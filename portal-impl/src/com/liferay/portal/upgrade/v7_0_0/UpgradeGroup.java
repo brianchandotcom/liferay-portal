@@ -71,9 +71,19 @@ public class UpgradeGroup extends UpgradeProcess {
 		}
 
 		for (Long companyId : companyIds) {
+			LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap();
+
+			for (String languageId : PropsValues.LOCALES_ENABLED) {
+				Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+				localizedValuesMap.put(
+					locale,
+					LanguageUtil.get(
+						LanguageResources.getResourceBundle(locale), "global"));
+			}
+
 			String nameXML = LocalizationUtil.getXml(
-				_getLocalizedValuesMap(PropsValues.LOCALES_ENABLED, "global"),
-				"global");
+				localizedValuesMap, "global");
 
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
@@ -122,11 +132,17 @@ public class UpgradeGroup extends UpgradeProcess {
 						LocaleUtil.fromLanguageId(defaultLanguageId));
 
 					LocalizedValuesMap localizedValuesMap =
-						_getLocalizedValuesMap(
+						new LocalizedValuesMap();
+
+					for (String languageId :
 							StringUtil.split(
 								typeSettingsUnicodeProperties.getProperty(
-									"locales")),
-							name);
+									"locales"))) {
+
+						Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+						localizedValuesMap.put(locale, name);
+					}
 
 					String nameXML = LocalizationUtil.updateLocalization(
 						localizedValuesMap.getValues(), StringPool.BLANK,
@@ -146,23 +162,6 @@ public class UpgradeGroup extends UpgradeProcess {
 
 			preparedStatement2.executeBatch();
 		}
-	}
-
-	private LocalizedValuesMap _getLocalizedValuesMap(
-		String[] languageIds, String name) {
-
-		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap();
-
-		for (String languageId : languageIds) {
-			Locale locale = LocaleUtil.fromLanguageId(languageId);
-
-			localizedValuesMap.put(
-				locale,
-				LanguageUtil.get(
-					LanguageResources.getResourceBundle(locale), name));
-		}
-
-		return localizedValuesMap;
 	}
 
 }

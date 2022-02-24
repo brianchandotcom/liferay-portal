@@ -149,7 +149,7 @@ const TestrayRoute = () => (
 
 					<Route element={<Subtasks />} path="subtasks" />
 
-					<Route element={<TestFlowTasks />} path=":testflowId" />
+					<Route element={<TestFlowTasks />} path=":testrayTaskId" />
 				</Route>
 
 				<Route element={<div>Page not found</div>} path="*" />

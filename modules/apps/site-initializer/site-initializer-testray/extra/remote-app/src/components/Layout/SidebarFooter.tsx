@@ -74,7 +74,7 @@ const SidebarFooter = () => {
 			items: [
 				{
 					icon: 'pencil',
-					label: 'Manage User',
+					label: 'Manage Users',
 					path: '/',
 				},
 				{

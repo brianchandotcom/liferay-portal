@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.util.HtmlParser;
 
 import net.htmlparser.jericho.Source;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * Provides the implementation of the HTML utility interface for extracting and
  * rendering HTML text.
@@ -29,6 +31,7 @@ import net.htmlparser.jericho.Source;
  * @author Connor McKay
  * @author Shuyang Zhou
  */
+@Component(immediate = true, service = HtmlParser.class)
 public class HtmlParserImpl implements HtmlParser {
 
 	/**

@@ -40,24 +40,25 @@ public class CommerceShipmentServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.commerce.service.impl.CommerceShipmentServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static CommerceShipment addCommerceShipment(
-			long groupId, long commerceAccountId, long commerceAddressId,
-			long commerceShippingMethodId, String commerceShippingOptionName,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addCommerceShipment(
-			groupId, commerceAccountId, commerceAddressId,
-			commerceShippingMethodId, commerceShippingOptionName,
-			serviceContext);
-	}
-
-	public static CommerceShipment addCommerceShipment(
 			long commerceOrderId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceShipment(
 			commerceOrderId, serviceContext);
+	}
+
+	public static CommerceShipment addCommerceShipment(
+			String externalReferenceCode, long groupId, long commerceAccountId,
+			long commerceAddressId, long commerceShippingMethodId,
+			String commerceShippingOptionName,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addCommerceShipment(
+			externalReferenceCode, groupId, commerceAccountId,
+			commerceAddressId, commerceShippingMethodId,
+			commerceShippingOptionName, serviceContext);
 	}
 
 	/**
@@ -76,6 +77,14 @@ public class CommerceShipmentServiceUtil {
 
 		getService().deleteCommerceShipment(
 			commerceShipmentId, restoreStockQuantity);
+	}
+
+	public static CommerceShipment fetchCommerceShipment(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().fetchCommerceShipment(
+			companyId, externalReferenceCode);
 	}
 
 	public static CommerceShipment getCommerceShipment(long commerceShipmentId)

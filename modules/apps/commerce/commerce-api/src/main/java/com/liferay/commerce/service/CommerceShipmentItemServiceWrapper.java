@@ -40,13 +40,28 @@ public class CommerceShipmentItemServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceShipmentItem
 			addCommerceShipmentItem(
-				long commerceShipmentId, long commerceOrderItemId,
-				long commerceInventoryWarehouseId, int quantity,
+				String externalReferenceCode, long commerceShipmentId,
+				long commerceOrderItemId, long commerceInventoryWarehouseId,
+				int quantity,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentItemService.addCommerceShipmentItem(
-			commerceShipmentId, commerceOrderItemId,
+			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
+			commerceInventoryWarehouseId, quantity, serviceContext);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipmentItem
+			addOrUpdateCommerceShipmentItem(
+				String externalReferenceCode, long commerceShipmentId,
+				long commerceOrderItemId, long commerceInventoryWarehouseId,
+				int quantity,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentItemService.addOrUpdateCommerceShipmentItem(
+			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
 			commerceInventoryWarehouseId, quantity, serviceContext);
 	}
 
@@ -81,6 +96,16 @@ public class CommerceShipmentItemServiceWrapper
 		return _commerceShipmentItemService.fetchCommerceShipmentItem(
 			commerceShipmentId, commerceOrderItemId,
 			commerceInventoryWarehouseId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipmentItem
+			fetchCommerceShipmentItem(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentItemService.fetchCommerceShipmentItem(
+			companyId, externalReferenceCode);
 	}
 
 	@Override

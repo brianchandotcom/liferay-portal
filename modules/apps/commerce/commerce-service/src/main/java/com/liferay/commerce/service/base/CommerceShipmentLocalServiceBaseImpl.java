@@ -268,6 +268,50 @@ public abstract class CommerceShipmentLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce shipment with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce shipment's external reference code
+	 * @return the matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
+	 */
+	@Override
+	public CommerceShipment fetchCommerceShipmentByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return commerceShipmentPersistence.fetchByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceShipmentByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public CommerceShipment fetchCommerceShipmentByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return fetchCommerceShipmentByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the commerce shipment with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce shipment's external reference code
+	 * @return the matching commerce shipment
+	 * @throws PortalException if a matching commerce shipment could not be found
+	 */
+	@Override
+	public CommerceShipment getCommerceShipmentByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return commerceShipmentPersistence.findByC_ERC(
+			companyId, externalReferenceCode);
+	}
+
+	/**
 	 * Returns the commerce shipment with the primary key.
 	 *
 	 * @param commerceShipmentId the primary key of the commerce shipment

@@ -37,6 +37,10 @@ public class CommerceShipmentItemTable
 	public final Column<CommerceShipmentItemTable, Long> mvccVersion =
 		createColumn(
 			"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CommerceShipmentItemTable, String>
+		externalReferenceCode = createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceShipmentItemTable, Long>
 		commerceShipmentItemId = createColumn(
 			"commerceShipmentItemId", Long.class, Types.BIGINT,

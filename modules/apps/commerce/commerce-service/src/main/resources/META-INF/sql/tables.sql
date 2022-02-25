@@ -273,6 +273,7 @@ create table CommerceOrderTypeRel (
 
 create table CommerceShipment (
 	mvccVersion LONG default 0 not null,
+	externalReferenceCode VARCHAR(75) null,
 	commerceShipmentId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -293,6 +294,7 @@ create table CommerceShipment (
 
 create table CommerceShipmentItem (
 	mvccVersion LONG default 0 not null,
+	externalReferenceCode VARCHAR(75) null,
 	commerceShipmentItemId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,

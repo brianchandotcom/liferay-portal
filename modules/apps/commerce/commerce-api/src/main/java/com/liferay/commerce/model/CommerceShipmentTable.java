@@ -36,6 +36,10 @@ public class CommerceShipmentTable extends BaseTable<CommerceShipmentTable> {
 
 	public final Column<CommerceShipmentTable, Long> mvccVersion = createColumn(
 		"mvccVersion", Long.class, Types.BIGINT, Column.FLAG_NULLITY);
+	public final Column<CommerceShipmentTable, String> externalReferenceCode =
+		createColumn(
+			"externalReferenceCode", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceShipmentTable, Long> commerceShipmentId =
 		createColumn(
 			"commerceShipmentId", Long.class, Types.BIGINT,

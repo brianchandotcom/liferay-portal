@@ -60,13 +60,14 @@ public class CommerceShipmentItemLocalServiceWrapper
 	@Override
 	public com.liferay.commerce.model.CommerceShipmentItem
 			addCommerceShipmentItem(
-				long commerceShipmentId, long commerceOrderItemId,
-				long commerceInventoryWarehouseId, int quantity,
+				String externalReferenceCode, long commerceShipmentId,
+				long commerceOrderItemId, long commerceInventoryWarehouseId,
+				int quantity,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShipmentItemLocalService.addCommerceShipmentItem(
-			commerceShipmentId, commerceOrderItemId,
+			externalReferenceCode, commerceShipmentId, commerceOrderItemId,
 			commerceInventoryWarehouseId, quantity, serviceContext);
 	}
 
@@ -80,6 +81,21 @@ public class CommerceShipmentItemLocalServiceWrapper
 		return _commerceShipmentItemLocalService.
 			addDeliverySubscriptionCommerceShipmentItem(
 				groupId, userId, commerceShipmentId, commerceOrderItemId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceShipmentItem
+			addOrUpdateCommerceShipmentItem(
+				String externalReferenceCode, long commerceShipmentId,
+				long commerceOrderItemId, long commerceInventoryWarehouseId,
+				int quantity,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentItemLocalService.
+			addOrUpdateCommerceShipmentItem(
+				externalReferenceCode, commerceShipmentId, commerceOrderItemId,
+				commerceInventoryWarehouseId, quantity, serviceContext);
 	}
 
 	/**
@@ -313,6 +329,37 @@ public class CommerceShipmentItemLocalServiceWrapper
 			commerceInventoryWarehouseId);
 	}
 
+	/**
+	 * Returns the commerce shipment item with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce shipment item's external reference code
+	 * @return the matching commerce shipment item, or <code>null</code> if a matching commerce shipment item could not be found
+	 */
+	@Override
+	public com.liferay.commerce.model.CommerceShipmentItem
+		fetchCommerceShipmentItemByExternalReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _commerceShipmentItemLocalService.
+			fetchCommerceShipmentItemByExternalReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceShipmentItemByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Override
+	public com.liferay.commerce.model.CommerceShipmentItem
+		fetchCommerceShipmentItemByReferenceCode(
+			long companyId, String externalReferenceCode) {
+
+		return _commerceShipmentItemLocalService.
+			fetchCommerceShipmentItemByReferenceCode(
+				companyId, externalReferenceCode);
+	}
+
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
@@ -334,6 +381,25 @@ public class CommerceShipmentItemLocalServiceWrapper
 
 		return _commerceShipmentItemLocalService.getCommerceShipmentItem(
 			commerceShipmentItemId);
+	}
+
+	/**
+	 * Returns the commerce shipment item with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce shipment item's external reference code
+	 * @return the matching commerce shipment item
+	 * @throws PortalException if a matching commerce shipment item could not be found
+	 */
+	@Override
+	public com.liferay.commerce.model.CommerceShipmentItem
+			getCommerceShipmentItemByExternalReferenceCode(
+				long companyId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShipmentItemLocalService.
+			getCommerceShipmentItemByExternalReferenceCode(
+				companyId, externalReferenceCode);
 	}
 
 	/**

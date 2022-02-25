@@ -32,6 +32,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FRAGMENT_BUTTON</td>
+	<td>//*[contains(@class,'btn') and contains(.,'${key_buttonName}')]//a[contains(@href,'${key_href}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TITLE_LINK</td>
 	<td>//h3[contains(.,'${key_entryTitle}')]//a</td>
 	<td></td>

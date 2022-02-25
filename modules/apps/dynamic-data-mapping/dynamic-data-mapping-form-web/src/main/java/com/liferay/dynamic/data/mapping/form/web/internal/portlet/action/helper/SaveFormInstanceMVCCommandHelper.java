@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.exception.StructureDefinitionException;
 import com.liferay.dynamic.data.mapping.exception.StructureLayoutException;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializer;
 import com.liferay.dynamic.data.mapping.form.builder.context.DDMFormContextDeserializerRequest;
-import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.FFSubmissionsSettingsConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.util.DDMFormInstanceFieldSettingsValidator;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -373,12 +372,6 @@ public class SaveFormInstanceMVCCommandHelper {
 	private void _validateExpirationDate(DDMFormValues ddmFormValues)
 		throws Exception {
 
-		if (!_ffSubmissionsSettingsConfigurationActivator.
-				expirationDateEnabled()) {
-
-			return;
-		}
-
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap(false);
 
@@ -534,10 +527,6 @@ public class SaveFormInstanceMVCCommandHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SaveFormInstanceMVCCommandHelper.class);
-
-	@Reference
-	private FFSubmissionsSettingsConfigurationActivator
-		_ffSubmissionsSettingsConfigurationActivator;
 
 	@Reference
 	private Portal _portal;

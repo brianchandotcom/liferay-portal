@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateRequest;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorEvaluateResponse;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluatorFieldContextKey;
-import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.FFSubmissionsSettingsConfigurationActivator;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -410,22 +409,6 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 		return ddmFormInstanceSettings;
 	}
 
-	private FFSubmissionsSettingsConfigurationActivator
-		_mockFFSubmissionsSettingsConfigurationActivator() {
-
-		FFSubmissionsSettingsConfigurationActivator
-			ffSubmissionsSettingsConfigurationActivator = mock(
-				FFSubmissionsSettingsConfigurationActivator.class);
-
-		when(
-			ffSubmissionsSettingsConfigurationActivator.expirationDateEnabled()
-		).thenReturn(
-			true
-		);
-
-		return ffSubmissionsSettingsConfigurationActivator;
-	}
-
 	private void _mockGetDDMFormLayout() throws Exception {
 		DDMFormInstance formInstance = mock(DDMFormInstance.class);
 
@@ -490,18 +473,6 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 			"_ddmStructureLocalService"
 		).set(
 			_addRecordMVCCommandHelper, _ddmStructureLocalService
-		);
-
-		FFSubmissionsSettingsConfigurationActivator
-			ffSubmissionsSettingsConfigurationActivator =
-				_mockFFSubmissionsSettingsConfigurationActivator();
-
-		field(
-			AddFormInstanceRecordMVCCommandHelper.class,
-			"_ffSubmissionsSettingsConfigurationActivator"
-		).set(
-			_addRecordMVCCommandHelper,
-			ffSubmissionsSettingsConfigurationActivator
 		);
 
 		field(

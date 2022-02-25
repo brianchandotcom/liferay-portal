@@ -23,7 +23,6 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormTemplateContextFactory;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
 import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.DDMFormWebConfigurationActivator;
-import com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator.FFSubmissionsSettingsConfigurationActivator;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormAdminDisplayContext;
 import com.liferay.dynamic.data.mapping.form.web.internal.display.context.DDMFormAdminFieldSetDisplayContext;
 import com.liferay.dynamic.data.mapping.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
@@ -167,9 +166,8 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormWebConfigurationActivator.
 						getDDMFormWebConfiguration(),
 					_ddmStorageAdapterTracker, _ddmStructureLocalService,
-					_ddmStructureService,
-					_ffSubmissionsSettingsConfigurationActivator, _jsonFactory,
-					_npmResolver, _objectDefinitionLocalService, _portal));
+					_ddmStructureService, _jsonFactory, _npmResolver,
+					_objectDefinitionLocalService, _portal));
 		}
 		else {
 			renderRequest.setAttribute(
@@ -191,9 +189,8 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 					_ddmFormWebConfigurationActivator.
 						getDDMFormWebConfiguration(),
 					_ddmStorageAdapterTracker, _ddmStructureLocalService,
-					_ddmStructureService,
-					_ffSubmissionsSettingsConfigurationActivator, _jsonFactory,
-					_npmResolver, _objectDefinitionLocalService, _portal));
+					_ddmStructureService, _jsonFactory, _npmResolver,
+					_objectDefinitionLocalService, _portal));
 		}
 	}
 
@@ -275,10 +272,6 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private DDMStructureService _ddmStructureService;
-
-	@Reference
-	private FFSubmissionsSettingsConfigurationActivator
-		_ffSubmissionsSettingsConfigurationActivator;
 
 	@Reference
 	private JSONFactory _jsonFactory;

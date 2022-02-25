@@ -14,8 +14,12 @@
 
 package com.liferay.object.rest.internal.dto.v1_0.converter;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -34,6 +38,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -209,7 +214,22 @@ public class ObjectEntryDTOConverter
 					});
 			}
 			else if (Objects.equals(
-						objectField.getRelationshipType(), "oneToMany")) {
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				DLFileEntry dlFileEntry =
+					_dlFileEntryLocalService.fetchDLFileEntry(
+						GetterUtil.getLong(serializable));
+
+				if (dlFileEntry == null) {
+					continue;
+				}
+
+				map.put(objectFieldName, dlFileEntry.getFileName());
+			}
+			else if (Objects.equals(
+						objectField.getRelationshipType(),
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
 				long objectEntryId = 0;
 
@@ -268,6 +288,9 @@ public class ObjectEntryDTOConverter
 
 		return map;
 	}
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

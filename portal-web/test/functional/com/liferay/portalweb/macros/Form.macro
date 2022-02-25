@@ -1076,6 +1076,14 @@ definition {
 		AssertLocation(value1 = "${friendlyURL}");
 	}
 
+	macro viewReorderPageAndVerifyField {
+		AssertElementPresent(
+			key_fieldName = "${fieldName}",
+			key_fieldPositionNumber = "${fieldPositionNumber}",
+			key_formPageNumber = "${formPageNumber}",
+			locator1 = "Form#FIELD_BODY_IN_SPECIFIC_POSITION");
+	}
+
 	macro viewRequiredFieldIndicator {
 		AssertElementPresent(locator1 = "Form#FIELD_REQUIRED_INDICATOR");
 	}

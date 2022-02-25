@@ -62,8 +62,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.RenderRequest;
@@ -123,18 +121,11 @@ public class HttpImpl implements Http {
 		// http://java.sun.com/j2se/1.5.0/docs/guide/net/properties.html
 
 		if (Validator.isNotNull(_NON_PROXY_HOSTS)) {
-			String nonProxyHostsRegEx = _NON_PROXY_HOSTS;
-
-			nonProxyHostsRegEx = nonProxyHostsRegEx.replaceAll("\\.", "\\\\.");
-			nonProxyHostsRegEx = nonProxyHostsRegEx.replaceAll("\\*", ".*?");
-			nonProxyHostsRegEx = nonProxyHostsRegEx.replaceAll("\\|", ")|(");
-
-			nonProxyHostsRegEx = "(" + nonProxyHostsRegEx + ")";
-
-			_nonProxyHostsPattern = Pattern.compile(nonProxyHostsRegEx);
+			_nonProxyHosts = StringUtil.split(
+				_NON_PROXY_HOSTS, StringPool.PIPE);
 		}
 		else {
-			_nonProxyHostsPattern = null;
+			_nonProxyHosts = null;
 		}
 
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
@@ -713,11 +704,16 @@ public class HttpImpl implements Http {
 			return false;
 		}
 
-		if (_nonProxyHostsPattern != null) {
-			Matcher matcher = _nonProxyHostsPattern.matcher(host);
+		if (_nonProxyHosts != null) {
+			for (String nonProxyHost : _nonProxyHosts) {
+				if (nonProxyHost.equals(host) ||
+					(nonProxyHost.contains(StringPool.STAR) &&
+					 StringUtil.wildcardMatches(
+						 host, nonProxyHost, (char)0, CharPool.STAR, (char)0,
+						 false))) {
 
-			if (matcher.matches()) {
-				return true;
+					return true;
+				}
 			}
 		}
 
@@ -2082,7 +2078,7 @@ public class HttpImpl implements Http {
 		new CentralizedThreadLocal<>(HttpImpl.class + "._uris", HashMap::new);
 
 	private final CloseableHttpClient _closeableHttpClient;
-	private final Pattern _nonProxyHostsPattern;
+	private final String[] _nonProxyHosts;
 	private final PoolingHttpClientConnectionManager
 		_poolingHttpClientConnectionManager;
 	private final List<String> _proxyAuthPrefs = new ArrayList<>();

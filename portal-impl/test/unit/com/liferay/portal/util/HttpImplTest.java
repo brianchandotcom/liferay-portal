@@ -17,6 +17,7 @@ package com.liferay.portal.util;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
@@ -31,6 +32,7 @@ import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
@@ -350,6 +352,33 @@ public class HttpImplTest {
 			JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI, "https://foo.com");
 
 		Assert.assertTrue(_httpImpl.isForwarded(mockHttpServletRequest));
+	}
+
+	@Test
+	public void testIsNonProxyHost() throws Exception {
+		String domain = "foo.com";
+		String ipAddress = "192.168.0.250";
+		String ipAddressWithStarWildcard = "182.*.0.250";
+
+		Field field = ReflectionTestUtil.getField(
+			HttpImpl.class, "_nonProxyHosts");
+
+		Object value = field.get(_httpImpl);
+
+		try {
+			field.set(
+				_httpImpl,
+				new String[] {domain, ipAddress, ipAddressWithStarWildcard});
+
+			Assert.assertTrue(_httpImpl.isNonProxyHost(domain));
+			Assert.assertTrue(_httpImpl.isNonProxyHost(ipAddress));
+			Assert.assertTrue(_httpImpl.isNonProxyHost("182.123.0.250"));
+			Assert.assertFalse(_httpImpl.isNonProxyHost("182.100.1.250"));
+			Assert.assertFalse(_httpImpl.isNonProxyHost("google.com"));
+		}
+		finally {
+			field.set(_httpImpl, value);
+		}
 	}
 
 	@Test

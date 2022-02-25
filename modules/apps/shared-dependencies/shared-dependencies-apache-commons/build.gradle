@@ -1,0 +1,4 @@
+dependencies {
+	compileInclude group: "commons-digester", name: "commons-digester", version: "1.8.1"
+	compileInclude group: "commons-validator", name: "commons-validator", version: "1.5.1"
+}

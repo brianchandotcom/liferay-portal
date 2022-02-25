@@ -152,13 +152,14 @@ public class SystemObjectDefinitionMetadataModelListener
 			"objectActionTriggerKey", objectActionTriggerKey
 		).put(
 			"model" + _modelClass.getSimpleName(),
-			_jsonFactory.createJSONObject(baseModel.toString())
+			_jsonFactory.createJSONObject(
+				_jsonFactory.looseSerializeDeep(baseModel))
 		).put(
 			"original" + _modelClass.getSimpleName(),
 			() -> {
 				if (originalBaseModel != null) {
 					return _jsonFactory.createJSONObject(
-						originalBaseModel.toString());
+						_jsonFactory.looseSerializeDeep(originalBaseModel));
 				}
 
 				return null;

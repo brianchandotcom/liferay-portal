@@ -323,6 +323,19 @@ public class CommerceShippingFixedOptionLocalServiceWrapper
 			getActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List
+		<com.liferay.commerce.shipping.engine.fixed.model.
+			CommerceShippingFixedOption>
+				getCommerceOrderTypeCommerceShippingFixedOptions(
+					long companyId, long commerceOrderTypeId,
+					long commerceShippingMethodId) {
+
+		return _commerceShippingFixedOptionLocalService.
+			getCommerceOrderTypeCommerceShippingFixedOptions(
+				companyId, commerceOrderTypeId, commerceShippingMethodId);
+	}
+
 	/**
 	 * Returns the commerce shipping fixed option with the primary key.
 	 *

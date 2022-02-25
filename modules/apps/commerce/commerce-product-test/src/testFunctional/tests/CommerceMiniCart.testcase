@@ -1031,7 +1031,7 @@ definition {
 		FrontStore.viewMiniCartItem(
 			cartItemName = "Bundled Product",
 			cartItemOption = "black",
-			cartItemPriceValue = "$ 70.00",
+			cartItemPriceValue = "70.00",
 			cartItemQuantity = "1",
 			cartItemSku = "BLACKSKU");
 

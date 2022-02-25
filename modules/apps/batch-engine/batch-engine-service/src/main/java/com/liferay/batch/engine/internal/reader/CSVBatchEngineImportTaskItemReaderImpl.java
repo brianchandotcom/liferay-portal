@@ -30,6 +30,7 @@ import java.util.Map;
 
 /**
  * @author Ivica Cardic
+ * @author Igor Beslic
  */
 public class CSVBatchEngineImportTaskItemReaderImpl
 	implements BatchEngineImportTaskItemReader {
@@ -39,19 +40,21 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 			Map<String, Serializable> parameters)
 		throws IOException {
 
+		_containsHeaders = Boolean.valueOf(
+			(String)parameters.getOrDefault(
+				"containsHeaders", StringPool.TRUE));
+
 		_delimiter = (String)parameters.getOrDefault("delimiter", delimiter);
 		_inputStream = inputStream;
 
-		_enclosingCharacter = (String)parameters.getOrDefault(
-			"enclosingCharacter", null);
+		_enclosingCharacter = _getEnclosingCharacter(parameters);
 
 		_delimiterRegex = _getDelimiterRegex(_enclosingCharacter);
 
 		_unsyncBufferedReader = new UnsyncBufferedReader(
 			new InputStreamReader(_inputStream));
 
-		_fieldNames = StringUtil.split(
-			_unsyncBufferedReader.readLine(), _delimiter);
+		_fieldNames = _getFieldNames();
 	}
 
 	@Override
@@ -116,6 +119,34 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 			enclosingCharacter, escapedDelimiter, enclosingCharacter);
 	}
 
+	private String _getEnclosingCharacter(
+		Map<String, Serializable> parameters) {
+
+		String enclosingCharacter = (String)parameters.getOrDefault(
+			"enclosingCharacter", null);
+
+		if (Validator.isNull(enclosingCharacter)) {
+			return null;
+		}
+
+		return enclosingCharacter;
+	}
+
+	private String[] _getFieldNames() throws IOException {
+		if (_containsHeaders) {
+			return StringUtil.split(
+				_unsyncBufferedReader.readLine(), _delimiter);
+		}
+
+		String[] fieldNames = new String[100];
+
+		for (int i = 0; i < fieldNames.length; i++) {
+			fieldNames[i] = String.valueOf(i);
+		}
+
+		return fieldNames;
+	}
+
 	private String _trimEnclosingCharacter(String line) {
 		if ((_enclosingCharacter == null) || Validator.isNull(line)) {
 			return line;
@@ -141,6 +172,7 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 		StringPool.QUESTION, StringPool.STAR
 	};
 
+	private final boolean _containsHeaders;
 	private final String _delimiter;
 	private final String _delimiterRegex;
 	private final String _enclosingCharacter;

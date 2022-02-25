@@ -1659,6 +1659,72 @@ definition {
 		Form.viewPageEmptyField(pageIndex = "0");
 	}
 
+	@description = "LPS-111551 - As a Forms admin, I want to reorder my form pages"
+	@priority = "4"
+	test ReorderPagesAndVerifyFields {
+		FormsAdmin.addForm();
+
+		Form.editName(formName = "Form 1");
+
+		Form.editPageTitle(
+			formPageName = "Page A",
+			formTitleNumber = "1");
+
+		Form.addTextField(fieldPositionNumber = "0");
+
+		var fieldTextField = FormFields.getFieldName();
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 1");
+
+		Form.closeSidebar();
+
+		Form.addPage(formAddNewPageNumber = "1");
+
+		Form.editPageTitle(
+			formPageName = "Page B",
+			formTitleNumber = "2");
+
+		Form.addTextField(
+			fieldPositionNumber = "0",
+			formPageNumber = "1");
+
+		Form.editFieldLabelMetal(fieldValue = "Text Field 2");
+
+		Form.closeSidebar();
+
+		Form.movePageDown(formPageName = "Page A");
+
+		Form.viewButtonPageDisabled(
+			formPageName = "Page A",
+			pageMove = "Down");
+
+		Form.viewButtonPageDownEnabled(formPageName = "Page B");
+
+		Form.viewButtonPageUpEnabled(formPageName = "Page A");
+
+		Form.viewReorderPageAndVerifyField(
+			fieldName = "Text Field 2",
+			fieldPositionNumber = "0",
+			formPageNumber = "0");
+
+		Form.viewReorderPageAndVerifyField(
+			fieldName = "Text Field 1",
+			fieldPositionNumber = "0",
+			formPageNumber = "1");
+
+		Form.movePageUp(formPageName = "Page A");
+
+		Form.viewReorderPageAndVerifyField(
+			fieldName = "Text Field 1",
+			fieldPositionNumber = "0",
+			formPageNumber = "0");
+
+		Form.viewReorderPageAndVerifyField(
+			fieldName = "Text Field 2",
+			fieldPositionNumber = "0",
+			formPageNumber = "1");
+	}
+
 	@description = "This is a use case for LPS-59336."
 	@priority = "4"
 	test SearchFormRecordMultipleEntries {

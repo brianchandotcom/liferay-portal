@@ -6,6 +6,11 @@ $sxpElementHeaderHeight: 48px;
 	.sxp-element-row {
 		height: 100%;
 		padding-top: 64px;
+
+		&.shifted {
+			margin-right: $sidebarWidth;
+			transition: margin-right ease 0.2s;
+		}
 	}
 
 	.sxp-element-section {

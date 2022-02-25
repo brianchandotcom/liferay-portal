@@ -15,9 +15,7 @@ import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
-import ClaySticker from '@clayui/sticker';
 import ClayToolbar from '@clayui/toolbar';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
 import {fetch, navigate} from 'frontend-js-web';
 import {PropTypes} from 'prop-types';
@@ -31,8 +29,10 @@ import React, {
 
 import CodeMirrorEditor from '../shared/CodeMirrorEditor';
 import ErrorBoundary from '../shared/ErrorBoundary';
+import LearnMessage from '../shared/LearnMessage';
 import PreviewModal from '../shared/PreviewModal';
 import SearchInput from '../shared/SearchInput';
+import Sidebar from '../shared/Sidebar';
 import SubmitWarningModal from '../shared/SubmitWarningModal';
 import ThemeContext from '../shared/ThemeContext';
 import SXPElement from '../shared/sxp_element/index';
@@ -135,8 +135,9 @@ function EditSXPElementForm({
 	const [errors, setErrors] = useState([]);
 	const [expandAllVariables, setExpandAllVariables] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [showSidebar, setShowSidebar] = useState(false);
+	const [showInfoSidebar, setShowInfoSidebar] = useState(false);
 	const [showSubmitWarningModal, setShowSubmitWarningModal] = useState(false);
+	const [showVariablesSidebar, setShowVariablesSidebar] = useState(false);
 	const [elementJSONEditorValue, setElementJSONEditorValue] = useState(
 		initialElementJSONEditorValueString
 	);
@@ -165,7 +166,7 @@ function EditSXPElementForm({
 	 */
 	useEffect(() => {
 		if (!readOnly) {
-			setShowSidebar(true);
+			setShowVariablesSidebar(true);
 		}
 	}, [readOnly]);
 
@@ -475,7 +476,26 @@ function EditSXPElementForm({
 				</div>
 			</form>
 
-			<div className="sxp-element-row">
+			<Sidebar
+				className="info-sidebar"
+				onClose={() => setShowInfoSidebar(false)}
+				title={Liferay.Language.get('element-source')}
+				visible={showInfoSidebar}
+			>
+				<div className="container-fluid">
+					<span className="help-text text-secondary">
+						{Liferay.Language.get('element-source-description')}
+					</span>
+
+					<LearnMessage resourceKey="element-source" />
+				</div>
+			</Sidebar>
+
+			<div
+				className={getCN('sxp-element-row', {
+					shifted: showInfoSidebar,
+				})}
+			>
 				<ClayLayout.Row>
 					<ClayLayout.Col size={12}>
 						<div className="sxp-element-section">
@@ -483,12 +503,16 @@ function EditSXPElementForm({
 								{!readOnly && (
 									<ClayButton
 										borderless
-										className={showSidebar && 'active'}
+										className={getCN({
+											active: showVariablesSidebar,
+										})}
 										disabled={false}
 										displayType="secondary"
 										monospaced
 										onClick={() =>
-											setShowSidebar(!showSidebar)
+											setShowVariablesSidebar(
+												!showVariablesSidebar
+											)
 										}
 										small
 										title={Liferay.Language.get(
@@ -506,30 +530,28 @@ function EditSXPElementForm({
 											{Liferay.Language.get(
 												'element-source-json'
 											)}
-
-											<ClayTooltipProvider>
-												<ClaySticker
-													displayType="unstyled"
-													size="sm"
-													title={Liferay.Language.get(
-														'element-source-json-help'
-													)}
-												>
-													<ClayIcon
-														data-tooltip-align="top"
-														symbol="info-circle"
-													/>
-												</ClaySticker>
-											</ClayTooltipProvider>
 										</label>
 									</div>
 								</div>
+
+								<ClayButton
+									borderless
+									className={getCN({active: showInfoSidebar})}
+									displayType="secondary"
+									monospaced
+									onClick={() =>
+										setShowInfoSidebar(!showInfoSidebar)
+									}
+									small
+								>
+									<ClayIcon symbol="info-circle-open" />
+								</ClayButton>
 							</div>
 
 							<ClayLayout.Row>
 								<ClayLayout.Col
 									className={getCN('json-section', {
-										hide: !showSidebar,
+										hide: !showVariablesSidebar,
 									})}
 									size={3}
 								>
@@ -592,7 +614,7 @@ function EditSXPElementForm({
 
 								<ClayLayout.Col
 									className="json-section"
-									size={showSidebar ? 9 : 12}
+									size={showVariablesSidebar ? 9 : 12}
 								>
 									<CodeMirrorEditor
 										onChange={(value) =>

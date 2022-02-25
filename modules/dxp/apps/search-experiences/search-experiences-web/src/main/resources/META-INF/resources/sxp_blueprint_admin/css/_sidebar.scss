@@ -4,6 +4,10 @@
 		text-align: center;
 	}
 
+	.help-text + .learn-message {
+		margin-left: 4px;
+	}
+
 	.sidebar-header,
 	.sidebar-search {
 		flex-shrink: 0; // Fix for certain versions of Safari when nesting flex elements
@@ -42,10 +46,11 @@
 	}
 }
 
-// Edit Blueprint Sidebars
+// Edit Blueprint + Element Sidebars
 
 .add-sxp-element-sidebar,
 .clause-contributors-sidebar,
+.info-sidebar,
 .preview-sidebar {
 	background-color: $white;
 	display: flex;

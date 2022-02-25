@@ -1443,6 +1443,7 @@ definition {
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
+			increaseMinutes = "1",
 			invalidExpirationDate = "true");
 	}
 

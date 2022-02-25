@@ -14,6 +14,7 @@
 
 package com.liferay.object.internal.search.spi.model.query.contributor;
 
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectView;
 import com.liferay.object.model.ObjectViewColumn;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermRangeQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
@@ -253,15 +253,50 @@ public class ObjectEntryKeywordQueryContributor
 
 			queryConfig.addHighlightFieldNames(fieldName);
 		}
-		else if (Objects.equals(objectField.getDBType(), "BigDecimal")) {
+		else if (Objects.equals(
+					objectField.getBusinessType(),
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
+				 Objects.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_CLOB) ||
+				 Objects.equals(
+					 objectField.getDBType(),
+					 ObjectFieldConstants.DB_TYPE_STRING)) {
+
+			String fieldName = "nestedFieldArray.value_text";
+
+			if (Objects.equals(
+					objectField.getIndexedLanguageId(),
+					searchContext.getLanguageId())) {
+
+				fieldName =
+					"nestedFieldArray.value_" +
+						objectField.getIndexedLanguageId();
+			}
+
+			nestedBooleanQuery.add(
+				new MatchQuery(fieldName, token), BooleanClauseOccur.MUST);
+
+			queryConfig.addHighlightFieldNames(fieldName);
+		}
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_BIG_DECIMAL)) {
+
 			_addNumericClause(
 				"nestedFieldArray.value_double", nestedBooleanQuery,
 				objectField, token);
 		}
-		else if (Objects.equals(objectField.getDBType(), "Blob")) {
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_BLOB)) {
+
 			_log.error("Blob type is not indexable");
 		}
-		else if (Objects.equals(objectField.getDBType(), "Boolean")) {
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_BOOLEAN)) {
+
 			String fieldName = null;
 
 			if (StringUtil.equalsIgnoreCase(token, "false") ||
@@ -283,47 +318,34 @@ public class ObjectEntryKeywordQueryContributor
 				queryConfig.addHighlightFieldNames(fieldName);
 			}
 		}
-		else if (Objects.equals(objectField.getDBType(), "Clob") ||
-				 Objects.equals(objectField.getDBType(), "String")) {
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_DATE)) {
 
-			if (Validator.isBlank(objectField.getIndexedLanguageId())) {
-				String fieldName = "nestedFieldArray.value_text";
-
-				nestedBooleanQuery.add(
-					new MatchQuery(fieldName, token), BooleanClauseOccur.MUST);
-
-				queryConfig.addHighlightFieldNames(fieldName);
-			}
-			else if (Objects.equals(
-						objectField.getIndexedLanguageId(),
-						LocaleUtil.toLanguageId(searchContext.getLocale()))) {
-
-				String fieldName =
-					"nestedFieldArray.value_" +
-						objectField.getIndexedLanguageId();
-
-				nestedBooleanQuery.add(
-					new MatchQuery(fieldName, token), BooleanClauseOccur.MUST);
-
-				queryConfig.addHighlightFieldNames(fieldName);
-			}
-		}
-		else if (Objects.equals(objectField.getDBType(), "Date")) {
 			_addNumericClause(
 				"nestedFieldArray.value_date", nestedBooleanQuery, objectField,
 				token);
 		}
-		else if (Objects.equals(objectField.getDBType(), "Double")) {
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_DOUBLE)) {
+
 			_addNumericClause(
 				"nestedFieldArray.value_double", nestedBooleanQuery,
 				objectField, token);
 		}
-		else if (Objects.equals(objectField.getDBType(), "Integer")) {
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_INTEGER)) {
+
 			_addNumericClause(
 				"nestedFieldArray.value_integer", nestedBooleanQuery,
 				objectField, token);
 		}
-		else if (Objects.equals(objectField.getDBType(), "Long")) {
+		else if (Objects.equals(
+					objectField.getDBType(),
+					ObjectFieldConstants.DB_TYPE_LONG)) {
+
 			_addNumericClause(
 				"nestedFieldArray.value_long", nestedBooleanQuery, objectField,
 				token);

@@ -14,6 +14,8 @@
 
 package com.liferay.object.internal.search.spi.model.index.contributor;
 
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -27,8 +29,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.FieldArray;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -54,12 +59,15 @@ public class ObjectEntryModelDocumentContributor
 		String className,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
-		ObjectFieldLocalService objectFieldLocalService) {
+		ObjectFieldLocalService objectFieldLocalService,
+		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry) {
 
 		_className = className;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
+		_persistedModelLocalServiceRegistry =
+			persistedModelLocalServiceRegistry;
 	}
 
 	@Override
@@ -173,6 +181,13 @@ public class ObjectEntryModelDocumentContributor
 			return;
 		}
 
+		if (StringUtil.equals(
+				objectField.getBusinessType(),
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			value = _getFileName(GetterUtil.getLong(value));
+		}
+
 		String objectFieldName = objectField.getName();
 		String valueString = String.valueOf(value);
 
@@ -260,6 +275,27 @@ public class ObjectEntryModelDocumentContributor
 		return format.format(value);
 	}
 
+	private String _getFileName(long dlFileEntryId) {
+		try {
+			PersistedModelLocalService persistedModelLocalService =
+				_persistedModelLocalServiceRegistry.
+					getPersistedModelLocalService(DLFileEntry.class.getName());
+
+			DLFileEntry dlFileEntry =
+				(DLFileEntry)persistedModelLocalService.getPersistedModel(
+					dlFileEntryId);
+
+			return dlFileEntry.getFileName();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return StringPool.BLANK;
+		}
+	}
+
 	private String _getSortableValue(String value) {
 		if (value.length() > 256) {
 			return value.substring(0, 256);
@@ -283,5 +319,7 @@ public class ObjectEntryModelDocumentContributor
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final PersistedModelLocalServiceRegistry
+		_persistedModelLocalServiceRegistry;
 
 }

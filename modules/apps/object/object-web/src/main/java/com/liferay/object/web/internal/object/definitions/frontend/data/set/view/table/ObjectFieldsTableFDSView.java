@@ -42,10 +42,10 @@ public class ObjectFieldsTableFDSView extends BaseTableFDSView {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
 			_fdsTableSchemaBuilderFactory.create();
 
-		fdsTableSchemaBuilder.addFDSTableSchemaField("businessType", "type");
-
 		FDSTableSchemaField labelFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField("label.LANG", "label");
+
+		fdsTableSchemaBuilder.addFDSTableSchemaField("businessType", "type");
 
 		labelFDSTableSchemaField.setContentRenderer("actionLink");
 

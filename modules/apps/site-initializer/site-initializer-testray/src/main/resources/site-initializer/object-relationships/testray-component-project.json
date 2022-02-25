@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "Testray Component And Project"
+	},
+	"name": "componentProject",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:TestrayProject$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:TestrayComponent$]",
+	"objectDefinitionName2": "TestrayComponent",
+	"type": "oneToMany"
+}

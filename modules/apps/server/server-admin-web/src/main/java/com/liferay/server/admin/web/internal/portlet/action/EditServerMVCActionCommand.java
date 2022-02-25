@@ -94,7 +94,6 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -108,12 +107,15 @@ import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.ShutdownUtil;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -377,12 +379,7 @@ public class EditServerMVCActionCommand
 					layoutStagingHandler.setLayoutRevision(layoutRevision);
 
 					if (_containsPortlet(
-							(Layout)ProxyUtil.newProxyInstance(
-								PortalClassLoaderUtil.getClassLoader(),
-								new Class<?>[] {
-									Layout.class, ModelWrapper.class
-								},
-								layoutStagingHandler),
+							_proxyProviderFunction.apply(layoutStagingHandler),
 							portletPreferences.getPortletId())) {
 
 						return;
@@ -819,6 +816,9 @@ public class EditServerMVCActionCommand
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditServerMVCActionCommand.class);
 
+	private static final Function<InvocationHandler, Layout>
+		_proxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Layout.class, ModelWrapper.class);
 	private static final MethodKey _resetLogLevelsMethodKey = new MethodKey(
 		EditServerMVCActionCommand.class, "_resetLogLevels", Map.class,
 		Map.class);

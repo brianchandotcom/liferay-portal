@@ -298,14 +298,9 @@ public class PaymentMethodResourceFactoryImpl
 	private static Function<InvocationHandler, PaymentMethodResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = PaymentMethodResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PaymentMethodResource.class);
+			PaymentMethodResource.class.getClassLoader(),
+			PaymentMethodResource.class);
 
 		try {
 			Constructor<PaymentMethodResource> constructor =

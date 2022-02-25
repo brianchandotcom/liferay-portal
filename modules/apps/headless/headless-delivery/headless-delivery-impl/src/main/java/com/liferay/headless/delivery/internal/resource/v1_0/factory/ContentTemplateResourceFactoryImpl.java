@@ -296,15 +296,9 @@ public class ContentTemplateResourceFactoryImpl
 	private static Function<InvocationHandler, ContentTemplateResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			ContentTemplateResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ContentTemplateResource.class);
+			ContentTemplateResource.class.getClassLoader(),
+			ContentTemplateResource.class);
 
 		try {
 			Constructor<ContentTemplateResource> constructor =

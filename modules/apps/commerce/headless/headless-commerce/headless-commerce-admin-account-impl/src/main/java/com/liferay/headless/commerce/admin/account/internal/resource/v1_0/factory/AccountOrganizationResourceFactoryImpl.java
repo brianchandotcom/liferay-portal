@@ -300,15 +300,9 @@ public class AccountOrganizationResourceFactoryImpl
 	private static Function<InvocationHandler, AccountOrganizationResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			AccountOrganizationResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, AccountOrganizationResource.class);
+			AccountOrganizationResource.class.getClassLoader(),
+			AccountOrganizationResource.class);
 
 		try {
 			Constructor<AccountOrganizationResource> constructor =

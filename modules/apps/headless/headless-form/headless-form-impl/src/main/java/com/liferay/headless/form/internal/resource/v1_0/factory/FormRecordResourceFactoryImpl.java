@@ -294,14 +294,9 @@ public class FormRecordResourceFactoryImpl
 	private static Function<InvocationHandler, FormRecordResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = FormRecordResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, FormRecordResource.class);
+			FormRecordResource.class.getClassLoader(),
+			FormRecordResource.class);
 
 		try {
 			Constructor<FormRecordResource> constructor =

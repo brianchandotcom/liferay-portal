@@ -294,14 +294,9 @@ public class EmailAddressResourceFactoryImpl
 	private static Function<InvocationHandler, EmailAddressResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = EmailAddressResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, EmailAddressResource.class);
+			EmailAddressResource.class.getClassLoader(),
+			EmailAddressResource.class);
 
 		try {
 			Constructor<EmailAddressResource> constructor =

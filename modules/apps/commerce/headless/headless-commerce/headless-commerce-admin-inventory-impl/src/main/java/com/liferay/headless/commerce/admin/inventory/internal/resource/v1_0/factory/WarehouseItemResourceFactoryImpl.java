@@ -298,14 +298,9 @@ public class WarehouseItemResourceFactoryImpl
 	private static Function<InvocationHandler, WarehouseItemResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = WarehouseItemResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, WarehouseItemResource.class);
+			WarehouseItemResource.class.getClassLoader(),
+			WarehouseItemResource.class);
 
 		try {
 			Constructor<WarehouseItemResource> constructor =

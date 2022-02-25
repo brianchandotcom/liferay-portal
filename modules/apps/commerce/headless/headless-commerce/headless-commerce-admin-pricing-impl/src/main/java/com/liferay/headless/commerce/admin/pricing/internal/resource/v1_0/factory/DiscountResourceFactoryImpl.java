@@ -294,14 +294,8 @@ public class DiscountResourceFactoryImpl implements DiscountResource.Factory {
 	private static Function<InvocationHandler, DiscountResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = DiscountResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, DiscountResource.class);
+			DiscountResource.class.getClassLoader(), DiscountResource.class);
 
 		try {
 			Constructor<DiscountResource> constructor =

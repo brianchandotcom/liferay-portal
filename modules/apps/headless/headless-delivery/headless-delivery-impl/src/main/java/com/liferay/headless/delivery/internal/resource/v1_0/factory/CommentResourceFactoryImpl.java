@@ -291,14 +291,8 @@ public class CommentResourceFactoryImpl implements CommentResource.Factory {
 	private static Function<InvocationHandler, CommentResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = CommentResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, CommentResource.class);
+			CommentResource.class.getClassLoader(), CommentResource.class);
 
 		try {
 			Constructor<CommentResource> constructor =

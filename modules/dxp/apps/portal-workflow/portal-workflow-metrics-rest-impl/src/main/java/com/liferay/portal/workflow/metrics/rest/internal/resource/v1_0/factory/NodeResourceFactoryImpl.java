@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.NodeResource;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -72,9 +75,7 @@ public class NodeResourceFactoryImpl implements NodeResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (NodeResource)ProxyUtil.newProxyInstance(
-					NodeResource.class.getClassLoader(),
-					new Class<?>[] {NodeResource.class},
+				return _nodeResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -285,5 +286,35 @@ public class NodeResourceFactoryImpl implements NodeResource.Factory {
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, NodeResource>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			NodeResource.class.getClassLoader(), NodeResource.class);
+
+		try {
+			Constructor<NodeResource> constructor =
+				(Constructor<NodeResource>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, NodeResource>
+		_nodeResourceProxyProviderFunction = _getProxyProviderFunction();
 
 }

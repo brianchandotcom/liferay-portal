@@ -299,15 +299,9 @@ public class MessageBoardSectionResourceFactoryImpl
 	private static Function<InvocationHandler, MessageBoardSectionResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			MessageBoardSectionResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, MessageBoardSectionResource.class);
+			MessageBoardSectionResource.class.getClassLoader(),
+			MessageBoardSectionResource.class);
 
 		try {
 			Constructor<MessageBoardSectionResource> constructor =

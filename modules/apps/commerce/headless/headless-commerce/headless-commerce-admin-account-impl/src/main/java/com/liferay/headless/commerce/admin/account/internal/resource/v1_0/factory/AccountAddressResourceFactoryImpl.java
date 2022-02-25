@@ -298,14 +298,9 @@ public class AccountAddressResourceFactoryImpl
 	private static Function<InvocationHandler, AccountAddressResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = AccountAddressResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, AccountAddressResource.class);
+			AccountAddressResource.class.getClassLoader(),
+			AccountAddressResource.class);
 
 		try {
 			Constructor<AccountAddressResource> constructor =

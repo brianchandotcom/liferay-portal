@@ -291,14 +291,8 @@ public class StatusResourceFactoryImpl implements StatusResource.Factory {
 	private static Function<InvocationHandler, StatusResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = StatusResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, StatusResource.class);
+			StatusResource.class.getClassLoader(), StatusResource.class);
 
 		try {
 			Constructor<StatusResource> constructor =

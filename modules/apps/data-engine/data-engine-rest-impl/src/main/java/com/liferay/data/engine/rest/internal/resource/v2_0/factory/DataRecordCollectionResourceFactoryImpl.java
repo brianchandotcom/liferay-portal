@@ -299,15 +299,9 @@ public class DataRecordCollectionResourceFactoryImpl
 	private static Function<InvocationHandler, DataRecordCollectionResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			DataRecordCollectionResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, DataRecordCollectionResource.class);
+			DataRecordCollectionResource.class.getClassLoader(),
+			DataRecordCollectionResource.class);
 
 		try {
 			Constructor<DataRecordCollectionResource> constructor =

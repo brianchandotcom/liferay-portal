@@ -299,15 +299,9 @@ public class KnowledgeBaseFolderResourceFactoryImpl
 	private static Function<InvocationHandler, KnowledgeBaseFolderResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			KnowledgeBaseFolderResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, KnowledgeBaseFolderResource.class);
+			KnowledgeBaseFolderResource.class.getClassLoader(),
+			KnowledgeBaseFolderResource.class);
 
 		try {
 			Constructor<KnowledgeBaseFolderResource> constructor =

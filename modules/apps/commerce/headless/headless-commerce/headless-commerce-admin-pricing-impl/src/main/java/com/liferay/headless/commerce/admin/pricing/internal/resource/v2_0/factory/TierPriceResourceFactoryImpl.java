@@ -294,14 +294,8 @@ public class TierPriceResourceFactoryImpl implements TierPriceResource.Factory {
 	private static Function<InvocationHandler, TierPriceResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = TierPriceResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, TierPriceResource.class);
+			TierPriceResource.class.getClassLoader(), TierPriceResource.class);
 
 		try {
 			Constructor<TierPriceResource> constructor =

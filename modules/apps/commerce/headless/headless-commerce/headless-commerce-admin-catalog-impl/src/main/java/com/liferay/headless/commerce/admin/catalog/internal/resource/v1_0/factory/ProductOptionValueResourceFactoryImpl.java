@@ -300,15 +300,9 @@ public class ProductOptionValueResourceFactoryImpl
 	private static Function<InvocationHandler, ProductOptionValueResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			ProductOptionValueResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ProductOptionValueResource.class);
+			ProductOptionValueResource.class.getClassLoader(),
+			ProductOptionValueResource.class);
 
 		try {
 			Constructor<ProductOptionValueResource> constructor =

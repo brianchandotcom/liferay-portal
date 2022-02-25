@@ -303,15 +303,9 @@ public class DataDefinitionFieldLinkResourceFactoryImpl
 	private static Function<InvocationHandler, DataDefinitionFieldLinkResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			DataDefinitionFieldLinkResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, DataDefinitionFieldLinkResource.class);
+			DataDefinitionFieldLinkResource.class.getClassLoader(),
+			DataDefinitionFieldLinkResource.class);
 
 		try {
 			Constructor<DataDefinitionFieldLinkResource> constructor =

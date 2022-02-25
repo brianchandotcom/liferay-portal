@@ -310,15 +310,9 @@ public class ProductShippingConfigurationResourceFactoryImpl
 		<InvocationHandler, ProductShippingConfigurationResource>
 			_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			ProductShippingConfigurationResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ProductShippingConfigurationResource.class);
+			ProductShippingConfigurationResource.class.getClassLoader(),
+			ProductShippingConfigurationResource.class);
 
 		try {
 			Constructor<ProductShippingConfigurationResource> constructor =

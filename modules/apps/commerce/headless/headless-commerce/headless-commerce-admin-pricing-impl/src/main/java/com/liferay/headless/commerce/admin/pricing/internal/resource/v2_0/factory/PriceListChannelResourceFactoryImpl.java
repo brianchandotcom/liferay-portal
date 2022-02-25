@@ -299,15 +299,9 @@ public class PriceListChannelResourceFactoryImpl
 	private static Function<InvocationHandler, PriceListChannelResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			PriceListChannelResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PriceListChannelResource.class);
+			PriceListChannelResource.class.getClassLoader(),
+			PriceListChannelResource.class);
 
 		try {
 			Constructor<PriceListChannelResource> constructor =

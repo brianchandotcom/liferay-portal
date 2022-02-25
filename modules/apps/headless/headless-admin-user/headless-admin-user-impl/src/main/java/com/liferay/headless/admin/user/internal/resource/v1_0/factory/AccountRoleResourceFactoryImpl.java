@@ -294,14 +294,9 @@ public class AccountRoleResourceFactoryImpl
 	private static Function<InvocationHandler, AccountRoleResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = AccountRoleResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, AccountRoleResource.class);
+			AccountRoleResource.class.getClassLoader(),
+			AccountRoleResource.class);
 
 		try {
 			Constructor<AccountRoleResource> constructor =

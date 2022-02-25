@@ -292,14 +292,8 @@ public class SitePageResourceFactoryImpl implements SitePageResource.Factory {
 	private static Function<InvocationHandler, SitePageResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = SitePageResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, SitePageResource.class);
+			SitePageResource.class.getClassLoader(), SitePageResource.class);
 
 		try {
 			Constructor<SitePageResource> constructor =

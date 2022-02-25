@@ -292,14 +292,8 @@ public class WikiPageResourceFactoryImpl implements WikiPageResource.Factory {
 	private static Function<InvocationHandler, WikiPageResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = WikiPageResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, WikiPageResource.class);
+			WikiPageResource.class.getClassLoader(), WikiPageResource.class);
 
 		try {
 			Constructor<WikiPageResource> constructor =

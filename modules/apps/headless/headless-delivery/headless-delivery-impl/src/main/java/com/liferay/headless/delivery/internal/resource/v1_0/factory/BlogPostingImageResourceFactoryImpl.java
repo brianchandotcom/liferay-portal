@@ -296,15 +296,9 @@ public class BlogPostingImageResourceFactoryImpl
 	private static Function<InvocationHandler, BlogPostingImageResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			BlogPostingImageResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, BlogPostingImageResource.class);
+			BlogPostingImageResource.class.getClassLoader(),
+			BlogPostingImageResource.class);
 
 		try {
 			Constructor<BlogPostingImageResource> constructor =

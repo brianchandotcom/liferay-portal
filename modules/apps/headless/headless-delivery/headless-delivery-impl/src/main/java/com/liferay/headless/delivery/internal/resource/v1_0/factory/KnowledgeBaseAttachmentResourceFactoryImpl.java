@@ -303,15 +303,9 @@ public class KnowledgeBaseAttachmentResourceFactoryImpl
 	private static Function<InvocationHandler, KnowledgeBaseAttachmentResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			KnowledgeBaseAttachmentResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, KnowledgeBaseAttachmentResource.class);
+			KnowledgeBaseAttachmentResource.class.getClassLoader(),
+			KnowledgeBaseAttachmentResource.class);
 
 		try {
 			Constructor<KnowledgeBaseAttachmentResource> constructor =

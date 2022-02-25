@@ -299,15 +299,9 @@ public class DiscountProductResourceFactoryImpl
 	private static Function<InvocationHandler, DiscountProductResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			DiscountProductResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, DiscountProductResource.class);
+			DiscountProductResource.class.getClassLoader(),
+			DiscountProductResource.class);
 
 		try {
 			Constructor<DiscountProductResource> constructor =

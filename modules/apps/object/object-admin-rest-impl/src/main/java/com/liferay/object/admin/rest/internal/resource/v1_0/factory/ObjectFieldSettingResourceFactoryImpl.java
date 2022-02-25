@@ -297,15 +297,9 @@ public class ObjectFieldSettingResourceFactoryImpl
 	private static Function<InvocationHandler, ObjectFieldSettingResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			ObjectFieldSettingResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ObjectFieldSettingResource.class);
+			ObjectFieldSettingResource.class.getClassLoader(),
+			ObjectFieldSettingResource.class);
 
 		try {
 			Constructor<ObjectFieldSettingResource> constructor =

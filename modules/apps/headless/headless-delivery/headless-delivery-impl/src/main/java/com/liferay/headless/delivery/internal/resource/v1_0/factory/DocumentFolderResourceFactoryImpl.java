@@ -295,14 +295,9 @@ public class DocumentFolderResourceFactoryImpl
 	private static Function<InvocationHandler, DocumentFolderResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = DocumentFolderResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, DocumentFolderResource.class);
+			DocumentFolderResource.class.getClassLoader(),
+			DocumentFolderResource.class);
 
 		try {
 			Constructor<DocumentFolderResource> constructor =

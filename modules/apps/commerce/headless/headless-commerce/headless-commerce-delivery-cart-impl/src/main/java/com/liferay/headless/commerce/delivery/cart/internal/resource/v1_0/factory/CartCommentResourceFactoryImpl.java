@@ -297,14 +297,9 @@ public class CartCommentResourceFactoryImpl
 	private static Function<InvocationHandler, CartCommentResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = CartCommentResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, CartCommentResource.class);
+			CartCommentResource.class.getClassLoader(),
+			CartCommentResource.class);
 
 		try {
 			Constructor<CartCommentResource> constructor =

@@ -290,14 +290,8 @@ public class RoleResourceFactoryImpl implements RoleResource.Factory {
 	private static Function<InvocationHandler, RoleResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = RoleResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, RoleResource.class);
+			RoleResource.class.getClassLoader(), RoleResource.class);
 
 		try {
 			Constructor<RoleResource> constructor =

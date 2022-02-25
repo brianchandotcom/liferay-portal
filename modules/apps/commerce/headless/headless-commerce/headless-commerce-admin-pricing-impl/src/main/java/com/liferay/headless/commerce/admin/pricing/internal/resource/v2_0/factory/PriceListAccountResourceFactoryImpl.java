@@ -299,15 +299,9 @@ public class PriceListAccountResourceFactoryImpl
 	private static Function<InvocationHandler, PriceListAccountResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			PriceListAccountResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PriceListAccountResource.class);
+			PriceListAccountResource.class.getClassLoader(),
+			PriceListAccountResource.class);
 
 		try {
 			Constructor<PriceListAccountResource> constructor =

@@ -300,15 +300,9 @@ public class ProductConfigurationResourceFactoryImpl
 	private static Function<InvocationHandler, ProductConfigurationResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			ProductConfigurationResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ProductConfigurationResource.class);
+			ProductConfigurationResource.class.getClassLoader(),
+			ProductConfigurationResource.class);
 
 		try {
 			Constructor<ProductConfigurationResource> constructor =

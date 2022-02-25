@@ -294,14 +294,9 @@ public class BlogPostingResourceFactoryImpl
 	private static Function<InvocationHandler, BlogPostingResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = BlogPostingResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, BlogPostingResource.class);
+			BlogPostingResource.class.getClassLoader(),
+			BlogPostingResource.class);
 
 		try {
 			Constructor<BlogPostingResource> constructor =

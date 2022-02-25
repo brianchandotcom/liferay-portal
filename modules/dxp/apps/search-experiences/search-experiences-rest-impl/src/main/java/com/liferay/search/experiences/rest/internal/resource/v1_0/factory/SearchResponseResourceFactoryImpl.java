@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.search.experiences.rest.resource.v1_0.SearchResponseResource;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -73,9 +76,7 @@ public class SearchResponseResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (SearchResponseResource)ProxyUtil.newProxyInstance(
-					SearchResponseResource.class.getClassLoader(),
-					new Class<?>[] {SearchResponseResource.class},
+				return _searchResponseResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -290,5 +291,37 @@ public class SearchResponseResourceFactoryImpl
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, SearchResponseResource>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SearchResponseResource.class.getClassLoader(),
+			SearchResponseResource.class);
+
+		try {
+			Constructor<SearchResponseResource> constructor =
+				(Constructor<SearchResponseResource>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, SearchResponseResource>
+		_searchResponseResourceProxyProviderFunction =
+			_getProxyProviderFunction();
 
 }

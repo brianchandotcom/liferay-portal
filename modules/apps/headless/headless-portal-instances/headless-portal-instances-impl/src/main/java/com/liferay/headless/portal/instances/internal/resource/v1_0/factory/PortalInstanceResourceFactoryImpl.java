@@ -295,14 +295,9 @@ public class PortalInstanceResourceFactoryImpl
 	private static Function<InvocationHandler, PortalInstanceResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = PortalInstanceResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PortalInstanceResource.class);
+			PortalInstanceResource.class.getClassLoader(),
+			PortalInstanceResource.class);
 
 		try {
 			Constructor<PortalInstanceResource> constructor =

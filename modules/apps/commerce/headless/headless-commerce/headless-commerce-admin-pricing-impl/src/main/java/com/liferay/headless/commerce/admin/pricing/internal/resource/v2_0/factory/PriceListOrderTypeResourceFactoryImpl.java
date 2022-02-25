@@ -300,15 +300,9 @@ public class PriceListOrderTypeResourceFactoryImpl
 	private static Function<InvocationHandler, PriceListOrderTypeResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			PriceListOrderTypeResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PriceListOrderTypeResource.class);
+			PriceListOrderTypeResource.class.getClassLoader(),
+			PriceListOrderTypeResource.class);
 
 		try {
 			Constructor<PriceListOrderTypeResource> constructor =

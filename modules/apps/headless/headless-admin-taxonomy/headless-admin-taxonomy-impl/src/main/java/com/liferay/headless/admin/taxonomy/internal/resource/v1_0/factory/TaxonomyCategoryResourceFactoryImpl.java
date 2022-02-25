@@ -296,15 +296,9 @@ public class TaxonomyCategoryResourceFactoryImpl
 	private static Function<InvocationHandler, TaxonomyCategoryResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			TaxonomyCategoryResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, TaxonomyCategoryResource.class);
+			TaxonomyCategoryResource.class.getClassLoader(),
+			TaxonomyCategoryResource.class);
 
 		try {
 			Constructor<TaxonomyCategoryResource> constructor =

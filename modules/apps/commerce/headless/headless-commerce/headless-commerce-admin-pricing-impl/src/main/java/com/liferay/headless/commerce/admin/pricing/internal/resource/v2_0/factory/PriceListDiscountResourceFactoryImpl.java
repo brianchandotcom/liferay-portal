@@ -300,15 +300,9 @@ public class PriceListDiscountResourceFactoryImpl
 	private static Function<InvocationHandler, PriceListDiscountResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			PriceListDiscountResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PriceListDiscountResource.class);
+			PriceListDiscountResource.class.getClassLoader(),
+			PriceListDiscountResource.class);
 
 		try {
 			Constructor<PriceListDiscountResource> constructor =

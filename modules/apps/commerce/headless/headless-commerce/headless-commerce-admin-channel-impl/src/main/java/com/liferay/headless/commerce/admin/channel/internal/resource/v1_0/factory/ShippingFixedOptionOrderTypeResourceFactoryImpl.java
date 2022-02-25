@@ -310,15 +310,9 @@ public class ShippingFixedOptionOrderTypeResourceFactoryImpl
 		<InvocationHandler, ShippingFixedOptionOrderTypeResource>
 			_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			ShippingFixedOptionOrderTypeResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ShippingFixedOptionOrderTypeResource.class);
+			ShippingFixedOptionOrderTypeResource.class.getClassLoader(),
+			ShippingFixedOptionOrderTypeResource.class);
 
 		try {
 			Constructor<ShippingFixedOptionOrderTypeResource> constructor =

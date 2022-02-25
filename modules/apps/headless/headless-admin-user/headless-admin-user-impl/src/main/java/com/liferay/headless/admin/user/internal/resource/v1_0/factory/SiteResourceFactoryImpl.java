@@ -290,14 +290,8 @@ public class SiteResourceFactoryImpl implements SiteResource.Factory {
 	private static Function<InvocationHandler, SiteResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = SiteResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, SiteResource.class);
+			SiteResource.class.getClassLoader(), SiteResource.class);
 
 		try {
 			Constructor<SiteResource> constructor =

@@ -304,15 +304,9 @@ public class ShippingFixedOptionTermResourceFactoryImpl
 	private static Function<InvocationHandler, ShippingFixedOptionTermResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			ShippingFixedOptionTermResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ShippingFixedOptionTermResource.class);
+			ShippingFixedOptionTermResource.class.getClassLoader(),
+			ShippingFixedOptionTermResource.class);
 
 		try {
 			Constructor<ShippingFixedOptionTermResource> constructor =

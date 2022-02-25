@@ -310,15 +310,9 @@ public class PaymentMethodGroupRelOrderTypeResourceFactoryImpl
 		<InvocationHandler, PaymentMethodGroupRelOrderTypeResource>
 			_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			PaymentMethodGroupRelOrderTypeResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PaymentMethodGroupRelOrderTypeResource.class);
+			PaymentMethodGroupRelOrderTypeResource.class.getClassLoader(),
+			PaymentMethodGroupRelOrderTypeResource.class);
 
 		try {
 			Constructor<PaymentMethodGroupRelOrderTypeResource> constructor =

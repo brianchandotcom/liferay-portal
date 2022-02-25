@@ -292,14 +292,8 @@ public class DocumentResourceFactoryImpl implements DocumentResource.Factory {
 	private static Function<InvocationHandler, DocumentResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = DocumentResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, DocumentResource.class);
+			DocumentResource.class.getClassLoader(), DocumentResource.class);
 
 		try {
 			Constructor<DocumentResource> constructor =

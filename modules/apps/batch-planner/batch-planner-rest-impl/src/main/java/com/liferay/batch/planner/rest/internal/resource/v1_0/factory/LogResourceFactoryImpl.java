@@ -288,14 +288,8 @@ public class LogResourceFactoryImpl implements LogResource.Factory {
 	private static Function<InvocationHandler, LogResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = LogResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, LogResource.class);
+			LogResource.class.getClassLoader(), LogResource.class);
 
 		try {
 			Constructor<LogResource> constructor =

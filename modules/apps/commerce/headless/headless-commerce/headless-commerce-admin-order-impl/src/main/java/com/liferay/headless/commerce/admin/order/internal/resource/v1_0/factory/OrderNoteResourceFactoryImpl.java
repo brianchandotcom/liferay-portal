@@ -294,14 +294,8 @@ public class OrderNoteResourceFactoryImpl implements OrderNoteResource.Factory {
 	private static Function<InvocationHandler, OrderNoteResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = OrderNoteResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, OrderNoteResource.class);
+			OrderNoteResource.class.getClassLoader(), OrderNoteResource.class);
 
 		try {
 			Constructor<OrderNoteResource> constructor =

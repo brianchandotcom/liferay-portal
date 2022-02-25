@@ -297,15 +297,9 @@ public class WorkflowDefinitionResourceFactoryImpl
 	private static Function<InvocationHandler, WorkflowDefinitionResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			WorkflowDefinitionResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, WorkflowDefinitionResource.class);
+			WorkflowDefinitionResource.class.getClassLoader(),
+			WorkflowDefinitionResource.class);
 
 		try {
 			Constructor<WorkflowDefinitionResource> constructor =

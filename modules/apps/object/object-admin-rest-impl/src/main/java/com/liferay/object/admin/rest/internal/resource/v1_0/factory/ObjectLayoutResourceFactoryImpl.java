@@ -294,14 +294,9 @@ public class ObjectLayoutResourceFactoryImpl
 	private static Function<InvocationHandler, ObjectLayoutResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = ObjectLayoutResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ObjectLayoutResource.class);
+			ObjectLayoutResource.class.getClassLoader(),
+			ObjectLayoutResource.class);
 
 		try {
 			Constructor<ObjectLayoutResource> constructor =

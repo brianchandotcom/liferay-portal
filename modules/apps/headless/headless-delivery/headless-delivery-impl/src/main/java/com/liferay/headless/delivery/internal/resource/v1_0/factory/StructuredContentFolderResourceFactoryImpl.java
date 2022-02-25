@@ -303,15 +303,9 @@ public class StructuredContentFolderResourceFactoryImpl
 	private static Function<InvocationHandler, StructuredContentFolderResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			StructuredContentFolderResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, StructuredContentFolderResource.class);
+			StructuredContentFolderResource.class.getClassLoader(),
+			StructuredContentFolderResource.class);
 
 		try {
 			Constructor<StructuredContentFolderResource> constructor =

@@ -298,14 +298,9 @@ public class SpecificationResourceFactoryImpl
 	private static Function<InvocationHandler, SpecificationResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = SpecificationResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, SpecificationResource.class);
+			SpecificationResource.class.getClassLoader(),
+			SpecificationResource.class);
 
 		try {
 			Constructor<SpecificationResource> constructor =

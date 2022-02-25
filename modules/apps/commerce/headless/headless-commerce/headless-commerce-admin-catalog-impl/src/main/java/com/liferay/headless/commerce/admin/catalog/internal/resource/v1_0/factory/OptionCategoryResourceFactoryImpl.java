@@ -298,14 +298,9 @@ public class OptionCategoryResourceFactoryImpl
 	private static Function<InvocationHandler, OptionCategoryResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = OptionCategoryResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, OptionCategoryResource.class);
+			OptionCategoryResource.class.getClassLoader(),
+			OptionCategoryResource.class);
 
 		try {
 			Constructor<OptionCategoryResource> constructor =

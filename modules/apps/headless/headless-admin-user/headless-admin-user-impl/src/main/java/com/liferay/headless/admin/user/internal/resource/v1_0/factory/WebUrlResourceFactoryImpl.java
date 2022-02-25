@@ -291,14 +291,8 @@ public class WebUrlResourceFactoryImpl implements WebUrlResource.Factory {
 	private static Function<InvocationHandler, WebUrlResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = WebUrlResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, WebUrlResource.class);
+			WebUrlResource.class.getClassLoader(), WebUrlResource.class);
 
 		try {
 			Constructor<WebUrlResource> constructor =

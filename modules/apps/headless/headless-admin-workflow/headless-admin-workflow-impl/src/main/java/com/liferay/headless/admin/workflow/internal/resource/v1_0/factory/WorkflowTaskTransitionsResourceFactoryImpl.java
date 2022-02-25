@@ -303,15 +303,9 @@ public class WorkflowTaskTransitionsResourceFactoryImpl
 	private static Function<InvocationHandler, WorkflowTaskTransitionsResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			WorkflowTaskTransitionsResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, WorkflowTaskTransitionsResource.class);
+			WorkflowTaskTransitionsResource.class.getClassLoader(),
+			WorkflowTaskTransitionsResource.class);
 
 		try {
 			Constructor<WorkflowTaskTransitionsResource> constructor =

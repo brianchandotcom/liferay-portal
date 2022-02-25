@@ -294,14 +294,9 @@ public class ObjectActionResourceFactoryImpl
 	private static Function<InvocationHandler, ObjectActionResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = ObjectActionResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ObjectActionResource.class);
+			ObjectActionResource.class.getClassLoader(),
+			ObjectActionResource.class);
 
 		try {
 			Constructor<ObjectActionResource> constructor =

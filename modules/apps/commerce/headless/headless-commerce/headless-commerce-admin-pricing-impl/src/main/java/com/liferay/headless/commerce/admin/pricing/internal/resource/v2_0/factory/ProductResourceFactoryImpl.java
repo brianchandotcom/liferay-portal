@@ -293,14 +293,8 @@ public class ProductResourceFactoryImpl implements ProductResource.Factory {
 	private static Function<InvocationHandler, ProductResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = ProductResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ProductResource.class);
+			ProductResource.class.getClassLoader(), ProductResource.class);
 
 		try {
 			Constructor<ProductResource> constructor =

@@ -294,14 +294,9 @@ public class ActiveViewResourceFactoryImpl
 	private static Function<InvocationHandler, ActiveViewResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = ActiveViewResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ActiveViewResource.class);
+			ActiveViewResource.class.getClassLoader(),
+			ActiveViewResource.class);
 
 		try {
 			Constructor<ActiveViewResource> constructor =

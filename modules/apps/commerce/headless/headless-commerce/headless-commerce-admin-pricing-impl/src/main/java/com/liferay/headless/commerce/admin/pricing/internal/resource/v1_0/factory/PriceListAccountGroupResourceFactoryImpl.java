@@ -302,15 +302,9 @@ public class PriceListAccountGroupResourceFactoryImpl
 	private static Function<InvocationHandler, PriceListAccountGroupResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			PriceListAccountGroupResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PriceListAccountGroupResource.class);
+			PriceListAccountGroupResource.class.getClassLoader(),
+			PriceListAccountGroupResource.class);
 
 		try {
 			Constructor<PriceListAccountGroupResource> constructor =

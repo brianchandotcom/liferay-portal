@@ -296,15 +296,9 @@ public class ContentStructureResourceFactoryImpl
 	private static Function<InvocationHandler, ContentStructureResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			ContentStructureResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ContentStructureResource.class);
+			ContentStructureResource.class.getClassLoader(),
+			ContentStructureResource.class);
 
 		try {
 			Constructor<ContentStructureResource> constructor =

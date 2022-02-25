@@ -302,15 +302,9 @@ public class OrderRuleAccountGroupResourceFactoryImpl
 	private static Function<InvocationHandler, OrderRuleAccountGroupResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			OrderRuleAccountGroupResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, OrderRuleAccountGroupResource.class);
+			OrderRuleAccountGroupResource.class.getClassLoader(),
+			OrderRuleAccountGroupResource.class);
 
 		try {
 			Constructor<OrderRuleAccountGroupResource> constructor =

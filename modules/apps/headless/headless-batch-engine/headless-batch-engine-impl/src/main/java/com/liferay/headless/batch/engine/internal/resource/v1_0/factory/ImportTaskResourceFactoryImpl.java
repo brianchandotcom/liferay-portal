@@ -294,14 +294,9 @@ public class ImportTaskResourceFactoryImpl
 	private static Function<InvocationHandler, ImportTaskResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = ImportTaskResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ImportTaskResource.class);
+			ImportTaskResource.class.getClassLoader(),
+			ImportTaskResource.class);
 
 		try {
 			Constructor<ImportTaskResource> constructor =

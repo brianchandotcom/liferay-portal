@@ -297,15 +297,9 @@ public class ObjectRelationshipResourceFactoryImpl
 	private static Function<InvocationHandler, ObjectRelationshipResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			ObjectRelationshipResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ObjectRelationshipResource.class);
+			ObjectRelationshipResource.class.getClassLoader(),
+			ObjectRelationshipResource.class);
 
 		try {
 			Constructor<ObjectRelationshipResource> constructor =

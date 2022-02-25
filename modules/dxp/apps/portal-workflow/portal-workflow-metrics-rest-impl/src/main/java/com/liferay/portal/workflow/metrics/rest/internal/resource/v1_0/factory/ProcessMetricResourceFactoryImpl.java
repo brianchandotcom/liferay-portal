@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessMetricResource;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -73,9 +76,7 @@ public class ProcessMetricResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (ProcessMetricResource)ProxyUtil.newProxyInstance(
-					ProcessMetricResource.class.getClassLoader(),
-					new Class<?>[] {ProcessMetricResource.class},
+				return _processMetricResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -290,5 +291,37 @@ public class ProcessMetricResourceFactoryImpl
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, ProcessMetricResource>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			ProcessMetricResource.class.getClassLoader(),
+			ProcessMetricResource.class);
+
+		try {
+			Constructor<ProcessMetricResource> constructor =
+				(Constructor<ProcessMetricResource>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, ProcessMetricResource>
+		_processMetricResourceProxyProviderFunction =
+			_getProxyProviderFunction();
 
 }

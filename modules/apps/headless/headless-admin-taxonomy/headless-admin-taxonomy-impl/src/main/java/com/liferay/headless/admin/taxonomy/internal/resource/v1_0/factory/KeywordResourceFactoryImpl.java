@@ -291,14 +291,8 @@ public class KeywordResourceFactoryImpl implements KeywordResource.Factory {
 	private static Function<InvocationHandler, KeywordResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = KeywordResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, KeywordResource.class);
+			KeywordResource.class.getClassLoader(), KeywordResource.class);
 
 		try {
 			Constructor<KeywordResource> constructor =

@@ -297,15 +297,9 @@ public class MessageBoardThreadResourceFactoryImpl
 	private static Function<InvocationHandler, MessageBoardThreadResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			MessageBoardThreadResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, MessageBoardThreadResource.class);
+			MessageBoardThreadResource.class.getClassLoader(),
+			MessageBoardThreadResource.class);
 
 		try {
 			Constructor<MessageBoardThreadResource> constructor =

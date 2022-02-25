@@ -294,14 +294,9 @@ public class SubscriptionResourceFactoryImpl
 	private static Function<InvocationHandler, SubscriptionResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = SubscriptionResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, SubscriptionResource.class);
+			SubscriptionResource.class.getClassLoader(),
+			SubscriptionResource.class);
 
 		try {
 			Constructor<SubscriptionResource> constructor =

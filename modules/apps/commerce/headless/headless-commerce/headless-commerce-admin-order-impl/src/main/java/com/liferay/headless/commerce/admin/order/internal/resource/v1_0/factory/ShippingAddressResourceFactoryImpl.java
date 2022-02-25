@@ -299,15 +299,9 @@ public class ShippingAddressResourceFactoryImpl
 	private static Function<InvocationHandler, ShippingAddressResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			ShippingAddressResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ShippingAddressResource.class);
+			ShippingAddressResource.class.getClassLoader(),
+			ShippingAddressResource.class);
 
 		try {
 			Constructor<ShippingAddressResource> constructor =

@@ -293,14 +293,8 @@ public class ChannelResourceFactoryImpl implements ChannelResource.Factory {
 	private static Function<InvocationHandler, ChannelResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = ChannelResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ChannelResource.class);
+			ChannelResource.class.getClassLoader(), ChannelResource.class);
 
 		try {
 			Constructor<ChannelResource> constructor =

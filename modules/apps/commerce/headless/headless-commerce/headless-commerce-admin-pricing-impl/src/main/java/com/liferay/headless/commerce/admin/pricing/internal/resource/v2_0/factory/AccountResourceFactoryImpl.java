@@ -293,14 +293,8 @@ public class AccountResourceFactoryImpl implements AccountResource.Factory {
 	private static Function<InvocationHandler, AccountResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = AccountResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, AccountResource.class);
+			AccountResource.class.getClassLoader(), AccountResource.class);
 
 		try {
 			Constructor<AccountResource> constructor =

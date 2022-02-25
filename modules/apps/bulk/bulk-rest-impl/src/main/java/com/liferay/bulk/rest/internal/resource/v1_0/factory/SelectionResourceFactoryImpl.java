@@ -292,14 +292,8 @@ public class SelectionResourceFactoryImpl implements SelectionResource.Factory {
 	private static Function<InvocationHandler, SelectionResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = SelectionResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, SelectionResource.class);
+			SelectionResource.class.getClassLoader(), SelectionResource.class);
 
 		try {
 			Constructor<SelectionResource> constructor =

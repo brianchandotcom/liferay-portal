@@ -297,14 +297,9 @@ public class DiscountRuleResourceFactoryImpl
 	private static Function<InvocationHandler, DiscountRuleResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = DiscountRuleResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, DiscountRuleResource.class);
+			DiscountRuleResource.class.getClassLoader(),
+			DiscountRuleResource.class);
 
 		try {
 			Constructor<DiscountRuleResource> constructor =

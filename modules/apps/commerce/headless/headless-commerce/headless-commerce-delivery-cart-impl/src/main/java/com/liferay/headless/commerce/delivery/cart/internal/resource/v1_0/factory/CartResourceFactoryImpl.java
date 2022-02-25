@@ -292,14 +292,8 @@ public class CartResourceFactoryImpl implements CartResource.Factory {
 	private static Function<InvocationHandler, CartResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = CartResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, CartResource.class);
+			CartResource.class.getClassLoader(), CartResource.class);
 
 		try {
 			Constructor<CartResource> constructor =

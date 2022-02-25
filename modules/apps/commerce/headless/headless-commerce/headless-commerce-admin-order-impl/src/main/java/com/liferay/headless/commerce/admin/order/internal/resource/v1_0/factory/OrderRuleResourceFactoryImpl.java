@@ -294,14 +294,8 @@ public class OrderRuleResourceFactoryImpl implements OrderRuleResource.Factory {
 	private static Function<InvocationHandler, OrderRuleResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = OrderRuleResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, OrderRuleResource.class);
+			OrderRuleResource.class.getClassLoader(), OrderRuleResource.class);
 
 		try {
 			Constructor<OrderRuleResource> constructor =

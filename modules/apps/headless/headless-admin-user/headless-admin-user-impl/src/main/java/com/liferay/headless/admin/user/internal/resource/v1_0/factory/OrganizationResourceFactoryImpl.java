@@ -294,14 +294,9 @@ public class OrganizationResourceFactoryImpl
 	private static Function<InvocationHandler, OrganizationResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = OrganizationResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, OrganizationResource.class);
+			OrganizationResource.class.getClassLoader(),
+			OrganizationResource.class);
 
 		try {
 			Constructor<OrganizationResource> constructor =

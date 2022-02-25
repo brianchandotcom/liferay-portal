@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.search.experiences.rest.resource.v1_0.QueryPrefilterContributorResource;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -75,13 +78,8 @@ public class QueryPrefilterContributorResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (QueryPrefilterContributorResource)
-					ProxyUtil.newProxyInstance(
-						QueryPrefilterContributorResource.class.
-							getClassLoader(),
-						new Class<?>[] {
-							QueryPrefilterContributorResource.class
-						},
+				return _queryPrefilterContributorResourceProxyProviderFunction.
+					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
 							_httpServletRequest, _httpServletResponse,
@@ -302,5 +300,39 @@ public class QueryPrefilterContributorResourceFactoryImpl
 		private final User _user;
 
 	}
+
+	private static Function
+		<InvocationHandler, QueryPrefilterContributorResource>
+			_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			QueryPrefilterContributorResource.class.getClassLoader(),
+			QueryPrefilterContributorResource.class);
+
+		try {
+			Constructor<QueryPrefilterContributorResource> constructor =
+				(Constructor<QueryPrefilterContributorResource>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function
+		<InvocationHandler, QueryPrefilterContributorResource>
+			_queryPrefilterContributorResourceProxyProviderFunction =
+				_getProxyProviderFunction();
 
 }

@@ -294,14 +294,9 @@ public class DataLayoutResourceFactoryImpl
 	private static Function<InvocationHandler, DataLayoutResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = DataLayoutResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, DataLayoutResource.class);
+			DataLayoutResource.class.getClassLoader(),
+			DataLayoutResource.class);
 
 		try {
 			Constructor<DataLayoutResource> constructor =

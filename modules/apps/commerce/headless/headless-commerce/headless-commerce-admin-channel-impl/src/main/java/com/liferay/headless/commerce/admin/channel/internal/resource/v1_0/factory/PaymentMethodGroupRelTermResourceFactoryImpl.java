@@ -306,15 +306,9 @@ public class PaymentMethodGroupRelTermResourceFactoryImpl
 		<InvocationHandler, PaymentMethodGroupRelTermResource>
 			_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			PaymentMethodGroupRelTermResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PaymentMethodGroupRelTermResource.class);
+			PaymentMethodGroupRelTermResource.class.getClassLoader(),
+			PaymentMethodGroupRelTermResource.class);
 
 		try {
 			Constructor<PaymentMethodGroupRelTermResource> constructor =

@@ -293,14 +293,8 @@ public class CatalogResourceFactoryImpl implements CatalogResource.Factory {
 	private static Function<InvocationHandler, CatalogResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = CatalogResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, CatalogResource.class);
+			CatalogResource.class.getClassLoader(), CatalogResource.class);
 
 		try {
 			Constructor<CatalogResource> constructor =

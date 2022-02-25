@@ -294,14 +294,9 @@ public class TransitionResourceFactoryImpl
 	private static Function<InvocationHandler, TransitionResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = TransitionResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, TransitionResource.class);
+			TransitionResource.class.getClassLoader(),
+			TransitionResource.class);
 
 		try {
 			Constructor<TransitionResource> constructor =

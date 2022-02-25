@@ -297,15 +297,9 @@ public class WikiPageAttachmentResourceFactoryImpl
 	private static Function<InvocationHandler, WikiPageAttachmentResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			WikiPageAttachmentResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, WikiPageAttachmentResource.class);
+			WikiPageAttachmentResource.class.getClassLoader(),
+			WikiPageAttachmentResource.class);
 
 		try {
 			Constructor<WikiPageAttachmentResource> constructor =

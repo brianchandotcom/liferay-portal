@@ -298,14 +298,9 @@ public class TermOrderTypeResourceFactoryImpl
 	private static Function<InvocationHandler, TermOrderTypeResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = TermOrderTypeResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, TermOrderTypeResource.class);
+			TermOrderTypeResource.class.getClassLoader(),
+			TermOrderTypeResource.class);
 
 		try {
 			Constructor<TermOrderTypeResource> constructor =

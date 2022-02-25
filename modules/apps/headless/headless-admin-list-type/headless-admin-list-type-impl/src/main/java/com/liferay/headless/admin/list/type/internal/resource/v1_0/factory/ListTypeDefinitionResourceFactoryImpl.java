@@ -297,15 +297,9 @@ public class ListTypeDefinitionResourceFactoryImpl
 	private static Function<InvocationHandler, ListTypeDefinitionResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			ListTypeDefinitionResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ListTypeDefinitionResource.class);
+			ListTypeDefinitionResource.class.getClassLoader(),
+			ListTypeDefinitionResource.class);
 
 		try {
 			Constructor<ListTypeDefinitionResource> constructor =

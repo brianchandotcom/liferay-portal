@@ -310,15 +310,9 @@ public class ProductSubscriptionConfigurationResourceFactoryImpl
 		<InvocationHandler, ProductSubscriptionConfigurationResource>
 			_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			ProductSubscriptionConfigurationResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ProductSubscriptionConfigurationResource.class);
+			ProductSubscriptionConfigurationResource.class.getClassLoader(),
+			ProductSubscriptionConfigurationResource.class);
 
 		try {
 			Constructor<ProductSubscriptionConfigurationResource> constructor =

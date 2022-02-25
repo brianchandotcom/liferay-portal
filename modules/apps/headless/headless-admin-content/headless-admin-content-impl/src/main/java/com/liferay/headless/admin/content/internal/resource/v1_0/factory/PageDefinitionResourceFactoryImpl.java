@@ -295,14 +295,9 @@ public class PageDefinitionResourceFactoryImpl
 	private static Function<InvocationHandler, PageDefinitionResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = PageDefinitionResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PageDefinitionResource.class);
+			PageDefinitionResource.class.getClassLoader(),
+			PageDefinitionResource.class);
 
 		try {
 			Constructor<PageDefinitionResource> constructor =

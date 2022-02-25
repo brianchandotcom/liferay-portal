@@ -299,15 +299,9 @@ public class KnowledgeBaseArticleResourceFactoryImpl
 	private static Function<InvocationHandler, KnowledgeBaseArticleResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			KnowledgeBaseArticleResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, KnowledgeBaseArticleResource.class);
+			KnowledgeBaseArticleResource.class.getClassLoader(),
+			KnowledgeBaseArticleResource.class);
 
 		try {
 			Constructor<KnowledgeBaseArticleResource> constructor =

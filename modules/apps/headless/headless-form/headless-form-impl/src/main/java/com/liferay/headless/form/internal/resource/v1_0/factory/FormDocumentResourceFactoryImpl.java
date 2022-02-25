@@ -294,14 +294,9 @@ public class FormDocumentResourceFactoryImpl
 	private static Function<InvocationHandler, FormDocumentResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = FormDocumentResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, FormDocumentResource.class);
+			FormDocumentResource.class.getClassLoader(),
+			FormDocumentResource.class);
 
 		try {
 			Constructor<FormDocumentResource> constructor =

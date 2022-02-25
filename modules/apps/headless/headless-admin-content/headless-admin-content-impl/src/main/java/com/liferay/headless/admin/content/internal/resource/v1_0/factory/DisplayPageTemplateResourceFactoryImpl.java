@@ -299,15 +299,9 @@ public class DisplayPageTemplateResourceFactoryImpl
 	private static Function<InvocationHandler, DisplayPageTemplateResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			DisplayPageTemplateResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, DisplayPageTemplateResource.class);
+			DisplayPageTemplateResource.class.getClassLoader(),
+			DisplayPageTemplateResource.class);
 
 		try {
 			Constructor<DisplayPageTemplateResource> constructor =

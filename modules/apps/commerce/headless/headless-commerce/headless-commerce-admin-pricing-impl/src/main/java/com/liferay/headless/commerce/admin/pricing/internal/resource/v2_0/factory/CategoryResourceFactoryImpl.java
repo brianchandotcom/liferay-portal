@@ -294,14 +294,8 @@ public class CategoryResourceFactoryImpl implements CategoryResource.Factory {
 	private static Function<InvocationHandler, CategoryResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = CategoryResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, CategoryResource.class);
+			CategoryResource.class.getClassLoader(), CategoryResource.class);
 
 		try {
 			Constructor<CategoryResource> constructor =

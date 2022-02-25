@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.search.experiences.rest.resource.v1_0.KeywordQueryContributorResource;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -75,10 +78,8 @@ public class KeywordQueryContributorResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (KeywordQueryContributorResource)
-					ProxyUtil.newProxyInstance(
-						KeywordQueryContributorResource.class.getClassLoader(),
-						new Class<?>[] {KeywordQueryContributorResource.class},
+				return _keywordQueryContributorResourceProxyProviderFunction.
+					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
 							_httpServletRequest, _httpServletResponse,
@@ -298,5 +299,38 @@ public class KeywordQueryContributorResourceFactoryImpl
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, KeywordQueryContributorResource>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			KeywordQueryContributorResource.class.getClassLoader(),
+			KeywordQueryContributorResource.class);
+
+		try {
+			Constructor<KeywordQueryContributorResource> constructor =
+				(Constructor<KeywordQueryContributorResource>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function
+		<InvocationHandler, KeywordQueryContributorResource>
+			_keywordQueryContributorResourceProxyProviderFunction =
+				_getProxyProviderFunction();
 
 }

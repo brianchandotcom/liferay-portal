@@ -297,14 +297,9 @@ public class ShipmentItemResourceFactoryImpl
 	private static Function<InvocationHandler, ShipmentItemResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = ShipmentItemResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ShipmentItemResource.class);
+			ShipmentItemResource.class.getClassLoader(),
+			ShipmentItemResource.class);
 
 		try {
 			Constructor<ShipmentItemResource> constructor =

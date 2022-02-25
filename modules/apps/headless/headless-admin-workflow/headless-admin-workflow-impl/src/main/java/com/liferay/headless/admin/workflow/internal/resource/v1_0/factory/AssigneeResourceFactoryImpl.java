@@ -292,14 +292,8 @@ public class AssigneeResourceFactoryImpl implements AssigneeResource.Factory {
 	private static Function<InvocationHandler, AssigneeResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = AssigneeResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, AssigneeResource.class);
+			AssigneeResource.class.getClassLoader(), AssigneeResource.class);
 
 		try {
 			Constructor<AssigneeResource> constructor =

@@ -304,15 +304,9 @@ public class ProductTaxConfigurationResourceFactoryImpl
 	private static Function<InvocationHandler, ProductTaxConfigurationResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			ProductTaxConfigurationResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ProductTaxConfigurationResource.class);
+			ProductTaxConfigurationResource.class.getClassLoader(),
+			ProductTaxConfigurationResource.class);
 
 		try {
 			Constructor<ProductTaxConfigurationResource> constructor =

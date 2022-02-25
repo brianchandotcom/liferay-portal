@@ -297,14 +297,9 @@ public class AccountGroupResourceFactoryImpl
 	private static Function<InvocationHandler, AccountGroupResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = AccountGroupResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, AccountGroupResource.class);
+			AccountGroupResource.class.getClassLoader(),
+			AccountGroupResource.class);
 
 		try {
 			Constructor<AccountGroupResource> constructor =

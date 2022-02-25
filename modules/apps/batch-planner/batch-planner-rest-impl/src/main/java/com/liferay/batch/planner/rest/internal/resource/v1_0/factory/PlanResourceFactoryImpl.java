@@ -290,14 +290,8 @@ public class PlanResourceFactoryImpl implements PlanResource.Factory {
 	private static Function<InvocationHandler, PlanResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = PlanResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PlanResource.class);
+			PlanResource.class.getClassLoader(), PlanResource.class);
 
 		try {
 			Constructor<PlanResource> constructor =

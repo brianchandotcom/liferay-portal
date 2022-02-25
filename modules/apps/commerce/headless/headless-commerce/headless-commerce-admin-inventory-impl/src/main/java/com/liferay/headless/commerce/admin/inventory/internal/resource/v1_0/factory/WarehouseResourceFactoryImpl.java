@@ -294,14 +294,8 @@ public class WarehouseResourceFactoryImpl implements WarehouseResource.Factory {
 	private static Function<InvocationHandler, WarehouseResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = WarehouseResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, WarehouseResource.class);
+			WarehouseResource.class.getClassLoader(), WarehouseResource.class);
 
 		try {
 			Constructor<WarehouseResource> constructor =

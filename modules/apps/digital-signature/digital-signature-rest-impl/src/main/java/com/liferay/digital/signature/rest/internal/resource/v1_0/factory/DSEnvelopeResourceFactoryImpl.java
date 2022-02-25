@@ -294,14 +294,9 @@ public class DSEnvelopeResourceFactoryImpl
 	private static Function<InvocationHandler, DSEnvelopeResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = DSEnvelopeResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, DSEnvelopeResource.class);
+			DSEnvelopeResource.class.getClassLoader(),
+			DSEnvelopeResource.class);
 
 		try {
 			Constructor<DSEnvelopeResource> constructor =

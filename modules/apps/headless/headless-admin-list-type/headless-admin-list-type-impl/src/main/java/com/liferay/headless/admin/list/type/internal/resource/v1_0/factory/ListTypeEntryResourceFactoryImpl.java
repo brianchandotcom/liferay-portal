@@ -295,14 +295,9 @@ public class ListTypeEntryResourceFactoryImpl
 	private static Function<InvocationHandler, ListTypeEntryResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = ListTypeEntryResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ListTypeEntryResource.class);
+			ListTypeEntryResource.class.getClassLoader(),
+			ListTypeEntryResource.class);
 
 		try {
 			Constructor<ListTypeEntryResource> constructor =

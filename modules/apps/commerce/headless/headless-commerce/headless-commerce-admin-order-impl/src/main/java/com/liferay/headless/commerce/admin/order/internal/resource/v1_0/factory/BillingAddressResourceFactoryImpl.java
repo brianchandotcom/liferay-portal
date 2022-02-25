@@ -298,14 +298,9 @@ public class BillingAddressResourceFactoryImpl
 	private static Function<InvocationHandler, BillingAddressResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = BillingAddressResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, BillingAddressResource.class);
+			BillingAddressResource.class.getClassLoader(),
+			BillingAddressResource.class);
 
 		try {
 			Constructor<BillingAddressResource> constructor =

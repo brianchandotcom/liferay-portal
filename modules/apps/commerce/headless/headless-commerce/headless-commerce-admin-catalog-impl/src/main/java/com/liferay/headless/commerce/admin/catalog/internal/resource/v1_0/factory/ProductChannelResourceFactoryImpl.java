@@ -298,14 +298,9 @@ public class ProductChannelResourceFactoryImpl
 	private static Function<InvocationHandler, ProductChannelResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = ProductChannelResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ProductChannelResource.class);
+			ProductChannelResource.class.getClassLoader(),
+			ProductChannelResource.class);
 
 		try {
 			Constructor<ProductChannelResource> constructor =

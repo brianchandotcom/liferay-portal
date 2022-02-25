@@ -292,14 +292,8 @@ public class TermResourceFactoryImpl implements TermResource.Factory {
 	private static Function<InvocationHandler, TermResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = TermResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, TermResource.class);
+			TermResource.class.getClassLoader(), TermResource.class);
 
 		try {
 			Constructor<TermResource> constructor =

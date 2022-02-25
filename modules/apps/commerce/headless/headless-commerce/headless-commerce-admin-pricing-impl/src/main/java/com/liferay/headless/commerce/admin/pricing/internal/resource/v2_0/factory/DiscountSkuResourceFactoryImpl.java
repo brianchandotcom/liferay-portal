@@ -297,14 +297,9 @@ public class DiscountSkuResourceFactoryImpl
 	private static Function<InvocationHandler, DiscountSkuResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = DiscountSkuResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, DiscountSkuResource.class);
+			DiscountSkuResource.class.getClassLoader(),
+			DiscountSkuResource.class);
 
 		try {
 			Constructor<DiscountSkuResource> constructor =

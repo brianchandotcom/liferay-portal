@@ -295,14 +295,9 @@ public class NavigationMenuResourceFactoryImpl
 	private static Function<InvocationHandler, NavigationMenuResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = NavigationMenuResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, NavigationMenuResource.class);
+			NavigationMenuResource.class.getClassLoader(),
+			NavigationMenuResource.class);
 
 		try {
 			Constructor<NavigationMenuResource> constructor =

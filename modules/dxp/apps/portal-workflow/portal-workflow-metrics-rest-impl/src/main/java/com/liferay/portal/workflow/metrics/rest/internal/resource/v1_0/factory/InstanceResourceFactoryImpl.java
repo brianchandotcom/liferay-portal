@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -72,9 +75,7 @@ public class InstanceResourceFactoryImpl implements InstanceResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (InstanceResource)ProxyUtil.newProxyInstance(
-					InstanceResource.class.getClassLoader(),
-					new Class<?>[] {InstanceResource.class},
+				return _instanceResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -287,5 +288,35 @@ public class InstanceResourceFactoryImpl implements InstanceResource.Factory {
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, InstanceResource>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			InstanceResource.class.getClassLoader(), InstanceResource.class);
+
+		try {
+			Constructor<InstanceResource> constructor =
+				(Constructor<InstanceResource>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, InstanceResource>
+		_instanceResourceProxyProviderFunction = _getProxyProviderFunction();
 
 }

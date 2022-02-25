@@ -290,14 +290,8 @@ public class FormResourceFactoryImpl implements FormResource.Factory {
 	private static Function<InvocationHandler, FormResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = FormResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, FormResource.class);
+			FormResource.class.getClassLoader(), FormResource.class);
 
 		try {
 			Constructor<FormResource> constructor =

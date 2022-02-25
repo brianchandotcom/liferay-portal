@@ -308,15 +308,9 @@ public class WorkflowTaskAssignableUsersResourceFactoryImpl
 		<InvocationHandler, WorkflowTaskAssignableUsersResource>
 			_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			WorkflowTaskAssignableUsersResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, WorkflowTaskAssignableUsersResource.class);
+			WorkflowTaskAssignableUsersResource.class.getClassLoader(),
+			WorkflowTaskAssignableUsersResource.class);
 
 		try {
 			Constructor<WorkflowTaskAssignableUsersResource> constructor =

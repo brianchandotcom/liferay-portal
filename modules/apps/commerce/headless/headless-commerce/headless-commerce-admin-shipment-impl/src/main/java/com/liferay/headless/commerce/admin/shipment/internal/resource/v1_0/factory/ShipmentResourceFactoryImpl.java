@@ -294,14 +294,8 @@ public class ShipmentResourceFactoryImpl implements ShipmentResource.Factory {
 	private static Function<InvocationHandler, ShipmentResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = ShipmentResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ShipmentResource.class);
+			ShipmentResource.class.getClassLoader(), ShipmentResource.class);
 
 		try {
 			Constructor<ShipmentResource> constructor =

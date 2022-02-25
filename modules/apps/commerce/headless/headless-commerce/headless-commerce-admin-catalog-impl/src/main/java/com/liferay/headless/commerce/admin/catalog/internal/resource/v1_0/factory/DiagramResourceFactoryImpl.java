@@ -293,14 +293,8 @@ public class DiagramResourceFactoryImpl implements DiagramResource.Factory {
 	private static Function<InvocationHandler, DiagramResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = DiagramResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, DiagramResource.class);
+			DiagramResource.class.getClassLoader(), DiagramResource.class);
 
 		try {
 			Constructor<DiagramResource> constructor =

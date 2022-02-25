@@ -300,15 +300,9 @@ public class PriceModifierProductResourceFactoryImpl
 	private static Function<InvocationHandler, PriceModifierProductResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			PriceModifierProductResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PriceModifierProductResource.class);
+			PriceModifierProductResource.class.getClassLoader(),
+			PriceModifierProductResource.class);
 
 		try {
 			Constructor<PriceModifierProductResource> constructor =

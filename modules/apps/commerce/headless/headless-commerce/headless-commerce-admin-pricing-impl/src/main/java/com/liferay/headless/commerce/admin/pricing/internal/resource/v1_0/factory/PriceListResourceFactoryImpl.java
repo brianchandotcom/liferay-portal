@@ -294,14 +294,8 @@ public class PriceListResourceFactoryImpl implements PriceListResource.Factory {
 	private static Function<InvocationHandler, PriceListResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = PriceListResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PriceListResource.class);
+			PriceListResource.class.getClassLoader(), PriceListResource.class);
 
 		try {
 			Constructor<PriceListResource> constructor =

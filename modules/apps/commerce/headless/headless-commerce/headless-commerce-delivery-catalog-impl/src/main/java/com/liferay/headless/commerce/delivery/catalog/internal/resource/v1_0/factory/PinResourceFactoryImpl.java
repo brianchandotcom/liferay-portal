@@ -290,14 +290,8 @@ public class PinResourceFactoryImpl implements PinResource.Factory {
 	private static Function<InvocationHandler, PinResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = PinResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PinResource.class);
+			PinResource.class.getClassLoader(), PinResource.class);
 
 		try {
 			Constructor<PinResource> constructor =

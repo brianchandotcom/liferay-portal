@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.SLAResource;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -72,9 +75,7 @@ public class SLAResourceFactoryImpl implements SLAResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (SLAResource)ProxyUtil.newProxyInstance(
-					SLAResource.class.getClassLoader(),
-					new Class<?>[] {SLAResource.class},
+				return _slaResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -283,5 +284,35 @@ public class SLAResourceFactoryImpl implements SLAResource.Factory {
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, SLAResource>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			SLAResource.class.getClassLoader(), SLAResource.class);
+
+		try {
+			Constructor<SLAResource> constructor =
+				(Constructor<SLAResource>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, SLAResource>
+		_slaResourceProxyProviderFunction = _getProxyProviderFunction();
 
 }

@@ -292,14 +292,8 @@ public class UserGroupResourceFactoryImpl implements UserGroupResource.Factory {
 	private static Function<InvocationHandler, UserGroupResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = UserGroupResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, UserGroupResource.class);
+			UserGroupResource.class.getClassLoader(), UserGroupResource.class);
 
 		try {
 			Constructor<UserGroupResource> constructor =

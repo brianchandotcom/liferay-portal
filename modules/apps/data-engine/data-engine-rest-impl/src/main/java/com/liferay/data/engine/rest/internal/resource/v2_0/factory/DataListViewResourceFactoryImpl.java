@@ -294,14 +294,9 @@ public class DataListViewResourceFactoryImpl
 	private static Function<InvocationHandler, DataListViewResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = DataListViewResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, DataListViewResource.class);
+			DataListViewResource.class.getClassLoader(),
+			DataListViewResource.class);
 
 		try {
 			Constructor<DataListViewResource> constructor =

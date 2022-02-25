@@ -296,15 +296,9 @@ public class ObjectDefinitionResourceFactoryImpl
 	private static Function<InvocationHandler, ObjectDefinitionResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			ObjectDefinitionResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ObjectDefinitionResource.class);
+			ObjectDefinitionResource.class.getClassLoader(),
+			ObjectDefinitionResource.class);
 
 		try {
 			Constructor<ObjectDefinitionResource> constructor =

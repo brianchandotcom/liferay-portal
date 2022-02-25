@@ -300,15 +300,9 @@ public class DiscountAccountGroupResourceFactoryImpl
 	private static Function<InvocationHandler, DiscountAccountGroupResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			DiscountAccountGroupResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, DiscountAccountGroupResource.class);
+			DiscountAccountGroupResource.class.getClassLoader(),
+			DiscountAccountGroupResource.class);
 
 		try {
 			Constructor<DiscountAccountGroupResource> constructor =

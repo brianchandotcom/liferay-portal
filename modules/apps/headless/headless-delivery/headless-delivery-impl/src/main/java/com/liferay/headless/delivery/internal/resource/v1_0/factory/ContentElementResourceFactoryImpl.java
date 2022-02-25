@@ -295,14 +295,9 @@ public class ContentElementResourceFactoryImpl
 	private static Function<InvocationHandler, ContentElementResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = ContentElementResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ContentElementResource.class);
+			ContentElementResource.class.getClassLoader(),
+			ContentElementResource.class);
 
 		try {
 			Constructor<ContentElementResource> constructor =

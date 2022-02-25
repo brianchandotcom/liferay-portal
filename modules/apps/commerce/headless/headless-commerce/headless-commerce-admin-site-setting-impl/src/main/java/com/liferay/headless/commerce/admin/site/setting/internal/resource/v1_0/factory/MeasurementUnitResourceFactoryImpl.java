@@ -299,15 +299,9 @@ public class MeasurementUnitResourceFactoryImpl
 	private static Function<InvocationHandler, MeasurementUnitResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			MeasurementUnitResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, MeasurementUnitResource.class);
+			MeasurementUnitResource.class.getClassLoader(),
+			MeasurementUnitResource.class);
 
 		try {
 			Constructor<MeasurementUnitResource> constructor =

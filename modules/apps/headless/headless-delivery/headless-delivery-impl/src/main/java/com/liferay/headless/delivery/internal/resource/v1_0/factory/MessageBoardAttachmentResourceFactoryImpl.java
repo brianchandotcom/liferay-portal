@@ -301,15 +301,9 @@ public class MessageBoardAttachmentResourceFactoryImpl
 	private static Function<InvocationHandler, MessageBoardAttachmentResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			MessageBoardAttachmentResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, MessageBoardAttachmentResource.class);
+			MessageBoardAttachmentResource.class.getClassLoader(),
+			MessageBoardAttachmentResource.class);
 
 		try {
 			Constructor<MessageBoardAttachmentResource> constructor =

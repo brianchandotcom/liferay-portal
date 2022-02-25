@@ -294,14 +294,9 @@ public class ObjectViewResourceFactoryImpl
 	private static Function<InvocationHandler, ObjectViewResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = ObjectViewResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ObjectViewResource.class);
+			ObjectViewResource.class.getClassLoader(),
+			ObjectViewResource.class);
 
 		try {
 			Constructor<ObjectViewResource> constructor =

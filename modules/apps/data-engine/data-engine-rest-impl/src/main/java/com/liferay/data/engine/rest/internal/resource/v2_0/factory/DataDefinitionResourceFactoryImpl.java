@@ -295,14 +295,9 @@ public class DataDefinitionResourceFactoryImpl
 	private static Function<InvocationHandler, DataDefinitionResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = DataDefinitionResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, DataDefinitionResource.class);
+			DataDefinitionResource.class.getClassLoader(),
+			DataDefinitionResource.class);
 
 		try {
 			Constructor<DataDefinitionResource> constructor =

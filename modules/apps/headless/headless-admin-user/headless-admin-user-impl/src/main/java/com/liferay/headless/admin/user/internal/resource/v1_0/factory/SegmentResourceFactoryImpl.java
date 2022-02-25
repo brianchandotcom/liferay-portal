@@ -291,14 +291,8 @@ public class SegmentResourceFactoryImpl implements SegmentResource.Factory {
 	private static Function<InvocationHandler, SegmentResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = SegmentResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, SegmentResource.class);
+			SegmentResource.class.getClassLoader(), SegmentResource.class);
 
 		try {
 			Constructor<SegmentResource> constructor =

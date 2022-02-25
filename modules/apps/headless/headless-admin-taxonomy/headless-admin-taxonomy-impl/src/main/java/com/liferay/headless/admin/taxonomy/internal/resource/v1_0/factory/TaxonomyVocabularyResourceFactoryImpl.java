@@ -297,15 +297,9 @@ public class TaxonomyVocabularyResourceFactoryImpl
 	private static Function<InvocationHandler, TaxonomyVocabularyResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			TaxonomyVocabularyResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, TaxonomyVocabularyResource.class);
+			TaxonomyVocabularyResource.class.getClassLoader(),
+			TaxonomyVocabularyResource.class);
 
 		try {
 			Constructor<TaxonomyVocabularyResource> constructor =

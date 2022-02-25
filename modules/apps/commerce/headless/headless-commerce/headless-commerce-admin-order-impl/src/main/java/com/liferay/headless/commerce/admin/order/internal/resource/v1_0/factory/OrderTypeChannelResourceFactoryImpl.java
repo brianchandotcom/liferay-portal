@@ -299,15 +299,9 @@ public class OrderTypeChannelResourceFactoryImpl
 	private static Function<InvocationHandler, OrderTypeChannelResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			OrderTypeChannelResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, OrderTypeChannelResource.class);
+			OrderTypeChannelResource.class.getClassLoader(),
+			OrderTypeChannelResource.class);
 
 		try {
 			Constructor<OrderTypeChannelResource> constructor =

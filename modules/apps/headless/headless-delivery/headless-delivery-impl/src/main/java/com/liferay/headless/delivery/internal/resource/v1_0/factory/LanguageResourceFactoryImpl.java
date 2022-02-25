@@ -292,14 +292,8 @@ public class LanguageResourceFactoryImpl implements LanguageResource.Factory {
 	private static Function<InvocationHandler, LanguageResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = LanguageResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, LanguageResource.class);
+			LanguageResource.class.getClassLoader(), LanguageResource.class);
 
 		try {
 			Constructor<LanguageResource> constructor =

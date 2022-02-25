@@ -291,14 +291,8 @@ public class PhoneResourceFactoryImpl implements PhoneResource.Factory {
 	private static Function<InvocationHandler, PhoneResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = PhoneResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PhoneResource.class);
+			PhoneResource.class.getClassLoader(), PhoneResource.class);
 
 		try {
 			Constructor<PhoneResource> constructor =

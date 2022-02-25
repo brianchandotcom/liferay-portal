@@ -294,14 +294,9 @@ public class WorkflowLogResourceFactoryImpl
 	private static Function<InvocationHandler, WorkflowLogResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = WorkflowLogResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, WorkflowLogResource.class);
+			WorkflowLogResource.class.getClassLoader(),
+			WorkflowLogResource.class);
 
 		try {
 			Constructor<WorkflowLogResource> constructor =

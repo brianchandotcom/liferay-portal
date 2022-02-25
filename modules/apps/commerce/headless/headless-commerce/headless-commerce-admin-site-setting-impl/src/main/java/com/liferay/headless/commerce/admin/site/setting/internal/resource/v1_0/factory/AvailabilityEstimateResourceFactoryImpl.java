@@ -300,15 +300,9 @@ public class AvailabilityEstimateResourceFactoryImpl
 	private static Function<InvocationHandler, AvailabilityEstimateResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			AvailabilityEstimateResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, AvailabilityEstimateResource.class);
+			AvailabilityEstimateResource.class.getClassLoader(),
+			AvailabilityEstimateResource.class);
 
 		try {
 			Constructor<AvailabilityEstimateResource> constructor =

@@ -300,15 +300,9 @@ public class OrderRuleOrderTypeResourceFactoryImpl
 	private static Function<InvocationHandler, OrderRuleOrderTypeResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			OrderRuleOrderTypeResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, OrderRuleOrderTypeResource.class);
+			OrderRuleOrderTypeResource.class.getClassLoader(),
+			OrderRuleOrderTypeResource.class);
 
 		try {
 			Constructor<OrderRuleOrderTypeResource> constructor =

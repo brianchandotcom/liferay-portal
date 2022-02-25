@@ -293,14 +293,8 @@ public class AddressResourceFactoryImpl implements AddressResource.Factory {
 	private static Function<InvocationHandler, AddressResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = AddressResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, AddressResource.class);
+			AddressResource.class.getClassLoader(), AddressResource.class);
 
 		try {
 			Constructor<AddressResource> constructor =

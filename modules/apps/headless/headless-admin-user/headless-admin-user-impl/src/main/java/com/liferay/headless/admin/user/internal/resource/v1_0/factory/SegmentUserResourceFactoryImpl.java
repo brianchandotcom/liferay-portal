@@ -294,14 +294,9 @@ public class SegmentUserResourceFactoryImpl
 	private static Function<InvocationHandler, SegmentUserResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = SegmentUserResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, SegmentUserResource.class);
+			SegmentUserResource.class.getClassLoader(),
+			SegmentUserResource.class);
 
 		try {
 			Constructor<SegmentUserResource> constructor =

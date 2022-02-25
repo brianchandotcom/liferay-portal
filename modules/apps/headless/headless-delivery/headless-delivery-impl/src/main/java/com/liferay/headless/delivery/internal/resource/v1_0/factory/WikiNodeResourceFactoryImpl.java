@@ -292,14 +292,8 @@ public class WikiNodeResourceFactoryImpl implements WikiNodeResource.Factory {
 	private static Function<InvocationHandler, WikiNodeResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = WikiNodeResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, WikiNodeResource.class);
+			WikiNodeResource.class.getClassLoader(), WikiNodeResource.class);
 
 		try {
 			Constructor<WikiNodeResource> constructor =

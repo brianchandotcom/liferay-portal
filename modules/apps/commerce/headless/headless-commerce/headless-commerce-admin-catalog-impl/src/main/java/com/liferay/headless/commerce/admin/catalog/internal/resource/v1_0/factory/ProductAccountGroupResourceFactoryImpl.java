@@ -300,15 +300,9 @@ public class ProductAccountGroupResourceFactoryImpl
 	private static Function<InvocationHandler, ProductAccountGroupResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader =
-			ProductAccountGroupResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, ProductAccountGroupResource.class);
+			ProductAccountGroupResource.class.getClassLoader(),
+			ProductAccountGroupResource.class);
 
 		try {
 			Constructor<ProductAccountGroupResource> constructor =

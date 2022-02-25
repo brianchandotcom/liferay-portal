@@ -293,14 +293,8 @@ public class OptionResourceFactoryImpl implements OptionResource.Factory {
 	private static Function<InvocationHandler, OptionResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = OptionResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, OptionResource.class);
+			OptionResource.class.getClassLoader(), OptionResource.class);
 
 		try {
 			Constructor<OptionResource> constructor =

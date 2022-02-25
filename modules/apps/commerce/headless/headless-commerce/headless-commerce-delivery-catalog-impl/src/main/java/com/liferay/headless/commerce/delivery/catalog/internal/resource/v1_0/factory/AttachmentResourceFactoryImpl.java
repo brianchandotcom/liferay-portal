@@ -297,14 +297,9 @@ public class AttachmentResourceFactoryImpl
 	private static Function<InvocationHandler, AttachmentResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = AttachmentResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, AttachmentResource.class);
+			AttachmentResource.class.getClassLoader(),
+			AttachmentResource.class);
 
 		try {
 			Constructor<AttachmentResource> constructor =

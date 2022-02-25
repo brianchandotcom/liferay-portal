@@ -297,14 +297,9 @@ public class PriceEntryResourceFactoryImpl
 	private static Function<InvocationHandler, PriceEntryResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = PriceEntryResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PriceEntryResource.class);
+			PriceEntryResource.class.getClassLoader(),
+			PriceEntryResource.class);
 
 		try {
 			Constructor<PriceEntryResource> constructor =

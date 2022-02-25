@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.search.experiences.rest.resource.v1_0.FieldMappingInfoResource;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -73,9 +76,7 @@ public class FieldMappingInfoResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (FieldMappingInfoResource)ProxyUtil.newProxyInstance(
-					FieldMappingInfoResource.class.getClassLoader(),
-					new Class<?>[] {FieldMappingInfoResource.class},
+				return _fieldMappingInfoResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -291,5 +292,37 @@ public class FieldMappingInfoResourceFactoryImpl
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, FieldMappingInfoResource>
+		_getProxyProviderFunction() {
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			FieldMappingInfoResource.class.getClassLoader(),
+			FieldMappingInfoResource.class);
+
+		try {
+			Constructor<FieldMappingInfoResource> constructor =
+				(Constructor<FieldMappingInfoResource>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, FieldMappingInfoResource>
+		_fieldMappingInfoResourceProxyProviderFunction =
+			_getProxyProviderFunction();
 
 }

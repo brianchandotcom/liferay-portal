@@ -295,14 +295,9 @@ public class PostalAddressResourceFactoryImpl
 	private static Function<InvocationHandler, PostalAddressResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = PostalAddressResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, PostalAddressResource.class);
+			PostalAddressResource.class.getClassLoader(),
+			PostalAddressResource.class);
 
 		try {
 			Constructor<PostalAddressResource> constructor =

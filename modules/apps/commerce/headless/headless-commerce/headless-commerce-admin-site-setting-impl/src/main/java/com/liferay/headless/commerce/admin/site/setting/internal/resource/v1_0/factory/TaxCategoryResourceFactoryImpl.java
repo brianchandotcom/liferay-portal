@@ -297,14 +297,9 @@ public class TaxCategoryResourceFactoryImpl
 	private static Function<InvocationHandler, TaxCategoryResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = TaxCategoryResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, TaxCategoryResource.class);
+			TaxCategoryResource.class.getClassLoader(),
+			TaxCategoryResource.class);
 
 		try {
 			Constructor<TaxCategoryResource> constructor =

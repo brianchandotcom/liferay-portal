@@ -290,14 +290,8 @@ public class SkuResourceFactoryImpl implements SkuResource.Factory {
 	private static Function<InvocationHandler, SkuResource>
 		_getProxyProviderFunction() {
 
-		ClassLoader classLoader = SkuResource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			classLoader, SkuResource.class);
+			SkuResource.class.getClassLoader(), SkuResource.class);
 
 		try {
 			Constructor<SkuResource> constructor =

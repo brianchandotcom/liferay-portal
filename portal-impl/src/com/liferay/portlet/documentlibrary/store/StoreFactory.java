@@ -127,13 +127,6 @@ public class StoreFactory {
 		return storeTypes.toArray(new String[0]);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setStore(String key) {
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);
 
 	private static final BundleContext _bundleContext =

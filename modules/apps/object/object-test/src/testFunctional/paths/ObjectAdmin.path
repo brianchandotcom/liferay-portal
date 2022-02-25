@@ -590,6 +590,11 @@
 		<td>//*[contains(@id,'titleObjectFieldId')]//option[contains(text(),'${key_optionName}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>LABEL_OBJECT_RELATIONSHIP_REQUIRED</td>
+		<td>//input[@id ='objectRelationshipLabel']/..//div//span[contains(text(),'Required')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

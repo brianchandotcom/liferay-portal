@@ -21,7 +21,10 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -162,9 +165,25 @@ public class GetPagePreviewMVCResourceCommandTest {
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
 			StringPool.BLANK, 0, null, _serviceContext);
 
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), layout.getPlid());
+
+		String data = layoutPageTemplateStructure.getData(
+			SegmentsExperienceConstants.ID_DEFAULT);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(data);
+
+		layoutStructure.addFragmentStyledLayoutStructureItem(
+			_fragmentEntryLink.getFragmentEntryLinkId(),
+			layoutStructure.getMainItemId(), 0);
+
 		_layoutPageTemplateStructureLocalService.
-			rebuildLayoutPageTemplateStructure(
-				_group.getGroupId(), layout.getPlid());
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), layout.getPlid(),
+				SegmentsExperienceConstants.ID_DEFAULT,
+				layoutStructure.toString());
 
 		_themeDisplay.setLayout(layout);
 		_themeDisplay.setLayoutSet(layout.getLayoutSet());

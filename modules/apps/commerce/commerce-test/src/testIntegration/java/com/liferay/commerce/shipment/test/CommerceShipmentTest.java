@@ -523,7 +523,7 @@ public class CommerceShipmentTest {
 
 		CommerceShipmentItem commerceShipmentItem1 =
 			_commerceShipmentItemLocalService.addCommerceShipmentItem(
-				commerceShipment1.getCommerceShipmentId(),
+				null, commerceShipment1.getCommerceShipmentId(),
 				commerceOrderItem1.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				commerceOrderItem1.getQuantity(),
@@ -532,7 +532,7 @@ public class CommerceShipmentTest {
 
 		CommerceShipmentItem commerceShipmentItem2 =
 			_commerceShipmentItemLocalService.addCommerceShipmentItem(
-				commerceShipment2.getCommerceShipmentId(),
+				null, commerceShipment2.getCommerceShipmentId(),
 				commerceOrderItem2.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				commerceOrderItem2.getQuantity(),
@@ -730,7 +730,7 @@ public class CommerceShipmentTest {
 				commerceOrder.getGroupId(), commerceOrder.getCommerceOrderId());
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
-			commerceShipment.getCommerceShipmentId(),
+			null, commerceShipment.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			orderedQuantity,

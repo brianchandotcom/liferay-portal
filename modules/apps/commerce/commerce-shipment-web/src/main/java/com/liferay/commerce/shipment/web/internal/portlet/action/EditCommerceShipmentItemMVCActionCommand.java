@@ -230,7 +230,7 @@ public class EditCommerceShipmentItemMVCActionCommand
 			else if ((commerceShipmentItem == null) && (quantity > 0)) {
 				commerceShipmentItem =
 					_commerceShipmentItemService.addCommerceShipmentItem(
-						commerceShipmentId, commerceOrderItemId,
+						null, commerceShipmentId, commerceOrderItemId,
 						commerceInventoryWarehouseId, quantity, serviceContext);
 			}
 			else if ((commerceShipmentItem != null) &&

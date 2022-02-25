@@ -203,7 +203,7 @@ public class CommerceOrderEngineTest {
 			commerceInventoryWarehouses.get(0);
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
-			_commerceShipment1.getCommerceShipmentId(),
+			null, _commerceShipment1.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			commerceOrderItem.getQuantity(), _serviceContext);
@@ -282,7 +282,7 @@ public class CommerceOrderEngineTest {
 			commerceInventoryWarehouses.get(0);
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
-			_commerceShipment1.getCommerceShipmentId(),
+			null, _commerceShipment1.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			commerceOrderItem.getQuantity() / 2, _serviceContext);
@@ -347,7 +347,7 @@ public class CommerceOrderEngineTest {
 			commerceInventoryWarehouses.get(0);
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
-			_commerceShipment1.getCommerceShipmentId(),
+			null, _commerceShipment1.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			commerceOrderItem.getQuantity(), _serviceContext);
@@ -804,7 +804,7 @@ public class CommerceOrderEngineTest {
 			commerceInventoryWarehouses.get(0);
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
-			_commerceShipment1.getCommerceShipmentId(),
+			null, _commerceShipment1.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			commerceOrderItem.getQuantity() / 2, _serviceContext);
@@ -825,7 +825,7 @@ public class CommerceOrderEngineTest {
 				commerceOrderItem.getShippedQuantity();
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
-			_commerceShipment2.getCommerceShipmentId(),
+			null, _commerceShipment2.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			remainingQuantity, _serviceContext);
@@ -916,7 +916,7 @@ public class CommerceOrderEngineTest {
 			commerceInventoryWarehouses.get(0);
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
-			_commerceShipment1.getCommerceShipmentId(),
+			null, _commerceShipment1.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			commerceOrderItem.getQuantity() / 2, _serviceContext);
@@ -937,7 +937,7 @@ public class CommerceOrderEngineTest {
 				commerceOrderItem.getShippedQuantity();
 
 		_commerceShipmentItemLocalService.addCommerceShipmentItem(
-			_commerceShipment2.getCommerceShipmentId(),
+			null, _commerceShipment2.getCommerceShipmentId(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 			remainingQuantity, _serviceContext);

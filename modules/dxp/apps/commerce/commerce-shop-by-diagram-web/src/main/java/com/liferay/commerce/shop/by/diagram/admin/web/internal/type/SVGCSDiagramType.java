@@ -23,7 +23,7 @@ import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.portlet.action.ActionHelper;
 import com.liferay.commerce.product.url.CPFriendlyURL;
-import com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.taglib.clay.data.set.constants.CSDiagramDataSetConstants;
+import com.liferay.commerce.shop.by.diagram.admin.web.internal.constants.CSDiagramFDSNames;
 import com.liferay.commerce.shop.by.diagram.admin.web.internal.util.CSDiagramSettingUtil;
 import com.liferay.commerce.shop.by.diagram.configuration.CSDiagramSettingImageConfiguration;
 import com.liferay.commerce.shop.by.diagram.constants.CSDiagramWebKeys;
@@ -141,9 +141,7 @@ public class SVGCSDiagramType implements CSDiagramType {
 
 		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
 			HashMapBuilder.<String, Object>put(
-				"datasetDisplayId",
-				CSDiagramDataSetConstants.
-					CS_DIAGRAM_MAPPED_PRODUCTS_DATA_SET_KEY
+				"datasetDisplayId", CSDiagramFDSNames.MAPPED_PRODUCTS
 			).put(
 				"diagramId", csDiagramSetting.getCSDiagramSettingId()
 			).put(

@@ -189,9 +189,7 @@ const ModalAddObjectField: React.FC<IProps> = ({
 									}
 								);
 
-								const {
-									items = [],
-								} = (await result.json()) as {
+								const {items = []} = (await result.json()) as {
 									items: [];
 								};
 
@@ -210,16 +208,7 @@ const ModalAddObjectField: React.FC<IProps> = ({
 						options={objectFieldBusinessTypes}
 						required
 						value={selectedObjectBusinessTypeLabel}
-					>
-						{({description, label}) => (
-							<>
-								<div>{label}</div>
-								<span className="text-small">
-									{description}
-								</span>
-							</>
-						)}
-					</CustomSelect>
+					/>
 
 					{values.businessType === 'Picklist' && (
 						<Select

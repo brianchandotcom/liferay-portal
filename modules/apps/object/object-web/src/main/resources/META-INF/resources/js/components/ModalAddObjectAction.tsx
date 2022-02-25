@@ -147,16 +147,7 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 						options={objectActionTriggers}
 						required
 						value={values.objectActionTrigger.label}
-					>
-						{({description, label}) => (
-							<>
-								<div>{label}</div>
-								<span className="text-small">
-									{description}
-								</span>
-							</>
-						)}
-					</CustomSelect>
+					/>
 
 					<CustomSelect
 						error={errors.objectActionExecutor}
@@ -167,16 +158,7 @@ const ModalAddObjectAction: React.FC<IProps> = ({
 						options={objectActionExecutors}
 						required
 						value={values.objectActionExecutor.label}
-					>
-						{({description, label}) => (
-							<>
-								<div>{label}</div>
-								<span className="text-small">
-									{description}
-								</span>
-							</>
-						)}
-					</CustomSelect>
+					/>
 
 					{values.objectActionExecutor.label === 'Webhook' && (
 						<>

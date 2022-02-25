@@ -23,19 +23,7 @@ import ErrorFeedback from '../ErrorFeedback';
 import FeedbackMessage from '../FeedbackMessage';
 import RequiredMask from '../RequiredMask';
 
-interface ICustomSelectProps extends React.HTMLAttributes<HTMLElement> {
-	children: (item: any) => React.ReactNode;
-	disabled?: boolean;
-	error?: string;
-	feedbackMessage?: string;
-	label: string;
-	options: any[];
-	required?: boolean;
-	value: string;
-}
-
-const CustomSelect: React.FC<ICustomSelectProps> = ({
-	children,
+export default function CustomSelect<T extends IItem = IItem>({
 	className,
 	disabled = false,
 	error,
@@ -46,8 +34,7 @@ const CustomSelect: React.FC<ICustomSelectProps> = ({
 	options,
 	required,
 	value,
-	...otherProps
-}) => {
+}: IProps<T>) {
 	const [active, setActive] = useState<boolean>(false);
 	const inputRef = useRef(null);
 
@@ -73,26 +60,27 @@ const CustomSelect: React.FC<ICustomSelectProps> = ({
 				/>
 
 				<ClayAutocomplete.DropDown
-					{...otherProps}
 					active={active}
 					alignElementRef={inputRef}
 					closeOnClickOutside
 					onSetActive={setActive}
 				>
 					<ClayDropDown.ItemList>
-						{options?.map((option, index) => {
-							return (
-								<ClayDropDown.Item
-									key={index}
-									onClick={() => {
-										setActive(false);
-										onChange && onChange(option);
-									}}
-								>
-									{children && children(option)}
-								</ClayDropDown.Item>
-							);
-						})}
+						{options?.map((option, index) => (
+							<ClayDropDown.Item
+								key={index}
+								onClick={() => {
+									setActive(false);
+									onChange?.(option);
+								}}
+							>
+								<div>{option.label}</div>
+
+								<span className="text-small">
+									{option.description}
+								</span>
+							</ClayDropDown.Item>
+						))}
 					</ClayDropDown.ItemList>
 				</ClayAutocomplete.DropDown>
 			</ClayAutocomplete>
@@ -104,6 +92,21 @@ const CustomSelect: React.FC<ICustomSelectProps> = ({
 			)}
 		</ClayForm.Group>
 	);
-};
+}
 
-export default CustomSelect;
+interface IItem {
+	description: string;
+	label: string;
+}
+interface IProps<T extends IItem = IItem> {
+	className?: string;
+	disabled?: boolean;
+	error?: string;
+	feedbackMessage?: string;
+	id?: string;
+	label: string;
+	onChange?: (selected: T) => void;
+	options: T[];
+	required?: boolean;
+	value?: string | number | string[];
+}

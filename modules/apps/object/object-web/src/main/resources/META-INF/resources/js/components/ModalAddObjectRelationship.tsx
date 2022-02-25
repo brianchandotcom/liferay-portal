@@ -222,7 +222,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 					<CustomSelect
 						error={errors.type}
 						label={Liferay.Language.get('type')}
-						onChange={(type: any) => {
+						onChange={(type) => {
 							setValues({type});
 
 							type.value === 'manyToMany'
@@ -232,16 +232,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 						options={filteredObjectRelationshipTypes}
 						required
 						value={values.type.label}
-					>
-						{({description, label}) => (
-							<>
-								<div>{label}</div>
-								<span className="text-small">
-									{description}
-								</span>
-							</>
-						)}
-					</CustomSelect>
+					/>
 
 					<Select
 						error={errors.objectDefinitionId2}

@@ -383,6 +383,9 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 						batchEngineImportTaskError),
 					FailedItem.class);
 				id = batchEngineImportTask.getBatchEngineImportTaskId();
+				importStrategy = ImportTask.ImportStrategy.create(
+					BatchEngineImportTaskConstants.getImportStrategyString(
+						batchEngineImportTask.getImportStrategy()));
 				operation = ImportTask.Operation.create(
 					batchEngineImportTask.getOperation());
 				processedItemsCount =

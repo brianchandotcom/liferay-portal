@@ -19,13 +19,9 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import ClayToolbar from '@clayui/toolbar';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import PropTypes from 'prop-types';
-import React, {useContext, useRef, useState} from 'react';
-
-import {getLocalizedText} from '../utils/language';
-import ThemeContext from './ThemeContext';
+import React, {useRef, useState} from 'react';
 
 function EditTitleModal({
-	defaultLocale,
 	initialDescription,
 	initialTitle,
 	modalFieldFocus,
@@ -42,7 +38,7 @@ function EditTitleModal({
 	const _handleSubmit = (event) => {
 		event.preventDefault();
 
-		if (!title[defaultLocale]) {
+		if (!title) {
 			setHasError(true);
 
 			titleInputRef.current.focus();
@@ -80,14 +76,10 @@ function EditTitleModal({
 							onBlur={({currentTarget}) => {
 								setHasError(!currentTarget.value);
 							}}
-							onChange={({target: {value}}) =>
-								setTitle({
-									[defaultLocale]: value,
-								})
-							}
+							onChange={({target: {value}}) => setTitle(value)}
 							ref={titleInputRef}
 							type="text"
-							value={title[defaultLocale]}
+							value={title}
 						/>
 
 						{hasError && (
@@ -113,12 +105,10 @@ function EditTitleModal({
 							component="textarea"
 							id="description"
 							onChange={({target: {value}}) =>
-								setDescription({
-									[defaultLocale]: value,
-								})
+								setDescription(value)
 							}
 							type="text"
-							value={description[defaultLocale]}
+							value={description}
 						/>
 					</ClayForm.Group>
 				</ClayModal.Body>
@@ -145,33 +135,17 @@ function EditTitleModal({
 }
 
 export default function PageToolbar({
-	initialDescription = {},
-	initialTitle = {},
+	children,
+	description,
 	isSubmitting,
 	onCancel,
 	onChangeTab,
+	onChangeTitleAndDescription,
 	onSubmit,
 	tab,
 	tabs,
-	children,
+	title,
 }) {
-	const {defaultLocale, namespace} = useContext(ThemeContext);
-
-	const newDefaultLocale = defaultLocale.replace('_', '-');
-
-	// Update defaultLocale in case the instance defaultLocale is different
-	// from the original entry's defaultLocale.
-
-	const [description, setDescription] = useState({
-		[newDefaultLocale]: getLocalizedText(
-			initialDescription,
-			newDefaultLocale
-		),
-	});
-	const [title, setTitle] = useState({
-		[newDefaultLocale]: getLocalizedText(initialTitle, newDefaultLocale),
-	});
-
 	const [modalFieldFocus, setModalFieldFocus] = useState('title');
 	const [modalVisible, setModalVisible] = useState(false);
 
@@ -179,29 +153,10 @@ export default function PageToolbar({
 		onClose: () => setModalVisible(false),
 	});
 
-	const _renderLocalizedInputs = (inputId, translations) => {
-		return Object.keys(translations).map((key) => (
-			<input
-				key={key}
-				name={`${inputId}_${key.replace('-', '_')}`}
-				type="hidden"
-				value={translations[key]}
-			/>
-		));
-	};
-
-	const descriptionInputId = `${namespace}description`;
-	const titleInputId = `${namespace}title`;
-
 	const _handleClickEdit = (fieldFocus) => () => {
 		setModalFieldFocus(fieldFocus);
 
 		setModalVisible(true);
-	};
-
-	const _handleEditTitleSubmit = ({description, title}) => {
-		setDescription(description);
-		setTitle(title);
 	};
 
 	return (
@@ -215,13 +170,12 @@ export default function PageToolbar({
 						<ClayToolbar.Item className="text-left" expand>
 							{modalVisible && (
 								<EditTitleModal
-									defaultLocale={newDefaultLocale}
 									initialDescription={description}
 									initialTitle={title}
 									modalFieldFocus={modalFieldFocus}
 									observer={observer}
 									onClose={onClose}
-									onSubmit={_handleEditTitleSubmit}
+									onSubmit={onChangeTitleAndDescription}
 								/>
 							)}
 
@@ -236,7 +190,7 @@ export default function PageToolbar({
 									onClick={_handleClickEdit('title')}
 								>
 									<div className="entry-title text-truncate">
-										{title[newDefaultLocale]}
+										{title}
 
 										<ClayIcon
 											className="entry-heading-edit-icon"
@@ -244,8 +198,6 @@ export default function PageToolbar({
 										/>
 									</div>
 								</ClayButton>
-
-								{_renderLocalizedInputs(titleInputId, title)}
 
 								<ClayButton
 									aria-label={Liferay.Language.get(
@@ -260,11 +212,9 @@ export default function PageToolbar({
 										<div
 											className="entry-description text-truncate"
 											data-tooltip-align="bottom"
-											title={
-												description[newDefaultLocale]
-											}
+											title={description}
 										>
-											{description[newDefaultLocale] || (
+											{description || (
 												<span className="entry-description-blank">
 													{Liferay.Language.get(
 														'no-description'
@@ -279,11 +229,6 @@ export default function PageToolbar({
 										</div>
 									</ClayTooltipProvider>
 								</ClayButton>
-
-								{_renderLocalizedInputs(
-									descriptionInputId,
-									description
-								)}
 							</div>
 						</ClayToolbar.Item>
 
@@ -349,12 +294,13 @@ export default function PageToolbar({
 }
 
 PageToolbar.propTypes = {
-	initialDescription: PropTypes.object,
-	initialTitle: PropTypes.object,
+	description: PropTypes.string,
 	isSubmitting: PropTypes.bool,
 	onCancel: PropTypes.string.isRequired,
 	onChangeTab: PropTypes.func,
+	onChangeTitleAndDescription: PropTypes.func,
 	onSubmit: PropTypes.func.isRequired,
 	tab: PropTypes.string,
 	tabs: PropTypes.object,
+	title: PropTypes.string,
 };

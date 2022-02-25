@@ -502,7 +502,7 @@ definition {
 				ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "${individualAttribute}");
 			}
 
-			for (var individualAttribute : list "birthDate,classPK,contactId,createDate,givenName,jobTitle,modifiedDate") {
+			for (var individualAttribute : list "createDate,givenName,modifiedDate,timeZoneId,userId,uuid") {
 				ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "${individualAttribute}");
 			}
 		}
@@ -514,7 +514,7 @@ definition {
 				ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "${individualAttribute}");
 			}
 
-			for (var individualAttribute : list "birthDate,classPK,contactId,createDate,familyName,jobTitle,modifiedDate") {
+			for (var individualAttribute : list "createDate,familyName,modifiedDate,timeZoneId,userId,uuid") {
 				ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "${individualAttribute}");
 			}
 		}
@@ -524,7 +524,7 @@ definition {
 
 			ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "createDate");
 
-			for (var individualAttribute : list "createDate,email,familyName,givenName,modifiedDate,timeZoneId,userId,uuid") {
+			for (var individualAttribute : list "email,familyName,givenName,modifiedDate,timeZoneId,userId,uuid") {
 				ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "${individualAttribute}");
 			}
 		}
@@ -544,7 +544,7 @@ definition {
 				ACIndividualsDashboard.assertIndividualAttribute(key_individualAttribute = "familyName");
 			}
 
-			for (var individualAttribute : list "createDate,email,familyName,givenName,modifiedDate,timeZoneId,userId,uuid") {
+			for (var individualAttribute : list "createDate,email,givenName,modifiedDate,timeZoneId,userId,uuid") {
 				ACIndividualsDashboard.assertIndividualAttributeNotPresent(key_individualAttribute = "${individualAttribute}");
 			}
 		}

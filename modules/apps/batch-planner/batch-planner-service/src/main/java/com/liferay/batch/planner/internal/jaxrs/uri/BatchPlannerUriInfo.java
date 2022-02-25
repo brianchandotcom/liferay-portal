@@ -29,12 +29,6 @@ import javax.ws.rs.core.UriInfo;
  */
 public class BatchPlannerUriInfo implements UriInfo {
 
-	public BatchPlannerUriInfo(String delimiter, String taskItemDelegateName) {
-		_pathParameters.putSingle("taskItemDelegateName", taskItemDelegateName);
-
-		_queryParameters.putSingle("delimiter", delimiter);
-	}
-
 	@Override
 	public URI getAbsolutePath() {
 		return null;
@@ -130,9 +124,51 @@ public class BatchPlannerUriInfo implements UriInfo {
 		return null;
 	}
 
-	private final MultivaluedHashMap<String, String> _pathParameters =
-		new MultivaluedHashMap<>();
-	private final MultivaluedHashMap<String, String> _queryParameters =
-		new MultivaluedHashMap<>();
+	public static class Builder {
+
+		public BatchPlannerUriInfo build() {
+			return new BatchPlannerUriInfo(this);
+		}
+
+		public Builder delimiter(String delimiter) {
+			_queryParameters.putSingle("delimiter", delimiter);
+
+			return this;
+		}
+
+		public Builder pathParameter(String name, String value) {
+			_pathParameters.putSingle(name, value);
+
+			return this;
+		}
+
+		public Builder queryParameter(String name, String value) {
+			_queryParameters.putSingle(name, value);
+
+			return this;
+		}
+
+		public Builder taskItemDelegateName(String taskItemDelegateName) {
+			_pathParameters.putSingle(
+				"taskItemDelegateName", taskItemDelegateName);
+
+			return this;
+		}
+
+		private final MultivaluedHashMap<String, String> _pathParameters =
+			new MultivaluedHashMap<>();
+		private final MultivaluedHashMap<String, String> _queryParameters =
+			new MultivaluedHashMap<>();
+
+	}
+
+	private BatchPlannerUriInfo(Builder builder) {
+		_pathParameters = builder._pathParameters;
+
+		_queryParameters = builder._queryParameters;
+	}
+
+	private final MultivaluedHashMap<String, String> _pathParameters;
+	private final MultivaluedHashMap<String, String> _queryParameters;
 
 }

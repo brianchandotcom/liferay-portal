@@ -210,6 +210,125 @@ public abstract class BaseShippingAddressResourceTestCase {
 	}
 
 	@Test
+	public void testGetShipmentByExternalReferenceCodeShippingAddress()
+		throws Exception {
+
+		ShippingAddress postShippingAddress =
+			testGetShipmentByExternalReferenceCodeShippingAddress_addShippingAddress();
+
+		ShippingAddress getShippingAddress =
+			shippingAddressResource.
+				getShipmentByExternalReferenceCodeShippingAddress(
+					postShippingAddress.getExternalReferenceCode());
+
+		assertEquals(postShippingAddress, getShippingAddress);
+		assertValid(getShippingAddress);
+	}
+
+	protected ShippingAddress
+			testGetShipmentByExternalReferenceCodeShippingAddress_addShippingAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetShipmentByExternalReferenceCodeShippingAddress()
+		throws Exception {
+
+		ShippingAddress shippingAddress =
+			testGraphQLShippingAddress_addShippingAddress();
+
+		Assert.assertTrue(
+			equals(
+				shippingAddress,
+				ShippingAddressSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"shipmentByExternalReferenceCodeShippingAddress",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												shippingAddress.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/shipmentByExternalReferenceCodeShippingAddress"))));
+	}
+
+	@Test
+	public void testGraphQLGetShipmentByExternalReferenceCodeShippingAddressNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"shipmentByExternalReferenceCodeShippingAddress",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPatchShipmentByExternalReferenceCodeShippingAddress()
+		throws Exception {
+
+		ShippingAddress postShippingAddress =
+			testPatchShipmentByExternalReferenceCodeShippingAddress_addShippingAddress();
+
+		ShippingAddress randomPatchShippingAddress =
+			randomPatchShippingAddress();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ShippingAddress patchShippingAddress =
+			shippingAddressResource.
+				patchShipmentByExternalReferenceCodeShippingAddress(
+					postShippingAddress.getExternalReferenceCode(),
+					randomPatchShippingAddress);
+
+		ShippingAddress expectedPatchShippingAddress =
+			postShippingAddress.clone();
+
+		_beanUtilsBean.copyProperties(
+			expectedPatchShippingAddress, randomPatchShippingAddress);
+
+		ShippingAddress getShippingAddress =
+			shippingAddressResource.
+				getShipmentByExternalReferenceCodeShippingAddress(
+					patchShippingAddress.getExternalReferenceCode());
+
+		assertEquals(expectedPatchShippingAddress, getShippingAddress);
+		assertValid(getShippingAddress);
+	}
+
+	protected ShippingAddress
+			testPatchShipmentByExternalReferenceCodeShippingAddress_addShippingAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetShipmentShippingAddress() throws Exception {
 		ShippingAddress postShippingAddress =
 			testGetShipmentShippingAddress_addShippingAddress();

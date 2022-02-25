@@ -123,6 +123,34 @@ public class ShipmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Date createDate;
 
+	@Schema
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+	}
+
+	@JsonIgnore
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		try {
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String externalReferenceCode;
+
 	@DecimalMin("0")
 	@Schema
 	public Long getId() {
@@ -237,6 +265,38 @@ public class ShipmentItem implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotNull
 	protected Integer quantity;
+
+	@Schema
+	public String getShipmentExternalReferenceCode() {
+		return shipmentExternalReferenceCode;
+	}
+
+	public void setShipmentExternalReferenceCode(
+		String shipmentExternalReferenceCode) {
+
+		this.shipmentExternalReferenceCode = shipmentExternalReferenceCode;
+	}
+
+	@JsonIgnore
+	public void setShipmentExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			shipmentExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			shipmentExternalReferenceCode =
+				shipmentExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String shipmentExternalReferenceCode;
 
 	@DecimalMin("0")
 	@Schema
@@ -379,6 +439,20 @@ public class ShipmentItem implements Serializable {
 			sb.append("\"");
 		}
 
+		if (externalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
 		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -421,6 +495,20 @@ public class ShipmentItem implements Serializable {
 			sb.append("\"quantity\": ");
 
 			sb.append(quantity);
+		}
+
+		if (shipmentExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shipmentExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(shipmentExternalReferenceCode));
+
+			sb.append("\"");
 		}
 
 		if (shipmentId != null) {

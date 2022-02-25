@@ -124,6 +124,20 @@ public class ShipmentSerDes {
 			sb.append("\"");
 		}
 
+		if (shipment.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(shipment.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (shipment.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -336,6 +350,15 @@ public class ShipmentSerDes {
 				liferayToJSONDateFormat.format(shipment.getExpectedDate()));
 		}
 
+		if (shipment.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(shipment.getExternalReferenceCode()));
+		}
+
 		if (shipment.getId() == null) {
 			map.put("id", null);
 		}
@@ -482,6 +505,14 @@ public class ShipmentSerDes {
 				if (jsonParserFieldValue != null) {
 					shipment.setExpectedDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					shipment.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

@@ -25,6 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false,
@@ -54,6 +55,8 @@ public class ShipmentDTOConverter
 				carrier = commerceShipment.getCarrier();
 				createDate = commerceShipment.getCreateDate();
 				expectedDate = commerceShipment.getExpectedDate();
+				externalReferenceCode =
+					commerceShipment.getExternalReferenceCode();
 				id = commerceShipment.getCommerceShipmentId();
 				modifiedDate = commerceShipment.getModifiedDate();
 				shippingAddressId = commerceShipment.getCommerceAddressId();

@@ -26,6 +26,8 @@ import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.comparator.CommerceShippingOptionLabelComparator;
 import com.liferay.petra.string.CharPool;
@@ -35,6 +37,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,12 +53,16 @@ public class ShippingMethodCheckoutStepDisplayContext {
 		CommercePriceFormatter commercePriceFormatter,
 		CommerceShippingEngineRegistry commerceShippingEngineRegistry,
 		CommerceShippingMethodLocalService commerceShippingMethodLocalService,
+		CommerceShippingFixedOptionLocalService
+			commerceShippingFixedOptionLocalService,
 		HttpServletRequest httpServletRequest) {
 
 		_commercePriceFormatter = commercePriceFormatter;
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;
 		_commerceShippingMethodLocalService =
 			commerceShippingMethodLocalService;
+		_commerceShippingFixedOptionLocalService =
+			commerceShippingFixedOptionLocalService;
 		_httpServletRequest = httpServletRequest;
 
 		_commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
@@ -64,6 +71,35 @@ public class ShippingMethodCheckoutStepDisplayContext {
 
 	public CommerceOrder getCommerceOrder() {
 		return _commerceOrder;
+	}
+
+	public List<CommerceShippingFixedOption>
+			getCommerceShippingFixedOptionFilteredList()
+		throws PortalException {
+
+		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
+			new ArrayList<>();
+		List<CommerceShippingMethod> commerceShippingMethods =
+			getCommerceShippingMethods();
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		for (CommerceShippingMethod commerceShippingMethod :
+				commerceShippingMethods) {
+
+			List<CommerceShippingFixedOption> commerceShippingFixedOptionList =
+				_commerceShippingFixedOptionLocalService.
+					getCommerceOrderTypeCommerceShippingFixedOptions(
+						commerceOrder.getCompanyId(),
+						commerceOrder.getCommerceOrderTypeId(),
+						commerceShippingMethod.getCommerceShippingMethodId());
+
+			if (!ListUtil.isEmpty(commerceShippingFixedOptionList)) {
+				commerceShippingFixedOptions.addAll(
+					commerceShippingFixedOptionList);
+			}
+		}
+
+		return commerceShippingFixedOptions;
 	}
 
 	public List<CommerceShippingMethod> getCommerceShippingMethods()
@@ -124,6 +160,34 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			new CommerceShippingOptionLabelComparator());
 	}
 
+	public List<CommerceShippingOption> getShippingOptionFilteredList(
+			CommerceShippingMethod commerceShippingMethod)
+		throws PortalException {
+
+		List<CommerceShippingOption> commerceShippingOptionsFiltered =
+			new ArrayList<>();
+		List<CommerceShippingOption> commerceShippingOptions =
+			getCommerceShippingOptions(commerceShippingMethod);
+		List<CommerceShippingFixedOption> commerceShippingFixedOptions =
+			getCommerceShippingFixedOptionFilteredList();
+
+		for (CommerceShippingFixedOption commerceShippingFixedOption :
+				commerceShippingFixedOptions) {
+
+			for (CommerceShippingOption commerceShippingOption :
+					commerceShippingOptions) {
+
+				String key = commerceShippingFixedOption.getKey();
+
+				if (key.equals(commerceShippingOption.getName())) {
+					commerceShippingOptionsFiltered.add(commerceShippingOption);
+				}
+			}
+		}
+
+		return commerceShippingOptionsFiltered;
+	}
+
 	private CommerceContext _getCommerceContext() {
 		return (CommerceContext)_httpServletRequest.getAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT);
@@ -133,6 +197,8 @@ public class ShippingMethodCheckoutStepDisplayContext {
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private final CommerceShippingEngineRegistry
 		_commerceShippingEngineRegistry;
+	private final CommerceShippingFixedOptionLocalService
+		_commerceShippingFixedOptionLocalService;
 	private final CommerceShippingMethodLocalService
 		_commerceShippingMethodLocalService;
 	private final HttpServletRequest _httpServletRequest;

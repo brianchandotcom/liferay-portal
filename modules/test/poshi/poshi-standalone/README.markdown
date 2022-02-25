@@ -6,26 +6,25 @@ This repository contains the minimal configuration to begin writing and running 
 
  1. Java JDK 8
 
- 1. [Gradle](https://gradle.org/install/) 6.6.1 or a [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:adding_wrapper) binary
+ 1. [Gradle](https://gradle.org/install/) or [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:adding_wrapper) 6.6.1 or higher.
 
 ## Poshi Configuration
 
 ### Poshi Properties
 
-Poshi Properties are necessary for configuring how tests are run within a particular Poshi project, and full list of properties is available [here](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.markdown). Default properties have been set in [poshi.properties](poshi.properties) and additional properties can be set in a `poshi-ext.properties` file.
+Poshi Properties are necessary for configuring how tests are run within a particular Poshi project, and full list of properties is available [here](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.markdown). Default properties can be set in [poshi.properties](poshi.properties) and additional user properties can be set in a `poshi-ext.properties` file.
 
-The base url for tests should be set for a project and is set by default in [poshi.properties](poshi.properties) to:
-```
-portal.url=https://www.liferay.com/
-```
+#### Essential Properties
+Property Name | Default Value | Description
+------------- | ------------- | -----------
+[`portal.url`](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.markdown#portalurl) | `http://liferay.com` (from [poshi.properties](poshi.properties)) | Sets the default URL to which WebDriver opens.
+[`test.base.dir.name`](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.markdown#testbasedirname) | `src/test` (from Poshi source) | Sets the path of the main directory containing Poshi files used for the test project.
+[`test.name`](https://github.com/liferay/liferay-portal/blob/master/modules/test/poshi/poshi-properties.markdown#testname) | `PortalSmoke#Smoke` (from Poshi source) | Sets the test case(s) to run. The tests can be specified by the test case command name, the test case file's name, or a comma-delimited list of both that runs sequentially. To run sequentially, the tests must be configured with proper teardowns.
 
 #### Google Chrome
-Currently, only Google Chrome is supported and is set by default in [poshi.properties](poshi.properties) to:
-```
-browser.type=chrome
-```
+Currently, only Google Chrome is supported and is set to use Chrome by default.
 
-Optionally, the Google Chrome binary can also be set in [Poshi Properties file](#poshi-properties-files). If not set, the default Google Chrome binary will be used.
+Optionally, an alternate Google Chrome binary can also be set in [`poshi.properties`](poshi.properties) or `poshi-ext.properties`. If not set, the default installation directory Google Chrome binary will be used.
 ```
 browser.chrome.bin.file=path/to/chrome/binary
 ```
@@ -57,11 +56,16 @@ To see available tasks (under "Verification tasks"):
 gradlew tasks
 ```
 
-### Syntax and Usage Validation
+### Syntax Validation and Source Formatting
 
 To run Poshi validation:
 ```
 gradlew validatePoshi
+```
+
+To run source formatting through the [Source Formatter Gradle Plugin](https://github.com/liferay/liferay-portal/blob/master/modules/sdk/gradle-plugins-source-formatter/README.markdown):
+```
+gradlew formatSource
 ```
 
 ### Running a test

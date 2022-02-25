@@ -54,6 +54,8 @@ definition {
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#00FF00");
 
+			StyleBooks.clickManagementBar();
+
 			StyleBooks.waitForAutoSave();
 
 			StyleBooks.selectForm(formName = "Typography");
@@ -64,6 +66,8 @@ definition {
 				key_fieldLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "2rem");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 
@@ -248,6 +252,8 @@ definition {
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#00FF00");
 
+			StyleBooks.clickManagementBar();
+
 			StyleBooks.waitForAutoSave();
 
 			StyleBooks.selectForm(formName = "Typography");
@@ -258,6 +264,8 @@ definition {
 				key_fieldLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "2rem");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 
@@ -406,9 +414,9 @@ definition {
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#00FF00");
 
-			StyleBooks.waitForAutoSave();
+			StyleBooks.clickManagementBar();
 
-			Pause(locator1 = "3000");
+			StyleBooks.waitForAutoSave();
 
 			StyleBooks.expandSection(sectionName = "Button Secondary");
 
@@ -418,9 +426,9 @@ definition {
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#FF0000");
 
-			StyleBooks.waitForAutoSave();
+			StyleBooks.clickManagementBar();
 
-			Pause(locator1 = "3000");
+			StyleBooks.waitForAutoSave();
 
 			StyleBooks.expandSection(sectionName = "Button Outline Secondary");
 
@@ -429,6 +437,8 @@ definition {
 				key_groupLabel = "Button Outline Secondary",
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#0000FF");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 
@@ -563,6 +573,8 @@ definition {
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#FF0000");
 
+			StyleBooks.clickManagementBar();
+
 			StyleBooks.waitForAutoSave();
 
 			StyleBooks.selectForm(formName = "Typography");
@@ -573,6 +585,8 @@ definition {
 				key_fieldLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "2rem");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 
@@ -647,6 +661,8 @@ definition {
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#00FF00");
 
+			StyleBooks.clickManagementBar();
+
 			StyleBooks.waitForAutoSave();
 
 			StyleBooks.selectForm(formName = "Typography");
@@ -657,6 +673,8 @@ definition {
 				key_fieldLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "2rem");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 
@@ -793,6 +811,8 @@ definition {
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#FF0000");
 
+			StyleBooks.clickManagementBar();
+
 			StyleBooks.waitForAutoSave();
 
 			StyleBooks.selectForm(formName = "Typography");
@@ -803,6 +823,8 @@ definition {
 				key_fieldLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "1.5rem");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 

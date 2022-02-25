@@ -419,6 +419,8 @@ definition {
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "2rem");
 
+			StyleBooks.clickManagementBar();
+
 			StyleBooks.waitForAutoSave();
 		}
 
@@ -490,6 +492,8 @@ definition {
 				key_groupLabel = "Button Primary",
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#00FF00");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 		}
@@ -569,6 +573,8 @@ definition {
 				key_fieldLabel = "Heading 1 Font Size",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "2rem");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 		}
@@ -752,6 +758,8 @@ definition {
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#227777");
 
+			StyleBooks.clickManagementBar();
+
 			StyleBooks.waitForAutoSave();
 		}
 
@@ -779,6 +787,8 @@ definition {
 				key_groupLabel = "Body",
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#556622");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 		}
@@ -808,6 +818,8 @@ definition {
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#995511");
 
+			StyleBooks.clickManagementBar();
+
 			StyleBooks.waitForAutoSave();
 		}
 
@@ -835,6 +847,8 @@ definition {
 				key_groupLabel = "Body",
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#666666");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 		}
@@ -865,6 +879,8 @@ definition {
 				key_groupLabel = "Body",
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#005566");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 		}
@@ -940,6 +956,8 @@ definition {
 				key_fieldLabel = "Font Family Base",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "times");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 		}
@@ -1065,6 +1083,8 @@ definition {
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#227777");
 
+			StyleBooks.clickManagementBar();
+
 			StyleBooks.waitForAutoSave();
 		}
 
@@ -1096,6 +1116,8 @@ definition {
 				key_groupLabel = "Button Primary",
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#880022");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 		}
@@ -1129,6 +1151,8 @@ definition {
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#995511");
 
+			StyleBooks.clickManagementBar();
+
 			StyleBooks.waitForAutoSave();
 		}
 
@@ -1160,6 +1184,8 @@ definition {
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "times");
 
+			StyleBooks.clickManagementBar();
+
 			StyleBooks.waitForAutoSave();
 		}
 
@@ -1186,6 +1212,8 @@ definition {
 				key_fieldLabel = "Font Family Base",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "courier");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 		}
@@ -1284,6 +1312,8 @@ definition {
 				key_groupLabel = "Button Primary",
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#880022");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 		}
@@ -1387,6 +1417,8 @@ definition {
 				key_groupLabel = "Button Primary",
 				locator1 = "TextInput#GROUPED_TEXT_INPUT",
 				value1 = "#FF0000");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 		}

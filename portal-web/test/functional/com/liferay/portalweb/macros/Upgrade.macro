@@ -537,6 +537,8 @@ definition {
 				fieldLabel = "Font Family Base",
 				text = "${fontFamily}");
 
+			StyleBooks.clickManagementBar();
+
 			StyleBooks.waitForAutoSave();
 		}
 

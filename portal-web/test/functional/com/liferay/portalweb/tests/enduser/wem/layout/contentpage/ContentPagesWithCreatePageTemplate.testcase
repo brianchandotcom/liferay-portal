@@ -284,6 +284,8 @@ definition {
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "times");
 
+			StyleBooks.clickManagementBar();
+
 			StyleBooks.waitForAutoSave();
 
 			StyleBooks.clickPublish();

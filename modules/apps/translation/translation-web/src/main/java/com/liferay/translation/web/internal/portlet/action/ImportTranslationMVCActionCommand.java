@@ -282,7 +282,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 		return new InfoItemReference(className, classPK);
 	}
 
-	private void _importXLIFFFile(
+	private void _importXLIFFInputStream(
 			ActionRequest actionRequest, long groupId, String className,
 			long classPK, InputStream inputStream)
 		throws IOException, PortalException {
@@ -341,7 +341,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 		throws IOException, PortalException {
 
 		try {
-			_importXLIFFFile(
+			_importXLIFFInputStream(
 				actionRequest, groupId, className, classPK, inputStream);
 
 			successMessages.add(fileName);

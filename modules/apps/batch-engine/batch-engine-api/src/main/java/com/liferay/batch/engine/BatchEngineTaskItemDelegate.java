@@ -16,6 +16,7 @@ package com.liferay.batch.engine;
 
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
+import com.liferay.batch.engine.strategy.ImportStrategy;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
@@ -54,6 +55,8 @@ public interface BatchEngineTaskItemDelegate<T> {
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);
+
+	public void setContextImportStrategy(ImportStrategy importStrategy);
 
 	public void setContextUser(User contextUser);
 

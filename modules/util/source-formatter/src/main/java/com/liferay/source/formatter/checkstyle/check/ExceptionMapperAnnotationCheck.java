@@ -17,10 +17,12 @@ package com.liferay.source.formatter.checkstyle.check;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Simon Jiang
@@ -53,6 +55,38 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 			detailAST, "Component");
 
 		if (annotationDetailAST == null) {
+			return;
+		}
+
+		DetailAST serviceAnnotationMemberValuePairDetailAST =
+			getAnnotationMemberValuePairDetailAST(
+				annotationDetailAST, "service");
+
+		if (serviceAnnotationMemberValuePairDetailAST == null) {
+			return;
+		}
+
+		DetailAST exprDetailAST =
+			serviceAnnotationMemberValuePairDetailAST.findFirstToken(
+				TokenTypes.EXPR);
+
+		if (exprDetailAST == null) {
+			return;
+		}
+
+		DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
+
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.DOT)) {
+
+			return;
+		}
+
+		FullIdent fullIdent = FullIdent.createFullIdent(firstChildDetailAST);
+
+		if (!Objects.equals(
+				fullIdent.getText(), _OSGI_SERVICE_NAME + ".class")) {
+
 			return;
 		}
 

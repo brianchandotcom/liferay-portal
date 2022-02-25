@@ -2260,6 +2260,153 @@ definition {
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 	}
 
+	test ViewCustomElementsJSONValidation {
+		Blueprints.openBlueprintsAdmin();
+
+		Navigator.gotoNavItem(navItem = "Elements");
+
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "Test Element");
+
+		Button.click(button = "Create");
+
+		var elementSourceJson = '''
+{
+	"elementDefinition": {
+		"configuration": {}}
+	}
+}
+		''';
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "${elementSourceJson}");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "Element Source (JSON) is invalid.");
+
+		var elementSourceJson = '''
+{
+	"elementDefinition": {
+		"configuration": {}
+	}
+}
+		''';
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "${elementSourceJson}");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "TypeError: Cannot read property 'fieldSets' of undefined");
+
+		var elementSourceJson = '''
+{
+	"elementDefinition": {
+		"configuration": {},
+		"uiConfiguration": {}
+	}
+}
+		''';
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "${elementSourceJson}");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "The title cannot be blank.");
+
+		var elementSourceJson = '''
+{
+	"elementDefinition": {
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"query": {
+									"term": {
+										"fields": "${configuration.apple}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"uiConfiguration": {}
+	},
+	"title_i18n": {
+		"en_US": "Test Element"
+	}
+}
+		''';
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "${elementSourceJson}");
+
+		Button.clickSave();
+
+		Alert.viewErrorMessage(errorMessage = "The following configuration key is missing: apple.");
+
+		var elementSourceJson = '''
+{
+	"elementDefinition": {
+		"configuration": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"query": {
+									"term": {
+										"fields": "${configuration.apple}"
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		},
+		"uiConfiguration": {
+			"fieldSets": [
+				{
+					"fields": [
+						{
+							"name": "apple"
+						}
+					]
+				}
+			]
+		}
+	},
+	"title_i18n": {
+		"en_US": "Test Element"
+	}
+}
+		''';
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "${elementSourceJson}");
+
+		Button.clickSave();
+
+		AssertElementNotPresent(locator1 = "Message#ERROR");
+
+		Blueprints.editElement(element = "Test Element");
+
+		AssertTextPresent(value1 = "apple");
+	}
+
 	test ViewDefaultElement {
 		Blueprints.openBlueprintsAdmin();
 

@@ -74,7 +74,6 @@ public class ImportResults {
 
 	public void addTestrayBuild(long projectId, Document document)
 		throws Exception  {
-
 		String runName = null;
 		
 		Map<String, String> map = new HashMap<>();
@@ -118,7 +117,8 @@ public class ImportResults {
 
 						map.put("name", value);
 
-					} else if (name.equals("testray.build.time")){
+					}
+					else if (name.equals("testray.build.time")) {
 						value = propertyNode.getAttributes(
 						).getNamedItem(
 							"value"
@@ -126,7 +126,8 @@ public class ImportResults {
 
 						map.put("dueDate", value);
 
-					} else if (name.equals("testray.build.type")){
+					}
+					else if (name.equals("testray.build.type")) {
 						value = propertyNode.getAttributes(
 						).getNamedItem(
 							"value"
@@ -136,7 +137,8 @@ public class ImportResults {
 
 						map.put("testrayRoutineId", String.valueOf(routineId));
 
-					} else if (name.equals("testray.run.id")){
+					}
+					else if (name.equals("testray.run.id")) {
 						runName = propertyNode.getAttributes(
 						).getNamedItem(
 							"value"
@@ -147,18 +149,16 @@ public class ImportResults {
 		}
 
 		JSONObject responseJSONObject = HttpUtil.invoke(
-					new JSONObject(
-						map
-					).toString(),
-					"testraybuilds", null, null, HttpInvoker.HttpMethod.POST);
+				new JSONObject(
+					map
+				).toString(),
+				"testraybuilds", null, null, HttpInvoker.HttpMethod.POST);
 
 		long buildId = responseJSONObject.getLong("id");
 
 		if(runName != null){
-
-				long runId = fetchOrAddTestrayRun(buildId,runName);					
+			long runId = fetchOrAddTestrayRun(buildId,runName);
 		}
-
 	}
 
 	public void addTestrayCase(long projectId, Document document)

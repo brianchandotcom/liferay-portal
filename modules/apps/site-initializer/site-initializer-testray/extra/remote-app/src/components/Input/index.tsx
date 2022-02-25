@@ -31,7 +31,6 @@ const Input: React.FC<InputProps> = ({
 	name,
 	id = name,
 	required = false,
-	...otherProps
 }) => (
 	<>
 		{label && (
@@ -46,7 +45,7 @@ const Input: React.FC<InputProps> = ({
 			</label>
 		)}
 
-		<ClayInput id={id} name={name} type="text" {...otherProps} />
+		<ClayInput id={id} name={name} type="text" />
 
 		{error && <InputWarning>{error}</InputWarning>}
 	</>

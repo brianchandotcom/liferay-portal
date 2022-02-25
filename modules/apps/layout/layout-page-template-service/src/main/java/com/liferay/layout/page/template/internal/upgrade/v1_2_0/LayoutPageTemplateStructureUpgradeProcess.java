@@ -18,11 +18,11 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.util.LayoutPageTemplateStructureHelperUtil;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -61,23 +61,44 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 		_upgradeLayouts();
 	}
 
-	private JSONObject _generateLayoutPageTemplateStructureData(
+	private String _generateLayoutPageTemplateStructureData(
 		long groupId, long classNameId, long classPK) {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinks(
 				groupId, classNameId, classPK);
 
-		return LayoutPageTemplateStructureHelperUtil.
-			generateContentLayoutStructure(fragmentEntryLinks);
+		if (fragmentEntryLinks.isEmpty()) {
+			LayoutStructure layoutStructure = new LayoutStructure();
+
+			layoutStructure.addRootLayoutStructureItem();
+
+			return layoutStructure.toString();
+		}
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		LayoutStructureItem containerStyledLayoutStructureItem =
+			layoutStructure.addContainerStyledLayoutStructureItem(
+				rootLayoutStructureItem.getItemId(), 0);
+
+		for (int i = 0; i < fragmentEntryLinks.size(); i++) {
+			FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(i);
+
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				fragmentEntryLink.getFragmentEntryLinkId(),
+				containerStyledLayoutStructureItem.getItemId(), i);
+		}
+
+		return layoutStructure.toString();
 	}
 
 	private void _updateLayoutPageTemplateStructure(
 		long groupId, long companyId, long userId, String userName,
 		Timestamp createDate, long classNameId, long classPK) {
-
-		JSONObject jsonObject = _generateLayoutPageTemplateStructureData(
-			groupId, classNameId, classPK);
 
 		String sql = StringBundler.concat(
 			"insert into LayoutPageTemplateStructure (uuid_, ",
@@ -98,7 +119,10 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setTimestamp(8, createDate);
 			preparedStatement.setLong(9, classNameId);
 			preparedStatement.setLong(10, classPK);
-			preparedStatement.setString(11, jsonObject.toString());
+			preparedStatement.setString(
+				11,
+				_generateLayoutPageTemplateStructureData(
+					groupId, classNameId, classPK));
 
 			preparedStatement.executeUpdate();
 		}

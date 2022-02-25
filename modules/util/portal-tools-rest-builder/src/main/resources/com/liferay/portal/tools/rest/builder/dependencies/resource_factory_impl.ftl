@@ -253,32 +253,22 @@ public class ${schemaName}ResourceFactoryImpl implements ${schemaName}Resource.F
 	}
 
 	private static Function<InvocationHandler, ${schemaName}Resource> _getProxyProviderFunction() {
-
-		ClassLoader classLoader = ${schemaName}Resource.class.getClassLoader();
-
-		if (classLoader == null) {
-			classLoader = ClassLoader.getSystemClassLoader();
-		}
-
-		Class<?> proxyClass = ProxyUtil.getProxyClass(classLoader, ${schemaName}Resource.class);
+		Class<?> proxyClass = ProxyUtil.getProxyClass(${schemaName}Resource.class.getClassLoader(), ${schemaName}Resource.class);
 
 		try {
-		Constructor<${schemaName}Resource> constructor =
-			(Constructor<${schemaName}Resource>)proxyClass.getConstructor(InvocationHandler.class);
+			Constructor<${schemaName}Resource> constructor = (Constructor<${schemaName}Resource>)proxyClass.getConstructor(InvocationHandler.class);
 
-				return invocationHandler -> {
-					try {
-						return constructor.newInstance(invocationHandler);
-					}
-					catch (ReflectiveOperationException
-					reflectiveOperationException) {
-
-						throw new InternalError(reflectiveOperationException);
-					}
-				};
-			}
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException reflectiveOperationException) {
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
 		catch (NoSuchMethodException noSuchMethodException) {
-				throw new InternalError(noSuchMethodException);
+			throw new InternalError(noSuchMethodException);
 		}
 	}
 

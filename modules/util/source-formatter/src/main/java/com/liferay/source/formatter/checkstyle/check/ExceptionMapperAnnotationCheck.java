@@ -54,38 +54,8 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
 			detailAST, "Component");
 
-		if (annotationDetailAST == null) {
-			return;
-		}
-
-		DetailAST serviceAnnotationMemberValuePairDetailAST =
-			getAnnotationMemberValuePairDetailAST(
-				annotationDetailAST, "service");
-
-		if (serviceAnnotationMemberValuePairDetailAST == null) {
-			return;
-		}
-
-		DetailAST exprDetailAST =
-			serviceAnnotationMemberValuePairDetailAST.findFirstToken(
-				TokenTypes.EXPR);
-
-		if (exprDetailAST == null) {
-			return;
-		}
-
-		DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
-
-		if ((firstChildDetailAST == null) ||
-			(firstChildDetailAST.getType() != TokenTypes.DOT)) {
-
-			return;
-		}
-
-		FullIdent fullIdent = FullIdent.createFullIdent(firstChildDetailAST);
-
-		if (!Objects.equals(
-				fullIdent.getText(), _OSGI_SERVICE_NAME + ".class")) {
+		if ((annotationDetailAST == null) ||
+			!_isExceptionMapperService(annotationDetailAST)) {
 
 			return;
 		}
@@ -138,6 +108,42 @@ public class ExceptionMapperAnnotationCheck extends BaseCheck {
 		}
 
 		return null;
+	}
+
+	private boolean _isExceptionMapperService(DetailAST annotationDetailAST) {
+		DetailAST serviceAnnotationMemberValuePairDetailAST =
+			getAnnotationMemberValuePairDetailAST(
+				annotationDetailAST, "service");
+
+		if (serviceAnnotationMemberValuePairDetailAST == null) {
+			return false;
+		}
+
+		DetailAST exprDetailAST =
+			serviceAnnotationMemberValuePairDetailAST.findFirstToken(
+				TokenTypes.EXPR);
+
+		if (exprDetailAST == null) {
+			return false;
+		}
+
+		DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
+
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.DOT)) {
+
+			return false;
+		}
+
+		FullIdent fullIdent = FullIdent.createFullIdent(firstChildDetailAST);
+
+		if (!Objects.equals(
+				fullIdent.getText(), _OSGI_SERVICE_NAME + ".class")) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _MSG_INCORRECT_OSGI_JAXRS_MAME =

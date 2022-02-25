@@ -56,13 +56,13 @@ definition {
 		var key_changeTitle = "${changeTitle}";
 
 		if ("${conflictingChanges}" == "true") {
-			if (IsElementPresent(locator1 = "PublicationsChanges#DISCARD_CHANGE_BUTTON")) {
-				Click(locator1 = "PublicationsChanges#DISCARD_CHANGE_BUTTON");
-			}
-			else if (IsElementPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_DROPDOWN")) {
+			if (IsElementPresent(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_DROPDOWN")) {
 				Click(locator1 = "PublicationsChanges#PUBLICATIONS_CHANGE_DROPDOWN");
 
 				MenuItem.click(menuItem = "Discard Change");
+			}
+			else if (IsElementPresent(locator1 = "PublicationsChanges#DISCARD_CHANGE_BUTTON")) {
+				Click(locator1 = "PublicationsChanges#DISCARD_CHANGE_BUTTON");
 			}
 			else {
 				MenuItem.click(menuItem = "Discard Change");

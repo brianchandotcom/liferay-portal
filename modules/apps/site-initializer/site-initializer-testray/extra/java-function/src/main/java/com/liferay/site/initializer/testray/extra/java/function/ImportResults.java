@@ -72,7 +72,7 @@ public class ImportResults {
 		_documentBuilder = _documentBuilderFactory.newDocumentBuilder();
 	}
 
-	public void addTestrayProperties(long projectId, Document document) {
+	public void addTestrayBuild(long projectId, Document document) {
 		String runName = null;
 		
 		Map<String, String> map = new HashMap<>();
@@ -542,7 +542,7 @@ public class ImportResults {
 
 			long projectId = addTestrayProject(document);
 
-			addTestrayProperties(projectId, document);
+			addTestrayBuild(projectId, document);
 			addTestrayCase(projectId, document);
 		}
 	}

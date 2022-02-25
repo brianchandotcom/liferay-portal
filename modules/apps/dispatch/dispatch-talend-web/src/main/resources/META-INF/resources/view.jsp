@@ -74,12 +74,19 @@ DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(Dispatch
 
 <aui:script>
 	AUI().ready((A) => {
-		A.one('#<portlet:namespace />talendArchiveFileRemove').on('click', (event) => {
-			event.preventDefault();
+		A.one('#<portlet:namespace />talendArchiveFileRemove').on(
+			'click',
+			(event) => {
+				event.preventDefault();
 
-			A.one('#<portlet:namespace />talendArchiveFile').removeClass('hide');
+				A.one('#<portlet:namespace />talendArchiveFile').removeClass(
+					'hide'
+				);
 
-			A.one('#<portlet:namespace />talendArchiveFileName').addClass('hide');
-		});
+				A.one('#<portlet:namespace />talendArchiveFileName').addClass(
+					'hide'
+				);
+			}
+		);
 	});
 </aui:script>

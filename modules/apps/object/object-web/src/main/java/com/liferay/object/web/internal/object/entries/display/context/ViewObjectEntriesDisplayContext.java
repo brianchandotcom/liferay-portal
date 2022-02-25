@@ -15,13 +15,18 @@
 package com.liferay.object.web.internal.object.entries.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSSortItemBuilder;
+import com.liferay.frontend.data.set.model.FDSSortItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectView;
+import com.liferay.object.model.ObjectViewSortColumn;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -59,12 +64,14 @@ public class ViewObjectEntriesDisplayContext {
 		HttpServletRequest httpServletRequest,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectScopeProvider objectScopeProvider,
+		ObjectViewLocalService objectViewLocalService,
 		PortletResourcePermission portletResourcePermission,
 		String restContextPath) {
 
 		_httpServletRequest = httpServletRequest;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectScopeProvider = objectScopeProvider;
+		_objectViewLocalService = objectViewLocalService;
 		_portletResourcePermission = portletResourcePermission;
 
 		_apiURL = "/o" + restContextPath;
@@ -158,6 +165,28 @@ public class ViewObjectEntriesDisplayContext {
 		return _objectRequestHelper.getPortletId();
 	}
 
+	public FDSSortItemList getFDSSortItemList() {
+		ObjectView objectView = _objectViewLocalService.getDefaultObjectView(
+			_objectDefinition.getObjectDefinitionId());
+
+		FDSSortItemList fdsSortItemList = new FDSSortItemList();
+
+		if (objectView != null) {
+			for (ObjectViewSortColumn objectViewSortColumn :
+					objectView.getObjectViewSortColumns()) {
+
+				fdsSortItemList.add(
+					FDSSortItemBuilder.setDirection(
+						objectViewSortColumn.getSortOrder()
+					).setKey(
+						objectViewSortColumn.getObjectFieldName()
+					).build());
+			}
+		}
+
+		return fdsSortItemList;
+	}
+
 	public ObjectDefinition getObjectDefinition() {
 		if (_objectDefinition != null) {
 			return _objectDefinition;
@@ -246,6 +275,7 @@ public class ViewObjectEntriesDisplayContext {
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectRequestHelper _objectRequestHelper;
 	private final ObjectScopeProvider _objectScopeProvider;
+	private final ObjectViewLocalService _objectViewLocalService;
 	private final PortletResourcePermission _portletResourcePermission;
 
 }

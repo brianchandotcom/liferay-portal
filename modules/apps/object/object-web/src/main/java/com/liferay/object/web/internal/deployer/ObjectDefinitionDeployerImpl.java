@@ -221,7 +221,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				new ObjectEntriesPortlet(
 					objectDefinition.getObjectDefinitionId(),
 					_objectDefinitionLocalService, _objectFieldLocalService,
-					_objectScopeProviderRegistry, _portal,
+					_objectScopeProviderRegistry, _objectViewLocalService,
+					_portal,
 					_getPortletResourcePermission(
 						objectDefinition.getResourceName())),
 				HashMapDictionaryBuilder.<String, Object>put(

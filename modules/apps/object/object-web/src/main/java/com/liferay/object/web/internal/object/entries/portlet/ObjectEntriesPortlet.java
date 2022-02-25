@@ -18,6 +18,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.entries.display.context.ViewObjectEntriesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -41,13 +42,15 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 		long objectDefinitionId,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
-		ObjectScopeProviderRegistry objectScopeProviderRegistry, Portal portal,
+		ObjectScopeProviderRegistry objectScopeProviderRegistry,
+		ObjectViewLocalService objectViewLocalService, Portal portal,
 		PortletResourcePermission portletResourcePermission) {
 
 		_objectDefinitionId = objectDefinitionId;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
+		_objectViewLocalService = objectViewLocalService;
 		_portal = portal;
 		_portletResourcePermission = portletResourcePermission;
 	}
@@ -71,7 +74,7 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 				_objectFieldLocalService,
 				_objectScopeProviderRegistry.getObjectScopeProvider(
 					objectDefinition.getScope()),
-				_portletResourcePermission,
+				_objectViewLocalService, _portletResourcePermission,
 				objectDefinition.getRESTContextPath()));
 
 		super.render(renderRequest, renderResponse);
@@ -81,6 +84,7 @@ public class ObjectEntriesPortlet extends MVCPortlet {
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
+	private final ObjectViewLocalService _objectViewLocalService;
 	private final Portal _portal;
 	private final PortletResourcePermission _portletResourcePermission;
 

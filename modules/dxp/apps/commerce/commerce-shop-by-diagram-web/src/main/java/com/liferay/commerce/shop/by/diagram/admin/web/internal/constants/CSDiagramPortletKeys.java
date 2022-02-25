@@ -12,14 +12,15 @@
  *
  */
 
-package com.liferay.commerce.shop.by.diagram.admin.web.internal.frontend.taglib.clay.data.set.constants;
+package com.liferay.commerce.shop.by.diagram.admin.web.internal.constants;
 
 /**
- * @author Andrea Sbarra
+ * @author Marko Cikos
  */
-public class CSDiagramDataSetConstants {
+public class CSDiagramPortletKeys {
 
-	public static final String CS_DIAGRAM_MAPPED_PRODUCTS_DATA_SET_KEY =
-		"csDiagramMappedProducts";
+	public static final String CS_DIAGRAM =
+		"com_liferay_commerce_shop_by_diagram_admin_web_portlet_" +
+			"CSDiagramPortlet";
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.shipment.internal.resource.v1_0;
 
 import com.liferay.commerce.constants.CommerceShipmentConstants;
+import com.liferay.commerce.exception.NoSuchShipmentException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.CommerceAddressService;
@@ -53,6 +54,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false,
@@ -68,8 +70,45 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 	}
 
 	@Override
+	public void deleteShipmentByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceShipment commerceShipment =
+			_commerceShipmentService.fetchCommerceShipment(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipment == null) {
+			throw new NoSuchShipmentException(
+				"Unable to find shipment with external reference code " +
+					externalReferenceCode);
+		}
+
+		_commerceShipmentService.deleteCommerceShipment(
+			commerceShipment.getCommerceShipmentId(), Boolean.FALSE);
+	}
+
+	@Override
 	public Shipment getShipment(Long shipmentId) throws Exception {
 		return _toShipment(shipmentId);
+	}
+
+	@Override
+	public Shipment getShipmentByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceShipment commerceShipment =
+			_commerceShipmentService.fetchCommerceShipment(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipment == null) {
+			throw new NoSuchShipmentException(
+				"Unable to find shipment with external reference code " +
+					externalReferenceCode);
+		}
+
+		return _toShipment(commerceShipment);
 	}
 
 	@Override
@@ -102,61 +141,30 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 	public Shipment patchShipment(Long shipmentId, Shipment shipment)
 		throws Exception {
 
-		CommerceShipment commerceShipment =
-			_commerceShipmentService.getCommerceShipment(shipmentId);
-
-		_commerceShipmentService.updateCarrierDetails(
-			commerceShipment.getCommerceShipmentId(),
-			GetterUtil.get(
-				shipment.getCarrier(), commerceShipment.getCarrier()),
-			GetterUtil.get(
-				shipment.getTrackingNumber(),
-				commerceShipment.getTrackingNumber()));
-
-		Date expectedDate = shipment.getExpectedDate();
-
-		if (expectedDate != null) {
-			Calendar calendar = CalendarFactoryUtil.getCalendar(
-				expectedDate.getTime());
-
-			int expectedDay = calendar.get(Calendar.DAY_OF_MONTH);
-			int expectedMonth = calendar.get(Calendar.MONTH);
-			int expectedYear = calendar.get(Calendar.YEAR);
-			int expectedHour = calendar.get(Calendar.HOUR_OF_DAY);
-			int expectedMinute = calendar.get(Calendar.MINUTE);
-
-			_commerceShipmentService.updateExpectedDate(
-				shipmentId, expectedMonth, expectedDay, expectedYear,
-				expectedHour, expectedMinute);
-		}
-
-		ShippingAddress shippingAddress = shipment.getShippingAddress();
-
-		if (shippingAddress != null) {
-			ShippingAddressUtil.updateShippingAddress(
-				_commerceAddressService, _commerceShipmentService,
-				commerceShipment, _countryService, _regionService,
-				shippingAddress, _serviceContextHelper);
-		}
-
-		Date shippingDate = shipment.getShippingDate();
-
-		if (shippingDate != null) {
-			Calendar calendar = CalendarFactoryUtil.getCalendar(
-				shippingDate.getTime());
-
-			int shippingDay = calendar.get(Calendar.DAY_OF_MONTH);
-			int shippingMonth = calendar.get(Calendar.MONTH);
-			int shippingYear = calendar.get(Calendar.YEAR);
-			int shippingHour = calendar.get(Calendar.HOUR_OF_DAY);
-			int shippingMinute = calendar.get(Calendar.MINUTE);
-
-			_commerceShipmentService.updateShippingDate(
-				shipmentId, shippingMonth, shippingDay, shippingYear,
-				shippingHour, shippingMinute);
-		}
+		_updateCommerceShipment(
+			_commerceShipmentService.getCommerceShipment(shipmentId), shipment);
 
 		return _toShipment(shipmentId);
+	}
+
+	@Override
+	public Shipment patchShipmentByExternalReferenceCode(
+			String externalReferenceCode, Shipment shipment)
+		throws Exception {
+
+		CommerceShipment commerceShipment =
+			_commerceShipmentService.fetchCommerceShipment(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipment == null) {
+			throw new NoSuchShipmentException(
+				"Unable to find shipment with external reference code " +
+					externalReferenceCode);
+		}
+
+		_updateCommerceShipment(commerceShipment, shipment);
+
+		return _toShipment(commerceShipment);
 	}
 
 	@Override
@@ -166,7 +174,7 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 
 		CommerceShipment commerceShipment =
 			_commerceShipmentService.addCommerceShipment(
-				commerceOrder.getGroupId(),
+				shipment.getExternalReferenceCode(), commerceOrder.getGroupId(),
 				commerceOrder.getCommerceAccountId(),
 				commerceOrder.getShippingAddressId(),
 				commerceOrder.getCommerceShippingMethodId(),
@@ -174,6 +182,69 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 				_serviceContextHelper.getServiceContext(contextUser));
 
 		return _toShipment(commerceShipment.getCommerceShipmentId());
+	}
+
+	@Override
+	public Shipment postShipmentByExternalReferenceCodeStatusDelivered(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceShipment commerceShipment =
+			_commerceShipmentService.fetchCommerceShipment(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipment == null) {
+			throw new NoSuchShipmentException(
+				"Unable to find shipment with external reference code " +
+					externalReferenceCode);
+		}
+
+		return _toShipment(
+			_commerceShipmentService.updateStatus(
+				commerceShipment.getCommerceShipmentId(),
+				CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED));
+	}
+
+	@Override
+	public Shipment postShipmentByExternalReferenceCodeStatusFinishProcessing(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceShipment commerceShipment =
+			_commerceShipmentService.fetchCommerceShipment(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipment == null) {
+			throw new NoSuchShipmentException(
+				"Unable to find shipment with external reference code " +
+					externalReferenceCode);
+		}
+
+		return _toShipment(
+			_commerceShipmentService.updateStatus(
+				commerceShipment.getCommerceShipmentId(),
+				CommerceShipmentConstants.SHIPMENT_STATUS_READY_TO_BE_SHIPPED));
+	}
+
+	@Override
+	public Shipment postShipmentByExternalReferenceCodeStatusShipped(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceShipment commerceShipment =
+			_commerceShipmentService.fetchCommerceShipment(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipment == null) {
+			throw new NoSuchShipmentException(
+				"Unable to find shipment with external reference code " +
+					externalReferenceCode);
+		}
+
+		return _toShipment(
+			_commerceShipmentService.updateStatus(
+				commerceShipment.getCommerceShipmentId(),
+				CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED));
 	}
 
 	@Override
@@ -203,6 +274,33 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 		return _toShipment(
 			_commerceShipmentService.updateStatus(
 				shipmentId, CommerceShipmentConstants.SHIPMENT_STATUS_SHIPPED));
+	}
+
+	@Override
+	public Shipment putShipmentByExternalReferenceCode(
+			String externalReferenceCode, Shipment shipment)
+		throws Exception {
+
+		CommerceShipment commerceShipment =
+			_commerceShipmentService.fetchCommerceShipment(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipment == null) {
+			CommerceOrder commerceOrder =
+				_commerceOrderService.getCommerceOrder(shipment.getOrderId());
+
+			commerceShipment = _commerceShipmentService.addCommerceShipment(
+				shipment.getExternalReferenceCode(), commerceOrder.getGroupId(),
+				commerceOrder.getCommerceAccountId(),
+				commerceOrder.getShippingAddressId(),
+				commerceOrder.getCommerceShippingMethodId(),
+				commerceOrder.getShippingOptionName(),
+				_serviceContextHelper.getServiceContext(contextUser));
+		}
+
+		_updateCommerceShipment(commerceShipment, shipment);
+
+		return _toShipment(commerceShipment);
 	}
 
 	private Map<String, Map<String, String>> _getActions(
@@ -248,6 +346,62 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 				_getActions(commerceShipment), _dtoConverterRegistry,
 				commerceShipmentId, contextAcceptLanguage.getPreferredLocale(),
 				contextUriInfo, contextUser));
+	}
+
+	private void _updateCommerceShipment(
+			CommerceShipment commerceShipment, Shipment shipment)
+		throws Exception {
+
+		_commerceShipmentService.updateCarrierDetails(
+			commerceShipment.getCommerceShipmentId(),
+			GetterUtil.get(
+				shipment.getCarrier(), commerceShipment.getCarrier()),
+			GetterUtil.get(
+				shipment.getTrackingNumber(),
+				commerceShipment.getTrackingNumber()));
+
+		Date expectedDate = shipment.getExpectedDate();
+
+		if (expectedDate != null) {
+			Calendar calendar = CalendarFactoryUtil.getCalendar(
+				expectedDate.getTime());
+
+			int expectedDay = calendar.get(Calendar.DAY_OF_MONTH);
+			int expectedMonth = calendar.get(Calendar.MONTH);
+			int expectedYear = calendar.get(Calendar.YEAR);
+			int expectedHour = calendar.get(Calendar.HOUR_OF_DAY);
+			int expectedMinute = calendar.get(Calendar.MINUTE);
+
+			_commerceShipmentService.updateExpectedDate(
+				commerceShipment.getCommerceShipmentId(), expectedMonth,
+				expectedDay, expectedYear, expectedHour, expectedMinute);
+		}
+
+		ShippingAddress shippingAddress = shipment.getShippingAddress();
+
+		if (shippingAddress != null) {
+			ShippingAddressUtil.updateShippingAddress(
+				_commerceAddressService, _commerceShipmentService,
+				commerceShipment, _countryService, _regionService,
+				shippingAddress, _serviceContextHelper);
+		}
+
+		Date shippingDate = shipment.getShippingDate();
+
+		if (shippingDate != null) {
+			Calendar calendar = CalendarFactoryUtil.getCalendar(
+				shippingDate.getTime());
+
+			int shippingDay = calendar.get(Calendar.DAY_OF_MONTH);
+			int shippingMonth = calendar.get(Calendar.MONTH);
+			int shippingYear = calendar.get(Calendar.YEAR);
+			int shippingHour = calendar.get(Calendar.HOUR_OF_DAY);
+			int shippingMinute = calendar.get(Calendar.MINUTE);
+
+			_commerceShipmentService.updateShippingDate(
+				commerceShipment.getCommerceShipmentId(), shippingMonth,
+				shippingDay, shippingYear, shippingHour, shippingMinute);
+		}
 	}
 
 	@Reference

@@ -8,26 +8,6 @@
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Testray Project Id"
-			},
-			"name": "testrayProjectId",
-			"required": false,
-			"type": "Long"
-		},
-		{
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Testray Team Id"
-			},
-			"name": "testrayTeamId",
-			"required": false,
-			"type": "Long"
-		},
-		{
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
 				"en_US": "Name"
 			},
 			"name": "name",

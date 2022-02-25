@@ -31,7 +31,7 @@ type ListViewProps<T = any> = {
 	query: TypedDocumentNode;
 	tableProps: Omit<TableProps, 'items'>;
 	transformData: (data: T) => LiferayQueryResponse<T>;
-	variables: any;
+	variables?: any;
 };
 
 const ListView: React.FC<ListViewProps> = ({

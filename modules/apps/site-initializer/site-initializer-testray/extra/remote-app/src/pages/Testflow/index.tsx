@@ -19,7 +19,6 @@ import ListView from '../../components/ListView/ListView';
 import ProgressBar from '../../components/ProgressBar/';
 import StatusBadge from '../../components/StatusBadge';
 import {getTestrayTasks} from '../../graphql/queries/testrayTask';
-import {Liferay} from '../../services/liferay/liferay';
 import {TEST_STATUS_LABEL} from '../../util/constants';
 
 const TestFlow = () => (
@@ -112,7 +111,6 @@ const TestFlow = () => (
 				navigateTo: (item) => `/testflow/${item.id}`,
 			}}
 			transformData={(data) => data?.testrayTasks || {}}
-			variables={{scopeKey: Liferay.ThemeDisplay.getScopeGroupId()}}
 		/>
 	</Container>
 );

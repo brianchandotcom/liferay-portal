@@ -34,7 +34,6 @@ import {
 	getTestrayTaskRest,
 } from '../../graphql/queries/testrayTask';
 import useHeader from '../../hooks/useHeader';
-import {Liferay} from '../../services/liferay/liferay';
 import {SUBTASK_STATUS, TEST_STATUS_LABEL} from '../../util/constants';
 import {routines, tasks} from '../../util/mock';
 
@@ -57,11 +56,7 @@ const TestFlowTasks: React.FC = () => {
 
 	const {data: dataTestraySubTasks} = useQuery<
 		CTypePagination<'testraySubTasks', TestraySubTask>
-	>(getTestraySubTasks, {
-		variables: {
-			scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
-		},
-	});
+	>(getTestraySubTasks);
 
 	const testrayTask = data?.testrayTask;
 	// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -242,9 +237,6 @@ const TestFlowTasks: React.FC = () => {
 						navigateTo: () => '/testflow/subtasks',
 					}}
 					transformData={(data) => data?.c?.testraySubTasks}
-					variables={{
-						scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
-					}}
 				/>
 			</Container>
 		</>

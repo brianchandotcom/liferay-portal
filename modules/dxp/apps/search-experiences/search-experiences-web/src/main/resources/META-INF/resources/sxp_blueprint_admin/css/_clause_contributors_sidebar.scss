@@ -1,11 +1,13 @@
 .clause-contributors-sidebar {
 	width: $clauseContributorsSidebarWidth;
 
-	.clause-contributors-list {
-		overflow-y: scroll;
+	.clause-contributors-description {
+		padding: 8px 4px;
 	}
 
 	.list-group {
+		margin-bottom: 0;
+
 		.list-group-header {
 			&:first-child {
 				border-top-left-radius: 0;
@@ -31,7 +33,7 @@
 		border-bottom: 0;
 
 		.container-fluid {
-			padding-left: 12px;
+			padding-left: 4px;
 			padding-right: 12px;
 		}
 

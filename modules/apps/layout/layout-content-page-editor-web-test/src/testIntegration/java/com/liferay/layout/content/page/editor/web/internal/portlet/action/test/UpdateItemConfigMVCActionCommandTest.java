@@ -149,7 +149,7 @@ public class UpdateItemConfigMVCActionCommandTest {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
 				fetchLayoutPageTemplateStructure(
-					_layout.getGroupId(), _layout.getPlid(), true);
+					_layout.getGroupId(), _layout.getPlid());
 
 		return LayoutStructure.of(
 			layoutPageTemplateStructure.getData(

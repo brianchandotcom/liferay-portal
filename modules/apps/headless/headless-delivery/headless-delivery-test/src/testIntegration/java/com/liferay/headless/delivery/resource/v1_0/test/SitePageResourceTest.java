@@ -259,7 +259,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				LayoutPageTemplateStructure layoutPageTemplateStructure =
 					_layoutPageTemplateStructureLocalService.
 						fetchLayoutPageTemplateStructure(
-							testGroup.getGroupId(), layout.getPlid(), true);
+							testGroup.getGroupId(), layout.getPlid());
 
 				LayoutStructure layoutStructure = LayoutStructure.of(
 					layoutPageTemplateStructure.getData(0));

@@ -149,7 +149,7 @@ public class PublishLayoutMVCActionCommandTest {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					_group.getGroupId(), layout.getPlid(), true);
+					_group.getGroupId(), layout.getPlid());
 
 		return LayoutStructure.of(layoutPageTemplateStructure.getData(0));
 	}

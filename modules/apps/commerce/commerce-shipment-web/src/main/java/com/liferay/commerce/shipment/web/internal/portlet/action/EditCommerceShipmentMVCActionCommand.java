@@ -134,7 +134,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "commerceShippingOptionName");
 
 		return _commerceShipmentService.addCommerceShipment(
-			groupId, commerceAccountId, commerceAddressId,
+			null, groupId, commerceAccountId, commerceAddressId,
 			commerceShippingMethodId, commerceShippingOptionName,
 			serviceContext);
 	}
@@ -153,7 +153,8 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long commerceOrderItemId : commerceOrderItemIds) {
 			_commerceShipmentItemService.addCommerceShipmentItem(
-				commerceShipmentId, commerceOrderItemId, 0, 0, serviceContext);
+				null, commerceShipmentId, commerceOrderItemId, 0, 0,
+				serviceContext);
 		}
 	}
 

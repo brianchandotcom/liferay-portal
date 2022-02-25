@@ -1989,6 +1989,12 @@ definition {
 			entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "${currentDate}");
+
+		AssertTextEquals.assertPartialText(
+			cellPosition = "6",
+			entryTitle = "Test Blueprint",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "${currentDate}");
 	}
 
 	test ViewBlueprintsConfigurationValidation {
@@ -2326,6 +2332,62 @@ definition {
 		AssertTextEquals.assertPartialText(
 			locator1 = "Modal#BODY",
 			value1 = "Boost All Keywords Match");
+	}
+
+	test ViewElementsAdminTableValues {
+		Blueprints.openBlueprintsAdmin();
+
+		Navigator.gotoNavItem(navItem = "Elements");
+
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "Test Element");
+
+		PortletEntry.inputDescription(description = "Test Element Description");
+
+		Button.click(button = "Create");
+
+		PortletEntry.save();
+
+		AssertTextEquals(
+			cellPosition = "1",
+			entryTitle = "Test Element",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "Test Element");
+
+		AssertTextEquals(
+			cellPosition = "2",
+			entryTitle = "Test Element",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "Test Element Description");
+
+		var elementId = Blueprints.getElementID(title = "Test Element");
+
+		AssertTextEquals(
+			cellPosition = "3",
+			entryTitle = "Test Element",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "${elementId}");
+
+		AssertTextEquals(
+			cellPosition = "4",
+			entryTitle = "Test Element",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "Test Test");
+
+		var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
+
+		AssertTextEquals.assertPartialText(
+			cellPosition = "5",
+			entryTitle = "Test Element",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "${currentDate}");
+
+		AssertTextEquals.assertPartialText(
+			cellPosition = "6",
+			entryTitle = "Test Element",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
+			value1 = "${currentDate}");
 	}
 
 	test ViewExpandedAndCollapsedBlueprintsPreviewResult {

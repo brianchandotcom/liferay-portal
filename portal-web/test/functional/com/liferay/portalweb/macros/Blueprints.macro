@@ -126,14 +126,10 @@ definition {
 	macro getBlueprintID {
 		Variables.assertDefined(parameterList = "${title}");
 
-		var groupId = JSONGroupAPI._getGroupIdByName(
-			groupName = "Global",
-			site = "true");
-
 		var portalURL = JSONCompany.getPortalURL();
 
 		var curl = '''
-				${portalURL}/o/search-experiences-rest/v1.0/sxp-blueprints \
+				${portalURL}/o/search-experiences-rest/v1.0/sxp-blueprints?search=${title} \
 				-H 'accept: application/json' \
 				-u test@liferay.com:test
 		''';
@@ -142,6 +138,23 @@ definition {
 		echo("## ID for Blueprint ${title}: ${blueprintId}");
 
 		return "${blueprintId}";
+	}
+
+	macro getElementID {
+		Variables.assertDefined(parameterList = "${title}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var curl = '''
+				${portalURL}/o/search-experiences-rest/v1.0/sxp-elements?search=${title} \
+				-H 'accept: application/json' \
+				-u test@liferay.com:test
+		''';
+		var elementId = JSONCurlUtil.get("${curl}", "$.items[?(@['title'] == '${title}')]['id']");
+
+		echo("## ID for Element ${title}: ${elementId}");
+
+		return "${elementId}";
 	}
 
 	macro gotoEntryMenuItem {

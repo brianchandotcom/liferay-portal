@@ -40,7 +40,7 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-87055."
+	@description = "This is a use case for LPS-87055. Adding a page template with an already used name fails with a clear error message."
 	@priority = "3"
 	test AddPageTemplatesWithDuplicateNameViaSiteTemplate {
 		SiteTemplates.addCP(
@@ -94,7 +94,7 @@ definition {
 			siteTemplate = "true");
 	}
 
-	@description = "This is a use case for LPS-51432 and LPS-95113."
+	@description = "This is a use case for LPS-51432 and LPS-95113. Pages associated with a site template cannot be deleted and removing a page on a site template will delete the same page on the connected sites if propagation is enabled."
 	@priority = "4"
 	test AdminCanNotAddASubpageOfAChildPageLinkedToSiteTemplatePage {
 		property portal.acceptance = "true";
@@ -169,6 +169,7 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 	}
 
+	@description = "User can edit the permission of a page on site templates both in the pages menu and on the page itself."
 	@priority = "4"
 	test EditSiteTemplateGuestPermissions {
 		SiteTemplates.addCP(siteTemplateName = "${siteTemplateName}");
@@ -207,8 +208,9 @@ definition {
 			roleTitle = "Guest");
 	}
 
+	@description = "Site templates with older versions can be imported."
 	@priority = "4"
-	test ImportOldSchemaVerion {
+	test ImportOldSchemaVersion {
 		property test.name.skip.portal.instance = "SitetemplatesUsecase#ImportOldSchemaVerion";
 
 		ApplicationsMenu.gotoPortlet(
@@ -222,7 +224,7 @@ definition {
 			uploadFrom = "dependencies");
 	}
 
-	@description = "This is a use case for LPS-81629"
+	@description = "This is a use case for LPS-42067. Portlet preferences doesn't change when the same portlet with the same name is created on different pages. "
 	@priority = "4"
 	test PortletPreferencesPersistWithSiteTemplateWhenSamePortletAddedOnSecondPage {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -296,6 +298,7 @@ definition {
 			roleTitle = "Guest");
 	}
 
+	@description = "Site admin should not be able to delete pages that were created from site templates."
 	@priority = "3"
 	test SiteAdminCannotDeletePagesThatWereCreatedBySiteTemplates {
 		SiteTemplates.addCP(siteTemplateName = "Site Template Name");
@@ -326,6 +329,7 @@ definition {
 			pageName = "Public Pages");
 	}
 
+	@description = "LRQA-73456. Site template preferences and contents are inherited on templates which are connected to user groups."
 	@priority = "4"
 	test SitesDynamicTemplateInheritance {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -388,6 +392,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
+	@description = "This is a use case for LRQA-73458. The preferences and contents of a personal site will be inherited from site templates."
 	@priority = "3"
 	test SitesTemplateResourceInheritance {
 		property portal.release = "false";
@@ -461,7 +466,7 @@ definition {
 			userEmailAddress = "test@liferay.com");
 	}
 
-	@description = "This is a use case for LPS-86487."
+	@description = "This is a use case for LPS-86487. Page links on sites which were created in site templates should redirect correctly to other pages."
 	@priority = "4"
 	test SiteTemplatePageLinkInWebContentRedirectCorrectly {
 		property portal.acceptance = "true";
@@ -541,7 +546,7 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
-	@description = "This is a use case for LPS-74081."
+	@description = "This is a use case for LPS-74081. Site pages with numeric friendly URL's can be imported from LAR files."
 	@priority = "4"
 	test ViewImportedSitePageWithNumericFriendlyURL {
 		var portalURL = PropsUtil.get("portal.url");
@@ -638,7 +643,7 @@ definition {
 			pageNameList = "Home,1,2,Hello");
 	}
 
-	@description = "This is a use case for LPS-107677."
+	@description = "This is a use case for LPS-107677. Additional info button should not be present on a newly imported site when it has no difference compared to the site template it was created from."
 	@priority = "3"
 	test ViewImportedSitePageWithoutInfoMessage {
 		SiteTemplates.addCP(
@@ -696,6 +701,7 @@ definition {
 		SiteTemplates.viewNoInfoMessage();
 	}
 
+	@description = "Portlets on the site templates should give guests view permission by default."
 	@priority = "3"
 	test ViewInlineGuestPermissionsInSiteTemplatesViaWCD {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -730,7 +736,7 @@ definition {
 			roleTitle = "Guest");
 	}
 
-	@description = "This is a use case for LPS-92663."
+	@description = "This is a use case for LPS-92663. Navigation menus are copied when a site is created from a site template."
 	@priority = "4"
 	test ViewNavigationMenuCopyFromSitesTemplate {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");
@@ -825,7 +831,7 @@ definition {
 			locator1 = "Home#PAGE");
 	}
 
-	@description = "This is a use case for LPS-113145."
+	@description = "This is a use case for LPS-113145. Portlet configuration is copied when a site is created from a site template."
 	@priority = "3"
 	test ViewPortletConfigurationOfGlobalTemplatesPageCopyFromSitesTemplate {
 		var siteName = TestCase.getSiteName(siteName = "${siteName}");

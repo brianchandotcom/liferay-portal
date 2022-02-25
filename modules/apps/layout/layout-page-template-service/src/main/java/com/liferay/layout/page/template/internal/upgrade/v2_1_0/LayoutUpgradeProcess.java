@@ -99,14 +99,6 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 			privateLayout, 0, titleMap, titleMap, null, null, null, layoutType,
 			StringPool.BLANK, true, true, new HashMap<>(), serviceContext);
 
-		_layoutLocalService.addLayout(
-			layout.getUserId(), layout.getGroupId(), privateLayout,
-			layout.getParentLayoutId(), PortalUtil.getClassNameId(Layout.class),
-			layout.getPlid(), layout.getNameMap(), layout.getTitleMap(),
-			layout.getDescriptionMap(), layout.getKeywordsMap(),
-			layout.getRobotsMap(), layout.getType(), StringPool.BLANK, true,
-			true, Collections.emptyMap(), 0, serviceContext);
-
 		return layout.getPlid();
 	}
 

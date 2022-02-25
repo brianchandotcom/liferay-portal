@@ -879,15 +879,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			null, null, layoutType, typeSettings, true, true, new HashMap<>(),
 			masterLayoutPlid, serviceContext);
 
-		serviceContext.setModifiedDate(layout.getModifiedDate());
-
-		Layout draftLayout = _layoutLocalService.addLayout(
-			userId, groupId, privateLayout, layout.getParentLayoutId(),
-			_classNameLocalService.getClassNameId(Layout.class),
-			layout.getPlid(), layout.getNameMap(), titleMap,
-			layout.getDescriptionMap(), layout.getKeywordsMap(),
-			layout.getRobotsMap(), layoutType, layout.getTypeSettings(), true,
-			true, Collections.emptyMap(), masterLayoutPlid, serviceContext);
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		if ((type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) ||
 			(masterLayoutPlid > 0)) {

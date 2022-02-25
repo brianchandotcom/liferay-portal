@@ -19,6 +19,7 @@ import com.liferay.info.exception.InfoItemPermissionException;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
+import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -69,6 +70,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -311,13 +313,14 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			Locale locale)
 		throws IOException, PortalException {
 
+		Translation translation = new Translation(
+			() -> uploadPortletRequest.getContentType("file"), fileName,
+			() -> uploadPortletRequest.getFileAsStream("file"));
+
 		if (Objects.equals(
-				uploadPortletRequest.getContentType("file"),
-				ContentTypes.APPLICATION_ZIP)) {
+				translation.getContentType(), ContentTypes.APPLICATION_ZIP)) {
 
-			try (InputStream inputStream1 =
-					uploadPortletRequest.getFileAsStream("file")) {
-
+			try (InputStream inputStream1 = translation.getInputStream()) {
 				ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
 					inputStream1);
 
@@ -339,12 +342,11 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		else {
-			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
-					"file")) {
-
+			try (InputStream inputStream = translation.getInputStream()) {
 				_processXLIFFInputStream(
-					actionRequest, groupId, className, classPK, fileName,
-					successMessages, failureMessages, inputStream, locale);
+					actionRequest, groupId, className, classPK,
+					translation.getFileName(), successMessages, failureMessages,
+					inputStream, locale);
 			}
 		}
 	}
@@ -377,11 +379,14 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			Locale locale)
 		throws IOException, PortalException {
 
-		if (Objects.equals(
-				MimeTypesUtil.getContentType(fileItem.getFileName()),
-				ContentTypes.APPLICATION_ZIP)) {
+		Translation translation = new Translation(
+			() -> MimeTypesUtil.getContentType(fileItem.getFileName()),
+			fileItem.getFileName(), fileItem::getInputStream);
 
-			try (InputStream inputStream1 = fileItem.getInputStream()) {
+		if (Objects.equals(
+				translation.getContentType(), ContentTypes.APPLICATION_ZIP)) {
+
+			try (InputStream inputStream1 = translation.getInputStream()) {
 				ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
 					inputStream1);
 
@@ -404,10 +409,10 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		else {
-			try (InputStream inputStream = fileItem.getInputStream()) {
+			try (InputStream inputStream = translation.getInputStream()) {
 				_processXLIFFInputStream(
 					actionRequest, groupId, className, classPK,
-					fileItem.getFileName(), successMessages, failureMessages,
+					translation.getFileName(), successMessages, failureMessages,
 					inputStream, locale);
 			}
 		}
@@ -503,5 +508,36 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService;
+
+	private static class Translation {
+
+		public Translation(
+			Supplier<String> contentTypeSupplier, String fileName,
+			UnsafeSupplier<InputStream, IOException>
+				inputStreamUnsafeSupplier) {
+
+			_contentTypeSupplier = contentTypeSupplier;
+			_fileName = fileName;
+			_inputStreamUnsafeSupplier = inputStreamUnsafeSupplier;
+		}
+
+		public String getContentType() {
+			return _contentTypeSupplier.get();
+		}
+
+		public String getFileName() {
+			return _fileName;
+		}
+
+		public InputStream getInputStream() throws IOException {
+			return _inputStreamUnsafeSupplier.get();
+		}
+
+		private final Supplier<String> _contentTypeSupplier;
+		private final String _fileName;
+		private final UnsafeSupplier<InputStream, IOException>
+			_inputStreamUnsafeSupplier;
+
+	}
 
 }

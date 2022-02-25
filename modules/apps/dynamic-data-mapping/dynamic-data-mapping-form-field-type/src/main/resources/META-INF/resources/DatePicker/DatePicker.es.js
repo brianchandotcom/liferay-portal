@@ -255,6 +255,7 @@ export default function DatePicker({
 				value={formattedDate}
 				weekdaysShort={weekdaysShort}
 				years={years}
+				yearsCheck={false}
 			/>
 
 			<input name={name} type="hidden" value={rawDate} />

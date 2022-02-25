@@ -20,9 +20,10 @@ definition {
 	@description = "Upgrade to 7.4.13 and assert custom remote app can be viewed in portlet"
 	@priority = "4"
 	test CanViewRemoteAppCustomElementPortletAfterUpgrade7413 {
-		property portal.acceptance = "true";
 		property data.archive.type = "data-archive-remote-app";
+		property portal.acceptance = "true";
 		property portal.version = "7.4.13";
+		property test.run.environment = "EE";
 
 		task ("Assert custom remote app is present after upgrade") {
 			RemoteAppsUpgrade.assertRemoteAppEntry(
@@ -52,9 +53,10 @@ definition {
 	@description = "Upgrade to 7.3.10.1 and assert remote app fields were saved properly"
 	@priority = "5"
 	test CanViewRemoteAppFieldsAfterUpgrade73101 {
-		property portal.acceptance = "true";
 		property data.archive.type = "data-archive-remote-app";
+		property portal.acceptance = "true";
 		property portal.version = "7.3.10.1";
+		property test.run.environment = "EE";
 
 		var remoteAppName = "Test Remote App";
 		var remoteAppType = "IFrame";

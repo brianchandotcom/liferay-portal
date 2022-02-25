@@ -10,14 +10,14 @@ definition {
 
 		User.firstLoginPG();
 
-		//Raylife.createRaylifeSite(siteName = "Raylife");
+		Raylife.createRaylifeSite(siteName = "Raylife");
 
 	}
 
 	tearDown {
 		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		//Raylife.tearDownCP();
+		Raylife.tearDownCP();
 
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();

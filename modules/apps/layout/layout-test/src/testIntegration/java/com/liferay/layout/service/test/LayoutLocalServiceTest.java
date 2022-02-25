@@ -400,6 +400,40 @@ public class LayoutLocalServiceTest {
 			draftLayout.getStyleBookEntryId(), new ServiceContext());
 	}
 
+	@Test
+	public void testUpdateLayoutWithEmptyDefaultFriendlyURLAndAnotherLocaleAdded()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Layout layout = _layoutLocalService.addLayout(
+			TestPropsValues.getUserId(), _group.getGroupId(), false, 0, 0, 0,
+			HashMapBuilder.put(
+				LocaleUtil.US, "home"
+			).build(),
+			new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
+			LayoutConstants.TYPE_CONTENT, StringPool.BLANK, false, false,
+			new HashMap<>(), 0, serviceContext);
+
+		layout = _layoutLocalService.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getParentLayoutId(), layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
+			layout.isHidden(),
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, "/casa"
+			).put(
+				LocaleUtil.US, ""
+			).build(),
+			false, null, layout.getMasterLayoutPlid(),
+			layout.getStyleBookEntryId(), serviceContext);
+
+		Assert.assertEquals("/home", layout.getFriendlyURL(LocaleUtil.US));
+	}
+
 	private void _testDeleteLayouts(boolean system) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

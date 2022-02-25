@@ -326,7 +326,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 						try (InputStream inputStream2 =
 								zipReader.getEntryAsInputStream(entry)) {
 
-							_processXLIFFFile(
+							_processXLIFFInputStream(
 								actionRequest, groupId, className, classPK,
 								entry, successMessages, failureMessages,
 								inputStream2, locale);
@@ -342,7 +342,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			try (InputStream inputStream = uploadPortletRequest.getFileAsStream(
 					"file")) {
 
-				_processXLIFFFile(
+				_processXLIFFInputStream(
 					actionRequest, groupId, className, classPK, fileName,
 					successMessages, failureMessages, inputStream, locale);
 			}
@@ -370,7 +370,50 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _processXLIFFFile(
+	private void _processXLIFFFileItem(
+			ActionRequest actionRequest, long groupId, String className,
+			long classPK, List<String> successMessages,
+			Map<String, String> failureMessages, FileItem fileItem,
+			Locale locale)
+		throws IOException, PortalException {
+
+		if (Objects.equals(
+				MimeTypesUtil.getContentType(fileItem.getFileName()),
+				ContentTypes.APPLICATION_ZIP)) {
+
+			try (InputStream inputStream1 = fileItem.getInputStream()) {
+				ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
+					inputStream1);
+
+				try {
+					for (String zipReaderEntry : zipReader.getEntries()) {
+						try (InputStream inputStream2 =
+								zipReader.getEntryAsInputStream(
+									zipReaderEntry)) {
+
+							_processXLIFFInputStream(
+								actionRequest, groupId, className, classPK,
+								zipReaderEntry, successMessages,
+								failureMessages, inputStream2, locale);
+						}
+					}
+				}
+				finally {
+					zipReader.close();
+				}
+			}
+		}
+		else {
+			try (InputStream inputStream = fileItem.getInputStream()) {
+				_processXLIFFInputStream(
+					actionRequest, groupId, className, classPK,
+					fileItem.getFileName(), successMessages, failureMessages,
+					inputStream, locale);
+			}
+		}
+	}
+
+	private void _processXLIFFInputStream(
 			ActionRequest actionRequest, long groupId, String className,
 			long classPK, String fileName, List<String> successMessages,
 			Map<String, String> failureMessages, InputStream inputStream,
@@ -396,49 +439,6 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 				fileName,
 				_language.get(
 					resourceBundle, exceptionMessageFunction.apply(className)));
-		}
-	}
-
-	private void _processXLIFFFileItem(
-			ActionRequest actionRequest, long groupId, String className,
-			long classPK, List<String> successMessages,
-			Map<String, String> failureMessages, FileItem fileItem,
-			Locale locale)
-		throws IOException, PortalException {
-
-		if (Objects.equals(
-				MimeTypesUtil.getContentType(fileItem.getFileName()),
-				ContentTypes.APPLICATION_ZIP)) {
-
-			try (InputStream inputStream1 = fileItem.getInputStream()) {
-				ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
-					inputStream1);
-
-				try {
-					for (String zipReaderEntry : zipReader.getEntries()) {
-						try (InputStream inputStream2 =
-								zipReader.getEntryAsInputStream(
-									zipReaderEntry)) {
-
-							_processXLIFFFile(
-								actionRequest, groupId, className, classPK,
-								zipReaderEntry, successMessages,
-								failureMessages, inputStream2, locale);
-						}
-					}
-				}
-				finally {
-					zipReader.close();
-				}
-			}
-		}
-		else {
-			try (InputStream inputStream = fileItem.getInputStream()) {
-				_processXLIFFFile(
-					actionRequest, groupId, className, classPK,
-					fileItem.getFileName(), successMessages, failureMessages,
-					inputStream, locale);
-			}
 		}
 	}
 

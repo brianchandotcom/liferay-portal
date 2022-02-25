@@ -822,6 +822,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.commerce.shipping.engine.fedex.jar!commons-discovery.jar</file-name>
+				<version>0.4</version>
+				<project-name>org.apache.commons.discovery</project-name>
+				<project-url>http://jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>/LICENSE.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.commerce.shipping.engine.fedex.jar!org.apache.axis.jar</file-name>
 				<version>1.4.LIFERAY-PATCHED-6</version>
 				<project-name>org.apache.axis</project-name>
@@ -3094,7 +3106,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.search.elasticsearch7.impl.jar!jackson-dataformat-cbor.jar</file-name>
-				<version>2.10.4</version>
+				<version>2.12.6</version>
 				<project-name>Jackson dataformat: CBOR</project-name>
 				<project-url>http://github.com/FasterXML/jackson-dataformats-binary</project-url>
 				<licenses>
@@ -4152,7 +4164,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.s3.jar!jackson-dataformat-cbor.jar</file-name>
-				<version>2.12.1</version>
+				<version>2.12.6</version>
 				<project-name>Jackson dataformat: CBOR</project-name>
 				<project-url>http://github.com/FasterXML/jackson-dataformats-binary</project-url>
 				<licenses>
@@ -4204,6 +4216,77 @@
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
 						<license-url>https://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tika.jar!commons-lang3.jar</file-name>
+				<version>3.12.0</version>
+				<project-name>Apache Commons Lang</project-name>
+				<project-url>https://commons.apache.org/proper/commons-lang/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>https://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tika.jar!jmatio.jar</file-name>
+				<version>1.2</version>
+				<project-name>JMatIO</project-name>
+				<project-url>https://github.com/tballison/jmatio</project-url>
+				<licenses>
+					<license>
+						<license-name>BSD</license-name>
+						<license-url>http://www.linfo.org/bsdlicense.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tika.jar!org.gagravarr.tika.jar</file-name>
+				<version>0.8.LIFERAY-PATCHED-1</version>
+				<project-name>org.gagravarr.tika</project-name>
+				<licenses>
+					<license>
+						<license-name>LGPL 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tika.jar!tika-core.jar</file-name>
+				<version>1.26</version>
+				<project-name>Apache Tika core</project-name>
+				<project-url>http://tika.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tika.jar!tika-parsers.jar</file-name>
+				<version>1.26</version>
+				<project-name>Apache Tika parsers</project-name>
+				<project-url>http://tika.apache.org/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tika.jar!vorbis-java-core.jar</file-name>
+				<version>0.8</version>
+				<project-name>Ogg and Vorbis for Java, Core</project-name>
+				<project-url>https://github.com/Gagravarr/VorbisJava</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>
 			</library>

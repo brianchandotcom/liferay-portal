@@ -1262,4 +1262,45 @@ definition {
 			}
 		}
 	}
+
+	@description = "This is a test for LPS-146737. Verify the Error Page can be displayed"
+	@priority = "3"
+	test VerifyTheErrorPageCanBeDisplayed {
+		task ("Go to Error Page in Team Extranet Site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-team-extranet");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "404");
+		}
+
+		task ("Assert the Error Page is displayed correctly") {
+			AssertElementPresent(
+				key_title = "Page not Found",
+				locator1 = "TeamExtranet#FRAGMENT_HEADING");
+		}
+	}
+
+	@description = "This is a test for LPS-146737. Verify the 'Go to Home Page' button in 404 Page redirects to the Home Page"
+	@priority = "3"
+	test VerifyTheErrorPageButtonGoToHomePage {
+		task ("Go to Error Page in Team Extranet Site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-team-extranet");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "404");
+		}
+
+		task ("Click to Go to Home Page and Assert the Page is redirected correctly") {
+			Click(
+				locator1 = "TeamExtranet#FRAGMENT_BUTTON",
+				key_buttonName = "Go to home page",
+				key_href = "home");
+
+			AssertElementPresent(
+				key_title = "Welcome to the team!",
+				locator1 = "TeamExtranet#FRAGMENT_HEADER");
+		}
+	}
 }

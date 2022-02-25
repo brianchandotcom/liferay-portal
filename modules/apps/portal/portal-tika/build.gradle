@@ -4,6 +4,7 @@ dependencies {
 	compileInclude group: "org.apache.tika", name: "tika-core", version: "1.26"
 	compileInclude group: "org.apache.tika", name: "tika-parsers", version: "1.26"
 	compileInclude group: "org.gagravarr", name: "vorbis-java-core", version: "0.8"
+	compileInclude group: "org.tallison", name: "jmatio", version: "1.2"
 
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"

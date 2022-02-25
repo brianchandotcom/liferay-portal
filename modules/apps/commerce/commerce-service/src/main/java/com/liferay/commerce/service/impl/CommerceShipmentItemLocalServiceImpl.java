@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
@@ -54,9 +55,9 @@ public class CommerceShipmentItemLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceShipmentItem addCommerceShipmentItem(
-			long commerceShipmentId, long commerceOrderItemId,
-			long commerceInventoryWarehouseId, int quantity,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long commerceShipmentId,
+			long commerceOrderItemId, long commerceInventoryWarehouseId,
+			int quantity, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce shipment item
@@ -79,6 +80,11 @@ public class CommerceShipmentItemLocalServiceImpl
 		CommerceShipmentItem commerceShipmentItem =
 			commerceShipmentItemPersistence.create(commerceShipmentItemId);
 
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+
+		commerceShipmentItem.setExternalReferenceCode(externalReferenceCode);
 		commerceShipmentItem.setGroupId(groupId);
 		commerceShipmentItem.setCompanyId(user.getCompanyId());
 		commerceShipmentItem.setUserId(user.getUserId());
@@ -130,6 +136,32 @@ public class CommerceShipmentItemLocalServiceImpl
 		commerceShipmentItem.setCommerceOrderItemId(commerceOrderItemId);
 
 		return commerceShipmentItemPersistence.update(commerceShipmentItem);
+	}
+
+	@Override
+	public CommerceShipmentItem addOrUpdateCommerceShipmentItem(
+			String externalReferenceCode, long commerceShipmentId,
+			long commerceOrderItemId, long commerceInventoryWarehouseId,
+			int quantity, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (Validator.isBlank(externalReferenceCode)) {
+			externalReferenceCode = null;
+		}
+
+		CommerceShipmentItem commerceShipmentItem =
+			commerceShipmentItemPersistence.fetchByC_ERC(
+				serviceContext.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipmentItem == null) {
+			return commerceShipmentItemLocalService.addCommerceShipmentItem(
+				externalReferenceCode, commerceShipmentId, commerceOrderItemId,
+				commerceInventoryWarehouseId, quantity, serviceContext);
+		}
+
+		return commerceShipmentItemLocalService.updateCommerceShipmentItem(
+			commerceShipmentItem.getCommerceShipmentItemId(),
+			commerceInventoryWarehouseId, quantity);
 	}
 
 	@Indexable(type = IndexableType.DELETE)

@@ -38,6 +38,7 @@ import com.liferay.commerce.internal.upgrade.v4_6_0.SubscriptionUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v4_8_1.CommerceOrderStatusesUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v5_0_0.CommerceAddressRestrictionUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v5_0_1.CommercePermissionUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v8_2_0.CommerceShipmentExternalReferenceCodeUpgradeProcess;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -268,6 +269,10 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 			"8.1.0", "8.1.1",
 			new com.liferay.commerce.internal.upgrade.v8_1_1.
 				CommerceAddressUpgradeProcess());
+
+		registry.register(
+			"8.1.1", "8.2.0",
+			new CommerceShipmentExternalReferenceCodeUpgradeProcess());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");

@@ -978,16 +978,6 @@ public class DLFileEntryLocalServiceUtil {
 			userId, fileEntryId, fileEntryTypeId, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static void updateSmallImage(long smallImageId, long largeImageId)
-		throws PortalException {
-
-		getService().updateSmallImage(smallImageId, largeImageId);
-	}
-
 	public static DLFileEntry updateStatus(
 			long userId, DLFileEntry dlFileEntry,
 			com.liferay.document.library.kernel.model.DLFileVersion

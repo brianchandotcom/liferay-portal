@@ -558,16 +558,6 @@ public class DLFileEntryTypeLocalServiceUtil {
 		return getService().getFileEntryType(groupId, fileEntryTypeKey);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	public static List<DLFileEntryType> getFileEntryTypes(long ddmStructureId)
-		throws PortalException {
-
-		return getService().getFileEntryTypes(ddmStructureId);
-	}
-
 	public static List<DLFileEntryType> getFileEntryTypes(long[] groupIds) {
 		return getService().getFileEntryTypes(groupIds);
 	}

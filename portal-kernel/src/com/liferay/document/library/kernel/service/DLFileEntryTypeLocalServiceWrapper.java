@@ -645,18 +645,6 @@ public class DLFileEntryTypeLocalServiceWrapper
 			groupId, fileEntryTypeKey);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<DLFileEntryType> getFileEntryTypes(
-			long ddmStructureId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlFileEntryTypeLocalService.getFileEntryTypes(ddmStructureId);
-	}
-
 	@Override
 	public java.util.List<DLFileEntryType> getFileEntryTypes(long[] groupIds) {
 		return _dlFileEntryTypeLocalService.getFileEntryTypes(groupIds);

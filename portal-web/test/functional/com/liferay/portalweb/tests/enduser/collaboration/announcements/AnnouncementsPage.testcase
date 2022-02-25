@@ -442,7 +442,7 @@ definition {
 
 	@description = "This test covers LPS-147716. It checks that the javascript in the user name will not be executed when viewing an announcement on page."
 	@priority = "3"
-	test XSSIsNotExecutedWhenViewingAnnouncementUser {
+	test XSSIsNotExecutedWhenViewingUsernameInAnnouncement {
 		Navigator.openURL();
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");

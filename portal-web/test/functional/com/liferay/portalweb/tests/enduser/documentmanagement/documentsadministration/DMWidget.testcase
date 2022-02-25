@@ -240,7 +240,7 @@ definition {
 
 	@description = "This test checks that the javascript in the user name will not be executed when viewing a document on page."
 	@priority = "3"
-	test XSSIsNotExecutedWhenViewingDMUser {
+	test XSSIsNotExecutedWhenViewingUsernameInDocument {
 		Navigator.openURL();
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");

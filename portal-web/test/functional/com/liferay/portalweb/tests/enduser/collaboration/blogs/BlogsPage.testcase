@@ -789,7 +789,7 @@ definition {
 
 	@description = "This test checks that the javascript in the user name will not be executed when viewing an entry on page."
 	@priority = "3"
-	test XSSIsNotExecutedWhenViewingBlogUser {
+	test XSSIsNotExecutedWhenViewingUsernameInBlog {
 		Navigator.openURL();
 
 		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");

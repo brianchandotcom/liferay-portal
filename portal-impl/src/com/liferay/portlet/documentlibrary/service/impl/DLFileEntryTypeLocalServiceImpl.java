@@ -472,36 +472,6 @@ public class DLFileEntryTypeLocalServiceImpl
 		return dlFileEntryTypePersistence.findByG_F(groupId, fileEntryTypeKey);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x)
-	 */
-	@Deprecated
-	@Override
-	public List<DLFileEntryType> getFileEntryTypes(long ddmStructureId)
-		throws PortalException {
-
-		List<DLFileEntryType> fileEntryTypes = new ArrayList<>();
-
-		long classNameId = _classNameLocalService.getClassNameId(
-			DLFileEntryType.class);
-
-		List<DDMStructureLink> ddmStructureLinks =
-			DDMStructureLinkManagerUtil.getStructureLinks(ddmStructureId);
-
-		for (DDMStructureLink ddmStructureLink : ddmStructureLinks) {
-			if (classNameId != ddmStructureLink.getClassNameId()) {
-				continue;
-			}
-
-			DLFileEntryType fileEntryType = getFileEntryType(
-				ddmStructureLink.getClassPK());
-
-			fileEntryTypes.add(fileEntryType);
-		}
-
-		return fileEntryTypes;
-	}
-
 	@Override
 	public List<DLFileEntryType> getFileEntryTypes(long[] groupIds) {
 		return dlFileEntryTypePersistence.findByGroupId(groupIds);
@@ -747,44 +717,6 @@ public class DLFileEntryTypeLocalServiceImpl
 						originalFileEntryTypeId);
 			}
 		}
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {{@link
-	 *             #getDefaultFileEntryTypeId(long)}}
-	 */
-	@Deprecated
-	protected static long getDefaultFileEntryTypeId(
-			DLFolderPersistence dlFolderPersistence, long folderId)
-		throws PortalException {
-
-		return DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
-			folderId);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {{@link
-	 *             #_getFileEntryTypesPrimaryFolderId(long)}}
-	 */
-	@Deprecated
-	protected static long getFileEntryTypesPrimaryFolderId(
-			DLFolderPersistence dlFolderPersistence, long folderId)
-		throws NoSuchFolderException {
-
-		while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
-
-			if (dlFolder.getRestrictionType() ==
-					DLFolderConstants.
-						RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) {
-
-				break;
-			}
-
-			folderId = dlFolder.getParentFolderId();
-		}
-
-		return folderId;
 	}
 
 	protected void addFileEntryTypeResources(

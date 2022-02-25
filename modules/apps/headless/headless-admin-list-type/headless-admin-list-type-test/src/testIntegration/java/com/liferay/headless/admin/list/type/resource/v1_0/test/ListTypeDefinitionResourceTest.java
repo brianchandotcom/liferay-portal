@@ -105,6 +105,14 @@ public class ListTypeDefinitionResourceTest
 
 	@Override
 	protected ListTypeDefinition
+			testPatchListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		return _addListTypeDefinition(randomListTypeDefinition());
+	}
+
+	@Override
+	protected ListTypeDefinition
 			testPostListTypeDefinition_addListTypeDefinition(
 				ListTypeDefinition listTypeDefinition)
 		throws Exception {

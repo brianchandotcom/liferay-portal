@@ -39,6 +39,7 @@ import SXPElement from '../shared/sxp_element/index';
 import {CONFIG_PREFIX, DEFAULT_ERROR} from '../utils/constants';
 import {sub} from '../utils/language';
 import {openErrorToast} from '../utils/toasts';
+import useShouldConfirmBeforeNavigate from '../utils/useShouldConfirmBeforeNavigate';
 import {getUIConfigurationValues} from '../utils/utils';
 import SidebarPanel from './SidebarPanel';
 
@@ -125,13 +126,19 @@ function EditSXPElementForm({
 	const formRef = useRef();
 	const elementJSONEditorRef = useRef();
 
+	const initialElementJSONEditorValueString = JSON.stringify(
+		initialElementJSONEditorValue,
+		null,
+		'\t'
+	);
+
 	const [errors, setErrors] = useState([]);
 	const [expandAllVariables, setExpandAllVariables] = useState(false);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [showSidebar, setShowSidebar] = useState(false);
 	const [showSubmitWarningModal, setShowSubmitWarningModal] = useState(false);
 	const [elementJSONEditorValue, setElementJSONEditorValue] = useState(
-		JSON.stringify(initialElementJSONEditorValue, null, '\t')
+		initialElementJSONEditorValueString
 	);
 
 	const filteredCategories = {};
@@ -345,6 +352,11 @@ function EditSXPElementForm({
 			</div>
 		);
 	}
+
+	useShouldConfirmBeforeNavigate(
+		initialElementJSONEditorValueString !== elementJSONEditorValue &&
+			!isSubmitting
+	);
 
 	return (
 		<>

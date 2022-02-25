@@ -26,9 +26,6 @@ export type TestrayCase = {
 	stepsType: string;
 	testrayCaseId: number;
 	testrayCaseResult: number;
-	testrayCaseTypeId: number;
-	testrayComponentId: number;
-	testrayProjectId: number;
 };
 
 const testrayCaseFragment = gql`
@@ -44,9 +41,6 @@ const testrayCaseFragment = gql`
 		stepsType
 		testrayCaseResult
 		testrayCaseId
-		testrayCaseTypeId
-		testrayComponentId
-		testrayProjectId
 	}
 `;
 

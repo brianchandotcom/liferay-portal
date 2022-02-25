@@ -5729,7 +5729,7 @@ definition {
 	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many will allow the entry with relation (from the parent Object) to be deleted and its relations to be disassociated"
 	@priority = "5"
 	test DisassociateDeletionOneToManyWillAllowDeleteParent {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(

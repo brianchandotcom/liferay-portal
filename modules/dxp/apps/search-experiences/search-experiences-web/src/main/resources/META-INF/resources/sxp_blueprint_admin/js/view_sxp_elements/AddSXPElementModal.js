@@ -19,6 +19,7 @@ import React, {useEffect, useState} from 'react';
 
 import {DEFAULT_ERROR} from '../utils/constants';
 import {DEFAULT_EDIT_SXP_ELEMENT} from '../utils/data';
+import {setInitialSuccessToast} from '../utils/toasts';
 import {isDefined} from '../utils/utils';
 
 const ADD_EVENT = 'addSXPElement';
@@ -91,9 +92,21 @@ const AddSXPElementModal = ({
 								responseContent.id
 							);
 
+							setInitialSuccessToast(
+								Liferay.Language.get(
+									'the-element-was-created-successfully'
+								)
+							);
+
 							navigate(url);
 						}
 						else {
+							setInitialSuccessToast(
+								Liferay.Language.get(
+									'the-element-was-created-successfully'
+								)
+							);
+
 							navigate(window.location.href);
 						}
 					}

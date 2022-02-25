@@ -38,7 +38,7 @@ import ThemeContext from '../shared/ThemeContext';
 import SXPElement from '../shared/sxp_element/index';
 import {CONFIG_PREFIX, DEFAULT_ERROR} from '../utils/constants';
 import {sub} from '../utils/language';
-import {openErrorToast} from '../utils/toasts';
+import {openErrorToast, setInitialSuccessToast} from '../utils/toasts';
 import useShouldConfirmBeforeNavigate from '../utils/useShouldConfirmBeforeNavigate';
 import {getUIConfigurationValues} from '../utils/utils';
 import SidebarPanel from './SidebarPanel';
@@ -304,6 +304,10 @@ function EditSXPElementForm({
 				setIsSubmitting(false);
 			}
 			else {
+				setInitialSuccessToast(
+					Liferay.Language.get('the-element-was-saved-successfully')
+				);
+
 				navigate(redirectURL);
 			}
 		}

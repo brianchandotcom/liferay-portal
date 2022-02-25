@@ -25,6 +25,7 @@ import {
 	DEFAULT_SORT_CONFIGURATION,
 } from '../utils/data';
 import {fetchData} from '../utils/fetch';
+import {setInitialSuccessToast} from '../utils/toasts';
 import {filterAndSortClassNames} from '../utils/utils';
 
 const ADD_EVENT = 'addSXPBlueprint';
@@ -88,26 +89,40 @@ const AddModal = ({
 				return response.json();
 			})
 			.then((responseContent) => {
-				if (isMounted()) {
-					if (responseContent.error) {
-						_handleFormError(responseContent);
+				if (!isMounted()) {
+					return;
+				}
+
+				if (responseContent.error) {
+					_handleFormError(responseContent);
+				}
+				else {
+					onClose();
+
+					if (responseContent.id) {
+						const url = new URL(editSXPBlueprintURL);
+
+						url.searchParams.set(
+							`${portletNamespace}sxpBlueprintId`,
+							responseContent.id
+						);
+
+						setInitialSuccessToast(
+							Liferay.Language.get(
+								'the-blueprint-was-created-successfully'
+							)
+						);
+
+						navigate(url);
 					}
 					else {
-						onClose();
+						setInitialSuccessToast(
+							Liferay.Language.get(
+								'the-blueprint-was-created-successfully'
+							)
+						);
 
-						if (responseContent.id) {
-							const url = new URL(editSXPBlueprintURL);
-
-							url.searchParams.set(
-								`${portletNamespace}sxpBlueprintId`,
-								responseContent.id
-							);
-
-							navigate(url);
-						}
-						else {
-							navigate(window.location.href);
-						}
+						navigate(window.location.href);
 					}
 				}
 			})

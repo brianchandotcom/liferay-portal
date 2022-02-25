@@ -16,6 +16,7 @@ import ThemeContext from '../shared/ThemeContext';
 import {COPY_BUTTON_CSS_CLASS} from '../utils/constants';
 import {fetchData} from '../utils/fetch';
 import {renameKeys} from '../utils/language';
+import {openInitialSuccessToast} from '../utils/toasts';
 import useClipboardJS from '../utils/useClipboardJS';
 import EditSXPElementForm from './EditSXPElementForm';
 
@@ -85,6 +86,8 @@ export default function ({
 	useClipboardJS('.' + COPY_BUTTON_CSS_CLASS);
 
 	useEffect(() => {
+		openInitialSuccessToast();
+
 		fetchData(
 			`/o/search-experiences-rest/v1.0/sxp-elements/${sxpElementId}`,
 			{

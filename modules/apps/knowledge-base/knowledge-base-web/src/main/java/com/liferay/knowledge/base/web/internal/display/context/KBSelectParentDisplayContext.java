@@ -195,9 +195,6 @@ public class KBSelectParentDisplayContext {
 					_parentResourcePrimKey =
 						KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 				}
-				else {
-					_parentTitle = parentKBFolder.getName();
-				}
 			}
 			else {
 				KBArticle parentKBArticle =
@@ -213,9 +210,6 @@ public class KBSelectParentDisplayContext {
 
 					_parentResourcePrimKey =
 						KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-				}
-				else {
-					_parentTitle = parentKBArticle.getTitle();
 				}
 			}
 		}
@@ -282,7 +276,6 @@ public class KBSelectParentDisplayContext {
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private long _parentResourceClassNameId;
 	private long _parentResourcePrimKey;
-	private String _parentTitle;
 	private final RenderRequest _renderRequest;
 	private Long _resourceClassNameId;
 	private SearchContainer<Object> _searchContainer;

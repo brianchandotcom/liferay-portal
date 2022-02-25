@@ -335,7 +335,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			_layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
 					targetLayout.getUserId(), targetLayout.getGroupId(),
-					targetLayout.getPlid(), null,
+					targetLayout.getPlid(),
+					SegmentsExperienceConstants.ID_DEFAULT, null,
 					ServiceContextThreadLocal.getServiceContext());
 		}
 
@@ -407,7 +408,8 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			targetLayout.getUserId(), targetLayout.getGroupId(),
-			targetLayout.getPlid(), dataJSONObject.toString(),
+			targetLayout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT,
+			dataJSONObject.toString(),
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

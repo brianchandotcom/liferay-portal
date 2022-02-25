@@ -126,7 +126,8 @@ public class ConvertLayoutMVCActionCommandTest {
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			originalLayout.getPlid(), StringPool.BLANK, _serviceContext);
+			originalLayout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT,
+			StringPool.BLANK, _serviceContext);
 
 		_mvcActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(originalLayout.getPlid()),

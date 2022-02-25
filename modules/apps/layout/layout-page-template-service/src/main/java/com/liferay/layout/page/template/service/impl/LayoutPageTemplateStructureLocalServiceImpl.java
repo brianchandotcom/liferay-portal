@@ -204,7 +204,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 
 		return addLayoutPageTemplateStructure(
 			PrincipalThreadLocal.getUserId(), groupId, plid,
-			jsonObject.toString(),
+			SegmentsExperienceConstants.ID_DEFAULT, jsonObject.toString(),
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

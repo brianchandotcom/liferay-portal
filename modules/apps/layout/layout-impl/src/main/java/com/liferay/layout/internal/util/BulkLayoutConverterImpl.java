@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -222,13 +223,14 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 			return _layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
 					serviceContext.getUserId(), layout.getGroupId(),
-					layout.getPlid(), layoutDataJSONObject.toString(),
-					serviceContext);
+					layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT,
+					layoutDataJSONObject.toString(), serviceContext);
 		}
 
 		return _layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				layout.getGroupId(), layout.getPlid(),
+				SegmentsExperienceConstants.ID_DEFAULT,
 				layoutDataJSONObject.toString());
 	}
 

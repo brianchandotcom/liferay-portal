@@ -91,6 +91,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
@@ -1284,7 +1285,7 @@ public class LayoutPageTemplatesImporterImpl
 
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			layout.getUserId(), layout.getGroupId(), layout.getPlid(),
-			jsonObject.toString(),
+			SegmentsExperienceConstants.ID_DEFAULT, jsonObject.toString(),
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

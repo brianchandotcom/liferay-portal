@@ -59,8 +59,8 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 
 	@Override
 	public LayoutPageTemplateStructure addLayoutPageTemplateStructure(
-			long userId, long groupId, long plid, String data,
-			ServiceContext serviceContext)
+			long userId, long groupId, long plid, long segmentsExperienceId,
+			String data, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template structure
@@ -104,8 +104,7 @@ public class LayoutPageTemplateStructureLocalServiceImpl
 			_layoutPageTemplateStructureRelLocalService.
 				addLayoutPageTemplateStructureRel(
 					userId, groupId, layoutPageTemplateStructureId,
-					SegmentsExperienceConstants.ID_DEFAULT, data,
-					serviceContext);
+					segmentsExperienceId, data, serviceContext);
 		}
 
 		return layoutPageTemplateStructure;

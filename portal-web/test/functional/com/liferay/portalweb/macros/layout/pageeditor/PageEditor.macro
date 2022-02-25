@@ -959,7 +959,7 @@ definition {
 	}
 
 	macro clearSelection {
-		Click(
+		Click.clickNoWaitForVisible(
 			key_fieldLabel = "${fieldLabel}",
 			key_text = "times-circle",
 			locator1 = "Icon#ANY_ITEM_SELECTOR");

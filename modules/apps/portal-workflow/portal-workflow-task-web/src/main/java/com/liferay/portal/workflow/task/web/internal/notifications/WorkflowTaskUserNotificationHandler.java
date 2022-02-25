@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
@@ -89,6 +92,32 @@ public class WorkflowTaskUserNotificationHandler
 					_language.get(locale, "notification-no-longer-applies")
 				}),
 			StringPool.BLANK, false);
+	}
+
+	@Override
+	public boolean isApplicable(
+		UserNotificationEvent userNotificationEvent,
+		ServiceContext serviceContext) {
+
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				userNotificationEvent.getPayload());
+
+			for (User user :
+					WorkflowTaskManagerUtil.getNotifiableUsers(
+						jsonObject.getLong("companyId"),
+						jsonObject.getLong("workflowTaskId"))) {
+
+				if (user.getUserId() == serviceContext.getUserId()) {
+					return true;
+				}
+			}
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
+
+		return false;
 	}
 
 	@Override
@@ -195,6 +224,9 @@ public class WorkflowTaskUserNotificationHandler
 	private static final String _BODY_TEMPLATE_DEFAULT =
 		"<div class=\"title\">[$TITLE$]</div><div class=\"body\">[$BODY$]" +
 			"</div>";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WorkflowTaskUserNotificationHandler.class);
 
 	@Reference
 	private Language _language;

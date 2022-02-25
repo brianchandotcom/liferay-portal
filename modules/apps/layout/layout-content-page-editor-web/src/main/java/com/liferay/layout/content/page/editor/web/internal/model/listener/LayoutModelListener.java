@@ -18,6 +18,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
@@ -107,6 +108,20 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {
+		if (!(layout.isTypeAssetDisplay() || layout.isTypeContent())) {
+			return;
+		}
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					layout.getGroupId(), layout.getPlid());
+
+		if (layoutPageTemplateStructure != null) {
+			_layoutPageTemplateStructureLocalService.
+				deleteLayoutPageTemplateStructure(layoutPageTemplateStructure);
+		}
+
 		if (!layout.isTypeContent()) {
 			return;
 		}

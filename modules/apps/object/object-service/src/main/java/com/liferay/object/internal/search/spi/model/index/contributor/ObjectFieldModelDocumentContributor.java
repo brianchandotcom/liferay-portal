@@ -37,7 +37,6 @@ public class ObjectFieldModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, ObjectField objectField) {
-		document.addText(Field.NAME, objectField.getName());
 		document.addKeyword(
 			"objectDefinitionId", objectField.getObjectDefinitionId());
 		document.addLocalizedText(
@@ -45,6 +44,7 @@ public class ObjectFieldModelDocumentContributor
 			LocalizationUtil.populateLocalizationMap(
 				objectField.getLabelMap(), objectField.getDefaultLanguageId(),
 				0));
+		document.addText(Field.NAME, objectField.getName());
 		document.remove(Field.USER_NAME);
 	}
 

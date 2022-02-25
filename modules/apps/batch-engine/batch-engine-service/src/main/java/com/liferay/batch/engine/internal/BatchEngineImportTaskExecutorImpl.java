@@ -26,9 +26,11 @@ import com.liferay.batch.engine.internal.notification.BatchEngineNotificationSen
 import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReader;
 import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReaderFactory;
 import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReaderUtil;
+import com.liferay.batch.engine.internal.strategy.ImportStrategyFactory;
 import com.liferay.batch.engine.internal.task.progress.BatchEngineTaskProgress;
 import com.liferay.batch.engine.internal.task.progress.BatchEngineTaskProgressFactory;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -145,6 +147,8 @@ public class BatchEngineImportTaskExecutorImpl
 			new BatchEngineTaskItemDelegateExecutorFactory(
 				_batchEngineTaskMethodRegistry, null, null, null);
 
+		_importStrategyFactory = new ImportStrategyFactory();
+
 		setUserNotificationEventLocalService(
 			_userNotificationEventLocalService);
 	}
@@ -178,6 +182,7 @@ public class BatchEngineImportTaskExecutorImpl
 				batchEngineTaskItemDelegateExecutor.saveItems(
 					BatchEngineTaskOperation.valueOf(
 						batchEngineImportTask.getOperation()),
+					_importStrategyFactory.create(batchEngineImportTask),
 					items);
 
 				batchEngineImportTask.setProcessedItemsCount(
@@ -282,6 +287,10 @@ public class BatchEngineImportTaskExecutorImpl
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
+	@Reference
+	private BatchEngineImportTaskErrorLocalService
+		_batchEngineImportTaskErrorLocalService;
+
 	private BatchEngineImportTaskItemReaderFactory
 		_batchEngineImportTaskItemReaderFactory;
 
@@ -299,6 +308,8 @@ public class BatchEngineImportTaskExecutorImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	private ImportStrategyFactory _importStrategyFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

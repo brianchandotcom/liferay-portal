@@ -174,7 +174,7 @@ definition {
 	@description = "LPS-135390 - Verify it is possible to edit its own Object entry with only the Add Object Entry permission"
 	@priority = "5"
 	test CanEditItsOwnEntryWithOnlyAddPermission {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",

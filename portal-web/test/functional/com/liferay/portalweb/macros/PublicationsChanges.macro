@@ -76,7 +76,9 @@ definition {
 			MenuItem.click(menuItem = "Discard");
 		}
 
-		AssertElementPresent(locator1 = "PublicationsChanges#DISCARDED_CHANGES_TITLE");
+		AssertElementPresent(
+			key_changeTitle = "Discarded Changes",
+			locator1 = "PublicationsChanges#CHANGE_TITLE");
 
 		while (IsElementNotPresent(locator1 = "PublicationsChanges#CONTEXT_CHANGE_TITLE")) {
 			Click(locator1 = "Pagination#NEXT_LINK");

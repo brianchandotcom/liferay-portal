@@ -542,11 +542,9 @@ definition {
 
 		Portlet.addPG(portletName = "Web Content Display");
 
-		Navigator.openStagingSiteURL(siteName = "Site Name");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page",
-			pageName = "Staging Test Page");
+		Navigator.openSitePage(
+			pageName = "Child Page",
+			siteName = "Site Name Staging");
 
 		Portlet.addPG(portletName = "Web Content Display");
 
@@ -569,11 +567,9 @@ definition {
 
 		Portlet.viewNoSpecificPG(portletName = "Web Content Display");
 
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page",
-			pageName = "Staging Test Page");
+		Navigator.openSitePage(
+			pageName = "Child Page",
+			siteName = "Site Name");
 
 		Portlet.viewPG(portletName = "Web Content Display");
 	}
@@ -2231,11 +2227,9 @@ definition {
 			workflowDefinition = "Single Approver",
 			workflowResourceValue = "Page Revision");
 
-		Navigator.openStagingSiteURL(siteName = "Site Name");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page A",
-			pageName = "Staging Page Edit");
+		Navigator.openSitePage(
+			pageName = "Child Page A",
+			siteName = "Site Name Staging");
 
 		Portlet.addPG(portletName = "Blogs");
 
@@ -2243,11 +2237,9 @@ definition {
 
 		Staging.submitForPublicationPageRevision();
 
-		Navigator.openStagingSiteURL(siteName = "Site Name");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page A",
-			pageName = "Staging Page Edit");
+		Navigator.openSitePage(
+			pageName = "Child Page A",
+			siteName = "Site Name Staging");
 
 		Page.viewWithWorkflowPG(workflowStatus = "Pending (Review)");
 
@@ -2269,11 +2261,9 @@ definition {
 			workflowAssetType = "Page Revision",
 			workflowTask = "Review");
 
-		Navigator.openStagingSiteURL(siteName = "Site Name");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page A",
-			pageName = "Staging Page Edit");
+		Navigator.openSitePage(
+			pageName = "Child Page A",
+			siteName = "Site Name Staging");
 
 		Page.viewWithWorkflowPG(workflowStatus = "Ready for Publication");
 
@@ -2283,21 +2273,17 @@ definition {
 
 		Page.viewWithWorkflowPG(workflowStatus = "Ready for Publication");
 
-		Navigator.openStagingSiteURL(siteName = "Site Name");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page A",
-			pageName = "Staging Page Edit");
+		Navigator.openSitePage(
+			pageName = "Child Page A",
+			siteName = "Site Name Staging");
 
 		Staging.gotoPublishToLive();
 
 		Staging.publishToLive();
 
-		Navigator.openStagingSiteURL(siteName = "Site Name");
-
-		Page.gotoChildPagePG(
-			childPageName = "Child Page A",
-			pageName = "Staging Page Edit");
+		Navigator.openSitePage(
+			pageName = "Child Page A",
+			siteName = "Site Name Staging");
 
 		Portlet.viewPG(portletName = "Blogs");
 

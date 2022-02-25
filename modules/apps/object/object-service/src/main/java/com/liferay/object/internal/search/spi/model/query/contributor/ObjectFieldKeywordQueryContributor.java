@@ -43,6 +43,8 @@ public class ObjectFieldKeywordQueryContributor
 		SearchContext searchContext =
 			keywordQueryContributorHelper.getSearchContext();
 
+		_queryHelper.addSearchLocalizedTerm(
+			booleanQuery, searchContext, "label", false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		_queryHelper.addSearchTerm(

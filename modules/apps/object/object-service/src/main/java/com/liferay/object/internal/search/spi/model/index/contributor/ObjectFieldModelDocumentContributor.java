@@ -18,6 +18,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,6 +40,11 @@ public class ObjectFieldModelDocumentContributor
 		document.addText(Field.NAME, objectField.getName());
 		document.addKeyword(
 			"objectDefinitionId", objectField.getObjectDefinitionId());
+		document.addLocalizedText(
+			"label",
+			LocalizationUtil.populateLocalizationMap(
+				objectField.getLabelMap(), objectField.getDefaultLanguageId(),
+				0));
 		document.remove(Field.USER_NAME);
 	}
 

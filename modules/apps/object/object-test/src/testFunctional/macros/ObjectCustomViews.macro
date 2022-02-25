@@ -70,4 +70,20 @@ definition {
 		Click(locator1 = "ObjectCustomViews#OBJECT_VIEWS_TAB");
 	}
 
+	macro goToViewsBuilderTab {
+
+		if (IsElementPresent(locator1 = "ObjectCustomViews#VIEW_BUILDER_TAB")) {
+
+			Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_TAB");
+		}
+	}
+
+	macro assertEmptyStateTextOnViewBuilder {
+
+		AssertElementPresent(
+			key_text = "${text}",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT");
+
+	}
+
 }

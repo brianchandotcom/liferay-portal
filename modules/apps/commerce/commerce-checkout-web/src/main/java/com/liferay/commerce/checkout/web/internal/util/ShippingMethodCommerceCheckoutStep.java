@@ -28,6 +28,8 @@ import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionQualifierLocalService;
 import com.liferay.commerce.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
@@ -140,7 +142,9 @@ public class ShippingMethodCommerceCheckoutStep
 			shippingMethodCheckoutStepDisplayContext =
 				new ShippingMethodCheckoutStepDisplayContext(
 					_commercePriceFormatter, _commerceShippingEngineRegistry,
-					_commerceShippingMethodLocalService, httpServletRequest);
+					_commerceShippingMethodLocalService,
+					_commerceShippingFixedOptionLocalService,
+					httpServletRequest);
 
 		CommerceOrder commerceOrder =
 			shippingMethodCheckoutStepDisplayContext.getCommerceOrder();
@@ -316,6 +320,14 @@ public class ShippingMethodCommerceCheckoutStep
 
 	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
+
+	@Reference
+	private CommerceShippingFixedOptionLocalService
+		_commerceShippingFixedOptionLocalService;
+
+	@Reference
+	private CommerceShippingFixedOptionQualifierLocalService
+		_commerceShippingFixedOptionQualifierLocalService;
 
 	@Reference
 	private CommerceShippingHelper _commerceShippingHelper;

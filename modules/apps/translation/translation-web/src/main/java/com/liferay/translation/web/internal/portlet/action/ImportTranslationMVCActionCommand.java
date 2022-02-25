@@ -135,11 +135,14 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 					failureMessages, themeDisplay.getLocale());
 			}
 			else {
-				_processUploadedFile(
-					actionRequest, uploadPortletRequest,
-					translationRequestHelper.getGroupId(),
+				_processXLIFFTranslation(
+					actionRequest, translationRequestHelper.getGroupId(),
 					translationRequestHelper.getModelClassName(),
-					translationRequestHelper.getModelClassPK(), fileName,
+					translationRequestHelper.getModelClassPK(),
+					new Translation(
+						() -> uploadPortletRequest.getContentType("file"),
+						fileName,
+						() -> uploadPortletRequest.getFileAsStream("file")),
 					successMessages, failureMessages, themeDisplay.getLocale());
 			}
 
@@ -305,17 +308,65 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private void _processUploadedFile(
+	private void _processUploadedFiles(
 			ActionRequest actionRequest,
 			UploadPortletRequest uploadPortletRequest, long groupId,
-			String className, long classPK, String fileName,
-			List<String> successMessages, Map<String, String> failureMessages,
+			String className, long classPK, List<String> successMessages,
+			Map<String, String> failureMessages, Locale locale)
+		throws IOException, PortalException {
+
+		Map<String, FileItem[]> multipartParameterMap =
+			uploadPortletRequest.getMultipartParameterMap();
+
+		for (Map.Entry<String, FileItem[]> entry :
+				multipartParameterMap.entrySet()) {
+
+			for (FileItem fileItem : entry.getValue()) {
+				_processXLIFFTranslation(
+					actionRequest, groupId, className, classPK,
+					new Translation(
+						() -> MimeTypesUtil.getContentType(
+							fileItem.getFileName()),
+						fileItem.getFileName(), fileItem::getInputStream),
+					successMessages, failureMessages, locale);
+			}
+		}
+	}
+
+	private void _processXLIFFInputStream(
+			ActionRequest actionRequest, long groupId, String className,
+			long classPK, String fileName, List<String> successMessages,
+			Map<String, String> failureMessages, InputStream inputStream,
 			Locale locale)
 		throws IOException, PortalException {
 
-		Translation translation = new Translation(
-			() -> uploadPortletRequest.getContentType("file"), fileName,
-			() -> uploadPortletRequest.getFileAsStream("file"));
+		try {
+			_importXLIFFFile(
+				actionRequest, groupId, className, classPK, inputStream);
+
+			successMessages.add(fileName);
+		}
+		catch (XLIFFFileException xliffFileException) {
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				locale, getClass());
+
+			Function<String, String> exceptionMessageFunction =
+				_exceptionMessageFunctions.getOrDefault(
+					xliffFileException.getClass(),
+					s -> "the-xliff-file-is-invalid");
+
+			failureMessages.put(
+				fileName,
+				_language.get(
+					resourceBundle, exceptionMessageFunction.apply(className)));
+		}
+	}
+
+	private void _processXLIFFTranslation(
+			ActionRequest actionRequest, long groupId, String className,
+			long classPK, Translation translation, List<String> successMessages,
+			Map<String, String> failureMessages, Locale locale)
+		throws IOException, PortalException {
 
 		if (Objects.equals(
 				translation.getContentType(), ContentTypes.APPLICATION_ZIP)) {
@@ -348,102 +399,6 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 					translation.getFileName(), successMessages, failureMessages,
 					inputStream, locale);
 			}
-		}
-	}
-
-	private void _processUploadedFiles(
-			ActionRequest actionRequest,
-			UploadPortletRequest uploadPortletRequest, long groupId,
-			String className, long classPK, List<String> successMessages,
-			Map<String, String> failureMessages, Locale locale)
-		throws IOException, PortalException {
-
-		Map<String, FileItem[]> multipartParameterMap =
-			uploadPortletRequest.getMultipartParameterMap();
-
-		for (Map.Entry<String, FileItem[]> entry :
-				multipartParameterMap.entrySet()) {
-
-			for (FileItem fileItem : entry.getValue()) {
-				_processXLIFFFileItem(
-					actionRequest, groupId, className, classPK, successMessages,
-					failureMessages, fileItem, locale);
-			}
-		}
-	}
-
-	private void _processXLIFFFileItem(
-			ActionRequest actionRequest, long groupId, String className,
-			long classPK, List<String> successMessages,
-			Map<String, String> failureMessages, FileItem fileItem,
-			Locale locale)
-		throws IOException, PortalException {
-
-		Translation translation = new Translation(
-			() -> MimeTypesUtil.getContentType(fileItem.getFileName()),
-			fileItem.getFileName(), fileItem::getInputStream);
-
-		if (Objects.equals(
-				translation.getContentType(), ContentTypes.APPLICATION_ZIP)) {
-
-			try (InputStream inputStream1 = translation.getInputStream()) {
-				ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(
-					inputStream1);
-
-				try {
-					for (String zipReaderEntry : zipReader.getEntries()) {
-						try (InputStream inputStream2 =
-								zipReader.getEntryAsInputStream(
-									zipReaderEntry)) {
-
-							_processXLIFFInputStream(
-								actionRequest, groupId, className, classPK,
-								zipReaderEntry, successMessages,
-								failureMessages, inputStream2, locale);
-						}
-					}
-				}
-				finally {
-					zipReader.close();
-				}
-			}
-		}
-		else {
-			try (InputStream inputStream = translation.getInputStream()) {
-				_processXLIFFInputStream(
-					actionRequest, groupId, className, classPK,
-					translation.getFileName(), successMessages, failureMessages,
-					inputStream, locale);
-			}
-		}
-	}
-
-	private void _processXLIFFInputStream(
-			ActionRequest actionRequest, long groupId, String className,
-			long classPK, String fileName, List<String> successMessages,
-			Map<String, String> failureMessages, InputStream inputStream,
-			Locale locale)
-		throws IOException, PortalException {
-
-		try {
-			_importXLIFFFile(
-				actionRequest, groupId, className, classPK, inputStream);
-
-			successMessages.add(fileName);
-		}
-		catch (XLIFFFileException xliffFileException) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				locale, getClass());
-
-			Function<String, String> exceptionMessageFunction =
-				_exceptionMessageFunctions.getOrDefault(
-					xliffFileException.getClass(),
-					s -> "the-xliff-file-is-invalid");
-
-			failureMessages.put(
-				fileName,
-				_language.get(
-					resourceBundle, exceptionMessageFunction.apply(className)));
 		}
 	}
 

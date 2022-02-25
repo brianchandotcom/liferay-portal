@@ -142,17 +142,25 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 	}
 
 	private UriInfo _getImportTaskUriInfo(BatchPlannerPlan batchPlannerPlan) {
-		BatchPlannerPolicy batchPlannerPolicy =
-			batchPlannerPlan.fetchBatchPlannerPolicy("csvSeparator");
+		BatchPlannerUriInfo.Builder builder = new BatchPlannerUriInfo.Builder();
 
-		String csvSeparator = null;
+		return builder.delimiter(
+			_getValue(batchPlannerPlan.fetchBatchPlannerPolicy("csvSeparator"))
+		).taskItemDelegateName(
+			batchPlannerPlan.getTaskItemDelegateName()
+		).queryParameter(
+			"containsHeaders",
+			_getValue(
+				batchPlannerPlan.fetchBatchPlannerPolicy("containsHeaders"))
+		).build();
+	}
 
+	private String _getValue(BatchPlannerPolicy batchPlannerPolicy) {
 		if (batchPlannerPolicy != null) {
-			csvSeparator = batchPlannerPolicy.getValue();
+			return batchPlannerPolicy.getValue();
 		}
 
-		return new BatchPlannerUriInfo(
-			csvSeparator, batchPlannerPlan.getTaskItemDelegateName());
+		return null;
 	}
 
 	private void _submitExportTask(BatchPlannerPlan batchPlannerPlan)
@@ -161,8 +169,7 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		_exportTaskResource.setContextCompany(
 			_companyLocalService.getCompany(batchPlannerPlan.getCompanyId()));
 		_exportTaskResource.setContextUriInfo(
-			new BatchPlannerUriInfo(
-				null, batchPlannerPlan.getTaskItemDelegateName()));
+			_getImportTaskUriInfo(batchPlannerPlan));
 		_exportTaskResource.setContextUser(
 			_userLocalService.getUser(batchPlannerPlan.getUserId()));
 

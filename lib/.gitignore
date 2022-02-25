@@ -102,7 +102,6 @@
 /portal/commons-compress.jar
 /portal/commons-configuration.jar
 /portal/commons-dbcp.jar
-/portal/commons-digester.jar
 /portal/commons-exec.jar
 /portal/commons-fileupload.jar
 /portal/commons-io.jar
@@ -111,7 +110,6 @@
 /portal/commons-math.jar
 /portal/commons-math3.jar
 /portal/commons-pool.jar
-/portal/commons-validator.jar
 /portal/crypt.jar
 /portal/dom4j.jar
 /portal/fontbox.jar

@@ -22,6 +22,7 @@ import com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converte
 import com.liferay.headless.commerce.machine.learning.internal.dto.v1_0.converter.CommerceMLForecastCompositeResourcePrimaryKey;
 import com.liferay.headless.commerce.machine.learning.internal.helper.v1_0.CommerceAccountPermissionHelper;
 import com.liferay.headless.commerce.machine.learning.resource.v1_0.AccountForecastResource;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -57,36 +58,39 @@ public class AccountForecastResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (AccountForecast accountForecast : accountForecasts) {
-			CommerceAccountCommerceMLForecast
-				commerceAccountCommerceMLForecast =
-					_commerceAccountCommerceMLForecastManager.create();
+		UnsafeConsumer<AccountForecast, Exception> unsafeConsumer =
+			accountForecast -> {
+				CommerceAccountCommerceMLForecast
+					commerceAccountCommerceMLForecast =
+						_commerceAccountCommerceMLForecastManager.create();
 
-			if (accountForecast.getActual() != null) {
-				commerceAccountCommerceMLForecast.setActual(
-					accountForecast.getActual());
-			}
+				if (accountForecast.getActual() != null) {
+					commerceAccountCommerceMLForecast.setActual(
+						accountForecast.getActual());
+				}
 
-			commerceAccountCommerceMLForecast.setCommerceAccountId(
-				accountForecast.getAccount());
-			commerceAccountCommerceMLForecast.setCompanyId(
-				contextCompany.getCompanyId());
-			commerceAccountCommerceMLForecast.setForecast(
-				accountForecast.getForecast());
-			commerceAccountCommerceMLForecast.setForecastLowerBound(
-				accountForecast.getForecastLowerBound());
-			commerceAccountCommerceMLForecast.setForecastUpperBound(
-				accountForecast.getForecastUpperBound());
-			commerceAccountCommerceMLForecast.setPeriod("month");
-			commerceAccountCommerceMLForecast.setScope("commerce-account");
-			commerceAccountCommerceMLForecast.setTarget("revenue");
-			commerceAccountCommerceMLForecast.setTimestamp(
-				accountForecast.getTimestamp());
+				commerceAccountCommerceMLForecast.setCommerceAccountId(
+					accountForecast.getAccount());
+				commerceAccountCommerceMLForecast.setCompanyId(
+					contextCompany.getCompanyId());
+				commerceAccountCommerceMLForecast.setForecast(
+					accountForecast.getForecast());
+				commerceAccountCommerceMLForecast.setForecastLowerBound(
+					accountForecast.getForecastLowerBound());
+				commerceAccountCommerceMLForecast.setForecastUpperBound(
+					accountForecast.getForecastUpperBound());
+				commerceAccountCommerceMLForecast.setPeriod("month");
+				commerceAccountCommerceMLForecast.setScope("commerce-account");
+				commerceAccountCommerceMLForecast.setTarget("revenue");
+				commerceAccountCommerceMLForecast.setTimestamp(
+					accountForecast.getTimestamp());
 
-			_commerceAccountCommerceMLForecastManager.
-				addCommerceAccountCommerceMLForecast(
-					commerceAccountCommerceMLForecast);
-		}
+				_commerceAccountCommerceMLForecastManager.
+					addCommerceAccountCommerceMLForecast(
+						commerceAccountCommerceMLForecast);
+			};
+
+		contextBatchStrategy.apply(accountForecasts, unsafeConsumer);
 	}
 
 	@Override

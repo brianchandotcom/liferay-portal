@@ -18,13 +18,14 @@ import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldTypeSett
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HtmlParser;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.util.HtmlImpl;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -34,6 +35,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.mockito.Mock;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -51,7 +54,7 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_setUpHtmlUtil();
+		_setUpHtmlParser();
 	}
 
 	@Test
@@ -321,11 +324,20 @@ public class NumericDDMFormFieldTemplateContextContributorTest
 		return ddmFormField;
 	}
 
-	private void _setUpHtmlUtil() {
-		HtmlUtil htmlUtil = new HtmlUtil();
+	private void _setUpHtmlParser() {
+		ReflectionTestUtil.setFieldValue(
+			_numericDDMFormFieldTemplateContextContributor, "_htmlParser",
+			_htmlParser);
 
-		htmlUtil.setHtml(new HtmlImpl());
+		when(
+			_htmlParser.extractText(StringPool.BLANK)
+		).thenReturn(
+			StringPool.BLANK
+		);
 	}
+
+	@Mock
+	private HtmlParser _htmlParser;
 
 	private final Locale _locale = LocaleUtil.US;
 	private final NumericDDMFormFieldTemplateContextContributor

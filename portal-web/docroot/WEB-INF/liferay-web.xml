@@ -540,10 +540,6 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Header Filter</filter-name>
-		<url-pattern>/o/js_loader_config</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>Header Filter</filter-name>
 		<url-pattern>*.css</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
@@ -613,10 +609,6 @@
 	<filter-mapping>
 		<filter-name>ETag Filter</filter-name>
 		<url-pattern>/o/js_bundle_config</url-pattern>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>ETag Filter</filter-name>
-		<url-pattern>/o/js_loader_config</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>ETag Filter</filter-name>
@@ -785,11 +777,6 @@
 	<filter-mapping>
 		<filter-name>GZip Filter</filter-name>
 		<url-pattern>/o/js_bundle_config</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>GZip Filter</filter-name>
-		<url-pattern>/o/js_loader_config</url-pattern>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>

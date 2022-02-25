@@ -329,6 +329,46 @@ definition {
 	}
 
 	@priority = "4"
+	test IsBrowserHistoryPreserved {
+		property test.assert.warning.exceptions = "true";
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content",
+			groupName = "Guest",
+			title = "WC WebContent Title");
+
+		PublicationsNavigator.gotoPublish(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		Publications.publishPublication(publicationName = "Publication Name");
+
+		RunScript(locator1 = "window.history.go(-1)");
+
+		AssertTextPresent(
+			key_publicationName = "Production",
+			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
+			value1 = "Production");
+
+		AssertElementNotPresent(
+			key_changeTitle = "Conflicting Changes",
+			locator1 = "PublicationsChanges#CHANGE_TITLE");
+
+		RunScript(locator1 = "window.history.go(-1)");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertTextEquals(
+			key_publicationName = "Publication Name",
+			locator1 = "Publications#LIST_PUBLISHED_STATUS",
+			value1 = "Published");
+	}
+
+	@priority = "4"
 	test IsLocalizedInPublicationsAdmin {
 		property test.name.skip.portal.instance = "Publications#IsLocalizedInPublicationsAdmin";
 

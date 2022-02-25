@@ -804,6 +804,42 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-144174. Verify the Team Extranet Fragment Components Collection"
+	@priority = "4"
+	test VerifyFragmentComponentsCollection {
+		task ("Go to Team Extranet Fragments Collections") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-team-extranet");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Components");
+		}
+
+		task ("Assert the Fragments names on Components Collection") {
+			for (var key_card : list "Border,Image,Blog Header,Footer,Heading,Text Block,Main Navbar,Parallax Container,Class Container,Link,Video,Button,Member Header,Job Card,Member Card,Social Links,Entry Card,Home Header,Entry Header") {
+				AssertElementPresent(
+					key_card = "${key_card}",
+					locator1 = "Card#CARD_TITLE");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144174. Verify the Team Extranet Fragment Compositions Collection"
+	@priority = "4"
+	test VerifyFragmentCompositionsCollection {
+		task ("Go to Team Extranet Fragments Collections") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-team-extranet");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Compositions");
+		}
+
+		task ("Assert the Fragments names on Compositions Collection") {
+			for (var key_card : list "Filter Bar,Job Positions Collection,Blog Entries Collection,Page header,Team Members Collection,Section Heading") {
+				AssertElementPresent(
+					key_card = "${key_card}",
+					locator1 = "Card#CARD_TITLE");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-144835. Verify the search Bar Widget can be embedded in a Custom Fragment"
 	@priority = "3"
 	test VerifySearchBarEmbeddedInACustomFragment {
@@ -920,6 +956,47 @@ definition {
 				key_buttonName = "All open positions",
 				key_description = "Careers",
 				key_href = "careers");
+		}
+	}
+
+	@description = "This is a test for LPS-146737. Verify the 'Go to Home Page' button in 404 Page redirects to the Home Page"
+	@priority = "3"
+	test VerifyTheErrorPageButtonGoToHomePage {
+		task ("Go to Error Page in Team Extranet Site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-team-extranet");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "404");
+		}
+
+		task ("Click to Go to Home Page and Assert the Page is redirected correctly") {
+			Click(
+				key_buttonName = "Go to home page",
+				key_href = "home",
+				locator1 = "TeamExtranet#FRAGMENT_BUTTON");
+
+			AssertElementPresent(
+				key_title = "Welcome to the team!",
+				locator1 = "TeamExtranet#FRAGMENT_HEADER");
+		}
+	}
+
+	@description = "This is a test for LPS-146737. Verify the Error Page can be displayed"
+	@priority = "3"
+	test VerifyTheErrorPageCanBeDisplayed {
+		task ("Go to Error Page in Team Extranet Site") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-team-extranet");
+
+			PagesAdmin.gotoPageEllipsisMenuItem(
+				menuItem = "View",
+				pageName = "404");
+		}
+
+		task ("Assert the Error Page is displayed correctly") {
+			AssertElementPresent(
+				key_title = "Page not Found",
+				locator1 = "TeamExtranet#FRAGMENT_HEADING");
 		}
 	}
 
@@ -1227,80 +1304,4 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-144174. Verify the Team Extranet Fragment Components Collection"
-	@priority = "4"
-	test VerifyFragmentComponentsCollection {
-		task ("Go to Team Extranet Fragments Collections") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-team-extranet");
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Components");
-		}
-
-		task ("Assert the Fragments names on Components Collection") {
-			for (var key_card : list "Border,Image,Blog Header,Footer,Heading,Text Block,Main Navbar,Parallax Container,Class Container,Link,Video,Button,Member Header,Job Card,Member Card,Social Links,Entry Card,Home Header,Entry Header") {
-				AssertElementPresent(
-					key_card = "${key_card}",
-					locator1 = "Card#CARD_TITLE");
-			}
-		}
-	}
-
-	@description = "This is a test for LPS-144174. Verify the Team Extranet Fragment Compositions Collection"
-	@priority = "4"
-	test VerifyFragmentCompositionsCollection {
-		task ("Go to Team Extranet Fragments Collections") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-team-extranet");
-
-			FragmentsAdminNavigator.gotoCollection(collectionName = "Compositions");
-		}
-
-		task ("Assert the Fragments names on Compositions Collection") {
-			for (var key_card : list "Filter Bar,Job Positions Collection,Blog Entries Collection,Page header,Team Members Collection,Section Heading") {
-				AssertElementPresent(
-					key_card = "${key_card}",
-					locator1 = "Card#CARD_TITLE");
-			}
-		}
-	}
-
-	@description = "This is a test for LPS-146737. Verify the Error Page can be displayed"
-	@priority = "3"
-	test VerifyTheErrorPageCanBeDisplayed {
-		task ("Go to Error Page in Team Extranet Site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-team-extranet");
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View",
-				pageName = "404");
-		}
-
-		task ("Assert the Error Page is displayed correctly") {
-			AssertElementPresent(
-				key_title = "Page not Found",
-				locator1 = "TeamExtranet#FRAGMENT_HEADING");
-		}
-	}
-
-	@description = "This is a test for LPS-146737. Verify the 'Go to Home Page' button in 404 Page redirects to the Home Page"
-	@priority = "3"
-	test VerifyTheErrorPageButtonGoToHomePage {
-		task ("Go to Error Page in Team Extranet Site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-team-extranet");
-
-			PagesAdmin.gotoPageEllipsisMenuItem(
-				menuItem = "View",
-				pageName = "404");
-		}
-
-		task ("Click to Go to Home Page and Assert the Page is redirected correctly") {
-			Click(
-				locator1 = "TeamExtranet#FRAGMENT_BUTTON",
-				key_buttonName = "Go to home page",
-				key_href = "home");
-
-			AssertElementPresent(
-				key_title = "Welcome to the team!",
-				locator1 = "TeamExtranet#FRAGMENT_HEADER");
-		}
-	}
 }

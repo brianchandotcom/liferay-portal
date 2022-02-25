@@ -431,7 +431,7 @@ definition {
 			label = "Catalog");
 
 		Click(locator1 = "Button#SUBMIT");
-		
+
 		WaitForPageLoad();
 
 		AssertSelectedLabel(

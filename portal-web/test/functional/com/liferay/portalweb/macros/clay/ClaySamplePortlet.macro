@@ -1,11 +1,11 @@
 definition {
 
-	macro changeTabAndAssertElementImage {
+	macro assertNavTabVisualContent {
 		Navigator.gotoNavTab(navTab = "${tab}");
 
 		OcularAssertElementImage(
 			locator1 = "ClaySamplePortlet#CLAY_SECTION",
-			value1 = "CanRenderUi/${tab}.png");
+			value1 = "ClaySmoke/CanRenderUI/${tab}.png");
 	}
 
 }

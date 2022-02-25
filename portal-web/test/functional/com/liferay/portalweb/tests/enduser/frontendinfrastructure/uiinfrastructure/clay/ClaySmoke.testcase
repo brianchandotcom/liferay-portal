@@ -46,31 +46,31 @@ definition {
 	@priority = "3"
 	test CanRenderUI {
 		task ("Change tabs and take a screenshot") {
-			Clay.changeTabAndAssertElementImage(tab = "Badges");
+			ClaySamplePortlet.assertNavTabVisualContent(tab = "Badges");
 
-			Clay.changeTabAndAssertElementImage(tab = "Buttons");
+			ClaySamplePortlet.assertNavTabVisualContent(tab = "Buttons");
 
-			Clay.changeTabAndAssertElementImage(tab = "Dropdowns");
+			ClaySamplePortlet.assertNavTabVisualContent(tab = "Dropdowns");
 
-			Clay.changeTabAndAssertElementImage(tab = "Labels");
+			ClaySamplePortlet.assertNavTabVisualContent(tab = "Labels");
 
-			Clay.changeTabAndAssertElementImage(tab = "Links");
+			ClaySamplePortlet.assertNavTabVisualContent(tab = "Links");
 
-			Clay.changeTabAndAssertElementImage(tab = "Navigation Bars");
+			ClaySamplePortlet.assertNavTabVisualContent(tab = "Navigation Bars");
 
-			Clay.changeTabAndAssertElementImage(tab = "Pagination Bars");
+			ClaySamplePortlet.assertNavTabVisualContent(tab = "Pagination Bars");
 
-			Clay.changeTabAndAssertElementImage(tab = "Progress Bars");
+			ClaySamplePortlet.assertNavTabVisualContent(tab = "Progress Bars");
 
-			Clay.changeTabAndAssertElementImage(tab = "Stickers");
+			ClaySamplePortlet.assertNavTabVisualContent(tab = "Stickers");
 
 			// They are commented because ocular not working for full page screenshots
 
-			//Clay.changeTabAndAssertElementImage(tab = "Alerts");
-			//Clay.changeTabAndAssertElementImage(tab = "Cards");
-			//Clay.changeTabAndAssertElementImage(tab = "Form Elements");
-			//Clay.changeTabAndAssertElementImage(tab = "Icons");
-			//Clay.changeTabAndAssertElementImage(tab = "Management Toolbars");
+			//ClaySamplePortlet.assertNavTabVisualContent(tab = "Alerts");
+			//ClaySamplePortlet.assertNavTabVisualContent(tab = "Cards");
+			//ClaySamplePortlet.assertNavTabVisualContent(tab = "Form Elements");
+			//ClaySamplePortlet.assertNavTabVisualContent(tab = "Icons");
+			//ClaySamplePortlet.assertNavTabVisualContent(tab = "Management Toolbars");
 
 		}
 	}

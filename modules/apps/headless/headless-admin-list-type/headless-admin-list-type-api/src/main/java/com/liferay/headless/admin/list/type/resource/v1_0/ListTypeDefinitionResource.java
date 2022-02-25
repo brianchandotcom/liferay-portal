@@ -82,6 +82,10 @@ public interface ListTypeDefinitionResource {
 	public ListTypeDefinition getListTypeDefinition(Long listTypeDefinitionId)
 		throws Exception;
 
+	public ListTypeDefinition patchListTypeDefinition(
+			Long listTypeDefinitionId, ListTypeDefinition listTypeDefinition)
+		throws Exception;
+
 	public ListTypeDefinition putListTypeDefinition(
 			Long listTypeDefinitionId, ListTypeDefinition listTypeDefinition)
 		throws Exception;

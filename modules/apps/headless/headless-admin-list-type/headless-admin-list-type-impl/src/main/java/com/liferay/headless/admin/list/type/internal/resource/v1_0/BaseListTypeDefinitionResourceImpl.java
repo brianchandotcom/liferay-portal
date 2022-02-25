@@ -299,6 +299,70 @@ public abstract class BaseListTypeDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/{listTypeDefinitionId}' -d $'{"name": ___, "name_i18n": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "listTypeDefinitionId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ListTypeDefinition")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/list-type-definitions/{listTypeDefinitionId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ListTypeDefinition patchListTypeDefinition(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("listTypeDefinitionId")
+			Long listTypeDefinitionId,
+			ListTypeDefinition listTypeDefinition)
+		throws Exception {
+
+		ListTypeDefinition existingListTypeDefinition = getListTypeDefinition(
+			listTypeDefinitionId);
+
+		if (listTypeDefinition.getActions() != null) {
+			existingListTypeDefinition.setActions(
+				listTypeDefinition.getActions());
+		}
+
+		if (listTypeDefinition.getDateCreated() != null) {
+			existingListTypeDefinition.setDateCreated(
+				listTypeDefinition.getDateCreated());
+		}
+
+		if (listTypeDefinition.getDateModified() != null) {
+			existingListTypeDefinition.setDateModified(
+				listTypeDefinition.getDateModified());
+		}
+
+		if (listTypeDefinition.getName() != null) {
+			existingListTypeDefinition.setName(listTypeDefinition.getName());
+		}
+
+		if (listTypeDefinition.getName_i18n() != null) {
+			existingListTypeDefinition.setName_i18n(
+				listTypeDefinition.getName_i18n());
+		}
+
+		preparePatch(listTypeDefinition, existingListTypeDefinition);
+
+		return putListTypeDefinition(
+			listTypeDefinitionId, existingListTypeDefinition);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-list-type/v1.0/list-type-definitions/{listTypeDefinitionId}' -d $'{"name": ___, "name_i18n": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
@@ -588,6 +652,11 @@ public abstract class BaseListTypeDefinitionResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		ListTypeDefinition listTypeDefinition,
+		ListTypeDefinition existingListTypeDefinition) {
 	}
 
 	protected <T, R> List<R> transform(

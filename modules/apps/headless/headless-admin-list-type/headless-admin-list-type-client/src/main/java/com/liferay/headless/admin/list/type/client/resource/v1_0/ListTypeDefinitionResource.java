@@ -87,6 +87,14 @@ public interface ListTypeDefinitionResource {
 			Long listTypeDefinitionId)
 		throws Exception;
 
+	public ListTypeDefinition patchListTypeDefinition(
+			Long listTypeDefinitionId, ListTypeDefinition listTypeDefinition)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse patchListTypeDefinitionHttpResponse(
+			Long listTypeDefinitionId, ListTypeDefinition listTypeDefinition)
+		throws Exception;
+
 	public ListTypeDefinition putListTypeDefinition(
 			Long listTypeDefinitionId, ListTypeDefinition listTypeDefinition)
 		throws Exception;
@@ -660,6 +668,93 @@ public interface ListTypeDefinitionResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port +
+						"/o/headless-admin-list-type/v1.0/list-type-definitions/{listTypeDefinitionId}");
+
+			httpInvoker.path("listTypeDefinitionId", listTypeDefinitionId);
+
+			httpInvoker.userNameAndPassword(
+				_builder._login + ":" + _builder._password);
+
+			return httpInvoker.invoke();
+		}
+
+		public ListTypeDefinition patchListTypeDefinition(
+				Long listTypeDefinitionId,
+				ListTypeDefinition listTypeDefinition)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				patchListTypeDefinitionHttpResponse(
+					listTypeDefinitionId, listTypeDefinition);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+
+			try {
+				return ListTypeDefinitionSerDes.toDTO(content);
+			}
+			catch (Exception e) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response: " + content, e);
+
+				throw new Problem.ProblemException(Problem.toDTO(content));
+			}
+		}
+
+		public HttpInvoker.HttpResponse patchListTypeDefinitionHttpResponse(
+				Long listTypeDefinitionId,
+				ListTypeDefinition listTypeDefinition)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body(listTypeDefinition.toString(), "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

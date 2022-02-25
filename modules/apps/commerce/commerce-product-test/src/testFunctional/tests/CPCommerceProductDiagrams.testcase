@@ -5,6 +5,7 @@ definition {
 	property portal.upstream = "true";
 	property osgi.module.configuration.file.names = "com.liferay.commerce.shop.by.diagram.configuration.CSDiagramCPTypeConfiguration.config";
 	property osgi.module.configurations = "enabled=&quot;true&quot;";
+	property test.run.environment = "EE";
 	property testray.main.component.name = "Product Info Management";
 
 	setUp {

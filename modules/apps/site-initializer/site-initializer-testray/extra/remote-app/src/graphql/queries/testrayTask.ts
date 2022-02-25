@@ -47,17 +47,11 @@ export const getTestrayTasks = gql`
 		$filter: String
 		$page: Int = 1
 		$pageSize: Int = 20
-		$scopeKey: String
 	) {
-		testrayTasks(
-			filter: $filter
-			page: $page
-			pageSize: $pageSize
-			scopeKey: $scopeKey
-		)
+		testrayTasks(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
 				type: "C_TestrayTask"
-				path: "testraytasks/scopes/{args.scopeKey}?page={args.page}&pageSize={args.pageSize}&nestedFields=testrayBuild.testrayProject,testrayBuild.testrayRoutine"
+				path: "testraytasks?page={args.page}&pageSize={args.pageSize}&nestedFields=testrayBuild.testrayProject,testrayBuild.testrayRoutine"
 			) {
 			items {
 				dueStatus
@@ -111,15 +105,9 @@ export const getTestrayTasksXXX = gql`
 		$filter: String
 		$page: Int = 1
 		$pageSize: Int = 20
-		$scopeKey: String
 	) {
 		c {
-			testrayTasks(
-				filter: $filter
-				page: $page
-				pageSize: $pageSize
-				scopeKey: $scopeKey
-			) {
+			testrayTasks(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
 					...TestrayTaskFragment
 				}

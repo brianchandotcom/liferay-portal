@@ -25,15 +25,9 @@ export const getTestraySubTasks = gql`
 		$filter: String
 		$page: Int = 1
 		$pageSize: Int = 20
-		$scopeKey: String
 	) {
 		c {
-			testraySubTasks(
-				filter: $filter
-				page: $page
-				pageSize: $pageSize
-				scopeKey: $scopeKey
-			) {
+			testraySubTasks(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
 					dueStatus
 					name

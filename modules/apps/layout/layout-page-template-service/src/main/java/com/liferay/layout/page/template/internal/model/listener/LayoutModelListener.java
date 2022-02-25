@@ -39,12 +39,14 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,7 +71,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				addLayoutPageTemplateStructure(
 					layout.getUserId(), layout.getGroupId(), layout.getPlid(),
 					SegmentsExperienceConstants.ID_DEFAULT,
-					_generateContentLayoutStructure(layout), serviceContext);
+					_generateContentLayoutStructure(), serviceContext);
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -215,17 +217,21 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 		return null;
 	}
 
-	private String _generateContentLayoutStructure(Layout layout) {
+	private String _generateContentLayoutStructure() {
 		LayoutStructure layoutStructure = new LayoutStructure();
 
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.addRootLayoutStructureItem();
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getLayoutPageTemplateEntry(layout);
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
-		if ((layoutPageTemplateEntry == null) ||
-			(layoutPageTemplateEntry.getType() !=
+		int layoutPageTemplateEntryType = GetterUtil.getInteger(
+			serviceContext.getAttribute("layout.page.template.entry.type"),
+			LayoutPageTemplateEntryTypeConstants.TYPE_BASIC);
+
+		if (!Objects.equals(
+				layoutPageTemplateEntryType,
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT)) {
 
 			return layoutStructure.toString();

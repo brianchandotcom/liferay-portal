@@ -1227,4 +1227,39 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-144174. Verify the Team Extranet Fragment Components Collection"
+	@priority = "4"
+	test VerifyFragmentComponentsCollection {
+		task ("Go to Team Extranet Fragments Collections") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-team-extranet");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Components");
+		}
+
+		task ("Assert the Fragments names on Components Collection") {
+			for (var key_card : list "Border,Image,Blog Header,Footer,Heading,Text Block,Main Navbar,Parallax Container,Class Container,Link,Video,Button,Member Header,Job Card,Member Card,Social Links,Entry Card,Home Header,Entry Header") {
+				AssertElementPresent(
+					key_card = "${key_card}",
+					locator1 = "Card#CARD_TITLE");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144174. Verify the Team Extranet Fragment Compositions Collection"
+	@priority = "4"
+	test VerifyFragmentCompositionsCollection {
+		task ("Go to Team Extranet Fragments Collections") {
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-team-extranet");
+
+			FragmentsAdminNavigator.gotoCollection(collectionName = "Compositions");
+		}
+
+		task ("Assert the Fragments names on Compositions Collection") {
+			for (var key_card : list "Filter Bar,Job Positions Collection,Blog Entries Collection,Page header,Team Members Collection,Section Heading") {
+				AssertElementPresent(
+					key_card = "${key_card}",
+					locator1 = "Card#CARD_TITLE");
+			}
+		}
+	}
 }

@@ -112,12 +112,12 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_TITLE</td>
-	<td>//div[contains(@class,'table-list-title')]//*[normalize-space(text())='${title}']</td>
+	<td>//div[contains(@class,'table-list-title')]//*[normalize-space(text())='${entryTitle}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_VERTICAL_ELLIPSIS</td>
-	<td>//*[contains(@class,'dnd-tr') and contains(.,'${title}')]//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td>//*[contains(@class,'dnd-tr') and contains(.,'${entryTitle}')]//*[*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>

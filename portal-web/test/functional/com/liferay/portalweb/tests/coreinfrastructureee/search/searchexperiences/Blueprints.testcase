@@ -614,8 +614,8 @@ definition {
 		Click(locator1 = "Button#PREVIEW");
 
 		Click(
-			key_text = "Dropdown",
-			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+			ariaLabel = "Dropdown",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		MenuItem.clickNoError(menuItem = "View Element JSON");
 
@@ -917,8 +917,8 @@ definition {
 		Click(locator1 = "Button#PREVIEW");
 
 		Click(
-			key_text = "Dropdown",
-			locator1 = "Icon#ANY_VERTICAL_ELLIPSIS");
+			ariaLabel = "Dropdown",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 		MenuItem.clickNoError(menuItem = "View Element JSON");
 
@@ -1589,16 +1589,12 @@ definition {
 			index = "5",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 
-		Pagination.changePagination(itemsPerPage = "8 items");
+		Pagination.changePagination(itemsPerPage = "60 items");
 
-		Pagination.viewResults(results = "Showing 1 to 8 of ${totalElements}");
+		Pagination.viewResults(results = "Showing 1 to ${totalElements} of ${totalElements}");
 
 		AssertElementPresent(
-			index = "8",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
-
-		AssertElementNotPresent(
-			index = "9",
+			index = "${totalElements}",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_NTH_ENTRY");
 	}
 

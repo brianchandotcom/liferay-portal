@@ -119,8 +119,8 @@ definition {
 
 	macro editEntry {
 		Click(
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE",
-			title = "${title}");
+			entryTitle = "${title}",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
 	}
 
 	macro getBlueprintID {
@@ -175,8 +175,8 @@ definition {
 
 	macro openEntryMenu {
 		Click.waitForMenuToggleJSClick(
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_VERTICAL_ELLIPSIS",
-			title = "${title}");
+			entryTitle = "${title}",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_VERTICAL_ELLIPSIS");
 	}
 
 	macro searchBlueprintsPreview {
@@ -257,14 +257,14 @@ definition {
 
 	macro viewEntryTitle {
 		AssertElementPresent(
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE",
-			title = "${title}");
+			entryTitle = "${title}",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
 	}
 
 	macro viewNoEntry {
 		AssertElementNotPresent(
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE",
-			title = "${title}");
+			entryTitle = "${title}",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_TITLE");
 	}
 
 }

@@ -7138,18 +7138,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jericho-html.jar</file-name>
-				<version>3.1</version>
-				<project-name>Jericho HTML Parser</project-name>
-				<project-url>http://jerichohtml.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/jersey-common.jar</file-name>
 				<version>2.26</version>
 				<project-name>Jersey core common packages</project-name>

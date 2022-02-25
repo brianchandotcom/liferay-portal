@@ -267,7 +267,6 @@ definition {
 	@description = "LPS-135394 - Verify the empty state for the View Builder tab"
 	@priority = "3"
 	test EmptyStateViewBuilder {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147760",
 			objectName = "CustomObject147760",
@@ -288,7 +287,6 @@ definition {
 		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No columns added yet.");
 
 		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "Add columns to start creating a view.");
-
 	}
 
 	@description = "LPS-135394 - Verify the empty state for the View tab"

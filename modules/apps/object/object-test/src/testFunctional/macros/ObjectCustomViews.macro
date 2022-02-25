@@ -32,6 +32,12 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro assertEmptyStateTextOnViewBuilder {
+		AssertElementPresent(
+			key_text = "${text}",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT");
+	}
+
 	macro assertObjectView {
 		var key_viewLabel = "${viewLabel}";
 
@@ -58,6 +64,12 @@ definition {
 			value1 = "${name}");
 	}
 
+	macro goToViewsBuilderTab {
+		if (IsElementPresent(locator1 = "ObjectCustomViews#VIEW_BUILDER_TAB")) {
+			Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_TAB");
+		}
+	}
+
 	macro goToViewsDetails {
 		Click(
 			key_label = "${label}",
@@ -68,22 +80,6 @@ definition {
 
 	macro goToViewsTab {
 		Click(locator1 = "ObjectCustomViews#OBJECT_VIEWS_TAB");
-	}
-
-	macro goToViewsBuilderTab {
-
-		if (IsElementPresent(locator1 = "ObjectCustomViews#VIEW_BUILDER_TAB")) {
-
-			Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_TAB");
-		}
-	}
-
-	macro assertEmptyStateTextOnViewBuilder {
-
-		AssertElementPresent(
-			key_text = "${text}",
-			locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT");
-
 	}
 
 }

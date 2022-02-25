@@ -26,6 +26,7 @@ function QuerySettings({
 	frameworkConfig,
 	onApplyIndexerClausesChange,
 	onChangeClauseContributorsVisibility,
+	onChangeIndexerClausesVisibility,
 	onFrameworkConfigChange,
 	searchableTypes,
 }) {
@@ -137,7 +138,13 @@ function QuerySettings({
 
 								<ClayTooltipProvider>
 									<ClaySticker
+										borderless
 										displayType="secondary"
+										monospaced
+										onClick={(event) => {
+											event.stopPropagation();
+											onChangeIndexerClausesVisibility();
+										}}
 										size="md"
 										title={Liferay.Language.get(
 											'search-framework-indexer-clauses-help'

@@ -15,6 +15,7 @@ import getCN from 'classnames';
 import React from 'react';
 
 import CodeMirrorEditor from '../../shared/CodeMirrorEditor';
+import LearnMessage from '../../shared/LearnMessage';
 
 function ConfigurationTab({
 	advancedConfig,
@@ -60,9 +61,13 @@ function ConfigurationTab({
 					</h2>
 
 					<div className="sheet-text">
-						{Liferay.Language.get(
-							'enter-additional-blueprints-configuration-settings-below-refer-to-the-documentation-for-help'
-						)}
+						<span className="help-text">
+							{Liferay.Language.get(
+								'enter-additional-blueprints-configuration-settings-below-refer-to-the-documentation-for-help'
+							)}
+						</span>
+
+						<LearnMessage resourceKey="search-blueprint-configuration" />
 					</div>
 
 					<ClayForm.Group>

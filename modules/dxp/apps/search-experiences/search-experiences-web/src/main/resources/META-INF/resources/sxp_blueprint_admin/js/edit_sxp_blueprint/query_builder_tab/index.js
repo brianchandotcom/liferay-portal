@@ -76,6 +76,8 @@ function QueryBuilderTab({
 		if (
 			(verticalNavKey === VERTICAL_NAV_KEYS.QUERY_SXP_ELEMENTS &&
 				openSidebar === SIDEBARS.CLAUSE_CONTRIBUTORS) ||
+			(verticalNavKey === VERTICAL_NAV_KEYS.QUERY_SXP_ELEMENTS &&
+				openSidebar === SIDEBARS.INDEXER_CLAUSES) ||
 			(verticalNavKey === VERTICAL_NAV_KEYS.QUERY_SETTINGS &&
 				openSidebar === SIDEBARS.ADD_SXP_ELEMENT)
 		) {
@@ -155,6 +157,9 @@ function QueryBuilderTab({
 									}
 									onChangeClauseContributorsVisibility={_handleChangeSidebarVisibility(
 										SIDEBARS.CLAUSE_CONTRIBUTORS
+									)}
+									onChangeIndexerClausesVisibility={_handleChangeSidebarVisibility(
+										SIDEBARS.INDEXER_CLAUSES
 									)}
 									onFrameworkConfigChange={
 										onFrameworkConfigChange

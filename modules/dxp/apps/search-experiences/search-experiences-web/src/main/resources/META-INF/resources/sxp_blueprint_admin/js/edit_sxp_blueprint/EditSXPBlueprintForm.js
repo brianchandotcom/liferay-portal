@@ -23,7 +23,9 @@ import React, {
 	useState,
 } from 'react';
 
+import LearnMessage from '../shared/LearnMessage';
 import PageToolbar from '../shared/PageToolbar';
+import Sidebar from '../shared/Sidebar';
 import SubmitWarningModal from '../shared/SubmitWarningModal';
 import ThemeContext from '../shared/ThemeContext';
 import {DEFAULT_ERROR, SIDEBARS} from '../utils/constants';
@@ -504,7 +506,8 @@ function EditSXPBlueprintForm({
 	const _handleChangeTab = (tab) => {
 		if (
 			tab !== 'query-builder' &&
-			openSidebar === SIDEBARS.CLAUSE_CONTRIBUTORS
+			(openSidebar === SIDEBARS.CLAUSE_CONTRIBUTORS ||
+				openSidebar === SIDEBARS.INDEXER_CLAUSES)
 		) {
 			setOpenSidebar('');
 		}
@@ -808,6 +811,25 @@ function EditSXPBlueprintForm({
 							}
 						/>
 
+						<Sidebar
+							className="info-sidebar"
+							onClose={_handleCloseSidebar}
+							title={Liferay.Language.get(
+								'search-framework-indexer-clauses'
+							)}
+							visible={openSidebar === SIDEBARS.INDEXER_CLAUSES}
+						>
+							<div className="container-fluid text-secondary">
+								<span className="help-text">
+									{Liferay.Language.get(
+										'search-framework-indexer-clauses-description'
+									)}
+								</span>
+
+								<LearnMessage resourceKey="query-clause-contributors-configuration" />
+							</div>
+						</Sidebar>
+
 						<div
 							className={getCN({
 								'open-add-sxp-element':
@@ -815,6 +837,8 @@ function EditSXPBlueprintForm({
 								'open-clause-contributors':
 									openSidebar ===
 									SIDEBARS.CLAUSE_CONTRIBUTORS,
+								'open-info':
+									openSidebar === SIDEBARS.INDEXER_CLAUSES,
 							})}
 						>
 							<QueryBuilderTab

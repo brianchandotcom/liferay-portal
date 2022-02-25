@@ -24,6 +24,14 @@
 		}
 	}
 
+	.help-text + .learn-message {
+		margin-left: 4px;
+	}
+
+	.learn-message {
+		color: $primary;
+	}
+
 	.sheet + .sheet {
 		margin-top: 0;
 	}
@@ -47,35 +55,29 @@
 	}
 }
 
+@mixin shifted($width) {
+	margin-right: calc(
+		max(50% - (#{$builderMaxWidth} / 2), #{$width} - (50vw - 50%) + 24px)
+	);
+}
+
 @media (min-width: calc(#{$builderMinWidth} + #{$sidebarWidth})) {
-	.open-add-sxp-element .builder-content-shift {
-		margin-right: calc(
-			max(
-				50% - (#{$builderMaxWidth} / 2),
-				#{$sidebarWidth} - (50vw - 50%) + 24px
-			)
-		);
+	.open-add-sxp-element,
+	.open-info {
+		.builder-content-shift {
+			@include shifted($sidebarWidth);
+		}
 	}
 }
 
 @media (min-width: calc(#{$builderMinWidth} + #{$previewSidebarWidth})) {
 	.open-preview .builder-content-shift {
-		margin-right: calc(
-			max(
-				50% - (#{$builderMaxWidth} / 2),
-				#{$previewSidebarWidth} - (50vw - 50%) + 24px
-			)
-		);
+		@include shifted($previewSidebarWidth);
 	}
 }
 
 @media (min-width: calc(#{$builderMinWidth} + #{$clauseContributorsSidebarWidth})) {
 	.open-clause-contributors .builder-content-shift {
-		margin-right: calc(
-			max(
-				50% - (#{$builderMaxWidth} / 2),
-				#{$clauseContributorsSidebarWidth} - (50vw - 50%) + 24px
-			)
-		);
+		@include shifted($clauseContributorsSidebarWidth);
 	}
 }

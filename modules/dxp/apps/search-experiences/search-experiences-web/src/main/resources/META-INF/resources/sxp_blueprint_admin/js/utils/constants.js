@@ -27,6 +27,7 @@ export const DEFAULT_ERROR = Liferay.Language.get(
 export const SIDEBARS = {
 	ADD_SXP_ELEMENT: 'addSXPElement',
 	CLAUSE_CONTRIBUTORS: 'clauseContributors',
+	INDEXER_CLAUSES: 'indexerClauses',
 	PREVIEW: 'preview',
 };
 

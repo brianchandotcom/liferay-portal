@@ -1151,6 +1151,35 @@ public interface BaseProjectTemplatesTestCase {
 		}
 	}
 
+	public default File removeGradlePropertiesInWorkspace(
+			File workspaceDir, String gradleProperties)
+		throws IOException {
+
+		File gradlePropertiesFile = new File(workspaceDir, "gradle.properties");
+
+		List<String> originalPropertiesList = Files.readAllLines(
+			gradlePropertiesFile.toPath());
+
+		StringBuilder sb = new StringBuilder();
+
+		for (String property : originalPropertiesList) {
+			if (property.equals(gradleProperties)) {
+				continue;
+			}
+
+			sb.append(property);
+			sb.append(System.lineSeparator());
+		}
+
+		String propertiesContent = sb.toString();
+
+		Files.write(
+			gradlePropertiesFile.toPath(), propertiesContent.getBytes(),
+			StandardOpenOption.TRUNCATE_EXISTING);
+
+		return gradlePropertiesFile;
+	}
+
 	public default void replaceElementByName(
 			Document document, String oldElementName, String newElementName,
 			String textString)

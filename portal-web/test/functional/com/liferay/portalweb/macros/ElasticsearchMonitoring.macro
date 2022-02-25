@@ -31,7 +31,7 @@ definition {
 			locator1 = "ElasticsearchMonitoring#CLUSTER_NAME",
 			value1 = "LiferayElasticsearchCluster");
 
-		if (contains("${serverVersion}", "7.16.3")) {
+		if (contains("${serverVersion}", "7.17.0")) {
 			AssertElementPresent(
 				key_title = "Cluster overview",
 				locator1 = "Header#H1_TITLE");

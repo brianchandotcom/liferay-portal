@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.util.PropsValues;
@@ -735,12 +734,6 @@ public class DLStoreImpl implements DLStore {
 
 		DLValidatorUtil.validateVersionLabel(versionLabel);
 	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	protected GroupLocalService groupLocalService;
 
 	private final StoreFactory _storeFactory;
 

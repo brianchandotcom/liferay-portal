@@ -944,4 +944,66 @@ definition {
 		}
 	}
 
+	@description = "Bug: ACP-274 | Automation ID: LRAC-10672 | Test Summary: Download a document by download button (enabled through show actions portlet configuration)"
+	@priority = "4"
+	test DownloadDocumentByDownloadButton {
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Go to AC Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Enable show actions option") {
+			DMDocument.enableActionsMenuOnPortlet();
+		}
+
+		task ("Download the documents and media") {
+			PortletEntry.selectAll();
+
+			Click.clickNoMouseOver(locator1 = "Icon#DOWNLOAD");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to documents and media assets list") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Documents and Media");
+		}
+
+		task ("Change the time filter") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Check the number of downloads and previews in the documents and media assets list") {
+			ACUtils.viewTableInformation(
+				nameList = "DM AC Title",
+				numberValueList = "1");
+		}
+
+		task ("Navigate to the overview tab in document report entry") {
+			ACNavigation.openItem(itemName = "DM AC Title");
+		}
+
+		task ("Check the number of downloads and previews in the overview tab") {
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Downloads",
+				metricValue = "1");
+		}
+	}
+
 }

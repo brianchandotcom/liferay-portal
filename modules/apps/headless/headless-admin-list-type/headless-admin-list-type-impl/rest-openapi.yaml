@@ -175,6 +175,33 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ListTypeDefinition"
             tags: ["ListTypeDefinition"]
+        patch:
+            operationId: patchListTypeDefinition
+            parameters:
+                - in: path
+                  name: listTypeDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeDefinition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeDefinition"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+            tags: ["ListTypeDefinition"]
         put:
             operationId: putListTypeDefinition
             parameters:

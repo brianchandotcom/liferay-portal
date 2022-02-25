@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -76,9 +79,7 @@ public class OptionValueResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (OptionValueResource)ProxyUtil.newProxyInstance(
-					OptionValueResource.class.getClassLoader(),
-					new Class<?>[] {OptionValueResource.class},
+				return _optionValueResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -292,5 +293,41 @@ public class OptionValueResourceFactoryImpl
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, OptionValueResource>
+		_getProxyProviderFunction() {
+
+		ClassLoader classLoader = OptionValueResource.class.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			classLoader, OptionValueResource.class);
+
+		try {
+			Constructor<OptionValueResource> constructor =
+				(Constructor<OptionValueResource>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, OptionValueResource>
+		_optionValueResourceProxyProviderFunction = _getProxyProviderFunction();
 
 }

@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -73,9 +76,7 @@ public class ContentStructureResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (ContentStructureResource)ProxyUtil.newProxyInstance(
-					ContentStructureResource.class.getClassLoader(),
-					new Class<?>[] {ContentStructureResource.class},
+				return _contentStructureResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -291,5 +292,43 @@ public class ContentStructureResourceFactoryImpl
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, ContentStructureResource>
+		_getProxyProviderFunction() {
+
+		ClassLoader classLoader =
+			ContentStructureResource.class.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			classLoader, ContentStructureResource.class);
+
+		try {
+			Constructor<ContentStructureResource> constructor =
+				(Constructor<ContentStructureResource>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, ContentStructureResource>
+		_contentStructureResourceProxyProviderFunction =
+			_getProxyProviderFunction();
 
 }

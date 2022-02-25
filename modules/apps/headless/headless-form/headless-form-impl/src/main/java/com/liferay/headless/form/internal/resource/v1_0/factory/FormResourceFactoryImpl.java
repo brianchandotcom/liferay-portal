@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -72,9 +75,7 @@ public class FormResourceFactoryImpl implements FormResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (FormResource)ProxyUtil.newProxyInstance(
-					FormResource.class.getClassLoader(),
-					new Class<?>[] {FormResource.class},
+				return _formResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -285,5 +286,41 @@ public class FormResourceFactoryImpl implements FormResource.Factory {
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, FormResource>
+		_getProxyProviderFunction() {
+
+		ClassLoader classLoader = FormResource.class.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			classLoader, FormResource.class);
+
+		try {
+			Constructor<FormResource> constructor =
+				(Constructor<FormResource>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, FormResource>
+		_formResourceProxyProviderFunction = _getProxyProviderFunction();
 
 }

@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -76,13 +79,8 @@ public class ProductShippingConfigurationResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (ProductShippingConfigurationResource)
-					ProxyUtil.newProxyInstance(
-						ProductShippingConfigurationResource.class.
-							getClassLoader(),
-						new Class<?>[] {
-							ProductShippingConfigurationResource.class
-						},
+				return _productShippingConfigurationResourceProxyProviderFunction.
+					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
 							_httpServletRequest, _httpServletResponse,
@@ -307,5 +305,45 @@ public class ProductShippingConfigurationResourceFactoryImpl
 		private final User _user;
 
 	}
+
+	private static Function
+		<InvocationHandler, ProductShippingConfigurationResource>
+			_getProxyProviderFunction() {
+
+		ClassLoader classLoader =
+			ProductShippingConfigurationResource.class.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			classLoader, ProductShippingConfigurationResource.class);
+
+		try {
+			Constructor<ProductShippingConfigurationResource> constructor =
+				(Constructor<ProductShippingConfigurationResource>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function
+		<InvocationHandler, ProductShippingConfigurationResource>
+			_productShippingConfigurationResourceProxyProviderFunction =
+				_getProxyProviderFunction();
 
 }

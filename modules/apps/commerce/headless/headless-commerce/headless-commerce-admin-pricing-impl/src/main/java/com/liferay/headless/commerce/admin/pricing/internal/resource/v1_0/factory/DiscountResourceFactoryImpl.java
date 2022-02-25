@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -74,9 +77,7 @@ public class DiscountResourceFactoryImpl implements DiscountResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (DiscountResource)ProxyUtil.newProxyInstance(
-					DiscountResource.class.getClassLoader(),
-					new Class<?>[] {DiscountResource.class},
+				return _discountResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -289,5 +290,41 @@ public class DiscountResourceFactoryImpl implements DiscountResource.Factory {
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, DiscountResource>
+		_getProxyProviderFunction() {
+
+		ClassLoader classLoader = DiscountResource.class.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			classLoader, DiscountResource.class);
+
+		try {
+			Constructor<DiscountResource> constructor =
+				(Constructor<DiscountResource>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, DiscountResource>
+		_discountResourceProxyProviderFunction = _getProxyProviderFunction();
 
 }

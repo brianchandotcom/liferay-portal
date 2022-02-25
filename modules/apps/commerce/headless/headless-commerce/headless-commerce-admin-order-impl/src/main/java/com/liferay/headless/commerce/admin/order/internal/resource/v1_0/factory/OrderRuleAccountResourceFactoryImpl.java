@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -76,9 +79,7 @@ public class OrderRuleAccountResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (OrderRuleAccountResource)ProxyUtil.newProxyInstance(
-					OrderRuleAccountResource.class.getClassLoader(),
-					new Class<?>[] {OrderRuleAccountResource.class},
+				return _orderRuleAccountResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -294,5 +295,43 @@ public class OrderRuleAccountResourceFactoryImpl
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, OrderRuleAccountResource>
+		_getProxyProviderFunction() {
+
+		ClassLoader classLoader =
+			OrderRuleAccountResource.class.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			classLoader, OrderRuleAccountResource.class);
+
+		try {
+			Constructor<OrderRuleAccountResource> constructor =
+				(Constructor<OrderRuleAccountResource>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, OrderRuleAccountResource>
+		_orderRuleAccountResourceProxyProviderFunction =
+			_getProxyProviderFunction();
 
 }

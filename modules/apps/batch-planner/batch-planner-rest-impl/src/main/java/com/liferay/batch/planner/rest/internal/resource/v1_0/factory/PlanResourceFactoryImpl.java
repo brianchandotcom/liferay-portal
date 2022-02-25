@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -72,9 +75,7 @@ public class PlanResourceFactoryImpl implements PlanResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (PlanResource)ProxyUtil.newProxyInstance(
-					PlanResource.class.getClassLoader(),
-					new Class<?>[] {PlanResource.class},
+				return _planResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -285,5 +286,41 @@ public class PlanResourceFactoryImpl implements PlanResource.Factory {
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, PlanResource>
+		_getProxyProviderFunction() {
+
+		ClassLoader classLoader = PlanResource.class.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			classLoader, PlanResource.class);
+
+		try {
+			Constructor<PlanResource> constructor =
+				(Constructor<PlanResource>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, PlanResource>
+		_planResourceProxyProviderFunction = _getProxyProviderFunction();
 
 }

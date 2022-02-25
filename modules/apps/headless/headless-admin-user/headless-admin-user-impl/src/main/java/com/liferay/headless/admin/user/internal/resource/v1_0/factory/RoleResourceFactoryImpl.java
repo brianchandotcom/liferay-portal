@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -72,9 +75,7 @@ public class RoleResourceFactoryImpl implements RoleResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (RoleResource)ProxyUtil.newProxyInstance(
-					RoleResource.class.getClassLoader(),
-					new Class<?>[] {RoleResource.class},
+				return _roleResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -285,5 +286,41 @@ public class RoleResourceFactoryImpl implements RoleResource.Factory {
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, RoleResource>
+		_getProxyProviderFunction() {
+
+		ClassLoader classLoader = RoleResource.class.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			classLoader, RoleResource.class);
+
+		try {
+			Constructor<RoleResource> constructor =
+				(Constructor<RoleResource>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, RoleResource>
+		_roleResourceProxyProviderFunction = _getProxyProviderFunction();
 
 }

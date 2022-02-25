@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -76,9 +79,7 @@ public class PriceModifierProductResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (PriceModifierProductResource)ProxyUtil.newProxyInstance(
-					PriceModifierProductResource.class.getClassLoader(),
-					new Class<?>[] {PriceModifierProductResource.class},
+				return _priceModifierProductResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -295,5 +296,44 @@ public class PriceModifierProductResourceFactoryImpl
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, PriceModifierProductResource>
+		_getProxyProviderFunction() {
+
+		ClassLoader classLoader =
+			PriceModifierProductResource.class.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			classLoader, PriceModifierProductResource.class);
+
+		try {
+			Constructor<PriceModifierProductResource> constructor =
+				(Constructor<PriceModifierProductResource>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function
+		<InvocationHandler, PriceModifierProductResource>
+			_priceModifierProductResourceProxyProviderFunction =
+				_getProxyProviderFunction();
 
 }

@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -76,13 +79,8 @@ public class WorkflowTaskAssignableUsersResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (WorkflowTaskAssignableUsersResource)
-					ProxyUtil.newProxyInstance(
-						WorkflowTaskAssignableUsersResource.class.
-							getClassLoader(),
-						new Class<?>[] {
-							WorkflowTaskAssignableUsersResource.class
-						},
+				return _workflowTaskAssignableUsersResourceProxyProviderFunction.
+					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
 							_httpServletRequest, _httpServletResponse,
@@ -305,5 +303,45 @@ public class WorkflowTaskAssignableUsersResourceFactoryImpl
 		private final User _user;
 
 	}
+
+	private static Function
+		<InvocationHandler, WorkflowTaskAssignableUsersResource>
+			_getProxyProviderFunction() {
+
+		ClassLoader classLoader =
+			WorkflowTaskAssignableUsersResource.class.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			classLoader, WorkflowTaskAssignableUsersResource.class);
+
+		try {
+			Constructor<WorkflowTaskAssignableUsersResource> constructor =
+				(Constructor<WorkflowTaskAssignableUsersResource>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function
+		<InvocationHandler, WorkflowTaskAssignableUsersResource>
+			_workflowTaskAssignableUsersResourceProxyProviderFunction =
+				_getProxyProviderFunction();
 
 }

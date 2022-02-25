@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -74,9 +77,7 @@ public class ShipmentResourceFactoryImpl implements ShipmentResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (ShipmentResource)ProxyUtil.newProxyInstance(
-					ShipmentResource.class.getClassLoader(),
-					new Class<?>[] {ShipmentResource.class},
+				return _shipmentResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -289,5 +290,41 @@ public class ShipmentResourceFactoryImpl implements ShipmentResource.Factory {
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, ShipmentResource>
+		_getProxyProviderFunction() {
+
+		ClassLoader classLoader = ShipmentResource.class.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			classLoader, ShipmentResource.class);
+
+		try {
+			Constructor<ShipmentResource> constructor =
+				(Constructor<ShipmentResource>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, ShipmentResource>
+		_shipmentResourceProxyProviderFunction = _getProxyProviderFunction();
 
 }

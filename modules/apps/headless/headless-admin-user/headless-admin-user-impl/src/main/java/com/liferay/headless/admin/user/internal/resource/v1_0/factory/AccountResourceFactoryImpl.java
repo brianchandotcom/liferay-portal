@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -72,9 +75,7 @@ public class AccountResourceFactoryImpl implements AccountResource.Factory {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (AccountResource)ProxyUtil.newProxyInstance(
-					AccountResource.class.getClassLoader(),
-					new Class<?>[] {AccountResource.class},
+				return _accountResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -286,5 +287,41 @@ public class AccountResourceFactoryImpl implements AccountResource.Factory {
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, AccountResource>
+		_getProxyProviderFunction() {
+
+		ClassLoader classLoader = AccountResource.class.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			classLoader, AccountResource.class);
+
+		try {
+			Constructor<AccountResource> constructor =
+				(Constructor<AccountResource>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, AccountResource>
+		_accountResourceProxyProviderFunction = _getProxyProviderFunction();
 
 }

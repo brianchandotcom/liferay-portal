@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -75,10 +78,8 @@ public class DataDefinitionFieldLinkResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (DataDefinitionFieldLinkResource)
-					ProxyUtil.newProxyInstance(
-						DataDefinitionFieldLinkResource.class.getClassLoader(),
-						new Class<?>[] {DataDefinitionFieldLinkResource.class},
+				return _dataDefinitionFieldLinkResourceProxyProviderFunction.
+					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
 							_httpServletRequest, _httpServletResponse,
@@ -298,5 +299,44 @@ public class DataDefinitionFieldLinkResourceFactoryImpl
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, DataDefinitionFieldLinkResource>
+		_getProxyProviderFunction() {
+
+		ClassLoader classLoader =
+			DataDefinitionFieldLinkResource.class.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			classLoader, DataDefinitionFieldLinkResource.class);
+
+		try {
+			Constructor<DataDefinitionFieldLinkResource> constructor =
+				(Constructor<DataDefinitionFieldLinkResource>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function
+		<InvocationHandler, DataDefinitionFieldLinkResource>
+			_dataDefinitionFieldLinkResourceProxyProviderFunction =
+				_getProxyProviderFunction();
 
 }

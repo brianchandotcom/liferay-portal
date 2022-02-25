@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -73,9 +76,7 @@ public class DataDefinitionResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (DataDefinitionResource)ProxyUtil.newProxyInstance(
-					DataDefinitionResource.class.getClassLoader(),
-					new Class<?>[] {DataDefinitionResource.class},
+				return _dataDefinitionResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -290,5 +291,42 @@ public class DataDefinitionResourceFactoryImpl
 		private final User _user;
 
 	}
+
+	private static Function<InvocationHandler, DataDefinitionResource>
+		_getProxyProviderFunction() {
+
+		ClassLoader classLoader = DataDefinitionResource.class.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			classLoader, DataDefinitionResource.class);
+
+		try {
+			Constructor<DataDefinitionResource> constructor =
+				(Constructor<DataDefinitionResource>)proxyClass.getConstructor(
+					InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function<InvocationHandler, DataDefinitionResource>
+		_dataDefinitionResourceProxyProviderFunction =
+			_getProxyProviderFunction();
 
 }

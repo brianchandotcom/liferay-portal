@@ -35,12 +35,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.function.Function;
 
 import javax.annotation.Generated;
 
@@ -76,13 +79,8 @@ public class ShippingFixedOptionOrderTypeResourceFactoryImpl
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				return (ShippingFixedOptionOrderTypeResource)
-					ProxyUtil.newProxyInstance(
-						ShippingFixedOptionOrderTypeResource.class.
-							getClassLoader(),
-						new Class<?>[] {
-							ShippingFixedOptionOrderTypeResource.class
-						},
+				return _shippingFixedOptionOrderTypeResourceProxyProviderFunction.
+					apply(
 						(proxy, method, arguments) -> _invoke(
 							method, arguments, _checkPermissions,
 							_httpServletRequest, _httpServletResponse,
@@ -307,5 +305,45 @@ public class ShippingFixedOptionOrderTypeResourceFactoryImpl
 		private final User _user;
 
 	}
+
+	private static Function
+		<InvocationHandler, ShippingFixedOptionOrderTypeResource>
+			_getProxyProviderFunction() {
+
+		ClassLoader classLoader =
+			ShippingFixedOptionOrderTypeResource.class.getClassLoader();
+
+		if (classLoader == null) {
+			classLoader = ClassLoader.getSystemClassLoader();
+		}
+
+		Class<?> proxyClass = ProxyUtil.getProxyClass(
+			classLoader, ShippingFixedOptionOrderTypeResource.class);
+
+		try {
+			Constructor<ShippingFixedOptionOrderTypeResource> constructor =
+				(Constructor<ShippingFixedOptionOrderTypeResource>)
+					proxyClass.getConstructor(InvocationHandler.class);
+
+			return invocationHandler -> {
+				try {
+					return constructor.newInstance(invocationHandler);
+				}
+				catch (ReflectiveOperationException
+							reflectiveOperationException) {
+
+					throw new InternalError(reflectiveOperationException);
+				}
+			};
+		}
+		catch (NoSuchMethodException noSuchMethodException) {
+			throw new InternalError(noSuchMethodException);
+		}
+	}
+
+	private static final Function
+		<InvocationHandler, ShippingFixedOptionOrderTypeResource>
+			_shippingFixedOptionOrderTypeResourceProxyProviderFunction =
+				_getProxyProviderFunction();
 
 }

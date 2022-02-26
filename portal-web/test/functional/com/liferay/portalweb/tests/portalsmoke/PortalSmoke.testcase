@@ -10,8 +10,6 @@ definition {
 
 	setUp {
 		TestCase.setUpPortalInstance();
-
-		SignIn.signInTestSetup();
 	}
 
 	tearDown {
@@ -39,6 +37,8 @@ definition {
 		property portal.acceptance = "false";
 		property testray.component.names = "Training";
 
+		SignIn.signInTestSetup();
+
 		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
@@ -55,6 +55,8 @@ definition {
 		property osgi.module.configurations = "cacheEnabled=&quot;false&quot;";
 		property portal.smoke = "false";
 
+		SignIn.signInTestSetup();
+
 		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
@@ -63,9 +65,22 @@ definition {
 	@priority = "4"
 	test SmokeWithEmbeddedHypersonic {
 		property app.server.types = "jboss,tomcat,weblogic,websphere,wildfly";
+		property custom.properties = "passwords.default.policy.change.required=true";
 		property database.hypersonic.embedded = "true";
 		property database.types = "hypersonic";
 		property portal.smoke = "false";
+
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		User.resetPassword(setupWizardEnabled = "true");
+
+		User.answerPasswordReminder();
+
+		User.acceptEndUserLicenseAgreement();
+
+		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 
 		Smoke.viewWelcomeContentPage();
 
@@ -79,6 +94,8 @@ definition {
 		property database.types = "mariadb,mysql";
 		property portal.smoke = "false";
 
+		SignIn.signInTestSetup();
+
 		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
@@ -89,6 +106,8 @@ definition {
 		property delete.precompiled.jsps = "true";
 		property portal.smoke = "false";
 
+		SignIn.signInTestSetup();
+
 		Smoke.viewWelcomeContentPage();
 
 		Smoke.runSmoke();
@@ -98,6 +117,8 @@ definition {
 	test SmokeWithSPADisabled {
 		property custom.properties = "javascript.single.page.application.enabled=false";
 		property portal.smoke = "false";
+
+		SignIn.signInTestSetup();
 
 		Smoke.viewWelcomeContentPage();
 

@@ -17,6 +17,8 @@ package com.liferay.commerce.checkout.web.internal.helper;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -44,6 +46,7 @@ import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -118,17 +121,26 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			String languageId, boolean visible)
 		throws PortalException {
 
-		if (commerceOrder.getCommerceShippingMethodId() < 1) {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+
+		if ((!commerceOrder.isGuestOrder() &&
+			 !_commerceOrderPortletResourcePermission.contains(
+				 themeDisplay.getPermissionChecker(),
+				 commerceAccount.getCommerceAccountGroupId(),
+				 CommerceOrderActionKeys.
+					 MANAGE_COMMERCE_ORDER_PAYMENT_METHODS)) ||
+			(commerceOrder.getCommerceShippingMethodId() < 1)) {
+
 			return false;
 		}
 
 		CommerceShippingMethod commerceShippingMethod =
 			_commerceShippingMethodLocalService.getCommerceShippingMethod(
 				commerceOrder.getCommerceShippingMethodId());
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
 
 		CommerceShippingEngine commerceShippingEngine =
 			_commerceShippingEngineRegistry.getCommerceShippingEngine(
@@ -401,6 +413,11 @@ public class DefaultCommerceCheckoutStepHttpHelper
 
 	@Reference
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
+
+	@Reference(
+		target = "(resource.name=" + CommerceOrderConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _commerceOrderPortletResourcePermission;
 
 	@Reference
 	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;

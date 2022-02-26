@@ -40,7 +40,8 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.instanceable=true",
 		"javax.portlet.display-name=Analytics Client Demo Portlet",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
-		"javax.portlet.security-role-ref=power-user,user"
+		"javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )

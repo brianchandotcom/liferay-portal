@@ -54,9 +54,9 @@ public class UncompressUtil {
 			TarArchiveInputStream tarArchiveInputStream =
 				new TarArchiveInputStream(gzipCompressorInputStream)) {
 
-			TarArchiveEntry tarArchiveEntry = null;
-
 			String rootArchiveName = StringPool.BLANK;
+
+			TarArchiveEntry tarArchiveEntry = null;
 
 			while ((tarArchiveEntry =
 						tarArchiveInputStream.getNextTarEntry()) != null) {

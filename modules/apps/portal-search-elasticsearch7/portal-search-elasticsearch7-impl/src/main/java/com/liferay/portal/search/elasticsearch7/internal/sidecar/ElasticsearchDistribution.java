@@ -38,7 +38,8 @@ public class ElasticsearchDistribution implements Distribution {
 	@Override
 	public List<Distributable> getPluginDistributables() {
 		return Arrays.asList(
-			new DistributableImpl(_getDownloadURLString("analysis-icu"), _ICU_CHECKSUM),
+			new DistributableImpl(
+				_getDownloadURLString("analysis-icu"), _ICU_CHECKSUM),
 			new DistributableImpl(
 				_getDownloadURLString("analysis-kuromoji"), _KUROMOJI_CHECKSUM),
 			new DistributableImpl(

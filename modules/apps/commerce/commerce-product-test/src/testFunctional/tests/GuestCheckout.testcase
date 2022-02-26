@@ -114,8 +114,8 @@ definition {
 		CommerceNavigator.gotoSpeedwellAccountDropdownItem(dropdownItem = "Sign In");
 
 		CommerceLogin.loginPG(
+			newPassword = "test",
 			password = "ttest",
-			resetPassword = "test",
 			samlEnabled = "true",
 			userEmailAddress = "buyer@liferay.com");
 
@@ -190,8 +190,8 @@ definition {
 		User.logoutPG();
 
 		CommerceLogin.speedwellLogin(
+			newPassword = "test",
 			password = "ttest",
-			resetPassword = "test",
 			urlAppend = "web/speedwell",
 			userEmailAddress = "buyer@liferay.com");
 
@@ -318,8 +318,8 @@ definition {
 		User.logoutPG();
 
 		CommerceLogin.speedwellLogin(
+			newPassword = "test",
 			password = "ttest",
-			resetPassword = "test",
 			urlAppend = "web/speedwell",
 			userEmailAddress = "buyer@liferay.com");
 
@@ -695,8 +695,8 @@ definition {
 		User.logoutPG();
 
 		CommerceLogin.speedwellLogin(
+			newPassword = "test",
 			password = "ttest",
-			resetPassword = "test",
 			urlAppend = "web/speedwell",
 			userEmailAddress = "buyer@liferay.com");
 
@@ -1187,8 +1187,8 @@ definition {
 			userScreenName = "buyeruser");
 
 		CommerceLogin.speedwellLogin(
+			newPassword = "test",
 			password = "ttest",
-			resetPassword = "test",
 			urlAppend = "web/speedwell",
 			userEmailAddress = "buyer@liferay.com");
 

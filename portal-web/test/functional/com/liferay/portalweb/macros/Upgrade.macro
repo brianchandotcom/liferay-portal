@@ -2409,14 +2409,14 @@ definition {
 
 		if (IsElementPresent(locator1 = "UserBar#USER_SIGN_IN")) {
 			User.loginPG(
+				newPassword = "test2",
 				password = "test",
-				setupWizardEnabled = "true",
 				userEmailAddress = "test@liferay.com");
 		}
 		else {
 			User.acceptEndUserLicenseAgreement();
 
-			User.resetPassword(setupWizardEnabled = "true");
+			User.resetPassword(newPassword = "test2");
 
 			User.answerPasswordReminder();
 

@@ -151,7 +151,6 @@ definition {
 		User.editPasswordCP(
 			currentPassword = "${currentPassword}",
 			newPassword = "${newPassword}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
 			userEmailAddress = "${userEmailAddress}",
 			userScreenName = "${userScreenName}");
 
@@ -194,7 +193,6 @@ definition {
 		User.editPasswordCP(
 			currentPassword = "${currentPassword}",
 			newPassword = "${newPassword}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
 			userEmailAddress = "${userEmailAddress}",
 			userScreenName = "${userScreenName}");
 
@@ -297,7 +295,6 @@ definition {
 		User.editPasswordCP(
 			currentPassword = "${currentPassword}",
 			newPassword = "${newPassword}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
 			userEmailAddress = "${userEmailAddress}",
 			userScreenName = "${userScreenName}");
 
@@ -364,7 +361,6 @@ definition {
 		User.editPasswordCP(
 			currentPassword = "${currentPassword}",
 			newPassword = "${newPassword}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
 			userEmailAddress = "${userEmailAddress}",
 			userScreenName = "${userScreenName}");
 
@@ -396,7 +392,6 @@ definition {
 			pageName = "${pageName}",
 			roleTitle = "${roleTitle}",
 			siteName = "${siteName}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
 			userEmailAddress = "${userEmailAddress}",
 			userFirstName = "${userFirstName}",
 			userLastName = "${userLastName}",
@@ -474,7 +469,6 @@ definition {
 		User.editPasswordCP(
 			currentPassword = "${currentPassword}",
 			newPassword = "${newPassword}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
 			userEmailAddress = "${userEmailAddress}",
 			userScreenName = "${userScreenName}");
 

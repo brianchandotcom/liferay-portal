@@ -1125,10 +1125,9 @@ definition {
 
 			User.loginPG(
 				authenticationMethod = "${authenticationMethod}",
+				newPassword = "${newPassword}",
 				nodePort = "${nodePort}",
 				password = "test",
-				resetPassword = "${resetPassword}",
-				syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
 				userEmailAddress = "test@liferay.com",
 				userScreenName = "${userScreenName}");
 		}
@@ -1157,10 +1156,9 @@ definition {
 
 			User.loginPG(
 				authenticationMethod = "${authenticationMethod}",
+				newPassword = "${newPassword}",
 				nodePort = "${nodePort}",
 				password = "test",
-				resetPassword = "${resetPassword}",
-				syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
 				userEmailAddress = "test@liferay.com",
 				userScreenName = "${userScreenName}");
 		}
@@ -1522,10 +1520,9 @@ definition {
 
 		User.loginPG(
 			authenticationMethod = "${authenticationMethod}",
+			newPassword = "${newPassword}",
 			nodePort = "${nodePort}",
 			password = "${newPassword}",
-			resetPassword = "${resetPassword}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}",
 			userEmailAddress = "${userEmailAddress}",
 			userScreenName = "${userScreenName}");
 
@@ -1910,10 +1907,7 @@ definition {
 
 		// TODO Remove below macro after password reminder gets completely cleaned out with JSON
 
-		User.resetPassword(
-			resetPassword = "${resetPassword}",
-			setupWizardEnabled = "${setupWizardEnabled}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}");
+		User.resetPassword(newPassword = "${newPassword}");
 
 		User.answerPasswordReminder();
 
@@ -1950,10 +1944,7 @@ definition {
 
 		// TODO Remove below macro after password reminder gets completely cleaned out with JSON
 
-		User.resetPassword(
-			resetPassword = "${resetPassword}",
-			setupWizardEnabled = "${setupWizardEnabled}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}");
+		User.resetPassword(newPassword = "${newPassword}");
 
 		User.answerPasswordReminder();
 
@@ -2114,10 +2105,7 @@ definition {
 
 		// TODO Remove below macro after password reminder gets completely cleaned out with JSON
 
-		User.resetPassword(
-			resetPassword = "${resetPassword}",
-			setupWizardEnabled = "${setupWizardEnabled}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}");
+		User.resetPassword(newPassword = "${newPassword}");
 
 		User.answerPasswordReminder();
 
@@ -2148,10 +2136,7 @@ definition {
 
 		// TODO Remove below macro after password reminder gets completely cleaned out with JSON
 
-		User.resetPassword(
-			resetPassword = "${resetPassword}",
-			setupWizardEnabled = "${setupWizardEnabled}",
-			syntaxCheckingEnabled = "${syntaxCheckingEnabled}");
+		User.resetPassword(newPassword = "${newPassword}");
 
 		User.answerPasswordReminder();
 
@@ -2281,28 +2266,7 @@ definition {
 					value1 = "I Agree");
 			}
 
-			if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#PASSWORD")) {
-				if (isSet(syntaxCheckingEnabled) && ("${syntaxCheckingEnabled}" == "true")) {
-					Type(
-						locator1 = "TextInput#PASSWORD",
-						value1 = "${resetPassword}");
-
-					Type(
-						locator1 = "TextInput#ENTER_AGAIN",
-						value1 = "${resetPassword}");
-				}
-				else {
-					Type(
-						locator1 = "TextInput#PASSWORD",
-						value1 = "test");
-
-					Type(
-						locator1 = "TextInput#ENTER_AGAIN",
-						value1 = "test");
-				}
-
-				Button.click(button = "Save");
-			}
+			User.resetPassword(newPassword = "${newPassword}");
 
 			if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#ANSWER")) {
 				Type(
@@ -2361,17 +2325,7 @@ definition {
 				value1 = "I Agree");
 		}
 
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#PASSWORD")) {
-			Type(
-				locator1 = "TextInput#PASSWORD",
-				value1 = "test");
-
-			Type(
-				locator1 = "TextInput#ENTER_AGAIN",
-				value1 = "test");
-
-			Button.clickSave();
-		}
+		User.resetPassword();
 
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#ANSWER")) {
 			Type(
@@ -2465,34 +2419,23 @@ definition {
 
 	macro resetPassword {
 		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#PASSWORD")) {
-			if ("${syntaxCheckingEnabled}" == "true") {
+			if (isSet(newPassword)) {
 				Type(
 					locator1 = "TextInput#PASSWORD_1",
-					value1 = "${resetPassword}");
+					value1 = "${newPassword}");
 
 				Type(
 					locator1 = "TextInput#PASSWORD_2",
-					value1 = "${resetPassword}");
+					value1 = "${newPassword}");
 			}
 			else {
-				if ("${setupWizardEnabled}" == "true") {
-					Type(
-						locator1 = "TextInput#PASSWORD_1",
-						value1 = "test2");
+				Type(
+					locator1 = "TextInput#PASSWORD_1",
+					value1 = "test");
 
-					Type(
-						locator1 = "TextInput#PASSWORD_2",
-						value1 = "test2");
-				}
-				else {
-					Type(
-						locator1 = "TextInput#PASSWORD_1",
-						value1 = "test");
-
-					Type(
-						locator1 = "TextInput#PASSWORD_2",
-						value1 = "test");
-				}
+				Type(
+					locator1 = "TextInput#PASSWORD_2",
+					value1 = "test");
 			}
 
 			Button.clickSubmitButton();
@@ -2610,28 +2553,7 @@ definition {
 				value1 = "Verify");
 		}
 
-		if (IsElementPresent.pauseIsElementPresent(locator1 = "TextInput#PASSWORD")) {
-			if (isSet(syntaxCheckingEnabled) && ("${syntaxCheckingEnabled}" == "true")) {
-				Type(
-					locator1 = "TextInput#PASSWORD",
-					value1 = "${resetPassword}");
-
-				Type(
-					locator1 = "TextInput#ENTER_AGAIN",
-					value1 = "${resetPassword}");
-			}
-			else {
-				Type(
-					locator1 = "TextInput#PASSWORD",
-					value1 = "test");
-
-				Type(
-					locator1 = "TextInput#ENTER_AGAIN",
-					value1 = "test");
-			}
-
-			Button.clickSave();
-		}
+		User.resetPassword(newPassword = "${newPassword}");
 
 		if (isSet(localizedAnswer)) {
 			User.answerPasswordReminderLocalized(

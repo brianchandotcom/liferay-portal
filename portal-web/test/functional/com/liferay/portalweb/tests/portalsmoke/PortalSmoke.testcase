@@ -74,7 +74,7 @@ definition {
 			password = "test",
 			userEmailAddress = "test@liferay.com");
 
-		User.resetPassword(setupWizardEnabled = "true");
+		User.resetPassword(newPassword = "test2");
 
 		User.answerPasswordReminder();
 

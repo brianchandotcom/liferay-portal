@@ -158,8 +158,6 @@
 /portal/log4j-core.jar
 /portal/mchange-commons-java.jar
 /portal/metadata-extractor.jar
-/portal/mime4j-core.jar
-/portal/mime4j-dom.jar
 /portal/mimepull.jar
 /portal/mp4parser.jar
 /portal/netcdf.jar

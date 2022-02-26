@@ -30,8 +30,8 @@ import java.util.Collections;
 import java.util.function.Consumer;
 
 import org.elasticsearch.common.Strings;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentFactory;
+import org.elasticsearch.xcontent.XContentBuilder;
+import org.elasticsearch.xcontent.XContentFactory;
 
 import org.junit.After;
 import org.junit.Assert;

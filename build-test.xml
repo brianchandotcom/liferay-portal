@@ -1889,6 +1889,13 @@ war.path=${app.server.portal.dir}/</echo>
 							</fileset>
 						</chmod>
 
+						<chmod
+							file="${test.app.server.parent.dir}/elasticsearch-sidecar/**"
+							perm="777"
+							type="both"
+							verbose="true"
+						/>
+
 						<local name="jmx.remote.port.overwrite" />
 
 						<math
@@ -4507,8 +4514,18 @@ go</echo>
 			<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
 
 			<if>
+				<not>
+					<isset property="app.server.name" />
+				</not>
+				<then>
+					<property name="app.server.name" value="${app.server.type}" />
+				</then>
+			</if>
+
+			<if>
 				<or>
 					<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
+					<equals arg1="${app.server.type}" arg2="websphere" />
 					<istrue value="${remote.elasticsearch.enabled}" />
 				</or>
 				<then>
@@ -4523,6 +4540,14 @@ go</echo>
 				<then>
 					<delete dir="${liferay.home}/elasticsearch7" failonerror="false" />
 				</then>
+				<else>
+					<chmod
+						file="${liferay.home}/elasticsearch-sidecar/**"
+						perm="777"
+						type="both"
+						verbose="true"
+					/>
+				</else>
 			</if>
 		</sequential>
 	</macrodef>
@@ -5465,8 +5490,18 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<get-testcase-property property.name="remote.elasticsearch.enabled" />
 
 			<if>
+				<not>
+					<isset property="app.server.name" />
+				</not>
+				<then>
+					<property name="app.server.name" value="${app.server.type}" />
+				</then>
+			</if>
+
+			<if>
 				<or>
 					<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
+					<equals arg1="${app.server.type}" arg2="websphere" />
 					<istrue value="${remote.elasticsearch.enabled}" />
 				</or>
 				<then>

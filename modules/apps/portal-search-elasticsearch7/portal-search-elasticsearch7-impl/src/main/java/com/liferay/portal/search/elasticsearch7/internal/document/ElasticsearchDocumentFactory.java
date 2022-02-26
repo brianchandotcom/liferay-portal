@@ -16,7 +16,7 @@ package com.liferay.portal.search.elasticsearch7.internal.document;
 
 import com.liferay.portal.search.document.Document;
 
-import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.xcontent.XContentBuilder;
 
 /**
  * @author Michael C. Han

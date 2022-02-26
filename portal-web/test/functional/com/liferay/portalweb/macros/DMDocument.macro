@@ -2105,6 +2105,10 @@ definition {
 			locator1 = "TextInput#EXPIRATION_DATE_TIME",
 			value1 = "${expirationDateTime}");
 
+		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
+
+		takeScreenshot();
+
 		Button.clickPublish();
 
 		if ("${invalidExpirationDate}" == "true") {
@@ -2142,6 +2146,10 @@ definition {
 		Type(
 			locator1 = "TextInput#REVIEW_DATE_TIME",
 			value1 = "${reviewDateTime}");
+
+		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
+
+		takeScreenshot();
 
 		Button.clickPublish();
 

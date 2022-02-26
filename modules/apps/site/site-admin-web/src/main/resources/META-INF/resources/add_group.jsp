@@ -18,6 +18,7 @@
 
 <%
 AddGroupDisplayContext addGroupDisplayContext = new AddGroupDisplayContext(request, renderResponse);
+String creationType = ParamUtil.getString(request, "creationType");
 %>
 
 <clay:container-fluid>
@@ -31,7 +32,9 @@ AddGroupDisplayContext addGroupDisplayContext = new AddGroupDisplayContext(reque
 		<liferay-frontend:edit-form-body>
 			<aui:input autoFocus="<%= true %>" label="name" name="name" required="<%= true %>" />
 
-			<aui:input label="create-default-pages-as-private-available-only-to-members-if-unchecked-they-will-be-public-available-to-anyone" name="layoutSetVisibilityPrivate" type="checkbox" />
+			<c:if test="<%= creationType.equals(SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE) %>">
+				<aui:input label="create-default-pages-as-private-available-only-to-members-if-unchecked-they-will-be-public-available-to-anyone" name="layoutSetVisibilityPrivate" type="checkbox" />
+			</c:if>
 
 			<c:if test="<%= addGroupDisplayContext.hasRequiredVocabularies() %>">
 				<aui:fieldset cssClass="mb-4">

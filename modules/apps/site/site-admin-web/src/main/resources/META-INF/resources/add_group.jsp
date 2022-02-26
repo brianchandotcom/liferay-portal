@@ -31,6 +31,8 @@ AddGroupDisplayContext addGroupDisplayContext = new AddGroupDisplayContext(reque
 		<liferay-frontend:edit-form-body>
 			<aui:input autoFocus="<%= true %>" label="name" name="name" required="<%= true %>" />
 
+			<aui:input label="create-default-pages-as-private-available-only-to-members-if-unchecked-they-will-be-public-available-to-anyone" name="layoutSetVisibilityPrivate" type="checkbox" />
+
 			<c:if test="<%= addGroupDisplayContext.hasRequiredVocabularies() %>">
 				<aui:fieldset cssClass="mb-4">
 					<div class="h3 sheet-subtitle"><liferay-ui:message key="categorization" /></div>

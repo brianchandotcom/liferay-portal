@@ -19,7 +19,6 @@ export default function DxpActivationKeysTableContext({children}) {
 		activationKeys: [],
 		activationKeysFilteredByConditions: [],
 		toSearchAndFilterKeys: {
-			active: [''],
 			complimentary: [''],
 			expirationDate: [''],
 			licenseEntryType: [''],
@@ -28,6 +27,7 @@ export default function DxpActivationKeysTableContext({children}) {
 			productVersion: [''],
 			sizing: [''],
 			startDate: [''],
+			status: [''],
 			toSearchTerm: [''],
 		},
 

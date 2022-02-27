@@ -106,9 +106,17 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 			);
 
 			items[0].sizing = 'Sizing 2';
-			items[1].sizing = 'Sizing 2';
+			items[0].startDate = '2023-11-05T00:00:00Z';
+			items[0].expirationDate = '2024-11-05T00:00:00Z';
+			items[1].startDate = '2023-11-05T00:00:00Z';
+			items[1].expirationDate = '2024-11-05T00:00:00Z';
+			items[1].sizing = 'Sizing 4';
 			items[2].sizing = 'Sizing 2';
+			items[2].startDate = '2019-11-05T00:00:00Z';
+			items[2].expirationDate = '2020-11-05T00:00:00Z';
 			items[3].sizing = 'Sizing 2';
+			items[3].startDate = '2018-11-05T00:00:00Z';
+			items[3].expirationDate = '2021-11-05T00:00:00Z';
 			items[4].sizing = 'Sizing 3';
 			items[5].sizing = 'Sizing 3';
 			items[6].sizing = 'Sizing 3';

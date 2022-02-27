@@ -32,10 +32,7 @@ const ProductVersionFilter = () => {
 		setAvailableProductVersions(
 			activationKeys
 				.reduce((accumulatorInstanceSizes, activationKey) => {
-					const formatedInstanceSizing = activationKey.productVersion.replace(
-						'Sizing ',
-						''
-					);
+					const formatedInstanceSizing = activationKey.productVersion;
 					if (
 						accumulatorInstanceSizes.includes(
 							formatedInstanceSizing

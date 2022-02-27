@@ -12,6 +12,7 @@
 import {useEffect} from 'react';
 import {useActivationKeys} from '../../context';
 import {actionTypes} from '../../context/reducer';
+import {getStatusActivationTag} from '../../utils';
 import EnvironmentTypeFilter from './components/EnvironmentType';
 import ExpirationDateFilter from './components/ExpirationDate';
 import InstanceSizeFilter from './components/InstanceSize';
@@ -39,6 +40,7 @@ const Filter = () => {
 		toSearchAndFilterKeys.toSearchTerm,
 		toSearchAndFilterKeys.sizing,
 		toSearchAndFilterKeys.productVersion,
+		toSearchAndFilterKeys.status,
 	]);
 
 	function searchAndFilter() {
@@ -76,8 +78,16 @@ const Filter = () => {
 			  )
 			: filteredActivationKeysBySizing;
 
+		const filteredActivationKeysByStatus = toSearchAndFilterKeys.status[0]
+			? filteredActivationKeysByProductVersion.filter((activationKey) =>
+					toSearchAndFilterKeys.status.includes(
+						getStatusActivationTag(activationKey)?.title
+					)
+			  )
+			: filteredActivationKeysByProductVersion;
+
 		dispatch({
-			payload: filteredActivationKeysByProductVersion,
+			payload: filteredActivationKeysByStatus,
 			type: actionTypes.UPDATE_ACTIVATION_KEYS_FILTERED_BY_CONDITIONS,
 		});
 	}

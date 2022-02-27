@@ -15,6 +15,7 @@ import {useNavigate} from 'react-router-dom';
 import {Button, ButtonDropDown} from '../../../../../../common/components';
 import {AUTO_CLOSE_ALERT_TIME, PAGE_TYPES} from '../../../../utils/constants';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
+import {useActivationKeys} from '../../context';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
 import {DOWNLOADABLE_LICENSE_KEYS} from '../../utils/constants/downlodableLicenseKeys';
 import {getActivationKeyDownload} from '../../utils/getActivationKeyDownload';
@@ -22,25 +23,19 @@ import {getActivationKeysActionsItems} from '../../utils/getActivationKeysAction
 import {getActivationKeysDownloadItems} from '../../utils/getActivationKeysDownloadItems';
 import DeactivateButton from '../Deactivate';
 
-import EnvironmentTypeFilter from '../Filter/components/EnvironmentType';
-import KeyTypeFilter from '../Filter/components/KeyType';
-import StartDateFilter from '../Filter/components/StartDate';
-import StatusFilter from '../Filter/components/Status';
-import Search from '../Search';
+import Filter from '../Filter';
 
 const dxpNewRedirectLink = PAGE_TYPES.dxpNew.split('_')[1];
 
 const DXPActivationKeysTableHeader = ({
 	accountKey,
-	activationKeys,
 	licenseKeyDownloadURL,
 	project,
 	selectedKeys,
 	sessionId,
-	setActivationKeys,
-	setSearchTerm,
 }) => {
 	const navigate = useNavigate();
+	const [{activationKeys}] = useActivationKeys();
 
 	const [
 		activationKeysDownloadStatus,
@@ -155,15 +150,7 @@ const DXPActivationKeysTableHeader = ({
 	return (
 		<div>
 			<div className="align-items-center bg-neutral-1 d-flex mb-2 p-3 rounded">
-				<Search setSearchTerm={setSearchTerm} />
-
-				<KeyTypeFilter />
-
-				<EnvironmentTypeFilter />
-
-				<StartDateFilter />
-
-				<StatusFilter />
+				<Filter />
 
 				<div className="align-items-center d-flex ml-auto">
 					{!!selectedKeys.length && (
@@ -176,7 +163,6 @@ const DXPActivationKeysTableHeader = ({
 								deactivateKeysStatus={deactivateKeysStatus}
 								selectedKeys={selectedKeys}
 								sessionId={sessionId}
-								setActivationKeys={setActivationKeys}
 								setDeactivateKeysStatus={
 									setDeactivateKeysStatus
 								}

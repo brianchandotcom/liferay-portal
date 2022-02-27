@@ -17,11 +17,6 @@ const StartDateFilter = () => {
 	const [onOrAfter, setOnOrAfter] = useState('');
 	const [onOrBefore, setOnOrBefore] = useState('');
 
-	// eslint-disable-next-line no-console
-	console.log('onOrAfter: ', onOrAfter);
-	// eslint-disable-next-line no-console
-	console.log('onOrBefore: ', onOrBefore);
-
 	return (
 		<div>
 			<ClayPopover

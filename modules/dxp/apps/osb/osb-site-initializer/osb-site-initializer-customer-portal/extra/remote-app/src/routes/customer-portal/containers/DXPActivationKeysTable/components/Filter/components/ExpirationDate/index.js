@@ -8,23 +8,25 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-
 import ClayButton from '@clayui/button';
-import {ClayCheckbox, ClayInput} from '@clayui/form';
+import ClayDatePicker from '@clayui/date-picker';
+import {ClayCheckbox} from '@clayui/form';
 import ClayPopover from '@clayui/popover';
 import {useState} from 'react';
 import {Button} from '../../../../../../../../common/components';
 
-const KeyTypeFilter = () => {
+const ExpirationDateFilter = () => {
+	const [onOrAfter, setOnOrAfter] = useState('');
+	const [onOrBefore, setOnOrBefore] = useState('');
 	const [value, setValue] = useState(false);
 
 	return (
 		<div>
 			<ClayPopover
 				alignPosition="bottom"
-				closeOnClickOutside={true}
+				className="cp-popover"
 				disableScroll={true}
-				header="Key Type"
+				header="Expiration Date"
 				trigger={
 					<Button
 						borderless
@@ -36,43 +38,40 @@ const KeyTypeFilter = () => {
 				}
 			>
 				<div className="w-100">
-					<ClayCheckbox
-						aria-label="Option 1"
-						checked={value}
-						label="On-Premise"
-						onChange={() => setValue((val) => !val)}
-					/>
-
-					<ClayCheckbox
-						aria-label="Option 1"
-						checked={value}
-						label="Virtual Cluster"
-						onChange={() => setValue((val) => !val)}
+					On or after
+					<ClayDatePicker
+						dateFormat="MM/dd/yyyy"
+						onValueChange={setOnOrAfter}
+						placeholder="MM/DD/YYYY"
+						value={onOrAfter}
+						years={{
+							end: 2024,
+							start: 1997,
+						}}
 					/>
 				</div>
 
-				<div className="d-flex">
-					<div className="mr-2">
-						<ClayInput
-							component="input"
-							id="basicInputText"
-							placeholder="1"
-							type="text"
-						/>
+				<div className="w-100">
+					On or before
+					<ClayDatePicker
+						dateFormat="MM/dd/yyyy"
+						onValueChange={setOnOrBefore}
+						placeholder="MM/DD/YYYY"
+						value={onOrBefore}
+						years={{
+							end: 2024,
+							start: 1997,
+						}}
+					/>
+				</div>
 
-						<p className="m-0 text-neutral-7">min nodes</p>
-					</div>
-
-					<div>
-						<ClayInput
-							component="input"
-							id="basicInputText"
-							placeholder="28"
-							type="text"
-						/>
-
-						<p className="m-0 text-neutral-7">max nodes </p>
-					</div>
+				<div>
+					<ClayCheckbox
+						aria-label="Option 1"
+						checked={value}
+						label="Does Not Expire"
+						onChange={() => setValue((val) => !val)}
+					/>
 				</div>
 
 				<div>
@@ -84,4 +83,4 @@ const KeyTypeFilter = () => {
 		</div>
 	);
 };
-export default KeyTypeFilter;
+export default ExpirationDateFilter;

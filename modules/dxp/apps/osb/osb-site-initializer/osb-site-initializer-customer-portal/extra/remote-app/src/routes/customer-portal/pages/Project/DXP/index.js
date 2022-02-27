@@ -9,12 +9,17 @@
  * distribution rights of the Software.
  */
 import DXPActivationKeysTable from '../../../containers/DXPActivationKeysTable';
+import DxpActivationKeysTableContext from '../../../containers/DXPActivationKeysTable/context';
 import DeveloperKeysLayouts from '../../../layouts/DeveloperKeysLayout';
-
 const DXP = ({project, sessionId}) => {
 	return (
 		<div className="mr-4">
-			<DXPActivationKeysTable project={project} sessionId={sessionId} />
+			<DxpActivationKeysTableContext>
+				<DXPActivationKeysTable
+					project={project}
+					sessionId={sessionId}
+				/>
+			</DxpActivationKeysTableContext>
 
 			<DeveloperKeysLayouts>
 				<DeveloperKeysLayouts.Inputs

@@ -24,6 +24,8 @@ import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../DXPActivationKe
 import {getActivationKeyDownload} from '../DXPActivationKeysTable/utils/getActivationKeyDownload';
 import DXPActivationKeysTableHeader from './components/Header';
 import ModalKeyDetails from './components/ModalKeyDetails';
+import {useActivationKeys} from './context';
+import {actionTypes} from './context/reducer';
 import {
 	ACTIVATION_KEYS_LICENSE_FILTER_TYPES,
 	ACTIVATION_STATUS,
@@ -45,10 +47,17 @@ const PAGE = 1;
 const DXPActivationKeysTable = ({project, sessionId}) => {
 	const [{assetsPath}] = useCustomerPortal();
 	const {licenseKeyDownloadURL} = useApplicationProvider();
+	const [
+		{
+			activationKeys,
+			activationKeysFilteredByConditions,
+			wasFiltered,
+			wasSearched,
+		},
+		dispatch,
+	] = useActivationKeys();
 
-	const [activationKeys, setActivationKeys] = useState([]);
 	const [statusBar, setStatusBar] = useState({});
-	const [searchTerm, setSearchTerm] = useState('');
 
 	const [activationKeysFiltered, setActivationKeysFiltered] = useState([]);
 	const [totalCount, setTotalCount] = useState(0);
@@ -95,15 +104,36 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 				MAX_ITEMS,
 				sessionId
 			);
+
+			items[0].sizing = 'Sizing 2';
+			items[1].sizing = 'Sizing 2';
+			items[2].sizing = 'Sizing 2';
+			items[3].sizing = 'Sizing 2';
+			items[4].sizing = 'Sizing 3';
+			items[5].sizing = 'Sizing 3';
+			items[6].sizing = 'Sizing 3';
+			items[7].sizing = 'Sizing 3';
+			items[8].sizing = 'Sizing 4';
+			items[9].sizing = 'Sizing 4';
+			items[10].sizing = 'Sizing 4';
+
 			if (items) {
-				setActivationKeys(items);
+				dispatch({
+					payload: items,
+					type: actionTypes.UPDATE_ACTIVATION_KEYS,
+				});
+				dispatch({
+					payload: items,
+					type:
+						actionTypes.UPDATE_ACTIVATION_KEYS_FILTERED_BY_CONDITIONS,
+				});
 			}
 
 			setIsLoadingActivationKeys(false);
 		};
 
 		fetchActivationKeysData();
-	}, [licenseKeyDownloadURL, project, sessionId]);
+	}, [dispatch, licenseKeyDownloadURL, project, sessionId]);
 
 	useEffect(() => {
 		if (activationKeys.length) {
@@ -126,75 +156,34 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 		}
 	}, [activationKeys]);
 
-	const searchTermToLowerCase = searchTerm.toLowerCase();
-
 	useEffect(() => {
-		const activationKeysSearchedByConditions = activationKeys.filter(
+		const activationKeysFilterData = activationKeysFilteredByConditions.filter(
 			(activationKey) =>
-				activationKey.name
-					.toLowerCase()
-					.includes(searchTermToLowerCase) ||
-				activationKey.description
-					.toLowerCase()
-					.includes(searchTermToLowerCase) ||
-				activationKey.macAddresses
-					.toLowerCase()
-					.includes(searchTermToLowerCase) ||
-				activationKey.ipAddresses
-					.toLowerCase()
-					.includes(searchTermToLowerCase) ||
-				activationKey.hostName
-					.toLowerCase()
-					.includes(searchTermToLowerCase)
+				ACTIVATION_KEYS_LICENSE_FILTER_TYPES[filterStatusBar]
+					? ACTIVATION_KEYS_LICENSE_FILTER_TYPES[filterStatusBar](
+							activationKey
+					  )
+					: Boolean
 		);
 
-		// eslint-disable-next-line no-console
-		console.log('searchTermToLowerCase:', searchTermToLowerCase);
-		// eslint-disable-next-line no-console
-		console.log('activationKeys:', activationKeys);
-		// eslint-disable-next-line no-console
-		console.log(
-			('activationKeysSearchedByConditions:',
-			activationKeysSearchedByConditions)
+		setTotalCount(activationKeysFilterData?.length || 0);
+
+		const activationKeysFilterByPage = activationKeysFilterData?.slice(
+			itemsPerPage * activePage - itemsPerPage,
+			itemsPerPage * activePage
 		);
 
-		if (activationKeys.length) {
-			const activationKeysFilterData = searchTerm
-				? activationKeysSearchedByConditions.filter((activationKey) =>
-						ACTIVATION_KEYS_LICENSE_FILTER_TYPES[filterStatusBar]
-							? ACTIVATION_KEYS_LICENSE_FILTER_TYPES[
-									filterStatusBar
-							  ](activationKey)
-							: Boolean
-				  )
-				: activationKeys.filter((activationKey) =>
-						ACTIVATION_KEYS_LICENSE_FILTER_TYPES[filterStatusBar]
-							? ACTIVATION_KEYS_LICENSE_FILTER_TYPES[
-									filterStatusBar
-							  ](activationKey)
-							: Boolean
-				  );
-
-			setTotalCount(activationKeysFilterData?.length || 0);
-
-			const activationKeysFilterByPage = activationKeysFilterData?.slice(
-				itemsPerPage * activePage - itemsPerPage,
-				itemsPerPage * activePage
-			);
-
-			setActivationKeysFiltered(
-				activationKeysFilterByPage?.length
-					? activationKeysFilterByPage
-					: activationKeysFilterData
-			);
-		}
+		setActivationKeysFiltered(
+			activationKeysFilterByPage?.length
+				? activationKeysFilterByPage
+				: activationKeysFilterData
+		);
 	}, [
 		activationKeys,
+		activationKeysFilteredByConditions,
 		activePage,
 		filterStatusBar,
 		itemsPerPage,
-		searchTerm,
-		searchTermToLowerCase,
 	]);
 
 	const groupButtons = [
@@ -240,8 +229,8 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 		<>
 			{isVisibleModal && (
 				<ModalKeyDetails
-					activationKeys={currentActivationKey}
 					assetsPath={assetsPath}
+					currentActivationKey={currentActivationKey}
 					downloadActivationLicenseKey={downloadActivationLicenseKey}
 					isVisibleModal={isVisibleModal}
 					licenseKeyDownloadURL={licenseKeyDownloadURL}
@@ -276,86 +265,95 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 							project={project}
 							selectedKeys={activationKeysChecked}
 							sessionId={sessionId}
-							setActivationKeys={setActivationKeys}
 							setActivationKeysFiltered={
 								setActivationKeysFiltered
 							}
-							setSearchTerm={setSearchTerm}
 						/>
 					</div>
 
-					<Table
-						checkboxConfig={{
-							checkboxesChecked: activationKeysChecked,
-							setCheckboxesChecked: setActivationKeysChecked,
-						}}
-						className="border-0 cp-dxp-activation-key-table"
-						columns={COLUMNS}
-						hasCheckbox
-						hasPagination
-						isLoading={isLoadingActivationKeys}
-						paginationConfig={paginationConfig}
-						rows={activationKeysFiltered.map((activationKey) => ({
-							customClickOnRow: () => {
-								setCurrentActivationKey(activationKey);
-								setIsVisibleModal(true);
-							},
-							download: (
-								<ButtonWithIcon
-									displayType="null"
-									onClick={() =>
-										getActivationKeyDownload(
-											activationKey.id,
-											licenseKeyDownloadURL,
-											sessionId,
-											handleAlertStatus,
-											activationKey.productName,
-											activationKey.productVersion,
-											project.name
-										)
-									}
-									small
-									symbol="download"
-								/>
-							),
-							envName: (
-								<div
-									title={[
-										activationKey.name,
-										activationKey.description,
-									]}
-								>
-									<p className="font-weight-bold m-0 text-neutral-10 text-truncate">
-										{activationKey.name}
-									</p>
+					{!activationKeysFilteredByConditions.length &
+					(wasFiltered || wasSearched) ? (
+						<p>
+							No activation keys found with this search criteria
+						</p>
+					) : (
+						<Table
+							checkboxConfig={{
+								checkboxesChecked: activationKeysChecked,
+								setCheckboxesChecked: setActivationKeysChecked,
+							}}
+							className="border-0 cp-dxp-activation-key-table"
+							columns={COLUMNS}
+							hasCheckbox
+							hasPagination
+							isLoading={isLoadingActivationKeys}
+							paginationConfig={paginationConfig}
+							rows={activationKeysFiltered.map(
+								(activationKey) => ({
+									customClickOnRow: () => {
+										setCurrentActivationKey(activationKey);
+										setIsVisibleModal(true);
+									},
+									download: (
+										<ButtonWithIcon
+											displayType="null"
+											onClick={() =>
+												getActivationKeyDownload(
+													activationKey.id,
+													licenseKeyDownloadURL,
+													sessionId,
+													handleAlertStatus,
+													activationKey.productName,
+													activationKey.productVersion,
+													project.name
+												)
+											}
+											small
+											symbol="download"
+										/>
+									),
+									envName: (
+										<div
+											title={[
+												activationKey.name,
+												activationKey.description,
+											]}
+										>
+											<p className="font-weight-bold m-0 text-neutral-10 text-truncate">
+												{activationKey.name}
+											</p>
 
-									<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm text-truncate">
-										{activationKey.description}
-									</p>
-								</div>
-							),
-							envType: (
-								<EnvironmentTypeColumn
-									activationKey={activationKey}
-								/>
-							),
-							expirationDate: (
-								<ExpirationDateColumn
-									activationKey={activationKey}
-								/>
-							),
-							id: activationKey.id,
-							keyType: (
-								<KeyTypeColumn
-									activationKey={activationKey}
-									assetsPath={assetsPath}
-								/>
-							),
-							status: (
-								<StatusColumn activationKey={activationKey} />
-							),
-						}))}
-					/>
+											<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm text-truncate">
+												{activationKey.description}
+											</p>
+										</div>
+									),
+									envType: (
+										<EnvironmentTypeColumn
+											activationKey={activationKey}
+										/>
+									),
+									expirationDate: (
+										<ExpirationDateColumn
+											activationKey={activationKey}
+										/>
+									),
+									id: activationKey.id,
+									keyType: (
+										<KeyTypeColumn
+											activationKey={activationKey}
+											assetsPath={assetsPath}
+										/>
+									),
+									status: (
+										<StatusColumn
+											activationKey={activationKey}
+										/>
+									),
+								})
+							)}
+						/>
+					)}
 				</div>
 			</ClayTooltipProvider>
 			{activationKeysDownloadStatus && (

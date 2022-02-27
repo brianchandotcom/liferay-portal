@@ -14,16 +14,19 @@ import {useModal} from '@clayui/modal';
 import {useState} from 'react';
 import {useApplicationProvider} from '../../../../../../common/context/AppPropertiesProvider';
 import {putDeactivateKeys} from '../../../../../../common/services/liferay/rest/raysource/LicenseKeys';
+import {actionTypes} from '../../../../context/reducer';
 import {ALERT_DOWNLOAD_TYPE, STATUS_CODE} from '../../../../utils/constants';
+import {useActivationKeys} from '../../context';
 import DeactivateKeysModal from './Modal';
 
 const DeactivateButton = ({
 	deactivateKeysStatus,
 	selectedKeys,
 	sessionId,
-	setActivationKeys,
 	setDeactivateKeysStatus,
 }) => {
+	const [{activationKeys}, dispatch] = useActivationKeys();
+
 	const {licenseKeyDownloadURL} = useApplicationProvider();
 	const [isDeactivating, setIsDeactivating] = useState(false);
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
@@ -49,12 +52,14 @@ const DeactivateButton = ({
 		if (response.status === STATUS_CODE.successNoContent) {
 			setIsDeactivating(false);
 			setIsVisibleModal(false);
-			setActivationKeys((previousActivationKeys) =>
-				previousActivationKeys.filter(
-					(activationKeys) =>
-						!selectedKeys.includes(activationKeys.id)
-				)
+
+			const activationKeysMinusDeactivated = activationKeys.filter(
+				(activationKey) => !selectedKeys.includes(activationKey.id)
 			);
+			dispatch({
+				payload: activationKeysMinusDeactivated,
+				type: actionTypes.UPDATE_ACTIVATION_KEYS,
+			});
 
 			return setDeactivateKeysStatus(ALERT_DOWNLOAD_TYPE.success);
 		}

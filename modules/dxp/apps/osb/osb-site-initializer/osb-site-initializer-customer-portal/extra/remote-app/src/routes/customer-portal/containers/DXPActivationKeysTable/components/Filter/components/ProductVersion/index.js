@@ -10,12 +10,12 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ClayCheckbox, ClayInput} from '@clayui/form';
+import {ClayCheckbox} from '@clayui/form';
 import ClayPopover from '@clayui/popover';
 import {useState} from 'react';
 import {Button} from '../../../../../../../../common/components';
 
-const KeyTypeFilter = () => {
+const ProductVersionFilter = () => {
 	const [value, setValue] = useState(false);
 
 	return (
@@ -24,7 +24,7 @@ const KeyTypeFilter = () => {
 				alignPosition="bottom"
 				closeOnClickOutside={true}
 				disableScroll={true}
-				header="Key Type"
+				header="Product Version"
 				trigger={
 					<Button
 						borderless
@@ -39,40 +39,39 @@ const KeyTypeFilter = () => {
 					<ClayCheckbox
 						aria-label="Option 1"
 						checked={value}
-						label="On-Premise"
+						label="7.4"
 						onChange={() => setValue((val) => !val)}
 					/>
 
 					<ClayCheckbox
 						aria-label="Option 1"
 						checked={value}
-						label="Virtual Cluster"
+						label="7.3"
+						onChange={() => setValue((val) => !val)}
+					/>
+
+					<ClayCheckbox
+						aria-label="Option 1"
+						checked={value}
+						label="7.2"
+						onChange={() => setValue((val) => !val)}
+					/>
+
+					<ClayCheckbox
+						aria-label="Option 1"
+						checked={value}
+						label="7.1"
 						onChange={() => setValue((val) => !val)}
 					/>
 				</div>
 
-				<div className="d-flex">
-					<div className="mr-2">
-						<ClayInput
-							component="input"
-							id="basicInputText"
-							placeholder="1"
-							type="text"
-						/>
-
-						<p className="m-0 text-neutral-7">min nodes</p>
-					</div>
-
-					<div>
-						<ClayInput
-							component="input"
-							id="basicInputText"
-							placeholder="28"
-							type="text"
-						/>
-
-						<p className="m-0 text-neutral-7">max nodes </p>
-					</div>
+				<div>
+					<ClayCheckbox
+						aria-label="Option 1"
+						checked={value}
+						label="7.0"
+						onChange={() => setValue((val) => !val)}
+					/>
 				</div>
 
 				<div>
@@ -84,4 +83,4 @@ const KeyTypeFilter = () => {
 		</div>
 	);
 };
-export default KeyTypeFilter;
+export default ProductVersionFilter;

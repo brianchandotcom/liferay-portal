@@ -38,8 +38,6 @@ if (wikiPageItemSelectorViewDisplayContext.isSearch()) {
 
 	Hits hits = indexer.search(searchContext);
 
-	wikiPagesSearchContainer.setTotal(hits.getLength());
-
 	List<WikiPage> results = new ArrayList<>();
 
 	for (SearchResult searchResult : SearchResultUtil.getSearchResults(hits, themeDisplay.getLocale())) {
@@ -48,11 +46,10 @@ if (wikiPageItemSelectorViewDisplayContext.isSearch()) {
 		results.add(wikiPage);
 	}
 
-	wikiPagesSearchContainer.setResults(results);
+	wikiPagesSearchContainer.setResultsAndTotal(() -> results, hits.getLength());
 }
 else {
-	wikiPagesSearchContainer.setTotal(WikiPageLocalServiceUtil.getPagesCount(node.getNodeId(), true, wikiPageItemSelectorViewDisplayContext.getStatus()));
-	wikiPagesSearchContainer.setResults(WikiPageLocalServiceUtil.getPages(node.getNodeId(), true, wikiPageItemSelectorViewDisplayContext.getStatus(), wikiPagesSearchContainer.getStart(), wikiPagesSearchContainer.getEnd()));
+	wikiPagesSearchContainer.setResultsAndTotal(() -> WikiPageLocalServiceUtil.getPages(node.getNodeId(), true, wikiPageItemSelectorViewDisplayContext.getStatus(), wikiPagesSearchContainer.getStart(), wikiPagesSearchContainer.getEnd()), WikiPageLocalServiceUtil.getPagesCount(node.getNodeId(), true, wikiPageItemSelectorViewDisplayContext.getStatus()));
 }
 %>
 

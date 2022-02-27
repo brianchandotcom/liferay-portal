@@ -71,9 +71,10 @@ wikiNodesSearchContainer.setRowChecker(nodesChecker);
 wikiNodesSearchContainer.setOrderByCol(orderByCol);
 wikiNodesSearchContainer.setOrderByComparator(WikiPortletUtil.getNodeOrderByComparator(orderByCol, orderByType));
 wikiNodesSearchContainer.setOrderByType(orderByType);
-wikiNodesSearchContainer.setTotal(WikiNodeServiceUtil.getNodesCount(scopeGroupId));
 
-wikiNodesSearchContainer.setResults(WikiNodeServiceUtil.getNodes(scopeGroupId, WorkflowConstants.STATUS_APPROVED, wikiNodesSearchContainer.getStart(), wikiNodesSearchContainer.getEnd(), wikiNodesSearchContainer.getOrderByComparator()));
+long wikiNodesScopeGroupId = scopeGroupId;
+
+wikiNodesSearchContainer.setResultsAndTotal(() -> WikiNodeServiceUtil.getNodes(wikiNodesScopeGroupId, WorkflowConstants.STATUS_APPROVED, wikiNodesSearchContainer.getStart(), wikiNodesSearchContainer.getEnd(), wikiNodesSearchContainer.getOrderByComparator()), WikiNodeServiceUtil.getNodesCount(wikiNodesScopeGroupId));
 
 WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContext = new WikiNodesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, displayStyle, wikiNodesSearchContainer, trashHelper);
 %>

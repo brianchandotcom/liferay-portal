@@ -55,13 +55,11 @@ else {
 		<liferay-ui:search-container-results>
 
 			<%
-			results.addAll(SchedulerEngineHelperUtil.getScheduledJobs(StagingUtil.getSchedulerGroupName(destinationName, liveGroupId), StorageType.PERSISTED));
+			SearchContainer<SchedulerResponse> jobsSearchContainer = searchContainer;
 
-			searchContainer.setTotal(results.size());
+			List<SchedulerResponse> schedulerResponses = SchedulerEngineHelperUtil.getScheduledJobs(StagingUtil.getSchedulerGroupName(destinationName, liveGroupId), StorageType.PERSISTED);
 
-			results = ListUtil.subList(results, searchContainer.getStart(), searchContainer.getEnd());
-
-			searchContainer.setResults(results);
+			searchContainer.setResultsAndTotal(() -> ListUtil.subList(schedulerResponses, jobsSearchContainer.getStart(), jobsSearchContainer.getEnd()), schedulerResponses.size());
 			%>
 
 		</liferay-ui:search-container-results>

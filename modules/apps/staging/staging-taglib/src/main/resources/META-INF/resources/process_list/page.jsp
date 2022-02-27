@@ -43,17 +43,16 @@
 		<liferay-ui:search-container-results>
 
 			<%
-			int backgroundTasksCount = 0;
-			List<BackgroundTask> backgroundTasks = null;
+			SearchContainer<BackgroundTask> backgroundTaskSearchContainer = searchContainer;
+			long backgroundTaskGroupId = groupId;
+			long backgroundTaskLiveGroupId = liveGroupId;
 
 			if (navigation.equals("all")) {
-				backgroundTasksCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(new long[] {groupId, liveGroupId}, taskExecutorClassName);
-
 				if (orderByCol.equals("duration")) {
-					backgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasksByDuration(new long[] {groupId, liveGroupId}, new String[] {taskExecutorClassName}, searchContainer.getStart(), searchContainer.getEnd(), StringUtil.equalsIgnoreCase("asc", orderByType));
+					searchContainer.setResultsAndTotal(() -> BackgroundTaskManagerUtil.getBackgroundTasksByDuration(new long[] {backgroundTaskGroupId, backgroundTaskLiveGroupId}, new String[] {taskExecutorClassName}, backgroundTaskSearchContainer.getStart(), backgroundTaskSearchContainer.getEnd(), StringUtil.equalsIgnoreCase("asc", orderByType)), BackgroundTaskManagerUtil.getBackgroundTasksCount(new long[] {backgroundTaskGroupId, backgroundTaskLiveGroupId}, taskExecutorClassName));
 				}
 				else {
-					backgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(new long[] {groupId, liveGroupId}, taskExecutorClassName, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+					searchContainer.setResultsAndTotal(() -> BackgroundTaskManagerUtil.getBackgroundTasks(new long[] {backgroundTaskGroupId, backgroundTaskLiveGroupId}, taskExecutorClassName, backgroundTaskSearchContainer.getStart(), backgroundTaskSearchContainer.getEnd(), backgroundTaskSearchContainer.getOrderByComparator()), BackgroundTaskManagerUtil.getBackgroundTasksCount(new long[] {groupId, backgroundTaskLiveGroupId}, taskExecutorClassName));
 				}
 			}
 			else {
@@ -63,18 +62,15 @@
 					completed = true;
 				}
 
-				backgroundTasksCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(new long[] {groupId, liveGroupId}, taskExecutorClassName, completed);
+				boolean backgroundTaskCompleted = completed;
 
 				if (orderByCol.equals("duration")) {
-					backgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasksByDuration(new long[] {groupId, liveGroupId}, new String[] {taskExecutorClassName}, completed, searchContainer.getStart(), searchContainer.getEnd(), StringUtil.equalsIgnoreCase("asc", orderByType));
+					searchContainer.setResultsAndTotal(() -> BackgroundTaskManagerUtil.getBackgroundTasksByDuration(new long[] {backgroundTaskGroupId, backgroundTaskLiveGroupId}, new String[] {taskExecutorClassName}, backgroundTaskCompleted, backgroundTaskSearchContainer.getStart(), backgroundTaskSearchContainer.getEnd(), StringUtil.equalsIgnoreCase("asc", orderByType)), BackgroundTaskManagerUtil.getBackgroundTasksCount(new long[] {backgroundTaskGroupId, backgroundTaskLiveGroupId}, taskExecutorClassName, backgroundTaskCompleted));
 				}
 				else {
-					backgroundTasks = BackgroundTaskManagerUtil.getBackgroundTasks(new long[] {groupId, liveGroupId}, taskExecutorClassName, completed, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+					searchContainer.setResultsAndTotal(() -> BackgroundTaskManagerUtil.getBackgroundTasks(new long[] {backgroundTaskGroupId, backgroundTaskLiveGroupId}, taskExecutorClassName, backgroundTaskCompleted, backgroundTaskSearchContainer.getStart(), backgroundTaskSearchContainer.getEnd(), backgroundTaskSearchContainer.getOrderByComparator()), BackgroundTaskManagerUtil.getBackgroundTasksCount(new long[] {backgroundTaskGroupId, backgroundTaskLiveGroupId}, taskExecutorClassName, backgroundTaskCompleted));
 				}
 			}
-
-			searchContainer.setResults(backgroundTasks);
-			searchContainer.setTotal(backgroundTasksCount);
 			%>
 
 		</liferay-ui:search-container-results>

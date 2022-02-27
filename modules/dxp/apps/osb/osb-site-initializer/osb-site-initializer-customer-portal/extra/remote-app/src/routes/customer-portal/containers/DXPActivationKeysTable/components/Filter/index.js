@@ -35,7 +35,11 @@ const Filter = () => {
 		searchAndFilter();
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [toSearchAndFilterKeys.toSearchTerm, toSearchAndFilterKeys.sizing]);
+	}, [
+		toSearchAndFilterKeys.toSearchTerm,
+		toSearchAndFilterKeys.sizing,
+		toSearchAndFilterKeys.productVersion,
+	]);
 
 	function searchAndFilter() {
 		const searchedActivationKeysByConditions = activationKeys.filter(
@@ -57,15 +61,23 @@ const Filter = () => {
 					.includes(toSearchAndFilterKeys.toSearchTerm)
 		);
 
-		const filteredActivationKeysByConditions = toSearchAndFilterKeys
-			.sizing[0]
+		const filteredActivationKeysBySizing = toSearchAndFilterKeys.sizing[0]
 			? searchedActivationKeysByConditions.filter((activationKey) =>
 					toSearchAndFilterKeys.sizing.includes(activationKey.sizing)
 			  )
 			: searchedActivationKeysByConditions;
 
+		const filteredActivationKeysByProductVersion = toSearchAndFilterKeys
+			.productVersion[0]
+			? filteredActivationKeysBySizing.filter((activationKey) =>
+					toSearchAndFilterKeys.productVersion.includes(
+						activationKey.productVersion
+					)
+			  )
+			: filteredActivationKeysBySizing;
+
 		dispatch({
-			payload: filteredActivationKeysByConditions,
+			payload: filteredActivationKeysByProductVersion,
 			type: actionTypes.UPDATE_ACTIVATION_KEYS_FILTERED_BY_CONDITIONS,
 		});
 	}

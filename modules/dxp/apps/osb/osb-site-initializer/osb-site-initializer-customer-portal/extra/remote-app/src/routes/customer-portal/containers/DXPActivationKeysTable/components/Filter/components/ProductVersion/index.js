@@ -12,11 +12,74 @@
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import ClayPopover from '@clayui/popover';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Button} from '../../../../../../../../common/components';
+import {useActivationKeys} from '../../../../context';
+import {actionTypes} from '../../../../context/reducer';
 
 const ProductVersionFilter = () => {
-	const [value, setValue] = useState(false);
+	const [
+		{activationKeys, toSearchAndFilterKeys},
+		dispatch,
+	] = useActivationKeys();
+
+	const [availableProductVersions, setAvailableProductVersions] = useState(
+		[]
+	);
+	const [selectedProductVersions, setSelectedProductVersions] = useState([]);
+
+	useEffect(() => {
+		setAvailableProductVersions(
+			activationKeys
+				.reduce((accumulatorInstanceSizes, activationKey) => {
+					const formatedInstanceSizing = activationKey.productVersion.replace(
+						'Sizing ',
+						''
+					);
+					if (
+						accumulatorInstanceSizes.includes(
+							formatedInstanceSizing
+						)
+					) {
+						return accumulatorInstanceSizes;
+					}
+
+					return [
+						...accumulatorInstanceSizes,
+						formatedInstanceSizing,
+					];
+				}, [])
+				.sort((a, b) => a - b)
+		);
+	}, [activationKeys]);
+
+	function handleSelectedInstanceSize(productVersion) {
+		const formatedInstanceSizing = `${productVersion}`;
+		if (selectedProductVersions.includes(formatedInstanceSizing)) {
+			return setSelectedProductVersions(
+				selectedProductVersions.filter(
+					(version) => version !== formatedInstanceSizing
+				)
+			);
+		}
+		setSelectedProductVersions([
+			...selectedProductVersions,
+			formatedInstanceSizing,
+		]);
+	}
+
+	function filterInstanceSize(selectedInstanceSize) {
+		toSearchAndFilterKeys.productVersion = selectedInstanceSize;
+
+		dispatch({
+			payload: toSearchAndFilterKeys,
+			type: actionTypes.UPDATE_TO_SERACH_AND_FILTER_KEYS,
+		});
+		dispatch({
+			payload: selectedInstanceSize.length ? true : false,
+			type: actionTypes.UPDATE_WAS_FILTERED,
+		});
+	}
 
 	return (
 		<div>
@@ -36,46 +99,29 @@ const ProductVersionFilter = () => {
 				}
 			>
 				<div className="w-100">
-					<ClayCheckbox
-						aria-label="Option 1"
-						checked={value}
-						label="7.4"
-						onChange={() => setValue((val) => !val)}
-					/>
-
-					<ClayCheckbox
-						aria-label="Option 1"
-						checked={value}
-						label="7.3"
-						onChange={() => setValue((val) => !val)}
-					/>
-
-					<ClayCheckbox
-						aria-label="Option 1"
-						checked={value}
-						label="7.2"
-						onChange={() => setValue((val) => !val)}
-					/>
-
-					<ClayCheckbox
-						aria-label="Option 1"
-						checked={value}
-						label="7.1"
-						onChange={() => setValue((val) => !val)}
-					/>
+					{availableProductVersions.map((productVersion) => (
+						<ClayCheckbox
+							checked={selectedProductVersions.includes(
+								`${productVersion}`
+							)}
+							key={productVersion}
+							label={productVersion}
+							onChange={() =>
+								handleSelectedInstanceSize(productVersion)
+							}
+						/>
+					))}
 				</div>
 
 				<div>
-					<ClayCheckbox
-						aria-label="Option 1"
-						checked={value}
-						label="7.0"
-						onChange={() => setValue((val) => !val)}
-					/>
-				</div>
-
-				<div>
-					<ClayButton className="w-100" small={true}>
+					<ClayButton
+						className="w-100"
+						onClick={() => {
+							filterInstanceSize(selectedProductVersions);
+						}}
+						required
+						small={true}
+					>
 						Apply
 					</ClayButton>
 				</div>

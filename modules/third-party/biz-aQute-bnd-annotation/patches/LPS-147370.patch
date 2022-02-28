@@ -1,0 +1,22 @@
+diff --git a/aQute/bnd/annotation/metatype/Configurable.java b/aQute/bnd/annotation/metatype/Configurable.java
+index 6742c3999bb50..a2bc4af3c88c0 100644
+--- a/aQute/bnd/annotation/metatype/Configurable.java
++++ b/aQute/bnd/annotation/metatype/Configurable.java
+@@ -322,7 +322,9 @@ public class Configurable<T> {
+ 
+ 			if (o instanceof String) {
+ 				String s = (String) o;
+-				if (SPLITTER_P.matcher(s)
++				if (s.isEmpty())
++					return new ArrayList<>();
++				else if (SPLITTER_P.matcher(s)
+ 					.find())
+ 					return Arrays.asList(s.split("\\|"));
+ 				else
+@@ -400,3 +402,5 @@ public class Configurable<T> {
+ 	}
+ 
+ }
++
++/* @generated */
+\ No newline at end of file

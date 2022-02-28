@@ -164,23 +164,19 @@ if (commerceOrder != null) {
 		<div class="commerce-panel">
 			<div class="commerce-panel__title"><liferay-ui:message key="billing-address" /></div>
 			<div class="commerce-panel__content">
-				<div class="row">
-					<div class="col-md-12">
-						<c:if test="<%= billingCommerceAddress != null %>">
-							<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet1()) %></p>
+				<c:if test="<%= billingCommerceAddress != null %>">
+					<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet1()) %></p>
 
-							<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet2()) %>">
-								<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet2()) %></p>
-							</c:if>
+					<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet2()) %>">
+						<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet2()) %></p>
+					</c:if>
 
-							<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet3()) %>">
-								<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet3()) %></p>
-							</c:if>
+					<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet3()) %>">
+						<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet3()) %></p>
+					</c:if>
 
-							<p><%= HtmlUtil.escape(billingCommerceAddress.getCity() + StringPool.SPACE + billingCommerceAddress.getZip()) %></p>
-						</c:if>
-					</div>
-				</div>
+					<p><%= HtmlUtil.escape(billingCommerceAddress.getCity() + StringPool.SPACE + billingCommerceAddress.getZip()) %></p>
+				</c:if>
 			</div>
 		</div>
 	</div>
@@ -189,23 +185,71 @@ if (commerceOrder != null) {
 		<div class="commerce-panel">
 			<div class="commerce-panel__title"><liferay-ui:message key="shipping-address" /></div>
 			<div class="commerce-panel__content">
-				<div class="row">
-					<div class="col-md-12">
-						<c:if test="<%= shippingCommerceAddress != null %>">
-							<p><%= HtmlUtil.escape(shippingCommerceAddress.getStreet1()) %></p>
+				<c:if test="<%= shippingCommerceAddress != null %>">
+					<p><%= HtmlUtil.escape(shippingCommerceAddress.getStreet1()) %></p>
 
-							<c:if test="<%= !Validator.isBlank(shippingCommerceAddress.getStreet2()) %>">
-								<p><%= HtmlUtil.escape(shippingCommerceAddress.getStreet2()) %></p>
-							</c:if>
+					<c:if test="<%= !Validator.isBlank(shippingCommerceAddress.getStreet2()) %>">
+						<p><%= HtmlUtil.escape(shippingCommerceAddress.getStreet2()) %></p>
+					</c:if>
 
-							<c:if test="<%= !Validator.isBlank(shippingCommerceAddress.getStreet3()) %>">
-								<p><%= HtmlUtil.escape(shippingCommerceAddress.getStreet3()) %></p>
-							</c:if>
+					<c:if test="<%= !Validator.isBlank(shippingCommerceAddress.getStreet3()) %>">
+						<p><%= HtmlUtil.escape(shippingCommerceAddress.getStreet3()) %></p>
+					</c:if>
 
-							<p><%= HtmlUtil.escape(shippingCommerceAddress.getCity() + StringPool.SPACE + shippingCommerceAddress.getZip()) %></p>
-						</c:if>
-					</div>
-				</div>
+					<p><%= HtmlUtil.escape(shippingCommerceAddress.getCity() + StringPool.SPACE + shippingCommerceAddress.getZip()) %></p>
+				</c:if>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="commerce-panel">
+			<div class="commerce-panel__title"><liferay-ui:message key="delivery-terms" /></div>
+			<div class="commerce-panel__content">
+				<p>
+					<c:if test="<%= commerceOrder.getDeliveryCommerceTermEntryId() != 0 %>">
+						<a href="#" id="<%= commerceOrder.getDeliveryCommerceTermEntryId() %>"><%= HtmlUtil.escape(commerceOrder.getDeliveryCommerceTermEntryName()) %></a>
+
+						<liferay-frontend:component
+							context='<%=
+								HashMapBuilder.<String, Object>put(
+									"HTMLElementId", commerceOrder.getDeliveryCommerceTermEntryId()
+								).put(
+									"modalContent", commerceOrder.getDeliveryCommerceTermEntryDescription()
+								).put(
+									"modalTitle", commerceOrder.getDeliveryCommerceTermEntryName()
+								).build()
+							%>'
+							module="js/attachModalToHTMLElement"
+						/>
+					</c:if>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-6">
+		<div class="commerce-panel">
+			<div class="commerce-panel__title"><liferay-ui:message key="payment-terms" /></div>
+			<div class="commerce-panel__content">
+				<p>
+					<c:if test="<%= commerceOrder.getPaymentCommerceTermEntryId() != 0 %>">
+						<a href="#" id="<%= commerceOrder.getPaymentCommerceTermEntryId() %>"><%= HtmlUtil.escape(commerceOrder.getPaymentCommerceTermEntryName()) %></a>
+
+						<liferay-frontend:component
+							context='<%=
+								HashMapBuilder.<String, Object>put(
+									"HTMLElementId", commerceOrder.getPaymentCommerceTermEntryId()
+								).put(
+									"modalContent", commerceOrder.getPaymentCommerceTermEntryDescription()
+								).put(
+									"modalTitle", commerceOrder.getPaymentCommerceTermEntryName()
+								).build()
+							%>'
+							module="js/attachModalToHTMLElement"
+						/>
+					</c:if>
+				</p>
 			</div>
 		</div>
 	</div>

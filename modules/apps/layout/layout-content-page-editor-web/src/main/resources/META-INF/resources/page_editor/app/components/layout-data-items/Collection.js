@@ -145,7 +145,8 @@ const Grid = ({
 					)}
 				</ClayLayout.Row>
 			))}
-			{maxNumberOfItems > config.maxNumberOfItemsEditMode && (
+			{collection.totalNumberOfItems >
+				config.maxNumberOfItemsEditMode && (
 				<ClayAlert
 					className="border-0 mb-0"
 					displayType="info"
@@ -207,7 +208,14 @@ const Collection = React.memo(
 		const emptyCollection = useMemo(
 			() => ({
 				fakeCollection: true,
-				items: {length: collectionConfig.numberOfItems || 1},
+				items: {
+					length: collectionConfig.numberOfItems
+						? Math.min(
+								collectionConfig.numberOfItems,
+								config.maxNumberOfItemsEditMode
+						  )
+						: 1,
+				},
 				length: collectionConfig.numberOfItems || 1,
 				totalNumberOfItems: collectionConfig.numberOfItems || 1,
 			}),
@@ -276,11 +284,19 @@ const Collection = React.memo(
 					.then((response) => {
 						const {itemSubtype, itemType, ...collection} = response;
 
+						const nextCollection = {
+							...collection,
+							items: collection.items.slice(
+								0,
+								config.maxNumberOfItemsEditMode
+							),
+						};
+
 						setCollection(
-							collection.length > 0 &&
-								collection.items?.length > 0
-								? collection
-								: {...collection, ...emptyCollection}
+							nextCollection.length > 0 &&
+								nextCollection.items?.length > 0
+								? nextCollection
+								: {...nextCollection, ...emptyCollection}
 						);
 
 						// LPS-133832

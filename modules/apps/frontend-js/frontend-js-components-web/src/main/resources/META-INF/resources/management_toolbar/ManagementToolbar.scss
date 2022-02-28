@@ -1,0 +1,123 @@
+@import 'atlas-variables';
+
+$management-toolbar-container-base: (
+	border-color: transparent,
+	border-style: solid,
+	media-breakpoint-down: (),
+	media-breakpoint-up: (),
+	navbar-nav: (
+		nav-link: (
+			border-radius: $border-radius,
+			outline: 0,
+			transition: box-shadow 0.15s ease-in-out,
+			focus: (
+				box-shadow: $btn-focus-box-shadow,
+			),
+			disabled: (
+				box-shadow: none,
+			),
+		),
+	),
+);
+
+$management-toolbar-container-size: (
+	scaling-navbar: true,
+	border-bottom-width: 0.0625rem,
+	font-size: $navbar-font-size,
+	height: 4rem,
+	min-height: 4rem,
+	padding-x: 0,
+	padding-y: 0,
+	height-mobile: 3rem,
+	min-height-mobile: 3rem,
+	btn-monospaced-font-size: 1rem,
+	link-height: 2rem,
+	link-height-mobile: 2rem,
+	link-margin-x: 0.5rem,
+	link-margin-x-mobile: 0.25rem,
+	link-padding-x-mobile: 0.25rem,
+	form-control-height-mobile: 2rem,
+	toggler-margin-x: 0.875rem,
+	active-border-bottom-width: 0.25rem,
+	nav-item-dropdown-margin-top: 0,
+);
+
+$management-toolbar-container-light: (
+	background-color: $white,
+	navbar-nav: (
+		nav-link: (
+			color: $navbar-light-color,
+			font-weight: $font-weight-semi-bold,
+			hover: (
+				background-color: rgba($gray-900, 0.03),
+				color: $gray-900,
+			),
+			focus: (
+				background-color: rgba($gray-900, 0.03),
+				color: $gray-900,
+			),
+			active: (
+				background-color: rgba($gray-900, 0.06),
+				color: $navbar-light-active-color,
+			),
+			disabled: (
+				background-color: transparent,
+				color: $navbar-light-disabled-color,
+				opacity: 1,
+			),
+		),
+	),
+	media-breakpoint-down: (),
+	media-breakpoint-up: (),
+);
+
+$management-toolbar-container-primary: (
+	background-color: $primary-l3,
+	border-color: $primary,
+	color: $navbar-light-color,
+	navbar-nav: (
+		nav-link: (
+			border-radius: $border-radius,
+			font-weight: $font-weight-semi-bold,
+			color: $navbar-light-color,
+			hover: (
+				background-color: rgba($gray-900, 0.03),
+				color: $gray-900,
+			),
+			focus: (
+				background-color: rgba($gray-900, 0.03),
+				color: $gray-900,
+			),
+			active: (
+				background-color: rgba($gray-900, 0.06),
+			),
+			disabled: (
+				background-color: transparent,
+				disabled-color: $navbar-light-disabled-color,
+				disabled-opacity: 1,
+			),
+		),
+	),
+	media-breakpoint-down: (),
+	media-breakpoint-up: (),
+);
+
+.management-toolbar-container {
+	@include clay-navbar-size($management-toolbar-container-size);
+	@include clay-navbar-variant($management-toolbar-container-base);
+
+	&.navbar-nowrap {
+		.navbar-text {
+			white-space: normal;
+			word-wrap: break-word;
+		}
+	}
+}
+
+.management-toolbar-container-light {
+	@include clay-navbar-variant($management-toolbar-container-light);
+}
+
+.management-toolbar-container-primary {
+	@include clay-navbar-variant($management-toolbar-container-primary);
+}

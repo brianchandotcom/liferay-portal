@@ -12,14 +12,21 @@
  * details.
  */
 
-export {default as Treeview} from './treeview/Treeview';
+import classNames from 'classnames';
+import React from 'react';
 
-export {default as ManagementToolbar} from './management_toolbar/ManagementToolbar';
+const ItemList = ({children, expand}) => (
+	<ul
+		className={classNames('navbar-nav', {
+			'navbar-nav-expand': expand,
+		})}
+	>
+		{children}
+	</ul>
+);
 
-export {
-	activeLanguageIdsAtom,
-	selectedLanguageIdAtom,
-} from './translation_manager/state';
+ItemList.propTypes = {
+	expand: Boolean,
+};
 
-export {default as TranslationAdminModal} from './translation_manager/TranslationAdminModal';
-export {default as TranslationAdminSelector} from './translation_manager/TranslationAdminSelector';
+export default ItemList;

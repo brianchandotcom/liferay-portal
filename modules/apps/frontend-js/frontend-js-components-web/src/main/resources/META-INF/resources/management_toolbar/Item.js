@@ -12,14 +12,13 @@
  * details.
  */
 
-export {default as Treeview} from './treeview/Treeview';
+import classNames from 'classnames';
+import React from 'react';
 
-export {default as ManagementToolbar} from './management_toolbar/ManagementToolbar';
+const Item = ({children, className, ...otherProps}) => (
+	<li {...otherProps} className={classNames('nav-item', className)}>
+		{children}
+	</li>
+);
 
-export {
-	activeLanguageIdsAtom,
-	selectedLanguageIdAtom,
-} from './translation_manager/state';
-
-export {default as TranslationAdminModal} from './translation_manager/TranslationAdminModal';
-export {default as TranslationAdminSelector} from './translation_manager/TranslationAdminSelector';
+export default Item;

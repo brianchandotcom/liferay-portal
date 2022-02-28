@@ -12,14 +12,22 @@
  * details.
  */
 
-export {default as Treeview} from './treeview/Treeview';
+import Container from './Container';
+import Item from './Item';
+import ItemList from './ItemList';
+import ResultsBar from './ResultsBar';
+import ResultsBarItem from './ResultsBarItem';
+import Search from './Search';
 
-export {default as ManagementToolbar} from './management_toolbar/ManagementToolbar';
+import './ManagementToolbar.scss';
 
-export {
-	activeLanguageIdsAtom,
-	selectedLanguageIdAtom,
-} from './translation_manager/state';
+const ManagementToolbar = {};
 
-export {default as TranslationAdminModal} from './translation_manager/TranslationAdminModal';
-export {default as TranslationAdminSelector} from './translation_manager/TranslationAdminSelector';
+ManagementToolbar.Container = Container;
+ManagementToolbar.Item = Item;
+ManagementToolbar.ItemList = ItemList;
+ManagementToolbar.ResultsBar = ResultsBar;
+ManagementToolbar.ResultsBarItem = ResultsBarItem;
+ManagementToolbar.Search = Search;
+
+export default ManagementToolbar;

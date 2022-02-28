@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,15 +12,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-export {default as Treeview} from './treeview/Treeview';
+<%@ include file="/init.jsp" %>
 
-export {default as ManagementToolbar} from './management_toolbar/ManagementToolbar';
+<clay:container-fluid>
+	<clay:row>
+		<clay:col>
+			<h2>React Component</h2>
+		</clay:col>
+	</clay:row>
 
-export {
-	activeLanguageIdsAtom,
-	selectedLanguageIdAtom,
-} from './translation_manager/state';
-
-export {default as TranslationAdminModal} from './translation_manager/TranslationAdminModal';
-export {default as TranslationAdminSelector} from './translation_manager/TranslationAdminSelector';
+	<react:component
+		module="js/ManagementToolbarSamples"
+	/>
+</clay:container-fluid>

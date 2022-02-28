@@ -12,14 +12,27 @@
  * details.
  */
 
-export {default as Treeview} from './treeview/Treeview';
+import classNames from 'classnames';
+import React from 'react';
 
-export {default as ManagementToolbar} from './management_toolbar/ManagementToolbar';
+const ResultsBarItem = ({
+	children,
+	className,
+	expand = false,
+	...otherProps
+}) => (
+	<li
+		{...otherProps}
+		className={classNames('tbar-item', className, {
+			'tbar-item-expand': expand,
+		})}
+	>
+		<div className="tbar-section">{children}</div>
+	</li>
+);
 
-export {
-	activeLanguageIdsAtom,
-	selectedLanguageIdAtom,
-} from './translation_manager/state';
+ResultsBarItem.propTypes = {
+	expand: Boolean,
+};
 
-export {default as TranslationAdminModal} from './translation_manager/TranslationAdminModal';
-export {default as TranslationAdminSelector} from './translation_manager/TranslationAdminSelector';
+export default ResultsBarItem;

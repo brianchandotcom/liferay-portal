@@ -18,6 +18,10 @@ import type {Atom} from '@liferay/frontend-js-state-web';
 
 export const activeLanguageIdsAtom: Atom<any>;
 
+export function ResultsBar(
+	children: React.ReactElement | Array<React.ReactElement>
+): ReactElement;
+
 export function Treeview(
 	NodeComponent: () => void,
 	filter: string | (() => void),

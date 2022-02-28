@@ -12,14 +12,18 @@
  * details.
  */
 
-export {default as Treeview} from './treeview/Treeview';
+import ClayLayout from '@clayui/layout';
+import React from 'react';
 
-export {default as ManagementToolbar} from './management_toolbar/ManagementToolbar';
+const ResultsBar = ({children, ...otherProps}) => (
+	<nav
+		{...otherProps}
+		className="subnav-tbar subnav-tbar-primary tbar tbar-inline-xs-down"
+	>
+		<ClayLayout.ContainerFluid>
+			<ul className="tbar-nav tbar-nav-wrap">{children}</ul>
+		</ClayLayout.ContainerFluid>
+	</nav>
+);
 
-export {
-	activeLanguageIdsAtom,
-	selectedLanguageIdAtom,
-} from './translation_manager/state';
-
-export {default as TranslationAdminModal} from './translation_manager/TranslationAdminModal';
-export {default as TranslationAdminSelector} from './translation_manager/TranslationAdminSelector';
+export default ResultsBar;

@@ -25,8 +25,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.admin.web.internal.constants.SiteAdminConstants;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.RenderResponse;
 
@@ -133,6 +135,17 @@ public class AddGroupDisplayContext {
 					return true;
 				}
 			}
+		}
+
+		return false;
+	}
+
+	public boolean isShowLayoutSetVisibilityPrivateCheckbox() {
+		if (Objects.equals(
+				ParamUtil.getString(_httpServletRequest, "creationType"),
+				SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE)) {
+
+			return true;
 		}
 
 		return false;

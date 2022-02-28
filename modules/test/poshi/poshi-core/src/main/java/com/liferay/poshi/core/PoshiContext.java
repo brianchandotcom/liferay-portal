@@ -551,9 +551,18 @@ public class PoshiContext {
 				testIncludeDirPaths.add(testIncludeDir.getCanonicalPath());
 			}
 
-			_readPoshiFiles(
-				POSHI_SUPPORT_FILE_INCLUDES,
-				testIncludeDirPaths.toArray(new String[0]));
+			baseDirNames = ArrayUtils.addAll(baseDirNames, testIncludeDirNames);
+		}
+
+		String testBaseDirNames = PropsUtil.get("test.base.dir.names");
+
+		String[] testBaseDirNamesList = testBaseDirNames.split(",");
+
+		for (String testDirName : testBaseDirNamesList) {
+			if ((testDirName != null) && !testDirName.isEmpty()) {
+				baseDirNames = ArrayUtils.addAll(
+					baseDirNames, StringUtil.split(testDirName));
+			}
 		}
 
 		_readPoshiFiles(poshiFileIncludes.toArray(new String[0]), baseDirNames);

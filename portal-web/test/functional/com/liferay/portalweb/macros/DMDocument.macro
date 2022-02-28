@@ -2085,22 +2085,17 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		var displayDateMinute = DateUtil.getFormattedCurrentDate("mm");
-		var displayDateHour = DateUtil.getFormattedCurrentDate("HH");
-		var displayDateDay = DateUtil.getCurrentDate();
-		var displayDateYear = DateUtil.getCurrentYear();
-		var displayDateMonth = DateUtil.getCurrentMonth();
+		var expirationDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
 
-		if (isSet(increaseMinutes)) {
-			var displayDateMinute = ${displayDateMinute} + ${increaseMinutes};
-		}
+		echo("## * reviewDate: ${expirationDate}");
 
 		if ("${invalidExpirationDate}" == "true") {
-			var displayDateYear = ${displayDateYear} - 1;
+			var expirationDate = DateUtil.getDateOffsetByYears("-1", "MM/dd/yyyy");
 		}
 
-		var expirationDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
-		var expirationDateTime = "${displayDateHour}:${displayDateMinute}";
+		var expirationDateTime = DateUtil.getDateOffsetByMinutes("${increaseMinutes}", "hh:mm a");
+
+		echo("## * expirationDateTime: ${expirationDateTime}");
 
 		Type(
 			locator1 = "TextInput#EXPIRATION_DATE",
@@ -2132,18 +2127,13 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		var displayDateMinute = DateUtil.getFormattedCurrentDate("mm");
-		var displayDateHour = DateUtil.getFormattedCurrentDate("HH");
-		var displayDateDay = DateUtil.getCurrentDate();
-		var displayDateYear = DateUtil.getCurrentYear();
-		var displayDateMonth = DateUtil.getCurrentMonth();
+		var reviewDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
 
-		if (isSet(increaseMinutes)) {
-			var displayDateMinute = ${displayDateMinute} + ${increaseMinutes};
-		}
+		echo("## * reviewDate: ${reviewDate}");
 
-		var reviewDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
-		var reviewDateTime = "${displayDateHour}:${displayDateMinute}";
+		var reviewDateTime = DateUtil.getDateOffsetByMinutes("${increaseMinutes}", "hh:mm a");
+
+		echo("## * reviewDateTime: ${reviewDateTime}");
 
 		Type(
 			locator1 = "TextInput#REVIEW_DATE",

@@ -207,7 +207,9 @@ public class UpdateLanguageAction implements Action {
 			}
 		}
 
-		if (layoutURL.startsWith(themeDisplay.getPathMain())) {
+		if (!Validator.isBlank(themeDisplay.getPathMain()) &&
+			layoutURL.startsWith(themeDisplay.getPathMain())) {
+
 			redirect = layoutURL;
 		}
 		else if (isFriendlyURLResolver(layoutURL) ||

@@ -18,7 +18,6 @@ import {useEffect} from 'react';
  * an SPA lifecycle event used to detect when the user cancels or navigates to
  * a new page within Liferay.
  *
- *
  * @param {boolean} requiresConfirmation True if the user should be prompted
  * @param {string} message Message to display in prompt
  */
@@ -36,6 +35,12 @@ export default function useShouldConfirmBeforeNavigate(
 
 		const handleBeforeUnload = (event) => {
 			event.preventDefault();
+
+			// Setting returnValue is required for activation in certain browsers like Chrome.
+			// Its string message was once used to customize the confirmation message, but now
+			// for security purposes, each browser is in control of its own message.
+			// https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload
+
 			event.returnValue = '';
 		};
 

@@ -365,6 +365,8 @@ function EditSXPBlueprintForm({
 		validate: _handleFormikValidate,
 	});
 
+	useShouldConfirmBeforeNavigate(formik.dirty && !formik.isSubmitting);
+
 	useEffect(() => {
 		fetchData(
 			`/o/search-experiences-rest/v1.0/searchable-asset-names/${locale}`,
@@ -847,8 +849,6 @@ function EditSXPBlueprintForm({
 				);
 		}
 	};
-
-	useShouldConfirmBeforeNavigate(formik.dirty && !formik.isSubmitting);
 
 	if (
 		!indexFields ||

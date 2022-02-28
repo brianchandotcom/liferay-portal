@@ -154,6 +154,11 @@ function EditSXPElementForm({
 
 	const [variables, setVariables] = useState(filteredCategories);
 
+	useShouldConfirmBeforeNavigate(
+		initialElementJSONEditorValueString !== elementJSONEditorValue &&
+			!isSubmitting
+	);
+
 	/**
 	 * Workaround to force a re-render so `elementJSONEditorRef` will be
 	 * defined when calling `_handleVariableClick`
@@ -352,11 +357,6 @@ function EditSXPElementForm({
 			</div>
 		);
 	}
-
-	useShouldConfirmBeforeNavigate(
-		initialElementJSONEditorValueString !== elementJSONEditorValue &&
-			!isSubmitting
-	);
 
 	return (
 		<>

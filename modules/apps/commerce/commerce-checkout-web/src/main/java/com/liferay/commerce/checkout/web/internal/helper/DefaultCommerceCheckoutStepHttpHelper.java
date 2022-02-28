@@ -307,6 +307,22 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			(CommerceOrder)httpServletRequest.getAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
+		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!commerceOrder.isGuestOrder() &&
+			!_commerceOrderPortletResourcePermission.contains(
+				themeDisplay.getPermissionChecker(),
+				commerceAccount.getCommerceAccountGroupId(),
+				CommerceOrderActionKeys.
+					MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS)) {
+
+			return false;
+		}
+
 		if (!_commerceShippingHelper.isShippable(commerceOrder) ||
 			_commerceShippingHelper.isFreeShipping(commerceOrder)) {
 

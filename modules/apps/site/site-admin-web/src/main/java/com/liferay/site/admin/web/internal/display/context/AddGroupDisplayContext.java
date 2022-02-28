@@ -143,6 +143,10 @@ public class AddGroupDisplayContext {
 	}
 
 	public boolean isShowLayoutSetVisibilityPrivateCheckbox() {
+		if (_disablePrivateLayouts) {
+			return false;
+		}
+
 		if (Objects.equals(
 				ParamUtil.getString(_httpServletRequest, "creationType"),
 				SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE)) {

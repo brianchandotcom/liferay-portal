@@ -3094,6 +3094,16 @@ components:
                         - collectionReference
                         - collectionType
                     type: object
+                displayAllItems:
+                    # @review
+                    description:
+                        Whether to show all items when pagination is disabled.
+                    type: boolean
+                displayAllPages:
+                    # @review
+                    description:
+                        Whether to show all pages when pagination is enabled.
+                    type: boolean
                 fragmentStyle:
                     allOf:
                         - $ref: "#/components/schemas/FragmentStyle"
@@ -3131,6 +3141,11 @@ components:
                     # @review
                     description:
                         The number of items per page in the page collection.
+                    type: integer
+                numberOfPages:
+                    # @review
+                    description:
+                        The maximum number of pages to show when pagination is enabled.
                     type: integer
                 paginationType:
                     # @review

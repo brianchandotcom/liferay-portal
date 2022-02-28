@@ -261,6 +261,45 @@ definition {
 			startingValue = "Nickname");
 	}
 
+	@description = "This is a use case for LPS-146795.The test is blocked and waiting on POSHI-256"
+	@ignore = "true"
+	@priority = "4"
+	test AddNewUserWithGeolocationCustomFields {
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Custom Fields");
+
+		CustomFields.addCP(
+			customFieldName = "Test Field",
+			customFieldType = "Geolocation",
+			resourceName = "User");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.addGeolocationCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		Alert.viewSuccessMessage();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.viewCP(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+	}
+
 	@priority = "5"
 	test EditCustomFieldUserTextField {
 		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";

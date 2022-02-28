@@ -505,10 +505,12 @@ public class AccountRoleLocalServiceTest {
 	public void testSearchAccountRolesWithParams() throws Exception {
 		AccountRole accountRole1 = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), _accountEntry1.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
+			RandomTestUtil.randomString() + " " + RandomTestUtil.randomString(),
+			null, null);
 		AccountRole accountRole2 = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), _accountEntry1.getAccountEntryId(),
-			RandomTestUtil.randomString(), null, null);
+			RandomTestUtil.randomString() + " " + RandomTestUtil.randomString(),
+			null, null);
 
 		_testSearchAccountRolesWithParams(
 			accountRole1.getCompanyId(),

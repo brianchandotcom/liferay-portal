@@ -62,6 +62,7 @@ page import="com.liferay.commerce.order.web.internal.security.permission.resourc
 page import="com.liferay.commerce.order.web.internal.servlet.taglib.ui.constants.CommerceOrderScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.order.web.internal.servlet.taglib.ui.constants.CommerceOrderTypeScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.product.model.CPMeasurementUnit" %><%@
+page import="com.liferay.commerce.term.model.CommerceTermEntry" %><%@
 page import="com.liferay.petra.string.StringBundler" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
@@ -85,10 +86,13 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 <%@ page import="java.util.Calendar" %><%@
 page import="java.util.Collections" %><%@
 page import="java.util.Date" %><%@
+page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
 page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
+<
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

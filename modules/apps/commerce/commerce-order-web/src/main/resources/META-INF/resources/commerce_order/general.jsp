@@ -95,6 +95,30 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 	url="<%= editPrintedNoteURL %>"
 />
 
+<liferay-portlet:renderURL var="editPaymentTermsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/commerce_order/edit_commerce_order_payment_terms" />
+	<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderId()) %>" />
+</liferay-portlet:renderURL>
+
+<commerce-ui:modal
+	id="payment-terms-modal"
+	refreshPageOnClose="<%= true %>"
+	size="xl"
+	url="<%= editPaymentTermsURL %>"
+/>
+
+<liferay-portlet:renderURL var="editDeliveryTermsURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="mvcRenderCommandName" value="/commerce_order/edit_commerce_order_delivery_terms" />
+	<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrderEditDisplayContext.getCommerceOrderId()) %>" />
+</liferay-portlet:renderURL>
+
+<commerce-ui:modal
+	id="delivery-terms-modal"
+	refreshPageOnClose="<%= true %>"
+	size="xl"
+	url="<%= editDeliveryTermsURL %>"
+/>
+
 <div class="row">
 	<c:if test="<%= !commerceOrder.isOpen() %>">
 		<div class="col-12 mb-4">
@@ -237,6 +261,46 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 
 								<p class="mb-0">
 									<%= commerceOrderEditDisplayContext.getDescriptiveAddress(shippingCommerceAddress) %>
+								</p>
+							</c:otherwise>
+						</c:choose>
+					</commerce-ui:info-box>
+
+					<commerce-ui:info-box
+						actionLabel='<%= LanguageUtil.get(request, (commerceOrder.getPaymentCommerceTermEntryId() == 0) ? "add" : "edit") %>'
+						actionTargetId="payment-terms-modal"
+						elementClasses="py-3"
+						title='<%= LanguageUtil.get(request, "payment-terms") %>'
+					>
+						<c:choose>
+							<c:when test="<%= commerceOrder.getPaymentCommerceTermEntryId() == 0 %>">
+								<span class="text-muted">
+									<liferay-ui:message key="click-add-to-insert" />
+								</span>
+							</c:when>
+							<c:otherwise>
+								<p class="mb-0">
+									<%= commerceOrder.getPaymentCommerceTermEntryName() %>
+								</p>
+							</c:otherwise>
+						</c:choose>
+					</commerce-ui:info-box>
+
+					<commerce-ui:info-box
+						actionLabel='<%= LanguageUtil.get(request, (commerceOrder.getDeliveryCommerceTermEntryId() == 0) ? "add" : "edit") %>'
+						actionTargetId="delivery-terms-modal"
+						elementClasses="py-3"
+						title='<%= LanguageUtil.get(request, "delivery-terms") %>'
+					>
+						<c:choose>
+							<c:when test="<%= commerceOrder.getDeliveryCommerceTermEntryId() == 0 %>">
+								<span class="text-muted">
+									<liferay-ui:message key="click-add-to-insert" />
+								</span>
+							</c:when>
+							<c:otherwise>
+								<p class="mb-0">
+									<%= commerceOrder.getDeliveryCommerceTermEntryName() %>
 								</p>
 							</c:otherwise>
 						</c:choose>

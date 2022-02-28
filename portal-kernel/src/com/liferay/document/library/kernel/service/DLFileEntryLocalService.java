@@ -96,21 +96,6 @@ public interface DLFileEntryLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFileEntry addDLFileEntry(DLFileEntry dlFileEntry);
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addFileEntry(String, long, long, long, long, String, String,
-	 String, String, String, String, long, Map, File, InputStream,
-	 long, Date, Date, ServiceContext)}
-	 */
-	@Deprecated
-	public DLFileEntry addFileEntry(
-			long userId, long groupId, long repositoryId, long folderId,
-			String sourceFileName, String mimeType, String title,
-			String description, String changeLog, long fileEntryTypeId,
-			Map<String, DDMFormValues> ddmFormValuesMap, File file,
-			InputStream inputStream, long size, ServiceContext serviceContext)
-		throws PortalException;
-
 	public DLFileEntry addFileEntry(
 			String externalReferenceCode, long userId, long groupId,
 			long repositoryId, long folderId, String sourceFileName,
@@ -707,23 +692,6 @@ public interface DLFileEntryLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public DLFileEntry updateDLFileEntry(DLFileEntry dlFileEntry);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 DLFileEntryLocalService#updateFileEntry(
-	 long, long, String, String, String, String, String, String,
-	 DLVersionNumberIncrease, long, Map, File, InputStream, long,
-	 Date, Date, ServiceContext)}
-	 */
-	@Deprecated
-	public DLFileEntry updateFileEntry(
-			long userId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			DLVersionNumberIncrease dlVersionNumberIncrease,
-			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
-			File file, InputStream inputStream, long size,
-			ServiceContext serviceContext)
-		throws PortalException;
 
 	public DLFileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,

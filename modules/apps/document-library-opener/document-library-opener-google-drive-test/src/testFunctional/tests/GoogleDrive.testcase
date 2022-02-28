@@ -14,34 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "Google Drive",
-			configurationScope = "Virtual Instance Scope");
-
-		var googleClientId = PropsUtil.get("google.client.id.2");
-
-		Type(
-			key_text = "clientId",
-			locator1 = "TextArea#ANY",
-			value1 = "${googleClientId}");
-
-		var googleClientSecret = PropsUtil.get("google.client.secret.2");
-
-		Type(
-			key_text = "clientSecret",
-			locator1 = "TextArea#ANY",
-			value1 = "${googleClientSecret}");
-
-		ScrollWebElementIntoView(locator1 = "Button#SAVE");
-
-		AssertClick(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
-
-		VerifyElementPresent(locator1 = "Message#SUCCESS");
+		Google.enableGoogleDrive();
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

@@ -1,5 +1,34 @@
 definition {
 
+	macro enableGoogleDrive {
+		DMNavigator.openToConfigInSystemSettings(portlet = "Google Drive");
+
+		var num = MathUtil.randomNumber(3);
+
+		echo("###num:${num}");
+
+		var googleClientId = PropsUtil.get("google.client.id.${num}");
+
+		Type(
+			key_text = "clientId",
+			locator1 = "TextArea#ANY",
+			value1 = "${googleClientId}");
+
+		var googleClientSecret = PropsUtil.get("google.client.secret.${num}");
+
+		Type(
+			key_text = "clientSecret",
+			locator1 = "TextArea#ANY",
+			value1 = "${googleClientSecret}");
+
+		if (IsElementPresent(locator1 = "Button#UPDATE")) {
+			PortletEntry.update();
+		}
+		else if (IsElementPresent(locator1 = "Button#SAVE")) {
+			PortletEntry.save();
+		}
+	}
+
 	macro signIn {
 		if (isSet(windowTitle)) {
 			SelectWindow(locator1 = "GoogleLogin#PAGE_TITLE");

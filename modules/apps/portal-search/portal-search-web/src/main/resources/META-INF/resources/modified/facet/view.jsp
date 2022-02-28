@@ -116,8 +116,7 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 								</c:if>
 							</a>
 						</li>
-
-						<div class="<%= !modifiedFacetCalendarDisplayContext.isSelected() ? "hide" : StringPool.BLANK %> modified-custom-range" id="<portlet:namespace />customRange">
+						<li class="<%= !modifiedFacetCalendarDisplayContext.isSelected() ? "hide" : StringPool.BLANK %> modified-custom-range" id="<portlet:namespace />customRange">
 							<clay:col
 								id='<%= liferayPortletResponse.getNamespace() + "customRangeFrom" %>'
 								md="6"
@@ -159,7 +158,7 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 							</clay:col>
 
 							<aui:button cssClass="modified-facet-custom-range-filter-button" disabled="<%= modifiedFacetCalendarDisplayContext.isRangeBackwards() %>" name="searchCustomRangeButton" value="search" />
-						</div>
+						</li>
 					</ul>
 
 					<c:if test="<%= !modifiedFacetDisplayContext.isNothingSelected() %>">

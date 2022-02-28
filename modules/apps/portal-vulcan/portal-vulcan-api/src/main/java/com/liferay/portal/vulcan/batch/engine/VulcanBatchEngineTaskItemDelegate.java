@@ -26,10 +26,14 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.io.Serializable;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -49,6 +53,29 @@ public interface VulcanBatchEngineTaskItemDelegate<T> {
 
 	public default List<String> getCreateEntityScopes() {
 		return Collections.emptyList();
+	}
+
+	public default String getEntityClassName() {
+		Type[] genericInterfaceTypes = getClass().getGenericInterfaces();
+
+		for (Type genericInterfaceType : genericInterfaceTypes) {
+			ParameterizedType parameterizedType =
+				(ParameterizedType)genericInterfaceType;
+
+			if (Objects.equals(
+					VulcanBatchEngineTaskItemDelegate.class,
+					parameterizedType.getRawType())) {
+
+				Type[] actualTypeArguments =
+					parameterizedType.getActualTypeArguments();
+
+				Class<?> entityClazz = (Class<?>)actualTypeArguments[0];
+
+				return entityClazz.getName();
+			}
+		}
+
+		return Object.class.getName();
 	}
 
 	public default List<Field> getEntityFields() {

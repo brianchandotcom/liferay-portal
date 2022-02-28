@@ -391,6 +391,80 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
+	macro addGeolocationCP {
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+			value1 = "${userScreenName}");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+			value1 = "${userEmailAddress}");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+			value1 = "${userFirstName}");
+
+		Type(
+			locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+			value1 = "${userLastName}");
+
+		var browserType = PropsUtil.get("browser.type");
+
+		if ("${browserType}" == "safari") {
+			Button.clickSave();
+		}
+		else {
+			AssertClick(
+				locator1 = "Button#SUBMIT",
+				value1 = "Save");
+		}
+
+		if ("${userEmailAddressVariation}" == "Invalid") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_ENTER_A_VALID_EMAIL_ADDRESS",
+				value1 = "Please enter a valid email address.");
+		}
+		else if ("${userEmailAddressVariation}" == "Null") {
+			Alert.viewRequiredField();
+		}
+		else if ("${userEmailAddressVariation}" == "Root") {
+			Alert.viewRequestFailedToComplete();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_ENTER_A_VALID_EMAIL_ADDRESS",
+				value1 = "Please enter a valid email address.");
+		}
+		else if ("${userScreenNameVariation}" == "Invalid") {
+			AssertTextEquals(
+				locator1 = "Message#ERROR_FORM_VALIDATION",
+				value1 = "The screen name cannot be an email address or a reserved word, such as postfix. It must contain only alphanumeric or the following special characters: -._.");
+		}
+		else {
+			var userEmailAddress = StringUtil.lowerCase("${userEmailAddress}");
+			var userScreenName = StringUtil.lowerCase("${userScreenName}");
+
+			AssertTextEquals(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+				value1 = "${userScreenName}");
+
+			AssertTextEquals(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+				value1 = "${userEmailAddress}");
+
+			AssertTextEquals(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+				value1 = "${userFirstName}");
+
+			AssertTextEquals(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+				value1 = "${userLastName}");
+		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+	}
+
 	macro addMultipleCP {
 		for (var userEmail : list "${usersEmailsList}") {
 			var userEmailAddress = "${userEmail}";

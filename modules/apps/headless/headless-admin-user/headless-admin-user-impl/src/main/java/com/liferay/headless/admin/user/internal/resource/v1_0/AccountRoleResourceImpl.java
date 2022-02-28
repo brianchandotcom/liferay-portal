@@ -15,25 +15,31 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.AccountRole;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.AccountResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.UserResourceDTOConverter;
+import com.liferay.headless.admin.user.internal.odata.entity.v1_0.AccountRoleEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.comparator.RoleDescriptionComparator;
-import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.util.Collections;
-import java.util.Objects;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -92,33 +98,55 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 	@Override
 	public Page<AccountRole> getAccountAccountRolesByExternalReferenceCodePage(
-			String externalReferenceCode, String keywords,
+			String externalReferenceCode, String keywords, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return getAccountAccountRolesPage(
 			_accountResourceDTOConverter.getAccountEntryId(
 				externalReferenceCode),
-			keywords, pagination, sorts);
+			keywords, filter, pagination, sorts);
 	}
 
 	@Override
 	public Page<AccountRole> getAccountAccountRolesPage(
-		Long accountId, String keywords, Pagination pagination, Sort[] sorts) {
+			Long accountId, String keywords, Filter filter,
+			Pagination pagination, Sort[] sorts)
+		throws Exception {
 
-		BaseModelSearchResult<com.liferay.account.model.AccountRole>
-			baseModelSearchResult = _accountRoleLocalService.searchAccountRoles(
-				contextCompany.getCompanyId(),
-				new long[] {
-					AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, accountId
-				},
-				keywords, null, pagination.getStartPosition(),
-				pagination.getEndPosition(), _getOrderByComparator(sorts));
+		_accountEntryLocalService.getAccountEntry(accountId);
 
-		return Page.of(
-			transform(
-				baseModelSearchResult.getBaseModels(), this::_toAccountRole),
-			pagination, baseModelSearchResult.getLength());
+		return SearchUtil.search(
+			null,
+			booleanQuery -> {
+				BooleanFilter preBooleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				TermsFilter termsFilter = new TermsFilter("accountEntryId");
+
+				termsFilter.addValues(
+					ArrayUtil.toStringArray(
+						new long[] {
+							AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, accountId
+						}));
+
+				preBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+			},
+			filter, com.liferay.account.model.AccountRole.class.getName(),
+			keywords, pagination,
+			queryConfig -> {
+			},
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+
+				if (Validator.isNotNull(keywords)) {
+					searchContext.setKeywords(keywords);
+				}
+			},
+			sorts,
+			document -> _toAccountRole(
+				_accountRoleLocalService.getAccountRole(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override
@@ -228,23 +256,6 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 				userAccountExternalReferenceCode));
 	}
 
-	private OrderByComparator<?> _getOrderByComparator(Sort[] sorts) {
-		if ((sorts == null) || (sorts.length == 0)) {
-			return _roleNameComparator;
-		}
-
-		Sort sort = sorts[0];
-
-		if (Objects.equals(sort.getFieldName(), "description")) {
-			return new RoleDescriptionComparator(!sort.isReverse());
-		}
-		else if (Objects.equals(sort.getFieldName(), "name")) {
-			return new RoleNameComparator(!sort.isReverse());
-		}
-
-		return _roleNameComparator;
-	}
-
 	private AccountRole _toAccountRole(
 			com.liferay.account.model.AccountRole serviceBuilderAccountRole)
 		throws Exception {
@@ -265,8 +276,8 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 		};
 	}
 
-	private static final RoleNameComparator _roleNameComparator =
-		new RoleNameComparator();
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private AccountResourceDTOConverter _accountResourceDTOConverter;
@@ -274,7 +285,7 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
 
-	private final EntityModel _entityModel = Collections::emptyMap;
+	private final EntityModel _entityModel = new AccountRoleEntityModel();
 
 	@Reference
 	private UserLocalService _userLocalService;

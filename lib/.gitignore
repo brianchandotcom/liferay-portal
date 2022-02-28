@@ -163,10 +163,6 @@
 /portal/netcdf.jar
 /portal/pdfbox.jar
 /portal/persistence.jar
-/portal/poi-ooxml-schemas.jar
-/portal/poi-ooxml.jar
-/portal/poi-scratchpad.jar
-/portal/poi.jar
 /portal/portlet.jar
 /portal/portletmvc4spring-framework.jar
 /portal/rmi-api.jar

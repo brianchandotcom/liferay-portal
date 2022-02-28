@@ -272,6 +272,9 @@ public class ConfigurableUtilTest {
 			new String[] {"test_string_1", "test_string_2"},
 			testConfiguration.testStringArray());
 		Assert.assertArrayEquals(
+			new String[0],
+			testConfiguration.testStringArrayWithEmptyStringAsDefault());
+		Assert.assertArrayEquals(
 			new String[] {"a=b", "c=d,e=f"},
 			testConfiguration.testStringEscapeMultiValuedAttribute());
 		Assert.assertEquals(
@@ -339,6 +342,9 @@ public class ConfigurableUtilTest {
 
 		@Meta.AD(deflt = "test_string_1|test_string_2", required = false)
 		public String[] testStringArray();
+
+		@Meta.AD(deflt = "", required = false)
+		public String[] testStringArrayWithEmptyStringAsDefault();
 
 		@Meta.AD(deflt = "a=b,c=d\\,e=f", required = false)
 		public String[] testStringEscapeMultiValuedAttribute();

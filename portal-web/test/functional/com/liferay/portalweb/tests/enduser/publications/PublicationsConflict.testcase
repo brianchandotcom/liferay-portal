@@ -321,7 +321,7 @@ definition {
 
 		PublicationsNavigator.gotoPublish(publicationName = "Publication 2 Name");
 
-		Publications.viewConflictingChanges(warningMessage = "This publication contains conflicting changes that must be manually resolved before publishing.");
+		Publications.viewConflictingChangesWarning(warningMessage = "This publication contains conflicting changes that must be manually resolved before publishing.");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "WC Folder Name",

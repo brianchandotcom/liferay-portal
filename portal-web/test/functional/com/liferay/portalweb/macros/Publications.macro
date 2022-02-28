@@ -350,7 +350,7 @@ definition {
 			locator1 = "Publications#CONFLICTING_CHANGES_SUCCESS_CONTENT");
 	}
 
-	macro viewConflictingChanges {
+	macro viewConflictingChangesWarning {
 		AssertElementPresent(
 			key_warningMessage = "${warningMessage}",
 			locator1 = "Message#WARNING_SPECIFIC");

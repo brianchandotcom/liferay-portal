@@ -14,14 +14,18 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.commerce.account.constants.CommerceAccountActionKeys;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.checkout.web.internal.display.context.TermCommerceCheckoutStepDisplayContext;
 import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
@@ -38,10 +42,21 @@ import com.liferay.commerce.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -51,6 +66,7 @@ import javax.portlet.ActionResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.liferay.portal.kernel.util.WebKeys;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -84,6 +100,22 @@ public class PaymentTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			(CommerceOrder)httpServletRequest.getAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(themeDisplay.getUser());
+
+
+		if (!_portletResourcePermission.contains(
+			permissionChecker, commerceOrder.getCommerceAccount().getCommerceAccountGroup(),
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS)) {
+
+			return false;
+		}
+
 		CommerceChannel commerceChannel =
 			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
 				commerceOrder.getGroupId());
@@ -108,11 +140,17 @@ public class PaymentTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		CommerceOrder commerceOrder = (CommerceOrder)actionRequest.getAttribute(
-			CommerceCheckoutWebKeys.COMMERCE_ORDER);
-
 		String commercePaymentTermId = ParamUtil.getString(
 			actionRequest, "commercePaymentTermId");
+
+		if (!Validator.isNumber(commercePaymentTermId)) {
+			SessionErrors.add(actionRequest, "paymentTermsInvalid");
+
+			return;
+		}
+
+		CommerceOrder commerceOrder = (CommerceOrder)actionRequest.getAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
 		commerceOrder = _commerceOrderLocalService.updateTermsAndConditions(
 			commerceOrder.getCommerceOrderId(), 0,
@@ -191,6 +229,7 @@ public class PaymentTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			"/checkout_step/payment_term.jsp");
 	}
 
+
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
@@ -224,4 +263,8 @@ public class PaymentTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 	@Reference
 	private JSPRenderer _jspRenderer;
 
+	@Reference(
+		target = "(resource.name=" + CommerceOrderConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 }

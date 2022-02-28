@@ -180,8 +180,8 @@ public class DefaultCommerceCheckoutStepHttpHelper
 				deliveryCommerceTermEntries.get(0);
 
 			_commerceOrderService.updateTermsAndConditions(
-				commerceOrder.getCommerceOrderId(), 0,
-				commerceTermEntry.getCommerceTermEntryId(), languageId);
+				commerceOrder.getCommerceOrderId(),
+				commerceTermEntry.getCommerceTermEntryId(), 0, languageId);
 
 			return false;
 		}

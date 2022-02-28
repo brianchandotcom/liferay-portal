@@ -280,7 +280,7 @@ public class ShippingMethodCommerceCheckoutStep
 			commerceShippingOptionName, themeDisplay.getLocale());
 
 		try {
-			TransactionInvokerUtil.invoke(
+			CommerceOrder updateCommerceOrder = TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> {
 					_commerceOrderLocalService.updateCommerceShippingMethod(
@@ -288,11 +288,12 @@ public class ShippingMethodCommerceCheckoutStep
 						commerceShippingMethodId, commerceShippingOptionName,
 						shippingAmount, commerceContext);
 
-					_commerceOrderLocalService.recalculatePrice(
+					return _commerceOrderLocalService.recalculatePrice(
 						commerceOrder.getCommerceOrderId(), commerceContext);
-
-					return null;
 				});
+
+			actionRequest.setAttribute(
+				CommerceCheckoutWebKeys.COMMERCE_ORDER, updateCommerceOrder);
 		}
 		catch (Throwable throwable) {
 			throw new PortalException(throwable);

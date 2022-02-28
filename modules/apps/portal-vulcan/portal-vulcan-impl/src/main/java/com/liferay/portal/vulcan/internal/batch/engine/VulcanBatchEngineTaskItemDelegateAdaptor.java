@@ -17,6 +17,7 @@ package com.liferay.portal.vulcan.internal.batch.engine;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
+import com.liferay.batch.engine.strategy.ImportStrategy;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.internal.batch.engine.strategy.BatchStrategyImpl;
 import com.liferay.portal.vulcan.util.GroupUtil;
 
 import java.io.Serializable;
@@ -118,6 +120,12 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 	public void setContextCompany(Company contextCompany) {
 		_company = contextCompany;
 		_vulcanBatchEngineTaskItemDelegate.setContextCompany(contextCompany);
+	}
+
+	@Override
+	public void setContextImportStrategy(ImportStrategy importStrategy) {
+		_vulcanBatchEngineTaskItemDelegate.setContextBatchStrategy(
+			new BatchStrategyImpl(importStrategy));
 	}
 
 	@Override

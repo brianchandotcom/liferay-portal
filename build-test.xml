@@ -1890,11 +1890,13 @@ war.path=${app.server.portal.dir}/</echo>
 						</chmod>
 
 						<chmod
-							file="${test.app.server.parent.dir}/elasticsearch-sidecar/**"
 							perm="777"
-							type="both"
-							verbose="true"
-						/>
+						>
+							<fileset
+								dir="${test.app.server.parent.dir}/elasticsearch-sidecar"
+								includes="**/controller"
+							/>
+						</chmod>
 
 						<local name="jmx.remote.port.overwrite" />
 
@@ -4542,11 +4544,13 @@ go</echo>
 				</then>
 				<else>
 					<chmod
-						file="${liferay.home}/elasticsearch-sidecar/**"
 						perm="777"
-						type="both"
-						verbose="true"
-					/>
+					>
+						<fileset
+							dir="${liferay.home}/elasticsearch-sidecar"
+							includes="**/controller"
+						/>
+					</chmod>
 				</else>
 			</if>
 		</sequential>

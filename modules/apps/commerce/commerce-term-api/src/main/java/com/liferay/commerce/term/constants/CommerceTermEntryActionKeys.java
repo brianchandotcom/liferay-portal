@@ -22,4 +22,7 @@ public class CommerceTermEntryActionKeys {
 	public static final String ADD_COMMERCE_TERM_ENTRY =
 		"ADD_COMMERCE_TERM_ENTRY";
 
+	public static final String VIEW_COMMERCE_TERM_ENTRY =
+		"VIEW_COMMERCE_TERM_ENTRY";
+
 }

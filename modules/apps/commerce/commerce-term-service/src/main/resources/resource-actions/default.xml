@@ -12,11 +12,13 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_COMMERCE_TERM_ENTRY</action-key>
+				<action-key>VIEW_COMMERCE_TERM_ENTRY</action-key>
 			</supports>
 			<site-member-defaults/>
 			<guest-defaults/>
 			<guest-unsupported>
 				<action-key>ADD_COMMERCE_TERM_ENTRY</action-key>
+				<action-key>VIEW_COMMERCE_TERM_ENTRY</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

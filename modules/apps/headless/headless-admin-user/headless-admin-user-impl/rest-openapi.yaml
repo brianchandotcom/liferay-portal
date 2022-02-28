@@ -1348,6 +1348,10 @@ paths:
                   schema:
                       type: string
                 - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
                   name: page
                   schema:
                       type: integer
@@ -1884,6 +1888,10 @@ paths:
                       type: integer
                 - in: query
                   name: keywords
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
                   schema:
                       type: string
                 - in: query

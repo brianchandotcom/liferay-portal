@@ -283,8 +283,6 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
-
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",
 			groupName = "Guest");
@@ -292,8 +290,6 @@ definition {
 		JSONPublications.addPublication(publicationName = "Publication 2 Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		JSONWebcontent.addFolder(
 			folderName = "WC Folder Name",
@@ -325,9 +321,7 @@ definition {
 
 		PublicationsNavigator.gotoPublish(publicationName = "Publication 2 Name");
 
-		AssertElementPresent(
-			key_warningMessage = "This publication contains conflicting changes that must be manually resolved before publishing.",
-			locator1 = "Message#WARNING_SPECIFIC");
+		Publications.viewConflictingChanges(warningMessage = "This publication contains conflicting changes that must be manually resolved before publishing.");
 
 		Publications.viewNeedsManualResolution(
 			entryTitle = "WC Folder Name",

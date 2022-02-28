@@ -19,65 +19,15 @@
 <%
 WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
 
-PortletURL portletURL = PortletURLBuilder.createRenderURL(
-	renderResponse
-).setMVCRenderCommandName(
-	"/wiki_admin/view"
-).buildPortletURL();
+WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContext = new WikiNodesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest, trashHelper);
 
-String displayStyle = ParamUtil.getString(request, "displayStyle");
-
-if (Validator.isNull(displayStyle)) {
-	displayStyle = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "nodes-display-style", "descriptive");
-}
-else {
-	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "nodes-display-style", displayStyle);
-
-	request.setAttribute(WebKeys.SINGLE_PAGE_APPLICATION_CLEAR_CACHE, Boolean.TRUE);
-}
-
-String orderByCol = ParamUtil.getString(request, "orderByCol");
-String orderByType = ParamUtil.getString(request, "orderByType");
-
-if (Validator.isNotNull(orderByCol)) {
-	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-col", orderByCol);
-}
-else {
-	orderByCol = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-col", "lastPostDate");
-}
-
-if (Validator.isNotNull(orderByType)) {
-	portalPreferences.setValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-type", orderByType);
-}
-else {
-	orderByType = portalPreferences.getValue(WikiPortletKeys.WIKI_ADMIN, "nodes-order-by-type", "desc");
-}
-
-request.setAttribute("view.jsp-orderByCol", orderByCol);
-request.setAttribute("view.jsp-orderByType", orderByType);
+request.setAttribute("view.jsp-orderByCol", wikiNodesManagementToolbarDisplayContext.getOrderByCol());
+request.setAttribute("view.jsp-orderByType", wikiNodesManagementToolbarDisplayContext.getOrderByType());
 %>
 
 <portlet:actionURL name="/wiki/edit_node" var="restoreTrashEntriesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
-
-<%
-SearchContainer<WikiNode> wikiNodesSearchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, "there-are-no-wikis");
-
-NodesChecker nodesChecker = new NodesChecker(liferayPortletRequest, liferayPortletResponse);
-
-wikiNodesSearchContainer.setRowChecker(nodesChecker);
-
-wikiNodesSearchContainer.setOrderByCol(orderByCol);
-wikiNodesSearchContainer.setOrderByComparator(WikiPortletUtil.getNodeOrderByComparator(orderByCol, orderByType));
-wikiNodesSearchContainer.setOrderByType(orderByType);
-
-long wikiNodesScopeGroupId = scopeGroupId;
-
-wikiNodesSearchContainer.setResultsAndTotal(() -> WikiNodeServiceUtil.getNodes(wikiNodesScopeGroupId, WorkflowConstants.STATUS_APPROVED, wikiNodesSearchContainer.getStart(), wikiNodesSearchContainer.getEnd(), wikiNodesSearchContainer.getOrderByComparator()), WikiNodeServiceUtil.getNodesCount(wikiNodesScopeGroupId));
-
-WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContext = new WikiNodesManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, displayStyle, wikiNodesSearchContainer, trashHelper);
-%>
 
 <clay:management-toolbar
 	actionDropdownItems="<%= wikiNodesManagementToolbarDisplayContext.getActionDropdownItems() %>"
@@ -118,7 +68,7 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 		>
 
 			<%
-			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "wiki"), portletURL.toString());
+			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "wiki"), String.valueOf(wikiNodesManagementToolbarDisplayContext.getPortletURL()));
 			%>
 
 			<liferay-ui:breadcrumb
@@ -140,8 +90,8 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 
 				<liferay-ui:search-container
 					id="wikiNodes"
-					searchContainer="<%= wikiNodesSearchContainer %>"
-					total="<%= wikiNodesSearchContainer.getTotal() %>"
+					searchContainer="<%= wikiNodesManagementToolbarDisplayContext.getSearchContainer() %>"
+					total="<%= wikiNodesManagementToolbarDisplayContext.getSearchContainerTotal() %>"
 				>
 					<liferay-ui:search-container-row
 						className="com.liferay.wiki.model.WikiNode"
@@ -169,7 +119,7 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 						%>
 
 						<c:choose>
-							<c:when test='<%= displayStyle.equals("descriptive") %>'>
+							<c:when test='<%= Objects.equals(wikiNodesManagementToolbarDisplayContext.getDisplayStyle(), "descriptive") %>'>
 								<liferay-ui:search-container-column-icon
 									icon="wiki"
 									toggleRowChecker="<%= true %>"
@@ -231,7 +181,7 @@ WikiNodesManagementToolbarDisplayContext wikiNodesManagementToolbarDisplayContex
 					</liferay-ui:search-container-row>
 
 					<liferay-ui:search-iterator
-						displayStyle="<%= displayStyle %>"
+						displayStyle="<%= wikiNodesManagementToolbarDisplayContext.getDisplayStyle() %>"
 						markupView="lexicon"
 					/>
 				</liferay-ui:search-container>

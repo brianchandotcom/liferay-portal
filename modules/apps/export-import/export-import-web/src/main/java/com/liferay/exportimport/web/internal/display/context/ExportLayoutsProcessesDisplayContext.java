@@ -18,6 +18,7 @@ import com.liferay.background.task.kernel.util.comparator.BackgroundTaskComparat
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -61,7 +62,7 @@ public class ExportLayoutsProcessesDisplayContext {
 
 		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
 			_httpServletRequest, ExportImportPortletKeys.EXPORT,
-			"layouts-processes-display-style", null);
+			"layouts-processes-display-style", StringPool.BLANK);
 
 		return _displayStyle;
 	}
@@ -93,7 +94,7 @@ public class ExportLayoutsProcessesDisplayContext {
 
 		_orderByCol = SearchOrderByUtil.getOrderByCol(
 			_httpServletRequest, ExportImportPortletKeys.EXPORT,
-			"layouts-processes-order-by-col", null);
+			"layouts-processes-order-by-col", StringPool.BLANK);
 
 		return _orderByCol;
 	}
@@ -105,7 +106,7 @@ public class ExportLayoutsProcessesDisplayContext {
 
 		_orderByType = SearchOrderByUtil.getOrderByType(
 			_httpServletRequest, ExportImportPortletKeys.EXPORT,
-			"layouts-processes-order-by-type", null);
+			"layouts-processes-order-by-type", StringPool.BLANK);
 
 		return _orderByType;
 	}

@@ -17,53 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String cmd = "unschedule_publish_to_live";
-
-boolean localPublishing = true;
-
-if (group.isStaged() && group.isStagedRemotely()) {
-	cmd = "unschedule_publish_to_remote";
-
-	localPublishing = false;
-}
-
-String destinationName = localPublishing ? DestinationNames.LAYOUTS_LOCAL_PUBLISHER : DestinationNames.LAYOUTS_REMOTE_PUBLISHER;
-
-PortletURL renderURL = liferayPortletResponse.createRenderURL();
-
-String orderByCol = ParamUtil.getString(request, "orderByCol");
-String orderByType = ParamUtil.getString(request, "orderByType");
-
-if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-	portalPreferences.setValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-col", orderByCol);
-	portalPreferences.setValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-type", orderByType);
-}
-else {
-	orderByCol = portalPreferences.getValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-col", "create-date");
-	orderByType = portalPreferences.getValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-type", "desc");
-}
+ScheduledPublishProcessesDisplayContext scheduledPublishProcessesDisplayContext = new ScheduledPublishProcessesDisplayContext(group, request, liferayPortletResponse, liveGroupId);
 %>
 
 <div id="<portlet:namespace />scheduledPublishProcessesSearchContainer">
 	<liferay-ui:search-container
-		emptyResultsMessage="no-scheduled-publish-processes-were-found"
 		id="scheduledPublishProcesses"
-		iteratorURL="<%= renderURL %>"
-		orderByCol="<%= orderByCol %>"
-		orderByType="<%= orderByType %>"
+		searchContainer="<%= scheduledPublishProcessesDisplayContext.getSearchContainer() %>"
 	>
-		<liferay-ui:search-container-results>
-
-			<%
-			SearchContainer<SchedulerResponse> jobsSearchContainer = searchContainer;
-
-			List<SchedulerResponse> schedulerResponses = SchedulerEngineHelperUtil.getScheduledJobs(StagingUtil.getSchedulerGroupName(destinationName, liveGroupId), StorageType.PERSISTED);
-
-			searchContainer.setResultsAndTotal(() -> ListUtil.subList(schedulerResponses, jobsSearchContainer.getStart(), jobsSearchContainer.getEnd()), schedulerResponses.size());
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse"
 			modelVar="schedulerResponse"
@@ -145,7 +106,7 @@ else {
 					</portlet:renderURL>
 
 					<portlet:actionURL name="/staging_processes/publish_layouts" var="deleteScheduledPublicationURL">
-						<portlet:param name="cmd" value="<%= cmd %>" />
+						<portlet:param name="cmd" value="<%= scheduledPublishProcessesDisplayContext.getCmd() %>" />
 						<portlet:param name="stagingGroupId" value="<%= String.valueOf(stagingGroupId) %>" />
 						<portlet:param name="jobName" value="<%= schedulerResponse.getJobName() %>" />
 						<portlet:param name="redirect" value="<%= deleteScheduledPublicationRedirectURL %>" />

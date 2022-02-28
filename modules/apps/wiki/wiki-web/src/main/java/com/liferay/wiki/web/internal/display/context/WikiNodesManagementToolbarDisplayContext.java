@@ -28,16 +28,24 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.portlet.SearchDisplayStyleUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.TrashHelper;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.service.WikiNodeServiceUtil;
+import com.liferay.wiki.web.internal.search.NodesChecker;
 import com.liferay.wiki.web.internal.security.permission.resource.WikiNodePermission;
 import com.liferay.wiki.web.internal.security.permission.resource.WikiResourcePermission;
+import com.liferay.wiki.web.internal.util.WikiPortletUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +54,7 @@ import java.util.Objects;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -55,20 +64,16 @@ import javax.servlet.http.HttpServletRequest;
 public class WikiNodesManagementToolbarDisplayContext {
 
 	public WikiNodesManagementToolbarDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse, String displayStyle,
-		SearchContainer<WikiNode> searchContainer, TrashHelper trashHelper) {
+		LiferayPortletResponse liferayPortletResponse,
+		RenderRequest renderRequest, TrashHelper trashHelper) {
 
+		_httpServletRequest = httpServletRequest;
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
-		_displayStyle = displayStyle;
-		_searchContainer = searchContainer;
+		_renderRequest = renderRequest;
 		_trashHelper = trashHelper;
-
-		_currentURLObj = PortletURLUtil.getCurrent(
-			_liferayPortletRequest, _liferayPortletResponse);
-
-		_httpServletRequest = liferayPortletRequest.getHttpServletRequest();
 
 		_themeDisplay = (ThemeDisplay)_httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -160,6 +165,18 @@ public class WikiNodesManagementToolbarDisplayContext {
 		).build();
 	}
 
+	public String getDisplayStyle() {
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
+		}
+
+		_displayStyle = SearchDisplayStyleUtil.getDisplayStyle(
+			_httpServletRequest, WikiPortletKeys.WIKI_ADMIN,
+			"nodes-display-style", "descriptive", true);
+
+		return _displayStyle;
+	}
+
 	public List<DropdownItem> getFilterDropdownItems() {
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
@@ -170,27 +187,102 @@ public class WikiNodesManagementToolbarDisplayContext {
 		).build();
 	}
 
+	public String getOrderByCol() {
+		if (Validator.isNotNull(_orderByCol)) {
+			return _orderByCol;
+		}
+
+		_orderByCol = SearchOrderByUtil.getOrderByCol(
+			_httpServletRequest, WikiPortletKeys.WIKI_ADMIN,
+			"nodes-order-by-col", "lastPostDate");
+
+		return _orderByCol;
+	}
+
+	public String getOrderByType() {
+		if (Validator.isNotNull(_orderByType)) {
+			return _orderByType;
+		}
+
+		_orderByType = SearchOrderByUtil.getOrderByType(
+			_httpServletRequest, WikiPortletKeys.WIKI_ADMIN,
+			"nodes-order-by-type", "desc");
+
+		return _orderByType;
+	}
+
+	public PortletURL getPortletURL() throws PortletException {
+		if (_portletURL != null) {
+			return _portletURL;
+		}
+
+		_portletURL = PortletURLBuilder.create(
+			PortletURLUtil.clone(
+				PortletURLUtil.getCurrent(
+					_liferayPortletRequest, _liferayPortletResponse),
+				_liferayPortletResponse)
+		).setMVCRenderCommandName(
+			"/wiki_admin/view"
+		).buildPortletURL();
+
+		return _portletURL;
+	}
+
+	public SearchContainer<WikiNode> getSearchContainer() throws Exception {
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
+		_searchContainer = new SearchContainer(
+			_renderRequest, getPortletURL(), null, "there-are-no-wikis");
+
+		_searchContainer.setOrderByCol(getOrderByCol());
+		_searchContainer.setOrderByComparator(
+			WikiPortletUtil.getNodeOrderByComparator(
+				getOrderByCol(), getOrderByType()));
+		_searchContainer.setOrderByType(getOrderByType());
+		_searchContainer.setResultsAndTotal(
+			() -> WikiNodeServiceUtil.getNodes(
+				_themeDisplay.getScopeGroupId(),
+				WorkflowConstants.STATUS_APPROVED, _searchContainer.getStart(),
+				_searchContainer.getEnd(),
+				_searchContainer.getOrderByComparator()),
+			WikiNodeServiceUtil.getNodesCount(_themeDisplay.getScopeGroupId()));
+		_searchContainer.setRowChecker(
+			new NodesChecker(_liferayPortletRequest, _liferayPortletResponse));
+
+		return _searchContainer;
+	}
+
+	public int getSearchContainerTotal() throws Exception {
+		SearchContainer<WikiNode> searchContainer = getSearchContainer();
+
+		return searchContainer.getTotal();
+	}
+
 	public String getSortingOrder() {
-		return _getOrderByType();
+		return getOrderByType();
 	}
 
 	public PortletURL getSortingURL() throws PortletException {
 		return PortletURLBuilder.create(
-			_getPortletURL()
+			getPortletURL()
 		).setParameter(
-			"orderByCol", _getOrderByCol()
+			"orderByCol", getOrderByCol()
 		).setParameter(
 			"orderByType",
-			Objects.equals(_getOrderByType(), "asc") ? "desc" : "asc"
+			Objects.equals(getOrderByType(), "asc") ? "desc" : "asc"
 		).buildPortletURL();
 	}
 
-	public int getTotalItems() {
-		return _searchContainer.getTotal();
+	public int getTotalItems() throws Exception {
+		SearchContainer<WikiNode> searchContainer = getSearchContainer();
+
+		return searchContainer.getTotal();
 	}
 
 	public ViewTypeItemList getViewTypes() throws PortletException {
-		return new ViewTypeItemList(_getPortletURL(), _displayStyle) {
+		return new ViewTypeItemList(getPortletURL(), getDisplayStyle()) {
 			{
 				addListViewTypeItem();
 				addTableViewTypeItem();
@@ -198,8 +290,10 @@ public class WikiNodesManagementToolbarDisplayContext {
 		};
 	}
 
-	public boolean isDisabled() {
-		return !_searchContainer.hasResults();
+	public boolean isDisabled() throws Exception {
+		SearchContainer<WikiNode> searchContainer = getSearchContainer();
+
+		return !searchContainer.hasResults();
 	}
 
 	public boolean isSelectable() {
@@ -208,10 +302,6 @@ public class WikiNodesManagementToolbarDisplayContext {
 
 	public boolean isShowSearch() {
 		return false;
-	}
-
-	private String _getOrderByCol() {
-		return _searchContainer.getOrderByCol();
 	}
 
 	private List<DropdownItem> _getOrderByDropdownItems() {
@@ -231,9 +321,9 @@ public class WikiNodesManagementToolbarDisplayContext {
 					add(
 						dropdownItem -> {
 							dropdownItem.setActive(
-								orderByCol.equals(_getOrderByCol()));
+								orderByCol.equals(getOrderByCol()));
 							dropdownItem.setHref(
-								_getPortletURL(), "orderByCol", orderByCol);
+								getPortletURL(), "orderByCol", orderByCol);
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest,
@@ -242,18 +332,6 @@ public class WikiNodesManagementToolbarDisplayContext {
 				}
 			}
 		};
-	}
-
-	private String _getOrderByType() {
-		return _searchContainer.getOrderByType();
-	}
-
-	private PortletURL _getPortletURL() throws PortletException {
-		return PortletURLBuilder.create(
-			PortletURLUtil.clone(_currentURLObj, _liferayPortletResponse)
-		).setMVCRenderCommandName(
-			"/wiki_admin/view"
-		).buildPortletURL();
 	}
 
 	private boolean _isTrashEnabled() {
@@ -266,12 +344,15 @@ public class WikiNodesManagementToolbarDisplayContext {
 		}
 	}
 
-	private final PortletURL _currentURLObj;
-	private final String _displayStyle;
+	private String _displayStyle;
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
-	private final SearchContainer<WikiNode> _searchContainer;
+	private String _orderByCol;
+	private String _orderByType;
+	private PortletURL _portletURL;
+	private final RenderRequest _renderRequest;
+	private SearchContainer<WikiNode> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;
 

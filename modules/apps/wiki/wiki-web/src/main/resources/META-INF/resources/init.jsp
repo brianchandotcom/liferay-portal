@@ -106,9 +106,7 @@ page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %><%@
 page import="com.liferay.wiki.service.WikiPageServiceUtil" %><%@
 page import="com.liferay.wiki.web.internal.display.context.WikiNodesManagementToolbarDisplayContext" %><%@
 page import="com.liferay.wiki.web.internal.display.context.WikiPagesManagementToolbarDisplayContext" %><%@
-page import="com.liferay.wiki.web.internal.search.NodesChecker" %><%@
-page import="com.liferay.wiki.web.internal.search.PagesChecker" %><%@
-page import="com.liferay.wiki.web.internal.util.WikiPortletUtil" %>
+page import="com.liferay.wiki.web.internal.search.PagesChecker" %>
 
 <%@ page import="java.text.DecimalFormatSymbols" %><%@
 page import="java.text.Format" %>

@@ -16,20 +16,37 @@ package com.liferay.wiki.web.internal.item.selector.view.display.context;
 
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.SearchResult;
+import com.liferay.portal.kernel.search.SearchResultUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.item.selector.criterion.WikiPageItemSelectorCriterion;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalService;
+import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.web.internal.item.selector.WikiPageItemSelectorReturnTypeResolver;
 import com.liferay.wiki.web.internal.item.selector.view.WikiPageItemSelectorView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -77,6 +94,84 @@ public class WikiPageItemSelectorViewDisplayContext {
 		).buildPortletURL();
 	}
 
+	public SearchContainer<WikiPage> getSearchContainer(
+			HttpServletRequest httpServletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			RenderRequest renderRequest)
+		throws Exception {
+
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String emptyResultsMessage = null;
+
+		if (isSearch()) {
+			String keywords = ParamUtil.getString(
+				httpServletRequest, "keywords");
+
+			emptyResultsMessage = LanguageUtil.format(
+				themeDisplay.getLocale(),
+				"no-pages-were-found-that-matched-the-keywords-x",
+				"<strong>" + HtmlUtil.escape(keywords) + "</strong>", false);
+		}
+		else {
+			emptyResultsMessage = "there-are-no-pages";
+		}
+
+		_searchContainer = new SearchContainer(
+			renderRequest,
+			getPortletURL(httpServletRequest, liferayPortletResponse), null,
+			emptyResultsMessage);
+
+		WikiNode node = getNode();
+
+		if (isSearch()) {
+			Indexer<WikiPage> indexer = IndexerRegistryUtil.getIndexer(
+				WikiPage.class);
+
+			SearchContext searchContext = SearchContextFactory.getInstance(
+				httpServletRequest);
+
+			searchContext.setEnd(_searchContainer.getEnd());
+			searchContext.setIncludeAttachments(false);
+			searchContext.setIncludeDiscussions(false);
+			searchContext.setNodeIds(new long[] {node.getNodeId()});
+			searchContext.setStart(_searchContainer.getStart());
+
+			Hits hits = indexer.search(searchContext);
+
+			List<WikiPage> results = new ArrayList<>();
+
+			for (SearchResult searchResult :
+					SearchResultUtil.getSearchResults(
+						hits, themeDisplay.getLocale())) {
+
+				WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(
+					searchResult.getClassPK());
+
+				results.add(wikiPage);
+			}
+
+			_searchContainer.setResultsAndTotal(
+				() -> results, hits.getLength());
+		}
+		else {
+			_searchContainer.setResultsAndTotal(
+				() -> WikiPageLocalServiceUtil.getPages(
+					node.getNodeId(), true, getStatus(),
+					_searchContainer.getStart(), _searchContainer.getEnd()),
+				WikiPageLocalServiceUtil.getPagesCount(
+					node.getNodeId(), true, getStatus()));
+		}
+
+		return _searchContainer;
+	}
+
 	public int getStatus() throws PortalException {
 		return _wikiPageItemSelectorCriterion.getStatus();
 	}
@@ -108,6 +203,7 @@ public class WikiPageItemSelectorViewDisplayContext {
 		_itemSelectorReturnTypeResolverHandler;
 	private final PortletURL _portletURL;
 	private final boolean _search;
+	private SearchContainer<WikiPage> _searchContainer;
 	private final WikiNodeLocalService _wikiNodeLocalService;
 	private final WikiPageItemSelectorCriterion _wikiPageItemSelectorCriterion;
 	private final WikiPageItemSelectorView _wikiPageItemSelectorView;

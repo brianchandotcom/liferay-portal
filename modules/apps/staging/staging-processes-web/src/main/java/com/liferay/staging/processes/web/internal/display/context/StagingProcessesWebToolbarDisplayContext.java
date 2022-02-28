@@ -23,6 +23,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItemList;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
@@ -203,7 +204,7 @@ public class StagingProcessesWebToolbarDisplayContext {
 
 		_orderByCol = SearchOrderByUtil.getOrderByCol(
 			_httpServletRequest, StagingProcessesPortletKeys.STAGING_PROCESSES,
-			null);
+			StringPool.BLANK);
 
 		return _orderByCol;
 	}

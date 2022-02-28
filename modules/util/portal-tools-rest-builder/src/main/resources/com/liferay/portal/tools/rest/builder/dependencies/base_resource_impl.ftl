@@ -32,8 +32,13 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+
+<#if configYAML.generateBatch>
+	import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+	import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+	import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
+</#if>
+
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -371,9 +376,7 @@ public abstract class Base${schemaName}ResourceImpl
 					}
 				</#if>
 
-				for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
-					${schemaVarName}UnsafeConsumer.accept(${schemaVarName});
-				}
+				contextBatchStrategy.apply(${schemaVarNames}, ${schemaVarName}UnsafeConsumer);
 			</#if>
 		}
 
@@ -553,6 +556,12 @@ public abstract class Base${schemaName}ResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	<#if generateBatch>
+		public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+			this.contextBatchStrategy = contextBatchStrategy;
+		}
+	</#if>
+
 	public void setContextCompany(com.liferay.portal.kernel.model.Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
@@ -655,6 +664,9 @@ public abstract class Base${schemaName}ResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	<#if generateBatch>
+		protected BatchStrategy contextBatchStrategy;
+	</#if>
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

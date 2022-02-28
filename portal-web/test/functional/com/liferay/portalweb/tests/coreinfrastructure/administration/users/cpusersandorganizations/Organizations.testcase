@@ -488,7 +488,7 @@ definition {
 	}
 
 	@description = "Resolved bug automation for LPS-140712. This test asserts that a success message displays when a user is added to an organization"
-	@priority = "4"
+	@priority = "3"
 	test AddUserDisplaysSuccessMessage {
 		task ("Given an organization") {
 			JSONOrganization.addOrganization(

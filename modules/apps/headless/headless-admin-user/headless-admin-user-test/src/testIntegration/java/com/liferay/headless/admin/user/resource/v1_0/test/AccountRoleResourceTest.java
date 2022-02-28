@@ -222,6 +222,20 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			expectedAccountRoles, (List<AccountRole>)page.getItems());
 		assertValid(page);
+
+		AccountRole accountRole =
+			testGetAccountAccountRolesByExternalReferenceCodePage_addAccountRole(
+				externalReferenceCode, randomAccountRole());
+
+		page =
+			accountRoleResource.
+				getAccountAccountRolesByExternalReferenceCodePage(
+					externalReferenceCode, null,
+					String.format("name eq '%s'", accountRole.getName()),
+					Pagination.of(1, 100), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(accountRole, page.fetchFirstItem());
 	}
 
 	@Override
@@ -324,6 +338,20 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 		assertEqualsIgnoringOrder(
 			expectedAccountRoles, (List<AccountRole>)page.getItems());
 		assertValid(page);
+
+		// Filter string
+
+		AccountRole accountRole3 =
+			testGetAccountAccountRolesPage_addAccountRole(
+				accountId, randomAccountRole());
+
+		page = accountRoleResource.getAccountAccountRolesPage(
+			accountId, null,
+			String.format("name eq '%s'", accountRole3.getName()),
+			Pagination.of(1, expectedAccountRoles.size()), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(accountRole3, page.fetchFirstItem());
 	}
 
 	@Override

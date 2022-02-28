@@ -290,12 +290,6 @@ export function CollectionGeneralPanel({item}) {
 
 	return (
 		<>
-			<CommonStyles
-				commonStylesValues={collectionConfig.styles}
-				item={item}
-				role={COMMON_STYLES_ROLES.general}
-			/>
-
 			<div className="mb-3">
 				<Collapse
 					label={Liferay.Language.get('collection-display-options')}
@@ -442,6 +436,12 @@ export function CollectionGeneralPanel({item}) {
 					/>
 				) : null}
 			</div>
+
+			<CommonStyles
+				commonStylesValues={collectionConfig.styles}
+				item={item}
+				role={COMMON_STYLES_ROLES.general}
+			/>
 		</>
 	);
 }

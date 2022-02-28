@@ -121,19 +121,7 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			String languageId, boolean visible)
 		throws PortalException {
 
-		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if ((!commerceOrder.isGuestOrder() &&
-			 !_commerceOrderPortletResourcePermission.contains(
-				 themeDisplay.getPermissionChecker(),
-				 commerceAccount.getCommerceAccountGroupId(),
-				 CommerceOrderActionKeys.
-					 MANAGE_COMMERCE_ORDER_PAYMENT_METHODS)) ||
-			(commerceOrder.getCommerceShippingMethodId() < 1)) {
-
+		if (commerceOrder.getCommerceShippingMethodId() < 1) {
 			return false;
 		}
 
@@ -148,6 +136,10 @@ public class DefaultCommerceCheckoutStepHttpHelper
 		CommerceContext commerceContext =
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		List<CommerceShippingOption> commerceShippingOptions =
 			commerceShippingEngine.getCommerceShippingOptions(
@@ -201,6 +193,21 @@ public class DefaultCommerceCheckoutStepHttpHelper
 	public boolean isActivePaymentMethodCommerceCheckoutStep(
 			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
 		throws PortalException {
+
+		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!commerceOrder.isGuestOrder() &&
+			!_commerceOrderPortletResourcePermission.contains(
+				themeDisplay.getPermissionChecker(),
+				commerceAccount.getCommerceAccountGroupId(),
+				CommerceOrderActionKeys.
+					MANAGE_COMMERCE_ORDER_PAYMENT_METHODS)) {
+
+			return false;
+		}
 
 		long commercePaymentMethodGroupRelsCount =
 			_commercePaymentEngine.getCommercePaymentMethodGroupRelsCount(

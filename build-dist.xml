@@ -2525,11 +2525,10 @@ plugins.includes=</echo>
 
 				<chmod
 					perm="777"
-					type="both"
 				>
 					<fileset
 						dir="dist/${tstamp.value}/liferay-portal-${lp.version}/elasticsearch-sidecar"
-						includes="**/*"
+						includes="**/controller"
 					/>
 				</chmod>
 

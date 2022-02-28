@@ -194,17 +194,9 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
 		throws PortalException {
 
-		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (!commerceOrder.isGuestOrder() &&
-			!_commerceOrderPortletResourcePermission.contains(
-				themeDisplay.getPermissionChecker(),
-				commerceAccount.getCommerceAccountGroupId(),
-				CommerceOrderActionKeys.
-					MANAGE_COMMERCE_ORDER_PAYMENT_METHODS)) {
+		if (!_hasCommerceOrderPermission(
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_METHODS,
+				commerceOrder, httpServletRequest)) {
 
 			return false;
 		}
@@ -307,23 +299,10 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			(CommerceOrder)httpServletRequest.getAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
-		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (!commerceOrder.isGuestOrder() &&
-			!_commerceOrderPortletResourcePermission.contains(
-				themeDisplay.getPermissionChecker(),
-				commerceAccount.getCommerceAccountGroupId(),
-				CommerceOrderActionKeys.
-					MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS)) {
-
-			return false;
-		}
-
-		if (!_commerceShippingHelper.isShippable(commerceOrder) ||
+		if (!_hasCommerceOrderPermission(
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS,
+				commerceOrder, httpServletRequest) ||
+			!_commerceShippingHelper.isShippable(commerceOrder) ||
 			_commerceShippingHelper.isFreeShipping(commerceOrder)) {
 
 			return false;
@@ -377,6 +356,27 @@ public class DefaultCommerceCheckoutStepHttpHelper
 		}
 
 		return false;
+	}
+
+	private boolean _hasCommerceOrderPermission(
+			String actionId, CommerceOrder commerceOrder,
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!commerceOrder.isGuestOrder() &&
+			!_commerceOrderPortletResourcePermission.contains(
+				themeDisplay.getPermissionChecker(),
+				commerceAccount.getCommerceAccountGroupId(), actionId)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private void _updateCommerceOrder(

@@ -90,27 +90,9 @@ public class PortletServletResponse extends HttpServletResponseWrapper {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public String encodeRedirectUrl(String url) {
-		return null;
-	}
-
 	@Override
 	public String encodeRedirectURL(String url) {
 		return null;
-	}
-
-	/**
-	 * @deprecated As of Wilberforce (7.0.x)
-	 */
-	@Deprecated
-	@Override
-	public String encodeUrl(String url) {
-		return _portletResponse.encodeURL(url);
 	}
 
 	@Override

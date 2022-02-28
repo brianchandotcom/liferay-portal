@@ -231,6 +231,14 @@ public class CommerceTermEntryLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceTermEntry> getCommerceTermEntries(
+		long companyId, String type) {
+
+		return commerceTermEntryPersistence.filterFindByC_A_LikeType(
+			companyId, true, type);
+	}
+
+	@Override
 	public List<String> getCTermEntryLocalizationLanguageIds(
 		long commerceTermEntryId) {
 

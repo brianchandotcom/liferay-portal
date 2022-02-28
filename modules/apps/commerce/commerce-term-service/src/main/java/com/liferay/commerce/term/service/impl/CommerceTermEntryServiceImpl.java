@@ -15,6 +15,7 @@
 package com.liferay.commerce.term.service.impl;
 
 import com.liferay.commerce.term.constants.CommerceTermEntryActionKeys;
+import com.liferay.commerce.term.constants.CommerceTermEntryConstants;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.base.CommerceTermEntryServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
@@ -23,8 +24,10 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -121,6 +124,19 @@ public class CommerceTermEntryServiceImpl
 	}
 
 	@Override
+	public List<CommerceTermEntry> getCommerceTermEntries(
+			long groupId, long companyId, String type)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			CommerceTermEntryActionKeys.VIEW_COMMERCE_TERM_ENTRY);
+
+		return commerceTermEntryLocalService.getCommerceTermEntries(
+			companyId, type);
+	}
+
+	@Override
 	public CommerceTermEntry getCommerceTermEntry(long commerceTermEntryId)
 		throws PortalException {
 
@@ -129,6 +145,20 @@ public class CommerceTermEntryServiceImpl
 
 		return commerceTermEntryLocalService.getCommerceTermEntry(
 			commerceTermEntryId);
+	}
+
+	@Override
+	public List<CommerceTermEntry> getPaymentCommerceTermEntries(
+			long groupId, long companyId, long commerceOrderTypeId,
+			long commercePaymentMethodGroupRelId)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			CommerceTermEntryActionKeys.VIEW_COMMERCE_TERM_ENTRY);
+
+		return commerceTermEntryLocalService.getPaymentCommerceTermEntries(
+			companyId, commerceOrderTypeId, commercePaymentMethodGroupRelId);
 	}
 
 	@Override
@@ -174,5 +204,11 @@ public class CommerceTermEntryServiceImpl
 				CommerceTermEntryServiceImpl.class,
 				"_commerceTermEntryModelResourcePermission",
 				CommerceTermEntry.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CommerceTermEntryServiceImpl.class,
+				"_portletResourcePermission",
+				CommerceTermEntryConstants.RESOURCE_NAME);
 
 }

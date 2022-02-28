@@ -225,6 +225,94 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 			emailAddress, organizationId, serviceContext);
 	}
 
+	@Override
+	public Organization addOrUpdateOrganization(
+			String externalReferenceCode, long parentOrganizationId,
+			String name, String type, long regionId, long countryId,
+			long statusId, String comments, boolean hasLogo, byte[] logoBytes,
+			boolean site, List<Address> addresses,
+			List<EmailAddress> emailAddresses, List<OrgLabor> orgLabors,
+			List<Phone> phones, List<Website> websites,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = getUser();
+
+		Organization organization =
+			organizationLocalService.fetchOrganizationByExternalReferenceCode(
+				user.getCompanyId(), externalReferenceCode);
+
+		if (organization == null) {
+			if (parentOrganizationId ==
+					OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
+
+				PortalPermissionUtil.check(
+					getPermissionChecker(), ActionKeys.ADD_ORGANIZATION);
+			}
+			else {
+				OrganizationPermissionUtil.check(
+					getPermissionChecker(), parentOrganizationId,
+					ActionKeys.ADD_ORGANIZATION);
+			}
+		}
+		else {
+			OrganizationPermissionUtil.check(
+				getPermissionChecker(), organization, ActionKeys.UPDATE);
+
+			if (organization.getParentOrganizationId() !=
+					parentOrganizationId) {
+
+				if (parentOrganizationId ==
+						OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID) {
+
+					PortalPermissionUtil.check(
+						getPermissionChecker(), ActionKeys.ADD_ORGANIZATION);
+				}
+				else {
+					OrganizationPermissionUtil.check(
+						getPermissionChecker(), parentOrganizationId,
+						ActionKeys.ADD_ORGANIZATION);
+				}
+			}
+		}
+
+		organization = organizationLocalService.addOrUpdateOrganization(
+			externalReferenceCode, user.getUserId(), parentOrganizationId, name,
+			type, regionId, countryId, statusId, comments, hasLogo, logoBytes,
+			site, serviceContext);
+
+		if (addresses != null) {
+			UsersAdminUtil.updateAddresses(
+				Organization.class.getName(), organization.getOrganizationId(),
+				addresses);
+		}
+
+		if (emailAddresses != null) {
+			UsersAdminUtil.updateEmailAddresses(
+				Organization.class.getName(), organization.getOrganizationId(),
+				emailAddresses);
+		}
+
+		if (orgLabors != null) {
+			UsersAdminUtil.updateOrgLabors(
+				organization.getOrganizationId(), orgLabors);
+		}
+
+		if (phones != null) {
+			UsersAdminUtil.updatePhones(
+				Organization.class.getName(), organization.getOrganizationId(),
+				phones);
+		}
+
+		if (websites != null) {
+			UsersAdminUtil.updateWebsites(
+				Organization.class.getName(), organization.getOrganizationId(),
+				websites);
+		}
+
+		return organization;
+	}
+
 	/**
 	 * Assigns the password policy to the organizations, removing any other
 	 * currently assigned password policies.
@@ -340,6 +428,21 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 
 		Organization organization = organizationLocalService.getOrganization(
 			organizationId);
+
+		OrganizationPermissionUtil.check(
+			getPermissionChecker(), organization, ActionKeys.VIEW);
+
+		return organization;
+	}
+
+	@Override
+	public Organization getOrganizationByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		Organization organization =
+			organizationLocalService.getOrganizationByExternalReferenceCode(
+				companyId, externalReferenceCode);
 
 		OrganizationPermissionUtil.check(
 			getPermissionChecker(), organization, ActionKeys.VIEW);

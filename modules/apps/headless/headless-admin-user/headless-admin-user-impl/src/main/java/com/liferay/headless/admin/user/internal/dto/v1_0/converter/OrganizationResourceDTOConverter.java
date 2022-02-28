@@ -124,6 +124,7 @@ public class OrganizationResourceDTOConverter
 					dtoConverterContext.getLocale());
 				dateCreated = organization.getCreateDate();
 				dateModified = organization.getModifiedDate();
+				externalReferenceCode = organization.getExternalReferenceCode();
 				id = String.valueOf(organization.getOrganizationId());
 				keywords = ListUtil.toArray(
 					_assetTagLocalService.getTags(

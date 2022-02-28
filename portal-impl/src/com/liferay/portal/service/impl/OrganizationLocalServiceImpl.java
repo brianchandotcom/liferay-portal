@@ -409,6 +409,44 @@ public class OrganizationLocalServiceImpl
 		return user;
 	}
 
+	@Override
+	public Organization addOrUpdateOrganization(
+			String externalReferenceCode, long userId,
+			long parentOrganizationId, String name, String type, long regionId,
+			long countryId, long statusId, String comments, boolean hasLogo,
+			byte[] logoBytes, boolean site, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
+
+		Organization organization = organizationPersistence.fetchByC_ERC(
+			user.getCompanyId(), externalReferenceCode);
+
+		if (organization == null) {
+			organization = addOrganization(
+				userId, parentOrganizationId, name, type, regionId, countryId,
+				statusId, comments, site, serviceContext);
+
+			organization.setExternalReferenceCode(externalReferenceCode);
+
+			PortalUtil.updateImageId(
+				organization, hasLogo, logoBytes, "logoId",
+				_userFileUploadsSettings.getImageMaxSize(),
+				_userFileUploadsSettings.getImageMaxHeight(),
+				_userFileUploadsSettings.getImageMaxWidth());
+
+			organization = organizationPersistence.update(organization);
+		}
+		else {
+			organization = updateOrganization(
+				user.getCompanyId(), organization.getOrganizationId(),
+				parentOrganizationId, name, type, regionId, countryId, statusId,
+				comments, hasLogo, logoBytes, site, serviceContext);
+		}
+
+		return organization;
+	}
+
 	/**
 	 * Assigns the password policy to the organizations, removing any other
 	 * currently assigned password policies.

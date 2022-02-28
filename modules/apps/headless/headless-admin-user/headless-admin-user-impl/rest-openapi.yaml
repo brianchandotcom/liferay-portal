@@ -269,6 +269,11 @@ components:
                     format: date-time
                     readOnly: true
                     type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The optional external key of this organization.
+                    type: string
                 id:
                     description:
                         The organization's ID.
@@ -2327,6 +2332,104 @@ paths:
                                 $ref: "#/components/schemas/Organization"
                     description:
                         "Organizations successfully created"
+            tags: ["Organization"]
+    "/organizations/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes an organization.
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Organization"]
+        get:
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Organization"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Organization"
+            tags: ["Organization"]
+        patch:
+            # @review
+            description:
+                Updates the organization with information sent in the request body. Only the provided fields are
+                updated.
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Organization"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Organization"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Organization"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Organization"
+                    # @review
+                    description:
+                        "Organization successfully updated"
+            tags: ["Organization"]
+        put:
+            # @review
+            description:
+                Replaces the organization with information sent in the request body. Any missing fields are deleted
+                unless they are required.
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Organization"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Organization"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Organization"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Organization"
+                    # @review
+                    description:
+                        "Organization successfully replaced"
             tags: ["Organization"]
     "/organizations/move-accounts/{sourceOrganizationId}/{targetOrganizationId}":
         patch:

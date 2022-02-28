@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>PUBLICATIONS_CHANGE_DROPDOWN</td>
-	<td>//li[contains(.,'${key_changeTitle}') and contains(.,'Edit in')]//button[contains(@class,'dropdown-toggle')]</td>
+	<td>//li[contains(.,'${key_changeTitle}') and contains(.,'${key_changeCategory}')]//button[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>

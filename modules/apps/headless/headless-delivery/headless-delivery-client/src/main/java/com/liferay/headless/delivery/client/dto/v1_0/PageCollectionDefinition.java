@@ -56,6 +56,48 @@ public class PageCollectionDefinition implements Cloneable, Serializable {
 
 	protected CollectionConfig collectionConfig;
 
+	public Boolean getDisplayAllItems() {
+		return displayAllItems;
+	}
+
+	public void setDisplayAllItems(Boolean displayAllItems) {
+		this.displayAllItems = displayAllItems;
+	}
+
+	public void setDisplayAllItems(
+		UnsafeSupplier<Boolean, Exception> displayAllItemsUnsafeSupplier) {
+
+		try {
+			displayAllItems = displayAllItemsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean displayAllItems;
+
+	public Boolean getDisplayAllPages() {
+		return displayAllPages;
+	}
+
+	public void setDisplayAllPages(Boolean displayAllPages) {
+		this.displayAllPages = displayAllPages;
+	}
+
+	public void setDisplayAllPages(
+		UnsafeSupplier<Boolean, Exception> displayAllPagesUnsafeSupplier) {
+
+		try {
+			displayAllPages = displayAllPagesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean displayAllPages;
+
 	public FragmentStyle getFragmentStyle() {
 		return fragmentStyle;
 	}
@@ -203,6 +245,27 @@ public class PageCollectionDefinition implements Cloneable, Serializable {
 	}
 
 	protected Integer numberOfItemsPerPage;
+
+	public Integer getNumberOfPages() {
+		return numberOfPages;
+	}
+
+	public void setNumberOfPages(Integer numberOfPages) {
+		this.numberOfPages = numberOfPages;
+	}
+
+	public void setNumberOfPages(
+		UnsafeSupplier<Integer, Exception> numberOfPagesUnsafeSupplier) {
+
+		try {
+			numberOfPages = numberOfPagesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer numberOfPages;
 
 	public PaginationType getPaginationType() {
 		return paginationType;

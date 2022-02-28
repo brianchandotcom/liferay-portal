@@ -70,6 +70,26 @@ public class PageCollectionDefinitionSerDes {
 				String.valueOf(pageCollectionDefinition.getCollectionConfig()));
 		}
 
+		if (pageCollectionDefinition.getDisplayAllItems() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"displayAllItems\": ");
+
+			sb.append(pageCollectionDefinition.getDisplayAllItems());
+		}
+
+		if (pageCollectionDefinition.getDisplayAllPages() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"displayAllPages\": ");
+
+			sb.append(pageCollectionDefinition.getDisplayAllPages());
+		}
+
 		if (pageCollectionDefinition.getFragmentStyle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -167,6 +187,16 @@ public class PageCollectionDefinitionSerDes {
 			sb.append(pageCollectionDefinition.getNumberOfItemsPerPage());
 		}
 
+		if (pageCollectionDefinition.getNumberOfPages() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"numberOfPages\": ");
+
+			sb.append(pageCollectionDefinition.getNumberOfPages());
+		}
+
 		if (pageCollectionDefinition.getPaginationType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -235,6 +265,24 @@ public class PageCollectionDefinitionSerDes {
 				String.valueOf(pageCollectionDefinition.getCollectionConfig()));
 		}
 
+		if (pageCollectionDefinition.getDisplayAllItems() == null) {
+			map.put("displayAllItems", null);
+		}
+		else {
+			map.put(
+				"displayAllItems",
+				String.valueOf(pageCollectionDefinition.getDisplayAllItems()));
+		}
+
+		if (pageCollectionDefinition.getDisplayAllPages() == null) {
+			map.put("displayAllPages", null);
+		}
+		else {
+			map.put(
+				"displayAllPages",
+				String.valueOf(pageCollectionDefinition.getDisplayAllPages()));
+		}
+
 		if (pageCollectionDefinition.getFragmentStyle() == null) {
 			map.put("fragmentStyle", null);
 		}
@@ -300,6 +348,15 @@ public class PageCollectionDefinitionSerDes {
 					pageCollectionDefinition.getNumberOfItemsPerPage()));
 		}
 
+		if (pageCollectionDefinition.getNumberOfPages() == null) {
+			map.put("numberOfPages", null);
+		}
+		else {
+			map.put(
+				"numberOfPages",
+				String.valueOf(pageCollectionDefinition.getNumberOfPages()));
+		}
+
 		if (pageCollectionDefinition.getPaginationType() == null) {
 			map.put("paginationType", null);
 		}
@@ -355,6 +412,18 @@ public class PageCollectionDefinitionSerDes {
 							(String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "displayAllItems")) {
+				if (jsonParserFieldValue != null) {
+					pageCollectionDefinition.setDisplayAllItems(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "displayAllPages")) {
+				if (jsonParserFieldValue != null) {
+					pageCollectionDefinition.setDisplayAllPages(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentStyle")) {
 				if (jsonParserFieldValue != null) {
 					pageCollectionDefinition.setFragmentStyle(
@@ -404,6 +473,12 @@ public class PageCollectionDefinitionSerDes {
 
 				if (jsonParserFieldValue != null) {
 					pageCollectionDefinition.setNumberOfItemsPerPage(
+						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "numberOfPages")) {
+				if (jsonParserFieldValue != null) {
+					pageCollectionDefinition.setNumberOfPages(
 						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}

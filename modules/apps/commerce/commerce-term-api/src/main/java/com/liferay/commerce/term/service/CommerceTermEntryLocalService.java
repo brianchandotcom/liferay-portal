@@ -270,6 +270,10 @@ public interface CommerceTermEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceTermEntry> getCommerceTermEntries(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceTermEntry> getCommerceTermEntries(
+		long companyId, String type);
+
 	/**
 	 * Returns the number of commerce term entries.
 	 *

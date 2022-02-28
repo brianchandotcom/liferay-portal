@@ -835,6 +835,17 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder resetTermsAndConditions(
+			long commerceOrderId, boolean resetDeliveryCommerceTerm,
+			boolean resetPaymentCommerceTermEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderLocalService.resetTermsAndConditions(
+			commerceOrderId, resetDeliveryCommerceTerm,
+			resetPaymentCommerceTermEntry);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<com.liferay.commerce.model.CommerceOrder> searchCommerceOrders(
 				com.liferay.portal.kernel.search.SearchContext searchContext)

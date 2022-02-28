@@ -231,6 +231,50 @@ public class CommerceTermEntryServiceHttp {
 		}
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.term.model.CommerceTermEntry>
+				getCommerceTermEntries(
+					HttpPrincipal httpPrincipal, long groupId, long companyId,
+					String type)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceTermEntryServiceUtil.class, "getCommerceTermEntries",
+				_getCommerceTermEntriesParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, companyId, type);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.term.model.CommerceTermEntry>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.commerce.term.model.CommerceTermEntry
 			getCommerceTermEntry(
 				HttpPrincipal httpPrincipal, long commerceTermEntryId)
@@ -239,7 +283,7 @@ public class CommerceTermEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceTermEntryServiceUtil.class, "getCommerceTermEntry",
-				_getCommerceTermEntryParameterTypes4);
+				_getCommerceTermEntryParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceTermEntryId);
@@ -272,6 +316,53 @@ public class CommerceTermEntryServiceHttp {
 		}
 	}
 
+	public static java.util.List
+		<com.liferay.commerce.term.model.CommerceTermEntry>
+				getPaymentCommerceTermEntries(
+					HttpPrincipal httpPrincipal, long groupId, long companyId,
+					long commerceOrderTypeId,
+					long commercePaymentMethodGroupRelId)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceTermEntryServiceUtil.class,
+				"getPaymentCommerceTermEntries",
+				_getPaymentCommerceTermEntriesParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, companyId, commerceOrderTypeId,
+				commercePaymentMethodGroupRelId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.commerce.term.model.CommerceTermEntry>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.commerce.term.model.CommerceTermEntry
 			updateCommerceTermEntry(
 				HttpPrincipal httpPrincipal, long commerceTermEntryId,
@@ -290,7 +381,7 @@ public class CommerceTermEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceTermEntryServiceUtil.class, "updateCommerceTermEntry",
-				_updateCommerceTermEntryParameterTypes5);
+				_updateCommerceTermEntryParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceTermEntryId, active, descriptionMap,
@@ -338,7 +429,7 @@ public class CommerceTermEntryServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				CommerceTermEntryServiceUtil.class,
 				"updateCommerceTermEntryExternalReferenceCode",
-				_updateCommerceTermEntryExternalReferenceCodeParameterTypes6);
+				_updateCommerceTermEntryExternalReferenceCodeParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, commerceTermEntryId);
@@ -390,9 +481,15 @@ public class CommerceTermEntryServiceHttp {
 		};
 	private static final Class<?>[] _fetchCommerceTermEntryParameterTypes3 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getCommerceTermEntryParameterTypes4 =
+	private static final Class<?>[] _getCommerceTermEntriesParameterTypes4 =
+		new Class[] {long.class, long.class, String.class};
+	private static final Class<?>[] _getCommerceTermEntryParameterTypes5 =
 		new Class[] {long.class};
-	private static final Class<?>[] _updateCommerceTermEntryParameterTypes5 =
+	private static final Class<?>[]
+		_getPaymentCommerceTermEntriesParameterTypes6 = new Class[] {
+			long.class, long.class, long.class, long.class
+		};
+	private static final Class<?>[] _updateCommerceTermEntryParameterTypes7 =
 		new Class[] {
 			long.class, boolean.class, java.util.Map.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
@@ -401,7 +498,7 @@ public class CommerceTermEntryServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_updateCommerceTermEntryExternalReferenceCodeParameterTypes6 =
+		_updateCommerceTermEntryExternalReferenceCodeParameterTypes8 =
 			new Class[] {String.class, long.class};
 
 }

@@ -17,6 +17,7 @@ package com.liferay.commerce.term.service;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -80,6 +81,13 @@ public class CommerceTermEntryServiceUtil {
 		return getService().fetchCommerceTermEntry(commerceTermEntryId);
 	}
 
+	public static List<CommerceTermEntry> getCommerceTermEntries(
+			long groupId, long companyId, String type)
+		throws PortalException {
+
+		return getService().getCommerceTermEntries(groupId, companyId, type);
+	}
+
 	public static CommerceTermEntry getCommerceTermEntry(
 			long commerceTermEntryId)
 		throws PortalException {
@@ -94,6 +102,16 @@ public class CommerceTermEntryServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static List<CommerceTermEntry> getPaymentCommerceTermEntries(
+			long groupId, long companyId, long commerceOrderTypeId,
+			long commercePaymentMethodGroupRelId)
+		throws PortalException {
+
+		return getService().getPaymentCommerceTermEntries(
+			groupId, companyId, commerceOrderTypeId,
+			commercePaymentMethodGroupRelId);
 	}
 
 	public static CommerceTermEntry updateCommerceTermEntry(

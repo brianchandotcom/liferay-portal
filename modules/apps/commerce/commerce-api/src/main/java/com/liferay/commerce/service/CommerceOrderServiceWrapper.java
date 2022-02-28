@@ -425,6 +425,17 @@ public class CommerceOrderServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder resetTermsAndConditions(
+			long commerceOrderId, boolean deliveryCommerceTermEntry,
+			boolean paymentCommerceTermEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderService.resetTermsAndConditions(
+			commerceOrderId, deliveryCommerceTermEntry,
+			paymentCommerceTermEntry);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder updateBillingAddress(
 			long commerceOrderId, long billingAddressId)
 		throws com.liferay.portal.kernel.exception.PortalException {

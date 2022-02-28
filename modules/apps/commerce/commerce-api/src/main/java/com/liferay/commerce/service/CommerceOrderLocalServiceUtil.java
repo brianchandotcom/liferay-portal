@@ -733,6 +733,16 @@ public class CommerceOrderLocalServiceUtil {
 		return getService().resetCommerceOrderShipping(commerceOrderId);
 	}
 
+	public static CommerceOrder resetTermsAndConditions(
+			long commerceOrderId, boolean resetDeliveryCommerceTerm,
+			boolean resetPaymentCommerceTermEntry)
+		throws PortalException {
+
+		return getService().resetTermsAndConditions(
+			commerceOrderId, resetDeliveryCommerceTerm,
+			resetPaymentCommerceTermEntry);
+	}
+
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CommerceOrder> searchCommerceOrders(
 				com.liferay.portal.kernel.search.SearchContext searchContext)

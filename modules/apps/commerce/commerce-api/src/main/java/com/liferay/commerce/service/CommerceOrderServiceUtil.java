@@ -369,6 +369,16 @@ public class CommerceOrderServiceUtil {
 			commerceOrderId, commerceContext);
 	}
 
+	public static CommerceOrder resetTermsAndConditions(
+			long commerceOrderId, boolean deliveryCommerceTermEntry,
+			boolean paymentCommerceTermEntry)
+		throws PortalException {
+
+		return getService().resetTermsAndConditions(
+			commerceOrderId, deliveryCommerceTermEntry,
+			paymentCommerceTermEntry);
+	}
+
 	public static CommerceOrder updateBillingAddress(
 			long commerceOrderId, long billingAddressId)
 		throws PortalException {

@@ -2580,6 +2580,50 @@ public class CommerceOrderServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceOrder
+			resetTermsAndConditions(
+				HttpPrincipal httpPrincipal, long commerceOrderId,
+				boolean deliveryCommerceTermEntry,
+				boolean paymentCommerceTermEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceOrderServiceUtil.class, "resetTermsAndConditions",
+				_resetTermsAndConditionsParameterTypes56);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceOrderId, deliveryCommerceTermEntry,
+				paymentCommerceTermEntry);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.model.CommerceOrder)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceOrder updateTransactionId(
 			HttpPrincipal httpPrincipal, long commerceOrderId,
 			String transactionId)
@@ -2588,7 +2632,7 @@ public class CommerceOrderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceOrderServiceUtil.class, "updateTransactionId",
-				_updateTransactionIdParameterTypes56);
+				_updateTransactionIdParameterTypes57);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceOrderId, transactionId);
@@ -2628,7 +2672,7 @@ public class CommerceOrderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceOrderServiceUtil.class, "updateUser",
-				_updateUserParameterTypes57);
+				_updateUserParameterTypes58);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceOrderId, userId);
@@ -2916,9 +2960,11 @@ public class CommerceOrderServiceHttp {
 		};
 	private static final Class<?>[] _updateTermsAndConditionsParameterTypes55 =
 		new Class[] {long.class, long.class, long.class, String.class};
-	private static final Class<?>[] _updateTransactionIdParameterTypes56 =
+	private static final Class<?>[] _resetTermsAndConditionsParameterTypes56 =
+		new Class[] {long.class, boolean.class, boolean.class};
+	private static final Class<?>[] _updateTransactionIdParameterTypes57 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _updateUserParameterTypes57 = new Class[] {
+	private static final Class<?>[] _updateUserParameterTypes58 = new Class[] {
 		long.class, long.class
 	};
 

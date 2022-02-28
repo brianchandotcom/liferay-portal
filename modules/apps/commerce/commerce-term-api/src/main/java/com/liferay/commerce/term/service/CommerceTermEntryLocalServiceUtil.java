@@ -303,6 +303,12 @@ public class CommerceTermEntryLocalServiceUtil {
 		return getService().getCommerceTermEntries(start, end);
 	}
 
+	public static List<CommerceTermEntry> getCommerceTermEntries(
+		long companyId, String type) {
+
+		return getService().getCommerceTermEntries(companyId, type);
+	}
+
 	/**
 	 * Returns the number of commerce term entries.
 	 *

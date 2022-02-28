@@ -89,6 +89,15 @@ public class CommerceTermEntryServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.commerce.term.model.CommerceTermEntry>
+			getCommerceTermEntries(long groupId, long companyId, String type)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTermEntryService.getCommerceTermEntries(
+			groupId, companyId, type);
+	}
+
+	@Override
 	public com.liferay.commerce.term.model.CommerceTermEntry
 			getCommerceTermEntry(long commerceTermEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -105,6 +114,18 @@ public class CommerceTermEntryServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _commerceTermEntryService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.term.model.CommerceTermEntry>
+			getPaymentCommerceTermEntries(
+				long groupId, long companyId, long commerceOrderTypeId,
+				long commercePaymentMethodGroupRelId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceTermEntryService.getPaymentCommerceTermEntries(
+			groupId, companyId, commerceOrderTypeId,
+			commercePaymentMethodGroupRelId);
 	}
 
 	@Override

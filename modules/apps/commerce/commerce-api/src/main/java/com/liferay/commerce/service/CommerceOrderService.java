@@ -263,6 +263,11 @@ public interface CommerceOrderService extends BaseService {
 			long commerceOrderId, CommerceContext commerceContext)
 		throws PortalException;
 
+	public CommerceOrder resetTermsAndConditions(
+			long commerceOrderId, boolean deliveryCommerceTermEntry,
+			boolean paymentCommerceTermEntry)
+		throws PortalException;
+
 	public CommerceOrder updateBillingAddress(
 			long commerceOrderId, long billingAddressId)
 		throws PortalException;

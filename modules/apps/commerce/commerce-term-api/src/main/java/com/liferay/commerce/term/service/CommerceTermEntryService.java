@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -78,6 +79,11 @@ public interface CommerceTermEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceTermEntry> getCommerceTermEntries(
+			long groupId, long companyId, String type)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTermEntry getCommerceTermEntry(long commerceTermEntryId)
 		throws PortalException;
 
@@ -87,6 +93,12 @@ public interface CommerceTermEntryService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceTermEntry> getPaymentCommerceTermEntries(
+			long groupId, long companyId, long commerceOrderTypeId,
+			long commercePaymentMethodGroupRelId)
+		throws PortalException;
 
 	public CommerceTermEntry updateCommerceTermEntry(
 			long commerceTermEntryId, boolean active,

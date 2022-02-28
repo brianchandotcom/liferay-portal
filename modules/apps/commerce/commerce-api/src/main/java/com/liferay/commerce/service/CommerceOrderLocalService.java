@@ -557,6 +557,11 @@ public interface CommerceOrderLocalService
 	public CommerceOrder resetCommerceOrderShipping(long commerceOrderId)
 		throws PortalException;
 
+	public CommerceOrder resetTermsAndConditions(
+			long commerceOrderId, boolean resetDeliveryCommerceTerm,
+			boolean resetPaymentCommerceTermEntry)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CommerceOrder> searchCommerceOrders(
 			SearchContext searchContext)

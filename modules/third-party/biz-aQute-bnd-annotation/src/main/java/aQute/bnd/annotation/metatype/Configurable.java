@@ -322,7 +322,9 @@ public class Configurable<T> {
 
 			if (o instanceof String) {
 				String s = (String) o;
-				if (SPLITTER_P.matcher(s)
+				if (s.isEmpty())
+					return new ArrayList<>();
+				else if (SPLITTER_P.matcher(s)
 					.find())
 					return Arrays.asList(s.split("\\|"));
 				else
@@ -400,3 +402,5 @@ public class Configurable<T> {
 	}
 
 }
+
+/* @generated */

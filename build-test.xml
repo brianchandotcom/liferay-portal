@@ -5556,8 +5556,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<sequential>
 			<delete failonerror="false" file="${liferay.home}/deploy/license.xml" verbose="true" />
 
-			<var name="expiration.leeway" value="2" />
-
 			<if>
 				<equals arg1="@{dxp.license.file}" arg2="dxp-license-virtual-cluster.xml" />
 				<then>

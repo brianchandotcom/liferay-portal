@@ -47,7 +47,7 @@ ModifiedFacetPortletInstanceConfiguration modifiedFacetPortletInstanceConfigurat
 %>
 
 <c:if test="<%= !modifiedFacetDisplayContext.isRenderNothing() %>">
-	<aui:form method="get" name="fm">
+	<aui:form action="#" method="get" name="fm">
 		<aui:input autocomplete="off" name="inputFacetName" type="hidden" value="modified" />
 		<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= HtmlUtil.escapeAttribute(modifiedFacetDisplayContext.getParameterName()) %>" />
 		<aui:input name="start-parameter-name" type="hidden" value="<%= modifiedFacetDisplayContext.getPaginationStartParameterName() %>" />

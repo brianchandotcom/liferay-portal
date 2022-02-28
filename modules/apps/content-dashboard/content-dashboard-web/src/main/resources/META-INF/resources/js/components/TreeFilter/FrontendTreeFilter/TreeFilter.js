@@ -194,7 +194,7 @@ const TreeFilter = ({
 					fluid
 				>
 					<div className="container p-0">
-						<p className="m-0">
+						<p className="m-0 text-2">
 							{selectedItemsCount + ' '}
 
 							{selectedItemsCount > 1

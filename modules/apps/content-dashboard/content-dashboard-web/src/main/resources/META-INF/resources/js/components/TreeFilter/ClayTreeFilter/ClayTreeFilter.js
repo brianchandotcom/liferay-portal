@@ -51,7 +51,7 @@ const TreeFilter = ({
 	const [expandedKeys, setExpandedKeys] = useState(new Set(expanded));
 
 	const selectedNodesRef = useRef(null);
-	const refItemsCount = selectedNodesRef.current?.length || 0;
+	const selectedNodesRefCount = selectedNodesRef.current?.length || 0;
 
 	const searchInputElementRef = useRef(null);
 
@@ -127,7 +127,7 @@ const TreeFilter = ({
 			setSelectedKeys(selectedNodes);
 		},
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[refItemsCount]
+		[selectedNodesRefCount]
 	);
 
 	const debouncedSetFilterQuery = debounce((event) => {

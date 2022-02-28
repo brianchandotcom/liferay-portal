@@ -29,6 +29,7 @@ import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.service.CommerceShipmentService;
+import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -78,7 +79,7 @@ public class SelectCommerceOrderBillingAddressMVCRenderCommand
 					_commerceOrderTypeService,
 					_commercePaymentMethodGroupRelLocalService,
 					_commerceShipmentService, _cpMeasurementUnitService,
-					renderRequest);
+					_commerceTermEntryService, renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -142,6 +143,9 @@ public class SelectCommerceOrderBillingAddressMVCRenderCommand
 
 	@Reference
 	private CommerceShipmentService _commerceShipmentService;
+
+	@Reference
+	private CommerceTermEntryService _commerceTermEntryService;
 
 	@Reference
 	private CPMeasurementUnitService _cpMeasurementUnitService;

@@ -44,6 +44,9 @@ import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.service.CommerceShipmentService;
+import com.liferay.commerce.term.constants.CommerceTermEntryConstants;
+import com.liferay.commerce.term.model.CommerceTermEntry;
+import com.liferay.commerce.term.service.CommerceTermEntryService;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -104,6 +107,7 @@ public class CommerceOrderEditDisplayContext {
 				commercePaymentMethodGroupRelLocalService,
 			CommerceShipmentService commerceShipmentService,
 			CPMeasurementUnitService cpMeasurementUnitService,
+			CommerceTermEntryService commerceTermEntryService,
 			RenderRequest renderRequest)
 		throws PortalException {
 
@@ -146,6 +150,8 @@ public class CommerceOrderEditDisplayContext {
 			FastDateFormatFactoryUtil.getDateTime(
 				DateFormat.SHORT, DateFormat.SHORT, themeDisplay.getLocale(),
 				themeDisplay.getTimeZone());
+
+		_commerceTermEntryService = commerceTermEntryService;
 	}
 
 	public String getCommerceAccountThumbnailURL() throws PortalException {
@@ -470,6 +476,14 @@ public class CommerceOrderEditDisplayContext {
 			_commerceOrderItemDecimalQuantityConfiguration.roundingMode());
 	}
 
+	public List<CommerceTermEntry> getDeliveryTermsEntries()
+		throws PortalException {
+
+		return _commerceTermEntryService.getCommerceTermEntries(
+			_commerceOrder.getGroupId(), _commerceOrder.getCompanyId(),
+			CommerceTermEntryConstants.TYPE_DELIVERY_TERMS);
+	}
+
 	public String getDescriptiveAddress(CommerceAddress commerceAddress) {
 		StringBundler sb = new StringBundler(5);
 
@@ -684,6 +698,14 @@ public class CommerceOrderEditDisplayContext {
 		return steps;
 	}
 
+	public List<CommerceTermEntry> getPaymentTermsEntries()
+		throws PortalException {
+
+		return _commerceTermEntryService.getCommerceTermEntries(
+			_commerceOrder.getGroupId(), _commerceOrder.getCompanyId(),
+			CommerceTermEntryConstants.TYPE_PAYMENT_TERMS);
+	}
+
 	public PortletURL getTransitionOrderPortletURL() {
 		return PortletURLBuilder.createActionURL(
 			_commerceOrderRequestHelper.getLiferayPortletResponse()
@@ -767,6 +789,7 @@ public class CommerceOrderEditDisplayContext {
 		_commercePaymentMethodGroupRelLocalService;
 	private CommerceShipment _commerceShipment;
 	private final CommerceShipmentService _commerceShipmentService;
+	private final CommerceTermEntryService _commerceTermEntryService;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
 
 }

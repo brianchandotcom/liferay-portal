@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AddGroupDisplayContext addGroupDisplayContext = new AddGroupDisplayContext(request, renderResponse);
+AddGroupDisplayContext addGroupDisplayContext = (AddGroupDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <clay:container-fluid>

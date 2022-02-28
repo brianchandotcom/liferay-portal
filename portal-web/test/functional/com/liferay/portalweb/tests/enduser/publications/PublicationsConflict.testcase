@@ -276,6 +276,64 @@ definition {
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 	}
 
+	@description = "Assert explanation of duplicate conflict displays"
+	@priority = "4"
+	test ExplainDuplicationConflict {
+		JSONPublications.addPublication(publicationName = "Publication 1 Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication 1 Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		JSONWebcontent.addFolder(
+			folderName = "WC Folder Name",
+			groupName = "Guest");
+
+		JSONPublications.addPublication(publicationName = "Publication 2 Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication 2 Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		JSONWebcontent.addFolder(
+			folderName = "WC Folder Name",
+			groupName = "Guest");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication 1 Name");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Web Content Folder",
+			changeSite = "Guest",
+			changeTitle = "WC Folder Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		JSONPublications.publishPublication(publicationName = "Publication 1 Name");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication 2 Name");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Web Content Folder",
+			changeSite = "Guest",
+			changeTitle = "WC Folder Name",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsNavigator.gotoPublish(publicationName = "Publication 2 Name");
+
+		AssertElementPresent(
+			key_warningMessage = "This publication contains conflicting changes that must be manually resolved before publishing.",
+			locator1 = "Message#WARNING_SPECIFIC");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "WC Folder Name",
+			warningMessage = "Duplicate Folder Name: Rename the folder in the publication.");
+	}
+
 	@description = "Assert the conflict changes disply when modifying and deleting the same document in two Publications and discard the changes"
 	@priority = "5"
 	test ResolveDeletionModificationConflictPublicationsByDiscarding {

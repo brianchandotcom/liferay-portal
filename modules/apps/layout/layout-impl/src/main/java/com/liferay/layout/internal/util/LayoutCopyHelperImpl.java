@@ -406,11 +406,11 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 			layoutStructure.toString(), targetLayout, fragmentEntryLinksMap,
 			SegmentsExperienceConstants.ID_DEFAULT);
 
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			targetLayout.getUserId(), targetLayout.getGroupId(),
-			targetLayout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT,
-			dataJSONObject.toString(),
-			ServiceContextThreadLocal.getServiceContext());
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				targetLayout.getGroupId(), targetLayout.getPlid(),
+				SegmentsExperienceConstants.ID_DEFAULT,
+				dataJSONObject.toString());
 	}
 
 	private void _copyLayoutSEOEntry(Layout sourceLayout, Layout targetLayout)

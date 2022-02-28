@@ -105,11 +105,13 @@
 		<field name="deliveryCommerceTermEntryId" type="long" />
 		<field name="deliveryCommerceTermEntryDescription" type="String">
 			<hint-collection name="CLOB" />
+			<sanitize content-type="text/plain" modes="ALL" />
 		</field>
 		<field name="deliveryCommerceTermEntryName" type="String" />
 		<field name="paymentCommerceTermEntryId" type="long" />
 		<field name="paymentCommerceTermEntryDescription" type="String">
 			<hint-collection name="CLOB" />
+			<sanitize content-type="text/plain" modes="ALL" />
 		</field>
 		<field name="paymentCommerceTermEntryName" type="String" />
 		<field name="subtotal" type="BigDecimal" />

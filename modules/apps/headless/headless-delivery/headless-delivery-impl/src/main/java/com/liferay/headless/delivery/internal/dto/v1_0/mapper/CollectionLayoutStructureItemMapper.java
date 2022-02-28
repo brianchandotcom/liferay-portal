@@ -57,6 +57,12 @@ public class CollectionLayoutStructureItemMapper
 					{
 						collectionConfig = _getCollectionConfig(
 							collectionStyledLayoutStructureItem);
+						displayAllItems =
+							collectionStyledLayoutStructureItem.
+								isDisplayAllItems();
+						displayAllPages =
+							collectionStyledLayoutStructureItem.
+								isDisplayAllPages();
 						listItemStyle =
 							collectionStyledLayoutStructureItem.
 								getListItemStyle();
@@ -71,6 +77,9 @@ public class CollectionLayoutStructureItemMapper
 						numberOfItemsPerPage =
 							collectionStyledLayoutStructureItem.
 								getNumberOfItemsPerPage();
+						numberOfPages =
+							collectionStyledLayoutStructureItem.
+								getNumberOfPages();
 						paginationType = _getPaginationType(
 							collectionStyledLayoutStructureItem.
 								getPaginationType());

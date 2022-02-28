@@ -79,6 +79,10 @@ public class CollectionLayoutStructureItemImporter
 					_getCollectionConfigAsJSONObject(collectionConfig));
 			}
 
+			collectionStyledLayoutStructureItem.setDisplayAllItems(
+				(Boolean)definitionMap.get("displayAllItems"));
+			collectionStyledLayoutStructureItem.setDisplayAllPages(
+				(Boolean)definitionMap.get("displayAllPages"));
 			collectionStyledLayoutStructureItem.setListItemStyle(
 				(String)definitionMap.get("listItemStyle"));
 			collectionStyledLayoutStructureItem.setListStyle(
@@ -94,6 +98,13 @@ public class CollectionLayoutStructureItemImporter
 			if (numberOfItemsPerPage != null) {
 				collectionStyledLayoutStructureItem.setNumberOfItemsPerPage(
 					numberOfItemsPerPage);
+			}
+
+			Integer numberOfPages = (Integer)definitionMap.get("numberOfPages");
+
+			if (numberOfPages != null) {
+				collectionStyledLayoutStructureItem.setNumberOfPages(
+					numberOfPages);
 			}
 
 			collectionStyledLayoutStructureItem.setPaginationType(

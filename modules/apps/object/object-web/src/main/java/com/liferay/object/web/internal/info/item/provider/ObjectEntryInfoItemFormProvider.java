@@ -17,6 +17,8 @@ package com.liferay.object.web.internal.info.item.provider;
 import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
+import com.liferay.info.field.type.BooleanInfoFieldType;
+import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
@@ -144,6 +146,14 @@ public class ObjectEntryInfoItemFormProvider
 	private InfoFieldType _getInfoFieldType(ObjectField objectField) {
 		if (Objects.equals(objectField.getDBType(), "Blob")) {
 			return ImageInfoFieldType.INSTANCE;
+		}
+
+		if (Objects.equals(objectField.getDBType(), "Boolean")) {
+			return BooleanInfoFieldType.INSTANCE;
+		}
+
+		if (Objects.equals(objectField.getDBType(), "Date")) {
+			return DateInfoFieldType.INSTANCE;
 		}
 
 		return TextInfoFieldType.INSTANCE;

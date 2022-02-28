@@ -1,5 +1,9 @@
+[#assign
+	htmlElement = configuration.submitButton?then('button', 'a')
+/]
+
 <div class="component-button text-break">
-	<a class="btn btn-${configuration.buttonSize} btn-${configuration.buttonType}" data-lfr-editable-id="link" data-lfr-editable-type="link" href="" id="fragment-${fragmentEntryLinkNamespace}-link">
+	<${htmlElement} class="btn btn-${configuration.buttonSize} btn-${configuration.buttonType}" data-lfr-editable-id="link" data-lfr-editable-type="link" href="" id="fragment-${fragmentEntryLinkNamespace}-link" [#if configuration.submitButton]type="submit"[/#if]>
 		Go Somewhere
-	</a>
+	</${htmlElement}>
 </div>

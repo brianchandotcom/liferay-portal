@@ -1,0 +1,40 @@
+<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.GetterUtil" %>
+<%@ page import="com.liferay.portal.kernel.security.RandomUtil" %>
+<%@ page import="com.liferay.portal.kernel.uuid.PortalUUIDUtil" %><%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%@ include file="/init.jsp" %>
+
+<%
+String name = (String) request.getAttribute("name");
+String label = (String) request.getAttribute("label");
+String placeholder = GetterUtil.getString(request.getAttribute("placeholder"));
+
+String id = PortalUUIDUtil.generate();
+%>
+
+<div>
+	<span
+		aria-hidden="true"
+		class="loading-animation"
+	></span>
+
+	<react:component
+		props="<%= HashMapBuilder.<String, Object>put("name", name).put("label", label).put("placeholder", placeholder).build() %>"
+		module="js/DatePicker"
+	/>
+</div>

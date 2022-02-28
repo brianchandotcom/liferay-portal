@@ -16,6 +16,13 @@ import {config} from '../config/index';
 import serviceFetch from './serviceFetch';
 
 export default {
+	getAvailableInfoItemFormProviders() {
+		return serviceFetch(
+			config.getAvailableInfoItemFormProviders,
+			{},
+			() => {}
+		);
+	},
 
 	/**
 	 * Get available list item renderers for the list style

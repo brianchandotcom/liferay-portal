@@ -51,6 +51,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFa
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
@@ -291,12 +292,17 @@ public class InfoItemServiceTrackerImpl implements InfoItemServiceTracker {
 					ServiceReferenceMapperFactory.create(
 						bundleContext,
 						(service, emitter) -> {
-							String key = serviceClass.getName();
+							String key;
 
 							if (service instanceof Keyed) {
 								Keyed keyedService = (Keyed)service;
 
 								key = keyedService.getKey();
+							}
+							else {
+								Class<?> clazz =
+									serviceClass.getClass();
+								key = clazz.getName();
 							}
 
 							emitter.emit(key);

@@ -50,6 +50,12 @@
 							}
 						]
 					}
+				},
+				{
+					"dataType": "bool",
+					"label": "submit-button",
+					"name": "submitButton",
+					"type": "checkbox"
 				}
 			],
 			"label": "button-options"

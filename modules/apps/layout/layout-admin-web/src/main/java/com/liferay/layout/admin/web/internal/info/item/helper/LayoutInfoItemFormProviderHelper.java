@@ -42,6 +42,8 @@ public class LayoutInfoItemFormProviderHelper {
 		return InfoForm.builder(
 		).infoFieldSetEntry(
 			_getBasicInformationInfoFieldSet()
+		).name(
+			Layout.class.getName()
 		).build();
 	}
 

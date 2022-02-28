@@ -1,0 +1,48 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"label": "action-url",
+					"name": "actionURL",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"name": "classNameId",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"label": "classTypeId",
+					"name": "classTypeId",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "post",
+					"label": "method",
+					"name": "method",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "post"
+							},
+							{
+								"value": "get"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "bool",
+					"label": "include-files",
+					"name": "includeFiles",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

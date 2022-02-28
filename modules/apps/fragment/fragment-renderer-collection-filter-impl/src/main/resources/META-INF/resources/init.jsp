@@ -31,6 +31,8 @@ page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 
+<%@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
+
 <%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
 

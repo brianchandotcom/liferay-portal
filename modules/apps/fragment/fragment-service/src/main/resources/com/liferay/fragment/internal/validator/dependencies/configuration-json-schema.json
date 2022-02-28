@@ -95,6 +95,7 @@
 				"dataType": {
 					"enum": [
 						"array",
+						"bool",
 						"double",
 						"int",
 						"object",

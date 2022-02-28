@@ -1,0 +1,6 @@
+<form method="${configuration.method}" [#if configuration.actionURL?has_content]action="${configuration.actionURL}"[/#if]  [#if configuration.includeFiles]enctype="multipart/form-data"[/#if]>
+	<input type="hidden" name="_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet_classNameId" value="${configuration.classNameId}">
+	<input type="hidden" name="_com_liferay_layout_content_page_editor_web_internal_portlet_ContentPageEditorPortlet_classTypeId" value="${configuration.classTypeId}">
+
+	<lfr-drop-zone></lfr-drop-zone>
+</form>

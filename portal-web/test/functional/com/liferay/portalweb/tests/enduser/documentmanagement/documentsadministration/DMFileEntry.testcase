@@ -1455,7 +1455,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		DMDocument.updateCheckInterval(fieldValue = "2");
+		DMDocument.updateCheckInterval(fieldValue = "1");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1687,7 +1687,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CanRepublishDocumentAfterDisablingExpirationDate";
 
-		DMDocument.updateCheckInterval(fieldValue = "2");
+		DMDocument.updateCheckInterval(fieldValue = "1");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1856,7 +1856,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CanReviewDocumentWhenDateIsChanged";
 
-		DMDocument.updateCheckInterval(fieldValue = "2");
+		DMDocument.updateCheckInterval(fieldValue = "1");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1913,7 +1913,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CanReviewDocumentWhenDateIsDisabled";
 
-		DMDocument.updateCheckInterval(fieldValue = "2");
+		DMDocument.updateCheckInterval(fieldValue = "1");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -2181,7 +2181,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CanViewExpiredDocument";
 
-		DMDocument.updateCheckInterval(fieldValue = "2");
+		DMDocument.updateCheckInterval(fieldValue = "1");
 
 		DMNavigator.openToAddEntry(
 			groupName = "Guest",

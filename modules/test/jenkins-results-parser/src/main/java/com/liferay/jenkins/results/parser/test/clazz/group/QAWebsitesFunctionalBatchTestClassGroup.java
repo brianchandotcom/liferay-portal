@@ -102,6 +102,8 @@ public class QAWebsitesFunctionalBatchTestClassGroup
 
 			Properties properties = JenkinsResultsParserUtil.getProperties(
 				new File(testBaseDir.getParentFile(), "test.properties"),
+				new File(testBaseDir, "poshi-ext.properties"),
+				new File(testBaseDir, "poshi.properties"),
 				new File(testBaseDir, "test.properties"));
 
 			if (!JenkinsResultsParserUtil.isNullOrEmpty(testBaseDirPath)) {

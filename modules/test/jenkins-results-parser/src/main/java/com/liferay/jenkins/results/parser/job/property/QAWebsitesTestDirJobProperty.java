@@ -18,7 +18,7 @@ import com.liferay.jenkins.results.parser.Job;
 
 import java.io.File;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,7 +38,9 @@ public class QAWebsitesTestDirJobProperty extends BaseTestDirJobProperty {
 
 	@Override
 	protected List<File> getJobPropertiesFiles() {
-		return Collections.singletonList(
+		return Arrays.asList(
+			new File(getTestBaseDir(), "poshi-ext.properties"),
+			new File(getTestBaseDir(), "poshi.properties"),
 			new File(getTestBaseDir(), "test.properties"));
 	}
 

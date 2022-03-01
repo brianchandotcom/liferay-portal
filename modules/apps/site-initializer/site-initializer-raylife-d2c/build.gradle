@@ -28,6 +28,9 @@ dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
 
 String dateString = dateFormat.format(new Date())
 
+File extraRemoteAppDir = new File(projectDir, "extra/remote-app/")
+File fragmentsSrcDir = new File(projectDir, "src/main/resources/site-initializer/fragments/")
+
 artifacts {
 	extraRemoteApp zipExtraRemoteApp
 }
@@ -42,8 +45,9 @@ forceDeploy {
 
 node {
 	global = false
-	nodeVersion = "14.17.6"
+	nodeVersion = "16.0.0"
 	useNpm = false
+	yarnVersion = "1.22.5"
 }
 
 processResources {
@@ -58,13 +62,41 @@ processResources {
 			from(new File(projectDir, "extra/remote-app/build/static/js")) {
 				include "*.js"
 			}
+
+			rename(/([0-9a-zA-Z-]+).*\.(css|js)$/, '$1.$2')
 		}
 
-		rename(/([0-9a-zA-Z-]+).*\.(css|js)$/, '$1.$2')
+		File packageJSONFile = new File(fragmentsSrcDir, "package.json")
+
+		if (packageJSONFile.exists()) {
+			exclude "site-initializer/fragments/**"
+
+			doLast {
+				copy {
+					from new File(fragmentsSrcDir, "build/liferay-fragments/src")
+					into new File(projectDir, "classes/site-initializer/fragments/src")
+				}
+			}
+		}
 	}
 	else {
-		into("site-initializer/documents/company/remote-app") {
+		into("site-initializer/documents/company") {
 			from zipTree(configurations.extraRemoteApp.singleFile)
+			include "remote-app/**"
+		}
+
+		File packageJSONFile = new File(fragmentsSrcDir, "package.json")
+
+		if (packageJSONFile.exists()) {
+			exclude "site-initializer/fragments/**"
+
+			doLast {
+				copy {
+					from zipTree(configurations.extraRemoteApp.singleFile)
+					include "fragments/**"
+					into new File(projectDir, "classes/site-initializer")
+				}
+			}
 		}
 	}
 }
@@ -108,60 +140,112 @@ zipExtraRemoteApp {
 		archiveName "extra-remote-app.zip"
 		destinationDir new File(buildDir, "dist")
 
-		from(new File(projectDir, "extra/remote-app/build/static/css")) {
-			include "*.css"
+		into("remote-app/") {
+			from(new File(projectDir, "extra/remote-app/build/static/css")) {
+				include "*.css"
+			}
+
+			from(new File(projectDir, "extra/remote-app/build/static/js")) {
+				include "*.js"
+			}
+
+			rename(/([0-9a-zA-Z-]+).*\.(css|js)$/, '$1.$2')
 		}
 
-		from(new File(projectDir, "extra/remote-app/build/static/js")) {
-			include "*.js"
-		}
+		File packageJSONFile = new File(fragmentsSrcDir, "package.json")
 
-		rename(/([0-9a-zA-Z-]+).*\.(css|js)$/, '$1.$2')
+		if (packageJSONFile.exists()) {
+			into("fragments/src") {
+				from(new File(fragmentsSrcDir, "build/liferay-fragments/src"))
+			}
+		}
 	}
 }
 
-_createExtraRemoteAppTasks()
+_createExtraTasks([extraRemoteAppDir, fragmentsSrcDir])
 
-private void _createExtraRemoteAppTasks() {
-	File dir = new File(projectDir, "extra/remote-app")
+private String _camelCase(String dirName) {
+	String suffix = dirName.replaceAll(/\-(\w)/) {
+		String s = it[1]
 
-	Task yarnInstallExtraRemoteAppTask = tasks.create(name: "yarnInstallExtraRemoteApp", type: Exec) {
-		if (OSDetector.windows) {
-			executable "cmd.exe"
-
-			args "/c"
-			args new File(node.nodeDir, "node.exe")
-			args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
-		}
-		else {
-			executable new File(node.nodeDir, "bin/node")
-
-			args new File(node.nodeDir, "lib/node_modules/yarn/yarn-" + node.yarnVersion + ".js")
-		}
-
-		args "install"
-		dependsOn downloadNode
-		workingDir dir
+		s.toUpperCase()
 	}
 
-	Task yarnBuildExtraRemoteAppTask = tasks.create(name: "yarnBuildExtraRemoteApp", type: Exec) {
-		if (OSDetector.windows) {
-			executable "cmd.exe"
+	return StringUtil.capitalize(suffix)
+}
 
-			args "/c"
-			args new File(node.nodeDir, "node.exe")
-			args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+private void _createExtraTasks(List<File> dirs) {
+	dirs.each {
+		File dir ->
+
+		File packageJSONFile = new File(dir, "package.json")
+
+		if (!packageJSONFile.exists()) {
+			return
 		}
-		else {
-			executable new File(node.nodeDir, "bin/node")
 
-			args new File(node.nodeDir, "lib/node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+		Task yarnInstallTask = tasks.create(name: "yarnInstall" + _camelCase(dir.name), type: Exec) {
+			if (OSDetector.windows) {
+				executable "cmd.exe"
+
+				args "/c"
+				args new File(node.nodeDir, "node.exe")
+				args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+			}
+			else {
+				executable new File(node.nodeDir, "bin/node")
+
+				args new File(node.nodeDir, "lib/node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+			}
+
+			args "install"
+			dependsOn downloadNode
+			workingDir dir
 		}
 
-		args "build"
-		dependsOn yarnInstallExtraRemoteAppTask
-		workingDir dir
+		Task yarnBuildTask = tasks.create(name: "yarnBuild" + _camelCase(dir.name), type: Exec) {
+			if (OSDetector.windows) {
+				executable "cmd.exe"
+
+				args "/c"
+				args new File(node.nodeDir, "node.exe")
+				args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+			}
+			else {
+				executable new File(node.nodeDir, "bin/node")
+
+				args new File(node.nodeDir, "lib/node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+			}
+
+			args "build"
+			dependsOn yarnInstallTask
+			workingDir dir
+		}
+
+		if (packageJSONFile.text.contains("\"build\": \"yo ")) {
+			Task yarnAddYoTask = tasks.create(name: "yarnAddYo" + _camelCase(dir.name), type: Exec) {
+				if (OSDetector.windows) {
+					executable "cmd.exe"
+
+					args "/c"
+					args new File(node.nodeDir, "node.exe")
+					args new File(node.nodeDir, "node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+				}
+				else {
+					executable new File(node.nodeDir, "bin/node")
+
+					args new File(node.nodeDir, "lib/node_modules/yarn/yarn-" + node.yarnVersion + ".js")
+				}
+
+				args "add"
+				args "yo"
+				dependsOn yarnInstallTask
+				workingDir dir
+			}
+
+			yarnBuildTask.dependsOn yarnAddYoTask
+		}
+
+		buildExtraRemoteApp.dependsOn yarnBuildTask
 	}
-
-	buildExtraRemoteApp.finalizedBy yarnBuildExtraRemoteAppTask
 }

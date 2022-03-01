@@ -33,9 +33,11 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
-		Navigator.openURL();
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -59,7 +61,7 @@ definition {
 
 		FormsAdmin.saveDataProvider();
 
-		Navigator.openURL();
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -86,15 +88,17 @@ definition {
 		Form.save();
 
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Form Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
+		Navigator.gotoSitePage(
+			pageName = "Form Page",
+			siteName = "Site Name");
 
 		FormPortletNavigator.gotoSelectForm();
 
@@ -102,13 +106,13 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.openURL();
-
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		Navigator.gotoPage(pageName = "Form Page");
+		Navigator.gotoSitePage(
+			pageName = "Form Page",
+			siteName = "Site Name");
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 
@@ -122,7 +126,7 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		Navigator.openURL();
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -138,7 +142,9 @@ definition {
 	@description = "Assert the form with edited Element Set is published to production"
 	@priority = "4"
 	test PublishPublicationWithEditedElementSetInForm {
-		Navigator.openURL();
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -168,7 +174,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		Navigator.openURL();
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -192,12 +198,12 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "Element Set Name",
 			changeType = "Modified",
 			changeUser = "Test Test");
 
-		Navigator.openURL();
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -219,7 +225,9 @@ definition {
 	@description = "Assert the conflict needs manually resolved on Forms within Publications."
 	@priority = "4"
 	test ResolveConflictingPublicationsByDiscarding {
-		Navigator.openURL();
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -245,7 +253,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 1");
 
-		Navigator.openURL();
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -267,7 +275,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "Created Form Name Edited",
 			changeType = "Modified",
 			changeUser = "Test Test");
@@ -276,7 +284,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 2");
 
-		Navigator.openURL();
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -288,7 +296,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "Created Form Name",
 			changeType = "Deleted",
 			changeUser = "Test Test");
@@ -319,7 +327,9 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		Navigator.openURL();
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -395,15 +405,17 @@ definition {
 		Form.publishForm();
 
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Form Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoPage(pageName = "Form Page");
+		Navigator.gotoSitePage(
+			pageName = "Form Page",
+			siteName = "Site Name");
 
 		FormPortletNavigator.gotoSelectForm();
 
@@ -411,7 +423,9 @@ definition {
 
 		PortletEntry.save();
 
-		Navigator.gotoPage(pageName = "Form Page");
+		Navigator.gotoSitePage(
+			pageName = "Form Page",
+			siteName = "Site Name");
 
 		FormPortlet.waitFormRenderer(text = "Next");
 
@@ -447,7 +461,7 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		Navigator.openURL();
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -469,20 +483,20 @@ definition {
 
 		var changeTitle = JSONDDMForm.getFormInstanceRecordId(
 			formName = "Created Form Name",
-			groupName = "Guest");
+			groupName = "Site Name");
 
 		PublicationsNavigator.gotoReviewChanges();
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Form Instance",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "Created Form Name",
 			changeType = "Added",
 			changeUser = "Test Test");
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Form Record",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "${changeTitle}",
 			changeType = "Added",
 			changeUser = "Test Test");
@@ -491,7 +505,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		Navigator.openURL();
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -519,7 +533,9 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		Navigator.openURL();
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -597,13 +613,13 @@ definition {
 			fieldLabel = "Date Field",
 			fieldName = "${fieldNameDateField}");
 
-		Navigator.openURL();
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		Navigator.openURL();
+		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

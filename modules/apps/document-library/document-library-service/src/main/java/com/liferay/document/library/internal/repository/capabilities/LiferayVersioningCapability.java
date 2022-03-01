@@ -83,8 +83,8 @@ public class LiferayVersioningCapability
 			@Override
 			public FileEntry updateFileEntry(
 					long userId, long fileEntryId, String sourceFileName,
-					String mimeType, String title, String description,
-					String changeLog,
+					String mimeType, String title, String urlTitle,
+					String description, String changeLog,
 					DLVersionNumberIncrease dlVersionNumberIncrease, File file,
 					Date expirationDate, Date reviewDate,
 					ServiceContext serviceContext)
@@ -94,15 +94,16 @@ public class LiferayVersioningCapability
 					dlAppServiceAdapter,
 					super.updateFileEntry(
 						userId, fileEntryId, sourceFileName, mimeType, title,
-						description, changeLog, dlVersionNumberIncrease, file,
-						expirationDate, reviewDate, serviceContext));
+						urlTitle, description, changeLog,
+						dlVersionNumberIncrease, file, expirationDate,
+						reviewDate, serviceContext));
 			}
 
 			@Override
 			public FileEntry updateFileEntry(
 					long userId, long fileEntryId, String sourceFileName,
-					String mimeType, String title, String description,
-					String changeLog,
+					String mimeType, String title, String urlTitle,
+					String description, String changeLog,
 					DLVersionNumberIncrease dlVersionNumberIncrease,
 					InputStream inputStream, long size, Date expirationDate,
 					Date reviewDate, ServiceContext serviceContext)
@@ -112,9 +113,9 @@ public class LiferayVersioningCapability
 					dlAppServiceAdapter,
 					super.updateFileEntry(
 						userId, fileEntryId, sourceFileName, mimeType, title,
-						description, changeLog, dlVersionNumberIncrease,
-						inputStream, size, expirationDate, reviewDate,
-						serviceContext));
+						urlTitle, description, changeLog,
+						dlVersionNumberIncrease, inputStream, size,
+						expirationDate, reviewDate, serviceContext));
 			}
 
 		};
@@ -145,8 +146,8 @@ public class LiferayVersioningCapability
 			@Override
 			public FileEntry updateFileEntry(
 					long userId, long fileEntryId, String sourceFileName,
-					String mimeType, String title, String description,
-					String changeLog,
+					String mimeType, String title, String urlTitle,
+					String description, String changeLog,
 					DLVersionNumberIncrease dlVersionNumberIncrease, File file,
 					Date expirationDate, Date reviewDate,
 					ServiceContext serviceContext)
@@ -156,15 +157,16 @@ public class LiferayVersioningCapability
 					dlAppServiceAdapter,
 					super.updateFileEntry(
 						userId, fileEntryId, sourceFileName, mimeType, title,
-						description, changeLog, dlVersionNumberIncrease, file,
-						expirationDate, reviewDate, serviceContext));
+						urlTitle, description, changeLog,
+						dlVersionNumberIncrease, file, expirationDate,
+						reviewDate, serviceContext));
 			}
 
 			@Override
 			public FileEntry updateFileEntry(
 					long userId, long fileEntryId, String sourceFileName,
-					String mimeType, String title, String description,
-					String changeLog,
+					String mimeType, String title, String urlTitle,
+					String description, String changeLog,
 					DLVersionNumberIncrease dlVersionNumberIncrease,
 					InputStream inputStream, long size, Date expirationDate,
 					Date reviewDate, ServiceContext serviceContext)
@@ -174,9 +176,9 @@ public class LiferayVersioningCapability
 					dlAppServiceAdapter,
 					super.updateFileEntry(
 						userId, fileEntryId, sourceFileName, mimeType, title,
-						description, changeLog, dlVersionNumberIncrease,
-						inputStream, size, expirationDate, reviewDate,
-						serviceContext));
+						urlTitle, description, changeLog,
+						dlVersionNumberIncrease, inputStream, size,
+						expirationDate, reviewDate, serviceContext));
 			}
 
 		};

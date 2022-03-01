@@ -62,14 +62,14 @@ public abstract class BaseRepositoryImpl
 	public FileEntry addFileEntry(
 			String externalReferenceCode, long userId, long folderId,
 			String sourceFileName, String mimeType, String title,
-			String description, String changeLog, File file,
+			String urlTitle, String description, String changeLog, File file,
 			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
 		try (InputStream inputStream = new FileInputStream(file)) {
 			return addFileEntry(
 				externalReferenceCode, userId, folderId, sourceFileName,
-				mimeType, title, description, changeLog, inputStream,
+				mimeType, title, urlTitle, description, changeLog, inputStream,
 				file.length(), expirationDate, reviewDate, serviceContext);
 		}
 		catch (IOException ioException) {
@@ -398,14 +398,15 @@ public abstract class BaseRepositoryImpl
 	@Override
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			DLVersionNumberIncrease dlVersionNumberIncrease, File file,
-			Date expirationDate, Date reviewDate, ServiceContext serviceContext)
+			String mimeType, String title, String urlTitle, String description,
+			String changeLog, DLVersionNumberIncrease dlVersionNumberIncrease,
+			File file, Date expirationDate, Date reviewDate,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		try (InputStream inputStream = new FileInputStream(file)) {
 			return updateFileEntry(
-				userId, fileEntryId, sourceFileName, mimeType, title,
+				userId, fileEntryId, sourceFileName, mimeType, title, urlTitle,
 				description, changeLog, dlVersionNumberIncrease, inputStream,
 				file.length(), expirationDate, reviewDate, serviceContext);
 		}
@@ -417,8 +418,8 @@ public abstract class BaseRepositoryImpl
 	@Override
 	public abstract FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
-			String mimeType, String title, String description, String changeLog,
-			DLVersionNumberIncrease dlVersionNumberIncrease,
+			String mimeType, String title, String urlTitle, String description,
+			String changeLog, DLVersionNumberIncrease dlVersionNumberIncrease,
 			InputStream inputStream, long size, Date expirationDate,
 			Date reviewDate, ServiceContext serviceContext)
 		throws PortalException;

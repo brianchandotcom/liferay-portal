@@ -21,8 +21,6 @@ import com.liferay.content.dashboard.web.internal.constants.ContentDashboardPort
 import com.liferay.content.dashboard.web.internal.dao.search.ContentDashboardItemSearchContainerFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
-import com.liferay.content.dashboard.web.internal.item.FileEntryContentDashboardItem;
-import com.liferay.content.dashboard.web.internal.item.JournalArticleContentDashboardItem;
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -33,8 +31,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.Searcher;
 
@@ -52,8 +50,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -189,41 +190,36 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 				contentDashboardItem.getDescription(locale)
 			);
 
-			if (contentDashboardItem instanceof FileEntryContentDashboardItem) {
-				Map<String, Object> specificInformation =
-					contentDashboardItem.getSpecificInformation(locale);
+			Map<String, Object> specificInformation =
+				contentDashboardItem.getSpecificInformation(locale);
 
-				if (specificInformation != null) {
-					workbookBuilder.cell(
-						String.valueOf(specificInformation.get("extension"))
-					).cell(
-						String.valueOf(specificInformation.get("fileName"))
-					).cell(
-						String.valueOf(specificInformation.get("size"))
-					);
-				}
+			workbookBuilder.cell(_toString(specificInformation, "extension"));
+
+			if (contentDashboardItem.getClipboard() != null) {
+				ContentDashboardItem.Clipboard clipboard =
+					contentDashboardItem.getClipboard();
+
+				workbookBuilder.cell(_toString(clipboard.getName()));
 			}
 
-			if (contentDashboardItem instanceof
-					JournalArticleContentDashboardItem) {
+			workbookBuilder.cell(
+				_toString(specificInformation, "size")
+			).cell(
+				_toString(specificInformation, "display-date")
+			).cell(
+				_toString(contentDashboardItem.getCreateDate())
+			);
 
-				Map<String, Object> specificInformation =
-					contentDashboardItem.getSpecificInformation(locale);
+			List<Locale> locales = contentDashboardItem.getAvailableLocales();
 
-				if (specificInformation != null) {
-					workbookBuilder.cellIndexIncrement(
-						3
-					).cell(
-						_toString((Date)specificInformation.get("display-date"))
-					).cell(
-						_toString(contentDashboardItem.getCreateDate())
-					).cell(
-						StringUtil.merge(
-							(String[])specificInformation.get(
-								"languages-translated"))
-					);
-				}
-			}
+			Stream<Locale> stream = locales.stream();
+
+			workbookBuilder.cell(
+				stream.map(
+					LocaleUtil::toLanguageId
+				).collect(
+					Collectors.joining(StringPool.COMMA)
+				));
 		}
 
 		LocalDate localDate = LocalDate.now();
@@ -244,6 +240,30 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 		LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
 
 		return localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+	}
+
+	private String _toString(
+		Map<String, Object> specificFields, String fieldName) {
+
+		return Optional.ofNullable(
+			specificFields
+		).map(
+			safeSpecificFields -> safeSpecificFields.get(fieldName)
+		).filter(
+			Objects::nonNull
+		).map(
+			field -> _toString(field)
+		).orElse(
+			StringPool.BLANK
+		);
+	}
+
+	private String _toString(Object value) {
+		if (value instanceof Date) {
+			return _toString((Date)value);
+		}
+
+		return String.valueOf(value);
 	}
 
 	@Reference

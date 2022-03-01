@@ -298,8 +298,6 @@ public class JournalArticleContentDashboardItem
 		).put(
 			"expiration-date", _journalArticle.getExpirationDate()
 		).put(
-			"languages-translated", _journalArticle.getAvailableLanguageIds()
-		).put(
 			"review-date", _journalArticle.getReviewDate()
 		).build();
 	}

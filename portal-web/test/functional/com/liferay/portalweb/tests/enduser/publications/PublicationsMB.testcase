@@ -31,12 +31,15 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
 			categoryName = "MB Category Name",
+			groupName = "Site Name",
 			userEmailAddress = "test@liferay.com");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsCategory.gotoCP(categoryName = "MB Category Name");
 
@@ -48,7 +51,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Category",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "Message Boards Category",
 			changeType = "Added",
 			changeUser = "Test Test",
@@ -58,7 +61,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsCategory.gotoCP(categoryName = "MB Category Name");
 
@@ -142,13 +145,15 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONMBMessage.addMessage(
-			groupName = "Guest",
+			groupName = "Site Name",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
 		JSONMBMessage.addMessageReply(
-			groupName = "Guest",
+			groupName = "Site Name",
 			replyBody = "MB Thread Reply Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -158,7 +163,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Message",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "MB Thread Message Subject",
 			changeType = "Added",
 			changeUser = "Test Test");
@@ -166,14 +171,14 @@ definition {
 		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Message",
 			changeOrder = "2",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "RE: MB Thread Message Subject",
 			changeType = "Added",
 			changeUser = "Test Test");
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Thread",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "MB Thread Message Subject",
 			changeType = "Added",
 			changeUser = "Test Test");
@@ -182,7 +187,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsThread.viewCP(
 			replyCount = "1",
@@ -199,23 +204,25 @@ definition {
 	@description = "Assert we can publish the publication with split message board threads."
 	@priority = "4"
 	test PublishSplitMessageBoardThreads {
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Message Boards Page");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "2",
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Message Boards Page",
 			widgetName = "Message Boards");
 
 		JSONMBMessage.addMessage(
-			groupName = "Guest",
+			groupName = "Site Name",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
 		JSONMBMessage.addMessageReply(
-			groupName = "Guest",
+			groupName = "Site Name",
 			replyBody = "MB Thread Reply Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -223,7 +230,9 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		Navigator.gotoSitePage(
+			pageName = "Message Boards Page",
+			siteName = "Site Name");
 
 		MessageboardsThread.gotoPG(
 			lastPostUserName = "Test Test",
@@ -242,7 +251,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Message",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "MB Thread Split Subject",
 			changeType = "Modified",
 			changeUser = "Test Test");
@@ -250,14 +259,14 @@ definition {
 		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Message",
 			changeOrder = "2",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "Split Reply Thread Subject",
 			changeType = "Added",
 			changeUser = "Test Test");
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Thread",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "MB Thread Message Subject",
 			changeType = "Modified",
 			changeUser = "Test Test");
@@ -265,7 +274,7 @@ definition {
 		PublicationsChanges.viewChanges(
 			changeCategory = "Message Boards Thread",
 			changeOrder = "2",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "MB Thread Split Subject",
 			changeType = "Added",
 			changeUser = "Test Test");
@@ -274,10 +283,13 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		Navigator.gotoPage(pageName = "Message Boards Page");
+		Navigator.gotoSitePage(
+			pageName = "Message Boards Page",
+			siteName = "Site Name");
 
 		MessageboardsThread.viewSplitThreadPG(
 			pageName = "Message Boards Page",
+			siteName = "Site Name",
 			threadBody = "MB Thread Message Body",
 			threadReplyBody = "MB Thread Reply Body",
 			threadSplitReplyBody = "Split Reply Thread Body",
@@ -289,8 +301,10 @@ definition {
 	@description = "Assert we can resolve the conflict publications by discarding."
 	@priority = "4"
 	test ResolveConflictingPublicationsByDiscarding {
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONMBMessage.addMessage(
-			groupName = "Guest",
+			groupName = "Site Name",
 			threadBody = "MB Thread Message Body",
 			threadSubject = "MB Thread Message Subject");
 
@@ -298,7 +312,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 1");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsThread.editCP(
 			threadBodyEdit = "MB Thread Message Body Edit",
@@ -311,10 +325,10 @@ definition {
 		JSONPublications.selectPublication(publicationName = "Publication Name 2");
 
 		JSONMBMessage.moveThreadToTrash(
-			groupName = "Guest",
+			groupName = "Site Name",
 			threadSubject = "MB Thread Message Subject");
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
 
 		RecycleBin.deleteCP(
 			assetName = "MB Thread Message Subject",
@@ -326,7 +340,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name 1");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",
@@ -336,7 +350,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 2");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsThread.viewDefaultCP(threadSubject = "MB Thread Message Subject");
 
@@ -364,7 +378,7 @@ definition {
 
 		Publications.publishPublication(publicationName = "Publication Name 2");
 
-		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "guest");
+		MessageBoardsAdmin.openMessageBoardsAdmin(siteURLKey = "site-name");
 
 		MessageboardsThread.viewCP(
 			replyCount = "0",

@@ -49,7 +49,7 @@ import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMTemplate
 import com.liferay.dynamic.data.mapping.internal.upgrade.v3_0_0.util.DDMTemplateVersionTable;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v3_1_0.DDMStructureLayoutUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v3_2_4.DDMContentUpgradeProcess;
-import com.liferay.dynamic.data.mapping.internal.upgrade.v3_5_0.DDMFormInstanceReportUpgradeProcess;
+import com.liferay.dynamic.data.mapping.internal.upgrade.v3_5_0.util.DDMFormInstanceReportTable;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v3_7_1.DDMStructureEmptyValidationUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v4_1_0.DDMFieldUpgradeProcess;
 import com.liferay.dynamic.data.mapping.internal.upgrade.v4_3_0.DLFileEntryTypeDataDefinitionIdUpgradeProcess;
@@ -328,7 +328,7 @@ public class DDMServiceUpgrade implements UpgradeStepRegistrator {
 			new CTModelUpgradeProcess("DDMStructureLink", "DDMTemplateLink"));
 
 		registry.register(
-			"3.4.0", "3.5.0", new DDMFormInstanceReportUpgradeProcess());
+			"3.4.0", "3.5.0", DDMFormInstanceReportTable.create());
 
 		registry.register(
 			"3.5.0", "3.6.0",

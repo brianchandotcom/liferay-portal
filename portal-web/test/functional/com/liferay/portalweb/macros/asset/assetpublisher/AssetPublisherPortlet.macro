@@ -567,7 +567,7 @@ definition {
 	}
 
 	macro configurePaginationPG {
-		AssetPublisherPortlet.gotoConfigurationPG();
+		AssetPublisherPortlet.gotoConfigurationPG(portletIndex = "${portletIndex}");
 
 		Navigator.gotoNavTab(navTab = "Display Settings");
 
@@ -890,6 +890,7 @@ definition {
 		WaitForLiferayEvent.initializeLiferayEventLog();
 
 		Portlet.gotoPortletOptions(
+			portletIndex = "${portletIndex}",
 			portletName = "${portletName}",
 			portletOption = "Configuration");
 

@@ -141,6 +141,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SPECIFIC_BORDERLESS_ELLIPSIS_ICON_INDEX</td>
+	<td>xpath=(//header[contains(@class,'portlet-topper') and contains(.,'${key_portletName}')]//div[contains(@class,'portlet-options')]/a)[${portletIndex}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SPECIFIC_ELLIPSIS_ICON</td>
 	<td>//div[@id='main-content']//header[contains(.,'${key_portletName}')]//menu/div[contains(@class,'portlet-options')]/a</td>
 	<td></td>

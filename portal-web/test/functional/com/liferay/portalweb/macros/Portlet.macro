@@ -510,6 +510,15 @@ definition {
 
 				Click(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 			}
+			else if (isSet(portletIndex)) {
+				MouseOver.mouseOverNotVisible(
+					locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON_INDEX",
+					portletIndex = "${portletIndex}");
+
+				Click.waitForMenuToggleJSClick(
+					locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON_INDEX",
+					portletIndex = "${portletIndex}");
+			}
 			else {
 				MouseOver.mouseOverInvisible(locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
 

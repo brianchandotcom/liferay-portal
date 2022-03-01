@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CURRENT_PAGE_MENU_INDEX</td>
+	<td>xpath=(//div[contains(@class,'current-page-menu')]/a[contains(@class,'toggle')])[${key_index}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CURRENT_PAGE_SELECT</td>
 	<td>//p[contains(@class,'pagination-results')]</td>
 	<td></td>

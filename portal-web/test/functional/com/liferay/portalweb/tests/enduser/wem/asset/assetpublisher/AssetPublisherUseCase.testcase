@@ -2154,6 +2154,81 @@ catch (Exception e) {
 		}
 	}
 
+	@description = "This is a use case for LPS-146343. View the pagination with 2 Asset Publisher widgets on a Content Page."
+	@priority = "3"
+	test ViewPaginationWithTwoAssetPublisherWidgetsInContentPage {
+		task ("Add 3 web contents") {
+			for (var i : list "1,2,3") {
+				JSONWebcontent.addWebContent(
+					content = "WC WebContent${i} Content",
+					groupName = "Test Site Name",
+					title = "WC WebContent${i} Title");
+			}
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Content Page Name",
+				type = "content");
+		}
+
+		task ("Add two Asset Publisher widgets to page and configure the pagination type to Regular") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addWidget(portletName = "Asset Publisher");
+
+			AssetPublisherPortlet.configurePaginationPG(
+				paginationNumber = "1",
+				paginationType = "Regular");
+
+			IFrame.closeFrame();
+
+			PageEditor.addWidget(
+				portletName = "Asset Publisher",
+				targetFragmentName = "Asset Publisher");
+
+			AssetPublisherPortlet.configurePaginationPG(
+				paginationNumber = "1",
+				paginationType = "Regular",
+				portletIndex = "2");
+
+			IFrame.closeFrame();
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View the pagination in two Asset Publisher widgets") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+
+			Click(locator1 = "Pagination#NEXT_LINK");
+
+			AssertTextEquals(
+				locator1 = "Pagination#CURRENT_PAGE_MENU",
+				value1 = "Page 2 of 3");
+
+			AssertTextEquals(
+				key_index = "2",
+				locator1 = "Pagination#CURRENT_PAGE_MENU_INDEX",
+				value1 = "Page 1 of 3");
+
+			Click(locator1 = "Pagination#NEXT_LINK_2");
+
+			AssertTextEquals(
+				locator1 = "Pagination#CURRENT_PAGE_MENU",
+				value1 = "Page 2 of 3");
+
+			AssertTextEquals(
+				key_index = "2",
+				locator1 = "Pagination#CURRENT_PAGE_MENU_INDEX",
+				value1 = "Page 2 of 3");
+		}
+	}
+
 	@description = "View tag of web content in Asset Publisher."
 	@priority = "4"
 	@uitest

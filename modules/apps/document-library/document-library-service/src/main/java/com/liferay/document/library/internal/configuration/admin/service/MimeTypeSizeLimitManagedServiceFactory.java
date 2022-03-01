@@ -48,10 +48,6 @@ import org.osgi.service.component.annotations.Deactivate;
 public class MimeTypeSizeLimitManagedServiceFactory
 	implements ManagedServiceFactory {
 
-	public void clear(long companyId) {
-		_companyMimeTypeSizeLimitCache.remove(companyId);
-	}
-
 	@Override
 	public void deleted(String pid) {
 		_unmapPid(pid);
@@ -90,6 +86,8 @@ public class MimeTypeSizeLimitManagedServiceFactory
 				companyId,
 				ConfigurableUtil.createConfigurable(
 					MimeTypeSizeLimitConfiguration.class, dictionary));
+
+			_companyMimeTypeSizeLimitCache.remove(companyId);
 		}
 	}
 
@@ -137,6 +135,8 @@ public class MimeTypeSizeLimitManagedServiceFactory
 			long companyId = _pidCompanyIdMapping.remove(pid);
 
 			_companyConfigurationBeans.remove(companyId);
+
+			_companyMimeTypeSizeLimitCache.remove(companyId);
 		}
 	}
 

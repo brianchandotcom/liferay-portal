@@ -20,7 +20,6 @@ import com.liferay.document.library.internal.util.MimeTypeSizeLimitUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Dictionary;
 
@@ -40,9 +39,6 @@ public class MimeTypeSizeLimitConfigurationModelListener
 	@Override
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
-
-		_mimeTypeSizeLimitManagedServiceFactory.clear(
-			GetterUtil.getLong(properties.get("companyId")));
 
 		String[] mimeTypeSizeLimit = (String[])properties.get(
 			"mimeTypeSizeLimit");

@@ -826,20 +826,10 @@ definition {
 
 		Staging.publishToLive();
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging DM Page",
-			siteName = "Site Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
-
-		DMDocument.deleteCP(dmDocumentTitle = "DM Document Title");
-
-		AssertElementNotPresent(
-			key_card = "DM Document Title",
-			locator1 = "Card#CARD_SHORTCUT");
+		JSONDocument.deleteFile(
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name (Staging)",
+			site = "false");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",

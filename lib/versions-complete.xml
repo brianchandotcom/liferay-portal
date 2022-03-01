@@ -6403,18 +6403,6 @@
 				<comments>This was recompiled for compatibility with JDK 5.</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/ant.jar</file-name>
-				<version>1.10.11</version>
-				<project-name>Ant</project-name>
-				<project-url>http://ant.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/asm-analysis.jar</file-name>
 				<version>7.0</version>
 				<project-name>ASM</project-name>

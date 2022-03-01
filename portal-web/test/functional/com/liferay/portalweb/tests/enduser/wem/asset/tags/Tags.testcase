@@ -29,260 +29,333 @@ definition {
 		}
 	}
 
+	@description = "The user cannot add a tag with an empty name."
 	@priority = "4"
-	test CannotAddEmptyTag {
-		Tag.addWithNullTitleCP(tagName = " ");
+	@uitest
+	test CannotAddWithEmptyName {
+		task ("View cannot add a tag wih an empty name") {
+			Tag.openTagsAdmin(siteURLKey = "test-site-name");
 
-		Tag.openTagsAdmin(siteURLKey = "Guest");
+			Tag.addWithNullTitleCP(tagName = " ");
+		}
 
-		Portlet.viewEmptyMessage(message = "There are no tags.");
+		task ("View empty message on tags admin") {
+			Tag.openTagsAdmin(siteURLKey = "test-site-name");
+
+			Portlet.viewEmptyMessage(message = "There are no tags.");
+		}
 	}
 
+	@description = "View cannot merge single tag on tags admin."
 	@priority = "4"
-	test CannotMergeSingleTagViewWarning {
-		JSONAssettag.addTag(
-			groupName = "Guest",
-			tagName = "tagname1");
-
-		Tag.openTagsAdmin(siteURLKey = "Guest");
-
-		Tag.gotoMerge(
-			mergeMethod = "menuItem",
-			tagName = "tagname1");
-
-		Tag.mergeSingleTagWarning();
-	}
-
-	@priority = "4"
-	test DeleteMultipleTagsFromToolbar {
-		for (var i : list "1,2,3") {
+	test CannotMergeSingleTarget {
+		task ("Add a tag") {
 			JSONAssettag.addTag(
-				groupName = "Guest",
-				tagName = "tagname${i}");
+				groupName = "Test Site Name",
+				tagName = "tagname");
 		}
 
-		Tag.openTagsAdmin(siteURLKey = "Guest");
+		task ("View cannot merge single tag") {
+			Tag.openTagsAdmin(siteURLKey = "test-site-name");
 
-		for (var i : list "1,2,3") {
-			Tag.viewCP(tagName = "tagname${i}");
+			Tag.gotoMerge(
+				mergeMethod = "menuItem",
+				tagName = "tagname");
+
+			Tag.mergeSingleTagWarning();
+		}
+	}
+
+	@description = "The user can delete multiple tags via Toolbar management."
+	@priority = "4"
+	test DeleteMultipleTagsViaToolbar {
+		task ("Add three tags") {
+			for (var i : list "1,2,3") {
+				JSONAssettag.addTag(
+					groupName = "Test Site Name",
+					tagName = "tagname${i}");
+			}
 		}
 
-		PortletEntry.deleteViaToolbar(rowEntries = "tagname1,tagname2,tagname3");
+		task ("View tags are shown in tags admin") {
+			Tag.openTagsAdmin(siteURLKey = "Test Site Name");
 
-		Alert.viewSuccessMessage();
+			Tag.viewCP(tagNameList = "tagname1,tagname2,tagname3");
+		}
 
-		Portlet.viewEmptyMessage(message = "There are no tags.");
+		task ("Delete tags via Toolbar management") {
+			PortletEntry.deleteViaToolbar(rowEntries = "tagname1,tagname2,tagname3");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("View tags are not shown") {
+			Portlet.viewEmptyMessage(message = "There are no tags.");
+		}
 	}
 
+	@description = "The user can delete single tag via Toolbar management."
+	@priority = "4"
+	test DeleteSingleTagViaToolbar {
+		task ("Add a tag") {
+			JSONAssettag.addTag(
+				groupName = "Test Site Name",
+				tagName = "tagname");
+		}
+
+		task ("View tag is shown in tags admin") {
+			Tag.openTagsAdmin(siteURLKey = "test-site-name");
+
+			Tag.viewCP(tagNameList = "tagname");
+		}
+
+		task ("Delete tag via Toolbar management") {
+			PortletEntry.deleteViaToolbar(rowEntries = "tagname");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("View tag is not shown") {
+			Portlet.viewEmptyMessage(message = "There are no tags.");
+		}
+	}
+
+	@description = "The user can delete a single tag via menu item."
 	@priority = "5"
-	test DeleteTagFromMenu {
+	test DeleteTagViaMenuItem {
 		property portal.acceptance = "true";
 
-		JSONAssettag.addTag(
-			groupName = "Guest",
-			tagName = "tagname1");
+		task ("Add a tag") {
+			JSONAssettag.addTag(
+				groupName = "Test Site Name",
+				tagName = "tagname");
+		}
 
-		Tag.openTagsAdmin(siteURLKey = "Guest");
+		task ("View tag is shown in tags admin") {
+			Tag.openTagsAdmin(siteURLKey = "test-site-name");
 
-		Tag.viewCP(tagName = "tagname1");
+			Tag.viewCP(tagNameList = "tagname");
+		}
 
-		PortletEntry.deleteViaMenuItem(rowEntry = "tagname1");
+		task ("Delete tag via menu item") {
+			Tag.deleteCP(tagNameList = "tagname");
+		}
 
-		Alert.viewSuccessMessage();
-
-		Portlet.viewEmptyMessage(message = "There are no tags.");
+		task ("View tag is not shown") {
+			Portlet.viewEmptyMessage(message = "There are no tags.");
+		}
 	}
 
-	@priority = "4"
-	test DeleteTagFromToolbar {
-		JSONAssettag.addTag(
-			groupName = "Guest",
-			tagName = "tagname1");
-
-		Tag.openTagsAdmin(siteURLKey = "Guest");
-
-		Tag.viewCP(tagName = "tagname1");
-
-		PortletEntry.deleteViaToolbar(rowEntries = "tagname1");
-
-		Alert.viewSuccessMessage();
-
-		Portlet.viewEmptyMessage(message = "There are no tags.");
-	}
-
-	@priority = "4"
-	test EditTagAndCancel {
-		JSONAssettag.addTag(
-			groupName = "Guest",
-			tagName = "tagname1");
-
-		Tag.openTagsAdmin(siteURLKey = "Guest");
-
-		Tag.viewCP(tagName = "tagname1");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "tagname1");
-
-		PortletEntry.inputName(name = "tagname2");
-
-		Button.clickCancel();
-
-		Tag.viewCP(tagName = "tagname1");
-
-		AssertTextNotPresent(value1 = "tagname2");
-	}
-
+	@description = "The user can edit the tag name."
 	@priority = "5"
-	test EditTagAndSave {
+	test EditTag {
 		property portal.acceptance = "true";
 
-		JSONAssettag.addTag(
-			groupName = "Guest",
-			tagName = "tagname1");
+		task ("Add a tag") {
+			JSONAssettag.addTag(
+				groupName = "Test Site Name",
+				tagName = "tagname1");
+		}
 
-		Tag.openTagsAdmin(siteURLKey = "Guest");
+		task ("View tag is shown in tags admin") {
+			Tag.openTagsAdmin(siteURLKey = "test-site-name");
 
-		Tag.viewCP(tagName = "tagname1");
+			Tag.viewCP(tagNameList = "tagname1");
+		}
 
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "tagname1");
+		task ("Edit tag name without save") {
+			Tag.editCP(
+				tagMenuName = "tagname1",
+				tagNameEdit = "tagname2");
+		}
 
-		PortletEntry.inputName(name = "tagname2");
+		task ("View edited tag name is shown") {
+			Tag.viewCP(tagNameList = "tagname2");
+		}
 
-		PortletEntry.save();
-
-		Tag.viewCP(tagName = "tagname2");
-
-		AssertTextNotPresent(value1 = "tagname1");
+		task ("View old tag name is not shown") {
+			Tag.viewNotPresentCP(tagNameList = "tagname1");
+		}
 	}
 
+	@description = "The edited tag name is not shown whether the change is not saved."
+	@priority = "4"
+	test EditTagWithoutSave {
+		task ("Add a tag") {
+			JSONAssettag.addTag(
+				groupName = "Test Site Name",
+				tagName = "tagname1");
+		}
+
+		task ("View tag is shown in tags admin") {
+			Tag.openTagsAdmin(siteURLKey = "test-site-name");
+
+			Tag.viewCP(tagNameList = "tagname1");
+		}
+
+		task ("Edit tag name without save") {
+			Tag.cancelEditCP(
+				tagMenuName = "tagname1",
+				tagNameEdit = "tagname2");
+		}
+
+		task ("View original tag name is shown") {
+			Tag.viewCP(tagNameList = "tagname1");
+		}
+
+		task ("View edited tag name is not shown") {
+			Tag.viewNotPresentCP(tagNameList = "tagname2");
+		}
+	}
+
+	@description = "The usar can select another tag to merge in Merge Tags section."
+	@priority = "3"
+	test MergeAdditionalTag {
+		task ("Add six tags") {
+			for (var i : list "1,2,3,4,5,6") {
+				JSONAssettag.addTag(
+					groupName = "Test Site Name",
+					tagName = "tagname${i}");
+			}
+		}
+
+		task ("View six tags are shown in tags admin") {
+			Tag.openTagsAdmin(siteURLKey = "Test Site Name");
+
+			Tag.viewCP(tagNameList = "tagname1,tagname2,tagname3,tagname4,tagname5,tagname6");
+		}
+
+		task ("Select first, third and fifth tag to merge") {
+			Tag.gotoMerge(tagNameList = "tagname1,tagname3,tagname5");
+		}
+
+		task ("Select an additional tag to merge") {
+			Tag.mergeTagsSelectAdditionalTags(tagNameList = "tagname6");
+		}
+
+		task ("Merge tags into fifth tag") {
+			Tag.mergeTags(
+				mergedTag = "tagname5",
+				tagNameList = "tagname1,tagname3,tagname5,tagname6");
+		}
+
+		task ("View second, fourth and fifth tag are shown") {
+			Tag.viewCP(tagNameList = "tagname2,tagname4,tagname5");
+		}
+
+		task ("View first, third and sixth tag are not shown") {
+			Tag.viewNotPresentCP(tagNameList = "tagname1,tagname3,tagname6");
+		}
+	}
+
+	@description = "The user can merge multiple tags."
 	@priority = "4"
 	test MergeMultipleTags {
-		for (var i : list "1,2,3") {
-			JSONAssettag.addTag(
-				groupName = "Guest",
-				tagName = "tagname${i}");
+		task ("Add three tags") {
+			for (var i : list "1,2,3") {
+				JSONAssettag.addTag(
+					groupName = "Test Site Name",
+					tagName = "tagname${i}");
+			}
 		}
 
-		Tag.openTagsAdmin(siteURLKey = "Guest");
+		task ("View three tags are shown in tags admin") {
+			Tag.openTagsAdmin(siteURLKey = "Test Site Name");
 
-		for (var i : list "1,2,3") {
-			Tag.viewCP(tagName = "tagname${i}");
+			Tag.viewCP(tagNameList = "tagname1,tagname2,tagname3");
 		}
 
-		for (var i : list "1,2,3") {
-			LexiconEntry.selectEntry(rowEntry = "tagname${i}");
+		task ("Merge second and third tag into first tag") {
+			Tag.gotoMerge(tagNameList = "tagname1,tagname2,tagname3");
+
+			Tag.mergeTags(
+				mergedTag = "tagname1",
+				tagNameList = "tagname1,tagname2,tagname3");
 		}
 
-		Tag.gotoMerge();
-
-		Tag.mergeTags(
-			mergedTag = "tagname1",
-			tagNameList = "tagname1,tagname2,tagname3");
-
-		Tag.viewCP(tagName = "tagname1");
-
-		for (var i : list "2,3") {
-			AssertTextNotPresent(value1 = "tagname${i}");
-		}
-	}
-
-	@priority = "3"
-	test MergeTagsSelectAdditionalTag {
-		for (var i : list "1,2,3,4,5,6,7") {
-			JSONAssettag.addTag(
-				groupName = "Guest",
-				tagName = "tagname${i}");
+		task ("View first tag is shown") {
+			Tag.viewCP(tagNameList = "tagname1");
 		}
 
-		Tag.openTagsAdmin(siteURLKey = "Guest");
-
-		for (var i : list "1,2,3,4,5,6,7") {
-			Tag.viewCP(tagName = "tagname${i}");
-		}
-
-		Pagination.changePagination(itemsPerPage = "4");
-
-		Pagination.viewResults(results = "Showing 1 to 4 of 7 entries.");
-
-		for (var i : list "1,2,3") {
-			LexiconEntry.selectEntry(rowEntry = "tagname${i}");
-		}
-
-		Tag.gotoMerge();
-
-		Tag.mergeTagsSelectAdditionalTags(tagName = "tagname7");
-
-		Tag.mergeTags(
-			mergedTag = "tagname1",
-			tagNameList = "tagname1,tagname2,tagname3,tagname7");
-
-		for (var i : list "1,4,5,6") {
-			Tag.viewCP(tagName = "tagname${i}");
-		}
-
-		for (var i : list "2,3,7") {
-			AssertTextNotPresent(value1 = "tagname${i}");
+		task ("View second and third tag are not shown") {
+			Tag.viewNotPresentCP(tagNameList = "tagname2,tagname3");
 		}
 	}
 
+	@description = "View display styles in tags admin."
 	@priority = "4"
 	test ToggleDisplayStyles {
-		JSONAssettag.addTag(
-			groupName = "Guest",
-			tagName = "tagname1");
+		task ("Add a tag") {
+			JSONAssettag.addTag(
+				groupName = "Test Site Name",
+				tagName = "tagname");
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Tags");
+		task ("View tag is shwon in list style") {
+			Tag.openTagsAdmin(siteURLKey = "Test Site Name");
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		LexiconList.viewListEntryTitle(listEntry = "tagname1");
+			LexiconList.viewListEntryTitle(listEntry = "tagname");
+		}
 
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
+		task ("View tag is shown in table style") {
+			LexiconEntry.changeDisplayStyle(displayStyle = "table");
 
-		AssertTextEquals(
-			key_columnNumber = "2",
-			locator1 = "ContentRow#ENTRY_CONTENT_LIST_COLUMN",
-			value1 = "tagname1");
+			LexiconTable.viewTableEntryTitle(tableEntry = "tagname");
+		}
 	}
 
+	@description = "View pagination in tags admin."
 	@priority = "4"
 	test ViewTagsPagination {
-		var index = "1";
+		task ("Add twenty four tags") {
+			var i = "1";
 
-		while ("${index}" != "10") {
-			JSONAssettag.addTag(
-				groupName = "Guest",
-				tagName = "tagname0${index}");
+			while ("${i}" != "10") {
+				JSONAssettag.addTag(
+					groupName = "Test Site Name",
+					tagName = "tagname0${i}");
 
-			var index = ${index} + 1;
+				var i = ${i} + 1;
+			}
+
+			while ("${i}" != "26") {
+				JSONAssettag.addTag(
+					groupName = "Test Site Name",
+					tagName = "tagname${i}");
+
+				var i = ${i} + 1;
+			}
 		}
 
-		while ("${index}" != "26") {
-			JSONAssettag.addTag(
-				groupName = "Guest",
-				tagName = "tagname${index}");
+		task ("View pagination results for 20 entries") {
+			Tag.openTagsAdmin(siteURLKey = "Test Site Name");
 
-			var index = ${index} + 1;
+			AssertTextEquals.assertPartialText(
+				locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
+				value1 = "20 Entries Per page");
+
+			Pagination.viewResults(results = "Showing 1 to 20 of 24 entries.");
 		}
 
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Tags");
+		task ("View pagination results for 4 entries") {
+			Pagination.changePagination(itemsPerPage = "4");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "Pagination#ITEMS_PER_PAGE_SELECT",
-			value1 = "20 Entries Per page");
+			Pagination.viewResults(results = "Showing 1 to 4 of 24 entries.");
+		}
 
-		Pagination.viewResults(results = "Showing 1 to 20 of 24 entries.");
+		task ("View pagination results for 8 entries") {
+			Pagination.changePagination(itemsPerPage = "8");
 
-		Pagination.changePagination(itemsPerPage = "4");
+			Pagination.viewResults(results = "Showing 1 to 8 of 24 entries.");
+		}
 
-		Pagination.viewResults(results = "Showing 1 to 4 of 24 entries.");
+		task ("View pagination results for 40 entries") {
+			Pagination.changePagination(itemsPerPage = "40");
+
+			Pagination.viewResults(results = "Showing 1 to 24 of 24 entries.");
+		}
 	}
 
 }

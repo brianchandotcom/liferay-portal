@@ -1,7 +1,9 @@
 definition {
 
 	macro add {
-		WebContentDisplayPortletNavigator.gotoAdd(portletNameScoped = "${portletNameScoped}");
+		WebContentDisplayPortletNavigator.gotoAdd(
+			portletNameScoped = "${portletNameScoped}",
+			structureName = "${structureName}");
 
 		WebContent.addCP(
 			embedImage = "${embedImage}",
@@ -11,10 +13,27 @@ definition {
 			webContentContent = "${webContentContent}",
 			webContentTitle = "${webContentTitle}");
 
+		if (isSet(structureName)) {
+			for (var fieldLabel : list "${fieldLabelList}") {
+				if ("${fieldLabel}" == "Text Box") {
+					WebContent.addWithStructureCP(
+						fieldType = "Multiple Lines",
+						webContentText = "${textBox}",
+						webContentTextFieldLabel = "Text Box");
+				}
+				else {
+					WebContent.addWithStructureCP(webContentText = "${text}");
+				}
+			}
+		}
+		else {
+			var structureName = "Basic Web Content";
+		}
+
 		if (isSet(templateName)) {
 			if (IsTextNotEqual(inputFieldId = "ddmTemplateName", locator1 = "TextInput#INPUT_ID", value1 = "${templateName}")) {
 				WebContent.selectTemplateCP(
-					structureName = "Basic Web Content",
+					structureName = "${structureName}",
 					templateName = "${templateName}");
 			}
 		}

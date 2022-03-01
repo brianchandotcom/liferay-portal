@@ -302,38 +302,6 @@ definition {
 			value1 = "${priority}");
 	}
 
-	macro addStructuredPGViaWCD {
-		WebContentDisplayPortletNavigator.gotoAdd(structureName = "${structureName}");
-
-		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
-
-		PortletEntry.inputTitle(title = "${webContentTitle}");
-
-		for (var fieldLabel : list "${fieldLabelList}") {
-			if ("${fieldLabel}" == "Text Box") {
-				WebContent.addWithStructureCP(
-					fieldType = "Multiple Lines",
-					webContentText = "${textBox}",
-					webContentTextFieldLabel = "Text Box");
-			}
-			else {
-				WebContent.addWithStructureCP(webContentText = "${text}");
-			}
-		}
-
-		if (isSet(templateName)) {
-			if (IsTextNotEqual(inputFieldId = "ddmTemplateName", locator1 = "TextInput#INPUT_ID", value1 = "${templateName}")) {
-				WebContent.selectTemplateCP(
-					structureName = "${structureName}",
-					templateName = "${templateName}");
-			}
-		}
-
-		Click(locator1 = "Button#PUBLISH");
-
-		SelectFrame(value1 = "relative=top");
-	}
-
 	macro addTagPGViaWCD {
 		Panel.expandPanel(panel = "Categorization");
 

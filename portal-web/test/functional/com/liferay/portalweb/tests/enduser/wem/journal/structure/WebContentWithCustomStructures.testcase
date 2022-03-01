@@ -72,7 +72,7 @@ definition {
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
-		WebContent.addStructuredPGViaWCD(
+		WebContentDisplayPortlet.add(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentTitle = "WC Title");

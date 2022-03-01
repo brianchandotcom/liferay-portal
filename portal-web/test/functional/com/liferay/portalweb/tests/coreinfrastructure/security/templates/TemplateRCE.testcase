@@ -98,7 +98,7 @@ ${Application['org.apache.catalina.resources'].getContext().getInstanceManager()
 			pageName = "Test Page",
 			siteName = "Test Site Name");
 
-		WebContent.addStructuredPGViaWCD(
+		WebContentDisplayPortlet.add(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name 1",
 			webContentTitle = "WC Title");
@@ -111,7 +111,7 @@ ${Application['org.apache.catalina.resources'].getContext().getInstanceManager()
 			pageName = "Test Page 2",
 			siteName = "Test Site Name");
 
-		WebContent.addStructuredPGViaWCD(
+		WebContentDisplayPortlet.add(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name 2",
 			webContentTitle = "WC Title 2");
@@ -222,7 +222,7 @@ ${Application['org.apache.tomcat.InstanceManager'].newInstance('com.sun.org.apac
 			pageName = "Test Page",
 			siteName = "Test Site Name");
 
-		WebContent.addStructuredPGViaWCD(
+		WebContentDisplayPortlet.add(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentTitle = "WC Title");
@@ -275,7 +275,7 @@ ${Application['org.apache.tomcat.InstanceManager'].newInstance('com.sun.org.apac
 			pageName = "Test Page",
 			siteName = "Test Site Name");
 
-		WebContent.addStructuredPGViaWCD(
+		WebContentDisplayPortlet.add(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentTitle = "WC Title");
@@ -327,7 +327,7 @@ ${Application['org.apache.tomcat.InstanceManager'].newInstance('com.sun.org.apac
 			pageName = "Test Page",
 			siteName = "Test Site Name");
 
-		WebContent.addStructuredPGViaWCD(
+		WebContentDisplayPortlet.add(
 			structureName = "WC Structure Name",
 			templateName = "WC Template Name",
 			webContentTitle = "WC Title");

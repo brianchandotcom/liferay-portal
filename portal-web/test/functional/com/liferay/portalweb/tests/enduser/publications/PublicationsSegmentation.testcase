@@ -27,7 +27,9 @@ definition {
 	@description = "Assert we can publish a publication with an edited Segment."
 	@priority = "4"
 	test CanPublishEditedSegment {
-		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -55,7 +57,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+		Segmentation.openSegmentsAdmin(siteURLKey = "site-name");
 
 		AssertElementPresent(
 			key_tableEntry = "Edited Segment Title",
@@ -86,12 +88,14 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Experience Content Page",
 			type = "content");
 
-		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+		Segmentation.openSegmentsAdmin(siteURLKey = "site-name");
 
 		LexiconEntry.gotoAdd();
 
@@ -105,7 +109,7 @@ definition {
 
 		Button.clickSave();
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/experience-content-page");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/experience-content-page");
 
 		ContentPages.gotoPageEditor();
 
@@ -140,7 +144,7 @@ definition {
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
 
-		Navigator.openWithAppendToBaseURL(urlAppend = "web/guest/experience-content-page");
+		Navigator.openWithAppendToBaseURL(urlAppend = "web/site-name/experience-content-page");
 
 		AssertTextEquals(
 			locator1 = "Experience#FRAGMENT_HEADING",
@@ -150,7 +154,9 @@ definition {
 	@description = "Assert we can resolve conflicting Segment changes by discarding."
 	@priority = "4"
 	test CanResolveConflictingPublicationsByDiscarding {
-		Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		Segmentation.openSegmentsAdmin(siteURLKey = "site-name");
 
 		LexiconEntry.gotoAdd();
 

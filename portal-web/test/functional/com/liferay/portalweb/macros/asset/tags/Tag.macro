@@ -42,7 +42,9 @@ definition {
 
 		Navigator.gotoNavTab(navTab = "Categorization");
 
-		AssetCategorization.addTag(tagName = "${tagName}");
+		for (var tagName : list "${tagNameList}") {
+			AssetCategorization.addTag(tagName = "${tagName}");
+		}
 
 		PortletEntry.save();
 
@@ -66,6 +68,10 @@ definition {
 				rowEntry = "${tagName}");
 		}
 		else {
+			for (var tagName : list "${tagNameList}") {
+				LexiconEntry.selectEntry(rowEntry = "${tagName}");
+			}
+
 			Click(locator1 = "Icon#TOOLBAR_ELLIPSIS");
 
 			Click(locator1 = "Button#MERGE");
@@ -99,7 +105,9 @@ definition {
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
-		LexiconEntry.selectEntry(rowEntry = "${tagName}");
+		for (var tagName : list "${tagNameList}") {
+			LexiconEntry.selectEntry(rowEntry = "${tagName}");
+		}
 
 		SelectFrameTop();
 
@@ -138,11 +146,15 @@ definition {
 	}
 
 	macro viewCP {
-		var key_tagName = "${tagName}";
+		for (var tagName : list "${tagNameList}") {
+			LexiconEntry.viewEntryName(rowEntry = "${tagName}");
+		}
+	}
 
-		AssertTextEquals(
-			locator1 = "Tags#TAG_ENTRY_TABLE_NAME",
-			value1 = "${tagName}");
+	macro viewNotPresentCP {
+		for (var tagName : list "${tagNameList}") {
+			LexiconEntry.viewNoEntry(rowEntry = "${tagName}");
+		}
 	}
 
 }

@@ -594,9 +594,7 @@ definition {
 
 			Site.openSiteSettingsAdmin(siteURLKey = "site-name");
 
-			for (var tagName : list "apple,banana,mango") {
-				Tag.addViaSiteCP(tagName = "${tagName}");
-			}
+			Tag.addViaSiteCP(tagNameList = "apple,banana,mango");
 		}
 
 		task ("Add My Sites widget to Site Page in Home Site") {
@@ -615,9 +613,7 @@ definition {
 				memberCount = "1 User",
 				siteName = "Site Name");
 
-			for (var tagName : list "apple,banana,mango") {
-				MySites.viewTags(tagName = "${tagName}");
-			}
+			MySites.viewTags(tagNameList = "apple,banana,mango");
 		}
 	}
 

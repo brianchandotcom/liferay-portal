@@ -31,10 +31,12 @@ definition {
 	}
 
 	macro viewTags {
-		AssertTextEquals(
-			key_tagName = "${tagName}",
-			locator1 = "Tags#VIEW_TAGS_VIA_MY_SITES",
-			value1 = "${tagName}");
+		for (var tagName : list "${tagNameList}") {
+			AssertTextEquals(
+				key_tagName = "${tagName}",
+				locator1 = "Tags#VIEW_TAGS_VIA_MY_SITES",
+				value1 = "${tagName}");
+		}
 	}
 
 }

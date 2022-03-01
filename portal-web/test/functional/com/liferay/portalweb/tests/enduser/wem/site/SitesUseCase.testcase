@@ -916,9 +916,7 @@ definition {
 				category = "Configuration",
 				portlet = "Site Settings");
 
-			for (var tagName : list "World Cup,Russia,2018") {
-				Tag.addViaSiteCP(tagName = "${tagName}");
-			}
+			Tag.addViaSiteCP(tagNameList = "World Cup,Russia,2018");
 		}
 
 		task ("Add virtual host for public page and private page") {

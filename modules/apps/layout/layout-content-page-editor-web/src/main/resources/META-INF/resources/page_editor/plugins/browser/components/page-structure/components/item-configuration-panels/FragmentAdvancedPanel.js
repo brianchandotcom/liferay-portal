@@ -16,7 +16,6 @@ import PropTypes from 'prop-types';
 import React, {useCallback} from 'react';
 
 import {FRAGMENT_CONFIGURATION_ROLES} from '../../../../../../app/config/constants/fragmentConfigurationRoles';
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
@@ -24,6 +23,7 @@ import {
 	useSelectorCallback,
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
+import getFragmentConfigurationValues from '../../../../../../app/utils/getFragmentConfigurationValues';
 import updateConfigurationValue from '../../../../../../app/utils/updateConfigurationValue';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
 import {FieldSet} from './FieldSet';
@@ -74,7 +74,9 @@ export function FragmentAdvancedPanel({item}) {
 						label={fieldSet.label}
 						languageId={config.defaultLanguageId}
 						onValueSelect={onConfigurationValueSelect}
-						values={getConfigurationValues(fragmentEntryLink)}
+						values={getFragmentConfigurationValues(
+							fragmentEntryLink
+						)}
 					/>
 				);
 			})}
@@ -89,12 +91,3 @@ FragmentAdvancedPanel.propTypes = {
 		}).isRequired,
 	}),
 };
-
-function getConfigurationValues(fragmentEntryLink) {
-	return {
-		...fragmentEntryLink.defaultConfigurationValues,
-		...(fragmentEntryLink.editableValues[
-			FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-		] || {}),
-	};
-}

@@ -17,14 +17,15 @@ import React, {useCallback} from 'react';
 
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
 import {FRAGMENT_CONFIGURATION_ROLES} from '../../../../../../app/config/constants/fragmentConfigurationRoles';
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
+import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
 	useSelector,
 	useSelectorCallback,
 } from '../../../../../../app/contexts/StoreContext';
 import selectLanguageId from '../../../../../../app/selectors/selectLanguageId';
+import getFragmentConfigurationValues from '../../../../../../app/utils/getFragmentConfigurationValues';
 import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConfig';
 import updateConfigurationValue from '../../../../../../app/utils/updateConfigurationValue';
 import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
@@ -53,9 +54,6 @@ export function FragmentGeneralPanel({item}) {
 				  FRAGMENT_CONFIGURATION_ROLES.style
 	);
 
-	const defaultConfigurationValues =
-		fragmentEntryLink.defaultConfigurationValues;
-
 	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 
 	const onValueSelect = useCallback(
@@ -83,8 +81,7 @@ export function FragmentGeneralPanel({item}) {
 								label={fieldSet.label}
 								languageId={languageId}
 								onValueSelect={onValueSelect}
-								values={getConfigurationValues(
-									defaultConfigurationValues,
+								values={getFragmentConfigurationValues(
 									fragmentEntryLink
 								)}
 							/>
@@ -108,12 +105,3 @@ FragmentGeneralPanel.propTypes = {
 		}).isRequired,
 	}),
 };
-
-function getConfigurationValues(defaultConfigurationValues, fragmentEntryLink) {
-	return {
-		...defaultConfigurationValues,
-		...(fragmentEntryLink.editableValues[
-			FREEMARKER_FRAGMENT_ENTRY_PROCESSOR
-		] || {}),
-	};
-}

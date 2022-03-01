@@ -7,13 +7,15 @@ definition {
 	property testray.main.component.name = "Tags";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
 
-		ProductMenu.gotoPortlet(
-			category = "Categorization",
-			portlet = "Tags");
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
 	}
 
 	tearDown {
@@ -23,7 +25,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Tag.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 

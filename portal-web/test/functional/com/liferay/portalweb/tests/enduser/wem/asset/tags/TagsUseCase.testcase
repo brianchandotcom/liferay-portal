@@ -3,12 +3,25 @@ definition {
 
 	property portal.release = "true";
 	property portal.upstream = "true";
+	property testray.component.names = "Tags";
 	property testray.main.component.name = "Tags";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
 
-		User.firstLoginPG();
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
 	}
 
 	tearDown {
@@ -18,9 +31,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			Tag.tearDownCP();
-
-			Site.tearDownCP();
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
 		}
 	}
 

@@ -38,9 +38,9 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 		/>
 
 		<commerce-ui:panel
-			actionLabel='<%= LanguageUtil.get(request, Validator.isNull(commerceOrder.getCommercePaymentMethodKey()) ? "add" : "edit") %>'
+			actionLabel='<%= commerceOrderEditDisplayContext.containsManageCommerceOrderPaymentMethodsPermission() ? LanguageUtil.get(request, Validator.isNull(commerceOrder.getCommercePaymentMethodKey()) ? "add" : "edit") : null %>'
 			actionTargetId="order-payment-method-modal"
-			actionUrl="<%= editOrderPaymentMethodURL %>"
+			actionUrl="<%= commerceOrderEditDisplayContext.containsManageCommerceOrderPaymentMethodsPermission() ? editOrderPaymentMethodURL : null %>"
 			elementClasses="flex-fill"
 			title='<%= LanguageUtil.get(request, "payment-method") %>'
 		>

@@ -19,7 +19,7 @@
 <%
 int aspectRatio = ParamUtil.getInteger(request, "aspectRatio");
 String currentImageURL = ParamUtil.getString(request, "currentLogoURL");
-long maxFileSize = ParamUtil.getLong(request, "maxFileSize");
+long maxFileSize = UploadImageUtil.getMaxFileSize(renderRequest);
 boolean preserveRatio = ParamUtil.getBoolean(request, "preserveRatio");
 String randomNamespace = ParamUtil.getString(request, "randomNamespace");
 String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");

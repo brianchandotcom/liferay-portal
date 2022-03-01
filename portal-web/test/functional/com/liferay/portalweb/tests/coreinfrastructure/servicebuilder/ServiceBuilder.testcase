@@ -1,0 +1,42 @@
+@component-name = "portal-service-builder"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property test.assert.warning.exceptions = "true";
+	property testray.main.component.name = "Service Builder";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "Upgrades a Service Builder module using Spring to use Declarative Services instead"
+	@priority = "4"
+	test UpgradeSpringModuleToDeclarativeServices {
+		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "ServiceBuilder#UpgradeSpringModuleToDeclarativeServices";
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "update-dependency-injector -Dgradle.file.path=/modules/test/spring-service-builder-test-service");
+		
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "build-service -Dgradle.file.path=/modules/test/spring-service-builder-test-service");
+
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "deploy-osgi-module-to-specific-bundle -Dmodule.base.dir=/modules/test/spring-service-builder-test-service -DliferayHome=${liferayHome}");
+	}
+
+}

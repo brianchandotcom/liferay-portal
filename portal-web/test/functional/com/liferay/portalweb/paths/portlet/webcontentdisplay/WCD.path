@@ -21,11 +21,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_STRUCTURED_WEB_CONTENT</td>
-	<td>//span[contains(@class,'taglib-text-icon') and contains(.,'${key_structureName}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

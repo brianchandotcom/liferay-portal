@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.internal.upgrade.v1_3_0;
 
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
-import com.liferay.commerce.product.model.impl.CProductModelImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -34,10 +33,6 @@ public class CProductUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasTable(CProductModelImpl.TABLE_NAME)) {
-			runSQL(CProductModelImpl.TABLE_SQL_CREATE);
-		}
-
 		addColumn("CPDefinition", "CProductId", "LONG");
 		addColumn("CPDefinition", "version", "INTEGER");
 

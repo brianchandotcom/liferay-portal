@@ -14,15 +14,15 @@
 
 package com.liferay.commerce.discount.internal.upgrade;
 
-import com.liferay.commerce.discount.internal.upgrade.v2_0_0.CommerceDiscountCommerceAccountGroupRelUpgradeProcess;
 import com.liferay.commerce.discount.internal.upgrade.v2_0_0.CommerceDiscountRelUpgradeProcess;
 import com.liferay.commerce.discount.internal.upgrade.v2_0_0.CommerceDiscountRuleUpgradeProcess;
 import com.liferay.commerce.discount.internal.upgrade.v2_0_0.CommerceDiscountUpgradeProcess;
 import com.liferay.commerce.discount.internal.upgrade.v2_0_0.CommerceDiscountUsageEntryUpgradeProcess;
+import com.liferay.commerce.discount.internal.upgrade.v2_0_0.util.CommerceDiscountCommerceAccountGroupRelTable;
 import com.liferay.commerce.discount.internal.upgrade.v2_1_0.CommerceDiscountExternalReferenceCodeUpgradeProcess;
-import com.liferay.commerce.discount.internal.upgrade.v2_2_0.CommerceDiscountAccountRelUpgradeProcess;
 import com.liferay.commerce.discount.internal.upgrade.v2_2_0.CommerceDiscountRuleNameUpgradeProcess;
-import com.liferay.commerce.discount.internal.upgrade.v2_6_0.CommerceDiscountOrderTypeRelUpgradeProcess;
+import com.liferay.commerce.discount.internal.upgrade.v2_2_0.util.CommerceDiscountAccountRelTable;
+import com.liferay.commerce.discount.internal.upgrade.v2_6_0.util.CommerceDiscountOrderTypeRelTable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
@@ -48,7 +48,7 @@ public class CommerceDiscountUpgradeStepRegistrator
 
 		registry.register(
 			"1.0.0", "2.0.0",
-			new CommerceDiscountCommerceAccountGroupRelUpgradeProcess(),
+			CommerceDiscountCommerceAccountGroupRelTable.create(),
 			new CommerceDiscountRelUpgradeProcess(),
 			new CommerceDiscountRuleUpgradeProcess(),
 			new CommerceDiscountUpgradeProcess(),
@@ -62,10 +62,10 @@ public class CommerceDiscountUpgradeStepRegistrator
 			"2.1.0", "2.2.0",
 			new com.liferay.commerce.discount.internal.upgrade.v2_2_0.
 				CommerceDiscountUpgradeProcess(),
-			new CommerceDiscountAccountRelUpgradeProcess(),
+			CommerceDiscountAccountRelTable.create(),
 			new CommerceDiscountRuleNameUpgradeProcess(),
-			new com.liferay.commerce.discount.internal.upgrade.v2_2_0.
-				CommerceDiscountCommerceAccountGroupRelUpgradeProcess());
+			com.liferay.commerce.discount.internal.upgrade.v2_2_0.util.
+				CommerceDiscountCommerceAccountGroupRelTable.create());
 
 		registry.register(
 			"2.2.0", "2.3.0",
@@ -87,7 +87,7 @@ public class CommerceDiscountUpgradeStepRegistrator
 		registry.register("2.4.2", "2.5.0", new DummyUpgradeStep());
 
 		registry.register(
-			"2.5.0", "2.6.0", new CommerceDiscountOrderTypeRelUpgradeProcess());
+			"2.5.0", "2.6.0", CommerceDiscountOrderTypeRelTable.create());
 
 		registry.register(
 			"2.6.0", "2.7.0",

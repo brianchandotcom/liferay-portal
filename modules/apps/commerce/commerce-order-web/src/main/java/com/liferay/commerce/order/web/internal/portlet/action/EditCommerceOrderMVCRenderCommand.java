@@ -15,6 +15,7 @@
 package com.liferay.commerce.order.web.internal.portlet.action;
 
 import com.liferay.commerce.configuration.CommerceOrderItemDecimalQuantityConfiguration;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.notification.service.CommerceNotificationQueueEntryLocalService;
@@ -32,6 +33,7 @@ import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -74,6 +76,7 @@ public class EditCommerceOrderMVCRenderCommand implements MVCRenderCommand {
 					_commerceOrderEngine,
 					_commerceOrderItemDecimalQuantityConfiguration,
 					_commerceOrderItemService, _commerceOrderNoteService,
+					_commerceOrderPortletResourcePermission,
 					_commerceOrderService, _commerceOrderStatusRegistry,
 					_commerceOrderTypeService,
 					_commercePaymentMethodGroupRelLocalService,
@@ -126,6 +129,11 @@ public class EditCommerceOrderMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CommerceOrderNoteService _commerceOrderNoteService;
+
+	@Reference(
+		target = "(resource.name=" + CommerceOrderConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _commerceOrderPortletResourcePermission;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;

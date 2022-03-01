@@ -375,11 +375,15 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 		FileEntry newFileEntry = _dlAppLocalService.getFileEntry(fileEntryId);
 
 		if (!Objects.equals(newFileEntry.getExtension(), "jrxml")) {
+			_dlAppLocalService.deleteFileEntry(newFileEntry.getFileEntryId());
+
 			throw new FileExtensionException();
 		}
 
 		if (!_commerceReportExporter.isValidJRXMLTemplate(
 				newFileEntry.getContentStream())) {
+
+			_dlAppLocalService.deleteFileEntry(newFileEntry.getFileEntryId());
 
 			throw new InvalidFileException();
 		}

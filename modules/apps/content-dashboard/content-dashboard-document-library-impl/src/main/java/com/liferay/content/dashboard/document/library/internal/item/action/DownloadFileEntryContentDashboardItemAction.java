@@ -15,6 +15,7 @@
 package com.liferay.content.dashboard.document.library.internal.item.action;
 
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
+import com.liferay.document.library.constants.DLContentTypes;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -63,6 +65,13 @@ public class DownloadFileEntryContentDashboardItemAction
 
 	@Override
 	public String getURL() {
+		if (Objects.equals(
+				_fileEntry.getMimeType(),
+				DLContentTypes.VIDEO_EXTERNAL_SHORTCUT)) {
+
+			return StringPool.BLANK;
+		}
+
 		InfoItemFieldValues infoItemFieldValues =
 			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
 

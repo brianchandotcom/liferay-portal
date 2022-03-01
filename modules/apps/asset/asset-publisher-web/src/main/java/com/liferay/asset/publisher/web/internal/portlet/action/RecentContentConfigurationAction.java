@@ -15,6 +15,7 @@
 package com.liferay.asset.publisher.web.internal.portlet.action;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,4 +30,10 @@ import org.osgi.service.component.annotations.Component;
 )
 public class RecentContentConfigurationAction
 	extends AssetPublisherConfigurationAction {
+
+	@Override
+	protected String getDefaultSelectionStyle() {
+		return AssetPublisherSelectionStyleConstants.TYPE_DYNAMIC;
+	}
+
 }

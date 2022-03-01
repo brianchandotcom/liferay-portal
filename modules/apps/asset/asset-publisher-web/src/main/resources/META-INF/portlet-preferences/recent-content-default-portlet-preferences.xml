@@ -9,4 +9,8 @@
 		<name>displayStyle</name>
 		<value>title-list</value>
 	</preference>
+	<preference>
+		<name>selectionStyle</name>
+		<value>dynamic</value>
+	</preference>
 </portlet-preferences>

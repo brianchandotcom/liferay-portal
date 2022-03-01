@@ -381,8 +381,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return repository.addFileEntry(
 			externalReferenceCode, getUserId(), folderId, sourceFileName,
-			mimeType, title, description, changeLog, file, expirationDate,
-			reviewDate, serviceContext);
+			mimeType, title, title, description, changeLog, file,
+			expirationDate, reviewDate, serviceContext);
 	}
 
 	/**
@@ -468,7 +468,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return repository.addFileEntry(
 			externalReferenceCode, getUserId(), folderId, sourceFileName,
-			mimeType, title, description, changeLog, inputStream, size,
+			mimeType, title, title, description, changeLog, inputStream, size,
 			expirationDate, reviewDate, serviceContext);
 	}
 
@@ -2925,7 +2925,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			fileEntryId);
 
 		FileEntry fileEntry = repository.updateFileEntry(
-			getUserId(), fileEntryId, sourceFileName, mimeType, title,
+			getUserId(), fileEntryId, sourceFileName, mimeType, title, title,
 			description, changeLog, dlVersionNumberIncrease, file,
 			expirationDate, reviewDate, serviceContext);
 
@@ -3072,7 +3072,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			fileEntryId);
 
 		FileEntry fileEntry = repository.updateFileEntry(
-			getUserId(), fileEntryId, sourceFileName, mimeType, title,
+			getUserId(), fileEntryId, sourceFileName, mimeType, title, title,
 			description, changeLog, dlVersionNumberIncrease, inputStream, size,
 			expirationDate, reviewDate, serviceContext);
 
@@ -3157,7 +3157,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			fileEntryId);
 
 		repository.updateFileEntry(
-			getUserId(), fileEntryId, sourceFileName, mimeType, title,
+			getUserId(), fileEntryId, sourceFileName, mimeType, title, title,
 			description, changeLog, dlVersionNumberIncrease, file,
 			expirationDate, reviewDate, serviceContext);
 
@@ -3208,7 +3208,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			fileEntryId);
 
 		repository.updateFileEntry(
-			getUserId(), fileEntryId, sourceFileName, mimeType, title,
+			getUserId(), fileEntryId, sourceFileName, mimeType, title, title,
 			description, changeLog, dlVersionNumberIncrease, inputStream, size,
 			expirationDate, reviewDate, serviceContext);
 
@@ -3382,8 +3382,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileEntry destinationFileEntry = toRepository.addFileEntry(
 			null, getUserId(), newFolderId, sourceFileName,
 			latestFileVersion.getMimeType(), latestFileVersion.getTitle(),
-			latestFileVersion.getDescription(), StringPool.BLANK,
-			latestFileVersion.getContentStream(false),
+			latestFileVersion.getTitle(), latestFileVersion.getDescription(),
+			StringPool.BLANK, latestFileVersion.getContentStream(false),
 			latestFileVersion.getSize(), latestFileVersion.getExpirationDate(),
 			latestFileVersion.getReviewDate(), serviceContext);
 
@@ -3398,8 +3398,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 				destinationFileEntry = toRepository.updateFileEntry(
 					getUserId(), destinationFileEntry.getFileEntryId(),
 					sourceFileName, fileVersion.getMimeType(),
-					fileVersion.getTitle(), fileVersion.getDescription(),
-					StringPool.BLANK,
+					fileVersion.getTitle(), fileVersion.getTitle(),
+					fileVersion.getDescription(), StringPool.BLANK,
 					DLVersionNumberIncrease.fromMajorVersion(
 						DLAppUtil.isMajorVersion(
 							previousFileVersion, fileVersion)),

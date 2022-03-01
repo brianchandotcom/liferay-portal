@@ -15,12 +15,12 @@
 package com.liferay.commerce.price.list.internal.upgrade;
 
 import com.liferay.commerce.price.list.internal.upgrade.v1_1_0.CommercePriceEntryUpgradeProcess;
-import com.liferay.commerce.price.list.internal.upgrade.v1_2_0.CommercePriceListAccountRelUpgradeProcess;
-import com.liferay.commerce.price.list.internal.upgrade.v2_0_0.CommercePriceListCommerceAccountGroupRelUpgradeProcess;
+import com.liferay.commerce.price.list.internal.upgrade.v1_2_0.util.CommercePriceListAccountRelTable;
 import com.liferay.commerce.price.list.internal.upgrade.v2_0_0.CommerceTierPriceEntryUpgradeProcess;
-import com.liferay.commerce.price.list.internal.upgrade.v2_1_0.CommercePriceListChannelRelUpgradeProcess;
-import com.liferay.commerce.price.list.internal.upgrade.v2_1_0.CommercePriceListDiscountRelUpgradeProcess;
-import com.liferay.commerce.price.list.internal.upgrade.v2_2_0.CommercePriceListOrderTypeRelUpgradeProcess;
+import com.liferay.commerce.price.list.internal.upgrade.v2_0_0.util.CommercePriceListCommerceAccountGroupRelTable;
+import com.liferay.commerce.price.list.internal.upgrade.v2_1_0.util.CommercePriceListChannelRelTable;
+import com.liferay.commerce.price.list.internal.upgrade.v2_1_0.util.CommercePriceListDiscountRelTable;
+import com.liferay.commerce.price.list.internal.upgrade.v2_2_0.util.CommercePriceListOrderTypeRelTable;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -56,7 +56,7 @@ public class CommercePriceListUpgradeStepRegistrator
 				_cpDefinitionLocalService, _cpInstanceLocalService));
 
 		registry.register(
-			"1.1.0", "1.2.0", new CommercePriceListAccountRelUpgradeProcess());
+			"1.1.0", "1.2.0", CommercePriceListAccountRelTable.create());
 
 		registry.register(
 			"1.2.0", "2.0.0",
@@ -64,7 +64,7 @@ public class CommercePriceListUpgradeStepRegistrator
 				CommercePriceEntryUpgradeProcess(),
 			new com.liferay.commerce.price.list.internal.upgrade.v2_0_0.
 				CommercePriceListAccountRelUpgradeProcess(),
-			new CommercePriceListCommerceAccountGroupRelUpgradeProcess(),
+			CommercePriceListCommerceAccountGroupRelTable.create(),
 			new CommerceTierPriceEntryUpgradeProcess());
 
 		registry.register(
@@ -75,8 +75,8 @@ public class CommercePriceListUpgradeStepRegistrator
 				CommercePriceListUpgradeProcess(),
 			new com.liferay.commerce.price.list.internal.upgrade.v2_1_0.
 				CommerceTierPriceEntryUpgradeProcess(),
-			new CommercePriceListChannelRelUpgradeProcess(),
-			new CommercePriceListDiscountRelUpgradeProcess());
+			CommercePriceListChannelRelTable.create(),
+			CommercePriceListDiscountRelTable.create());
 
 		registry.register(
 			"2.1.0", "2.1.1",
@@ -92,8 +92,7 @@ public class CommercePriceListUpgradeStepRegistrator
 		registry.register("2.1.2", "2.1.3", new DummyUpgradeProcess());
 
 		registry.register(
-			"2.1.3", "2.2.0",
-			new CommercePriceListOrderTypeRelUpgradeProcess());
+			"2.1.3", "2.2.0", CommercePriceListOrderTypeRelTable.create());
 
 		registry.register(
 			"2.2.0", "2.3.0",

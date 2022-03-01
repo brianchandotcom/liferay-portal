@@ -16,7 +16,6 @@ package com.liferay.commerce.product.internal.upgrade.v2_0_0;
 
 import com.liferay.commerce.product.internal.upgrade.base.BaseCommerceProductServiceUpgradeProcess;
 import com.liferay.commerce.product.model.impl.CPInstanceModelImpl;
-import com.liferay.commerce.product.model.impl.CPInstanceOptionValueRelModelImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -50,10 +49,6 @@ public class CPInstanceOptionValueRelUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (!hasTable(CPInstanceOptionValueRelModelImpl.TABLE_NAME)) {
-			runSQL(CPInstanceOptionValueRelModelImpl.TABLE_SQL_CREATE);
-		}
-
 		_importContentFromCPInstanceJsonField();
 
 		dropColumn(CPInstanceModelImpl.TABLE_NAME, "json");

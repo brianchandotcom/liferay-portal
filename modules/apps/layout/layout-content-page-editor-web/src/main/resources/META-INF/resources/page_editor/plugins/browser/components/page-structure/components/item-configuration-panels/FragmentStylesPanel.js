@@ -46,11 +46,12 @@ export function FragmentStylesPanel({item}) {
 
 	const itemConfig = getResponsiveConfig(item.config, selectedViewportSize);
 
-	const hasCustomStyles = fragmentEntryLink.configuration?.fieldSets?.filter(
-		(fieldSet) =>
-			fieldSet.configurationRole === FRAGMENT_CONFIGURATION_ROLES.style &&
-			selectedViewportSize === VIEWPORT_SIZES.desktop
-	).length;
+	const hasCustomStyles =
+		fragmentEntryLink.configuration?.fieldSets?.filter(
+			(fieldSet) =>
+				fieldSet.configurationRole ===
+				FRAGMENT_CONFIGURATION_ROLES.style
+		).length && selectedViewportSize === VIEWPORT_SIZES.desktop;
 
 	const onCustomStyleValueSelect = useCallback(
 		(name, value) => {

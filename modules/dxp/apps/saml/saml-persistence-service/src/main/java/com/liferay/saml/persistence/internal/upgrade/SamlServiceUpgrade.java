@@ -22,6 +22,7 @@ import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
 import com.liferay.saml.persistence.internal.upgrade.v1_1_0.SamlSpAuthRequestUpgradeProcess;
 import com.liferay.saml.persistence.internal.upgrade.v1_1_0.SamlSpMessageUpgradeProcess;
 import com.liferay.saml.persistence.internal.upgrade.v2_1_0.SamlIdpSpConnectionUpgradeProcess;
+import com.liferay.saml.persistence.internal.upgrade.v3_0_0.util.SamlPeerBindingTable;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
@@ -113,10 +114,7 @@ public class SamlServiceUpgrade implements UpgradeStepRegistrator {
 			new com.liferay.saml.persistence.internal.upgrade.v2_3_0.
 				SamlSpIdpConnectionUpgradeProcess());
 
-		registry.register(
-			"2.3.0", "2.4.0",
-			new com.liferay.saml.persistence.internal.upgrade.v3_0_0.
-				SamlPeerBindingUpgradeProcess());
+		registry.register("2.3.0", "2.4.0", SamlPeerBindingTable.create());
 
 		registry.register(
 			"2.4.0", "2.5.0",

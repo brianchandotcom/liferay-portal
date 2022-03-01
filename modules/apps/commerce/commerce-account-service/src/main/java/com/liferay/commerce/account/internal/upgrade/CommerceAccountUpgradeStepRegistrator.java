@@ -21,9 +21,9 @@ import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.account.internal.upgrade.v1_1_0.CommerceAccountUpgradeProcess;
-import com.liferay.commerce.account.internal.upgrade.v1_2_0.CommerceAccountGroupCommerceAccountRelUpgradeProcess;
-import com.liferay.commerce.account.internal.upgrade.v1_2_0.CommerceAccountGroupRelUpgradeProcess;
-import com.liferay.commerce.account.internal.upgrade.v1_2_0.CommerceAccountGroupUpgradeProcess;
+import com.liferay.commerce.account.internal.upgrade.v1_2_0.util.CommerceAccountGroupCommerceAccountRelTable;
+import com.liferay.commerce.account.internal.upgrade.v1_2_0.util.CommerceAccountGroupRelTable;
+import com.liferay.commerce.account.internal.upgrade.v1_2_0.util.CommerceAccountGroupTable;
 import com.liferay.commerce.account.internal.upgrade.v1_3_0.CommerceAccountNameUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v1_4_0.CommerceAccountDefaultAddressesUpgradeProcess;
 import com.liferay.commerce.account.internal.upgrade.v2_0_0.CommerceAccountGroupSystemUpgradeProcess;
@@ -70,9 +70,9 @@ public class CommerceAccountUpgradeStepRegistrator
 
 		registry.register(
 			"1.1.0", "1.2.0",
-			new CommerceAccountGroupCommerceAccountRelUpgradeProcess(),
-			new CommerceAccountGroupRelUpgradeProcess(),
-			new CommerceAccountGroupUpgradeProcess());
+			CommerceAccountGroupCommerceAccountRelTable.create(),
+			CommerceAccountGroupRelTable.create(),
+			CommerceAccountGroupTable.create());
 
 		registry.register(
 			"1.2.0", "1.3.0", new CommerceAccountNameUpgradeProcess());

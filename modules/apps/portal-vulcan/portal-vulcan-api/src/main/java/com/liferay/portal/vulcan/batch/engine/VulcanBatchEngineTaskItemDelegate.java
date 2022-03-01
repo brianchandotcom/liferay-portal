@@ -89,6 +89,10 @@ public interface VulcanBatchEngineTaskItemDelegate<T> {
 		return Collections.emptyList();
 	}
 
+	public default String getVersion() {
+		return "1.0";
+	}
+
 	public Page<T> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)

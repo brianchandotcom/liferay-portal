@@ -274,6 +274,10 @@ public class ElasticsearchInstanceSettingsBuilder {
 		put("monitor.jvm.gc.enabled", StringPool.FALSE);
 	}
 
+	private void _disableGeoipDownloader() {
+		put("ingest.geoip.downloader.enabled", false);
+	}
+
 	private void _disableXpack() {
 		put("xpack.ml.enabled", false);
 		put("xpack.monitoring.enabled", false);
@@ -312,6 +316,8 @@ public class ElasticsearchInstanceSettingsBuilder {
 		_configurePaths();
 
 		_configureTestMode();
+
+		_disableGeoipDownloader();
 
 		_disableXpack();
 	}

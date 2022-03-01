@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -128,15 +127,7 @@ public class FileEntryContentDashboardItem
 
 	@Override
 	public List<Locale> getAvailableLocales() {
-		try {
-			return Arrays.asList(
-				_portal.getSiteDefaultLocale(_fileEntry.getGroupId()));
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-
-			return Collections.emptyList();
-		}
+		return Collections.emptyList();
 	}
 
 	@Override

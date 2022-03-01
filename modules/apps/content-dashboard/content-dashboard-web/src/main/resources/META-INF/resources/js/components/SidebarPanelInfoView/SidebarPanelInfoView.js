@@ -290,9 +290,7 @@ const SidebarPanelInfoView = ({
 							</div>
 						</div>
 
-						{!!viewURLs.length && !isADocument && (
-							<ItemLanguages urls={viewURLs} />
-						)}
+						{!!viewURLs.length && <ItemLanguages urls={viewURLs} />}
 					</CollapsibleSection>
 				</ClayPanel.Group>
 			</Sidebar.Body>

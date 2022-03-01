@@ -3,7 +3,6 @@ ${copyright}
 package ${package};
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeStep;
 
 /**
 * @author Brian Wing Shun Chan
@@ -16,7 +15,7 @@ public class ${className} {
 	*
 	* Never modify this class directly. Use buildUpgradeTable command to generate it.
 	*/
-	public static UpgradeStep create() {
+	public static UpgradeProcess create() {
 		return new UpgradeProcess() {
 
 			@Override

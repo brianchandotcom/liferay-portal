@@ -348,6 +348,7 @@
 				"configurationRole": {
 					"default": "",
 					"enum": [
+						"advanced",
 						"style"
 					],
 					"title": "The Configuration Role Schema",

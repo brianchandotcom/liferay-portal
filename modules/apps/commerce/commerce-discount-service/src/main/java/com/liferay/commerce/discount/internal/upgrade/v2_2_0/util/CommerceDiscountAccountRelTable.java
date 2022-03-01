@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.upgrade.v4_5_0.util;
+package com.liferay.commerce.discount.internal.upgrade.v2_2_0.util;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 * @author Brian Wing Shun Chan
 * @generated
 */
-public class BatchEngineImportTaskErrorTable {
+public class CommerceDiscountAccountRelTable {
 
 	/*
 	* NOTE FOR DEVELOPERS:
@@ -39,9 +39,9 @@ public class BatchEngineImportTaskErrorTable {
 		};
 	}
 
-	private static final String TABLE_NAME = "BatchEngineImportTaskError";
+	private static final String TABLE_NAME = "CommerceDiscountAccountRel";
 
 	private static final String TABLE_SQL_CREATE=
-		"create table BatchEngineImportTaskError (mvccVersion LONG default 0 not null,batchEngineImportTaskErrorId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,modifiedDate DATE null,batchEngineImportTaskId LONG,item TEXT null,itemIndex INTEGER,message TEXT null)";
+		"create table CommerceDiscountAccountRel (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,commerceDiscountAccountRelId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceAccountId LONG,commerceDiscountId LONG,order_ INTEGER,lastPublishDate DATE null)";
 
 }

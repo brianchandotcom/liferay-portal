@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.notification.internal.upgrade;
 
-import com.liferay.commerce.notification.internal.upgrade.v2_0_0.CommerceNotificationTemplateAccountGroupRelUpgradeProcess;
+import com.liferay.commerce.notification.internal.upgrade.v2_0_0.util.CommerceNotificationTemplateCommerceAccountGroupRelTable;
 import com.liferay.commerce.notification.internal.upgrade.v2_1_0.CommerceNotificationQueueEntryUpgradeProcess;
 import com.liferay.commerce.notification.internal.upgrade.v2_2_0.CommerceNotificationTemplateUpgradeProcess;
 import com.liferay.commerce.notification.internal.upgrade.v2_2_1.CommerceNotificationTemplateGroupIdUpgradeProcess;
@@ -49,7 +49,7 @@ public class CommerceNotificationUpgradeStepRegistrator
 
 		registry.register(
 			"1.1.0", "2.0.0",
-			new CommerceNotificationTemplateAccountGroupRelUpgradeProcess());
+			CommerceNotificationTemplateCommerceAccountGroupRelTable.create());
 
 		registry.register(
 			"2.0.0", "2.1.0",

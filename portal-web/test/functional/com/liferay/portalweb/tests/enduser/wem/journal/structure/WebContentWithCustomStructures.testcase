@@ -403,10 +403,14 @@ definition {
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
-		WebContent.addWithGlobalStructurePGViaWCD(
-			fieldName = "Text",
+		WebContentDisplayPortlet.add(
+			fieldLabelList = "Text",
 			structureName = "Global WC Structure Name",
 			templateName = "Local WC Template Name",
+			text = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title");
+
+		WebContentDisplayPortlet.viewContent(
 			webContentContent = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title");
 	}
@@ -1006,10 +1010,14 @@ definition {
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
-		WebContent.addWithGlobalStructurePGViaWCD(
-			fieldName = "Text",
+		WebContentDisplayPortlet.add(
+			fieldLabelList = "Text",
 			structureName = "Global WC Structure Name",
 			templateName = "Global WC Template Name",
+			text = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title");
+
+		WebContentDisplayPortlet.viewContent(
 			webContentContent = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title");
 
@@ -1027,6 +1035,10 @@ definition {
 			webContentContentEdit = "WC WebContent Text Edit",
 			webContentText = "WC WebContent Text Edit",
 			webContentTitleEdit = "WC WebContent Title Edit");
+
+		WebContentDisplayPortlet.viewContent(
+			webContentContent = "WC WebContent Text Edit",
+			webContentTitle = "WC WebContent Title Edit");
 	}
 
 	@priority = "5"
@@ -1119,10 +1131,14 @@ definition {
 			pageName = "Web Content Display Page",
 			siteName = "Test Site Name");
 
-		WebContent.addWithGlobalStructurePGViaWCD(
-			fieldName = "Text",
+		WebContentDisplayPortlet.add(
+			fieldLabelList = "Text",
 			structureName = "Global WC Structure Name",
 			templateName = "Global WC Template Name",
+			text = "WC WebContent Text",
+			webContentTitle = "WC WebContent Title");
+
+		WebContentDisplayPortlet.viewContent(
 			webContentContent = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title");
 

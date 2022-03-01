@@ -402,47 +402,6 @@ definition {
 		PortletEntry.publish();
 	}
 
-	macro addWithGlobalStructurePGViaWCD {
-		WebContentDisplayPortletNavigator.gotoAdd(structureName = "${structureName}");
-
-		WebContent.addCP(webContentTitle = "${webContentTitle}");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "WCEditWebContent#SELECTED_STRUCTURE",
-			value1 = "${structureName}");
-
-		PortletEntry.inputTitle(title = "${webContentTitle}");
-
-		Type(
-			key_fieldFieldLabel = "${fieldName}",
-			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "${webContentContent}");
-
-		if (isSet(templateName)) {
-			if (IsTextNotEqual(inputFieldId = "ddmTemplateName", locator1 = "TextInput#INPUT_ID", value1 = "${templateName}")) {
-				WebContent.selectTemplateCP(
-					structureName = "${structureName}",
-					templateName = "${templateName}");
-			}
-		}
-
-		Click(locator1 = "Button#PUBLISH");
-
-		SelectFrame(value1 = "relative=top");
-
-		if ("${webContentJavascript}" == "true") {
-			AssertTextEquals(
-				locator1 = "//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]",
-				value1 = "${embeddedPortletTitle}");
-		}
-		else {
-			AssertTextEquals(
-				index = "1",
-				locator1 = "WCD#WEB_CONTENT_CONTENT",
-				value1 = "${webContentContent}");
-		}
-	}
-
 	macro addWithMultipleCategories {
 		for (var key_panel : list "Basic Information,Default Template,Display Page Template,Featured Image ") {
 			if ((IsElementPresent(locator1 = "Panel#PANEL_EXPANDED")) && (IsVisible(locator1 = "Panel#PANEL_EXPANDED"))) {

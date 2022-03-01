@@ -36,7 +36,7 @@ public class DefaultCommerceTermEntriesJSPDynamicInclude
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
 			"com.liferay.account.admin.web#/account_entries_admin" +
-				"/account_entry/details.jsp");
+				"/account_entry/details.jsp#terms");
 	}
 
 	@Override

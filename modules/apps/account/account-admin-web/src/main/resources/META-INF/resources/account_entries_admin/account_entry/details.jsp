@@ -61,7 +61,11 @@ renderResponse.setTitle((accountEntryDisplay.getAccountEntryId() == 0) ? Languag
 			</c:if>
 
 			<c:if test="<%= accountEntryDisplay.getAccountEntryId() > 0 %>">
-				<liferay-util:dynamic-include key="com.liferay.account.admin.web#/account_entries_admin/account_entry/details.jsp" />
+				<liferay-util:dynamic-include key="com.liferay.account.admin.web#/account_entries_admin/account_entry/details.jsp#terms" />
+			</c:if>
+
+			<c:if test="<%= accountEntryDisplay.getAccountEntryId() > 0 %>">
+				<liferay-util:dynamic-include key="com.liferay.account.admin.web#/account_entries_admin/account_entry/details.jsp#payment_methods" />
 			</c:if>
 
 			<liferay-util:include page="/account_entries_admin/account_entry/categorization.jsp" servletContext="<%= application %>" />

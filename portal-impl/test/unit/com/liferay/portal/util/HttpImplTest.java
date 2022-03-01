@@ -361,13 +361,13 @@ public class HttpImplTest {
 		String ipAddressWithStarWildcard = "182.*.0.250";
 
 		Field field = ReflectionTestUtil.getField(
-			HttpImpl.class, "_nonProxyHosts");
+			HttpImpl.class, "_NON_PROXY_HOSTS");
 
-		Object value = field.get(_httpImpl);
+		Object value = field.get(null);
 
 		try {
 			field.set(
-				_httpImpl,
+				null,
 				new String[] {domain, ipAddress, ipAddressWithStarWildcard});
 
 			Assert.assertTrue(_httpImpl.isNonProxyHost(domain));
@@ -377,7 +377,7 @@ public class HttpImplTest {
 			Assert.assertFalse(_httpImpl.isNonProxyHost("google.com"));
 		}
 		finally {
-			field.set(_httpImpl, value);
+			field.set(null, value);
 		}
 	}
 

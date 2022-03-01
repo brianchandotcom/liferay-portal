@@ -40,9 +40,9 @@ import org.osgi.service.component.annotations.Deactivate;
 	configurationPid = "com.liferay.document.library.internal.configuration.MimeTypeSizeLimitConfiguration",
 	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.document.library.internal.configuration.MimeTypeSizeLimitConfiguration.scoped",
-	service = MimeTypeSizeLimitCompanyConfigurationCache.class
+	service = MimeTypeSizeLimitManagedServiceFactory.class
 )
-public class MimeTypeSizeLimitCompanyConfigurationCache
+public class MimeTypeSizeLimitManagedServiceFactory
 	implements ManagedServiceFactory {
 
 	public void clear(long companyId) {

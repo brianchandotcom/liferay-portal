@@ -15,7 +15,7 @@
 package com.liferay.document.library.internal.util;
 
 import com.liferay.document.library.configuration.DLConfiguration;
-import com.liferay.document.library.internal.configuration.cache.MimeTypeSizeLimitCompanyConfigurationCache;
+import com.liferay.document.library.internal.configuration.cache.MimeTypeSizeLimitManagedServiceFactory;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -46,11 +46,11 @@ public class DLValidatorImplTest {
 
 		dlValidatorImpl.setDLConfiguration(_dlConfiguration);
 
-		_mimeTypeSizeLimitCompanyConfigurationCache = Mockito.mock(
-			MimeTypeSizeLimitCompanyConfigurationCache.class);
+		_mimeTypeSizeLimitManagedServiceFactory = Mockito.mock(
+			MimeTypeSizeLimitManagedServiceFactory.class);
 
-		dlValidatorImpl.setMimeTypeSizeLimitCompanyConfigurationCache(
-			_mimeTypeSizeLimitCompanyConfigurationCache);
+		dlValidatorImpl.setMimeTypeSizeLimitManagedServiceFactory(
+			_mimeTypeSizeLimitManagedServiceFactory);
 
 		_uploadServletRequestConfigurationHelper = Mockito.mock(
 			UploadServletRequestConfigurationHelper.class);
@@ -75,9 +75,8 @@ public class DLValidatorImplTest {
 		);
 
 		Mockito.when(
-			_mimeTypeSizeLimitCompanyConfigurationCache.
-				getCompanyMimeTypeSizeLimit(
-					Mockito.anyLong(), Mockito.anyString())
+			_mimeTypeSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
+				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			15L
 		);
@@ -100,9 +99,8 @@ public class DLValidatorImplTest {
 		);
 
 		Mockito.when(
-			_mimeTypeSizeLimitCompanyConfigurationCache.
-				getCompanyMimeTypeSizeLimit(
-					Mockito.anyLong(), Mockito.anyString())
+			_mimeTypeSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
+				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			5L
 		);
@@ -164,8 +162,8 @@ public class DLValidatorImplTest {
 
 	private DLConfiguration _dlConfiguration;
 	private DLValidator _dlValidator;
-	private MimeTypeSizeLimitCompanyConfigurationCache
-		_mimeTypeSizeLimitCompanyConfigurationCache;
+	private MimeTypeSizeLimitManagedServiceFactory
+		_mimeTypeSizeLimitManagedServiceFactory;
 	private UploadServletRequestConfigurationHelper
 		_uploadServletRequestConfigurationHelper;
 

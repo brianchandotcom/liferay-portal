@@ -15,7 +15,7 @@
 package com.liferay.document.library.internal.util;
 
 import com.liferay.document.library.configuration.DLConfiguration;
-import com.liferay.document.library.internal.configuration.cache.MimeTypeSizeLimitCompanyConfigurationCache;
+import com.liferay.document.library.internal.configuration.cache.MimeTypeSizeLimitManagedServiceFactory;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
@@ -83,9 +83,8 @@ public final class DLValidatorImpl implements DLValidator {
 		long globalMaxAllowableSize = _getGlobalMaxAllowableSize();
 
 		long mimeTypeFileMaxSize =
-			_mimeTypeSizeLimitCompanyConfigurationCache.
-				getCompanyMimeTypeSizeLimit(
-					CompanyThreadLocal.getCompanyId(), mimeType);
+			_mimeTypeSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
+				CompanyThreadLocal.getCompanyId(), mimeType);
 
 		if (mimeTypeFileMaxSize == 0) {
 			return globalMaxAllowableSize;
@@ -292,12 +291,12 @@ public final class DLValidatorImpl implements DLValidator {
 		_dlConfiguration = dlConfiguration;
 	}
 
-	protected void setMimeTypeSizeLimitCompanyConfigurationCache(
-		MimeTypeSizeLimitCompanyConfigurationCache
-			mimeTypeSizeLimitCompanyConfigurationCache) {
+	protected void setMimeTypeSizeLimitManagedServiceFactory(
+		MimeTypeSizeLimitManagedServiceFactory
+			mimeTypeSizeLimitManagedServiceFactory) {
 
-		_mimeTypeSizeLimitCompanyConfigurationCache =
-			mimeTypeSizeLimitCompanyConfigurationCache;
+		_mimeTypeSizeLimitManagedServiceFactory =
+			mimeTypeSizeLimitManagedServiceFactory;
 	}
 
 	protected void setUploadServletRequestConfigurationHelper(
@@ -380,8 +379,8 @@ public final class DLValidatorImpl implements DLValidator {
 	private volatile DLConfiguration _dlConfiguration;
 
 	@Reference
-	private MimeTypeSizeLimitCompanyConfigurationCache
-		_mimeTypeSizeLimitCompanyConfigurationCache;
+	private MimeTypeSizeLimitManagedServiceFactory
+		_mimeTypeSizeLimitManagedServiceFactory;
 
 	@Reference
 	private UploadServletRequestConfigurationHelper

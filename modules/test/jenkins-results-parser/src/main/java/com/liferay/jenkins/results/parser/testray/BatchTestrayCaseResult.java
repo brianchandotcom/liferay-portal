@@ -174,6 +174,7 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
 
 		testrayAttachments.add(_getBuildResultTopLevelTestrayAttachment());
+		testrayAttachments.add(_getJobSummaryTestrayAttachment());
 		testrayAttachments.add(_getJenkinsConsoleTestrayAttachment());
 		testrayAttachments.add(_getJenkinsConsoleTopLevelTestrayAttachment());
 		testrayAttachments.add(_getJenkinsReportTestrayAttachment());
@@ -277,6 +278,12 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		return getTestrayAttachment(
 			getTopLevelBuild(), "Jenkins Report (Top Level)",
 			_getTopLevelBuildURLPath() + "/jenkins-report.html.gz");
+	}
+
+	private TestrayAttachment _getJobSummaryTestrayAttachment() {
+		return getTestrayAttachment(
+			getTopLevelBuild(), "Job Summary (Top Level)",
+			_getTopLevelBuildURLPath() + "/job-summary/index.html.gz");
 	}
 
 	private String _getTopLevelBuildURLPath() {

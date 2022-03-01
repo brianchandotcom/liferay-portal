@@ -474,6 +474,22 @@ public abstract class TopLevelBuild extends BaseBuild {
 			String.valueOf(getBuildNumber()), "/jenkins-report.html");
 	}
 
+	public File getJobSummaryDir() {
+		File jobSummaryDir = new File(getBuildDirPath(), "job-summary");
+
+		if (!jobSummaryDir.exists()) {
+			try {
+				CIJobSummaryReportUtil.writeJobSummaryReport(
+					jobSummaryDir, getJob());
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+
+		return jobSummaryDir;
+	}
+
 	@Override
 	public Map<String, String> getMetricLabels() {
 		Map<String, String> metricLabels = new TreeMap<>();

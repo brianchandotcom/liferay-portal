@@ -29,10 +29,6 @@ public class CIJobSummaryReportUtil {
 			summaryDir.mkdirs();
 		}
 
-		JenkinsResultsParserUtil.write(
-			new File(summaryDir, "js/job-data.js"),
-			"data=" + job.getJSONObject());
-
 		String indexHTMLContent =
 			JenkinsResultsParserUtil.getResourceFileContent(
 				"dependencies/job/summary/index.html");
@@ -45,6 +41,9 @@ public class CIJobSummaryReportUtil {
 			"src=\"js/main.js\"",
 			JenkinsResultsParserUtil.combine(
 				"src=\"", _JOB_SUMMARY_RESOURCE_URL, "/js/main.js\""));
+		indexHTMLContent = indexHTMLContent.replace(
+			"<script src=\"js/job-data.js\"></script>",
+			"<script>\ndata=" + job.getJSONObject() + "\n</script>");
 
 		JenkinsResultsParserUtil.write(
 			new File(summaryDir, "index.html"), indexHTMLContent);

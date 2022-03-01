@@ -58,6 +58,7 @@ public class TestrayAttachmentRecorder {
 
 			if (_build instanceof TopLevelBuild) {
 				_recordBuildResult();
+				_recordJobSummary();
 				_recordJenkinsReport();
 			}
 			else {
@@ -303,6 +304,31 @@ public class TestrayAttachmentRecorder {
 				jenkinsReportFile,
 				StringEscapeUtils.unescapeXml(
 					Dom4JUtil.format(jenkinsReportElement, true)));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private void _recordJobSummary() {
+		if (!(_build instanceof TopLevelBuild)) {
+			return;
+		}
+
+		TopLevelBuild topLevelBuild = (TopLevelBuild)_build;
+
+		File jobSummaryFile = new File(
+			topLevelBuild.getJobSummaryDir(), "index.html");
+
+		if (!jobSummaryFile.exists()) {
+			return;
+		}
+
+		try {
+			JenkinsResultsParserUtil.copy(
+				jobSummaryFile,
+				new File(
+					_getRecordedFilesBuildDir(), "job-summary/index.html"));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

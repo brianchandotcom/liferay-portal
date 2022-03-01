@@ -1048,9 +1048,6 @@ public interface PropsKeys {
 
 	public static final String DL_FOLDER_COLUMNS = "dl.folder.columns";
 
-	public static final String DL_FOLDER_ICON_CHECK_COUNT =
-		"dl.folder.icon.check.count";
-
 	public static final String DL_FOLDERS_SEARCH_VISIBLE =
 		"dl.folders.search.visible";
 

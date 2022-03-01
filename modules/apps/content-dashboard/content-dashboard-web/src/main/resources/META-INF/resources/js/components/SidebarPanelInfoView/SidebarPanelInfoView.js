@@ -254,6 +254,19 @@ const SidebarPanelInfoView = ({
 
 							<div
 								className="c-mb-4 sidebar-dl sidebar-section"
+								key="creation-date"
+							>
+								<h5 className="c-mb-1 font-weight-semi-bold">
+									{Liferay.Language.get('creation-date')}
+								</h5>
+
+								<p className="text-secondary">
+									{formatDate(createDate, languageTag)}
+								</p>
+							</div>
+
+							<div
+								className="c-mb-4 sidebar-dl sidebar-section"
 								key="modified-date"
 							>
 								<h5 className="c-mb-1 font-weight-semi-bold">

@@ -41,9 +41,14 @@ import com.liferay.portal.search.searcher.Searcher;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -179,7 +184,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 						contentDashboardItem.getAssetTags(),
 						AssetTagModel::getName))
 			).cell(
-				String.valueOf(contentDashboardItem.getModifiedDate())
+				_toString(contentDashboardItem.getModifiedDate())
 			);
 
 			if (contentDashboardItem instanceof FileEntryContentDashboardItem) {
@@ -209,9 +214,9 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 					workbookBuilder.cellIndexIncrement(
 						4
 					).cell(
-						String.valueOf(specificInformation.get("display-date"))
+						_toString((Date)specificInformation.get("display-date"))
 					).cell(
-						String.valueOf(specificInformation.get("creation-date"))
+						_toString(contentDashboardItem.getCreateDate())
 					).cell(
 						StringUtil.merge(
 							(String[])specificInformation.get(
@@ -229,6 +234,16 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 				localDate.format(DateTimeFormatter.ofPattern("MM_dd_yyyy")) +
 					".xls",
 			workbookBuilder.build(), ContentTypes.APPLICATION_VND_MS_EXCEL);
+	}
+
+	private String _toString(Date date) {
+		Instant instant = date.toInstant();
+
+		ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+
+		LocalDateTime localDateTime = zonedDateTime.toLocalDateTime();
+
+		return localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 	}
 
 	@Reference

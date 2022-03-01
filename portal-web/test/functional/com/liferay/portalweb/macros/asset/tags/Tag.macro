@@ -61,6 +61,34 @@ definition {
 		Alert.viewRequiredField();
 	}
 
+	macro cancelEditCP {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${tagMenuName}");
+
+		PortletEntry.inputName(name = "${tagNameEdit}");
+
+		Button.clickCancel();
+	}
+
+	macro deleteCP {
+		for (var tagName : list "${tagNameList}") {
+			PortletEntry.deleteViaMenuItem(rowEntry = "${tagName}");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro editCP {
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "${tagMenuName}");
+
+		PortletEntry.inputName(name = "${tagNameEdit}");
+
+		PortletEntry.save();
+	}
+
 	macro gotoMerge {
 		if ("${mergeMethod}" == "menuItem") {
 			LexiconEntry.gotoEntryMenuItem(

@@ -18,6 +18,7 @@ import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
 import com.liferay.jenkins.results.parser.TestClassResult;
 import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
@@ -170,12 +171,8 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
 	@Override
 	public String getTeamName() {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		Job job = topLevelBuild.getJob();
-
-		JobProperty teamNamesJobProperty = JobPropertyFactory.newJobProperty(
-			job, "testray.team.names");
+		JobProperty teamNamesJobProperty = _getJobProperty(
+			"testray.team.names");
 
 		String teamNames = teamNamesJobProperty.getValue();
 
@@ -186,9 +183,8 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		String componentName = getComponentName();
 
 		for (String teamName : teamNames.split(",")) {
-			JobProperty teamComponentNamesJobProperty =
-				JobPropertyFactory.newJobProperty(
-					job, "testray.team." + teamName + ".component.names");
+			JobProperty teamComponentNamesJobProperty = _getJobProperty(
+				"testray.team." + teamName + ".component.names");
 
 			String teamComponentNames =
 				teamComponentNamesJobProperty.getValue();
@@ -286,6 +282,22 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 		}
 
 		return null;
+	}
+
+	private JobProperty _getJobProperty(String basePropertyName) {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		Job job = topLevelBuild.getJob();
+
+		if (job instanceof QAWebsitesGitRepositoryJob) {
+			AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
+
+			return JobPropertyFactory.newJobProperty(
+				basePropertyName, job, axisTestClassGroup.getTestBaseDir(),
+				JobProperty.Type.QA_WEBSITES_TEST_DIR);
+		}
+
+		return JobPropertyFactory.newJobProperty(basePropertyName, job);
 	}
 
 	private List<TestrayAttachment> _getLiferayLogTestrayAttachments() {

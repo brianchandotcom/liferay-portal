@@ -27,9 +27,17 @@ import java.util.Map;
  */
 public class JobPropertyFactory {
 
-	public static JobProperty newJobProperty(Job job, String basePropertyName) {
+	public static JobProperty newJobProperty(String basePropertyName, Job job) {
 		return newJobProperty(
 			basePropertyName, null, null, job, null, null, true);
+	}
+
+	public static JobProperty newJobProperty(
+		String basePropertyName, Job job, File testBaseDir,
+		JobProperty.Type type) {
+
+		return newJobProperty(
+			basePropertyName, null, null, job, testBaseDir, type, true);
 	}
 
 	public static JobProperty newJobProperty(

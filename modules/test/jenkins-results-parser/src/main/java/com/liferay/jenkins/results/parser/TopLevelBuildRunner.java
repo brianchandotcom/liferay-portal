@@ -119,7 +119,7 @@ public abstract class TopLevelBuildRunner<T extends TopLevelBuildData>
 
 	protected String getJobPropertyValue(String key) {
 		JobProperty jobProperty = JobPropertyFactory.newJobProperty(
-			getJob(), key);
+			key, getJob());
 
 		return jobProperty.getValue();
 	}

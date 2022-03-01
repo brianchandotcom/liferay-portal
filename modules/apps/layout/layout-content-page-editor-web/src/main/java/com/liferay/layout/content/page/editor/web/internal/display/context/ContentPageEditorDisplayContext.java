@@ -344,6 +344,10 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/edit_fragment_entry_link")
 			).put(
+				"fragmentAdvancedOptionsEnabled",
+				_ffLayoutContentPageEditorConfiguration.
+					fragmentAdvancedOptionsEnabled()
+			).put(
 				"frontendTokens",
 				() -> {
 					LayoutSet layoutSet =

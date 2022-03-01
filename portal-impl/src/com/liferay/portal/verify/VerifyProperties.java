@@ -1633,6 +1633,7 @@ public class VerifyProperties extends VerifyProcess {
 		"default.wap.color.scheme.id", "default.wap.theme.id",
 		"discussion.subscribe.by.default", "discussion.thread.view",
 		"dl.file.entry.image.exif.metadata.rotation.enabled",
+		"dl.file.entry.preview.auto.create.on.upgrade",
 		"dl.file.entry.preview.document.depth",
 		"dl.file.entry.previewable.processor.max.size",
 		"dl.file.entry.read.count.enabled",

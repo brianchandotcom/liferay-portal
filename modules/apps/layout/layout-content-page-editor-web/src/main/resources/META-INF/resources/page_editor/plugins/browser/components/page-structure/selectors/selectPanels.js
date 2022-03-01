@@ -29,6 +29,7 @@ import {CollectionGeneralPanel} from '../components/item-configuration-panels/Co
 import ContainerGeneralPanel from '../components/item-configuration-panels/ContainerGeneralPanel';
 import {ContainerStylesPanel} from '../components/item-configuration-panels/ContainerStylesPanel';
 import EditableLinkPanel from '../components/item-configuration-panels/EditableLinkPanel';
+import {FragmentAdvancedPanel} from '../components/item-configuration-panels/FragmentAdvancedPanel';
 import {FragmentGeneralPanel} from '../components/item-configuration-panels/FragmentGeneralPanel';
 import {FragmentStylesPanel} from '../components/item-configuration-panels/FragmentStylesPanel';
 import ImageSourcePanel from '../components/item-configuration-panels/ImageSourcePanel';
@@ -45,6 +46,7 @@ export const PANEL_IDS = {
 	containerStyles: 'containerStyles',
 	editableLink: 'editableLink',
 	editableMapping: 'editableMapping',
+	fragmentAdvanced: 'fragmentAdvanced',
 	fragmentGeneral: 'fragmentGeneral',
 	fragmentStyles: 'fragmentStyles',
 	imageSource: 'imageSource',
@@ -90,15 +92,20 @@ export const PANELS = {
 		label: Liferay.Language.get('mapping'),
 		priority: 1,
 	},
+	[PANEL_IDS.fragmentAdvanced]: {
+		component: FragmentAdvancedPanel,
+		label: Liferay.Language.get('advanced'),
+		priority: 0,
+	},
 	[PANEL_IDS.fragmentGeneral]: {
 		component: FragmentGeneralPanel,
 		label: Liferay.Language.get('general'),
-		priority: 1,
+		priority: 2,
 	},
 	[PANEL_IDS.fragmentStyles]: {
 		component: FragmentStylesPanel,
 		label: Liferay.Language.get('styles'),
-		priority: 0,
+		priority: 1,
 	},
 	[PANEL_IDS.imageSource]: {
 		component: ImageSourcePanel,
@@ -190,6 +197,15 @@ export function selectPanels(activeItemId, activeItemType, state) {
 		const fieldSets = fragmentEntryLink?.configuration?.fieldSets ?? [];
 
 		panelsIds = {
+			[PANEL_IDS.fragmentAdvanced]:
+				canUpdateItemConfiguration &&
+				config.fragmentAdvancedOptionsEnabled &&
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
+				fieldSets.some(
+					(fieldSet) =>
+						fieldSet.configurationRole ===
+						FRAGMENT_CONFIGURATION_ROLES.advanced
+				),
 			[PANEL_IDS.fragmentStyles]: canUpdateItemConfiguration,
 			[PANEL_IDS.fragmentGeneral]:
 				fragmentEntryKey !== COLLECTION_FILTER_FRAGMENT_ENTRY_KEY &&

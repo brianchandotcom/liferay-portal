@@ -452,9 +452,6 @@ definition {
 	@description = "This test covers LPS-142411. It ensures that a translation entry is not shown after deleting translated content page with new experience."
 	@priority = "4"
 	test EntryIsNotShownAfterDeletingTranslatedPage {
-		property osgi.module.configuration.file.names = "com.liferay.translation.web.internal.configuration.FFLayoutExperienceSelectorConfiguration.config";
-		property osgi.module.configurations = "enabled=B&quot;true&quot;";
-
 		JSONGroup.addGroup(groupName = "Test Site Name");
 
 		JSONLayout.addPublicLayout(

@@ -120,14 +120,6 @@ public class HttpImpl implements Http {
 		// Mimic behavior found in
 		// http://java.sun.com/j2se/1.5.0/docs/guide/net/properties.html
 
-		if (Validator.isNotNull(_NON_PROXY_HOSTS)) {
-			_nonProxyHosts = StringUtil.split(
-				_NON_PROXY_HOSTS, StringPool.PIPE);
-		}
-		else {
-			_nonProxyHosts = null;
-		}
-
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
 		_poolingHttpClientConnectionManager =
@@ -704,16 +696,14 @@ public class HttpImpl implements Http {
 			return false;
 		}
 
-		if (_nonProxyHosts != null) {
-			for (String nonProxyHost : _nonProxyHosts) {
-				if (nonProxyHost.equals(host) ||
-					(nonProxyHost.contains(StringPool.STAR) &&
-					 StringUtil.wildcardMatches(
-						 host, nonProxyHost, (char)0, CharPool.STAR, (char)0,
-						 false))) {
+		for (String nonProxyHost : _NON_PROXY_HOSTS) {
+			if (nonProxyHost.equals(host) ||
+				(nonProxyHost.contains(StringPool.STAR) &&
+				 StringUtil.wildcardMatches(
+					 host, nonProxyHost, (char)0, CharPool.STAR, (char)0,
+					 false))) {
 
-					return true;
-				}
+				return true;
 			}
 		}
 
@@ -2038,8 +2028,8 @@ public class HttpImpl implements Http {
 	private static final int _MAX_TOTAL_CONNECTIONS = GetterUtil.getInteger(
 		PropsUtil.get(HttpImpl.class.getName() + ".max.total.connections"), 20);
 
-	private static final String _NON_PROXY_HOSTS = SystemProperties.get(
-		"http.nonProxyHosts");
+	private static final String[] _NON_PROXY_HOSTS = StringUtil.split(
+		SystemProperties.get("http.nonProxyHosts"), StringPool.PIPE);
 
 	private static final String _PROXY_AUTH_TYPE = GetterUtil.getString(
 		PropsUtil.get(HttpImpl.class.getName() + ".proxy.auth.type"));
@@ -2078,7 +2068,6 @@ public class HttpImpl implements Http {
 		new CentralizedThreadLocal<>(HttpImpl.class + "._uris", HashMap::new);
 
 	private final CloseableHttpClient _closeableHttpClient;
-	private final String[] _nonProxyHosts;
 	private final PoolingHttpClientConnectionManager
 		_poolingHttpClientConnectionManager;
 	private final List<String> _proxyAuthPrefs = new ArrayList<>();

@@ -279,19 +279,16 @@ definition {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property test.name.skip.portal.instance = "CanonicalURL#ViewPageNameInCanonicalURL";
 
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
+		for (var num : list "1,2") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "page${num}");
+		}
 
-		PagesAdmin.addPublicPage(pageName = "Page1");
-
-		PagesAdmin.addPublicPage(pageName = "Page2");
-
-		Site.openSiteSettingsAdmin(siteURLKey = "guest");
-
-		Site.addVirtualHostsURLCP(
-			publicPageVirtualHostURL = "www.able.com",
-			publicVirtualHosts = "true");
+		HeadlessPortalInstanceAPI.addPortalInstance(
+			domain = "liferay.com",
+			portalInstanceId = "www.able.com",
+			virtualHost = "true");
 
 		User.logoutPG();
 

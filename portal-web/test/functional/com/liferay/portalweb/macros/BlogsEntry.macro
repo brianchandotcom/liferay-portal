@@ -1540,6 +1540,17 @@ definition {
 		}
 	}
 
+	macro viewTagNotPresentPG {
+		for (var tagName : list "${tagNameList}") {
+			var lowerCaseTagName = StringUtil.lowerCase("${tagName}");
+
+			AssertElementNotPresent(
+				key_entryTitle = "${entryTitle}",
+				key_tagName = "${lowerCaseTagName}",
+				locator1 = "BlogsEntry#TAG");
+		}
+	}
+
 	macro viewTagPG {
 		var key_entryTitle = "${entryTitle}";
 

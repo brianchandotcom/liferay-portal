@@ -175,6 +175,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		Assert.assertEquals(
 			infoItemReference.getClassPK(), jsonObject.getLong("classPK"), 0);
 
+		Assert.assertEquals(
+			contentDashboardItem.getDescription(LocaleUtil.US),
+			jsonObject.getString("description"));
+
 		JSONArray tagsJSONArray = jsonObject.getJSONArray("tags");
 
 		List<AssetTag> assetTags = contentDashboardItem.getAssetTags();
@@ -414,6 +418,9 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			_getContentDashboardItemInfoMVCResourceCommand, "_language",
 			new LanguageImpl());
 		ReflectionTestUtil.setFieldValue(
+			_getContentDashboardItemInfoMVCResourceCommand, "_language",
+			new LanguageImpl());
+		ReflectionTestUtil.setFieldValue(
 			_getContentDashboardItemInfoMVCResourceCommand, "_portal",
 			new PortalImpl());
 
@@ -576,7 +583,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 				@Override
 				public String getDescription(Locale locale) {
-					return "Web Content description";
+					return "My very important description";
 				}
 
 				@Override
@@ -599,8 +606,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 					Locale locale) {
 
 					return HashMapBuilder.<String, Object>put(
-						"description", "My very important description"
-					).put(
 						"downloadURL", "www.download.url.com/download"
 					).put(
 						"extension", ".pdf"

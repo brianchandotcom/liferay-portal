@@ -49,6 +49,7 @@ const SidebarPanelInfoView = ({
 	className,
 	classPK,
 	createDate,
+	description,
 	languageTag = 'en',
 	modifiedDate,
 	specificFields = {},
@@ -77,7 +78,6 @@ const SidebarPanelInfoView = ({
 	);
 
 	const {
-		description,
 		downloadURL,
 		extension,
 		fileName,

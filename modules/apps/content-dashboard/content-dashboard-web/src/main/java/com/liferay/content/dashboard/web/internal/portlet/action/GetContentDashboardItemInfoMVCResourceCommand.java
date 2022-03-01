@@ -134,6 +134,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"createDate",
 					_toString(contentDashboardItem.getCreateDate())
 				).put(
+					"description", contentDashboardItem.getDescription(locale)
+				).put(
 					"languageTag", locale.toLanguageTag()
 				).put(
 					"modifiedDate",

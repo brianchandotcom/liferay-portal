@@ -185,6 +185,8 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 						AssetTagModel::getName))
 			).cell(
 				_toString(contentDashboardItem.getModifiedDate())
+			).cell(
+				contentDashboardItem.getDescription(locale)
 			);
 
 			if (contentDashboardItem instanceof FileEntryContentDashboardItem) {
@@ -193,8 +195,6 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 				if (specificInformation != null) {
 					workbookBuilder.cell(
-						String.valueOf(specificInformation.get("description"))
-					).cell(
 						String.valueOf(specificInformation.get("extension"))
 					).cell(
 						String.valueOf(specificInformation.get("fileName"))
@@ -212,7 +212,7 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 
 				if (specificInformation != null) {
 					workbookBuilder.cellIndexIncrement(
-						4
+						3
 					).cell(
 						_toString((Date)specificInformation.get("display-date"))
 					).cell(

@@ -296,8 +296,6 @@ public class FileEntryContentDashboardItem
 	@Override
 	public Map<String, Object> getSpecificInformation(Locale locale) {
 		return HashMapBuilder.<String, Object>put(
-			"description", getDescription(locale)
-		).put(
 			"downloadURL", _getDownloadURL()
 		).put(
 			"extension", _getExtension()

@@ -284,8 +284,6 @@ public class JournalArticleContentDashboardItem
 	@Override
 	public Map<String, Object> getSpecificInformation(Locale locale) {
 		return HashMapBuilder.<String, Object>put(
-			"description", getDescription(locale)
-		).put(
 			"display-date", _journalArticle.getDisplayDate()
 		).put(
 			"expiration-date", _journalArticle.getExpirationDate()

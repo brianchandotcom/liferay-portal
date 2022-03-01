@@ -14,12 +14,12 @@
 
 package com.liferay.portal.tools.upgrade.table.builder;
 
-import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -166,13 +166,12 @@ public class UpgradeTableBuilder {
 
 		String upgradeFileContent = _read(upgradeFilePath);
 
-		String author = _getAuthor(content);
-
-		String[] addIndexes = _getAddIndexes(
-			_getIndexesFilePath(upgradeFileVersion), tableName);
-
-		content = _getContent(
-			packagePath, className, upgradeFileContent, author, addIndexes);
+		try {
+			content = _getContent(packagePath, className, upgradeFileContent);
+		}
+		catch (Exception exception) {
+			throw new IOException(exception.getMessage(), exception.getCause());
+		}
 
 		Files.write(path, content.getBytes(StandardCharsets.UTF_8));
 	}
@@ -212,52 +211,9 @@ public class UpgradeTableBuilder {
 		return paths;
 	}
 
-	private String[] _getAddIndexes(Path indexesFilePath, String tableName)
-		throws IOException {
-
-		List<String> addIndexes = new ArrayList<>();
-
-		try (BufferedReader bufferedReader = Files.newBufferedReader(
-				indexesFilePath, StandardCharsets.UTF_8)) {
-
-			String line = null;
-
-			while ((line = bufferedReader.readLine()) != null) {
-				if (line.contains(" on " + tableName + " (") ||
-					line.contains(" on " + tableName + "_ (")) {
-
-					String sql = line.trim();
-
-					if (sql.endsWith(";")) {
-						sql = sql.substring(0, sql.length() - 1);
-					}
-
-					addIndexes.add(sql);
-				}
-			}
-		}
-
-		return addIndexes.toArray(new String[0]);
-	}
-
-	private String _getAuthor(String content) {
-		int x = content.indexOf("* @author ");
-
-		if (x != -1) {
-			int y = content.indexOf("*", x + 1);
-
-			if (y != -1) {
-				return StringUtil.trim(content.substring(x + 10, y));
-			}
-		}
-
-		return _AUTHOR;
-	}
-
 	private String _getContent(
-			String packagePath, String className, String content, String author,
-			String[] addIndexes)
-		throws IOException {
+			String packagePath, String className, String content)
+		throws Exception {
 
 		int x = content.indexOf("public static final String TABLE_NAME =");
 
@@ -265,93 +221,36 @@ public class UpgradeTableBuilder {
 			x = content.indexOf("public static String TABLE_NAME =");
 		}
 
-		int y = content.indexOf("public static final String TABLE_SQL_DROP =");
+		String tableName = content.substring(
+			content.indexOf("=", x) + 1, content.indexOf(";", x));
+
+		int y = content.indexOf(
+			"public static final String TABLE_SQL_CREATE =");
 
 		if (y == -1) {
-			y = content.indexOf("public static String TABLE_SQL_DROP =");
+			y = content.lastIndexOf("public static String TABLE_SQL_CREATE =");
 		}
 
-		y = content.indexOf(";", y);
+		String tableSQLCreate = content.substring(
+			content.indexOf("=", y) + 1, content.indexOf(";", y));
 
-		content = content.substring(x, y + 1);
-
-		content = StringUtil.removeSubstring(content, "\t");
-		content = StringUtil.replace(content, "{ \"", "{\"");
-		content = StringUtil.replace(content, "new Integer(Types.", "Types.");
-		content = StringUtil.replace(content, ") }", "}");
-		content = StringUtil.replace(content, " }", "}");
-
-		while (content.contains("\n\n")) {
-			content = StringUtil.replace(content, "\n\n", "\n");
-		}
-
-		StringBundler sb = new StringBundler();
-
-		sb.append(_getCopyright());
-
-		sb.append("\n\npackage ");
-		sb.append(packagePath);
-		sb.append(";\n\n");
-
-		sb.append("import java.sql.Types;\n\n");
-
-		if (content.contains("TABLE_COLUMNS_MAP")) {
-			sb.append("import java.util.HashMap;\n");
-			sb.append("import java.util.Map;\n\n");
-		}
-
-		sb.append("/**\n");
-		sb.append(" * @author\t  ");
-		sb.append(author);
-		sb.append("\n");
-		sb.append(" * @generated\n");
-		sb.append(" */\n");
-		sb.append("public class ");
-		sb.append(className);
-		sb.append(" {\n\n");
-
-		String[] lines = content.split("\\n");
-
-		for (String line : lines) {
-			if (line.startsWith("public static") || line.startsWith("};")) {
-				sb.append("\t");
-			}
-			else if (line.startsWith("{\"")) {
-				sb.append("\t\t");
-			}
-
-			sb.append(line);
-			sb.append("\n");
-
-			if (line.endsWith(";")) {
-				sb.append("\n");
-			}
-		}
-
-		sb.append("\tpublic static final String[] TABLE_SQL_ADD_INDEXES = {\n");
-
-		for (int i = 0; i < addIndexes.length; i++) {
-			String addIndex = addIndexes[i];
-
-			sb.append("\t\t\"");
-			sb.append(addIndex);
-			sb.append("\"");
-
-			if ((i + 1) < addIndexes.length) {
-				sb.append(",");
-			}
-
-			sb.append("\n");
-		}
-
-		sb.append("\t};\n\n");
-
-		sb.append("}");
-
-		return sb.toString();
+		return FreeMarkerUtil.process(
+			"com/liferay/portal/tools/upgrade/table/builder/dependencies" +
+				"/upgradeTable.ftl",
+			HashMapBuilder.put(
+				"className", className
+			).put(
+				"copyright", _getCopyright()
+			).put(
+				"package", packagePath
+			).put(
+				"tableName", tableName
+			).put(
+				"tableSQLCreate", tableSQLCreate
+			).build());
 	}
 
-	private String _getCopyright() throws IOException {
+	private String _getCopyright() throws Exception {
 		Path path = Paths.get(_baseDirName);
 
 		path = path.toAbsolutePath();
@@ -367,31 +266,6 @@ public class UpgradeTableBuilder {
 		}
 
 		return null;
-	}
-
-	private Path _getIndexesFilePath(String upgradeFileVersion)
-		throws IOException {
-
-		Path indexesFilePath = null;
-
-		if (_osgiModule) {
-			List<Path> paths = _findFiles(
-				_baseDirName, "**/sql/indexes.sql", 1);
-
-			if (!paths.isEmpty()) {
-				indexesFilePath = paths.get(0);
-			}
-		}
-		else {
-			indexesFilePath = Paths.get(
-				_upgradeTableDirName, upgradeFileVersion, "indexes.sql");
-
-			if (Files.notExists(indexesFilePath)) {
-				indexesFilePath = Paths.get(_baseDirName, "../sql/indexes.sql");
-			}
-		}
-
-		return indexesFilePath;
 	}
 
 	private String _getPackagePath(String content) {
@@ -450,8 +324,6 @@ public class UpgradeTableBuilder {
 
 		return StringUtil.replace(s, "\r\n", "\n");
 	}
-
-	private static final String _AUTHOR = "Brian Wing Shun Chan";
 
 	private static final Pattern _packagePathPattern = Pattern.compile(
 		"package (.+?);");

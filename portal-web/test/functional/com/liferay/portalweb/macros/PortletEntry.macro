@@ -141,17 +141,6 @@ definition {
 			value1 = "${title}");
 	}
 
-	macro LastSelectAll {
-		if (IsNotChecked.isNotCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT_LAST")) {
-			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER_LAST");
-		}
-		else if (IsNotChecked(locator1 = "Checkbox#SELECT_ALL")) {
-			Click(locator1 = "Checkbox#SELECT_ALL");
-		}
-
-		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT_LAST");
-	}
-
 	macro publish {
 		Button.clickPublish();
 
@@ -189,6 +178,18 @@ definition {
 		}
 
 		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
+	}
+
+	macro SelectAllOnSpecificWidget {
+		if (IsNotChecked.isNotCheckedNotVisible(key_position = "${widgetPosition}", locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT_SPECIFIC")) {
+			Click(
+				key_position = "${widgetPosition}",
+				locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER_SPECIFIC");
+		}
+
+		AssertChecked.assertCheckedNotVisible(
+			key_position = "${widgetPosition}",
+			locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT_SPECIFIC");
 	}
 
 	macro submitForPublication {

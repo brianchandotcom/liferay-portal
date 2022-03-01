@@ -49,7 +49,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			WebContent.addDraftPGViaWCD(
+			WebContentDisplayPortlet.addDraft(
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 		}

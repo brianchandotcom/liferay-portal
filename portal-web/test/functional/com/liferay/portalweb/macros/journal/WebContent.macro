@@ -126,14 +126,6 @@ definition {
 		WebContent.saveAsDraftViaAP();
 	}
 
-	macro addDraftPGViaWCD {
-		WebContentDisplayPortletNavigator.gotoAdd();
-
-		WebContent.addDraft(
-			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}");
-	}
-
 	macro addExistingRelatedAssetCP {
 		var key_webContentTitle = "${webContentTitle}";
 

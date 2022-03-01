@@ -361,6 +361,8 @@ definition {
 	@description = "This is a test for LPS-140774. The user can preview the effects on current site fragments in styles book editor."
 	@priority = "4"
 	test PreviewEffectOnCurrentSiteFragment {
+		property portal.release = "false";
+
 		task ("Add a fragment set in current site") {
 			JSONFragment.addFragmentCollection(
 				groupName = "Test Site Name",
@@ -439,6 +441,8 @@ definition {
 	@description = "This is a test for LPS-140774. The user can preview the effects on default fragments in styles book editor."
 	@priority = "4"
 	test PreviewEffectOnDefaultFragment {
+		property portal.release = "false";
+
 		task ("Add a style book") {
 			JSONStylebooks.addStyleBookEntry(
 				groupName = "Test Site Name",
@@ -512,6 +516,8 @@ definition {
 	@description = "This is a test for LPS-140774. The user can preview the effects on global fragments in styles book editor."
 	@priority = "4"
 	test PreviewEffectOnGlobalFragment {
+		property portal.release = "false";
+
 		task ("Add a fragment set in Global site") {
 			JSONFragment.addFragmentCollection(
 				groupName = "Global",
@@ -1460,6 +1466,7 @@ definition {
 	@description = "This is a test for LPS-116078 and LPS-137065. The user could view the empty state when the site is empty."
 	@priority = "4"
 	test ViewEmptyStateWhenSiteIsEmpty {
+		property portal.release = "false";
 		property test.name.skip.portal.instance = "StyleBooksWithPreview#ViewEmptyStateWhenSiteIsEmpty";
 
 		task ("Deactivate the Default fragment sets") {

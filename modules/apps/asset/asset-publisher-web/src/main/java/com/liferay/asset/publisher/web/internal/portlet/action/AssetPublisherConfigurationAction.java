@@ -242,9 +242,7 @@ public class AssetPublisherConfigurationAction
 					actionRequest, "selectionStyle");
 
 				if (Validator.isNull(selectionStyle)) {
-					selectionStyle =
-						AssetPublisherSelectionStyleConstants.
-							DEFAULT_SELECTION_STYLE;
+					selectionStyle = getDefaultSelectionStyle();
 				}
 
 				if (selectionStyle.equals(
@@ -337,6 +335,10 @@ public class AssetPublisherConfigurationAction
 	protected void activate(Map<String, Object> properties) {
 		assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(
 			AssetPublisherWebConfiguration.class, properties);
+	}
+
+	protected String getDefaultSelectionStyle() {
+		return AssetPublisherSelectionStyleConstants.DEFAULT_SELECTION_STYLE;
 	}
 
 	@Reference
@@ -869,8 +871,7 @@ public class AssetPublisherConfigurationAction
 
 		if (Validator.isNull(selectionStyle)) {
 			setPreference(
-				actionRequest, "selectionStyle",
-				AssetPublisherSelectionStyleConstants.DEFAULT_SELECTION_STYLE);
+				actionRequest, "selectionStyle", getDefaultSelectionStyle());
 		}
 	}
 

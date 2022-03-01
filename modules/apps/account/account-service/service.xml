@@ -20,6 +20,7 @@
 		<!-- Other fields -->
 
 		<column name="defaultBillingAddressId" type="long" />
+		<column name="defaultCPaymentMethodKey" type="String" />
 		<column name="defaultDeliveryCTermEntryId" type="long" />
 		<column name="defaultPaymentCTermEntryId" type="long" />
 		<column name="defaultShippingAddressId" type="long" />

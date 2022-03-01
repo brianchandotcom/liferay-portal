@@ -35,6 +35,11 @@ public class JSONPackageJSONRedundantDependenciesCheck extends BaseFileCheck {
 	}
 
 	@Override
+	public boolean isModuleSourceCheck() {
+		return true;
+	}
+
+	@Override
 	protected String doProcess(
 			String fileName, String absolutePath, String content)
 		throws IOException {

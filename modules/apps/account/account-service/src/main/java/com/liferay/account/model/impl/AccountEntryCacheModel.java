@@ -77,7 +77,7 @@ public class AccountEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -97,6 +97,8 @@ public class AccountEntryCacheModel
 		sb.append(modifiedDate);
 		sb.append(", defaultBillingAddressId=");
 		sb.append(defaultBillingAddressId);
+		sb.append(", defaultCPaymentMethodKey=");
+		sb.append(defaultCPaymentMethodKey);
 		sb.append(", defaultDeliveryCTermEntryId=");
 		sb.append(defaultDeliveryCTermEntryId);
 		sb.append(", defaultPaymentCTermEntryId=");
@@ -167,6 +169,15 @@ public class AccountEntryCacheModel
 		}
 
 		accountEntryImpl.setDefaultBillingAddressId(defaultBillingAddressId);
+
+		if (defaultCPaymentMethodKey == null) {
+			accountEntryImpl.setDefaultCPaymentMethodKey("");
+		}
+		else {
+			accountEntryImpl.setDefaultCPaymentMethodKey(
+				defaultCPaymentMethodKey);
+		}
+
 		accountEntryImpl.setDefaultDeliveryCTermEntryId(
 			defaultDeliveryCTermEntryId);
 		accountEntryImpl.setDefaultPaymentCTermEntryId(
@@ -247,6 +258,7 @@ public class AccountEntryCacheModel
 		modifiedDate = objectInput.readLong();
 
 		defaultBillingAddressId = objectInput.readLong();
+		defaultCPaymentMethodKey = objectInput.readUTF();
 
 		defaultDeliveryCTermEntryId = objectInput.readLong();
 
@@ -296,6 +308,13 @@ public class AccountEntryCacheModel
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(defaultBillingAddressId);
+
+		if (defaultCPaymentMethodKey == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(defaultCPaymentMethodKey);
+		}
 
 		objectOutput.writeLong(defaultDeliveryCTermEntryId);
 
@@ -368,6 +387,7 @@ public class AccountEntryCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long defaultBillingAddressId;
+	public String defaultCPaymentMethodKey;
 	public long defaultDeliveryCTermEntryId;
 	public long defaultPaymentCTermEntryId;
 	public long defaultShippingAddressId;

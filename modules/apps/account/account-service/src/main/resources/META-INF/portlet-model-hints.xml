@@ -11,6 +11,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="defaultBillingAddressId" type="long" />
+		<field name="defaultCPaymentMethodKey" type="String" />
 		<field name="defaultDeliveryCTermEntryId" type="long" />
 		<field name="defaultPaymentCTermEntryId" type="long" />
 		<field name="defaultShippingAddressId" type="long" />

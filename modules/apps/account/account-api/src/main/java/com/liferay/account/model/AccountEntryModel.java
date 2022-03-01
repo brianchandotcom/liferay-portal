@@ -216,6 +216,21 @@ public interface AccountEntryModel
 	public void setDefaultBillingAddressId(long defaultBillingAddressId);
 
 	/**
+	 * Returns the default c payment method key of this account entry.
+	 *
+	 * @return the default c payment method key of this account entry
+	 */
+	@AutoEscape
+	public String getDefaultCPaymentMethodKey();
+
+	/**
+	 * Sets the default c payment method key of this account entry.
+	 *
+	 * @param defaultCPaymentMethodKey the default c payment method key of this account entry
+	 */
+	public void setDefaultCPaymentMethodKey(String defaultCPaymentMethodKey);
+
+	/**
 	 * Returns the default delivery c term entry ID of this account entry.
 	 *
 	 * @return the default delivery c term entry ID of this account entry

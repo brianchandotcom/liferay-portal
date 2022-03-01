@@ -8,6 +8,7 @@ create table AccountEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	defaultBillingAddressId LONG,
+	defaultCPaymentMethodKey VARCHAR(75) null,
 	defaultDeliveryCTermEntryId LONG,
 	defaultPaymentCTermEntryId LONG,
 	defaultShippingAddressId LONG,

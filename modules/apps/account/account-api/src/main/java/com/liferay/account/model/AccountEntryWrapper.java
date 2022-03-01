@@ -52,6 +52,8 @@ public class AccountEntryWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("defaultBillingAddressId", getDefaultBillingAddressId());
 		attributes.put(
+			"defaultCPaymentMethodKey", getDefaultCPaymentMethodKey());
+		attributes.put(
 			"defaultDeliveryCTermEntryId", getDefaultDeliveryCTermEntryId());
 		attributes.put(
 			"defaultPaymentCTermEntryId", getDefaultPaymentCTermEntryId());
@@ -127,6 +129,13 @@ public class AccountEntryWrapper
 
 		if (defaultBillingAddressId != null) {
 			setDefaultBillingAddressId(defaultBillingAddressId);
+		}
+
+		String defaultCPaymentMethodKey = (String)attributes.get(
+			"defaultCPaymentMethodKey");
+
+		if (defaultCPaymentMethodKey != null) {
+			setDefaultCPaymentMethodKey(defaultCPaymentMethodKey);
 		}
 
 		Long defaultDeliveryCTermEntryId = (Long)attributes.get(
@@ -270,6 +279,16 @@ public class AccountEntryWrapper
 	@Override
 	public long getDefaultBillingAddressId() {
 		return model.getDefaultBillingAddressId();
+	}
+
+	/**
+	 * Returns the default c payment method key of this account entry.
+	 *
+	 * @return the default c payment method key of this account entry
+	 */
+	@Override
+	public String getDefaultCPaymentMethodKey() {
+		return model.getDefaultCPaymentMethodKey();
 	}
 
 	/**
@@ -525,6 +544,16 @@ public class AccountEntryWrapper
 	@Override
 	public void setDefaultBillingAddressId(long defaultBillingAddressId) {
 		model.setDefaultBillingAddressId(defaultBillingAddressId);
+	}
+
+	/**
+	 * Sets the default c payment method key of this account entry.
+	 *
+	 * @param defaultCPaymentMethodKey the default c payment method key of this account entry
+	 */
+	@Override
+	public void setDefaultCPaymentMethodKey(String defaultCPaymentMethodKey) {
+		model.setDefaultCPaymentMethodKey(defaultCPaymentMethodKey);
 	}
 
 	/**

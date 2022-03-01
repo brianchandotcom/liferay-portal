@@ -4,8 +4,9 @@
 		"@clayui/css": "^3.46.0",
 		"@clayui/drop-down": "^3.45.0",
 		"classnames": "^2.3.1",
+		"react": "16.8.6",
 		"react-dom": "16.8.6",
-		"react": "16.8.6"
+		"yo": "^4.3.0"
 	},
 	"devDependencies": {
 		"generator-liferay-fragments": "2.0.0-rc3"

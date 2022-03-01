@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADDED_ELEMENT_FIELD_MAPPING_DELETE_BUTTON</td>
-	<td>//li[contains(@class,'fieldMappingList')]//button[@aria-label='Delete']</td>
+	<td>//li[contains(@class,'fieldMappingList')]//div[contains(@class,'input-group-sm')][.//input[@value='${field}']]//button[@aria-label='Delete']</td>
 	<td></td>
 </tr>
 <tr>

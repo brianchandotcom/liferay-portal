@@ -1944,6 +1944,56 @@ definition {
 			value1 = "apple apple apple");
 	}
 
+	test SearchWithCopiedDefaultElement {
+		JSONWebcontent.addWebContent(
+			content = "",
+			groupName = "Guest",
+			title = "fruit");
+
+		JSONWebcontent.addWebContent(
+			content = "fruit",
+			groupName = "Guest",
+			title = "apple");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Navigator.gotoNavItem(navItem = "Elements");
+
+		Search.searchCP(searchTerm = "Text Match Over Multiple Fields");
+
+		Blueprints.gotoEntryMenuItem(
+			menuItem = "Copy",
+			title = "Text Match Over Multiple Fields");
+
+		Blueprints.editElement(element = "Copy of Text Match Over Multiple Fields");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "localized_title");
+
+		AssertElementNotPresent(locator1 = "Blueprints#ELEMENTS_EDIT_PAGE_READ_ONLY_INDICATOR");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Copy of Text Match Over Multiple Fields");
+
+		Click(
+			field = "localized_title",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_MAPPING_DELETE_BUTTON");
+
+		Blueprints.searchBlueprintsPreview(searchTerm = "fruit");
+
+		AssertElementPresent(
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
+			resultTitle = "apple");
+
+		AssertElementNotPresent(
+			locator1 = "Blueprints#BLUEPRINTS_PREVIEW_SEARCH_RESULT_TITLE",
+			resultTitle = "fruit");
+	}
+
 	test SearchWithSelectedAssetType {
 		JSONWebcontent.addWebContent(
 			content = "",
@@ -2762,7 +2812,9 @@ definition {
 
 		Blueprints.addElement(element = "Test Element");
 
-		Click(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_MAPPING_DELETE_BUTTON");
+		Click(
+			field = "localized_title",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_MAPPING_DELETE_BUTTON");
 
 		Button.clickSave();
 
@@ -2874,7 +2926,9 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_INPUT_FIELD",
 			value1 = "");
 
-		Click(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_MAPPING_DELETE_BUTTON");
+		Click(
+			field = "localized_title",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT_FIELD_MAPPING_DELETE_BUTTON");
 
 		AssertElementNotPresent(locator1 = "TextInput#REQUIRED_ALERT");
 

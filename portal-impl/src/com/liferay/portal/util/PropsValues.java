@@ -719,10 +719,6 @@ public class PropsValues {
 			PropsUtil.get(
 				PropsKeys.DL_FILE_ENTRY_PREVIEW_AUTO_CREATE_ON_UPGRADE));
 
-	public static final int DL_FILE_ENTRY_PREVIEW_DOCUMENT_DEPTH =
-		GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DEPTH));
-
 	public static final int DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI =
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI));

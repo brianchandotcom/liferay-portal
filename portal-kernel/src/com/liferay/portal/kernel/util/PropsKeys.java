@@ -1010,9 +1010,6 @@ public interface PropsKeys {
 	public static final String DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH =
 		"dl.file.entry.thumbnail.max.width";
 
-	public static final String DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE =
-		"dl.file.entry.thumbnail.video.frame.percentage";
-
 	/**
 	 * @deprecated As of Mueller (7.2.x), with no direct replacement
 	 */

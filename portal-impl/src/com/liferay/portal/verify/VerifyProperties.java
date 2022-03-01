@@ -1636,6 +1636,7 @@ public class VerifyProperties extends VerifyProcess {
 		"dl.file.entry.preview.document.depth",
 		"dl.file.entry.previewable.processor.max.size",
 		"dl.file.entry.read.count.enabled",
+		"dl.file.entry.thumbnail.video.frame.percentage",
 		"dl.file.entry.type.ig.image.auto.create.on.upgrade",
 		"dl.file.entry.version.policy", "dl.file.extensions",
 		"dl.file.max.size", "dl.file.rank.enabled",

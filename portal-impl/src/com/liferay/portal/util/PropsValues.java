@@ -816,11 +816,6 @@ public class PropsValues {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH));
 
-	public static final int DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE =
-		GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE));
-
 	public static final boolean DL_FILE_EXTENSIONS_STRICT_CHECK =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.DL_FILE_EXTENSIONS_STRICT_CHECK));

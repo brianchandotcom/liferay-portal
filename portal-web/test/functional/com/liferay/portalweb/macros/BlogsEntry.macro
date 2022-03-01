@@ -1559,6 +1559,10 @@ definition {
 				var tagName = StringUtil.lowerCase("${tagName}");
 				var key_tagName = "${tagName}";
 
+				BlogsNavigator.gotoEntryPG(
+					entryContent = "${entryContent}",
+					entryTitle = "${entryTitle}");
+
 				AssertClick(
 					locator1 = "BlogsEntry#TAG",
 					value1 = "${tagName}");

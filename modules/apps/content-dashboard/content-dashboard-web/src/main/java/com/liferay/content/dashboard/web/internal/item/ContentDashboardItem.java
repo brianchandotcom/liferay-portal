@@ -42,6 +42,8 @@ public interface ContentDashboardItem<T> {
 
 	public List<Locale> getAvailableLocales();
 
+	public Clipboard getClipboard();
+
 	public List<ContentDashboardItemAction> getContentDashboardItemActions(
 		HttpServletRequest httpServletRequest,
 		ContentDashboardItemAction.Type... types);
@@ -78,6 +80,36 @@ public interface ContentDashboardItem<T> {
 	public List<Version> getVersions(Locale locale);
 
 	public boolean isViewable(HttpServletRequest httpServletRequest);
+
+	public static class Clipboard {
+
+		public static final Clipboard EMPTY = new Clipboard(null, null);
+
+		public Clipboard(String name, String url) {
+			_name = name;
+			_url = url;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		public String getUrl() {
+			return _url;
+		}
+
+		public JSONObject toJSONObject() {
+			return JSONUtil.put(
+				"name", getName()
+			).put(
+				"url", getUrl()
+			);
+		}
+
+		private final String _name;
+		private final String _url;
+
+	}
 
 	public static class Preview {
 

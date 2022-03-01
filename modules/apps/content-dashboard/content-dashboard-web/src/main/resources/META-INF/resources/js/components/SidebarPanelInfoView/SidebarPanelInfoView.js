@@ -46,10 +46,10 @@ const formatDate = (date, languageTag) => {
 };
 
 const SidebarPanelInfoView = ({
-	className,
 	classPK,
 	createDate,
 	description,
+	clipboard,
 	languageTag = 'en',
 	modifiedDate,
 	specificFields = {},
@@ -78,18 +78,7 @@ const SidebarPanelInfoView = ({
 		publicVocabularies
 	);
 
-	const {extension, fileName, previewURL, size} = specificFields;
-
 	const items = Object.values(specificFields);
-
-	const isADocument =
-		className === 'com.liferay.portal.kernel.repository.model.FileEntry';
-
-	const documentIsAFile =
-		isADocument &&
-		!!preview.downloadURL &&
-		!!extension &&
-		parseInt(size?.split(' ')[0], 10) > 0;
 
 	const showTaxonomies =
 		!!internalCategoriesCount || !!publicCategoriesCount || !!tags?.length;
@@ -100,12 +89,14 @@ const SidebarPanelInfoView = ({
 
 			<Sidebar.Body>
 				<div className="sidebar-section sidebar-section--compress">
-					{documentIsAFile && (
+					{clipboard && (
 						<>
 							<div className="c-mt-1">
-								<FileUrlCopyButton url={previewURL} />
+								<FileUrlCopyButton url={clipboard.url} />
 							</div>
-							<p className="c-mb-1 text-secondary">{fileName}</p>
+							<p className="c-mb-1 text-secondary">
+								{clipboard.name}
+							</p>
 						</>
 					)}
 

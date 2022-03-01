@@ -131,6 +131,11 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
+	public Clipboard getClipboard() {
+		return new Clipboard(_getFileName(), _getClipboardURL());
+	}
+
+	@Override
 	public List<ContentDashboardItemAction> getContentDashboardItemActions(
 		HttpServletRequest httpServletRequest,
 		ContentDashboardItemAction.Type... types) {
@@ -294,10 +299,6 @@ public class FileEntryContentDashboardItem
 		return HashMapBuilder.<String, Object>put(
 			"extension", _getExtension()
 		).put(
-			"fileName", _getFileName()
-		).put(
-			"previewURL", _getPreviewURL()
-		).put(
 			"size", _getSize(locale)
 		).build();
 	}
@@ -386,6 +387,32 @@ public class FileEntryContentDashboardItem
 		);
 	}
 
+	private String _getClipboardURL() {
+		return Optional.ofNullable(
+			ServiceContextThreadLocal.getServiceContext()
+		).map(
+			ServiceContext::getLiferayPortletRequest
+		).map(
+			portletRequest -> {
+				List<ContentDashboardItemAction> contentDashboardItemActions =
+					getContentDashboardItemActions(
+						_portal.getHttpServletRequest(portletRequest),
+						ContentDashboardItemAction.Type.PREVIEW);
+
+				if (!contentDashboardItemActions.isEmpty()) {
+					ContentDashboardItemAction contentDashboardItemAction =
+						contentDashboardItemActions.get(0);
+
+					return contentDashboardItemAction.getURL();
+				}
+
+				return null;
+			}
+		).orElse(
+			null
+		);
+	}
+
 	private String _getDownloadURL() {
 		return Optional.ofNullable(
 			ServiceContextThreadLocal.getServiceContext()
@@ -449,32 +476,6 @@ public class FileEntryContentDashboardItem
 				).orElse(
 					null
 				);
-			}
-		).orElse(
-			null
-		);
-	}
-
-	private String _getPreviewURL() {
-		return Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext()
-		).map(
-			ServiceContext::getLiferayPortletRequest
-		).map(
-			portletRequest -> {
-				List<ContentDashboardItemAction> contentDashboardItemActions =
-					getContentDashboardItemActions(
-						_portal.getHttpServletRequest(portletRequest),
-						ContentDashboardItemAction.Type.PREVIEW);
-
-				if (!contentDashboardItemActions.isEmpty()) {
-					ContentDashboardItemAction contentDashboardItemAction =
-						contentDashboardItemActions.get(0);
-
-					return contentDashboardItemAction.getURL();
-				}
-
-				return null;
 			}
 		).orElse(
 			null

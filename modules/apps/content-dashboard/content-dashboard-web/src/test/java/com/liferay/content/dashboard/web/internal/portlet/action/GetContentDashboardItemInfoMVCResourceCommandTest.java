@@ -538,6 +538,12 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				}
 
 				@Override
+				public Clipboard getClipboard() {
+					return new Clipboard(
+						"name", "www.previewURL.url.com/previewURL");
+				}
+
+				@Override
 				public List<ContentDashboardItemAction>
 					getContentDashboardItemActions(
 						HttpServletRequest httpServletRequest,
@@ -615,10 +621,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 
 					return HashMapBuilder.<String, Object>put(
 						"extension", ".pdf"
-					).put(
-						"fileName", "MyDocument"
-					).put(
-						"previewURL", "www.previewURL.url.com/previewURL"
 					).put(
 						"size", "5"
 					).build();

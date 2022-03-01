@@ -57,6 +57,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -131,6 +132,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"classPK", _getClassPK(contentDashboardItem)
 				).put(
+					"clipboard", _getClipboardJSONObject(contentDashboardItem)
+				).put(
 					"createDate",
 					_toString(contentDashboardItem.getCreateDate())
 				).put(
@@ -140,6 +143,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				).put(
 					"modifiedDate",
 					_toString(contentDashboardItem.getModifiedDate())
+				).put(
+					"preview", _getPreviewJSONObject(contentDashboardItem)
 				).put(
 					"preview", _getPreviewJSONObject(contentDashboardItem)
 				).put(
@@ -252,6 +257,18 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 		return infoItemReference.getClassPK();
 	}
 
+	private JSONObject _getClipboardJSONObject(
+		ContentDashboardItem contentDashboardItem) {
+
+		return Optional.ofNullable(
+			contentDashboardItem.getClipboard()
+		).map(
+			ContentDashboardItem.Clipboard::toJSONObject
+		).orElse(
+			null
+		);
+	}
+
 	private Collector<AssetCategory, ?, Map<Long, Map<String, Object>>>
 		_getCollector(Locale locale) {
 
@@ -304,7 +321,9 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		stream.forEach(
+		stream.sorted(
+			Comparator.comparing(entry -> entry.getKey())
+		).forEach(
 			entry -> jsonObject.put(
 				entry.getKey(),
 				JSONUtil.put(
@@ -313,7 +332,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"type", _getSpecificInformationType(entry.getValue())
 				).put(
 					"value", _toString(entry.getValue())
-				)));
+				))
+		);
 
 		return jsonObject;
 	}

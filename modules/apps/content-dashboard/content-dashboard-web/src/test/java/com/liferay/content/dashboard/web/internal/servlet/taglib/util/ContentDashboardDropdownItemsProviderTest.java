@@ -236,6 +236,11 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
+			public Clipboard getClipboard() {
+				return Clipboard.EMPTY;
+			}
+
+			@Override
 			public List<ContentDashboardItemAction>
 				getContentDashboardItemActions(
 					HttpServletRequest httpServletRequest,

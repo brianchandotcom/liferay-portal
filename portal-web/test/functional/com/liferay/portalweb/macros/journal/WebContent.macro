@@ -845,24 +845,6 @@ definition {
 			value1 = "There are no results.");
 	}
 
-	macro addWithWorkflowPGViaWCD {
-		WebContentDisplayPortletNavigator.gotoAdd(structureName = "${selectStructureName}");
-
-		WebContent.addCP(
-			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}");
-
-		AssertClick(
-			locator1 = "Button#SUBMIT_FOR_PUBLICATION",
-			value1 = "Submit for Publication");
-
-		SelectFrame(value1 = "relative=top");
-
-		AssertTextEquals(
-			locator1 = "Message#ERROR_3",
-			value1 = "${webContentTitle} is not approved.");
-	}
-
 	macro assertFieldOnWebContent {
 		var key_fieldFieldLabel = "${fieldFieldLabel}";
 		var key_fieldName = "${fieldName}";

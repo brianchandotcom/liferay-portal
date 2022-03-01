@@ -63,6 +63,22 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro addWithWorkflow {
+		WebContentDisplayPortletNavigator.gotoAdd(structureName = "${selectStructureName}");
+
+		WebContent.addCP(
+			webContentContent = "${webContentContent}",
+			webContentTitle = "${webContentTitle}");
+
+		Button.click(button = "Submit for Publication");
+
+		SelectFrame(value1 = "relative=top");
+
+		AssertTextEquals(
+			locator1 = "Message#ERROR_3",
+			value1 = "${webContentTitle} is not approved.");
+	}
+
 	macro configureScopePG {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",

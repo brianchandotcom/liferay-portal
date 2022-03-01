@@ -56,7 +56,7 @@ definition {
 	test ApproveWebContentViaWebContentDisplayPG {
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		WebContent.addWithWorkflowPGViaWCD(
+		WebContentDisplayPortlet.addWithWorkflow(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
@@ -99,7 +99,7 @@ definition {
 	test RejectWebContentViaWebContentDisplayPG {
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		WebContent.addWithWorkflowPGViaWCD(
+		WebContentDisplayPortlet.addWithWorkflow(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 

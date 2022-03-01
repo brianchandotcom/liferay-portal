@@ -87,6 +87,11 @@ definition {
 	}
 
 	macro mergeTags {
+		Select(
+			key_fieldLabel = "Into This Tag:",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${mergedTag}");
+
 		ClickNoError(locator1 = "Button#SAVE");
 
 		var message = "Are you sure you want to merge &quot;${tagNameList}&quot; into &quot;${mergedTag}&quot;? This will change all items tagged with &quot;${tagNameList}&quot; to instead be tagged with &quot;${mergedTag}&quot;.";

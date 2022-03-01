@@ -805,14 +805,12 @@ definition {
 	test PublishDeletionOfShortcutTarget {
 		property portal.acceptance = "true";
 
-		DMNavigator.gotoAddDocumentTypeCP();
-
-		DMDocument.editDocument(
+		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.doc",
-			dmDocumentTitle = "DM Document Title");
-
-		Button.clickPublish();
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Site Name-staging",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
 
 		DMDocument.addDMShortcutCPWithStaging(
 			dmDocumentTitle = "DM Document Title",

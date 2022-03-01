@@ -28,6 +28,7 @@ dependencies {
 	compileOnly project(":apps:item-selector:item-selector-criteria-api")
 	compileOnly project(":apps:item-selector:item-selector-taglib")
 	compileOnly project(":apps:petra:petra-portlet-url-builder")
+	compileOnly project(":apps:portal-vulcan:portal-vulcan-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:upload:upload-api")
 	compileOnly project(":core:petra:petra-function")

@@ -371,9 +371,9 @@ public class RepositoryTest {
 			null, TestPropsValues.getUserId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			inputStream, _TEST_CONTENT.length(), null, null,
-			new ServiceContext());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, inputStream,
+			_TEST_CONTENT.length(), null, null, new ServiceContext());
 
 		Folder folder = localRepository.addFolder(
 			TestPropsValues.getUserId(),
@@ -384,9 +384,9 @@ public class RepositoryTest {
 		FileEntry folderFileEntry = localRepository.addFileEntry(
 			null, TestPropsValues.getUserId(), folder.getFolderId(),
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			inputStream, _TEST_CONTENT.length(), null, null,
-			new ServiceContext());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, inputStream,
+			_TEST_CONTENT.length(), null, null, new ServiceContext());
 
 		return new long[] {
 			fileEntry.getFileEntryId(), folder.getFolderId(),

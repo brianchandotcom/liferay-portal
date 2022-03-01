@@ -193,8 +193,9 @@ public class FragmentEntryProcessorHelperTest {
 			null, TestPropsValues.getUserId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_JPEG,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			inputStream, bytes.length, null, null, serviceContext);
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, inputStream, bytes.length, null,
+			null, serviceContext);
 	}
 
 	private JournalArticle _addJournalArticle(

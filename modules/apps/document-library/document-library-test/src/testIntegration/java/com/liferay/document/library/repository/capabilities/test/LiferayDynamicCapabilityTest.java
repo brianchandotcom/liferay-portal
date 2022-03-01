@@ -173,7 +173,7 @@ public class LiferayDynamicCapabilityTest {
 							public FileEntry addFileEntry(
 								String externalReferenceCode, long userId,
 								long folderId, String sourceFileName,
-								String mimeType, String title,
+								String mimeType, String title, String urlTitle,
 								String description, String changeLog, File file,
 								Date expirationDate, Date reviewDate,
 								ServiceContext serviceContext) {
@@ -353,7 +353,7 @@ public class LiferayDynamicCapabilityTest {
 							public FileEntry addFileEntry(
 								String externalReferenceCode, long userId,
 								long folderId, String sourceFileName,
-								String mimeType, String title,
+								String mimeType, String title, String urlTitle,
 								String description, String changeLog, File file,
 								Date expirationDate, Date reviewDate,
 								ServiceContext serviceContext) {
@@ -411,7 +411,7 @@ public class LiferayDynamicCapabilityTest {
 							public FileEntry addFileEntry(
 								String externalReferenceCode, long userId,
 								long folderId, String sourceFileName,
-								String mimeType, String title,
+								String mimeType, String title, String urlTitle,
 								String description, String changeLog, File file,
 								Date expirationDate, Date reviewDate,
 								ServiceContext serviceContext) {

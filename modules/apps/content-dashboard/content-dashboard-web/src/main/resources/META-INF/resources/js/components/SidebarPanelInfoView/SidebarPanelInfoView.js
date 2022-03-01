@@ -21,10 +21,10 @@ import React from 'react';
 
 import Sidebar from '../Sidebar';
 import CollapsibleSection from './CollapsibleSection';
-import DocumentPreview from './DocumentPreview';
 import FileUrlCopyButton from './FileUrlCopyButton';
 import ItemLanguages from './ItemLanguages';
 import ItemVocabularies from './ItemVocabularies';
+import Preview from './Preview';
 import {
 	getCategoriesCountFromVocabularies,
 	groupVocabulariesBy,
@@ -56,6 +56,7 @@ const SidebarPanelInfoView = ({
 	subType,
 	tags = [],
 	title,
+	preview,
 	user,
 	versions = [],
 	viewURLs = [],
@@ -77,15 +78,7 @@ const SidebarPanelInfoView = ({
 		publicVocabularies
 	);
 
-	const {
-		downloadURL,
-		extension,
-		fileName,
-		previewImageURL,
-		previewURL,
-		size,
-		viewURL,
-	} = specificFields;
+	const {extension, fileName, previewURL, size} = specificFields;
 
 	const items = Object.values(specificFields);
 
@@ -94,11 +87,9 @@ const SidebarPanelInfoView = ({
 
 	const documentIsAFile =
 		isADocument &&
-		!!downloadURL &&
+		!!preview.downloadURL &&
 		!!extension &&
 		parseInt(size?.split(' ')[0], 10) > 0;
-
-	const documentUsesPreview = !!previewImageURL || documentIsAFile;
 
 	const showTaxonomies =
 		!!internalCategoriesCount || !!publicCategoriesCount || !!tags?.length;
@@ -156,13 +147,12 @@ const SidebarPanelInfoView = ({
 					<span className="c-ml-2 text-secondary">{user.name}</span>
 				</div>
 
-				{documentUsesPreview && (
-					<DocumentPreview
-						documentSrc={previewImageURL}
-						documentTitle={title}
-						downloadURL={downloadURL}
-						isFile={documentIsAFile}
-						viewURL={viewURL}
+				{preview && preview.url && (
+					<Preview
+						downloadURL={preview.downloadURL}
+						imageURL={preview.imageURL}
+						title={title}
+						url={preview.url}
 					/>
 				)}
 

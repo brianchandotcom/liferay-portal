@@ -17,23 +17,17 @@ import ClayLink from '@clayui/link';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const DocumentPreview = ({
-	documentSrc,
-	documentTitle,
-	downloadURL,
-	isFile,
-	viewURL,
-}) => {
+const Preview = ({downloadURL, imageURL, title, url}) => {
 	return (
 		<div className="document-preview sidebar-section">
-			{documentSrc && (
+			{imageURL && (
 				<figure className="document-preview-figure mb-2">
 					<a
 						className="align-items-center c-focus-inset d-flex h-100"
-						href={viewURL}
+						href={url}
 						target="_blank"
 					>
-						<img alt={documentTitle} src={documentSrc} />
+						<img alt={title} src={imageURL} />
 
 						<ClayIcon
 							className="document-preview-icon"
@@ -44,7 +38,7 @@ const DocumentPreview = ({
 			)}
 
 			<div>
-				{isFile && (
+				{downloadURL && (
 					<ClayLink className="btn btn-primary" href={downloadURL}>
 						{Liferay.Language.get('download')}
 					</ClayLink>
@@ -54,17 +48,15 @@ const DocumentPreview = ({
 	);
 };
 
-DocumentPreview.defaultProps = {
-	isFile: false,
+Preview.defaultProps = {
 	viewURL: null,
 };
 
-DocumentPreview.propTypes = {
-	documentSrc: PropTypes.string.isRequired,
-	documentTitle: PropTypes.string.isRequired,
+Preview.propTypes = {
 	downloadURL: PropTypes.string,
-	isFile: PropTypes.bool,
+	imageURL: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
 	viewURL: PropTypes.string,
 };
 
-export default DocumentPreview;
+export default Preview;

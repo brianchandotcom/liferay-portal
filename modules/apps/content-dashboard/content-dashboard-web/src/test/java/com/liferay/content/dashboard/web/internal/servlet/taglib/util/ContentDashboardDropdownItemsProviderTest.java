@@ -300,6 +300,11 @@ public class ContentDashboardDropdownItemsProviderTest {
 			}
 
 			@Override
+			public Preview getPreview() {
+				return Preview.EMPTY;
+			}
+
+			@Override
 			public String getScopeName(Locale locale) {
 				return null;
 			}

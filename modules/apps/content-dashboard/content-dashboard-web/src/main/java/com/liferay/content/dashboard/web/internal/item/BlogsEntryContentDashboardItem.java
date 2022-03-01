@@ -258,6 +258,11 @@ public class BlogsEntryContentDashboardItem
 	}
 
 	@Override
+	public Preview getPreview() {
+		return Preview.EMPTY;
+	}
+
+	@Override
 	public String getScopeName(Locale locale) {
 		return Optional.ofNullable(
 			_group

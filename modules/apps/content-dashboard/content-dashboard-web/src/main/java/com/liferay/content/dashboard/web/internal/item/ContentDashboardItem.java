@@ -61,6 +61,8 @@ public interface ContentDashboardItem<T> {
 
 	public Date getModifiedDate();
 
+	public Preview getPreview();
+
 	public String getScopeName(Locale locale);
 
 	public Map<String, Object> getSpecificInformation(Locale locale);
@@ -76,6 +78,44 @@ public interface ContentDashboardItem<T> {
 	public List<Version> getVersions(Locale locale);
 
 	public boolean isViewable(HttpServletRequest httpServletRequest);
+
+	public static class Preview {
+
+		public static final Preview EMPTY = new Preview(null, null, null);
+
+		public Preview(String downloadURL, String imageURL, String url) {
+			_downloadURL = downloadURL;
+			_imageURL = imageURL;
+			_url = url;
+		}
+
+		public String getDownloadURL() {
+			return _downloadURL;
+		}
+
+		public String getImageURL() {
+			return _imageURL;
+		}
+
+		public String getUrl() {
+			return _url;
+		}
+
+		public JSONObject toJSONObject() {
+			return JSONUtil.put(
+				"downloadURL", getDownloadURL()
+			).put(
+				"imageURL", getImageURL()
+			).put(
+				"url", getUrl()
+			);
+		}
+
+		private final String _downloadURL;
+		private final String _imageURL;
+		private final String _url;
+
+	}
 
 	public static class Version {
 

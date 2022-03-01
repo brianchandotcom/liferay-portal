@@ -597,6 +597,14 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				}
 
 				@Override
+				public Preview getPreview() {
+					return new Preview(
+						"www.preview.com/downloadURL",
+						"www.preview.com/imageURL",
+						"www.viewURL.url.com/viewURL");
+				}
+
+				@Override
 				public String getScopeName(Locale locale) {
 					return RandomTestUtil.randomString();
 				}
@@ -606,20 +614,13 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 					Locale locale) {
 
 					return HashMapBuilder.<String, Object>put(
-						"downloadURL", "www.download.url.com/download"
-					).put(
 						"extension", ".pdf"
 					).put(
 						"fileName", "MyDocument"
 					).put(
-						"previewImageURL",
-						"www.previewImage.url.com/previewImage"
-					).put(
 						"previewURL", "www.previewURL.url.com/previewURL"
 					).put(
 						"size", "5"
-					).put(
-						"viewURL", "www.viewURL.url.com/viewURL"
 					).build();
 				}
 

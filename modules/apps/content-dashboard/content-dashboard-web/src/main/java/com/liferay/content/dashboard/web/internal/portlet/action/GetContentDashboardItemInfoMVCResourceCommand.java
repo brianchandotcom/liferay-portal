@@ -141,6 +141,8 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"modifiedDate",
 					_toString(contentDashboardItem.getModifiedDate())
 				).put(
+					"preview", _getPreviewJSONObject(contentDashboardItem)
+				).put(
 					"specificFields",
 					_getSpecificFieldsJSONObject(contentDashboardItem, locale)
 				).put(
@@ -276,6 +278,18 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 
 				return first;
 			});
+	}
+
+	private JSONObject _getPreviewJSONObject(
+		ContentDashboardItem contentDashboardItem) {
+
+		return Optional.ofNullable(
+			contentDashboardItem.getPreview()
+		).map(
+			ContentDashboardItem.Preview::toJSONObject
+		).orElse(
+			null
+		);
 	}
 
 	private JSONObject _getSpecificFieldsJSONObject(

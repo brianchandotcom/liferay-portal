@@ -273,6 +273,11 @@ public class FileEntryContentDashboardItem
 		return _fileEntry.getModifiedDate();
 	}
 
+	public Preview getPreview() {
+		return new Preview(
+			_getDownloadURL(), _getPreviewImageURL(), _getViewURL());
+	}
+
 	@Override
 	public String getScopeName(Locale locale) {
 		return Optional.ofNullable(
@@ -287,19 +292,13 @@ public class FileEntryContentDashboardItem
 	@Override
 	public Map<String, Object> getSpecificInformation(Locale locale) {
 		return HashMapBuilder.<String, Object>put(
-			"downloadURL", _getDownloadURL()
-		).put(
 			"extension", _getExtension()
 		).put(
 			"fileName", _getFileName()
 		).put(
-			"previewImageURL", _getPreviewImageURL()
-		).put(
 			"previewURL", _getPreviewURL()
 		).put(
 			"size", _getSize(locale)
-		).put(
-			"viewURL", _getViewURL()
 		).build();
 	}
 

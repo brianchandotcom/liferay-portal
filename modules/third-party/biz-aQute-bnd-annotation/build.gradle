@@ -5,15 +5,15 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-    compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd.annotation", version: "4.2.0"
 }
 
 patch {
-    ext {
-        autoClean = false
-    }
+	ext {
+		autoClean = false
+	}
 
-    fileNames "aQute/bnd/annotation/metatype/Configurable.java"
+	fileNames "aQute/bnd/annotation/metatype/Configurable.java"
 
-    originalLibModuleName = "biz.aQute.bnd.annotation"
+	originalLibModuleName = "biz.aQute.bnd.annotation"
 }

@@ -826,17 +826,6 @@ definition {
 
 		Staging.publishToLive();
 
-		ProductMenu.gotoLiveSite();
-
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
-
-		AssertElementPresent(
-			key_card = "DM Document Title",
-			locator1 = "Card#CARD_SHORTCUT");
-
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",
 			siteName = "Site Name");

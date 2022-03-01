@@ -14,6 +14,15 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewOutOfDatePublicationsArchive735 {
+		property data.archive.type = "data-archive-publications";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.5";
+
+		PublicationsUpgrade.viewOutOfDatePublications();
+	}
+
+	@priority = "5"
 	test ViewOutOfDatePublicationsArchive7310 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver,sybase";

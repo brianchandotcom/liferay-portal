@@ -12,6 +12,8 @@ Import-Package:\
 	\
 	!org.antlr.stringtemplate.*,\
 	\
+	!org.apache.tools.ant.*,\
+	\
 	!org.codehaus.janino.*,\
 	\
 	!org.eclipse.jdt.core.index.*,\

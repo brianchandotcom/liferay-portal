@@ -18,6 +18,7 @@ Import-Package:\
 	!org.apache.http.*,\
 	!org.apache.james.mime4j.*,\
 	!org.apache.neethi.*,\
+	!org.apache.tools.ant.*,\
 	\
 	*
 -fixupmessages: Classes found in the wrong directory: ...;is:=ignore

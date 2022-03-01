@@ -15,6 +15,7 @@ Import-Package:\
 	!org.apache.log.output.io,\
 	!org.apache.oro.text.perl,\
 	!org.apache.struts.*,\
+	!org.apache.tools.ant.*,\
 	\
 	!org.jdom.*,\
 	\

@@ -35,6 +35,7 @@ Import-Package:\
 	!org.apache.jcp.xml.dsig.internal.dom.*,\
 	!org.apache.poi.hsmf.*,\
 	!org.apache.poi.hwpf.extractor.*,\
+	!org.apache.tools.ant.*,\
 	\
 	!org.bouncycastle.*,\
 	\

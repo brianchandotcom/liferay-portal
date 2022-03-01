@@ -4,6 +4,8 @@ Bundle-Version: 2.0.44
 Import-Package:\
 	!com.graphbuilder.*,\
 	\
+	!org.apache.tools.ant.*,\
+	\
 	com.microsoft.schemas.office.powerpoint.*;resolution:=optional,\
 	com.microsoft.schemas.office.word.*;resolution:=optional,\
 	\

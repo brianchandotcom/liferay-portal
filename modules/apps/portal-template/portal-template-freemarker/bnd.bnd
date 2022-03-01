@@ -10,6 +10,7 @@ Import-Package:\
 	\
 	!org.apache.crimson.jaxp,\
 	!org.apache.log,\
+	!org.apache.tools.ant.*,\
 	!org.apache.xml.resolver.*,\
 	!org.apache.xml.utils,\
 	!org.apache.xmlbeans.*,\

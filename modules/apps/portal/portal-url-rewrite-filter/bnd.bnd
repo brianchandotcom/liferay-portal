@@ -3,5 +3,6 @@ Bundle-SymbolicName: com.liferay.portal.url.rewrite.filter
 Bundle-Version: 1.0.3
 Import-Package:\
 	!org.apache.commons.httpclient.*,\
+	!org.apache.tools.ant,\
 	\
 	*

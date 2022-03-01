@@ -17,6 +17,7 @@ Import-Package:\
 	!org.apache.batik.*,\
 	!org.apache.commons.math3.*,\
 	!org.apache.jcp.*,\
+	!org.apache.tools.ant.*,\
 	\
 	!org.bouncycastle.*,\
 	\

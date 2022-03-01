@@ -10,6 +10,7 @@ Import-Package:\
 	!com.graphbuilder.*,\
 	\
 	!org.apache.tapestry5.json.*,\
+	!org.apache.tools.ant.*,\
 	\
 	com.github.*;resolution:=optional,\
 	\

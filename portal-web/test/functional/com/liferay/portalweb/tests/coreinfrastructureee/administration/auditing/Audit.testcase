@@ -1,6 +1,7 @@
 @component-name = "portal-security"
 definition {
 
+	property log.context.enabled = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.run.environment = "EE";
@@ -42,17 +43,11 @@ definition {
 			Navigator.openURL(baseURL = "http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address");
 
 			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address''';
-			var userId = JSONCurlUtil.get("${curl}");
+			var runGet = JSONCurlUtil.get("${curl}");
 
-			AssertConsoleTextPresent(
-				value1 = "xRequestId",
-				value2 = "sessionId",
-				value3 = "companyId:${companyId}",
-				value4 = "virtualHostName",
-				value5 = "clientIP",
-				value6 = "emailAddress",
-				value7 = "serverName",
-				value8 = "userId:${userId}");
+			for (var logString : list "xRequestId,sessionId,companyId=${companyId},virtualHostName,clientIP,emailAddress,serverName,userId=${userId}") {
+				AuditLog.viewLogFileContent(logString = "${logString}");
+			}
 		}
 	}
 
@@ -77,7 +72,7 @@ definition {
 
 			AssertConsoleTextNotPresent(value1 = "${invalidXRequestId}");
 
-			AssertConsoleTextPresent(value1 = "xRequestId");
+			AuditLog.viewLogFileContent(logString = "xRequestId");
 		}
 	}
 
@@ -101,7 +96,7 @@ definition {
 			var curl = '''http://localhost:8080/api/jsonws/user/get-user-by-email-address/company-id/email-address -H 'X-Request-Id:${validXRequestId}' ''';
 			var userId = JSONCurlUtil.get("${curl}");
 
-			AssertConsoleTextPresent(value1 = "${validXRequestId}");
+			AuditLog.viewLogFileContent(logString = "${validXRequestId}");
 		}
 	}
 

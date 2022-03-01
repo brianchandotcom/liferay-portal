@@ -8643,8 +8643,54 @@ ${update.properties}</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="log.context.enabled" />
+
+		<if>
+			<equals arg1="${log.context.enabled}" arg2="true" />
+			<then>
+				<property name="log4j.appenders"><![CDATA[<Appenders>
+		<Appender name="CONSOLE" type="Console">
+			<Layout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t][%c{1}:%L] %m%n %X" type="PatternLayout" />
+		</Appender>
+
+		<Appender filePattern="@liferay.home@/logs/liferay.%d{yyyy-MM-dd}.log" ignoreExceptions="false" name="TEXT_FILE" type="RollingFile">
+			<Layout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t][%c{1}:%L] %m%n %X" type="PatternLayout" />
+
+			<TimeBasedTriggeringPolicy />
+
+			<DirectWriteRolloverStrategy />
+		</Appender>
+
+		<Appender filePattern="@liferay.home@/liferay.audit.log" ignoreExceptions="false" name="TEXT_FILE_AUDIT" type="RollingFile">
+			<Layout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t][%c{1}:%L] %m%n %X" type="PatternLayout" />
+
+			<SizeBasedTriggeringPolicy size="50 MB" />
+
+			<DirectWriteRolloverStrategy />
+		</Appender>
+
+		<Appender filePattern="@liferay.home@/logs/liferay.%d{yyyy-MM-dd}.xml" ignoreExceptions="false" name="XML_FILE" type="RollingFile">
+			<Log4j1XmlLayout locationInfo="true" properties="true" />
+
+			<TimeBasedTriggeringPolicy />
+
+			<DirectWriteRolloverStrategy />
+		</Appender>
+	</Appenders>]]></property>
+
+				<property name="log4j.logggers.root"><![CDATA[<Root level="INFO">
+			<AppenderRef ref="TEXT_FILE_AUDIT" />
+		</Root>]]></property>
+			</then>
+			<else>
+				<property name="log4j.appenders" value="" />
+				<property name="log4j.logggers.root" value="" />
+			</else>
+		</if>
+
 		<echo file="${app.server.classes.portal.dir}/META-INF/portal-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
 <Configuration strict="true">
+	${log4j.appenders}
 	<Loggers>
 		<Logger level="DEBUG" name="com.liferay.frontend.js.spa.web.internal.servlet.taglib" />
 
@@ -8659,6 +8705,8 @@ ${update.properties}</echo>
 		<Logger level="${dialect.detector.log.level}" name="com.liferay.portal.spring.hibernate.DialectDetector" />
 
 		<Logger level="ERROR" name="com.zaxxer.hikari.pool.PoolBase" />
+
+		${log4j.logggers.root}
 	</Loggers>
 </Configuration>]]></echo>
 

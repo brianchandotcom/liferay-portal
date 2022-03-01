@@ -1,0 +1,15 @@
+definition {
+
+	macro viewLogFileContent {
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+		var fileContent = FileUtil.read("${liferayHome}/liferay.audit.log");
+
+		if (contains("${fileContent}", "${logString}")) {
+			echo("Found ${logString} in portal log.");
+		}
+		else {
+			fail("Failed to find ${logString} in portal log.");
+		}
+	}
+
+}

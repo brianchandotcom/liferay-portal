@@ -2256,6 +2256,79 @@ definition {
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
 	}
 
+	test ViewCopiedBlueprintContent {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Boost Tags Match");
+
+		Navigator.gotoNavNested(navNested = "Query Settings");
+
+		Check.checkNotVisible(
+			locator1 = "Radio#ANY",
+			radioLabel = "Selected Types");
+
+		Button.click(button = "Select Asset Types");
+
+		Check.checkNotVisible(
+			assetType = "Document",
+			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
+
+		Button.clickDone();
+
+		Uncheck.uncheckToggleSwitch(locator1 = "Blueprints#BLUEPRINTS_SEARCH_FRAMEWORK_INDEXER_CLAUSES_ON_OFF_TOGGLE");
+
+		Check.checkNotVisible(
+			locator1 = "Radio#ANY",
+			radioLabel = "Customize");
+
+		Button.click(button = "Customize Contributors");
+
+		Uncheck.uncheckToggleSwitch(
+			contributorClass = "AccountGroupKeywordQueryContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ON_OFF_TOGGLE");
+
+		Navigator.gotoNavTab(navTab = "Configuration");
+
+		var aggregationConfigurationJson = '''{"aggs":{}}''';
+
+		Type.typeCodeMirrorEditorNoError(
+			configurationField = "Aggregation Configuration",
+			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_EDITOR",
+			value1 = "${aggregationConfigurationJson}");
+
+		PortletEntry.save();
+
+		Blueprints.gotoEntryMenuItem(
+			menuItem = "Copy",
+			title = "Test Blueprint");
+
+		Blueprints.editBlueprint(title = "Copy of Test Blueprint");
+
+		AssertElementPresent(
+			element = "Boost Tags Match",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		Navigator.gotoNavNested(navNested = "Query Settings");
+
+		AssertElementPresent(
+			assetType = "Document",
+			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECTED");
+
+		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCH_FRAMEWORK_INDEXER_CLAUSES_ON_OFF_TOGGLE");
+
+		Button.click(button = "Customize Contributors");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			contributorClass = "AccountGroupKeywordQueryContributor",
+			locator1 = "Blueprints#BLUEPRINTS_CLAUSE_CONTRIBUTOR_ON_OFF_TOGGLE");
+
+		Navigator.gotoNavTab(navTab = "Configuration");
+
+		AssertTextPresent(value1 = "aggs");
+	}
+
 	test ViewCustomElementsJSONValidation {
 		Blueprints.openBlueprintsAdmin();
 

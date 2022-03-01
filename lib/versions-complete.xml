@@ -7615,18 +7615,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/tagsoup.jar</file-name>
-				<version>1.2.1</version>
-				<project-name>TagSoup</project-name>
-				<project-url>http://home.ccil.org/~cowan/XML/tagsoup</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/tomcat-jdbc.jar</file-name>
 				<version>9.0.56</version>
 				<project-name>Tomcat</project-name>

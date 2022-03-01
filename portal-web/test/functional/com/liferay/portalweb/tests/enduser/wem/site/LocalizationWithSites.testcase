@@ -607,7 +607,7 @@ definition {
 				pageName = "Test Page Name 1",
 				siteName = "Test Site Name 1");
 
-			WebContent.addLocalizedPGViaWCD(
+			WebContentDisplayPortlet.addLocalized(
 				localizedBasicWebContent = "Contenido web básico",
 				portletNameTranslation = "Visor de contenido web",
 				webContentContent = "Web Content Content",

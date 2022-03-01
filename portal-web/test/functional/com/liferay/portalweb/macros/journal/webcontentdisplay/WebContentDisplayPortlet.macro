@@ -8,6 +8,20 @@ definition {
 			webContentTitle = "${webContentTitle}");
 	}
 
+	macro addLocalized {
+		WebContentDisplayPortletNavigator.gotoAdd(
+			portletNameTranslation = "${portletNameTranslation}",
+			structureName = "${localizedBasicWebContent}");
+
+		WebContent.addCP(
+			webContentContent = "${webContentContent}",
+			webContentTitle = "${webContentTitle}");
+
+		Click(locator1 = "Button#PUBLISH_LOCALIZED");
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 	macro configureScopePG {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",

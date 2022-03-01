@@ -219,20 +219,6 @@ definition {
 			value1 = "${imageSourceURL}");
 	}
 
-	macro addLocalizedPGViaWCD {
-		WebContentDisplayPortletNavigator.gotoAdd(
-			portletNameTranslation = "${portletNameTranslation}",
-			structureName = "${localizedBasicWebContent}");
-
-		WebContent.addCP(
-			webContentContent = "${webContentContent}",
-			webContentTitle = "${webContentTitle}");
-
-		Click(locator1 = "Button#PUBLISH_LOCALIZED");
-
-		SelectFrame(value1 = "relative=top");
-	}
-
 	macro addMultipleArticlesCP {
 		var articleCount = ${articleCount} + 1;
 		var count = "1";

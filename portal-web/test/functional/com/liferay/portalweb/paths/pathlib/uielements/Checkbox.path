@@ -286,8 +286,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LEXICON_SELECT_ALL_CONTAINER_LAST</td>
-	<td>xpath=(//nav[contains(@class,'management-bar')]//div[contains(@class,'custom-checkbox')])[last()]</td>
+	<td>LEXICON_SELECT_ALL_CONTAINER_SPECIFIC</td>
+	<td>//div[contains(@class,'portlet-boundary')][${key_position}]//nav[contains(@class,'management-bar')]//div[contains(@class,'custom-checkbox')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -296,8 +296,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LEXICON_SELECT_ALL_INPUT_LAST</td>
-	<td>xpath=(//nav[contains(@class,'management-bar')]//input[@type='checkbox'])[last()]</td>
+	<td>LEXICON_SELECT_ALL_INPUT_SPECIFIC</td>
+	<td>//div[contains(@class,'portlet-boundary')][${key_position}]//nav[contains(@class,'management-bar')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

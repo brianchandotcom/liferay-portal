@@ -40,11 +40,12 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 			Map<String, Serializable> parameters)
 		throws IOException {
 
+		_delimiter = (String)parameters.getOrDefault("delimiter", delimiter);
+		_inputStream = inputStream;
+
 		_containsHeaders = Boolean.valueOf(
 			(String)parameters.getOrDefault(
 				"containsHeaders", StringPool.TRUE));
-		_delimiter = (String)parameters.getOrDefault("delimiter", delimiter);
-		_inputStream = inputStream;
 
 		_enclosingCharacter = _getEnclosingCharacter(parameters);
 

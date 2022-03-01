@@ -160,41 +160,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-82204. View blogs entry with XSS custom abstract."
-	@priority = "5"
-	test NoXSSVulnerabilityInBlogsEntryCustomAbstract {
-		var entryAbstractDescription = '''<script>alert(123)</script>''';
-		var key_entryAbstractDescription = "${entryAbstractDescription}";
-
-		task ("Add public layout") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Blogs Page");
-		}
-
-		task ("Add page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Blogs Page",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("Add custom abstract") {
-			JSONBlog.addEntry(
-				entryAbstractDescription = "${entryAbstractDescription}",
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title");
-		}
-
-		task ("Assert abstract added successfully") {
-			Navigator.gotoPage(pageName = "Blogs Page");
-
-			AssertAlertNotPresent();
-
-			Blogs.viewContentAbstractDescription(descriptionValue = "${entryAbstractDescription}");
-		}
-	}
-
 	@description = "This is a use case for LPS-90727. Assert no XSS vulnerability when modifying a specific URL from the control panel."
 	@priority = "5"
 	test NoXSSVulnerabilityInControlPanel {

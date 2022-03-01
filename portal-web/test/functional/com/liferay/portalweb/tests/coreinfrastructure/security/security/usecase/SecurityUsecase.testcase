@@ -255,27 +255,6 @@ out.println(PortalUtil.escapeRedirect("/"));
 		}
 	}
 
-	@description = "This is a use case for LPS-114470. Validate crafted or corrupted files cannot cause out of memory errors."
-	@priority = "5"
-	test ValidateCraftedOrCorruptedFilesCannotCauseOutOfMemoryErrors {
-		task ("Add new document") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentDescription = "DM Document Description",
-				dmDocumentTitle = "DM Document Title",
-				groupName = "Guest",
-				mimeType = "audio/x-mpeg",
-				sourceFileName = "tika.mp3");
-		}
-
-		task ("Assert out of memory error message") {
-			AssertConsoleTextPresent(value1 = "java.io.IOException: Record size");
-
-			AssertConsoleTextPresent(value1 = "is larger than the allowed record size");
-
-			AssertConsoleTextNotPresent(value1 = "java.lang.OutOfMemoryError");
-		}
-	}
-
 	@description = "This is a use case for LRQA-14382. Validate forward url PG."
 	@priority = "5"
 	test ValidateForwardURLPG {

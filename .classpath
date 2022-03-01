@@ -224,7 +224,6 @@
 	<classpathentry kind="lib" path="lib/portal/stax.jar"/>
 	<classpathentry kind="lib" path="lib/portal/stax-ex.jar"/>
 	<classpathentry kind="lib" path="lib/portal/streambuffer.jar"/>
-	<classpathentry kind="lib" path="lib/portal/tagsoup.jar"/>
 	<classpathentry kind="lib" path="lib/portal/tomcat-jdbc.jar"/>
 	<classpathentry kind="lib" path="lib/portal/tomcat-juli.jar"/>
 	<classpathentry kind="lib" path="lib/portal/transaction.jar"/>

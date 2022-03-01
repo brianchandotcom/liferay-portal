@@ -44,7 +44,6 @@ import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
-import com.liferay.translation.web.internal.configuration.FFLayoutExperienceSelectorConfiguration;
 
 import java.net.URI;
 
@@ -68,8 +67,6 @@ public class ExportTranslationDisplayContext {
 
 	public ExportTranslationDisplayContext(
 		long classNameId, long[] classPKs,
-		FFLayoutExperienceSelectorConfiguration
-			ffLayoutExperienceSelectorConfiguration,
 		long groupId, HttpServletRequest httpServletRequest,
 		InfoItemServiceTracker infoItemServiceTracker,
 		LiferayPortletRequest liferayPortletRequest,
@@ -80,8 +77,6 @@ public class ExportTranslationDisplayContext {
 
 		_classNameId = classNameId;
 		_classPKs = classPKs;
-		_ffLayoutExperienceSelectorConfiguration =
-			ffLayoutExperienceSelectorConfiguration;
 		_groupId = groupId;
 		_httpServletRequest = httpServletRequest;
 		_infoItemServiceTracker = infoItemServiceTracker;
@@ -131,12 +126,6 @@ public class ExportTranslationDisplayContext {
 		).build();
 
 		List<Map<String, String>> experiences = new ArrayList<>();
-
-		if (!_ffLayoutExperienceSelectorConfiguration.enabled()) {
-			experiences.add(defaultExperience);
-
-			return experiences;
-		}
 
 		List<SegmentsExperience> segmentsExperiences =
 			_getSegmentsExperiences();
@@ -369,8 +358,6 @@ public class ExportTranslationDisplayContext {
 	private final String _className;
 	private final long _classNameId;
 	private final long[] _classPKs;
-	private final FFLayoutExperienceSelectorConfiguration
-		_ffLayoutExperienceSelectorConfiguration;
 	private final long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemServiceTracker _infoItemServiceTracker;

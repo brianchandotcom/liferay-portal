@@ -28,8 +28,6 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -183,17 +181,6 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public Map<String, Object> getData(Locale locale) {
-		return HashMapBuilder.<String, Object>put(
-			"display-date", _journalArticle.getDisplayDate()
-		).put(
-			"expiration-date", _journalArticle.getExpirationDate()
-		).put(
-			"review-date", _journalArticle.getReviewDate()
-		).build();
-	}
-
-	@Override
 	public ContentDashboardItemAction getDefaultContentDashboardItemAction(
 		HttpServletRequest httpServletRequest) {
 
@@ -295,16 +282,20 @@ public class JournalArticleContentDashboardItem
 	}
 
 	@Override
-	public JSONObject getSpecificInformationJSONObject(Locale locale) {
-		return JSONUtil.put(
-			"creationDate", _journalArticle.getCreateDate()
+	public Map<String, Object> getSpecificInformation(Locale locale) {
+		return HashMapBuilder.<String, Object>put(
+			"creation-date", _journalArticle.getCreateDate()
 		).put(
 			"description", getDescription(locale)
 		).put(
-			"displayDate", _journalArticle.getDisplayDate()
+			"display-date", _journalArticle.getDisplayDate()
 		).put(
-			"languagesTranslated", _journalArticle.getAvailableLanguageIds()
-		);
+			"expiration-date", _journalArticle.getExpirationDate()
+		).put(
+			"languages-translated", _journalArticle.getAvailableLanguageIds()
+		).put(
+			"review-date", _journalArticle.getReviewDate()
+		).build();
 	}
 
 	@Override

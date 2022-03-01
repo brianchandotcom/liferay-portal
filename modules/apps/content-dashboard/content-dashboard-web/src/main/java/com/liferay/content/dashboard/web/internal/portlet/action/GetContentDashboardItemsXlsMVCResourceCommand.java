@@ -26,7 +26,6 @@ import com.liferay.content.dashboard.web.internal.item.JournalArticleContentDash
 import com.liferay.content.dashboard.web.internal.searcher.ContentDashboardSearchRequestBuilderFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
@@ -47,6 +46,7 @@ import java.time.format.DateTimeFormatter;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -183,19 +183,18 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			);
 
 			if (contentDashboardItem instanceof FileEntryContentDashboardItem) {
-				JSONObject jsonObject =
-					contentDashboardItem.getSpecificInformationJSONObject(
-						locale);
+				Map<String, Object> specificInformation =
+					contentDashboardItem.getSpecificInformation(locale);
 
-				if (jsonObject != null) {
+				if (specificInformation != null) {
 					workbookBuilder.cell(
-						jsonObject.getString("description")
+						String.valueOf(specificInformation.get("description"))
 					).cell(
-						jsonObject.getString("extension")
+						String.valueOf(specificInformation.get("extension"))
 					).cell(
-						jsonObject.getString("fileName")
+						String.valueOf(specificInformation.get("fileName"))
 					).cell(
-						jsonObject.getString("size")
+						String.valueOf(specificInformation.get("size"))
 					);
 				}
 			}
@@ -203,20 +202,20 @@ public class GetContentDashboardItemsXlsMVCResourceCommand
 			if (contentDashboardItem instanceof
 					JournalArticleContentDashboardItem) {
 
-				JSONObject jsonObject =
-					contentDashboardItem.getSpecificInformationJSONObject(
-						locale);
+				Map<String, Object> specificInformation =
+					contentDashboardItem.getSpecificInformation(locale);
 
-				if (jsonObject != null) {
+				if (specificInformation != null) {
 					workbookBuilder.cellIndexIncrement(
 						4
 					).cell(
-						jsonObject.getString("displayDate")
+						String.valueOf(specificInformation.get("display-date"))
 					).cell(
-						jsonObject.getString("creationDate")
+						String.valueOf(specificInformation.get("creation-date"))
 					).cell(
 						StringUtil.merge(
-							(String[])jsonObject.get("languagesTranslated"))
+							(String[])specificInformation.get(
+								"languages-translated"))
 					);
 				}
 			}

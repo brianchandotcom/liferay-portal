@@ -30,8 +30,6 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -42,6 +40,7 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -190,11 +189,6 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public Map<String, Object> getData(Locale locale) {
-		return Collections.emptyMap();
-	}
-
-	@Override
 	public ContentDashboardItemAction getDefaultContentDashboardItemAction(
 		HttpServletRequest httpServletRequest) {
 
@@ -300,8 +294,8 @@ public class FileEntryContentDashboardItem
 	}
 
 	@Override
-	public JSONObject getSpecificInformationJSONObject(Locale locale) {
-		return JSONUtil.put(
+	public Map<String, Object> getSpecificInformation(Locale locale) {
+		return HashMapBuilder.<String, Object>put(
 			"description", getDescription(locale)
 		).put(
 			"downloadURL", _getDownloadURL()
@@ -317,7 +311,7 @@ public class FileEntryContentDashboardItem
 			"size", _getSize(locale)
 		).put(
 			"viewURL", _getViewURL()
-		);
+		).build();
 	}
 
 	@Override

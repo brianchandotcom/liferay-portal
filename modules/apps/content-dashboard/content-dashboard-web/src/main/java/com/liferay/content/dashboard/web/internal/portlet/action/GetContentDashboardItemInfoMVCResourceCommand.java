@@ -134,16 +134,13 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 					"createDate",
 					_toString(contentDashboardItem.getCreateDate())
 				).put(
-					"data", _getDataJSONObject(contentDashboardItem, locale)
-				).put(
 					"languageTag", locale.toLanguageTag()
 				).put(
 					"modifiedDate",
 					_toString(contentDashboardItem.getModifiedDate())
 				).put(
 					"specificFields",
-					contentDashboardItem.getSpecificInformationJSONObject(
-						locale)
+					_getSpecificFieldsJSONObject(contentDashboardItem, locale)
 				).put(
 					"subType", _getSubtype(contentDashboardItem, locale)
 				).put(
@@ -279,12 +276,13 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 			});
 	}
 
-	private JSONObject _getDataJSONObject(
+	private JSONObject _getSpecificFieldsJSONObject(
 		ContentDashboardItem contentDashboardItem, Locale locale) {
 
-		Map<String, Object> data = contentDashboardItem.getData(locale);
+		Map<String, Object> specificInformation =
+			contentDashboardItem.getSpecificInformation(locale);
 
-		Set<Map.Entry<String, Object>> entries = data.entrySet();
+		Set<Map.Entry<String, Object>> entries = specificInformation.entrySet();
 
 		Stream<Map.Entry<String, Object>> stream = entries.stream();
 
@@ -296,10 +294,20 @@ public class GetContentDashboardItemInfoMVCResourceCommand
 				JSONUtil.put(
 					"title", _language.get(locale, entry.getKey())
 				).put(
+					"type", _getSpecificInformationType(entry.getValue())
+				).put(
 					"value", _toString(entry.getValue())
 				)));
 
 		return jsonObject;
+	}
+
+	private String _getSpecificInformationType(Object object) {
+		if (object instanceof Date) {
+			return "Date";
+		}
+
+		return "String";
 	}
 
 	private String _getSubtype(

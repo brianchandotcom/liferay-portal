@@ -49,7 +49,6 @@ const SidebarPanelInfoView = ({
 	className,
 	classPK,
 	createDate,
-	data = {},
 	languageTag = 'en',
 	modifiedDate,
 	specificFields = {},
@@ -88,32 +87,7 @@ const SidebarPanelInfoView = ({
 		viewURL,
 	} = specificFields;
 
-	const itemDates = [
-		{
-			text: formatDate(data['display-date']?.value, languageTag),
-			title: Liferay.Language.get('display-date'),
-		},
-		{
-			text: formatDate(createDate, languageTag),
-			title: Liferay.Language.get('creation-date'),
-		},
-		{
-			text: formatDate(modifiedDate, languageTag),
-			title: Liferay.Language.get('modified-date'),
-		},
-		{
-			text: formatDate(data['expiration-date']?.value, languageTag),
-			title: Liferay.Language.get('expiration-date'),
-		},
-		{
-			text: formatDate(data['review-date']?.value, languageTag),
-			title: Liferay.Language.get('review-date'),
-		},
-		{
-			text: classPK,
-			title: Liferay.Language.get('id'),
-		},
-	];
+	const items = Object.values(specificFields);
 
 	const isADocument =
 		className === 'com.liferay.portal.kernel.repository.model.FileEntry';
@@ -251,41 +225,57 @@ const SidebarPanelInfoView = ({
 					)}
 
 					<CollapsibleSection title={Liferay.Language.get('details')}>
-						{documentIsAFile && (
-							<div className="sidebar-section">
+						<div className="sidebar-section">
+							{!!items.length &&
+								items.map(
+									({title, type, value}) =>
+										title &&
+										value &&
+										type && (
+											<div
+												className="c-mb-4 sidebar-dl sidebar-section"
+												key={title}
+											>
+												<h5 className="c-mb-1 font-weight-semi-bold">
+													{title}
+												</h5>
+
+												<p className="text-secondary">
+													{type === 'Date'
+														? formatDate(
+																value,
+																languageTag
+														  )
+														: value}
+												</p>
+											</div>
+										)
+								)}
+
+							<div
+								className="c-mb-4 sidebar-dl sidebar-section"
+								key="modified-date"
+							>
 								<h5 className="c-mb-1 font-weight-semi-bold">
-									{Liferay.Language.get('extension')}
+									{Liferay.Language.get('modified-date')}
 								</h5>
 
-								<p className="text-secondary">{extension}</p>
-
-								<h5 className="c-mb-1 font-weight-semi-bold">
-									{Liferay.Language.get('size')}
-								</h5>
-
-								<p className="text-secondary">{size}</p>
+								<p className="text-secondary">
+									{formatDate(modifiedDate, languageTag)}
+								</p>
 							</div>
-						)}
 
-						{!!itemDates.length &&
-							itemDates.map(
-								({text, title}) =>
-									text &&
-									title && (
-										<div
-											className="c-mb-4 sidebar-dl sidebar-section"
-											key={title}
-										>
-											<h5 className="c-mb-1 font-weight-semi-bold">
-												{title}
-											</h5>
+							<div
+								className="c-mb-4 sidebar-dl sidebar-section"
+								key="id"
+							>
+								<h5 className="c-mb-1 font-weight-semi-bold">
+									{Liferay.Language.get('id')}
+								</h5>
 
-											<p className="text-secondary">
-												{text}
-											</p>
-										</div>
-									)
-							)}
+								<p className="text-secondary">{classPK}</p>
+							</div>
+						</div>
 
 						{!!viewURLs.length && !isADocument && (
 							<ItemLanguages urls={viewURLs} />

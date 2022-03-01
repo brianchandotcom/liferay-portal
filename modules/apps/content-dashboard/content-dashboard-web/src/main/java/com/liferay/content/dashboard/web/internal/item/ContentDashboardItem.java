@@ -50,8 +50,6 @@ public interface ContentDashboardItem<T> {
 
 	public Date getCreateDate();
 
-	public Map<String, Object> getData(Locale locale);
-
 	public ContentDashboardItemAction getDefaultContentDashboardItemAction(
 		HttpServletRequest httpServletRequest);
 
@@ -65,9 +63,7 @@ public interface ContentDashboardItem<T> {
 
 	public String getScopeName(Locale locale);
 
-	public default JSONObject getSpecificInformationJSONObject(Locale locale) {
-		return null;
-	}
+	public Map<String, Object> getSpecificInformation(Locale locale);
 
 	public String getTitle(Locale locale);
 

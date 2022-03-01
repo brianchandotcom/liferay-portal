@@ -27,11 +27,11 @@ import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItem
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -41,9 +41,11 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.servlet.BrowserSnifferImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.HttpImpl;
@@ -89,6 +91,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
+
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(new LanguageImpl());
 
 		PortalUtil portalUtil = new PortalUtil();
 
@@ -198,15 +204,25 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			contentDashboardItemSubtype.getLabel(LocaleUtil.US),
 			jsonObject.getString("subType"));
 
-		JSONObject getSpecificInformationJSONObject =
-			contentDashboardItem.getSpecificInformationJSONObject(
-				LocaleUtil.US);
+		Map<String, Object> specificInformation =
+			contentDashboardItem.getSpecificInformation(LocaleUtil.US);
 
 		Assert.assertEquals(
-			getSpecificInformationJSONObject.toString(),
-			jsonObject.getJSONObject(
-				"specificFields"
-			).toString());
+			String.valueOf(specificInformation), 2, specificInformation.size());
+
+		JSONObject specificFieldsJSONObject = jsonObject.getJSONObject(
+			"specificFields");
+
+		for (Map.Entry<String, Object> entry : specificInformation.entrySet()) {
+			JSONObject specificFieldJSONObject =
+				specificFieldsJSONObject.getJSONObject(entry.getKey());
+
+			Assert.assertEquals(
+				specificFieldJSONObject.getString("title"), entry.getKey());
+
+			Assert.assertEquals(
+				specificFieldJSONObject.getString("value"), entry.getValue());
+		}
 
 		JSONObject userJSONObject = jsonObject.getJSONObject("user");
 
@@ -395,6 +411,9 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 			_getContentDashboardItemInfoMVCResourceCommand, "_http",
 			new HttpImpl());
 		ReflectionTestUtil.setFieldValue(
+			_getContentDashboardItemInfoMVCResourceCommand, "_language",
+			new LanguageImpl());
+		ReflectionTestUtil.setFieldValue(
 			_getContentDashboardItemInfoMVCResourceCommand, "_portal",
 			new PortalImpl());
 
@@ -543,11 +562,6 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				}
 
 				@Override
-				public Map<String, Object> getData(Locale locale) {
-					return Collections.emptyMap();
-				}
-
-				@Override
 				public ContentDashboardItemAction
 					getDefaultContentDashboardItemAction(
 						HttpServletRequest httpServletRequest) {
@@ -581,12 +595,10 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 				}
 
 				@Override
-				public JSONObject getSpecificInformationJSONObject(
+				public Map<String, Object> getSpecificInformation(
 					Locale locale) {
 
-					JSONObject jsonObject = new JSONObjectImpl();
-
-					jsonObject.put(
+					return HashMapBuilder.<String, Object>put(
 						"description", "My very important description"
 					).put(
 						"downloadURL", "www.download.url.com/download"
@@ -603,9 +615,7 @@ public class GetContentDashboardItemInfoMVCResourceCommandTest {
 						"size", "5"
 					).put(
 						"viewURL", "www.viewURL.url.com/viewURL"
-					);
-
-					return jsonObject;
+					).build();
 				}
 
 				@Override

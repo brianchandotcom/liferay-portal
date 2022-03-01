@@ -195,7 +195,7 @@ definition {
 			roleKey = "Regular Role",
 			roleTitle = "Regular Role");
 
-		for (var resourceActionIndex : list "APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX,RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX") {
+		for (var resourceActionIndex : list "APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX,RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",
@@ -625,7 +625,7 @@ definition {
 			roleKey = "Regular Role",
 			roleTitle = "Regular Role");
 
-		for (var resourceActionIndex : list "APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX,RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX") {
+		for (var resourceActionIndex : list "APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX,RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",
 				panel = "Control Panel",

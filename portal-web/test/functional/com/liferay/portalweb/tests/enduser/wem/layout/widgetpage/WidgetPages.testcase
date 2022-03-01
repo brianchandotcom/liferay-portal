@@ -333,7 +333,7 @@ definition {
 		}
 	}
 
-	@description = "Can configure a full page aplication to use all available portlets on the page."
+	@description = "Can configure a full page application to use all available portlets on the page."
 	@priority = "4"
 	test ConfigureFullPageApplicationOfPage {
 		property osgi.app.includes = "hello-soy";

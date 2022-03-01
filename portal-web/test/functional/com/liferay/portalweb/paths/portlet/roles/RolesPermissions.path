@@ -48,7 +48,7 @@
 </tr>
 <!--CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS-->
 <tr>
-	<td>CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX</td>
+	<td>CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX</td>
 	<td>//input[contains(@name,'_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_rowIds') and contains(@value,'ACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>
@@ -63,7 +63,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACTION_CHECKBOX</td>
+	<td>CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACTION_CHECKBOX</td>
 	<td>xpath=(//input[contains(@name,'_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_allRowIds') and contains(@title,'Select All')])[1]</td>
 	<td></td>
 </tr>
@@ -130,7 +130,7 @@
 </tr>
 <!--CONTROL_PANEL_OBJECTS_PERMISSIONS-->
 <tr>
-	<td>CONTROL_PANEL_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX</td>
+	<td>CONTROL_PANEL_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX</td>
 	<td>//input[contains(@name,'_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_rowIds') and contains(@value,'ACCESS_IN_CONTROL_PANEL')]</td>
 	<td></td>
 </tr>

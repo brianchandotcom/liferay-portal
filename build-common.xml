@@ -1744,7 +1744,6 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 				/>
 				<fileset
 					dir="${project.dir}/lib/portal"
-					excludes="ant.jar"
 					includes="*.jar"
 				/>
 				<fileset

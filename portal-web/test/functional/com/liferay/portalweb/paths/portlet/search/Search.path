@@ -88,7 +88,7 @@
 </tr>
 <tr>
 	<td>MODIFIED_FACET_SELECTION</td>
-	<td>//li[contains(@name,'ModifiedFacet')]//span[contains(.,'${range}')]</td>
+	<td>//div[contains(@id,'ModifiedFacet')]//span[contains(.,'${range}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -162,6 +162,10 @@ public class UpgradeTableBuilder {
 
 		String packagePath = _getPackagePath(content);
 
+		if (packagePath == null) {
+			throw new IOException("Provide a package in " + fileName);
+		}
+
 		String className = fileName.substring(0, fileName.length() - 5);
 
 		String upgradeFileContent = _read(upgradeFilePath);
@@ -170,7 +174,7 @@ public class UpgradeTableBuilder {
 			content = _getContent(packagePath, className, upgradeFileContent);
 		}
 		catch (Exception exception) {
-			throw new IOException(exception.getMessage(), exception.getCause());
+			throw new IOException(exception.getCause());
 		}
 
 		Files.write(path, content.getBytes(StandardCharsets.UTF_8));

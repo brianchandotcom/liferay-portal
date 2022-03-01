@@ -66,8 +66,8 @@ import javax.servlet.http.HttpServletRequest;
 public class ExportTranslationDisplayContext {
 
 	public ExportTranslationDisplayContext(
-		long classNameId, long[] classPKs,
-		long groupId, HttpServletRequest httpServletRequest,
+		long classNameId, long[] classPKs, long groupId,
+		HttpServletRequest httpServletRequest,
 		InfoItemServiceTracker infoItemServiceTracker,
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse, List<Object> models,

@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Spring Service Builder Test Service
+Bundle-SymbolicName: com.liferay.spring.service.builder.test.service
+Bundle-Version: 1.0.0
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

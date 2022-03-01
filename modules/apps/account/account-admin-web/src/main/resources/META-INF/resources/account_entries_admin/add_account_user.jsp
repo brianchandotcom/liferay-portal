@@ -115,16 +115,10 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-new-user-to-x", accoun
 					md="6"
 				>
 					<div class="text-center">
-
-						<%
-						UserFileUploadsConfiguration userFileUploadsConfiguration = (UserFileUploadsConfiguration)request.getAttribute(UserFileUploadsConfiguration.class.getName());
-						%>
-
 						<liferay-ui:logo-selector
 							currentLogoURL='<%= themeDisplay.getPathImage() + "/user_portrait?img_id=0" %>'
 							defaultLogo="<%= true %>"
 							defaultLogoURL='<%= themeDisplay.getPathImage() + "/user_portrait?img_id=0" %>'
-							maxFileSize="<%= userFileUploadsConfiguration.imageMaxSize() %>"
 							tempImageFileName="0"
 						/>
 					</div>

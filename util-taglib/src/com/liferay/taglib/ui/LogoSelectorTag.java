@@ -47,6 +47,10 @@ public class LogoSelectorTag extends IncludeTag {
 		return _logoDisplaySelector;
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
 	public long getMaxFileSize() {
 		return _maxFileSize;
 	}

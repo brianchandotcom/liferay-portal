@@ -103,8 +103,6 @@ if (organization != null) {
 
 				<%
 				long logoId = organization.getLogoId();
-
-				UserFileUploadsConfiguration userFileUploadsConfiguration = (UserFileUploadsConfiguration)request.getAttribute(UserFileUploadsConfiguration.class.getName());
 				%>
 
 				<label class="control-label"></label>
@@ -114,7 +112,6 @@ if (organization != null) {
 					defaultLogo="<%= logoId == 0 %>"
 					defaultLogoURL='<%= themeDisplay.getPathImage() + "/organization_logo?img_id=0" %>'
 					logoDisplaySelector=".organization-logo"
-					maxFileSize="<%= userFileUploadsConfiguration.imageMaxSize() %>"
 					tempImageFileName="<%= String.valueOf(groupId) %>"
 				/>
 			</c:if>

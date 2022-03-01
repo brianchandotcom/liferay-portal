@@ -155,17 +155,20 @@ definition {
 		property test.assert.javascript.errors = "true";
 		property test.assert.warning.exceptions = "true";
 
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "Test Folder",
+			groupName = "Guest");
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		Portlet.addPG(
-			pageName = "Documents and Media Page",
-			portletName = "Documents and Media");
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder");
-
-		PortletEntry.LastSelectAll();
+		PortletEntry.SelectAllOnSpecificWidget(widgetPosition = "2");
 
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 	}

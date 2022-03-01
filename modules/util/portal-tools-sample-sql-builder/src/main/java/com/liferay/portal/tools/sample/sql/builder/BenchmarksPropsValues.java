@@ -14,8 +14,6 @@
 
 package com.liferay.portal.tools.sample.sql.builder;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -26,8 +24,6 @@ import java.io.Reader;
 
 import java.time.ZoneId;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import java.util.TimeZone;
 
@@ -35,9 +31,6 @@ import java.util.TimeZone;
  * @author Lily Chi
  */
 public class BenchmarksPropsValues {
-
-	public static final String ACTUAL_PROPERTIES_CONTENT =
-		PropertiesHolder._ACTUAL_PROPERTIES_CONTENT;
 
 	public static final String[] COMMERCE_LAYOUT_EXCLUDED_PORTLETS =
 		StringUtil.split(
@@ -267,8 +260,6 @@ public class BenchmarksPropsValues {
 			return _properties.getProperty(key);
 		}
 
-		private static final String _ACTUAL_PROPERTIES_CONTENT;
-
 		private static final Properties _properties;
 
 		static {
@@ -296,26 +287,6 @@ public class BenchmarksPropsValues {
 			catch (Exception exception) {
 				throw new ExceptionInInitializerError(exception);
 			}
-
-			List<String> propertyNames = new ArrayList<>(
-				properties.stringPropertyNames());
-
-			propertyNames.sort(null);
-
-			StringBundler sb = new StringBundler(propertyNames.size() * 4);
-
-			for (String propertyName : propertyNames) {
-				if (!propertyName.startsWith("sample.sql")) {
-					continue;
-				}
-
-				sb.append(propertyName);
-				sb.append(StringPool.EQUAL);
-				sb.append(properties.getProperty(propertyName));
-				sb.append(StringPool.NEW_LINE);
-			}
-
-			_ACTUAL_PROPERTIES_CONTENT = sb.toString();
 
 			_properties = properties;
 		}

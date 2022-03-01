@@ -1092,7 +1092,7 @@ definition {
 		MenuItem.click(menuItem = "Split Thread");
 
 		AssertTextEquals(
-			locator1 = "Message#INFO",
+			locator1 = "MessageBoardsSplitThread#SPLIT_THREAD_INFO",
 			value1 = "Click OK to create a new thread with the following messages.");
 
 		AssertTextEquals.assertPartialText(
@@ -1836,7 +1836,14 @@ definition {
 			locator1 = "MessageBoardsThread#THREAD_BODY",
 			value1 = "${threadSplitReplyBody}");
 
-		Navigator.gotoPage(pageName = "${pageName}");
+		if (isSet(siteName)) {
+			Navigator.openSitePage(
+				pageName = "${pageName}",
+				siteName = "${siteName}");
+		}
+		else {
+			Navigator.gotoPage(pageName = "${pageName}");
+		}
 
 		var key_repliesCount = "0";
 		var key_threadBody = "${threadReplyBody}";

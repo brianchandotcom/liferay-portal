@@ -12,6 +12,11 @@
 <tbody>
 <!--THREAD_TABLE-->
 <tr>
+	<td>SPLIT_THREAD_INFO</td>
+	<td>//form[contains(@name,'message_board')]//div[contains(@class,'alert alert-info') and not(contains(@class,'hide'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>THREAD_TABLE_SUBJECT</td>
 	<td>//table[contains(@id,'message_boards_view_message_thread')]//tr[contains(.,'${key_threadSubject}')]/td//a/strong</td>
 	<td></td>

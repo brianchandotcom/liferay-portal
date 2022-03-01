@@ -86,7 +86,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		return addFileEntry(
 			null, groupId, repositoryId, folderId, sourceFileName, mimeType,
-			title, description, changeLog, fileEntryTypeId, ddmFormValuesMap,
+			title, title, description, changeLog, fileEntryTypeId, ddmFormValuesMap,
 			file, inputStream, size, null, null, serviceContext);
 	}
 
@@ -94,9 +94,9 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public DLFileEntry addFileEntry(
 			String externalReferenceCode, long groupId, long repositoryId,
 			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, long fileEntryTypeId,
-			Map<String, DDMFormValues> ddmFormValuesMap, File file,
-			InputStream inputStream, long size, Date expirationDate,
+			String urlTitle, String description, String changeLog,
+			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
+			File file, InputStream inputStream, long size, Date expirationDate,
 			Date reviewDate, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -106,7 +106,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		return dlFileEntryLocalService.addFileEntry(
 			externalReferenceCode, getUserId(), groupId, repositoryId, folderId,
-			sourceFileName, mimeType, title, title, description, changeLog,
+			sourceFileName, mimeType, title, urlTitle, description, changeLog,
 			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size,
 			expirationDate, reviewDate, serviceContext);
 	}
@@ -708,7 +708,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	@Override
 	public DLFileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
-			String title, String description, String changeLog,
+			String title, String urlTitle, String description, String changeLog,
 			DLVersionNumberIncrease dlVersionNumberIncrease,
 			long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
 			File file, InputStream inputStream, long size, Date expirationDate,
@@ -730,7 +730,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		}
 
 		return dlFileEntryLocalService.updateFileEntry(
-			getUserId(), fileEntryId, sourceFileName, mimeType, title, title,
+			getUserId(), fileEntryId, sourceFileName, mimeType, title, urlTitle,
 			description, changeLog, dlVersionNumberIncrease, fileEntryTypeId,
 			ddmFormValuesMap, file, inputStream, size, expirationDate,
 			reviewDate, serviceContext);
@@ -754,7 +754,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		throws PortalException {
 
 		return updateFileEntry(
-			fileEntryId, sourceFileName, mimeType, title, description,
+			fileEntryId, sourceFileName, mimeType, title, title, description,
 			changeLog, dlVersionNumberIncrease, fileEntryTypeId,
 			ddmFormValuesMap, file, inputStream, size, null, null,
 			serviceContext);

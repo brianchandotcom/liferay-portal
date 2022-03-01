@@ -10,12 +10,6 @@
 </thead>
 
 <tbody>
-<!--TAG_ENTRY_TABLE-->
-<tr>
-	<td>TAG_ENTRY_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_tagName}')]/td[2]</td>
-	<td></td>
-</tr>
 <tr>
 	<td>VIEW_TAGS_VIA_MY_SITES</td>
 	<td>//*[@data-qa-id='row']//span[contains(@class,'asset-tag')]/span[contains(.,'${key_tagName}')]</td>

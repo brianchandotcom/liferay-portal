@@ -126,12 +126,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ENTRY_CONTENT_LIST-->
-<tr>
-	<td>ENTRY_CONTENT_LIST_COLUMN</td>
-	<td>//tr[@data-qa-id='row']/td[${key_columnNumber}]</td>
-	<td></td>
-</tr>
 <!--ENTRY_CONTENT_REDIRECT-->
 <tr>
 	<td>ENTRY_CONTENT_REDIRECT_DESTINATION_URL_COLUMN</td>

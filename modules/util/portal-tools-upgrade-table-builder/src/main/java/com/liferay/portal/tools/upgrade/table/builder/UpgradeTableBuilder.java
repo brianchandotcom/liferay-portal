@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.upgrade.table.builder;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -154,7 +155,10 @@ public class UpgradeTableBuilder {
 			upgradeFilePath = _getUpgradeFilePath(upgradeFileName);
 
 			if (upgradeFilePath == null) {
-				return;
+				throw new IOException(
+					StringBundler.concat(
+						"Verify name for ", fileName, " because ",
+						upgradeFileName, " does not exist"));
 			}
 		}
 
@@ -163,7 +167,7 @@ public class UpgradeTableBuilder {
 		String packagePath = _getPackagePath(content);
 
 		if (packagePath == null) {
-			throw new IOException("Provide a package in " + fileName);
+			throw new IOException("Provide a package in " + path);
 		}
 
 		String className = fileName.substring(0, fileName.length() - 5);

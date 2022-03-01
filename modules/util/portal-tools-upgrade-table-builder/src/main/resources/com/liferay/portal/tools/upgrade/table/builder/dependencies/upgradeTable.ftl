@@ -27,8 +27,8 @@ public class ${className} {
 		};
 	}
 
-	private static String TABLE_NAME =${tableName};
+	private static final String TABLE_NAME =${tableName};
 
-	private static String TABLE_SQL_CREATE=${tableSQLCreate};
+	private static final String TABLE_SQL_CREATE=${tableSQLCreate};
 
 }

@@ -839,16 +839,11 @@ definition {
 
 		Staging.publishToLive();
 
-		ProductMenu.gotoLiveSite();
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			panel = "Site Administration",
-			portlet = "Documents and Media");
+		DMDocument.viewDefault();
 
-		AssertElementNotPresent(
-			key_card = "DM Document Title",
-			locator1 = "Card#CARD_SHORTCUT");
+		AssertConsoleTextNotPresent(value1 = "PortletDataException");
 	}
 
 	@description = "This is a use case for LPS-79925."

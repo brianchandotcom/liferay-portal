@@ -52,6 +52,7 @@ import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContrib
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
+import com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityContributor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +104,11 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 
 		return _journalArticleModelResourcePermission.contains(
 			permissionChecker, entryClassPK, ActionKeys.VIEW);
+	}
+
+	@Override
+	public boolean isVisible(long classPK, int status) throws Exception {
+		return modelVisibilityContributor.isVisible(classPK, status);
 	}
 
 	@Override
@@ -268,6 +274,11 @@ public class JournalArticleIndexer extends BaseIndexer<JournalArticle> {
 		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"
 	)
 	protected ModelSummaryContributor modelSummaryContributor;
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	protected ModelVisibilityContributor modelVisibilityContributor;
 
 	@Reference
 	protected UIDFactory uidFactory;

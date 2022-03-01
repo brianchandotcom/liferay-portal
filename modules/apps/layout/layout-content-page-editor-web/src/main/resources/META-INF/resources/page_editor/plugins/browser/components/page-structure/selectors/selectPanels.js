@@ -210,10 +210,11 @@ export function selectPanels(activeItemId, activeItemType, state) {
 			[PANEL_IDS.fragmentGeneral]:
 				fragmentEntryKey !== COLLECTION_FILTER_FRAGMENT_ENTRY_KEY &&
 				canUpdateItemConfiguration &&
-				fieldSets.some(
-					(fieldSet) =>
-						fieldSet.configurationRole !==
-						FRAGMENT_CONFIGURATION_ROLES.style
+				fieldSets.some((fieldSet) =>
+					config.fragmentAdvancedOptionsEnabled
+						? !fieldSet.configurationRole
+						: fieldSet.configurationRole !==
+						  FRAGMENT_CONFIGURATION_ROLES.style
 				),
 			[PANEL_IDS.collectionAppliedFiltersGeneral]:
 				fragmentEntryKey ===

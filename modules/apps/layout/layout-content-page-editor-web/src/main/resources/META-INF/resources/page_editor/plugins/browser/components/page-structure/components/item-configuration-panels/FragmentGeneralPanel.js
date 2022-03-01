@@ -47,7 +47,10 @@ export function FragmentGeneralPanel({item}) {
 
 	const fieldSets = fragmentEntryLink.configuration?.fieldSets.filter(
 		(fieldSet) =>
-			fieldSet.configurationRole !== FRAGMENT_CONFIGURATION_ROLES.style
+			config.fragmentAdvancedOptionsEnabled
+				? !fieldSet.configurationRole
+				: fieldSet.configurationRole !==
+				  FRAGMENT_CONFIGURATION_ROLES.style
 	);
 
 	const defaultConfigurationValues =

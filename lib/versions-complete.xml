@@ -4008,7 +4008,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!protobuf-java-util.jar</file-name>
-				<version>3.15.6</version>
+				<version>3.16.1</version>
 				<project-name>Protocol Buffers [Util]</project-name>
 				<project-url>https://developers.google.com/protocol-buffers/</project-url>
 				<licenses>
@@ -4020,7 +4020,7 @@
 			</library>
 			<library>
 				<file-name>com.liferay.portal.store.gcs.jar!protobuf-java.jar</file-name>
-				<version>3.15.6</version>
+				<version>3.16.1</version>
 				<project-name>Protocol Buffers [Core]</project-name>
 				<project-url>https://developers.google.com/protocol-buffers/</project-url>
 				<licenses>
@@ -4334,6 +4334,18 @@
 				<licenses>
 					<license>
 						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tika.jar!tagsoup.jar</file-name>
+				<version>1.2.1</version>
+				<project-name>TagSoup</project-name>
+				<project-url>http://home.ccil.org/~cowan/XML/tagsoup/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
 					</license>
 				</licenses>

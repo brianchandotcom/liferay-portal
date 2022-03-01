@@ -99,7 +99,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		WebContent.addPGViaWCD(
+		WebContentDisplayPortlet.add(
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 

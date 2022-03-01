@@ -1222,7 +1222,7 @@ definition {
 
 		Navigator.openSiteURL(siteName = "Child SiteName");
 
-		WebContent.addPGViaWCD(
+		WebContentDisplayPortlet.add(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 

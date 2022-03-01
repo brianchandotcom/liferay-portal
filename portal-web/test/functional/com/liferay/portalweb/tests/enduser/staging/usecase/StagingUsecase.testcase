@@ -556,7 +556,7 @@ definition {
 			pageName = "Page Name 2",
 			siteName = "Site Name");
 
-		WebContent.addPGViaWCD(
+		WebContentDisplayPortlet.add(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title");
 
@@ -1623,7 +1623,7 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		WebContent.addPGViaWCD(
+		WebContentDisplayPortlet.add(
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 

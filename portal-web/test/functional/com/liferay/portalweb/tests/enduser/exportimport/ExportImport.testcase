@@ -1991,7 +1991,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name A");
 
-		WebContent.addPGViaWCD(
+		WebContentDisplayPortlet.add(
 			webContentContent = "WebContent Content",
 			webContentTitle = "WebContent Title");
 

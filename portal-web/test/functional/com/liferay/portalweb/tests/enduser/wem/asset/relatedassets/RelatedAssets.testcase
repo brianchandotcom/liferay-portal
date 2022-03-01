@@ -71,7 +71,7 @@ definition {
 				pageName = "Test Page 1",
 				siteName = "Site Name");
 
-			WebContent.addPGViaWCD(
+			WebContentDisplayPortlet.add(
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 

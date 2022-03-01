@@ -629,7 +629,7 @@ definition {
 
 		Portlet.addPG(portletName = "Web Content Display");
 
-		WebContent.addPGViaWCD(
+		WebContentDisplayPortlet.add(
 			webContentContent = "WebContent Content",
 			webContentTitle = "WebContent Title");
 

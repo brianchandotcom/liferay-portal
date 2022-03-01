@@ -1011,7 +1011,7 @@ definition {
 			pageName = "Test Page",
 			siteName = "Site Name");
 
-		WebContent.addPGViaWCD(
+		WebContentDisplayPortlet.add(
 			embedImage = "true",
 			imageFileName = "Document_1.png",
 			siteName = "Global",

@@ -1,5 +1,27 @@
 definition {
 
+	macro add {
+		WebContentDisplayPortletNavigator.gotoAdd(portletNameScoped = "${portletNameScoped}");
+
+		WebContent.addCP(
+			embedImage = "${embedImage}",
+			imageFileName = "${imageFileName}",
+			siteName = "${siteName}",
+			source = "${source}",
+			webContentContent = "${webContentContent}",
+			webContentTitle = "${webContentTitle}");
+
+		if (isSet(templateName)) {
+			if (IsTextNotEqual(inputFieldId = "ddmTemplateName", locator1 = "TextInput#INPUT_ID", value1 = "${templateName}")) {
+				WebContent.selectTemplateCP(
+					structureName = "Basic Web Content",
+					templateName = "${templateName}");
+			}
+		}
+
+		PortletEntry.publish();
+	}
+
 	macro addDraft {
 		WebContentDisplayPortletNavigator.gotoAdd();
 

@@ -107,7 +107,7 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			WebContent.addPGViaWCD(
+			WebContentDisplayPortlet.add(
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
 		}
@@ -164,7 +164,7 @@ definition {
 				pageName = "Test Page Name 1",
 				siteName = "Test Site Name");
 
-			WebContent.addPGViaWCD(
+			WebContentDisplayPortlet.add(
 				portletNameScoped = "Web Content Display (Test Page Name 1)",
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");
@@ -333,7 +333,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			WebContent.addPGViaWCD(
+			WebContentDisplayPortlet.add(
 				templateName = "Second Basic Template",
 				webContentContent = "Web Content Content",
 				webContentTitle = "Web Content Title");

@@ -305,10 +305,17 @@ definition {
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-		AssertClick(
-			key_breadcrumbName = "Sites and Libraries",
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-			value1 = "Sites and Libraries");
+		if (isSet(stagingSiteName)) {
+			AssertVisible(
+				key_card = "${dmDocumentTitle}",
+				locator1 = "Card#CARD");
+		}
+		else {
+			AssertClick(
+				key_breadcrumbName = "Sites and Libraries",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "Sites and Libraries");
+		}
 
 		if (isSet(siteName)) {
 			LexiconCard.clickCardTitleLink(card = "${siteName}");

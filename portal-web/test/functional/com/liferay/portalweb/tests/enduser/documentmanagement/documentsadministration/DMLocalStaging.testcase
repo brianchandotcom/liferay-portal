@@ -812,9 +812,11 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_1.jpg");
 
-		DMDocument.addDMShortcutCPWithStaging(
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.addDMShortcutCP(
 			dmDocumentTitle = "DM Document Title",
-			siteName = "Site Name");
+			stagingSiteName = "true");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",

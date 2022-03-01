@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.internal.configuration.cache;
+package com.liferay.document.library.internal.configuration.admin.service;
 
 import com.liferay.document.library.internal.configuration.MimeTypeSizeLimitConfiguration;
 import com.liferay.document.library.internal.util.MimeTypeSizeLimitUtil;

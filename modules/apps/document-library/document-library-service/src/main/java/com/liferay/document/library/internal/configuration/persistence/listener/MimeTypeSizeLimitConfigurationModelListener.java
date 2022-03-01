@@ -15,7 +15,7 @@
 package com.liferay.document.library.internal.configuration.persistence.listener;
 
 import com.liferay.document.library.internal.configuration.MimeTypeSizeLimitConfiguration;
-import com.liferay.document.library.internal.configuration.cache.MimeTypeSizeLimitManagedServiceFactory;
+import com.liferay.document.library.internal.configuration.admin.service.MimeTypeSizeLimitManagedServiceFactory;
 import com.liferay.document.library.internal.util.MimeTypeSizeLimitUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;

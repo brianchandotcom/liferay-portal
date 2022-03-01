@@ -1,5 +1,6 @@
 dependencies {
 	compileInclude group: "com.liferay", name: "org.gagravarr.tika", version: "0.8.LIFERAY-PATCHED-1"
+	compileInclude group: "com.uwyn", name: "jhighlight", version: "1.0"
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.12.0"
 	compileInclude group: "org.apache.james", name: "apache-mime4j-core", version: "0.8.3"
 	compileInclude group: "org.apache.james", name: "apache-mime4j-dom", version: "0.8.3"

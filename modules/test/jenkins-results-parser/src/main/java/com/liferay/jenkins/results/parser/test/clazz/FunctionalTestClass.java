@@ -53,8 +53,8 @@ public class FunctionalTestClass extends BaseTestClass {
 		String testClassMethodName = getTestClassMethodName();
 
 		return JenkinsResultsParserUtil.combine(
-			name.replaceAll("([^\\.]+)\\..*", "$1"), "#",
-			testClassMethodName.replaceAll("([^#]+#)?(.*)", "$2"));
+			name.replaceAll("(.+/)[^/]+", "$1"),
+			testClassMethodName.replaceAll("([^\\.]+\\.)?(.*)", "$2"));
 	}
 
 	public Properties getPoshiProperties() {

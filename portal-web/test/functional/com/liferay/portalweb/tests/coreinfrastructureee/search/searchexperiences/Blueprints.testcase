@@ -586,6 +586,39 @@ definition {
 		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
 	}
 
+	test CopyCustomElement {
+		Blueprints.openBlueprintsAdmin();
+
+		var elementSourceJson = '''
+{
+	"description_i18n": {
+		"en_US": "Copy Element"
+	},
+	"elementDefinition": {
+		"configuration": {},
+		"uiConfiguration": {}
+	},
+	"title_i18n": {
+		"en_US": "Test Element"
+	}
+}
+		''';
+
+		Blueprints.createElement(
+			elementSourceJson = "${elementSourceJson}",
+			title = "Test Element");
+
+		Blueprints.gotoEntryMenuItem(
+			menuItem = "Copy",
+			title = "Test Element");
+
+		Blueprints.editElement(element = "Copy of Test Element");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "Copy Element");
+	}
+
 	test CopyElementJSONViaBlueprintsQueryBuilder {
 		Blueprints.openBlueprintsAdmin();
 

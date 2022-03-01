@@ -78,9 +78,8 @@ public class XMLEchoMessageCheck extends BaseFileCheck {
 					continue;
 				}
 
-				echoElement.setText(messageAttribute.getText());
-
 				echoElement.remove(messageAttribute);
+				echoElement.setText(messageAttribute.getText());
 
 				content = StringUtil.replace(
 					content, matchedTag, echoElement.asXML());

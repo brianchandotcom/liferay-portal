@@ -141,7 +141,9 @@ function Table({dataLoading, items, itemsActions, schema, style}) {
 
 							{!!items.length &&
 								items.map((item) => {
-									const itemId = item[selectedItemsKey];
+									const itemId =
+										item[selectedItemsKey ?? 'id'];
+
 									const nestedItems =
 										nestedItemsReferenceKey &&
 										item[nestedItemsReferenceKey];

@@ -21,24 +21,24 @@ CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrder
 
 CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder();
 
-List<CommerceTermEntry> deliveryTermsEntries = commerceOrderEditDisplayContext.getDeliveryTermsEntries();
+List<CommerceTermEntry> paymentCommerceTermEntries = commerceOrderEditDisplayContext.getPaymentTermsEntries();
 
-long deliveryCommerceTermEntryId = commerceOrder.getDeliveryCommerceTermEntryId();
+long paymentCommerceTermEntryId = commerceOrder.getPaymentCommerceTermEntryId();
 
 HashMap<Long, String> terms = new HashMap<Long, String>();
 %>
 
-<portlet:actionURL name="/commerce_order/edit_commerce_order" var="editCommerceOrderDeliveryTermsActionURL" />
+<portlet:actionURL name="/commerce_order/edit_commerce_order" var="editCommerceOrderPaymentTermsActionURL" />
 
 <commerce-ui:modal-content
-	title='<%= (deliveryCommerceTermEntryId == 0) ? LanguageUtil.get(request, "delivery-terms") : LanguageUtil.get(request, "edit-delivery-terms") %>'
+	title='<%= (paymentCommerceTermEntryId == 0) ? LanguageUtil.get(request, "payment-terms") : LanguageUtil.get(request, "edit-payment-terms") %>'
 >
 	<c:choose>
-		<c:when test="<%= deliveryTermsEntries.isEmpty() %>">
+		<c:when test="<%= paymentCommerceTermEntries.isEmpty() %>">
 			<aui:row>
 				<aui:col widht="100">
 					<aui:alert type="info">
-						<liferay-ui:message key="there-are-no-available-delivery-terms" />
+						<liferay-ui:message key="there-are-no-available-payment-terms" />
 					</aui:alert>
 				</aui:col>
 			</aui:row>
@@ -52,20 +52,20 @@ HashMap<Long, String> terms = new HashMap<Long, String>();
 			</aui:script>
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:error key="deliveryTermsInvalid" message="please-select-a-delivery-terms" />
+			<liferay-ui:error key="paymentTermsInvalid" message="please-select-a-payment-terms" />
 
-			<aui:form action="<%= editCommerceOrderDeliveryTermsActionURL %>" method="post" name="fm">
-				<aui:input name="<%= Constants.CMD %>" type="hidden" value="updateDeliveryTerms" />
+			<aui:form action="<%= editCommerceOrderPaymentTermsActionURL %>" method="post" name="fm">
+				<aui:input name="<%= Constants.CMD %>" type="hidden" value="updatePaymentTerms" />
 				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 				<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
 
-				<aui:select label='<%= LanguageUtil.get(request, "title") %>' name="commerceDeliveryTermId" showEmptyOption="<%= true %>">
+				<aui:select label='<%= LanguageUtil.get(request, "title") %>' name="commercePaymentTermId" showEmptyOption="<%= true %>">
 
 					<%
-					for (CommerceTermEntry commerceTermEntry : deliveryTermsEntries) {
+					for (CommerceTermEntry commerceTermEntry : paymentCommerceTermEntries) {
 					%>
 
-						<aui:option label="<%= commerceTermEntry.getLabel(LanguageUtil.getLanguageId(locale)) %>" selected="<%= deliveryCommerceTermEntryId == commerceTermEntry.getCommerceTermEntryId() %>" value="<%= commerceTermEntry.getCommerceTermEntryId() %>" />
+						<aui:option label="<%= commerceTermEntry.getLabel(LanguageUtil.getLanguageId(locale)) %>" selected="<%= paymentCommerceTermEntryId == commerceTermEntry.getCommerceTermEntryId() %>" value="<%= commerceTermEntry.getCommerceTermEntryId() %>" />
 
 					<%
 						terms.put(commerceTermEntry.getCommerceTermEntryId(), commerceTermEntry.getDescription(LanguageUtil.getLanguageId(locale)));
@@ -75,16 +75,16 @@ HashMap<Long, String> terms = new HashMap<Long, String>();
 				</aui:select>
 			</aui:form>
 
-			<label class="control-label <%= deliveryCommerceTermEntryId == 0 ? " d-none" : "" %>" id="description-label"><%= LanguageUtil.get(request, "description") %></label>
+			<label class="control-label <%= (paymentCommerceTermEntryId == 0) ? " d-none" : "" %>" id="description-label"><%= LanguageUtil.get(request, "description") %></label>
 
 			<div id="description-container">
-				<%= commerceOrder.getDeliveryCommerceTermEntryDescription() %>
+				<%= commerceOrder.getPaymentCommerceTermEntryDescription() %>
 			</div>
 
 			<liferay-frontend:component
 				context='<%=
 					HashMapBuilder.<String, Object>put(
-						"selectId", liferayPortletResponse.getNamespace() + "commerceDeliveryTermId"
+						"selectId", liferayPortletResponse.getNamespace() + "commercePaymentTermId"
 					).put(
 						"terms", terms
 					).build()

@@ -55,11 +55,11 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_ORDER,
-		"mvc.command.name=/commerce_order/edit_commerce_order_payment_terms"
+		"mvc.command.name=/commerce_order/edit_commerce_order_delivery_terms"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditCommerceOrderPaymentTernsMVCRenderCommand
+public class EditCommerceOrderDeliveryTermsMVCRenderCommand
 	implements MVCRenderCommand {
 
 	@Override
@@ -97,7 +97,7 @@ public class EditCommerceOrderPaymentTernsMVCRenderCommand
 			throw new PortletException(exception);
 		}
 
-		return "/commerce_order/payment-terms.jsp";
+		return "/commerce_order/delivery_terms.jsp";
 	}
 
 	@Activate

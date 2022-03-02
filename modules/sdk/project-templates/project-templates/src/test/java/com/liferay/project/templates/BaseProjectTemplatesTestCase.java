@@ -752,12 +752,12 @@ public interface BaseProjectTemplatesTestCase {
 
 					XPath xPath = xPathFactory.newXPath();
 
-					XPathExpression pomXmlNpmInstallXPathExpression =
+					XPathExpression pomXmlYarnInstallXPathExpression =
 						xPath.compile(
-							"//id[contains(text(),'npm-install')]/parent::*");
+							"//id[contains(text(),'yarn-install')]/parent::*");
 
 					NodeList nodeList =
-						(NodeList)pomXmlNpmInstallXPathExpression.evaluate(
+						(NodeList)pomXmlYarnInstallXPathExpression.evaluate(
 							document, XPathConstants.NODESET);
 
 					Node executionNode = nodeList.item(0);

@@ -321,7 +321,7 @@
 					for (const editorName in CKEDITOR.instances) {
 						const editor = CKEDITOR.instances[editorName];
 
-						editor.balloonToolbars.hide();
+						editor.balloonToolbars?.hide();
 
 						const liferayToolbars = editor.liferayToolbars;
 

@@ -152,8 +152,7 @@ public class ObjectRelatedModelsProviderTest {
 
 		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition1.getObjectDefinitionId(),
-			Collections.<String, Serializable>emptyMap(),
+			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
@@ -161,8 +160,7 @@ public class ObjectRelatedModelsProviderTest {
 
 		ObjectEntry objectEntryA = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition2.getObjectDefinitionId(),
-			Collections.<String, Serializable>emptyMap(),
+			_objectDefinition2.getObjectDefinitionId(), Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 
 		List<ObjectEntry> objectEntries =
@@ -277,8 +275,7 @@ public class ObjectRelatedModelsProviderTest {
 
 		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition1.getObjectDefinitionId(),
-			Collections.<String, Serializable>emptyMap(),
+			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
@@ -286,8 +283,7 @@ public class ObjectRelatedModelsProviderTest {
 
 		ObjectEntry objectEntryA = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition2.getObjectDefinitionId(),
-			Collections.<String, Serializable>emptyMap(),
+			_objectDefinition2.getObjectDefinitionId(), Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 
 		List<ObjectEntry> objectEntries =
@@ -383,13 +379,11 @@ public class ObjectRelatedModelsProviderTest {
 
 		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition1.getObjectDefinitionId(),
-			Collections.<String, Serializable>emptyMap(),
+			_objectDefinition1.getObjectDefinitionId(), Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 		ObjectEntry objectEntry2 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition2.getObjectDefinitionId(),
-			Collections.<String, Serializable>emptyMap(),
+			_objectDefinition2.getObjectDefinitionId(), Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 
 		List<ObjectEntry> objectEntries =
@@ -415,8 +409,7 @@ public class ObjectRelatedModelsProviderTest {
 
 		objectEntry2 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition2.getObjectDefinitionId(),
-			Collections.<String, Serializable>emptyMap(),
+			_objectDefinition2.getObjectDefinitionId(), Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 
 		_objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
@@ -438,8 +431,6 @@ public class ObjectRelatedModelsProviderTest {
 		_testIndividualScopeViewPermission(
 			objectEntry2, objectRelationship, objectRelatedModelsProvider,
 			objectEntry1);
-
-		// TODO deleteObjectRelationshipMappingTableValues
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);

@@ -562,6 +562,20 @@ public class CommerceShipmentLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
+	public CommerceShipment updateCommerceShipmentExternalReferenceCode(
+			String externalReferenceCode, long commerceShipmentId)
+		throws PortalException {
+
+		CommerceShipment commerceShipment =
+			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
+
+		commerceShipment.setExternalReferenceCode(externalReferenceCode);
+
+		return commerceShipmentPersistence.update(commerceShipment);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CommerceShipment updateExpectedDate(
 			long commerceShipmentId, int expectedDateMonth, int expectedDateDay,
 			int expectedDateYear, int expectedDateHour, int expectedDateMinute)

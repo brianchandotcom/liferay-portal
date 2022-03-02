@@ -365,6 +365,7 @@ definition {
 	@priority = "5"
 	test OpenIDConnectSmokeWithAzure {
 		property dummy.socket.proxy.disabled = "true";
+		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithAzure";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";

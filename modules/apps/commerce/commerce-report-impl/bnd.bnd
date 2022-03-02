@@ -27,6 +27,8 @@ Import-Package:\
 	\
 	!javax.print.*,\
 	\
+	!javax.rmi.*,\
+	\
 	!javax.swing.*,\
 	\
 	!jline.*,\

@@ -8,6 +8,8 @@ Import-Package:\
 	\
 	!javax.jms.*,\
 	\
+	!javax.rmi,\
+	\
 	!javax.swing.*,\
 	\
 	!org.apache.bsf.*,\

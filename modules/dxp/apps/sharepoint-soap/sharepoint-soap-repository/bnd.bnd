@@ -7,6 +7,8 @@ Import-Package:\
 	!com.sun.javadoc.*,\
 	!com.sun.tools.javadoc.*,\
 	\
+	!javax.rmi,\
+	\
 	!net.sf.saxon.*,\
 	\
 	!org.apache.axis2.jaxws.description.*,\

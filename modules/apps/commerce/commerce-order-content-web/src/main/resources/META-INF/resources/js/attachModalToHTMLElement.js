@@ -24,11 +24,11 @@ export default function ({HTMLElementId, modalContent, modalTitle}) {
 				bodyHTML: modalContent,
 				center: true,
 				containerProps: {
-					className: "modal-height-full",
-					center: true
+					center: true,
+					className: 'modal-height-full',
 				},
-				size: 'xl'
-				title: modalTitle
+				size: 'xl',
+				title: modalTitle,
 			});
 		});
 }

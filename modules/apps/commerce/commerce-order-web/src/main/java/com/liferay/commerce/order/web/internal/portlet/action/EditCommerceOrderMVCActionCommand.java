@@ -432,7 +432,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		_commerceOrderService.updateTermsAndConditions(
 			commerceOrder.getCommerceOrderId(),
-			Long.parseLong(commerceDeliveryTermId), 0,
+			GetterUtil.getLong(commerceDeliveryTermId), 0,
 			LanguageUtil.getLanguageId(actionRequest.getLocale()));
 	}
 
@@ -531,7 +531,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 		_commerceOrderService.updateTermsAndConditions(
 			commerceOrder.getCommerceOrderId(), 0,
-			Long.parseLong(commercePaymentTermId),
+			GetterUtil.getLong(commercePaymentTermId),
 			LanguageUtil.getLanguageId(actionRequest.getLocale()));
 	}
 

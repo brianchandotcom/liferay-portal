@@ -1351,6 +1351,8 @@ definition {
 	@description = "LPS-135390 - Verify it is not possible to update an Object entry without the Update permission"
 	@priority = "4"
 	test CannotUpdateObjectEntryWithoutUpdatePermission {
+		property portal.upstream = "quarantine";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",

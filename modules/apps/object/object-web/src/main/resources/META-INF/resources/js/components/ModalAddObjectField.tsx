@@ -44,7 +44,7 @@ const headers = new Headers({
 
 async function fetchPickList() {
 	const result = await fetch(
-		'/o/headless-admin-list-type/v1.0/list-type-definitions',
+		'/o/headless-admin-list-type/v1.0/list-type-definitions?pageSize=-1',
 		{
 			headers,
 			method: 'GET',

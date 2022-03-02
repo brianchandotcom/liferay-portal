@@ -221,8 +221,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 			}
 
 			return _getOperationJSONObject(
-				String.valueOf(type), (EntityField)expressions.get(0),
-				expressions.get(1));
+				String.valueOf(type), expressions.get(0), expressions.get(1));
 		}
 
 		throw new UnsupportedOperationException(

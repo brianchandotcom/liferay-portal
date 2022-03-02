@@ -1,3 +1,9 @@
-.input-localized > .form-group {
-	margin-bottom: 0;
+.lfr-objects__input-localized {
+	.form-group {
+		margin-bottom: 0;
+	}
+
+	.form-text {
+		display: none;
+	}
 }

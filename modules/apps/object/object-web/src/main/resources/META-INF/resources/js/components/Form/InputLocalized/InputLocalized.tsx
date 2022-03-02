@@ -22,25 +22,28 @@ import RequiredMask from '../RequiredMask';
 
 import './InputLocalized.scss';
 
-const InputLocalized: React.FC<IInputLocalizedProps> = ({
+export default function InputLocalized({
 	className,
 	disabled = false,
 	error,
 	id,
 	label,
 	locales,
+	name,
 	onSelectedLocaleChange,
 	onTranslationsChange,
 	required = false,
 	selectedLocale,
 	translations,
 	...otherProps
-}) => {
+}: IProps) {
 	return (
 		<ClayForm.Group
-			className={classNames(className, 'input-localized', {
-				'has-error': error,
-			})}
+			className={classNames(
+				'lfr-objects__input-localized',
+				{'has-error': error},
+				className
+			)}
 		>
 			<label className={classNames({disabled})} htmlFor={id}>
 				{label}
@@ -53,6 +56,7 @@ const InputLocalized: React.FC<IInputLocalizedProps> = ({
 				id={id}
 				label=""
 				locales={locales}
+				name={name}
 				onSelectedLocaleChange={onSelectedLocaleChange}
 				onTranslationsChange={onTranslationsChange}
 				selectedLocale={selectedLocale}
@@ -62,29 +66,24 @@ const InputLocalized: React.FC<IInputLocalizedProps> = ({
 			{error && <ErrorFeedback error={error} />}
 		</ClayForm.Group>
 	);
-};
+}
 
-interface IInputLocalizedProps {
+interface ILocale {
+	label: string;
+	symbol: string;
+}
+
+interface IProps {
 	className?: string;
 	disabled?: boolean;
 	error?: string;
-	id: string;
+	id?: string;
 	label: string;
-	locales: TLocale[];
-	onSelectedLocaleChange: (value: TLocale) => void;
-	onTranslationsChange: (value: TTranslations) => void;
+	locales: ILocale[];
+	name?: string;
+	onSelectedLocaleChange: (value: ILocale) => void;
+	onTranslationsChange: (value: LocalizedValue<string>) => void;
 	required?: boolean;
-	selectedLocale: TLocale;
-	translations: TTranslations;
+	selectedLocale: ILocale;
+	translations: LocalizedValue<string>;
 }
-
-type TTranslations = {
-	[key: string]: string;
-};
-
-type TLocale = {
-	label: string;
-	symbol: string;
-};
-
-export default InputLocalized;

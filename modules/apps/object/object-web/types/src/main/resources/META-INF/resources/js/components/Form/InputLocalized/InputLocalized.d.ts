@@ -12,27 +12,40 @@
  * details.
  */
 
-import React from 'react';
+/// <reference types="react" />
+
 import './InputLocalized.scss';
-declare const InputLocalized: React.FC<IInputLocalizedProps>;
-interface IInputLocalizedProps {
+export default function InputLocalized({
+	className,
+	disabled,
+	error,
+	id,
+	label,
+	locales,
+	name,
+	onSelectedLocaleChange,
+	onTranslationsChange,
+	required,
+	selectedLocale,
+	translations,
+	...otherProps
+}: IProps): JSX.Element;
+interface ILocale {
+	label: string;
+	symbol: string;
+}
+interface IProps {
 	className?: string;
 	disabled?: boolean;
 	error?: string;
-	id: string;
+	id?: string;
 	label: string;
-	locales: TLocale[];
-	onSelectedLocaleChange: (value: TLocale) => void;
-	onTranslationsChange: (value: TTranslations) => void;
+	locales: ILocale[];
+	name?: string;
+	onSelectedLocaleChange: (value: ILocale) => void;
+	onTranslationsChange: (value: LocalizedValue<string>) => void;
 	required?: boolean;
-	selectedLocale: TLocale;
-	translations: TTranslations;
+	selectedLocale: ILocale;
+	translations: LocalizedValue<string>;
 }
-declare type TTranslations = {
-	[key: string]: string;
-};
-declare type TLocale = {
-	label: string;
-	symbol: string;
-};
-export default InputLocalized;
+export {};

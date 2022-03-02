@@ -68,7 +68,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import java.util.Map;
-import java.util.Optional;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -348,11 +347,7 @@ public class BlogPostingResourceImpl
 				_getExpandoBridgeAttributes(blogPosting), groupId,
 				contextHttpServletRequest, blogPosting.getViewableByAsString());
 
-		Optional.ofNullable(
-			blogPosting.getPriority()
-		).ifPresent(
-			serviceContext::setAssetPriority
-		);
+		serviceContext.setAssetPriority(blogPosting.getPriority());
 
 		return serviceContext;
 	}

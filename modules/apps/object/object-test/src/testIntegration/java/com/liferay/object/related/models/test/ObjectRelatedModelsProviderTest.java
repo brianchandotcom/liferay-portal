@@ -140,15 +140,8 @@ public class ObjectRelatedModelsProviderTest {
 	public void testObjectEntry1to1ObjectRelatedModelsProviderImpl()
 		throws Exception {
 
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
-				_objectDefinition1.getObjectDefinitionId(),
-				_objectDefinition2.getObjectDefinitionId(),
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
+		ObjectRelationship objectRelationship = _createRelationship(
+			ObjectRelationshipConstants.TYPE_ONE_TO_ONE);
 
 		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
@@ -272,15 +265,8 @@ public class ObjectRelatedModelsProviderTest {
 	public void testObjectEntry1toMObjectRelatedModelsProviderImpl()
 		throws Exception {
 
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
-				_objectDefinition1.getObjectDefinitionId(),
-				_objectDefinition2.getObjectDefinitionId(),
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+		ObjectRelationship objectRelationship = _createRelationship(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
@@ -385,15 +371,8 @@ public class ObjectRelatedModelsProviderTest {
 	public void testObjectEntryMtoMObjectRelatedModelsProviderImpl()
 		throws Exception {
 
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				TestPropsValues.getUserId(),
-				_objectDefinition1.getObjectDefinitionId(),
-				_objectDefinition2.getObjectDefinitionId(),
-				ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(),
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		ObjectRelationship objectRelationship = _createRelationship(
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
 
 		ObjectRelatedModelsProvider<ObjectEntry> objectRelatedModelsProvider =
 			_objectRelatedModelsProviderRegistry.getObjectRelatedModelsProvider(
@@ -464,6 +443,18 @@ public class ObjectRelatedModelsProviderTest {
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);
+	}
+
+	private ObjectRelationship _createRelationship(String relationshipType)
+		throws Exception {
+
+		return _objectRelationshipLocalService.addObjectRelationship(
+			TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(),
+			_objectDefinition2.getObjectDefinitionId(),
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.randomId(), relationshipType);
 	}
 
 	private void _setUser(User user) {

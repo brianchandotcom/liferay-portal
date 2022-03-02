@@ -44,9 +44,12 @@ public class CommerceTermEntryClayTableDataSetDisplayView
 			_clayTableSchemaBuilderFactory.create();
 
 		ClayTableSchemaField nameClayTableSchemaField =
-			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"label.LANG", "title");
 
 		nameClayTableSchemaField.setContentRenderer("actionLink");
+
+		clayTableSchemaBuilder.addClayTableSchemaField("name", "key");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("typeLocalized", "type");
 

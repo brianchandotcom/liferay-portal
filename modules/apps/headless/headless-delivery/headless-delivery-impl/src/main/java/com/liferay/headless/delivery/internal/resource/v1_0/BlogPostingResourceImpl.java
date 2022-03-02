@@ -341,15 +341,10 @@ public class BlogPostingResourceImpl
 	private ServiceContext _createServiceContext(
 		BlogPosting blogPosting, long groupId) {
 
-		ServiceContext serviceContext =
-			ServiceContextRequestUtil.createServiceContext(
-				blogPosting.getTaxonomyCategoryIds(), blogPosting.getKeywords(),
-				_getExpandoBridgeAttributes(blogPosting), groupId,
-				contextHttpServletRequest, blogPosting.getViewableByAsString());
-
-		serviceContext.setAssetPriority(blogPosting.getPriority());
-
-		return serviceContext;
+		return ServiceContextRequestUtil.createServiceContext(
+			blogPosting.getTaxonomyCategoryIds(), blogPosting.getKeywords(),
+			_getExpandoBridgeAttributes(blogPosting), groupId,
+			contextHttpServletRequest, blogPosting.getViewableByAsString());
 	}
 
 	private String _getCaption(Image image) {

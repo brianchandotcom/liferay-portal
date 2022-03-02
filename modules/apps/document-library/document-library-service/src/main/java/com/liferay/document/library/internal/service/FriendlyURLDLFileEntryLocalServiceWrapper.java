@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.InputStream;
@@ -71,7 +72,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 			expirationDate, reviewDate, serviceContext);
 
 		if (_ffFriendlyURLEntryFileEntryConfiguration.enabled()) {
-			_addFriendlyURLEntry(dlFileEntry, urlTitle);
+			_addFriendlyURLEntry(dlFileEntry, _getUrlTitle(title, urlTitle));
 		}
 
 		return dlFileEntry;
@@ -110,7 +111,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 			reviewDate, serviceContext);
 
 		if (_ffFriendlyURLEntryFileEntryConfiguration.enabled()) {
-			_updateFriendlyURL(dlFileEntry, urlTitle);
+			_updateFriendlyURL(dlFileEntry, title, urlTitle);
 		}
 
 		return dlFileEntry;
@@ -140,7 +141,16 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 			ServiceContextThreadLocal.getServiceContext());
 	}
 
-	private void _updateFriendlyURL(DLFileEntry dlFileEntry, String urlTitle)
+	private String _getUrlTitle(String title, String urlTitle) {
+		if (!Validator.isBlank(urlTitle)) {
+			return urlTitle;
+		}
+
+		return title;
+	}
+
+	private void _updateFriendlyURL(
+			DLFileEntry dlFileEntry, String title, String urlTitle)
 		throws PortalException {
 
 		FriendlyURLEntry friendlyURLEntry =
@@ -149,7 +159,7 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 				dlFileEntry.getFileEntryId());
 
 		if (friendlyURLEntry == null) {
-			_addFriendlyURLEntry(dlFileEntry, urlTitle);
+			_addFriendlyURLEntry(dlFileEntry, _getUrlTitle(title, urlTitle));
 
 			return;
 		}

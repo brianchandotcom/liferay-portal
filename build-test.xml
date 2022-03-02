@@ -10132,14 +10132,6 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 						</echo>
 					</then>
 				</if>
-
-				<prepare-chrome-driver />
-
-				<echo append="true" file="${test.ext.properties.file}">
-					selenium.chrome.driver.executable=${selenium.chrome.driver.executable}
-					selenium.chrome.driver.version=${selenium.chrome.driver.version}
-					selenium.executable.dir.name=${selenium.executable.dir.name}
-				</echo>
 			</then>
 		</if>
 

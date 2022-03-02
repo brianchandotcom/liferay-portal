@@ -369,6 +369,7 @@ public class DefaultCommerceCheckoutStepHttpHelper
 				WebKeys.THEME_DISPLAY);
 
 		if (!commerceOrder.isGuestOrder() &&
+			!commerceAccount.isPersonalAccount() &&
 			!_commerceOrderPortletResourcePermission.contains(
 				themeDisplay.getPermissionChecker(),
 				commerceAccount.getCommerceAccountGroupId(), actionId)) {

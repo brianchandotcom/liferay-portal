@@ -1503,14 +1503,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("priority", additionalAssertFieldName)) {
-				if (blogPosting.getPriority() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("relatedContents", additionalAssertFieldName)) {
 				if (blogPosting.getRelatedContents() == null) {
 					valid = false;
@@ -1917,17 +1909,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 				if (!Objects.deepEquals(
 						blogPosting1.getNumberOfComments(),
 						blogPosting2.getNumberOfComments())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("priority", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						blogPosting1.getPriority(),
-						blogPosting2.getPriority())) {
 
 					return false;
 				}
@@ -2379,11 +2360,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
 		if (entityFieldName.equals("relatedContents")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2477,7 +2453,6 @@ public abstract class BaseBlogPostingResourceTestCase {
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				numberOfComments = RandomTestUtil.randomInt();
-				priority = RandomTestUtil.randomDouble();
 				siteId = testGroup.getGroupId();
 			}
 		};

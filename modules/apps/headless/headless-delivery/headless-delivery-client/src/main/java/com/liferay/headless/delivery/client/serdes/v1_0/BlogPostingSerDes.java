@@ -313,16 +313,6 @@ public class BlogPostingSerDes {
 			sb.append(blogPosting.getNumberOfComments());
 		}
 
-		if (blogPosting.getPriority() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"priority\": ");
-
-			sb.append(blogPosting.getPriority());
-		}
-
 		if (blogPosting.getRelatedContents() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -601,13 +591,6 @@ public class BlogPostingSerDes {
 				String.valueOf(blogPosting.getNumberOfComments()));
 		}
 
-		if (blogPosting.getPriority() == null) {
-			map.put("priority", null);
-		}
-		else {
-			map.put("priority", String.valueOf(blogPosting.getPriority()));
-		}
-
 		if (blogPosting.getRelatedContents() == null) {
 			map.put("relatedContents", null);
 		}
@@ -793,12 +776,6 @@ public class BlogPostingSerDes {
 				if (jsonParserFieldValue != null) {
 					blogPosting.setNumberOfComments(
 						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "priority")) {
-				if (jsonParserFieldValue != null) {
-					blogPosting.setPriority(
-						Double.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "relatedContents")) {

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.RegionService;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -143,6 +144,12 @@ public class ShipmentResourceImpl extends BaseShipmentResourceImpl {
 
 		_updateCommerceShipment(
 			_commerceShipmentService.getCommerceShipment(shipmentId), shipment);
+
+		if (!Validator.isBlank(shipment.getExternalReferenceCode())) {
+			_commerceShipmentService.
+				updateCommerceShipmentExternalReferenceCode(
+					shipment.getExternalReferenceCode(), shipmentId);
+		}
 
 		return _toShipment(shipmentId);
 	}

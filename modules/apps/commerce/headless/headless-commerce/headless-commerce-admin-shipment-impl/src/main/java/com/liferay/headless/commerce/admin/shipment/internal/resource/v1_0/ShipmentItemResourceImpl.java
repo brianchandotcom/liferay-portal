@@ -27,6 +27,7 @@ import com.liferay.headless.commerce.admin.shipment.resource.v1_0.ShipmentItemRe
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -163,6 +164,13 @@ public class ShipmentItemResourceImpl
 			GetterUtil.get(
 				shipmentItem.getQuantity(),
 				commerceShipmentItem.getQuantity()));
+
+		if (!Validator.isBlank(shipmentItem.getExternalReferenceCode())) {
+			_commerceShipmentItemService.
+				updateCommerceShipmentItemExternalReferenceCode(
+					shipmentItem.getExternalReferenceCode(),
+					commerceShipmentItem.getCommerceShipmentItemId());
+		}
 
 		return _toShipmentItem(shipmentItemId);
 	}

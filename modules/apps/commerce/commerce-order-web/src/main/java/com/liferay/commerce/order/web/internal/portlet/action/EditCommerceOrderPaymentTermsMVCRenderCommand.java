@@ -74,7 +74,7 @@ public class EditCommerceOrderPaymentTermsMVCRenderCommand
 					_commerceNotificationQueueEntryLocalService,
 					_commerceOrderEngine,
 					_commerceOrderItemDecimalQuantityConfiguration,
-					_commerceOrderItemService, _commerceOrderNoteService,
+					_commerceOrderItemService, _commerceOrderNoteService, null,
 					_commerceOrderService, _commerceOrderStatusRegistry,
 					_commerceOrderTypeService,
 					_commercePaymentMethodGroupRelLocalService,

@@ -15,7 +15,12 @@
 package com.liferay.portal.kernel.test.util;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.ResourcedModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -63,6 +68,36 @@ public class ResourcePermissionTestUtil {
 
 		return ResourcePermissionLocalServiceUtil.addResourcePermission(
 			resourcePermission);
+	}
+
+	public static void deleteResourcePermissions(PersistedModel persistedModel)
+		throws Exception {
+
+		if (!(persistedModel instanceof BaseModel) ||
+			!(persistedModel instanceof ShardedModel)) {
+
+			return;
+		}
+
+		BaseModel<?> baseModel = (BaseModel)persistedModel;
+
+		ShardedModel shardedModel = (ShardedModel)baseModel;
+
+		ResourcePermissionLocalServiceUtil.deleteResourcePermissions(
+			shardedModel.getCompanyId(), baseModel.getModelClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(baseModel.getPrimaryKeyObj()));
+
+		if (!(persistedModel instanceof ResourcedModel)) {
+			return;
+		}
+
+		ResourcedModel resourcedModel = (ResourcedModel)baseModel;
+
+		ResourcePermissionLocalServiceUtil.deleteResourcePermissions(
+			shardedModel.getCompanyId(), baseModel.getModelClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(resourcedModel.getResourcePrimKey()));
 	}
 
 }

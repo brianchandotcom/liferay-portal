@@ -43,7 +43,7 @@ else {
 	externalReferenceCode="<%= commerceTermEntry.getExternalReferenceCode() %>"
 	externalReferenceCodeEditUrl="<%= editCommerceTermEntryExternalReferenceCodeURL %>"
 	model="<%= CommerceTermEntry.class %>"
-	title="<%= commerceTermEntry.getName() %>"
+	title="<%= commerceTermEntry.getLabel(themeDisplay.getLanguageId()) %>"
 />
 
 <liferay-frontend:screen-navigation

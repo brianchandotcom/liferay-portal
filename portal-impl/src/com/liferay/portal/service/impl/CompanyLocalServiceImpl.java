@@ -1658,8 +1658,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			_actionableDynamicQuery.setCompanyId(companyId);
 			_actionableDynamicQuery.setPerformActionMethod(
 				(ExpandoColumn expandoColumn) ->
-					_expandoColumnLocalService.deleteExpandoColumn(
-						expandoColumn));
+					_expandoColumnLocalService.deleteColumn(expandoColumn));
 		}
 
 		protected void performActions() throws PortalException {

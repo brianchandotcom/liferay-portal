@@ -869,4 +869,54 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-76717. The user could view warning message in preview window when no available navigation in site."
+	@ignore = "true"
+	@priority = "3"
+	test ViewWarningMessageInPreviewWindowWhenNoNavigationAvailable {
+		task ("Add a content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateCollection(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection");
+		}
+
+		task ("Add a Menu Display widget to content page template") {
+			JSONLayoutpagetemplate.addLayoutPageTemplateEntry(
+				groupName = "Test Site Name",
+				layoutPageTemplateCollectionName = "Page Template Collection",
+				layoutPageTemplateEntryName = "Page Template Name",
+				layoutPageTemplateStatus = "Draft",
+				layoutPageTemplateType = "Content Page Template");
+
+			PageTemplatesAdmin.openPageTemplatesAdmin(siteURLKey = "test-site-name");
+
+			Navigator.gotoNavNested(navNested = "Page Template Collection");
+
+			PageTemplatesAdmin.gotoPageTemplate(pageTemplateName = "Page Template Name");
+
+			PageEditor.assertFragmentSidebarLoaded();
+
+			PageEditor.addWidget(
+				indexItem = "2",
+				portletName = "Menu Display");
+		}
+
+		task ("View the warning message shown in preview window when no navigation available") {
+			NavigationMenusWidget.gotoNavigationMenuWidgetConfig();
+
+			AssertSelectedLabel(
+				locator1 = "NavigationMenusWidget#SELECT_NAVIGATION",
+				value1 = "Primary Navigation");
+
+			Alert.viewWarningSpecific(warningMessage = "There is no Primary Navigation available for the current site.");
+
+			NavigationMenusWidget.selectNavigation(menuType = "Secondary Navigation");
+
+			Alert.viewWarningSpecific(warningMessage = "There is no Secondary Navigation available for the current site.");
+
+			NavigationMenusWidget.selectNavigation(menuType = "Social Navigation");
+
+			Alert.viewWarningSpecific(warningMessage = "There is no Social Navigation available for the current site.");
+		}
+	}
+
 }

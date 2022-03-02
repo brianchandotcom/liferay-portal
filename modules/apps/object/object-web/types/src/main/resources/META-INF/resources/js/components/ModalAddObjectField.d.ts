@@ -16,10 +16,10 @@
 
 export default function ModalWithProvider({
 	apiURL,
-	objectFieldBusinessTypes,
+	objectFieldTypes,
 }: IProps): JSX.Element;
 interface IProps {
 	apiURL: string;
-	objectFieldBusinessTypes: ObjectFieldType[];
+	objectFieldTypes: ObjectFieldType[];
 }
 export {};

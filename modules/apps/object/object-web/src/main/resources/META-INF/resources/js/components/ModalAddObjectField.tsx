@@ -60,19 +60,19 @@ async function fetchPickList() {
 
 function ModalAddObjectField({
 	apiURL,
-	objectFieldBusinessTypes,
+	objectFieldTypes,
 	observer,
 	onClose,
 }: IModal) {
 	const businessTypeMap = useMemo(() => {
 		const businessTypeMap = new Map<string, ObjectFieldType>();
 
-		objectFieldBusinessTypes.forEach((type) => {
+		objectFieldTypes.forEach((type) => {
 			businessTypeMap.set(type.businessType, type);
 		});
 
 		return businessTypeMap;
-	}, [objectFieldBusinessTypes]);
+	}, [objectFieldTypes]);
 
 	const [error, setError] = useState<string>('');
 	const [picklist, setPicklist] = useState<IPicklist[]>([]);
@@ -222,7 +222,7 @@ function ModalAddObjectField({
 						error={errors.businessType}
 						label={Liferay.Language.get('type')}
 						onChange={handleTypeChange}
-						options={objectFieldBusinessTypes}
+						options={objectFieldTypes}
 						required
 						value={
 							businessTypeMap.get(values.businessType ?? '')
@@ -283,10 +283,7 @@ function ModalAddObjectField({
 	);
 }
 
-export default function ModalWithProvider({
-	apiURL,
-	objectFieldBusinessTypes,
-}: IProps) {
+export default function ModalWithProvider({apiURL, objectFieldTypes}: IProps) {
 	const [isVisible, setVisibility] = useState<boolean>(false);
 	const {observer, onClose} = useModal({onClose: () => setVisibility(false)});
 
@@ -301,7 +298,7 @@ export default function ModalWithProvider({
 			{isVisible && (
 				<ModalAddObjectField
 					apiURL={apiURL}
-					objectFieldBusinessTypes={objectFieldBusinessTypes}
+					objectFieldTypes={objectFieldTypes}
 					observer={observer}
 					onClose={onClose}
 				/>
@@ -322,5 +319,5 @@ interface IPicklist {
 
 interface IProps {
 	apiURL: string;
-	objectFieldBusinessTypes: ObjectFieldType[];
+	objectFieldTypes: ObjectFieldType[];
 }

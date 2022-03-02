@@ -80,6 +80,10 @@ const InviteTeamMembersPage = ({
 		project?.slaCurrent?.includes(SLA.gold) ||
 		project?.slaCurrent?.includes(SLA.platinum);
 
+	const roleNameType = projectHasSLAGoldPlatinum
+		? ROLE_TYPES.requestor.name
+		: ROLE_TYPES.admin.name;
+
 	useEffect(() => {
 		const isProjectPartner = project.partner;
 
@@ -182,6 +186,7 @@ const InviteTeamMembersPage = ({
 						disabled:
 							previousAccountRole.label ===
 								ROLE_TYPES.requestor.name ||
+<<<<<<< HEAD
 							previousAccountRole.label === ROLE_TYPES.admin.name,
 					}))
 				);
@@ -193,11 +198,16 @@ const InviteTeamMembersPage = ({
 					previousAccountRoles.map((previousAccountRoles) => ({
 						...previousAccountRoles,
 						disabled: false,
+=======
+							previousAccountRole.label === ROLE_TYPES.admin.name,˙
+>>>>>>> 0ff2ccc (LPS-147808 fix if else conditional and add a variable for roleNameType)
 					}))
 				);
 >>>>>>> d0ae6c3 (LPS-147808 SF)
 			}
 			setAvailableAdminsRoles(remainingAdmins);
+
+			return;
 		}
 	}, [values, project, maxRequestors, accountRoles]);
 
@@ -214,8 +224,7 @@ const InviteTeamMembersPage = ({
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 			setshowEmptyEmailError(false);
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -270,8 +279,7 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({
@@ -431,11 +439,7 @@ const InviteTeamMembersPage = ({
 						<div className="invites-helper px-3">
 							<div className="mx-3 pt-3">
 								<h5 className="text-neutral-7">
-									{`${
-										projectHasSLAGoldPlatinum
-											? ROLE_TYPES.requestor.name
-											: ROLE_TYPES.admin.name
-									}	roles available: ${availableAdminsRoles} of ${maxRequestors}`}
+									{`${roleNameType}	roles available: ${availableAdminsRoles} of ${maxRequestors}`}
 								</h5>
 
 								<p className="mb-0 text-neutral-7 text-paragraph-sm">

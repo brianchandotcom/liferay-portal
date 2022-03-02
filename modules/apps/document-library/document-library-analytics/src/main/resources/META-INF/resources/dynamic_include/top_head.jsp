@@ -20,23 +20,25 @@
 	if (window.Analytics) {
 		window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry = false;
 	}
+</script>
 
-	const pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+?)\/([^&]+)/;
+<aui:script>
+	var pathnameRegexp = /\/documents\/(\d+)\/(\d+)\/(.+?)\/([^&]+)/;
 
 	function sendAnalyticsEvent(anchor) {
-		const fileEntryId =
+		var fileEntryId =
 			anchor.dataset.analyticsFileEntryId ||
 			(anchor.parentElement &&
 				anchor.parentElement.dataset.analyticsFileEntryId);
 
-		const getParameterValue = (parameterName) => {
-			let result = null;
+		var getParameterValue = (parameterName) => {
+			var result = null;
 
 			anchor.search
 				.substr(1)
 				.split('&')
 				.forEach((item) => {
-					const tmp = item.split('=');
+					var tmp = item.split('=');
 
 					if (tmp[0] === parameterName) {
 						result = decodeURIComponent(tmp[1]);
@@ -46,7 +48,7 @@
 			return result;
 		};
 
-		const match = pathnameRegexp.exec(anchor.pathname);
+		var match = pathnameRegexp.exec(anchor.pathname);
 
 		if (fileEntryId && match) {
 			Analytics.send('documentDownloaded', 'Document', {
@@ -70,12 +72,12 @@
 						'lexicon-icon-download'
 					))
 			) {
-				const selectedFiles = document.querySelectorAll(
+				var selectedFiles = document.querySelectorAll(
 					'.portlet-document-library .entry-selector:checked'
 				);
 
 				selectedFiles.forEach(({value}) => {
-					const selectedFile = document.querySelector(
+					var selectedFile = document.querySelector(
 						'[data-analytics-file-entry-id="' + value + '"]'
 					);
 
@@ -101,4 +103,4 @@
 	Liferay.once('portletReady', () => {
 		document.body.addEventListener('click', handleDownloadClick);
 	});
-</script>
+</aui:script>

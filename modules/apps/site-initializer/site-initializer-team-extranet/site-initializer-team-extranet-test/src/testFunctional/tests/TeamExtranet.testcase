@@ -1170,6 +1170,8 @@ definition {
 	@description = "This is a test for LPS-142641. View the Team Extranet Documents and Media"
 	@priority = "4"
 	test ViewTeamExtranetDocumentsAndMedia {
+		property portal.acceptance = "true";
+		
 		task ("Go to Team Extranet Documents and Media") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "${testSiteURL}");
 		}
@@ -1188,6 +1190,8 @@ definition {
 	@description = "This is a test for LPS-142641. View the Team Extranet Fragments"
 	@priority = "4"
 	test ViewTeamExtranetFragments {
+		property portal.acceptance = "true";
+		
 		task ("Go to Team Extranet Fragments Collections") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "${testSiteURL}");
 		}
@@ -1204,6 +1208,8 @@ definition {
 	@description = "This is a test for LPS-142641. View the Team Extranet Pages"
 	@priority = "4"
 	test ViewTeamExtranetPages {
+		property portal.acceptance = "true";
+		
 		task ("Go to Team Extranet Pages") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "${testSiteURL}");
 		}
@@ -1220,6 +1226,8 @@ definition {
 	@description = "This is a test for LPS-142641. View the Team Extranet Page Templates"
 	@priority = "4"
 	test ViewTeamExtranetPageTemplates {
+		property portal.acceptance = "true";
+		
 		task ("Go to Masters Page Templates in Team Extranet Site") {
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "${testSiteURL}");
 		}
@@ -1244,6 +1252,8 @@ definition {
 	@description = "This is a test for LPS-142641. View the Team Extranet Web Content"
 	@priority = "4"
 	test ViewTeamExtranetWebContent {
+		property portal.acceptance = "true";
+		
 		task ("Go to Team Extranet Web Content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "${testSiteURL}");
 		}

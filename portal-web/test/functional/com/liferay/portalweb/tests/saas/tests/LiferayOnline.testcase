@@ -156,6 +156,8 @@ definition {
 	@description = "This is a test for LPS-143786. Verify Remote Apps can be created in Liferay Online"
 	@priority = "4"
 	test RemoteAppsCanBeCreatedInLiferayOnline {
+		property portal.acceptance = "true";
+		
 		task ("Go to Remote Apps Portlet") {
 			RemoteApps.goToRemoteAppsPortlet();
 		}
@@ -177,6 +179,8 @@ definition {
 	@description = "This is a test for LPS-143786. Verify Remote Apps can be deleted in Liferay Online"
 	@priority = "4"
 	test RemoteAppsCanBeDeletedInLiferayOnline {
+		property portal.acceptance = "true";
+		
 		task ("Create a New Remote App with JSON") {
 			JSONRemoteApp.addIFrameRemoteAppEntry(
 				iFrameURL = "http://www.liferay.com/my_new_remote_app",
@@ -199,6 +203,8 @@ definition {
 	@description = "This is a test for LPS-143786. Verify Remote Apps can be displayed in Liferay Online"
 	@priority = "4"
 	test RemoteAppsCanBeDisplayedInLiferayOnline {
+		property portal.acceptance = "true";
+		
 		task ("Add a public page with JSON") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",

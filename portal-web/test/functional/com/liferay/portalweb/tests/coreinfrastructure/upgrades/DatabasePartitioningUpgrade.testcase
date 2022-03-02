@@ -24,6 +24,7 @@ definition {
 		property data.archive.type = "data-archive-portal-partition";
 		property portal.upgrades = "true";
 		property portal.version = "7.4.1";
+		property portal.acceptance = "true";
 
 		Upgrade.viewUpgradeDBPartition();
 	}

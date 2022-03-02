@@ -1,0 +1,96 @@
+.side-bar-container {
+	width: 64px;
+	height: 100vh;
+	transition: width 1.3s ease-out;
+}
+
+.side-bar-container .footer-bar .avatar-container,
+.side-bar-container .footer-bar .notification-container,
+.side-bar-container .top-bar {
+	cursor: pointer;
+}
+
+.side-bar-container:hover {
+	width: 200px;
+}
+
+.side-bar-container .footer-bar .avatar-container p,
+.side-bar-container .top-bar .logo-name,
+.side-bar-container .middle-bar .menu-item-name {
+	opacity: 0;
+	transition: opacity 0.5s ease-in;
+}
+
+.side-bar-container:hover .footer-bar .avatar-container p,
+.side-bar-container:hover .top-bar .logo-name,
+.side-bar-container:hover .middle-bar .menu-item-name {
+	opacity: 10;
+}
+
+.side-bar-container .middle-bar ul {
+	list-style-type: none;
+}
+
+.side-bar-container .middle-bar ul li {
+	cursor: pointer;
+}
+
+.side-bar-container .middle-bar ul li::before {
+	-webkit-mask-size: cover;
+	background-color: #afafb1;
+	content: '';
+	display: inline-block;
+	flex-shrink: 0;
+	height: 24px;
+	margin-right: 4px;
+	width: 24px;
+}
+
+.side-bar-container .middle-bar ul li:hover::before {
+	background-color: #ffffff;
+}
+
+.side-bar-container .middle-bar ul li:hover .menu-item-name {
+	color: #ffffff !important;
+}
+
+.side-bar-container .middle-bar ul li.dashboard-menu::before {
+	-webkit-mask: url('[resources:home_icon.svg]') no-repeat 50% 50%;
+	mask: url('[resources:home_icon.svg]') no-repeat 50% 50%;
+}
+
+.side-bar-container .middle-bar ul li.applications-menu::before {
+	-webkit-mask: url('[resources:note_icon.svg]') no-repeat 50% 50%;
+	mask: url('[resources:note_icon.svg]') no-repeat 50% 50%;
+}
+
+.side-bar-container .middle-bar ul li.policies-menu::before {
+	-webkit-mask: url('[resources:umbrella_icon.svg]') no-repeat 50% 50%;
+	mask: url('[resources:umbrella_icon.svg]') no-repeat 50% 50%;
+}
+
+.side-bar-container .middle-bar ul li.claims-menu::before {
+	-webkit-mask: url('[resources:shield_check_icon.svg]') no-repeat 50% 50%;
+	mask: url('[resources:shield_check_icon_icon.svg]') no-repeat 50% 50%;
+}
+
+.side-bar-container .middle-bar ul li.reports-menu::before {
+	-webkit-mask: url('[resources:chart_icon.svg]') no-repeat 50% 50%;
+	mask: url('[resources:chart_icon.svg]') no-repeat 50% 50%;
+}
+
+.side-bar-container .footer-bar .notification-container {
+	width: 24px;
+	height: 24px;
+}
+
+.side-bar-container .footer-bar .indicator-icon {
+	right: 25px;
+	bottom: 35px;
+}
+
+.page-header-container {
+	box-shadow: 0px 5px 15px rgba(77, 133, 255, 0.12);
+	height: 72px;
+	top: 0px;
+}

@@ -1,0 +1,9 @@
+{
+	"configurationPath": "index.json",
+	"jsPath": "index.js",
+	"htmlPath": "index.html",
+	"cssPath": "index.css",
+	"icon": "code",
+	"name": "Layout",
+	"type": "component"
+}

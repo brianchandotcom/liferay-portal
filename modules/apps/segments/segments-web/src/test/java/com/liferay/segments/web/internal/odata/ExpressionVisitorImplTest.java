@@ -18,20 +18,27 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IntegerEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
+import com.liferay.portal.odata.filter.expression.ComplexPropertyExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
 import com.liferay.portal.odata.filter.expression.ListExpression;
+import com.liferay.portal.odata.filter.expression.LiteralExpression;
+import com.liferay.portal.odata.filter.expression.MemberExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
+import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
+import com.liferay.portal.odata.filter.expression.PropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -99,6 +106,130 @@ public class ExpressionVisitorImplTest {
 				)
 			).toString(),
 			itemsJSONArray.toString());
+	}
+
+	@Test
+	public void testVisitBinaryExpressionOperationWithComplexEntityField()
+		throws ExpressionVisitException {
+
+		BinaryExpression binaryExpression = new BinaryExpression() {
+
+			@Override
+			public <T> T accept(ExpressionVisitor<T> expressionVisitor)
+				throws ExpressionVisitException {
+
+				Expression leftOperationExpression =
+					getLeftOperationExpression();
+
+				Expression rightOperationExpression =
+					getRightOperationExpression();
+
+				return expressionVisitor.visitBinaryExpressionOperation(
+					getOperation(),
+					leftOperationExpression.accept(expressionVisitor),
+					rightOperationExpression.accept(expressionVisitor));
+			}
+
+			@Override
+			public Expression getLeftOperationExpression() {
+				return new MemberExpression() {
+
+					@Override
+					public <T> T accept(ExpressionVisitor<T> expressionVisitor)
+						throws ExpressionVisitException {
+
+						return expressionVisitor.visitMemberExpression(this);
+					}
+
+					public Expression getExpression() {
+						return new ComplexPropertyExpression() {
+
+							@Override
+							public <T> T accept(
+									ExpressionVisitor<T> expressionVisitor)
+								throws ExpressionVisitException {
+
+								return expressionVisitor.
+									visitComplexPropertyExpression(this);
+							}
+
+							@Override
+							public String getName() {
+								return "complexField";
+							}
+
+							@Override
+							public PropertyExpression getPropertyExpression() {
+								return new PrimitivePropertyExpression() {
+
+									@Override
+									public <T> T accept(
+											ExpressionVisitor<T>
+												expressionVisitor)
+										throws ExpressionVisitException {
+
+										return expressionVisitor.
+											visitPrimitivePropertyExpression(
+												this);
+									}
+
+									@Override
+									public String getName() {
+										return "fieldInsideComplexField";
+									}
+
+								};
+							}
+
+						};
+					}
+
+				};
+			}
+
+			@Override
+			public Operation getOperation() {
+				return Operation.EQ;
+			}
+
+			@Override
+			public Expression getRightOperationExpression() {
+				return new LiteralExpression() {
+
+					@Override
+					public <T> T accept(ExpressionVisitor<T> expressionVisitor)
+						throws ExpressionVisitException {
+
+						return expressionVisitor.visitLiteralExpression(this);
+					}
+
+					@Override
+					public String getText() {
+						return "complexFieldValue1";
+					}
+
+					@Override
+					public Type getType() {
+						return LiteralExpression.Type.STRING;
+					}
+
+				};
+			}
+
+		};
+
+		JSONObject jsonObject = (JSONObject)binaryExpression.accept(
+			_expressionVisitorImpl);
+
+		Assert.assertEquals(
+			JSONUtil.put(
+				"operatorName", "eq"
+			).put(
+				"propertyName", "complexField/fieldInsideComplexField"
+			).put(
+				"value", "complexFieldValue1"
+			).toString(),
+			jsonObject.toString());
 	}
 
 	@Test
@@ -351,7 +482,13 @@ public class ExpressionVisitorImplTest {
 		public Map<String, EntityField> getEntityFieldsMap() {
 			return Stream.of(
 				new IntegerEntityField("id", locale -> "id"),
-				new StringEntityField("title", locale -> "title")
+				new StringEntityField("title", locale -> "title"),
+				new ComplexEntityField(
+					"complexField",
+					Collections.singletonList(
+						new StringEntityField(
+							"fieldInsideComplexField",
+							locale -> "fieldInsideComplexFieldInternal")))
 			).collect(
 				Collectors.toMap(EntityField::getName, Function.identity())
 			);

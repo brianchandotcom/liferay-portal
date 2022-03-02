@@ -176,17 +176,19 @@ export function selectPanels(activeItemId, activeItemType, state) {
 				activeItem.type !== EDITABLE_TYPES.backgroundImage,
 		};
 	}
+	else if (!canUpdateItemConfiguration) {
+		return {activeItem, panelsIds};
+	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.collection) {
 		panelsIds = {
 			[PANEL_IDS.collectionGeneral]:
-				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
-				canUpdateItemConfiguration,
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.container) {
 		panelsIds = {
-			[PANEL_IDS.containerGeneral]: canUpdateItemConfiguration,
-			[PANEL_IDS.containerStyles]: canUpdateItemConfiguration,
+			[PANEL_IDS.containerGeneral]: true,
+			[PANEL_IDS.containerStyles]: true,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
@@ -198,7 +200,6 @@ export function selectPanels(activeItemId, activeItemType, state) {
 
 		panelsIds = {
 			[PANEL_IDS.fragmentAdvanced]:
-				canUpdateItemConfiguration &&
 				config.fragmentAdvancedOptionsEnabled &&
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
 				fieldSets.some(
@@ -206,10 +207,9 @@ export function selectPanels(activeItemId, activeItemType, state) {
 						fieldSet.configurationRole ===
 						FRAGMENT_CONFIGURATION_ROLES.advanced
 				),
-			[PANEL_IDS.fragmentStyles]: canUpdateItemConfiguration,
+			[PANEL_IDS.fragmentStyles]: true,
 			[PANEL_IDS.fragmentGeneral]:
 				fragmentEntryKey !== COLLECTION_FILTER_FRAGMENT_ENTRY_KEY &&
-				canUpdateItemConfiguration &&
 				fieldSets.some((fieldSet) =>
 					config.fragmentAdvancedOptionsEnabled
 						? !fieldSet.configurationRole
@@ -219,18 +219,16 @@ export function selectPanels(activeItemId, activeItemType, state) {
 			[PANEL_IDS.collectionAppliedFiltersGeneral]:
 				fragmentEntryKey ===
 					COLLECTION_APPLIED_FILTERS_FRAGMENT_ENTRY_KEY &&
-				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
-				canUpdateItemConfiguration,
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.collectionFilterGeneral]:
 				fragmentEntryKey === COLLECTION_FILTER_FRAGMENT_ENTRY_KEY &&
-				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
-				canUpdateItemConfiguration,
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 		};
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.row) {
 		panelsIds = {
-			[PANEL_IDS.rowStyles]: canUpdateItemConfiguration,
-			[PANEL_IDS.rowGeneral]: canUpdateItemConfiguration,
+			[PANEL_IDS.rowStyles]: true,
+			[PANEL_IDS.rowGeneral]: true,
 		};
 	}
 

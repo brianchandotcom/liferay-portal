@@ -133,9 +133,7 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 				int type = layoutFriendlyURLException.getType();
 
 				if (type == LayoutFriendlyURLException.DUPLICATE) {
-					if (layout == null) {
-						friendlyURL = originalFriendlyURL + i;
-					}
+					friendlyURL = originalFriendlyURL + i;
 				}
 				else {
 					friendlyURL = StringPool.SLASH + layoutId;

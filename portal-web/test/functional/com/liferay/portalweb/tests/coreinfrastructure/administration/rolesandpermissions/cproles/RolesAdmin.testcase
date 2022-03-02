@@ -108,6 +108,62 @@ definition {
 			value1 = "No roles were found.");
 	}
 
+	@description = "This test automates LPS-141903 and asserts that a deactivated user is not counted in Site Roles"
+	@priority = "3"
+	test DeactivatedUserIsNotCountedInSiteRoles {
+		task ("Given two users are assigned to corresponding sites as a Site Content Reviewer") {
+			for (var userNum : list "1,2") {
+				JSONUser.addUser(
+					userEmailAddress = "user${userNum}@liferay.com",
+					userFirstName = "user${userNum}",
+					userLastName = "user${userNum}",
+					userScreenName = "user${userNum}");
+
+				JSONGroup.addGroup(groupName = "Site${userNum}");
+
+				JSONGroup.assignUserToGroup(
+					groupName = "Site${userNum}",
+					userEmailAddress = "user${userNum}@liferay.com");
+
+				JSONGroup.assignGroupRoleToUser(
+					groupName = "Site${userNum}",
+					roleTitle = "Site Content Reviewer",
+					userEmailAddress = "user${userNum}@liferay.com");
+			}
+
+			Role.openRolesAdmin();
+
+			Navigator.gotoNavTab(navTab = "Site Roles");
+
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "Site Content Reviewer",
+				listEntrySubtitle = "2 Assignees");
+		}
+
+		task ("When the first user is deactivated") {
+			User.openUsersAdmin();
+
+			User.singleDeactivateCP(userFirstName = "user1");
+		}
+
+		task ("Then that user should no longer be counted in Site Roles and no longer be listed as a member of the site") {
+			Role.openRolesAdmin();
+
+			Navigator.gotoNavTab(navTab = "Site Roles");
+
+			LexiconList.viewListEntrySubtitle(
+				listEntry = "Site Content Reviewer",
+				listEntrySubtitle = "1 Assignee");
+
+			ProductMenu.gotoPortlet(
+				category = "People",
+				portlet = "Memberships",
+				site = "Site1");
+
+			LexiconEntry.viewNoEntry(rowEntry = "user1 user1");
+		}
+	}
+
 	@priority = "4"
 	test ExistingSegmentCanBeAssignedToARegularRole {
 		ProductMenu.gotoSite(site = "Global");

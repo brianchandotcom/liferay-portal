@@ -109,7 +109,7 @@ ManagementBar.propTypes = {
 	onFiltersChange: PropTypes.func.isRequired,
 	selectedItemsKey: PropTypes.string,
 	selectedItemsValue: PropTypes.array,
-	selectionType: PropTypes.oneOf(['single', 'multiple']).isRequired,
+	selectionType: PropTypes.oneOf(['single', 'multiple']),
 	showSearch: PropTypes.bool,
 	total: PropTypes.number,
 };

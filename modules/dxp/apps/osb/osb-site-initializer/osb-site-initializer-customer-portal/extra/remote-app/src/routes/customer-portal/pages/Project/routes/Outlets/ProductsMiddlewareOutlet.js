@@ -31,7 +31,7 @@ const ProductsMiddlewareOutlet = () => {
 		if (pageKey) {
 			const productName = PRODUCT_TYPES[pageKey];
 
-			return subscriptionGroups.some(
+			return subscriptionGroups?.some(
 				(subscriptionGroup) => subscriptionGroup.name === productName
 			);
 		}

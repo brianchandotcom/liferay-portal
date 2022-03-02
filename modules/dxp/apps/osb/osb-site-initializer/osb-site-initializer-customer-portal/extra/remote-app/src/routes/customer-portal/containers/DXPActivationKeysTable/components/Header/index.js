@@ -23,7 +23,7 @@ import {getActivationKeysActionsItems} from '../../utils/getActivationKeysAction
 import {getActivationKeysDownloadItems} from '../../utils/getActivationKeysDownloadItems';
 import DeactivateButton from '../Deactivate';
 
-const dxpNewRedirectLink = PAGE_TYPES.dxp_new.split('_')[1];
+const dxpNewRedirectLink = PAGE_TYPES.dxpNew.split('_')[1];
 
 const DXPActivationKeysTableHeader = ({
 	accountKey,

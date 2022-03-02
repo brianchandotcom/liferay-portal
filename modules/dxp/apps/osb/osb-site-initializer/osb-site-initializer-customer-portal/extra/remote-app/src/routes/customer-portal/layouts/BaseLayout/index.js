@@ -31,7 +31,7 @@ const PAGE_SKELETON_LAYOUT = {
 
 const Layout = () => {
 	const location = useLocation();
-	const [, ...currentPath] = location.pathname.split('/').filter(Boolean);
+	const [, ...currentPath] = location.pathname?.split('/')?.filter(Boolean);
 
 	const [
 		{project, sessionId, subscriptionGroups, userAccount},
@@ -46,24 +46,26 @@ const Layout = () => {
 	const getCurrentProduct = () => {
 		const activationKey = 'activation';
 
-		const isProduct = !!currentPath.find((path) => path === activationKey);
+		const isProduct = !!currentPath?.find((path) => path === activationKey);
 
 		if (isProduct) {
 			const [, ...productType] = currentPath;
 
-			return productType.join('_');
+			return productType?.join('_');
 		}
 
-		return null;
+		return;
 	};
 
 	const hasProjectContact = getCurrentPage() === PAGE_TYPES.overview;
+	const currentPage = getCurrentPage();
+	const currentProduct = getCurrentProduct();
 
 	const hasQuickLinksPanel =
-		getCurrentPage() !== PAGE_TYPES.teamMembers &&
-		getCurrentProduct() !== PAGE_TYPES.dxp_new;
+		currentPage !== PAGE_TYPES.teamMembers &&
+		currentProduct !== PAGE_TYPES.dxpNew;
 
-	const hasSideMenu = getCurrentProduct() !== PAGE_TYPES.dxp_new;
+	const hasSideMenu = getCurrentProduct() !== PAGE_TYPES.dxpNew;
 
 	if (!project || !sessionId || !subscriptionGroups || !userAccount) {
 		return (

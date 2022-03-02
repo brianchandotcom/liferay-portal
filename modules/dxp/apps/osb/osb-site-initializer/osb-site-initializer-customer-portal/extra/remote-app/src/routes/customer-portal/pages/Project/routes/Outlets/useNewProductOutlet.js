@@ -15,10 +15,10 @@ import {PAGE_TYPES} from '../../../../utils/constants';
 
 const NewProductOutlet = () => {
 	const {productId} = useParams();
-	const {hasAccessToCurrentProduct} = useOutletContext();
+	const {hasAccessToCurrentProduct, sessionId} = useOutletContext();
 
 	const newActivationComponents = {
-		[PAGE_TYPES.dxp_new]: <GenerateNewDXPKey />,
+		[PAGE_TYPES.dxpNew]: <GenerateNewDXPKey sessionId={sessionId} />,
 	};
 
 	const currentProduct = newActivationComponents[`${productId}_new`];

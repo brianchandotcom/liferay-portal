@@ -88,8 +88,8 @@ public interface LayoutPageTemplateStructureLocalService
 		LayoutPageTemplateStructure layoutPageTemplateStructure);
 
 	public LayoutPageTemplateStructure addLayoutPageTemplateStructure(
-			long userId, long groupId, long plid, String data,
-			ServiceContext serviceContext)
+			long userId, long groupId, long plid, long segmentsExperienceId,
+			String data, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

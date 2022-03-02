@@ -62,13 +62,15 @@ public class LayoutPageTemplateStructureLocalServiceWrapper
 
 	@Override
 	public LayoutPageTemplateStructure addLayoutPageTemplateStructure(
-			long userId, long groupId, long plid, String data,
+			long userId, long groupId, long plid, long segmentsExperienceId,
+			String data,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutPageTemplateStructureLocalService.
 			addLayoutPageTemplateStructure(
-				userId, groupId, plid, data, serviceContext);
+				userId, groupId, plid, segmentsExperienceId, data,
+				serviceContext);
 	}
 
 	/**

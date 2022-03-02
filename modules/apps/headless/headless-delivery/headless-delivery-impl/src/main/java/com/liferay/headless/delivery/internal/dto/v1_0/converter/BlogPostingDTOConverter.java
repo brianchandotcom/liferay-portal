@@ -14,7 +14,6 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -134,19 +133,6 @@ public class BlogPostingDTOConverter
 							StringUtil.shorten(
 								blogsEntry.getContent(),
 								PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH));
-					});
-				setPriority(
-					() -> {
-						AssetEntry assetEntry =
-							_assetEntryLocalService.fetchEntry(
-								blogsEntry.getModelClassName(),
-								blogsEntry.getEntryId());
-
-						if (assetEntry != null) {
-							return assetEntry.getPriority();
-						}
-
-						return null;
 					});
 				setRenderedContents(
 					() -> DisplayPageRendererUtil.getRenderedContent(

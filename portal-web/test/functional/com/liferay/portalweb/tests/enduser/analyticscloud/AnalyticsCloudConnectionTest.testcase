@@ -180,7 +180,7 @@ definition {
 		var statusDisconnect = ListUtil.newListFromString("Disconnected,Unconfigured,Unconfigured");
 		var size = ListUtil.size("${list1}");
 
-		task ("Connect DXP to AC, create a property and sync site") {
+		task ("Connect DXP to AC, create a property, and sync the site only") {
 			ACDXPSettings.goToInstanceSettingsAC();
 
 			ACDXPSettings.connectAnalyticsCloud();
@@ -214,7 +214,7 @@ definition {
 			ACNavigation.openItem(itemName = "${dataSource}");
 		}
 
-		task ("Assert the data source status") {
+		task ("Assert the data source Status: Active, Sites: Configured, Contacts: Unconfigured") {
 			var i = "0";
 
 			while ("${i}" != "${size}") {
@@ -252,7 +252,7 @@ definition {
 			ACNavigation.openItem(itemName = "${dataSource}");
 		}
 
-		task ("Assert the data source status") {
+		task ("Assert the data source Status: Active, Sites: Configured, Contacts: Configured") {
 			var i = "0";
 
 			while ("${i}" != "${size}") {
@@ -268,7 +268,7 @@ definition {
 			}
 		}
 
-		task ("Disconnect data source and assert the data source status") {
+		task ("Disconnect data source and assert the data source Status: Disconnected, Sites: Unconfigured, Contacts: Unconfigured") {
 			ACSettings.disconnectDataSource();
 
 			var i = "0";

@@ -1,546 +1,547 @@
 @component-name = "portal-solutions"
 definition {
 
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Raylife";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        User.firstLoginPG();
+		User.firstLoginPG();
 
-        Raylife.createRaylifeSite(siteName = "Raylife");
-    }
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        Raylife.tearDownCP();
+		Raylife.tearDownCP();
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        else {
-            User.logoutPG();
-        }
-    }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
 
-    @description = "LPS-147321 - Verify that when the user clicks on the 'Yes' option on the 'Does your company have a Federal Employer Identification Number (FEIN)?' page, the 'Employer Identification' field appears (Smartphone)"
-    @priority = "5"
-    test FieldAppearsWhenClickYesOnOptionPhone {
-        SetWindowSize(value1 = "360,720");
+	@description = "LPS-147344 - Verify if Previous button in the 'Does your business operate year round?' subsection goes back to 'What year did you start your business?' subsection (Smartphone)"
+	@priority = "5"
+	test CanBackPageWithPreviousButtonPhone {
+		SetWindowSize(value1 = "360,720");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        RaylifeHomePage.startFlow();
+		RaylifeHomePage.startFlow();
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Does your business have a Federal Employer Identification Number (FEIN)?",
-            locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
 
-        AssertElementPresent(locator1 = "RaylifeMobile#INPUT_FEIN_REQUIRED");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.fein",
+			value = "12-3456789");
 
-        Raylife.dismissAlert();
-    }
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-    @description = "LPS-147332 - Verify that when the user clicks on the 'No' option on the 'Does your company have a Federal Employer Identification Number (FEIN)?' page, the 'Employer Identification' field does not appear (Smartphone)"
-    @priority = "5"
-    test FieldDoesNotAppearWhenTheNoOptionIsClickedPhone {
-        SetWindowSize(value1 = "360,720");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.startBusinessAtYear",
+			value = "2000");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeHomePage.startFlow();
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		AssertElementPresent(
+			label = "employees.startBusinessAtYear",
+			locator1 = "Raylife#FORMS_FIELDS");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Raylife.dismissAlert();
+	}
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+	@description = "LPS-147340 - Verify that the Continue button is only enabled when the field 'What is your estimated annual gross revenue for the next 12 months?' and filled in (Smartphone)"
+	@priority = "5"
+	test CanClickTheOptionsInAnnualGrossPhone {
+		SetWindowSize(value1 = "360,720");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(
-            field = "Does your business have a Federal Employer Identification Number (FEIN)?",
-            locator1 = "RaylifeMobile#BUTTON_NO_FEIN_PHONE");
+		RaylifeHomePage.startFlow();
 
-        AssertElementNotPresent(locator1 = "RaylifeMobile#INPUT_FEIN_REQUIRED");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        Raylife.dismissAlert();
-    }
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-    @description = "LPS-147333 - Verify that when the user clicks on the 'No' option on the 'Does your company have a Federal Employer Identification Number (FEIN)?' page, the 'Continue' button is enabled (Smartphone)"
-    @priority = "5"
-    test ContinueButtonEnabledWhenNoOptionIsSelectedPhone {
-        SetWindowSize(value1 = "360,720");
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeHomePage.startFlow();
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.fein",
+			value = "12-3456789");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.startBusinessAtYear",
+			value = "2000");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementNotPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(
+			field = "Does your business operate year round?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        Click(
-            field = "Does your business have a Federal Employer Identification Number (FEIN)?",
-            locator1 = "RaylifeMobile#BUTTON_NO_FEIN_PHONE");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.partTimeEmployees",
+			value = "200");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Raylife.dismissAlert();
-    }
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-    @description = "LPS-147334 - Verify that the Continue button is only enabled when the field 'Federal Employer Identification Number (FEIN)?' and filled in (in case previous question was answered as yes) (Smartphone)"
-    @priority = "5"
-    test ContinueButtonActivatedInEmployerIdentificationPhone {
-        SetWindowSize(value1 = "360,720");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.estimatedAnnualGrossRevenue",
+			value = "$111.00");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeHomePage.startFlow();
+		Raylife.dismissAlert();
+	}
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+	@description = "LPS-147343 - Verify that the Continue button is only enabled when the field 'What do you anticipate your annual payroll will be for all employees over the next 12 months?' and filled in (Smartphone"
+	@priority = "5"
+	test CanClickTheOptionsInAnnualPayrollEmployeesPhone {
+		SetWindowSize(value1 = "360,720");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		RaylifeHomePage.startFlow();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        AssertElementNotPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Does your business have a Federal Employer Identification Number (FEIN)?",
-            locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.fein",
-            value = "12-3456789");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
 
-        Raylife.dismissAlert();
-    }
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.fein",
+			value = "12-3456789");
 
-    @description = "LPS-147336 - Verify that the Continue button is only enabled when the field 'What year did you start your business?' and filled in (Smartphone)"
-    @priority = "5"
-    test ContinueButtonActivatedInStartYourBusinessPhone {
-        SetWindowSize(value1 = "360,720");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.startBusinessAtYear",
+			value = "2000");
 
-        RaylifeHomePage.startFlow();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		Click(
+			field = "Does your business operate year round?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.partTimeEmployees",
+			value = "200");
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.estimatedAnnualGrossRevenue",
+			value = "$111.00");
 
-        Click(
-            field = "Does your business have a Federal Employer Identification Number (FEIN)?",
-            locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.fein",
-            value = "12-3456789");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.annualPayrollForOwner",
+			value = "$111.00");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.startBusinessAtYear",
-            value = "2000");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.annualPayrollForEmployees",
+			value = "$111.00");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Raylife.dismissAlert();
-    }
+		Raylife.dismissAlert();
+	}
 
-    @description = "LPS-147338 - Verify that when the user clicks on any option on the 'Does your business operate year round?' page they go directly to the next page. (Smartphone)"
-    @priority = "5"
-    test CanClickTheOptionsInBusinessOperatePhone {
-        SetWindowSize(value1 = "360,720");
+	@description = "LPS-147341 - Verify that the Continue button is only enabled when the field 'What do you anticipate your annual payroll will be for all owner(s) over the next 12 months?' and filled in (Smartphone)"
+	@priority = "5"
+	test CanClickTheOptionsInAnnualPayrollPhone {
+		SetWindowSize(value1 = "360,720");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        RaylifeHomePage.startFlow();
+		RaylifeHomePage.startFlow();
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Does your business have a Federal Employer Identification Number (FEIN)?",
-            locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.fein",
-            value = "12-3456789");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.fein",
+			value = "12-3456789");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.startBusinessAtYear",
-            value = "2000");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.startBusinessAtYear",
+			value = "2000");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Does your business operate year round?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		Click(
+			field = "Does your business operate year round?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        AssertElementPresent(
-            locator1 = "Raylife#FORMS_FIELDS",
-            label = "employees.partTimeEmployees");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.partTimeEmployees",
+			value = "200");
 
-        Raylife.dismissAlert();
-    }
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-    @description = "LPS-147339 -  Verify that the Continue button is only enabled when the field 'How many full or part time employees do you have?' and filled in (Smartphone)"
-    @priority = "5"
-    test CanClickTheOptionsInTimeEmployeesPhone {
-        SetWindowSize(value1 = "360,720");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.estimatedAnnualGrossRevenue",
+			value = "$111.00");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeHomePage.startFlow();
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.annualPayrollForOwner",
+			value = "$111.00");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		Raylife.dismissAlert();
+	}
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+	@description = "LPS-147338 - Verify that when the user clicks on any option on the 'Does your business operate year round?' page they go directly to the next page. (Smartphone)"
+	@priority = "5"
+	test CanClickTheOptionsInBusinessOperatePhone {
+		SetWindowSize(value1 = "360,720");
 
-        Click(
-            field = "Does your business have a Federal Employer Identification Number (FEIN)?",
-            locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.fein",
-            value = "12-3456789");
+		RaylifeHomePage.startFlow();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.startBusinessAtYear",
-            value = "2000");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        Click(
-            field = "Does your business operate year round?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.partTimeEmployees",
-            value = "200");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.fein",
+			value = "12-3456789");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Raylife.dismissAlert();
-    }
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.startBusinessAtYear",
+			value = "2000");
 
-    @description = "LPS-147340 - Verify that the Continue button is only enabled when the field 'What is your estimated annual gross revenue for the next 12 months?' and filled in (Smartphone)"
-    @priority = "5"
-    test CanClickTheOptionsInAnnualGrossPhone {
-        SetWindowSize(value1 = "360,720");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Click(
+			field = "Does your business operate year round?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        RaylifeHomePage.startFlow();
+		AssertElementPresent(
+			label = "employees.partTimeEmployees",
+			locator1 = "Raylife#FORMS_FIELDS");
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		Raylife.dismissAlert();
+	}
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+	@description = "LPS-147339 -  Verify that the Continue button is only enabled when the field 'How many full or part time employees do you have?' and filled in (Smartphone)"
+	@priority = "5"
+	test CanClickTheOptionsInTimeEmployeesPhone {
+		SetWindowSize(value1 = "360,720");
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
-        Click(
-            field = "Does your business have a Federal Employer Identification Number (FEIN)?",
-            locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.fein",
-            value = "12-3456789");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.startBusinessAtYear",
-            value = "2000");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
 
-        Click(
-            field = "Does your business operate year round?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.fein",
+			value = "12-3456789");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.partTimeEmployees",
-            value = "200");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.startBusinessAtYear",
+			value = "2000");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.estimatedAnnualGrossRevenue",
-            value = "$111.00");
+		Click(
+			field = "Does your business operate year round?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-        Raylife.dismissAlert();
-    }
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.partTimeEmployees",
+			value = "200");
 
-    @description = "LPS-147341 - Verify that the Continue button is only enabled when the field 'What do you anticipate your annual payroll will be for all owner(s) over the next 12 months?' and filled in (Smartphone)"
-    @priority = "5"
-    test CanClickTheOptionsInAnnualPayrollPhone {
-        SetWindowSize(value1 = "360,720");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Raylife.dismissAlert();
+	}
 
-        RaylifeHomePage.startFlow();
+	@description = "LPS-147346 - Verify if previous to the Business page and back to the Employees page, all information is present (Tablet)"
+	@priority = "5"
+	test CanViewAllInformationBackPageTablet {
+		SetWindowSize(value1 = "800,1024");
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		RaylifeContactInfo.typeAllBasicsInfoFields();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Does your business have a Federal Employer Identification Number (FEIN)?",
-            locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
+		RaylifeBusiness.typeAllBusinessInfoFields();
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.fein",
-            value = "12-3456789");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeEmployees.typeAllEmployeesInfoFields();
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.startBusinessAtYear",
-            value = "2000");
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Does your business operate year round?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		RaylifeEmployees.viewEmployeesInfo();
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.partTimeEmployees",
-            value = "200");
+		Raylife.dismissAlert();
+	}
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+	@description = "LPS-147345 - Verify if Continue Button is only enabled when all required fields have been filled in Employees (Tablet)"
+	@priority = "5"
+	test CanViewContinueButtonActivatedTablet {
+		SetWindowSize(value1 = "800,1024");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.estimatedAnnualGrossRevenue",
-            value = "$111.00");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+		RaylifeContactInfo.typeAllBasicsInfoFields();
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.annualPayrollForOwner",
-            value = "$111.00");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeBusiness.typeAllBusinessInfoFields();
 
-        Raylife.dismissAlert();
-    }
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-     @description = "LPS-147343 - Verify that the Continue button is only enabled when the field 'What do you anticipate your annual payroll will be for all employees over the next 12 months?' and filled in (Smartphone"
-    @priority = "5"
-    test CanClickTheOptionsInAnnualPayrollEmployeesPhone {
-        SetWindowSize(value1 = "360,720");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		RaylifeEmployees.typeAllEmployeesInfoFields();
 
-        RaylifeHomePage.startFlow();
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		Raylife.dismissAlert();
+	}
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+	@description = "LPS-147334 - Verify that the Continue button is only enabled when the field 'Federal Employer Identification Number (FEIN)?' and filled in (in case previous question was answered as yes) (Smartphone)"
+	@priority = "5"
+	test ContinueButtonActivatedInEmployerIdentificationPhone {
+		SetWindowSize(value1 = "360,720");
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
-        Click(
-            field = "Does your business have a Federal Employer Identification Number (FEIN)?",
-            locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.fein",
-            value = "12-3456789");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.startBusinessAtYear",
-            value = "2000");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		AssertElementNotPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Does your business operate year round?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.partTimeEmployees",
-            value = "200");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.fein",
+			value = "12-3456789");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.estimatedAnnualGrossRevenue",
-            value = "$111.00");
+		Raylife.dismissAlert();
+	}
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+	@description = "LPS-147336 - Verify that the Continue button is only enabled when the field 'What year did you start your business?' and filled in (Smartphone)"
+	@priority = "5"
+	test ContinueButtonActivatedInStartYourBusinessPhone {
+		SetWindowSize(value1 = "360,720");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.annualPayrollForOwner",
-            value = "$111.00");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.annualPayrollForEmployees",
-            value = "$111.00");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        Raylife.dismissAlert();
-    }
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-    @description = "LPS-147344 - Verify if Previous button in the 'Does your business operate year round?' subsection goes back to 'What year did you start your business?' subsection (Smartphone)"
-    @priority = "5"
-    test CanBackPageWithPreviousButtonPhone {
-        SetWindowSize(value1 = "360,720");
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.fein",
+			value = "12-3456789");
 
-        RaylifeHomePage.startFlow();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeEmployees.typeEmployeesInfoFields(
+			label = "employees.startBusinessAtYear",
+			value = "2000");
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Raylife.dismissAlert();
+	}
 
-        Click(
-            field = "Does your business have a Federal Employer Identification Number (FEIN)?",
-            locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
+	@description = "LPS-147333 - Verify that when the user clicks on the 'No' option on the 'Does your company have a Federal Employer Identification Number (FEIN)?' page, the 'Continue' button is enabled (Smartphone)"
+	@priority = "5"
+	test ContinueButtonEnabledWhenNoOptionIsSelectedPhone {
+		SetWindowSize(value1 = "360,720");
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.fein",
-            value = "12-3456789");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
-        RaylifeEmployees.typeEmployeesInfoFields(
-            label = "employees.startBusinessAtYear",
-            value = "2000");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        AssertElementPresent(
-            locator1 = "Raylife#FORMS_FIELDS",
-            label = "employees.startBusinessAtYear");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Raylife.dismissAlert();
-    }
+		AssertElementNotPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-    @description = "LPS-147345 - Verify if Continue Button is only enabled when all required fields have been filled in Employees (Tablet)"
-    @priority = "5"
-    test CanViewContinueButtonActivatedTablet {
-        SetWindowSize(value1 = "800,1024");
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "RaylifeMobile#BUTTON_NO_FEIN_PHONE");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeHomePage.startFlow();
+		Raylife.dismissAlert();
+	}
 
-        RaylifeContactInfo.typeAllBasicsInfoFields();
+	@description = "LPS-147321 - Verify that when the user clicks on the 'Yes' option on the 'Does your company have a Federal Employer Identification Number (FEIN)?' page, the 'Employer Identification' field appears (Smartphone)"
+	@priority = "5"
+	test FieldAppearsWhenClickYesOnOptionPhone {
+		SetWindowSize(value1 = "360,720");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        RaylifeBusiness.typeAllBusinessInfoFields();
+		RaylifeHomePage.startFlow();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeEmployees.typeAllEmployeesInfoFields();
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Raylife.dismissAlert();
-    }
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "RaylifeMobile#BUTTON_YES_FEIN_PHONE");
 
-    @description = "LPS-147346 - Verify if previous to the Business page and back to the Employees page, all information is present (Tablet)"
-    @priority = "5"
-    test CanViewAllInformationBackPageTablet {
-        SetWindowSize(value1 = "800,1024");
+		AssertElementPresent(locator1 = "RaylifeMobile#INPUT_FEIN_REQUIRED");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Raylife.dismissAlert();
+	}
 
-        RaylifeHomePage.startFlow();
+	@description = "LPS-147332 - Verify that when the user clicks on the 'No' option on the 'Does your company have a Federal Employer Identification Number (FEIN)?' page, the 'Employer Identification' field does not appear (Smartphone)"
+	@priority = "5"
+	test FieldDoesNotAppearWhenTheNoOptionIsClickedPhone {
+		SetWindowSize(value1 = "360,720");
 
-        RaylifeContactInfo.typeAllBasicsInfoFields();
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
-        RaylifeBusiness.typeAllBusinessInfoFields();
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeEmployees.typeAllEmployeesInfoFields();
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(
+			field = "Does your business have a Federal Employer Identification Number (FEIN)?",
+			locator1 = "RaylifeMobile#BUTTON_NO_FEIN_PHONE");
 
-        RaylifeEmployees.viewEmployeesInfo();
+		AssertElementNotPresent(locator1 = "RaylifeMobile#INPUT_FEIN_REQUIRED");
 
-        Raylife.dismissAlert();
-    }
+		Raylife.dismissAlert();
+	}
+
 }

@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.io.File;
 
@@ -91,10 +92,11 @@ public class ExportMasterLayoutsMVCResourceCommandTest {
 				LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			layoutPageTemplateEntry.getPlid(), _read("layout_data.json"),
-			_serviceContext);
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), layoutPageTemplateEntry.getPlid(),
+				SegmentsExperienceConstants.ID_DEFAULT,
+				_read("layout_data.json"));
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			_group.getGroupId(), RandomTestUtil.randomString(),

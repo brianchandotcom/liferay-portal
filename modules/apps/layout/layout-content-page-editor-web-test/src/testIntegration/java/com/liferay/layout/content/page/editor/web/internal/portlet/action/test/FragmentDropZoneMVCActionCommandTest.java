@@ -21,7 +21,9 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
@@ -62,6 +64,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.List;
 
@@ -101,9 +104,15 @@ public class FragmentDropZoneMVCActionCommandTest {
 
 		_layout = _addLayout();
 
-		_layoutStructure = new LayoutStructure();
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), _layout.getPlid());
 
-		_layoutStructure.addRootLayoutStructureItem();
+		String data = layoutPageTemplateStructure.getData(
+			SegmentsExperienceConstants.ID_DEFAULT);
+
+		_layoutStructure = LayoutStructure.of(data);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -112,10 +121,6 @@ public class FragmentDropZoneMVCActionCommandTest {
 		serviceContext.setRequest(_getMockHttpServletRequest());
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(), _layout.getPlid(),
-			_layoutStructure.toString(), serviceContext);
 	}
 
 	@Test

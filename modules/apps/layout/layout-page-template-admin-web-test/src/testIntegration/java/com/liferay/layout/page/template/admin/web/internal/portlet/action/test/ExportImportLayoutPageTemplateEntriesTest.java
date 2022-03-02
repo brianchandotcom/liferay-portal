@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.io.File;
 
@@ -136,16 +137,17 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 				_read("export_import_fragment_field_text_editable_values.json"),
 				StringPool.BLANK, 0, null, _serviceContext1);
 
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			TestPropsValues.getUserId(), _group1.getGroupId(),
-			layoutPageTemplateEntry1.getPlid(),
-			StringUtil.replace(
-				_read("export_import_layout_data.json"), "${", "}",
-				HashMapBuilder.put(
-					"FRAGMENT_ENTRY_LINK1_ID",
-					String.valueOf(fragmentEntryLink.getFragmentEntryLinkId())
-				).build()),
-			_serviceContext1);
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group1.getGroupId(), layoutPageTemplateEntry1.getPlid(),
+				SegmentsExperienceConstants.ID_DEFAULT,
+				StringUtil.replace(
+					_read("export_import_layout_data.json"), "${", "}",
+					HashMapBuilder.put(
+						"FRAGMENT_ENTRY_LINK1_ID",
+						String.valueOf(
+							fragmentEntryLink.getFragmentEntryLinkId())
+					).build()));
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			_group1.getGroupId(), RandomTestUtil.randomString(),

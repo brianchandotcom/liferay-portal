@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.awt.image.BufferedImage;
 
@@ -161,10 +162,11 @@ public class LayoutCopyHelperTest {
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			containerLayoutStructureItem.getItemId(), 0);
 
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			sourceLayout.getUserId(), sourceLayout.getGroupId(),
-			sourceLayout.getPlid(), layoutStructure.toString(),
-			_serviceContext);
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				sourceLayout.getGroupId(), sourceLayout.getPlid(),
+				SegmentsExperienceConstants.ID_DEFAULT,
+				layoutStructure.toString());
 
 		Layout targetLayout = _addContentLayout();
 

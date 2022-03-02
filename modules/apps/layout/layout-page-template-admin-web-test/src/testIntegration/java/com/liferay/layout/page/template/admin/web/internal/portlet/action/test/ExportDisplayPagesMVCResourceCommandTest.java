@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.io.File;
 
@@ -101,10 +102,11 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 			_addLayoutPageTemplateEntry(
 				name, WorkflowConstants.STATUS_APPROVED);
 
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			layoutPageTemplateEntry.getPlid(), _read("layout_data.json"),
-			_serviceContext);
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), layoutPageTemplateEntry.getPlid(),
+				SegmentsExperienceConstants.ID_DEFAULT,
+				_read("layout_data.json"));
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			_group.getGroupId(), RandomTestUtil.randomString(),
@@ -180,14 +182,16 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 			_addLayoutPageTemplateEntry(
 				name2, WorkflowConstants.STATUS_APPROVED);
 
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			layoutPageTemplateEntry1.getPlid(), _read("layout_data.json"),
-			_serviceContext);
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			layoutPageTemplateEntry2.getPlid(), _read("layout_data.json"),
-			_serviceContext);
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), layoutPageTemplateEntry1.getPlid(),
+				SegmentsExperienceConstants.ID_DEFAULT,
+				_read("layout_data.json"));
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), layoutPageTemplateEntry2.getPlid(),
+				SegmentsExperienceConstants.ID_DEFAULT,
+				_read("layout_data.json"));
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			_group.getGroupId(), RandomTestUtil.randomString(),

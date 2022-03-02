@@ -26,7 +26,9 @@ import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -381,15 +383,15 @@ public class GetPageContentMVCResourceCommandTest {
 			UnsafeConsumer<LayoutStructure, Exception> layoutStructureConsumer)
 		throws Exception {
 
-		LayoutStructure layoutStructure = new LayoutStructure();
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), _layout.getPlid());
 
-		layoutStructure.addRootLayoutStructureItem();
+		String data = layoutPageTemplateStructure.getData(
+			SegmentsExperienceConstants.ID_DEFAULT);
 
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(), _layout.getPlid(),
-			layoutStructure.toString(),
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId()));
+		LayoutStructure layoutStructure = LayoutStructure.of(data);
 
 		layoutStructureConsumer.accept(layoutStructure);
 

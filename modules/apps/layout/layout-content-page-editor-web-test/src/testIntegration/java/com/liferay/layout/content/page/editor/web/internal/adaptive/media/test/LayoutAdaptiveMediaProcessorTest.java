@@ -279,9 +279,11 @@ public class LayoutAdaptiveMediaProcessorTest {
 			_fragmentEntryLink.getFragmentEntryLinkId(),
 			containerStyledLayoutStructureItem.getItemId(), 0);
 
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			TestPropsValues.getUserId(), _group.getGroupId(), _layout.getPlid(),
-			layoutStructure.toString(), _serviceContext);
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), _layout.getPlid(),
+				SegmentsExperienceConstants.ID_DEFAULT,
+				layoutStructure.toString());
 
 		_themeDisplay.setLayout(_layout);
 		_themeDisplay.setLayoutSet(_layout.getLayoutSet());

@@ -74,6 +74,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -630,11 +631,10 @@ public class PageDefinitionDTOConverterTest {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
-				addLayoutPageTemplateStructure(
-					TestPropsValues.getUserId(), _group.getGroupId(),
-					_layoutPageTemplateEntry.getPlid(),
-					StringUtil.replace(_read(fileName), "${", "}", valuesMap),
-					_serviceContext);
+				updateLayoutPageTemplateStructureData(
+					_group.getGroupId(), _layoutPageTemplateEntry.getPlid(),
+					SegmentsExperienceConstants.ID_DEFAULT,
+					StringUtil.replace(_read(fileName), "${", "}", valuesMap));
 
 		return LayoutStructure.of(layoutPageTemplateStructure.getData(0L));
 	}

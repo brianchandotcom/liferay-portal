@@ -23,6 +23,7 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -58,6 +59,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.util.List;
 import java.util.Locale;
@@ -94,17 +96,15 @@ public class AddPortletMVCActionCommandTest {
 
 		_layout = _addLayout();
 
-		_layoutStructure = new LayoutStructure();
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(
+					_group.getGroupId(), _layout.getPlid());
 
-		_layoutStructure.addRootLayoutStructureItem();
+		String data = layoutPageTemplateStructure.getData(
+			SegmentsExperienceConstants.ID_DEFAULT);
 
-		_layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				addLayoutPageTemplateStructure(
-					TestPropsValues.getUserId(), _group.getGroupId(),
-					_layout.getPlid(), _layoutStructure.toString(),
-					ServiceContextTestUtil.getServiceContext(
-						_group, TestPropsValues.getUserId()));
+		_layoutStructure = LayoutStructure.of(data);
 	}
 
 	@Test
@@ -352,9 +352,6 @@ public class AddPortletMVCActionCommandTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
-
-	@DeleteAfterTestRun
-	private LayoutPageTemplateStructure _layoutPageTemplateStructure;
 
 	@Inject
 	private LayoutPageTemplateStructureLocalService

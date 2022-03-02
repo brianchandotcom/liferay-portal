@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import java.io.File;
 
@@ -129,11 +130,11 @@ public class ExportImportDisplayPagesTest {
 		Layout layout1 = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry1.getPlid());
 
-		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
-			TestPropsValues.getUserId(), _group1.getGroupId(),
-			layoutPageTemplateEntry1.getPlid(),
-			_read("export_import_display_page_layout_data.json"),
-			_serviceContext1);
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group1.getGroupId(), layoutPageTemplateEntry1.getPlid(),
+				SegmentsExperienceConstants.ID_DEFAULT,
+				_read("export_import_display_page_layout_data.json"));
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			_group1.getGroupId(), RandomTestUtil.randomString(),

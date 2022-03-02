@@ -107,6 +107,11 @@ public class SiteNavigationMenuItemOrderComparator
 	}
 
 	@Override
+	public int hashCode() {
+		return Objects.hash(getOrderBy(), getOrderByFields(), isAscending());
+	}
+
+	@Override
 	public boolean isAscending() {
 		return _ascending;
 	}

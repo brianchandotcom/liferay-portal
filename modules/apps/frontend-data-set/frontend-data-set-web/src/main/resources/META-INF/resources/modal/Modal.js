@@ -167,7 +167,7 @@ function Modal({
 
 Modal.propTypes = {
 	closeOnSubmit: PropTypes.bool,
-	id: PropTypes.string.isRequired,
+	id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 	onClose: PropTypes.func,
 	status: PropTypes.string,
 	title: PropTypes.string,

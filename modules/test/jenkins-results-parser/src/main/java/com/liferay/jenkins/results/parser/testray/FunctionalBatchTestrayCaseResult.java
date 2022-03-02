@@ -170,42 +170,6 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 	}
 
 	@Override
-	public String getTeamName() {
-		JobProperty teamNamesJobProperty = _getJobProperty(
-			"testray.team.names");
-
-		String teamNames = teamNamesJobProperty.getValue();
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(teamNames)) {
-			return super.getTeamName();
-		}
-
-		String componentName = getComponentName();
-
-		for (String teamName : teamNames.split(",")) {
-			JobProperty teamComponentNamesJobProperty = _getJobProperty(
-				"testray.team." + teamName + ".component.names");
-
-			String teamComponentNames =
-				teamComponentNamesJobProperty.getValue();
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(teamComponentNames)) {
-				continue;
-			}
-
-			for (String teamComponentName : teamComponentNames.split(",")) {
-				if (teamComponentName.equals(componentName)) {
-					teamName = teamName.replace("-", " ");
-
-					return WordUtils.capitalize(teamName);
-				}
-			}
-		}
-
-		return super.getTeamName();
-	}
-
-	@Override
 	public List<TestrayAttachment> getTestrayAttachments() {
 		List<TestrayAttachment> testrayAttachments =
 			super.getTestrayAttachments();
@@ -283,23 +247,7 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
 		return null;
 	}
-
-	private JobProperty _getJobProperty(String basePropertyName) {
-		TopLevelBuild topLevelBuild = getTopLevelBuild();
-
-		Job job = topLevelBuild.getJob();
-
-		if (job instanceof QAWebsitesGitRepositoryJob) {
-			AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
-
-			return JobPropertyFactory.newJobProperty(
-				basePropertyName, job, axisTestClassGroup.getTestBaseDir(),
-				JobProperty.Type.QA_WEBSITES_TEST_DIR);
-		}
-
-		return JobPropertyFactory.newJobProperty(basePropertyName, job);
-	}
-
+	
 	private List<TestrayAttachment> _getLiferayLogTestrayAttachments() {
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
 

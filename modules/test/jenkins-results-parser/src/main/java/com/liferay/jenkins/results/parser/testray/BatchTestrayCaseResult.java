@@ -18,7 +18,11 @@ import com.liferay.jenkins.results.parser.AxisBuild;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
+import com.liferay.jenkins.results.parser.job.property.JobProperty;
+import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.io.IOException;
@@ -29,6 +33,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.commons.lang.WordUtils;
 
 /**
  * @author Michael Hashimoto
@@ -159,6 +165,44 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 
 	@Override
 	public String getTeamName() {
+		JobProperty teamNamesJobProperty = _getJobProperty(
+			"testray.team.names");
+
+		String teamNames = teamNamesJobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(teamNames)) {
+			try {
+				return JenkinsResultsParserUtil.getProperty(
+					JenkinsResultsParserUtil.getBuildProperties(),
+					"testray.case.team", getBatchName());
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+
+		String componentName = getComponentName();
+
+		for (String teamName : teamNames.split(",")) {
+			JobProperty teamComponentNamesJobProperty = _getJobProperty(
+				"testray.team." + teamName + ".component.names");
+
+			String teamComponentNames =
+				teamComponentNamesJobProperty.getValue();
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(teamComponentNames)) {
+				continue;
+			}
+
+			for (String teamComponentName : teamComponentNames.split(",")) {
+				if (teamComponentName.equals(componentName)) {
+					teamName = teamName.replace("-", " ");
+
+					return WordUtils.capitalize(teamName);
+				}
+			}
+		}
+
 		try {
 			return JenkinsResultsParserUtil.getProperty(
 				JenkinsResultsParserUtil.getBuildProperties(),
@@ -278,6 +322,22 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 		return getTestrayAttachment(
 			getTopLevelBuild(), "Jenkins Report (Top Level)",
 			_getTopLevelBuildURLPath() + "/jenkins-report.html.gz");
+	}
+
+	private JobProperty _getJobProperty(String basePropertyName) {
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
+
+		Job job = topLevelBuild.getJob();
+
+		if (job instanceof QAWebsitesGitRepositoryJob) {
+			AxisTestClassGroup axisTestClassGroup = getAxisTestClassGroup();
+
+			return JobPropertyFactory.newJobProperty(
+				basePropertyName, job, axisTestClassGroup.getTestBaseDir(),
+				JobProperty.Type.QA_WEBSITES_TEST_DIR);
+		}
+
+		return JobPropertyFactory.newJobProperty(basePropertyName, job);
 	}
 
 	private TestrayAttachment _getJobSummaryTestrayAttachment() {

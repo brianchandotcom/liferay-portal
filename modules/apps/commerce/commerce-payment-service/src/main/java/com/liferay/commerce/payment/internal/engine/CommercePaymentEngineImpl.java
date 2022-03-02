@@ -17,14 +17,17 @@ package com.liferay.commerce.payment.internal.engine;
 import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.payment.engine.CommercePaymentEngine;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
 import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
+import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRelQualifier;
 import com.liferay.commerce.payment.request.CommercePaymentRequest;
 import com.liferay.commerce.payment.result.CommercePaymentResult;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
+import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelQualifierLocalService;
 import com.liferay.commerce.payment.util.CommercePaymentUtils;
 import com.liferay.commerce.payment.util.comparator.CommercePaymentMethodPriorityComparator;
 import com.liferay.commerce.service.CommerceOrderLocalService;
@@ -267,13 +270,13 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 				_commercePaymentMethodGroupRelLocalService.
 					getCommercePaymentMethodGroupRels(
 						groupId, commerceAddress.getCountryId(), true),
-				subscriptionOrder);
+				commerceOrder.getCommerceOrderTypeId(), subscriptionOrder);
 		}
 
 		return _getCommercePaymentMethodsList(
 			_commercePaymentMethodGroupRelLocalService.
 				getCommercePaymentMethodGroupRels(groupId, true),
-			subscriptionOrder);
+			commerceOrder.getCommerceOrderTypeId(), subscriptionOrder);
 	}
 
 	@Override
@@ -486,7 +489,7 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 
 	private List<CommercePaymentMethod> _getCommercePaymentMethodsList(
 		List<CommercePaymentMethodGroupRel> commercePaymentMethodGroupRels,
-		boolean subscriptionOrder) {
+		long commerceOrderTypeId, boolean subscriptionOrder) {
 
 		ListUtil.sort(
 			commercePaymentMethodGroupRels,
@@ -496,6 +499,27 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 
 		for (CommercePaymentMethodGroupRel commercePaymentMethodGroupRel :
 				commercePaymentMethodGroupRels) {
+
+			List<CommercePaymentMethodGroupRelQualifier>
+				commercePaymentMethodGroupRelQualifiers =
+					_commercePaymentMethodGroupRelQualifierLocalService.
+						getCommercePaymentMethodGroupRelQualifiers(
+							CommerceOrderType.class.getName(),
+							commercePaymentMethodGroupRel.
+								getCommercePaymentMethodGroupRelId());
+
+			if ((commerceOrderTypeId > 0) &&
+				!ListUtil.exists(
+					commercePaymentMethodGroupRelQualifiers,
+					commercePaymentMethodGroupRelQualifier -> {
+						long classPK =
+							commercePaymentMethodGroupRelQualifier.getClassPK();
+
+						return classPK == commerceOrderTypeId;
+					})) {
+
+				continue;
+			}
 
 			CommercePaymentMethod commercePaymentMethod =
 				_commercePaymentMethodRegistry.getCommercePaymentMethod(
@@ -525,6 +549,10 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 	@Reference
 	private CommercePaymentMethodGroupRelLocalService
 		_commercePaymentMethodGroupRelLocalService;
+
+	@Reference
+	private CommercePaymentMethodGroupRelQualifierLocalService
+		_commercePaymentMethodGroupRelQualifierLocalService;
 
 	@Reference
 	private CommercePaymentMethodRegistry _commercePaymentMethodRegistry;

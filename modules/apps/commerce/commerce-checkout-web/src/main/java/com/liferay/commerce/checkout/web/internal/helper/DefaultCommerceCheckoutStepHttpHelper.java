@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.checkout.web.internal.helper;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
@@ -54,6 +56,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
 
@@ -245,6 +248,38 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			return false;
 		}
 
+		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+
+		if (commerceAccount != null) {
+			AccountEntry accountEntry =
+				_accountEntryLocalService.fetchAccountEntry(
+					commerceAccount.getCommerceAccountId());
+
+			if ((accountEntry != null) &&
+				(accountEntry.getDefaultCPaymentMethodKey() != null)) {
+
+				Stream<CommercePaymentMethod> commercePaymentMethodsStream =
+					commercePaymentMethods.stream();
+
+				CommercePaymentMethod commercePaymentMethod =
+					commercePaymentMethodsStream.filter(
+						cpm -> cpm.getKey(
+						).equals(
+							accountEntry.getDefaultCPaymentMethodKey()
+						)
+					).findFirst(
+					).orElse(
+						commercePaymentMethods.get(0)
+					);
+
+				_updateCommerceOrder(
+					httpServletRequest, commerceOrder,
+					commercePaymentMethod.getKey());
+
+				return false;
+			}
+		}
+
 		return true;
 	}
 
@@ -430,6 +465,9 @@ public class DefaultCommerceCheckoutStepHttpHelper
 		httpServletRequest.setAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
 	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;

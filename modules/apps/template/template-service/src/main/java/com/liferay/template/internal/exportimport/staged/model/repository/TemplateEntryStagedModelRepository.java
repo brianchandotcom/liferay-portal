@@ -90,7 +90,7 @@ public class TemplateEntryStagedModelRepository
 	public void deleteStagedModel(TemplateEntry templateEntry)
 		throws PortalException {
 
-		_ddmTemplateLocalService.deleteDDMTemplate(
+		_ddmTemplateLocalService.deleteTemplate(
 			templateEntry.getDDMTemplateId());
 
 		_templateEntryLocalService.deleteTemplateEntry(templateEntry);

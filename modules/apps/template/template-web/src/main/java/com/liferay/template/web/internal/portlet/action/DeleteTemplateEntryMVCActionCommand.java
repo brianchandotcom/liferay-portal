@@ -64,7 +64,7 @@ public class DeleteTemplateEntryMVCActionCommand
 				_templateEntryLocalService.deleteTemplateEntry(
 					deleteTemplateEntryId);
 
-			_ddmTemplateLocalService.deleteDDMTemplate(
+			_ddmTemplateLocalService.deleteTemplate(
 				templateEntry.getDDMTemplateId());
 		}
 	}

@@ -884,7 +884,7 @@ public class ObjectEntryLocalServiceImpl
 					}
 
 					return _inlineSQLHelper.getPermissionWherePredicate(
-						dynamicObjectDefinitionTable.getName(),
+						objectDefinition2.getClassName(),
 						dynamicObjectDefinitionTable.getPrimaryKeyColumn());
 				}
 			)
@@ -959,8 +959,12 @@ public class ObjectEntryLocalServiceImpl
 						return null;
 					}
 
+					ObjectDefinition objectDefinition2 =
+						_objectDefinitionPersistence.findByPrimaryKey(
+							objectRelationship.getObjectDefinitionId2());
+
 					return _inlineSQLHelper.getPermissionWherePredicate(
-						dynamicObjectDefinitionTable.getName(),
+						objectDefinition2.getClassName(),
 						dynamicObjectDefinitionTable.getPrimaryKeyColumn());
 				}
 			)

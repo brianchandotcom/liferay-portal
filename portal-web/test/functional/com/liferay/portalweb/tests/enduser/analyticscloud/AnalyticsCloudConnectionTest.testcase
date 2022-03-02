@@ -174,7 +174,7 @@ definition {
 	test AssertLiferayDataSourceStatus {
 		property portal.release = "true";
 
-		var list1 = ListUtil.newListFromString("Current Status,Synced Sites,Synced Contacts");
+		var sectionTitleList = ListUtil.newListFromString("Current Status,Synced Sites,Synced Contacts");
 		var statusSyncSite = ListUtil.newListFromString("Active,Configured,Unconfigured");
 		var statusSyncContact = ListUtil.newListFromString("Active,Configured,Configured");
 		var statusDisconnect = ListUtil.newListFromString("Disconnected,Unconfigured,Unconfigured");

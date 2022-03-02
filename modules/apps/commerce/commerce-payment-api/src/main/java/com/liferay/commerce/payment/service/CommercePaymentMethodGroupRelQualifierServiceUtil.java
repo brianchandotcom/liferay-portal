@@ -117,15 +117,6 @@ public class CommercePaymentMethodGroupRelQualifierServiceUtil {
 
 	public static List<CommercePaymentMethodGroupRelQualifier>
 			getCommercePaymentMethodGroupRelQualifiers(
-				long commercePaymentMethodGroupRelId)
-		throws PortalException {
-
-		return getService().getCommercePaymentMethodGroupRelQualifiers(
-			commercePaymentMethodGroupRelId);
-	}
-
-	public static List<CommercePaymentMethodGroupRelQualifier>
-			getCommercePaymentMethodGroupRelQualifiers(
 				long commercePaymentMethodGroupRelId, int start, int end,
 				OrderByComparator<CommercePaymentMethodGroupRelQualifier>
 					orderByComparator)
@@ -133,6 +124,15 @@ public class CommercePaymentMethodGroupRelQualifierServiceUtil {
 
 		return getService().getCommercePaymentMethodGroupRelQualifiers(
 			commercePaymentMethodGroupRelId, start, end, orderByComparator);
+	}
+
+	public static List<CommercePaymentMethodGroupRelQualifier>
+			getCommercePaymentMethodGroupRelQualifiers(
+				String className, long commercePaymentMethodGroupRelId)
+		throws PortalException {
+
+		return getService().getCommercePaymentMethodGroupRelQualifiers(
+			className, commercePaymentMethodGroupRelId);
 	}
 
 	public static int getCommercePaymentMethodGroupRelQualifiersCount(

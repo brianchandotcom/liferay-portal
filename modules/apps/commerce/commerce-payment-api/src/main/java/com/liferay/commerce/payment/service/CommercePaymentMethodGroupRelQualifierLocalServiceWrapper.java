@@ -399,18 +399,6 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceWrapper
 		<com.liferay.commerce.payment.model.
 			CommercePaymentMethodGroupRelQualifier>
 				getCommercePaymentMethodGroupRelQualifiers(
-					long commercePaymentMethodGroupRelId) {
-
-		return _commercePaymentMethodGroupRelQualifierLocalService.
-			getCommercePaymentMethodGroupRelQualifiers(
-				commercePaymentMethodGroupRelId);
-	}
-
-	@Override
-	public java.util.List
-		<com.liferay.commerce.payment.model.
-			CommercePaymentMethodGroupRelQualifier>
-				getCommercePaymentMethodGroupRelQualifiers(
 					long commercePaymentMethodGroupRelId, int start, int end,
 					com.liferay.portal.kernel.util.OrderByComparator
 						<com.liferay.commerce.payment.model.
@@ -420,6 +408,18 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceWrapper
 		return _commercePaymentMethodGroupRelQualifierLocalService.
 			getCommercePaymentMethodGroupRelQualifiers(
 				commercePaymentMethodGroupRelId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.payment.model.
+			CommercePaymentMethodGroupRelQualifier>
+				getCommercePaymentMethodGroupRelQualifiers(
+					String className, long commercePaymentMethodGroupRelId) {
+
+		return _commercePaymentMethodGroupRelQualifierLocalService.
+			getCommercePaymentMethodGroupRelQualifiers(
+				className, commercePaymentMethodGroupRelId);
 	}
 
 	/**

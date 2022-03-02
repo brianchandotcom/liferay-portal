@@ -328,20 +328,20 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceUtil {
 
 	public static List<CommercePaymentMethodGroupRelQualifier>
 		getCommercePaymentMethodGroupRelQualifiers(
-			long commercePaymentMethodGroupRelId) {
-
-		return getService().getCommercePaymentMethodGroupRelQualifiers(
-			commercePaymentMethodGroupRelId);
-	}
-
-	public static List<CommercePaymentMethodGroupRelQualifier>
-		getCommercePaymentMethodGroupRelQualifiers(
 			long commercePaymentMethodGroupRelId, int start, int end,
 			OrderByComparator<CommercePaymentMethodGroupRelQualifier>
 				orderByComparator) {
 
 		return getService().getCommercePaymentMethodGroupRelQualifiers(
 			commercePaymentMethodGroupRelId, start, end, orderByComparator);
+	}
+
+	public static List<CommercePaymentMethodGroupRelQualifier>
+		getCommercePaymentMethodGroupRelQualifiers(
+			String className, long commercePaymentMethodGroupRelId) {
+
+		return getService().getCommercePaymentMethodGroupRelQualifiers(
+			className, commercePaymentMethodGroupRelId);
 	}
 
 	/**

@@ -400,7 +400,12 @@ public class CommercePaymentMethodGroupRelQualifierServiceHttp {
 			CommercePaymentMethodGroupRelQualifier>
 					getCommercePaymentMethodGroupRelQualifiers(
 						HttpPrincipal httpPrincipal,
-						long commercePaymentMethodGroupRelId)
+						long commercePaymentMethodGroupRelId, int start,
+						int end,
+						com.liferay.portal.kernel.util.OrderByComparator
+							<com.liferay.commerce.payment.model.
+								CommercePaymentMethodGroupRelQualifier>
+									orderByComparator)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -410,7 +415,8 @@ public class CommercePaymentMethodGroupRelQualifierServiceHttp {
 				_getCommercePaymentMethodGroupRelQualifiersParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commercePaymentMethodGroupRelId);
+				methodKey, commercePaymentMethodGroupRelId, start, end,
+				orderByComparator);
 
 			Object returnObj = null;
 
@@ -446,13 +452,8 @@ public class CommercePaymentMethodGroupRelQualifierServiceHttp {
 		<com.liferay.commerce.payment.model.
 			CommercePaymentMethodGroupRelQualifier>
 					getCommercePaymentMethodGroupRelQualifiers(
-						HttpPrincipal httpPrincipal,
-						long commercePaymentMethodGroupRelId, int start,
-						int end,
-						com.liferay.portal.kernel.util.OrderByComparator
-							<com.liferay.commerce.payment.model.
-								CommercePaymentMethodGroupRelQualifier>
-									orderByComparator)
+						HttpPrincipal httpPrincipal, String className,
+						long commercePaymentMethodGroupRelId)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -462,8 +463,7 @@ public class CommercePaymentMethodGroupRelQualifierServiceHttp {
 				_getCommercePaymentMethodGroupRelQualifiersParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, commercePaymentMethodGroupRelId, start, end,
-				orderByComparator);
+				methodKey, className, commercePaymentMethodGroupRelId);
 
 			Object returnObj = null;
 
@@ -657,13 +657,13 @@ public class CommercePaymentMethodGroupRelQualifierServiceHttp {
 			new Class[] {long.class};
 	private static final Class<?>[]
 		_getCommercePaymentMethodGroupRelQualifiersParameterTypes8 =
-			new Class[] {long.class};
-	private static final Class<?>[]
-		_getCommercePaymentMethodGroupRelQualifiersParameterTypes9 =
 			new Class[] {
 				long.class, int.class, int.class,
 				com.liferay.portal.kernel.util.OrderByComparator.class
 			};
+	private static final Class<?>[]
+		_getCommercePaymentMethodGroupRelQualifiersParameterTypes9 =
+			new Class[] {String.class, long.class};
 	private static final Class<?>[]
 		_getCommercePaymentMethodGroupRelQualifiersCountParameterTypes10 =
 			new Class[] {long.class};

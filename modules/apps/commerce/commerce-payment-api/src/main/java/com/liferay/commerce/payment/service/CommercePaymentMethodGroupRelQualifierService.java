@@ -108,15 +108,15 @@ public interface CommercePaymentMethodGroupRelQualifierService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePaymentMethodGroupRelQualifier>
 			getCommercePaymentMethodGroupRelQualifiers(
-				long commercePaymentMethodGroupRelId)
+				long commercePaymentMethodGroupRelId, int start, int end,
+				OrderByComparator<CommercePaymentMethodGroupRelQualifier>
+					orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePaymentMethodGroupRelQualifier>
 			getCommercePaymentMethodGroupRelQualifiers(
-				long commercePaymentMethodGroupRelId, int start, int end,
-				OrderByComparator<CommercePaymentMethodGroupRelQualifier>
-					orderByComparator)
+				String className, long commercePaymentMethodGroupRelId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

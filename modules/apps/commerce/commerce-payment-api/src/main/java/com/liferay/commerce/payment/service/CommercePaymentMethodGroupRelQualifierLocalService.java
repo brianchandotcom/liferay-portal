@@ -281,14 +281,14 @@ public interface CommercePaymentMethodGroupRelQualifierLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePaymentMethodGroupRelQualifier>
 		getCommercePaymentMethodGroupRelQualifiers(
-			long commercePaymentMethodGroupRelId);
+			long commercePaymentMethodGroupRelId, int start, int end,
+			OrderByComparator<CommercePaymentMethodGroupRelQualifier>
+				orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePaymentMethodGroupRelQualifier>
 		getCommercePaymentMethodGroupRelQualifiers(
-			long commercePaymentMethodGroupRelId, int start, int end,
-			OrderByComparator<CommercePaymentMethodGroupRelQualifier>
-				orderByComparator);
+			String className, long commercePaymentMethodGroupRelId);
 
 	/**
 	 * Returns the number of commerce payment method group rel qualifiers.

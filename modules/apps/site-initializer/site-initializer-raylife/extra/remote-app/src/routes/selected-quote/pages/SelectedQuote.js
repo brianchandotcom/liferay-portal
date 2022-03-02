@@ -12,6 +12,7 @@
  * details.
  */
 
+import classNames from 'classnames';
 import React, {useContext, useEffect, useState} from 'react';
 import Panel from '../components/Panel';
 import CheckButton from '../components/Panel/CheckButton';
@@ -32,6 +33,14 @@ const SelectedQuote = () => {
 	const [hasError, setHasError] = useState(false);
 
 	useEffect(() => {
+		const quoteElements = document.querySelector(
+			'section#content #main-content .container-fluid'
+		);
+
+		quoteElements.classList.add('selected-quote-content');
+	}, []);
+
+	useEffect(() => {
 		if (sections) {
 			setHasError(sectionsHasError(sections));
 		}
@@ -46,24 +55,37 @@ const SelectedQuote = () => {
 				<Panel
 					Right={CheckButton}
 					id="createAnAccount"
-					title="1. Create an Account"
+					title="Create an Account"
+					titleNumber="1"
 				>
 					<CreateAnAccount />
 				</Panel>
 
 				<Panel
-					Middle={({checked, expanded}) => (
-						<div className="panel-middle">
-							{!expanded && checked && (
-								<ViewFilesPanel sections={sections} />
-							)}
-						</div>
-					)}
+					Middle={({checked, expanded}) => {
+						const displayViewFiles = !expanded && checked;
+
+						return (
+							<div
+								className={classNames(
+									'order-last order-lg-3 order-md-2 order-xl-2 panel-middle',
+									{
+										'd-none': !displayViewFiles,
+									}
+								)}
+							>
+								{displayViewFiles && (
+									<ViewFilesPanel sections={sections} />
+								)}
+							</div>
+						);
+					}}
 					Right={DiscardChanges}
 					changeable
 					hasError={hasError}
 					id="uploadDocuments"
-					title="2. Upload Documents"
+					title="Upload Documents"
+					titleNumber="2"
 				>
 					<UploadDocuments />
 				</Panel>
@@ -71,7 +93,8 @@ const SelectedQuote = () => {
 				<Panel
 					Right={CheckButton}
 					id="selectPaymentMethod"
-					title="3. Select Payment Method"
+					title="Select Payment Method"
+					titleNumber="3"
 				>
 					<PaymentMethod />
 				</Panel>

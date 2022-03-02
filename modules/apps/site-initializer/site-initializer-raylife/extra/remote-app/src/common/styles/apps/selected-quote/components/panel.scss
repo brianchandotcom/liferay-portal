@@ -2,32 +2,24 @@
 	border-bottom: 1px solid $color-neutral-3;
 
 	.panel-header {
+		.break-title {
+			@media screen and (max-width: 440px) {
+				width: 125px;
+			}
+		}
+
 		.panel-middle {
 			margin-top: 10px;
+			width: 224px;
 
 			.view-section {
-				margin-bottom: 24px;
-
-				h3 {
-					color: $color-neutral-8;
-					font-size: 14px;
-					font-weight: 700;
-					margin-bottom: 8px;
-				}
-
 				.content {
-					display: flex;
-					flex-direction: row;
-
 					.image {
 						border: 1px solid $color-neutral-3;
-						border-radius: 4px;
 						height: 48px;
-						margin-right: 8px;
 						width: 48px;
 
 						img {
-							border-radius: 4px;
 							height: 48px;
 							object-fit: cover;
 							width: 48px;
@@ -35,15 +27,8 @@
 					}
 
 					.documents {
-						align-items: center;
-						background-color: $color-neutral-white;
 						border: 1px solid #d2d2d3;
-						border-radius: 4px;
-						box-sizing: border-box;
-						display: flex;
 						height: 48px;
-						justify-content: center;
-						margin-right: 8px;
 						width: 48px;
 
 						svg {
@@ -80,8 +65,13 @@
 				span {
 					color: $color-action-neutral-default;
 					cursor: pointer;
-					margin-right: 24px;
 					text-decoration: underline;
+				}
+			}
+
+			.upload-documents-mobile {
+				@media screen and (max-width: $breakpoint-phone) {
+					color: $color-neutral-white !important;
 				}
 			}
 
@@ -94,14 +84,6 @@
 					width: 23px !important;
 				}
 			}
-		}
-	}
-
-	.panel-content {
-		display: none;
-
-		&.show {
-			display: block;
 		}
 	}
 }

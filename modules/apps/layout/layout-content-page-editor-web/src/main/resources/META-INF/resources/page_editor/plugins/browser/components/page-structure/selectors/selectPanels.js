@@ -26,6 +26,7 @@ import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selec
 import {CollectionAppliedFiltersGeneralPanel} from '../components/item-configuration-panels/CollectionAppliedFiltersGeneralPanel';
 import {CollectionFilterGeneralPanel} from '../components/item-configuration-panels/CollectionFilterGeneralPanel';
 import {CollectionGeneralPanel} from '../components/item-configuration-panels/CollectionGeneralPanel';
+import ContainerAdvancedPanel from '../components/item-configuration-panels/ContainerAdvancedPanel';
 import ContainerGeneralPanel from '../components/item-configuration-panels/ContainerGeneralPanel';
 import {ContainerStylesPanel} from '../components/item-configuration-panels/ContainerStylesPanel';
 import EditableLinkPanel from '../components/item-configuration-panels/EditableLinkPanel';
@@ -42,6 +43,7 @@ export const PANEL_IDS = {
 	collectionAppliedFiltersGeneral: 'collectionAppliedFiltersGeneral',
 	collectionFilterGeneral: 'collectionFilterGeneral',
 	collectionGeneral: 'collectionGeneral',
+	containerAdvanced: 'containerAdvanced',
 	containerGeneral: 'containerGeneral',
 	containerStyles: 'containerStyles',
 	editableLink: 'editableLink',
@@ -72,15 +74,20 @@ export const PANELS = {
 		label: Liferay.Language.get('general'),
 		priority: 0,
 	},
+	[PANEL_IDS.containerAdvanced]: {
+		component: ContainerAdvancedPanel,
+		label: Liferay.Language.get('advanced'),
+		priority: 0,
+	},
 	[PANEL_IDS.containerGeneral]: {
 		component: ContainerGeneralPanel,
 		label: Liferay.Language.get('general'),
-		priority: 1,
+		priority: 2,
 	},
 	[PANEL_IDS.containerStyles]: {
 		component: ContainerStylesPanel,
 		label: Liferay.Language.get('styles'),
-		priority: 0,
+		priority: 1,
 	},
 	[PANEL_IDS.editableLink]: {
 		component: EditableLinkPanel,
@@ -187,6 +194,9 @@ export function selectPanels(activeItemId, activeItemType, state) {
 	}
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.container) {
 		panelsIds = {
+			[PANEL_IDS.containerAdvanced]:
+				config.fragmentAdvancedOptionsEnabled &&
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.containerGeneral]: true,
 			[PANEL_IDS.containerStyles]: true,
 		};

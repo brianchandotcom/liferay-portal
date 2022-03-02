@@ -33,6 +33,7 @@ const TeamMembers = () => {
 	const modalProps = useModal({
 		onClose: () => setVisible(false),
 	});
+
 	const statusActivedDXPC = subscriptionGroups[0].activationStatus;
 
 	return (
@@ -71,7 +72,7 @@ const TeamMembers = () => {
 						<div className="d-flex">
 							<Button
 								appendIcon="shortcut"
-								className="align-items-stretch btn btn-ghost btn-style-neutral cp-manager-product-button d-flex mr-3 px-2 py-2"
+								className="align-items-stretch btn btn-ghost cp-manager-product-button d-flex mr-3 p-2 text-neutral-10"
 							>
 								<p className="font-weight-semi-bold h6 m-0 pl-1">
 									Manage DXP Cloud Users
@@ -80,7 +81,7 @@ const TeamMembers = () => {
 
 							<Button
 								appendIcon="shortcut"
-								className="align-items-stretch btn btn-ghost btn-style-neutral cp-manager-product-button d-flex px-2 py-2"
+								className="align-items-stretch btn btn-ghost cp-manager-product-button d-flex p-2 text-neutral-10"
 							>
 								<p className="font-weight-semi-bold h6 m-0 pl-1">
 									Manage Analytics Cloud Users

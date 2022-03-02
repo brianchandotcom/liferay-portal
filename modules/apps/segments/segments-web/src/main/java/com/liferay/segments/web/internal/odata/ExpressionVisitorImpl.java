@@ -23,10 +23,12 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.CollectionEntityField;
+import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.CollectionPropertyExpression;
+import com.liferay.portal.odata.filter.expression.ComplexPropertyExpression;
 import com.liferay.portal.odata.filter.expression.Expression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitor;
@@ -37,6 +39,7 @@ import com.liferay.portal.odata.filter.expression.LiteralExpression;
 import com.liferay.portal.odata.filter.expression.MemberExpression;
 import com.liferay.portal.odata.filter.expression.MethodExpression;
 import com.liferay.portal.odata.filter.expression.PrimitivePropertyExpression;
+import com.liferay.portal.odata.filter.expression.PropertyExpression;
 import com.liferay.portal.odata.filter.expression.UnaryExpression;
 
 import java.util.Collections;
@@ -74,7 +77,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 				 Objects.equals(BinaryExpression.Operation.NE, operation)) {
 
 			return _getOperationJSONObject(
-				String.valueOf(operation), (EntityField)left, right);
+				String.valueOf(operation), left, right);
 		}
 
 		throw new UnsupportedOperationException(
@@ -115,6 +118,28 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 					}
 
 				}));
+	}
+
+	public Object visitComplexPropertyExpression(
+		ComplexPropertyExpression complexPropertyExpression) {
+
+		Map<String, EntityField> entityFieldsMap =
+			_entityModel.getEntityFieldsMap();
+
+		ComplexEntityField complexEntityField =
+			(ComplexEntityField)entityFieldsMap.get(
+				complexPropertyExpression.getName());
+
+		Map<String, EntityField> complexEntityFieldFieldsMap =
+			complexEntityField.getEntityFieldsMap();
+
+		PropertyExpression propertyExpression =
+			complexPropertyExpression.getPropertyExpression();
+
+		EntityField entityField = complexEntityFieldFieldsMap.get(
+			propertyExpression.getName());
+
+		return complexEntityField.getName() + "/" + entityField.getName();
 	}
 
 	@Override
@@ -159,7 +184,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 
 		if (operation == ListExpression.Operation.IN) {
 			return _getOperationJSONObject(
-				String.valueOf(operation), (EntityField)left, right);
+				String.valueOf(operation), left, right);
 		}
 
 		throw new UnsupportedOperationException(
@@ -277,8 +302,7 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 	}
 
 	private JSONObject _getOperationJSONObject(
-		String operatorName, EntityField entityField,
-		List<Object> fieldValues) {
+		String operatorName, Object object, List<Object> fieldValues) {
 
 		Stream<Object> stream = fieldValues.stream();
 
@@ -293,22 +317,32 @@ public class ExpressionVisitorImpl implements ExpressionVisitor<Object> {
 		return JSONUtil.put(
 			"operatorName", StringUtil.lowerCase(operatorName)
 		).put(
-			"propertyName", entityField.getName()
+			"propertyName", _getPropertyName(object)
 		).put(
 			"value", jsonArray
 		);
 	}
 
 	private JSONObject _getOperationJSONObject(
-		String operatorName, EntityField entityField, Object fieldValue) {
+		String operatorName, Object object, Object fieldValue) {
 
 		return JSONUtil.put(
 			"operatorName", StringUtil.lowerCase(operatorName)
 		).put(
-			"propertyName", entityField.getName()
+			"propertyName", _getPropertyName(object)
 		).put(
 			"value", fieldValue
 		);
+	}
+
+	private String _getPropertyName(Object object) {
+		if (object instanceof EntityField) {
+			EntityField entityField = (EntityField)object;
+
+			return entityField.getName();
+		}
+
+		return String.valueOf(object);
 	}
 
 	private final EntityModel _entityModel;

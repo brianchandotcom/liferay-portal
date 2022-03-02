@@ -1408,7 +1408,7 @@ paths:
                                 $ref: "#/components/schemas/Shipment"
             tags:
                 - Shipment
-    /shipments/by-externalReferenceCode/{externalReferenceCode}status-shipped:
+    /shipments/by-externalReferenceCode/{externalReferenceCode}/status-shipped:
         post:
             operationId: postShipmentByExternalReferenceCodeStatusShipped
             parameters:

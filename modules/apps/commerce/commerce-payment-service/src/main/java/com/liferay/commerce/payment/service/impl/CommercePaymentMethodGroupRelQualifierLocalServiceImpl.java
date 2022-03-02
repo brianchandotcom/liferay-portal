@@ -207,16 +207,6 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceImpl
 	@Override
 	public List<CommercePaymentMethodGroupRelQualifier>
 		getCommercePaymentMethodGroupRelQualifiers(
-			long commercePaymentMethodGroupRelId) {
-
-		return commercePaymentMethodGroupRelQualifierPersistence.
-			findByCommercePaymentMethodGroupRelId(
-				commercePaymentMethodGroupRelId);
-	}
-
-	@Override
-	public List<CommercePaymentMethodGroupRelQualifier>
-		getCommercePaymentMethodGroupRelQualifiers(
 			long commercePaymentMethodGroupRelId, int start, int end,
 			OrderByComparator<CommercePaymentMethodGroupRelQualifier>
 				orderByComparator) {
@@ -224,6 +214,16 @@ public class CommercePaymentMethodGroupRelQualifierLocalServiceImpl
 		return commercePaymentMethodGroupRelQualifierPersistence.
 			findByCommercePaymentMethodGroupRelId(
 				commercePaymentMethodGroupRelId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommercePaymentMethodGroupRelQualifier>
+		getCommercePaymentMethodGroupRelQualifiers(
+			String className, long commercePaymentMethodGroupRelId) {
+
+		return commercePaymentMethodGroupRelQualifierPersistence.findByC_C(
+			classNameLocalService.getClassNameId(className),
+			commercePaymentMethodGroupRelId);
 	}
 
 	@Override

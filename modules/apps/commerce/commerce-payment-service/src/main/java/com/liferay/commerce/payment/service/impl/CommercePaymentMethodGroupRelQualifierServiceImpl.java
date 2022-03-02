@@ -156,19 +156,6 @@ public class CommercePaymentMethodGroupRelQualifierServiceImpl
 	@Override
 	public List<CommercePaymentMethodGroupRelQualifier>
 			getCommercePaymentMethodGroupRelQualifiers(
-				long commercePaymentMethodGroupRelId)
-		throws PortalException {
-
-		_checkCommerceChannel(commercePaymentMethodGroupRelId);
-
-		return commercePaymentMethodGroupRelQualifierLocalService.
-			getCommercePaymentMethodGroupRelQualifiers(
-				commercePaymentMethodGroupRelId);
-	}
-
-	@Override
-	public List<CommercePaymentMethodGroupRelQualifier>
-			getCommercePaymentMethodGroupRelQualifiers(
 				long commercePaymentMethodGroupRelId, int start, int end,
 				OrderByComparator<CommercePaymentMethodGroupRelQualifier>
 					orderByComparator)
@@ -179,6 +166,19 @@ public class CommercePaymentMethodGroupRelQualifierServiceImpl
 		return commercePaymentMethodGroupRelQualifierLocalService.
 			getCommercePaymentMethodGroupRelQualifiers(
 				commercePaymentMethodGroupRelId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommercePaymentMethodGroupRelQualifier>
+			getCommercePaymentMethodGroupRelQualifiers(
+				String className, long commercePaymentMethodGroupRelId)
+		throws PortalException {
+
+		_checkCommerceChannel(commercePaymentMethodGroupRelId);
+
+		return commercePaymentMethodGroupRelQualifierLocalService.
+			getCommercePaymentMethodGroupRelQualifiers(
+				className, commercePaymentMethodGroupRelId);
 	}
 
 	@Override

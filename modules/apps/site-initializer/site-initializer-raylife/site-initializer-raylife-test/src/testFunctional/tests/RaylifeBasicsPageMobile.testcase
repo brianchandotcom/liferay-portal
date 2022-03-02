@@ -297,6 +297,7 @@ definition {
 	}
 
 	@description = "LPS-146556 - Verify if Previous button works from 'Your Name'. (Smartphone)"
+	@priority = "4"
 	test PreviousButtonOfYourNamePhone {
 		SetWindowSize(value1 = "360,720");
 

@@ -52,7 +52,12 @@
 </tr>
 <tr>
 	<td>PROPERTY_PRESENT_MOBILE</td>
-	<td>//div[text()='Property'] </td>
+	<td>//div[text()='Property']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INPUT_FEIN_REQUIRED</td>
+	<td>//h6[contains(@class, 'required') and contains(., 'FEIN')]</td>
 	<td></td>
 </tr>
 </tbody>

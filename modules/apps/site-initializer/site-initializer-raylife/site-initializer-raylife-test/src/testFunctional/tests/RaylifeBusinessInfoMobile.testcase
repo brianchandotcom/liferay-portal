@@ -90,7 +90,7 @@ definition {
 		Raylife.dismissAlert();
 	}
 
-	@description = "Check that when the user clicks on any option on the page 'Do you sell products under your own brand or label?' they go directly to the next page.(Smartphone)"
+	@description = "LPS-147184 - Check that when the user clicks on any option on the page 'Do you sell products under your own brand or label?' they go directly to the next page.(Smartphone)"
 	@priority = "5"
 	test CanClickTheOptionsInProductsUnderPhone {
 		SetWindowSize(value1 = "360,720");
@@ -140,7 +140,7 @@ definition {
 		Raylife.dismissAlert();
 	}
 
-	@description = "Verify if Continue Button is only enabled when all required fields have been filled in Business (residence in product)(Tablet)"
+	@description = "LPS-147190 - Verify if Continue Button is only enabled when all required fields have been filled in Business (residence in product)(Tablet)"
 	@priority = "5"
 	test CanContinueButtonInBusinessWithResidenceTablet {
 		SetWindowSize(value1 = "800,1024");
@@ -186,7 +186,7 @@ definition {
 		Raylife.dismissAlert();
 	}
 
-	@description = "Check that the Continue button is only enabled when the field 'What percentage of overall sales involves delivery?' is filled in.(Smartphone)"
+	@description = "LPS-147185 - Check that the Continue button is only enabled when the field 'What percentage of overall sales involves delivery?' is filled in.(Smartphone)"
 	@priority = "5"
 	test CanContinueWithInPercentageOfOverallPhone {
 		SetWindowSize(value1 = "360,720");
@@ -240,7 +240,7 @@ definition {
 		Raylife.dismissAlert();
 	}
 
-	@description = "Verify that the 'Continue' button on the 'Percentage of sales of used merchandise?' page is only enabled when all fields are filled in.(Smartphone)"
+	@description = "LPS-147183 - Verify that the 'Continue' button on the 'Percentage of sales of used merchandise?' page is only enabled when all fields are filled in.(Smartphone)"
 	@priority = "5"
 	test CanContinueWithInPercentageOfSalesPhone {
 		SetWindowSize(value1 = "360,720");
@@ -346,7 +346,7 @@ definition {
 		Raylife.dismissAlert();
 	}
 
-	@description = "Check if I can pass the flow in Business (residence in the product) (Smartphone)"
+	@description = "LPS-147186 - Check if I can pass the flow in Business (residence in the product) (Smartphone)"
 	@priority = "5"
 	test CanPassFlowInBusinessWithResidencePhone {
 		SetWindowSize(value1 = "360,720");
@@ -396,7 +396,7 @@ definition {
 		Raylife.dismissAlert();
 	}
 
-	@description = " Verify if Continue Button is only enabled when all required fields have been filled in Business (Tablet)"
+	@description = "LPS-147188 - Verify if Continue Button is only enabled when all required fields have been filled in Business (Tablet)"
 	@priority = "5"
 	test CanViewContinueButtonActivatedTablet {
 		SetWindowSize(value1 = "800,1024");
@@ -418,7 +418,7 @@ definition {
 		Raylife.dismissAlert();
 	}
 
-	@description = "Verify if Continue Button is only enabled when all required fields have been filled in Business. (residence in product) (Smartphone)"
+	@description = "LPS-147187 - Verify if Continue Button is only enabled when all required fields have been filled in Business. (residence in product) (Smartphone)"
 	@priority = "5"
 	test EnableContinueButtonWithResidencePhone {
 		SetWindowSize(value1 = "360,720");
@@ -466,7 +466,7 @@ definition {
 		Raylife.dismissAlert();
 	}
 
-	@description = "Verify if Previous button from Business works (residence in product) (Tablet)"
+	@description = "LPS-147189 - Verify if Previous button from Business works (residence in product) (Tablet)"
 	@priority = "4"
 	test PreviousButtonInBusinessWithResidenceTablet {
 		SetWindowSize(value1 = "800,1024");

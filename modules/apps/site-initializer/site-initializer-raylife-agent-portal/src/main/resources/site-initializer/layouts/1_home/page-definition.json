@@ -3,7 +3,10 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {"borderWidth": "0", "textAlign": ""},
+					"fragmentStyle": {
+						"borderWidth": "0",
+						"textAlign": ""
+					},
 					"layout": {
 						"borderWidth": 0,
 						"marginBottom": 0,
@@ -20,11 +23,19 @@
 				"pageElements": [
 					{
 						"definition": {
-							"fragment": {"key": "layout"},
-							"fragmentConfig": {},
-							"fragmentFields": []
+							"fragment": {
+								"key": "layout"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							]
 						},
-						"pageElements": [{"type": "FragmentDropZone"}],
+						"pageElements": [
+							{
+								"type": "FragmentDropZone"
+							}
+						],
 						"type": "Fragment"
 					}
 				],

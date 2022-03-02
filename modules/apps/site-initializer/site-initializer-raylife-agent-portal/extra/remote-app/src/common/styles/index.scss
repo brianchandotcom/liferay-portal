@@ -1,5 +1,3 @@
-// stylelint-disable selector-type-no-unknown
-
 *,
 *:after,
 *:before {
@@ -9,19 +7,11 @@
 	padding: 0;
 }
 
-body {
-	font-size: 100%;
-	list-style-type: none;
-}
-
-.cursor-pointer {
-	cursor: pointer;
-}
-
 .portlet {
 	margin-bottom: 0;
 }
 
+// stylelint-disable selector-type-no-unknown
 liferay-remote-app-raylife-agent-portal {
 	@import 'variables';
 }

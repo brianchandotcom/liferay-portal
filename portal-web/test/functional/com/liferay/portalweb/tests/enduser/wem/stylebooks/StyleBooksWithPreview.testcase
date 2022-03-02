@@ -1441,6 +1441,8 @@ definition {
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "2rem");
 
+			StyleBooks.clickManagementBar();
+
 			StyleBooks.waitForAutoSave();
 		}
 
@@ -1455,6 +1457,8 @@ definition {
 				key_fieldLabel = "Danger",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "#0b5fff");
+
+			StyleBooks.clickManagementBar();
 
 			StyleBooks.waitForAutoSave();
 		}

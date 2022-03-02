@@ -262,6 +262,14 @@ public class CommerceShipmentServiceUtil {
 			expectedDateHour, expectedDateMinute);
 	}
 
+	public static CommerceShipment updateCommerceShipmentExternalReferenceCode(
+			String externalReferenceCode, long commerceShipmentId)
+		throws PortalException {
+
+		return getService().updateCommerceShipmentExternalReferenceCode(
+			externalReferenceCode, commerceShipmentId);
+	}
+
 	public static CommerceShipment updateExpectedDate(
 			long commerceShipmentId, int expectedDateMonth, int expectedDateDay,
 			int expectedDateYear, int expectedDateHour, int expectedDateMinute)

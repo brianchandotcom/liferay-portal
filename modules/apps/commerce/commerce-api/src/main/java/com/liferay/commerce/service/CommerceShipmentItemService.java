@@ -151,4 +151,8 @@ public interface CommerceShipmentItemService extends BaseService {
 			int quantity)
 		throws PortalException;
 
+	public CommerceShipmentItem updateCommerceShipmentItemExternalReferenceCode(
+			String externalReferenceCode, long commerceShipmentItemId)
+		throws PortalException;
+
 }

@@ -193,6 +193,10 @@ public interface CommerceShipmentService extends BaseService {
 			int expectedDateMinute)
 		throws PortalException;
 
+	public CommerceShipment updateCommerceShipmentExternalReferenceCode(
+			String externalReferenceCode, long commerceShipmentId)
+		throws PortalException;
+
 	public CommerceShipment updateExpectedDate(
 			long commerceShipmentId, int expectedDateMonth, int expectedDateDay,
 			int expectedDateYear, int expectedDateHour, int expectedDateMinute)

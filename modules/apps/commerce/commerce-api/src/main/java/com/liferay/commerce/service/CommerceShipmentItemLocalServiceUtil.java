@@ -486,6 +486,15 @@ public class CommerceShipmentItemLocalServiceUtil {
 			commerceShipmentItemId, commerceInventoryWarehouseId, quantity);
 	}
 
+	public static CommerceShipmentItem
+			updateCommerceShipmentItemExternalReferenceCode(
+				String externalReferenceCode, long commerceShipmentItemId)
+		throws PortalException {
+
+		return getService().updateCommerceShipmentItemExternalReferenceCode(
+			externalReferenceCode, commerceShipmentItemId);
+	}
+
 	public static CommerceShipmentItemLocalService getService() {
 		return _service;
 	}

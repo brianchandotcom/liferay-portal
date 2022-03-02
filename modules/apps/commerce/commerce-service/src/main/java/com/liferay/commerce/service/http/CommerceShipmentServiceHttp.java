@@ -990,6 +990,49 @@ public class CommerceShipmentServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceShipment
+			updateCommerceShipmentExternalReferenceCode(
+				HttpPrincipal httpPrincipal, String externalReferenceCode,
+				long commerceShipmentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceShipmentServiceUtil.class,
+				"updateCommerceShipmentExternalReferenceCode",
+				_updateCommerceShipmentExternalReferenceCodeParameterTypes22);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, commerceShipmentId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.model.CommerceShipment)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceShipment
 			updateExpectedDate(
 				HttpPrincipal httpPrincipal, long commerceShipmentId,
 				int expectedDateMonth, int expectedDateDay,
@@ -1000,7 +1043,7 @@ public class CommerceShipmentServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceShipmentServiceUtil.class, "updateExpectedDate",
-				_updateExpectedDateParameterTypes22);
+				_updateExpectedDateParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceShipmentId, expectedDateMonth,
@@ -1046,7 +1089,7 @@ public class CommerceShipmentServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceShipmentServiceUtil.class, "updateShippingDate",
-				_updateShippingDateParameterTypes23);
+				_updateShippingDateParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceShipmentId, shippingDateMonth,
@@ -1088,7 +1131,7 @@ public class CommerceShipmentServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceShipmentServiceUtil.class, "updateStatus",
-				_updateStatusParameterTypes24);
+				_updateStatusParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceShipmentId, status);
@@ -1210,15 +1253,18 @@ public class CommerceShipmentServiceHttp {
 			int.class, int.class, int.class, int.class, int.class, int.class,
 			int.class, int.class, int.class
 		};
-	private static final Class<?>[] _updateExpectedDateParameterTypes22 =
+	private static final Class<?>[]
+		_updateCommerceShipmentExternalReferenceCodeParameterTypes22 =
+			new Class[] {String.class, long.class};
+	private static final Class<?>[] _updateExpectedDateParameterTypes23 =
 		new Class[] {
 			long.class, int.class, int.class, int.class, int.class, int.class
 		};
-	private static final Class<?>[] _updateShippingDateParameterTypes23 =
+	private static final Class<?>[] _updateShippingDateParameterTypes24 =
 		new Class[] {
 			long.class, int.class, int.class, int.class, int.class, int.class
 		};
-	private static final Class<?>[] _updateStatusParameterTypes24 =
+	private static final Class<?>[] _updateStatusParameterTypes25 =
 		new Class[] {long.class, int.class};
 
 }

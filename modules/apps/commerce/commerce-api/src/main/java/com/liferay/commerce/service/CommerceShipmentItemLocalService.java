@@ -393,4 +393,9 @@ public interface CommerceShipmentItemLocalService
 			int quantity)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceShipmentItem updateCommerceShipmentItemExternalReferenceCode(
+			String externalReferenceCode, long commerceShipmentItemId)
+		throws PortalException;
+
 }

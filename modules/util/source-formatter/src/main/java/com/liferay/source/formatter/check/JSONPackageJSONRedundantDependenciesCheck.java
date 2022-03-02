@@ -48,6 +48,15 @@ public class JSONPackageJSONRedundantDependenciesCheck extends BaseFileCheck {
 			return content;
 		}
 
+		List<String> excludedDirNames = getAttributeValues(
+			_EXCLUDED_DIR_NAMES_KEY, absolutePath);
+
+		for (String excludedDirName : excludedDirNames) {
+			if (absolutePath.contains(excludedDirName)) {
+				return content;
+			}
+		}
+
 		_getInternalDependenciesNames(absolutePath);
 
 		JSONObject jsonObject = new JSONObject(content);
@@ -137,6 +146,8 @@ public class JSONPackageJSONRedundantDependenciesCheck extends BaseFileCheck {
 
 		return _internalDependenciesNames;
 	}
+
+	private static final String _EXCLUDED_DIR_NAMES_KEY = "excludedDirNames";
 
 	private List<String> _internalDependenciesNames;
 

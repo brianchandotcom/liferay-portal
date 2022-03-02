@@ -74,7 +74,7 @@ public class BlogsContentEditorConfigContributor
 				"a[*](*); ", _getAllowedContentText(),
 				" div[*](*); figcaption; figure; iframe[*](*); img[*](*){*}; ",
 				_getAllowedContentLists(), " p[*](*){text-align}; ",
-				_getAllowedContentTable(), " video[*](*);")
+				_getAllowedContentTable(), " source[*](*); video[*](*);")
 		).put(
 			"stylesSet", _getStyleFormatsJSONArray(themeDisplay.getLocale())
 		);

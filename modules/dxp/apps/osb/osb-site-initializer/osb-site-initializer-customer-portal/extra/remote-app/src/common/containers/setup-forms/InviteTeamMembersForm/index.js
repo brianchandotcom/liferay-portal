@@ -80,10 +80,6 @@ const InviteTeamMembersPage = ({
 		project?.slaCurrent?.includes(SLA.gold) ||
 		project?.slaCurrent?.includes(SLA.platinum);
 
-	const roleNameType = projectHasSLAGoldPlatinum
-		? ROLE_TYPES.requestor.name
-		: ROLE_TYPES.admin.name;
-
 	useEffect(() => {
 		const isProjectPartner = project.partner;
 
@@ -186,28 +182,11 @@ const InviteTeamMembersPage = ({
 						disabled:
 							previousAccountRole.label ===
 								ROLE_TYPES.requestor.name ||
-<<<<<<< HEAD
 							previousAccountRole.label === ROLE_TYPES.admin.name,
 					}))
 				);
-<<<<<<< HEAD
-=======
-			}
-			else {
-				setAccountRolesOptions((previousAccountRoles) =>
-					previousAccountRoles.map((previousAccountRoles) => ({
-						...previousAccountRoles,
-						disabled: false,
-=======
-							previousAccountRole.label === ROLE_TYPES.admin.name,˙
->>>>>>> 0ff2ccc (LPS-147808 fix if else conditional and add a variable for roleNameType)
-					}))
-				);
->>>>>>> d0ae6c3 (LPS-147808 SF)
 			}
 			setAvailableAdminsRoles(remainingAdmins);
-
-			return;
 		}
 	}, [values, project, maxRequestors, accountRoles]);
 
@@ -439,7 +418,11 @@ const InviteTeamMembersPage = ({
 						<div className="invites-helper px-3">
 							<div className="mx-3 pt-3">
 								<h5 className="text-neutral-7">
-									{`${roleNameType}	roles available: ${availableAdminsRoles} of ${maxRequestors}`}
+									{`${
+										projectHasSLAGoldPlatinum
+											? ROLE_TYPES.requestor.name
+											: ROLE_TYPES.admin.name
+									}	roles available: ${availableAdminsRoles} of ${maxRequestors}`}
 								</h5>
 
 								<p className="mb-0 text-neutral-7 text-paragraph-sm">

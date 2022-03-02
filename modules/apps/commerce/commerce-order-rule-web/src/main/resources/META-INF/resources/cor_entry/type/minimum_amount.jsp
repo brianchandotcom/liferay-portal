@@ -58,7 +58,7 @@ COREntryDisplayContext corEntryDisplayContext = (COREntryDisplayContext)request.
 						%>
 
 						<aui:option label="total" selected="<%= Validator.isNull(applyTo) || applyTo.equals(COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_TOTAL) %>" value="<%= COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_TOTAL %>" />
-						<aui:option label="sub-total" selected="<%= applyTo.equals(COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_SUB_TOTAL) %>" value="<%= COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_SUB_TOTAL %>" />
+						<aui:option label="sub-total" selected="<%= applyTo.equals(COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_SUBTOTAL) %>" value="<%= COREntryConstants.TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_SUBTOTAL %>" />
 					</aui:select>
 				</div>
 			</div>

@@ -83,7 +83,7 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 		if (Validator.isNotNull(applyTo) &&
 			applyTo.equals(
 				COREntryConstants.
-					TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_SUB_TOTAL)) {
+					TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_SUBTOTAL)) {
 
 			applyToAmount = commerceOrder.getSubtotal();
 		}
@@ -145,7 +145,7 @@ public class MinimumAmountCOREntryTypeImpl implements COREntryType {
 		if (Validator.isNotNull(applyTo) &&
 			applyTo.equals(
 				COREntryConstants.
-					TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_SUB_TOTAL)) {
+					TYPE_MINIMUM_ORDER_AMOUNT_FIELD_APPLY_TO_ORDER_SUBTOTAL)) {
 
 			applyToAmount = commerceOrder.getSubtotal();
 		}

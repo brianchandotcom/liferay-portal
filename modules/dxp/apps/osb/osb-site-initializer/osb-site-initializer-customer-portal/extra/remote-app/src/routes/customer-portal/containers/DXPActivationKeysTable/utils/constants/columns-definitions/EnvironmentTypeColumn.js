@@ -14,7 +14,7 @@ const EnvironmentTypeColumn = ({activationKey}) => {
 	return (
 		<div>
 			<p className="font-weight-bold m-0 text-neutral-10">
-				{getProductName(activationKey)?.replace('Production', 'Prod')}
+				{getProductName(activationKey)}
 			</p>
 
 			<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm">

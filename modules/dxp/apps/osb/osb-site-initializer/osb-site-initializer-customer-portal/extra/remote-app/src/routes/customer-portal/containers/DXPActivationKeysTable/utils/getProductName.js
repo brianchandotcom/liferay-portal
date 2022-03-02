@@ -12,10 +12,11 @@
 import {getPascalCase} from '../../../utils/getPascalCase';
 
 export function getProductName(activationKey) {
-	const productName = getPascalCase(activationKey.licenseEntryType).replace(
-		'-',
-		' '
+	const productName = activationKey.productName.replace('DXP', '').trim();
+	const formatProductName = getPascalCase(productName).replace(
+		'Production',
+		'Prod'
 	);
 
-	return productName;
+	return formatProductName;
 }

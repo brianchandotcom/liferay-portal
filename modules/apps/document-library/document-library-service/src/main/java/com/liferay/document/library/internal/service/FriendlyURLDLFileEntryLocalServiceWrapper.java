@@ -164,7 +164,9 @@ public class FriendlyURLDLFileEntryLocalServiceWrapper
 			return;
 		}
 
-		if (!Objects.equals(friendlyURLEntry.getUrlTitle(), urlTitle)) {
+		if (!Validator.isBlank(urlTitle) &&
+			!Objects.equals(friendlyURLEntry.getUrlTitle(), urlTitle)) {
+
 			String uniqueUrlTitle =
 				_friendlyURLEntryLocalService.getUniqueUrlTitle(
 					dlFileEntry.getGroupId(),

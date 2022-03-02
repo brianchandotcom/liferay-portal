@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -222,10 +223,30 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	}
 
 	@Override
+	protected Organization
+			testDeleteOrganizationByExternalReferenceCode_addOrganization()
+		throws Exception {
+
+		return organizationResource.putOrganizationByExternalReferenceCode(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()),
+			randomOrganization());
+	}
+
+	@Override
 	protected Organization testGetOrganization_addOrganization()
 		throws Exception {
 
 		return _addUserOrganization(_user.getUserId(), randomOrganization());
+	}
+
+	@Override
+	protected Organization
+			testGetOrganizationByExternalReferenceCode_addOrganization()
+		throws Exception {
+
+		return organizationResource.putOrganizationByExternalReferenceCode(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()),
+			randomOrganization());
 	}
 
 	@Override
@@ -292,6 +313,16 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 	}
 
 	@Override
+	protected Organization
+			testPatchOrganizationByExternalReferenceCode_addOrganization()
+		throws Exception {
+
+		return organizationResource.putOrganizationByExternalReferenceCode(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()),
+			randomOrganization());
+	}
+
+	@Override
 	protected Organization testPostOrganization_addOrganization(
 			Organization organization)
 		throws Exception {
@@ -306,13 +337,31 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		return _addUserOrganization(_user.getUserId(), randomOrganization());
 	}
 
+	@Override
+	protected Organization
+			testPutOrganizationByExternalReferenceCode_addOrganization()
+		throws Exception {
+
+		return organizationResource.putOrganizationByExternalReferenceCode(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()),
+			randomOrganization());
+	}
+
 	private com.liferay.portal.kernel.model.Organization _addOrganization(
 			Organization organization, String parentOrganizationId)
 		throws Exception {
 
-		return _organizationLocalService.addOrganization(
-			_user.getUserId(), GetterUtil.getLong(parentOrganizationId),
-			organization.getName(), true);
+		com.liferay.portal.kernel.model.Organization
+			serviceBuilderOrganization =
+				_organizationLocalService.addOrganization(
+					_user.getUserId(), GetterUtil.getLong(parentOrganizationId),
+					organization.getName(), true);
+
+		serviceBuilderOrganization.setExternalReferenceCode(
+			organization.getExternalReferenceCode());
+
+		return _organizationLocalService.updateOrganization(
+			serviceBuilderOrganization);
 	}
 
 	private Organization _addUserOrganization(
@@ -342,6 +391,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 			{
 				dateCreated = organization.getCreateDate();
 				dateModified = organization.getModifiedDate();
+				externalReferenceCode = organization.getExternalReferenceCode();
 				id = String.valueOf(organization.getOrganizationId());
 				name = organization.getName();
 			}

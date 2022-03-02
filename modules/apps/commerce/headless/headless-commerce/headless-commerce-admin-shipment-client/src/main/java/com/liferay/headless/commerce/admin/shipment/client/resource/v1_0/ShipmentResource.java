@@ -1079,7 +1079,7 @@ public interface ShipmentResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port +
-						"/o/headless-commerce-admin-shipment/v1.0/shipments/by-externalReferenceCode/{externalReferenceCode}status-shipped");
+						"/o/headless-commerce-admin-shipment/v1.0/shipments/by-externalReferenceCode/{externalReferenceCode}/status-shipped");
 
 			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 

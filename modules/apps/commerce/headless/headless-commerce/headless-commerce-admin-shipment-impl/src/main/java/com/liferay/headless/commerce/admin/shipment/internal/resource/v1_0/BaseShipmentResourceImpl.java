@@ -443,7 +443,7 @@ public abstract class BaseShipmentResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipments/by-externalReferenceCode/{externalReferenceCode}status-shipped'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-commerce-admin-shipment/v1.0/shipments/by-externalReferenceCode/{externalReferenceCode}/status-shipped'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -457,7 +457,7 @@ public abstract class BaseShipmentResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Shipment")}
 	)
 	@javax.ws.rs.Path(
-		"/shipments/by-externalReferenceCode/{externalReferenceCode}status-shipped"
+		"/shipments/by-externalReferenceCode/{externalReferenceCode}/status-shipped"
 	)
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})

@@ -545,9 +545,11 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_EDITOR",
 			value1 = "${aggregationConfigurationJson}");
 
-		Click(
+		ClickNoError(
 			key_text = "Cancel",
 			locator1 = "Link#ANY");
+
+		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
 
 		Blueprints.editBlueprint(title = "Test Blueprint");
 
@@ -577,9 +579,11 @@ definition {
 
 		Blueprints.addElement(element = "Limit Search to My Contents");
 
-		Click(
+		ClickNoError(
 			key_text = "Cancel",
 			locator1 = "Link#ANY");
+
+		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
 
 		Blueprints.editBlueprint(title = "Test Blueprint");
 
@@ -633,6 +637,10 @@ definition {
 		SelectFrameTop();
 
 		Click.javaScriptClick(locator1 = "Button#COPY");
+
+		Click(locator1 = "Modal#CLOSE_BUTTON");
+
+		PortletEntry.save();
 
 		Blueprints.viewCopiedContent(text = "clauses");
 	}
@@ -2179,9 +2187,11 @@ definition {
 			configurationField = "Advanced Configuration",
 			locator1 = "Blueprints#BLUEPRINTS_CONFIGURATION_INVALID_JSON_ERROR");
 
-		Click(
+		ClickNoError(
 			key_text = "Cancel",
 			locator1 = "Link#ANY");
+
+		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
 
 		Blueprints.editBlueprint(title = "Test Blueprint");
 

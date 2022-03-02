@@ -32,7 +32,7 @@ definition {
 	@priority = "5"
 	test AddMasterclassSite {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Masterclass Site") {
 			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
 		}
@@ -647,7 +647,7 @@ definition {
 	test ForgotPasswordInMasterclass {
 		property test.name.skip.portal.instance = "Masterclass#ForgotPasswordInMasterclass";
 		property portal.acceptance = "true";
-		
+
 		task ("Disable Captcha to Create a New User") {
 			WorkflowUser.disableCaptchaToCreateNewUserAndSendPassword();
 		}
@@ -1095,7 +1095,7 @@ definition {
 	@priority = "4"
 	test MasterclassSignOut {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Masterclass Site") {
 			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
 		}
@@ -1169,7 +1169,7 @@ definition {
 	@priority = "4"
 	test SetStudentPermission {
 		property portal.acceptance = "true";
-		
+
 		task ("Add Pages permissions to Student under the Site and Asset Library Administration tab") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",
@@ -1227,7 +1227,7 @@ definition {
 	@priority = "4"
 	test SetTeacherPermission {
 		property portal.acceptance = "true";
-		
+
 		task ("Add Pages permissions to Teacher under the Site and Asset Library Administration tab") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",
@@ -1349,7 +1349,7 @@ definition {
 	@priority = "4"
 	test ViewBlogListinBlogDetailView {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Masterclass Site") {
 			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
 		}
@@ -1427,7 +1427,7 @@ definition {
 	@priority = "5"
 	test ViewMasterclassClassicStylebook {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Masterclass Stylebook") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-masterclass-name");
 		}
@@ -1443,7 +1443,7 @@ definition {
 	@priority = "4"
 	test ViewMasterclassCollections {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Masterclass Collections") {
 			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
 
@@ -1465,7 +1465,7 @@ definition {
 	@priority = "4"
 	test ViewMasterclassDocuments {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Masterclass Documents") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-masterclass-name");
 		}
@@ -1535,7 +1535,7 @@ definition {
 	@priority = "4"
 	test ViewMasterclassPages {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Masterclass Pages") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-masterclass-name");
 		}
@@ -1553,7 +1553,7 @@ definition {
 	@priority = "4"
 	test ViewMasterclassPageTemplates {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Master Page Templates in Masterclass Site") {
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "test-masterclass-name");
 		}
@@ -1579,7 +1579,7 @@ definition {
 	@priority = "4"
 	test ViewMasterclassWebContent {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Masterclass Web Content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-masterclass-name");
 		}
@@ -1742,7 +1742,7 @@ definition {
 	@priority = "5"
 	test ViewSignInPageElements {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Masterclass Site") {
 			ApplicationsMenu.gotoSite(site = "Test Masterclass Name");
 		}
@@ -1782,7 +1782,7 @@ definition {
 	@priority = "4"
 	test ViewStudentandTeacheronSiteRoles {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Site Roles") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",
@@ -1806,7 +1806,7 @@ definition {
 	@priority = "4"
 	test ViewStudentandTeacherPermissions {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Site Roles") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Users",

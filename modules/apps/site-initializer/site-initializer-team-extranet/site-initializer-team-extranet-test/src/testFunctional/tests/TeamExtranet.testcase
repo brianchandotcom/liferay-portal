@@ -1171,7 +1171,7 @@ definition {
 	@priority = "4"
 	test ViewTeamExtranetDocumentsAndMedia {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Team Extranet Documents and Media") {
 			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "${testSiteURL}");
 		}
@@ -1191,7 +1191,7 @@ definition {
 	@priority = "4"
 	test ViewTeamExtranetFragments {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Team Extranet Fragments Collections") {
 			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "${testSiteURL}");
 		}
@@ -1209,7 +1209,7 @@ definition {
 	@priority = "4"
 	test ViewTeamExtranetPages {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Team Extranet Pages") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "${testSiteURL}");
 		}
@@ -1227,7 +1227,7 @@ definition {
 	@priority = "4"
 	test ViewTeamExtranetPageTemplates {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Masters Page Templates in Team Extranet Site") {
 			MastersPageTemplatesAdmin.openMastersAdmin(siteURLKey = "${testSiteURL}");
 		}
@@ -1253,7 +1253,7 @@ definition {
 	@priority = "4"
 	test ViewTeamExtranetWebContent {
 		property portal.acceptance = "true";
-		
+
 		task ("Go to Team Extranet Web Content") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "${testSiteURL}");
 		}

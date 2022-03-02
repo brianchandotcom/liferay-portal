@@ -992,6 +992,29 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	}
 
 	@Override
+	public CommerceOrder resetTermsAndConditions(
+		long commerceOrderId, boolean deliveryCommerceTermEntry,
+		boolean paymentCommerceTermEntry)
+		throws PortalException {
+
+		if (deliveryCommerceTermEntry) {
+			_commerceOrderModelResourcePermission.check(
+				getPermissionChecker(), commerceOrderId,
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_DELIVERY_TERMS);
+		}
+
+		if (paymentCommerceTermEntry) {
+			_commerceOrderModelResourcePermission.check(
+				getPermissionChecker(), commerceOrderId,
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS);
+		}
+
+		return commerceOrderLocalService.resetTermsAndConditions(
+			commerceOrderId, deliveryCommerceTermEntry,
+			paymentCommerceTermEntry);
+	}
+
+	@Override
 	public CommerceOrder updateTransactionId(
 			long commerceOrderId, String transactionId)
 		throws PortalException {

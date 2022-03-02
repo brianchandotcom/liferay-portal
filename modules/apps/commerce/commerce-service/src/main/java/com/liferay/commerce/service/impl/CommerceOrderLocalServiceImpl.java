@@ -1728,6 +1728,7 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrderPersistence.update(commerceOrder);
 	}
 
+	@Override
 	public CommerceOrder updateTermsAndConditions(
 			long commerceOrderId, long deliveryCommerceTermEntryId,
 			long paymentCommerceTermEntryId, String languageId)
@@ -1766,6 +1767,30 @@ public class CommerceOrderLocalServiceImpl
 				paymentCommerceTermEntry.getDescription(languageId));
 			commerceOrder.setPaymentCommerceTermEntryName(
 				paymentCommerceTermEntry.getLabel(languageId));
+		}
+
+		return commerceOrderPersistence.update(commerceOrder);
+	}
+
+	@Override
+	public CommerceOrder resetTermsAndConditions(
+		long commerceOrderId, boolean resetDeliveryCommerceTerm,
+		boolean resetPaymentCommerceTermEntry)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		if (resetDeliveryCommerceTerm) {
+			commerceOrder.setDeliveryCommerceTermEntryId(0);
+			commerceOrder.setDeliveryCommerceTermEntryDescription(null);
+			commerceOrder.setDeliveryCommerceTermEntryName(null);
+		}
+
+		if (resetPaymentCommerceTermEntry) {
+			commerceOrder.setPaymentCommerceTermEntryId(0);
+			commerceOrder.setPaymentCommerceTermEntryDescription(null);
+			commerceOrder.setPaymentCommerceTermEntryName(null);
 		}
 
 		return commerceOrderPersistence.update(commerceOrder);

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.CollectionEntityField;
 import com.liferay.portal.odata.entity.ComplexEntityField;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
+import com.liferay.portal.odata.entity.DoubleEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.entity.IntegerEntityField;
@@ -60,6 +61,9 @@ public class StructuredContentEntityModel implements EntityModel {
 				"datePublished",
 				locale -> Field.getSortableFieldName(Field.DISPLAY_DATE),
 				locale -> Field.DISPLAY_DATE),
+			new DoubleEntityField(
+				"priority",
+				locale -> Field.getSortableFieldName(Field.PRIORITY)),
 			new IntegerEntityField("assetLibraryId", locale -> Field.GROUP_ID),
 			new IntegerEntityField(
 				"contentStructureId", locale -> Field.CLASS_TYPE_ID),

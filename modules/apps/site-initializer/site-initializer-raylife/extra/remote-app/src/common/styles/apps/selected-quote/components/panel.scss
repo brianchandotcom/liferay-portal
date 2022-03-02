@@ -69,12 +69,6 @@
 				}
 			}
 
-			.upload-documents-mobile {
-				@media screen and (max-width: $breakpoint-phone) {
-					color: $color-neutral-white !important;
-				}
-			}
-
 			.icon {
 				height: 32px;
 				width: 32px;
@@ -82,6 +76,12 @@
 				svg {
 					height: 23px !important;
 					width: 23px !important;
+				}
+			}
+
+			.upload-documents-mobile {
+				@media screen and (max-width: $breakpoint-phone) {
+					color: $color-neutral-white !important;
 				}
 			}
 		}

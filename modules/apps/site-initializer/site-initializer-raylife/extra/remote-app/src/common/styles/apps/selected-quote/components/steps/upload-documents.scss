@@ -1,4 +1,6 @@
 .upload-container {
+	$badge-size: $badge-size;
+
 	.upload-section {
 		.header {
 			.upload-title {
@@ -41,13 +43,13 @@
 					.close-icon {
 						cursor: pointer;
 						fill: $color-action-neutral-default;
+						filter: drop-shadow(
+							0 5px 15px rgba(77, 133, 255, 0.12)
+						);
 						height: 36px;
 						left: 137px;
 						top: -212px;
 						width: 36px;
-						filter: drop-shadow(
-							0 5px 15px rgba(77, 133, 255, 0.12)
-						);
 					}
 
 					.div-document {
@@ -71,32 +73,32 @@
 
 							.lexicon-icon-document-pdf {
 								fill: #af78ff;
-								height: 64px !important;
-								width: 64px !important;
+								height: $size-document-preview !important;
+								width: $size-document-preview !important;
 							}
 
 							.lexicon-icon-document-text {
 								fill: $color-brand-primary;
-								height: 64px !important;
-								width: 64px !important;
+								height: $size-document-preview !important;
+								width: $size-document-preview !important;
 							}
 
 							.lexicon-icon-document-table {
 								fill: #50d2a0;
-								height: 64px !important;
-								width: 64px !important;
+								height: $size-document-preview !important;
+								width: $size-document-preview !important;
 							}
 
 							.lexicon-icon-document-presentation {
 								fill: #ffb46e;
-								height: 64px !important;
-								width: 64px !important;
+								height: $size-document-preview !important;
+								width: $size-document-preview !important;
 							}
 
 							.lexicon-icon-document-unknown {
 								fill: $color-action-neutral-default;
-								height: 64px !important;
-								width: 64px !important;
+								height: $size-document-preview !important;
+								width: $size-document-preview !important;
 							}
 						}
 					}
@@ -137,8 +139,8 @@
 
 				&.badge-info {
 					svg {
-						height: 20px !important;
-						width: 20px !important;
+						height: $badge-size !important;
+						width: $badge-size !important;
 					}
 				}
 
@@ -160,8 +162,8 @@
 			.label-tonal-danger {
 				.badge {
 					svg {
-						height: 20px !important;
-						width: 20px !important;
+						height: $badge-size !important;
+						width: $badge-size !important;
 					}
 				}
 			}

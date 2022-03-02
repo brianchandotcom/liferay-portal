@@ -60,7 +60,33 @@ buildClay {
 	}
 
 	eachFile {
-		if (name in ["atlas.scss", "bootstrap.scss", "base.scss"]) {
+		if (name in ["atlas.scss", "base.scss"]) {
+			filter {
+				String line ->
+
+				if (line == "// INSERT @use rules") {
+					line = '''\
+@use "sass:math" as *;'''
+				}
+				else if (line == "// INSERT CUSTOM EXTENSIONS") {
+					line = '''\
+@import "variables";
+
+@import "../liferay_variables_custom";
+@import "../liferay_variables";
+@import "bourbon";
+@import "../clay_custom";
+@import "../liferay_custom";'''
+				}
+				else if (line == "// INSERT CUSTOM VARS") {
+					line = '''\
+@import "../clay_variables";'''
+				}
+
+				return line
+			}
+		}
+		else if (name in ["bootstrap.scss"]) {
 			filter {
 				String line ->
 
@@ -86,7 +112,11 @@ buildClay {
 			filter {
 				String line ->
 
-				if (line == "// INSERT CUSTOM BASE VARS") {
+				if (line == "// INSERT @use rules") {
+					line = '''\
+@use "sass:math" as *;'''
+				}
+				else if (line == "// INSERT CUSTOM BASE VARS") {
 					line = '''\
 @import "../clay_variables";'''
 				}
@@ -95,6 +125,18 @@ buildClay {
 
 @import "../liferay_variables_custom";
 @import "../liferay_variables";'''
+				}
+
+				return line
+			}
+		}
+		else if (name in ["cadmin.scss", "_cadmin-variables.scss"]) {
+			filter {
+				String line ->
+
+				if (line == "// INSERT @use rules") {
+					line = '''\
+@use "sass:math" as *;'''
 				}
 
 				return line

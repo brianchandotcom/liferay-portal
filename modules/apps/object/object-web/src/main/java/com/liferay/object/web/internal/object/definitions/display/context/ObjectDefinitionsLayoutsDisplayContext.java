@@ -16,9 +16,11 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
+import com.liferay.object.web.internal.util.ObjectFieldBusinessTypeUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -29,6 +31,8 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -43,10 +47,14 @@ public class ObjectDefinitionsLayoutsDisplayContext {
 	public ObjectDefinitionsLayoutsDisplayContext(
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
-			objectDefinitionModelResourcePermission) {
+			objectDefinitionModelResourcePermission,
+		ObjectFieldBusinessTypeServicesTracker
+			objectFieldBusinessTypeServicesTracker) {
 
 		_objectDefinitionModelResourcePermission =
 			objectDefinitionModelResourcePermission;
+		_objectFieldBusinessTypeServicesTracker =
+			objectFieldBusinessTypeServicesTracker;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
 	}
@@ -110,6 +118,15 @@ public class ObjectDefinitionsLayoutsDisplayContext {
 		return objectDefinition.getObjectDefinitionId();
 	}
 
+	public List<Map<String, String>> getObjectFieldBusinessTypeMaps(
+		Locale locale) {
+
+		return ObjectFieldBusinessTypeUtil.getObjectFieldBusinessTypeMaps(
+			locale,
+			_objectFieldBusinessTypeServicesTracker.
+				getObjectFieldBusinessTypes());
+	}
+
 	public PortletURL getPortletURL() throws PortletException {
 		return PortletURLUtil.clone(
 			PortletURLUtil.getCurrent(
@@ -128,6 +145,8 @@ public class ObjectDefinitionsLayoutsDisplayContext {
 
 	private final ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
+	private final ObjectFieldBusinessTypeServicesTracker
+		_objectFieldBusinessTypeServicesTracker;
 	private final ObjectRequestHelper _objectRequestHelper;
 
 }

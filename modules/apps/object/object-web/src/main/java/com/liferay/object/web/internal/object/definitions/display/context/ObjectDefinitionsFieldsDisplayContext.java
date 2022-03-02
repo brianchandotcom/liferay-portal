@@ -24,6 +24,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.web.internal.configuration.FFBusinessTypeAttachmentConfiguration;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
+import com.liferay.object.web.internal.util.ObjectFieldBusinessTypeUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -35,15 +36,15 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -140,40 +141,29 @@ public class ObjectDefinitionsFieldsDisplayContext {
 	public List<Map<String, String>> getObjectFieldBusinessTypeMaps(
 		boolean includeRelationshipObjectFieldBusinessType, Locale locale) {
 
-		List<Map<String, String>> objectFieldBusinessTypeMaps =
-			new ArrayList<>();
+		List<ObjectFieldBusinessType> objectFieldBusinessTypes =
+			_objectFieldBusinessTypeServicesTracker.
+				getObjectFieldBusinessTypes();
 
-		for (ObjectFieldBusinessType objectFieldBusinessType :
-				_objectFieldBusinessTypeServicesTracker.
-					getObjectFieldBusinessTypes()) {
+		Stream<ObjectFieldBusinessType> stream =
+			objectFieldBusinessTypes.stream();
 
-			if (!objectFieldBusinessType.isVisible() ||
-				(StringUtil.equals(
-					objectFieldBusinessType.getName(),
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) &&
-				 !_ffBusinessTypeAttachmentConfiguration.enabled()) ||
-				(StringUtil.equals(
-					objectFieldBusinessType.getName(),
-					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP) &&
-				 !includeRelationshipObjectFieldBusinessType)) {
-
-				continue;
-			}
-
-			objectFieldBusinessTypeMaps.add(
-				HashMapBuilder.put(
-					"businessType", objectFieldBusinessType.getName()
-				).put(
-					"dbType", objectFieldBusinessType.getDBType()
-				).put(
-					"description",
-					objectFieldBusinessType.getDescription(locale)
-				).put(
-					"label", objectFieldBusinessType.getLabel(locale)
-				).build());
-		}
-
-		return objectFieldBusinessTypeMaps;
+		return ObjectFieldBusinessTypeUtil.getObjectFieldBusinessTypeMaps(
+			locale,
+			stream.filter(
+				objectFieldBusinessType ->
+					objectFieldBusinessType.isVisible() &&
+					(!StringUtil.equals(
+						objectFieldBusinessType.getName(),
+						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
+					 _ffBusinessTypeAttachmentConfiguration.enabled()) &&
+					(!StringUtil.equals(
+						objectFieldBusinessType.getName(),
+						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP) ||
+					 includeRelationshipObjectFieldBusinessType)
+			).collect(
+				Collectors.toList()
+			));
 	}
 
 	public JSONObject getObjectFieldJSONObject(ObjectField objectField) {

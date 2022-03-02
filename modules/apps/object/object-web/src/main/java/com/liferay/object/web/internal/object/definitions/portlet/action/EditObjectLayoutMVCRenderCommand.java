@@ -15,6 +15,7 @@
 package com.liferay.object.web.internal.object.definitions.portlet.action;
 
 import com.liferay.object.constants.ObjectPortletKeys;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -69,7 +70,8 @@ public class EditObjectLayoutMVCRenderCommand implements MVCRenderCommand {
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new ObjectDefinitionsLayoutsDisplayContext(
 					_portal.getHttpServletRequest(renderRequest),
-					_objectDefinitionModelResourcePermission));
+					_objectDefinitionModelResourcePermission,
+					_objectFieldBusinessTypeServicesTracker));
 		}
 		catch (PortalException portalException) {
 			SessionErrors.add(renderRequest, portalException.getClass());
@@ -86,6 +88,10 @@ public class EditObjectLayoutMVCRenderCommand implements MVCRenderCommand {
 	)
 	private ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
+
+	@Reference
+	private ObjectFieldBusinessTypeServicesTracker
+		_objectFieldBusinessTypeServicesTracker;
 
 	@Reference
 	private ObjectLayoutLocalService _objectLayoutLocalService;

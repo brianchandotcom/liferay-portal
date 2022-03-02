@@ -910,6 +910,7 @@
 		<check name="JSONPackageJSONRedundantDependenciesCheck">
 			<category name="Performance" />
 			<description name="Checks for preventing internal dependencies from being added to `package.json`." />
+			<property name="enabled" value="false" />
 		</check>
 	</source-processor>
 	<source-processor name="JSPSourceProcessor">

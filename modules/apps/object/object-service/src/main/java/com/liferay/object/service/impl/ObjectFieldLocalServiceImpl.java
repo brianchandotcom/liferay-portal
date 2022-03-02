@@ -35,6 +35,7 @@ import com.liferay.object.service.persistence.ObjectFieldSettingPersistence;
 import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewPersistence;
+import com.liferay.object.service.persistence.ObjectViewSortColumnPersistence;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -418,6 +419,9 @@ public class ObjectFieldLocalServiceImpl
 		for (ObjectView objectView : objectViews) {
 			_objectViewColumnPersistence.removeByOVI_OFN(
 				objectView.getObjectViewId(), objectField.getName());
+
+			_objectViewSortColumnPersistence.removeByOVI_OFN(
+				objectView.getObjectViewId(), objectField.getName());
 		}
 
 		if (Objects.equals(
@@ -576,6 +580,9 @@ public class ObjectFieldLocalServiceImpl
 
 	@Reference
 	private ObjectViewPersistence _objectViewPersistence;
+
+	@Reference
+	private ObjectViewSortColumnPersistence _objectViewSortColumnPersistence;
 
 	private final Set<String> _reservedNames = SetUtil.fromArray(
 		"actions", "companyid", "createdate", "creator", "datecreated",

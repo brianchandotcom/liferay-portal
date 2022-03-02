@@ -16,7 +16,7 @@ import {defaultLanguageId} from '../../../constants';
 import BaseNode from './BaseNode';
 
 export default function ConditionNode({
-	data: {actions, description, label, newNode, script} = {},
+	data: {actions, description, label, newNode, notifications, script} = {},
 	descriptionSidebar,
 	id,
 	...otherProps
@@ -41,6 +41,7 @@ export default function ConditionNode({
 			id={id}
 			label={label}
 			newNode={newNode}
+			notifications={notifications}
 			script={script}
 			type="condition"
 			{...otherProps}

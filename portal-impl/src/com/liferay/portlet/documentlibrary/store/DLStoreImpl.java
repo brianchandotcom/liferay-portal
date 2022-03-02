@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
@@ -636,7 +637,8 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		DLValidatorUtil.validateFileSize(fileName, bytes);
+		DLValidatorUtil.validateFileSize(
+			fileName, MimeTypesUtil.getContentType(fileName), bytes);
 	}
 
 	@Override
@@ -646,7 +648,8 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		DLValidatorUtil.validateFileSize(fileName, file);
+		DLValidatorUtil.validateFileSize(
+			fileName, MimeTypesUtil.getContentType(fileName), file);
 	}
 
 	@Override
@@ -657,7 +660,8 @@ public class DLStoreImpl implements DLStore {
 
 		validate(fileName, validateFileExtension);
 
-		DLValidatorUtil.validateFileSize(fileName, inputStream);
+		DLValidatorUtil.validateFileSize(
+			fileName, MimeTypesUtil.getContentType(fileName), inputStream);
 	}
 
 	@Override
@@ -681,7 +685,8 @@ public class DLStoreImpl implements DLStore {
 		validate(
 			fileName, fileExtension, sourceFileName, validateFileExtension);
 
-		DLValidatorUtil.validateFileSize(fileName, file);
+		DLValidatorUtil.validateFileSize(
+			fileName, MimeTypesUtil.getContentType(fileName), file);
 	}
 
 	@Override
@@ -693,7 +698,8 @@ public class DLStoreImpl implements DLStore {
 		validate(
 			fileName, fileExtension, sourceFileName, validateFileExtension);
 
-		DLValidatorUtil.validateFileSize(fileName, inputStream);
+		DLValidatorUtil.validateFileSize(
+			fileName, MimeTypesUtil.getContentType(fileName), inputStream);
 	}
 
 	protected void validate(

@@ -49,11 +49,13 @@ create index IX_7813C75C on CommerceOrderTypeRel (classNameId, commerceOrderType
 create index IX_AA661546 on CommerceOrderTypeRel (commerceOrderTypeId);
 create index IX_22C116C7 on CommerceOrderTypeRel (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 
+create index IX_F5105190 on CommerceShipment (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_616BDD15 on CommerceShipment (groupId, commerceAddressId);
 create index IX_68FBA2B5 on CommerceShipment (groupId, status);
 
 create index IX_3615B923 on CommerceShipmentItem (commerceOrderItemId);
 create unique index IX_4FAC36D0 on CommerceShipmentItem (commerceShipmentId, commerceOrderItemId, commerceInventoryWarehouseId);
+create index IX_41C840C3 on CommerceShipmentItem (companyId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create index IX_DB0BB83C on CommerceShipmentItem (groupId);
 
 create index IX_42E5F6EF on CommerceShippingMethod (groupId, active_);

@@ -510,13 +510,13 @@ public class LayoutsTreeDisplayContext {
 			return _backURL;
 		}
 
-		String backURL = ParamUtil.getString(_renderRequest, "p_l_back_url");
+		String backURL = ParamUtil.getString(_renderRequest, "backURL");
 
 		if (Validator.isNull(backURL)) {
 			backURL = ParamUtil.getString(
 				PortalUtil.getOriginalServletRequest(
 					PortalUtil.getHttpServletRequest(_liferayPortletRequest)),
-				"p_l_back_url", _themeDisplay.getURLCurrent());
+				"backURL", _themeDisplay.getURLCurrent());
 		}
 
 		_backURL = backURL;

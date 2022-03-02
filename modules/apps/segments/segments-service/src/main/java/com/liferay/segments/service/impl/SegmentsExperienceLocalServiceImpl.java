@@ -64,18 +64,6 @@ public class SegmentsExperienceLocalServiceImpl
 	public SegmentsExperience addSegmentsExperience(
 			long segmentsEntryId, long classNameId, long classPK,
 			Map<Locale, String> nameMap, boolean active,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addSegmentsExperience(
-			segmentsEntryId, classNameId, classPK, nameMap, active,
-			new UnicodeProperties(true), serviceContext);
-	}
-
-	@Override
-	public SegmentsExperience addSegmentsExperience(
-			long segmentsEntryId, long classNameId, long classPK,
-			Map<Locale, String> nameMap, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -99,18 +87,21 @@ public class SegmentsExperienceLocalServiceImpl
 	public SegmentsExperience addSegmentsExperience(
 			long segmentsEntryId, long classNameId, long classPK,
 			Map<Locale, String> nameMap, int priority, boolean active,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addSegmentsExperience(
-			segmentsEntryId, classNameId, classPK, nameMap, priority, active,
-			new UnicodeProperties(true), serviceContext);
+			segmentsEntryId, String.valueOf(counterLocalService.increment()),
+			classNameId, classPK, nameMap, priority, active,
+			typeSettingsUnicodeProperties, serviceContext);
 	}
 
 	@Override
 	public SegmentsExperience addSegmentsExperience(
-			long segmentsEntryId, long classNameId, long classPK,
-			Map<Locale, String> nameMap, int priority, boolean active,
+			long segmentsEntryId, String segmentsExperienceKey,
+			long classNameId, long classPK, Map<Locale, String> nameMap,
+			int priority, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -140,8 +131,7 @@ public class SegmentsExperienceLocalServiceImpl
 		segmentsExperience.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
 		segmentsExperience.setSegmentsEntryId(segmentsEntryId);
-		segmentsExperience.setSegmentsExperienceKey(
-			String.valueOf(counterLocalService.increment()));
+		segmentsExperience.setSegmentsExperienceKey(segmentsExperienceKey);
 		segmentsExperience.setClassNameId(classNameId);
 		segmentsExperience.setClassPK(publishedClassPK);
 		segmentsExperience.setNameMap(nameMap);
@@ -343,15 +333,18 @@ public class SegmentsExperienceLocalServiceImpl
 		long groupId, long classNameId, long classPK, int priority) {
 
 		return segmentsExperiencePersistence.fetchByG_C_C_P(
-			groupId, classNameId, classPK, priority);
+			groupId, classNameId, _getPublishedLayoutClassPK(classPK),
+			priority);
 	}
 
 	@Override
 	public SegmentsExperience fetchSegmentsExperience(
-		long groupId, String segmentsExperienceKey) {
+		long groupId, String segmentsExperienceKey, long classNameId,
+		long classPK) {
 
-		return segmentsExperiencePersistence.fetchByG_S(
-			groupId, segmentsExperienceKey);
+		return segmentsExperiencePersistence.fetchByG_SEK_C_C(
+			groupId, segmentsExperienceKey, classNameId,
+			_getPublishedLayoutClassPK(classPK));
 	}
 
 	@Override
@@ -364,11 +357,13 @@ public class SegmentsExperienceLocalServiceImpl
 
 	@Override
 	public SegmentsExperience getSegmentsExperience(
-			long groupId, String segmentsExperienceKey)
+			long groupId, String segmentsExperienceKey, long classNameId,
+			long classPK)
 		throws PortalException {
 
-		return segmentsExperiencePersistence.findByG_S(
-			groupId, segmentsExperienceKey);
+		return segmentsExperiencePersistence.findByG_SEK_C_C(
+			groupId, segmentsExperienceKey, classNameId,
+			_getPublishedLayoutClassPK(classPK));
 	}
 
 	@Override

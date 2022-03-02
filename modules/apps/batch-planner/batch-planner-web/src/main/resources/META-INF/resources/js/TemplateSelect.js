@@ -58,7 +58,13 @@ const TemplateSelect = ({
 	useEffect(() => {
 		if (initialTemplate) {
 			Liferay.fire(TEMPLATE_SELECTED_EVENT, {
-				template: initialTemplate,
+				template: {
+					...initialTemplate,
+					mappings:
+						initialTemplate.mappings ||
+						initialTemplate.mapping ||
+						{},
+				},
 			});
 		}
 	}, [initialTemplate]);

@@ -18,6 +18,7 @@ import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.initializer.util.CPDefinitionsImporter;
 import com.liferay.commerce.initializer.util.CPOptionsImporter;
+import com.liferay.commerce.initializer.util.CPSpecificationOptionsImporter;
 import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
@@ -27,6 +28,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductOptionResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
 
 import org.osgi.service.component.annotations.Component;
@@ -77,9 +79,16 @@ public class CommerceReferencesHolder {
 	public CPOptionsImporter cpOptionsImporter;
 
 	@Reference
+	public CPSpecificationOptionsImporter cpSpecificationOptionsImporter;
+
+	@Reference
 	public OptionResource.Factory optionResourceFactory;
 
 	@Reference
 	public ProductOptionResource.Factory productOptionResourceFactory;
+
+	@Reference
+	public ProductSpecificationResource.Factory
+		productSpecificationResourceFactory;
 
 }

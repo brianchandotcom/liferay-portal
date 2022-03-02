@@ -3094,6 +3094,16 @@ components:
                         - collectionReference
                         - collectionType
                     type: object
+                displayAllItems:
+                    # @review
+                    description:
+                        Whether to show all items when pagination is disabled.
+                    type: boolean
+                displayAllPages:
+                    # @review
+                    description:
+                        Whether to show all pages when pagination is enabled.
+                    type: boolean
                 fragmentStyle:
                     allOf:
                         - $ref: "#/components/schemas/FragmentStyle"
@@ -3131,6 +3141,11 @@ components:
                     # @review
                     description:
                         The number of items per page in the page collection.
+                    type: integer
+                numberOfPages:
+                    # @review
+                    description:
+                        The maximum number of pages to show when pagination is enabled.
                     type: integer
                 paginationType:
                     # @review
@@ -4324,6 +4339,12 @@ components:
                         The number of comments the structured content has received.
                     readOnly: true
                     type: integer
+                priority:
+                    # @review
+                    description:
+                        The structured content's priority.
+                    format: double
+                    type: number
                 relatedContents:
                     # @review
                     description:
@@ -4827,7 +4848,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.delivery.client', and version '4.0.20'."
+        'com.liferay.headless.delivery.client', and version '4.0.21'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"

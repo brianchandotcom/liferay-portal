@@ -68,7 +68,7 @@ info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
         'om.liferay.headless.admin.list.type.client', and version '1.0.0'.. A Java client JAR is available for use with
-        the group ID 'com.liferay', artifact ID 'com.liferay.headless.admin.list.type.client', and version '1.0.6'."
+        the group ID 'com.liferay', artifact ID 'com.liferay.headless.admin.list.type.client', and version '1.0.7'."
     license:
         name: "Apache 2.0"
         url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -165,6 +165,33 @@ paths:
                   schema:
                       format: int64
                       type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ListTypeDefinition"
+            tags: ["ListTypeDefinition"]
+        patch:
+            operationId: patchListTypeDefinition
+            parameters:
+                - in: path
+                  name: listTypeDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeDefinition"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ListTypeDefinition"
             responses:
                 200:
                     content:

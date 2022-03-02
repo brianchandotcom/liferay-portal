@@ -30,6 +30,9 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 ).build();
 %>
 
+<liferay-ui:error embed="<%= false %>" exception="<%= FileExtensionException.class %>" message="please-select-a-valid-jrxml-file" />
+<liferay-ui:error embed="<%= false %>" exception="<%= InvalidFileException.class %>" message="please-select-a-valid-jrxml-file" />
+
 <portlet:actionURL name="/commerce_channels/edit_commerce_channel" var="editCommerceChannelActionURL" />
 
 <aui:form action="<%= editCommerceChannelActionURL %>" cssClass="m-0 p-0" method="post" name="fm">
@@ -136,9 +139,6 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 				</p>
 
 				<aui:button name="selectFileButton" value="select-file" />
-
-				<liferay-ui:error exception="<%= FileExtensionException.class %>" message="please-select-a-valid-jrxml-file" />
-				<liferay-ui:error exception="<%= InvalidFileException.class %>" message="please-select-a-valid-jrxml-file" />
 			</commerce-ui:panel>
 		</div>
 

@@ -27,7 +27,6 @@ import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
-import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -50,7 +49,6 @@ import org.junit.runner.RunWith;
  * @author Pei-Jung Lan
  * @author Drew Brokke
  */
-@DataGuard(scope = DataGuard.Scope.METHOD)
 @RunWith(Arquillian.class)
 public class CurrentAccountEntryManagerTest {
 
@@ -96,17 +94,30 @@ public class CurrentAccountEntryManagerTest {
 	public void testGetCurrentAccountEntryForGroupWithRestrictedTypes()
 		throws Exception {
 
+		AccountEntry accountEntry = null;
+
+		String[] allowedTypes = {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS};
+
+		List<AccountEntry> accountEntries =
+			_accountEntryLocalService.getUserAccountEntries(
+				TestPropsValues.getUserId(),
+				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
+				allowedTypes, 0, 1);
+
+		if (!accountEntries.isEmpty()) {
+			accountEntry = accountEntries.get(0);
+		}
+
 		Group group = GroupTestUtil.addGroup();
 
-		_setAllowedTypes(
-			group.getGroupId(),
-			new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS});
+		_setAllowedTypes(group.getGroupId(), allowedTypes);
 
 		AccountEntry personAccountEntry =
 			AccountEntryTestUtil.addPersonAccountEntry(
 				_accountEntryLocalService);
 
-		Assert.assertNull(
+		Assert.assertEquals(
+			accountEntry,
 			_currentAccountEntryManager.getCurrentAccountEntry(
 				group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -116,11 +127,10 @@ public class CurrentAccountEntryManagerTest {
 			personAccountEntry.getAccountEntryId(), group.getGroupId(),
 			TestPropsValues.getUserId());
 
-		_setAllowedTypes(
-			group.getGroupId(),
-			new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS});
+		_setAllowedTypes(group.getGroupId(), allowedTypes);
 
-		Assert.assertNull(
+		Assert.assertEquals(
+			accountEntry,
 			_currentAccountEntryManager.getCurrentAccountEntry(
 				group.getGroupId(), TestPropsValues.getUserId()));
 	}
@@ -139,6 +149,24 @@ public class CurrentAccountEntryManagerTest {
 		throws Exception {
 
 		User user = UserTestUtil.addUser();
+
+		Assert.assertNull(
+			_currentAccountEntryManager.getCurrentAccountEntry(
+				TestPropsValues.getGroupId(), user.getUserId()));
+	}
+
+	@Test
+	public void testGetCurrentAccountEntryWithNoViewPermission()
+		throws Exception {
+
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+
+		User user = UserTestUtil.addUser();
+
+		_currentAccountEntryManager.setCurrentAccountEntry(
+			accountEntry.getAccountEntryId(), TestPropsValues.getGroupId(),
+			user.getUserId());
 
 		Assert.assertNull(
 			_currentAccountEntryManager.getCurrentAccountEntry(

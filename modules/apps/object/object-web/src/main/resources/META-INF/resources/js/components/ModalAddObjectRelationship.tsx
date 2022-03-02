@@ -146,7 +146,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 		return errors;
 	};
 
-	const {errors, handleChange, handleSubmit, values} = useForm({
+	const {errors, handleChange, handleSubmit, setValues, values} = useForm({
 		initialValues,
 		onSubmit,
 		validate,
@@ -222,13 +222,8 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 					<CustomSelect
 						error={errors.type}
 						label={Liferay.Language.get('type')}
-						onChange={(type: any) => {
-							handleChange({
-								target: {
-									name: 'type',
-									value: type,
-								},
-							} as any);
+						onChange={(type) => {
+							setValues({type});
 
 							type.value === 'manyToMany'
 								? handleChangeManyToMany()
@@ -237,16 +232,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 						options={filteredObjectRelationshipTypes}
 						required
 						value={values.type.label}
-					>
-						{({description, label}) => (
-							<>
-								<div>{label}</div>
-								<span className="text-small">
-									{description}
-								</span>
-							</>
-						)}
-					</CustomSelect>
+					/>
 
 					<Select
 						error={errors.objectDefinitionId2}
@@ -255,12 +241,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 						onChange={({target: {value}}: any) => {
 							const {id} = objectDefinitions[Number(value) - 1];
 
-							handleChange({
-								target: {
-									name: 'objectDefinitionId2',
-									value: Number(id),
-								},
-							} as any);
+							setValues({objectDefinitionId2: Number(id)});
 						}}
 						options={objectDefinitions.map(({name}) => name)}
 						required

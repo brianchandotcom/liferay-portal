@@ -36,7 +36,8 @@ import {isIdDuplicated} from './components/sidebar/utils';
 import edgeTypes from './components/transitions/Edge';
 import FloatingConnectionLine from './components/transitions/FloatingConnectionLine';
 import getCollidingElements from './util/collisionDetection';
-import populateAssignmentsData from './util/populateAssignmentData';
+import populateAssignmentsData from './util/populateAssignmentsData';
+import populateNotificationsData from './util/populateNotificationsData';
 
 let id = 2;
 const getId = () => `item_${id++}`;
@@ -299,6 +300,7 @@ export default function DiagramBuilder({version}) {
 			setElements(elements);
 
 			populateAssignmentsData(elements, setElements);
+			populateNotificationsData(elements, setElements);
 
 			setDeserialize(false);
 		}
@@ -321,6 +323,7 @@ export default function DiagramBuilder({version}) {
 					setElements(elements);
 
 					populateAssignmentsData(elements, setElements);
+					populateNotificationsData(elements, setElements);
 				});
 		}
 

@@ -12,17 +12,35 @@
  * details.
  */
 
-import React from 'react';
+/// <reference types="react" />
+
 import './CustomSelect.scss';
-interface ICustomSelectProps extends React.HTMLAttributes<HTMLElement> {
-	children: (item: any) => React.ReactNode;
+export default function CustomSelect<T extends IItem = IItem>({
+	className,
+	disabled,
+	error,
+	feedbackMessage,
+	id,
+	label,
+	onChange,
+	options,
+	required,
+	value,
+}: IProps<T>): JSX.Element;
+interface IItem {
+	description: string;
+	label: string;
+}
+interface IProps<T extends IItem = IItem> {
+	className?: string;
 	disabled?: boolean;
 	error?: string;
 	feedbackMessage?: string;
+	id?: string;
 	label: string;
-	options: any[];
+	onChange?: (selected: T) => void;
+	options: T[];
 	required?: boolean;
-	value: string;
+	value?: string | number | string[];
 }
-declare const CustomSelect: React.FC<ICustomSelectProps>;
-export default CustomSelect;
+export {};

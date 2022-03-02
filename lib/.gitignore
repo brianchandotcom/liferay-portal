@@ -146,7 +146,6 @@
 /portal/jersey-common.jar
 /portal/jhighlight.jar
 /portal/jhlabs-filters.jar
-/portal/jmatio.jar
 /portal/jna.jar
 /portal/jodd-json.jar
 /portal/jodd-proxetta.jar
@@ -159,17 +158,11 @@
 /portal/log4j-core.jar
 /portal/mchange-commons-java.jar
 /portal/metadata-extractor.jar
-/portal/mime4j-core.jar
-/portal/mime4j-dom.jar
 /portal/mimepull.jar
 /portal/mp4parser.jar
 /portal/netcdf.jar
 /portal/pdfbox.jar
 /portal/persistence.jar
-/portal/poi-ooxml-schemas.jar
-/portal/poi-ooxml.jar
-/portal/poi-scratchpad.jar
-/portal/poi.jar
 /portal/portlet.jar
 /portal/portletmvc4spring-framework.jar
 /portal/rmi-api.jar

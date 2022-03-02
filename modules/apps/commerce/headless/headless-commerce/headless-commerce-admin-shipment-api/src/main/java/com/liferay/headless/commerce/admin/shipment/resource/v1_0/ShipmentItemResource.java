@@ -57,6 +57,18 @@ public interface ShipmentItemResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public void deleteShipmentItemByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public ShipmentItem getShipmentByExternalReferenceCodeItem(
+			String externalReferenceCode)
+		throws Exception;
+
+	public ShipmentItem patchShipmentItemByExternalReferenceCode(
+			String externalReferenceCode, ShipmentItem shipmentItem)
+		throws Exception;
+
 	public void deleteShipmentItem(Long shipmentItemId) throws Exception;
 
 	public Response deleteShipmentItemBatch(String callbackURL, Object object)
@@ -66,6 +78,14 @@ public interface ShipmentItemResource {
 
 	public ShipmentItem patchShipmentItem(
 			Long shipmentItemId, ShipmentItem shipmentItem)
+		throws Exception;
+
+	public Page<ShipmentItem> getShipmentByExternalReferenceCodeItemsPage(
+			String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public ShipmentItem putShipmentByExternalReferenceCodeItem(
+			String externalReferenceCode, ShipmentItem shipmentItem)
 		throws Exception;
 
 	public Page<ShipmentItem> getShipmentItemsPage(

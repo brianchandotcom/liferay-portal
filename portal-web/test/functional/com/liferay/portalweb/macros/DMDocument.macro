@@ -305,10 +305,17 @@ definition {
 
 		SelectFrame(locator1 = "ItemSelector#ITEM_SELECTOR_IFRAME");
 
-		AssertClick(
-			key_breadcrumbName = "Sites and Libraries",
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
-			value1 = "Sites and Libraries");
+		if (isSet(stagingSiteName)) {
+			AssertVisible(
+				key_card = "${dmDocumentTitle}",
+				locator1 = "Card#CARD");
+		}
+		else {
+			AssertClick(
+				key_breadcrumbName = "Sites and Libraries",
+				locator1 = "Breadcrumb#BREADCRUMB_ENTRY",
+				value1 = "Sites and Libraries");
+		}
 
 		if (isSet(siteName)) {
 			LexiconCard.clickCardTitleLink(card = "${siteName}");
@@ -321,24 +328,6 @@ definition {
 				value1 = "Asset Library");
 
 			LexiconCard.clickCard(card = "${depotName}");
-		}
-
-		LexiconCard.clickCard(card = "${dmDocumentTitle}");
-
-		SelectFrameTop(value1 = "relative=top");
-
-		PortletEntry.save();
-	}
-
-	macro addDMShortcutCPWithStaging {
-		DMNavigator.gotoAddDocumentTypeCP(dmDocumentTypeName = "Shortcut");
-
-		Click(locator1 = "DocumentsAndMediaAddShortcut#SELECT_DOCUMENT_BUTTON");
-
-		IFrame.selectModalFrame();
-
-		if (isSet(folder)) {
-			LexiconCard.clickCardTitleLink(card = "${folder}");
 		}
 
 		LexiconCard.clickCard(card = "${dmDocumentTitle}");
@@ -2085,22 +2074,17 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		var displayDateMinute = DateUtil.getFormattedCurrentDate("mm");
-		var displayDateHour = DateUtil.getFormattedCurrentDate("HH");
-		var displayDateDay = DateUtil.getCurrentDate();
-		var displayDateYear = DateUtil.getCurrentYear();
-		var displayDateMonth = DateUtil.getCurrentMonth();
+		var expirationDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
 
-		if (isSet(increaseMinutes)) {
-			var displayDateMinute = ${displayDateMinute} + ${increaseMinutes};
-		}
+		echo("## * reviewDate: ${expirationDate}");
 
 		if ("${invalidExpirationDate}" == "true") {
-			var displayDateYear = ${displayDateYear} - 1;
+			var expirationDate = DateUtil.getDateOffsetByYears("-1", "MM/dd/yyyy");
 		}
 
-		var expirationDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
-		var expirationDateTime = "${displayDateHour}:${displayDateMinute}";
+		var expirationDateTime = DateUtil.getDateOffsetByMinutes("${increaseMinutes}", "hh:mm a");
+
+		echo("## * expirationDateTime: ${expirationDateTime}");
 
 		Type(
 			locator1 = "TextInput#EXPIRATION_DATE",
@@ -2109,6 +2093,10 @@ definition {
 		Type(
 			locator1 = "TextInput#EXPIRATION_DATE_TIME",
 			value1 = "${expirationDateTime}");
+
+		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
+
+		takeScreenshot();
 
 		Button.clickPublish();
 
@@ -2132,18 +2120,13 @@ definition {
 				locator1 = "Checkbox#ANY_CHECKBOX");
 		}
 
-		var displayDateMinute = DateUtil.getFormattedCurrentDate("mm");
-		var displayDateHour = DateUtil.getFormattedCurrentDate("HH");
-		var displayDateDay = DateUtil.getCurrentDate();
-		var displayDateYear = DateUtil.getCurrentYear();
-		var displayDateMonth = DateUtil.getCurrentMonth();
+		var reviewDate = DateUtil.getFormattedCurrentDate("MM/dd/yyyy");
 
-		if (isSet(increaseMinutes)) {
-			var displayDateMinute = ${displayDateMinute} + ${increaseMinutes};
-		}
+		echo("## * reviewDate: ${reviewDate}");
 
-		var reviewDate = "${displayDateMonth}/${displayDateDay}/${displayDateYear}";
-		var reviewDateTime = "${displayDateHour}:${displayDateMinute}";
+		var reviewDateTime = DateUtil.getDateOffsetByMinutes("${increaseMinutes}", "hh:mm a");
+
+		echo("## * reviewDateTime: ${reviewDateTime}");
 
 		Type(
 			locator1 = "TextInput#REVIEW_DATE",
@@ -2152,6 +2135,10 @@ definition {
 		Type(
 			locator1 = "TextInput#REVIEW_DATE_TIME",
 			value1 = "${reviewDateTime}");
+
+		ScrollWebElementIntoView(locator1 = "Button#PUBLISH");
+
+		takeScreenshot();
 
 		Button.clickPublish();
 

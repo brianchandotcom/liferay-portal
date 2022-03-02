@@ -537,6 +537,8 @@ definition {
 				fieldLabel = "Font Family Base",
 				text = "${fontFamily}");
 
+			StyleBooks.clickManagementBar();
+
 			StyleBooks.waitForAutoSave();
 		}
 
@@ -2409,14 +2411,14 @@ definition {
 
 		if (IsElementPresent(locator1 = "UserBar#USER_SIGN_IN")) {
 			User.loginPG(
+				newPassword = "test2",
 				password = "test",
-				setupWizardEnabled = "true",
 				userEmailAddress = "test@liferay.com");
 		}
 		else {
 			User.acceptEndUserLicenseAgreement();
 
-			User.resetPassword(setupWizardEnabled = "true");
+			User.resetPassword(newPassword = "test2");
 
 			User.answerPasswordReminder();
 
@@ -4877,43 +4879,6 @@ definition {
 				var n = ${n} + 1;
 			}
 		}
-	}
-
-	macro viewOutOfDatePublications {
-		AssertTextPresent(
-			key_publicationName = "Production",
-			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
-			value1 = "Production");
-
-		PublicationsNavigator.openPublicationsAdmin();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		var key_publicationName = "Publication 2 Name";
-
-		AssertTextEquals(
-			locator1 = "Publications#LIST_OUT_OF_DATE_STATUS",
-			value1 = "Out of Date");
-
-		PublicationsNavigator.gotoReviewChanges(
-			gotoPublicationsAdmin = "true",
-			publicationName = "Publication 2 Name");
-
-		AssertVisible(
-			key_warningMessage = "This publication was created on a previous Liferay version. You cannot publish, revert, or make additional changes. You can only view or delete it.",
-			locator1 = "Message#WARNING_SPECIFIC");
-
-		PublicationsNavigator.openPublicationsAdmin();
-
-		Publications.deletePublication(publicationName = "Publication 2 Name");
-
-		PublicationsNavigator.openPublicationsHistory();
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		AssertVisible(
-			key_publicationName = "Publication 1 Name",
-			locator1 = "Publications#LIST_REVERT_DISABLED");
 	}
 
 	macro viewPortalCORS {

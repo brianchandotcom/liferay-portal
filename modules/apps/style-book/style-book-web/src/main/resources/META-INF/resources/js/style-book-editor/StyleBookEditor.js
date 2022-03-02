@@ -114,7 +114,6 @@ export default function ({
 	saveDraftURL,
 	styleBookEntryId,
 	themeName,
-	tokenReuseEnabled,
 } = {}) {
 	initializeConfig({
 		fragmentCollectionPreviewURL,
@@ -128,7 +127,6 @@ export default function ({
 		saveDraftURL,
 		styleBookEntryId,
 		themeName,
-		tokenReuseEnabled,
 	});
 
 	return <StyleBookEditor frontendTokensValues={frontendTokensValues} />;

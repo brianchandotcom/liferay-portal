@@ -76,13 +76,8 @@ export default function FrontendTokenSet({frontendTokens, label}) {
 				...frontendTokensValues,
 				[name]: {
 					cssVariableMapping: cssVariableMapping.value,
-					value:
-						(config.tokenReuseEnabled &&
-							tokenValues[value]?.value) ||
-						value,
-					...(config.tokenReuseEnabled && {
-						name: tokenValues[value]?.name,
-					}),
+					name: tokenValues[value]?.name,
+					value: tokenValues[value]?.value || value,
 				},
 			});
 		}
@@ -95,32 +90,31 @@ export default function FrontendTokenSet({frontendTokens, label}) {
 					frontendToken
 				);
 
-				return config.tokenReuseEnabled ? (
-					<FrontendTokenComponent
-						frontendToken={frontendToken}
-						frontendTokensValues={frontendTokensValues}
-						key={frontendToken.name}
-						onValueSelect={(_, value) => {
+				let props = {
+					frontendToken,
+					onValueSelect: (value) =>
+						updateFrontendTokensValues(frontendToken, value),
+					value:
+						frontendTokensValues[frontendToken.name]?.name ||
+						frontendTokensValues[frontendToken.name]?.value ||
+						frontendToken.defaultValue,
+				};
+
+				if (frontendToken.editorType === 'ColorPicker') {
+					props = {
+						...props,
+						frontendTokensValues,
+						onValueSelect: (_, value) => {
 							updateFrontendTokensValues(frontendToken, value);
-						}}
-						tokenValues={tokenValues}
-						value={
-							frontendTokensValues[frontendToken.name]?.name ||
-							frontendTokensValues[frontendToken.name]?.value ||
-							frontendToken.defaultValue
-						}
-					/>
-				) : (
+						},
+						tokenValues,
+					};
+				}
+
+				return (
 					<FrontendTokenComponent
-						frontendToken={frontendToken}
 						key={frontendToken.name}
-						onValueSelect={(value) =>
-							updateFrontendTokensValues(frontendToken, value)
-						}
-						value={
-							frontendTokensValues[frontendToken.name]?.value ||
-							frontendToken.defaultValue
-						}
+						{...props}
 					/>
 				);
 			})}

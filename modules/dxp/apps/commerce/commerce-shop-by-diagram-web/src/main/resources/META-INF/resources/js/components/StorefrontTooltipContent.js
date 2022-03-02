@@ -117,8 +117,12 @@ function SkuContent({
 				</div>
 
 				<h4 className="component-title mb-1">
-					<a href={productURL}>{productName}</a>
+					<a href={productURL}>{product.sku}</a>
 				</h4>
+
+				<p className="component-subtitle mb-1">
+					<a href={productURL}>{productName}</a>
+				</p>
 
 				<p>
 					{Liferay.Language.get('quantity')}: {product.quantity}

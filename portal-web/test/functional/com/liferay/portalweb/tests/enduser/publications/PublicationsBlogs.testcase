@@ -31,7 +31,9 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		Blogs.addEntryWithUploadedCoverImage(
 			coverImageName = "Document_1",
@@ -47,7 +49,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Blogs Entry",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "Blogs Entry Title",
 			changeType = "Added",
 			changeUser = "Test Test",
@@ -57,7 +59,7 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
 
 		BlogsNavigator.gotoEntryCP(entryTitle = "Blogs Entry Title");
 
@@ -73,25 +75,30 @@ definition {
 	@description = "Assert we can publish the publication with an edited blog."
 	@priority = "4"
 	test PublishEditedBlogsEntry {
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Blogs Page");
 
 		JSONLayout.addWidgetToPublicLayout(
 			column = "1",
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Blogs Page",
 			widgetName = "Blogs");
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			entryTitle = "Blogs Entry Title",
+			groupName = "Site Name");
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		Blogs.editEntryPG(
 			entryContent = "Blogs Entry Content",
@@ -103,7 +110,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Blogs Entry",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "Blogs Entry Title Edit",
 			changeType = "Modified",
 			changeUser = "Test Test",
@@ -113,7 +120,9 @@ definition {
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		Navigator.gotoPage(pageName = "Blogs Page");
+		Navigator.gotoSitePage(
+			pageName = "Blogs Page",
+			siteName = "Site Name");
 
 		BlogsNavigator.gotoEntryPG(
 			entryContent = "Blogs Entry Content Edit",

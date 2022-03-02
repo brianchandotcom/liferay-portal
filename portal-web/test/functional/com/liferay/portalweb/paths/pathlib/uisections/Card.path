@@ -56,11 +56,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CARD_SHORTCUT</td>
-	<td>//*[@data-qa-id='row'][div[contains(@class,'card')]//*[normalize-space()='${key_card}']]//*[contains(@class,'shortcut')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CARD_STICKER</td>
 	<td>//div[contains(@class,'card')][contains(.,'${key_card}')]//span[contains(@class,'sticker-overlay')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_icon}')] | //div[contains(@class,'card')][contains(.,'${key_card}')]//span[contains(@class,'text')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_icon}')]</td>
 	<td></td>

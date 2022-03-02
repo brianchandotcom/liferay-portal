@@ -65,7 +65,6 @@ export function CommonStyles({
 
 	return (
 		<>
-			<h1 className="sr-only">{Liferay.Language.get('common-styles')}</h1>
 			<div
 				className={classNames('page-editor__common-styles', className)}
 			>

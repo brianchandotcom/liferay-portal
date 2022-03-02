@@ -1021,25 +1021,23 @@ definition {
 			key_productName = "Bundled Product",
 			locator1 = "CommerceAccelerators#PRODUCT_CARD_VIEW_ALL_VARIANTS");
 
-		Click(
-			key_productName = "Bundled Product",
-			locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_BY_PRODUCT");
+		FrontStore.addToCartFromProductDetails(
+			optionNamesAndValues = "Color:Black",
+			productName = "Bundled Product",
+			productSku = "BLACKSKU");
 
 		CommerceNavigator.gotoMiniCart();
 
 		FrontStore.viewMiniCartItem(
 			cartItemName = "Bundled Product",
 			cartItemOption = "black",
+			cartItemPriceValue = "70.00",
 			cartItemQuantity = "1",
 			cartItemSku = "BLACKSKU");
 
 		AssertTextEquals.assertPartialText(
 			locator1 = "CommerceAccelerators#MINI_CART_ITEM_BUNDLED_ITEMS",
 			value1 = "1 × U-Joint");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "CommerceAccelerators#PRODUCT_DETAILS_LIST_PRICE_INACTIVE",
-			value1 = "70.00");
 
 		AssertElementPresent(
 			key_cartItemSku = "BLACKSKU",

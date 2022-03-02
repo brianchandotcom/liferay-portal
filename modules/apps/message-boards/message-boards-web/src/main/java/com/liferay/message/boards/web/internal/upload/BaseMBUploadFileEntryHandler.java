@@ -43,6 +43,7 @@ public abstract class BaseMBUploadFileEntryHandler
 
 		dlValidator.validateFileSize(
 			uploadPortletRequest.getFileName(getParameterName()),
+			uploadPortletRequest.getContentType(getParameterName()),
 			uploadPortletRequest.getSize(getParameterName()));
 
 		ThemeDisplay themeDisplay =

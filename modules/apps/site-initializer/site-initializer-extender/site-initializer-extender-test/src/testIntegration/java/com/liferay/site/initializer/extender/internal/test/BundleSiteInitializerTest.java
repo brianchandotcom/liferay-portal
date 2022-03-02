@@ -30,11 +30,13 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPOptionLocalService;
+import com.liferay.commerce.product.service.CPSpecificationOptionLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
@@ -53,6 +55,8 @@ import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
@@ -101,6 +105,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.site.initializer.SiteInitializer;
@@ -175,6 +180,7 @@ public class BundleSiteInitializerTest {
 			_assertCommerceCatalogs(group);
 			_assertCommerceChannel(group);
 			_assertCommerceInventoryWarehouse(group);
+			_assertCommerceSpecificationProducts(serviceContext);
 			_assertCPDefinition(group);
 			_assertCPInstanceProperties(group);
 			_assertDDMStructure(group);
@@ -443,6 +449,45 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Commerce Notification Template",
 			commerceNotificationTemplate.getName());
+	}
+
+	private void _assertCommerceSpecificationProducts(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		CPSpecificationOption cpSpecificationOption =
+			_cpSpecificationOptionLocalService.fetchCPSpecificationOption(
+				serviceContext.getCompanyId(), "product-specification-test-1");
+
+		Assert.assertNotNull(cpSpecificationOption);
+
+		CPDefinition cpDefinition =
+			_cpDefinitionLocalService.
+				fetchCPDefinitionByCProductExternalReferenceCode(
+					"TEST001", serviceContext.getCompanyId());
+
+		Assert.assertNotNull(cpDefinition);
+
+		ProductSpecificationResource.Builder
+			productSpecificationResourceBuilder =
+				_productSpecificationResourceFactory.create();
+
+		ProductSpecificationResource productSpecificationResource =
+			productSpecificationResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		Page<ProductSpecification> productSpecificationPage =
+			productSpecificationResource.getProductIdProductSpecificationsPage(
+				cpDefinition.getCProductId(), Pagination.of(1, 10));
+
+		ProductSpecification productSpecification =
+			productSpecificationPage.fetchFirstItem();
+
+		Assert.assertNotNull(productSpecification);
+		Assert.assertEquals(
+			"product-specification-test-1",
+			productSpecification.getSpecificationKey());
 	}
 
 	private void _assertCPDefinition(Group group) throws Exception {
@@ -1125,6 +1170,10 @@ public class BundleSiteInitializerTest {
 	private CPOptionLocalService _cpOptionLocalService;
 
 	@Inject
+	private CPSpecificationOptionLocalService
+		_cpSpecificationOptionLocalService;
+
+	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Inject
@@ -1171,6 +1220,10 @@ public class BundleSiteInitializerTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private ProductSpecificationResource.Factory
+		_productSpecificationResourceFactory;
 
 	@Inject
 	private RemoteAppEntryLocalService _remoteAppEntryLocalService;

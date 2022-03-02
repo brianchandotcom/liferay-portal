@@ -16,7 +16,7 @@ import {defaultLanguageId} from '../../../constants';
 import BaseNode from './BaseNode';
 
 export default function ForkNode({
-	data: {actions, description, label, newNode} = {},
+	data: {actions, description, label, newNode, notifications} = {},
 	descriptionSidebar,
 	id,
 	...otherProps
@@ -37,6 +37,7 @@ export default function ForkNode({
 			id={id}
 			label={label}
 			newNode={newNode}
+			notifications={notifications}
 			type="fork"
 			{...otherProps}
 		/>

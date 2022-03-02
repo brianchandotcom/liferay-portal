@@ -8,12 +8,9 @@ $pageEditorSpacing: 8px;
 
 $sidebarButtonWidth: 42px;
 $sidebarContentWidth: 280px;
-$toolbarBorderWidth: 1px;
 
 $controlMenuHeight: 48px;
 $desktopControlMenuHeight: 56px;
-
-$dropTargetWidth: 5px;
 
 // z-indexes, ordered numerically.
 
@@ -21,6 +18,6 @@ $dragSourceZIndex: 977;
 $translationStatusListZIndex: 977;
 $portletTopperZIndex: 986;
 $sidebarZIndex: 988;
-$dragPreviewLayer: 991;
+$dragPreviewZIndex: 991;
 $undoHistoryOverlayZIndex: 1001;
 $modalZIndex: 1050;

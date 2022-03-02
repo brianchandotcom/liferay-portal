@@ -321,7 +321,7 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 				_portletRequest, "redirect", _themeDisplay.getURLCurrent())
 		).setBackURL(
 			ParamUtil.getString(
-				_portletRequest, "p_l_back_url", _themeDisplay.getURLCurrent())
+				_portletRequest, "backURL", _themeDisplay.getURLCurrent())
 		).setParameter(
 			"selPpid",
 			() -> {

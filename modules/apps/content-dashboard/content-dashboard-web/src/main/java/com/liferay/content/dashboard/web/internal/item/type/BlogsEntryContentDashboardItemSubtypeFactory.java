@@ -12,22 +12,25 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.web.internal.configuration;
+package com.liferay.content.dashboard.web.internal.item.type;
 
-import aQute.bnd.annotation.metatype.Meta;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.portal.kernel.exception.PortalException;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Marcela Cunha
+ * @author Cristina González
  */
-@ExtendedObjectClassDefinition(generateUI = false)
-@Meta.OCD(
-	id = "com.liferay.dynamic.data.mapping.form.web.internal.configuration.FFSubmissionsSettingsConfiguration"
-)
-public interface FFSubmissionsSettingsConfiguration {
+@Component(service = ContentDashboardItemSubtypeFactory.class)
+public class BlogsEntryContentDashboardItemSubtypeFactory
+	implements ContentDashboardItemSubtypeFactory<BlogsEntry> {
 
-	@Meta.AD(deflt = "false", required = false)
-	public boolean expirationDateEnabled();
+	@Override
+	public ContentDashboardItemSubtype<BlogsEntry> create(long classPK)
+		throws PortalException {
+
+		return new BlogsEntryContentDashboardItemSubtype();
+	}
 
 }

@@ -693,6 +693,41 @@ public abstract class BaseListTypeDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testPatchListTypeDefinition() throws Exception {
+		ListTypeDefinition postListTypeDefinition =
+			testPatchListTypeDefinition_addListTypeDefinition();
+
+		ListTypeDefinition randomPatchListTypeDefinition =
+			randomPatchListTypeDefinition();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ListTypeDefinition patchListTypeDefinition =
+			listTypeDefinitionResource.patchListTypeDefinition(
+				postListTypeDefinition.getId(), randomPatchListTypeDefinition);
+
+		ListTypeDefinition expectedPatchListTypeDefinition =
+			postListTypeDefinition.clone();
+
+		_beanUtilsBean.copyProperties(
+			expectedPatchListTypeDefinition, randomPatchListTypeDefinition);
+
+		ListTypeDefinition getListTypeDefinition =
+			listTypeDefinitionResource.getListTypeDefinition(
+				patchListTypeDefinition.getId());
+
+		assertEquals(expectedPatchListTypeDefinition, getListTypeDefinition);
+		assertValid(getListTypeDefinition);
+	}
+
+	protected ListTypeDefinition
+			testPatchListTypeDefinition_addListTypeDefinition()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutListTypeDefinition() throws Exception {
 		ListTypeDefinition postListTypeDefinition =
 			testPutListTypeDefinition_addListTypeDefinition();

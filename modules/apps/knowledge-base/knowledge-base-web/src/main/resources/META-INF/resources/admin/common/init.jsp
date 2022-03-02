@@ -16,8 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.document.library.configuration.DLConfiguration" %><%@
-page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %>
+<%@ page import="com.liferay.document.library.configuration.DLConfiguration" %>
 
 <%
 long kbFolderClassNameId = PortalUtil.getClassNameId(KBFolderConstants.getClassName());

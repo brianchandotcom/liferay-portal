@@ -155,17 +155,20 @@ definition {
 		property test.assert.javascript.errors = "true";
 		property test.assert.warning.exceptions = "true";
 
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		JSONFolder.addFolder(
+			dmFolderDescription = "DM Folder Description",
+			dmFolderName = "Test Folder",
+			groupName = "Guest");
+
 		Navigator.gotoPage(pageName = "Documents and Media Page");
 
-		Portlet.addPG(
-			pageName = "Documents and Media Page",
-			portletName = "Documents and Media");
-
-		DMFolder.addPG(
-			dmFolderDescription = "DM Folder Description",
-			dmFolderName = "DM Folder");
-
-		PortletEntry.LastSelectAll();
+		PortletEntry.SelectAllOnSpecificWidget(widgetPosition = "2");
 
 		AssertNotChecked.assertNotCheckedNotVisible(locator1 = "Checkbox#LEXICON_SELECT_ALL_INPUT");
 	}
@@ -236,6 +239,25 @@ definition {
 			siteName = "Guest");
 
 		AssertAccessible();
+	}
+
+	@description = "This test checks that the javascript in the user name will not be executed when viewing a document on page."
+	@priority = "3"
+	test XSSIsNotExecutedWhenViewingUsernameInDocument {
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		User.editUserInformation(userLastNameEdit = '''Test<script>alert('hello!')</script>''');
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.addPG(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.txt",
+			dmDocumentTitle = "Document_1.txt");
+
+		AssertAlertNotPresent();
 	}
 
 }

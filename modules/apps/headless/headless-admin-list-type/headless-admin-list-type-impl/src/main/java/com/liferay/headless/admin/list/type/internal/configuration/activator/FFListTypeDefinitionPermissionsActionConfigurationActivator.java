@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.web.internal.configuration.activator;
+package com.liferay.headless.admin.list.type.internal.configuration.activator;
 
-import com.liferay.dynamic.data.mapping.form.web.internal.configuration.FFSubmissionsSettingsConfiguration;
+import com.liferay.headless.admin.list.type.internal.configuration.FFListTypeDefinitionPermissionsActionConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.Map;
@@ -24,28 +24,29 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 
 /**
- * @author Marcela Cunha
+ * @author Gabriel Albuquerque
  */
 @Component(
-	configurationPid = "com.liferay.dynamic.data.mapping.form.web.internal.configuration.FFSubmissionsSettingsConfiguration",
+	configurationPid = "com.liferay.headless.admin.list.type.internal.configuration.FFListTypeDefinitionPermissionsActionConfiguration",
 	immediate = true,
-	service = FFSubmissionsSettingsConfigurationActivator.class
+	service = FFListTypeDefinitionPermissionsActionConfigurationActivator.class
 )
-public class FFSubmissionsSettingsConfigurationActivator {
+public class FFListTypeDefinitionPermissionsActionConfigurationActivator {
 
-	public boolean expirationDateEnabled() {
-		return _ffSubmissionsSettingsConfiguration.expirationDateEnabled();
+	public boolean enabled() {
+		return _ffListTypeDefinitionPermissionsActionConfiguration.enabled();
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_ffSubmissionsSettingsConfiguration =
+		_ffListTypeDefinitionPermissionsActionConfiguration =
 			ConfigurableUtil.createConfigurable(
-				FFSubmissionsSettingsConfiguration.class, properties);
+				FFListTypeDefinitionPermissionsActionConfiguration.class,
+				properties);
 	}
 
-	private volatile FFSubmissionsSettingsConfiguration
-		_ffSubmissionsSettingsConfiguration;
+	private volatile FFListTypeDefinitionPermissionsActionConfiguration
+		_ffListTypeDefinitionPermissionsActionConfiguration;
 
 }

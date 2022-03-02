@@ -208,13 +208,15 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		map.put(key.concat("_sortable"), contentLength);
 	}
 
-	protected void populateDates(FileEntry fileEntry, Map<String, String> map) {
+	protected void populateDates(
+		AssetEntry assetEntry, FileEntry fileEntry, Map<String, String> map) {
+
 		indexedFieldsFixture.populateDate(
 			Field.CREATE_DATE, fileEntry.getCreateDate(), map);
 		indexedFieldsFixture.populateDate(
 			Field.MODIFIED_DATE, fileEntry.getModifiedDate(), map);
 		indexedFieldsFixture.populateDate(
-			Field.PUBLISH_DATE, fileEntry.getCreateDate(), map);
+			Field.PUBLISH_DATE, assetEntry.getPublishDate(), map);
 
 		indexedFieldsFixture.populateExpirationDateWithForever(map);
 	}
@@ -223,8 +225,12 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			FileEntry fileEntry, Map<String, String> map)
 		throws Exception {
 
-		map.put(
-			Field.ASSET_ENTRY_ID, String.valueOf(_getAssetEntryId(fileEntry)));
+		AssetEntry assetEntry = _getAssetEntry(fileEntry);
+
+		long assetEntryId = _getAssetEntryId(assetEntry);
+
+		map.put(Field.ASSET_ENTRY_ID, String.valueOf(assetEntryId));
+
 		map.put(Field.CLASS_NAME_ID, "0");
 		map.put(Field.CLASS_PK, "0");
 		map.put(Field.COMPANY_ID, String.valueOf(fileEntry.getCompanyId()));
@@ -242,9 +248,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		map.put(Field.USER_ID, String.valueOf(fileEntry.getUserId()));
 		map.put(
 			Field.USER_NAME, StringUtil.toLowerCase(fileEntry.getUserName()));
-		map.put(
-			"assetEntryId_sortable",
-			String.valueOf(_getAssetEntryId(fileEntry)));
+		map.put("assetEntryId_sortable", String.valueOf(assetEntryId));
 		map.put("classTypeId", "0");
 		map.put("content_ja_JP", getContents(fileEntry));
 		map.put(
@@ -274,7 +278,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		map.put("visible", "true");
 
 		populateContentLength(fileEntry, map);
-		populateDates(fileEntry, map);
+		populateDates(assetEntry, fileEntry, map);
 
 		if (_ddmIndexer.isLegacyDDMIndexFieldsEnabled()) {
 			legacyPopulateHttpHeaders(fileEntry, map);
@@ -402,10 +406,12 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 	protected FileEntrySearchFixture fileEntrySearchFixture;
 
-	private long _getAssetEntryId(FileEntry fileEntry) {
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+	private AssetEntry _getAssetEntry(FileEntry fileEntry) {
+		return _assetEntryLocalService.fetchEntry(
 			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+	}
 
+	private long _getAssetEntryId(AssetEntry assetEntry) {
 		if (assetEntry == null) {
 			return 0;
 		}

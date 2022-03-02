@@ -1,46 +1,27 @@
 definition {
 
 	macro clickManagementBar {
-		if (IsElementPresent(locator1 = "StyleBookEditor#MANAGEMENT_BAR")) {
-			Click(locator1 = "StyleBookEditor#MANAGEMENT_BAR");
-		}
-		else {
-			Click(locator1 = "Message#SUBTITLE");
-		}
+		Click(locator1 = "StyleBookEditor#MANAGEMENT_BAR");
 	}
 
 	macro clickPublish {
 		Button.clickNoError(button = "Publish");
 
-		if (IsAlertPresent(locator1 = "//body")) {
-			AssertConfirm.assertConfirmationNoError(value1 = "Once published, these changes will affect all instances of the site using these properties. Do you want to publish now?");
-		}
-		else {
-			if (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Style Errors Detected")) {
-				AssertTextEquals(
-					locator1 = "Modal#BODY",
-					value1 = "Some of the fields have invalid values. If you continue publishing, the latest valid values will display.");
+		if (IsTextEqual(locator1 = "Modal#HEADER", value1 = "Style Errors Detected")) {
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Some of the fields have invalid values. If you continue publishing, the latest valid values will display.");
 
-				if ("${publishing}" == "Cancel") {
-					Click(
-						key_text = "Cancel",
-						locator1 = "Modal#MODAL_FOOTER_BUTTON");
-				}
-				else {
-					Click(
-						key_text = "Continue",
-						locator1 = "Modal#MODAL_FOOTER_BUTTON");
-
-					AssertTextEquals(
-						locator1 = "Modal#BODY",
-						value1 = "Once published, these changes will affect all instances of the site using these properties. Do you want to publish now?");
-
-					Click(
-						key_text = "Continue",
-						locator1 = "Modal#MODAL_FOOTER_BUTTON");
-				}
+			if ("${publishing}" == "Cancel") {
+				Click(
+					key_text = "Cancel",
+					locator1 = "Modal#MODAL_FOOTER_BUTTON");
 			}
 			else {
+				Click(
+					key_text = "Continue",
+					locator1 = "Modal#MODAL_FOOTER_BUTTON");
+
 				AssertTextEquals(
 					locator1 = "Modal#BODY",
 					value1 = "Once published, these changes will affect all instances of the site using these properties. Do you want to publish now?");
@@ -49,6 +30,15 @@ definition {
 					key_text = "Continue",
 					locator1 = "Modal#MODAL_FOOTER_BUTTON");
 			}
+		}
+		else {
+			AssertTextEquals(
+				locator1 = "Modal#BODY",
+				value1 = "Once published, these changes will affect all instances of the site using these properties. Do you want to publish now?");
+
+			Click(
+				key_text = "Continue",
+				locator1 = "Modal#MODAL_FOOTER_BUTTON");
 		}
 
 		Alert.viewSuccessMessage();

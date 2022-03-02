@@ -1889,6 +1889,13 @@ war.path=${app.server.portal.dir}/</echo>
 							</fileset>
 						</chmod>
 
+						<chmod
+							file="${test.app.server.parent.dir}/elasticsearch-sidecar/**"
+							perm="777"
+							type="both"
+							verbose="true"
+						/>
+
 						<local name="jmx.remote.port.overwrite" />
 
 						<math
@@ -4507,8 +4514,18 @@ go</echo>
 			<propertycopy from="search.engine[${env.CI_TEST_SUITE}]" name="suite.search.engine" silent="true" />
 
 			<if>
+				<not>
+					<isset property="app.server.name" />
+				</not>
+				<then>
+					<property name="app.server.name" value="${app.server.type}" />
+				</then>
+			</if>
+
+			<if>
 				<or>
 					<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
+					<equals arg1="${app.server.type}" arg2="websphere" />
 					<istrue value="${remote.elasticsearch.enabled}" />
 				</or>
 				<then>
@@ -4523,6 +4540,14 @@ go</echo>
 				<then>
 					<delete dir="${liferay.home}/elasticsearch7" failonerror="false" />
 				</then>
+				<else>
+					<chmod
+						file="${liferay.home}/elasticsearch-sidecar/**"
+						perm="777"
+						type="both"
+						verbose="true"
+					/>
+				</else>
 			</if>
 		</sequential>
 	</macrodef>
@@ -4755,7 +4780,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							<equals arg1="@{testable.portal.started.marker.file}" arg2="" />
 						</not>
 						<then>
-							<echo file="@{testable.portal.started.marker.file}" message="1" />
+							<echo file="@{testable.portal.started.marker.file}">1</echo>
 						</then>
 					</if>
 
@@ -5465,8 +5490,18 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<get-testcase-property property.name="remote.elasticsearch.enabled" />
 
 			<if>
+				<not>
+					<isset property="app.server.name" />
+				</not>
+				<then>
+					<property name="app.server.name" value="${app.server.type}" />
+				</then>
+			</if>
+
+			<if>
 				<or>
 					<contains string="${suite.search.engine}" substring="remote-elasticsearch7" />
+					<equals arg1="${app.server.type}" arg2="websphere" />
 					<istrue value="${remote.elasticsearch.enabled}" />
 				</or>
 				<then>
@@ -5521,49 +5556,51 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 		<sequential>
 			<delete failonerror="false" file="${liferay.home}/deploy/license.xml" verbose="true" />
 
-			<copy
-				file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/@{dxp.license.file}"
-				todir="${liferay.home}/deploy"
-			/>
-
 			<if>
-				<equals arg1="@{dxp.license.file}" arg2="dxp-binary-license-developer.li" />
+				<equals arg1="@{dxp.license.file}" arg2="dxp-license-virtual-cluster.xml" />
 				<then>
 					<copy
-						file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/@{dxp.license.file}"
-						todir="${liferay.home}/data/license"
+						file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructureee/clustering/clusteringframework/dependencies/@{dxp.license.file}"
+						todir="${liferay.home}/deploy"
 					/>
 				</then>
-			</if>
+				<elseif>
+					<equals arg1="@{dxp.license.file}" arg2="portal-dxp-license-custom-expiration-48-hours.xml" />
+					<then>
+						<copy
+							file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/tests/coreinfrastructure/license/dependencies/@{dxp.license.file}"
+							todir="${liferay.home}/deploy"
+						/>
 
-			<var name="expiration.leeway" value="2" />
+						<beanshell>
+							<![CDATA[
+								import java.time.ZoneId;
+								import java.time.ZonedDateTime;
+								import java.time.format.DateTimeFormatter;
 
-			<if>
-				<equals arg1="@{dxp.license.file}" arg2="portal-dxp-license-custom-expiration-48-hours.xml" />
-				<then>
-					<beanshell>
-						<![CDATA[
-							import java.time.ZoneId;
-							import java.time.ZonedDateTime;
-							import java.time.format.DateTimeFormatter;
+								DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy hh:mm:ss a zz");
 
-							DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy hh:mm:ss a zz");
+								ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("GMT"));
 
-							ZoneId GMT = ZoneId.of("GMT");
+								// License expiration leeway
 
-							ZonedDateTime now = ZonedDateTime.now(GMT);
+								zonedDateTime = zonedDateTime.minusDays(2);
 
-							//License expiration leeway
-							ZonedDateTime expiration = now.minusDays(2);
+								// License expiration delay
 
-							//License expiration delay
-							expiration = expiration.plusMinutes(5);
+								zonedDateTime = zonedDateTime.plusMinutes(5);
 
-							System.out.println(dateTimeFormatter.format(expiration));
-							project.setProperty("expiration.date", dateTimeFormatter.format(expiration));
-						]]>
-					</beanshell>
-				</then>
+								project.setProperty("expiration.date", dateTimeFormatter.format(zonedDateTime));
+							]]>
+						</beanshell>
+					</then>
+				</elseif>
+				<else>
+					<copy
+						file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/@{dxp.license.file}"
+						todir="${liferay.home}/deploy"
+					/>
+				</else>
 			</if>
 
 			<replace
@@ -5577,6 +5614,16 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				token="${expirationdate}"
 				value="${expiration.date}"
 			/>
+
+			<if>
+				<equals arg1="@{dxp.license.file}" arg2="dxp-binary-license-developer.li" />
+				<then>
+					<copy
+						file="${project.dir}/portal-web/test/functional/com/liferay/portalweb/dependencies/license/@{dxp.license.file}"
+						todir="${liferay.home}/data/license"
+					/>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -8415,7 +8462,7 @@ virtualHostname="localhost"
 			replace="&lt;system-err&gt;&lt;\/system-err&gt;"
 		/>
 
-		<echo message="A report with all the test results can be found at test-results/html/index.html." />
+		<echo>A report with all the test results can be found at test-results/html/index.html.</echo>
 	</target>
 
 	<target name="move-file">
@@ -8430,10 +8477,10 @@ virtualHostname="localhost"
 					tofile="${tofile}"
 				/>
 
-				<echo message="Moved file ${file} to ${tofile}." />
+				<echo>Moved file ${file} to ${tofile}.</echo>
 			</then>
 			<else>
-				<echo message="File ${file} does not exist." />
+				<echo>File ${file} does not exist.</echo>
 			</else>
 		</if>
 	</target>
@@ -8520,6 +8567,10 @@ ${update.properties}</echo>
 				<echo>The file ${liferay.config.xml} is not exist.</echo>
 			</else>
 		</if>
+	</target>
+
+	<target name="prepare-chrome-driver">
+		<prepare-chrome-driver />
 	</target>
 
 	<target name="prepare-encryption-PCKS12-certificate">
@@ -9220,6 +9271,57 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 	</target>
 
+	<target name="prepare-portal-test-digital-signature-properties">
+		<if>
+			<isset property="digital.signature.account.base.uri" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+					digital.signature.account.base.uri=${digital.signature.account.base.uri}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="digital.signature.api.accountId" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+					digital.signature.api.accountId=${digital.signature.api.accountId}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="digital.signature.api.username" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+					digital.signature.api.username=${digital.signature.api.username}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="digital.signature.integration.key" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+					digital.signature.integration.key=${digital.signature.integration.key}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="digital.signature.rsa.private.key" />
+			<then>
+				<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+					digital.signature.rsa.private.key=${digital.signature.rsa.private.key}
+				</echo>
+			</then>
+		</if>
+
+		<echo append="true" file="${project.dir}/portal-test/src/test-portal-impl-ext.properties">
+			digital.signature.site.settings.strategy=always-inherit
+		</echo>
+	</target>
+
 	<target name="prepare-portlet-ext-properties">
 		<for list="${test.case.available.property.names}" param="test.case.available.property.name">
 			<sequential>
@@ -9559,7 +9661,7 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			]]>
 		</beanshell>
 
-		<echo append="true" file="${test.ext.properties.file}" message="${test.case.property.content}" />
+		<echo append="true" file="${test.ext.properties.file}">${test.case.property.content}</echo>
 
 		<if>
 			<isset property="test.case.required.property.names" />

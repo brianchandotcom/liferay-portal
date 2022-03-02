@@ -144,7 +144,7 @@ const AllowedFragmentSelector = ({dropZoneConfig, onSelectedFragment}) => {
 					type="text"
 				/>
 
-				<div className="mb-2 page-editor__allowed-fragment__tree">
+				<div className="mb-2 page-editor__allowed-fragment__tree pl-2">
 					<Treeview
 						NodeComponent={AllowedFragmentTreeNode}
 						filter={filter}
@@ -156,7 +156,7 @@ const AllowedFragmentSelector = ({dropZoneConfig, onSelectedFragment}) => {
 				</div>
 			</div>
 
-			<div className="page-editor__allowed-fragment__new-fragments-checkbox">
+			<div className="page-editor__allowed-fragment__new-fragments-checkbox px-4 py-3">
 				<ClayCheckbox
 					aria-label={Liferay.Language.get(
 						'select-new-fragments-automatically'

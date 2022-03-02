@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<macrodef name="print-current-time">
+	<if>
+		<not>
+			<equals arg1="${gradle.executable.task}" arg2="" />
+		</not>
+		<then>
+			<echo>Executing Gradle task: ${gradle.executable.task}</echo>
+		</then>
+	</if>
+</macrodef>

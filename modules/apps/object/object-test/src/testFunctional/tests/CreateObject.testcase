@@ -389,7 +389,7 @@ definition {
 			portlet = "Roles");
 
 		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
 			permissionDefinitionValue = "",
 			permissionNavigationKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS",
 			permissionNavigationValue = "Objects",
@@ -1288,7 +1288,7 @@ definition {
 			portlet = "Roles");
 
 		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
 			permissionDefinitionValue = "",
 			permissionNavigationKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS",
 			permissionNavigationValue = "Custom Objects",
@@ -1489,7 +1489,7 @@ definition {
 			portlet = "Roles");
 
 		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
 			permissionDefinitionValue = "",
 			permissionNavigationKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS",
 			permissionNavigationValue = "Objects",
@@ -1977,7 +1977,7 @@ definition {
 			portlet = "Roles");
 
 		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
 			permissionDefinitionValue = "",
 			permissionNavigationKey = "CONTROL_PANEL_OBJECTS_PERMISSIONS",
 			permissionNavigationValue = "Objects",
@@ -5729,7 +5729,7 @@ definition {
 	@description = "LPS-135401 - Verify if Disassociate deletion type of Relationship One to Many will allow the entry with relation (from the parent Object) to be deleted and its relations to be disassociated"
 	@priority = "5"
 	test DisassociateDeletionOneToManyWillAllowDeleteParent {
-		property portal.acceptance = "true";
+		property portal.acceptance = "quarantine";
 
 		for (var nameObject : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
@@ -5961,6 +5961,7 @@ definition {
 	}
 
 	@description = "LPS-135635 - Verify that the options Keyword and Text appears under the Searchable section when updating the field type to String"
+	@ignore = "true"
 	@priority = "4"
 	test KeywordAndTextAppearsWhenUpdateFieldType {
 		ObjectAdmin.addObjectViaAPI(
@@ -5970,7 +5971,7 @@ definition {
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Integer",
-			fieldLabelName = "Integer",
+			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "Integer",
 			isRequired = "false",
@@ -5982,9 +5983,9 @@ definition {
 
 		ObjectAdmin.goToFieldsTab();
 
-		ObjectAdmin.goToFieldsDetails(label = "Integer");
+		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
-		CreateObject.editType(fieldType = "String");
+		CreateObject.editType(fieldType = "Text");
 
 		CreateObject.assertSearchableSectionOptionsAppears(radioOption = "Keyword");
 
@@ -7771,6 +7772,8 @@ definition {
 	@description = "LPS-139005 - Verify that the Relationship field will not be displayed on a Collection Display with List Style set as Table when the parent object is inactivated"
 	@priority = "4"
 	test RelationshipFieldCannotBeDisplayedForCollectionDisplayTableWhenInactivated {
+		property portal.upstream = "quarantine";
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter}",

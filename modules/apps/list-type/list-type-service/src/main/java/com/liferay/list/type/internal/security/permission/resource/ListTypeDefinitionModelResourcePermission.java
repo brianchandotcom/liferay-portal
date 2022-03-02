@@ -74,7 +74,6 @@ public class ListTypeDefinitionModelResourcePermission
 				ListTypeDefinition.class.getName(),
 				listTypeDefinition.getListTypeDefinitionId(),
 				listTypeDefinition.getUserId(), actionId) ||
-			(permissionChecker.getUserId() == listTypeDefinition.getUserId()) ||
 			permissionChecker.hasPermission(
 				null, ListTypeDefinition.class.getName(),
 				listTypeDefinition.getPrimaryKey(), actionId)) {

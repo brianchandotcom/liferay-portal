@@ -120,6 +120,7 @@ definition {
 			state = "FL");
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test BootsFacesApplicantPortletSmoke {
 		JSONLayout.addPublicLayout(

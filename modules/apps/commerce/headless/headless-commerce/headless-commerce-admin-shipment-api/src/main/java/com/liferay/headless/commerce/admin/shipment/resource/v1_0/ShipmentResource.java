@@ -67,6 +67,34 @@ public interface ShipmentResource {
 	public Response postShipmentBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteShipmentByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Shipment getShipmentByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Shipment patchShipmentByExternalReferenceCode(
+			String externalReferenceCode, Shipment shipment)
+		throws Exception;
+
+	public Shipment putShipmentByExternalReferenceCode(
+			String externalReferenceCode, Shipment shipment)
+		throws Exception;
+
+	public Shipment postShipmentByExternalReferenceCodeStatusDelivered(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Shipment postShipmentByExternalReferenceCodeStatusFinishProcessing(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Shipment postShipmentByExternalReferenceCodeStatusShipped(
+			String externalReferenceCode)
+		throws Exception;
+
 	public void deleteShipment(Long shipmentId) throws Exception;
 
 	public Response deleteShipmentBatch(String callbackURL, Object object)

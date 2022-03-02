@@ -1106,13 +1106,20 @@ public class StagingImpl implements Staging {
 							"live-environment-and-the-staging-environment");
 			}
 			else {
+				long maxSize = _dlValidator.getMaxAllowableSize(null);
+
+				if (exception instanceof FileSizeException) {
+					FileSizeException fileSizeException =
+						(FileSizeException)exception;
+
+					maxSize = fileSizeException.getMaxSize();
+				}
+
 				errorMessage = LanguageUtil.format(
 					locale,
 					"please-enter-a-file-with-a-valid-file-size-no-larger-" +
 						"than-x",
-					LanguageUtil.formatStorageSize(
-						_dlValidator.getMaxAllowableSize(), locale),
-					false);
+					LanguageUtil.formatStorageSize(maxSize, locale), false);
 			}
 
 			errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;

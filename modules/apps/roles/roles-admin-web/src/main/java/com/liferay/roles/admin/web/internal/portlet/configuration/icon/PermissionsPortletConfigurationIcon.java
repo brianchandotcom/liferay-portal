@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.RoleService;
-import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
+import com.liferay.portal.kernel.service.permission.RolePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -115,7 +115,7 @@ public class PermissionsPortletConfigurationIcon
 			String roleName = role.getName();
 
 			if (!roleName.equals(RoleConstants.OWNER) &&
-				RolePermissionUtil.contains(
+				_rolePermission.contains(
 					themeDisplay.getPermissionChecker(), roleId,
 					ActionKeys.PERMISSIONS)) {
 
@@ -153,6 +153,9 @@ public class PermissionsPortletConfigurationIcon
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RolePermission _rolePermission;
 
 	private RoleService _roleService;
 

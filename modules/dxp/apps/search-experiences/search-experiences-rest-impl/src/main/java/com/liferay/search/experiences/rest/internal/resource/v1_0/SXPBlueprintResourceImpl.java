@@ -34,6 +34,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.search.experiences.constants.SXPActionKeys;
+import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementInstanceUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPBlueprintUtil;
@@ -178,15 +180,26 @@ public class SXPBlueprintResourceImpl
 
 				sxpBlueprint.setActions(
 					HashMapBuilder.put(
+						"create",
+						() -> addAction(
+							SXPActionKeys.ADD_SXP_BLUEPRINT, "postSXPBlueprint",
+							SXPConstants.RESOURCE_NAME,
+							contextCompany.getCompanyId())
+					).put(
 						"delete",
 						() -> addAction(
 							ActionKeys.DELETE, "deleteSXPBlueprint",
 							permissionName, sxpBlueprintId)
 					).put(
-						"view",
+						"get",
 						() -> addAction(
 							ActionKeys.VIEW, "getSXPBlueprint", permissionName,
 							sxpBlueprintId)
+					).put(
+						"update",
+						() -> addAction(
+							ActionKeys.UPDATE, "patchSXPBlueprint",
+							permissionName, sxpBlueprintId)
 					).build());
 
 				return sxpBlueprint;

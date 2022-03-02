@@ -21,10 +21,10 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.elasticsearch.ElasticsearchStatusException;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 /**
  * @author Eric Yan
@@ -61,28 +61,22 @@ public class ElasticsearchDateRangeFilterTest
 
 	@Test
 	public void testMalformed() throws Exception {
-		expectedException.expect(ElasticsearchStatusException.class);
-		expectedException.expectMessage("all shards failed");
-
 		addDocument(getDate(2000, 11, 22));
 
 		dateRangeFilterBuilder.setFrom("11212000000000");
 		dateRangeFilterBuilder.setTo("11232000000000");
 
-		assertNoHits();
+		assertElasticsearchException();
 	}
 
 	@Test
 	public void testMalformedMultiple() throws Exception {
-		expectedException.expect(ElasticsearchStatusException.class);
-		expectedException.expectMessage("all shards failed");
-
 		addDocument(getDate(2000, 11, 22));
 
 		dateRangeFilterBuilder.setFrom("2000");
 		dateRangeFilterBuilder.setTo("11232000000000");
 
-		assertNoHits();
+		assertElasticsearchException();
 	}
 
 	@Test
@@ -96,8 +90,27 @@ public class ElasticsearchDateRangeFilterTest
 		assertHits("20001122000000");
 	}
 
-	@Rule
-	public ExpectedException expectedException = ExpectedException.none();
+	protected void assertElasticsearchException() {
+		assertSearch(
+			indexingTestHelper -> {
+				indexingTestHelper.setFilter(dateRangeFilterBuilder.build());
+
+				try {
+					indexingTestHelper.search();
+
+					Assert.fail();
+				}
+				catch (ElasticsearchStatusException
+							elasticsearchStatusException) {
+
+					Assert.assertEquals(
+						"Elasticsearch exception [" +
+							"type=search_phase_execution_exception, " +
+								"reason=all shards failed]",
+						elasticsearchStatusException.getMessage());
+				}
+			});
+	}
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {

@@ -47,7 +47,10 @@ const TranslationAdminContent = ({
 
 	const activeLanguageIds = useMemo(() => {
 		return initialAvailableLocales.filter((availableLocale) => {
-			const regExp = new RegExp(searchValue, 'i');
+			const regExp = new RegExp(
+				searchValue.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&'),
+				'i'
+			);
 
 			return (
 				initialActiveLanguageIds.includes(availableLocale.id) &&

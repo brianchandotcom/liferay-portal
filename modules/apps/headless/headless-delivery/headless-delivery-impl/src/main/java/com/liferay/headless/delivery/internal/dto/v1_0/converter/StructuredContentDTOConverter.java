@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
+import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
@@ -195,6 +196,20 @@ public class StructuredContentDTOConverter
 					dtoConverterContext.isAcceptAllLanguages(),
 					journalArticle.getTitleMap());
 				uuid = journalArticle.getUuid();
+
+				setPriority(
+					() -> {
+						AssetEntry assetEntry =
+							_assetEntryLocalService.fetchEntry(
+								journalArticle.getModelClassName(),
+								journalArticle.getResourcePrimKey());
+
+						if (assetEntry == null) {
+							return null;
+						}
+
+						return assetEntry.getPriority();
+					});
 			}
 		};
 	}

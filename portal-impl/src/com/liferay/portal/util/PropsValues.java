@@ -301,9 +301,6 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.BROWSER_CACHE_SIGNED_IN_DISABLED));
 
-	public static final String BROWSER_COMPATIBILITY_IE_VERSIONS =
-		PropsUtil.get(PropsKeys.BROWSER_COMPATIBILITY_IE_VERSIONS);
-
 	public static final String BROWSER_LAUNCHER_URL = PropsUtil.get(
 		PropsKeys.BROWSER_LAUNCHER_URL);
 
@@ -2205,22 +2202,12 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.RSS_PUBLISH_TO_LIVE_BY_DEFAULT));
 
-	public static String[] RTL_CSS_EXCLUDED_PATHS_REGEXP = PropsUtil.getArray(
-		PropsKeys.RTL_CSS_EXCLUDED_PATHS_REGEXP);
-
 	public static final boolean SCHEDULER_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.SCHEDULER_ENABLED));
 
 	public static boolean SCHEMA_MODULE_BUILD_AUTO_UPGRADE =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.SCHEMA_MODULE_BUILD_AUTO_UPGRADE));
-
-	public static final String SCRIPTING_JRUBY_COMPILE_MODE = PropsUtil.get(
-		PropsKeys.SCRIPTING_JRUBY_COMPILE_MODE);
-
-	public static final int SCRIPTING_JRUBY_COMPILE_THRESHOLD =
-		GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.SCRIPTING_JRUBY_COMPILE_THRESHOLD), 50);
 
 	public static final int SEARCH_CONTAINER_PAGE_DEFAULT_DELTA =
 		GetterUtil.getInteger(
@@ -2660,9 +2647,6 @@ public class PropsValues {
 
 	public static final String[] USERS_EXPORT_CSV_FIELDS = PropsUtil.getArray(
 		PropsKeys.USERS_EXPORT_CSV_FIELDS);
-
-	public static final String[] USERS_LIST_VIEWS = PropsUtil.getArray(
-		PropsKeys.USERS_LIST_VIEWS);
 
 	public static final String USERS_PROFILE_FRIENDLY_URL = PropsUtil.get(
 		PropsKeys.USERS_PROFILE_FRIENDLY_URL);

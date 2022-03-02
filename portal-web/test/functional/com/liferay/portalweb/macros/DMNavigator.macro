@@ -367,6 +367,10 @@ definition {
 			var portletId = "com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration";
 		}
 
+		if ("${portlet}" == "Google Drive") {
+			var portletId = "com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration";
+		}
+
 		if ("${portlet}" == "Service") {
 			var portletId = "com.liferay.document.library.configuration.DLConfiguration";
 		}

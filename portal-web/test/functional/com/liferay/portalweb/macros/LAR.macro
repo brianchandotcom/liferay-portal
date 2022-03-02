@@ -58,6 +58,16 @@ definition {
 		}
 	}
 
+	macro _copyAsNew {
+		ScrollWebElementIntoView(
+			key_panel = "Update Data",
+			locator1 = "Panel#PANEL");
+
+		Panel.expandPanel(panel = "Update Data");
+
+		Click(locator1 = "ExportImport#UPDATE_DATA_COPY_AS_NEW_RADIO");
+	}
+
 	macro _export {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION_DIALOG");
 
@@ -146,6 +156,10 @@ definition {
 
 		if ("${contentDeletion}" == "true") {
 			Check.checkToggleSwitch(locator1 = "ToggleSwitch#DELETE_PORTLET_DATA");
+		}
+
+		if ("${copyAsNew}" == "true") {
+			LAR._copyAsNew();
 		}
 
 		if ("${mirrorWithOverwriting}" == "true") {
@@ -238,6 +252,10 @@ definition {
 				value1 = "Continue");
 
 			Pause(locator1 = "5000");
+
+			if ("${copyAsNew}" == "true") {
+				LAR._copyAsNew();
+			}
 
 			if ("${mirrorWithOverwriting}" == "true") {
 				LAR._mirrorWithOverwriting();
@@ -567,6 +585,7 @@ definition {
 
 		LAR._selectImportFile(
 			cannotImport = "${cannotImport}",
+			copyAsNew = "${copyAsNew}",
 			failureExpected = "${failureExpected}",
 			importDeletions = "${importDeletions}",
 			importPermissions = "${importPermissions}",
@@ -608,6 +627,7 @@ definition {
 				checkContentNameList = "${checkContentNameList}",
 				contentDeletion = "${contentDeletion}",
 				contentName = "${contentName}",
+				copyAsNew = "${copyAsNew}",
 				importPermissions = "${importPermissions}",
 				larFileName = "${larFileName}",
 				privateLayout = "${privateLayout}");
@@ -623,6 +643,7 @@ definition {
 
 		LAR._selectImportFile(
 			cannotImport = "${cannotImport}",
+			copyAsNew = "${copyAsNew}",
 			failureExpected = "${failureExpected}",
 			importDeletions = "${importDeletions}",
 			importPermissions = "${importPermissions}",

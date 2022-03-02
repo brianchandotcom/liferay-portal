@@ -112,6 +112,7 @@ public class ModelValidatorUtil {
 
 					DLValidatorUtil.validateFileSize(
 						fileContentReference.getSourceFileName(),
+						fileContentReference.getMimeType(),
 						fileContentReference.getSize());
 				}
 

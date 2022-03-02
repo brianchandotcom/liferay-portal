@@ -35,7 +35,6 @@ const ScriptInput = ({inputValue, updateSelectedItem}) => (
 export default ScriptInput;
 
 ScriptInput.propTypes = {
-	inputValue: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
-		.isRequired,
+	inputValue: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 	updateSelectedItem: PropTypes.func,
 };

@@ -76,6 +76,14 @@ const contents = {
 	'notifications': {
 		backButton: (setContentName, selectedItemType) => () =>
 			setContentName(selectedItemType),
+		deleteFunction: (setSelectedItem) => () =>
+			setSelectedItem((previousValue) => ({
+				...previousValue,
+				data: {
+					...previousValue.data,
+					notifications: null,
+				},
+			})),
 		sections: ['notifications'],
 		showDeleteButton: true,
 		title: Liferay.Language.get('notifications'),

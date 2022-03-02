@@ -1,0 +1,132 @@
+definition {
+
+	var siteType = "Open";
+
+	macro addCP {
+		LexiconEntry.gotoAdd();
+
+		if ("${singleSiteTypePermission}" != "true") {
+			if (!(isSet(siteTemplateName))) {
+				var siteTemplateName = "${siteType} Site";
+			}
+
+			LexiconCard.clickCard(card = "${siteTemplateName}");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.inputName(name = "${siteName}");
+
+			Button.clickAdd();
+
+			if (IsElementPresent(locator1 = "Message#ERROR_1", value1 = "Please enter a unique name.")) {
+				SelectFrameTop();
+
+				Site.tearDownCP();
+
+				LexiconEntry.gotoAdd();
+
+				LexiconCard.clickCard(card = "${siteTemplateName}");
+
+				SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+				PortletEntry.inputName(name = "${siteName}");
+
+				Button.clickAdd();
+			}
+
+			SelectFrameTop();
+
+			Alert.viewSuccessMessage();
+		}
+
+		if ("${siteType}" == "Site Template") {
+			if ("${uncheckPropagation}" == "true") {
+				Click(
+					key_itemName = "Pages",
+					locator1 = "ListGroupItem#ITEM_TEXT");
+
+				Navigator.gotoNavTab(navTab = "Pages");
+
+				Uncheck.uncheckToggleSwitch(locator1 = "Checkbox#ENABLE_PROPAGATION");
+
+				PortletEntry.save();
+
+				Navigator.gotoBack();
+			}
+		}
+
+		while (IsElementNotPresent(key_itemName = "Site Configuration", locator1 = "ListGroupItem#ITEM_TEXT")) {
+			WaitForPageLoad();
+		}
+
+		WaitForElementPresent(
+			key_itemName = "Site Configuration",
+			locator1 = "ListGroupItem#ITEM_TEXT");
+
+		Click(
+			key_itemName = "Site Configuration",
+			locator1 = "ListGroupItem#ITEM_TEXT");
+
+		if ("${membershipType}" == "Private") {
+			Select(
+				locator1 = "SitesEditSite#MEMBERSHIP_TYPE",
+				value1 = "Private");
+		}
+		else if ("${membershipType}" == "Restricted") {
+			Select(
+				locator1 = "SitesEditSite#MEMBERSHIP_TYPE",
+				value1 = "Restricted");
+		}
+		else {
+			Select(
+				locator1 = "SitesEditSite#MEMBERSHIP_TYPE",
+				value1 = "Open");
+		}
+
+		if (isSet(parentSiteName)) {
+			WaitForLiferayEvent.initializeLiferayEventLog();
+
+			Click(
+				key_fieldLabel = "Parent Site",
+				key_text = "Change",
+				locator1 = "Button#ANY_WITH_LABEL");
+
+			var key_parentSiteName = "${parentSiteName}";
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			Search.searchCP(searchTerm = "${parentSiteName}");
+
+			var key_site = "${parentSiteName}";
+
+			AssertTextEquals(
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK",
+				value1 = "${parentSiteName}");
+
+			Click(locator1 = "ContentRow#ENTRY_CONTENT_ROW_TD_1_SITE_LINK");
+
+			var key_parentSiteName = "${parentSiteName}";
+
+			SelectFrameTop();
+		}
+
+		ScrollWebElementIntoView(locator1 = "Button#SAVE");
+
+		PortletEntry.save();
+
+		AssertTextEquals(
+			locator1 = "SitesEditSite#DETAILS_NAME",
+			value1 = "${siteName}");
+	}
+
+	macro addSiteTemplateCP {
+		TeamExtranet.addCP(
+			membershipType = "${membershipType}",
+			parentSiteName = "${parentSiteName}",
+			siteName = "${siteName}",
+			siteTemplateName = "${siteTemplateName}",
+			siteType = "Site Template",
+			uncheckPropagation = "${uncheckPropagation}");
+	}
+
+}

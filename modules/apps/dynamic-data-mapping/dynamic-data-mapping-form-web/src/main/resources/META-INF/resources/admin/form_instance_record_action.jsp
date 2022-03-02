@@ -45,7 +45,7 @@ FormInstancePermissionCheckerHelper formInstancePermissionCheckerHelper = ddmFor
 		/>
 	</c:if>
 
-	<c:if test="<%= (!ddmFormAdminDisplayContext.isExpirationDateEnabled() || !DDMFormInstanceExpirationStatusUtil.isFormExpired(formInstanceRecord.getFormInstance(), timeZone)) && formInstancePermissionCheckerHelper.isShowEditIcon(ddmFormAdminDisplayContext.getDDMFormInstance()) %>">
+	<c:if test="<%= !DDMFormInstanceExpirationStatusUtil.isFormExpired(formInstanceRecord.getFormInstance(), timeZone) && formInstancePermissionCheckerHelper.isShowEditIcon(ddmFormAdminDisplayContext.getDDMFormInstance()) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/admin/edit_form_instance_record.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

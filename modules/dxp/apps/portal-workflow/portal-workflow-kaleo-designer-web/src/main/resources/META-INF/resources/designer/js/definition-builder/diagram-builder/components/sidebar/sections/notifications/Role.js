@@ -9,15 +9,45 @@
  * distribution rights of the Software.
  */
 
-import React from 'react';
+import React, {useContext} from 'react';
 
+import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import BaseRole from '../shared-components/BaseRole';
 
-const Role = () => {
+const Role = ({notificationIndex}) => {
+	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
+
+	const updateSelectedItem = (role) => {
+		setSelectedItem((previousItem) => {
+			previousItem.data.notifications.recipients[notificationIndex] = {
+				assignmentType: ['roleId'],
+				roleId: role.id,
+				sectionsData: {
+					id: role.id,
+					name: role.name,
+					roleType: role.roleType,
+				},
+			};
+
+			return previousItem;
+		});
+	};
+
 	return (
 		<BaseRole
+			defaultFieldValue={{
+				id:
+					selectedItem.data.notifications?.recipients?.[
+						notificationIndex
+					]?.sectionsData?.id || '',
+				name:
+					selectedItem.data.notifications?.recipients?.[
+						notificationIndex
+					]?.sectionsData?.name || '',
+			}}
 			inputLabel={Liferay.Language.get('role-id')}
-			selectLabel={Liferay.Language.get('role-type')}
+			selectLabel={Liferay.Language.get('role-name')}
+			updateSelectedItem={updateSelectedItem}
 		/>
 	);
 };

@@ -113,48 +113,6 @@ public class AssetEntryFinderImpl
 		}
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public double findPriorityByC_C(long classNameId, long classPK) {
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_PRIORITY_BY_C_C);
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
-
-			sqlQuery.addScalar("priority", Type.DOUBLE);
-
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(classNameId);
-			queryPos.add(classPK);
-
-			Iterator<Double> iterator = sqlQuery.iterate();
-
-			if (iterator.hasNext()) {
-				Double priority = iterator.next();
-
-				if (priority != null) {
-					return priority;
-				}
-			}
-
-			return 0;
-		}
-		catch (Exception exception) {
-			throw new SystemException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
 	protected void buildAllCategoriesSQL(long[] categoryIds, StringBundler sb) {
 		String findByAndCategoryIdsSQL = CustomSQLUtil.get(
 			FIND_BY_AND_CATEGORY_IDS);

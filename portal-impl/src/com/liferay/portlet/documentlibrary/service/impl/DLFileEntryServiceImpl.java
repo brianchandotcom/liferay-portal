@@ -106,7 +106,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		return dlFileEntryLocalService.addFileEntry(
 			externalReferenceCode, getUserId(), groupId, repositoryId, folderId,
-			sourceFileName, mimeType, title, description, changeLog,
+			sourceFileName, mimeType, title, title, description, changeLog,
 			fileEntryTypeId, ddmFormValuesMap, file, inputStream, size,
 			expirationDate, reviewDate, serviceContext);
 	}
@@ -730,7 +730,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		}
 
 		return dlFileEntryLocalService.updateFileEntry(
-			getUserId(), fileEntryId, sourceFileName, mimeType, title,
+			getUserId(), fileEntryId, sourceFileName, mimeType, title, title,
 			description, changeLog, dlVersionNumberIncrease, fileEntryTypeId,
 			ddmFormValuesMap, file, inputStream, size, expirationDate,
 			reviewDate, serviceContext);
@@ -739,8 +739,8 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *             #updateFileEntry(long, String, String, String, String,
-	 *             String, DLVersionNumberIncrease, long, Map, File, InputStream, long,
-	 *             Date, Date, ServiceContext)}
+	 *             String, DLVersionNumberIncrease, long, Map, File,
+	 *             InputStream, long, Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	@Override

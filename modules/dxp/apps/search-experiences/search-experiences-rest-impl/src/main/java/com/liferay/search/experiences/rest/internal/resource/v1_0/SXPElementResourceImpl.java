@@ -33,6 +33,8 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.search.experiences.constants.SXPActionKeys;
+import com.liferay.search.experiences.constants.SXPConstants;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.util.ElementDefinitionUtil;
 import com.liferay.search.experiences.rest.dto.v1_0.util.SXPElementUtil;
@@ -171,6 +173,12 @@ public class SXPElementResourceImpl
 
 				sxpElement.setActions(
 					HashMapBuilder.put(
+						"create",
+						() -> addAction(
+							SXPActionKeys.ADD_SXP_ELEMENT, "postSXPElement",
+							SXPConstants.RESOURCE_NAME,
+							contextCompany.getCompanyId())
+					).put(
 						"delete",
 						() -> {
 							if (sxpElement.getReadOnly()) {
@@ -182,10 +190,15 @@ public class SXPElementResourceImpl
 								permissionName, sxpElementId);
 						}
 					).put(
-						"view",
+						"get",
 						() -> addAction(
 							ActionKeys.VIEW, "getSXPElement", permissionName,
 							sxpElementId)
+					).put(
+						"update",
+						() -> addAction(
+							ActionKeys.UPDATE, "patchSXPElement",
+							permissionName, sxpElementId)
 					).build());
 
 				return sxpElement;

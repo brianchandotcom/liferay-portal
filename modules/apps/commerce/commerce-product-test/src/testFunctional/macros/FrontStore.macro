@@ -1,7 +1,7 @@
 definition {
 
 	macro addInitializerProductToCart {
-		var newItemCount = FrontStore.getCurrentCartItemCount();
+		var newItemCount = FrontStore.getCurrentCartItemCount(productName = "${productName}");
 
 		Refresh();
 
@@ -20,7 +20,7 @@ definition {
 	}
 
 	macro addToCartFromProductDetails {
-		var newItemCount = FrontStore.getCurrentCartItemCount();
+		var newItemCount = FrontStore.getCurrentCartItemCount(productName = "${productName}");
 
 		Refresh();
 

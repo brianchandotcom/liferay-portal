@@ -149,23 +149,6 @@ public class AssetVocabularyLocalServiceImpl
 			null, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * #addVocabulary(String, long, long, String, String, Map, Map, String, int, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public AssetVocabulary addVocabulary(
-			long userId, long groupId, String name, String title,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			String settings, int visibilityType, ServiceContext serviceContext)
-		throws PortalException {
-
-		return assetVocabularyLocalService.addVocabulary(
-			null, userId, groupId, name, title, titleMap, descriptionMap,
-			settings, visibilityType, serviceContext);
-	}
-
 	@Override
 	public AssetVocabulary addVocabulary(
 			long userId, long groupId, String name, String title,

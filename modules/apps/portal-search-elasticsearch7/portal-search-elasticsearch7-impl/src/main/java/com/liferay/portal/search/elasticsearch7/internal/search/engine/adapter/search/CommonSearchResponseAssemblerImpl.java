@@ -36,17 +36,17 @@ import org.apache.lucene.search.FuzzyQuery;
 import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.common.Strings;
-import org.elasticsearch.common.xcontent.ToXContent;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentFactory;
-import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.core.TimeValue;
 import org.elasticsearch.index.search.MatchQueryParser;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.profile.ProfileShardResult;
+import org.elasticsearch.search.profile.SearchProfileShardResult;
 import org.elasticsearch.search.profile.query.QueryProfileShardResult;
+import org.elasticsearch.xcontent.ToXContent;
+import org.elasticsearch.xcontent.XContentBuilder;
+import org.elasticsearch.xcontent.XContentFactory;
+import org.elasticsearch.xcontent.XContentType;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -134,15 +134,15 @@ public class CommonSearchResponseAssemblerImpl
 		",\"zero_terms_query\":\"" + MatchQueryParser.DEFAULT_ZERO_TERMS_QUERY +
 			"\"";
 
-	private String _getProfileShardResultString(
-			ProfileShardResult profileShardResult)
+	private String _getSearchProfileShardResultString(
+			SearchProfileShardResult searchProfileShardResult)
 		throws IOException {
 
 		XContentBuilder xContentBuilder = XContentFactory.contentBuilder(
 			XContentType.JSON);
 
 		List<QueryProfileShardResult> queryProfileShardResults =
-			profileShardResult.getQueryProfileResults();
+			searchProfileShardResult.getQueryProfileResults();
 
 		queryProfileShardResults.forEach(
 			queryProfileShardResult -> {
@@ -167,21 +167,22 @@ public class CommonSearchResponseAssemblerImpl
 	private void _setExecutionProfile(
 		SearchResponse searchResponse, BaseSearchResponse baseSearchResponse) {
 
-		Map<String, ProfileShardResult> profileShardResults =
+		Map<String, SearchProfileShardResult> searchProfileShardResults =
 			searchResponse.getProfileResults();
 
-		if (MapUtil.isEmpty(profileShardResults)) {
+		if (MapUtil.isEmpty(searchProfileShardResults)) {
 			return;
 		}
 
 		Map<String, String> executionProfile = new HashMap<>();
 
-		profileShardResults.forEach(
-			(shardKey, profileShardResult) -> {
+		searchProfileShardResults.forEach(
+			(shardKey, searchProfileShardResult) -> {
 				try {
 					executionProfile.put(
 						shardKey,
-						_getProfileShardResultString(profileShardResult));
+						_getSearchProfileShardResultString(
+							searchProfileShardResult));
 				}
 				catch (IOException ioException) {
 					if (_log.isInfoEnabled()) {

@@ -299,6 +299,8 @@ definition {
 	@description = "LPS-135429 - It is possible to retrieve objects data from Data Providers and use in a Select from List field in Forms"
 	@priority = "4"
 	test CanRetrieveDataProvidersOnSelectFromListField {
+		property test.name.skip.portal.instance = "ObjectForms#CanRetrieveDataProvidersOnSelectFromListField";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -373,6 +375,8 @@ definition {
 	@description = "LPS-135429 - It is possible to retrieve objects data from Data Providers and use in a Text field in Form"
 	@priority = "4"
 	test CanRetrieveDataProvidersOnTextField {
+		property test.name.skip.portal.instance = "ObjectForms#CanRetrieveDataProvidersOnTextField";
+
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",

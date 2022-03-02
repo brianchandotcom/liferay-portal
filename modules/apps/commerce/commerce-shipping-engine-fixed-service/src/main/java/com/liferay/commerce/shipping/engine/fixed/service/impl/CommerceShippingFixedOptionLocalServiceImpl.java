@@ -14,8 +14,18 @@
 
 package com.liferay.commerce.shipping.engine.fixed.service.impl;
 
+import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.model.CommerceShippingMethodTable;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionQualifierTable;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionTable;
 import com.liferay.commerce.shipping.engine.fixed.service.base.CommerceShippingFixedOptionLocalServiceBaseImpl;
+import com.liferay.petra.sql.dsl.Column;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.FromStep;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -142,6 +152,19 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 
 		return commerceShippingFixedOptionPersistence.fetchByC_K(
 			companyId, key);
+	}
+
+	@Override
+	public List<CommerceShippingFixedOption>
+		getCommerceOrderTypeCommerceShippingFixedOptions(
+			long companyId, long commerceOrderTypeId,
+			long commerceShippingMethodId) {
+
+		return dslQuery(
+			_getGroupByStep(
+				companyId, commerceOrderTypeId, commerceShippingMethodId,
+				DSLQueryFactoryUtil.selectDistinct(
+					CommerceShippingFixedOptionTable.INSTANCE)));
 	}
 
 	@Override
@@ -320,6 +343,51 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 		return commerceShippingFixedOptions;
 	}
 
+	private GroupByStep _getGroupByStep(
+		Long companyId, Long commerceOrderTypeId, Long commerceShippingMethodId,
+		FromStep fromStep) {
+
+		CommerceShippingFixedOptionQualifierTable
+			commerceOrderTypeCommerceShippingFixedQualifier =
+				CommerceShippingFixedOptionQualifierTable.INSTANCE.as(
+					"commerceOrderTypeCommerceShippingFixedQualifier");
+
+		JoinStep joinStep = fromStep.from(
+			CommerceShippingFixedOptionTable.INSTANCE
+		).innerJoinON(
+			CommerceShippingMethodTable.INSTANCE,
+			CommerceShippingMethodTable.INSTANCE.commerceShippingMethodId.eq(
+				CommerceShippingFixedOptionTable.INSTANCE.
+					commerceShippingMethodId)
+		).leftJoinOn(
+			commerceOrderTypeCommerceShippingFixedQualifier,
+			_getPredicate(
+				CommerceOrderType.class.getName(),
+				commerceOrderTypeCommerceShippingFixedQualifier.classNameId,
+				commerceOrderTypeCommerceShippingFixedQualifier.
+					commerceShippingFixedOptionId)
+		);
+
+		Column<CommerceShippingFixedOptionQualifierTable, Long> classPKColumn =
+			commerceOrderTypeCommerceShippingFixedQualifier.classPK;
+
+		return joinStep.where(
+			CommerceShippingFixedOptionTable.INSTANCE.companyId.eq(
+				companyId
+			).and(
+				CommerceShippingFixedOptionTable.INSTANCE.
+					commerceShippingMethodId.eq(commerceShippingMethodId)
+			).and(
+				Predicate.withParentheses(
+					classPKColumn.eq(
+						commerceOrderTypeId
+					).or(
+						commerceOrderTypeCommerceShippingFixedQualifier.
+							commerceShippingFixedOptionId.isNull()
+					))
+			));
+	}
+
 	private String _getKey(long companyId, Map<Locale, String> nameMap) {
 		String key = FriendlyURLNormalizerUtil.normalize(
 			nameMap.get(LocaleThreadLocal.getDefaultLocale()));
@@ -345,6 +413,22 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 		}
 
 		return key;
+	}
+
+	private Predicate _getPredicate(
+		String className,
+		Column<CommerceShippingFixedOptionQualifierTable, Long>
+			classNameIdColumn,
+		Column<CommerceShippingFixedOptionQualifierTable, Long>
+			commerceShippingFixedOptionIdColumn) {
+
+		return classNameIdColumn.eq(
+			classNameLocalService.getClassNameId(className)
+		).and(
+			commerceShippingFixedOptionIdColumn.eq(
+				CommerceShippingFixedOptionTable.INSTANCE.
+					commerceShippingFixedOptionId)
+		);
 	}
 
 }

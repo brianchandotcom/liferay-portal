@@ -460,7 +460,7 @@ definition {
 					"image": {
 					"caption": "",
 					"imageId": ${coverImageId}
-					}
+					},
 					"priority": 0
 				}
 		''';

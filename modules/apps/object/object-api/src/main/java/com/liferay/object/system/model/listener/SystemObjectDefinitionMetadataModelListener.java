@@ -62,7 +62,8 @@ public class SystemObjectDefinitionMetadataModelListener
 		throws ModelListenerException {
 
 		_executeObjectActions(
-			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null, baseModel);
+			ObjectActionTriggerConstants.KEY_ON_AFTER_ADD, null,
+			(BaseModel)baseModel.clone());
 	}
 
 	@Override
@@ -79,7 +80,7 @@ public class SystemObjectDefinitionMetadataModelListener
 
 		_executeObjectActions(
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, originalBaseModel,
-			baseModel);
+			(BaseModel)baseModel.clone());
 	}
 
 	@Override
@@ -152,13 +153,13 @@ public class SystemObjectDefinitionMetadataModelListener
 			"objectActionTriggerKey", objectActionTriggerKey
 		).put(
 			"model" + _modelClass.getSimpleName(),
-			_jsonFactory.createJSONObject(baseModel.toString())
+			_jsonFactory.createJSONObject(_jsonFactory.serialize(baseModel))
 		).put(
 			"original" + _modelClass.getSimpleName(),
 			() -> {
 				if (originalBaseModel != null) {
 					return _jsonFactory.createJSONObject(
-						originalBaseModel.toString());
+						_jsonFactory.serialize(originalBaseModel));
 				}
 
 				return null;

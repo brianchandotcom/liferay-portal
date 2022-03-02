@@ -183,7 +183,7 @@ const AllowedFragmentSelectorTree = ({dropZoneConfig, onSelectedFragment}) => {
 					type="text"
 				/>
 
-				<div className="mb-2 page-editor__allowed-fragment__tree">
+				<div className="mb-2 page-editor__allowed-fragment__tree pl-2">
 					<ClayTreeView
 						expandedKeys={expandedKeys}
 						expanderIcons={{

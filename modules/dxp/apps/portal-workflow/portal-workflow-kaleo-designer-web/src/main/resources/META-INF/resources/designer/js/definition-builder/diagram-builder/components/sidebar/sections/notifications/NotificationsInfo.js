@@ -10,10 +10,12 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayForm, {ClayInput, ClaySelect} from '@clayui/form';
 import PropTypes from 'prop-types';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
+import {DEFAULT_LANGUAGE} from '../../../../../source-builder/constants';
 import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import ScriptInput from '../../../shared-components/ScriptInput';
 import SidebarPanel from '../../SidebarPanel';
@@ -21,11 +23,7 @@ import Role from './Role';
 import RoleType from './RoleType';
 import User from './User';
 
-const executionTypeOptions = [
-	{
-		label: Liferay.Language.get('on-assignment'),
-		value: 'onAssignment',
-	},
+let executionTypeOptions = [
 	{
 		label: Liferay.Language.get('on-entry'),
 		value: 'onEntry',
@@ -36,16 +34,30 @@ const executionTypeOptions = [
 	},
 ];
 
-const notificationsTypeOptions = [
-	{
-		label: Liferay.Language.get('email'),
-		value: 'email',
-	},
-	{
-		label: Liferay.Language.get('user-notification'),
-		value: 'userNotification',
-	},
-];
+const getRecipientType = (assignmentType) => {
+	if (assignmentType === 'roleId') {
+		return 'role';
+	}
+	else if (assignmentType === 'scriptedRecipient') {
+		return 'scriptedRecipient';
+	}
+	else if (assignmentType === 'taskAssignees') {
+		return 'taskAssignees';
+	}
+	else if (assignmentType === 'user') {
+		return 'assetCreator';
+	}
+	else {
+		return null;
+	}
+};
+
+const recipientTypeComponents = {
+	role: Role,
+	roleType: RoleType,
+	scriptedRecipient: ScriptInput,
+	user: User,
+};
 
 let recipientTypeOptions = [
 	{
@@ -57,7 +69,6 @@ let recipientTypeOptions = [
 		value: 'role',
 	},
 	{
-		disabled: true,
 		label: Liferay.Language.get('role-type'),
 		value: 'roleType',
 	},
@@ -74,7 +85,7 @@ let recipientTypeOptions = [
 const templateLanguageOptions = [
 	{
 		label: Liferay.Language.get('freemarker'),
-		value: 'freeMarker',
+		value: 'freemarker',
 	},
 	{
 		label: Liferay.Language.get('text'),
@@ -86,31 +97,118 @@ const templateLanguageOptions = [
 	},
 ];
 
-const notificationTypeComponents = {
-	role: Role,
-	roleType: RoleType,
-	scriptedRecipient: ScriptInput,
-	user: User,
-};
-
 const NotificationsInfo = ({
 	identifier,
-	index,
+	index: notificationIndex,
 	sectionsLength,
 	setSections,
 	...restProps
 }) => {
 	const {selectedItem, setSelectedItem} = useContext(DiagramBuilderContext);
-	const [executionType, setExecutionType] = useState('');
-	const [notificationDescription, setNotificationDescription] = useState('');
-	const [notificationName, setNotificationName] = useState('');
-	const [notificationType, setNotificationType] = useState('');
-	const [recipientType, setRecipientType] = useState('assetCreator');
+
+	const [executionType, setExecutionType] = useState(
+		selectedItem.data.notifications?.executionType?.[notificationIndex] ||
+			(selectedItem.type === 'task' ? 'onAssignment' : 'onEntry')
+	);
 	const [internalSections, setInternalSections] = useState([
 		{identifier: `${Date.now()}-0`},
 	]);
-	const [template, setTemplate] = useState('');
-	const [templateLanguage, setTemplateLanguage] = useState('');
+	const [notificationDescription, setNotificationDescription] = useState(
+		selectedItem.data.notifications?.description?.[notificationIndex] || ''
+	);
+	const [notificationName, setNotificationName] = useState(
+		selectedItem.data.notifications?.name?.[notificationIndex] || ''
+	);
+	const [notificationTypeEmail, setNotificationTypeEmail] = useState(
+		selectedItem.data.notifications?.notificationTypes?.[
+			notificationIndex
+		]?.includes('email') || false
+	);
+	const [
+		notificationTypeUserNotification,
+		setNotificationTypeUserNotification,
+	] = useState(
+		selectedItem.data.notifications?.notificationTypes?.[
+			notificationIndex
+		]?.includes('user-notification') || false
+	);
+	const [recipientType, setRecipientType] = useState(
+		getRecipientType(
+			selectedItem.data.notifications?.recipients?.[notificationIndex]
+				?.assignmentType?.[0]
+		) || 'assetCreator'
+	);
+	const [template, setTemplate] = useState(
+		selectedItem.data.notifications?.template?.[notificationIndex] || ''
+	);
+	const [templateLanguage, setTemplateLanguage] = useState(
+		selectedItem.data.notifications?.templateLanguage?.[
+			notificationIndex
+		] || 'freemarker'
+	);
+
+	const notificationTypesOptions = [
+		{
+			checked: notificationTypeEmail,
+			label: Liferay.Language.get('email'),
+			onChange: (value) => {
+				setNotificationTypeEmail(value);
+
+				const notificationTypes = [];
+
+				if (value) {
+					notificationTypes.push({notificationType: 'email'});
+				}
+
+				if (notificationTypeUserNotification) {
+					notificationTypes.push({
+						notificationType: 'user-notification',
+					});
+				}
+
+				updateNotificationInfo({
+					description: notificationDescription,
+					executionType,
+					name: notificationName,
+					notificationTypes,
+					template,
+					templateLanguage,
+				});
+			},
+			type: 'checkbox',
+			value: 'email',
+		},
+		{
+			checked: notificationTypeUserNotification,
+			label: Liferay.Language.get('user-notification'),
+			onChange: (value) => {
+				setNotificationTypeUserNotification(value);
+
+				const notificationTypes = [];
+
+				if (notificationTypeEmail) {
+					notificationTypes.push({notificationType: 'email'});
+				}
+
+				if (value) {
+					notificationTypes.push({
+						notificationType: 'user-notification',
+					});
+				}
+
+				updateNotificationInfo({
+					description: notificationDescription,
+					executionType,
+					name: notificationName,
+					notificationTypes,
+					template,
+					templateLanguage,
+				});
+			},
+			type: 'checkbox',
+			value: 'userNotification',
+		},
+	];
 
 	const updateSelectedItem = (values) => {
 		setSelectedItem((previousItem) => ({
@@ -118,23 +216,21 @@ const NotificationsInfo = ({
 			data: {
 				...previousItem.data,
 				notifications: {
-					...previousItem.data.notifications,
 					description: values.map(({description}) => description),
 					executionType: values.map(
 						({executionType}) => executionType
 					),
 					name: values.map(({name}) => name),
-					notificationType: values.map(
-						({notificationType}) => notificationType
+					notificationTypes: values.map(
+						({notificationTypes}) => notificationTypes
 					),
-					recipients: [
-						{
-							...previousItem.data.notifications?.recipients,
-							receptionType: values.map(
-								({recipientType}) => recipientType
-							),
-						},
-					],
+					recipients: !previousItem.data.notifications?.recipients
+						? [
+								{
+									assignmentType: ['user'],
+								},
+						  ]
+						: [...previousItem.data.notifications.recipients],
 					template: values.map(({template}) => template),
 					templateLanguage: values.map(
 						({templateLanguage}) => templateLanguage
@@ -143,6 +239,49 @@ const NotificationsInfo = ({
 			},
 		}));
 	};
+
+	useEffect(() => {
+		if (selectedItem.data.notifications) {
+			setSelectedItem((previousItem) => {
+				let recipientDetails = {};
+
+				if (recipientType === 'assetCreator') {
+					recipientDetails = {assignmentType: ['user']};
+				}
+				else if (recipientType === 'taskAssignees') {
+					recipientDetails = {assignmentType: ['taskAssignees']};
+				}
+
+				const currentRecipient = {
+					...recipientDetails,
+				};
+
+				if (
+					previousItem.data.notifications.recipients[
+						notificationIndex
+					]
+				) {
+					previousItem.data.notifications.recipients[
+						notificationIndex
+					] = {
+						...previousItem.data.notifications.recipients[
+							notificationIndex
+						],
+						...currentRecipient,
+					};
+				}
+				else {
+					previousItem.data.notifications.recipients[
+						notificationIndex
+					] = currentRecipient;
+				}
+
+				return previousItem;
+			});
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [notificationIndex, recipientType, setSelectedItem]);
 
 	const deleteSection = () => {
 		setSections((prevSections) => {
@@ -156,49 +295,101 @@ const NotificationsInfo = ({
 		});
 	};
 
-	const selectRecipientType = (item) => {
-		setSections((prev) => {
-			prev[index] = {
-				...prev[index],
-				...item,
-			};
+	const updateNotificationInfo = (item) => {
+		if (item.name && item.template) {
+			setSections((prev) => {
+				prev[notificationIndex] = {
+					...prev[notificationIndex],
+					...item,
+				};
 
-			updateSelectedItem(prev);
+				updateSelectedItem(prev);
 
-			return prev;
-		});
-
-		setRecipientType(item.recipientType);
+				return prev;
+			});
+		}
 	};
 
-	if (
-		selectedItem?.type === 'task' &&
-		!recipientTypeOptions
-			.map((option) => option.value)
-			.includes('taskAssignees')
-	) {
-		recipientTypeOptions.push({
-			label: Liferay.Language.get('task-assignees'),
-			value: 'taskAssignees',
-		});
+	if (selectedItem.type === 'task') {
+		if (
+			!recipientTypeOptions
+				.map((option) => option.value)
+				.includes('taskAssignees')
+		) {
+			recipientTypeOptions.push({
+				label: Liferay.Language.get('task-assignees'),
+				value: 'taskAssignees',
+			});
+		}
+
+		if (
+			!executionTypeOptions
+				.map((option) => option.value)
+				.includes('onAssignment')
+		) {
+			executionTypeOptions.unshift({
+				label: Liferay.Language.get('on-assignment'),
+				value: 'onAssignment',
+			});
+		}
 	}
-	else if (selectedItem?.type !== 'task') {
+	else if (selectedItem.type !== 'task') {
 		recipientTypeOptions = recipientTypeOptions.filter(({value}) => {
 			return value !== 'taskAssignees';
 		});
+
+		executionTypeOptions = executionTypeOptions.filter(({value}) => {
+			return value !== 'onAssignment';
+		});
 	}
 
-	const NotificationTypeComponent = notificationTypeComponents[recipientType];
+	const scriptedRecipientUpdateSelectedItem = ({target}) =>
+		setSelectedItem((previousItem) => {
+			previousItem.data.notifications.recipients[notificationIndex] = {
+				assignmentType: ['scriptedRecipient'],
+				script: [target.value],
+				scriptLanguage: [DEFAULT_LANGUAGE],
+			};
+
+			return previousItem;
+		});
+
+	const RecipientTypeComponent = recipientTypeComponents[recipientType];
 
 	return (
 		<SidebarPanel panelTitle={Liferay.Language.get('information')}>
 			<ClayForm.Group>
 				<label htmlFor="notificationName">
 					{Liferay.Language.get('name')}
+
+					<span className="ml-1 mr-1 text-warning">*</span>
 				</label>
 
 				<ClayInput
+					autoComplete="off"
 					id="notificationName"
+					onBlur={() => {
+						const notificationTypes = [];
+
+						if (notificationTypeEmail) {
+							notificationTypes.push({notificationType: 'email'});
+						}
+
+						if (notificationTypeUserNotification) {
+							notificationTypes.push({
+								notificationType: 'user-notification',
+							});
+						}
+
+						updateNotificationInfo({
+							description: notificationDescription,
+							executionType,
+							name: notificationName,
+							notificationTypes,
+							template,
+							templateLanguage,
+						});
+					}}
 					onChange={({target}) => setNotificationName(target.value)}
 					placeholder={Liferay.Language.get('notification')}
 					type="text"
@@ -212,7 +403,30 @@ const NotificationsInfo = ({
 				</label>
 
 				<ClayInput
+					autoComplete="off"
 					id="notificationDescription"
+					onBlur={() => {
+						const notificationTypes = [];
+
+						if (notificationTypeEmail) {
+							notificationTypes.push({notificationType: 'email'});
+						}
+
+						if (notificationTypeUserNotification) {
+							notificationTypes.push({
+								notificationType: 'user-notification',
+							});
+						}
+
+						updateNotificationInfo({
+							description: notificationDescription,
+							executionType,
+							name: notificationName,
+							notificationTypes,
+							template,
+							templateLanguage,
+						});
+					}}
 					onChange={({target}) =>
 						setNotificationDescription(target.value)
 					}
@@ -229,7 +443,31 @@ const NotificationsInfo = ({
 				<ClaySelect
 					aria-label="Select"
 					id="template-language"
-					onChange={({target}) => setTemplateLanguage(target.value)}
+					onChange={({target}) => {
+						setTemplateLanguage(target.value);
+
+						const notificationTypes = [];
+
+						if (notificationTypeEmail) {
+							notificationTypes.push({notificationType: 'email'});
+						}
+
+						if (notificationTypeUserNotification) {
+							notificationTypes.push({
+								notificationType: 'user-notification',
+							});
+						}
+
+						updateNotificationInfo({
+							description: notificationDescription,
+							executionType,
+							name: notificationName,
+							notificationTypes,
+							template,
+							templateLanguage,
+						});
+					}}
+					value={templateLanguage}
 				>
 					{templateLanguageOptions.map((item) => (
 						<ClaySelect.Option
@@ -244,11 +482,35 @@ const NotificationsInfo = ({
 			<ClayForm.Group>
 				<label htmlFor="template">
 					{Liferay.Language.get('template')}
+
+					<span className="ml-1 mr-1 text-warning">*</span>
 				</label>
 
 				<ClayInput
 					component="textarea"
 					id="template"
+					onBlur={() => {
+						const notificationTypes = [];
+
+						if (notificationTypeEmail) {
+							notificationTypes.push({notificationType: 'email'});
+						}
+
+						if (notificationTypeUserNotification) {
+							notificationTypes.push({
+								notificationType: 'user-notification',
+							});
+						}
+
+						updateNotificationInfo({
+							description: notificationDescription,
+							executionType,
+							name: notificationName,
+							notificationTypes,
+							template,
+							templateLanguage,
+						});
+					}}
 					onChange={({target}) => setTemplate(target.value)}
 					placeholder="${userName} sent you a ${entryType} for review in the workflow."
 					type="text"
@@ -257,24 +519,19 @@ const NotificationsInfo = ({
 			</ClayForm.Group>
 
 			<ClayForm.Group>
-				<label htmlFor="notifications-type">
-					{Liferay.Language.get('notifications-type')}
+				<label htmlFor="notification-types">
+					{Liferay.Language.get('notification-types')}
 				</label>
 
-				<ClaySelect
-					aria-label="Select"
-					defaultValue={Liferay.Language.get('select')}
-					id="notifications-type"
-					onChange={({target}) => setNotificationType(target.value)}
-				>
-					{notificationsTypeOptions.map((item) => (
-						<ClaySelect.Option
-							key={item.value}
-							label={item.label}
-							value={item.value}
+				<ClayDropDownWithItems
+					items={notificationTypesOptions}
+					trigger={
+						<ClayInput
+							id="notification-types"
+							value={Liferay.Language.get('select')}
 						/>
-					))}
-				</ClaySelect>
+					}
+				/>
 			</ClayForm.Group>
 
 			<ClayForm.Group>
@@ -285,7 +542,31 @@ const NotificationsInfo = ({
 				<ClaySelect
 					aria-label="Select"
 					id="execution-type"
-					onChange={({target}) => setExecutionType(target.value)}
+					onChange={({target}) => {
+						setExecutionType(target.value);
+
+						const notificationTypes = [];
+
+						if (notificationTypeEmail) {
+							notificationTypes.push({notificationType: 'email'});
+						}
+
+						if (notificationTypeUserNotification) {
+							notificationTypes.push({
+								notificationType: 'user-notification',
+							});
+						}
+
+						updateNotificationInfo({
+							description: notificationDescription,
+							executionType,
+							name: notificationName,
+							notificationTypes,
+							template,
+							templateLanguage,
+						});
+					}}
+					value={executionType}
 				>
 					{executionTypeOptions.map((item) => (
 						<ClaySelect.Option
@@ -305,18 +586,31 @@ const NotificationsInfo = ({
 				<ClaySelect
 					aria-label="Select"
 					id="recipient-type"
-					onChange={({target}) => setRecipientType(target.value)}
-					onClickCapture={() =>
-						selectRecipientType({
+					onChange={({target}) => {
+						setRecipientType(target.value);
+
+						const notificationTypes = [];
+
+						if (notificationTypeEmail) {
+							notificationTypes.push({notificationType: 'email'});
+						}
+
+						if (notificationTypeUserNotification) {
+							notificationTypes.push({
+								notificationType: 'user-notification',
+							});
+						}
+
+						updateNotificationInfo({
 							description: notificationDescription,
 							executionType,
 							name: notificationName,
-							notificationType,
-							recipientType,
+							notificationTypes,
 							template,
 							templateLanguage,
-						})
-					}
+						});
+					}}
+					value={recipientType}
 				>
 					{recipientTypeOptions.map((item) => (
 						<ClaySelect.Option
@@ -334,13 +628,21 @@ const NotificationsInfo = ({
 					<SidebarPanel panelTitle={Liferay.Language.get('type')}>
 						<ClayForm.Group className="recipient-type-form-group">
 							{internalSections.map(({identifier}, index) => (
-								<NotificationTypeComponent
+								<RecipientTypeComponent
 									identifier={identifier}
 									index={index}
-									inputValue=""
+									inputValue={
+										selectedItem.data.notifications
+											?.recipients[notificationIndex]
+											?.script?.[0]
+									}
 									key={`section-${identifier}`}
+									notificationIndex={notificationIndex}
 									sectionsLength={internalSections.length}
 									setSections={setInternalSections}
+									updateSelectedItem={
+										scriptedRecipientUpdateSelectedItem
+									}
 									{...restProps}
 								/>
 							))}

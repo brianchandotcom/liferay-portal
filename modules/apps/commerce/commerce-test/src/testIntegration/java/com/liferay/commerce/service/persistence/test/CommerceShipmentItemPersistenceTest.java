@@ -129,6 +129,9 @@ public class CommerceShipmentItemPersistenceTest {
 
 		newCommerceShipmentItem.setMvccVersion(RandomTestUtil.nextLong());
 
+		newCommerceShipmentItem.setExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newCommerceShipmentItem.setGroupId(RandomTestUtil.nextLong());
 
 		newCommerceShipmentItem.setCompanyId(RandomTestUtil.nextLong());
@@ -162,6 +165,9 @@ public class CommerceShipmentItemPersistenceTest {
 		Assert.assertEquals(
 			existingCommerceShipmentItem.getMvccVersion(),
 			newCommerceShipmentItem.getMvccVersion());
+		Assert.assertEquals(
+			existingCommerceShipmentItem.getExternalReferenceCode(),
+			newCommerceShipmentItem.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingCommerceShipmentItem.getCommerceShipmentItemId(),
 			newCommerceShipmentItem.getCommerceShipmentItemId());
@@ -238,6 +244,15 @@ public class CommerceShipmentItemPersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_ERC() throws Exception {
+		_persistence.countByC_ERC(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_ERC(0L, "null");
+
+		_persistence.countByC_ERC(0L, (String)null);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceShipmentItem newCommerceShipmentItem =
 			addCommerceShipmentItem();
@@ -266,11 +281,11 @@ public class CommerceShipmentItemPersistenceTest {
 	protected OrderByComparator<CommerceShipmentItem> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"CommerceShipmentItem", "mvccVersion", true,
-			"commerceShipmentItemId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "commerceShipmentId", true,
-			"commerceOrderItemId", true, "commerceInventoryWarehouseId", true,
-			"quantity", true);
+			"externalReferenceCode", true, "commerceShipmentItemId", true,
+			"groupId", true, "companyId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true,
+			"commerceShipmentId", true, "commerceOrderItemId", true,
+			"commerceInventoryWarehouseId", true, "quantity", true);
 	}
 
 	@Test
@@ -580,6 +595,17 @@ public class CommerceShipmentItemPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				commerceShipmentItem, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "commerceInventoryWarehouseId"));
+
+		Assert.assertEquals(
+			Long.valueOf(commerceShipmentItem.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(
+				commerceShipmentItem, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "companyId"));
+		Assert.assertEquals(
+			commerceShipmentItem.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				commerceShipmentItem, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 	}
 
 	protected CommerceShipmentItem addCommerceShipmentItem() throws Exception {
@@ -588,6 +614,9 @@ public class CommerceShipmentItemPersistenceTest {
 		CommerceShipmentItem commerceShipmentItem = _persistence.create(pk);
 
 		commerceShipmentItem.setMvccVersion(RandomTestUtil.nextLong());
+
+		commerceShipmentItem.setExternalReferenceCode(
+			RandomTestUtil.randomString());
 
 		commerceShipmentItem.setGroupId(RandomTestUtil.nextLong());
 

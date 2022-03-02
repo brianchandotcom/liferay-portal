@@ -21,7 +21,9 @@ import java.util.Date;
 
 /**
  * @author Riccardo Ferrari
+ * @deprecated As of Cavanaugh (7.4.x)
  */
+@Deprecated
 public interface AnalyticsBatchClient {
 
 	public File downloadResource(

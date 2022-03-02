@@ -164,12 +164,26 @@ definition {
 	}
 
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Label blank"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotLeaveRelationshipLabelBlank {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147736",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects 147736");
 
-		// TODO LPS-147736 CannotLeaveRelationshipLabelBlank pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147736");
+
+		ObjectAdmin.gotoRelationshipsTab();
+
+		ObjectAdmin.addObjectRelationshipViaUI(
+			label = "",
+			name = "relationship",
+			object = "CustomObject",
+			type = "One to Many");
+
+		AssertElementPresent(locator1 = "ObjectAdmin#LABEL_OBJECT_RELATIONSHIP_REQUIRED");
 	}
 
 	@description = "LPS-135397 - Verify that it is not possible to leave a layout with a Relationship tab on first place by removing the fields tab"
@@ -182,12 +196,25 @@ definition {
 	}
 
 	@description = "LPS-139803 - It is not possible to select a Relationship field for the Object Entry Title"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotSelectRelationshipFieldForObjectEntryTitle {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147735",
+			objectName = "CustomObject147735",
+			pluralLabelName = "Custom Objects 147735");
 
-		// TODO LPS-147735 CannotSelectRelationshipFieldForObjectEntryTitle pending implementation
+		ObjectAdmin.addObjectRelationshipViaAPI(
+			objectName_1 = "CustomObject147735",
+			objectName_2 = "CustomObject147735",
+			relationshipLabel = "Relationship",
+			relationshipName = "relationship",
+			relationshipType = "oneToMany");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147735");
+
+		ObjectAdmin.viewOptionTitleField(optionNameNotPresent = "Relationship");
 	}
 
 	@description = "LPS-145393 - Verify it is possible to add a One-to-Many relation from a Custom Object scoped by Site entry with a Native Object entry"

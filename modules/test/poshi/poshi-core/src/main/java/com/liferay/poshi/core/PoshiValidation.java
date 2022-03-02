@@ -1840,7 +1840,17 @@ public class PoshiValidation {
 	private static String _getFilePath(PoshiElement poshiElement) {
 		URL filePathURL = poshiElement.getFilePathURL();
 
-		return filePathURL.getPath();
+		String filePath = filePathURL.getPath();
+
+		if (OSDetector.isWindows()) {
+			if (filePath.startsWith("/")) {
+				filePath = filePath.substring(1);
+			}
+
+			filePath = StringUtil.replace(filePath, "/", "\\");
+		}
+
+		return filePath;
 	}
 
 	private static void _throwExceptions() throws Exception {

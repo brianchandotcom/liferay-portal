@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceService;
@@ -96,7 +97,8 @@ public class DuplicateSegmentsExperienceMVCActionCommand
 						themeDisplay.getLocale(), "copy-of-x",
 						segmentsExperience.getName(
 							LocaleUtil.getSiteDefault()))),
-				segmentsExperience.isActive(), serviceContext);
+				segmentsExperience.isActive(), new UnicodeProperties(true),
+				serviceContext);
 
 		SegmentsExperienceUtil.copySegmentsExperienceData(
 			themeDisplay.getPlid(), _commentManager,

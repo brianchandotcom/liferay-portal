@@ -35,23 +35,9 @@ export default function PublishButton() {
 		onClose: () => setOpenPublishModal(false),
 	});
 
-	const handleSubmit = (event) => {
-		if (config.tokenReuseEnabled) {
-			if (formRef.current) {
-				formRef.current.submit();
-			}
-
-			return;
-		}
-
-		if (
-			!confirm(
-				Liferay.Language.get(
-					'once-published,-these-changes-will-affect-all-instances-of-the-site-using-these-properties'
-				)
-			)
-		) {
-			event.preventDefault();
+	const handleSubmit = () => {
+		if (formRef.current) {
+			formRef.current.submit();
 		}
 	};
 
@@ -75,72 +61,66 @@ export default function PublishButton() {
 					disabled={config.pending}
 					displayType="primary"
 					onClick={
-						config.tokenReuseEnabled
-							? hasStyleErrors
-								? () => setOpenStyleErrorsModal(true)
-								: () => setOpenPublishModal(true)
-							: handleSubmit
+						hasStyleErrors
+							? () => setOpenStyleErrorsModal(true)
+							: () => setOpenPublishModal(true)
 					}
 					small
-					type={config.tokenReuseEnabled ? 'button' : 'submit'}
+					type="button"
 				>
 					{Liferay.Language.get('publish')}
 				</ClayButton>
 			</form>
 
-			{config.tokenReuseEnabled && (
-				<>
-					{openStyleErrorsModal && hasStyleErrors && (
-						<StyleErrorsModal
-							onCloseModal={() => setOpenStyleErrorsModal(false)}
-							onSubmit={() => {
-								setOpenStyleErrorsModal(false);
-								setOpenPublishModal(true);
-							}}
-						/>
-					)}
+			{openStyleErrorsModal && hasStyleErrors && (
+				<StyleErrorsModal
+					onCloseModal={() => setOpenStyleErrorsModal(false)}
+					onSubmit={() => {
+						setOpenStyleErrorsModal(false);
+						setOpenPublishModal(true);
+					}}
+				/>
+			)}
 
-					{openPublishModal && (
-						<ClayModal
-							aria-label={Liferay.Language.get('publishing-info')}
-							observer={observerPublishModal}
-							status="info"
-						>
-							<ClayModal.Header>
-								{Liferay.Language.get('publishing-info')}
-							</ClayModal.Header>
+			{openPublishModal && (
+				<ClayModal
+					aria-label={Liferay.Language.get('publishing-info')}
+					observer={observerPublishModal}
+					status="info"
+				>
+					<ClayModal.Header>
+						{Liferay.Language.get('publishing-info')}
+					</ClayModal.Header>
 
-							<ClayModal.Body>
-								<p>
-									{Liferay.Language.get(
-										'once-published-these-changes-will-affect-all-instances-of-the-site-using-these-properties-do-you-want-to-publish-now'
-									)}
-								</p>
-							</ClayModal.Body>
+					<ClayModal.Body>
+						<p>
+							{Liferay.Language.get(
+								'once-published-these-changes-will-affect-all-instances-of-the-site-using-these-properties-do-you-want-to-publish-now'
+							)}
+						</p>
+					</ClayModal.Body>
 
-							<ClayModal.Footer
-								last={
-									<ClayButton.Group spaced>
-										<ClayButton
-											displayType="secondary"
-											onClick={onClosePublishModal}
-										>
-											{Liferay.Language.get('cancel')}
-										</ClayButton>
+					<ClayModal.Footer
+						last={
+							<ClayButton.Group spaced>
+								<ClayButton
+									displayType="secondary"
+									onClick={onClosePublishModal}
+								>
+									{Liferay.Language.get('cancel')}
+								</ClayButton>
 
-										<ClayButton
-											displayType="info"
-											onClick={handleSubmit}
-											type="submit"
-										>
-											{Liferay.Language.get('continue')}
-										</ClayButton>
-									</ClayButton.Group>
-								}
-							/>
-						</ClayModal>
-					)}
-				</>
+								<ClayButton
+									displayType="info"
+									onClick={handleSubmit}
+									type="submit"
+								>
+									{Liferay.Language.get('continue')}
+								</ClayButton>
+							</ClayButton.Group>
+						}
+					/>
+				</ClayModal>
 			)}
 		</>
 	);

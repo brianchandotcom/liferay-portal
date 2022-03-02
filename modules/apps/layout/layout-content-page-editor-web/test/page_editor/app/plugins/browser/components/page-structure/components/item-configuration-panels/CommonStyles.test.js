@@ -162,7 +162,7 @@ describe('CommonStyles', () => {
 	it('shows common styles panel', async () => {
 		const {getByText} = renderComponent({});
 
-		expect(getByText('common-styles')).toBeInTheDocument();
+		expect(getByText('margin')).toBeInTheDocument();
 	});
 
 	it('allows changing common styles for a given viewport', async () => {

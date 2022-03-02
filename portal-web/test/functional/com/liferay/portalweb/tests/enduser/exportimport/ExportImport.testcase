@@ -1104,6 +1104,84 @@ definition {
 		AssetPublisherPortlet.viewConfigureSiteScope(siteName = "Site Name B");
 	}
 
+	@description = "This is a test for LPS-142076. Can import site with the 'Copy as new' option in the Update data section."
+	@priority = "3"
+	test ExportImportSiteWithCopyAsNew {
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Site Name");
+		}
+
+		task ("Add a Web Content Display widget to new page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Site Name",
+				widgetName = "Web Content Display");
+		}
+
+		task ("Add a web content with a link as content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(webContentTitle = "WC WebContent 1");
+
+			CKEditor.addSourceContent(content = '''
+<p>Test: <a href="/web/test-site-name/test-site-name">Link</a></p>
+''');
+
+			PortletEntry.publish();
+		}
+
+		task ("Add the second web content") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentNavigator.gotoAddCP();
+
+			WebContent.addCP(
+				webContentContent = "WC WebContent Content",
+				webContentTitle = "WC WebContent 2");
+
+			PortletEntry.publish();
+		}
+
+		task ("Select display the second Web Content article in WCD") {
+			Navigator.gotoSitePage(
+				pageName = "Test Site Name",
+				siteName = "Test Site Name");
+
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent 2");
+		}
+
+		task ("Export the site") {
+			LAR.openExportAdmin(siteScopeName = "test-site-name");
+
+			LexiconEntry.gotoAdd();
+
+			LAR.exportWithAssertionOnSuccess();
+
+			LAR.downloadLar();
+		}
+
+		task ("Add a new site based on Blank Site") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
+
+		task ("Import the lar into the new site") {
+			var larFileName = LAR.getLarFileName();
+
+			LAR.importSiteCP(
+				copyAsNew = "true",
+				larFileName = "${larFileName}",
+				siteName = "Site Name");
+		}
+
+		task ("Assert the console no errors occur") {
+			AssertConsoleTextNotPresent(value1 = "Could not execute JDBC batch update");
+		}
+	}
+
 	@description = "This is a use case for LPS-88331."
 	@priority = "3"
 	test ExportImportSiteWithNestedUploadField {

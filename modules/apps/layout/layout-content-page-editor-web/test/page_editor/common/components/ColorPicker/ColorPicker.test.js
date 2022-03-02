@@ -20,9 +20,6 @@ import {StoreContextProvider} from '../../../../../src/main/resources/META-INF/r
 import {StyleErrorsContextProvider} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StyleErrorsContext';
 import {ColorPicker} from '../../../../../src/main/resources/META-INF/resources/page_editor/common/components/ColorPicker/ColorPicker';
 
-const CONFIG = {
-	tokenReuseEnabled: true,
-};
 const COLOR_PICKER_CLASS = '.page-editor__color-picker';
 const INPUT_NAME = 'Color Picker';
 const TOKEN_VALUES = {
@@ -72,7 +69,6 @@ const renderColorPicker = ({
 		<StoreContextProvider initialState={{}} reducer={(state) => state}>
 			<StyleErrorsContextProvider>
 				<ColorPicker
-					config={CONFIG}
 					editedTokenValues={editedTokenValues}
 					field={field}
 					onValueSelect={onValueSelect}

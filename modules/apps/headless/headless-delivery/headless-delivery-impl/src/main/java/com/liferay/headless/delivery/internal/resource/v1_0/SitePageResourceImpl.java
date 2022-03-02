@@ -296,7 +296,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 
 		return _segmentsExperienceService.fetchSegmentsExperience(
-			layout.getGroupId(), segmentsExperienceKey);
+			layout.getGroupId(), segmentsExperienceKey,
+			_portal.getClassNameId(Layout.class), layout.getPlid());
 	}
 
 	private List<SegmentsExperience> _getSegmentsExperiences(Layout layout)

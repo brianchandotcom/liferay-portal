@@ -120,6 +120,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -475,12 +476,8 @@ public class StructuredContentResourceImpl
 				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
-				ServiceContextRequestUtil.createServiceContext(
-					structuredContent.getTaxonomyCategoryIds(),
-					structuredContent.getKeywords(),
-					_getExpandoBridgeAttributes(structuredContent),
-					journalArticle.getGroupId(), contextHttpServletRequest,
-					structuredContent.getViewableByAsString())));
+				_createServiceContext(
+					journalArticle.getGroupId(), structuredContent)));
 	}
 
 	@Override
@@ -665,13 +662,27 @@ public class StructuredContentResourceImpl
 				localDateTime.getDayOfMonth(), localDateTime.getYear(),
 				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
-				null,
-				ServiceContextRequestUtil.createServiceContext(
-					structuredContent.getTaxonomyCategoryIds(),
-					structuredContent.getKeywords(),
-					_getExpandoBridgeAttributes(structuredContent), groupId,
-					contextHttpServletRequest,
-					structuredContent.getViewableByAsString())));
+				null, _createServiceContext(groupId, structuredContent)));
+	}
+
+	private ServiceContext _createServiceContext(
+		long groupId, StructuredContent structuredContent) {
+
+		ServiceContext serviceContext =
+			ServiceContextRequestUtil.createServiceContext(
+				structuredContent.getTaxonomyCategoryIds(),
+				structuredContent.getKeywords(),
+				_getExpandoBridgeAttributes(structuredContent), groupId,
+				contextHttpServletRequest,
+				structuredContent.getViewableByAsString());
+
+		Optional.ofNullable(
+			structuredContent.getPriority()
+		).ifPresent(
+			serviceContext::setAssetPriority
+		);
+
+		return serviceContext;
 	}
 
 	private UnsafeConsumer<BooleanQuery, Exception>
@@ -1084,12 +1095,8 @@ public class StructuredContentResourceImpl
 				localDateTime.getHour(), localDateTime.getMinute(), 0, 0, 0, 0,
 				0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
 				null,
-				ServiceContextRequestUtil.createServiceContext(
-					structuredContent.getTaxonomyCategoryIds(),
-					structuredContent.getKeywords(),
-					_getExpandoBridgeAttributes(structuredContent),
-					journalArticle.getGroupId(), contextHttpServletRequest,
-					structuredContent.getViewableByAsString())));
+				_createServiceContext(
+					journalArticle.getGroupId(), structuredContent)));
 	}
 
 	private void _validateContentFields(

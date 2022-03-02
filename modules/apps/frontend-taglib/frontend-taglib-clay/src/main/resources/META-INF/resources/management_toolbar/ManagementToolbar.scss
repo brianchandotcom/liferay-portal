@@ -3,6 +3,7 @@
 .management-bar-separator-left::before {
 	background-color: $gray-500;
 	content: '';
+	flex-shrink: 0;
 	height: 16px;
 	margin: 0 10px;
 	width: 1px;

@@ -941,7 +941,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					</antcall>
 				</try>
 				<catch>
-					<echo message="${exception.message}" />
+					<echo>${exception.message}</echo>
 
 					<fail message="Unable to prepare test build." />
 				</catch>
@@ -960,7 +960,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					</antcall>
 				</try>
 				<catch>
-					<echo message="${exception.message}" />
+					<echo>${exception.message}</echo>
 
 					<fail message="Unable to prepare test build." />
 				</catch>
@@ -2873,6 +2873,10 @@ log.sanitizer.enabled=false</echo>
 							<print-test-class-group test.class.group.index="${axis.variable}" />
 
 							<echo>Executing Gradle task in directory "modules": testIntegration.</echo>
+
+							<antcall target="prepare-portal-test-digital-signature-properties" />
+
+							<ant dir="portal-test" inheritAll="false" target="deploy" />
 
 							<setup-test-batch-testable-tomcat test.portal.bundle.version="@{test.portal.bundle.version}" />
 
@@ -7209,7 +7213,7 @@ ${output.content}</echo>
 						<if>
 							<isset property="build.rest.diff.txt.content" />
 							<then>
-								<echo message="${build.rest.diff.txt.content}" />
+								<echo>${build.rest.diff.txt.content}</echo>
 
 								<fail>
 .
@@ -7458,7 +7462,7 @@ tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/
 						<if>
 							<isset property="build.services.diff.txt.content" />
 							<then>
-								<echo message="${build.services.diff.txt.content}" />
+								<echo>${build.services.diff.txt.content}</echo>
 
 								<fail>
 .

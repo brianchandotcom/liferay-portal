@@ -121,7 +121,7 @@ definition {
 			userEmailAddress = "userea@liferay.com");
 
 		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACTION_CHECKBOX",
+			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACTION_CHECKBOX",
 			permissionDefinitionValue = "",
 			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
 			permissionNavigationValue = "Custom Objects",
@@ -443,7 +443,7 @@ definition {
 			userEmailAddress = "userea@liferay.com");
 
 		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACTION_CHECKBOX",
+			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACTION_CHECKBOX",
 			permissionDefinitionValue = "",
 			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
 			permissionNavigationValue = "Custom Objects",
@@ -844,7 +844,7 @@ definition {
 			portlet = "Roles");
 
 		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
 			permissionDefinitionValue = "",
 			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
 			permissionNavigationValue = "Custom Objects",
@@ -1251,7 +1251,7 @@ definition {
 			userEmailAddress = "userea@liferay.com");
 
 		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACTION_CHECKBOX",
+			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACTION_CHECKBOX",
 			permissionDefinitionValue = "",
 			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
 			permissionNavigationValue = "Custom Objects",
@@ -1317,7 +1317,7 @@ definition {
 			userEmailAddress = "userea@liferay.com");
 
 		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
 			permissionDefinitionValue = "",
 			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
 			permissionNavigationValue = "Custom Objects",
@@ -1381,7 +1381,7 @@ definition {
 			portlet = "Roles");
 
 		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
 			permissionDefinitionValue = "",
 			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
 			permissionNavigationValue = "Custom Objects",
@@ -1477,7 +1477,7 @@ definition {
 			userEmailAddress = "userea@liferay.com");
 
 		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
 			permissionDefinitionValue = "",
 			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
 			permissionNavigationValue = "Custom Objects",
@@ -1541,7 +1541,7 @@ definition {
 			portlet = "Roles");
 
 		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
 			permissionDefinitionValue = "",
 			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
 			permissionNavigationValue = "Custom Objects",
@@ -1766,7 +1766,7 @@ definition {
 			portlet = "Roles");
 
 		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
 			permissionDefinitionValue = "",
 			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
 			permissionNavigationValue = "Custom Objects",
@@ -2058,7 +2058,7 @@ definition {
 			portlet = "Roles");
 
 		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
+			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX",
 			permissionDefinitionValue = "",
 			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
 			permissionNavigationValue = "Custom Objects",

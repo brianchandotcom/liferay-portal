@@ -293,12 +293,14 @@ function appendXMLAssignments(
 
 function appendXMLNotifications(buffer, notifications, nodeName) {
 	if (notifications && notifications.name && notifications.name.length > 0) {
-		const description = notifications.description;
-		const executionType = notifications.executionType;
-		const notificationTypes = notifications.notificationTypes;
-		const recipients = notifications.recipients;
-		const template = notifications.template;
-		const templateLanguage = notifications.templateLanguage;
+		const {
+			description,
+			executionType,
+			notificationTypes,
+			recipients,
+			template,
+			templateLanguage,
+		} = notifications;
 
 		const xmlNotification = XMLUtil.createObj(nodeName || 'notification');
 
@@ -341,6 +343,18 @@ function appendXMLNotifications(buffer, notifications, nodeName) {
 				)
 			) {
 				recipientsAttrs.receptionType = recipients[index].receptionType;
+			}
+
+			if (
+				isObject(recipients[index]) &&
+				!isObjectEmpty(recipients[index])
+			) {
+				appendXMLAssignments(
+					buffer,
+					recipients[index],
+					'recipients',
+					recipientsAttrs
+				);
 			}
 
 			if (executionType) {
@@ -529,17 +543,7 @@ function serializeDefinition(
 
 		buffer.push(XMLUtil.create('metadata', cdata(jsonStringify(metadata))));
 
-		if (item.data.actions) {
-			appendXMLActions(buffer, item.data.actions);
-		}
-
-		if (item.data.assignments) {
-			appendXMLAssignments(buffer, item.data.assignments);
-		}
-
-		if (item.data.notifications) {
-			appendXMLNotifications(buffer, item.data.notifications);
-		}
+		appendXMLActions(buffer, item.data.actions, item.data.notifications);
 
 		appendXMLTaskTimers(buffer, item.data.taskTimers);
 
@@ -569,6 +573,10 @@ function serializeDefinition(
 		if (xmlType === 'condition') {
 			buffer.push(XMLUtil.create('scriptLanguage', DEFAULT_LANGUAGE));
 		}
+
+		appendXMLAssignments(buffer, item.data.assignments);
+
+		appendXMLTaskTimers(buffer, item.data.taskTimers);
 
 		const nodeTransitions = transitions.filter(
 			(transition) => transition.source === id

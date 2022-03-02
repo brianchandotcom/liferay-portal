@@ -25,8 +25,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.admin.web.internal.constants.SiteAdminConstants;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.RenderResponse;
 
@@ -38,8 +40,10 @@ import javax.servlet.http.HttpServletRequest;
 public class AddGroupDisplayContext {
 
 	public AddGroupDisplayContext(
-		HttpServletRequest httpServletRequest, RenderResponse renderResponse) {
+		boolean disablePrivateLayouts, HttpServletRequest httpServletRequest,
+		RenderResponse renderResponse) {
 
+		_disablePrivateLayouts = disablePrivateLayouts;
 		_httpServletRequest = httpServletRequest;
 		_renderResponse = renderResponse;
 	}
@@ -138,6 +142,21 @@ public class AddGroupDisplayContext {
 		return false;
 	}
 
+	public boolean isShowLayoutSetVisibilityPrivateCheckbox() {
+		if (_disablePrivateLayouts) {
+			return false;
+		}
+
+		if (Objects.equals(
+				ParamUtil.getString(_httpServletRequest, "creationType"),
+				SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private long _getParentGroupId() {
 		if (_parentGroupId != null) {
 			return _parentGroupId;
@@ -152,6 +171,7 @@ public class AddGroupDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddGroupDisplayContext.class);
 
+	private final boolean _disablePrivateLayouts;
 	private long[] _groupsIds;
 	private final HttpServletRequest _httpServletRequest;
 	private Long _parentGroupId;

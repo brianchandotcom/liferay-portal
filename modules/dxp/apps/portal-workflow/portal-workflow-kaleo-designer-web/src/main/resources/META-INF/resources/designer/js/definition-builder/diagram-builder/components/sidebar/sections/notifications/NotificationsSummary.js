@@ -11,20 +11,31 @@
 
 import ClayButton from '@clayui/button';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
 
+import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import SidebarPanel from '../../SidebarPanel';
+import CurrentNotifications from './CurrentNotifications';
 
 const NotificationsSummary = ({setContentName}) => {
+	const {selectedItem} = useContext(DiagramBuilderContext);
+
 	return (
 		<SidebarPanel panelTitle={Liferay.Language.get('notifications')}>
-			<ClayButton
-				className="mr-3"
-				displayType="secondary"
-				onClick={() => setContentName('notifications')}
-			>
-				{Liferay.Language.get('new')}
-			</ClayButton>
+			{!selectedItem?.data.notifications ? (
+				<ClayButton
+					className="mr-3"
+					displayType="secondary"
+					onClick={() => setContentName('notifications')}
+				>
+					{Liferay.Language.get('new')}
+				</ClayButton>
+			) : (
+				<CurrentNotifications
+					notifications={selectedItem.data.notifications}
+					setContentName={setContentName}
+				/>
+			)}
 		</SidebarPanel>
 	);
 };

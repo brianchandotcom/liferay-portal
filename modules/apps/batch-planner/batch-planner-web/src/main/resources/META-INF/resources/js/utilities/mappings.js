@@ -21,17 +21,17 @@ export function getAvailableMappings(newMappings, fileFields, dbFields) {
 
 	const dbFieldNames = dbFields?.map((dbField) => dbField.name) || [];
 
-	if (newMappings) {
-		Object.entries(newMappings).forEach(
-			([mappedDbField, mappedFileField]) => {
-				if (
-					fileFields?.includes(mappedFileField) &&
-					dbFieldNames?.includes(mappedDbField)
-				) {
-					availableMappings[mappedDbField] = mappedFileField;
-				}
+	const newMappingsEntries = Object.entries(newMappings || {});
+
+	if (newMappingsEntries.length) {
+		newMappingsEntries.forEach(([mappedDbField, mappedFileField]) => {
+			if (
+				fileFields?.includes(mappedFileField) &&
+				dbFieldNames?.includes(mappedDbField)
+			) {
+				availableMappings[mappedDbField] = mappedFileField;
 			}
-		);
+		});
 	}
 	else {
 		dbFieldNames.map((dbFieldName) => {

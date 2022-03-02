@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -67,7 +68,8 @@ import javax.sql.DataSource;
  */
 public abstract class CacheMissEntryLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements CacheMissEntryLocalService, IdentifiableOSGiService {
+	implements CacheMissEntryLocalService, CTService<CacheMissEntry>,
+			   IdentifiableOSGiService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:

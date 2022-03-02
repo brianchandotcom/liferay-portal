@@ -87,7 +87,6 @@ public class ObjectDefinitionModelResourcePermission
 				ObjectDefinition.class.getName(),
 				objectDefinition.getObjectDefinitionId(),
 				objectDefinition.getUserId(), actionId) ||
-			(permissionChecker.getUserId() == objectDefinition.getUserId()) ||
 			permissionChecker.hasPermission(
 				null, ObjectDefinition.class.getName(),
 				objectDefinition.getPrimaryKey(), actionId)) {

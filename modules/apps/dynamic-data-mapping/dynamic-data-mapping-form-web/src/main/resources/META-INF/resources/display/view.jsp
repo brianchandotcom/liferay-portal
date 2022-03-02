@@ -65,11 +65,7 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 		<%
 		DDMFormInstance formInstance = ddmFormDisplayContext.getFormInstance();
 
-		boolean expired = false;
-
-		if (ddmFormDisplayContext.isExpirationDateEnabled()) {
-			expired = DDMFormInstanceExpirationStatusUtil.isFormExpired(formInstance, timeZone);
-		}
+		boolean expired = DDMFormInstanceExpirationStatusUtil.isFormExpired(formInstance, timeZone);
 
 		boolean preview = ddmFormDisplayContext.isPreview();
 		boolean showSuccessPage = ddmFormDisplayContext.isShowSuccessPage();

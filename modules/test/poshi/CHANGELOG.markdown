@@ -1,5 +1,15 @@
 # Poshi Runner Change Log
 
+## 1.0.337
+
+### Documentation
+
+* [POSHI-259](https://issues.liferay.com/browse/POSHI-259) - Finalize poshi standalone for usage
+
+### Validation
+
+* [POSHI-258](https://issues.liferay.com/browse/POSHI-258) -  Throws Poshi validation error on winOS
+
 ## 1.0.336
 
 ### Documentation

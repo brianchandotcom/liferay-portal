@@ -17,6 +17,8 @@ package com.liferay.translation.translator.aws.internal.configuration.persistenc
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.translation.translator.aws.internal.configuration.AWSTranslatorConfiguration;
 
@@ -49,7 +51,10 @@ public class AWSTranslatorConfigurationModelListener
 				GetterUtil.getString(properties.get("secretKey")))) {
 
 			throw new ConfigurationModelListenerException(
-				"access-key-and-secret-key-must-not-be-empty",
+				ResourceBundleUtil.getString(
+					ResourceBundleUtil.getBundle(
+						LocaleThreadLocal.getThemeDisplayLocale(), getClass()),
+					"access-key-and-secret-key-must-not-be-empty"),
 				AWSTranslatorConfiguration.class, getClass(), properties);
 		}
 	}

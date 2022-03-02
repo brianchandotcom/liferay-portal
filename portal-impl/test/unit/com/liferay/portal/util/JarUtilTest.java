@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -70,7 +71,11 @@ public class JarUtilTest {
 			String message = exception.getMessage();
 
 			Assert.assertTrue(
-				message, message.contains("due to integrity check failure"));
+				message,
+				message.contains(
+					StringBundler.concat(
+						"because ", _SHA1_FAKE, " does not equal ",
+						_SHA1_REAL)));
 		}
 		finally {
 			Files.deleteIfExists(tempFilePath);

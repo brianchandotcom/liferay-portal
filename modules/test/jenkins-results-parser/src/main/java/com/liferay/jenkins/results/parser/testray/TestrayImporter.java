@@ -585,7 +585,8 @@ public class TestrayImporter {
 			String jobName = job.getJobName();
 
 			if ((testrayProductVersion == null) &&
-				jobName.equals("test-qa-websites-functional-daily")) {
+				(jobName.equals("test-qa-websites-functional-daily") ||
+				 jobName.equals("test-qa-websites-functional-weekly"))) {
 
 				testrayProductVersion =
 					testrayProject.createTestrayProductVersion("1.x");

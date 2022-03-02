@@ -9,12 +9,45 @@
  * distribution rights of the Software.
  */
 
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
+import {DiagramBuilderContext} from '../../../../DiagramBuilderContext';
 import NotificationsInfo from './NotificationsInfo';
 
 const Notifications = (props) => {
+	const {selectedItem} = useContext(DiagramBuilderContext);
+
+	const {notifications} = selectedItem?.data;
 	const [sections, setSections] = useState([{identifier: `${Date.now()}-0`}]);
+
+	useEffect(() => {
+		const sectionsData = [];
+
+		if (notifications) {
+			for (let i = 0; i < notifications.name.length; i++) {
+				let notificationTypes = notifications.notificationTypes[i];
+
+				if (notificationTypes === undefined) {
+					notificationTypes = '';
+				}
+
+				sectionsData.push({
+					description: notifications.description[i],
+					executionType: notifications.executionType[i],
+					identifier: `${Date.now()}-${i}`,
+					name: notifications.name[i],
+					notificationTypes,
+					recipients: notifications.recipients[i],
+					template: notifications.template[i],
+					templateLanguage: notifications.templateLanguage[i],
+				});
+			}
+
+			setSections(sectionsData);
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return sections.map(({identifier}, index) => (
 		<NotificationsInfo

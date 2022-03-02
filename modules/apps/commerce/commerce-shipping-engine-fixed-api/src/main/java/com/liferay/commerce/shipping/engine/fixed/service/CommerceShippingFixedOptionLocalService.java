@@ -242,6 +242,12 @@ public interface CommerceShippingFixedOptionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShippingFixedOption>
+		getCommerceOrderTypeCommerceShippingFixedOptions(
+			long companyId, long commerceOrderTypeId,
+			long commerceShippingMethodId);
+
 	/**
 	 * Returns the commerce shipping fixed option with the primary key.
 	 *

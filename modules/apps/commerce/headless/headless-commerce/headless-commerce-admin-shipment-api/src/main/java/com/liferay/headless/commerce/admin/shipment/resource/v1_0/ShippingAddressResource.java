@@ -54,6 +54,14 @@ public interface ShippingAddressResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public ShippingAddress getShipmentByExternalReferenceCodeShippingAddress(
+			String externalReferenceCode)
+		throws Exception;
+
+	public ShippingAddress patchShipmentByExternalReferenceCodeShippingAddress(
+			String externalReferenceCode, ShippingAddress shippingAddress)
+		throws Exception;
+
 	public ShippingAddress getShipmentShippingAddress(Long shipmentId)
 		throws Exception;
 

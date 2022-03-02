@@ -151,7 +151,7 @@ public class VulcanFeature implements Feature {
 				_expressionConvert, _filterParserProvider, _language, _portal));
 		featureContext.register(
 			new MultipartBodyMessageBodyReader(
-				_dlValidator.getMaxAllowableSize()));
+				_dlValidator.getMaxAllowableSize(null)));
 
 		_nestedFieldsWriterInterceptor = new NestedFieldsWriterInterceptor(
 			_bundleContext);

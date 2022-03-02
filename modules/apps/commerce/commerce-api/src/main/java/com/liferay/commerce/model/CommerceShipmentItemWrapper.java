@@ -45,6 +45,7 @@ public class CommerceShipmentItemWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("mvccVersion", getMvccVersion());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("commerceShipmentItemId", getCommerceShipmentItemId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -67,6 +68,13 @@ public class CommerceShipmentItemWrapper
 
 		if (mvccVersion != null) {
 			setMvccVersion(mvccVersion);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long commerceShipmentItemId = (Long)attributes.get(
@@ -216,6 +224,16 @@ public class CommerceShipmentItemWrapper
 	}
 
 	/**
+	 * Returns the external reference code of this commerce shipment item.
+	 *
+	 * @return the external reference code of this commerce shipment item
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
+	}
+
+	/**
 	 * Returns the group ID of this commerce shipment item.
 	 *
 	 * @return the group ID of this commerce shipment item
@@ -360,6 +378,16 @@ public class CommerceShipmentItemWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the external reference code of this commerce shipment item.
+	 *
+	 * @param externalReferenceCode the external reference code of this commerce shipment item
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

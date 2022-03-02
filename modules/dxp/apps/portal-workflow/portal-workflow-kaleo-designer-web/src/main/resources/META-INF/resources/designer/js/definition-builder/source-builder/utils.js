@@ -9,6 +9,9 @@
  * distribution rights of the Software.
  */
 
+import {removeNewLine, replaceTabSpaces} from '../util/utils';
+import {DEFAULT_LANGUAGE} from './constants';
+
 export function parseActions(node) {
 	const actions = {};
 
@@ -74,14 +77,89 @@ export function parseAssignments(node) {
 	return assignments;
 }
 
-function parseProperty(actions, item, property) {
-	const newProperty =
-		property === 'execution-type' ? 'executionType' : property;
+export function parseNotifications(node) {
+	const notifications = {notificationTypes: [], recipients: []};
 
-	if (Array.isArray(actions[newProperty])) {
-		actions[newProperty].push(item[property]);
+	node.notifications.forEach((item, index) => {
+		notifications.description = parseProperty(
+			notifications,
+			item,
+			'description'
+		);
+		notifications.executionType = parseProperty(
+			notifications,
+			item,
+			'execution-type'
+		);
+		notifications.name = parseProperty(notifications, item, 'name');
 
-		return actions[newProperty];
+		let notificationTypes = parseProperty(
+			notifications,
+			item,
+			'notification-type'
+		);
+
+		if (Array.isArray(notificationTypes[0])) {
+			notificationTypes = notificationTypes[0];
+		}
+
+		notifications.notificationTypes[index] = notificationTypes;
+
+		notifications.template = parseProperty(notifications, item, 'template');
+		notifications.templateLanguage = parseProperty(
+			notifications,
+			item,
+			'template-language'
+		);
+
+		if (item.assignees) {
+			notifications.recipients[index] = {
+				assignmentType: ['taskAssignees'],
+			};
+		}
+		else if (item.roles) {
+			notifications.recipients[index] = {
+				assignmentType: ['roleId'],
+				roleId: replaceTabSpaces(removeNewLine(item.roles[0])),
+			};
+		}
+		else if (item['scripted-recipient']) {
+			let script = item['scripted-recipient'][0];
+
+			script = replaceTabSpaces(
+				removeNewLine(script.substring(0, script.length - 13))
+			);
+
+			notifications.recipients[index] = {
+				assignmentType: ['scriptedRecipient'],
+				script: [script],
+				scriptLanguage: [DEFAULT_LANGUAGE],
+			};
+		}
+		else if (item.user) {
+			notifications.recipients[index] = {
+				assignmentType: ['user'],
+			};
+		}
+	});
+
+	return notifications;
+}
+
+function parseProperty(data, item, property) {
+	let newProperty = property;
+
+	if (property === 'execution-type') {
+		newProperty = 'executionType';
+	}
+	else if (property === 'template-language') {
+		newProperty = 'templateLanguage';
+	}
+
+	if (Array.isArray(data[newProperty])) {
+		data[newProperty].push(item[property]);
+
+		return data[newProperty];
 	}
 
 	return new Array(item[property]);

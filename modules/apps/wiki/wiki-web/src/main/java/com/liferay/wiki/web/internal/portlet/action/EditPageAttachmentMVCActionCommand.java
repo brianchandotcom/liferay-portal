@@ -350,12 +350,16 @@ public class EditPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 					errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
 				}
 				else if (exception instanceof FileSizeException) {
+					FileSizeException fileSizeException =
+						(FileSizeException)exception;
+
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-file-with-a-valid-file-size-no-" +
 							"larger-than-x",
 						LanguageUtil.formatStorageSize(
-							_dlValidator.getMaxAllowableSize(),
+							fileSizeException.getMaxSize(),
 							themeDisplay.getLocale()));
+
 					errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 				}
 

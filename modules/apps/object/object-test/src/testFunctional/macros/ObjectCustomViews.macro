@@ -32,6 +32,12 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro assertEmptyStateTextOnViewBuilder {
+		AssertElementPresent(
+			key_text = "${text}",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_EMPTY_STATE_TEXT");
+	}
+
 	macro assertObjectView {
 		var key_viewLabel = "${viewLabel}";
 
@@ -56,6 +62,12 @@ definition {
 		Type(
 			locator1 = "ObjectCustomViews#OBJECT_VIEWS_NAME",
 			value1 = "${name}");
+	}
+
+	macro goToViewsBuilderTab {
+		if (IsElementPresent(locator1 = "ObjectCustomViews#VIEW_BUILDER_TAB")) {
+			Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_TAB");
+		}
 	}
 
 	macro goToViewsDetails {

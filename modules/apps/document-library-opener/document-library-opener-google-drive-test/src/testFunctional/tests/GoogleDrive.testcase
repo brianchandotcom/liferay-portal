@@ -14,34 +14,7 @@ definition {
 
 		User.firstLoginPG();
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "Google Drive",
-			configurationScope = "Virtual Instance Scope");
-
-		var googleClientId = PropsUtil.get("google.client.id.2");
-
-		Type(
-			key_text = "clientId",
-			locator1 = "TextArea#ANY",
-			value1 = "${googleClientId}");
-
-		var googleClientSecret = PropsUtil.get("google.client.secret.2");
-
-		Type(
-			key_text = "clientSecret",
-			locator1 = "TextArea#ANY",
-			value1 = "${googleClientSecret}");
-
-		ScrollWebElementIntoView(locator1 = "Button#SAVE");
-
-		AssertClick(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
-
-		VerifyElementPresent(locator1 = "Message#SUCCESS");
+		Google.enableGoogleDrive();
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",
@@ -87,8 +60,8 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
 
 		Google.signIn(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"),
 			windowTitle = "Documents and Media Page - Liferay");
 
 		GoogleDoc.saveAndExit();
@@ -219,8 +192,8 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
 
 		Google.signIn(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"),
 			windowTitle = "Documents and Media Page - Liferay");
 
 		GoogleDoc.addContent(
@@ -248,8 +221,8 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
 
 		Google.signIn(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"),
 			windowTitle = "Documents and Media Page - Liferay");
 
 		GoogleDoc.discardChanges();
@@ -301,8 +274,8 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
 
 		Google.signIn(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"),
 			windowTitle = "Documents and Media Page - Liferay");
 
 		GoogleDoc.discardChanges();
@@ -320,8 +293,8 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
 
 		Google.signIn(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"),
 			windowTitle = "Documents and Media Page - Liferay");
 
 		GoogleDoc.saveAndExit();
@@ -373,8 +346,8 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Slide");
 
 		Google.signIn(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"),
 			windowTitle = "Documents and Media Page - Liferay");
 
 		GoogleDoc.saveAndExit();
@@ -439,8 +412,8 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
 
 		Google.signIn(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"),
 			windowTitle = "Documents and Media Page - Liferay");
 
 		GoogleDoc.saveAndExit();
@@ -555,8 +528,8 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
 
 		Google.signIn(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"),
 			windowTitle = "Documents and Media Page - Liferay");
 
 		GoogleDoc.saveAndExit();
@@ -615,8 +588,8 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
 
 		Google.signIn(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"),
 			windowTitle = "Documents and Media Page - Liferay");
 
 		GoogleDoc.saveAndExit();
@@ -740,8 +713,8 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
 
 		Google.signIn(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"),
 			windowTitle = "Documents and Media Page - Liferay");
 
 		GoogleDoc.saveAndExit();
@@ -800,8 +773,8 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Slide");
 
 		Google.signIn(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"),
 			windowTitle = "Documents and Media Page - Liferay");
 
 		GoogleDoc.saveAndExit();
@@ -883,8 +856,8 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Sheet");
 
 		Google.signIn(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"),
 			windowTitle = "Documents and Media Page - Liferay");
 
 		Navigator.openURL();
@@ -906,8 +879,8 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Slide");
 
 		Google.signIn(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.2"),
+			userPassword = PropsUtil.get("email.password.2"),
 			windowTitle = "Documents and Media Page - Liferay");
 
 		Navigator.openURL();
@@ -973,8 +946,8 @@ definition {
 		DMNavigator.gotoAddDocumentTypePG(dmDocumentTypeName = "Google Doc");
 
 		Google.signIn(
-			userEmailAddress = PropsUtil.get("email.address.3"),
-			userPassword = PropsUtil.get("email.password.3"),
+			userEmailAddress = PropsUtil.get("email.address.4"),
+			userPassword = PropsUtil.get("email.password.4"),
 			windowTitle = "Documents and Media Page - Liferay");
 
 		Open.openInTheNewTab(locator1 = "http://localhost:8080");

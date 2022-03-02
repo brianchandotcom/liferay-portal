@@ -15,6 +15,7 @@ import {DiagramBuilderContext} from '../../../../../DiagramBuilderContext';
 
 const AssetCreator = () => {
 	const {setSelectedItem} = useContext(DiagramBuilderContext);
+
 	useEffect(() => {
 		setSelectedItem((previousValue) => ({
 			...previousValue,

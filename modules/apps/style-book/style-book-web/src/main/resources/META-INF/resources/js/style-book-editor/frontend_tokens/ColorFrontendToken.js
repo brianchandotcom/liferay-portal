@@ -12,23 +12,9 @@
  * details.
  */
 
-import ClayColorPicker from '@clayui/color-picker';
-import ClayForm, {ClayInput} from '@clayui/form';
-import {
-	ColorPicker,
-	convertRGBtoHex,
-} from '@liferay/layout-content-page-editor-web';
-import {debounce} from 'frontend-js-web';
+import {ColorPicker} from '@liferay/layout-content-page-editor-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useRef, useState} from 'react';
-
-import {config} from '../../style-book-editor/config';
-import {useId} from '../useId';
-
-const debouncedOnValueSelect = debounce(
-	(onValueSelect, value) => onValueSelect(value),
-	300
-);
+import React from 'react';
 
 export default function ColorFrontendToken({
 	frontendToken,
@@ -37,98 +23,14 @@ export default function ColorFrontendToken({
 	tokenValues,
 	value,
 }) {
-	const {label} = frontendToken;
-
-	const [customColors, setCustomColors] = useState([]);
-	const [color, setColor] = useState(value || '');
-	const ref = useRef(null);
-	const id = useId();
-
-	useEffect(() => {
-		if (ref.current) {
-			ref.current.style.setProperty(
-				'--style-book-color-picker-color',
-				color
-			);
-		}
-
-		if (!config.tokenReuseEnabled) {
-			if (color.startsWith('#')) {
-				setCustomColors([color]);
-			}
-			else {
-				const element = document.createElement('div');
-
-				element.style.background = color;
-				element.style.display = 'none';
-
-				document.body.appendChild(element);
-
-				const backgroundColor = element.style.background;
-
-				setCustomColors([
-					backgroundColor
-						? convertRGBtoHex(
-								window.getComputedStyle(element).backgroundColor
-						  )
-						: 'FFFFFF',
-				]);
-
-				element.parentElement.removeChild(element);
-			}
-		}
-	}, [color]);
-
-	return config.tokenReuseEnabled ? (
+	return (
 		<ColorPicker
-			config={config}
 			editedTokenValues={frontendTokensValues}
 			field={frontendToken}
 			onValueSelect={onValueSelect}
 			tokenValues={tokenValues}
 			value={value}
 		/>
-	) : (
-		<ClayForm.Group
-			className="style-book-editor__color-frontend-token"
-			ref={ref}
-			small
-		>
-			<label htmlFor={id}>{label}</label>
-
-			<ClayInput.Group small>
-				<ClayInput.GroupItem prepend shrink>
-					<ClayColorPicker
-						colors={customColors}
-						dropDownContainerProps={{
-							className: 'cadmin',
-						}}
-						onColorsChange={setCustomColors}
-						onValueChange={(color) => {
-							setColor(`#${color}`);
-							debouncedOnValueSelect(onValueSelect, `#${color}`);
-						}}
-						showHex={false}
-						showPalette={false}
-						value={color?.replace('#', '') ?? ''}
-					/>
-				</ClayInput.GroupItem>
-
-				<ClayInput.GroupItem append>
-					<ClayInput
-						id={id}
-						onChange={(event) => {
-							setColor(event.target.value);
-							debouncedOnValueSelect(
-								onValueSelect,
-								event.target.value
-							);
-						}}
-						value={color}
-					/>
-				</ClayInput.GroupItem>
-			</ClayInput.Group>
-		</ClayForm.Group>
 	);
 }
 

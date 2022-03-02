@@ -106,7 +106,7 @@ definition {
 			User.logoutAndLoginPG(userLoginEmailAddress = "userea@liferay.com");
 		}
 
-		task ("Edit inline text of Heading fragment then submit for aplication") {
+		task ("Edit inline text of Heading fragment then submit for application") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");

@@ -26,9 +26,13 @@ import SidebarPanelHeader from '../../../common/components/SidebarPanelHeader';
 import ContentsSidebar from './contents/components/ContentsSidebar';
 import PageStructureSidebar from './page-structure/components/PageStructureSidebar';
 
+const TABS_IDS = {
+	pageContent: 1,
+	pageElements: 0,
+};
+
 const TABS = [
 	{
-		className: 'page-editor__page-structure__content',
 		component: <PageStructureSidebar />,
 		label: Liferay.Language.get('page-elements'),
 	},
@@ -41,7 +45,7 @@ const TABS = [
 export default function BrowserSidebar({title}) {
 	const activeItemId = useActiveItemId();
 	const activeItemType = useActiveItemType();
-	const [activeTabId, setActiveTabId] = useState(0);
+	const [activeTabId, setActiveTabId] = useState(TABS_IDS.pageElements);
 	const tabIdNamespace = useId();
 
 	const getTabId = (tabId) => `${tabIdNamespace}tab${tabId}`;
@@ -49,7 +53,7 @@ export default function BrowserSidebar({title}) {
 
 	useEffect(() => {
 		if (activeItemId && activeItemType !== ITEM_TYPES.editable) {
-			setActiveTabId(0);
+			setActiveTabId(TABS_IDS.pageElements);
 		}
 	}, [activeItemType, activeItemId]);
 
@@ -85,7 +89,7 @@ export default function BrowserSidebar({title}) {
 				{TABS.map((tab, index) => (
 					<ClayTabs.TabPane
 						aria-labelledby={getTabId(index)}
-						className={tab.className}
+						className="h-100"
 						id={getTabPanelId(index)}
 						key={index}
 					>

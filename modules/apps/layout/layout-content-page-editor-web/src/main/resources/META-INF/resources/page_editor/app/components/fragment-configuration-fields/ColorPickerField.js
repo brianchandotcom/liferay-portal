@@ -15,7 +15,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {config} from '../../../app/config/index';
 import {ColorPicker} from '../../../common/components/ColorPicker/ColorPicker';
 import {useStyleBook} from '../../../plugins/page-design-options/hooks/useStyleBook';
 import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
@@ -26,7 +25,6 @@ export function ColorPickerField({field, onValueSelect, value}) {
 
 	return Object.keys(tokenValues).length ? (
 		<ColorPicker
-			config={config}
 			field={field}
 			onValueSelect={onValueSelect}
 			tokenValues={tokenValues}

@@ -175,6 +175,18 @@ public class LayoutStructureUtil {
 			layoutPageTemplateStructure.getData(segmentsExperienceId));
 	}
 
+	public static LayoutStructure getLayoutStructure(
+			long groupId, long plid, String segmentsExperienceKey)
+		throws PortalException {
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			LayoutPageTemplateStructureLocalServiceUtil.
+				fetchLayoutPageTemplateStructure(groupId, plid, true);
+
+		return LayoutStructure.of(
+			layoutPageTemplateStructure.getData(segmentsExperienceKey));
+	}
+
 	public static boolean isPortletMarkedForDeletion(
 			long groupId, long plid, String portletId,
 			long segmentsExperienceId)

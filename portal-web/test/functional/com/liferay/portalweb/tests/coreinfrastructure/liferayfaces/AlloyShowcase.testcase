@@ -43,6 +43,7 @@ definition {
 		}
 	}
 
+	@ignore = "true"
 	@priority = "5"
 	test ButtonSmoke {
 

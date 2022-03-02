@@ -81,15 +81,21 @@ public interface CommerceShipmentItemLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceShipmentItem addCommerceShipmentItem(
-			long commerceShipmentId, long commerceOrderItemId,
-			long commerceInventoryWarehouseId, int quantity,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long commerceShipmentId,
+			long commerceOrderItemId, long commerceInventoryWarehouseId,
+			int quantity, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceShipmentItem addDeliverySubscriptionCommerceShipmentItem(
 			long groupId, long userId, long commerceShipmentId,
 			long commerceOrderItemId)
+		throws PortalException;
+
+	public CommerceShipmentItem addOrUpdateCommerceShipmentItem(
+			String externalReferenceCode, long commerceShipmentId,
+			long commerceOrderItemId, long commerceInventoryWarehouseId,
+			int quantity, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -241,6 +247,26 @@ public interface CommerceShipmentItemLocalService
 		long commerceShipmentId, long commerceOrderItemId,
 		long commerceInventoryWarehouseId);
 
+	/**
+	 * Returns the commerce shipment item with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce shipment item's external reference code
+	 * @return the matching commerce shipment item, or <code>null</code> if a matching commerce shipment item could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceShipmentItem
+		fetchCommerceShipmentItemByExternalReferenceCode(
+			long companyId, String externalReferenceCode);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceShipmentItemByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceShipmentItem fetchCommerceShipmentItemByReferenceCode(
+		long companyId, String externalReferenceCode);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -254,6 +280,19 @@ public interface CommerceShipmentItemLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceShipmentItem getCommerceShipmentItem(
 			long commerceShipmentItemId)
+		throws PortalException;
+
+	/**
+	 * Returns the commerce shipment item with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce shipment item's external reference code
+	 * @return the matching commerce shipment item
+	 * @throws PortalException if a matching commerce shipment item could not be found
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceShipmentItem getCommerceShipmentItemByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	/**

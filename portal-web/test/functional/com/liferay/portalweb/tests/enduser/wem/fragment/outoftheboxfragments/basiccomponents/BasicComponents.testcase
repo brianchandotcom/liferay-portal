@@ -462,10 +462,10 @@ definition {
 		}
 
 		task ("View the Default is shown in Text Color field") {
-			AssertTextEquals(
-				key_text = "Text Color",
-				locator1 = "TextInput#ANY",
-				value1 = "Default");
+			AssertVisible(
+				key_fieldLabel = "Text Color",
+				key_text = "Default",
+				locator1 = "Button#ANY_WITH_LABEL");
 		}
 
 		task ("Remove the Paragraph") {

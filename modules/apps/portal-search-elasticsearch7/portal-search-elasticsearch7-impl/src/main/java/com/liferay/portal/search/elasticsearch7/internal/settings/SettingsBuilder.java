@@ -18,7 +18,7 @@ import org.apache.commons.lang.StringUtils;
 
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.settings.SettingsException;
-import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.xcontent.XContentType;
 
 /**
  * @author André de Oliveira

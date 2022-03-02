@@ -37,7 +37,9 @@ public class AccountRoleRoleServiceWrapper extends RoleServiceWrapper {
 	public Role fetchRole(long roleId) throws PortalException {
 		Role role = _roleLocalService.fetchRole(roleId);
 
-		if (Objects.equals(role.getType(), RoleConstants.TYPE_ACCOUNT)) {
+		if ((role != null) &&
+			Objects.equals(role.getType(), RoleConstants.TYPE_ACCOUNT)) {
+
 			_accountRoleService.getAccountRoleByRoleId(roleId);
 
 			return role;

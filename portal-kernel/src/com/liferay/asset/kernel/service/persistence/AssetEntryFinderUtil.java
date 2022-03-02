@@ -32,10 +32,6 @@ public class AssetEntryFinderUtil {
 		return getFinder().findEntries(entryQuery);
 	}
 
-	public static double findPriorityByC_C(long classNameId, long classPK) {
-		return getFinder().findPriorityByC_C(classNameId, classPK);
-	}
-
 	public static AssetEntryFinder getFinder() {
 		if (_finder == null) {
 			_finder = (AssetEntryFinder)PortalBeanLocatorUtil.locate(

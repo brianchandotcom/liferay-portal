@@ -16,6 +16,8 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.source.formatter.check.comparator.ElementComparator;
 import com.liferay.source.formatter.check.util.SourceUtil;
 import com.liferay.source.formatter.util.FileUtil;
@@ -239,7 +241,7 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 	private List<String> _getTargetNames(
 			String buildFileName, String fileName, List<String> targetNames,
 			boolean importFile)
-		throws DocumentException, IOException {
+		throws IOException {
 
 		if (buildFileName.contains(StringPool.OPEN_CURLY_BRACE)) {
 			return null;
@@ -260,7 +262,18 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 			return null;
 		}
 
-		Document document = SourceUtil.readXML(FileUtil.read(file));
+		Document document = null;
+
+		try {
+			document = SourceUtil.readXML(FileUtil.read(file));
+		}
+		catch (DocumentException documentException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(documentException);
+			}
+
+			return _getTargetNames(buildFileName, fileName, targetNames, true);
+		}
 
 		Element rootElement = document.getRootElement();
 
@@ -289,6 +302,9 @@ public class XMLBuildFileCheck extends BaseFileCheck {
 
 		return targetNames;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		XMLBuildFileCheck.class);
 
 	private static final Pattern _importFilePattern = Pattern.compile(
 		"<import file=\"(.*)\"");

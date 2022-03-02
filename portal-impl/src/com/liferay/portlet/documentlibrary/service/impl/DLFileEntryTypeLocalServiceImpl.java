@@ -621,7 +621,7 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		return _dlFileEntryLocalService.updateFileEntry(
 			serviceContext.getUserId(), dlFileEntry.getFileEntryId(), null,
-			null, null, null, null,
+			null, null, null, null, null,
 			DLVersionNumberIncrease.fromMajorVersion(false),
 			getDefaultFileEntryTypeId(folderId), null, null, null, 0, null,
 			null, serviceContext);

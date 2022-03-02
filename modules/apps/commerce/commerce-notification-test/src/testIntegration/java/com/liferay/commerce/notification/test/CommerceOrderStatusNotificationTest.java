@@ -216,7 +216,7 @@ public class CommerceOrderStatusNotificationTest {
 				commerceInventoryWarehouses.get(0);
 
 			_commerceShipmentItemLocalService.addCommerceShipmentItem(
-				commerceShipment.getCommerceShipmentId(),
+				null, commerceShipment.getCommerceShipmentId(),
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				commerceOrderItem.getQuantity(), _serviceContext);

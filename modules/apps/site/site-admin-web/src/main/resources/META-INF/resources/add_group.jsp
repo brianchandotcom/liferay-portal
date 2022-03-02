@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AddGroupDisplayContext addGroupDisplayContext = new AddGroupDisplayContext(request, renderResponse);
+AddGroupDisplayContext addGroupDisplayContext = (AddGroupDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <clay:container-fluid>
@@ -30,6 +30,10 @@ AddGroupDisplayContext addGroupDisplayContext = new AddGroupDisplayContext(reque
 	>
 		<liferay-frontend:edit-form-body>
 			<aui:input autoFocus="<%= true %>" label="name" name="name" required="<%= true %>" />
+
+			<c:if test="<%= addGroupDisplayContext.isShowLayoutSetVisibilityPrivateCheckbox() %>">
+				<aui:input label="create-default-pages-as-private-available-only-to-members-if-unchecked-they-will-be-public-available-to-anyone" name="layoutSetVisibilityPrivate" type="checkbox" />
+			</c:if>
 
 			<c:if test="<%= addGroupDisplayContext.hasRequiredVocabularies() %>">
 				<aui:fieldset cssClass="mb-4">

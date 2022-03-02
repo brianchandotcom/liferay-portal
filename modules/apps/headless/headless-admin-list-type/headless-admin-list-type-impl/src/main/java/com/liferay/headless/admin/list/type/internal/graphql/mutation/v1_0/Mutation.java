@@ -120,6 +120,21 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public ListTypeDefinition patchListTypeDefinition(
+			@GraphQLName("listTypeDefinitionId") Long listTypeDefinitionId,
+			@GraphQLName("listTypeDefinition") ListTypeDefinition
+				listTypeDefinition)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_listTypeDefinitionResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			listTypeDefinitionResource ->
+				listTypeDefinitionResource.patchListTypeDefinition(
+					listTypeDefinitionId, listTypeDefinition));
+	}
+
+	@GraphQLField
 	public ListTypeDefinition updateListTypeDefinition(
 			@GraphQLName("listTypeDefinitionId") Long listTypeDefinitionId,
 			@GraphQLName("listTypeDefinition") ListTypeDefinition

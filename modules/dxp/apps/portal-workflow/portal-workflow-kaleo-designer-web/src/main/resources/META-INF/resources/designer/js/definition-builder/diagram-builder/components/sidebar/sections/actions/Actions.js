@@ -16,6 +16,7 @@ import ActionsInfo from './ActionsInfo';
 
 const Actions = (props) => {
 	const {selectedItem} = useContext(DiagramBuilderContext);
+
 	const {actions} = selectedItem?.data;
 	const [sections, setSections] = useState([{identifier: `${Date.now()}-0`}]);
 

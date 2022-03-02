@@ -18,7 +18,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
+import com.liferay.portal.kernel.service.permission.RolePermission;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -184,8 +184,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 		// Permissions
 
 		try {
-			velocityContext.put(
-				"rolePermission", RolePermissionUtil.getRolePermission());
+			velocityContext.put("rolePermission", _rolePermission);
 		}
 		catch (SecurityException securityException) {
 			_log.error(securityException);
@@ -215,6 +214,9 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 
 	private static volatile VelocityEngineConfiguration
 		_velocityEngineConfiguration;
+
+	@Reference
+	private RolePermission _rolePermission;
 
 	private final List<TemplateContextContributor>
 		_templateContextContributors = new ArrayList<>();

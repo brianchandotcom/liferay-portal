@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.shipment.internal.resource.v1_0;
 
+import com.liferay.commerce.exception.NoSuchShipmentException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.CommerceAddressService;
@@ -37,6 +38,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false,
@@ -46,6 +48,36 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class ShippingAddressResourceImpl
 	extends BaseShippingAddressResourceImpl implements NestedFieldSupport {
+
+	@NestedField(parentClass = Shipment.class, value = "shippingAddress")
+	@Override
+	public ShippingAddress getShipmentByExternalReferenceCodeShippingAddress(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceShipment commerceShipment =
+			_commerceShipmentService.fetchCommerceShipment(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipment == null) {
+			throw new NoSuchShipmentException(
+				"Unable to find shipment with external reference code " +
+					externalReferenceCode);
+		}
+
+		CommerceAddress commerceAddress =
+			_commerceAddressService.fetchCommerceAddress(
+				commerceShipment.getCommerceAddressId());
+
+		if (commerceAddress == null) {
+			return new ShippingAddress();
+		}
+
+		return _shippingAddressDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				commerceAddress.getCommerceAddressId(),
+				contextAcceptLanguage.getPreferredLocale()));
+	}
 
 	@NestedField(parentClass = Shipment.class, value = "shippingAddress")
 	@Override
@@ -67,6 +99,33 @@ public class ShippingAddressResourceImpl
 		return _shippingAddressDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
 				commerceAddress.getCommerceAddressId(),
+				contextAcceptLanguage.getPreferredLocale()));
+	}
+
+	@NestedField(parentClass = Shipment.class, value = "shippingAddress")
+	@Override
+	public ShippingAddress patchShipmentByExternalReferenceCodeShippingAddress(
+			String externalReferenceCode, ShippingAddress shippingAddress)
+		throws Exception {
+
+		CommerceShipment commerceShipment =
+			_commerceShipmentService.fetchCommerceShipment(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipment == null) {
+			throw new NoSuchShipmentException(
+				"Unable to find shipment with external reference code " +
+					externalReferenceCode);
+		}
+
+		commerceShipment = ShippingAddressUtil.updateShippingAddress(
+			_commerceAddressService, _commerceShipmentService, commerceShipment,
+			_countryService, _regionService, shippingAddress,
+			_serviceContextHelper);
+
+		return _shippingAddressDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				commerceShipment.getCommerceAddressId(),
 				contextAcceptLanguage.getPreferredLocale()));
 	}
 

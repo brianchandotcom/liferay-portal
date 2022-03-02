@@ -69,9 +69,8 @@ export default function BaseRole({
 	const handleItemClick = (item) => {
 		setFieldValues({id: item.id, name: item.name});
 		setActive(false);
-		if (updateSelectedItem) {
-			updateSelectedItem(item);
-		}
+
+		updateSelectedItem(item);
 	};
 
 	return (

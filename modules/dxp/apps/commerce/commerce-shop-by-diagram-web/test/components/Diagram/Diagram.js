@@ -165,7 +165,7 @@ describe('Diagram', () => {
 
 			const image = tooltip.querySelector('.sticker-img');
 			const link = tooltip.querySelector('a');
-			const title = tooltip.querySelector('h4');
+			const title = tooltip.querySelector('.component-subtitle ');
 
 			const productName =
 				frontStorePinsData[0].mappedProduct.productName[

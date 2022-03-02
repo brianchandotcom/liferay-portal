@@ -50,6 +50,11 @@
 	<td>//h6[contains(text(), '${title}')]//..//..//button[contains(., '${option}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PROPERTY_PRESENT_MOBILE</td>
+	<td>//div[text()='Property'] </td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -16,7 +16,7 @@ import {defaultLanguageId} from '../../../../constants';
 import BaseNode from '../BaseNode';
 
 export default function StateNode({
-	data: {actions, description, label, newNode} = {},
+	data: {actions, description, label, newNode, notifications} = {},
 	descriptionSidebar,
 	id,
 	...otherProps
@@ -37,6 +37,7 @@ export default function StateNode({
 			id={id}
 			label={label}
 			newNode={newNode}
+			notifications={notifications}
 			type="state"
 			{...otherProps}
 		/>

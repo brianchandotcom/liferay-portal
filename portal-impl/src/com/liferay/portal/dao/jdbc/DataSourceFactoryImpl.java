@@ -167,14 +167,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		}
 
 		if (Validator.isNotNull(jndiName)) {
-			Thread currentThread = Thread.currentThread();
-
-			ClassLoader classLoader = currentThread.getContextClassLoader();
-
-			Class<?> clazz = classLoader.getClass();
-
-			currentThread.setContextClassLoader(clazz.getClassLoader());
-
 			try {
 				Properties jndiEnvironmentProperties = PropsUtil.getProperties(
 					PropsKeys.JNDI_ENVIRONMENT, true);
@@ -185,9 +177,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			}
 			catch (Exception exception) {
 				_log.error("Unable to lookup " + jndiName, exception);
-			}
-			finally {
-				currentThread.setContextClassLoader(classLoader);
 			}
 		}
 		else {

@@ -14,8 +14,12 @@
 
 package com.liferay.headless.commerce.admin.shipment.internal.resource.v1_0;
 
+import com.liferay.commerce.exception.NoSuchShipmentException;
+import com.liferay.commerce.exception.NoSuchShipmentItemException;
+import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.service.CommerceShipmentItemService;
+import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Shipment;
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem;
 import com.liferay.headless.commerce.admin.shipment.internal.dto.v1_0.converter.ShipmentItemDTOConverter;
@@ -39,6 +43,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false,
@@ -53,6 +58,70 @@ public class ShipmentItemResourceImpl
 	public void deleteShipmentItem(Long shipmentItemId) throws Exception {
 		_commerceShipmentItemService.deleteCommerceShipmentItem(
 			shipmentItemId, Boolean.FALSE);
+	}
+
+	@Override
+	public void deleteShipmentItemByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceShipmentItem commerceShipmentItem =
+			_commerceShipmentItemService.fetchCommerceShipmentItem(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipmentItem == null) {
+			throw new NoSuchShipmentItemException(
+				"Unable to find shipment item with external reference code " +
+					externalReferenceCode);
+		}
+
+		_commerceShipmentItemService.deleteCommerceShipmentItem(
+			commerceShipmentItem.getCommerceShipmentItemId(), Boolean.FALSE);
+	}
+
+	@Override
+	public ShipmentItem getShipmentByExternalReferenceCodeItem(
+			String externalReferenceCode)
+		throws Exception {
+
+		CommerceShipmentItem commerceShipmentItem =
+			_commerceShipmentItemService.fetchCommerceShipmentItem(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipmentItem == null) {
+			throw new NoSuchShipmentItemException(
+				"Unable to find shipment item with external reference code " +
+					externalReferenceCode);
+		}
+
+		return _toShipmentItem(commerceShipmentItem);
+	}
+
+	@Override
+	public Page<ShipmentItem> getShipmentByExternalReferenceCodeItemsPage(
+			String externalReferenceCode, Pagination pagination)
+		throws Exception {
+
+		CommerceShipment commerceShipment =
+			_commerceShipmentService.fetchCommerceShipment(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipment == null) {
+			throw new NoSuchShipmentException(
+				"Unable to find shipment with external reference code " +
+					externalReferenceCode);
+		}
+
+		return Page.of(
+			transform(
+				_commerceShipmentItemService.getCommerceShipmentItems(
+					commerceShipment.getCommerceShipmentId(),
+					pagination.getStartPosition(), pagination.getEndPosition(),
+					null),
+				this::_toShipmentItem),
+			pagination,
+			_commerceShipmentItemService.getCommerceShipmentItemsCount(
+				commerceShipment.getCommerceShipmentId()));
 	}
 
 	@Override
@@ -99,17 +168,87 @@ public class ShipmentItemResourceImpl
 	}
 
 	@Override
+	public ShipmentItem patchShipmentItemByExternalReferenceCode(
+			String externalReferenceCode, ShipmentItem shipmentItem)
+		throws Exception {
+
+		CommerceShipmentItem commerceShipmentItem =
+			_commerceShipmentItemService.fetchCommerceShipmentItem(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipmentItem == null) {
+			throw new NoSuchShipmentItemException(
+				"Unable to find shipment item with external reference code " +
+					externalReferenceCode);
+		}
+
+		_commerceShipmentItemService.updateCommerceShipmentItem(
+			commerceShipmentItem.getCommerceShipmentItemId(),
+			GetterUtil.get(
+				shipmentItem.getWarehouseId(),
+				commerceShipmentItem.getCommerceInventoryWarehouseId()),
+			GetterUtil.get(
+				shipmentItem.getQuantity(),
+				commerceShipmentItem.getQuantity()));
+
+		return _toShipmentItem(commerceShipmentItem);
+	}
+
+	@Override
 	public ShipmentItem postShipmentItem(
 			Long shipmentId, ShipmentItem shipmentItem)
 		throws Exception {
 
 		CommerceShipmentItem commerceShipmentItem =
 			_commerceShipmentItemService.addCommerceShipmentItem(
-				shipmentId, shipmentItem.getOrderItemId(),
-				shipmentItem.getWarehouseId(), shipmentItem.getQuantity(),
+				shipmentItem.getExternalReferenceCode(), shipmentId,
+				shipmentItem.getOrderItemId(), shipmentItem.getWarehouseId(),
+				shipmentItem.getQuantity(),
 				_serviceContextHelper.getServiceContext(contextUser));
 
 		return _toShipmentItem(commerceShipmentItem);
+	}
+
+	@Override
+	public ShipmentItem putShipmentByExternalReferenceCodeItem(
+			String externalReferenceCode, ShipmentItem shipmentItem)
+		throws Exception {
+
+		CommerceShipment commerceShipment =
+			_commerceShipmentService.fetchCommerceShipment(
+				contextCompany.getCompanyId(),
+				shipmentItem.getShipmentExternalReferenceCode());
+
+		if (commerceShipment == null) {
+			commerceShipment = _commerceShipmentService.getCommerceShipment(
+				GetterUtil.getLong(shipmentItem.getShipmentId()));
+		}
+
+		long defaultOrderItemId = 0;
+		int defaultQuantity = 0;
+		long defaultWarehouseId = 0;
+
+		CommerceShipmentItem commerceShipmentItem =
+			_commerceShipmentItemService.fetchCommerceShipmentItem(
+				contextCompany.getCompanyId(), externalReferenceCode);
+
+		if (commerceShipmentItem != null) {
+			defaultOrderItemId = commerceShipmentItem.getCommerceOrderItemId();
+			defaultQuantity = commerceShipmentItem.getQuantity();
+			defaultWarehouseId =
+				commerceShipmentItem.getCommerceInventoryWarehouseId();
+		}
+
+		return _toShipmentItem(
+			_commerceShipmentItemService.addOrUpdateCommerceShipmentItem(
+				externalReferenceCode, commerceShipment.getCommerceShipmentId(),
+				GetterUtil.getLong(
+					shipmentItem.getOrderItemId(), defaultOrderItemId),
+				GetterUtil.getLong(
+					shipmentItem.getWarehouseId(), defaultWarehouseId),
+				GetterUtil.getInteger(
+					shipmentItem.getQuantity(), defaultQuantity),
+				_serviceContextHelper.getServiceContext()));
 	}
 
 	private Map<String, Map<String, String>> _getActions(
@@ -160,6 +299,9 @@ public class ShipmentItemResourceImpl
 
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;
+
+	@Reference
+	private CommerceShipmentService _commerceShipmentService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

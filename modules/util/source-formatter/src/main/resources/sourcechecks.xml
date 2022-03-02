@@ -1436,6 +1436,11 @@
 			<category name="Styling" />
 			<description name="Checks the DTD version in `*.xml` file." />
 		</check>
+		<check name="XMLEchoMessageCheck">
+			<category name="Styling" />
+			<description name="Checks the echo message attributes in `*.xml` file." />
+			<property name="enabled" value="false" />
+		</check>
 		<check name="XMLFriendlyURLRoutesFileCheck">
 			<category name="Styling" />
 			<description name="Performs several checks on `*-routes.xml` file." />

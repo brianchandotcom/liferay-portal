@@ -93,6 +93,7 @@ export default function CollectionPagination({
 
 					<ClayPaginationWithBasicItems
 						activePage={activePage}
+						disableEllipsis={config.paginationImprovementsEnabled}
 						onPageChange={onPageChange}
 						totalPages={
 							(Number.isFinite(totalPages) && totalPages) || 1

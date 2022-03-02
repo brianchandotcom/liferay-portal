@@ -39,7 +39,7 @@
 						<contains string="${modules.symbolic.names.list}" substring="@{nexus.module}" />
 					</not>
 					<then>
-						<echo append="true" file="${nexus.reports.dir}/stale.modules.txt" message="${line.separator}@{nexus.module}" />
+						<echo append="true" file="${nexus.reports.dir}/stale.modules.txt">${line.separator}@{nexus.module}</echo>
 					</then>
 				</if>
 			</sequential>
@@ -81,11 +81,11 @@
 	</target>
 
 	<target depends="prepare-report-dir" name="init-report-files">
-		<echo file="${nexus.reports.dir}/available.modules.txt" message="The following modules were found in ${repository.name}:${line.separator}" />
+		<echo file="${nexus.reports.dir}/available.modules.txt">The following modules were found in ${repository.name}:${line.separator}</echo>
 
-		<echo file="${nexus.reports.dir}/stale.modules.txt" message="The following modules were found in ${repository.name}, but do not currently exist in the source code:${line.separator}" />
+		<echo file="${nexus.reports.dir}/stale.modules.txt">The following modules were found in ${repository.name}, but do not currently exist in the source code:${line.separator}</echo>
 
-		<echo file="${nexus.reports.dir}/unavailable.modules.txt" message="The following modules were not found in ${repository.name}:${line.separator}" />
+		<echo file="${nexus.reports.dir}/unavailable.modules.txt">The following modules were not found in ${repository.name}:${line.separator}</echo>
 	</target>
 
 	<target name="prepare-report-dir">

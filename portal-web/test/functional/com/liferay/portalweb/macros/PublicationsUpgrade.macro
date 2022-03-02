@@ -1,0 +1,58 @@
+definition {
+
+	macro viewOutOfDatePublications {
+		AssertTextPresent(
+			key_publicationName = "Production",
+			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
+			value1 = "Production");
+
+		PublicationsNavigator.openPublicationsAdmin();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		var key_publicationName = "Publication 2 Name";
+
+		AssertTextEquals(
+			locator1 = "Publications#LIST_OUT_OF_DATE_STATUS",
+			value1 = "Out of Date");
+
+		PublicationsNavigator.gotoReviewChanges(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication 2 Name");
+
+		AssertVisible(
+			key_warningMessage = "This publication was created on a previous Liferay version. You cannot publish, revert, or make additional changes. You can only view or delete it.",
+			locator1 = "Message#WARNING_SPECIFIC");
+
+		PublicationsNavigator.openPublicationsAdmin();
+
+		Publications.deletePublication(publicationName = "Publication 2 Name");
+
+		PublicationsNavigator.openPublicationsHistory();
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+		AssertVisible(
+			key_publicationName = "Publication 1 Name",
+			locator1 = "Publications#LIST_REVERT_DISABLED");
+	}
+
+	macro viewPublicationsUserRolePermissions {
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		AssertClick(
+			key_itemName = "Publications User",
+			locator1 = "ListGroupItem#ITEM_NAME_LINK",
+			value1 = "Publications User");
+
+		Navigator.gotoNavItem(navItem = "Define Permissions");
+
+		Role.viewPermissionCP(
+			permissionDefinitionValue = "View Control Panel Menu",
+			permissionNavigationValue = "Portal");
+	}
+
+}

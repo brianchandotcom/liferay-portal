@@ -97,25 +97,29 @@ definition {
 	@description = "Assert the conflict can be manually resovled on Calendar by discarding within Publications."
 	@priority = "4"
 	test ResolveConflictingPublicationsByDiscarding {
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Calendar Page");
 
 		JSONLayout.updateLayoutTemplateOfPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Calendar Page",
 			layoutTemplate = "1 Column");
 
-		Navigator.gotoPage(pageName = "Calendar Page");
+		Navigator.gotoSitePage(
+			pageName = "Calendar Page",
+			siteName = "Site Name");
 
 		Portlet.addPG(portletName = "Calendar");
 
 		CalendarNavigator.gotoAddEvent();
 
-		CalendarEvent.add(
+		CalendarEvent.addRegularInCustomSite(
 			eventTitle = "Publication Calendar Event Title",
-			eventType = "All Day",
-			pageName = "Calendar Page");
+			pageName = "Calendar Page",
+			siteName = "Site Name");
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
@@ -133,7 +137,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Calendar Event",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "Publication Calendar Event Title Edit",
 			changeType = "Modified",
 			changeUser = "Test Test");
@@ -142,11 +146,13 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name 2");
 
-		Navigator.gotoPage(pageName = "Calendar Page");
+		Navigator.gotoSitePage(
+			pageName = "Calendar Page",
+			siteName = "Site Name");
 
 		CalendarEvent.delete();
 
-		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "site-name");
 
 		RecycleBin.deleteCP(
 			assetName = "Publication Calendar Event Title",
@@ -156,7 +162,7 @@ definition {
 
 		PublicationsChanges.viewChanges(
 			changeCategory = "Calendar Event",
-			changeSite = "Guest",
+			changeSite = "Site Name",
 			changeTitle = "Publication Calendar Event Title",
 			changeType = "Deleted",
 			changeUser = "Test Test");

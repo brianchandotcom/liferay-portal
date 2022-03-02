@@ -2047,4 +2047,28 @@ definition {
 		Questions.viewPaginationResults(results = "Showing 9 to 10 of 10");
 	}
 
+	@description = "This test checks that the javascript in the user name will not be executed when viewing a question on page."
+	@priority = "3"
+	test XSSIsNotExecutedWhenViewingUsernameInQuestion {
+		JSONMBMessage.addCategory(
+			categoryDescription = "Description",
+			categoryName = "Questions Test Category",
+			userEmailAddress = "test@liferay.com");
+
+		Navigator.openURL();
+
+		UserBar.gotoDropdownItem(dropdownItem = "Account Settings");
+
+		User.editUserInformation(userLastNameEdit = '''Test<script>alert('hello!')</script>''');
+
+		Questions.askQuestionFillingTheMandatoryFields(
+			contentField = "Content AddQuestion",
+			layoutName = "questions-page",
+			siteURLKey = "guest",
+			titleField = "Title AddQuestion",
+			topicName = "questions-test-category");
+
+		AssertAlertNotPresent();
+	}
+
 }

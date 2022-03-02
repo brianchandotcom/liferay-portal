@@ -1443,7 +1443,31 @@ definition {
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
+			increaseMinutes = "1",
 			invalidExpirationDate = "true");
+	}
+
+	@description = "This is a use case for LPS-114470. Validate crafted or corrupted files cannot cause out of memory errors."
+	@priority = "5"
+	test CannotUploadFileThatCausesOutOfMemoryErrors {
+		property testray.component.names = "Security";
+
+		task ("Add new document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentDescription = "DM Document Description",
+				dmDocumentTitle = "DM Document Title",
+				groupName = "Guest",
+				mimeType = "audio/x-mpeg",
+				sourceFileName = "tika.mp3");
+		}
+
+		task ("Assert out of memory error message") {
+			AssertConsoleTextPresent(value1 = "java.io.IOException: Record size");
+
+			AssertConsoleTextPresent(value1 = "is larger than the allowed record size");
+
+			AssertConsoleTextNotPresent(value1 = "java.lang.OutOfMemoryError");
+		}
 	}
 
 	@description = "This test ensures that the guest cannot see an expired document."
@@ -1454,7 +1478,7 @@ definition {
 
 		var portalURL = PropsUtil.get("portal.url");
 
-		DMDocument.updateCheckInterval(fieldValue = "2");
+		DMDocument.updateCheckInterval(fieldValue = "1");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1686,7 +1710,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CanRepublishDocumentAfterDisablingExpirationDate";
 
-		DMDocument.updateCheckInterval(fieldValue = "2");
+		DMDocument.updateCheckInterval(fieldValue = "1");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1855,7 +1879,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CanReviewDocumentWhenDateIsChanged";
 
-		DMDocument.updateCheckInterval(fieldValue = "2");
+		DMDocument.updateCheckInterval(fieldValue = "1");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -1912,7 +1936,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CanReviewDocumentWhenDateIsDisabled";
 
-		DMDocument.updateCheckInterval(fieldValue = "2");
+		DMDocument.updateCheckInterval(fieldValue = "1");
 
 		JSONDocument.addFileWithUploadedFile(
 			dmDocumentDescription = "DM Document Description",
@@ -2180,7 +2204,7 @@ definition {
 		property custom.properties = "company.default.time.zone=America/Los_Angeles";
 		property test.name.skip.portal.instance = "DMFileEntry#CanViewExpiredDocument";
 
-		DMDocument.updateCheckInterval(fieldValue = "2");
+		DMDocument.updateCheckInterval(fieldValue = "1");
 
 		DMNavigator.openToAddEntry(
 			groupName = "Guest",

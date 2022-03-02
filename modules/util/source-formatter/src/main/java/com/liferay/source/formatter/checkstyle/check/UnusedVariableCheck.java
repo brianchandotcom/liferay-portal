@@ -70,6 +70,12 @@ public class UnusedVariableCheck extends BaseCheck {
 		}
 
 		for (DetailAST variableCallerDetailAST : variableCallerDetailASTList) {
+			if (_isInsideConstructor(variableCallerDetailAST) ||
+				!_isInsidePrivateMethod(variableCallerDetailAST)) {
+
+				return;
+			}
+
 			DetailAST previousSiblingDetailAST =
 				variableCallerDetailAST.getPreviousSibling();
 
@@ -90,12 +96,47 @@ public class UnusedVariableCheck extends BaseCheck {
 			}
 		}
 
-		//log(detailAST, _MSG_UNUSED_VARIABLE_VALUE, variableName);
+		log(detailAST, _MSG_UNUSED_VARIABLE_VALUE, variableName);
+	}
+
+	private boolean _isInsideConstructor(DetailAST detailAST) {
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		while (parentDetailAST != null) {
+			if (parentDetailAST.getType() == TokenTypes.CTOR_DEF) {
+				return true;
+			}
+
+			parentDetailAST = parentDetailAST.getParent();
+		}
+
+		return false;
+	}
+
+	private boolean _isInsidePrivateMethod(DetailAST detailAST) {
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		while (parentDetailAST != null) {
+			if (parentDetailAST.getType() == TokenTypes.METHOD_DEF) {
+				DetailAST modifiersDetailAST = parentDetailAST.findFirstToken(
+					TokenTypes.MODIFIERS);
+
+				if (modifiersDetailAST.branchContains(
+						TokenTypes.LITERAL_PRIVATE)) {
+
+					return true;
+				}
+			}
+
+			parentDetailAST = parentDetailAST.getParent();
+		}
+
+		return false;
 	}
 
 	private static final String _MSG_UNUSED_VARIABLE = "variable.unused";
 
-	//private static final String _MSG_UNUSED_VARIABLE_VALUE =
-	//	"variable.value.unused";
+	private static final String _MSG_UNUSED_VARIABLE_VALUE =
+		"variable.value.unused";
 
 }

@@ -84,11 +84,15 @@ public class ViewSXPElementsDisplayContext {
 				).buildString(),
 				"view", "view",
 				LanguageUtil.get(_sxpRequestHelper.getRequest(), "view"), "get",
-				"view", null),
+				"get", null),
 			new FDSActionDropdownItem(
-				"#", "download", "export",
+				getAPIURL() + "/{id}/copy", "copy", "copy",
+				LanguageUtil.get(_sxpRequestHelper.getRequest(), "copy"),
+				"post", "create", "async"),
+			new FDSActionDropdownItem(
+				"#", "export", "export",
 				LanguageUtil.get(_sxpRequestHelper.getRequest(), "export"),
-				null, null, null),
+				null, "get", null),
 			new FDSActionDropdownItem(
 				LanguageUtil.get(
 					_sxpRequestHelper.getRequest(),

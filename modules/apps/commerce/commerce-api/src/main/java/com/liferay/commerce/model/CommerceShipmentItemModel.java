@@ -77,6 +77,21 @@ public interface CommerceShipmentItemModel
 	public void setMvccVersion(long mvccVersion);
 
 	/**
+	 * Returns the external reference code of this commerce shipment item.
+	 *
+	 * @return the external reference code of this commerce shipment item
+	 */
+	@AutoEscape
+	public String getExternalReferenceCode();
+
+	/**
+	 * Sets the external reference code of this commerce shipment item.
+	 *
+	 * @param externalReferenceCode the external reference code of this commerce shipment item
+	 */
+	public void setExternalReferenceCode(String externalReferenceCode);
+
+	/**
 	 * Returns the commerce shipment item ID of this commerce shipment item.
 	 *
 	 * @return the commerce shipment item ID of this commerce shipment item

@@ -57,9 +57,11 @@ import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResou
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductOptionResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
 import com.liferay.headless.delivery.dto.v1_0.Document;
@@ -651,6 +653,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (String resourcePath : resourcePaths) {
 			if (resourcePath.endsWith(".options.json") ||
 				resourcePath.endsWith(".products.json") ||
+				resourcePath.endsWith(".products.specifications.json") ||
 				resourcePath.endsWith(
 					".products.subscriptions.properties.json") ||
 				!resourcePath.endsWith(".json")) {
@@ -686,6 +689,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 				assetVocabularyName, catalog, channel,
 				commerceInventoryWarehouses,
 				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
+				serviceContext);
+
+			_addCommerceProductSpecifications(
+				StringUtil.replaceLast(
+					resourcePath, ".json", ".products.specifications.json"),
 				serviceContext);
 
 			TransactionCommitCallbackUtil.registerCallback(
@@ -859,6 +867,59 @@ public class BundleSiteInitializer implements SiteInitializer {
 				commerceChannelId, documentsStringUtilReplaceValues,
 				objectDefinitionIdsStringUtilReplaceValues, resourcePath,
 				serviceContext);
+		}
+	}
+
+	private void _addCommerceProductSpecifications(
+			String resourcePath, ServiceContext serviceContext)
+		throws Exception {
+
+		ProductSpecificationResource.Builder
+			productSpecificationResourceBuilder =
+				_commerceReferencesHolder.productSpecificationResourceFactory.
+					create();
+
+		ProductSpecificationResource productSpecificationResource =
+			productSpecificationResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		String json = _read(resourcePath);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		_commerceReferencesHolder.cpSpecificationOptionsImporter.
+			importCPSpecificationOptions(
+				jsonArray, serviceContext.getScopeGroupId(),
+				serviceContext.getUserId());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			CPDefinition cpDefinition =
+				_commerceReferencesHolder.cpDefinitionLocalService.
+					fetchCPDefinitionByCProductExternalReferenceCode(
+						jsonObject.getString(
+							"cpDefinitionExternalReferenceCode"),
+						serviceContext.getCompanyId());
+
+			if (cpDefinition == null) {
+				continue;
+			}
+
+			ProductSpecification productSpecification =
+				new ProductSpecification() {
+					{
+						productId = cpDefinition.getCPDefinitionId();
+						specificationKey = jsonObject.getString("key");
+						value = JSONUtil.toStringMap(
+							jsonObject.getJSONObject(
+								"productSpecificationValue"));
+					}
+				};
+
+			productSpecificationResource.postProductIdProductSpecification(
+				cpDefinition.getCPDefinitionId(), productSpecification);
 		}
 	}
 

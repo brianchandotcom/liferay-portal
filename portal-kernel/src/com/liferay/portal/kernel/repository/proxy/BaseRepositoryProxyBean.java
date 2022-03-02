@@ -37,13 +37,17 @@ import com.liferay.portal.kernel.service.RepositoryEntryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.io.File;
 import java.io.InputStream;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.util.Date;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author Mika Koivisto
@@ -622,7 +626,7 @@ public class BaseRepositoryProxyBean
 	public Lock lockFolder(long folderId) throws PortalException {
 		Lock lock = _baseRepository.lockFolder(folderId);
 
-		return (Lock)newProxyInstance(lock, Lock.class);
+		return newProxyInstance(lock, _lockProxyProviderFunction);
 	}
 
 	@Override
@@ -634,7 +638,7 @@ public class BaseRepositoryProxyBean
 		Lock lock = _baseRepository.lockFolder(
 			folderId, owner, inheritable, expirationTime);
 
-		return (Lock)newProxyInstance(lock, Lock.class);
+		return newProxyInstance(lock, _lockProxyProviderFunction);
 	}
 
 	@Override
@@ -669,7 +673,7 @@ public class BaseRepositoryProxyBean
 		Lock lock = _baseRepository.refreshFileEntryLock(
 			lockUuid, companyId, expirationTime);
 
-		return (Lock)newProxyInstance(lock, Lock.class);
+		return newProxyInstance(lock, _lockProxyProviderFunction);
 	}
 
 	@Override
@@ -680,7 +684,7 @@ public class BaseRepositoryProxyBean
 		Lock lock = _baseRepository.refreshFolderLock(
 			lockUuid, companyId, expirationTime);
 
-		return (Lock)newProxyInstance(lock, Lock.class);
+		return newProxyInstance(lock, _lockProxyProviderFunction);
 	}
 
 	@Override
@@ -897,6 +901,10 @@ public class BaseRepositoryProxyBean
 
 		return _baseRepository.verifyInheritableLock(folderId, lockUuid);
 	}
+
+	private static final Function<InvocationHandler, Lock>
+		_lockProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Lock.class);
 
 	private final BaseRepository _baseRepository;
 

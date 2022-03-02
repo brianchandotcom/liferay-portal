@@ -129,39 +129,50 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 	const handleSaveObjectView = async () => {
 		const newObjectView = removeLabelFromObjectView(objectView);
+		const {objectViewColumns} = newObjectView;
 
-		const response = await Liferay.Util.fetch(
-			`/o/object-admin/v1.0/object-views/${objectViewId}`,
-			{
-				body: JSON.stringify(newObjectView),
-				headers: HEADERS,
-				method: 'PUT',
+		if (!objectView.defaultObjectView || objectViewColumns.length !== 0) {
+			const response = await Liferay.Util.fetch(
+				`/o/object-admin/v1.0/object-views/${objectViewId}`,
+				{
+					body: JSON.stringify(newObjectView),
+					headers: HEADERS,
+					method: 'PUT',
+				}
+			);
+
+			if (response.status === 401) {
+				window.location.reload();
 			}
-		);
+			else if (response.ok) {
+				Liferay.Util.openToast({
+					message: Liferay.Language.get(
+						'modifications-saved-successfully'
+					),
+					type: 'success',
+				});
 
-		if (response.status === 401) {
-			window.location.reload();
-		}
-		else if (response.ok) {
-			Liferay.Util.openToast({
-				message: Liferay.Language.get(
-					'modifications-saved-successfully'
-				),
-				type: 'success',
-			});
+				setTimeout(() => {
+					const parentWindow = Liferay.Util.getOpener();
+					parentWindow.Liferay.fire('close-side-panel');
+				}, 1500);
+			}
+			else {
+				const {
+					title = Liferay.Language.get('an-error-occurred'),
+				} = await response.json();
 
-			setTimeout(() => {
-				const parentWindow = Liferay.Util.getOpener();
-				parentWindow.Liferay.fire('close-side-panel');
-			}, 1500);
+				Liferay.Util.openToast({
+					message: title,
+					type: 'danger',
+				});
+			}
 		}
 		else {
-			const {
-				title = Liferay.Language.get('an-error-occurred'),
-			} = await response.json();
-
 			Liferay.Util.openToast({
-				message: title,
+				message: Liferay.Language.get(
+					'default-view-must-have-at-least-one-column'
+				),
 				type: 'danger',
 			});
 		}

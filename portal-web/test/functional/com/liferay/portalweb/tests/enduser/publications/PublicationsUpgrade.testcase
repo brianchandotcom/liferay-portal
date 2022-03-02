@@ -14,13 +14,99 @@ definition {
 	}
 
 	@priority = "5"
+	test ViewOutOfDatePublicationsArchive735 {
+		property data.archive.type = "data-archive-publications";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.5";
+
+		PublicationsUpgrade.viewOutOfDatePublications();
+	}
+
+	@priority = "5"
+	test ViewOutOfDatePublicationsArchive740 {
+		property data.archive.type = "data-archive-publications";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.4.0";
+
+		PublicationsUpgrade.viewOutOfDatePublications();
+	}
+
+	@priority = "5"
 	test ViewOutOfDatePublicationsArchive7310 {
 		property data.archive.type = "data-archive-publications";
 		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver,sybase";
 		property portal.version = "7.3.10";
 		property test.run.environment = "EE";
 
-		Upgrade.viewOutOfDatePublications();
+		PublicationsUpgrade.viewOutOfDatePublications();
+	}
+
+	@priority = "5"
+	test ViewOutOfDatePublicationsArchive7413 {
+		property data.archive.type = "data-archive-publications";
+		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver";
+		property portal.version = "7.4.13";
+		property test.run.environment = "EE";
+
+		PublicationsUpgrade.viewOutOfDatePublications();
+	}
+
+	@priority = "5"
+	test ViewOutOfDatePublicationsArchive73101 {
+		property data.archive.type = "data-archive-publications";
+		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver";
+		property portal.version = "7.3.10.1";
+		property test.run.environment = "EE";
+
+		PublicationsUpgrade.viewOutOfDatePublications();
+	}
+
+	@priority = "5"
+	test ViewPublicationsUserRolePermissionsArchive735 {
+		property data.archive.type = "data-archive-publications";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.3.5";
+
+		PublicationsUpgrade.viewPublicationsUserRolePermissions();
+	}
+
+	@priority = "5"
+	test ViewPublicationsUserRolePermissionsArchive740 {
+		property data.archive.type = "data-archive-publications";
+		property database.types = "mariadb,mysql,postgresql";
+		property portal.version = "7.4.0";
+
+		PublicationsUpgrade.viewPublicationsUserRolePermissions();
+	}
+
+	@priority = "5"
+	test ViewPublicationsUserRolePermissionsArchive7310 {
+		property data.archive.type = "data-archive-publications";
+		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.3.10";
+		property test.run.environment = "EE";
+
+		PublicationsUpgrade.viewPublicationsUserRolePermissions();
+	}
+
+	@priority = "5"
+	test ViewPublicationsUserRolePermissionsArchive7413 {
+		property data.archive.type = "data-archive-publications";
+		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver";
+		property portal.version = "7.4.13";
+		property test.run.environment = "EE";
+
+		PublicationsUpgrade.viewPublicationsUserRolePermissions();
+	}
+
+	@priority = "5"
+	test ViewPublicationsUserRolePermissionsArchive73101 {
+		property data.archive.type = "data-archive-publications";
+		property database.types = "mariadb,mysql,oracle,postgresql,sqlserver";
+		property portal.version = "7.3.10.1";
+		property test.run.environment = "EE";
+
+		PublicationsUpgrade.viewPublicationsUserRolePermissions();
 	}
 
 }

@@ -167,7 +167,7 @@
 		<liferay-ui:error exception="<%= StructureLayoutException.class %>" message="please-enter-a-valid-form-layout" />
 		<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-form-name" />
 
-		<c:if test="<%= ddmFormAdminDisplayContext.isExpirationDateEnabled() && !showExpirationDateError && DDMFormInstanceExpirationStatusUtil.isFormExpired(ddmFormAdminDisplayContext.getDDMFormInstance(), timeZone) %>">
+		<c:if test="<%= !showExpirationDateError && DDMFormInstanceExpirationStatusUtil.isFormExpired(ddmFormAdminDisplayContext.getDDMFormInstance(), timeZone) %>">
 			<clay:alert
 				dismissible="<%= true %>"
 				displayType="warning"

@@ -21,12 +21,16 @@ import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.io.Serializable;
+
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * @author Mika Koivisto
@@ -94,8 +98,8 @@ public class FolderProxyBean
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return (ExpandoBridge)newProxyInstance(
-			_folder.getExpandoBridge(), ExpandoBridge.class);
+		return newProxyInstance(
+			_folder.getExpandoBridge(), _expandoBridgeProxyProviderFunction);
 	}
 
 	@Override
@@ -337,6 +341,10 @@ public class FolderProxyBean
 
 		return newFolderProxyBean(folder);
 	}
+
+	private static final Function<InvocationHandler, ExpandoBridge>
+		_expandoBridgeProxyProviderFunction =
+			ProxyUtil.getProxyProviderFunction(ExpandoBridge.class);
 
 	private final Folder _folder;
 

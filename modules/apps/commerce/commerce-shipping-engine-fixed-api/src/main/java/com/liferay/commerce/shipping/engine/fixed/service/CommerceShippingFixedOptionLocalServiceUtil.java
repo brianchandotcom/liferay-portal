@@ -272,6 +272,15 @@ public class CommerceShippingFixedOptionLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static List<CommerceShippingFixedOption>
+		getCommerceOrderTypeCommerceShippingFixedOptions(
+			long companyId, long commerceOrderTypeId,
+			long commerceShippingMethodId) {
+
+		return getService().getCommerceOrderTypeCommerceShippingFixedOptions(
+			companyId, commerceOrderTypeId, commerceShippingMethodId);
+	}
+
 	/**
 	 * Returns the commerce shipping fixed option with the primary key.
 	 *

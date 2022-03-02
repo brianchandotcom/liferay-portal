@@ -24,9 +24,12 @@ import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
+import java.lang.reflect.InvocationHandler;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * @author Mika Koivisto
@@ -42,8 +45,8 @@ public abstract class RepositoryModelProxyBean {
 			return null;
 		}
 
-		FileEntry fileEntryProxy = (FileEntry)newProxyInstance(
-			fileEntry, FileEntry.class);
+		FileEntry fileEntryProxy = newProxyInstance(
+			fileEntry, _fileEntryProxyProviderFunction);
 
 		return new FileEntryProxyBean(fileEntryProxy, _classLoader);
 	}
@@ -55,8 +58,8 @@ public abstract class RepositoryModelProxyBean {
 			return null;
 		}
 
-		FileShortcut fileShortcutProxy = (FileShortcut)newProxyInstance(
-			fileShortcut, FileShortcut.class);
+		FileShortcut fileShortcutProxy = newProxyInstance(
+			fileShortcut, _fileShortcutProxyProviderFunction);
 
 		return new FileShortcutProxyBean(fileShortcutProxy, _classLoader);
 	}
@@ -68,8 +71,8 @@ public abstract class RepositoryModelProxyBean {
 			return null;
 		}
 
-		FileVersion fileVersionProxy = (FileVersion)newProxyInstance(
-			fileVersion, FileVersion.class);
+		FileVersion fileVersionProxy = newProxyInstance(
+			fileVersion, _fileVersionProxyProviderFunction);
 
 		return new FileVersionProxyBean(fileVersionProxy, _classLoader);
 	}
@@ -79,7 +82,8 @@ public abstract class RepositoryModelProxyBean {
 			return null;
 		}
 
-		Folder folderProxy = (Folder)newProxyInstance(folder, Folder.class);
+		Folder folderProxy = newProxyInstance(
+			folder, _folderProxyProviderFunction);
 
 		return new FolderProxyBean(folderProxy, _classLoader);
 	}
@@ -87,9 +91,8 @@ public abstract class RepositoryModelProxyBean {
 	protected LocalRepositoryProxyBean newLocalRepositoryProxyBean(
 		LocalRepository localRepository) {
 
-		LocalRepository localRepositoryProxy =
-			(LocalRepository)newProxyInstance(
-				localRepository, LocalRepository.class);
+		LocalRepository localRepositoryProxy = newProxyInstance(
+			localRepository, _localRepositoryProxyProviderFunction);
 
 		return new LocalRepositoryProxyBean(localRepositoryProxy, _classLoader);
 	}
@@ -108,13 +111,14 @@ public abstract class RepositoryModelProxyBean {
 		return bean;
 	}
 
-	protected Object newProxyInstance(Object bean, Class<?> clazz) {
+	protected <T> T newProxyInstance(
+		Object bean, Function<InvocationHandler, T> proxyProviderFunction) {
+
 		if (bean == null) {
 			return null;
 		}
 
-		return ProxyUtil.newProxyInstance(
-			_classLoader, new Class<?>[] {clazz},
+		return proxyProviderFunction.apply(
 			new ClassLoaderBeanHandler(bean, _classLoader));
 	}
 
@@ -198,6 +202,22 @@ public abstract class RepositoryModelProxyBean {
 
 		return objectProxyBeans;
 	}
+
+	private static final Function<InvocationHandler, FileEntry>
+		_fileEntryProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			FileEntry.class);
+	private static final Function<InvocationHandler, FileShortcut>
+		_fileShortcutProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			FileShortcut.class);
+	private static final Function<InvocationHandler, FileVersion>
+		_fileVersionProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			FileVersion.class);
+	private static final Function<InvocationHandler, Folder>
+		_folderProxyProviderFunction = ProxyUtil.getProxyProviderFunction(
+			Folder.class);
+	private static final Function<InvocationHandler, LocalRepository>
+		_localRepositoryProxyProviderFunction =
+			ProxyUtil.getProxyProviderFunction(LocalRepository.class);
 
 	private final ClassLoader _classLoader;
 

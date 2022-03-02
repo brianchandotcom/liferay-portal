@@ -800,12 +800,13 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				"please-enter-a-file-with-a-valid-file-name");
 		}
 		else if (exception instanceof FileSizeException) {
+			FileSizeException fileSizeException = (FileSizeException)exception;
+
 			errorMessage = _language.format(
 				themeDisplay.getLocale(),
 				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
 				_language.formatStorageSize(
-					_dlValidator.getMaxAllowableSize(),
-					themeDisplay.getLocale()));
+					fileSizeException.getMaxSize(), themeDisplay.getLocale()));
 		}
 		else if (exception instanceof InvalidFileEntryTypeException) {
 			errorMessage = _language.get(
@@ -1004,7 +1005,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				!cmd.equals(Constants.ADD_MULTIPLE) &&
 				!cmd.equals(Constants.ADD_TEMP)) {
 
-				if (exception instanceof AntivirusScannerException) {
+				if (exception instanceof AntivirusScannerException ||
+					exception instanceof FileSizeException) {
+
 					SessionErrors.add(
 						actionRequest, exception.getClass(), exception);
 				}
@@ -1035,7 +1038,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					actionRequest, actionResponse, jsonObject);
 			}
 
-			if (exception instanceof AntivirusScannerException) {
+			if (exception instanceof AntivirusScannerException ||
+				exception instanceof FileSizeException) {
+
 				SessionErrors.add(
 					actionRequest, exception.getClass(), exception);
 			}

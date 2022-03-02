@@ -432,6 +432,8 @@ definition {
 
 		Click(locator1 = "Button#SUBMIT");
 
+		WaitForPageLoad();
+
 		AssertSelectedLabel(
 			key_fieldLabel = "Catalog",
 			locator1 = "Select#GENERIC_SELECT_FIELD",

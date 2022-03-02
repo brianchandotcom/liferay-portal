@@ -301,8 +301,8 @@ public interface DLFileEntryService extends BaseService {
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 #updateFileEntry(long, String, String, String, String,
-	 String, DLVersionNumberIncrease, long, Map, File, InputStream, long,
-	 Date, Date, ServiceContext)}
+	 String, DLVersionNumberIncrease, long, Map, File,
+	 InputStream, long, Date, Date, ServiceContext)}
 	 */
 	@Deprecated
 	public DLFileEntry updateFileEntry(

@@ -476,7 +476,9 @@ public class StructuredContentResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"contentStructureId", "description", "title"};
+		return new String[] {
+			"contentStructureId", "description", "priority", "title"
+		};
 	}
 
 	@Override

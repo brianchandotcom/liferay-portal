@@ -4,6 +4,7 @@ dependencies {
 	testIntegrationCompile project(":apps:commerce:commerce-inventory-api")
 	testIntegrationCompile project(":apps:commerce:commerce-notification-api")
 	testIntegrationCompile project(":apps:commerce:commerce-product-api")
+	testIntegrationCompile project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-catalog-api")
 	testIntegrationCompile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	testIntegrationCompile project(":apps:fragment:fragment-api")
 	testIntegrationCompile project(":apps:headless:headless-admin-list-type:headless-admin-list-type-api")

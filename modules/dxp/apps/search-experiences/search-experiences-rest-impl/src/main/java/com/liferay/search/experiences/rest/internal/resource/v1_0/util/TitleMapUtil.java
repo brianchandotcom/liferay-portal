@@ -14,7 +14,6 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0.util;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.HashMap;
@@ -30,14 +29,10 @@ public class TitleMapUtil {
 		Map<Locale, String> targetTitleMap = new HashMap<>();
 
 		for (Map.Entry<Locale, String> entry : sourceTitleMap.entrySet()) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(entry.getValue());
-			sb.append(" (");
-			sb.append(LanguageUtil.get(entry.getKey(), "copy"));
-			sb.append(")");
-
-			targetTitleMap.put(entry.getKey(), sb.toString());
+			targetTitleMap.put(
+				entry.getKey(),
+				LanguageUtil.format(
+					entry.getKey(), "copy-of-x", entry.getValue()));
 		}
 
 		return targetTitleMap;

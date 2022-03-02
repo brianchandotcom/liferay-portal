@@ -77,24 +77,25 @@ public class CommerceShipmentLocalServiceUtil {
 	}
 
 	public static CommerceShipment addCommerceShipment(
-			long groupId, long commerceAccountId, long commerceAddressId,
-			long commerceShippingMethodId, String commerceShippingOptionName,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addCommerceShipment(
-			groupId, commerceAccountId, commerceAddressId,
-			commerceShippingMethodId, commerceShippingOptionName,
-			serviceContext);
-	}
-
-	public static CommerceShipment addCommerceShipment(
 			long commerceOrderId,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCommerceShipment(
 			commerceOrderId, serviceContext);
+	}
+
+	public static CommerceShipment addCommerceShipment(
+			String externalReferenceCode, long groupId, long commerceAccountId,
+			long commerceAddressId, long commerceShippingMethodId,
+			String commerceShippingOptionName,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addCommerceShipment(
+			externalReferenceCode, groupId, commerceAccountId,
+			commerceAddressId, commerceShippingMethodId,
+			commerceShippingOptionName, serviceContext);
 	}
 
 	public static CommerceShipment addDeliverySubscriptionCommerceShipment(
@@ -270,6 +271,31 @@ public class CommerceShipmentLocalServiceUtil {
 		return getService().fetchCommerceShipment(commerceShipmentId);
 	}
 
+	/**
+	 * Returns the commerce shipment with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce shipment's external reference code
+	 * @return the matching commerce shipment, or <code>null</code> if a matching commerce shipment could not be found
+	 */
+	public static CommerceShipment fetchCommerceShipmentByExternalReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return getService().fetchCommerceShipmentByExternalReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #fetchCommerceShipmentByExternalReferenceCode(long, String)}
+	 */
+	@Deprecated
+	public static CommerceShipment fetchCommerceShipmentByReferenceCode(
+		long companyId, String externalReferenceCode) {
+
+		return getService().fetchCommerceShipmentByReferenceCode(
+			companyId, externalReferenceCode);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -287,6 +313,22 @@ public class CommerceShipmentLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getCommerceShipment(commerceShipmentId);
+	}
+
+	/**
+	 * Returns the commerce shipment with the matching external reference code and company.
+	 *
+	 * @param companyId the primary key of the company
+	 * @param externalReferenceCode the commerce shipment's external reference code
+	 * @return the matching commerce shipment
+	 * @throws PortalException if a matching commerce shipment could not be found
+	 */
+	public static CommerceShipment getCommerceShipmentByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getCommerceShipmentByExternalReferenceCode(
+			companyId, externalReferenceCode);
 	}
 
 	/**

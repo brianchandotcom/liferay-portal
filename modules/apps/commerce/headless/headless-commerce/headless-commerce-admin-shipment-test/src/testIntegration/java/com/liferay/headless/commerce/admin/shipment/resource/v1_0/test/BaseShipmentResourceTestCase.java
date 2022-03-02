@@ -187,6 +187,7 @@ public abstract class BaseShipmentResourceTestCase {
 		Shipment shipment = randomShipment();
 
 		shipment.setCarrier(regex);
+		shipment.setExternalReferenceCode(regex);
 		shipment.setShippingOptionName(regex);
 		shipment.setTrackingNumber(regex);
 		shipment.setUserName(regex);
@@ -198,6 +199,7 @@ public abstract class BaseShipmentResourceTestCase {
 		shipment = ShipmentSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, shipment.getCarrier());
+		Assert.assertEquals(regex, shipment.getExternalReferenceCode());
 		Assert.assertEquals(regex, shipment.getShippingOptionName());
 		Assert.assertEquals(regex, shipment.getTrackingNumber());
 		Assert.assertEquals(regex, shipment.getUserName());
@@ -488,6 +490,263 @@ public abstract class BaseShipmentResourceTestCase {
 	}
 
 	protected Shipment testPostShipment_addShipment(Shipment shipment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testDeleteShipmentByExternalReferenceCode() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Shipment shipment =
+			testDeleteShipmentByExternalReferenceCode_addShipment();
+
+		assertHttpResponseStatusCode(
+			204,
+			shipmentResource.deleteShipmentByExternalReferenceCodeHttpResponse(
+				shipment.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			shipmentResource.getShipmentByExternalReferenceCodeHttpResponse(
+				shipment.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			shipmentResource.getShipmentByExternalReferenceCodeHttpResponse(
+				shipment.getExternalReferenceCode()));
+	}
+
+	protected Shipment testDeleteShipmentByExternalReferenceCode_addShipment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetShipmentByExternalReferenceCode() throws Exception {
+		Shipment postShipment =
+			testGetShipmentByExternalReferenceCode_addShipment();
+
+		Shipment getShipment =
+			shipmentResource.getShipmentByExternalReferenceCode(
+				postShipment.getExternalReferenceCode());
+
+		assertEquals(postShipment, getShipment);
+		assertValid(getShipment);
+	}
+
+	protected Shipment testGetShipmentByExternalReferenceCode_addShipment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetShipmentByExternalReferenceCode()
+		throws Exception {
+
+		Shipment shipment = testGraphQLShipment_addShipment();
+
+		Assert.assertTrue(
+			equals(
+				shipment,
+				ShipmentSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"shipmentByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"externalReferenceCode",
+											"\"" +
+												shipment.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/shipmentByExternalReferenceCode"))));
+	}
+
+	@Test
+	public void testGraphQLGetShipmentByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"shipmentByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	@Test
+	public void testPatchShipmentByExternalReferenceCode() throws Exception {
+		Shipment postShipment =
+			testPatchShipmentByExternalReferenceCode_addShipment();
+
+		Shipment randomPatchShipment = randomPatchShipment();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Shipment patchShipment =
+			shipmentResource.patchShipmentByExternalReferenceCode(
+				postShipment.getExternalReferenceCode(), randomPatchShipment);
+
+		Shipment expectedPatchShipment = postShipment.clone();
+
+		_beanUtilsBean.copyProperties(
+			expectedPatchShipment, randomPatchShipment);
+
+		Shipment getShipment =
+			shipmentResource.getShipmentByExternalReferenceCode(
+				patchShipment.getExternalReferenceCode());
+
+		assertEquals(expectedPatchShipment, getShipment);
+		assertValid(getShipment);
+	}
+
+	protected Shipment testPatchShipmentByExternalReferenceCode_addShipment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutShipmentByExternalReferenceCode() throws Exception {
+		Shipment postShipment =
+			testPutShipmentByExternalReferenceCode_addShipment();
+
+		Shipment randomShipment = randomShipment();
+
+		Shipment putShipment =
+			shipmentResource.putShipmentByExternalReferenceCode(
+				postShipment.getExternalReferenceCode(), randomShipment);
+
+		assertEquals(randomShipment, putShipment);
+		assertValid(putShipment);
+
+		Shipment getShipment =
+			shipmentResource.getShipmentByExternalReferenceCode(
+				putShipment.getExternalReferenceCode());
+
+		assertEquals(randomShipment, getShipment);
+		assertValid(getShipment);
+
+		Shipment newShipment =
+			testPutShipmentByExternalReferenceCode_createShipment();
+
+		putShipment = shipmentResource.putShipmentByExternalReferenceCode(
+			newShipment.getExternalReferenceCode(), newShipment);
+
+		assertEquals(newShipment, putShipment);
+		assertValid(putShipment);
+
+		getShipment = shipmentResource.getShipmentByExternalReferenceCode(
+			putShipment.getExternalReferenceCode());
+
+		assertEquals(newShipment, getShipment);
+
+		Assert.assertEquals(
+			newShipment.getExternalReferenceCode(),
+			putShipment.getExternalReferenceCode());
+	}
+
+	protected Shipment testPutShipmentByExternalReferenceCode_createShipment()
+		throws Exception {
+
+		return randomShipment();
+	}
+
+	protected Shipment testPutShipmentByExternalReferenceCode_addShipment()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostShipmentByExternalReferenceCodeStatusDelivered()
+		throws Exception {
+
+		Shipment randomShipment = randomShipment();
+
+		Shipment postShipment =
+			testPostShipmentByExternalReferenceCodeStatusDelivered_addShipment(
+				randomShipment);
+
+		assertEquals(randomShipment, postShipment);
+		assertValid(postShipment);
+	}
+
+	protected Shipment
+			testPostShipmentByExternalReferenceCodeStatusDelivered_addShipment(
+				Shipment shipment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostShipmentByExternalReferenceCodeStatusFinishProcessing()
+		throws Exception {
+
+		Shipment randomShipment = randomShipment();
+
+		Shipment postShipment =
+			testPostShipmentByExternalReferenceCodeStatusFinishProcessing_addShipment(
+				randomShipment);
+
+		assertEquals(randomShipment, postShipment);
+		assertValid(postShipment);
+	}
+
+	protected Shipment
+			testPostShipmentByExternalReferenceCodeStatusFinishProcessing_addShipment(
+				Shipment shipment)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPostShipmentByExternalReferenceCodeStatusShipped()
+		throws Exception {
+
+		Shipment randomShipment = randomShipment();
+
+		Shipment postShipment =
+			testPostShipmentByExternalReferenceCodeStatusShipped_addShipment(
+				randomShipment);
+
+		assertEquals(randomShipment, postShipment);
+		assertValid(postShipment);
+	}
+
+	protected Shipment
+			testPostShipmentByExternalReferenceCodeStatusShipped_addShipment(
+				Shipment shipment)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -807,6 +1066,16 @@ public abstract class BaseShipmentResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (shipment.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("modifiedDate", additionalAssertFieldName)) {
 				if (shipment.getModifiedDate() == null) {
 					valid = false;
@@ -1035,6 +1304,19 @@ public abstract class BaseShipmentResourceTestCase {
 				if (!Objects.deepEquals(
 						shipment1.getExpectedDate(),
 						shipment2.getExpectedDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						shipment1.getExternalReferenceCode(),
+						shipment2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1349,6 +1631,14 @@ public abstract class BaseShipmentResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			sb.append("'");
+			sb.append(String.valueOf(shipment.getExternalReferenceCode()));
+			sb.append("'");
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1518,6 +1808,8 @@ public abstract class BaseShipmentResourceTestCase {
 				carrier = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				createDate = RandomTestUtil.nextDate();
 				expectedDate = RandomTestUtil.nextDate();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				modifiedDate = RandomTestUtil.nextDate();
 				orderId = RandomTestUtil.randomLong();

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -55,12 +56,11 @@ public class ListTypeDefinitionServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_defaultUser = _userLocalService.getDefaultUser(
-			TestPropsValues.getCompanyId());
+		_adminUser = TestPropsValues.getUser();
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
-		_user = TestPropsValues.getUser();
+		_user = UserTestUtil.addUser();
 	}
 
 	@After
@@ -73,7 +73,7 @@ public class ListTypeDefinitionServiceTest {
 	@Test
 	public void testAddListTypeDefinition() throws Exception {
 		try {
-			_testAddListTypeDefinition(_defaultUser);
+			_testAddListTypeDefinition(_user);
 
 			Assert.fail();
 		}
@@ -82,17 +82,17 @@ public class ListTypeDefinitionServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _user.getUserId() +
 						" must have ADD_LIST_TYPE_DEFINITION permission for"));
 		}
 
-		_testAddListTypeDefinition(_user);
+		_testAddListTypeDefinition(_adminUser);
 	}
 
 	@Test
 	public void testDeleteListTypeDefinition() throws Exception {
 		try {
-			_testDeleteListTypeDefinition(_user, _defaultUser);
+			_testDeleteListTypeDefinition(_adminUser, _user);
 
 			Assert.fail();
 		}
@@ -101,18 +101,18 @@ public class ListTypeDefinitionServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _user.getUserId() +
 						" must have DELETE permission for"));
 		}
 
-		_testDeleteListTypeDefinition(_defaultUser, _defaultUser);
+		_testDeleteListTypeDefinition(_adminUser, _adminUser);
 		_testDeleteListTypeDefinition(_user, _user);
 	}
 
 	@Test
 	public void testGetListTypeDefinition() throws Exception {
 		try {
-			_testGetListTypeDefinition(_user, _defaultUser);
+			_testGetListTypeDefinition(_adminUser, _user);
 
 			Assert.fail();
 		}
@@ -121,18 +121,18 @@ public class ListTypeDefinitionServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _user.getUserId() +
 						" must have VIEW permission for"));
 		}
 
-		_testGetListTypeDefinition(_defaultUser, _defaultUser);
+		_testGetListTypeDefinition(_adminUser, _adminUser);
 		_testGetListTypeDefinition(_user, _user);
 	}
 
 	@Test
 	public void testUpdateListTypeDefinition() throws Exception {
 		try {
-			_testUpdateListTypeDefinition(_user, _defaultUser);
+			_testUpdateListTypeDefinition(_adminUser, _user);
 
 			Assert.fail();
 		}
@@ -141,11 +141,11 @@ public class ListTypeDefinitionServiceTest {
 
 			Assert.assertTrue(
 				message.contains(
-					"User " + _defaultUser.getUserId() +
+					"User " + _user.getUserId() +
 						" must have UPDATE permission for"));
 		}
 
-		_testUpdateListTypeDefinition(_defaultUser, _defaultUser);
+		_testUpdateListTypeDefinition(_adminUser, _adminUser);
 		_testUpdateListTypeDefinition(_user, _user);
 	}
 
@@ -254,7 +254,7 @@ public class ListTypeDefinitionServiceTest {
 		}
 	}
 
-	private User _defaultUser;
+	private User _adminUser;
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;

@@ -26,17 +26,19 @@ definition {
 
 	@priority = "4"
 	test ViewProductionWebContentInPublication {
+		JSONGroup.addGroup(groupName = "Site Name");
+
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
-			groupName = "Guest",
+			groupName = "Site Name",
 			title = "Production WC");
 
 		JSONLayout.addPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Test Page Name");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
+			groupName = "Site Name",
 			layoutName = "Test Page Name",
 			widgetName = "Asset Publisher");
 
@@ -44,7 +46,7 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "site-name");
 
 		WebContentNavigator.gotoAddCP();
 
@@ -56,7 +58,7 @@ definition {
 
 		Navigator.openSitePage(
 			pageName = "Test Page Name",
-			siteName = "Guest");
+			siteName = "Site Name");
 
 		AssetPublisherPortlet.viewDisplayOrderPG(
 			assetTitle = "Publication WC",

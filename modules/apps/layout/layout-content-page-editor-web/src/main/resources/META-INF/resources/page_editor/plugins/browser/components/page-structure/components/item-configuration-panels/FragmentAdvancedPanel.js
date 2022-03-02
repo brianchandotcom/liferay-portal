@@ -56,10 +56,6 @@ export function FragmentAdvancedPanel({item}) {
 			fieldSet.configurationRole === FRAGMENT_CONFIGURATION_ROLES.advanced
 	);
 
-	if (!fieldSets.length) {
-		return null;
-	}
-
 	return (
 		<>
 			<h1 className="sr-only">

@@ -91,6 +91,8 @@ definition {
 			ACDXPSettings.connectDXPtoAnalyticsCloud();
 		}
 
+		// Now we are going to add a new DXP Data Source and validate the info shown in the connection modal from Settings.
+
 		task ("Disconnect the DXP from the AC and go to the AC create a new data source") {
 			ACDXPSettings.disconnectDXPFromAnalyticsCloud();
 
@@ -99,7 +101,7 @@ definition {
 			ACSettings.takeTokenFromAnalyticsCloud();
 		}
 
-		task ("Check the onboarding connection modal information") {
+		task ("Check the connection modal information when opened in Settings") {
 			task ("Check if the modal title and the copy token button are present") {
 				ACUtils.viewGenericText(textValueList = "Connect Your DXP Analytics");
 

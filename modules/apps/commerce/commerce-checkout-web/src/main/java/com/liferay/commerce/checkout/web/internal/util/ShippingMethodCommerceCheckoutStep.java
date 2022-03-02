@@ -292,6 +292,9 @@ public class ShippingMethodCommerceCheckoutStep
 						commerceOrder.getCommerceOrderId(), commerceContext);
 				});
 
+			_commerceOrderLocalService.resetTermsAndConditions(
+				commerceOrder.getCommerceOrderId(), true, false);
+
 			actionRequest.setAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER, updateCommerceOrder);
 		}

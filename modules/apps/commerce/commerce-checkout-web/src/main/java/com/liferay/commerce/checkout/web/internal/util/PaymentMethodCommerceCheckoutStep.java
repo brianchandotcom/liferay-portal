@@ -175,6 +175,9 @@ public class PaymentMethodCommerceCheckoutStep
 			commerceOrder.getShippingAmount(), commerceOrder.getTotal(),
 			commerceOrder.getAdvanceStatus(), commerceContext);
 
+		_commerceOrderLocalService.resetTermsAndConditions(
+			commerceOrder.getCommerceOrderId(), false, true);
+
 		actionRequest.setAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
 	}

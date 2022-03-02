@@ -634,13 +634,8 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10311 | Test Summary: Events are in alphabetical order and attributes are in alphabetical order"
-	@ignore = "true"
 	@priority = "4"
 	test ViewEventsAreListedInAlphabeticalOrder {
-
-		// The bug is not allowing the list to be updated after the display name is changed.
-		// AC Bug ticket: LRAC-10482
-
 		property test.name.skip.portal.instance = "CustomEventsEventAnalysis#ViewEventsAreListedInAlphabeticalOrder";
 
 		var attributeName = "assetId";

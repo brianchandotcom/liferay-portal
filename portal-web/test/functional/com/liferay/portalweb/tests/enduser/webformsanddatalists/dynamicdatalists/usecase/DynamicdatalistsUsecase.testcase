@@ -2986,7 +2986,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-51538."
-	@ignore = "true"
 	@priority = "3"
 	test ViewNestedFieldDoesNotDisplayInRecordTable {
 		Navigator.openURL();
@@ -3051,11 +3050,21 @@ definition {
 
 		DDLNavigator.gotoListRecords(ddlListName = "Dynamic Data List");
 
-		DDLRecord.viewFieldCP(
-			ddlRecordFieldData = "Test Data",
-			ddlRecordNestedFieldData = "253",
-			fieldFieldLabel = "Text",
-			nestedFieldFieldLabel = "Integer");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "View",
+			rowEntry = "Test Data");
+
+		Click(locator1 = "Button#EDIT");
+
+		AssertTextEquals(
+			key_fieldName = "Text",
+			locator1 = "TextInput#DDM",
+			value1 = "Test Data");
+
+		AssertTextEquals(
+			key_fieldName = "Integer",
+			locator1 = "TextInput#DDM",
+			value1 = "253");
 	}
 
 	@description = "This is a use case for LPS-48969."

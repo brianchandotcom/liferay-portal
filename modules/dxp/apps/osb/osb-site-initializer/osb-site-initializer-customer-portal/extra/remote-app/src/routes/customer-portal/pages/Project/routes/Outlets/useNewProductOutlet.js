@@ -24,7 +24,7 @@ const NewProductOutlet = () => {
 	const currentProduct = newActivationComponents[`${productId}_new`];
 
 	if (!currentProduct || !hasAccessToCurrentProduct) {
-		return <h3>Page not found2</h3>;
+		return <h3>Page not found</h3>;
 	}
 
 	return currentProduct;

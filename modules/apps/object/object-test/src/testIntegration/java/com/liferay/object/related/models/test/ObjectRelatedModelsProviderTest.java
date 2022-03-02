@@ -31,11 +31,23 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -47,8 +59,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -65,6 +79,17 @@ public class ObjectRelatedModelsProviderTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		_user = UserTestUtil.addUser();
+
+		_userRole = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.USER);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -101,6 +126,13 @@ public class ObjectRelatedModelsProviderTest {
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
 				TestPropsValues.getUserId(),
 				_objectDefinition2.getObjectDefinitionId());
+
+		_setUser(TestPropsValues.getUser());
+	}
+
+	@After
+	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 	}
 
 	@Ignore
@@ -338,6 +370,13 @@ public class ObjectRelatedModelsProviderTest {
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
 
+		_testCompanyScopeViewPermission(
+			objectRelationship, objectRelatedModelsProvider, objectEntry1);
+
+		_testIndividualScopeViewPermission(
+			objectEntryA, objectRelationship, objectRelatedModelsProvider,
+			objectEntry1);
+
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);
 	}
@@ -414,11 +453,95 @@ public class ObjectRelatedModelsProviderTest {
 
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
 
+		_testCompanyScopeViewPermission(
+			objectRelationship, objectRelatedModelsProvider, objectEntry1);
+
+		_testIndividualScopeViewPermission(
+			objectEntry2, objectRelationship, objectRelatedModelsProvider,
+			objectEntry1);
+
 		// TODO deleteObjectRelationshipMappingTableValues
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
 			objectRelationship);
 	}
+
+	private void _setUser(User user) {
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+
+		PrincipalThreadLocal.setName(user.getUserId());
+	}
+
+	private void _testCompanyScopeViewPermission(
+			ObjectRelationship objectRelationship,
+			ObjectRelatedModelsProvider<ObjectEntry>
+				objectRelatedModelsProvider,
+			ObjectEntry parentObjectEntry)
+		throws Exception {
+
+		_setUser(_user);
+
+		Assert.assertEquals(
+			0,
+			objectRelatedModelsProvider.getRelatedModelsCount(
+				0, objectRelationship.getObjectRelationshipId(),
+				parentObjectEntry.getObjectEntryId()));
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), _objectDefinition2.getClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			_userRole.getRoleId(), ActionKeys.VIEW);
+
+		Assert.assertEquals(
+			2,
+			objectRelatedModelsProvider.getRelatedModelsCount(
+				0, objectRelationship.getObjectRelationshipId(),
+				parentObjectEntry.getObjectEntryId()));
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			TestPropsValues.getCompanyId(), _objectDefinition2.getClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()),
+			_userRole.getRoleId(), ActionKeys.VIEW);
+	}
+
+	private void _testIndividualScopeViewPermission(
+			ObjectEntry childObjectEntry, ObjectRelationship objectRelationship,
+			ObjectRelatedModelsProvider<ObjectEntry>
+				objectRelatedModelsProvider,
+			ObjectEntry parentObjectEntry)
+		throws Exception {
+
+		Assert.assertEquals(
+			0,
+			objectRelatedModelsProvider.getRelatedModelsCount(
+				0, objectRelationship.getObjectRelationshipId(),
+				parentObjectEntry.getObjectEntryId()));
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), _objectDefinition2.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(childObjectEntry.getObjectEntryId()),
+			_userRole.getRoleId(), new String[] {ActionKeys.VIEW});
+
+		Assert.assertEquals(
+			1,
+			objectRelatedModelsProvider.getRelatedModelsCount(
+				0, objectRelationship.getObjectRelationshipId(),
+				parentObjectEntry.getObjectEntryId()));
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			TestPropsValues.getCompanyId(), _objectDefinition2.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(childObjectEntry.getObjectEntryId()),
+			_userRole.getRoleId(), ActionKeys.VIEW);
+	}
+
+	private static PermissionChecker _originalPermissionChecker;
+	private static User _user;
+	private static Role _userRole;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;
@@ -441,5 +564,8 @@ public class ObjectRelatedModelsProviderTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

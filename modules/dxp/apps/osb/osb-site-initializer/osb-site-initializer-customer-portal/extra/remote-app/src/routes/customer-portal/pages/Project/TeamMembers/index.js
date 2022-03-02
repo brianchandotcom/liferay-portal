@@ -28,11 +28,12 @@ const InvitesModal = ({observer, onClose, project}) => {
 };
 
 const TeamMembers = () => {
-	const {project} = useOutletContext();
+	const {project, subscriptionGroups} = useOutletContext();
 	const [visible, setVisible] = useState(false);
 	const modalProps = useModal({
 		onClose: () => setVisible(false),
 	});
+	const statusActivedDXPC = subscriptionGroups[0].activationStatus;
 
 	return (
 		<>
@@ -57,6 +58,38 @@ const TeamMembers = () => {
 					</Button>
 				</div>
 			</div>
+			{statusActivedDXPC && (
+				<div className="bg-brand-primary-lighten-6 border-0 card card-flat cp-manager-product-container mt-5">
+					<div className="p-4">
+						<p className="h4">Manage Product Users</p>
+
+						<p className="mt-2 text-neutral-7 text-paragraph-sm">
+							Manage roles and permissions of users within each
+							product.
+						</p>
+
+						<div className="d-flex">
+							<Button
+								appendIcon="shortcut"
+								className="align-items-stretch btn btn-ghost btn-style-neutral cp-manager-product-button d-flex mr-3 px-2 py-2"
+							>
+								<p className="font-weight-semi-bold h6 m-0 pl-1">
+									Manage DXP Cloud Users
+								</p>
+							</Button>
+
+							<Button
+								appendIcon="shortcut"
+								className="align-items-stretch btn btn-ghost btn-style-neutral cp-manager-product-button d-flex px-2 py-2"
+							>
+								<p className="font-weight-semi-bold h6 m-0 pl-1">
+									Manage Analytics Cloud Users
+								</p>
+							</Button>
+						</div>
+					</div>
+				</div>
+			)}
 		</>
 	);
 };

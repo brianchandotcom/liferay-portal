@@ -14,4 +14,15 @@
 	.inline-item {
 		width: 10px;
 	}
+.cp-manager-product-button {
+	& span {
+		width: 12px;
+		margin-left: 6px;
+		margin-right: 0.25rem;
+	}
+
+	border-color: var(--color-action-neutral-default);
+}
+.cp-manager-product-container {
+	max-width: fit-content;
 }

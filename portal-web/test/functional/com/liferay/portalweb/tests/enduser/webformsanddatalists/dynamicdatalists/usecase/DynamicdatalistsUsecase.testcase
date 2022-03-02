@@ -3059,7 +3059,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-48969."
-	@ignore = "true"
 	@priority = "3"
 	test ViewNestedFieldEntryWithBlankParentField {
 		Navigator.openURL();
@@ -3120,11 +3119,21 @@ definition {
 
 		DDLNavigator.gotoListRecords(ddlListName = "Dynamic Data List");
 
-		DDLRecord.viewFieldCP(
-			ddlRecordFieldData = "",
-			ddlRecordNestedFieldData = "253",
-			fieldFieldLabel = "Text",
-			nestedFieldFieldLabel = "Integer");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "View",
+			rowEntry = "");
+
+		Click(locator1 = "Button#EDIT");
+
+		AssertTextEquals(
+			key_fieldName = "Text",
+			locator1 = "TextInput#DDM",
+			value1 = "");
+
+		AssertTextEquals(
+			key_fieldName = "Integer",
+			locator1 = "TextInput#DDM",
+			value1 = "253");
 	}
 
 	@description = "This is a use case for LPS-63290 and LPS-72216."

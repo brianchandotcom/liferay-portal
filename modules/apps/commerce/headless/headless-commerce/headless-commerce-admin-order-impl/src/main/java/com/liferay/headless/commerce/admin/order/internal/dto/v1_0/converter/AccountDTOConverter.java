@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.order.internal.dto.v1_0.converter;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.service.CommerceAccountLocalService;
 import com.liferay.commerce.account.service.CommerceAccountService;
@@ -50,7 +51,9 @@ public class AccountDTOConverter
 
 		CommerceAccount commerceAccount;
 
-		if ((Long)dtoConverterContext.getId() == -1) {
+		if ((Long)dtoConverterContext.getId() ==
+				CommerceAccountConstants.ACCOUNT_ID_GUEST) {
+
 			User user = dtoConverterContext.getUser();
 
 			if (user == null) {

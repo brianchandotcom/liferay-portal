@@ -1831,18 +1831,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/rmi-api.jar</file-name>
-				<version>1.0.5.Final</version>
-				<project-name>The javax.rmi and javax.rmi.CORBA classes</project-name>
-				<project-url>https://github.com/jboss/jboss-rmi-api_spec</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/rometools-utils.jar</file-name>
 				<version>1.16.0</version>
 				<project-name>Rome Tools</project-name>

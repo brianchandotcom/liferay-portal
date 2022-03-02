@@ -18,6 +18,7 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
@@ -27,6 +28,7 @@ import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -232,7 +234,16 @@ public class ObjectEntryDTOConverter
 					int underlineLastIndex = objectFieldName.lastIndexOf(
 						StringPool.UNDERLINE);
 
-					if ((objectEntryId != 0) &&
+					ObjectRelationship objectRelationship =
+						_objectRelationshipLocalService.
+							fetchObjectRelationshipByObjectFieldId2(
+								objectField.getObjectFieldId());
+
+					ObjectDefinition objectDefinition1 =
+						_objectDefinitionLocalService.getObjectDefinition(
+							objectRelationship.getObjectDefinitionId1());
+
+					if (!objectDefinition1.isSystem() && (objectEntryId != 0) &&
 						uriInfoOptional.map(
 							UriInfo::getQueryParameters
 						).map(
@@ -285,6 +296,9 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Reference
 	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;

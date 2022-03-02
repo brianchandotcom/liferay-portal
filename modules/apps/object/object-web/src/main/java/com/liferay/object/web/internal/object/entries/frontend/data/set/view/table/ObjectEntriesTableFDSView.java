@@ -224,6 +224,10 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 				_objectDefinitionLocalService.fetchObjectDefinition(
 					objectRelationship.getObjectDefinitionId1());
 
+			if (objectDefinition.isSystem()) {
+				return;
+			}
+
 			ObjectField titleObjectField =
 				_objectFieldLocalService.fetchObjectField(
 					objectDefinition.getTitleObjectFieldId());

@@ -19,6 +19,7 @@ import React, {useEffect, useState} from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {CONTAINER_DISPLAY_OPTIONS} from '../../config/constants/containerDisplayOptions';
 import {CONTAINER_WIDTH_TYPES} from '../../config/constants/containerWidthTypes';
+import {config} from '../../config/index';
 import {useGetFieldValue} from '../../contexts/CollectionItemContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
@@ -152,8 +153,12 @@ const Container = React.forwardRef(
 		const textAlignDefaultValue = getCommonStyleByName('textAlign')
 			.defaultValue;
 
+		const HTMLTag = config.fragmentAdvancedOptionsEnabled
+			? itemConfig.htmlTag
+			: 'div';
+
 		const content = (
-			<div
+			<HTMLTag
 				{...(link ? {} : data)}
 				className={classNames(className, {
 					[align]: !!align,
@@ -204,7 +209,7 @@ const Container = React.forwardRef(
 				) : null}
 
 				{children}
-			</div>
+			</HTMLTag>
 		);
 
 		return link?.href ? (

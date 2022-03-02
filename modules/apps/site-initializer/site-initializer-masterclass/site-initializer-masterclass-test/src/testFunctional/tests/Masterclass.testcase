@@ -1106,7 +1106,6 @@ definition {
 	}
 
 	@description = "This is a test for LPS-141768. View the READ MORE links of the three courses redirect to the course display page"
-	@ignore = "true"
 	@priority = "4"
 	test ReadMoreLinksRedirectToCourseDisplayPage {
 		task ("Go to Masterclass Site") {

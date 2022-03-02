@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.sharepoint.soap.repository.connector.operation.AddFolderOperation;
 import com.liferay.sharepoint.soap.repository.connector.operation.AddOrUpdateFileOperation;
+import com.liferay.sharepoint.soap.repository.connector.operation.BatchOperation;
 import com.liferay.sharepoint.soap.repository.connector.operation.CancelCheckOutFileOperation;
 import com.liferay.sharepoint.soap.repository.connector.operation.CheckInFileOperation;
 import com.liferay.sharepoint.soap.repository.connector.operation.CheckOutFileOperation;
@@ -303,6 +304,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 		_addFolderOperation = _buildOperation(AddFolderOperation.class);
 		_addOrUpdateFileOperation = _buildOperation(
 			AddOrUpdateFileOperation.class);
+		_batchOperation = _buildOperation(BatchOperation.class);
 		_cancelCheckOutFileOperation = _buildOperation(
 			CancelCheckOutFileOperation.class);
 		_checkInFileOperation = _buildOperation(CheckInFileOperation.class);
@@ -417,6 +419,7 @@ public class SharepointConnectionImpl implements SharepointConnection {
 
 	private AddFolderOperation _addFolderOperation;
 	private AddOrUpdateFileOperation _addOrUpdateFileOperation;
+	private BatchOperation _batchOperation;
 	private CancelCheckOutFileOperation _cancelCheckOutFileOperation;
 	private CheckInFileOperation _checkInFileOperation;
 	private CheckOutFileOperation _checkOutFileOperation;

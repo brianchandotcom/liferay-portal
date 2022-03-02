@@ -1,0 +1,27 @@
+// stylelint-disable selector-type-no-unknown
+
+*,
+*:after,
+*:before {
+	box-sizing: border-box;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-size: 100%;
+	list-style-type: none;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+.portlet {
+	margin-bottom: 0;
+}
+
+liferay-remote-app-raylife-agent-portal {
+	@import 'variables';
+}

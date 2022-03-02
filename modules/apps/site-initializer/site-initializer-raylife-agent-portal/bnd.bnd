@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Site Initializer Raylife Agent Portal
+Bundle-SymbolicName: com.liferay.site.initializer.raylife.agent.portal
+Bundle-Version: 1.0.0
+Liferay-Site-Initializer-Name: Raylife Agent Portal
+Provide-Capability: liferay.site.initializer
+Web-ContextPath: /site-initializer-raylife-agent-portal

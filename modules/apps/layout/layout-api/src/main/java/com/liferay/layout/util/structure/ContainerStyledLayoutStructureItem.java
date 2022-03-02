@@ -67,6 +67,10 @@ public class ContainerStyledLayoutStructureItem
 		return _contentDisplay;
 	}
 
+	public String getHtmlTag() {
+		return _htmlTag;
+	}
+
 	@Override
 	public JSONObject getItemConfigJSONObject() {
 		JSONObject jsonObject = super.getItemConfigJSONObject();
@@ -75,6 +79,8 @@ public class ContainerStyledLayoutStructureItem
 			"align", _align
 		).put(
 			"contentDisplay", _contentDisplay
+		).put(
+			"htmlTag", _htmlTag
 		).put(
 			"justify", _justify
 		).put(
@@ -110,6 +116,10 @@ public class ContainerStyledLayoutStructureItem
 		_contentDisplay = contentDisplay;
 	}
 
+	public void setHtmlTag(String htmlTag) {
+		_htmlTag = htmlTag;
+	}
+
 	public void setJustify(String justify) {
 		_justify = justify;
 	}
@@ -134,6 +144,10 @@ public class ContainerStyledLayoutStructureItem
 
 		if (itemConfigJSONObject.has("contentDisplay")) {
 			setContentDisplay(itemConfigJSONObject.getString("contentDisplay"));
+		}
+
+		if (itemConfigJSONObject.has("htmlTag")) {
+			setHtmlTag(itemConfigJSONObject.getString("htmlTag"));
 		}
 
 		if (itemConfigJSONObject.has("justify")) {
@@ -240,6 +254,7 @@ public class ContainerStyledLayoutStructureItem
 
 	private String _align = "";
 	private String _contentDisplay = "";
+	private String _htmlTag = "div";
 	private String _justify = "";
 	private JSONObject _linkJSONObject;
 	private String _widthType = "fluid";

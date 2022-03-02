@@ -15,7 +15,6 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.object.configuration.activator.FFObjectViewSortColumnConfigurationUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.DefaultObjectViewException;
 import com.liferay.object.model.ObjectDefinition;
@@ -147,14 +146,11 @@ public class ObjectViewLocalServiceTest {
 		Assert.assertEquals(
 			objectViewColumns.toString(), 1, objectViewColumns.size());
 
-		if (FFObjectViewSortColumnConfigurationUtil.enabled()) {
-			List<ObjectViewSortColumn> objectViewSortColumns =
-				objectView.getObjectViewSortColumns();
+		List<ObjectViewSortColumn> objectViewSortColumns =
+			objectView.getObjectViewSortColumns();
 
-			Assert.assertEquals(
-				objectViewSortColumns.toString(), 2,
-				objectViewSortColumns.size());
-		}
+		Assert.assertEquals(
+			objectViewSortColumns.toString(), 1, objectViewSortColumns.size());
 
 		_deleteObjectFields();
 
@@ -190,14 +186,11 @@ public class ObjectViewLocalServiceTest {
 		Assert.assertEquals(
 			objectViewColumns.toString(), 2, objectViewColumns.size());
 
-		if (FFObjectViewSortColumnConfigurationUtil.enabled()) {
-			List<ObjectViewSortColumn> objectViewSortColumns =
-				objectView.getObjectViewSortColumns();
+		List<ObjectViewSortColumn> objectViewSortColumns =
+			objectView.getObjectViewSortColumns();
 
-			Assert.assertEquals(
-				objectViewSortColumns.toString(), 2,
-				objectViewSortColumns.size());
-		}
+		Assert.assertEquals(
+			objectViewSortColumns.toString(), 2, objectViewSortColumns.size());
 	}
 
 	private ObjectViewColumn _createObjectViewColumn() throws Exception {

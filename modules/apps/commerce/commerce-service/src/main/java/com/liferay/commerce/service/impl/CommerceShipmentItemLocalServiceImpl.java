@@ -391,6 +391,21 @@ public class CommerceShipmentItemLocalServiceImpl
 		return commerceShipmentItem;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceShipmentItem updateCommerceShipmentItemExternalReferenceCode(
+			String externalReferenceCode, long commerceShipmentItemId)
+		throws PortalException {
+
+		CommerceShipmentItem commerceShipmentItem =
+			commerceShipmentItemPersistence.findByPrimaryKey(
+				commerceShipmentItemId);
+
+		commerceShipmentItem.setExternalReferenceCode(externalReferenceCode);
+
+		return commerceShipmentItemPersistence.update(commerceShipmentItem);
+	}
+
 	protected void validate(
 			CommerceOrderItem commerceOrderItem,
 			CommerceShipment commerceShipment,

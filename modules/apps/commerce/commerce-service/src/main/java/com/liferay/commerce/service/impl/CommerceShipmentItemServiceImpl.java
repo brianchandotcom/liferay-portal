@@ -251,6 +251,20 @@ public class CommerceShipmentItemServiceImpl
 			commerceShipmentItemId, commerceInventoryWarehouseId, quantity);
 	}
 
+	@Override
+	public CommerceShipmentItem updateCommerceShipmentItemExternalReferenceCode(
+			String externalReferenceCode, long commerceShipmentItemId)
+		throws PortalException {
+
+		_portletResourcePermission.contains(
+			getPermissionChecker(), null,
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
+
+		return commerceShipmentItemLocalService.
+			updateCommerceShipmentItemExternalReferenceCode(
+				externalReferenceCode, commerceShipmentItemId);
+	}
+
 	private static volatile ModelResourcePermission<CommerceOrder>
 		_commerceOrderModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(

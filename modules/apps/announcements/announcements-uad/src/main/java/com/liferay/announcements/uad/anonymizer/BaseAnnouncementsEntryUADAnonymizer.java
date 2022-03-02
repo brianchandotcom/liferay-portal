@@ -52,9 +52,10 @@ public abstract class BaseAnnouncementsEntryUADAnonymizer
 	}
 
 	@Override
-	public void delete(AnnouncementsEntry announcementsEntry) {
-		announcementsEntryLocalService.deleteAnnouncementsEntry(
-			announcementsEntry);
+	public void delete(AnnouncementsEntry announcementsEntry)
+		throws PortalException {
+
+		announcementsEntryLocalService.deleteEntry(announcementsEntry);
 	}
 
 	@Override

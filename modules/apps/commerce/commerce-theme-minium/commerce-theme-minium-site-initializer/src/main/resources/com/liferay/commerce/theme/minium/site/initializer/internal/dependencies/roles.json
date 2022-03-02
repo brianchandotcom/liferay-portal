@@ -144,7 +144,7 @@
 			},
 			{
 				"actionIds": [
-					"MANAGE_AVAILABLE_ACCOUNTS"
+					"MANAGE_ALL_ACCOUNTS"
 				],
 				"resource": "com.liferay.commerce.account"
 			},

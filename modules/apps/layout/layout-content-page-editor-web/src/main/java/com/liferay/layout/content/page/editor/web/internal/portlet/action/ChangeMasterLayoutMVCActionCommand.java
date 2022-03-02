@@ -87,6 +87,8 @@ public class ChangeMasterLayoutMVCActionCommand
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			masterLayoutPlid);
 
+		actionRequest.setAttribute(WebKeys.LAYOUT, updatedLayout);
+
 		if (masterLayoutPlid == 0) {
 			return JSONUtil.put(
 				"styleBook",

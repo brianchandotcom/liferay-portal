@@ -17,20 +17,26 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectViewColumn;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectViewSortColumn;
+import com.liferay.object.admin.rest.internal.configuration.activator.FFObjectViewSortColumnConfigurationUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectViewUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
+import com.liferay.object.exception.ObjectViewSortColumnException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectViewService;
 import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewSortColumnPersistence;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -103,9 +109,7 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 				transformToList(
 					objectView.getObjectViewColumns(),
 					this::_toObjectViewColumn),
-				transformToList(
-					objectView.getObjectViewSortColumns(),
-					this::_toObjectViewSortColumn)));
+				_getObjectViewSortColumns(objectView)));
 	}
 
 	@Override
@@ -119,9 +123,28 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 				transformToList(
 					objectView.getObjectViewColumns(),
 					this::_toObjectViewColumn),
-				transformToList(
-					objectView.getObjectViewSortColumns(),
-					this::_toObjectViewSortColumn)));
+				_getObjectViewSortColumns(objectView)));
+	}
+
+	private List<com.liferay.object.model.ObjectViewSortColumn>
+			_getObjectViewSortColumns(ObjectView objectView)
+		throws Exception {
+
+		List<com.liferay.object.model.ObjectViewSortColumn>
+			objectViewSortColumns = new ArrayList<>();
+
+		if (FFObjectViewSortColumnConfigurationUtil.enabled()) {
+			objectViewSortColumns = transformToList(
+				objectView.getObjectViewSortColumns(),
+				this::_toObjectViewSortColumn);
+		}
+		else if (ArrayUtil.isNotEmpty(objectView.getObjectViewSortColumns())) {
+			throw new ObjectViewSortColumnException(
+				"ObjectViewSortColumn is under feature flag and can not be " +
+					"used");
+		}
+
+		return objectViewSortColumns;
 	}
 
 	private ObjectView _toObjectView(

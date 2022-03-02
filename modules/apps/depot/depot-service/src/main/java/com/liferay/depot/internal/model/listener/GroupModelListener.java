@@ -47,7 +47,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 							group.getGroupId());
 
 					if (depotEntry != null) {
-						_depotEntryLocalService.deleteDepotEntry(depotEntry);
+						_depotEntryLocalService.deleteDepotEntry(
+							depotEntry.getDepotEntryId());
 					}
 
 					return null;

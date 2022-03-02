@@ -272,7 +272,7 @@ public class DLFileShortcutLocalServiceImpl
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(DLFileShortcut fileShortcut) ->
-				dlFileShortcutLocalService.deleteDLFileShortcut(fileShortcut));
+				dlFileShortcutLocalService.deleteFileShortcut(fileShortcut));
 
 		actionableDynamicQuery.performActions();
 	}

@@ -169,7 +169,9 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		action = SystemEventConstants.ACTION_SKIP,
 		type = SystemEventConstants.TYPE_DELETE
 	)
-	public Repository deleteRepository(Repository repository) {
+	public Repository deleteRepository(Repository repository)
+		throws PortalException {
+
 		_expandoValueLocalService.deleteValues(
 			Repository.class.getName(), repository.getRepositoryId());
 
@@ -177,7 +179,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			repository.getDlFolderId());
 
 		if (dlFolder != null) {
-			_dlFolderLocalService.deleteDLFolder(dlFolder);
+			_dlFolderLocalService.deleteFolder(dlFolder);
 		}
 
 		repositoryPersistence.remove(repository);

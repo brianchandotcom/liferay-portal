@@ -49,6 +49,7 @@ export type TObjectLayoutColumn = {
 
 export type TObjectField = {
 	DBType: string;
+	businessType: string;
 	id: number;
 	indexed: boolean;
 	indexedAsKeyword: boolean;

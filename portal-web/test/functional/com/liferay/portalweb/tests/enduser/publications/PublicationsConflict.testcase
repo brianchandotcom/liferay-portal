@@ -276,6 +276,76 @@ definition {
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 	}
 
+	@description = "Assert explanation of addition conflict displays"
+	@priority = "4"
+	test ExplainAdditionConflict {
+		property portal.acceptance = "true";
+
+		JSONWebcontent.addFolder(
+			folderName = "WC Folder Name",
+			groupName = "Guest");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContentFolder.moveToRecycleBinCP(
+			assetType = "Web Content Folder",
+			folderName = "WC Folder Name");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.deleteCP(
+			assetName = "WC Folder Name",
+			assetType = "Web Content Folder");
+
+		PublicationsNavigator.gotoReviewChanges();
+
+		JSONPublications.publishPublication(publicationName = "Publication Name");
+
+		Publications.viewPublicationPublished(publicationName = "Publication Name");
+
+		PublicationsNavigator.openPublicationsHistory();
+
+		Publications.revertPublication(
+			publicationName = "Publication Name",
+			publishNow = "true");
+
+		JSONPublications.publishPublication(publicationName = "Revert &quot;Publication Name&quot;");
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Message#SUCCESS",
+			value1 = "No unresolved conflicts, ready to publish.");
+
+		Button.click(button = "Publish");
+
+		PublicationsNavigator.openPublicationsHistory();
+
+		ManagementBar.toggleViewOrder(order = "list-down");
+
+		Publications.revertPublication(
+			publicationName = "Publication Name",
+			publishNow = "true");
+
+		JSONPublications.publishPublication(publicationName = "Revert &quot;Publication Name&quot;");
+
+		Publications.viewConflictingChangesWarning(warningMessage = "This publication contains conflicting changes that must be manually resolved before publishing.");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "WC Folder Name",
+			warningMessage = "Addition Conflict: New item already exists.");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "WC Folder Name",
+			warningMessage = "Addition Conflict: New item already exists.");
+
+		Publications.viewNeedsManualResolution(
+			entryTitle = "Owner Permissions for Web Content Folder",
+			warningMessage = "Addition Conflict: New item already exists.");
+	}
+
 	@description = "Assert explanation of duplicate conflict displays"
 	@priority = "4"
 	test ExplainDuplicationConflict {

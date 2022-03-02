@@ -1,0 +1,151 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Raylife.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "LPS-147359 - Check that when clicking the Close button (in the menu) the options are closed"
+	@priority = "3"
+	test ClickingCloseButtonOptionsDissapearPhone {
+		SetWindowSize(value1 = "360,720");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Click(locator1 = "RaylifeMobile#MENU_LINK");
+
+		AssertElementPresent(locator1 = "RaylifeMobile#OPTIONS_MENU_LINK");
+
+		Click(locator1 = "RaylifeMobile#MENU_LINK");
+
+		AssertElementNotPresent(locator1 = "RaylifeMobile#OPTIONS_MENU_LINK");
+
+		Raylife.dismissAlert();
+	}
+
+	@description = "LPS-147360 - Check if I can see the 'save and exit' button in the Menu under the Basics section"
+	@priority = "4"
+	test CanViewSaveExitOnMenuInSectionBasicsPhone {
+		SetWindowSize(value1 = "360,720");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Click(locator1 = "RaylifeMobile#MENU_LINK");
+
+		AssertElementPresent(locator1 = "RaylifeMobile#SAVE_EXIT_MENU");
+
+		Raylife.dismissAlert();
+	}
+
+	@description = "LPS-147361 - Check if I can see the "save and exit" button in the Menu under the Business section"
+	@priority = "4"
+	test CanViewSaveExitOnMenuInSectionBusinessPhone {
+		SetWindowSize(value1 = "360,720");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "RaylifeMobile#MENU_LINK");
+
+		AssertElementPresent(locator1 = "RaylifeMobile#SAVE_EXIT_MENU");
+
+		Raylife.dismissAlert();
+	}
+
+	@description = "LPS-147362 - Check if I cannot see the "save and exit" button in the Menu under the Landing page"
+	@priority = "4"
+	test NoSaveExitMenuAppearLandingPagePhone {
+		SetWindowSize(value1 = "360,720");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		AssertElementNotPresent(locator1 = "RaylifeMobile#SAVE_EXIT_MENU");
+	}
+
+	@description = "LPS-147363 - Make sure that by filling in all the fields on the Employees page I can Save and Exit in the Menu"
+	@priority = "5"
+	test CanSaveExitTheMenuInSectionEmployeesTablet {
+		SetWindowSize(value1 = "800,1024");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+
+		Click(locator1 = "RaylifeSaveExit#CONTINUE_QUOTE");
+
+		AssertElementNotPresent(locator1 = "RaylifeSaveExit#MODAL_PROGRESS_SAVED");
+
+		Raylife.dismissAlert();
+	}
+
+    @description = "LPS-147364 - Make sure that by filling in all the fields on the Property page I can Save and Exit in the Menu"
+	@priority = "5"
+	test CanSaveExitTheMenuInSectionPropertyTablet {
+		SetWindowSize(value1 = "800,1024");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(locator1 = "RaylifeSaveExit#SAVE_EXIT");
+
+		Click(locator1 = "RaylifeSaveExit#CONTINUE_QUOTE");
+
+		AssertElementNotPresent(locator1 = "RaylifeSaveExit#MODAL_PROGRESS_SAVED");
+
+		Raylife.dismissAlert();
+	}
+
+} 

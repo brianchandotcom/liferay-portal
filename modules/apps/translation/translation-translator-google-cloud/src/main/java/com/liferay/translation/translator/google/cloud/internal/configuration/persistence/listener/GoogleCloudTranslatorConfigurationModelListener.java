@@ -18,9 +18,9 @@ import com.liferay.portal.configuration.persistence.listener.ConfigurationModelL
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.translation.translator.google.cloud.internal.configuration.GoogleCloudTranslatorConfiguration;
 
 import java.util.Dictionary;
@@ -48,9 +48,8 @@ public class GoogleCloudTranslatorConfigurationModelListener
 
 		if (enabled && !_isValid(serviceAccountPrivateKey)) {
 			throw new ConfigurationModelListenerException(
-				ResourceBundleUtil.getString(
-					ResourceBundleUtil.getBundle(
-						LocaleThreadLocal.getThemeDisplayLocale(), getClass()),
+				LanguageUtil.get(
+					LocaleThreadLocal.getThemeDisplayLocale(),
 					"the-service-account-private-key-must-be-in-json-format"),
 				GoogleCloudTranslatorConfiguration.class, getClass(),
 				properties);

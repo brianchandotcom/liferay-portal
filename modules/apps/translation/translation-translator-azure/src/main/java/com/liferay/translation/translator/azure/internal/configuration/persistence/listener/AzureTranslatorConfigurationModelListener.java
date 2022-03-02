@@ -16,9 +16,9 @@ package com.liferay.translation.translator.azure.internal.configuration.persiste
 
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration;
 
@@ -52,9 +52,8 @@ public class AzureTranslatorConfigurationModelListener
 			 Validator.isNull(resourceLocation))) {
 
 			throw new ConfigurationModelListenerException(
-				ResourceBundleUtil.getString(
-					ResourceBundleUtil.getBundle(
-						LocaleThreadLocal.getThemeDisplayLocale(), getClass()),
+				LanguageUtil.get(
+					LocaleThreadLocal.getThemeDisplayLocale(),
 					"the-subscription-key-and-resource-location-must-not-be-" +
 						"empty"),
 				AzureTranslatorConfiguration.class, getClass(), properties);

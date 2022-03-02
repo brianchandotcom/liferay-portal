@@ -10,11 +10,13 @@
  */
 
 import ClayModal, {useModal} from '@clayui/modal';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import {Button} from '../../../../../common/components';
 import InviteTeamMembersForm from '../../../../../common/containers/setup-forms/InviteTeamMembersForm';
+import ManageProductUser from '../../../components/ManageProductUsers';
 
+const activationStatusAC = null;
 const InvitesModal = ({observer, onClose, project}) => {
 	return (
 		<ClayModal center observer={observer}>
@@ -33,8 +35,12 @@ const TeamMembers = () => {
 	const modalProps = useModal({
 		onClose: () => setVisible(false),
 	});
+	const [activatedStatusDXPC, setActivatedStatusDXPC] = useState();
 
-	const statusActivedDXPC = subscriptionGroups[0].activationStatus;
+	useEffect(() => {
+		const activationStatusDXPC = subscriptionGroups[0].activationStatus;
+		setActivatedStatusDXPC(activationStatusDXPC);
+	}, [subscriptionGroups]);
 
 	return (
 		<>
@@ -59,37 +65,11 @@ const TeamMembers = () => {
 					</Button>
 				</div>
 			</div>
-			{statusActivedDXPC && (
-				<div className="bg-brand-primary-lighten-6 border-0 card card-flat cp-manager-product-container mt-5">
-					<div className="p-4">
-						<p className="h4">Manage Product Users</p>
-
-						<p className="mt-2 text-neutral-7 text-paragraph-sm">
-							Manage roles and permissions of users within each
-							product.
-						</p>
-
-						<div className="d-flex">
-							<Button
-								appendIcon="shortcut"
-								className="align-items-stretch btn btn-ghost cp-manager-product-button d-flex mr-3 p-2 text-neutral-10"
-							>
-								<p className="font-weight-semi-bold h6 m-0 pl-1">
-									Manage DXP Cloud Users
-								</p>
-							</Button>
-
-							<Button
-								appendIcon="shortcut"
-								className="align-items-stretch btn btn-ghost cp-manager-product-button d-flex p-2 text-neutral-10"
-							>
-								<p className="font-weight-semi-bold h6 m-0 pl-1">
-									Manage Analytics Cloud Users
-								</p>
-							</Button>
-						</div>
-					</div>
-				</div>
+			{(activatedStatusDXPC || activationStatusAC) && (
+				<ManageProductUser
+					activationStatusAC={activationStatusAC}
+					activationStatusDXPC={activatedStatusDXPC}
+				/>
 			)}
 		</>
 	);

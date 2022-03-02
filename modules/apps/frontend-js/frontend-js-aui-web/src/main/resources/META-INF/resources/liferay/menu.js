@@ -35,6 +35,8 @@ AUI.add(
 
 		var EVENT_CLICK = 'click';
 
+		var EVENT_KEYDOWN = 'keydown';
+
 		var PARENT_NODE = 'parentNode';
 
 		var STR_BOTTOM = 'b';
@@ -131,6 +133,10 @@ AUI.add(
 
 					instance._activeMenu = null;
 					instance._activeTrigger = null;
+
+					trigger.attr({
+						'aria-expanded': false,
+					});
 
 					if (trigger.hasClass(CSS_EXTENDED)) {
 						trigger.removeClass(CSS_BTN_PRIMARY);
@@ -453,7 +459,6 @@ AUI.add(
 
 				trigger.attr({
 					'aria-haspopup': true,
-					'role': 'button',
 				});
 
 				listNode.setAttribute('aria-labelledby', trigger.guid());
@@ -497,7 +502,10 @@ AUI.add(
 			if (buffer.length) {
 				var nodes = A.all(buffer);
 
-				nodes.on(EVENT_CLICK, A.bind('_registerMenu', Menu));
+				nodes.on(
+					[EVENT_CLICK, EVENT_KEYDOWN],
+					A.bind('_registerMenu', Menu)
+				);
 
 				buffer.length = 0;
 			}
@@ -629,6 +637,15 @@ AUI.add(
 			Menu,
 			'_registerMenu',
 			(event) => {
+				var key = event.key || event.keyCode;
+
+				if (
+					event.type === EVENT_KEYDOWN &&
+					key !== A.Event.KeyMap.SPACE
+				) {
+					return;
+				}
+
 				var menuInstance = Menu._INSTANCE;
 
 				var handles = menuInstance._handles;
@@ -661,6 +678,10 @@ AUI.add(
 
 					menuInstance._activeMenu = menu;
 					menuInstance._activeTrigger = trigger;
+
+					trigger.attr({
+						'aria-expanded': true,
+					});
 
 					if (!handles.length) {
 						var listContainer = trigger.getData(

@@ -604,6 +604,60 @@ public abstract class Base${schemaName}ResourceTestCase {
 					}
 
 					@Test
+					public void test${javaMethodSignature.methodName?cap_first}WithFilterDoubleEquals() throws Exception {
+						List<EntityField> entityFields = getEntityFields(EntityField.Type.DOUBLE);
+
+						if (entityFields.isEmpty()) {
+							return;
+						}
+
+						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+							${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}();
+						</#list>
+
+						${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
+
+						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+							${javaMethodParameter.parameterName},
+						</#list>
+
+						random${schemaName}());
+
+						@SuppressWarnings("PMD.UnusedLocalVariable")
+						${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
+
+						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+							${javaMethodParameter.parameterName},
+						</#list>
+
+						random${schemaName}());
+
+						for (EntityField entityField : entityFields) {
+							Page<${schemaName}> page = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
+
+							<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+								<#if !javaMethodParameter?is_first>
+									,
+								</#if>
+
+								<#if stringUtil.equals(javaMethodParameter.parameterName, "filter")>
+									getFilterString(entityField, "eq", ${schemaVarName}1)
+								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
+									Pagination.of(1, 2)
+								<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+									${javaMethodParameter.parameterName}
+								<#else>
+									null
+								</#if>
+							</#list>
+
+							);
+
+							assertEquals(Collections.singletonList(${schemaVarName}1), (List<${schemaName}>)page.getItems());
+						}
+					}
+
+					@Test
 					public void test${javaMethodSignature.methodName?cap_first}WithFilterStringEquals() throws Exception {
 						List<EntityField> entityFields = getEntityFields(EntityField.Type.STRING);
 
@@ -790,6 +844,16 @@ public abstract class Base${schemaName}ResourceTestCase {
 							EntityField.Type.DATE_TIME,
 							(entityField, ${schemaVarName}1, ${schemaVarName}2) -> {
 								BeanUtils.setProperty(${schemaVarName}1, entityField.getName(), DateUtils.addMinutes(new Date(), -2));
+							});
+					}
+
+					@Test
+					public void test${javaMethodSignature.methodName?cap_first}WithSortDouble() throws Exception {
+						test${javaMethodSignature.methodName?cap_first}WithSort(
+							EntityField.Type.DOUBLE,
+							(entityField, ${schemaVarName}1, ${schemaVarName}2) -> {
+								BeanUtils.setProperty(${schemaVarName}1, entityField.getName(), 0.1);
+								BeanUtils.setProperty(${schemaVarName}2, entityField.getName(), 0.5);
 							});
 					}
 
@@ -2318,6 +2382,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						sb.append(_dateFormat.format(${schemaVarName}.get${propertyName?cap_first}()));
 					}
+
+					return sb.toString();
+				<#elseif stringUtil.equals(properties[propertyName], "Double")>
+					sb.append(String.valueOf(${schemaVarName}.get${propertyName?cap_first}()));
+
+					return sb.toString();
+				<#elseif stringUtil.equals(properties[propertyName], "Integer")>
+					sb.append(String.valueOf(${schemaVarName}.get${propertyName?cap_first}()));
 
 					return sb.toString();
 				<#elseif stringUtil.equals(properties[propertyName], "String")>

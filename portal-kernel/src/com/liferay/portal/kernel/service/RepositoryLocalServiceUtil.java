@@ -135,8 +135,11 @@ public class RepositoryLocalServiceUtil {
 	 *
 	 * @param repository the repository
 	 * @return the repository that was removed
+	 * @throws PortalException
 	 */
-	public static Repository deleteRepository(Repository repository) {
+	public static Repository deleteRepository(Repository repository)
+		throws PortalException {
+
 		return getService().deleteRepository(repository);
 	}
 

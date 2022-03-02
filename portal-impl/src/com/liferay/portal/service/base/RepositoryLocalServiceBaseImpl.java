@@ -140,10 +140,13 @@ public abstract class RepositoryLocalServiceBaseImpl
 	 *
 	 * @param repository the repository
 	 * @return the repository that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Repository deleteRepository(Repository repository) {
+	public Repository deleteRepository(Repository repository)
+		throws PortalException {
+
 		return repositoryPersistence.remove(repository);
 	}
 

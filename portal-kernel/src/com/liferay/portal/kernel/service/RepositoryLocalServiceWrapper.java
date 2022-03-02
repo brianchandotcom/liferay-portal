@@ -139,9 +139,12 @@ public class RepositoryLocalServiceWrapper
 	 *
 	 * @param repository the repository
 	 * @return the repository that was removed
+	 * @throws PortalException
 	 */
 	@Override
-	public Repository deleteRepository(Repository repository) {
+	public Repository deleteRepository(Repository repository)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _repositoryLocalService.deleteRepository(repository);
 	}
 

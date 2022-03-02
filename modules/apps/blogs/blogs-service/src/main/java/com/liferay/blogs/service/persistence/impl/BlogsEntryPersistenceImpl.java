@@ -21517,23 +21517,6 @@ public class BlogsEntryPersistenceImpl
 					}
 				}
 				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!productionMode || !useFinderCache) {
-								finderArgs = new Object[] {
-									groupId, externalReferenceCode
-								};
-							}
-
-							_log.warn(
-								"BlogsEntryPersistenceImpl.fetchByG_ERC(long, String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
 					BlogsEntry blogsEntry = list.get(0);
 
 					result = blogsEntry;
@@ -21937,6 +21920,11 @@ public class BlogsEntryPersistenceImpl
 
 		BlogsEntryModelImpl blogsEntryModelImpl =
 			(BlogsEntryModelImpl)blogsEntry;
+
+		if (Validator.isNull(blogsEntry.getExternalReferenceCode())) {
+			blogsEntry.setExternalReferenceCode(
+				String.valueOf(blogsEntry.getPrimaryKey()));
+		}
 
 		if (Validator.isNull(blogsEntry.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();
@@ -22528,6 +22516,9 @@ public class BlogsEntryPersistenceImpl
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
 
 		_uniqueIndexColumnNames.add(new String[] {"groupId", "urlTitle"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"groupId", "externalReferenceCode"});
 	}
 
 	/**

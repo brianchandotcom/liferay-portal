@@ -14836,23 +14836,6 @@ public class DLFileEntryPersistenceImpl
 					}
 				}
 				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!productionMode || !useFinderCache) {
-								finderArgs = new Object[] {
-									groupId, externalReferenceCode
-								};
-							}
-
-							_log.warn(
-								"DLFileEntryPersistenceImpl.fetchByG_ERC(long, String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
 					DLFileEntry dlFileEntry = list.get(0);
 
 					result = dlFileEntry;
@@ -15304,6 +15287,11 @@ public class DLFileEntryPersistenceImpl
 
 		DLFileEntryModelImpl dlFileEntryModelImpl =
 			(DLFileEntryModelImpl)dlFileEntry;
+
+		if (Validator.isNull(dlFileEntry.getExternalReferenceCode())) {
+			dlFileEntry.setExternalReferenceCode(
+				String.valueOf(dlFileEntry.getPrimaryKey()));
+		}
 
 		if (Validator.isNull(dlFileEntry.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();
@@ -15867,6 +15855,9 @@ public class DLFileEntryPersistenceImpl
 
 		_uniqueIndexColumnNames.add(
 			new String[] {"groupId", "folderId", "title"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"groupId", "externalReferenceCode"});
 	}
 
 	/**

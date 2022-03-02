@@ -21263,23 +21263,6 @@ public class MBMessagePersistenceImpl
 					}
 				}
 				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!productionMode || !useFinderCache) {
-								finderArgs = new Object[] {
-									groupId, externalReferenceCode
-								};
-							}
-
-							_log.warn(
-								"MBMessagePersistenceImpl.fetchByG_ERC(long, String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
 					MBMessage mbMessage = list.get(0);
 
 					result = mbMessage;
@@ -21681,6 +21664,11 @@ public class MBMessagePersistenceImpl
 		}
 
 		MBMessageModelImpl mbMessageModelImpl = (MBMessageModelImpl)mbMessage;
+
+		if (Validator.isNull(mbMessage.getExternalReferenceCode())) {
+			mbMessage.setExternalReferenceCode(
+				String.valueOf(mbMessage.getPrimaryKey()));
+		}
 
 		if (Validator.isNull(mbMessage.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();
@@ -22255,6 +22243,9 @@ public class MBMessagePersistenceImpl
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
 
 		_uniqueIndexColumnNames.add(new String[] {"groupId", "urlSubject"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {"groupId", "externalReferenceCode"});
 	}
 
 	/**

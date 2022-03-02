@@ -6442,23 +6442,6 @@ public class CommerceDiscountPersistenceImpl
 					}
 				}
 				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {
-									companyId, externalReferenceCode
-								};
-							}
-
-							_log.warn(
-								"CommerceDiscountPersistenceImpl.fetchByC_ERC(long, String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
 					CommerceDiscount commerceDiscount = list.get(0);
 
 					result = commerceDiscount;
@@ -6845,6 +6828,11 @@ public class CommerceDiscountPersistenceImpl
 
 		CommerceDiscountModelImpl commerceDiscountModelImpl =
 			(CommerceDiscountModelImpl)commerceDiscount;
+
+		if (Validator.isNull(commerceDiscount.getExternalReferenceCode())) {
+			commerceDiscount.setExternalReferenceCode(
+				String.valueOf(commerceDiscount.getPrimaryKey()));
+		}
 
 		if (Validator.isNull(commerceDiscount.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();

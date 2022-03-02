@@ -8,7 +8,7 @@ create index IX_8154EFDD on BlogsEntry (displayDate, status, ctCollectionId);
 create index IX_1CA77361 on BlogsEntry (groupId, ctCollectionId);
 create index IX_FDD7DDFB on BlogsEntry (groupId, displayDate, ctCollectionId);
 create index IX_F678A3E1 on BlogsEntry (groupId, displayDate, status, ctCollectionId);
-create index IX_816E1938 on BlogsEntry (groupId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
+create unique index IX_816E1938 on BlogsEntry (groupId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_BE277347 on BlogsEntry (groupId, status, ctCollectionId);
 create unique index IX_38CAA07E on BlogsEntry (groupId, urlTitle[$COLUMN_LENGTH:255$], ctCollectionId);
 create index IX_141D3B01 on BlogsEntry (groupId, userId, displayDate, ctCollectionId);

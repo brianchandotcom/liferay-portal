@@ -429,13 +429,19 @@ public class LayoutsAdminDisplayContext {
 			return null;
 		}
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (draftLayout != null) {
+			return draftLayout;
+		}
+
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
-		Layout draftLayout = LayoutLocalServiceUtil.addLayout(
+		draftLayout = LayoutLocalServiceUtil.addLayout(
 			layout.getUserId(), layout.getGroupId(), layout.isPrivateLayout(),
 			layout.getParentLayoutId(), PortalUtil.getClassNameId(Layout.class),
 			layout.getPlid(), layout.getNameMap(), layout.getTitleMap(),

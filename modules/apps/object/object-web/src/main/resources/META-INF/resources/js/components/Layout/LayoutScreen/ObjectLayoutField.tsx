@@ -37,11 +37,18 @@ const ObjectLayoutField: React.FC<IObjectLayoutFieldProps> = ({
 	rowIndex,
 	tabIndex,
 }) => {
-	const [{objectFields}, dispatch] = useContext(LayoutContext);
+	const [{objectFieldTypes, objectFields}, dispatch] = useContext(
+		LayoutContext
+	);
 
 	const objectField = objectFields.find(
 		({id}) => id === objectFieldId
 	) as TObjectField;
+
+	const objectFieldType = objectFieldTypes.find(
+		(objectFieldType) =>
+			objectFieldType.businessType === objectField.businessType
+	) as ObjectFieldType;
 
 	return (
 		<>
@@ -66,7 +73,7 @@ const ObjectLayoutField: React.FC<IObjectLayoutFieldProps> = ({
 					title={objectField?.label[defaultLanguageId]}
 				>
 					<small className="text-secondary">
-						{objectField?.DBType} |{' '}
+						{objectFieldType?.label} |{' '}
 					</small>
 
 					<RequiredLabel required={objectField?.required} />

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -60,11 +61,18 @@ public class CurrentAccountEntryManagerImpl
 	public AccountEntry getCurrentAccountEntry(long groupId, long userId)
 		throws PortalException {
 
+		AccountEntry guestAccountEntry =
+			_accountEntryLocalService.getGuestAccountEntry(
+				CompanyThreadLocal.getCompanyId());
+
+		if (userId <= UserConstants.USER_ID_DEFAULT) {
+			return guestAccountEntry;
+		}
+
 		User user = _userLocalService.fetchUser(userId);
 
-		if ((user == null) || user.isDefaultUser()) {
-			return _accountEntryLocalService.getGuestAccountEntry(
-				CompanyThreadLocal.getCompanyId());
+		if (user == null) {
+			return guestAccountEntry;
 		}
 
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(

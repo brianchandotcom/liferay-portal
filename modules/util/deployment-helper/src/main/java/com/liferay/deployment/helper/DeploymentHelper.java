@@ -14,6 +14,8 @@
 
 package com.liferay.deployment.helper;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.ByteArrayOutputStream;
@@ -82,7 +84,7 @@ public class DeploymentHelper {
 		catch (Exception exception) {
 			System.err.println("Error running deployment helper");
 
-			exception.printStackTrace();
+			_log.error(exception);
 		}
 	}
 
@@ -244,5 +246,8 @@ public class DeploymentHelper {
 
 		helpFormatter.printHelp("Liferay Deployment Helper", _getOptions());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DeploymentHelper.class);
 
 }

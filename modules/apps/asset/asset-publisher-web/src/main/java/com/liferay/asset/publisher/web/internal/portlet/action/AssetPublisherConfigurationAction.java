@@ -26,6 +26,7 @@ import com.liferay.asset.publisher.util.AssetPublisherHelper;
 import com.liferay.asset.publisher.util.AssetQueryRule;
 import com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext;
@@ -338,7 +339,8 @@ public class AssetPublisherConfigurationAction
 	}
 
 	protected String getDefaultSelectionStyle() {
-		return AssetPublisherSelectionStyleConstants.DEFAULT_SELECTION_STYLE;
+		return AssetPublisherSelectionStyleConfigurationUtil.
+			defaultSelectionStyle();
 	}
 
 	@Reference

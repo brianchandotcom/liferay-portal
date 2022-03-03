@@ -31,6 +31,7 @@ import com.liferay.asset.list.service.AssetListEntryService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
 import com.liferay.asset.publisher.util.AssetPublisherHelper;
+import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfigurationUtil;
 import com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration;
 import com.liferay.asset.publisher.web.internal.constants.AssetPublisherSelectionStyleConstants;
 import com.liferay.asset.util.AssetHelper;
@@ -325,7 +326,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 
 		String selectionStyle = GetterUtil.getString(
 			portletPreferences.getValue("selectionStyle", null),
-			AssetPublisherSelectionStyleConstants.DEFAULT_SELECTION_STYLE);
+			AssetPublisherSelectionStyleConfigurationUtil.
+				defaultSelectionStyle());
 
 		long assetListEntryId = GetterUtil.getLong(
 			portletPreferences.getValue("assetListEntryId", null));
@@ -678,7 +680,8 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				"anyAssetType", Boolean.TRUE.toString()));
 		String selectionStyle = portletPreferences.getValue(
 			"selectionStyle",
-			AssetPublisherSelectionStyleConstants.DEFAULT_SELECTION_STYLE);
+			AssetPublisherSelectionStyleConfigurationUtil.
+				defaultSelectionStyle());
 
 		if (anyAssetType ||
 			selectionStyle.equals(

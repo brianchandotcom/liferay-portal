@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
@@ -101,6 +102,8 @@ public class WikiPageLocalServiceTest {
 		_group = GroupTestUtil.addGroup();
 
 		_node = WikiTestUtil.addNode(_group.getGroupId());
+
+		_user = UserTestUtil.addUser(_group.getGroupId());
 	}
 
 	@Test
@@ -1072,6 +1075,21 @@ public class WikiPageLocalServiceTest {
 		testRevertPage(true);
 	}
 
+	@Test
+	public void testUpdatePagePreservesOriginalOwner() throws Exception {
+		WikiPage page = WikiTestUtil.addPage(
+			_group.getGroupId(), _node.getNodeId(), true);
+
+		WikiPage updatedPage = WikiPageLocalServiceUtil.updatePage(
+			_user.getUserId(), _node.getNodeId(), page.getTitle(),
+			page.getVersion(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), false, page.getFormat(), null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertNotEquals(page.getPageId(), updatedPage.getPageId());
+		Assert.assertEquals(page.getUserId(), updatedPage.getUserId());
+	}
+
 	protected void addExpandoValueToPage(WikiPage page) throws Exception {
 		ExpandoValue value = ExpandoTestUtil.addValue(
 			PortalUtil.getClassNameId(WikiPage.class), page.getPrimaryKey(),
@@ -1259,6 +1277,9 @@ public class WikiPageLocalServiceTest {
 	private Group _group;
 
 	private WikiNode _node;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 	private static class AssetCategoryTestException extends PortalException {
 	}

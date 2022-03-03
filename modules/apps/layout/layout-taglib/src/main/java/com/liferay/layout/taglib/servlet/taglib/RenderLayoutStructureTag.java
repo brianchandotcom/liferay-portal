@@ -35,6 +35,7 @@ import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.taglib.internal.display.context.RenderCollectionLayoutStructureItemDisplayContext;
 import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureDisplayContext;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.layout.taglib.internal.util.FFLayoutTaglibConfigurationUtil;
 import com.liferay.layout.util.constants.LayoutStructureConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
@@ -480,7 +481,17 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			jspWriter.write("\">");
 		}
 
-		jspWriter.write("<div class=\"");
+		String htmlTag = containerStyledLayoutStructureItem.getHtmlTag();
+
+		if (!FFLayoutTaglibConfigurationUtil.fragmentAdvancedOptionsEnabled() ||
+			Validator.isNull(htmlTag)) {
+
+			htmlTag = "div";
+		}
+
+		jspWriter.write(StringPool.LESS_THAN);
+		jspWriter.write(htmlTag);
+		jspWriter.write(" class=\"");
 		jspWriter.write(
 			renderLayoutStructureDisplayContext.getCssClass(
 				containerStyledLayoutStructureItem));
@@ -494,7 +505,9 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			layoutStructureItem.getChildrenItemIds(),
 			renderLayoutStructureDisplayContext);
 
-		jspWriter.write("</div>");
+		jspWriter.write("</");
+		jspWriter.write(htmlTag);
+		jspWriter.write(StringPool.GREATER_THAN);
 
 		if (Validator.isNotNull(containerLinkHref)) {
 			jspWriter.write("</a>");

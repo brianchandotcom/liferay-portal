@@ -394,7 +394,7 @@ public class SiteNavigationMenuDisplayContext {
 	}
 
 	public String getSiteNavigationMenuTypeLabel() {
-		int type = getSiteNavigationMenuType();
+		int type = getSelectSiteNavigationMenuType();
 
 		String typeKey = "select";
 

@@ -22,10 +22,16 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 if (Validator.isNull(redirect)) {
+	String mvcRenderCommandName = "/blogs/view";
+
+	if (Objects.equals(portletName, BlogsPortletKeys.BLOGS_AGGREGATOR)) {
+		mvcRenderCommandName = "/blogs_aggregator/view";
+	}
+
 	redirect = PortletURLBuilder.createRenderURL(
 		renderResponse
 	).setMVCRenderCommandName(
-		"/blogs/view"
+		mvcRenderCommandName
 	).buildString();
 }
 

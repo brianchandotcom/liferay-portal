@@ -1234,10 +1234,10 @@ definition {
 			Redirect.viewEntryFloatingURL(redirectURL = "${redirectURL}");
 		}
 
-		var currentMonth = DateUtil.getFormattedCurrentDate("MMMM");
+		var currentYear = DateUtil.getFormattedCurrentDate("yyyy");
 
 		Redirect.viewEntryInfo(
-			createDate = "${currentMonth}",
+			createDate = "${currentYear}",
 			createdBy = "Test Test",
 			expirationDate = "January 1, 2100",
 			latestOccurrence = "Never",
@@ -1248,10 +1248,10 @@ definition {
 		Redirect.openRedirectAdmin(siteURLKey = "test-site-name");
 
 		Redirect.viewEntryInfo(
-			createDate = "${currentMonth}",
+			createDate = "${currentYear}",
 			createdBy = "Test Test",
 			expirationDate = "January 1, 2100",
-			latestOccurrence = "${currentMonth}",
+			latestOccurrence = "${currentYear}",
 			type = "Temporary");
 	}
 

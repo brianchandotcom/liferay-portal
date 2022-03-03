@@ -376,6 +376,11 @@
 			<property name="description" value="Validates messages that are passed to exceptions." />
 			<message key="message.incorrect" value="Incorrect exception message" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.ExceptionPrintStackTraceCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Avoid using printStackTrace." />
+			<message key="method.call.avoid" value="Avoid using method ''printStackTrace''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ExceptionVariableNameCheck">
 			<property name="category" value="Naming Conventions" />
 			<property name="description" value="Validates variable names that have type `*Exception`." />

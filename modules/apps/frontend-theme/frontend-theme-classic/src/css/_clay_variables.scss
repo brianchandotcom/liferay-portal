@@ -322,7 +322,7 @@ $headings-color: null !default;
 $headings-font-family: null !default;
 $headings-font-weight: $font-weight-bold !default;
 $headings-line-height: 1.2 !default;
-$headings-margin-bottom: $spacer / 2 !default;
+$headings-margin-bottom: $spacer * 0.5 !default;
 
 // Body
 

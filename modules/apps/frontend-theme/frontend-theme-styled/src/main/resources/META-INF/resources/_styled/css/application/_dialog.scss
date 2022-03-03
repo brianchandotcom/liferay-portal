@@ -45,8 +45,8 @@
 			padding-top: 20px;
 
 			.nav-tabs-underline {
-				margin-left: -$grid-gutter-width / 2;
-				margin-right: -$grid-gutter-width / 2;
+				margin-left: $grid-gutter-width * -0.5;
+				margin-right: $grid-gutter-width * -0.5;
 				margin-top: -20px;
 			}
 		}

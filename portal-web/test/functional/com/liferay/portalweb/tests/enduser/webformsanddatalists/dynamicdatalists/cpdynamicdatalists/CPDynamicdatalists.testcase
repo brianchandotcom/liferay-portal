@@ -3644,7 +3644,6 @@ definition {
 			fieldReadOnly = "No");
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test ViewFormTemplateFields {
 		Navigator.openURL();
@@ -3679,16 +3678,6 @@ definition {
 		DynamicDataMapping.viewCanAddField(field = "Separator");
 
 		DynamicDataMapping.viewCannotAddField(field = "Text");
-
-		DynamicDataMapping.deleteField(fieldFieldLabel = "Text");
-
-		DynamicDataMapping.viewCanAddField(field = "Fieldset");
-
-		DynamicDataMapping.viewCanAddField(field = "Paragraph");
-
-		DynamicDataMapping.viewCanAddField(field = "Separator");
-
-		DynamicDataMapping.viewCanAddField(field = "Text");
 	}
 
 	@priority = "3"

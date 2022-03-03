@@ -121,6 +121,8 @@
 	}
 
 	.liferay-ddm-form-field-paragraph {
+		overflow-x: auto;
+
 		blockquote {
 			margin: 1em 40px;
 		}

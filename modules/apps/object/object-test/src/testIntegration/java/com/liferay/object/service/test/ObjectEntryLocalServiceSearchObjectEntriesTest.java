@@ -544,9 +544,9 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	private long _getTitleObjectFieldId() throws Exception {
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), "Text", "String", false,
-			false, null, LocalizedMapUtil.getLocalizedMap("Beta"), "beta",
-			false, Collections.emptyList());
+			_objectDefinition.getObjectDefinitionId(), "Text", "String", true,
+			true, null, LocalizedMapUtil.getLocalizedMap("Beta"), "beta", false,
+			Collections.emptyList());
 
 		return objectField.getObjectFieldId();
 	}

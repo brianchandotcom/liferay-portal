@@ -45,7 +45,7 @@ DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(Dispatch
 			%>
 
 			<p class="<%= Objects.equals(talendArchiveFileName, StringPool.BLANK) ? "hide" : StringPool.BLANK %> text-default" id="<portlet:namespace />talendArchiveFileName">
-				<span id="<portlet:namespace />talendArchiveFileRemove">
+				<span id="<portlet:namespace />removeIconId">
 					<liferay-ui:icon
 						icon="times"
 						markupView="lexicon"
@@ -74,19 +74,12 @@ DispatchTrigger dispatchTrigger = (DispatchTrigger)request.getAttribute(Dispatch
 
 <aui:script>
 	AUI().ready((A) => {
-		A.one('#<portlet:namespace />talendArchiveFileRemove').on(
-			'click',
-			(event) => {
-				event.preventDefault();
+		A.one('#<portlet:namespace />removeIconId').on('click', (event) => {
+			event.preventDefault();
 
-				A.one('#<portlet:namespace />talendArchiveFile').removeClass(
-					'hide'
-				);
+			A.one('#<portlet:namespace />talendArchiveFile').removeClass('hide');
 
-				A.one('#<portlet:namespace />talendArchiveFileName').addClass(
-					'hide'
-				);
-			}
-		);
+			A.one('#<portlet:namespace />talendArchiveFileName').addClass('hide');
+		});
 	});
 </aui:script>

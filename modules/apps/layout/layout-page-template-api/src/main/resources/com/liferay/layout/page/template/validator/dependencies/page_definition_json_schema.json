@@ -1408,6 +1408,20 @@
 							"title": "The contentDisplay Schema",
 							"type": "string"
 						},
+						"htmlTag": {
+							"enum": [
+								"Article",
+								"Aside",
+								"Div",
+								"Footer",
+								"Header",
+								"Main",
+								"Nav",
+								"Section"
+							],
+							"title": "The htmlTag Schema",
+							"type": "string"
+						},
 						"justify": {
 							"enum": [
 								"Center",

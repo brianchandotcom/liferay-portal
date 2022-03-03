@@ -14,6 +14,7 @@
 
 interface IThemeDisplay {
 	getCompanyGroupId: () => number;
+	getLanguageId: () => string;
 	getPathThemeImages: () => string;
 	getScopeGroupId: () => number;
 	getSiteGroupId: () => number;
@@ -34,6 +35,7 @@ declare global {
 export const Liferay = window.Liferay || {
 	ThemeDisplay: {
 		getCompanyGroupId: () => 0,
+		getLanguageId: () => 'en_US',
 		getPathThemeImages: () => '',
 		getScopeGroupId: () => 0,
 		getSiteGroupId: () => 0,

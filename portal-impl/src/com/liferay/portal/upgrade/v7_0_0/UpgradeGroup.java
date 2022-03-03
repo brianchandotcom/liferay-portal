@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -100,8 +101,9 @@ public class UpgradeGroup extends UpgradeProcess {
 
 	protected void updateGroupsNames() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+			SQLTransformer.transform(
 				"select groupId, name, typeSettings from Group_ where site = " +
-					"1 and friendlyURL != '/global'");
+					"[$TRUE$] and friendlyURL != '/global'"));
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(

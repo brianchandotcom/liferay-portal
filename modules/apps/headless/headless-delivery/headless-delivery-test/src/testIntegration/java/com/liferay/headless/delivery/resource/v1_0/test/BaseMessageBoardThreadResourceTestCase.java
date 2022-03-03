@@ -316,6 +316,43 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
+	public void testGetMessageBoardSectionMessageBoardThreadsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long messageBoardSectionId =
+			testGetMessageBoardSectionMessageBoardThreadsPage_getMessageBoardSectionId();
+
+		MessageBoardThread messageBoardThread1 =
+			testGetMessageBoardSectionMessageBoardThreadsPage_addMessageBoardThread(
+				messageBoardSectionId, randomMessageBoardThread());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardThread messageBoardThread2 =
+			testGetMessageBoardSectionMessageBoardThreadsPage_addMessageBoardThread(
+				messageBoardSectionId, randomMessageBoardThread());
+
+		for (EntityField entityField : entityFields) {
+			Page<MessageBoardThread> page =
+				messageBoardThreadResource.
+					getMessageBoardSectionMessageBoardThreadsPage(
+						messageBoardSectionId, null, null,
+						getFilterString(entityField, "eq", messageBoardThread1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(messageBoardThread1),
+				(List<MessageBoardThread>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetMessageBoardSectionMessageBoardThreadsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -419,6 +456,20 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				BeanUtils.setProperty(
 					messageBoardThread1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetMessageBoardSectionMessageBoardThreadsPageWithSortDouble()
+		throws Exception {
+
+		testGetMessageBoardSectionMessageBoardThreadsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, messageBoardThread1, messageBoardThread2) -> {
+				BeanUtils.setProperty(
+					messageBoardThread1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					messageBoardThread2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -698,6 +749,20 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				BeanUtils.setProperty(
 					messageBoardThread1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetMessageBoardThreadsRankedPageWithSortDouble()
+		throws Exception {
+
+		testGetMessageBoardThreadsRankedPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, messageBoardThread1, messageBoardThread2) -> {
+				BeanUtils.setProperty(
+					messageBoardThread1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					messageBoardThread2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1264,6 +1329,41 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteMessageBoardThreadsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteMessageBoardThreadsPage_getSiteId();
+
+		MessageBoardThread messageBoardThread1 =
+			testGetSiteMessageBoardThreadsPage_addMessageBoardThread(
+				siteId, randomMessageBoardThread());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardThread messageBoardThread2 =
+			testGetSiteMessageBoardThreadsPage_addMessageBoardThread(
+				siteId, randomMessageBoardThread());
+
+		for (EntityField entityField : entityFields) {
+			Page<MessageBoardThread> page =
+				messageBoardThreadResource.getSiteMessageBoardThreadsPage(
+					siteId, null, null, null,
+					getFilterString(entityField, "eq", messageBoardThread1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(messageBoardThread1),
+				(List<MessageBoardThread>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetSiteMessageBoardThreadsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -1358,6 +1458,20 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				BeanUtils.setProperty(
 					messageBoardThread1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSiteMessageBoardThreadsPageWithSortDouble()
+		throws Exception {
+
+		testGetSiteMessageBoardThreadsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, messageBoardThread1, messageBoardThread2) -> {
+				BeanUtils.setProperty(
+					messageBoardThread1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					messageBoardThread2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -3069,13 +3183,19 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfMessageBoardAttachments")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(
+					messageBoardThread.getNumberOfMessageBoardAttachments()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("numberOfMessageBoardMessages")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(
+					messageBoardThread.getNumberOfMessageBoardMessages()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("relatedContents")) {

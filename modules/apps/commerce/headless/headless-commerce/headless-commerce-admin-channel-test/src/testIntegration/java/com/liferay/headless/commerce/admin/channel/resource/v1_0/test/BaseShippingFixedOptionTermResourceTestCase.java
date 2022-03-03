@@ -306,6 +306,44 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 	}
 
 	@Test
+	public void testGetShippingFixedOptionIdShippingFixedOptionTermsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id =
+			testGetShippingFixedOptionIdShippingFixedOptionTermsPage_getId();
+
+		ShippingFixedOptionTerm shippingFixedOptionTerm1 =
+			testGetShippingFixedOptionIdShippingFixedOptionTermsPage_addShippingFixedOptionTerm(
+				id, randomShippingFixedOptionTerm());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ShippingFixedOptionTerm shippingFixedOptionTerm2 =
+			testGetShippingFixedOptionIdShippingFixedOptionTermsPage_addShippingFixedOptionTerm(
+				id, randomShippingFixedOptionTerm());
+
+		for (EntityField entityField : entityFields) {
+			Page<ShippingFixedOptionTerm> page =
+				shippingFixedOptionTermResource.
+					getShippingFixedOptionIdShippingFixedOptionTermsPage(
+						id, null,
+						getFilterString(
+							entityField, "eq", shippingFixedOptionTerm1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(shippingFixedOptionTerm1),
+				(List<ShippingFixedOptionTerm>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetShippingFixedOptionIdShippingFixedOptionTermsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -410,6 +448,20 @@ public abstract class BaseShippingFixedOptionTermResourceTestCase {
 				BeanUtils.setProperty(
 					shippingFixedOptionTerm1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetShippingFixedOptionIdShippingFixedOptionTermsPageWithSortDouble()
+		throws Exception {
+
+		testGetShippingFixedOptionIdShippingFixedOptionTermsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, shippingFixedOptionTerm1, shippingFixedOptionTerm2) ->{
+				BeanUtils.setProperty(
+					shippingFixedOptionTerm1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					shippingFixedOptionTerm2, entityField.getName(), 0.5);
 			});
 	}
 

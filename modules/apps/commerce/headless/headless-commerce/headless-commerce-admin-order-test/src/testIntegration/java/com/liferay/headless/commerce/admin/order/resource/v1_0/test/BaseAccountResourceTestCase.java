@@ -864,8 +864,9 @@ public abstract class BaseAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("type")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(account.getType()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(

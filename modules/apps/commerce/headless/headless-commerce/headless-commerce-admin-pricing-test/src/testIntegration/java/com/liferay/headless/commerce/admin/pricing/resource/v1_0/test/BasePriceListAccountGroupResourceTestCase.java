@@ -1014,8 +1014,9 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 		}
 
 		if (entityFieldName.equals("order")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(priceListAccountGroup.getOrder()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("priceListExternalReferenceCode")) {

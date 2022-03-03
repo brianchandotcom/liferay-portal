@@ -304,6 +304,42 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibraryContentStructuresPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long assetLibraryId =
+			testGetAssetLibraryContentStructuresPage_getAssetLibraryId();
+
+		ContentStructure contentStructure1 =
+			testGetAssetLibraryContentStructuresPage_addContentStructure(
+				assetLibraryId, randomContentStructure());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ContentStructure contentStructure2 =
+			testGetAssetLibraryContentStructuresPage_addContentStructure(
+				assetLibraryId, randomContentStructure());
+
+		for (EntityField entityField : entityFields) {
+			Page<ContentStructure> page =
+				contentStructureResource.getAssetLibraryContentStructuresPage(
+					assetLibraryId, null, null,
+					getFilterString(entityField, "eq", contentStructure1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(contentStructure1),
+				(List<ContentStructure>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetAssetLibraryContentStructuresPageWithFilterStringEquals()
 		throws Exception {
 
@@ -400,6 +436,20 @@ public abstract class BaseContentStructureResourceTestCase {
 				BeanUtils.setProperty(
 					contentStructure1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetAssetLibraryContentStructuresPageWithSortDouble()
+		throws Exception {
+
+		testGetAssetLibraryContentStructuresPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, contentStructure1, contentStructure2) -> {
+				BeanUtils.setProperty(
+					contentStructure1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					contentStructure2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -827,6 +877,41 @@ public abstract class BaseContentStructureResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteContentStructuresPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteContentStructuresPage_getSiteId();
+
+		ContentStructure contentStructure1 =
+			testGetSiteContentStructuresPage_addContentStructure(
+				siteId, randomContentStructure());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ContentStructure contentStructure2 =
+			testGetSiteContentStructuresPage_addContentStructure(
+				siteId, randomContentStructure());
+
+		for (EntityField entityField : entityFields) {
+			Page<ContentStructure> page =
+				contentStructureResource.getSiteContentStructuresPage(
+					siteId, null, null,
+					getFilterString(entityField, "eq", contentStructure1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(contentStructure1),
+				(List<ContentStructure>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetSiteContentStructuresPageWithFilterStringEquals()
 		throws Exception {
 
@@ -921,6 +1006,20 @@ public abstract class BaseContentStructureResourceTestCase {
 				BeanUtils.setProperty(
 					contentStructure1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSiteContentStructuresPageWithSortDouble()
+		throws Exception {
+
+		testGetSiteContentStructuresPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, contentStructure1, contentStructure2) -> {
+				BeanUtils.setProperty(
+					contentStructure1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					contentStructure2, entityField.getName(), 0.5);
 			});
 	}
 

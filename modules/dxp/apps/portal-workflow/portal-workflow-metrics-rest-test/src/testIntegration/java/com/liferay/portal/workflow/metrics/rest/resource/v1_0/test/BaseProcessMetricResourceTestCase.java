@@ -270,6 +270,18 @@ public abstract class BaseProcessMetricResourceTestCase {
 	}
 
 	@Test
+	public void testGetProcessMetricsPageWithSortDouble() throws Exception {
+		testGetProcessMetricsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, processMetric1, processMetric2) -> {
+				BeanUtils.setProperty(
+					processMetric1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					processMetric2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
 	public void testGetProcessMetricsPageWithSortInteger() throws Exception {
 		testGetProcessMetricsPageWithSort(
 			EntityField.Type.INTEGER,

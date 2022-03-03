@@ -257,6 +257,38 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testGetOptionCategoriesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		OptionCategory optionCategory1 =
+			testGetOptionCategoriesPage_addOptionCategory(
+				randomOptionCategory());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OptionCategory optionCategory2 =
+			testGetOptionCategoriesPage_addOptionCategory(
+				randomOptionCategory());
+
+		for (EntityField entityField : entityFields) {
+			Page<OptionCategory> page =
+				optionCategoryResource.getOptionCategoriesPage(
+					getFilterString(entityField, "eq", optionCategory1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(optionCategory1),
+				(List<OptionCategory>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetOptionCategoriesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -347,6 +379,18 @@ public abstract class BaseOptionCategoryResourceTestCase {
 				BeanUtils.setProperty(
 					optionCategory1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetOptionCategoriesPageWithSortDouble() throws Exception {
+		testGetOptionCategoriesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, optionCategory1, optionCategory2) -> {
+				BeanUtils.setProperty(
+					optionCategory1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					optionCategory2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1042,8 +1086,9 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(optionCategory.getPriority()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("title")) {

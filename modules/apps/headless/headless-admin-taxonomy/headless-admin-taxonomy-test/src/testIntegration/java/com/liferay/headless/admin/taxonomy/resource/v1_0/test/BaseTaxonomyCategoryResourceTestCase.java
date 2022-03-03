@@ -406,6 +406,43 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testGetTaxonomyCategoryTaxonomyCategoriesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String parentTaxonomyCategoryId =
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_getParentTaxonomyCategoryId();
+
+		TaxonomyCategory taxonomyCategory1 =
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
+				parentTaxonomyCategoryId, randomTaxonomyCategory());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		TaxonomyCategory taxonomyCategory2 =
+			testGetTaxonomyCategoryTaxonomyCategoriesPage_addTaxonomyCategory(
+				parentTaxonomyCategoryId, randomTaxonomyCategory());
+
+		for (EntityField entityField : entityFields) {
+			Page<TaxonomyCategory> page =
+				taxonomyCategoryResource.
+					getTaxonomyCategoryTaxonomyCategoriesPage(
+						parentTaxonomyCategoryId, null,
+						getFilterString(entityField, "eq", taxonomyCategory1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(taxonomyCategory1),
+				(List<TaxonomyCategory>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetTaxonomyCategoryTaxonomyCategoriesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -506,6 +543,20 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				BeanUtils.setProperty(
 					taxonomyCategory1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetTaxonomyCategoryTaxonomyCategoriesPageWithSortDouble()
+		throws Exception {
+
+		testGetTaxonomyCategoryTaxonomyCategoriesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, taxonomyCategory1, taxonomyCategory2) -> {
+				BeanUtils.setProperty(
+					taxonomyCategory1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					taxonomyCategory2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1040,6 +1091,43 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testGetTaxonomyVocabularyTaxonomyCategoriesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long taxonomyVocabularyId =
+			testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId();
+
+		TaxonomyCategory taxonomyCategory1 =
+			testGetTaxonomyVocabularyTaxonomyCategoriesPage_addTaxonomyCategory(
+				taxonomyVocabularyId, randomTaxonomyCategory());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		TaxonomyCategory taxonomyCategory2 =
+			testGetTaxonomyVocabularyTaxonomyCategoriesPage_addTaxonomyCategory(
+				taxonomyVocabularyId, randomTaxonomyCategory());
+
+		for (EntityField entityField : entityFields) {
+			Page<TaxonomyCategory> page =
+				taxonomyCategoryResource.
+					getTaxonomyVocabularyTaxonomyCategoriesPage(
+						taxonomyVocabularyId, null,
+						getFilterString(entityField, "eq", taxonomyCategory1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(taxonomyCategory1),
+				(List<TaxonomyCategory>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetTaxonomyVocabularyTaxonomyCategoriesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -1143,6 +1231,20 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 				BeanUtils.setProperty(
 					taxonomyCategory1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetTaxonomyVocabularyTaxonomyCategoriesPageWithSortDouble()
+		throws Exception {
+
+		testGetTaxonomyVocabularyTaxonomyCategoriesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, taxonomyCategory1, taxonomyCategory2) -> {
+				BeanUtils.setProperty(
+					taxonomyCategory1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					taxonomyCategory2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -2297,8 +2399,11 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfTaxonomyCategories")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(
+					taxonomyCategory.getNumberOfTaxonomyCategories()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("parentTaxonomyCategory")) {
@@ -2322,8 +2427,11 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("taxonomyCategoryUsageCount")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(
+					taxonomyCategory.getTaxonomyCategoryUsageCount()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("taxonomyVocabularyId")) {

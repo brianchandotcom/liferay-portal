@@ -839,8 +839,9 @@ public abstract class BaseDiagramResourceTestCase {
 		}
 
 		if (entityFieldName.equals("radius")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(diagram.getRadius()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("type")) {

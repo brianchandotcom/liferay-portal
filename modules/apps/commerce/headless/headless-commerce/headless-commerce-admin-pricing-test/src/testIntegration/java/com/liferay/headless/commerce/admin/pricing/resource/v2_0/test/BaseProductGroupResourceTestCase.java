@@ -653,8 +653,9 @@ public abstract class BaseProductGroupResourceTestCase {
 		}
 
 		if (entityFieldName.equals("productsCount")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(productGroup.getProductsCount()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("title")) {

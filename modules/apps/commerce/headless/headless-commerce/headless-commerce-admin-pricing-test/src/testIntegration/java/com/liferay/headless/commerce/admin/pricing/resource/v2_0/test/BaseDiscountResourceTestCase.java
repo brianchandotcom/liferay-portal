@@ -261,6 +261,31 @@ public abstract class BaseDiscountResourceTestCase {
 	}
 
 	@Test
+	public void testGetDiscountsPageWithFilterDoubleEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Discount discount1 = testGetDiscountsPage_addDiscount(randomDiscount());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Discount discount2 = testGetDiscountsPage_addDiscount(randomDiscount());
+
+		for (EntityField entityField : entityFields) {
+			Page<Discount> page = discountResource.getDiscountsPage(
+				null, getFilterString(entityField, "eq", discount1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(discount1),
+				(List<Discount>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetDiscountsPageWithFilterStringEquals() throws Exception {
 		List<EntityField> entityFields = getEntityFields(
 			EntityField.Type.STRING);
@@ -331,6 +356,16 @@ public abstract class BaseDiscountResourceTestCase {
 				BeanUtils.setProperty(
 					discount1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetDiscountsPageWithSortDouble() throws Exception {
+		testGetDiscountsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, discount1, discount2) -> {
+				BeanUtils.setProperty(discount1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(discount2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1834,13 +1869,15 @@ public abstract class BaseDiscountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("limitationTimes")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(discount.getLimitationTimes()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("limitationTimesPerAccount")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(discount.getLimitationTimesPerAccount()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("limitationType")) {
@@ -1862,8 +1899,9 @@ public abstract class BaseDiscountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfUse")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(discount.getNumberOfUse()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("percentageLevel1")) {

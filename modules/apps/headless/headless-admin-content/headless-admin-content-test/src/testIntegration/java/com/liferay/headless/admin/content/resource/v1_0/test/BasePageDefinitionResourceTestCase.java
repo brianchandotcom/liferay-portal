@@ -524,8 +524,9 @@ public abstract class BasePageDefinitionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("version")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(pageDefinition.getVersion()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(

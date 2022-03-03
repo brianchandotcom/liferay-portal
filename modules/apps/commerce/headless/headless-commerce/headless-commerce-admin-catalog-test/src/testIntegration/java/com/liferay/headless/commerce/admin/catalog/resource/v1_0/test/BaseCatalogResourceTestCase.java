@@ -471,6 +471,31 @@ public abstract class BaseCatalogResourceTestCase {
 	}
 
 	@Test
+	public void testGetCatalogsPageWithFilterDoubleEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Catalog catalog1 = testGetCatalogsPage_addCatalog(randomCatalog());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Catalog catalog2 = testGetCatalogsPage_addCatalog(randomCatalog());
+
+		for (EntityField entityField : entityFields) {
+			Page<Catalog> page = catalogResource.getCatalogsPage(
+				null, getFilterString(entityField, "eq", catalog1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(catalog1),
+				(List<Catalog>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetCatalogsPageWithFilterStringEquals() throws Exception {
 		List<EntityField> entityFields = getEntityFields(
 			EntityField.Type.STRING);
@@ -541,6 +566,16 @@ public abstract class BaseCatalogResourceTestCase {
 				BeanUtils.setProperty(
 					catalog1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetCatalogsPageWithSortDouble() throws Exception {
+		testGetCatalogsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, catalog1, catalog2) -> {
+				BeanUtils.setProperty(catalog1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(catalog2, entityField.getName(), 0.5);
 			});
 	}
 

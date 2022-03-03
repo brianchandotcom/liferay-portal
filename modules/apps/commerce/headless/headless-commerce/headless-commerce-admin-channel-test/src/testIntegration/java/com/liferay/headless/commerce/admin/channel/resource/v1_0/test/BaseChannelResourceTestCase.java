@@ -253,6 +253,31 @@ public abstract class BaseChannelResourceTestCase {
 	}
 
 	@Test
+	public void testGetChannelsPageWithFilterDoubleEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Channel channel1 = testGetChannelsPage_addChannel(randomChannel());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Channel channel2 = testGetChannelsPage_addChannel(randomChannel());
+
+		for (EntityField entityField : entityFields) {
+			Page<Channel> page = channelResource.getChannelsPage(
+				null, getFilterString(entityField, "eq", channel1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(channel1),
+				(List<Channel>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetChannelsPageWithFilterStringEquals() throws Exception {
 		List<EntityField> entityFields = getEntityFields(
 			EntityField.Type.STRING);
@@ -323,6 +348,16 @@ public abstract class BaseChannelResourceTestCase {
 				BeanUtils.setProperty(
 					channel1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetChannelsPageWithSortDouble() throws Exception {
+		testGetChannelsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, channel1, channel2) -> {
+				BeanUtils.setProperty(channel1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(channel2, entityField.getName(), 0.5);
 			});
 	}
 

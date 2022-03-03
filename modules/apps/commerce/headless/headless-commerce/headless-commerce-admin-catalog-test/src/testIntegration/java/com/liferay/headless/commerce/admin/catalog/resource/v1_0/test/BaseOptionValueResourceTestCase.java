@@ -557,6 +557,18 @@ public abstract class BaseOptionValueResourceTestCase {
 	}
 
 	@Test
+	public void testGetOptionByExternalReferenceCodeOptionValuesPageWithSortDouble()
+		throws Exception {
+
+		testGetOptionByExternalReferenceCodeOptionValuesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, optionValue1, optionValue2) -> {
+				BeanUtils.setProperty(optionValue1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(optionValue2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
 	public void testGetOptionByExternalReferenceCodeOptionValuesPageWithSortInteger()
 		throws Exception {
 
@@ -826,6 +838,18 @@ public abstract class BaseOptionValueResourceTestCase {
 				BeanUtils.setProperty(
 					optionValue1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetOptionIdOptionValuesPageWithSortDouble()
+		throws Exception {
+
+		testGetOptionIdOptionValuesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, optionValue1, optionValue2) -> {
+				BeanUtils.setProperty(optionValue1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(optionValue2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1394,8 +1418,9 @@ public abstract class BaseOptionValueResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(optionValue.getPriority()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(

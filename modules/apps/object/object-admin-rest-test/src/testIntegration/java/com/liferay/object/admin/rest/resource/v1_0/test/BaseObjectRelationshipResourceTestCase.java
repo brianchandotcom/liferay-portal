@@ -296,6 +296,43 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	}
 
 	@Test
+	public void testGetObjectDefinitionObjectRelationshipsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long objectDefinitionId =
+			testGetObjectDefinitionObjectRelationshipsPage_getObjectDefinitionId();
+
+		ObjectRelationship objectRelationship1 =
+			testGetObjectDefinitionObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionId, randomObjectRelationship());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectRelationship objectRelationship2 =
+			testGetObjectDefinitionObjectRelationshipsPage_addObjectRelationship(
+				objectDefinitionId, randomObjectRelationship());
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectRelationship> page =
+				objectRelationshipResource.
+					getObjectDefinitionObjectRelationshipsPage(
+						objectDefinitionId, null,
+						getFilterString(entityField, "eq", objectRelationship1),
+						Pagination.of(1, 2));
+
+			assertEquals(
+				Collections.singletonList(objectRelationship1),
+				(List<ObjectRelationship>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetObjectDefinitionObjectRelationshipsPageWithFilterStringEquals()
 		throws Exception {
 

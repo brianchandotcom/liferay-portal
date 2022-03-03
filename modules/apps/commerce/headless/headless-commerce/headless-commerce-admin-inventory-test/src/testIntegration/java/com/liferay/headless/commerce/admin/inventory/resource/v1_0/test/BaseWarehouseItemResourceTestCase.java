@@ -1335,13 +1335,15 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		}
 
 		if (entityFieldName.equals("quantity")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(warehouseItem.getQuantity()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("reservedQuantity")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(warehouseItem.getReservedQuantity()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("sku")) {

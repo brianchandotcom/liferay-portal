@@ -283,6 +283,37 @@ public abstract class BaseProductResourceTestCase {
 	}
 
 	@Test
+	public void testGetChannelProductsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long channelId = testGetChannelProductsPage_getChannelId();
+
+		Product product1 = testGetChannelProductsPage_addProduct(
+			channelId, randomProduct());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Product product2 = testGetChannelProductsPage_addProduct(
+			channelId, randomProduct());
+
+		for (EntityField entityField : entityFields) {
+			Page<Product> page = productResource.getChannelProductsPage(
+				channelId, null, getFilterString(entityField, "eq", product1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(product1),
+				(List<Product>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetChannelProductsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -358,6 +389,16 @@ public abstract class BaseProductResourceTestCase {
 				BeanUtils.setProperty(
 					product1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetChannelProductsPageWithSortDouble() throws Exception {
+		testGetChannelProductsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, product1, product2) -> {
+				BeanUtils.setProperty(product1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(product2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1392,8 +1433,9 @@ public abstract class BaseProductResourceTestCase {
 		}
 
 		if (entityFieldName.equals("multipleOrderQuantity")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(product.getMultipleOrderQuantity()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {

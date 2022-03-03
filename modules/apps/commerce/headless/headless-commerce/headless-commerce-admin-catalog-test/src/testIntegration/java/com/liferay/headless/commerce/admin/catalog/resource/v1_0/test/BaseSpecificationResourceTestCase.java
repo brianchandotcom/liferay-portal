@@ -254,6 +254,36 @@ public abstract class BaseSpecificationResourceTestCase {
 	}
 
 	@Test
+	public void testGetSpecificationsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Specification specification1 =
+			testGetSpecificationsPage_addSpecification(randomSpecification());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Specification specification2 =
+			testGetSpecificationsPage_addSpecification(randomSpecification());
+
+		for (EntityField entityField : entityFields) {
+			Page<Specification> page =
+				specificationResource.getSpecificationsPage(
+					null, getFilterString(entityField, "eq", specification1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(specification1),
+				(List<Specification>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetSpecificationsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -335,6 +365,18 @@ public abstract class BaseSpecificationResourceTestCase {
 				BeanUtils.setProperty(
 					specification1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSpecificationsPageWithSortDouble() throws Exception {
+		testGetSpecificationsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, specification1, specification2) -> {
+				BeanUtils.setProperty(
+					specification1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					specification2, entityField.getName(), 0.5);
 			});
 	}
 

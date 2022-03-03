@@ -958,13 +958,15 @@ public abstract class BaseBillingAddressResourceTestCase {
 		}
 
 		if (entityFieldName.equals("latitude")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(billingAddress.getLatitude()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("longitude")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(billingAddress.getLongitude()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {

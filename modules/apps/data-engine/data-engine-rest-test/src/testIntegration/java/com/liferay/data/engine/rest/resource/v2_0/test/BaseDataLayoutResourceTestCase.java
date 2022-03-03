@@ -331,6 +331,18 @@ public abstract class BaseDataLayoutResourceTestCase {
 	}
 
 	@Test
+	public void testGetDataDefinitionDataLayoutsPageWithSortDouble()
+		throws Exception {
+
+		testGetDataDefinitionDataLayoutsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, dataLayout1, dataLayout2) -> {
+				BeanUtils.setProperty(dataLayout1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(dataLayout2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
 	public void testGetDataDefinitionDataLayoutsPageWithSortInteger()
 		throws Exception {
 

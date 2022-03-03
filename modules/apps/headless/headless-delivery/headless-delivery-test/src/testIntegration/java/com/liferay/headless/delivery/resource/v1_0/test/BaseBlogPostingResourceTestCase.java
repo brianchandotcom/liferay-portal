@@ -559,6 +559,39 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteBlogPostingsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteBlogPostingsPage_getSiteId();
+
+		BlogPosting blogPosting1 = testGetSiteBlogPostingsPage_addBlogPosting(
+			siteId, randomBlogPosting());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		BlogPosting blogPosting2 = testGetSiteBlogPostingsPage_addBlogPosting(
+			siteId, randomBlogPosting());
+
+		for (EntityField entityField : entityFields) {
+			Page<BlogPosting> page =
+				blogPostingResource.getSiteBlogPostingsPage(
+					siteId, null, null,
+					getFilterString(entityField, "eq", blogPosting1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(blogPosting1),
+				(List<BlogPosting>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetSiteBlogPostingsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -636,6 +669,16 @@ public abstract class BaseBlogPostingResourceTestCase {
 				BeanUtils.setProperty(
 					blogPosting1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSiteBlogPostingsPageWithSortDouble() throws Exception {
+		testGetSiteBlogPostingsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, blogPosting1, blogPosting2) -> {
+				BeanUtils.setProperty(blogPosting1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(blogPosting2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -2356,8 +2399,9 @@ public abstract class BaseBlogPostingResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfComments")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(blogPosting.getNumberOfComments()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("relatedContents")) {

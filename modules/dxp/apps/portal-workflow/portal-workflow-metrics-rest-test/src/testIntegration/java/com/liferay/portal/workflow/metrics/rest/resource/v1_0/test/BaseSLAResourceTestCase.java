@@ -950,8 +950,9 @@ public abstract class BaseSLAResourceTestCase {
 		}
 
 		if (entityFieldName.equals("status")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(sla.getStatus()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("stopNodeKeys")) {

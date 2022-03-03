@@ -292,6 +292,42 @@ public abstract class BaseListTypeEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGetListTypeDefinitionListTypeEntriesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long listTypeDefinitionId =
+			testGetListTypeDefinitionListTypeEntriesPage_getListTypeDefinitionId();
+
+		ListTypeEntry listTypeEntry1 =
+			testGetListTypeDefinitionListTypeEntriesPage_addListTypeEntry(
+				listTypeDefinitionId, randomListTypeEntry());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ListTypeEntry listTypeEntry2 =
+			testGetListTypeDefinitionListTypeEntriesPage_addListTypeEntry(
+				listTypeDefinitionId, randomListTypeEntry());
+
+		for (EntityField entityField : entityFields) {
+			Page<ListTypeEntry> page =
+				listTypeEntryResource.getListTypeDefinitionListTypeEntriesPage(
+					listTypeDefinitionId, null, null,
+					getFilterString(entityField, "eq", listTypeEntry1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(listTypeEntry1),
+				(List<ListTypeEntry>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetListTypeDefinitionListTypeEntriesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -390,6 +426,20 @@ public abstract class BaseListTypeEntryResourceTestCase {
 				BeanUtils.setProperty(
 					listTypeEntry1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetListTypeDefinitionListTypeEntriesPageWithSortDouble()
+		throws Exception {
+
+		testGetListTypeDefinitionListTypeEntriesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, listTypeEntry1, listTypeEntry2) -> {
+				BeanUtils.setProperty(
+					listTypeEntry1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					listTypeEntry2, entityField.getName(), 0.5);
 			});
 	}
 

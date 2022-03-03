@@ -321,6 +321,20 @@ public abstract class BaseMappedProductResourceTestCase {
 	}
 
 	@Test
+	public void testGetChannelProductMappedProductsPageWithSortDouble()
+		throws Exception {
+
+		testGetChannelProductMappedProductsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, mappedProduct1, mappedProduct2) -> {
+				BeanUtils.setProperty(
+					mappedProduct1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					mappedProduct2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
 	public void testGetChannelProductMappedProductsPageWithSortInteger()
 		throws Exception {
 
@@ -1255,8 +1269,9 @@ public abstract class BaseMappedProductResourceTestCase {
 		}
 
 		if (entityFieldName.equals("quantity")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(mappedProduct.getQuantity()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("replacementMappedProduct")) {

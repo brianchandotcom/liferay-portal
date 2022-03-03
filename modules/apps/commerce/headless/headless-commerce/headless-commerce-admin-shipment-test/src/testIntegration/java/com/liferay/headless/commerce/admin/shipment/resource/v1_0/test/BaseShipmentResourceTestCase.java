@@ -257,6 +257,31 @@ public abstract class BaseShipmentResourceTestCase {
 	}
 
 	@Test
+	public void testGetShipmentsPageWithFilterDoubleEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Shipment shipment1 = testGetShipmentsPage_addShipment(randomShipment());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Shipment shipment2 = testGetShipmentsPage_addShipment(randomShipment());
+
+		for (EntityField entityField : entityFields) {
+			Page<Shipment> page = shipmentResource.getShipmentsPage(
+				null, getFilterString(entityField, "eq", shipment1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(shipment1),
+				(List<Shipment>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetShipmentsPageWithFilterStringEquals() throws Exception {
 		List<EntityField> entityFields = getEntityFields(
 			EntityField.Type.STRING);
@@ -327,6 +352,16 @@ public abstract class BaseShipmentResourceTestCase {
 				BeanUtils.setProperty(
 					shipment1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetShipmentsPageWithSortDouble() throws Exception {
+		testGetShipmentsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, shipment1, shipment2) -> {
+				BeanUtils.setProperty(shipment1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(shipment2, entityField.getName(), 0.5);
 			});
 	}
 

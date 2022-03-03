@@ -289,6 +289,16 @@ public abstract class BaseNodeMetricResourceTestCase {
 	}
 
 	@Test
+	public void testGetProcessNodeMetricsPageWithSortDouble() throws Exception {
+		testGetProcessNodeMetricsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, nodeMetric1, nodeMetric2) -> {
+				BeanUtils.setProperty(nodeMetric1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(nodeMetric2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
 	public void testGetProcessNodeMetricsPageWithSortInteger()
 		throws Exception {
 
@@ -835,8 +845,10 @@ public abstract class BaseNodeMetricResourceTestCase {
 		}
 
 		if (entityFieldName.equals("breachedInstancePercentage")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(nodeMetric.getBreachedInstancePercentage()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("durationAvg")) {

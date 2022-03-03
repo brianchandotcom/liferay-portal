@@ -283,6 +283,31 @@ public abstract class BaseAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGetAccountsPageWithFilterDoubleEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Account account1 = testGetAccountsPage_addAccount(randomAccount());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Account account2 = testGetAccountsPage_addAccount(randomAccount());
+
+		for (EntityField entityField : entityFields) {
+			Page<Account> page = accountResource.getAccountsPage(
+				null, getFilterString(entityField, "eq", account1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(account1),
+				(List<Account>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetAccountsPageWithFilterStringEquals() throws Exception {
 		List<EntityField> entityFields = getEntityFields(
 			EntityField.Type.STRING);
@@ -353,6 +378,16 @@ public abstract class BaseAccountResourceTestCase {
 				BeanUtils.setProperty(
 					account1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetAccountsPageWithSortDouble() throws Exception {
+		testGetAccountsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, account1, account2) -> {
+				BeanUtils.setProperty(account1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(account2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1503,8 +1538,9 @@ public abstract class BaseAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("type")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(account.getType()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(

@@ -317,6 +317,44 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceTestCase {
 	}
 
 	@Test
+	public void testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id =
+			testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPage_getId();
+
+		ShippingFixedOptionOrderType shippingFixedOptionOrderType1 =
+			testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPage_addShippingFixedOptionOrderType(
+				id, randomShippingFixedOptionOrderType());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ShippingFixedOptionOrderType shippingFixedOptionOrderType2 =
+			testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPage_addShippingFixedOptionOrderType(
+				id, randomShippingFixedOptionOrderType());
+
+		for (EntityField entityField : entityFields) {
+			Page<ShippingFixedOptionOrderType> page =
+				shippingFixedOptionOrderTypeResource.
+					getShippingFixedOptionIdShippingFixedOptionOrderTypesPage(
+						id, null,
+						getFilterString(
+							entityField, "eq", shippingFixedOptionOrderType1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(shippingFixedOptionOrderType1),
+				(List<ShippingFixedOptionOrderType>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -423,6 +461,22 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceTestCase {
 				BeanUtils.setProperty(
 					shippingFixedOptionOrderType1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPageWithSortDouble()
+		throws Exception {
+
+		testGetShippingFixedOptionIdShippingFixedOptionOrderTypesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, shippingFixedOptionOrderType1,
+			 shippingFixedOptionOrderType2) -> {
+
+				BeanUtils.setProperty(
+					shippingFixedOptionOrderType1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					shippingFixedOptionOrderType2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1099,8 +1153,10 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(shippingFixedOptionOrderType.getPriority()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("shippingFixedOptionId")) {

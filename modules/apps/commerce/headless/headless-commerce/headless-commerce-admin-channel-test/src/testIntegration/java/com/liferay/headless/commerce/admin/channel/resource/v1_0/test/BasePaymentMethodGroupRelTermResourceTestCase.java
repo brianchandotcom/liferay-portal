@@ -309,6 +309,44 @@ public abstract class BasePaymentMethodGroupRelTermResourceTestCase {
 	}
 
 	@Test
+	public void testGetPaymentMethodGroupRelIdPaymentMethodGroupRelTermsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id =
+			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelTermsPage_getId();
+
+		PaymentMethodGroupRelTerm paymentMethodGroupRelTerm1 =
+			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelTermsPage_addPaymentMethodGroupRelTerm(
+				id, randomPaymentMethodGroupRelTerm());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PaymentMethodGroupRelTerm paymentMethodGroupRelTerm2 =
+			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelTermsPage_addPaymentMethodGroupRelTerm(
+				id, randomPaymentMethodGroupRelTerm());
+
+		for (EntityField entityField : entityFields) {
+			Page<PaymentMethodGroupRelTerm> page =
+				paymentMethodGroupRelTermResource.
+					getPaymentMethodGroupRelIdPaymentMethodGroupRelTermsPage(
+						id, null,
+						getFilterString(
+							entityField, "eq", paymentMethodGroupRelTerm1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(paymentMethodGroupRelTerm1),
+				(List<PaymentMethodGroupRelTerm>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetPaymentMethodGroupRelIdPaymentMethodGroupRelTermsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -415,6 +453,22 @@ public abstract class BasePaymentMethodGroupRelTermResourceTestCase {
 				BeanUtils.setProperty(
 					paymentMethodGroupRelTerm1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetPaymentMethodGroupRelIdPaymentMethodGroupRelTermsPageWithSortDouble()
+		throws Exception {
+
+		testGetPaymentMethodGroupRelIdPaymentMethodGroupRelTermsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, paymentMethodGroupRelTerm1,
+			 paymentMethodGroupRelTerm2) -> {
+
+				BeanUtils.setProperty(
+					paymentMethodGroupRelTerm1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					paymentMethodGroupRelTerm2, entityField.getName(), 0.5);
 			});
 	}
 

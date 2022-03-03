@@ -860,8 +860,9 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(availabilityEstimate.getPriority()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("title")) {

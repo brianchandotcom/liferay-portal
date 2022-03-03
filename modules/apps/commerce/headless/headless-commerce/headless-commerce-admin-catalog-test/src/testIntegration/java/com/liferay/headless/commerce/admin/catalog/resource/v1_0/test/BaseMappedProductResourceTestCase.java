@@ -371,6 +371,20 @@ public abstract class BaseMappedProductResourceTestCase {
 	}
 
 	@Test
+	public void testGetProductByExternalReferenceCodeMappedProductsPageWithSortDouble()
+		throws Exception {
+
+		testGetProductByExternalReferenceCodeMappedProductsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, mappedProduct1, mappedProduct2) -> {
+				BeanUtils.setProperty(
+					mappedProduct1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					mappedProduct2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
 	public void testGetProductByExternalReferenceCodeMappedProductsPageWithSortInteger()
 		throws Exception {
 
@@ -728,6 +742,20 @@ public abstract class BaseMappedProductResourceTestCase {
 				BeanUtils.setProperty(
 					mappedProduct1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetProductIdMappedProductsPageWithSortDouble()
+		throws Exception {
+
+		testGetProductIdMappedProductsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, mappedProduct1, mappedProduct2) -> {
+				BeanUtils.setProperty(
+					mappedProduct1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					mappedProduct2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1503,8 +1531,9 @@ public abstract class BaseMappedProductResourceTestCase {
 		}
 
 		if (entityFieldName.equals("quantity")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(mappedProduct.getQuantity()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("sequence")) {

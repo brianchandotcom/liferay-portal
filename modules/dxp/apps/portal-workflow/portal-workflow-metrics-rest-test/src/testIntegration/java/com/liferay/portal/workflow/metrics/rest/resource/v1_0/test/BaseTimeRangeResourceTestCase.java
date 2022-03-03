@@ -675,8 +675,9 @@ public abstract class BaseTimeRangeResourceTestCase {
 		}
 
 		if (entityFieldName.equals("id")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(timeRange.getId()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {

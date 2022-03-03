@@ -772,23 +772,32 @@ public abstract class BaseProductConfigurationResourceTestCase {
 		}
 
 		if (entityFieldName.equals("maxOrderQuantity")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(productConfiguration.getMaxOrderQuantity()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("minOrderQuantity")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(productConfiguration.getMinOrderQuantity()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("minStockQuantity")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(productConfiguration.getMinStockQuantity()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("multipleOrderQuantity")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(
+					productConfiguration.getMultipleOrderQuantity()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(

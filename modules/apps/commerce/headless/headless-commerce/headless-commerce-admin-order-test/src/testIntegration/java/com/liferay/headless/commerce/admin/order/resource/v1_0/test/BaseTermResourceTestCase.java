@@ -254,6 +254,30 @@ public abstract class BaseTermResourceTestCase {
 	}
 
 	@Test
+	public void testGetTermsPageWithFilterDoubleEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Term term1 = testGetTermsPage_addTerm(randomTerm());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Term term2 = testGetTermsPage_addTerm(randomTerm());
+
+		for (EntityField entityField : entityFields) {
+			Page<Term> page = termResource.getTermsPage(
+				null, getFilterString(entityField, "eq", term1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(term1), (List<Term>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetTermsPageWithFilterStringEquals() throws Exception {
 		List<EntityField> entityFields = getEntityFields(
 			EntityField.Type.STRING);
@@ -322,6 +346,16 @@ public abstract class BaseTermResourceTestCase {
 				BeanUtils.setProperty(
 					term1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetTermsPageWithSortDouble() throws Exception {
+		testGetTermsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, term1, term2) -> {
+				BeanUtils.setProperty(term1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(term2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1444,8 +1478,9 @@ public abstract class BaseTermResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(term.getPriority()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("termOrderType")) {

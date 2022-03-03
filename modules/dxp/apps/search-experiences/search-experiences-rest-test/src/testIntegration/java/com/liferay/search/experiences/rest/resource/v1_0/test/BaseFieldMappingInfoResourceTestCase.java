@@ -570,8 +570,9 @@ public abstract class BaseFieldMappingInfoResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("languageIdPosition")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(fieldMappingInfo.getLanguageIdPosition()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {

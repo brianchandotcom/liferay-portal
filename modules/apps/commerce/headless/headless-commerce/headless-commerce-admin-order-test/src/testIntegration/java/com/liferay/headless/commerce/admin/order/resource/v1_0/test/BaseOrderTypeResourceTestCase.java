@@ -316,6 +316,33 @@ public abstract class BaseOrderTypeResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrderTypesPageWithFilterDoubleEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		OrderType orderType1 = testGetOrderTypesPage_addOrderType(
+			randomOrderType());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderType orderType2 = testGetOrderTypesPage_addOrderType(
+			randomOrderType());
+
+		for (EntityField entityField : entityFields) {
+			Page<OrderType> page = orderTypeResource.getOrderTypesPage(
+				null, getFilterString(entityField, "eq", orderType1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(orderType1),
+				(List<OrderType>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetOrderTypesPageWithFilterStringEquals() throws Exception {
 		List<EntityField> entityFields = getEntityFields(
 			EntityField.Type.STRING);
@@ -391,6 +418,16 @@ public abstract class BaseOrderTypeResourceTestCase {
 				BeanUtils.setProperty(
 					orderType1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetOrderTypesPageWithSortDouble() throws Exception {
+		testGetOrderTypesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, orderType1, orderType2) -> {
+				BeanUtils.setProperty(orderType1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(orderType2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1470,8 +1507,9 @@ public abstract class BaseOrderTypeResourceTestCase {
 		}
 
 		if (entityFieldName.equals("displayOrder")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(orderType.getDisplayOrder()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("expirationDate")) {

@@ -438,6 +438,40 @@ public abstract class BaseDiscountSkuResourceTestCase {
 	}
 
 	@Test
+	public void testGetDiscountIdDiscountSkusPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id = testGetDiscountIdDiscountSkusPage_getId();
+
+		DiscountSku discountSku1 =
+			testGetDiscountIdDiscountSkusPage_addDiscountSku(
+				id, randomDiscountSku());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DiscountSku discountSku2 =
+			testGetDiscountIdDiscountSkusPage_addDiscountSku(
+				id, randomDiscountSku());
+
+		for (EntityField entityField : entityFields) {
+			Page<DiscountSku> page =
+				discountSkuResource.getDiscountIdDiscountSkusPage(
+					id, null, getFilterString(entityField, "eq", discountSku1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(discountSku1),
+				(List<DiscountSku>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetDiscountIdDiscountSkusPageWithFilterStringEquals()
 		throws Exception {
 
@@ -526,6 +560,18 @@ public abstract class BaseDiscountSkuResourceTestCase {
 				BeanUtils.setProperty(
 					discountSku1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetDiscountIdDiscountSkusPageWithSortDouble()
+		throws Exception {
+
+		testGetDiscountIdDiscountSkusPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, discountSku1, discountSku2) -> {
+				BeanUtils.setProperty(discountSku1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(discountSku2, entityField.getName(), 0.5);
 			});
 	}
 

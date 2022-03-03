@@ -1564,8 +1564,9 @@ public abstract class BaseAttachmentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(attachment.getPriority()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("src")) {
@@ -1582,8 +1583,9 @@ public abstract class BaseAttachmentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("type")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(attachment.getType()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(

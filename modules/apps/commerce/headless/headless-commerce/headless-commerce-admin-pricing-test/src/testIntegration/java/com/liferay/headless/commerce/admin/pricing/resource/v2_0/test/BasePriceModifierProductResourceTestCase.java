@@ -467,6 +467,43 @@ public abstract class BasePriceModifierProductResourceTestCase {
 	}
 
 	@Test
+	public void testGetPriceModifierIdPriceModifierProductsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id = testGetPriceModifierIdPriceModifierProductsPage_getId();
+
+		PriceModifierProduct priceModifierProduct1 =
+			testGetPriceModifierIdPriceModifierProductsPage_addPriceModifierProduct(
+				id, randomPriceModifierProduct());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PriceModifierProduct priceModifierProduct2 =
+			testGetPriceModifierIdPriceModifierProductsPage_addPriceModifierProduct(
+				id, randomPriceModifierProduct());
+
+		for (EntityField entityField : entityFields) {
+			Page<PriceModifierProduct> page =
+				priceModifierProductResource.
+					getPriceModifierIdPriceModifierProductsPage(
+						id, null,
+						getFilterString(
+							entityField, "eq", priceModifierProduct1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(priceModifierProduct1),
+				(List<PriceModifierProduct>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetPriceModifierIdPriceModifierProductsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -569,6 +606,20 @@ public abstract class BasePriceModifierProductResourceTestCase {
 				BeanUtils.setProperty(
 					priceModifierProduct1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetPriceModifierIdPriceModifierProductsPageWithSortDouble()
+		throws Exception {
+
+		testGetPriceModifierIdPriceModifierProductsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, priceModifierProduct1, priceModifierProduct2) -> {
+				BeanUtils.setProperty(
+					priceModifierProduct1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					priceModifierProduct2, entityField.getName(), 0.5);
 			});
 	}
 

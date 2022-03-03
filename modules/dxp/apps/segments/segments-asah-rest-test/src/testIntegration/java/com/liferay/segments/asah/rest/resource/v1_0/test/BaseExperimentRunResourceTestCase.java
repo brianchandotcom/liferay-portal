@@ -535,8 +535,9 @@ public abstract class BaseExperimentRunResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("confidenceLevel")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(experimentRun.getConfidenceLevel()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("experimentVariants")) {

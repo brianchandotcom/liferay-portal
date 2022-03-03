@@ -459,6 +459,33 @@ public abstract class BaseWarehouseResourceTestCase {
 	}
 
 	@Test
+	public void testGetWarehousesPageWithFilterDoubleEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Warehouse warehouse1 = testGetWarehousesPage_addWarehouse(
+			randomWarehouse());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Warehouse warehouse2 = testGetWarehousesPage_addWarehouse(
+			randomWarehouse());
+
+		for (EntityField entityField : entityFields) {
+			Page<Warehouse> page = warehouseResource.getWarehousesPage(
+				getFilterString(entityField, "eq", warehouse1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(warehouse1),
+				(List<Warehouse>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetWarehousesPageWithFilterStringEquals() throws Exception {
 		List<EntityField> entityFields = getEntityFields(
 			EntityField.Type.STRING);
@@ -534,6 +561,16 @@ public abstract class BaseWarehouseResourceTestCase {
 				BeanUtils.setProperty(
 					warehouse1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetWarehousesPageWithSortDouble() throws Exception {
+		testGetWarehousesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, warehouse1, warehouse2) -> {
+				BeanUtils.setProperty(warehouse1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(warehouse2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1326,13 +1363,15 @@ public abstract class BaseWarehouseResourceTestCase {
 		}
 
 		if (entityFieldName.equals("latitude")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(warehouse.getLatitude()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("longitude")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(warehouse.getLongitude()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("mvccVersion")) {

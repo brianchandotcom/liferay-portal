@@ -261,6 +261,33 @@ public abstract class BaseOrderRuleResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrderRulesPageWithFilterDoubleEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		OrderRule orderRule1 = testGetOrderRulesPage_addOrderRule(
+			randomOrderRule());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderRule orderRule2 = testGetOrderRulesPage_addOrderRule(
+			randomOrderRule());
+
+		for (EntityField entityField : entityFields) {
+			Page<OrderRule> page = orderRuleResource.getOrderRulesPage(
+				null, getFilterString(entityField, "eq", orderRule1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(orderRule1),
+				(List<OrderRule>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetOrderRulesPageWithFilterStringEquals() throws Exception {
 		List<EntityField> entityFields = getEntityFields(
 			EntityField.Type.STRING);
@@ -336,6 +363,16 @@ public abstract class BaseOrderRuleResourceTestCase {
 				BeanUtils.setProperty(
 					orderRule1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetOrderRulesPageWithSortDouble() throws Exception {
+		testGetOrderRulesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, orderRule1, orderRule2) -> {
+				BeanUtils.setProperty(orderRule1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(orderRule2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1583,8 +1620,9 @@ public abstract class BaseOrderRuleResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(orderRule.getPriority()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("type")) {

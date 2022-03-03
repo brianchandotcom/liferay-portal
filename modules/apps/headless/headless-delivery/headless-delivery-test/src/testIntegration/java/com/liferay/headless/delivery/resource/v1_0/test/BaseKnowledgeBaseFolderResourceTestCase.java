@@ -1916,13 +1916,19 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfKnowledgeBaseArticles")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(
+					knowledgeBaseFolder.getNumberOfKnowledgeBaseArticles()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("numberOfKnowledgeBaseFolders")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(
+					knowledgeBaseFolder.getNumberOfKnowledgeBaseFolders()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("parentKnowledgeBaseFolder")) {

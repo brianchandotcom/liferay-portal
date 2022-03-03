@@ -447,6 +447,41 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrderRuleIdOrderRuleAccountsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id = testGetOrderRuleIdOrderRuleAccountsPage_getId();
+
+		OrderRuleAccount orderRuleAccount1 =
+			testGetOrderRuleIdOrderRuleAccountsPage_addOrderRuleAccount(
+				id, randomOrderRuleAccount());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderRuleAccount orderRuleAccount2 =
+			testGetOrderRuleIdOrderRuleAccountsPage_addOrderRuleAccount(
+				id, randomOrderRuleAccount());
+
+		for (EntityField entityField : entityFields) {
+			Page<OrderRuleAccount> page =
+				orderRuleAccountResource.getOrderRuleIdOrderRuleAccountsPage(
+					id, null,
+					getFilterString(entityField, "eq", orderRuleAccount1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(orderRuleAccount1),
+				(List<OrderRuleAccount>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetOrderRuleIdOrderRuleAccountsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -541,6 +576,20 @@ public abstract class BaseOrderRuleAccountResourceTestCase {
 				BeanUtils.setProperty(
 					orderRuleAccount1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetOrderRuleIdOrderRuleAccountsPageWithSortDouble()
+		throws Exception {
+
+		testGetOrderRuleIdOrderRuleAccountsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, orderRuleAccount1, orderRuleAccount2) -> {
+				BeanUtils.setProperty(
+					orderRuleAccount1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					orderRuleAccount2, entityField.getName(), 0.5);
 			});
 	}
 

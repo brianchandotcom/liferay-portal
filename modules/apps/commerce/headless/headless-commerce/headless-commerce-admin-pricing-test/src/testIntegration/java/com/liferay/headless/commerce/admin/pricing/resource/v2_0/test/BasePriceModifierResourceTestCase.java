@@ -448,6 +448,41 @@ public abstract class BasePriceModifierResourceTestCase {
 	}
 
 	@Test
+	public void testGetPriceListIdPriceModifiersPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id = testGetPriceListIdPriceModifiersPage_getId();
+
+		PriceModifier priceModifier1 =
+			testGetPriceListIdPriceModifiersPage_addPriceModifier(
+				id, randomPriceModifier());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PriceModifier priceModifier2 =
+			testGetPriceListIdPriceModifiersPage_addPriceModifier(
+				id, randomPriceModifier());
+
+		for (EntityField entityField : entityFields) {
+			Page<PriceModifier> page =
+				priceModifierResource.getPriceListIdPriceModifiersPage(
+					id, null,
+					getFilterString(entityField, "eq", priceModifier1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(priceModifier1),
+				(List<PriceModifier>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetPriceListIdPriceModifiersPageWithFilterStringEquals()
 		throws Exception {
 
@@ -541,6 +576,20 @@ public abstract class BasePriceModifierResourceTestCase {
 				BeanUtils.setProperty(
 					priceModifier1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetPriceListIdPriceModifiersPageWithSortDouble()
+		throws Exception {
+
+		testGetPriceListIdPriceModifiersPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, priceModifier1, priceModifier2) -> {
+				BeanUtils.setProperty(
+					priceModifier1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					priceModifier2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1700,8 +1749,9 @@ public abstract class BasePriceModifierResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(priceModifier.getPriority()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("target")) {

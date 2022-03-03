@@ -255,6 +255,33 @@ public abstract class BaseUserGroupResourceTestCase {
 	}
 
 	@Test
+	public void testGetUserGroupsPageWithFilterDoubleEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		UserGroup userGroup1 = testGetUserGroupsPage_addUserGroup(
+			randomUserGroup());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		UserGroup userGroup2 = testGetUserGroupsPage_addUserGroup(
+			randomUserGroup());
+
+		for (EntityField entityField : entityFields) {
+			Page<UserGroup> page = userGroupResource.getUserGroupsPage(
+				null, getFilterString(entityField, "eq", userGroup1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(userGroup1),
+				(List<UserGroup>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetUserGroupsPageWithFilterStringEquals() throws Exception {
 		List<EntityField> entityFields = getEntityFields(
 			EntityField.Type.STRING);
@@ -330,6 +357,16 @@ public abstract class BaseUserGroupResourceTestCase {
 				BeanUtils.setProperty(
 					userGroup1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetUserGroupsPageWithSortDouble() throws Exception {
+		testGetUserGroupsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, userGroup1, userGroup2) -> {
+				BeanUtils.setProperty(userGroup1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(userGroup2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1303,8 +1340,9 @@ public abstract class BaseUserGroupResourceTestCase {
 		}
 
 		if (entityFieldName.equals("usersCount")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(userGroup.getUsersCount()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(

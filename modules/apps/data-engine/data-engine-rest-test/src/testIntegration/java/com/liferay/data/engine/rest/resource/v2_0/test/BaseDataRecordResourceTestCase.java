@@ -305,6 +305,18 @@ public abstract class BaseDataRecordResourceTestCase {
 	}
 
 	@Test
+	public void testGetDataDefinitionDataRecordsPageWithSortDouble()
+		throws Exception {
+
+		testGetDataDefinitionDataRecordsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, dataRecord1, dataRecord2) -> {
+				BeanUtils.setProperty(dataRecord1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(dataRecord2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
 	public void testGetDataDefinitionDataRecordsPageWithSortInteger()
 		throws Exception {
 
@@ -571,6 +583,18 @@ public abstract class BaseDataRecordResourceTestCase {
 				BeanUtils.setProperty(
 					dataRecord1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetDataRecordCollectionDataRecordsPageWithSortDouble()
+		throws Exception {
+
+		testGetDataRecordCollectionDataRecordsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, dataRecord1, dataRecord2) -> {
+				BeanUtils.setProperty(dataRecord1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(dataRecord2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1257,8 +1281,9 @@ public abstract class BaseDataRecordResourceTestCase {
 		}
 
 		if (entityFieldName.equals("status")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(dataRecord.getStatus()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(

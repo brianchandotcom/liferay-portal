@@ -674,8 +674,10 @@ public abstract class BaseProductSubscriptionConfigurationResourceTestCase {
 		}
 
 		if (entityFieldName.equals("length")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(productSubscriptionConfiguration.getLength()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("numberOfLength")) {

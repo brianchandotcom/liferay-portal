@@ -932,18 +932,21 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(measurementUnit.getPriority()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("rate")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(measurementUnit.getRate()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("type")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(measurementUnit.getType()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(

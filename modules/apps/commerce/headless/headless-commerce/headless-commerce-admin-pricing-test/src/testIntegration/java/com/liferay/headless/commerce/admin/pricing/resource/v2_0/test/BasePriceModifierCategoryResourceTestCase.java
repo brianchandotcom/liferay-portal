@@ -469,6 +469,43 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testGetPriceModifierIdPriceModifierCategoriesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id = testGetPriceModifierIdPriceModifierCategoriesPage_getId();
+
+		PriceModifierCategory priceModifierCategory1 =
+			testGetPriceModifierIdPriceModifierCategoriesPage_addPriceModifierCategory(
+				id, randomPriceModifierCategory());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PriceModifierCategory priceModifierCategory2 =
+			testGetPriceModifierIdPriceModifierCategoriesPage_addPriceModifierCategory(
+				id, randomPriceModifierCategory());
+
+		for (EntityField entityField : entityFields) {
+			Page<PriceModifierCategory> page =
+				priceModifierCategoryResource.
+					getPriceModifierIdPriceModifierCategoriesPage(
+						id, null,
+						getFilterString(
+							entityField, "eq", priceModifierCategory1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(priceModifierCategory1),
+				(List<PriceModifierCategory>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetPriceModifierIdPriceModifierCategoriesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -571,6 +608,20 @@ public abstract class BasePriceModifierCategoryResourceTestCase {
 				BeanUtils.setProperty(
 					priceModifierCategory1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetPriceModifierIdPriceModifierCategoriesPageWithSortDouble()
+		throws Exception {
+
+		testGetPriceModifierIdPriceModifierCategoriesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, priceModifierCategory1, priceModifierCategory2) -> {
+				BeanUtils.setProperty(
+					priceModifierCategory1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					priceModifierCategory2, entityField.getName(), 0.5);
 			});
 	}
 

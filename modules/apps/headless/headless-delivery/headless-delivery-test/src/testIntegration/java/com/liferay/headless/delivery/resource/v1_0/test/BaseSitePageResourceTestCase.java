@@ -274,6 +274,38 @@ public abstract class BaseSitePageResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteSitePagesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteSitePagesPage_getSiteId();
+
+		SitePage sitePage1 = testGetSiteSitePagesPage_addSitePage(
+			siteId, randomSitePage());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		SitePage sitePage2 = testGetSiteSitePagesPage_addSitePage(
+			siteId, randomSitePage());
+
+		for (EntityField entityField : entityFields) {
+			Page<SitePage> page = sitePageResource.getSiteSitePagesPage(
+				siteId, null, null,
+				getFilterString(entityField, "eq", sitePage1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(sitePage1),
+				(List<SitePage>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetSiteSitePagesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -350,6 +382,16 @@ public abstract class BaseSitePageResourceTestCase {
 				BeanUtils.setProperty(
 					sitePage1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSiteSitePagesPageWithSortDouble() throws Exception {
+		testGetSiteSitePagesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, sitePage1, sitePage2) -> {
+				BeanUtils.setProperty(sitePage1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(sitePage2, entityField.getName(), 0.5);
 			});
 	}
 

@@ -476,6 +476,43 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 	}
 
 	@Test
+	public void testGetPriceModifierIdPriceModifierProductGroupsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id = testGetPriceModifierIdPriceModifierProductGroupsPage_getId();
+
+		PriceModifierProductGroup priceModifierProductGroup1 =
+			testGetPriceModifierIdPriceModifierProductGroupsPage_addPriceModifierProductGroup(
+				id, randomPriceModifierProductGroup());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PriceModifierProductGroup priceModifierProductGroup2 =
+			testGetPriceModifierIdPriceModifierProductGroupsPage_addPriceModifierProductGroup(
+				id, randomPriceModifierProductGroup());
+
+		for (EntityField entityField : entityFields) {
+			Page<PriceModifierProductGroup> page =
+				priceModifierProductGroupResource.
+					getPriceModifierIdPriceModifierProductGroupsPage(
+						id, null,
+						getFilterString(
+							entityField, "eq", priceModifierProductGroup1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(priceModifierProductGroup1),
+				(List<PriceModifierProductGroup>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetPriceModifierIdPriceModifierProductGroupsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -580,6 +617,22 @@ public abstract class BasePriceModifierProductGroupResourceTestCase {
 				BeanUtils.setProperty(
 					priceModifierProductGroup1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetPriceModifierIdPriceModifierProductGroupsPageWithSortDouble()
+		throws Exception {
+
+		testGetPriceModifierIdPriceModifierProductGroupsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, priceModifierProductGroup1,
+			 priceModifierProductGroup2) -> {
+
+				BeanUtils.setProperty(
+					priceModifierProductGroup1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					priceModifierProductGroup2, entityField.getName(), 0.5);
 			});
 	}
 

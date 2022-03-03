@@ -590,6 +590,40 @@ public abstract class BaseDiscountRuleResourceTestCase {
 	}
 
 	@Test
+	public void testGetDiscountIdDiscountRulesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id = testGetDiscountIdDiscountRulesPage_getId();
+
+		DiscountRule discountRule1 =
+			testGetDiscountIdDiscountRulesPage_addDiscountRule(
+				id, randomDiscountRule());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DiscountRule discountRule2 =
+			testGetDiscountIdDiscountRulesPage_addDiscountRule(
+				id, randomDiscountRule());
+
+		for (EntityField entityField : entityFields) {
+			Page<DiscountRule> page =
+				discountRuleResource.getDiscountIdDiscountRulesPage(
+					id, null, getFilterString(entityField, "eq", discountRule1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(discountRule1),
+				(List<DiscountRule>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetDiscountIdDiscountRulesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -682,6 +716,20 @@ public abstract class BaseDiscountRuleResourceTestCase {
 				BeanUtils.setProperty(
 					discountRule1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetDiscountIdDiscountRulesPageWithSortDouble()
+		throws Exception {
+
+		testGetDiscountIdDiscountRulesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, discountRule1, discountRule2) -> {
+				BeanUtils.setProperty(
+					discountRule1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					discountRule2, entityField.getName(), 0.5);
 			});
 	}
 

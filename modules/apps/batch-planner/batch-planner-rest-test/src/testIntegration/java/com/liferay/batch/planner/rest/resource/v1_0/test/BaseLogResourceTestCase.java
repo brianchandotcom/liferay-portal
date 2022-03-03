@@ -648,18 +648,21 @@ public abstract class BaseLogResourceTestCase {
 		}
 
 		if (entityFieldName.equals("size")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(log.getSize()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("status")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(log.getStatus()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("total")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(log.getTotal()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(

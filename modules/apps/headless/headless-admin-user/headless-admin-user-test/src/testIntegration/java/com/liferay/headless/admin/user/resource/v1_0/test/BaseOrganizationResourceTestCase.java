@@ -259,6 +259,35 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrganizationsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Organization organization1 = testGetOrganizationsPage_addOrganization(
+			randomOrganization());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization2 = testGetOrganizationsPage_addOrganization(
+			randomOrganization());
+
+		for (EntityField entityField : entityFields) {
+			Page<Organization> page = organizationResource.getOrganizationsPage(
+				null, null, getFilterString(entityField, "eq", organization1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(organization1),
+				(List<Organization>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetOrganizationsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -340,6 +369,18 @@ public abstract class BaseOrganizationResourceTestCase {
 				BeanUtils.setProperty(
 					organization1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetOrganizationsPageWithSortDouble() throws Exception {
+		testGetOrganizationsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, organization1, organization2) -> {
+				BeanUtils.setProperty(
+					organization1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					organization2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -782,6 +823,42 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrganizationChildOrganizationsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String organizationId =
+			testGetOrganizationChildOrganizationsPage_getOrganizationId();
+
+		Organization organization1 =
+			testGetOrganizationChildOrganizationsPage_addOrganization(
+				organizationId, randomOrganization());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization2 =
+			testGetOrganizationChildOrganizationsPage_addOrganization(
+				organizationId, randomOrganization());
+
+		for (EntityField entityField : entityFields) {
+			Page<Organization> page =
+				organizationResource.getOrganizationChildOrganizationsPage(
+					organizationId, null, null,
+					getFilterString(entityField, "eq", organization1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(organization1),
+				(List<Organization>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetOrganizationChildOrganizationsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -877,6 +954,20 @@ public abstract class BaseOrganizationResourceTestCase {
 				BeanUtils.setProperty(
 					organization1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetOrganizationChildOrganizationsPageWithSortDouble()
+		throws Exception {
+
+		testGetOrganizationChildOrganizationsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, organization1, organization2) -> {
+				BeanUtils.setProperty(
+					organization1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					organization2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1153,6 +1244,42 @@ public abstract class BaseOrganizationResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrganizationOrganizationsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String parentOrganizationId =
+			testGetOrganizationOrganizationsPage_getParentOrganizationId();
+
+		Organization organization1 =
+			testGetOrganizationOrganizationsPage_addOrganization(
+				parentOrganizationId, randomOrganization());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Organization organization2 =
+			testGetOrganizationOrganizationsPage_addOrganization(
+				parentOrganizationId, randomOrganization());
+
+		for (EntityField entityField : entityFields) {
+			Page<Organization> page =
+				organizationResource.getOrganizationOrganizationsPage(
+					parentOrganizationId, null, null,
+					getFilterString(entityField, "eq", organization1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(organization1),
+				(List<Organization>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetOrganizationOrganizationsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -1251,6 +1378,20 @@ public abstract class BaseOrganizationResourceTestCase {
 				BeanUtils.setProperty(
 					organization1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetOrganizationOrganizationsPageWithSortDouble()
+		throws Exception {
+
+		testGetOrganizationOrganizationsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, organization1, organization2) -> {
+				BeanUtils.setProperty(
+					organization1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					organization2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -2718,18 +2859,21 @@ public abstract class BaseOrganizationResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfAccounts")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(organization.getNumberOfAccounts()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("numberOfOrganizations")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(organization.getNumberOfOrganizations()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("numberOfUsers")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(organization.getNumberOfUsers()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("organizationAccounts")) {

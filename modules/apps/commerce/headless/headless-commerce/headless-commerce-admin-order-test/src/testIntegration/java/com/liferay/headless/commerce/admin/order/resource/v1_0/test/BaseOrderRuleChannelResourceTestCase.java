@@ -447,6 +447,41 @@ public abstract class BaseOrderRuleChannelResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrderRuleIdOrderRuleChannelsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id = testGetOrderRuleIdOrderRuleChannelsPage_getId();
+
+		OrderRuleChannel orderRuleChannel1 =
+			testGetOrderRuleIdOrderRuleChannelsPage_addOrderRuleChannel(
+				id, randomOrderRuleChannel());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		OrderRuleChannel orderRuleChannel2 =
+			testGetOrderRuleIdOrderRuleChannelsPage_addOrderRuleChannel(
+				id, randomOrderRuleChannel());
+
+		for (EntityField entityField : entityFields) {
+			Page<OrderRuleChannel> page =
+				orderRuleChannelResource.getOrderRuleIdOrderRuleChannelsPage(
+					id, null,
+					getFilterString(entityField, "eq", orderRuleChannel1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(orderRuleChannel1),
+				(List<OrderRuleChannel>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetOrderRuleIdOrderRuleChannelsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -541,6 +576,20 @@ public abstract class BaseOrderRuleChannelResourceTestCase {
 				BeanUtils.setProperty(
 					orderRuleChannel1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetOrderRuleIdOrderRuleChannelsPageWithSortDouble()
+		throws Exception {
+
+		testGetOrderRuleIdOrderRuleChannelsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, orderRuleChannel1, orderRuleChannel2) -> {
+				BeanUtils.setProperty(
+					orderRuleChannel1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					orderRuleChannel2, entityField.getName(), 0.5);
 			});
 	}
 

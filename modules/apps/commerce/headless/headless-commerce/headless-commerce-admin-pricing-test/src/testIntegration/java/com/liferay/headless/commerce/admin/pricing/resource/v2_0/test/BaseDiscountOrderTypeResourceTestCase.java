@@ -450,6 +450,41 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 	}
 
 	@Test
+	public void testGetDiscountIdDiscountOrderTypesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id = testGetDiscountIdDiscountOrderTypesPage_getId();
+
+		DiscountOrderType discountOrderType1 =
+			testGetDiscountIdDiscountOrderTypesPage_addDiscountOrderType(
+				id, randomDiscountOrderType());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DiscountOrderType discountOrderType2 =
+			testGetDiscountIdDiscountOrderTypesPage_addDiscountOrderType(
+				id, randomDiscountOrderType());
+
+		for (EntityField entityField : entityFields) {
+			Page<DiscountOrderType> page =
+				discountOrderTypeResource.getDiscountIdDiscountOrderTypesPage(
+					id, null,
+					getFilterString(entityField, "eq", discountOrderType1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(discountOrderType1),
+				(List<DiscountOrderType>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetDiscountIdDiscountOrderTypesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -544,6 +579,20 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 				BeanUtils.setProperty(
 					discountOrderType1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetDiscountIdDiscountOrderTypesPageWithSortDouble()
+		throws Exception {
+
+		testGetDiscountIdDiscountOrderTypesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, discountOrderType1, discountOrderType2) -> {
+				BeanUtils.setProperty(
+					discountOrderType1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					discountOrderType2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1208,8 +1257,9 @@ public abstract class BaseDiscountOrderTypeResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(discountOrderType.getPriority()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(

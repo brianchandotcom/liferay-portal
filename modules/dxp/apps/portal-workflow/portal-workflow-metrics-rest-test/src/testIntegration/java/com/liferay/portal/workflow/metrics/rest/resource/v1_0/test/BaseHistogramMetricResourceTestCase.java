@@ -541,8 +541,9 @@ public abstract class BaseHistogramMetricResourceTestCase {
 		}
 
 		if (entityFieldName.equals("value")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(histogramMetric.getValue()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(

@@ -304,6 +304,20 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testGetWorkflowDefinitionsPageWithSortDouble()
+		throws Exception {
+
+		testGetWorkflowDefinitionsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, workflowDefinition1, workflowDefinition2) -> {
+				BeanUtils.setProperty(
+					workflowDefinition1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					workflowDefinition2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
 	public void testGetWorkflowDefinitionsPageWithSortInteger()
 		throws Exception {
 

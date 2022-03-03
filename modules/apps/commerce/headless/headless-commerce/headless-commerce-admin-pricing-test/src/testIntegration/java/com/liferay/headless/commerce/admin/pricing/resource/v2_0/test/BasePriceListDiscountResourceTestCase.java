@@ -961,8 +961,9 @@ public abstract class BasePriceListDiscountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("order")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(priceListDiscount.getOrder()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("priceListDiscountId")) {

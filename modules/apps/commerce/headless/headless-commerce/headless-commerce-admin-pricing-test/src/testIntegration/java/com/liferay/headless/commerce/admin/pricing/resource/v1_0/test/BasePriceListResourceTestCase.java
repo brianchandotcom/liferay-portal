@@ -255,6 +255,33 @@ public abstract class BasePriceListResourceTestCase {
 	}
 
 	@Test
+	public void testGetPriceListsPageWithFilterDoubleEquals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		PriceList priceList1 = testGetPriceListsPage_addPriceList(
+			randomPriceList());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PriceList priceList2 = testGetPriceListsPage_addPriceList(
+			randomPriceList());
+
+		for (EntityField entityField : entityFields) {
+			Page<PriceList> page = priceListResource.getPriceListsPage(
+				getFilterString(entityField, "eq", priceList1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(priceList1),
+				(List<PriceList>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetPriceListsPageWithFilterStringEquals() throws Exception {
 		List<EntityField> entityFields = getEntityFields(
 			EntityField.Type.STRING);
@@ -330,6 +357,16 @@ public abstract class BasePriceListResourceTestCase {
 				BeanUtils.setProperty(
 					priceList1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetPriceListsPageWithSortDouble() throws Exception {
+		testGetPriceListsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, priceList1, priceList2) -> {
+				BeanUtils.setProperty(priceList1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(priceList2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1361,8 +1398,9 @@ public abstract class BasePriceListResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(priceList.getPriority()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(

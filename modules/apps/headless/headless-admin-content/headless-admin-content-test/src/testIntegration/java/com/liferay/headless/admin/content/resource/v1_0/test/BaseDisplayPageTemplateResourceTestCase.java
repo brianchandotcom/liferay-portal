@@ -313,6 +313,20 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteDisplayPageTemplatesPageWithSortDouble()
+		throws Exception {
+
+		testGetSiteDisplayPageTemplatesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, displayPageTemplate1, displayPageTemplate2) -> {
+				BeanUtils.setProperty(
+					displayPageTemplate1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					displayPageTemplate2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
 	public void testGetSiteDisplayPageTemplatesPageWithSortInteger()
 		throws Exception {
 

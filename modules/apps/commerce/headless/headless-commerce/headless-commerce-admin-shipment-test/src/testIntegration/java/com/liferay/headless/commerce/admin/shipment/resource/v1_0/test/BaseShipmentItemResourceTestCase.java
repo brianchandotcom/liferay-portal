@@ -1350,8 +1350,9 @@ public abstract class BaseShipmentItemResourceTestCase {
 		}
 
 		if (entityFieldName.equals("quantity")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(shipmentItem.getQuantity()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("shipmentExternalReferenceCode")) {

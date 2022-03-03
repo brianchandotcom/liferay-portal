@@ -943,13 +943,15 @@ public abstract class BaseAddressResourceTestCase {
 		}
 
 		if (entityFieldName.equals("latitude")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(address.getLatitude()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("longitude")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(address.getLongitude()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("name")) {
@@ -1017,8 +1019,9 @@ public abstract class BaseAddressResourceTestCase {
 		}
 
 		if (entityFieldName.equals("typeId")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(address.getTypeId()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("vatNumber")) {

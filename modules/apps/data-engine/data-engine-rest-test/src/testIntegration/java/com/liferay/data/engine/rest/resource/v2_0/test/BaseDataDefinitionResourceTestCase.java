@@ -332,6 +332,20 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testGetDataDefinitionByContentTypeContentTypePageWithSortDouble()
+		throws Exception {
+
+		testGetDataDefinitionByContentTypeContentTypePageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, dataDefinition1, dataDefinition2) -> {
+				BeanUtils.setProperty(
+					dataDefinition1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					dataDefinition2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
 	public void testGetDataDefinitionByContentTypeContentTypePageWithSortInteger()
 		throws Exception {
 
@@ -886,6 +900,20 @@ public abstract class BaseDataDefinitionResourceTestCase {
 				BeanUtils.setProperty(
 					dataDefinition1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSiteDataDefinitionByContentTypeContentTypePageWithSortDouble()
+		throws Exception {
+
+		testGetSiteDataDefinitionByContentTypeContentTypePageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, dataDefinition1, dataDefinition2) -> {
+				BeanUtils.setProperty(
+					dataDefinition1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					dataDefinition2, entityField.getName(), 0.5);
 			});
 	}
 

@@ -452,6 +452,20 @@ public abstract class BaseProductOptionResourceTestCase {
 	}
 
 	@Test
+	public void testGetProductByExternalReferenceCodeProductOptionsPageWithSortDouble()
+		throws Exception {
+
+		testGetProductByExternalReferenceCodeProductOptionsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, productOption1, productOption2) -> {
+				BeanUtils.setProperty(
+					productOption1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					productOption2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
 	public void testGetProductByExternalReferenceCodeProductOptionsPageWithSortInteger()
 		throws Exception {
 
@@ -713,6 +727,20 @@ public abstract class BaseProductOptionResourceTestCase {
 				BeanUtils.setProperty(
 					productOption1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetProductIdProductOptionsPageWithSortDouble()
+		throws Exception {
+
+		testGetProductIdProductOptionsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, productOption1, productOption2) -> {
+				BeanUtils.setProperty(
+					productOption1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					productOption2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1401,8 +1429,9 @@ public abstract class BaseProductOptionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(productOption.getPriority()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("productOptionValues")) {

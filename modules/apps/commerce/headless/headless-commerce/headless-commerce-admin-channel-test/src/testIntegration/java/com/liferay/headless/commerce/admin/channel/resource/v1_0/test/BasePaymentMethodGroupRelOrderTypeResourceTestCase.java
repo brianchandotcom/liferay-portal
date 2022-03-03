@@ -319,6 +319,44 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 	}
 
 	@Test
+	public void testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id =
+			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage_getId();
+
+		PaymentMethodGroupRelOrderType paymentMethodGroupRelOrderType1 =
+			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage_addPaymentMethodGroupRelOrderType(
+				id, randomPaymentMethodGroupRelOrderType());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PaymentMethodGroupRelOrderType paymentMethodGroupRelOrderType2 =
+			testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage_addPaymentMethodGroupRelOrderType(
+				id, randomPaymentMethodGroupRelOrderType());
+
+		for (EntityField entityField : entityFields) {
+			Page<PaymentMethodGroupRelOrderType> page =
+				paymentMethodGroupRelOrderTypeResource.
+					getPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPage(
+						id, null,
+						getFilterString(
+							entityField, "eq", paymentMethodGroupRelOrderType1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(paymentMethodGroupRelOrderType1),
+				(List<PaymentMethodGroupRelOrderType>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -426,6 +464,24 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 				BeanUtils.setProperty(
 					paymentMethodGroupRelOrderType1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPageWithSortDouble()
+		throws Exception {
+
+		testGetPaymentMethodGroupRelIdPaymentMethodGroupRelOrderTypesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, paymentMethodGroupRelOrderType1,
+			 paymentMethodGroupRelOrderType2) -> {
+
+				BeanUtils.setProperty(
+					paymentMethodGroupRelOrderType1, entityField.getName(),
+					0.1);
+				BeanUtils.setProperty(
+					paymentMethodGroupRelOrderType2, entityField.getName(),
+					0.5);
 			});
 	}
 
@@ -1118,8 +1174,10 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(paymentMethodGroupRelOrderType.getPriority()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(

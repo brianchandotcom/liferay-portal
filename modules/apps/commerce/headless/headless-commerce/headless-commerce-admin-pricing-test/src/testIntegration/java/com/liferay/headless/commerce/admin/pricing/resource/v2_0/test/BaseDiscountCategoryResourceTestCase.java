@@ -447,6 +447,41 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 	}
 
 	@Test
+	public void testGetDiscountIdDiscountCategoriesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id = testGetDiscountIdDiscountCategoriesPage_getId();
+
+		DiscountCategory discountCategory1 =
+			testGetDiscountIdDiscountCategoriesPage_addDiscountCategory(
+				id, randomDiscountCategory());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DiscountCategory discountCategory2 =
+			testGetDiscountIdDiscountCategoriesPage_addDiscountCategory(
+				id, randomDiscountCategory());
+
+		for (EntityField entityField : entityFields) {
+			Page<DiscountCategory> page =
+				discountCategoryResource.getDiscountIdDiscountCategoriesPage(
+					id, null,
+					getFilterString(entityField, "eq", discountCategory1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(discountCategory1),
+				(List<DiscountCategory>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetDiscountIdDiscountCategoriesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -541,6 +576,20 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 				BeanUtils.setProperty(
 					discountCategory1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetDiscountIdDiscountCategoriesPageWithSortDouble()
+		throws Exception {
+
+		testGetDiscountIdDiscountCategoriesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, discountCategory1, discountCategory2) -> {
+				BeanUtils.setProperty(
+					discountCategory1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					discountCategory2, entityField.getName(), 0.5);
 			});
 	}
 

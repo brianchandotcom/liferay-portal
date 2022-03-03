@@ -477,6 +477,20 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 	}
 
 	@Test
+	public void testGetOrderTypeIdOrderTypeChannelsPageWithSortDouble()
+		throws Exception {
+
+		testGetOrderTypeIdOrderTypeChannelsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, orderTypeChannel1, orderTypeChannel2) -> {
+				BeanUtils.setProperty(
+					orderTypeChannel1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					orderTypeChannel2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
 	public void testGetOrderTypeIdOrderTypeChannelsPageWithSortInteger()
 		throws Exception {
 

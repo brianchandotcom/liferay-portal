@@ -291,6 +291,16 @@ public abstract class BasePinResourceTestCase {
 	}
 
 	@Test
+	public void testGetChannelProductPinsPageWithSortDouble() throws Exception {
+		testGetChannelProductPinsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, pin1, pin2) -> {
+				BeanUtils.setProperty(pin1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(pin2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
 	public void testGetChannelProductPinsPageWithSortInteger()
 		throws Exception {
 
@@ -779,13 +789,15 @@ public abstract class BasePinResourceTestCase {
 		}
 
 		if (entityFieldName.equals("positionX")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(pin.getPositionX()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("positionY")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(pin.getPositionY()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("sequence")) {

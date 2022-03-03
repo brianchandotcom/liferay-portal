@@ -462,6 +462,43 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 	}
 
 	@Test
+	public void testGetDiscountIdDiscountAccountGroupsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id = testGetDiscountIdDiscountAccountGroupsPage_getId();
+
+		DiscountAccountGroup discountAccountGroup1 =
+			testGetDiscountIdDiscountAccountGroupsPage_addDiscountAccountGroup(
+				id, randomDiscountAccountGroup());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		DiscountAccountGroup discountAccountGroup2 =
+			testGetDiscountIdDiscountAccountGroupsPage_addDiscountAccountGroup(
+				id, randomDiscountAccountGroup());
+
+		for (EntityField entityField : entityFields) {
+			Page<DiscountAccountGroup> page =
+				discountAccountGroupResource.
+					getDiscountIdDiscountAccountGroupsPage(
+						id, null,
+						getFilterString(
+							entityField, "eq", discountAccountGroup1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(discountAccountGroup1),
+				(List<DiscountAccountGroup>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetDiscountIdDiscountAccountGroupsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -561,6 +598,20 @@ public abstract class BaseDiscountAccountGroupResourceTestCase {
 				BeanUtils.setProperty(
 					discountAccountGroup1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetDiscountIdDiscountAccountGroupsPageWithSortDouble()
+		throws Exception {
+
+		testGetDiscountIdDiscountAccountGroupsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, discountAccountGroup1, discountAccountGroup2) -> {
+				BeanUtils.setProperty(
+					discountAccountGroup1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					discountAccountGroup2, entityField.getName(), 0.5);
 			});
 	}
 

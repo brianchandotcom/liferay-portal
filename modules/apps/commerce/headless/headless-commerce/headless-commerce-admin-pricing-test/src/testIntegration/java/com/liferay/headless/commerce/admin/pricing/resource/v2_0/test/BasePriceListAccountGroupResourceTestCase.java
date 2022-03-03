@@ -469,6 +469,43 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 	}
 
 	@Test
+	public void testGetPriceListIdPriceListAccountGroupsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id = testGetPriceListIdPriceListAccountGroupsPage_getId();
+
+		PriceListAccountGroup priceListAccountGroup1 =
+			testGetPriceListIdPriceListAccountGroupsPage_addPriceListAccountGroup(
+				id, randomPriceListAccountGroup());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PriceListAccountGroup priceListAccountGroup2 =
+			testGetPriceListIdPriceListAccountGroupsPage_addPriceListAccountGroup(
+				id, randomPriceListAccountGroup());
+
+		for (EntityField entityField : entityFields) {
+			Page<PriceListAccountGroup> page =
+				priceListAccountGroupResource.
+					getPriceListIdPriceListAccountGroupsPage(
+						id, null,
+						getFilterString(
+							entityField, "eq", priceListAccountGroup1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(priceListAccountGroup1),
+				(List<PriceListAccountGroup>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetPriceListIdPriceListAccountGroupsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -571,6 +608,20 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 				BeanUtils.setProperty(
 					priceListAccountGroup1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetPriceListIdPriceListAccountGroupsPageWithSortDouble()
+		throws Exception {
+
+		testGetPriceListIdPriceListAccountGroupsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, priceListAccountGroup1, priceListAccountGroup2) -> {
+				BeanUtils.setProperty(
+					priceListAccountGroup1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					priceListAccountGroup2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1235,8 +1286,9 @@ public abstract class BasePriceListAccountGroupResourceTestCase {
 		}
 
 		if (entityFieldName.equals("order")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(priceListAccountGroup.getOrder()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("priceListAccountGroupId")) {

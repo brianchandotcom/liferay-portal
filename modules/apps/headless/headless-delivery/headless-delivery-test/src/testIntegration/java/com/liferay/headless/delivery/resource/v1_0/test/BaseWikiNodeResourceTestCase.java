@@ -281,6 +281,38 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteWikiNodesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteWikiNodesPage_getSiteId();
+
+		WikiNode wikiNode1 = testGetSiteWikiNodesPage_addWikiNode(
+			siteId, randomWikiNode());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiNode wikiNode2 = testGetSiteWikiNodesPage_addWikiNode(
+			siteId, randomWikiNode());
+
+		for (EntityField entityField : entityFields) {
+			Page<WikiNode> page = wikiNodeResource.getSiteWikiNodesPage(
+				siteId, null, null,
+				getFilterString(entityField, "eq", wikiNode1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(wikiNode1),
+				(List<WikiNode>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetSiteWikiNodesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -357,6 +389,16 @@ public abstract class BaseWikiNodeResourceTestCase {
 				BeanUtils.setProperty(
 					wikiNode1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSiteWikiNodesPageWithSortDouble() throws Exception {
+		testGetSiteWikiNodesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, wikiNode1, wikiNode2) -> {
+				BeanUtils.setProperty(wikiNode1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(wikiNode2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1677,8 +1719,9 @@ public abstract class BaseWikiNodeResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfWikiPages")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(wikiNode.getNumberOfWikiPages()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("siteId")) {

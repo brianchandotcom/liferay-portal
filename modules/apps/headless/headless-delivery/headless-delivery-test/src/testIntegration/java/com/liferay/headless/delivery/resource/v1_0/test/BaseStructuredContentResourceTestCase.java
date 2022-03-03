@@ -324,6 +324,42 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testGetAssetLibraryStructuredContentsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long assetLibraryId =
+			testGetAssetLibraryStructuredContentsPage_getAssetLibraryId();
+
+		StructuredContent structuredContent1 =
+			testGetAssetLibraryStructuredContentsPage_addStructuredContent(
+				assetLibraryId, randomStructuredContent());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContent structuredContent2 =
+			testGetAssetLibraryStructuredContentsPage_addStructuredContent(
+				assetLibraryId, randomStructuredContent());
+
+		for (EntityField entityField : entityFields) {
+			Page<StructuredContent> page =
+				structuredContentResource.getAssetLibraryStructuredContentsPage(
+					assetLibraryId, null, null, null,
+					getFilterString(entityField, "eq", structuredContent1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(structuredContent1),
+				(List<StructuredContent>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetAssetLibraryStructuredContentsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -423,6 +459,20 @@ public abstract class BaseStructuredContentResourceTestCase {
 				BeanUtils.setProperty(
 					structuredContent1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetAssetLibraryStructuredContentsPageWithSortDouble()
+		throws Exception {
+
+		testGetAssetLibraryStructuredContentsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, structuredContent1, structuredContent2) -> {
+				BeanUtils.setProperty(
+					structuredContent1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					structuredContent2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -758,6 +808,43 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testGetContentStructureStructuredContentsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long contentStructureId =
+			testGetContentStructureStructuredContentsPage_getContentStructureId();
+
+		StructuredContent structuredContent1 =
+			testGetContentStructureStructuredContentsPage_addStructuredContent(
+				contentStructureId, randomStructuredContent());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContent structuredContent2 =
+			testGetContentStructureStructuredContentsPage_addStructuredContent(
+				contentStructureId, randomStructuredContent());
+
+		for (EntityField entityField : entityFields) {
+			Page<StructuredContent> page =
+				structuredContentResource.
+					getContentStructureStructuredContentsPage(
+						contentStructureId, null, null,
+						getFilterString(entityField, "eq", structuredContent1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(structuredContent1),
+				(List<StructuredContent>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetContentStructureStructuredContentsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -858,6 +945,20 @@ public abstract class BaseStructuredContentResourceTestCase {
 				BeanUtils.setProperty(
 					structuredContent1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetContentStructureStructuredContentsPageWithSortDouble()
+		throws Exception {
+
+		testGetContentStructureStructuredContentsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, structuredContent1, structuredContent2) -> {
+				BeanUtils.setProperty(
+					structuredContent1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					structuredContent2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1094,6 +1195,41 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteStructuredContentsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteStructuredContentsPage_getSiteId();
+
+		StructuredContent structuredContent1 =
+			testGetSiteStructuredContentsPage_addStructuredContent(
+				siteId, randomStructuredContent());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContent structuredContent2 =
+			testGetSiteStructuredContentsPage_addStructuredContent(
+				siteId, randomStructuredContent());
+
+		for (EntityField entityField : entityFields) {
+			Page<StructuredContent> page =
+				structuredContentResource.getSiteStructuredContentsPage(
+					siteId, null, null, null,
+					getFilterString(entityField, "eq", structuredContent1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(structuredContent1),
+				(List<StructuredContent>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetSiteStructuredContentsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -1188,6 +1324,20 @@ public abstract class BaseStructuredContentResourceTestCase {
 				BeanUtils.setProperty(
 					structuredContent1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSiteStructuredContentsPageWithSortDouble()
+		throws Exception {
+
+		testGetSiteStructuredContentsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, structuredContent1, structuredContent2) -> {
+				BeanUtils.setProperty(
+					structuredContent1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					structuredContent2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1919,6 +2069,43 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testGetStructuredContentFolderStructuredContentsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long structuredContentFolderId =
+			testGetStructuredContentFolderStructuredContentsPage_getStructuredContentFolderId();
+
+		StructuredContent structuredContent1 =
+			testGetStructuredContentFolderStructuredContentsPage_addStructuredContent(
+				structuredContentFolderId, randomStructuredContent());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		StructuredContent structuredContent2 =
+			testGetStructuredContentFolderStructuredContentsPage_addStructuredContent(
+				structuredContentFolderId, randomStructuredContent());
+
+		for (EntityField entityField : entityFields) {
+			Page<StructuredContent> page =
+				structuredContentResource.
+					getStructuredContentFolderStructuredContentsPage(
+						structuredContentFolderId, null, null, null,
+						getFilterString(entityField, "eq", structuredContent1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(structuredContent1),
+				(List<StructuredContent>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetStructuredContentFolderStructuredContentsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -2022,6 +2209,20 @@ public abstract class BaseStructuredContentResourceTestCase {
 				BeanUtils.setProperty(
 					structuredContent1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetStructuredContentFolderStructuredContentsPageWithSortDouble()
+		throws Exception {
+
+		testGetStructuredContentFolderStructuredContentsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, structuredContent1, structuredContent2) -> {
+				BeanUtils.setProperty(
+					structuredContent1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					structuredContent2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -3949,13 +4150,15 @@ public abstract class BaseStructuredContentResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfComments")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(structuredContent.getNumberOfComments()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(structuredContent.getPriority()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("relatedContents")) {

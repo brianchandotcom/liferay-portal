@@ -332,6 +332,20 @@ public abstract class BaseDataListViewResourceTestCase {
 	}
 
 	@Test
+	public void testGetDataDefinitionDataListViewsPageWithSortDouble()
+		throws Exception {
+
+		testGetDataDefinitionDataListViewsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, dataListView1, dataListView2) -> {
+				BeanUtils.setProperty(
+					dataListView1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					dataListView2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
 	public void testGetDataDefinitionDataListViewsPageWithSortInteger()
 		throws Exception {
 

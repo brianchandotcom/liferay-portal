@@ -447,6 +447,41 @@ public abstract class BasePriceListAccountResourceTestCase {
 	}
 
 	@Test
+	public void testGetPriceListIdPriceListAccountsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id = testGetPriceListIdPriceListAccountsPage_getId();
+
+		PriceListAccount priceListAccount1 =
+			testGetPriceListIdPriceListAccountsPage_addPriceListAccount(
+				id, randomPriceListAccount());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PriceListAccount priceListAccount2 =
+			testGetPriceListIdPriceListAccountsPage_addPriceListAccount(
+				id, randomPriceListAccount());
+
+		for (EntityField entityField : entityFields) {
+			Page<PriceListAccount> page =
+				priceListAccountResource.getPriceListIdPriceListAccountsPage(
+					id, null,
+					getFilterString(entityField, "eq", priceListAccount1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(priceListAccount1),
+				(List<PriceListAccount>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetPriceListIdPriceListAccountsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -541,6 +576,20 @@ public abstract class BasePriceListAccountResourceTestCase {
 				BeanUtils.setProperty(
 					priceListAccount1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetPriceListIdPriceListAccountsPageWithSortDouble()
+		throws Exception {
+
+		testGetPriceListIdPriceListAccountsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, priceListAccount1, priceListAccount2) -> {
+				BeanUtils.setProperty(
+					priceListAccount1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					priceListAccount2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1184,8 +1233,9 @@ public abstract class BasePriceListAccountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("order")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(priceListAccount.getOrder()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("priceListAccountId")) {

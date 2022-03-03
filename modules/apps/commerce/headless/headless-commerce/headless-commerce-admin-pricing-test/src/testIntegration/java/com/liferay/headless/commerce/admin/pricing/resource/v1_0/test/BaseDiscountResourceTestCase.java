@@ -1383,8 +1383,9 @@ public abstract class BaseDiscountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("limitationTimes")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(discount.getLimitationTimes()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("limitationType")) {
@@ -1406,8 +1407,9 @@ public abstract class BaseDiscountResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfUse")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(discount.getNumberOfUse()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("percentageLevel1")) {

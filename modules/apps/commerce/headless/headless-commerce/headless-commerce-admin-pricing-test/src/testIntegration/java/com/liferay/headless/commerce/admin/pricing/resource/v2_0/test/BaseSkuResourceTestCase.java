@@ -669,8 +669,9 @@ public abstract class BaseSkuResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("basePrice")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(sku.getBasePrice()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("basePriceFormatted")) {
@@ -682,8 +683,9 @@ public abstract class BaseSkuResourceTestCase {
 		}
 
 		if (entityFieldName.equals("basePromoPrice")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(sku.getBasePromoPrice()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("basePromoPriceFormatted")) {

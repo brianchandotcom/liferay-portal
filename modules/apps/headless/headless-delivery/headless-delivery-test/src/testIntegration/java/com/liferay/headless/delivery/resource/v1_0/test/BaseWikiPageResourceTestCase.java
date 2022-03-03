@@ -459,6 +459,38 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	@Test
+	public void testGetWikiNodeWikiPagesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long wikiNodeId = testGetWikiNodeWikiPagesPage_getWikiNodeId();
+
+		WikiPage wikiPage1 = testGetWikiNodeWikiPagesPage_addWikiPage(
+			wikiNodeId, randomWikiPage());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		WikiPage wikiPage2 = testGetWikiNodeWikiPagesPage_addWikiPage(
+			wikiNodeId, randomWikiPage());
+
+		for (EntityField entityField : entityFields) {
+			Page<WikiPage> page = wikiPageResource.getWikiNodeWikiPagesPage(
+				wikiNodeId, null, null,
+				getFilterString(entityField, "eq", wikiPage1),
+				Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(wikiPage1),
+				(List<WikiPage>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetWikiNodeWikiPagesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -537,6 +569,16 @@ public abstract class BaseWikiPageResourceTestCase {
 				BeanUtils.setProperty(
 					wikiPage1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetWikiNodeWikiPagesPageWithSortDouble() throws Exception {
+		testGetWikiNodeWikiPagesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, wikiPage1, wikiPage2) -> {
+				BeanUtils.setProperty(wikiPage1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(wikiPage2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1826,13 +1868,15 @@ public abstract class BaseWikiPageResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfAttachments")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(wikiPage.getNumberOfAttachments()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("numberOfWikiPages")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(wikiPage.getNumberOfWikiPages()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("parentWikiPageId")) {

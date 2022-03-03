@@ -424,6 +424,41 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteBlogPostingImagesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteBlogPostingImagesPage_getSiteId();
+
+		BlogPostingImage blogPostingImage1 =
+			testGetSiteBlogPostingImagesPage_addBlogPostingImage(
+				siteId, randomBlogPostingImage());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		BlogPostingImage blogPostingImage2 =
+			testGetSiteBlogPostingImagesPage_addBlogPostingImage(
+				siteId, randomBlogPostingImage());
+
+		for (EntityField entityField : entityFields) {
+			Page<BlogPostingImage> page =
+				blogPostingImageResource.getSiteBlogPostingImagesPage(
+					siteId, null, null,
+					getFilterString(entityField, "eq", blogPostingImage1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(blogPostingImage1),
+				(List<BlogPostingImage>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetSiteBlogPostingImagesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -518,6 +553,20 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 				BeanUtils.setProperty(
 					blogPostingImage1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSiteBlogPostingImagesPageWithSortDouble()
+		throws Exception {
+
+		testGetSiteBlogPostingImagesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, blogPostingImage1, blogPostingImage2) -> {
+				BeanUtils.setProperty(
+					blogPostingImage1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					blogPostingImage2, entityField.getName(), 0.5);
 			});
 	}
 

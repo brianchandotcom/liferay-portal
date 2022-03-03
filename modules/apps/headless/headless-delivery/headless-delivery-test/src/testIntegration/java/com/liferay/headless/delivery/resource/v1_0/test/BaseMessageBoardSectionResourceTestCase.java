@@ -624,6 +624,44 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
+	public void testGetMessageBoardSectionMessageBoardSectionsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long parentMessageBoardSectionId =
+			testGetMessageBoardSectionMessageBoardSectionsPage_getParentMessageBoardSectionId();
+
+		MessageBoardSection messageBoardSection1 =
+			testGetMessageBoardSectionMessageBoardSectionsPage_addMessageBoardSection(
+				parentMessageBoardSectionId, randomMessageBoardSection());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardSection messageBoardSection2 =
+			testGetMessageBoardSectionMessageBoardSectionsPage_addMessageBoardSection(
+				parentMessageBoardSectionId, randomMessageBoardSection());
+
+		for (EntityField entityField : entityFields) {
+			Page<MessageBoardSection> page =
+				messageBoardSectionResource.
+					getMessageBoardSectionMessageBoardSectionsPage(
+						parentMessageBoardSectionId, null, null,
+						getFilterString(
+							entityField, "eq", messageBoardSection1),
+						Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(messageBoardSection1),
+				(List<MessageBoardSection>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetMessageBoardSectionMessageBoardSectionsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -729,6 +767,20 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				BeanUtils.setProperty(
 					messageBoardSection1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetMessageBoardSectionMessageBoardSectionsPageWithSortDouble()
+		throws Exception {
+
+		testGetMessageBoardSectionMessageBoardSectionsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, messageBoardSection1, messageBoardSection2) -> {
+				BeanUtils.setProperty(
+					messageBoardSection1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					messageBoardSection2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -994,6 +1046,41 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
+	public void testGetSiteMessageBoardSectionsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long siteId = testGetSiteMessageBoardSectionsPage_getSiteId();
+
+		MessageBoardSection messageBoardSection1 =
+			testGetSiteMessageBoardSectionsPage_addMessageBoardSection(
+				siteId, randomMessageBoardSection());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		MessageBoardSection messageBoardSection2 =
+			testGetSiteMessageBoardSectionsPage_addMessageBoardSection(
+				siteId, randomMessageBoardSection());
+
+		for (EntityField entityField : entityFields) {
+			Page<MessageBoardSection> page =
+				messageBoardSectionResource.getSiteMessageBoardSectionsPage(
+					siteId, null, null, null,
+					getFilterString(entityField, "eq", messageBoardSection1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(messageBoardSection1),
+				(List<MessageBoardSection>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetSiteMessageBoardSectionsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -1089,6 +1176,20 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 				BeanUtils.setProperty(
 					messageBoardSection1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetSiteMessageBoardSectionsPageWithSortDouble()
+		throws Exception {
+
+		testGetSiteMessageBoardSectionsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, messageBoardSection1, messageBoardSection2) -> {
+				BeanUtils.setProperty(
+					messageBoardSection1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					messageBoardSection2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -2141,13 +2242,19 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("numberOfMessageBoardSections")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(
+					messageBoardSection.getNumberOfMessageBoardSections()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("numberOfMessageBoardThreads")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(
+				String.valueOf(
+					messageBoardSection.getNumberOfMessageBoardThreads()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("parentMessageBoardSectionId")) {

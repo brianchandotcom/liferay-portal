@@ -317,6 +317,20 @@ public abstract class BaseProductOptionValueResourceTestCase {
 	}
 
 	@Test
+	public void testGetProductOptionIdProductOptionValuesPageWithSortDouble()
+		throws Exception {
+
+		testGetProductOptionIdProductOptionValuesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, productOptionValue1, productOptionValue2) -> {
+				BeanUtils.setProperty(
+					productOptionValue1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					productOptionValue2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
 	public void testGetProductOptionIdProductOptionValuesPageWithSortInteger()
 		throws Exception {
 
@@ -862,8 +876,9 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		}
 
 		if (entityFieldName.equals("priority")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(productOptionValue.getPriority()));
+
+			return sb.toString();
 		}
 
 		throw new IllegalArgumentException(

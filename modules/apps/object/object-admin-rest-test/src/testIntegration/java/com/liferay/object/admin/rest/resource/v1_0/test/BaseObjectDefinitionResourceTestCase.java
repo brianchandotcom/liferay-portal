@@ -268,6 +268,39 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	}
 
 	@Test
+	public void testGetObjectDefinitionsPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		ObjectDefinition objectDefinition1 =
+			testGetObjectDefinitionsPage_addObjectDefinition(
+				randomObjectDefinition());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectDefinition objectDefinition2 =
+			testGetObjectDefinitionsPage_addObjectDefinition(
+				randomObjectDefinition());
+
+		for (EntityField entityField : entityFields) {
+			Page<ObjectDefinition> page =
+				objectDefinitionResource.getObjectDefinitionsPage(
+					null, null,
+					getFilterString(entityField, "eq", objectDefinition1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(objectDefinition1),
+				(List<ObjectDefinition>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetObjectDefinitionsPageWithFilterStringEquals()
 		throws Exception {
 
@@ -365,6 +398,18 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				BeanUtils.setProperty(
 					objectDefinition1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetObjectDefinitionsPageWithSortDouble() throws Exception {
+		testGetObjectDefinitionsPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, objectDefinition1, objectDefinition2) -> {
+				BeanUtils.setProperty(
+					objectDefinition1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(
+					objectDefinition2, entityField.getName(), 0.5);
 			});
 	}
 

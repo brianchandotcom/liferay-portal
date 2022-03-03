@@ -494,6 +494,40 @@ public abstract class BasePriceEntryResourceTestCase {
 	}
 
 	@Test
+	public void testGetPriceListIdPriceEntriesPageWithFilterDoubleEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DOUBLE);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long id = testGetPriceListIdPriceEntriesPage_getId();
+
+		PriceEntry priceEntry1 =
+			testGetPriceListIdPriceEntriesPage_addPriceEntry(
+				id, randomPriceEntry());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		PriceEntry priceEntry2 =
+			testGetPriceListIdPriceEntriesPage_addPriceEntry(
+				id, randomPriceEntry());
+
+		for (EntityField entityField : entityFields) {
+			Page<PriceEntry> page =
+				priceEntryResource.getPriceListIdPriceEntriesPage(
+					id, null, getFilterString(entityField, "eq", priceEntry1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(priceEntry1),
+				(List<PriceEntry>)page.getItems());
+		}
+	}
+
+	@Test
 	public void testGetPriceListIdPriceEntriesPageWithFilterStringEquals()
 		throws Exception {
 
@@ -582,6 +616,18 @@ public abstract class BasePriceEntryResourceTestCase {
 				BeanUtils.setProperty(
 					priceEntry1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
+			});
+	}
+
+	@Test
+	public void testGetPriceListIdPriceEntriesPageWithSortDouble()
+		throws Exception {
+
+		testGetPriceListIdPriceEntriesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, priceEntry1, priceEntry2) -> {
+				BeanUtils.setProperty(priceEntry1, entityField.getName(), 0.1);
+				BeanUtils.setProperty(priceEntry2, entityField.getName(), 0.5);
 			});
 	}
 
@@ -1628,8 +1674,9 @@ public abstract class BasePriceEntryResourceTestCase {
 		}
 
 		if (entityFieldName.equals("price")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
+			sb.append(String.valueOf(priceEntry.getPrice()));
+
+			return sb.toString();
 		}
 
 		if (entityFieldName.equals("priceEntryId")) {

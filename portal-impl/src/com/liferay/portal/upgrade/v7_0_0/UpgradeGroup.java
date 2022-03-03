@@ -101,9 +101,9 @@ public class UpgradeGroup extends UpgradeProcess {
 
 	protected void updateGroupsNames() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-			SQLTransformer.transform(
-				"select groupId, name, typeSettings from Group_ where site = " +
-					"[$TRUE$] and friendlyURL != '/global'"));
+				SQLTransformer.transform(
+					"select groupId, name, typeSettings from Group_ where " +
+						"site = [$TRUE$] and friendlyURL != '/global'"));
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(

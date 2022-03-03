@@ -75,6 +75,14 @@ public class EditBatchPlannerPlanDisplayContext {
 		for (BatchEngineTaskContentType batchEngineTaskContentType :
 				BatchEngineTaskContentType.values()) {
 
+			if ((batchEngineTaskContentType ==
+					BatchEngineTaskContentType.XLS) ||
+				(batchEngineTaskContentType ==
+					BatchEngineTaskContentType.XLSX)) {
+
+				continue;
+			}
+
 			selectOptions.add(
 				new SelectOption(
 					batchEngineTaskContentType.toString(),

@@ -9,12 +9,13 @@
  * distribution rights of the Software.
  */
 
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import client from '../../../../apolloClient';
 import {Table} from '../../../../common/components';
+import {Liferay} from '../../../../common/services/liferay';
 import {getAccountUserAccountsByExternalReferenceCode} from '../../../../common/services/liferay/graphql/queries';
+import {ROLE_TYPES} from '../../../../common/utils/constants';
 import TeamMembersTableHeader from './components/Header';
-import {COLUMNS} from './utils/constants';
 import {
 	NameColumnType,
 	OptionsColumnType,
@@ -22,6 +23,7 @@ import {
 	StatusColumnType,
 	SupportSeatColumnType,
 } from './utils/constants/columns-definitions';
+import {getColumnsByUserAccess} from './utils/getColumnsByUserAccess';
 
 const TeamMembersTable = ({project}) => {
 	const [userAccounts, setUserAccounts] = useState([]);
@@ -66,16 +68,33 @@ const TeamMembersTable = ({project}) => {
 		getAccountUserAccounts();
 	}, [project.accountKey]);
 
+	const hasAdminAccess = useMemo(() => {
+		const currentUser = userAccounts?.find(
+			({id}) => id === Number(Liferay.ThemeDisplay.getUserId())
+		);
+
+		if (currentUser) {
+			const hasAdminRoles = currentUser?.roles?.some(
+				(role) =>
+					role === ROLE_TYPES.admin.key ||
+					role === ROLE_TYPES.requestor.key
+			);
+
+			return hasAdminRoles;
+		}
+	}, [userAccounts]);
+
 	return (
 		<div className="pt-2">
 			<TeamMembersTableHeader
+				hasAdminAccess={hasAdminAccess}
 				project={project}
 				userAccounts={userAccounts}
 			/>
 
 			<Table
 				className="border-0 cp-team-members-table"
-				columns={COLUMNS}
+				columns={getColumnsByUserAccess(hasAdminAccess)}
 				isLoading={isLoadingUserAccounts}
 				rows={userAccounts.map((userAccount) => ({
 					email: (

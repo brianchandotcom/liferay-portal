@@ -12,13 +12,12 @@
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
-import {useEffect, useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Button} from '../../../../../../common/components';
-import {Liferay} from '../../../../../../common/services/liferay';
 import {ROLE_TYPES} from '../../../../../../common/utils/constants';
 import InvitesModal from '../InvitesModal';
 
-const TeamMembersTableHeader = ({project, userAccounts}) => {
+const TeamMembersTableHeader = ({hasAdminAccess, project, userAccounts}) => {
 	const [visible, setVisible] = useState(false);
 	const [administratorsAvailable, setAdministratorsAvailable] = useState();
 	const modalProps = useModal({
@@ -38,22 +37,6 @@ const TeamMembersTableHeader = ({project, userAccounts}) => {
 			project.maxRequestors - currentAdministrators
 		);
 	}, [project.maxRequestors, userAccounts]);
-
-	const hasAdminAccess = useMemo(() => {
-		const currentUser = userAccounts?.find(
-			({id}) => id === Number(Liferay.ThemeDisplay.getUserId())
-		);
-
-		if (currentUser) {
-			const hasAdminRoles = currentUser?.roles?.some(
-				(role) =>
-					role === ROLE_TYPES.admin.key ||
-					role === ROLE_TYPES.requestor.key
-			);
-
-			return hasAdminRoles;
-		}
-	}, [userAccounts]);
 
 	return (
 		<div

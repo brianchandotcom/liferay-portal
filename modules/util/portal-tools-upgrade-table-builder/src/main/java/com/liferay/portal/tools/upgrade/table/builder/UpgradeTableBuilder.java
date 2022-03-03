@@ -155,13 +155,20 @@ public class UpgradeTableBuilder {
 			upgradeFilePath = _getUpgradeFilePath(upgradeFileName);
 
 			if (upgradeFilePath == null) {
-				return;
+				throw new IOException(
+					StringBundler.concat(
+						"Verify name for ", fileName, " because ",
+						upgradeFileName, " does not exist"));
 			}
 		}
 
 		String content = _read(path);
 
 		String packagePath = _getPackagePath(content);
+
+		if (packagePath == null) {
+			throw new IOException("Provide a package in " + fileName);
+		}
 
 		String className = fileName.substring(0, fileName.length() - 5);
 

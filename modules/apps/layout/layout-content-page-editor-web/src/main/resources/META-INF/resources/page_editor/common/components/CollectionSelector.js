@@ -12,6 +12,8 @@
  * details.
  */
 
+import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -34,23 +36,44 @@ export default function CollectionSelector({
 
 	const customCollectionSelectorURL = useCustomCollectionSelectorURL();
 
+	const filterConfig = collectionItem?.config ?? {};
+
+	const isPrefiltered = Object.keys(filterConfig).length > 0;
+
 	return (
-		<ItemSelector
-			eventName={eventName}
-			itemSelectorURL={
-				customCollectionSelectorURL ||
-				itemSelectorURL ||
-				config.infoListSelectorURL
-			}
-			label={label}
-			onItemSelect={onCollectionSelect}
-			optionsMenuItems={optionsMenuItems}
-			quickMappedInfoItems={config.selectedMappingTypes?.linkedCollection}
-			selectedItem={collectionItem}
-			shouldPreventItemSelect={shouldPreventCollectionSelect}
-			showMappedItems={!!config.selectedMappingTypes?.linkedCollection}
-			transformValueCallback={itemSelectorValueToCollection}
-		/>
+		<>
+			<ItemSelector
+				className={classNames({'mb-0': isPrefiltered})}
+				eventName={eventName}
+				itemSelectorURL={
+					customCollectionSelectorURL ||
+					itemSelectorURL ||
+					config.infoListSelectorURL
+				}
+				label={label}
+				onItemSelect={onCollectionSelect}
+				optionsMenuItems={optionsMenuItems}
+				quickMappedInfoItems={
+					config.selectedMappingTypes?.linkedCollection
+				}
+				selectedItem={collectionItem}
+				shouldPreventItemSelect={shouldPreventCollectionSelect}
+				showMappedItems={
+					!!config.selectedMappingTypes?.linkedCollection
+				}
+				transformValueCallback={itemSelectorValueToCollection}
+			/>
+
+			{isPrefiltered && (
+				<p className="text-info">
+					<ClayIcon className="mr-2 mt-0" symbol="info-panel-open" />
+
+					<span className="text-2">
+						{Liferay.Language.get('collection-pre-filtered')}
+					</span>
+				</p>
+			)}
+		</>
 	);
 }
 

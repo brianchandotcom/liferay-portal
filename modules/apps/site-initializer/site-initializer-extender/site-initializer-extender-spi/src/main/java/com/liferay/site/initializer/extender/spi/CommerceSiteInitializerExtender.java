@@ -18,7 +18,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.annotation.versioning.ProviderType;
+import org.osgi.framework.Bundle;
 
 /**
  * @author Rafael Praxedes
@@ -27,9 +30,9 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface CommerceSiteInitializerExtender {
 
 	public void addCPDefinitions(
-			Map<String, String> documentsStringUtilReplaceValues,
+			Bundle bundle, Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception;
 
 }

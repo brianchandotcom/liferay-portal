@@ -624,8 +624,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		_commerceSiteInitializerExtender.addCPDefinitions(
-			documentsStringUtilReplaceValues,
-			objectDefinitionIdsStringUtilReplaceValues, serviceContext);
+			_bundle, documentsStringUtilReplaceValues,
+			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
+			_servletContext);
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)

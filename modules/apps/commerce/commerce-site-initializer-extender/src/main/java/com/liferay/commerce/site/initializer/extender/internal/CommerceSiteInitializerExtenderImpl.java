@@ -87,6 +87,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -102,32 +106,34 @@ public class CommerceSiteInitializerExtenderImpl
 
 	@Override
 	public void addCPDefinitions(
-			Map<String, String> documentsStringUtilReplaceValues,
+			Bundle bundle, Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
-		Channel channel = _addCommerceChannel(serviceContext);
+		Channel channel = _addCommerceChannel(serviceContext, servletContext);
 
 		if (channel == null) {
 			return;
 		}
 
 		_addCommerceCatalogs(
-			channel, _addCommerceInventoryWarehouses(serviceContext),
-			serviceContext);
+			bundle, channel,
+			_addCommerceInventoryWarehouses(serviceContext, servletContext),
+			serviceContext, servletContext);
 		_addCommerceNotificationTemplates(
-			channel.getId(), documentsStringUtilReplaceValues,
-			objectDefinitionIdsStringUtilReplaceValues, serviceContext);
+			bundle, channel.getId(), documentsStringUtilReplaceValues,
+			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
+			servletContext);
 	}
 
 	private void _addCommerceCatalogs(
-			Channel channel,
+			Bundle bundle, Channel channel,
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
+		Set<String> resourcePaths = servletContext.getResourcePaths(
 			"/site-initializer/commerce-catalogs");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
@@ -151,7 +157,7 @@ public class CommerceSiteInitializerExtenderImpl
 				continue;
 			}
 
-			String json = _read(resourcePath);
+			String json = _read(resourcePath, servletContext);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
@@ -174,17 +180,17 @@ public class CommerceSiteInitializerExtenderImpl
 			_addCPOptions(
 				catalog,
 				StringUtil.replaceLast(resourcePath, ".json", ".options.json"),
-				serviceContext);
+				serviceContext, servletContext);
 			_addCPDefinitions(
-				assetVocabularyName, catalog, channel,
+				assetVocabularyName, bundle, catalog, channel,
 				commerceInventoryWarehouses,
 				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
-				serviceContext);
+				serviceContext, servletContext);
 
 			_addCommerceProductSpecifications(
 				StringUtil.replaceLast(
 					resourcePath, ".json", ".products.specifications.json"),
-				serviceContext);
+				serviceContext, servletContext);
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
@@ -192,19 +198,20 @@ public class CommerceSiteInitializerExtenderImpl
 						StringUtil.replaceLast(
 							resourcePath, ".json",
 							".products.subscriptions.properties.json"),
-						serviceContext);
+						serviceContext, servletContext);
 
 					return null;
 				});
 		}
 	}
 
-	private Channel _addCommerceChannel(ServiceContext serviceContext)
+	private Channel _addCommerceChannel(
+			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
 		String resourcePath = "/site-initializer/commerce-channel.json";
 
-		String json = _read(resourcePath);
+		String json = _read(resourcePath, servletContext);
 
 		if (json == null) {
 			return null;
@@ -236,7 +243,7 @@ public class CommerceSiteInitializerExtenderImpl
 			CommerceChannel.class.getName(), String.valueOf(channel.getId()),
 			StringUtil.replaceLast(
 				resourcePath, ".json", ".model-resource-permissions.json"),
-			serviceContext);
+			serviceContext, servletContext);
 
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
@@ -262,27 +269,29 @@ public class CommerceSiteInitializerExtenderImpl
 	}
 
 	private List<CommerceInventoryWarehouse> _addCommerceInventoryWarehouses(
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
 		return _commerceInventoryWarehousesImporter.
 			importCommerceInventoryWarehouses(
 				JSONFactoryUtil.createJSONArray(
 					_read(
-						"/site-initializer" +
-							"/commerce-inventory-warehouses.json")),
+						"/site-initializer/commerce-inventory-warehouses.json",
+						servletContext)),
 				serviceContext.getScopeGroupId(), serviceContext.getUserId());
 	}
 
 	private void _addCommerceNotificationTemplate(
-			long commerceChannelId,
+			Bundle bundle, long commerceChannelId,
 			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
-			String resourcePath, ServiceContext serviceContext)
+			String resourcePath, ServiceContext serviceContext,
+			ServletContext servletContext)
 		throws Exception {
 
 		String json = _read(
-			resourcePath + "commerce-notification-template.json");
+			resourcePath + "commerce-notification-template.json",
+			servletContext);
 
 		if (Validator.isNull(json)) {
 			return;
@@ -296,7 +305,7 @@ public class CommerceSiteInitializerExtenderImpl
 
 		JSONObject bodyJSONObject = _jsonFactory.createJSONObject();
 
-		Enumeration<URL> enumeration = _bundle.findEntries(
+		Enumeration<URL> enumeration = bundle.findEntries(
 			resourcePath, "*.html", false);
 
 		if (enumeration != null) {
@@ -335,13 +344,13 @@ public class CommerceSiteInitializerExtenderImpl
 	}
 
 	private void _addCommerceNotificationTemplates(
-			long commerceChannelId,
+			Bundle bundle, long commerceChannelId,
 			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
+		Set<String> resourcePaths = servletContext.getResourcePaths(
 			"/site-initializer/commerce-notification-templates");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
@@ -350,14 +359,15 @@ public class CommerceSiteInitializerExtenderImpl
 
 		for (String resourcePath : resourcePaths) {
 			_addCommerceNotificationTemplate(
-				commerceChannelId, documentsStringUtilReplaceValues,
+				bundle, commerceChannelId, documentsStringUtilReplaceValues,
 				objectDefinitionIdsStringUtilReplaceValues, resourcePath,
-				serviceContext);
+				serviceContext, servletContext);
 		}
 	}
 
 	private void _addCommerceProductSpecifications(
-			String resourcePath, ServiceContext serviceContext)
+			String resourcePath, ServiceContext serviceContext,
+			ServletContext servletContext)
 		throws Exception {
 
 		ProductSpecificationResource.Builder
@@ -369,7 +379,7 @@ public class CommerceSiteInitializerExtenderImpl
 				serviceContext.fetchUser()
 			).build();
 
-		String json = _read(resourcePath);
+		String json = _read(resourcePath, servletContext);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
@@ -408,16 +418,20 @@ public class CommerceSiteInitializerExtenderImpl
 	}
 
 	private void _addCPDefinitions(
-			String assetVocabularyName, Catalog catalog, Channel channel,
+			String assetVocabularyName, Bundle bundle, Catalog catalog,
+			Channel channel,
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
-			String resourcePath, ServiceContext serviceContext)
+			String resourcePath, ServiceContext serviceContext,
+			ServletContext servletContext)
 		throws Exception {
 
-		String json = _read(resourcePath);
+		String json = _read(resourcePath, servletContext);
 
 		if (json == null) {
 			return;
 		}
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 		Group commerceCatalogGroup =
 			_commerceCatalogLocalService.getCommerceCatalogGroup(
@@ -430,15 +444,17 @@ public class CommerceSiteInitializerExtenderImpl
 				commerceInventoryWarehouses,
 				CommerceInventoryWarehouse.
 					COMMERCE_INVENTORY_WAREHOUSE_ID_ACCESSOR),
-			_classLoader, StringUtil.replace(resourcePath, ".json", "/"),
+			bundleWiring.getClassLoader(),
+			StringUtil.replace(resourcePath, ".json", "/"),
 			serviceContext.getScopeGroupId(), serviceContext.getUserId());
 	}
 
 	private void _addCPInstanceSubscriptions(
-			String resourcePath, ServiceContext serviceContext)
+			String resourcePath, ServiceContext serviceContext,
+			ServletContext servletContext)
 		throws Exception {
 
-		String json = _read(resourcePath);
+		String json = _read(resourcePath, servletContext);
 
 		if (json == null) {
 			return;
@@ -529,10 +545,11 @@ public class CommerceSiteInitializerExtenderImpl
 	}
 
 	private void _addCPOptions(
-			Catalog catalog, String resourcePath, ServiceContext serviceContext)
+			Catalog catalog, String resourcePath, ServiceContext serviceContext,
+			ServletContext servletContext)
 		throws Exception {
 
-		String json = _read(resourcePath);
+		String json = _read(resourcePath, servletContext);
 
 		if (json == null) {
 			return;
@@ -549,10 +566,10 @@ public class CommerceSiteInitializerExtenderImpl
 
 	private void _addModelResourcePermissions(
 			String className, String primKey, String resourcePath,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
-		String json = _read(resourcePath);
+		String json = _read(resourcePath, servletContext);
 
 		if (json == null) {
 			return;
@@ -576,8 +593,10 @@ public class CommerceSiteInitializerExtenderImpl
 		}
 	}
 
-	private String _read(String resourcePath) throws Exception {
-		InputStream inputStream = _servletContext.getResourceAsStream(
+	private String _read(String resourcePath, ServletContext servletContext)
+		throws Exception {
+
+		InputStream inputStream = servletContext.getResourceAsStream(
 			resourcePath);
 
 		if (inputStream == null) {

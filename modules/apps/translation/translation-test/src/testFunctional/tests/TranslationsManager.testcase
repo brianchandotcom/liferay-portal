@@ -1,0 +1,79 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property osgi.modules.includes = "frontend-js-components-sample-web";
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Translation Manager";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "JS Components Sample Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "JS Components Sample Page",
+			widgetName = "JS Components Sample");
+
+		Navigator.gotoPage(pageName = "JS Components Sample Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "JS Components Sample Page");
+		}
+	}
+
+	@description = "LPS-147499. Verifies default options are present in translation manager language menu."
+	@priority = "3"
+	test DefaultLanguageIsAvailableAndViewsNoOtherLanguagesOptions {
+		task ("Select translation language menu") {
+			TranslationManager.openSelectTranslationLanguageDropdownMenu(
+				key_currentLocale = "en-us",
+				key_title = "Admin");
+		}
+
+		task ("Assert only default language options are available") {
+			AssertElementPresent(
+				key_locale = "en-US",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+
+			AssertElementPresent(
+				key_locale = "ca-ES",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+
+			AssertElementPresent(
+				key_locale = "fr-FR",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+
+			AssertElementPresent(locator1 = "TranslationManager#MANAGE_TRANSLATIONS");
+
+			AssertElementNotPresent(
+				key_index = "6",
+				locator1 = "TranslationManager#SELECT_TRANSLATION_LANGUAGE_MENU_ITEM_INDEX");
+		}
+
+		task ("Assert link to Manage Translations is available") {
+			Click(locator1 = "TranslationManager#MANAGE_TRANSLATIONS");
+
+			AssertElementPresent(locator1 = "Portlet#MODAL_TITLE");
+		}
+	}
+
+}

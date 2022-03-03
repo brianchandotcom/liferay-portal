@@ -21,6 +21,7 @@ import {PAGE_TYPES} from '../../utils/constants';
 import LayoutSkeleton from './Skeleton';
 
 const PAGE_SKELETON_LAYOUT = {
+	[PAGE_TYPES.analyticsCloud]: <ActivationKeys.Skeleton />,
 	[PAGE_TYPES.commerce]: <ActivationKeys.Skeleton />,
 	[PAGE_TYPES.dxp]: <ActivationKeys.Skeleton />,
 	[PAGE_TYPES.dxpCloud]: <ActivationKeys.Skeleton />,

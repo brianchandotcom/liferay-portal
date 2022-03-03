@@ -13,6 +13,7 @@ import {useEffect} from 'react';
 import {Outlet, useNavigate, useOutletContext} from 'react-router-dom';
 import {PAGE_TYPES, PRODUCT_TYPES} from '../../../../utils/constants';
 import ActivationKeys from '../../ActivationKeys';
+import AnalyticsCloud from '../../Analytics Cloud';
 import DXP from '../../DXP';
 import DXPCloud from '../../DXPCloud';
 
@@ -44,6 +45,12 @@ const ActivationOutlet = () => {
 	}, [getCurrentPage, navigate, subscriptionGroups]);
 
 	const activationComponents = {
+		[PAGE_TYPES.analyticsCloud]: (
+			<AnalyticsCloud
+				accountKey={project?.accountKey}
+				sessionId={sessionId}
+			/>
+		),
 		[PAGE_TYPES.commerce]: (
 			<ActivationKeys.Commerce
 				accountKey={project?.accountKey}

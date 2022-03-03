@@ -313,59 +313,6 @@ definition {
 		}
 	}
 
-	@description = "The user can search for multiple tags via Blogs widget."
-	@priority = "3"
-	test SearchTagsViaBlogs {
-		property testray.component.names = "Blogs";
-
-		task ("Add a Blogs widget to page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				widgetName = "Blogs");
-		}
-
-		task ("Add a page based on Search temlate") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
-
-			PagesAdmin.addPublicPage(
-				pageName = "search",
-				pageTemplateName = "Search");
-		}
-
-		task ("Add thre Blogs entry with different tags") {
-			var i = "1";
-
-			for (var tagName : list "blue,green,yellow") {
-				HeadlessBlog.addBlogEntry(
-					assetTagNames = "${tagName}",
-					content = "Blogs Entry Content ${i}",
-					groupName = "Test Site Name",
-					title = "Blogs Entry Title ${i}");
-
-				var i = ${i} + 1;
-			}
-		}
-
-		task ("Search for the Blogs entry with the tag as parameter") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			var i = "1";
-
-			for (var searchTerm : list "blue,green,yellow") {
-				SearchPortlets.searchEmbedded(searchTerm = "${searchTerm}");
-
-				SearchResultPortlet.viewSearchResults(
-					searchAssetTitle = "Blogs Entry Title ${i}",
-					searchAssetType = "Blogs Entry");
-
-				var i = ${i} + 1;
-			}
-		}
-	}
-
 	@description = "The user could remove selected tag via Blogs."
 	@priority = "3"
 	test RemoveSelectedTagViaBlogs {
@@ -418,6 +365,59 @@ definition {
 			BlogsEntry.viewTagNotPresentPG(
 				entryTitle = "Blogs Entry Title",
 				tagNameList = "tagname1,tagname3");
+		}
+	}
+
+	@description = "The user can search for multiple tags via Blogs widget."
+	@priority = "3"
+	test SearchTagsViaBlogs {
+		property testray.component.names = "Blogs";
+
+		task ("Add a Blogs widget to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Blogs");
+		}
+
+		task ("Add a page based on Search temlate") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
+
+			PagesAdmin.addPublicPage(
+				pageName = "search",
+				pageTemplateName = "Search");
+		}
+
+		task ("Add thre Blogs entry with different tags") {
+			var i = "1";
+
+			for (var tagName : list "blue,green,yellow") {
+				HeadlessBlog.addBlogEntry(
+					assetTagNames = "${tagName}",
+					content = "Blogs Entry Content ${i}",
+					groupName = "Test Site Name",
+					title = "Blogs Entry Title ${i}");
+
+				var i = ${i} + 1;
+			}
+		}
+
+		task ("Search for the Blogs entry with the tag as parameter") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			var i = "1";
+
+			for (var searchTerm : list "blue,green,yellow") {
+				SearchPortlets.searchEmbedded(searchTerm = "${searchTerm}");
+
+				SearchResultPortlet.viewSearchResults(
+					searchAssetTitle = "Blogs Entry Title ${i}",
+					searchAssetType = "Blogs Entry");
+
+				var i = ${i} + 1;
+			}
 		}
 	}
 

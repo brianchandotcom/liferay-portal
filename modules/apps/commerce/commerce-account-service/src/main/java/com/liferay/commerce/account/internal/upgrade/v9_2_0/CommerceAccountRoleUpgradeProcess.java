@@ -15,6 +15,8 @@
 package com.liferay.commerce.account.internal.upgrade.v9_2_0;
 
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -50,39 +52,44 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 			"com.liferay.commerce.order",
 			Collections.singletonList("MANAGE_COMMERCE_ORDER_PAYMENT_METHODS"));
 
-		_companyLocalService.forEachCompany(
-			company -> {
-				for (String name :
-						Arrays.asList(
-							CommerceAccountConstants.
-								ROLE_NAME_ACCOUNT_ADMINISTRATOR,
-							CommerceAccountConstants.ROLE_NAME_ACCOUNT_BUYER,
-							CommerceAccountConstants.
-								ROLE_NAME_ACCOUNT_ORDER_MANAGER)) {
+		_companyLocalService.forEachCompany(this::_updateCommerceAccountRoles);
+	}
 
-					Role role = _roleLocalService.fetchRole(
-						company.getCompanyId(), name);
+	private void _addResourcePermission(Company company, Role role)
+		throws PortalException {
 
-					if (role == null) {
-						break;
-					}
+		for (String actionId :
+				new String[] {
+					"MANAGE_COMMERCE_ORDER_PAYMENT_METHODS",
+					"MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS"
+				}) {
 
-					for (String actionId :
-							new String[] {
-								"MANAGE_COMMERCE_ORDER_PAYMENT_METHODS",
-								"MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS"
-							}) {
+			_resourcePermissionLocalService.addResourcePermission(
+				company.getCompanyId(), "com.liferay.commerce.order",
+				ResourceConstants.SCOPE_GROUP_TEMPLATE,
+				String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+				role.getRoleId(), actionId);
+		}
+	}
 
-						_resourcePermissionLocalService.addResourcePermission(
-							company.getCompanyId(),
-							"com.liferay.commerce.order",
-							ResourceConstants.SCOPE_GROUP_TEMPLATE,
-							String.valueOf(
-								GroupConstants.DEFAULT_PARENT_GROUP_ID),
-							role.getRoleId(), actionId);
-					}
-				}
-			});
+	private void _updateCommerceAccountRoles(Company company)
+		throws PortalException {
+
+		for (String name :
+				Arrays.asList(
+					CommerceAccountConstants.ROLE_NAME_ACCOUNT_ADMINISTRATOR,
+					CommerceAccountConstants.ROLE_NAME_ACCOUNT_BUYER,
+					CommerceAccountConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER)) {
+
+			Role role = _roleLocalService.fetchRole(
+				company.getCompanyId(), name);
+
+			if (role == null) {
+				break;
+			}
+
+			_addResourcePermission(company, role);
+		}
 	}
 
 	private final CompanyLocalService _companyLocalService;

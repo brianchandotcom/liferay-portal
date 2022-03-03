@@ -425,14 +425,14 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public Layout getDraftLayout(Layout layout) throws Exception {
-		if (!layout.isTypeContent()) {
-			return null;
-		}
-
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		if (draftLayout != null) {
 			return draftLayout;
+		}
+
+		if (!layout.isTypeContent()) {
+			return null;
 		}
 
 		UnicodeProperties unicodeProperties =

@@ -250,6 +250,9 @@ definition {
 	}
 
 	macro addCP {
+
+		// TODO LRQA-73479 Refactor so separate macros to add user can be used in this single macro EX: Organization.addUser
+
 		LexiconEntry.gotoAdd();
 
 		Type(

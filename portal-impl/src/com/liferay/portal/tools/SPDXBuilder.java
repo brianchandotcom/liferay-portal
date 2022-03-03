@@ -17,6 +17,8 @@ package com.liferay.portal.tools;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.Dom4jUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -130,7 +132,7 @@ public class SPDXBuilder {
 				new StreamResult(new FileOutputStream(versionHtmlFile)));
 		}
 		catch (Exception exception) {
-			exception.printStackTrace();
+			_log.error(exception);
 		}
 	}
 
@@ -439,6 +441,8 @@ public class SPDXBuilder {
 
 	private static final Namespace _NAMESPACE_SPDX = new Namespace(
 		"spdx", "http://spdx.org/rdf/terms#");
+
+	private static final Log _log = LogFactoryUtil.getLog(SPDXBuilder.class);
 
 	private static final Map<String, QName> _qNameMap = new HashMap<>();
 

@@ -16,6 +16,8 @@ package com.liferay.portal.tools;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.xml.Dom4jUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -95,8 +97,11 @@ public class WebXML23Converter {
 			FileUtil.write(output, webXML23);
 		}
 		catch (Exception exception) {
-			exception.printStackTrace();
+			_log.error(exception);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WebXML23Converter.class);
 
 }

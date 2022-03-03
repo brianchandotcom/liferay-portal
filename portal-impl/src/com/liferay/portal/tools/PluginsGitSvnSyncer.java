@@ -65,7 +65,7 @@ public class PluginsGitSvnSyncer {
 			}
 		}
 		catch (Exception exception) {
-			exception.printStackTrace();
+			_log.error(exception);
 		}
 	}
 

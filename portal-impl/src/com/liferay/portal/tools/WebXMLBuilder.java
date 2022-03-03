@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -89,7 +91,7 @@ public class WebXMLBuilder {
 			FileUtil.write(mergedWebXML, mergedContent, true);
 		}
 		catch (Exception exception) {
-			exception.printStackTrace();
+			_log.error(exception);
 		}
 	}
 
@@ -173,5 +175,7 @@ public class WebXMLBuilder {
 
 		return y;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(WebXMLBuilder.class);
 
 }

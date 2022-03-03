@@ -136,7 +136,7 @@ public class DBUpgrader {
 					(stopWatch.getTime() / Time.SECOND) + " seconds");
 		}
 		catch (Exception exception) {
-			exception.printStackTrace();
+			_log.error(exception);
 
 			System.exit(1);
 		}

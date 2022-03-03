@@ -353,10 +353,10 @@ public class ObjectRelatedModelsProviderTest {
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
 
 		_testCompanyScopeViewPermission(
-			objectRelationship, objectRelatedModelsProvider, objectEntry1);
+			objectRelatedModelsProvider, objectRelationship, objectEntry1);
 
 		_testIndividualScopeViewPermission(
-			objectEntryA, objectRelationship, objectRelatedModelsProvider,
+			objectEntryA, objectRelatedModelsProvider, objectRelationship,
 			objectEntry1);
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
@@ -426,10 +426,10 @@ public class ObjectRelatedModelsProviderTest {
 		Assert.assertEquals(objectEntries.toString(), 2, objectEntries.size());
 
 		_testCompanyScopeViewPermission(
-			objectRelationship, objectRelatedModelsProvider, objectEntry1);
+			objectRelatedModelsProvider, objectRelationship, objectEntry1);
 
 		_testIndividualScopeViewPermission(
-			objectEntry2, objectRelationship, objectRelatedModelsProvider,
+			objectEntry2, objectRelatedModelsProvider, objectRelationship,
 			objectEntry1);
 
 		_objectRelationshipLocalService.deleteObjectRelationship(
@@ -456,9 +456,9 @@ public class ObjectRelatedModelsProviderTest {
 	}
 
 	private void _testCompanyScopeViewPermission(
-			ObjectRelationship objectRelationship,
 			ObjectRelatedModelsProvider<ObjectEntry>
 				objectRelatedModelsProvider,
+			ObjectRelationship objectRelationship,
 			ObjectEntry parentObjectEntry)
 		throws Exception {
 
@@ -490,9 +490,10 @@ public class ObjectRelatedModelsProviderTest {
 	}
 
 	private void _testIndividualScopeViewPermission(
-			ObjectEntry childObjectEntry, ObjectRelationship objectRelationship,
+			ObjectEntry childObjectEntry,
 			ObjectRelatedModelsProvider<ObjectEntry>
 				objectRelatedModelsProvider,
+			ObjectRelationship objectRelationship,
 			ObjectEntry parentObjectEntry)
 		throws Exception {
 

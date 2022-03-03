@@ -1747,18 +1747,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/metadata-extractor.jar</file-name>
-				<version>2.13.0</version>
-				<project-name>Metadata Extractor</project-name>
-				<project-url>http://www.drewnoakes.com/code/exif</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/mimepull.jar</file-name>
 				<version>1.3</version>
 				<project-name>MIME pull</project-name>
@@ -2357,18 +2345,6 @@
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 						<copyright-notice>(c) 2001, Institute for Data Communications Systems, http://www.nue.et-inf.uni-siegen.de</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/xmpcore.jar</file-name>
-				<version>6.0.6</version>
-				<project-name>Extensible Metadata Platform</project-name>
-				<project-url>http://www.adobe.com/devnet/xmp.html</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
 					</license>
 				</licenses>
 			</library>

@@ -79,7 +79,7 @@
 			</c:when>
 			<c:otherwise>
 				<div class="alert alert-warning">
-					<liferay-ui:message arguments="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuTypeLabel() %>" key="there-is-no-x-available-for-the-current-site" />
+					<liferay-ui:message arguments="<%= siteNavigationMenuDisplayContext.getSelectSiteNavigationMenuTypeLabel() %>" key="there-is-no-x-available-for-the-current-site" />
 				</div>
 			</c:otherwise>
 		</c:choose>

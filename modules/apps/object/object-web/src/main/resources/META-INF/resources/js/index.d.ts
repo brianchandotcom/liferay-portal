@@ -12,19 +12,22 @@
  * details.
  */
 
+type ObjectFieldBusinessType = 'Attachment' | 'Picklist';
+
 interface ObjectFieldType {
-	businessType: string;
+	businessType: ObjectFieldBusinessType;
 	dbType: string;
 	description: string;
 	label: string;
 }
-
 interface ObjectField {
 	DBType: string;
-	businessType: string;
+	businessType: ObjectFieldBusinessType;
+	id?: number;
 	indexed: boolean;
 	indexedAsKeyword: boolean;
-	label: {[key in Liferay.Language.Locale]?: string};
+	indexedLanguageId: Locale | null;
+	label: LocalizedValue<string>;
 	listTypeDefinitionId: number;
 	name?: string;
 	objectFieldSettings?: ObjectFieldSetting[];
@@ -35,7 +38,7 @@ interface ObjectField {
 interface ObjectFieldSetting {
 	name: ObjectFieldSettingName;
 	required: boolean;
-	value: unknown;
+	value: string | number;
 }
 
 type ObjectFieldSettingName =

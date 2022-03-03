@@ -39,7 +39,7 @@ export type HeaderTabs = {
 };
 
 export type HeaderTitle = {
-	category: string;
+	category?: string;
 	path?: string;
 	title: string;
 };

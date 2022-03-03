@@ -94,7 +94,11 @@ const Header = () => {
 									}}
 								>
 									<small className="text-paragraph-xs text-secondary">
-										{header.category}
+										{header.category ? (
+											header.category.toUpperCase()
+										) : (
+											<>&ensp;</>
+										)}
 									</small>
 
 									<div className="d-flex flex-row">

@@ -362,6 +362,7 @@ components:
                     format: int32
                     type: integer
                 sortOrder:
+                    enum: [asc, desc]
                     type: string
         Status:
             properties:

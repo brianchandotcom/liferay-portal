@@ -2,15 +2,19 @@
 definition {
 
 	function waitForPageLoad {
+		if (!(isSet(locator1))) {
+			var locator1 = "0";
+		}
+
 		var javascript = '''
-			return document.readyState === "complete";
+			window.onload = function() {
+				setTimeout(() => {
+					console.log("Page is fully loaded");
+				}, "${locator1}");
+			};
 		''';
 
-		var message = '''Page is still loading.''';
-
-		selenium.waitForJavaScriptNoError("${javascript}", "${message}", "");
-
-		selenium.verifyJavaScript("${javascript}", "${message}", "");
+		selenium.runScript("${javascript}");
 	}
 
 }

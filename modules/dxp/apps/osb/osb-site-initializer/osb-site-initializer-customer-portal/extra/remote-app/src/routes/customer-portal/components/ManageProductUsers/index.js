@@ -11,7 +11,12 @@
 
 import {Button} from '../../../../common/components';
 
-const ManageProductUser = ({activationStatusAC, activationStatusDXPC}) => {
+const ManageProductUser = ({
+	activationStatusAC,
+	activationStatusDXPC,
+	refLinkAC,
+	refLinkDXPC,
+}) => {
 	return (
 		<div className="bg-brand-primary-lighten-6 border-0 card card-flat cp-manager-product-container mt-5">
 			<div className="p-4">
@@ -23,25 +28,37 @@ const ManageProductUser = ({activationStatusAC, activationStatusDXPC}) => {
 
 				<div className="d-flex">
 					{activationStatusDXPC && (
-						<Button
-							appendIcon="shortcut"
-							className="align-items-stretch btn btn-ghost cp-manager-product-button d-flex mr-3 p-2 text-neutral-10"
+						<a
+							href={refLinkDXPC}
+							rel="noopener noreferrer"
+							target="_blank"
 						>
-							<p className="font-weight-semi-bold h6 m-0 pl-1">
-								Manage DXP Cloud Users
-							</p>
-						</Button>
+							<Button
+								appendIcon="shortcut"
+								className="align-items-stretch btn btn-ghost cp-manager-product-button d-flex mr-3 p-2 text-neutral-10"
+							>
+								<p className="font-weight-semi-bold h6 m-0 pl-1">
+									Manage DXP Cloud Users
+								</p>
+							</Button>
+						</a>
 					)}
 
 					{activationStatusAC && (
-						<Button
-							appendIcon="shortcut"
-							className="align-items-stretch btn btn-ghost cp-manager-product-button d-flex p-2 text-neutral-10"
+						<a
+							href={refLinkAC}
+							rel="noopener noreferrer"
+							target="_blank"
 						>
-							<p className="font-weight-semi-bold h6 m-0 pl-1">
-								Manage Analytics Cloud Users
-							</p>
-						</Button>
+							<Button
+								appendIcon="shortcut"
+								className="align-items-stretch btn btn-ghost cp-manager-product-button d-flex p-2 text-neutral-10"
+							>
+								<p className="font-weight-semi-bold h6 m-0 pl-1">
+									Manage Analytics Cloud Users
+								</p>
+							</Button>
+						</a>
 					)}
 				</div>
 			</div>

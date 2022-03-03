@@ -371,6 +371,10 @@ definition {
 			var portletId = "com.liferay.document.library.google.drive.configuration.DLGoogleDriveCompanyConfiguration";
 		}
 
+		if ("${portlet}" == "One Drive") {
+			var portletId = "com.liferay.document.library.opener.onedrive.web.internal.configuration.DLOneDriveCompanyConfiguration";
+		}
+
 		if ("${portlet}" == "Service") {
 			var portletId = "com.liferay.document.library.configuration.DLConfiguration";
 		}

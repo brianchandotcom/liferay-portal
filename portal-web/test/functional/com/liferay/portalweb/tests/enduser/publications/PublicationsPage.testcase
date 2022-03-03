@@ -228,18 +228,6 @@ definition {
 			conflictingChanges = "true",
 			entryTitle = "Content Page Name");
 
-		PublicationsChanges.discardChanges(
-			changeCategory = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
-			changeTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure",
-			conflictingChanges = "true",
-			entryTitle = "com.liferay.layout.page.template.model.LayoutPageTemplateStructure");
-
-		PublicationsChanges.discardChanges(
-			changeCategory = "Content Page Name",
-			changeTitle = "Content Page Name",
-			conflictingChanges = "true",
-			entryTitle = "Content Page Name");
-
 		Publications.publishPublication(publicationName = "Publication Name 1");
 	}
 

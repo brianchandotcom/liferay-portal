@@ -15,6 +15,9 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.ObjectFieldBusinessTypeException;
@@ -25,22 +28,32 @@ import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.RequiredObjectFieldException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.Serializable;
 
 import java.sql.Connection;
 
@@ -487,6 +500,131 @@ public class ObjectFieldLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteObjectFieldAttachment() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						"Date", "Date", true, false, null, "Birthday",
+						"birthday", false)));
+
+		_objectDefinitionLocalService.publishCustomObjectDefinition(
+			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+
+		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(), "Attachment", "Long",
+			true, false, null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			"upload", false, Collections.emptyList());
+
+		String fileContent = StringUtil.merge(RandomTestUtil.randomStrings(20));
+
+		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			StringUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+			fileContent.getBytes(), null, null,
+			ServiceContextTestUtil.getServiceContext());
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"upload", fileEntry.getFileEntryId()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertNotNull(
+			_dlAppLocalService.getFileEntry(fileEntry.getFileEntryId()));
+
+		_objectFieldLocalService.deleteObjectField(
+			objectField.getObjectFieldId());
+
+		try {
+			_dlAppLocalService.getFileEntry(fileEntry.getFileEntryId());
+
+			Assert.fail();
+		}
+		catch (NoSuchFileEntryException noSuchFileEntryException) {
+			Assert.assertEquals(
+				StringBundler.concat(
+					"No FileEntry exists with the key {fileEntryId=",
+					fileEntry.getFileEntryId(), "}"),
+				noSuchFileEntryException.getMessage());
+		}
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
+	}
+
+	@Test
+	public void testObjectFieldSettings() throws Exception {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"A" + RandomTestUtil.randomString(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				Collections.emptyList());
+
+		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(), "Text", "String", true,
+			false, null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.randomId(), false,
+			Arrays.asList(
+				_createObjectFieldSetting("helpText", true, "Help Text"),
+				_createObjectFieldSetting("repeatable", false, "True")));
+
+		_assertObjectFieldSetting(
+			objectField.getObjectFieldId(), "helpText", true, "Help Text");
+		_assertObjectFieldSetting(
+			objectField.getObjectFieldId(), "repeatable", false, "True");
+
+		objectField = _objectFieldLocalService.updateCustomObjectField(
+			objectField.getObjectFieldId(), 0, "Text", "String", true, false,
+			null,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			StringUtil.randomId(), false,
+			Arrays.asList(
+				_createObjectFieldSetting("helpText", true, "New Help Text"),
+				_createObjectFieldSetting(
+					"placeholder", false, "Placeholder")));
+
+		_assertObjectFieldSetting(
+			objectField.getObjectFieldId(), "helpText", true, "New Help Text");
+		_assertObjectFieldSetting(
+			objectField.getObjectFieldId(), "placeholder", false,
+			"Placeholder");
+
+		Assert.assertNull(
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
+				objectField.getObjectFieldId(), "repeatable"));
+
+		_objectFieldLocalService.deleteObjectField(
+			objectField.getObjectFieldId());
+
+		Assert.assertNull(
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
+				objectField.getObjectFieldId(), "helpText"));
+		Assert.assertNull(
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
+				objectField.getObjectFieldId(), "placeholder"));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			objectDefinition.getObjectDefinitionId());
+	}
+
+	@Test
 	public void testUpdateCustomObjectField() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
@@ -575,6 +713,32 @@ public class ObjectFieldLocalServiceTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			objectDefinition.getObjectDefinitionId());
+	}
+
+	private void _assertObjectFieldSetting(
+			long objectFieldId, String name, boolean required, String value)
+		throws Exception {
+
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.fetchObjectFieldSetting(
+				objectFieldId, name);
+
+		Assert.assertEquals(name, objectFieldSetting.getName());
+		Assert.assertEquals(required, objectFieldSetting.isRequired());
+		Assert.assertEquals(value, objectFieldSetting.getValue());
+	}
+
+	private ObjectFieldSetting _createObjectFieldSetting(
+		String name, boolean required, String value) {
+
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.createObjectFieldSetting(0L);
+
+		objectFieldSetting.setName(name);
+		objectFieldSetting.setRequired(required);
+		objectFieldSetting.setValue(value);
+
+		return objectFieldSetting;
 	}
 
 	private boolean _hasColumn(String tableName, String columnName)
@@ -679,10 +843,19 @@ public class ObjectFieldLocalServiceTest {
 	}
 
 	@Inject
+	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

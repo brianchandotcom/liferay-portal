@@ -175,6 +175,7 @@ const Table = ({
 												return row.customClickOnRow();
 											}
 										}}
+										truncate={column.truncate}
 									>
 										{row[column.accessor]}
 									</ClayTable.Cell>

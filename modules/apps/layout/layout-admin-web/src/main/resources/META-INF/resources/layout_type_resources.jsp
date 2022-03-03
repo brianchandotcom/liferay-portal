@@ -85,8 +85,6 @@ if (selLayout != null) {
 	<c:otherwise>
 
 		<%
-		liferayPortletRequest.setAttribute(WebKeys.LAYOUT_DESCRIPTIONS, layoutsAdminDisplayContext.getLayoutDescriptions());
-
 		LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(type);
 
 		ResourceBundle layoutTypeResourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, layoutTypeController.getClass());

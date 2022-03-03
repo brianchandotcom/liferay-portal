@@ -242,7 +242,8 @@ const LocalizableText = ({
 				value: currentValue,
 			})
 		);
-	}, [currentValue, defaultLocale, fieldName]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [defaultLocale, fieldName]);
 
 	return (
 		<ClayInput.Group>

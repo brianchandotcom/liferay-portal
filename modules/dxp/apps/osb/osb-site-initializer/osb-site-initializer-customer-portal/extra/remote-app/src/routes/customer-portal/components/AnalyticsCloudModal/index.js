@@ -10,12 +10,13 @@
  */
 import ClayModal from '@clayui/modal';
 import Button from '../../../../common/components/Button';
+import AnalyticsCloudForm from '../AnalyticsCloudForm';
 
 const AnalyticsCloudModal = ({observer, onClose}) => {
 	return (
 		<ClayModal center observer={observer} size="md">
 			<div className="m-4">
-				<div className="d-flex justify-content-between">
+				<div className="d-flex justify-content-between my-4">
 					<div className="flex-row">
 						<h1>Set up Analytics Cloud</h1>
 
@@ -33,6 +34,8 @@ const AnalyticsCloudModal = ({observer, onClose}) => {
 						onClick={onClose}
 					/>
 				</div>
+
+				<AnalyticsCloudForm />
 
 				<div className="d-flex justify-content-between my-2">
 					<Button displayType="unstyled" onClick={onClose}>

@@ -64,8 +64,7 @@ public class UploadImageUtil {
 			return _userFileUploadsConfiguration.imageMaxSize();
 		}
 
-		return _uploadImageUtil._uploadServletRequestConfigurationHelper.
-			getMaxSize();
+		return _uploadServletRequestConfigurationHelper.getMaxSize();
 	}
 
 	public static FileEntry getTempImageFileEntry(PortletRequest portletRequest)
@@ -94,15 +93,20 @@ public class UploadImageUtil {
 	protected void activate(Map<String, Object> properties) {
 		_userFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
 			UserFileUploadsConfiguration.class, properties);
-		_uploadImageUtil = this;
 	}
 
-	private static volatile UploadImageUtil _uploadImageUtil;
+	@Reference(unbind = "-")
+	protected void setUploadServletRequestConfigurationHelper(
+		UploadServletRequestConfigurationHelper
+			uploadServletRequestConfigurationHelper) {
+
+		_uploadServletRequestConfigurationHelper =
+			uploadServletRequestConfigurationHelper;
+	}
+
+	private static UploadServletRequestConfigurationHelper
+		_uploadServletRequestConfigurationHelper;
 	private static volatile UserFileUploadsConfiguration
 		_userFileUploadsConfiguration;
-
-	@Reference
-	private UploadServletRequestConfigurationHelper
-		_uploadServletRequestConfigurationHelper;
 
 }

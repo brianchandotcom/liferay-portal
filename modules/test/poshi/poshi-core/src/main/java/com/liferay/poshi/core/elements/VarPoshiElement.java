@@ -22,6 +22,7 @@ import com.liferay.poshi.core.util.Validator;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,17 +76,25 @@ public class VarPoshiElement extends PoshiElement {
 
 	public String getVarValue() {
 		if (valueAttributeName == null) {
+			List<Node> poshiCDATANodes = new ArrayList<>();
+
 			for (Node node : Dom4JUtil.toNodeList(content())) {
 				if (node instanceof CDATA) {
-					StringBuilder sb = new StringBuilder();
-
-					sb.append("\'\'\'");
-					sb.append(node.getText());
-					sb.append("\'\'\'");
-
-					return sb.toString();
+					poshiCDATANodes.add(node);
 				}
 			}
+
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("\'\'\'");
+
+			for (Node poshiCDATANode : poshiCDATANodes) {
+				sb.append(poshiCDATANode.getText());
+			}
+
+			sb.append("\'\'\'");
+
+			return sb.toString();
 		}
 
 		return attributeValue(valueAttributeName);
@@ -118,7 +127,22 @@ public class VarPoshiElement extends PoshiElement {
 		String value = getValueFromAssignment(poshiScript);
 
 		if (value.startsWith("\'\'\'")) {
-			add(new PoshiCDATA(getPoshiScriptEscapedContent(value)));
+			if (value.contains("CDATA")) {
+				Matcher nestedCDATAMatcher = _nestedCDATAPattern.matcher(value);
+
+				nestedCDATAMatcher.find();
+
+				String initialCDATA = nestedCDATAMatcher.group("firstCDATA");
+
+				String nestedCDATA = nestedCDATAMatcher.group("secondCDATA");
+
+				add(new PoshiCDATA(initialCDATA));
+
+				add(new PoshiCDATA(nestedCDATA));
+			}
+			else {
+				add(new PoshiCDATA(getPoshiScriptEscapedContent(value)));
+			}
 
 			return;
 		}
@@ -505,6 +529,8 @@ public class VarPoshiElement extends PoshiElement {
 		};
 	private static final Pattern _mathUtilMethodCallPattern = Pattern.compile(
 		"MathUtil\\.(\\w+)\\('(.+)', '(.+)'\\)");
+	private static final Pattern _nestedCDATAPattern = Pattern.compile(
+		"(?<firstCDATA><.+]])(?<secondCDATA>>.+>)");
 	private static final Pattern _statementPattern;
 	private static final Pattern _varValueMathExpressionPattern;
 

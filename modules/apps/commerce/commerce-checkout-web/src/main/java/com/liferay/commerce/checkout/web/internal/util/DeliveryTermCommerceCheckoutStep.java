@@ -106,7 +106,9 @@ public class DeliveryTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
 
-		if (!_portletResourcePermission.contains(
+		if (!commerceOrder.isGuestOrder() &&
+			!commerceAccount.isPersonalAccount() &&
+			!_portletResourcePermission.contains(
 				permissionChecker, commerceAccount.getCommerceAccountGroup(),
 				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS)) {
 

@@ -691,11 +691,18 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("View the None is selected in Pagination field") {
+		task ("View the Numeric is selected in Pagination field") {
 			AssertSelectedLabel(
 				key_fieldLabel = "Pagination",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "None");
+				value1 = "Numeric");
+		}
+
+		task ("Select the None in Pagination field") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				pagination = "None",
+				selectedName = "Dynamic Collection");
 		}
 
 		task ("View the page number, next and previous buttons not shown in Collection Display") {
@@ -1096,13 +1103,13 @@ definition {
 				id = "element-text");
 		}
 
-		task ("View the None is selected in Pagination field") {
+		task ("View the Numeric is selected in Pagination field") {
 			PageEditor.gotoConfiguration(fragmentName = "Collection Display");
 
 			AssertSelectedLabel(
 				key_fieldLabel = "Pagination",
 				locator1 = "Select#GENERIC_SELECT_FIELD",
-				value1 = "None");
+				value1 = "Numeric");
 		}
 
 		task ("View the Previous and Next buttons not shown in Collection Display") {

@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
 import java.util.Objects;
@@ -124,11 +125,15 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				deleteLayoutPageTemplateStructure(layoutPageTemplateStructure);
 		}
 
-		if (!layout.isTypeContent()) {
-			return;
-		}
-
 		try {
+			_segmentsExperienceLocalService.deleteSegmentsExperiences(
+				layout.getGroupId(), _portal.getClassNameId(Layout.class),
+				layout.getPlid());
+
+			if (!layout.isTypeContent()) {
+				return;
+			}
+
 			Indexer<Layout> indexer = IndexerRegistryUtil.getIndexer(
 				Layout.class);
 
@@ -299,5 +304,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

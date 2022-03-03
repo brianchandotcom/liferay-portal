@@ -55,6 +55,45 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-144166. Verify the Blog Entry DPT on Desktop Size"
+	@priority = "4"
+	test BlogEntryDPTOnDesktopSize {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		}
+
+		task ("Go to Display Page Templates and Blog Entry") {
+			ProductMenu.gotoPortlet(
+				category = "Design",
+				portlet = "Page Templates");
+
+			NavItem.gotoPageTemplates();
+
+			Navigator.gotoNavTab(navTab = "Display Page Templates");
+
+			LexiconEntry.gotoEntry(rowEntry = "Blog Entry");
+		}
+
+		task ("Go to Preview Mode in Landscape Phone") {
+			PageEditor.openPreviewMode();
+
+			PageEditor.switchViewport(
+				deviceType = "Desktop",
+				modal = "true");
+		}
+
+		task ("Assert the Elements are Visible in Frame") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_BODY");
+
+			for (var fragmentName : list "navbar,header,card,footer") {
+				AssertVisible(
+					fragmentName = "${fragmentName}",
+					index = "1",
+					locator1 = "Fragment#FRAGMENT_BODY");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-144166. Verify the Blog Entry DPT on Landscape Phone Size"
 	@priority = "4"
 	test BlogEntryDPTOnLandscapePhoneSize {

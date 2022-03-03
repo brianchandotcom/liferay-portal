@@ -375,7 +375,7 @@ while (manageableCalendarsIterator.hasNext()) {
 						<c:if test="<%= invitable %>">
 							<aui:input inputCssClass="calendar-portlet-invite-resources-input" label="" name="inviteResource" placeholder="add-people-sites-rooms" type="text" />
 
-							<div class="separator"><!-- --></div>
+							<hr class="separator" />
 						</c:if>
 
 						<clay:row

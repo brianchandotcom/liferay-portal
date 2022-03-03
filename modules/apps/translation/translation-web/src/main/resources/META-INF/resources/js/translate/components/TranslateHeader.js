@@ -32,7 +32,7 @@ const TranslateHeader = ({
 
 			<span className="ml-2">{sourceLanguageIdTitle}</span>
 
-			<div className="separator" />
+			<hr className="separator" />
 		</ClayLayout.Col>
 
 		<ClayLayout.Col md={6}>
@@ -40,7 +40,7 @@ const TranslateHeader = ({
 
 			<span className="ml-2">{targetLanguageIdTitle}</span>
 
-			<div className="separator" />
+			<hr className="separator" />
 		</ClayLayout.Col>
 	</ClayLayout.Row>
 );

@@ -169,5 +169,5 @@
 		</c:if>
 	</div>
 
-	<div class="separator"><!-- --></div>
+	<hr class="separator" />
 </c:if>

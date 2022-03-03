@@ -107,7 +107,7 @@
 </tr>
 <tr>
 	<td>TOGGLE_NAVIGATION</td>
-	<td>//div[contains(@class,'navbar')]//button[contains(@aria-label,'Toggle navigation')]</td>
+	<td>//*[contains(@class,'navbar')]//button[contains(@aria-label,'Toggle navigation')]</td>
 	<td></td>
 </tr>
 <tr>

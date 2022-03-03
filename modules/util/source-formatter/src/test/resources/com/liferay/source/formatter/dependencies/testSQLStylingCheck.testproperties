@@ -1,0 +1,42 @@
+    test.batch.run.property.query[functional-tomcat*-mysql*-jdk8][relevant]=\
+        (portal.acceptance == true) AND \
+        (\
+            (testray.main.component.name ~ "Friendly URL Service") OR \
+            (testray.main.component.name ~ "Friendly URL")\
+        )
+
+    test.batch.run.property.query[functional-tomcat*-mysql*-jdk8][relevant]=\
+        (portal.acceptance == true) AND \
+        (\
+            (testray.component.names ~ "Web Content") OR \
+            (testray.main.component.name ~ "Web Content Display") OR \
+            (testray.main.component.name ~ "Web Content Administration") OR \
+            (testray.main.component.name ~ "Web Content")\
+        )
+
+    test.batch.run.property.query[functional-tomcat*-mysql*-jdk8][relevant]=\
+        (portal.acceptance == true) AND \
+        (\
+            (testray.component.names ~ "Workflow") OR \
+            (testray.main.component.name ~ "Kaleo Designer") OR \
+            (testray.main.component.name ~ "Kaleo Forms Admin") OR \
+            (testray.main.component.name ~ "Workflow Metrics") OR \
+            (testray.main.component.name ~ "Workflow")\
+        )
+
+    test.batch.run.property.query[functional-tomcat90-mysql57-jdk8][site-initializer-team-extranet]=\
+        (portal.acceptance != quarantine AND portal.upstream != quarantine) AND \
+        (\
+            (testray.main.component.name == "Team Extranet")\
+        )
+
+    test.batch.run.property.query[functional-tomcat*-mysql*-jdk8][relevant]=\
+        (\
+            portal.acceptance == true AND \
+            testray.main.component.name == "Staging"\
+        ) OR \
+        (\
+            license.required != "true" AND \
+            testray.main.component.name == "Clustering"\
+        ) OR \
+        testray.main.component.name == "Scheduler"

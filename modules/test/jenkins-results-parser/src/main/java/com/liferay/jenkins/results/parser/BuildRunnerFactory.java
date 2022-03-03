@@ -56,6 +56,12 @@ public class BuildRunnerFactory {
 			}
 		}
 
+		if (jobName.startsWith(
+				"test-qa-websites-functional-daily-controller")) {
+
+			buildRunner = new QAWebsitesControllerBuildRunner(buildData);
+		}
+
 		if (jobName.startsWith("test-results-consistency-report-controller")) {
 			buildRunner = new TestResultsConsistencyReportControllerBuildRunner(
 				(BaseBuildData)buildData);

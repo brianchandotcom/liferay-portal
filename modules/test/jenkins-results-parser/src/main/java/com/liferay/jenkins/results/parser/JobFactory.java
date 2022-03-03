@@ -363,7 +363,10 @@ public class JobFactory {
 			return _jobs.get(jobKey);
 		}
 
-		if (jobName.startsWith("test-portal-testsuite-upstream-controller(")) {
+		if (jobName.startsWith("test-portal-testsuite-upstream-controller(") ||
+			jobName.startsWith(
+				"test-qa-websites-functional-daily-controller(")) {
+
 			_jobs.put(jobKey, new SimpleJob(jobName, buildProfile));
 
 			return _jobs.get(jobKey);

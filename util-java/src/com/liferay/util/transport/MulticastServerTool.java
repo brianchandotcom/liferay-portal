@@ -15,6 +15,8 @@
 package com.liferay.util.transport;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.net.DatagramPacket;
@@ -80,7 +82,7 @@ public class MulticastServerTool {
 			}
 		}
 		catch (Exception exception) {
-			exception.printStackTrace();
+			_log.error(exception);
 
 			System.err.println(
 				"Usage: java MulticastServerTool multicastAddress port " +
@@ -89,5 +91,8 @@ public class MulticastServerTool {
 			System.exit(1);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MulticastServerTool.class);
 
 }

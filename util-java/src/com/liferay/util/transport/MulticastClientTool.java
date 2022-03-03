@@ -15,6 +15,8 @@
 package com.liferay.util.transport;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +37,7 @@ public class MulticastClientTool {
 			new MulticastClientTool(args);
 		}
 		catch (Exception exception) {
-			exception.printStackTrace();
+			_log.error(exception);
 
 			System.err.println(
 				StringBundler.concat(
@@ -114,5 +116,8 @@ public class MulticastClientTool {
 
 		return argsMap;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MulticastClientTool.class);
 
 }

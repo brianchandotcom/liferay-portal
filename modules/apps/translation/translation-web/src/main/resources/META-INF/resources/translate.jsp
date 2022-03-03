@@ -80,7 +80,7 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 
 								<span class="ml-1"> <%= sourceLanguageIdTitle %> </span>
 
-								<div class="separator"><!-- --></div>
+								<hr class="separator" />
 							</clay:col>
 
 							<clay:col
@@ -97,7 +97,7 @@ renderResponse.setTitle(translateDisplayContext.getTitle());
 
 								<span class="ml-1"> <%= targetLanguageIdTitle %> </span>
 
-								<div class="separator"><!-- --></div>
+								<hr class="separator" />
 							</clay:col>
 						</clay:row>
 

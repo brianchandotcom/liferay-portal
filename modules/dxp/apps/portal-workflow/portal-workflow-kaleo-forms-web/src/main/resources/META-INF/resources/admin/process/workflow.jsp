@@ -82,7 +82,7 @@ if (Validator.isNotNull(workflowDefinition)) {
 		<aui:button onClick='<%= "javascript:" + liferayPortletResponse.getNamespace() + "editWorkflow('" + addURL + "');" %>' primary="<%= true %>" value="add-workflow" />
 	</c:if>
 
-	<div class="separator"><!-- --></div>
+	<hr class="separator" />
 
 	<liferay-portlet:renderURL varImpl="portletURL">
 		<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />

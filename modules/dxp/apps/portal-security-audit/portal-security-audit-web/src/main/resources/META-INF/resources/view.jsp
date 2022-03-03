@@ -51,7 +51,7 @@
 				<%@ include file="/search_columns.jspf" %>
 			</liferay-ui:search-container-row>
 
-			<div class="separator"><!-- --></div>
+			<hr class="separator" />
 
 			<liferay-ui:search-iterator
 				searchContainer="<%= auditDisplayContext.getSearchContainer() %>"

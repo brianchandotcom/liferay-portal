@@ -68,5 +68,5 @@ KBComment kbComment = (KBComment)request.getAttribute("template_comment.jsp-kb_c
 		</tr>
 	</table>
 
-	<div class="separator"><!-- --></div>
+	<hr class="separator" />
 </div>

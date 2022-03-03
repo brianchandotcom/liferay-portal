@@ -107,7 +107,7 @@ const FieldSet = ({
 					<>
 						<label className="text-uppercase">{label}</label>
 						<div className="ddm-field-types-fieldset__nested-separator">
-							<div className="mt-1 separator" />
+							<hr className="mt-1 separator" />
 						</div>
 					</>
 				)}

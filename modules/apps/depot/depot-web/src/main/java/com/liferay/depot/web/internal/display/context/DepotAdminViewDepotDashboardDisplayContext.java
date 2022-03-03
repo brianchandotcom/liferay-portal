@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 import com.liferay.site.memberships.constants.SiteMembershipsPortletKeys;
+import com.liferay.staging.constants.StagingProcessesPortletKeys;
 import com.liferay.trash.constants.TrashPortletKeys;
 
 import java.util.ArrayList;
@@ -152,13 +153,15 @@ public class DepotAdminViewDepotDashboardDisplayContext {
 		).put(
 			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN, "documents-and-media"
 		).put(
-			ExportImportPortletKeys.EXPORT, "download"
+			ExportImportPortletKeys.EXPORT, "upload"
 		).put(
-			ExportImportPortletKeys.IMPORT, "upload"
+			ExportImportPortletKeys.IMPORT, "download"
 		).put(
 			JournalPortletKeys.JOURNAL, "web-content"
 		).put(
 			SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN, "users"
+		).put(
+			StagingProcessesPortletKeys.STAGING_PROCESSES, "staging"
 		).put(
 			TrashPortletKeys.TRASH, "trash"
 		).put(

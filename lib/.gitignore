@@ -153,7 +153,6 @@
 /portal/log4j-api.jar
 /portal/log4j-core.jar
 /portal/mchange-commons-java.jar
-/portal/metadata-extractor.jar
 /portal/mimepull.jar
 /portal/mp4parser.jar
 /portal/netcdf.jar
@@ -198,5 +197,4 @@
 /portal/xercesImpl.jar
 /portal/xml-apis.jar
 /portal/xmlsec.jar
-/portal/xmpcore.jar
 /portal/xz.jar

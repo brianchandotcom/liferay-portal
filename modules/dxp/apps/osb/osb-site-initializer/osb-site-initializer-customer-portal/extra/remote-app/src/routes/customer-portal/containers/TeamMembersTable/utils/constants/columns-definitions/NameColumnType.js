@@ -11,9 +11,21 @@
  */
 
 import {Liferay} from '../../../../../../../common/services/liferay';
+import {getMd5Hash} from '../../../../../utils/getMd5Hash';
 
-const Avatar = () => {
-	return <div className="cp-team-members-avatar mr-2"></div>;
+const GRAVATAR_URL = 'https://www.gravatar.com/avatar';
+const AVATAR_SIZE_IN_PX = 40;
+
+const Avatar = ({emailAddress}) => {
+	return (
+		<div className="cp-team-members-avatar mr-2">
+			<img
+				height={AVATAR_SIZE_IN_PX}
+				src={`${GRAVATAR_URL}/${getMd5Hash(emailAddress)}`}
+				width={AVATAR_SIZE_IN_PX}
+			/>
+		</div>
+	);
 };
 
 const NameColumnType = ({userAccount}) => {
@@ -21,7 +33,7 @@ const NameColumnType = ({userAccount}) => {
 
 	return (
 		<div className="align-items-center d-flex">
-			<Avatar />
+			<Avatar emailAddress={userAccount.emailAddress} />
 
 			<p className="m-0 text-truncate">{userAccount.name}</p>
 

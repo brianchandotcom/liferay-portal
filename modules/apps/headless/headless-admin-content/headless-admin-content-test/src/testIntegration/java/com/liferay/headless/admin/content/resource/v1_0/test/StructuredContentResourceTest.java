@@ -184,7 +184,7 @@ public class StructuredContentResourceTest
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"title"};
+		return new String[] {"priority", "title"};
 	}
 
 	@Override
@@ -241,7 +241,7 @@ public class StructuredContentResourceTest
 				StructuredContent structuredContent)
 		throws Exception {
 
-		return _postSiteStructuredContent(
+		return _postSiteStructuredContentDraft(
 			testGroup.getGroupId(), structuredContent);
 	}
 
@@ -299,6 +299,14 @@ public class StructuredContentResourceTest
 				}));
 	}
 
+	private StructuredContent _postSiteStructuredContentDraft(
+			Long siteId, StructuredContent structuredContent)
+		throws Exception {
+
+		return structuredContentResource.postSiteStructuredContentDraft(
+			siteId, structuredContent);
+	}
+
 	private String _read(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
@@ -334,6 +342,7 @@ public class StructuredContentResourceTest
 				setDateCreated(structuredContent.getDateCreated());
 				setDateModified(structuredContent.getDateModified());
 				setId(structuredContent.getId());
+				setPriority(structuredContent.getPriority());
 				setSiteId(structuredContent.getSiteId());
 				setTitle(structuredContent.getTitle());
 			}

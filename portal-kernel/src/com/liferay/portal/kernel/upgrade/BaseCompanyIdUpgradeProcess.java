@@ -100,7 +100,7 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 		}
 
 		public void update(Connection connection)
-			throws IOException, SQLException {
+			throws Exception {
 
 			for (String[] foreignNames : _foreignNamesArray) {
 				runSQL(

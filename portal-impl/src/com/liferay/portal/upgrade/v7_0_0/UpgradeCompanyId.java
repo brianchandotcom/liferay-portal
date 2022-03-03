@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.BaseCompanyIdUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.io.IOException;
@@ -30,6 +31,7 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Luis Ortiz
  */
 public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 
@@ -246,4 +248,28 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 
 	}
 
+
+	protected class CompanyIdNotNullTableUpdater extends TableUpdater {
+
+		public CompanyIdNotNullTableUpdater(
+			String tableName, String foreignTableName, String columnName) {
+			super(tableName, foreignTableName, columnName);
+		}
+
+		public CompanyIdNotNullTableUpdater(
+			String tableName, String columnName, String[][] foreignNamesArray) {
+			super(tableName, columnName, foreignNamesArray);
+		}
+
+		@Override
+		public void update(Connection connection)
+			throws Exception {
+
+			super.update(connection);
+
+			if(!hasColumnType(getTableName(), "companyId", "LONG NOT NULL")) {
+				alterColumnType(getTableName(), "companyId", "LONG NOT NULL");
+			}
+		}
+	}
 }

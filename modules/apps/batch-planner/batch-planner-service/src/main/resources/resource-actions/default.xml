@@ -20,6 +20,22 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
+		<model-name>com.liferay.batch.planner.model.BatchPlannerLog</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_batch_planner_web_internal_portlet_BatchPlannerPortlet</portlet-name>
+		</portlet-ref>
+		<permissions>
+			<supports>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>VIEW</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
 		<model-name>com.liferay.batch.planner.model.BatchPlannerPlan</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_batch_planner_web_internal_portlet_BatchPlannerPortlet</portlet-name>

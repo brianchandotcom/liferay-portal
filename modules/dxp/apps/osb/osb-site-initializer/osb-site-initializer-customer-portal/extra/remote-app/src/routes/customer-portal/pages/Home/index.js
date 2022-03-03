@@ -79,7 +79,8 @@ const Home = ({userAccount}) => {
 					accounts = dataAccounts?.accounts?.items;
 					accountKeysFilter = '';
 				}
-			} else if (userAccount?.accountBriefs?.length) {
+			}
+			else if (userAccount?.accountBriefs?.length) {
 				accounts = userAccount?.accountBriefs;
 				accountKeysFilter = getKoroneikiFilter(accounts);
 			}

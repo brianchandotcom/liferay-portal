@@ -31,6 +31,7 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.UserAccountResource;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
@@ -534,6 +536,66 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	}
 
 	@Override
+	protected void
+			testGetAccountAccountRolesByExternalReferenceCodePageWithSort(
+				EntityField.Type type,
+				UnsafeTriConsumer
+					<EntityField, AccountRole, AccountRole, Exception>
+						unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		String externalReferenceCode =
+			testGetAccountAccountRolesByExternalReferenceCodePage_getExternalReferenceCode();
+
+		AccountRole accountRole1 = randomAccountRole();
+		AccountRole accountRole2 = randomAccountRole();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, accountRole1, accountRole2);
+		}
+
+		accountRole1 =
+			testGetAccountAccountRolesByExternalReferenceCodePage_addAccountRole(
+				externalReferenceCode, accountRole1);
+
+		accountRole2 =
+			testGetAccountAccountRolesByExternalReferenceCodePage_addAccountRole(
+				externalReferenceCode, accountRole2);
+
+		String filterString = String.format(
+			"name in ('%s', '%s')", accountRole1.getName(),
+			accountRole2.getName());
+
+		for (EntityField entityField : entityFields) {
+			Page<AccountRole> ascPage =
+				accountRoleResource.
+					getAccountAccountRolesByExternalReferenceCodePage(
+						externalReferenceCode, null, filterString,
+						Pagination.of(1, 2), entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(accountRole1, accountRole2),
+				(List<AccountRole>)ascPage.getItems());
+
+			Page<AccountRole> descPage =
+				accountRoleResource.
+					getAccountAccountRolesByExternalReferenceCodePage(
+						externalReferenceCode, null, filterString,
+						Pagination.of(1, 2), entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(accountRole2, accountRole1),
+				(List<AccountRole>)descPage.getItems());
+		}
+	}
+
+	@Override
 	protected AccountRole testGetAccountAccountRolesPage_addAccountRole(
 			Long accountId, AccountRole accountRole)
 		throws Exception {
@@ -545,6 +607,59 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	@Override
 	protected Long testGetAccountAccountRolesPage_getAccountId() {
 		return _account.getId();
+	}
+
+	@Override
+	protected void testGetAccountAccountRolesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer<EntityField, AccountRole, AccountRole, Exception>
+				unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		Long accountId = testGetAccountAccountRolesPage_getAccountId();
+
+		AccountRole accountRole1 = randomAccountRole();
+		AccountRole accountRole2 = randomAccountRole();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, accountRole1, accountRole2);
+		}
+
+		accountRole1 = testGetAccountAccountRolesPage_addAccountRole(
+			accountId, accountRole1);
+
+		accountRole2 = testGetAccountAccountRolesPage_addAccountRole(
+			accountId, accountRole2);
+
+		String filterString = String.format(
+			"name in ('%s', '%s')", accountRole1.getName(),
+			accountRole2.getName());
+
+		for (EntityField entityField : entityFields) {
+			Page<AccountRole> ascPage =
+				accountRoleResource.getAccountAccountRolesPage(
+					accountId, null, filterString, Pagination.of(1, 2),
+					entityField.getName() + ":asc");
+
+			assertEquals(
+				Arrays.asList(accountRole1, accountRole2),
+				(List<AccountRole>)ascPage.getItems());
+
+			Page<AccountRole> descPage =
+				accountRoleResource.getAccountAccountRolesPage(
+					accountId, null, filterString, Pagination.of(1, 2),
+					entityField.getName() + ":desc");
+
+			assertEquals(
+				Arrays.asList(accountRole2, accountRole1),
+				(List<AccountRole>)descPage.getItems());
+		}
 	}
 
 	@Override

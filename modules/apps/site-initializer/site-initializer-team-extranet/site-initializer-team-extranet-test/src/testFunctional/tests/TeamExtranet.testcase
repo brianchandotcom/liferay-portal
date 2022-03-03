@@ -1356,4 +1356,59 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-144161. Verify the Search Bar on Team Extranet Pages"
+	@priority = "4"
+	test VerifySearchBarOnPages {
+		task ("Go to Team Extranet Site Pages and Assert the Search Bar presence") {
+			for (var pageName : list "Home,Team,Careers,Blog,Resources,Privacy Policy,Cookie Settings,Search,404") {
+				PagesAdmin.openPagesAdmin(siteURLKey = "${testSiteURL}");
+
+				PagesAdmin.gotoPageEllipsisMenuItem(
+					menuItem = "View",
+					pageName = "${pageName}");
+				
+				AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+			}
+		}
+	}
+
+	@description = "This is a test for LPS-144161. Can do a search in the Search bar"
+	@priority = "3"
+	test CanDoASearchInTeamExtranetSearchBar {
+		task ("Go to Team Extranet Site") {
+			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		}
+
+		task ("Search for Careers in Search Bar") {
+			SearchPortlets.searchEmbedded(searchTerm = "careers");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Careers",
+				searchAssetType = "Page");
+		}
+	}
+
+	@description = "This is a test for LPS-144161. Can do a search in the Search bar in Mobile Size"
+	@priority = "3"
+	test CanDoASearchInMobileSize {
+		task ("Go to Blog Page") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Blog",
+				siteName = "${testSiteName}");
+		}
+
+		task ("Preview the Page with Mobile Size") {
+			MobileDevice.previewPG(deviceType = "smartphone");
+		}
+
+		task ("Search for Careers in Search Bar") {
+			Click(locator1 = "NavBar#TOGGLE_NAVIGATION");	
+
+			SearchPortlets.searchEmbedded(searchTerm = "careers");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Careers",
+				searchAssetType = "Page");
+		}
+	}
 }

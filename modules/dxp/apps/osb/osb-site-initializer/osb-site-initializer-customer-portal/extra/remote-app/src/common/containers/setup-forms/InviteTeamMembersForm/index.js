@@ -29,7 +29,7 @@ import Layout from '../Layout';
 import TeamMemberInputs from './TeamMemberInputs';
 
 const MAXIMUM_INVITES_COUNT = 10;
-const INITIAL_INVITES_COUNT = 3;
+const INITIAL_INVITES_COUNT = 1;
 
 const SLA = {
 	gold: 'Gold',
@@ -182,8 +182,6 @@ const InviteTeamMembersPage = ({
 				);
 			}
 			setAvailableAdminsRoles(remainingAdmins);
-
-			return;
 		}
 	}, [values, project, maxRequestors, accountRoles]);
 

@@ -9,6 +9,7 @@
 	<path id="jspc.common.classpath">
 		<path refid="lib.pre.classpath" />
 		<pathelement path="docroot/WEB-INF/classes" />
+		<pathelement location="${ant.core.lib}" />
 		<pathelement location="${project.dir}/portal-impl/portal-impl.jar" />
 		<pathelement location="${project.dir}/portal-kernel/portal-kernel.jar" />
 		<pathelement location="${project.dir}/util-bridges/util-bridges.jar" />

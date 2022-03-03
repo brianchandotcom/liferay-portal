@@ -191,6 +191,35 @@ public class Layout implements Cloneable, Serializable {
 
 	protected ContentDisplay contentDisplay;
 
+	public HtmlTag getHtmlTag() {
+		return htmlTag;
+	}
+
+	public String getHtmlTagAsString() {
+		if (htmlTag == null) {
+			return null;
+		}
+
+		return htmlTag.toString();
+	}
+
+	public void setHtmlTag(HtmlTag htmlTag) {
+		this.htmlTag = htmlTag;
+	}
+
+	public void setHtmlTag(
+		UnsafeSupplier<HtmlTag, Exception> htmlTagUnsafeSupplier) {
+
+		try {
+			htmlTag = htmlTagUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected HtmlTag htmlTag;
+
 	public Justify getJustify() {
 		return justify;
 	}
@@ -646,6 +675,40 @@ public class Layout implements Cloneable, Serializable {
 		}
 
 		private ContentDisplay(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum HtmlTag {
+
+		ARTICLE("Article"), ASIDE("Aside"), DIV("Div"), FOOTER("Footer"),
+		HEADER("Header"), MAIN("Main"), NAV("Nav"), SECTION("Section");
+
+		public static HtmlTag create(String value) {
+			for (HtmlTag htmlTag : values()) {
+				if (Objects.equals(htmlTag.getValue(), value) ||
+					Objects.equals(htmlTag.name(), value)) {
+
+					return htmlTag;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private HtmlTag(String value) {
 			_value = value;
 		}
 

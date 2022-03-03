@@ -133,6 +133,20 @@ public class LayoutSerDes {
 			sb.append("\"");
 		}
 
+		if (layout.getHtmlTag() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"htmlTag\": ");
+
+			sb.append("\"");
+
+			sb.append(layout.getHtmlTag());
+
+			sb.append("\"");
+		}
+
 		if (layout.getJustify() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -336,6 +350,13 @@ public class LayoutSerDes {
 				"contentDisplay", String.valueOf(layout.getContentDisplay()));
 		}
 
+		if (layout.getHtmlTag() == null) {
+			map.put("htmlTag", null);
+		}
+		else {
+			map.put("htmlTag", String.valueOf(layout.getHtmlTag()));
+		}
+
 		if (layout.getJustify() == null) {
 			map.put("justify", null);
 		}
@@ -485,6 +506,12 @@ public class LayoutSerDes {
 					layout.setContentDisplay(
 						Layout.ContentDisplay.create(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "htmlTag")) {
+				if (jsonParserFieldValue != null) {
+					layout.setHtmlTag(
+						Layout.HtmlTag.create((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "justify")) {

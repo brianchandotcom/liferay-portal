@@ -31,16 +31,16 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content) {
+		String fileName, String absolutePath, String content) {
 
 		content = content.replaceAll("(\n\n)( *#+)( [^#\\s])", "$1$2\n$2$3");
 
 		content = content.replaceAll(
-				"(\n)( *#+)( [^#\\s].*\n)(?!\\2([ \n]|\\Z))", "$1$2$3$2\n");
+			"(\n)( *#+)( [^#\\s].*\n)(?!\\2([ \n]|\\Z))", "$1$2$3$2\n");
 
 		content = content.replaceAll(
-				"(\\A|(?<!\\\\)\n)( *[\\w.-]+)(( +=)|(= +))(.*)(\\Z|\n)",
-				"$1$2=$6$7");
+			"(\\A|(?<!\\\\)\n)( *[\\w.-]+)(( +=)|(= +))(.*)(\\Z|\n)",
+			"$1$2=$6$7");
 
 		content = content.replaceAll("(?m)^(.*,) +(\\\\)$", "$1$2");
 
@@ -49,31 +49,36 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			String match = matcher.group();
 
-			String replacement = _formatSQLClause(matcher.group(1), matcher.group(3), matcher);
+			String replacement = _formatSQLClause(
+				matcher.group(1), matcher.group(3), matcher);
 
 			return StringUtil.replaceFirst(
-					content, match, replacement, matcher.start());
+				content, match, replacement, matcher.start());
 		}
 
 		matcher = _sqlPattern4.matcher(content);
+
 		while (matcher.find()) {
 			String match = matcher.group();
+
 			String sqlClause = matcher.group(3);
 
-			sqlClause = translateOneDate(sqlClause);
-			sqlClause = parseSql(sqlClause, false);
+			sqlClause = _translateOneDate(sqlClause);
+			sqlClause = _parseSql(sqlClause, false);
 
-			String replacement = _formatSQLClause(matcher.group(1), sqlClause, matcher);
+			String replacement = _formatSQLClause(
+				matcher.group(1), sqlClause, matcher);
 
 			if (StringUtil.equals(match, replacement)) {
 				continue;
 			}
 
 			return StringUtil.replaceFirst(
-					content, match, replacement, matcher.start());
+				content, match, replacement, matcher.start());
 		}
 
 		matcher = _sqlPattern2.matcher(content);
+
 		while (matcher.find()) {
 			int lineNumber = getLineNumber(content, matcher.start());
 
@@ -82,7 +87,7 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 			}
 
 			String nextSQLClause = _getSQLClause(
-					SourceUtil.getLine(content, lineNumber + 1));
+				SourceUtil.getLine(content, lineNumber + 1));
 
 			if (nextSQLClause == null) {
 				continue;
@@ -90,18 +95,37 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 
 			String sqlClause = matcher.group(1);
 
-			if (removeQuOte(sqlClause).compareTo(removeQuOte(nextSQLClause)) > 0) {
+			String removeQuOteSql = _removeQuOte(sqlClause);
+
+			String removeQuOteNestLineSql = _removeQuOte(nextSQLClause);
+
+			if (removeQuOteSql.compareTo(removeQuOteNestLineSql) > 0) {
 				content = StringUtil.replaceFirst(
-						content, nextSQLClause, sqlClause,
-						getLineStartPos(content, lineNumber + 1));
+					content, nextSQLClause, sqlClause,
+					getLineStartPos(content, lineNumber + 1));
 
 				return StringUtil.replaceFirst(
-						content, sqlClause, nextSQLClause,
-						getLineStartPos(content, lineNumber));
+					content, sqlClause, nextSQLClause,
+					getLineStartPos(content, lineNumber));
 			}
 		}
 
 		return content;
+	}
+
+	private String _formatSQLClause(
+		String indent, String sqlClause, Matcher matcher) {
+
+		sqlClause = sqlClause.replaceAll(" AND (?=\\()", " AND \\\\\n");
+		sqlClause = sqlClause.replaceAll(" OR (?=\\()", " OR \\\\\n");
+		sqlClause = sqlClause.replaceAll("\\((?=\\()", "(\\\\\n");
+		sqlClause = sqlClause.replaceAll("\\)(?=\\))", ")\\\\\n");
+
+		String[] sqlClauses = sqlClause.split("\n");
+
+		return StringBundler.concat(
+			indent, matcher.group(2), "\\\n",
+			_formatSQLClause(indent + StringPool.FOUR_SPACES, sqlClauses));
 	}
 
 	private String _formatSQLClause(String indent, String[] sqlClauses) {
@@ -109,6 +133,7 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 
 		for (String sqlClause : sqlClauses) {
 			sqlClause = sqlClause.trim();
+
 			if (sqlClause.startsWith(")")) {
 				indent = indent.substring(4);
 			}
@@ -129,19 +154,6 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 		return sb.toString();
 	}
 
-	private String _formatSQLClause(String indent, String sqlClause, Matcher matcher) {
-		sqlClause = sqlClause.replaceAll(" AND (?=\\()", " AND \\\\\n");
-		sqlClause = sqlClause.replaceAll(" OR (?=\\()", " OR \\\\\n");
-		sqlClause = sqlClause.replaceAll("\\((?=\\()", "(\\\\\n");
-		sqlClause = sqlClause.replaceAll("\\)(?=\\))", ")\\\\\n");
-
-		String[] sqlClauses = sqlClause.split("\n");
-
-		return StringBundler.concat(
-				indent, matcher.group(2), "\\\n",
-				_formatSQLClause(indent + StringPool.FOUR_SPACES, sqlClauses));
-	}
-
 	private String _getSQLClause(String line) {
 		Matcher matcher = _sqlPattern2.matcher(line);
 
@@ -152,52 +164,61 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 		return null;
 	}
 
-	private String removeQuOte(String target) {
-		return target.replace(StringPool.QUOTE, StringPool.BLANK);
-	}
-
-	private String translateOneDate(String sqlClause) {
-		return sqlClause.replaceAll("\\\\\n *", StringPool.BLANK);
-	}
-
-	private String parseSql(String sqlClause, boolean dealFlag) {
+	private String _parseSql(String sqlClause, boolean dealFlag) {
 		Matcher matcher = _sqlPattern3.matcher(sqlClause);
+
 		while (matcher.find()) {
 			String operatorFrontExp = matcher.group(1);
 			String operatorAfterExp = matcher.group(4);
 
 			if (Validator.isNotNull(operatorFrontExp)) {
 				sqlClause = StringUtil.replaceFirst(
-						sqlClause, operatorFrontExp, parseSql(operatorFrontExp, true),
-						matcher.start(1));
-				return parseSql(sqlClause, false);
+					sqlClause, operatorFrontExp,
+					_parseSql(operatorFrontExp, true), matcher.start(1));
+
+				return _parseSql(sqlClause, false);
 			}
 
 			if (Validator.isNotNull(operatorAfterExp)) {
 				sqlClause = StringUtil.replaceFirst(
-						sqlClause, operatorAfterExp, parseSql(operatorAfterExp, true),
-						matcher.start(4));
-				return parseSql(sqlClause, false);
+					sqlClause, operatorAfterExp,
+					_parseSql(operatorAfterExp, true), matcher.start(4));
+
+				return _parseSql(sqlClause, false);
 			}
 
-			if (Validator.isNull(operatorFrontExp) && Validator.isNull(operatorAfterExp) && dealFlag) {
-				return StringPool.OPEN_PARENTHESIS + sqlClause + StringPool.CLOSE_PARENTHESIS;
+			if (Validator.isNull(operatorFrontExp) &&
+				Validator.isNull(operatorAfterExp) && dealFlag) {
+
+				return StringPool.OPEN_PARENTHESIS + sqlClause +
+					StringPool.CLOSE_PARENTHESIS;
 			}
 		}
 
 		if (dealFlag) {
-			return StringPool.OPEN_PARENTHESIS + sqlClause + StringPool.CLOSE_PARENTHESIS;
+			return StringPool.OPEN_PARENTHESIS + sqlClause +
+				StringPool.CLOSE_PARENTHESIS;
 		}
 
 		return sqlClause;
 	}
 
+	private String _removeQuOte(String target) {
+		return StringUtil.removeSubstring(target, StringPool.QUOTE);
+	}
+
+	private String _translateOneDate(String sqlClause) {
+		return sqlClause.replaceAll("\\\\\n *", StringPool.BLANK);
+	}
+
 	private static final Pattern _sqlPattern1 = Pattern.compile(
-			"(?<=\n)( +)(test.batch.run.property.query.+]=)([^\\\\].+)");
+		"(?<=\n)( +)(test.batch.run.property.query.+]=)([^\\\\].+)");
 	private static final Pattern _sqlPattern2 = Pattern.compile(
-			"\\(([^(]* ([!=]=|~) [^)]+)\\)( (AND|OR) )?(\\\\)?");
+		"\\(([^(]* ([!=]=|~) [^)]+)\\)( (AND|OR) )?(\\\\)?");
 	private static final Pattern _sqlPattern3 = Pattern.compile(
-			"([^\\(\\)]+)?( (AND|OR) )([^\\(\\)\\\\]+)?");
+		"([^\\(\\)]+)?( (AND|OR) )([^\\(\\)\\\\]+)?");
 	private static final Pattern _sqlPattern4 = Pattern.compile(
-			"(?<=\n)( +)(test\\.batch\\.run\\.property\\.query.+]=)\\\\\n((.+\\\\\n)*.+)");
+		"(?<=\n)( +)(test\\.batch\\.run\\.property\\.query.+]=)\\\\\n" +
+			"((.+\\\\\n)*.+)");
+
 }

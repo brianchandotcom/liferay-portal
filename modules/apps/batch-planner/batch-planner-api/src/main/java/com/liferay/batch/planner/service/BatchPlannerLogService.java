@@ -52,21 +52,8 @@ public interface BatchPlannerLogService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.batch.planner.service.impl.BatchPlannerLogServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the batch planner log remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link BatchPlannerLogServiceUtil} if injection and service tracking are not available.
 	 */
-	public BatchPlannerLog addBatchPlannerLog(
-			long batchPlannerPlanId, String batchEngineExportERC,
-			String batchEngineImportERC, String dispatchTriggerERC, int size,
-			int status)
-		throws PortalException;
-
-	public BatchPlannerLog deleteBatchPlannerLog(long batchPlannerLogId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BatchPlannerLog getBatchPlannerLog(long batchPlannerLogId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getBatchPlannerLogsCount(long batchPlannerPlanId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

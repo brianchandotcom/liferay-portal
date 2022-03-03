@@ -272,6 +272,73 @@ public class BatchPlannerLogUtil {
 	}
 
 	/**
+	 * Returns all the batch planner logs that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching batch planner logs that the user has permission to view
+	 */
+	public static List<BatchPlannerLog> filterFindByCompanyId(long companyId) {
+		return getPersistence().filterFindByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns a range of all the batch planner logs that the user has permission to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchPlannerLogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of batch planner logs
+	 * @param end the upper bound of the range of batch planner logs (not inclusive)
+	 * @return the range of matching batch planner logs that the user has permission to view
+	 */
+	public static List<BatchPlannerLog> filterFindByCompanyId(
+		long companyId, int start, int end) {
+
+		return getPersistence().filterFindByCompanyId(companyId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the batch planner logs that the user has permissions to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>BatchPlannerLogModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of batch planner logs
+	 * @param end the upper bound of the range of batch planner logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching batch planner logs that the user has permission to view
+	 */
+	public static List<BatchPlannerLog> filterFindByCompanyId(
+		long companyId, int start, int end,
+		OrderByComparator<BatchPlannerLog> orderByComparator) {
+
+		return getPersistence().filterFindByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the batch planner logs before and after the current batch planner log in the ordered set of batch planner logs that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param batchPlannerLogId the primary key of the current batch planner log
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next batch planner log
+	 * @throws NoSuchLogException if a batch planner log with the primary key could not be found
+	 */
+	public static BatchPlannerLog[] filterFindByCompanyId_PrevAndNext(
+			long batchPlannerLogId, long companyId,
+			OrderByComparator<BatchPlannerLog> orderByComparator)
+		throws com.liferay.batch.planner.exception.NoSuchLogException {
+
+		return getPersistence().filterFindByCompanyId_PrevAndNext(
+			batchPlannerLogId, companyId, orderByComparator);
+	}
+
+	/**
 	 * Removes all the batch planner logs where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -288,6 +355,16 @@ public class BatchPlannerLogUtil {
 	 */
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
+	 * Returns the number of batch planner logs that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching batch planner logs that the user has permission to view
+	 */
+	public static int filterCountByCompanyId(long companyId) {
+		return getPersistence().filterCountByCompanyId(companyId);
 	}
 
 	/**

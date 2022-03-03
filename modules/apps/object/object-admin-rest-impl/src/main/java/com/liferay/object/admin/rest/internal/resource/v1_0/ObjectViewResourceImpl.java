@@ -200,7 +200,7 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 		serviceBuilderObjectViewSortColumn.setPriority(
 			objectViewSortColumn.getPriority());
 		serviceBuilderObjectViewSortColumn.setSortOrder(
-			objectViewSortColumn.getSortOrder());
+			objectViewSortColumn.getSortOrderAsString());
 
 		return serviceBuilderObjectViewSortColumn;
 	}

@@ -100,7 +100,8 @@ public class ObjectViewUtil {
 				objectFieldName =
 					serviceBuilderObjectViewSortColumn.getObjectFieldName();
 				priority = serviceBuilderObjectViewSortColumn.getPriority();
-				sortOrder = serviceBuilderObjectViewSortColumn.getSortOrder();
+				sortOrder = ObjectViewSortColumn.SortOrder.create(
+					serviceBuilderObjectViewSortColumn.getSortOrder());
 			}
 		};
 	}

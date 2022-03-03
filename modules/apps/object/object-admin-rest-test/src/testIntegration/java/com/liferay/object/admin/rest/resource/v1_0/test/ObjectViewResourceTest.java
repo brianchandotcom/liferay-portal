@@ -151,7 +151,7 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 			{
 				objectFieldName = _objectField.getName();
 				priority = RandomTestUtil.randomInt();
-				sortOrder = "asc";
+				sortOrder = SortOrder.ASC;
 			}
 		};
 	}

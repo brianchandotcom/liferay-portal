@@ -76,6 +76,43 @@ definition {
 		}
 	}
 
+	@description = "LPS-147946. Verifies the list will filter the results and the language will be deleted from the Manage Translation list."
+	@priority = "3"
+	test SearchAndDeleteLanguageOnManageTranslationModal {
+		task ("Select translation language menu") {
+			TranslationManager.openSelectTranslationLanguageDropdownMenu(
+				key_currentLocale = "en-us",
+				key_title = "Admin");
+		}
+
+		task ("Click Manage Translations and type text in search field") {
+			Click(locator1 = "TranslationManager#MANAGE_TRANSLATIONS");
+
+			Type.type(
+				locator1 = "TranslationManager#MANAGE_TRANSLATIONS_DIALOG_SEARCH_FIELD",
+				value1 = "English");
+		}
+
+		task ("View the list will filter the results using Code and Language fields") {
+			AssertElementPresent(
+				key_text = "Code",
+				locator1 = "TranslationManager#MANAGE_TRANSLATIONS_DIALOG_SEARCH_RESULTS_TITLE");
+
+			AssertElementPresent(
+				key_text = "Language",
+				locator1 = "TranslationManager#MANAGE_TRANSLATIONS_DIALOG_SEARCH_RESULTS_TITLE");
+
+			Click(locator1 = "Modal#CLOSE_BUTTON");
+		}
+
+		task ("Delete language in Manage Translations dialog") {
+			TranslationManager.deleteLanguageFromDialogList(
+				key_currentLocale = "en-us",
+				key_locale = "ca-es",
+				key_title = "Admin");
+		}
+	}
+
 	@description = "LPS-147612. Verifies translation results displayed by different language."
 	@priority = "3"
 	test TranslationResultsDisplayedByDifferentLanguage {

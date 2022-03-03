@@ -19,6 +19,8 @@ import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.display.request.attributes.contributor.InfoDisplayRequestAttributesContributor;
 import com.liferay.info.item.InfoItemDetails;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
 import com.liferay.portal.kernel.portlet.LiferayRenderRequest;
@@ -95,7 +97,7 @@ public class BasicInfoDisplayRequestAttributesContributor
 						themeDisplay.getResponse(), liferayRenderRequest));
 			}
 			catch (Exception exception) {
-				exception.printStackTrace();
+				_log.error(exception);
 			}
 		}
 	}
@@ -115,6 +117,9 @@ public class BasicInfoDisplayRequestAttributesContributor
 			getAssetRendererFactoryByClassNameId(
 				_portal.getClassNameId(infoItemDetails.getClassName()));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BasicInfoDisplayRequestAttributesContributor.class);
 
 	@Reference
 	private Portal _portal;

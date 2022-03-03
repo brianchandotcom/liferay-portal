@@ -48,7 +48,7 @@ CommercePaymentMethodRegistry commercePaymentMethodRegistry = (CommercePaymentMe
 			</div>
 
 			<c:choose>
-				<c:when test="<%= StringPool.BLANK.equals(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) %>">
+				<c:when test="<%= Validator.isNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) %>">
 					<span style="margin-bottom: 1rem;"><liferay-ui:message key="use-priority-settings" /></span>
 				</c:when>
 				<c:otherwise>
@@ -67,12 +67,12 @@ CommercePaymentMethodRegistry commercePaymentMethodRegistry = (CommercePaymentMe
 					cssClass="modify-link"
 					label="<%= true %>"
 					linkCssClass="btn btn-secondary btn-sm"
-					message='<%= StringPool.BLANK.equals(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) ? "set-default-payment-method" : "change" %>'
+					message='<%= Validator.isNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) ? "set-default-payment-method" : "change" %>'
 					method="get"
 					url="javascript:;"
 				/>
 
-				<c:if test="<%= !StringPool.BLANK.equals(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) %>">
+				<c:if test="<%= Validator.isNotNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) %>">
 					<portlet:actionURL name="/commerce_channel/edit_account_entry_default_commerce_payment_method" var="removeDefaultCommercePaymentMethodURL">
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="accountEntryId" value="<%= String.valueOf(commerceAccountEntryDisplay.getAccountEntryId()) %>" />

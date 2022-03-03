@@ -17,10 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceAccountEntryDisplay commerceAccountEntryDisplay = CommerceAccountEntryDisplay.of(ParamUtil.getLong(request, "accountEntryId"));
-
-String commercePaymentMethodKey = commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey();
-
 CommercePaymentMethodRegistry commercePaymentMethodRegistry = (CommercePaymentMethodRegistry)request.getAttribute("CommercePaymentMethodRegistry");
 
 SearchContainer<CommercePaymentMethodDisplay> accountEntryCommercePaymentMethodDisplaySearchContainer = AccountEntryCommercePaymentMethodDisplaySearchContainerFactory.create(liferayPortletRequest, liferayPortletResponse, commercePaymentMethodRegistry);
@@ -39,11 +35,20 @@ accountEntryCommercePaymentMethodDisplaySearchContainer.setRowChecker(null);
 			keyProperty="commercePaymentMethodKey"
 			modelVar="commercePaymentMethodDisplay"
 		>
+
+			<%
+			CommerceAccountEntryDisplay commerceAccountEntryDisplay = CommerceAccountEntryDisplay.of(ParamUtil.getLong(request, "accountEntryId"));
+			%>
+
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-expand-small table-cell-minw-150"
 				name="name"
 				value="<%= commercePaymentMethodDisplay.getName() %>"
 			/>
+
+			<%
+			String commercePaymentMethodKey = commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey();
+			%>
 
 			<liferay-ui:search-container-column-text>
 				<clay:radio

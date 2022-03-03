@@ -163,8 +163,8 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 							return null;
 						}
 
-						long segmentsExperienceId =
-							SegmentsExperienceConstants.ID_DEFAULT;
+						String segmentsExperienceKey =
+							SegmentsExperienceConstants.KEY_DEFAULT;
 
 						SegmentsExperience segmentsExperience =
 							(SegmentsExperience)
@@ -172,13 +172,13 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 									"segmentsExperience");
 
 						if (segmentsExperience != null) {
-							segmentsExperienceId =
-								segmentsExperience.getSegmentsExperienceId();
+							segmentsExperienceKey =
+								segmentsExperience.getSegmentsExperienceKey();
 						}
 
 						LayoutStructure layoutStructure = LayoutStructure.of(
 							layoutPageTemplateStructure.getData(
-								segmentsExperienceId));
+								segmentsExperienceKey));
 
 						return _pageDefinitionDTOConverter.toDTO(
 							dtoConverterContext, layoutStructure);

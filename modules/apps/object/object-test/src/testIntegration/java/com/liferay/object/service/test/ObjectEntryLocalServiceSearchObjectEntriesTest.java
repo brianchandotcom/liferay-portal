@@ -48,6 +48,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -405,6 +406,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 		_assertKeywords("search from [ 44 TO 46 ]", 0);
 	}
 
+	@Ignore
 	@Test
 	public void testSearchByTitleValue() throws Exception {
 		_addObjectDefinition(

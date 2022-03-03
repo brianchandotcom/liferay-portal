@@ -487,31 +487,6 @@ definition {
 			suborgType = "Organization");
 	}
 
-	@description = "Resolved bug automation for LPS-140712. This test asserts that a success message displays when a user is added to an organization"
-	@priority = "3"
-	test AddUserDisplaysSuccessMessage {
-		task ("Given an organization") {
-			JSONOrganization.addOrganization(
-				organizationName = "Organization Name",
-				organizationSite = "true");
-
-			Organization.openOrganizationsAdmin();
-		}
-
-		task ("When a user is added to that organization through the UI") {
-			Organization.addUser(
-				organizationName = "Organization Name",
-				userEmailAddress = "userea@liferay.com",
-				userFirstName = "userfn",
-				userLastName = "userln",
-				userScreenName = "usersn");
-		}
-
-		task ("Then a success message shoud display") {
-			Alert.viewSuccessMessageText(successMessage = "The user was created successfully. You can now add additional information about the user.");
-		}
-	}
-
 	@priority = "5"
 	test AssignImportedUserGroupToSuborganizationSites {
 		property liferay.training.dependency.jars = "01-liferay-fundamentals/modules/02-manage-user-accounts/exercise-src/com.liferay.training.contentloader.jar";
@@ -837,6 +812,37 @@ definition {
 		AssetCategorization.viewCategory(categoryName = "Category Name 1");
 
 		AssetCategorization.viewVocabulary(vocabularyName = "Vocabulary Name 1");
+	}
+
+	@description = "Resolved bug automation for LPS-140712. This test asserts that a user can be added to an organization through the UI and displays a success message"
+	@priority = "3"
+	test CanAddOrganizationUser {
+		task ("Given an organization") {
+			JSONOrganization.addOrganization(
+				organizationName = "Organization Name",
+				organizationSite = "true");
+		}
+
+		task ("When a user is added to that organization through the UI") {
+			Organization.openOrganizationsAdmin();
+
+			Organization.addUser(
+				organizationName = "Organization Name",
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("Then a success message should display and the user should be listed under the organization") {
+			Alert.viewSuccessMessageText(successMessage = "The user was created successfully. You can now add additional information about the user.");
+
+			LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+
+			LexiconEntry.viewEntryContent(
+				rowAny = "userfn userln",
+				rowEntry = "User");
+		}
 	}
 
 	@description = "This test asserts that an organization cannot be deleted if there is a suborganization associated with it."

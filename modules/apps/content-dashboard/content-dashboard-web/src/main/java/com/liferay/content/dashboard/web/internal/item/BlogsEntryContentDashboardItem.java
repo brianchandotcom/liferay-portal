@@ -20,7 +20,6 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.action.exception.ContentDashboardItemActionException;
 import com.liferay.content.dashboard.item.action.provider.ContentDashboardItemActionProvider;
-import com.liferay.content.dashboard.web.internal.info.item.provider.util.InfoItemFieldValuesProviderUtil;
 import com.liferay.content.dashboard.web.internal.item.action.ContentDashboardItemActionProviderTracker;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
@@ -262,8 +261,7 @@ public class BlogsEntryContentDashboardItem
 
 	@Override
 	public String getDescription(Locale locale) {
-		return InfoItemFieldValuesProviderUtil.getStringValue(
-			_blogsEntry, _infoItemFieldValuesProvider, "description");
+		return _blogsEntry.getSubtitle();
 	}
 
 	@Override

@@ -185,7 +185,6 @@
 	<classpathentry kind="lib" path="lib/portal/log4j-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/log4j-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/mchange-commons-java.jar"/>
-	<classpathentry kind="lib" path="lib/portal/metadata-extractor.jar"/>
 	<classpathentry kind="lib" path="lib/portal/mimepull.jar"/>
 	<classpathentry kind="lib" path="lib/portal/mp4parser.jar"/>
 	<classpathentry kind="lib" path="lib/portal/netcdf.jar"/>
@@ -229,7 +228,6 @@
 	<classpathentry kind="lib" path="lib/portal/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xml-apis.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xmlsec.jar"/>
-	<classpathentry kind="lib" path="lib/portal/xmpcore.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xz.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -9,25 +9,17 @@
  * distribution rights of the Software.
  */
 
-import ClayForm from '@clayui/form';
+import {ClayInput} from '@clayui/form';
+import {Input} from '../../../../common/components';
 
-// import {FieldArray} from 'formik';
-
-import AnalyticsCloudInputs from '../AnalyticsCloudInputs';
-
-const AnalyticsCloudForm = () => {
+const AnalyticsCloudInputs = () => {
 	return (
-		<>
-			<p className="text-neutral-10 text-paragraph">
-				Allowed Email Domains
-			</p>
-			<ClayForm>
-				<ClayForm.Group>
-					<AnalyticsCloudInputs />
-				</ClayForm.Group>
-			</ClayForm>
-		</>
+		<ClayInput.Group>
+			<ClayInput.GroupItem>
+				<Input label="email" type="email" />
+			</ClayInput.GroupItem>
+		</ClayInput.Group>
 	);
 };
 
-export default AnalyticsCloudForm;
+export default AnalyticsCloudInputs;

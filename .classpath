@@ -75,6 +75,7 @@
 	<classpathentry kind="lib" path="lib/development/jasper.jar"/>
 	<classpathentry kind="lib" path="lib/development/jaxb-api.jar"/>
 	<classpathentry kind="lib" path="lib/development/jbi_rt.jar"/>
+	<classpathentry kind="lib" path="lib/development/jhighlight.jar"/>
 	<classpathentry kind="lib" path="lib/development/jndi.jar"/>
 	<classpathentry kind="lib" path="lib/development/jsch.jar"/>
 	<classpathentry kind="lib" path="lib/development/jserrorcollector.jar"/>
@@ -176,7 +177,6 @@
 	<classpathentry kind="lib" path="lib/portal/jempbox.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jericho-html.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jersey-common.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jhighlight.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jna.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jodd-json.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jodd-proxetta.jar"/>

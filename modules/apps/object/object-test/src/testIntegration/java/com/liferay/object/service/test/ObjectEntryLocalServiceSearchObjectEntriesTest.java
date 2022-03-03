@@ -48,7 +48,6 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -406,7 +405,6 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 		_assertKeywords("search from [ 44 TO 46 ]", 0);
 	}
 
-	@Ignore
 	@Test
 	public void testSearchByTitleValue() throws Exception {
 		_addObjectDefinition(
@@ -546,9 +544,9 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 	private long _getTitleObjectFieldId() throws Exception {
 		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), "Text", "String", false,
-			false, null, LocalizedMapUtil.getLocalizedMap("Beta"), "beta",
-			false, Collections.emptyList());
+			_objectDefinition.getObjectDefinitionId(), "Text", "String", true,
+			true, null, LocalizedMapUtil.getLocalizedMap("Beta"), "beta", false,
+			Collections.emptyList());
 
 		return objectField.getObjectFieldId();
 	}

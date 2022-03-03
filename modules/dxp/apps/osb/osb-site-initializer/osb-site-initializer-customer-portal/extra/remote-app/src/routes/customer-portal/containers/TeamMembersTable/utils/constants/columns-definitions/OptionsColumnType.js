@@ -18,7 +18,7 @@ const OptionsColumnType = () => {
 			customDropDownButton={
 				<ButtonWithIcon displayType="null" small symbol="ellipsis-v" />
 			}
-			items={[{label: 'Options'}]}
+			items={[{label: 'Edit'}, {label: 'Remove'}]}
 			menuElementAttrs={{
 				className: 'p-0',
 			}}

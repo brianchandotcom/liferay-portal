@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
+
 export const COLUMNS = [
 	{
 		accessor: 'name',
@@ -37,7 +39,17 @@ export const COLUMNS = [
 		bodyClass: 'border-0',
 
 		header: {
-			name: 'Support Seat',
+			name: (
+				<div>
+					<p className="m-0">
+						Support Seat
+						<ClayIcon
+							className="cp-team-members-support-seat-icon ml-2"
+							symbol="info-circle"
+						/>
+					</p>
+				</div>
+			),
 			noWrap: true,
 			styles:
 				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-smaller',

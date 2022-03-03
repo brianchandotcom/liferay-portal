@@ -9,30 +9,97 @@
  * distribution rights of the Software.
  */
 
+import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
-import {useState} from 'react';
+import classNames from 'classnames';
+import {useEffect, useMemo, useState} from 'react';
 import {Button} from '../../../../../../common/components';
+import {Liferay} from '../../../../../../common/services/liferay';
+import {ROLE_TYPES} from '../../../../../../common/utils/constants';
 import InvitesModal from '../InvitesModal';
 
-const TeamMembersTableHeader = ({project}) => {
+const TeamMembersTableHeader = ({project, userAccounts}) => {
 	const [visible, setVisible] = useState(false);
+	const [administratorsAvailable, setAdministratorsAvailable] = useState();
 	const modalProps = useModal({
 		onClose: () => setVisible(false),
 	});
 
-	return (
-		<div className="align-items-center bg-neutral-1 d-flex mb-2 px-2 py-3 rounded">
-			<div className="align-items-center d-flex ml-auto px-1">
-				<p className="mr-3 my-0">Support seats</p>
+	useEffect(() => {
+		const currentAdministrators = userAccounts?.filter((userAccount) =>
+			userAccount?.roles?.some(
+				(role) =>
+					role === ROLE_TYPES.admin.key ||
+					role === ROLE_TYPES.requestor.key
+			)
+		)?.length;
 
-				<Button
-					className="btn-outline-primary invite-button px-3 py-2"
-					onClick={() => setVisible(true)}
-					prependIcon="user-plus"
-					prependIconClassName="mr-2"
-				>
-					Invite
-				</Button>
+		setAdministratorsAvailable(
+			project.maxRequestors - currentAdministrators
+		);
+	}, [project.maxRequestors, userAccounts]);
+
+	const hasAdminAccess = useMemo(() => {
+		const currentUser = userAccounts?.find(
+			({id}) => id === Number(Liferay.ThemeDisplay.getUserId())
+		);
+
+		if (currentUser) {
+			const hasAdminRoles = currentUser?.roles?.some(
+				(role) =>
+					role === ROLE_TYPES.admin.key ||
+					role === ROLE_TYPES.requestor.key
+			);
+
+			return hasAdminRoles;
+		}
+	}, [userAccounts]);
+
+	return (
+		<div
+			className={classNames(
+				'align-items-center bg-neutral-1 d-flex px-2 rounded mb-2',
+				{
+					'py-3': hasAdminAccess,
+					'py-4': !hasAdminAccess,
+				}
+			)}
+		>
+			<div className="align-items-center d-flex ml-auto">
+				{project.maxRequestors && (
+					<>
+						<ClayIcon
+							className="cp-team-members-support-seat-icon mr-2"
+							symbol="info-circle"
+						/>
+
+						<p className="font-weight-bold m-0">
+							Support seats: &nbsp;
+						</p>
+
+						<p
+							className={classNames(
+								'font-weight-semi-bold m-0 text-neutral-7',
+								{
+									'mr-4': !hasAdminAccess,
+								}
+							)}
+						>
+							{`${administratorsAvailable} of ${project.maxRequestors} available`}
+						</p>
+					</>
+				)}
+
+				{hasAdminAccess && (
+					<Button
+						className="btn-outline-primary invite-button ml-3 mr-1 px-3 py-2"
+						onClick={() => setVisible(true)}
+						prependIcon="user-plus"
+						prependIconClassName="mr-2"
+					>
+						Invite
+					</Button>
+				)}
 			</div>
 
 			{visible && <InvitesModal {...modalProps} project={project} />}

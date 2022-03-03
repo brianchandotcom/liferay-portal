@@ -68,7 +68,10 @@ const TeamMembersTable = ({project}) => {
 
 	return (
 		<div className="pt-2">
-			<TeamMembersTableHeader project={project} />
+			<TeamMembersTableHeader
+				project={project}
+				userAccounts={userAccounts}
+			/>
 
 			<Table
 				className="border-0 cp-team-members-table"

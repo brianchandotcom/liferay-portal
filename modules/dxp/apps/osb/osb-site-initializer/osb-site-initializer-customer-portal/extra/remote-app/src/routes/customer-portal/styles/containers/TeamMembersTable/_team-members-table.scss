@@ -9,10 +9,6 @@
 		min-width: auto !important;
 	}
 
-	.cp-team-members-support-seat-icon {
-		color: var(--color-action-primary-active);
-	}
-
 	tbody {
 		tr:first-child {
 			td {
@@ -20,4 +16,8 @@
 			}
 		}
 	}
+}
+
+.cp-team-members-support-seat-icon {
+	color: var(--color-action-primary-active);
 }

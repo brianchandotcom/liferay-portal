@@ -315,6 +315,54 @@ definition {
 			contentValueInPublication = "网页内容");
 	}
 
+	@description = "Login after resetting password when last in Publication."
+	@priority = "4"
+	test CanResetPasswordWhenLastInPublication {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		PublicationsNavigator.openPublicationsAdmin();
+
+		Publications.inviteUsers(
+			publicationName = "Publication Name",
+			publicationRole = "Editor",
+			userInvite = "userea@liferay.com",
+			userMissingPublicationsRole = "true");
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Users and Organizations");
+
+		User.impersonateCP(
+			siteName = "${siteName}",
+			userScreenName = "usersn");
+
+		Publications.selectPublication(publicationName = "Publication Name");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		AssertTextEquals(
+			locator1 = "Publications#PUBLICATIONS_INDICATOR_BUTTON",
+			value1 = "Publication Name");
+	}
+
 	@priority = "4"
 	test DiscardSubsetsofChangesInPublication {
 		JSONPublications.addPublication(publicationName = "Publication Name");

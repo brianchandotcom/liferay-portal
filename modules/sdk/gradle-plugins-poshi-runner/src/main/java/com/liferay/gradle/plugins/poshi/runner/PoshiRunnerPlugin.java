@@ -828,8 +828,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 				put("95", "95.0.4638.17");
 				put("96", "96.0.4664.45");
 				put("97", "97.0.4692.71");
-				put("98", "98.0.4758.80");
-				put("99", "99.0.4844.17");
+				put("98", "98.0.4758.102");
+				put("99", "99.0.4844.51");
 			}
 		};
 	private static final Pattern _chromeVersionPattern = Pattern.compile(

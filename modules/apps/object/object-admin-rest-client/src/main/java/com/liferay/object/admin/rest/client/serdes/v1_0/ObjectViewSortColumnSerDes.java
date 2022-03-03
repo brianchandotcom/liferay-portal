@@ -98,7 +98,7 @@ public class ObjectViewSortColumnSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(objectViewSortColumn.getSortOrder()));
+			sb.append(objectViewSortColumn.getSortOrder());
 
 			sb.append("\"");
 		}
@@ -199,7 +199,8 @@ public class ObjectViewSortColumnSerDes {
 			else if (Objects.equals(jsonParserFieldName, "sortOrder")) {
 				if (jsonParserFieldValue != null) {
 					objectViewSortColumn.setSortOrder(
-						(String)jsonParserFieldValue);
+						ObjectViewSortColumn.SortOrder.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

@@ -95,16 +95,24 @@ public class ObjectViewSortColumn implements Cloneable, Serializable {
 
 	protected Integer priority;
 
-	public String getSortOrder() {
+	public SortOrder getSortOrder() {
 		return sortOrder;
 	}
 
-	public void setSortOrder(String sortOrder) {
+	public String getSortOrderAsString() {
+		if (sortOrder == null) {
+			return null;
+		}
+
+		return sortOrder.toString();
+	}
+
+	public void setSortOrder(SortOrder sortOrder) {
 		this.sortOrder = sortOrder;
 	}
 
 	public void setSortOrder(
-		UnsafeSupplier<String, Exception> sortOrderUnsafeSupplier) {
+		UnsafeSupplier<SortOrder, Exception> sortOrderUnsafeSupplier) {
 
 		try {
 			sortOrder = sortOrderUnsafeSupplier.get();
@@ -114,7 +122,7 @@ public class ObjectViewSortColumn implements Cloneable, Serializable {
 		}
 	}
 
-	protected String sortOrder;
+	protected SortOrder sortOrder;
 
 	@Override
 	public ObjectViewSortColumn clone() throws CloneNotSupportedException {
@@ -146,6 +154,39 @@ public class ObjectViewSortColumn implements Cloneable, Serializable {
 
 	public String toString() {
 		return ObjectViewSortColumnSerDes.toJSON(this);
+	}
+
+	public static enum SortOrder {
+
+		ASC("asc"), DESC("desc");
+
+		public static SortOrder create(String value) {
+			for (SortOrder sortOrder : values()) {
+				if (Objects.equals(sortOrder.getValue(), value) ||
+					Objects.equals(sortOrder.name(), value)) {
+
+					return sortOrder;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private SortOrder(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

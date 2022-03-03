@@ -14,9 +14,11 @@
 
 package com.liferay.object.admin.rest.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -35,6 +37,8 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.annotation.Generated;
+
+import javax.validation.Valid;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -140,17 +144,27 @@ public class ObjectViewSortColumn implements Serializable {
 	protected Integer priority;
 
 	@Schema
-	public String getSortOrder() {
+	@Valid
+	public SortOrder getSortOrder() {
 		return sortOrder;
 	}
 
-	public void setSortOrder(String sortOrder) {
+	@JsonIgnore
+	public String getSortOrderAsString() {
+		if (sortOrder == null) {
+			return null;
+		}
+
+		return sortOrder.toString();
+	}
+
+	public void setSortOrder(SortOrder sortOrder) {
 		this.sortOrder = sortOrder;
 	}
 
 	@JsonIgnore
 	public void setSortOrder(
-		UnsafeSupplier<String, Exception> sortOrderUnsafeSupplier) {
+		UnsafeSupplier<SortOrder, Exception> sortOrderUnsafeSupplier) {
 
 		try {
 			sortOrder = sortOrderUnsafeSupplier.get();
@@ -165,7 +179,7 @@ public class ObjectViewSortColumn implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String sortOrder;
+	protected SortOrder sortOrder;
 
 	@Override
 	public boolean equals(Object object) {
@@ -238,7 +252,7 @@ public class ObjectViewSortColumn implements Serializable {
 
 			sb.append("\"");
 
-			sb.append(_escape(sortOrder));
+			sb.append(sortOrder);
 
 			sb.append("\"");
 		}
@@ -254,6 +268,44 @@ public class ObjectViewSortColumn implements Serializable {
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("SortOrder")
+	public static enum SortOrder {
+
+		ASC("asc"), DESC("desc");
+
+		@JsonCreator
+		public static SortOrder create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (SortOrder sortOrder : values()) {
+				if (Objects.equals(sortOrder.getValue(), value)) {
+					return sortOrder;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private SortOrder(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

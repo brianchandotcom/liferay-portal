@@ -180,6 +180,11 @@
 		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_portlet']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_EMPTY_LABEL_IN_DATE_ENTRY</td>
+		<td>//input[contains(@placeholder,'__/__/____')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

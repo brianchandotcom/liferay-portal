@@ -23,13 +23,40 @@ definition {
 	}
 
 	@description = "LPS-147658 - Verify it is possible to submit an empty value for a Date field and it will be correctly displayed on the Layout"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDisplayEmptyDateValue {
 		property portal.acceptance = "true";
 
-		// TODO LPS-147870 CanDisplayEmptyDateValue pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147870",
+			objectName = "CustomObject147870",
+			pluralLabelName = "Custom Objects 147870");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Date",
+			fieldLabelName = "Date",
+			fieldName = "customObjectField",
+			fieldType = "Date",
+			isRequired = "false",
+			objectName = "CustomObject147870");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject147870");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject147870");
+
+		LexiconEntry.gotoAdd();
+
+		Button.clickSave();
+
+		WaitForSPARefresh();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject147870");
+
+		ObjectPortlet.viewEntryDetails(entry = "");
+
+		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Date");
+
+		ObjectPortlet.viewEmptyLabelInDateEntry(entryValue = "__/__/____");
 	}
 
 	@description = "LPS-142659 - Verify it is possible to view a Clob entry and label on layout"

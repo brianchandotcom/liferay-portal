@@ -47,12 +47,14 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 
 		_delimiterRegex = _getDelimiterRegex(_enclosingCharacter);
 
+		_unsyncBufferedReader = new UnsyncBufferedReader(
+			new InputStreamReader(_inputStream));
+
 		_fieldNames = _getFieldNames(
 			Boolean.valueOf(
 				(String)parameters.getOrDefault(
-					"containsHeaders", StringPool.TRUE)));
-		_unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(_inputStream));
+					"containsHeaders", StringPool.TRUE)),
+			_delimiter, _unsyncBufferedReader);
 	}
 
 	@Override
@@ -130,12 +132,13 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 		return enclosingCharacter;
 	}
 
-	private String[] _getFieldNames(boolean containsHeaders)
+	private String[] _getFieldNames(
+			boolean containsHeaders, String delimiter,
+			UnsyncBufferedReader unsyncBufferedReader)
 		throws IOException {
 
 		if (containsHeaders) {
-			return StringUtil.split(
-				_unsyncBufferedReader.readLine(), _delimiter);
+			return StringUtil.split(unsyncBufferedReader.readLine(), delimiter);
 		}
 
 		String[] fieldNames = new String[100];

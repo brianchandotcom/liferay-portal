@@ -35,7 +35,6 @@ import {FragmentGeneralPanel} from '../components/item-configuration-panels/Frag
 import {FragmentStylesPanel} from '../components/item-configuration-panels/FragmentStylesPanel';
 import ImageSourcePanel from '../components/item-configuration-panels/ImageSourcePanel';
 import {MappingPanel} from '../components/item-configuration-panels/MappingPanel';
-import {OldCollectionGeneralPanel} from '../components/item-configuration-panels/OldCollectionGeneralPanel';
 import {RowGeneralPanel} from '../components/item-configuration-panels/RowGeneralPanel';
 import {RowStylesPanel} from '../components/item-configuration-panels/RowStylesPanel';
 
@@ -68,9 +67,7 @@ export const PANELS = {
 		priority: 2,
 	},
 	[PANEL_IDS.collectionGeneral]: {
-		component: config.paginationImprovementsEnabled
-			? CollectionGeneralPanel
-			: OldCollectionGeneralPanel,
+		component: CollectionGeneralPanel,
 		label: Liferay.Language.get('general'),
 		priority: 0,
 	},

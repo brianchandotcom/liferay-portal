@@ -21,23 +21,14 @@ import {
 	getLayoutDataItemPropTypes,
 } from '../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {config} from '../config/index';
 import {useSelectItem} from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
 import Layout from './Layout';
 import FragmentContent from './fragment-content/FragmentContent';
-import {
-	Collection,
-	Column,
-	Container,
-	OldCollection,
-	Row,
-} from './layout-data-items/index';
+import {Collection, Column, Container, Row} from './layout-data-items/index';
 
 const LAYOUT_DATA_ITEMS = {
-	[LAYOUT_DATA_ITEM_TYPES.collection]: config.paginationImprovementsEnabled
-		? Collection
-		: OldCollection,
+	[LAYOUT_DATA_ITEM_TYPES.collection]: Collection,
 	[LAYOUT_DATA_ITEM_TYPES.collectionItem]: CollectionItem,
 	[LAYOUT_DATA_ITEM_TYPES.column]: MasterColumn,
 	[LAYOUT_DATA_ITEM_TYPES.container]: Container,

@@ -139,6 +139,7 @@ export function OldCollectionGeneralPanel({item}) {
 								'pre-filter-collection'
 							),
 							onClick: () => setFilterConfigurationVisible(true),
+							symbolLeft: 'filter',
 						},
 				  ]
 				: [],

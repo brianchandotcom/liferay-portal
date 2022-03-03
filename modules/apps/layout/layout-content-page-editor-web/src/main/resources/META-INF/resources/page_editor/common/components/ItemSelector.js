@@ -147,6 +147,10 @@ export default function ItemSelector({
 					label
 				),
 				onClick: () => onItemSelect({}),
+				symbolLeft:
+					label === Liferay.Language.get('collection')
+						? 'times-circle'
+						: null,
 			});
 
 			return menuItems;

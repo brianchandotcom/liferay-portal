@@ -39,19 +39,19 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 	protected TableUpdater[] getTableUpdaters() {
 		return new TableUpdater[] {
 			new TableUpdater("AnnouncementsFlag", "User_", "userId"),
-			new TableUpdater(
+			new CompanyIdNotNullTableUpdater(
 				"AssetEntries_AssetCategories", "AssetCategory", "categoryId"),
-			new TableUpdater("AssetEntries_AssetTags", "AssetTag", "tagId"),
+			new CompanyIdNotNullTableUpdater("AssetEntries_AssetTags", "AssetTag", "tagId"),
 			new TableUpdater("AssetTagStats", "AssetTag", "tagId"),
 			new TableUpdater("BrowserTracker", "User_", "userId"),
 			new TableUpdater(
 				"DLFileEntryMetadata", "DLFileEntry", "fileEntryId"),
-			new TableUpdater(
+			new CompanyIdNotNullTableUpdater(
 				"DLFileEntryTypes_DLFolders", "DLFolder", "folderId"),
 			new DLSyncEventTableUpdater("DLSyncEvent"),
-			new TableUpdater("Groups_Orgs", "Group_", "groupId"),
-			new TableUpdater("Groups_Roles", "Group_", "groupId"),
-			new TableUpdater("Groups_UserGroups", "Group_", "groupId"),
+			new CompanyIdNotNullTableUpdater("Groups_Orgs", "Group_", "groupId"),
+			new CompanyIdNotNullTableUpdater("Groups_Roles", "Group_", "groupId"),
+			new CompanyIdNotNullTableUpdater("Groups_UserGroups", "Group_", "groupId"),
 			new TableUpdater(
 				"Image", "imageId",
 				new String[][] {
@@ -88,13 +88,13 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 			new TableUpdater("TrashVersion", "TrashEntry", "entryId"),
 			new TableUpdater("UserGroupGroupRole", "UserGroup", "userGroupId"),
 			new TableUpdater("UserGroupRole", "User_", "userId"),
-			new TableUpdater("UserGroups_Teams", "UserGroup", "userGroupId"),
+			new CompanyIdNotNullTableUpdater("UserGroups_Teams", "UserGroup", "userGroupId"),
 			new TableUpdater("UserIdMapper", "User_", "userId"),
-			new TableUpdater("Users_Groups", "User_", "userId"),
-			new TableUpdater("Users_Orgs", "User_", "userId"),
-			new TableUpdater("Users_Roles", "User_", "userId"),
-			new TableUpdater("Users_Teams", "User_", "userId"),
-			new TableUpdater("Users_UserGroups", "User_", "userId"),
+			new CompanyIdNotNullTableUpdater("Users_Groups", "User_", "userId"),
+			new CompanyIdNotNullTableUpdater("Users_Orgs", "User_", "userId"),
+			new CompanyIdNotNullTableUpdater("Users_Roles", "User_", "userId"),
+			new CompanyIdNotNullTableUpdater("Users_Teams", "User_", "userId"),
+			new CompanyIdNotNullTableUpdater("Users_UserGroups", "User_", "userId"),
 			new TableUpdater("UserTrackerPath", "UserTracker", "userTrackerId")
 		};
 	}

@@ -811,7 +811,7 @@ definition {
 	@priority = "4"
 	test VerifyFragmentComponentsCollection {
 		task ("Go to Team Extranet Fragments Collections") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-team-extranet");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "${testSiteURL}");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Components");
 		}
@@ -829,7 +829,7 @@ definition {
 	@priority = "4"
 	test VerifyFragmentCompositionsCollection {
 		task ("Go to Team Extranet Fragments Collections") {
-			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "test-site-team-extranet");
+			FragmentsAdminNavigator.openFragmentsAdmin(siteURLKey = "${testSiteURL}");
 
 			FragmentsAdminNavigator.gotoCollection(collectionName = "Compositions");
 		}
@@ -966,7 +966,7 @@ definition {
 	@priority = "3"
 	test VerifyTheErrorPageButtonGoToHomePage {
 		task ("Go to Error Page in Team Extranet Site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-team-extranet");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${testSiteURL}");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",
@@ -989,7 +989,7 @@ definition {
 	@priority = "3"
 	test VerifyTheErrorPageCanBeDisplayed {
 		task ("Go to Error Page in Team Extranet Site") {
-			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-team-extranet");
+			PagesAdmin.openPagesAdmin(siteURLKey = "${testSiteURL}");
 
 			PagesAdmin.gotoPageEllipsisMenuItem(
 				menuItem = "View",

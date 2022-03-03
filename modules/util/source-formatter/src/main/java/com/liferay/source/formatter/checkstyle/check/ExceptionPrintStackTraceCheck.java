@@ -39,9 +39,7 @@ public class ExceptionPrintStackTraceCheck extends BaseCheck {
 			return;
 		}
 
-		if (detailAST.getType() == TokenTypes.LITERAL_CATCH) {
-			_checkPrintStackTraceCall(detailAST);
-		}
+		_checkPrintStackTraceCall(detailAST);
 	}
 
 	private void _checkPrintStackTraceCall(DetailAST detailAST) {

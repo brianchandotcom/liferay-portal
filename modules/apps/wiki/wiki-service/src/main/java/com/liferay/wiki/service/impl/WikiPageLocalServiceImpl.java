@@ -3320,7 +3320,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		page.setResourcePrimKey(resourcePrimKey);
 		page.setGroupId(oldPage.getGroupId());
 		page.setCompanyId(user.getCompanyId());
-		page.setUserId(user.getUserId());
+		page.setUserId(oldPage.getUserId());
 		page.setUserName(user.getFullName());
 		page.setCreateDate(oldPage.getCreateDate());
 		page.setExternalReferenceCode(oldPage.getExternalReferenceCode());

@@ -15,37 +15,35 @@
 import Container from '../../../../../components/Layout/Container';
 import ListView from '../../../../../components/ListView/ListView';
 import {getTestrayCaseTypes} from '../../../../../graphql/queries/testrayCaseType';
+import i18n from '../../../../../i18n';
 
-const CaseType = () => {
-	return (
-		<Container className="mt-4" title="CaseType">
-			<ListView
-				query={getTestrayCaseTypes}
-				tableProps={{
-					columns: [
-						{
-							key: 'name',
-							value: 'Team',
-						},
-						{
-							key: 'failed',
-							value: 'Failed',
-						},
-						{
-							key: 'Total',
-							value: 'Total',
-						},
-						{
-							key: 'metrics',
-							value: 'Metrics',
-						},
-					],
-				}}
-				transformData={(data) => data?.c?.testrayCaseTypes}
-				variables={{}}
-			/>
-		</Container>
-	);
-};
+const CaseTypes = () => (
+	<Container className="mt-4" title={i18n.translate('case-types')}>
+		<ListView
+			query={getTestrayCaseTypes}
+			tableProps={{
+				columns: [
+					{
+						key: 'name',
+						value: i18n.translate('team'),
+					},
+					{
+						key: 'failed',
+						value: i18n.translate('failed'),
+					},
+					{
+						key: 'Total',
+						value: i18n.translate('total'),
+					},
+					{
+						key: 'metrics',
+						value: i18n.translate('metrics'),
+					},
+				],
+			}}
+			transformData={(data) => data?.c?.testrayCaseTypes}
+		/>
+	</Container>
+);
 
-export default CaseType;
+export default CaseTypes;

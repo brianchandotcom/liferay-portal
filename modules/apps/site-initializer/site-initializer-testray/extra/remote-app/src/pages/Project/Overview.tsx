@@ -15,12 +15,13 @@
 import {useOutletContext} from 'react-router-dom';
 
 import Container from '../../components/Layout/Container';
+import i18n from '../../i18n';
 
 const Overview = () => {
 	const {testrayProject} = useOutletContext<{testrayProject: any}>();
 
 	return (
-		<Container title="Overview">
+		<Container title={i18n.translate('overview')}>
 			<p>{testrayProject?.name}</p>
 
 			<p>{testrayProject?.description}</p>

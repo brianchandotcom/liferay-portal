@@ -20,13 +20,19 @@ import StatusBadge from '../../components/StatusBadge';
 import Table from '../../components/Table';
 import QATable from '../../components/Table/QATable';
 import useHeader from '../../hooks/useHeader';
+import i18n from '../../i18n';
 import {Tests, subtask} from '../../util/mock';
 
 const Subtasks = () => {
 	const {setHeading} = useHeader();
 
 	useEffect(() => {
-		setHeading([{category: 'PROJECT', title: 'Subtask'}]);
+		setHeading([
+			{
+				category: i18n.translate('project').toUpperCase(),
+				title: i18n.translate('subtask'),
+			},
+		]);
 	}, [setHeading]);
 
 	return (
@@ -37,7 +43,7 @@ const Subtasks = () => {
 						<QATable
 							items={[
 								{
-									title: 'STATUS',
+									title: i18n.translate('status'),
 									value: (
 										<StatusBadge type="blocked">
 											Blocked
@@ -45,7 +51,7 @@ const Subtasks = () => {
 									),
 								},
 								{
-									title: 'ASSIGNEE',
+									title: i18n.translate('assignee'),
 									value: (
 										<Avatar
 											displayName
@@ -55,15 +61,15 @@ const Subtasks = () => {
 									),
 								},
 								{
-									title: 'UPDATED',
+									title: i18n.translate('updated'),
 									value: '6 Hours ago',
 								},
 								{
-									title: 'ISSUE',
+									title: i18n.translate('issue'),
 									value: '-',
 								},
 								{
-									title: 'COMMENT',
+									title: i18n.translate('comment'),
 									value: 'None',
 								},
 							]}
@@ -74,11 +80,11 @@ const Subtasks = () => {
 						<QATable
 							items={[
 								{
-									title: 'SCORE',
+									title: i18n.translate('score'),
 									value: '1052',
 								},
 								{
-									title: 'ASSIGNEE',
+									title: i18n.translate('assignee'),
 									value: 'Failed prior to running test',
 								},
 							]}
@@ -90,17 +96,37 @@ const Subtasks = () => {
 			<Container className="mt-5" title="Tests">
 				<Table
 					columns={[
-						{clickable: true, key: 'run', value: 'RUN'},
-						{clickable: true, key: 'priority', value: 'PRIORITY'},
-						{clickable: true, key: 'team', value: 'TEAM'},
-						{clickable: true, key: 'component', value: 'COMPONENT'},
+						{
+							clickable: true,
+							key: 'run',
+							value: i18n.translate('run'),
+						},
+						{
+							clickable: true,
+							key: 'priority',
+							value: i18n.translate('priority'),
+						},
+						{
+							clickable: true,
+							key: 'team',
+							value: i18n.translate('team'),
+						},
+						{
+							clickable: true,
+							key: 'component',
+							value: i18n.translate('component'),
+						},
 						{
 							clickable: true,
 							key: 'case',
 							size: 'xl',
-							value: 'CASE',
+							value: i18n.translate('case'),
 						},
-						{clickable: true, key: 'issues', value: 'ISSUES'},
+						{
+							clickable: true,
+							key: 'issues',
+							value: i18n.translate('issues'),
+						},
 						{
 							clickable: true,
 							key: 'status',
@@ -110,7 +136,7 @@ const Subtasks = () => {
 								</StatusBadge>
 							),
 
-							value: 'STATUS',
+							value: i18n.translate('status'),
 						},
 					]}
 					items={Tests}

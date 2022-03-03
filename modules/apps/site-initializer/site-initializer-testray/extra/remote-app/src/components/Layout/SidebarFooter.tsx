@@ -17,13 +17,31 @@ import ClayIcon from '@clayui/icon';
 import {Context} from '@clayui/modal';
 import {ReactElement, useContext} from 'react';
 
+import i18n from '../../i18n';
 import {Liferay} from '../../services/liferay/liferay';
-import {USER_DROPDOWN} from '../../util/constants';
 import {Avatar} from '../Avatar';
 import DropDown from '../DropDown';
 import CaseTypeModal from '../Modal/CaseTypeModal';
 import CategoryModal from '../Modal/CategoryModal';
 import OptionsModal from '../Modal/OptionsModal';
+
+const USER_DROPDOWN = [
+	{
+		items: [
+			{
+				icon: 'user',
+				label: i18n.translate('manage-account'),
+				path: '/manage/user',
+			},
+			{
+				icon: 'logout',
+				label: i18n.translate('sign-out'),
+				path: `${window.location.origin}/c/portal/logout`,
+			},
+		],
+		title: '',
+	},
+];
 
 const SidebarFooter = () => {
 	const [, dispatch] = useContext(Context);
@@ -43,11 +61,15 @@ const SidebarFooter = () => {
 	const MANAGE_DROPDOWN = [
 		{
 			items: [
-				{icon: 'plus', label: 'New Project', path: '/'},
+				{icon: 'plus', label: i18n.translate('new-project'), path: '/'},
 				{
 					icon: 'cog',
 					label: 'Case Types',
-					onClick: () => onOpenModal('CaseTypes', <CaseTypeModal />),
+					onClick: () =>
+						onOpenModal(
+							i18n.translate('case-types'),
+							<CaseTypeModal />
+						),
 					path: '/',
 				},
 			],
@@ -58,33 +80,41 @@ const SidebarFooter = () => {
 				{
 					icon: 'cog',
 					label: 'Categories',
-					onClick: () => onOpenModal('Categories', <CategoryModal />),
+					onClick: () =>
+						onOpenModal(
+							i18n.translate('categories'),
+							<CategoryModal />
+						),
 					path: '/',
 				},
 				{
 					icon: 'cog',
 					label: 'Options',
-					onClick: () => onOpenModal('Options', <OptionsModal />),
+					onClick: () =>
+						onOpenModal(
+							i18n.translate('options'),
+							<OptionsModal />
+						),
 					path: '/',
 				},
 			],
-			title: 'Enviroment Factors',
+			title: i18n.translate('environment-factors'),
 		},
 		{
 			items: [
 				{
 					icon: 'pencil',
-					label: 'Manage Users',
+					label: i18n.translate('manage-users'),
 					path: '/',
 				},
 				{
 					icon: 'pencil',
-					label: 'Manager User Groups',
+					label: i18n.translate('manage-user-groups'),
 					path: '/',
 				},
 				{
 					icon: 'pencil',
-					label: 'Manage Roles',
+					label: i18n.translate('manage-roles'),
 					path: '/',
 				},
 			],
@@ -94,12 +124,12 @@ const SidebarFooter = () => {
 			items: [
 				{
 					icon: 'filter',
-					label: 'Manage Indexers',
+					label: i18n.translate('manage-indexers'),
 					path: '/',
 				},
 				{
 					icon: 'pencil',
-					label: 'Manage Server',
+					label: i18n.translate('manage-server'),
 					path: '/',
 				},
 			],
@@ -119,7 +149,7 @@ const SidebarFooter = () => {
 						<ClayIcon fontSize={16} symbol="cog" />
 
 						<span className="ml-1 testray-sidebar-text">
-							Manage
+							{i18n.translate('manage')}
 						</span>
 					</div>
 				}

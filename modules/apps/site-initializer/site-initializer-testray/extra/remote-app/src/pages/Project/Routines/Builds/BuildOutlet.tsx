@@ -30,6 +30,7 @@ import {
 	getTestrayBuild,
 } from '../../../../graphql/queries';
 import useHeader from '../../../../hooks/useHeader';
+import i18n from '../../../../i18n';
 import {DATA_COLORS} from '../../../../util/constants';
 import {getDonutLegend} from '../../../../util/graph';
 import {TotalTestCases, getRandomMaximumValue} from '../../../../util/mock';
@@ -47,43 +48,58 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 
 	return (
 		<>
-			<Container title="Details">
+			<Container title={i18n.translate('details')}>
 				<QATable
 					items={[
-						{title: 'product version', value: '7.0.x'},
 						{
-							title: 'description',
+							title: i18n.translate('product-version'),
+							value: '7.0.x',
+						},
+						{
+							title: i18n.translate('description'),
 							value: testrayBuild.description,
 						},
 						{
-							title: 'git hash',
+							title: i18n.translate('git-hash'),
 							value:
 								testrayBuild.gitHash ||
 								'c33e85e8b067d805a45956c76ad053ca98ffcc8a',
 						},
-						{title: 'create date', value: testrayBuild.dateCreated},
-						{title: 'created by', value: 'John Doe'},
-						{title: 'all issues found', value: '-'},
+						{
+							title: i18n.translate('create-date'),
+							value: testrayBuild.dateCreated,
+						},
+						{
+							title: i18n.translate('created-by'),
+							value: 'John Doe',
+						},
+						{title: i18n.translate('all-issues-found'), value: '-'},
 					]}
 				/>
 
 				<div className="d-flex mt-4">
 					<dl>
-						<dd>0 minutes</dd>
+						<dd>{i18n.sub('x-minutes', '0')}</dd>
 
-						<dd className="small-heading">TOTAL ESTIMATED TIME</dd>
+						<dd className="small-heading">
+							{i18n.translate('total-estimated-time')}
+						</dd>
 					</dl>
 
 					<dl className="ml-3">
-						<dd>0 minutes</dd>
+						<dd>{i18n.sub('x-minutes', '0')}</dd>
 
-						<dd className="small-heading">REMAINING ESTIMATED</dd>
+						<dd className="small-heading">
+							{i18n.translate('total-estimated-time')}
+						</dd>
 					</dl>
 
 					<dl className="ml-3">
-						<dd>0 minutes</dd>
+						<dd>{i18n.sub('x-minutes', '0')}</dd>
 
-						<dd className="small-heading">TIME 0 TOTAL ISSUES</dd>
+						<dd className="small-heading">
+							{i18n.sub('time-x-total-issues', '0')}
+						</dd>
 					</dl>
 				</div>
 			</Container>
@@ -140,7 +156,9 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 								y: {
 									label: {
 										position: 'outer-middle',
-										text: 'TESTS',
+										text: i18n
+											.translate('tests')
+											.toUpperCase(),
 									},
 								},
 							}}
@@ -261,27 +279,27 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePath}) => {
 					{
 						active: pathname === basePath,
 						path: basePath,
-						title: 'Results',
+						title: i18n.translate('results'),
 					},
 					{
 						active: pathname === `${basePath}/runs`,
 						path: `${basePath}/runs`,
-						title: 'Runs',
+						title: i18n.translate('runs'),
 					},
 					{
 						active: pathname === `${basePath}/teams`,
 						path: `${basePath}/teams`,
-						title: 'Teams',
+						title: i18n.translate('teams'),
 					},
 					{
 						active: pathname === `${basePath}/components`,
 						path: `${basePath}/components`,
-						title: 'Components',
+						title: i18n.translate('components'),
 					},
 					{
 						active: pathname === `${basePath}/case-types`,
 						path: `${basePath}/case-types`,
-						title: 'Case Types',
+						title: i18n.translate('case-types'),
 					},
 				]);
 			}, 5);

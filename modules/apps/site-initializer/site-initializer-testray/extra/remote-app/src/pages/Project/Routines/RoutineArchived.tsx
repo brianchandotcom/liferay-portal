@@ -13,7 +13,10 @@
  */
 
 import Container from '../../../components/Layout/Container';
+import i18n from '../../../i18n';
 
-const RoutineArchived = () => <Container title="Routine Archived" />;
+const RoutineArchived = () => (
+	<Container title={i18n.translate('routine-archived')} />
+);
 
 export default RoutineArchived;

@@ -18,23 +18,39 @@ import {useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
-import {LoadingWrapper} from '../../../components/Loading';
+import Loading from '../../../components/Loading';
 import QATable from '../../../components/Table/QATable';
-import {getTestrayCases, getTestrayRequirement} from '../../../graphql/queries';
+import {
+	CType,
+	TestrayRequirement,
+	getTestrayCases,
+	getTestrayRequirement,
+} from '../../../graphql/queries';
+import i18n from '../../../i18n';
 
 const Requirement = () => {
 	const {requirementId} = useParams();
 
-	const {data, loading} = useQuery(getTestrayRequirement, {
+	const {data, loading} = useQuery<
+		CType<'testrayRequirement', TestrayRequirement>
+	>(getTestrayRequirement, {
 		variables: {
 			testrayRequirementId: requirementId,
 		},
 	});
 
-	const testrayRequirement = data?.c?.testrayRequirement || {};
+	const testrayRequirement = data?.c?.testrayRequirement;
+
+	if (loading) {
+		return <Loading />;
+	}
+
+	if (!testrayRequirement) {
+		return null;
+	}
 
 	return (
-		<LoadingWrapper isLoading={loading}>
+		<>
 			<Container title="Details">
 				<QATable
 					items={[
@@ -59,21 +75,24 @@ const Requirement = () => {
 								</a>
 							),
 						},
-						{title: 'team', value: testrayRequirement.team},
 						{
-							title: 'component',
-							value: testrayRequirement.component,
+							title: 'team',
+							value: testrayRequirement.testrayRequirementId,
 						},
 						{
-							title: 'jira components',
+							title: i18n.translate('component'),
 							value: testrayRequirement.components,
 						},
 						{
-							title: 'summary',
+							title: i18n.translate('jira-components'),
+							value: testrayRequirement.components,
+						},
+						{
+							title: i18n.translate('summary'),
 							value: testrayRequirement.summary,
 						},
 						{
-							title: 'description',
+							title: i18n.translate('description'),
 							value: testrayRequirement.description,
 						},
 					]}
@@ -85,16 +104,21 @@ const Requirement = () => {
 					query={getTestrayCases}
 					tableProps={{
 						columns: [
-							{key: 'priority', value: 'Priority'},
-							{key: 'name', value: 'Case Name'},
-							{key: 'component', value: 'Component'},
+							{
+								key: 'priority',
+								value: i18n.translate('priority'),
+							},
+							{key: 'name', value: i18n.translate('case-name')},
+							{
+								key: 'component',
+								value: i18n.translate('component'),
+							},
 						],
 					}}
 					transformData={(data) => data?.c?.testrayCases}
-					variables={{}}
 				/>
 			</Container>
-		</LoadingWrapper>
+		</>
 	);
 };
 

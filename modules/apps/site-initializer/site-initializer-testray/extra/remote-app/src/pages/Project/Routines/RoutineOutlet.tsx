@@ -23,6 +23,7 @@ import {
 
 import {getTestrayRoutine} from '../../../graphql/queries';
 import useHeader from '../../../hooks/useHeader';
+import i18n from '../../../i18n';
 
 const RoutineOutlet = () => {
 	const {pathname} = useLocation();
@@ -43,12 +44,12 @@ const RoutineOutlet = () => {
 			{
 				active: pathname === basePath,
 				path: basePath,
-				title: 'Current',
+				title: i18n.translate('current'),
 			},
 			{
 				active: pathname !== basePath,
 				path: `${basePath}/archived`,
-				title: 'Archived',
+				title: i18n.translate('archived'),
 			},
 		],
 	});
@@ -56,8 +57,14 @@ const RoutineOutlet = () => {
 	useEffect(() => {
 		if (testrayProject && testrayRoutine) {
 			setHeading([
-				{category: 'PROJECT', title: testrayProject.name},
-				{category: 'ROUTINE', title: testrayRoutine.name},
+				{
+					category: i18n.translate('project').toUpperCase(),
+					title: testrayProject.name,
+				},
+				{
+					category: i18n.translate('routine').toUpperCase(),
+					title: testrayRoutine.name,
+				},
 			]);
 		}
 	}, [setHeading, testrayProject, testrayRoutine]);

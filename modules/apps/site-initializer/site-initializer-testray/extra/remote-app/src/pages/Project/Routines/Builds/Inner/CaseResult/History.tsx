@@ -13,7 +13,7 @@
  */
 
 const CaseResultHistory = () => {
-	return <div>aa</div>;
+	return <div>CaseResultHistory</div>;
 };
 
 export default CaseResultHistory;

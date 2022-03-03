@@ -14,6 +14,7 @@
 
 import {useLocation} from 'react-router-dom';
 
+import i18n from '../../i18n';
 import TestrayLogo from '../../images/testray-logo';
 import SidebarFooter from './SidebarFooter';
 import SidebarItem from './SidebarItem';
@@ -21,18 +22,18 @@ import SidebarItem from './SidebarItem';
 const sidebarItems = [
 	{
 		icon: 'polls',
-		label: 'Results',
+		label: i18n.translate('results'),
 		path: '/',
 	},
 	{
 		icon: 'merge',
-		label: 'TestFlow',
+		label: i18n.translate('testflow'),
 		path: '/testflow',
 	},
 	{
 		className: 'mt-3',
 		icon: 'drop',
-		label: 'Compare Runs',
+		label: i18n.translate('compare-runs'),
 		path: '/compare-runs',
 	},
 ];

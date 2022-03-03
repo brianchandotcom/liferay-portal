@@ -14,6 +14,8 @@
 
 import ClayIcon from '@clayui/icon';
 
+import i18n from '../../i18n';
+
 type AssignToMeProps = {
 	onClick?: () => void;
 };
@@ -22,7 +24,7 @@ const AssignToMe: React.FC<AssignToMeProps> = ({onClick}) => (
 	<div
 		className="assign-to-me cursor-pointer"
 		onClick={onClick}
-		title="Assign to Me"
+		title={i18n.translate('assign-to-me')}
 	>
 		<ClayIcon symbol="user-plus" />
 	</div>

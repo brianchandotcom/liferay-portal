@@ -13,10 +13,11 @@
  */
 
 import Container from '../../../../../components/Layout/Container';
+import i18n from '../../../../../i18n';
 
 const Results = () => {
 	return (
-		<Container className="mt-4" title="Results">
+		<Container className="mt-4" title={i18n.translate('results')}>
 			Results
 		</Container>
 	);

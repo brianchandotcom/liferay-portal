@@ -23,6 +23,7 @@ import {
 
 import {getTestrayCase} from '../../../graphql/queries/testrayCase';
 import useHeader from '../../../hooks/useHeader';
+import i18n from '../../../i18n';
 
 const CaseOutlet = () => {
 	const {testrayProject}: any = useOutletContext();
@@ -35,12 +36,12 @@ const CaseOutlet = () => {
 			{
 				active: pathname === basePath,
 				path: basePath,
-				title: 'Case Details',
+				title: i18n.translate('case-details'),
 			},
 			{
 				active: pathname === `${basePath}/requirements`,
 				path: `${basePath}/requirements`,
-				title: 'Requirements',
+				title: i18n.translate('requirements'),
 			},
 		],
 	});
@@ -58,12 +59,12 @@ const CaseOutlet = () => {
 			setTimeout(() => {
 				setHeading([
 					{
-						category: 'PROJECT',
+						category: i18n.translate('project').toUpperCase(),
 						path: `/project/${testrayProject.testrayProjectId}/cases`,
 						title: testrayProject.name,
 					},
 					{
-						category: 'CASE',
+						category: i18n.translate('case').toUpperCase(),
 						title: testrayCase.name,
 					},
 				]);

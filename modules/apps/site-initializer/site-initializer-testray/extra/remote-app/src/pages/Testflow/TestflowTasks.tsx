@@ -34,6 +34,7 @@ import {
 	getTestrayTaskRest,
 } from '../../graphql/queries/testrayTask';
 import useHeader from '../../hooks/useHeader';
+import i18n from '../../i18n';
 import {SUBTASK_STATUS, TEST_STATUS_LABEL} from '../../util/constants';
 import {routines, tasks} from '../../util/mock';
 
@@ -70,7 +71,7 @@ const TestFlowTasks: React.FC = () => {
 			setTimeout(() => {
 				setHeading([
 					{
-						category: 'TASK',
+						category: i18n.translate('tasks'),
 						title: testrayTask.name,
 					},
 				]);
@@ -122,7 +123,7 @@ const TestFlowTasks: React.FC = () => {
 						<QATable
 							items={[
 								{
-									title: 'Status',
+									title: i18n.translate('status'),
 									value: (
 										<StatusBadge type="failed">
 											{
@@ -134,7 +135,7 @@ const TestFlowTasks: React.FC = () => {
 									),
 								},
 								{
-									title: 'Assigned Users',
+									title: i18n.translate('assigned-users'),
 									value: (
 										<AvatarGroup
 											assignedUsers={assigned}
@@ -143,7 +144,7 @@ const TestFlowTasks: React.FC = () => {
 									),
 								},
 								{
-									title: 'Created',
+									title: i18n.translate('created'),
 									value: '8 Hours ago',
 								},
 							]}
@@ -154,19 +155,19 @@ const TestFlowTasks: React.FC = () => {
 						<QATable
 							items={[
 								{
-									title: 'Project name',
+									title: i18n.translate('project-name'),
 									value:
 										testrayTask.testrayBuild?.testrayProject
 											?.name,
 								},
 								{
-									title: 'Routine Name',
+									title: i18n.translate('routine-name'),
 									value:
 										testrayTask.testrayBuild?.testrayRoutine
 											?.name,
 								},
 								{
-									title: 'Build Name',
+									title: i18n.translate('build-name'),
 									value: testrayTask.testrayBuild?.name,
 								},
 							]}
@@ -181,13 +182,13 @@ const TestFlowTasks: React.FC = () => {
 				</div>
 			</Container>
 
-			<Container className="mt-3" title="Progress (Score) ">
+			<Container className="mt-3" title="Progress (Score)">
 				<div className="my-4">
 					<ProgressBar items={progressScore} legend />
 				</div>
 			</Container>
 
-			<Container className="mt-3" title="Subtasks">
+			<Container className="mt-3" title={i18n.translate('subtasks')}>
 				<ListView
 					query={getTestraySubTasks}
 					tableProps={{
@@ -195,7 +196,7 @@ const TestFlowTasks: React.FC = () => {
 							{
 								clickable: true,
 								key: 'name',
-								value: 'Name',
+								value: i18n.translate('name'),
 							},
 							{
 								clickable: true,
@@ -208,16 +209,24 @@ const TestFlowTasks: React.FC = () => {
 									</StatusBadge>
 								),
 
-								value: 'Status',
+								value: i18n.translate('status'),
 							},
-							{clickable: true, key: 'score', value: 'Score'},
-							{clickable: true, key: 'tests', value: 'Tests'},
+							{
+								clickable: true,
+								key: 'score',
+								value: i18n.translate('score'),
+							},
+							{
+								clickable: true,
+								key: 'tests',
+								value: i18n.translate('tests'),
+							},
 							{
 								clickable: true,
 								key: 'error',
 								render: (value) => <Code>{value}</Code>,
 								size: 'xl',
-								value: 'Errors',
+								value: i18n.translate('errors'),
 							},
 							{
 								clickable: true,
@@ -231,7 +240,7 @@ const TestFlowTasks: React.FC = () => {
 										/>
 									),
 								size: 'sm',
-								value: 'Assignee',
+								value: i18n.translate('assignee'),
 							},
 						],
 						navigateTo: () => '/testflow/subtasks',

@@ -17,12 +17,13 @@ import ListView from '../../components/ListView/ListView';
 import {initialState} from '../../context/HeaderContext';
 import {getTestrayProjects} from '../../graphql/queries';
 import useHeader from '../../hooks/useHeader';
+import i18n from '../../i18n';
 
 const Home = () => {
 	useHeader({useHeading: initialState.heading});
 
 	return (
-		<Container title="Projects">
+		<Container title={i18n.translate('projects')}>
 			<ListView
 				query={getTestrayProjects}
 				tableProps={{
@@ -30,15 +31,17 @@ const Home = () => {
 						{
 							clickable: true,
 							key: 'name',
-							value: 'Project',
+							value: i18n.translate('project'),
 						},
-						{key: 'description', value: 'Description'},
+						{
+							key: 'description',
+							value: i18n.translate('description'),
+						},
 					],
 					navigateTo: (item) =>
 						`/project/${item.testrayProjectId}/routines`,
 				}}
 				transformData={(data) => data?.c?.testrayProjects}
-				variables={{}}
 			/>
 		</Container>
 	);

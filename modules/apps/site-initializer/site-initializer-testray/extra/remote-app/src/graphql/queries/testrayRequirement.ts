@@ -14,6 +14,17 @@
 
 import {gql} from '@apollo/client';
 
+export type TestrayRequirement = {
+	components: string;
+	description: string;
+	descriptionType: string;
+	key: string;
+	linkTitle: string;
+	linkURL: string;
+	summary: string;
+	testrayRequirementId: number;
+};
+
 export const getTestrayRequirements = gql`
 	query getTestrayRequirements(
 		$filter: String

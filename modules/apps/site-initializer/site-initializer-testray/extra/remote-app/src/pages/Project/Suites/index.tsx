@@ -15,21 +15,25 @@
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import {getTestraySuites} from '../../../graphql/queries';
+import i18n from '../../../i18n';
 
 const Suites = () => (
-	<Container title="Suites">
+	<Container title={i18n.translate('suites')}>
 		<ListView
 			query={getTestraySuites}
 			tableProps={{
 				columns: [
-					{clickable: true, key: 'name', value: 'Case Name'},
-					{key: 'description', value: 'Description'},
-					{key: 'type', value: 'Type'},
+					{
+						clickable: true,
+						key: 'name',
+						value: i18n.translate('case-name'),
+					},
+					{key: 'description', value: i18n.translate('description')},
+					{key: 'type', value: i18n.translate('type')},
 				],
 				navigateTo: ({testraySuiteId}) => testraySuiteId?.toString(),
 			}}
 			transformData={(data) => data?.c?.testraySuites}
-			variables={{}}
 		/>
 	</Container>
 );

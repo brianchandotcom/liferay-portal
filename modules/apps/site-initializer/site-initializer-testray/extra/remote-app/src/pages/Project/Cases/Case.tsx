@@ -18,68 +18,74 @@ import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import QATable from '../../../components/Table/QATable';
 import {getTestrayCases} from '../../../graphql/queries/testrayCase';
+import i18n from '../../../i18n';
 
 const Case = () => {
 	const {testrayCase}: any = useOutletContext();
 
 	return (
 		<>
-			<Container title="Details">
+			<Container title={i18n.translate('details')}>
 				<QATable
 					items={[
 						{
-							title: 'type',
+							title: i18n.translate('type'),
 							value:
 								testrayCase.type || 'Automated Functional Test',
 						},
 						{
-							title: 'priority',
+							title: i18n.translate('priority'),
 							value: testrayCase.priority,
 						},
 						{
-							title: 'main component',
+							title: i18n.translate('main-component'),
 							value: testrayCase.component || 'A/B Test',
 						},
 						{
-							title: 'description',
+							title: i18n.translate('description'),
 							value: testrayCase.description,
 						},
 						{
-							title: 'estimed duration',
+							title: i18n.translate('estimed-duration'),
 							value: testrayCase.estimatedDuration,
 						},
 						{
-							title: 'steps',
+							title: i18n.translate('steps'),
 							value: testrayCase.steps,
 						},
 						{
-							title: 'date created',
+							title: i18n.translate('date-created'),
 							value: 'dez 13, 2021 12:00 PM',
 						},
 						{
-							title: 'date modified',
+							title: i18n.translate('date-modified'),
 							value: 'dez 13, 2021 12:00 PM',
 						},
 						{
-							title: 'all issues found',
+							title: i18n.translate('all-issues-found'),
 							value: '-',
 						},
 					]}
 				/>
 			</Container>
 
-			<Container className="mt-3" title="Test History">
+			<Container className="mt-3" title={i18n.translate('test-history')}>
 				<ListView
 					query={getTestrayCases}
 					tableProps={{
 						columns: [
-							{key: 'priority', value: 'Priority'},
-							{key: 'name', value: 'Case Name'},
-							{key: 'component', value: 'Component'},
+							{
+								key: 'priority',
+								value: i18n.translate('priority'),
+							},
+							{key: 'name', value: i18n.translate('case-name')},
+							{
+								key: 'component',
+								value: i18n.translate('component'),
+							},
 						],
 					}}
 					transformData={(data) => data?.c?.testrayCases}
-					variables={{}}
 				/>
 			</Container>
 		</>

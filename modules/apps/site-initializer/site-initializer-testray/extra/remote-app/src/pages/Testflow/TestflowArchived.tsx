@@ -13,7 +13,10 @@
  */
 
 import Container from '../../components/Layout/Container';
+import i18n from '../../i18n';
 
-const TestflowArchived = () => <Container title="Testflow Archived" />;
+const TestflowArchived = () => (
+	<Container title={i18n.translate('testflow-archived')} />
+);
 
 export default TestflowArchived;

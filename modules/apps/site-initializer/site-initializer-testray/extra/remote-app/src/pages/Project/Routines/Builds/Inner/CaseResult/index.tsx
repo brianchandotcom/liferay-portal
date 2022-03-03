@@ -22,28 +22,33 @@ import Code from '../../../../../../components/Code';
 import Container from '../../../../../../components/Layout/Container';
 import StatusBadge from '../../../../../../components/StatusBadge';
 import QATable, {Orientation} from '../../../../../../components/Table/QATable';
+import i18n from '../../../../../../i18n';
 
 const CaseResult = () => {
 	return (
 		<ClayLayout.Row>
 			<ClayButtonGroup className="ml-3" spaced>
-				<ClayButton>Assign</ClayButton>
+				<ClayButton>{i18n.translate('assign')}</ClayButton>
 
-				<ClayButton displayType="secondary">Assign to Me</ClayButton>
-
-				<ClayButton disabled displayType="unstyled">
-					Start Test
+				<ClayButton displayType="secondary">
+					{i18n.translate('assign-to-me')}
 				</ClayButton>
 
 				<ClayButton disabled displayType="unstyled">
-					Complete Test
+					{i18n.translate('start-test')}
 				</ClayButton>
 
 				<ClayButton disabled displayType="unstyled">
-					Reopen Test
+					{i18n.translate('complete-test')}
 				</ClayButton>
 
-				<ClayButton displayType="secondary">Edit</ClayButton>
+				<ClayButton disabled displayType="unstyled">
+					{i18n.translate('reopen-test')}
+				</ClayButton>
+
+				<ClayButton displayType="secondary">
+					{i18n.translate('edit')}
+				</ClayButton>
 			</ClayButtonGroup>
 
 			<ClayLayout.Col xs={9}>
@@ -51,7 +56,7 @@ const CaseResult = () => {
 					<QATable
 						items={[
 							{
-								title: 'Status',
+								title: i18n.translate('status'),
 								value: (
 									<StatusBadge type="failed">
 										FAILED
@@ -59,7 +64,7 @@ const CaseResult = () => {
 								),
 							},
 							{
-								title: 'Errors',
+								title: i18n.translate('errors'),
 								value: (
 									<Code>{`
 							java.lang.Exception: Element is present at "//*[contains(@class,'btn')][normalize-space(text())='Sign In']"
@@ -67,19 +72,19 @@ const CaseResult = () => {
 								),
 							},
 							{
-								title: 'Warnings (16)',
+								title: i18n.sub('warnings-x', '16'),
 								value: 'Show 16 Warnings',
 							},
 							{
-								title: 'Attachments',
+								title: i18n.translate('attachments'),
 								value: '',
 							},
 							{
-								title: 'Git Hash',
+								title: i18n.translate('git-hash'),
 								value: '',
 							},
 							{
-								title: 'GitHub Compare URLs',
+								title: i18n.translate('github-compare-urls'),
 								value: '',
 							},
 						]}
@@ -90,46 +95,48 @@ const CaseResult = () => {
 					<QATable
 						items={[
 							{
-								title: 'Priority',
+								title: i18n.translate('priority'),
 								value: 5,
 							},
 							{
-								title: 'Main Component',
+								title: i18n.translate('main-component'),
 								value: 'Tags',
 							},
 							{
-								title: 'Sub Components',
+								title: i18n.translate('subcomponents'),
 								value: '',
 							},
 							{
-								title: 'Type',
+								title: i18n.translate('Type'),
 								value: 'Automated Functional Test',
 							},
 							{
-								title: 'Estimated Duration',
+								title: i18n.translate('estimated-duration'),
 								value: '0',
 							},
 							{
-								title: 'Description',
+								title: i18n.translate('description'),
 								value: '',
 							},
 							{
-								title: 'Steps',
+								title: i18n.translate('steps'),
 								value: '',
 							},
 						]}
 					/>
 
-					<Link to="project/1234/case/1234">View Case</Link>
+					<Link to="project/1234/case/1234">
+						{i18n.translate('view-case')}
+					</Link>
 				</Container>
 			</ClayLayout.Col>
 
 			<ClayLayout.Col>
-				<Container className="mt-4" title="Dates">
+				<Container className="mt-4" title={i18n.translate('dates')}>
 					<QATable
 						items={[
 							{
-								title: 'Updated',
+								title: i18n.translate('Updated'),
 								value: '2 days ago',
 							},
 							{
@@ -138,21 +145,21 @@ const CaseResult = () => {
 							},
 							{
 								divider: true,
-								title: 'Execution Date',
+								title: i18n.translate('execution-date'),
 								value: 'a year ago',
 							},
 							{
 								divider: true,
-								title: 'Assignee',
+								title: i18n.translate('assignee'),
 								value: <AssignToMe />,
 							},
 							{
 								divider: true,
-								title: 'Issues',
+								title: i18n.translate('issues'),
 								value: '-',
 							},
 							{
-								title: 'Comment',
+								title: i18n.translate('comment'),
 								value: 'None',
 							},
 						]}

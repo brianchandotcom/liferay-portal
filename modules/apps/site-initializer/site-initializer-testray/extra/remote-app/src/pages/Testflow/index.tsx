@@ -19,10 +19,11 @@ import ListView from '../../components/ListView/ListView';
 import ProgressBar from '../../components/ProgressBar/';
 import StatusBadge from '../../components/StatusBadge';
 import {getTestrayTasks} from '../../graphql/queries/testrayTask';
+import i18n from '../../i18n';
 import {TEST_STATUS_LABEL} from '../../util/constants';
 
 const TestFlow = () => (
-	<Container title="Tasks">
+	<Container title={i18n.translate('tasks')}>
 		<ListView
 			query={getTestrayTasks}
 			tableProps={{
@@ -35,16 +36,21 @@ const TestFlow = () => (
 								{TEST_STATUS_LABEL[status]}
 							</StatusBadge>
 						),
-						value: 'Status',
+						value: i18n.translate('status'),
 					},
 					{
 						clickable: true,
 						key: 'dueDate',
 						render: (_, testrayTask) =>
 							testrayTask?.testrayBuild?.dueDate,
-						value: 'Start Date',
+						value: i18n.translate('start-date'),
 					},
-					{clickable: true, key: 'name', size: 'sm', value: 'Task'},
+					{
+						clickable: true,
+						key: 'name',
+						size: 'sm',
+						value: i18n.translate('task'),
+					},
 					{
 						clickable: true,
 						key: 'projectName',
@@ -52,7 +58,7 @@ const TestFlow = () => (
 							return testrayTask?.testrayBuild?.testrayProject
 								?.name;
 						},
-						value: 'Project Name',
+						value: i18n.translate('project-name'),
 					},
 					{
 						clickable: true,
@@ -61,7 +67,7 @@ const TestFlow = () => (
 							return testrayTask?.testrayBuild?.testrayRoutine
 								?.name;
 						},
-						value: 'Routine Name',
+						value: i18n.translate('routine-name'),
 					},
 					{
 						clickable: true,
@@ -69,7 +75,7 @@ const TestFlow = () => (
 						render: (_, testrayTask) => {
 							return testrayTask?.testrayBuild?.name;
 						},
-						value: 'Build Name',
+						value: i18n.translate('build-name'),
 					},
 					{
 						key: 'score',
@@ -87,14 +93,14 @@ const TestFlow = () => (
 								(passed * 100) / total
 							)}%`;
 						},
-						value: 'Score',
+						value: i18n.translate('score'),
 					},
 					{
-						key: 'score',
-						render: (score: any) =>
-							score && <ProgressBar items={score} />,
+						key: 'progress',
+						render: (progress: any) =>
+							progress && <ProgressBar items={progress} />,
 						size: 'sm',
-						value: 'Progress',
+						value: i18n.translate('progress'),
 					},
 					{
 						key: 'assigned',
@@ -105,7 +111,7 @@ const TestFlow = () => (
 									groupSize={3}
 								/>
 							),
-						value: 'Assigned',
+						value: i18n.translate('assigned'),
 					},
 				],
 				navigateTo: (item) => `/testflow/${item.id}`,

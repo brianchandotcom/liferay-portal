@@ -50,24 +50,6 @@ export const TEST_STATUS_LABEL: any = {
 	7: 'Test Fix',
 };
 
-export const USER_DROPDOWN = [
-	{
-		items: [
-			{
-				icon: 'user',
-				label: 'Manage Account',
-				path: '/manage/user',
-			},
-			{
-				icon: 'logout',
-				label: 'Sign Out',
-				path: `${window.location.origin}/c/portal/logout`,
-			},
-		],
-		title: '',
-	},
-];
-
 const getStatusLabel = (status: number): string =>
 	(TEST_STATUS_LABEL as any)[status];
 

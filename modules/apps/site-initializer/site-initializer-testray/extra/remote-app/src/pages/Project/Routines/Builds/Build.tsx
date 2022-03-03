@@ -19,10 +19,11 @@ import Container from '../../../../components/Layout/Container';
 import ListView from '../../../../components/ListView/ListView';
 import StatusBadge from '../../../../components/StatusBadge';
 import {getTestrayCases} from '../../../../graphql/queries';
+import i18n from '../../../../i18n';
 import {getStatusLabel} from '../../../../util/constants';
 
 const Build = () => (
-	<Container className="mt-4" title="Tests">
+	<Container className="mt-4" title={i18n.translate('tests')}>
 		<ListView
 			query={getTestrayCases}
 			tableProps={{
@@ -30,21 +31,21 @@ const Build = () => (
 					{
 						clickable: true,
 						key: 'priority',
-						value: 'Priority',
+						value: i18n.translate('priority'),
 					},
 					{
 						key: 'component',
-						value: 'Component',
+						value: i18n.translate('component'),
 					},
 					{
 						clickable: true,
 						key: 'name',
-						value: 'Case',
+						value: i18n.translate('case'),
 					},
 					{
 						key: 'run',
 						render: () => '01',
-						value: 'Run',
+						value: i18n.translate('run'),
 					},
 					{
 						key: 'assignee',
@@ -54,7 +55,7 @@ const Build = () => (
 							) : (
 								<AssignToMe />
 							),
-						value: 'Assignee',
+						value: i18n.translate('assignee'),
 					},
 					{
 						key: 'status',
@@ -70,11 +71,11 @@ const Build = () => (
 									)}
 								</StatusBadge>
 							),
-						value: 'Status',
+						value: i18n.translate('status'),
 					},
 					{
 						key: 'issues',
-						value: 'Issues',
+						value: i18n.translate('issues'),
 					},
 					{
 						key: 'error',
@@ -82,13 +83,12 @@ const Build = () => (
 							testrayCaseResult?.errors && (
 								<Code>{testrayCaseResult.errors}</Code>
 							),
-						value: 'Errors',
+						value: i18n.translate('errors'),
 					},
 				],
 				navigateTo: (item) => `case-result/${item.testrayCaseId}`,
 			}}
 			transformData={(data) => data?.c?.testrayCases}
-			variables={{}}
 		/>
 	</Container>
 );

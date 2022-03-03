@@ -18,17 +18,18 @@ import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import ProgressBar from '../../../components/ProgressBar';
 import {getTestrayBuilds} from '../../../graphql/queries';
+import i18n from '../../../i18n';
 import {DATA_COLORS} from '../../../util/constants';
 import {getRandomMaximumValue} from '../../../util/mock';
 
 const Routine = () => (
-	<Container title="Build History">
+	<Container title={i18n.translate('build-history')}>
 		<ClayChart
 			axis={{
 				y: {
 					label: {
 						position: 'outer-middle',
-						text: 'TESTS',
+						text: i18n.translate('tests').toUpperCase(),
 					},
 				},
 			}}
@@ -60,16 +61,26 @@ const Routine = () => (
 			tableProps={{
 				columns: [
 					{
+						key: 'dateCreated',
+						size: 'sm',
+						value: i18n.translate('create-date'),
+					},
+					{key: 'gitHash', value: i18n.translate('git-hash')},
+					{
+						key: 'product_version',
+						render: (_, {testrayProductVersion}) =>
+							testrayProductVersion?.name,
+						value: i18n.translate('product-version'),
+					},
+					{
 						clickable: true,
 						key: 'name',
-						value: 'Build',
+						size: 'md',
+						value: i18n.translate('build'),
 					},
-					{key: 'dateCreated', value: 'Create Date'},
-					{key: 'gitHash', value: 'Git Hash'},
-					{key: 'product_version', value: 'Product Version'},
-					{key: 'failed', value: 'Failed'},
-					{key: 'blocked', value: 'Blocked'},
-					{key: 'test_fix', value: 'Test Fix'},
+					{key: 'failed', value: i18n.translate('failed')},
+					{key: 'blocked', value: i18n.translate('blocked')},
+					{key: 'test_fix', value: i18n.translate('test-fix')},
 					{
 						key: 'metrics',
 						render: () => (
@@ -83,13 +94,13 @@ const Routine = () => (
 								}}
 							/>
 						),
-						value: 'Metrics',
+						size: 'md',
+						value: i18n.translate('metrics'),
 					},
 				],
 				navigateTo: ({testrayBuildId}) => `build/${testrayBuildId}`,
 			}}
-			transformData={(data) => data?.c?.testrayBuilds}
-			variables={{}}
+			transformData={(data) => data?.testrayBuilds || {}}
 		/>
 	</Container>
 );

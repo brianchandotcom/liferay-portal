@@ -15,6 +15,7 @@
 import {TypedDocumentNode, useQuery} from '@apollo/client';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 
+import i18n from '../../i18n';
 import {PAGINATION} from '../../util/constants';
 import EmptyState from '../EmptyState';
 import Table, {TableProps} from '../Table';
@@ -58,6 +59,11 @@ const ListView: React.FC<ListViewProps> = ({
 			activePage={page}
 			deltas={deltas}
 			ellipsisBuffer={PAGINATION.ellipsisBuffer}
+			labels={{
+				paginationResults: i18n.translate('showing-x-to-x-of-x'),
+				perPageItems: i18n.translate('x-items'),
+				selectPerPageItems: i18n.translate('x-items'),
+			}}
 			onDeltaChange={(delta) => onRefetch({pageSize: delta})}
 			onPageChange={(page) => onRefetch({page})}
 			totalItems={totalCount}
@@ -69,7 +75,7 @@ const ListView: React.FC<ListViewProps> = ({
 	}
 
 	if (loading) {
-		return <span>Loading...</span>;
+		return <span>{i18n.translate('loading')}...</span>;
 	}
 
 	if (!items.length) {

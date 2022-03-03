@@ -15,34 +15,34 @@
 import Container from '../../../../../components/Layout/Container';
 import ListView from '../../../../../components/ListView/ListView';
 import {getTestrayTeams} from '../../../../../graphql/queries/testrayTeam';
+import i18n from '../../../../../i18n';
 
 const Teams = () => {
 	return (
-		<Container className="mt-4" title="Teams">
+		<Container className="mt-4" title={i18n.translate('teams')}>
 			<ListView
 				query={getTestrayTeams}
 				tableProps={{
 					columns: [
 						{
 							key: 'name',
-							value: 'Team',
+							value: i18n.translate('team'),
 						},
 						{
 							key: 'failed',
-							value: 'Failed',
+							value: i18n.translate('failed'),
 						},
 						{
 							key: 'Total',
-							value: 'Total',
+							value: i18n.translate('total'),
 						},
 						{
 							key: 'metrics',
-							value: 'Metrics',
+							value: i18n.translate('metrics'),
 						},
 					],
 				}}
 				transformData={(data) => data?.c?.testrayTeams}
-				variables={{}}
 			/>
 		</Container>
 	);

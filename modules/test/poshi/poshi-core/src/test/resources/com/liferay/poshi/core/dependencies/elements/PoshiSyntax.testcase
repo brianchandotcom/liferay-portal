@@ -8,7 +8,7 @@
 	<!--This is a multiline
 		comment.-->
 
-	<var name="userPassword" static="true" value="password" />
+	<var static="true" name="userPassword" value="password"/>
 	<var name="userScreenName" value="joeblogs" />
 
 	<set-up>
@@ -19,11 +19,11 @@
 
 	<tear-down>
 		<execute macro="PortalInstances#tearDownCP">
-			<var method="PropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+			<var name="testPortalInstance" method="PropsUtil#get('test.portal.instance')"/>
 		</execute>
 	</tear-down>
 
-	<command annotations="simple-annotation" name="AddBlogsEntries" priority="4">
+	<command priority="4" annotations="simple-annotation" name="AddBlogsEntries">
 		<description message="Ensure that a user can add multiple Blogs Entries." />
 
 		<property name="testray.component.names" value="Blogs" />
@@ -62,7 +62,7 @@
 		<var name="portalInstanceIds" method="StringUtil#regexReplaceAll('${portalInstanceIds}', '[\[\]&quot;]', '')"/>
 	</command>
 
-	<command name="AddUser" priority="5">
+	<command priority="5" name="AddUser">
 		<!-- This is a comment-->
 
 		<!--This is a multiline
@@ -90,16 +90,16 @@
 
 		<echo message="This is a message." />
 
-		<for list="${breadcrumbListVisible}" param="breadcrumbName">
+		<for param="breadcrumbName" list="${breadcrumbListVisible}">
 			<var name="key_breadcrumbName" value="${breadcrumbName}" />
 
-			<var method="StringUtil#upperCase('${breadcrumbName}')" name="breadcrumbNameUppercase" />
+            <var name="breadcrumbNameUppercase" method="StringUtil#upperCase('${breadcrumbName}')"/>
 
-			<var method="selenium#getText('Staging#HISTORY_VERSION')" name="historyVersion" />
+			<var name="historyVersion" method="selenium#getText('Staging#HISTORY_VERSION')"/>
 
 			<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}" />
 
-			<for list="${breadcrumbListVisible}" param="breadcrumbName">
+			<for param="breadcrumbName" list="${breadcrumbListVisible}">
 				<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}" />
 			</for>
 
@@ -130,7 +130,7 @@
 			<!-- This is a comment-->
 		</for>
 
-		<for list="Breadcrumb: 1, Breadcrumb: 2" param="breadcrumbName">
+		<for param="breadcrumbName" list="Breadcrumb: 1, Breadcrumb: 2">
 			<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_ENTRY" value1="${breadcrumbNameUppercase}" />
 		</for>
 
@@ -159,7 +159,7 @@
 		</if>
 	</command>
 
-	<command name="Smoke" priority="5">
+	<command priority="5" name="Smoke">
 		<description message="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." />
 
 		<property name="portal.smoke" value="true" />
@@ -303,6 +303,8 @@
 		</execute>
 
 		<var name="testCDATA"><![CDATA['alert(0)'"alert(0)"><img src=x onerror=alert(0)><script>alert(0)</script>]]></var>
+
+		<var name="testNestedCDATA"><![CDATA[<root available-locales="en_US" default-locale="en_US">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09<![CDATA[${content}]]]]><![CDATA[>%0A%09%09</dynamic-content>%0A</root>]]></var>
 
 		<var name="wikiPageContent"><![CDATA[<p id='demo'>PASS</p>
 

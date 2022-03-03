@@ -205,7 +205,6 @@ definition {
 					"imageId": ${coverImageId}
 					},
 					"keywords": [${assetTagNames}],
-					"priority": 0,
 					"taxonomyCategoryIds": [${assetCategoryIds}],
 					"viewableBy": "${viewableBy}"
 				}
@@ -461,7 +460,6 @@ definition {
 					"caption": "",
 					"imageId": ${coverImageId}
 					},
-					"priority": 0
 				}
 		''';
 

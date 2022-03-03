@@ -76,7 +76,6 @@ definition {
 						"imageId": ${coverImageId}
 					},
 					"keywords": [${assetTagNames}],
-					"priority": 0,
 					"taxonomyCategoryIds": [${assetCategoryIds}],
 					"viewableBy": "${viewableBy}"
 				}

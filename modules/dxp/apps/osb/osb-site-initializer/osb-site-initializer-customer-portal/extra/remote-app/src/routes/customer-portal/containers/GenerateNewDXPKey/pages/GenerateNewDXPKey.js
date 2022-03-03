@@ -97,7 +97,7 @@ const GenerateNewDXPKey = () => {
 					<label htmlFor="basicInput">Key Type</label>
 
 					<div className="position-relative">
-						<ClaySelect className="cp-generate-key-select mr-2 pr-6 w-100">
+						<ClaySelect className="cp-generate-key-select w-100">
 							{options.map((option) => (
 								<ClaySelect.Option
 									key={option.value}

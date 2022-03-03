@@ -11,10 +11,10 @@ buildPluginDescriptor {
 }
 
 dependencies {
-	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "5.0.0"
-
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
-	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.lang", version: "5.0.0"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "5.0.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.apache.ant", name: "ant", transitive: false, version: "1.10.11"
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 }

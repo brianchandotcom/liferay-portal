@@ -14,6 +14,7 @@ import classNames from 'classnames';
 import {useState} from 'react';
 
 const ButtonDropDown = ({
+	customDropDownButton,
 	label,
 	align = Align.BottomRight,
 	items,
@@ -27,9 +28,14 @@ const ButtonDropDown = ({
 			alignmentPosition={align}
 			onActiveChange={setActive}
 			trigger={
-				<Button appendIcon="caret-bottom" className="btn btn-primary">
-					{label}
-				</Button>
+				customDropDownButton || (
+					<Button
+						appendIcon="caret-bottom"
+						className="btn btn-primary"
+					>
+						{label}
+					</Button>
+				)
 			}
 			{...props}
 		>

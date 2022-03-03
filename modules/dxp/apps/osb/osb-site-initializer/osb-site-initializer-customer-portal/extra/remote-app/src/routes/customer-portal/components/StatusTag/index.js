@@ -29,6 +29,10 @@ const labelProps = {
 		displayType: 'warning',
 		label: 'In Progress',
 	},
+	[STATUS_TAG_TYPES.invited]: {
+		displayType: 'info',
+		label: 'Invited',
+	},
 	[STATUS_TAG_TYPES.notActivated]: {
 		displayType: 'dark',
 		label: 'Not Activated',

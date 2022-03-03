@@ -466,13 +466,21 @@ public class SiteNavigationMenuDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isPrivateLayout()) {
+		if (scopeGroup.isPrivateLayoutsEnabled() &&
+			scopeGroup.hasPrivateLayouts() && layout.isPrivateLayout()) {
+
 			return SiteNavigationConstants.TYPE_PRIVATE_PAGES_HIERARCHY;
 		}
 
-		return SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY;
+		if (scopeGroup.hasPublicLayouts() && layout.isPublicLayout()) {
+			return SiteNavigationConstants.TYPE_PUBLIC_PAGES_HIERARCHY;
+		}
+
+		return SiteNavigationConstants.TYPE_PRIMARY;
 	}
 
 	private String _getSiteNavigationMenuName() {

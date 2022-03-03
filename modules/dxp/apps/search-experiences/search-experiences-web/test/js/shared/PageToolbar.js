@@ -18,8 +18,8 @@ import '@testing-library/jest-dom/extend-expect';
 
 jest.useFakeTimers();
 
-const onSubmit = jest.fn();
 const onChangeTitleAndDescription = jest.fn();
+const onSubmit = jest.fn();
 
 Liferay.ThemeDisplay.getDefaultLanguageId = () => 'en_US';
 

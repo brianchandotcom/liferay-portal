@@ -225,7 +225,7 @@ definition {
 				widgetName = "Tag Filter");
 		}
 
-		task ("Configure Number as display template") {
+		task ("Configure the display template to Number") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -233,7 +233,7 @@ definition {
 			TagsNavigationPortlet.configureDisplayStylePG(displayTemplate = "Number");
 		}
 
-		task ("Check show asset count in Tag Filter configuration") {
+		task ("Configure the Tag Filter to display asset count") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -265,7 +265,7 @@ definition {
 				sourceFileName = "Document_1.txt");
 		}
 
-		task ("View number of usages on tags") {
+		task ("View the usages of tags") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -280,7 +280,7 @@ definition {
 		}
 	}
 
-	@description = "View unused tags in Tag Filter widget."	
+	@description = "The Tag Filter widget could display unused tags."	
 	@priority = "3"
 	test DisplayUnusedTags {
 		task ("Add three tags") {
@@ -298,7 +298,7 @@ definition {
 				widgetName = "Tag Filter");
 		}
 
-		task ("Check show unused tags in Tag Filter configuration") {
+		task ("Configure the Tag Filter to display unused tags") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -315,7 +315,7 @@ definition {
 
 	@description = "The user can search for multiple tags via Blogs widget."
 	@priority = "3"
-	test SearchMultipleTagsViaBlogs {
+	test SearchTagsViaBlogs {
 		property testray.component.names = "Blogs";
 
 		task ("Add a Blogs widget to page") {
@@ -366,11 +366,11 @@ definition {
 		}
 	}
 
-	@description = "View selected and removed tags in Blogs widget."
+	@description = "The user could remove selected tag via Blogs."
 	@priority = "3"
-	test ViewRemovedTagViaBlogs {
+	test RemoveSelectedTagViaBlogs {
 		property portal.acceptance = "true";
-		property testray.component.names = "Blogs";
+		property testray.component.names = "Blogs,Tags";
 
 		task ("Add a Blogs widget to page") {
 			JSONLayout.addWidgetToPublicLayout(

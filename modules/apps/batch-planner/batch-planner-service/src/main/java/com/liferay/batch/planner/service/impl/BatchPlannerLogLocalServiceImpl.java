@@ -25,7 +25,9 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -114,7 +116,27 @@ public class BatchPlannerLogLocalServiceImpl
 		batchPlannerLog.setSize(size);
 		batchPlannerLog.setStatus(status);
 
-		return batchPlannerLogPersistence.update(batchPlannerLog);
+		batchPlannerLog = batchPlannerLogPersistence.update(batchPlannerLog);
+
+		resourceLocalService.addResources(
+			user.getCompanyId(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			user.getUserId(), BatchPlannerLog.class.getName(),
+			batchPlannerLog.getBatchPlannerLogId(), false, true, false);
+
+		return batchPlannerLog;
+	}
+
+	@Override
+	public BatchPlannerLog deleteBatchPlannerLog(long batchPlannerLogId)
+		throws PortalException {
+
+		BatchPlannerLog batchPlannerLog = batchPlannerLogPersistence.remove(
+			batchPlannerLogId);
+
+		resourceLocalService.deleteResource(
+			batchPlannerLog, ResourceConstants.SCOPE_INDIVIDUAL);
+
+		return batchPlannerLog;
 	}
 
 	@Override

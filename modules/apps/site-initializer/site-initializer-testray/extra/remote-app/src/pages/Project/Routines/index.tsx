@@ -60,18 +60,20 @@ const Routine = () => (
 			query={getTestrayBuilds}
 			tableProps={{
 				columns: [
+					{key: 'dateCreated', size: 'sm', value: 'Create Date'},
+					{key: 'gitHash', value: 'Git Hash'},
+					{
+						key: 'product_version',
+						render: (_, {testrayProductVersion}) =>
+							testrayProductVersion?.name,
+						value: 'Product Version',
+					},
 					{
 						key: 'dateCreated',
 						size: 'sm',
 						value: i18n.translate('create-date'),
 					},
 					{key: 'gitHash', value: i18n.translate('git-hash')},
-					{
-						key: 'product_version',
-						render: (_, {testrayProductVersion}) =>
-							testrayProductVersion?.name,
-						value: i18n.translate('product-version'),
-					},
 					{
 						clickable: true,
 						key: 'name',

@@ -54,8 +54,11 @@ const Requirements = () => (
 						key: 'components',
 						value: i18n.translate('jira-components'),
 					},
-					{key: 'summary', value: i18n.translate('summary')},
-					{key: 'description', value: i18n.translate('description')},
+					{
+						key: 'summary',
+						size: 'md',
+						value: i18n.translate('summary'),
+					},
 				],
 				navigateTo: ({testrayRequirementId}) =>
 					testrayRequirementId?.toString(),

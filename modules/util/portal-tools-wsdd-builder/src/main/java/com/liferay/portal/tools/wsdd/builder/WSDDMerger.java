@@ -16,6 +16,8 @@ package com.liferay.portal.tools.wsdd.builder;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.xml.Dom4jUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 
@@ -112,12 +114,14 @@ public class WSDDMerger {
 			merge(source, destination);
 		}
 		catch (Exception exception) {
-			exception.printStackTrace();
+			_log.error(exception);
 		}
 	}
 
 	private static SAXReader _getSAXReader() {
 		return SAXReaderFactory.getSAXReader(null, false, false);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(WSDDMerger.class);
 
 }

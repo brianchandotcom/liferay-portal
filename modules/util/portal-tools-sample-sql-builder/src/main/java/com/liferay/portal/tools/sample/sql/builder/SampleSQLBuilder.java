@@ -23,6 +23,8 @@ import com.liferay.portal.freemarker.FreeMarkerUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.tools.ToolDependencies;
@@ -102,7 +104,7 @@ public class SampleSQLBuilder {
 				BenchmarksPropsValues.ACTUAL_PROPERTIES_CONTENT);
 		}
 		catch (Exception exception) {
-			exception.printStackTrace();
+			_log.error(exception);
 		}
 		finally {
 			FileUtil.deltree(tempDir);
@@ -339,6 +341,9 @@ public class SampleSQLBuilder {
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SampleSQLBuilder.class);
 
 	private volatile Throwable _freeMarkerThrowable;
 

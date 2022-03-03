@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -110,7 +112,7 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 						assetVocabularyId);
 				}
 				catch (PortalException portalException) {
-					portalException.printStackTrace();
+					_log.error(portalException);
 
 					return null;
 				}
@@ -194,6 +196,9 @@ public class ContentDashboardAdminConfigurationDisplayContext {
 			"value", assetVocabulary.getVocabularyId()
 		);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ContentDashboardAdminConfigurationDisplayContext.class);
 
 	private List<AssetVocabulary> _assetVocabularies;
 	private final long[] _assetVocabularyIds;

@@ -50,7 +50,7 @@ public class AssetVocabulariesProvider {
 							assetVocabularyId);
 					}
 					catch (PortalException portalException) {
-						portalException.printStackTrace();
+						_log.error(portalException);
 
 						return null;
 					}

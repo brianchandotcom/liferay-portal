@@ -35,6 +35,7 @@
 /development/jasper.jar
 /development/jaxb-api.jar
 /development/jbi_rt.jar
+/development/jhighlight.jar
 /development/jndi.jar
 /development/jsch.jar
 /development/jserrorcollector.jar
@@ -143,7 +144,6 @@
 /portal/jempbox.jar
 /portal/jericho-html.jar
 /portal/jersey-common.jar
-/portal/jhighlight.jar
 /portal/jhlabs-filters.jar
 /portal/jna.jar
 /portal/jodd-json.jar

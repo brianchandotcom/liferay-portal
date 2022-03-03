@@ -477,7 +477,7 @@ definition {
 	macro goToSidebarAttributes {
 		var key_criterion = "${criterion}";
 
-		Click(locator1 = "ACSegments#CRITERION_TYPE_DROPDOWN");
+		Click.mouseDownMouseUp(locator1 = "ACSegments#CRITERION_TYPE_DROPDOWN");
 
 		while (IsElementPresent(locator1 = "ACSegments#SELECT_CRITERION_TYPE", value1 = "${criterion}")) {
 			Click(

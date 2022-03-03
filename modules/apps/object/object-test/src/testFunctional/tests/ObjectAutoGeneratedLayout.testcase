@@ -56,7 +56,7 @@ definition {
 
 		ObjectPortlet.assertEntryDetailsLabelPresent(entryLabel = "Date");
 
-		ObjectPortlet.viewEmptyLabelInDateEntry(entryValue = "__/__/____");
+		ObjectPortlet.viewEmptyLabelInDateEntry();
 	}
 
 	@description = "LPS-142659 - Verify it is possible to view a Clob entry and label on layout"

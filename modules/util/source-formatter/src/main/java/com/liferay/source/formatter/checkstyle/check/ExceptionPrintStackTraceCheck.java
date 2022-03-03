@@ -65,6 +65,13 @@ public class ExceptionPrintStackTraceCheck extends BaseCheck {
 		}
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTList) {
+			DetailAST parameterDetailAST = getParameterDetailAST(
+				methodCallDetailAST);
+
+			if (parameterDetailAST != null) {
+				continue;
+			}
+
 			log(methodCallDetailAST, _MSG_AVOID_METHOD_CALL);
 		}
 	}

@@ -4304,6 +4304,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.tika.jar!metadata-extractor.jar</file-name>
+				<version>2.13.0</version>
+				<project-name>metadata-extractor</project-name>
+				<project-url>https://drewnoakes.com/code/exif/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.tika.jar!org.gagravarr.tika.jar</file-name>
 				<version>0.8.LIFERAY-PATCHED-1</version>
 				<project-name>org.gagravarr.tika</project-name>
@@ -4407,6 +4419,18 @@
 					<license>
 						<license-name>The Apache Software License, Version 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.portal.tika.jar!xmpcore.jar</file-name>
+				<version>6.0.6</version>
+				<project-name>XMP Library for Java</project-name>
+				<project-url>https://zerowing.corp.adobe.com/display/granite</project-url>
+				<licenses>
+					<license>
+						<license-name>The BSD License</license-name>
+						<license-url>http://www.adobe.com/devnet/xmp/library/eula-xmp-library-java.html</license-url>
 					</license>
 				</licenses>
 			</library>

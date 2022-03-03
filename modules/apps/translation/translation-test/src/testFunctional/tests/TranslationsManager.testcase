@@ -76,4 +76,33 @@ definition {
 		}
 	}
 
+	@description = "LPS-147612. Verifies translation results displayed by different language."
+	@priority = "3"
+	test TranslationResultsDisplayedByDifferentLanguage {
+		task ("Input different languages with the same word") {
+			TranslationManager.useDifferentLanguageInputText(
+				key_currentLocale = "en-us",
+				key_locale = "fr-FR",
+				key_title = "Admin",
+				languagefirst = "Welcome to Liferay",
+				languagesecond = "Bienvenue sur Liferay");
+		}
+
+		task ("View translation results displayed by different language and the language selector is changed to the selected language") {
+			AssertElementPresent(
+				key_currentLocale = "fr-fr",
+				locator1 = "TranslationManager#SELECT_TRANSLATION_LANGUAGE_AUI_TAG_ADMINMENU");
+
+			AssertElementPresent(
+				key_title = "Admin",
+				locator1 = "TranslationManager#AUI_TAG_INPUT_TEXT_FIELD",
+				value1 = "Bienvenue sur Liferay");
+
+			AssertElementPresent(
+				key_title = "Admin",
+				locator1 = "TranslationManager#AUI_TAG_DEFAULT_LANGUAGE_TEXT",
+				value1 = "Welcome to Liferay");
+		}
+	}
+
 }

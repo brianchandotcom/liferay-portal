@@ -17,13 +17,9 @@ package com.liferay.jenkins.results.parser.testray;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
-import com.liferay.jenkins.results.parser.Job;
-import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
 import com.liferay.jenkins.results.parser.TestClassResult;
 import com.liferay.jenkins.results.parser.TestResult;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
-import com.liferay.jenkins.results.parser.job.property.JobProperty;
-import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.clazz.FunctionalTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
@@ -31,8 +27,6 @@ import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.apache.commons.lang.WordUtils;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -247,7 +241,7 @@ public class FunctionalBatchTestrayCaseResult extends BatchTestrayCaseResult {
 
 		return null;
 	}
-	
+
 	private List<TestrayAttachment> _getLiferayLogTestrayAttachments() {
 		List<TestrayAttachment> testrayAttachments = new ArrayList<>();
 

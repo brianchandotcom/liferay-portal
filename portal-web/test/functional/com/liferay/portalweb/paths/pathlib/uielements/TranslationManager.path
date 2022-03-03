@@ -56,7 +56,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>AUI_TAG_BELOW_INPUT_TEXT_FIELD</td>
+	<td>AUI_TAG_DEFAULT_LANGUAGE_TEXT</td>
 	<td>//div[contains(@class,'col') and h3='${key_title}']//div[contains(@class,'form-group')]//div[contains(@class,'form-text')]</td>
 	<td></td>
 </tr>

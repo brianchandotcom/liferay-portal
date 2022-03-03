@@ -132,8 +132,7 @@ public class ObjectEntryServiceTest {
 			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
 
 		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(),
-			_objectDefinition.getResourceName(),
+			TestPropsValues.getCompanyId(), _objectDefinition.getResourceName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()),
 			guestRole.getRoleId(), ObjectActionKeys.ADD_OBJECT_ENTRY);
@@ -145,8 +144,7 @@ public class ObjectEntryServiceTest {
 					"firstName", RandomStringUtils.randomAlphabetic(5)
 				).build(),
 				ServiceContextTestUtil.getServiceContext(
-					TestPropsValues.getGroupId(),
-					_defaultUser.getUserId())));
+					TestPropsValues.getGroupId(), _defaultUser.getUserId())));
 
 		_setUser(_user);
 
@@ -205,8 +203,7 @@ public class ObjectEntryServiceTest {
 			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
 
 		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(),
-			_objectDefinition.getClassName(),
+			TestPropsValues.getCompanyId(), _objectDefinition.getClassName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()),
 			guestRole.getRoleId(), ActionKeys.VIEW);

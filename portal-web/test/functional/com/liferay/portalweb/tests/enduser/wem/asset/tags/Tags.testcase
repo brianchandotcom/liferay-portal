@@ -32,7 +32,7 @@ definition {
 	@description = "The user cannot add a tag with an empty name."
 	@priority = "4"
 	@uitest
-	test CannotAddWithEmptyName {
+	test CannotAddTagWithoutName {
 		task ("View cannot add a tag wih an empty name") {
 			Tag.openTagsAdmin(siteURLKey = "test-site-name");
 
@@ -122,7 +122,7 @@ definition {
 
 	@description = "The user can delete a single tag via menu item."
 	@priority = "5"
-	test DeleteTagViaMenuItem {
+	test DeleteTagViaMenu {
 		property portal.acceptance = "true";
 
 		task ("Add a tag") {
@@ -339,19 +339,19 @@ definition {
 			Pagination.viewResults(results = "Showing 1 to 20 of 24 entries.");
 		}
 
-		task ("View pagination results for 4 entries") {
+		task ("Change the amount of items per page to 4") {
 			Pagination.changePagination(itemsPerPage = "4");
 
 			Pagination.viewResults(results = "Showing 1 to 4 of 24 entries.");
 		}
 
-		task ("View pagination results for 8 entries") {
+		task ("Change the amount of items per page to 8") {
 			Pagination.changePagination(itemsPerPage = "8");
 
 			Pagination.viewResults(results = "Showing 1 to 8 of 24 entries.");
 		}
 
-		task ("View pagination results for 40 entries") {
+		task ("Change the amount of items per page to 40") {
 			Pagination.changePagination(itemsPerPage = "40");
 
 			Pagination.viewResults(results = "Showing 1 to 24 of 24 entries.");

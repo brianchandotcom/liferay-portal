@@ -34,7 +34,7 @@ CSDiagramSetting csDiagramSetting = csDiagramCPTypeHelper.getCSDiagramSetting(co
 	</h4>
 
 	<p class="text-3">
-		<%= cpCatalogEntry.getDescription() %>
+		<%= cpCatalogEntry.getShortDescription() %>
 	</p>
 </div>
 

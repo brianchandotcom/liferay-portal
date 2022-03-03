@@ -87,10 +87,11 @@ const ProjectOutlet = () => {
 	}, [dispatch, testrayProjects]);
 
 	useEffect(() => {
-		if (testrayProject && !hasOtherParams) {
+		if (testrayProject) {
 			setHeading([
 				{
 					category: i18n.translate('project').toUpperCase(),
+					path: `/project/${testrayProject.testrayProjectId}/routines`,
 					title: testrayProject.name,
 				},
 			]);

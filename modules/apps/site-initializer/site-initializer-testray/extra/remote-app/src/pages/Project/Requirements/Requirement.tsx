@@ -14,6 +14,7 @@
 
 import {useQuery} from '@apollo/client';
 import ClayIcon from '@clayui/icon';
+import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
@@ -26,10 +27,13 @@ import {
 	getTestrayCases,
 	getTestrayRequirement,
 } from '../../../graphql/queries';
+import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
 
 const Requirement = () => {
 	const {requirementId} = useParams();
+
+	const {setHeading} = useHeader({shouldUpdate: false});
 
 	const {data, loading} = useQuery<
 		CType<'testrayRequirement', TestrayRequirement>
@@ -40,6 +44,12 @@ const Requirement = () => {
 	});
 
 	const testrayRequirement = data?.c?.testrayRequirement;
+
+	useEffect(() => {
+		if (testrayRequirement) {
+			setHeading([{title: testrayRequirement.key}], true);
+		}
+	}, [setHeading, testrayRequirement]);
 
 	if (loading) {
 		return <Loading />;

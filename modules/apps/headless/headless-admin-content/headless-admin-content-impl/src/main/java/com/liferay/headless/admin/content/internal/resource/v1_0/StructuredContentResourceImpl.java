@@ -90,6 +90,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.ws.rs.BadRequestException;
@@ -304,6 +305,12 @@ public class StructuredContentResourceImpl
 				_getExpandoBridgeAttributes(structuredContent), siteId,
 				contextHttpServletRequest,
 				structuredContent.getViewableByAsString());
+
+		Optional.ofNullable(
+			structuredContent.getPriority()
+		).ifPresent(
+			serviceContext::setAssetPriority
+		);
 
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 

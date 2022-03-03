@@ -4292,6 +4292,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.tika.jar!jna.jar</file-name>
+				<version>4.1.0</version>
+				<project-name>Java Native Access</project-name>
+				<project-url>https://github.com/twall/jna</project-url>
+				<licenses>
+					<license>
+						<license-name>LGPL, version 2.1</license-name>
+						<license-url>http://www.gnu.org/licenses/licenses.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.tika.jar!org.gagravarr.tika.jar</file-name>
 				<version>0.8.LIFERAY-PATCHED-1</version>
 				<project-name>org.gagravarr.tika</project-name>

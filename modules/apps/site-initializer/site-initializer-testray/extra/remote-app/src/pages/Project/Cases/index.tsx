@@ -29,25 +29,31 @@ const Cases = () => (
 						value: i18n.translate('case-name'),
 					},
 					{key: 'priority', value: i18n.translate('priority')},
-					{key: 'type', value: i18n.translate('case-type')},
+					{
+						key: 'testrayCaseType',
+						render: (testrayCaseType) => testrayCaseType?.name,
+						value: i18n.translate('case-type'),
+					},
 					{key: 'team', value: i18n.translate('team')},
-					{key: 'component', value: i18n.translate('component')},
+					{
+						key: 'testrayComponent',
+						render: (testrayComponent) => testrayComponent?.name,
+						value: i18n.translate('component'),
+					},
 					{key: 'issues', value: i18n.translate('issues')},
 
 					{
-						key: 'createdDate',
-						render: () => 'dez 13, 2021 12:00 PM',
+						key: 'dateCreated',
 						value: i18n.translate('create-date'),
 					},
 					{
-						key: 'modifiedDate',
-						render: () => 'dez 13, 2021 12:00 PM',
+						key: 'dateModified',
 						value: i18n.translate('modified-date'),
 					},
 				],
 				navigateTo: ({testrayCaseId}) => testrayCaseId?.toString(),
 			}}
-			transformData={(data) => data?.c?.testrayCases}
+			transformData={(data) => data?.testrayCases}
 		/>
 	</Container>
 );

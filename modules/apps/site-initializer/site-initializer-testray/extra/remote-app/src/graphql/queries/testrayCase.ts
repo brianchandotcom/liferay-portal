@@ -52,16 +52,36 @@ export const getTestrayCases = gql`
 		$page: Int = 1
 		$pageSize: Int = 20
 	) {
-		c {
-			testrayCases(filter: $filter, page: $page, pageSize: $pageSize) {
-				items {
-					...TestrayCaseFragment
+		testrayCases(filter: $filter, page: $page, pageSize: $pageSize)
+			@rest(
+				type: "C_TestrayCase"
+				path: "testraycases?page={args.page}&pageSize={args.pageSize}&nestedFields=testrayComponent,testrayCaseType"
+			) {
+			items {
+				caseNumber
+				dateCreated
+				dateModified
+				description
+				descriptionType
+				estimatedDuration
+				name
+				originationKey
+				priority
+				steps
+				stepsType
+				testrayCaseId
+				testrayCaseResult
+				testrayCaseType: r_caseCaseType_c_testrayCaseType {
+					name
 				}
-				lastPage
-				page
-				pageSize
-				totalCount
+				testrayComponent: r_casesComponents_c_testrayComponent {
+					name
+				}
 			}
+			lastPage
+			page
+			pageSize
+			totalCount
 		}
 	}
 `;

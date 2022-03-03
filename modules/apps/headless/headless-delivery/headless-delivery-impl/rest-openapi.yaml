@@ -3505,6 +3505,9 @@ components:
                             deprecated: true
                             enum: [Block, FlexColumn, FlexRow]
                             type: string
+                        htmlTag:
+                            enum: [Article, Aside, Div, Footer, Header, Main, Nav, Section]
+                            type: string
                         justify:
                             deprecated: true
                             enum: [Center, End, None, SpaceAround, SpaceBetween, Start]

@@ -19,6 +19,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.page.template.util.AlignConverter;
 import com.liferay.layout.page.template.util.BorderRadiusConverter;
 import com.liferay.layout.page.template.util.ContentDisplayConverter;
+import com.liferay.layout.page.template.util.HtmlTagConverter;
 import com.liferay.layout.page.template.util.JustifyConverter;
 import com.liferay.layout.page.template.util.MarginConverter;
 import com.liferay.layout.page.template.util.PaddingConverter;
@@ -142,6 +143,14 @@ public class ContainerLayoutStructureItemImporter
 					containerStyledLayoutStructureItem.setContentDisplay(
 						ContentDisplayConverter.convertToInternalValue(
 							contentDisplay));
+				}
+
+				String htmlTag = String.valueOf(
+					containerLayout.getOrDefault("htmlTag", StringPool.BLANK));
+
+				if (Validator.isNotNull(htmlTag)) {
+					containerStyledLayoutStructureItem.setHtmlTag(
+						HtmlTagConverter.convertToInternalValue(htmlTag));
 				}
 
 				String justify = String.valueOf(

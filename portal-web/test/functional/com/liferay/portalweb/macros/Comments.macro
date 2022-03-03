@@ -47,6 +47,12 @@ definition {
 			locator1 = "Link#GUEST",
 			value1 = "Guest");
 
+		AssertElementPresent(locator1 = "TextInput#FIRST_NAME");
+
+		AssertElementPresent(locator1 = "TextInput#LAST_NAME");
+
+		AssertElementPresent(locator1 = "TextInput#EMAIL_ADDRESS");
+
 		Type(
 			locator1 = "TextInput#FIRST_NAME",
 			value1 = "${userFirstName}");

@@ -359,6 +359,10 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro viewEmptyLabelInDateEntry {
+		AssertElementPresent(locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY");
+	}
+
 	macro viewEntry {
 		WaitForSPARefresh();
 
@@ -390,10 +394,6 @@ definition {
 
 	macro viewWidgetButton {
 		AssertElementPresent(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
-	}
-
-	macro viewEmptyLabelInDateEntry {
-		AssertElementPresent(locator1 = "ObjectPortlet#VIEW_EMPTY_LABEL_IN_DATE_ENTRY");
 	}
 
 }

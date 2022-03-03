@@ -257,6 +257,18 @@ function getMappedFieldLabel(
 	return null;
 }
 
+function getNameInfo(item) {
+	if (
+		config.fragmentAdvancedOptionsEnabled &&
+		item.type === LAYOUT_DATA_ITEM_TYPES.container &&
+		item.config.htmlTag !== 'div'
+	) {
+		return item.config.htmlTag;
+	}
+
+	return null;
+}
+
 function isItemHidden(item, selectedViewportSize) {
 	const responsiveConfig = getResponsiveConfig(
 		item.config,
@@ -483,6 +495,7 @@ function visit(
 		isMasterItem: !isMasterPage && itemInMasterLayout,
 		itemType: ITEM_TYPES.layoutDataItem,
 		name: getLayoutDataItemLabel(item, fragmentEntryLinks),
+		nameInfo: getNameInfo(item),
 		onHoverNode,
 		parentItemId: item.parentId,
 		removable: !itemInMasterLayout && isRemovable(item, layoutData),

@@ -310,6 +310,7 @@ function StructureTreeNodeContent({
 				isMapped={isMapped}
 				isMasterItem={node.isMasterItem}
 				name={node.name}
+				nameInfo={node.nameInfo}
 				ref={nodeRef}
 			/>
 
@@ -336,7 +337,7 @@ function StructureTreeNodeContent({
 }
 
 const NameLabel = React.forwardRef(
-	({hidden, icon, isActive, isMapped, isMasterItem, name}, ref) => (
+	({hidden, icon, isActive, isMapped, isMasterItem, name, nameInfo}, ref) => (
 		<div
 			className={classNames(
 				'page-editor__page-structure__tree-node__name',
@@ -352,6 +353,12 @@ const NameLabel = React.forwardRef(
 			{icon && <ClayIcon symbol={icon || ''} />}
 
 			{name || Liferay.Language.get('element')}
+
+			{nameInfo && (
+				<span className="ml-3 page-editor__page-structure__tree-node__name-info position-relative">
+					{nameInfo}
+				</span>
+			)}
 		</div>
 	)
 );

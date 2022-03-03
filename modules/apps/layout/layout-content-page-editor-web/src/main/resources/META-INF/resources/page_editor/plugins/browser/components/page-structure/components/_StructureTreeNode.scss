@@ -88,6 +88,23 @@ html#{$cadmin-selector} {
 					margin-right: 8px;
 				}
 
+				&-info {
+					font-weight: 400;
+
+					&:before {
+						background-color: $cadmin-dark;
+						border-radius: 50%;
+						content: '';
+						display: block;
+						height: 2px;
+						left: -8px;
+						position: absolute;
+						top: 50%;
+						transform: translateX(-50%);
+						width: 2px;
+					}
+				}
+
 				&--master-item {
 					color: $cadmin-secondary-l1;
 					cursor: not-allowed;

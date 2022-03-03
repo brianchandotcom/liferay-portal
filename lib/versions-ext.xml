@@ -1440,18 +1440,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/java-libpst.jar</file-name>
-				<version>0.8.1</version>
-				<project-name>java-libpst</project-name>
-				<project-url>http://code.google.com/p/java-libpst</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/javassist.jar</file-name>
 				<version>3.18.2 GA</version>
 				<project-name>Javassist</project-name>

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.permission.PortalPermission;
-import com.liferay.portal.kernel.service.permission.RolePermissionUtil;
+import com.liferay.portal.kernel.service.permission.RolePermission;
 
 import java.util.Locale;
 import java.util.Map;
@@ -124,8 +124,7 @@ public class AccountRoleServiceImpl extends AccountRoleServiceBaseImpl {
 			return accountRole;
 		}
 
-		RolePermissionUtil.check(
-			getPermissionChecker(), roleId, ActionKeys.VIEW);
+		_rolePermission.check(getPermissionChecker(), roleId, ActionKeys.VIEW);
 
 		return accountRole;
 	}
@@ -169,5 +168,8 @@ public class AccountRoleServiceImpl extends AccountRoleServiceBaseImpl {
 
 	@Reference
 	private PortalPermission _portalPermission;
+
+	@Reference
+	private RolePermission _rolePermission;
 
 }

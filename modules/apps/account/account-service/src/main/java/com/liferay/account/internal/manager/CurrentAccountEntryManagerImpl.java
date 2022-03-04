@@ -29,6 +29,10 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
@@ -71,17 +75,20 @@ public class CurrentAccountEntryManagerImpl
 			return guestAccountEntry;
 		}
 
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			user);
+
 		AccountEntry accountEntry = _getAccountEntryFromHttpSession(groupId);
 
 		String[] allowedTypes = _getAllowedTypes(groupId);
 
-		if (_isValid(accountEntry, allowedTypes)) {
+		if (_isValid(accountEntry, allowedTypes, permissionChecker)) {
 			return accountEntry;
 		}
 
 		accountEntry = _getAccountEntryFromPortalPreferences(groupId, userId);
 
-		if (_isValid(accountEntry, allowedTypes)) {
+		if (_isValid(accountEntry, allowedTypes, permissionChecker)) {
 			_saveInHttpSession(accountEntry.getAccountEntryId(), groupId);
 
 			return accountEntry;
@@ -89,7 +96,7 @@ public class CurrentAccountEntryManagerImpl
 
 		accountEntry = _getDefaultAccountEntry(allowedTypes, userId);
 
-		if (_isValid(accountEntry, allowedTypes)) {
+		if (_isValid(accountEntry, allowedTypes, permissionChecker)) {
 			setCurrentAccountEntry(
 				accountEntry.getAccountEntryId(), groupId, userId);
 
@@ -188,15 +195,29 @@ public class CurrentAccountEntryManagerImpl
 		return _portletPreferencesFactory.getPortalPreferences(userId, true);
 	}
 
-	private boolean _isValid(AccountEntry accountEntry, String[] allowedTypes) {
-		if ((accountEntry != null) &&
-			Objects.equals(
-				WorkflowConstants.STATUS_APPROVED, accountEntry.getStatus()) &&
-			((accountEntry.getAccountEntryId() ==
-				AccountConstants.ACCOUNT_ENTRY_ID_GUEST) ||
-			 ArrayUtil.contains(allowedTypes, accountEntry.getType()))) {
+	private boolean _isValid(
+		AccountEntry accountEntry, String[] allowedTypes,
+		PermissionChecker permissionChecker) {
 
-			return true;
+		try {
+			if ((accountEntry != null) &&
+				Objects.equals(
+					WorkflowConstants.STATUS_APPROVED,
+					accountEntry.getStatus()) &&
+				((accountEntry.getAccountEntryId() ==
+					AccountConstants.ACCOUNT_ENTRY_ID_GUEST) ||
+				 ArrayUtil.contains(allowedTypes, accountEntry.getType())) &&
+				_accountEntryModelResourcePermission.contains(
+					permissionChecker, accountEntry.getAccountEntryId(),
+					ActionKeys.VIEW)) {
+
+				return true;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isInfoEnabled()) {
+				_log.info(portalException);
+			}
 		}
 
 		return false;
@@ -243,6 +264,15 @@ public class CurrentAccountEntryManagerImpl
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
+
+	@Reference
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Reference
 	private PortalPreferencesLocalService _portalPreferencesLocalService;

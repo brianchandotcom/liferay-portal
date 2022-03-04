@@ -87,10 +87,17 @@ import com.liferay.portal.search.sort.Sorts;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.users.admin.kernel.file.uploads.UserFileUploadsSettings;
 
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.apache.commons.validator.routines.DomainValidator;
@@ -446,13 +453,19 @@ public class AccountEntryLocalServiceImpl
 			String[] types, Integer status, int start, int end)
 		throws PortalException {
 
-		return dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(AccountEntryTable.INSTANCE),
-				userId, parentAccountEntryId, keywords, types, status
-			).limit(
-				start, end
-			));
+		Map<Serializable, AccountEntry> accountEntriesMap =
+			accountEntryPersistence.fetchByPrimaryKeys(
+				_getUserAccountEntryIds(
+					userId, parentAccountEntryId, keywords, types, status));
+
+		if (accountEntriesMap.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<AccountEntry> accountEntries = new ArrayList<>(
+			accountEntriesMap.values());
+
+		return accountEntries.subList(start, end);
 	}
 
 	@Override
@@ -462,11 +475,24 @@ public class AccountEntryLocalServiceImpl
 			OrderByComparator<AccountEntry> orderByComparator)
 		throws PortalException {
 
-		return dslQuery(
-			_getGroupByStep(
+		GroupByStep groupByStep =
+			(GroupByStep)_getOrganizationsAccountEntriesGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(AccountEntryTable.INSTANCE),
 				userId, parentAccountEntryId, keywords, types, status
-			).orderBy(
+			).union(
+				_getOwnerAccountEntriesGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						AccountEntryTable.INSTANCE),
+					userId, parentAccountEntryId, keywords, types, status)
+			).union(
+				_getUerAccountEntriesGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						AccountEntryTable.INSTANCE),
+					userId, parentAccountEntryId, keywords, types, status)
+			);
+
+		return dslQuery(
+			groupByStep.orderBy(
 				AccountEntryTable.INSTANCE, orderByComparator
 			).limit(
 				start, end
@@ -490,11 +516,10 @@ public class AccountEntryLocalServiceImpl
 			String[] types, Integer status)
 		throws PortalException {
 
-		return accountEntryPersistence.dslQueryCount(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.countDistinct(
-					AccountEntryTable.INSTANCE.accountEntryId),
-				userId, parentAccountEntryId, keywords, types, status));
+		Set<Serializable> accountEntryIds = _getUserAccountEntryIds(
+			userId, parentAccountEntryId, keywords, types, status);
+
+		return accountEntryIds.size();
 	}
 
 	@Override
@@ -657,105 +682,49 @@ public class AccountEntryLocalServiceImpl
 		return updateStatus(getAccountEntry(accountEntryId), status);
 	}
 
-	private GroupByStep _getGroupByStep(
-			FromStep fromStep, long userId, Long parentAccountId,
-			String keywords, String[] types, Integer status)
-		throws PortalException {
+	private Predicate _getAccountEntryWherePredicate(
+		Long parentAccountId, String keywords, String[] types, Integer status) {
 
-		JoinStep joinStep = fromStep.from(
-			UserTable.INSTANCE
-		).leftJoinOn(
-			AccountEntryUserRelTable.INSTANCE,
-			AccountEntryUserRelTable.INSTANCE.accountUserId.eq(
-				UserTable.INSTANCE.userId)
-		);
+		Predicate predicate = null;
 
-		Long[] organizationIds = _getOrganizationIds(userId);
-
-		if (ArrayUtil.isNotEmpty(organizationIds)) {
-			joinStep = joinStep.leftJoinOn(
-				AccountEntryOrganizationRelTable.INSTANCE,
-				AccountEntryOrganizationRelTable.INSTANCE.organizationId.in(
-					organizationIds));
+		if (parentAccountId != null) {
+			predicate = Predicate.and(
+				predicate,
+				AccountEntryTable.INSTANCE.parentAccountEntryId.eq(
+					parentAccountId));
 		}
 
-		Predicate accountEntryPredicate =
-			AccountEntryTable.INSTANCE.accountEntryId.eq(
-				AccountEntryUserRelTable.INSTANCE.accountEntryId
-			).or(
-				AccountEntryTable.INSTANCE.userId.eq(userId)
-			).or(
-				() -> {
-					if (ArrayUtil.isEmpty(organizationIds)) {
-						return null;
-					}
+		if (Validator.isNotNull(keywords)) {
+			Predicate keywordsPredicate = _customSQL.getKeywordsPredicate(
+				DSLFunctionFactoryUtil.lower(AccountEntryTable.INSTANCE.name),
+				_customSQL.keywords(keywords, true));
 
-					return AccountEntryTable.INSTANCE.accountEntryId.eq(
-						AccountEntryOrganizationRelTable.INSTANCE.
-							accountEntryId);
-				}
-			);
+			if (Validator.isDigit(keywords)) {
+				keywordsPredicate = Predicate.or(
+					AccountEntryTable.INSTANCE.accountEntryId.eq(
+						Long.valueOf(keywords)),
+					keywordsPredicate);
+			}
 
-		joinStep = joinStep.leftJoinOn(
-			AccountEntryTable.INSTANCE, accountEntryPredicate);
+			keywordsPredicate = Predicate.or(
+				AccountEntryTable.INSTANCE.externalReferenceCode.eq(keywords),
+				keywordsPredicate);
 
-		return joinStep.where(
-			() -> UserTable.INSTANCE.userId.eq(
-				userId
-			).and(
-				() -> {
-					if (parentAccountId == null) {
-						return null;
-					}
+			predicate = Predicate.and(
+				predicate, Predicate.withParentheses(keywordsPredicate));
+		}
 
-					return AccountEntryTable.INSTANCE.parentAccountEntryId.eq(
-						parentAccountId);
-				}
-			).and(
-				() -> {
-					if (Validator.isNull(keywords)) {
-						return null;
-					}
+		if (types != null) {
+			predicate = Predicate.and(
+				predicate, AccountEntryTable.INSTANCE.type.in(types));
+		}
 
-					Predicate keywordsPredicate =
-						_customSQL.getKeywordsPredicate(
-							DSLFunctionFactoryUtil.lower(
-								AccountEntryTable.INSTANCE.name),
-							_customSQL.keywords(keywords, true));
+		if ((status != null) && (status != WorkflowConstants.STATUS_ANY)) {
+			predicate = Predicate.and(
+				predicate, AccountEntryTable.INSTANCE.status.eq(status));
+		}
 
-					if (Validator.isDigit(keywords)) {
-						keywordsPredicate = Predicate.or(
-							AccountEntryTable.INSTANCE.accountEntryId.eq(
-								Long.valueOf(keywords)),
-							keywordsPredicate);
-					}
-
-					keywordsPredicate = Predicate.or(
-						AccountEntryTable.INSTANCE.externalReferenceCode.eq(
-							keywords),
-						keywordsPredicate);
-
-					return Predicate.withParentheses(keywordsPredicate);
-				}
-			).and(
-				() -> {
-					if (types != null) {
-						return AccountEntryTable.INSTANCE.type.in(types);
-					}
-
-					return null;
-				}
-			).and(
-				() -> {
-					if ((status != null) &&
-						(status != WorkflowConstants.STATUS_ANY)) {
-
-						return AccountEntryTable.INSTANCE.status.eq(status);
-					}
-
-					return null;
-				}
-			));
+		return predicate;
 	}
 
 	private Long[] _getOrganizationIds(long userId) {
@@ -783,6 +752,49 @@ public class AccountEntryLocalServiceImpl
 		).distinct(
 		).toArray(
 			Long[]::new
+		);
+	}
+
+	private GroupByStep _getOrganizationsAccountEntriesGroupByStep(
+		FromStep fromStep, long userId, Long parentAccountId, String keywords,
+		String[] types, Integer status) {
+
+		JoinStep joinStep = fromStep.from(AccountEntryTable.INSTANCE);
+
+		Long[] organizationIds = _getOrganizationIds(userId);
+
+		if (ArrayUtil.isEmpty(organizationIds)) {
+			return joinStep.where(
+				AccountEntryTable.INSTANCE.accountEntryId.eq(-1L));
+		}
+
+		return joinStep.innerJoinON(
+			AccountEntryOrganizationRelTable.INSTANCE,
+			AccountEntryOrganizationRelTable.INSTANCE.accountEntryId.eq(
+				AccountEntryTable.INSTANCE.accountEntryId)
+		).where(
+			AccountEntryOrganizationRelTable.INSTANCE.organizationId.in(
+				organizationIds
+			).and(
+				_getAccountEntryWherePredicate(
+					parentAccountId, keywords, types, status)
+			)
+		);
+	}
+
+	private GroupByStep _getOwnerAccountEntriesGroupByStep(
+		FromStep fromStep, long userId, Long parentAccountId, String keywords,
+		String[] types, Integer status) {
+
+		return fromStep.from(
+			AccountEntryTable.INSTANCE
+		).where(
+			AccountEntryTable.INSTANCE.userId.eq(
+				userId
+			).and(
+				_getAccountEntryWherePredicate(
+					parentAccountId, keywords, types, status)
+			)
 		);
 	}
 
@@ -825,6 +837,56 @@ public class AccountEntryLocalServiceImpl
 		}
 
 		return searchRequestBuilder.build();
+	}
+
+	private GroupByStep _getUerAccountEntriesGroupByStep(
+		FromStep fromStep, long userId, Long parentAccountId, String keywords,
+		String[] types, Integer status) {
+
+		return fromStep.from(
+			AccountEntryTable.INSTANCE
+		).innerJoinON(
+			AccountEntryUserRelTable.INSTANCE,
+			AccountEntryUserRelTable.INSTANCE.accountEntryId.eq(
+				AccountEntryTable.INSTANCE.accountEntryId)
+		).where(
+			AccountEntryUserRelTable.INSTANCE.accountUserId.eq(
+				userId
+			).and(
+				_getAccountEntryWherePredicate(
+					parentAccountId, keywords, types, status)
+			)
+		);
+	}
+
+	private Set<Serializable> _getUserAccountEntryIds(
+		long userId, Long parentAccountEntryId, String keywords, String[] types,
+		Integer status) {
+
+		Set<Serializable> accountEntryIds = new HashSet<>();
+
+		accountEntryIds.addAll(
+			dslQuery(
+				_getOrganizationsAccountEntriesGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						AccountEntryTable.INSTANCE.accountEntryId),
+					userId, parentAccountEntryId, keywords, types, status)));
+
+		accountEntryIds.addAll(
+			dslQuery(
+				_getOwnerAccountEntriesGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						AccountEntryTable.INSTANCE.accountEntryId),
+					userId, parentAccountEntryId, keywords, types, status)));
+
+		accountEntryIds.addAll(
+			dslQuery(
+				_getUerAccountEntriesGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						AccountEntryTable.INSTANCE.accountEntryId),
+					userId, parentAccountEntryId, keywords, types, status)));
+
+		return accountEntryIds;
 	}
 
 	private void _performActions(

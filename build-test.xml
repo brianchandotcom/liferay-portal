@@ -11751,20 +11751,6 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					src="${java.io.tmpdir}/${bundle.file.name}"
 				/>
 
-				<move
-					todir="${project.dir}/sql"
-				>
-					<fileset
-						dir="${java.io.tmpdir}/bundle"
-						includes="liferay-*/data/hypersonic/*"
-					/>
-					<mapper
-						from="liferay-[^/]+/data/hypersonic/([^/]+)"
-						to="\1"
-						type="regexp"
-					/>
-				</move>
-
 				<delete dir="${java.io.tmpdir}/bundle" />
 
 				<delete file="${java.io.tmpdir}/${bundle.file.name}" />
@@ -12110,31 +12096,6 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 									</else>
 								</if>
 							</then>
-							<elseif>
-								<and>
-									<available file="sql/${database.name}.properties" />
-									<available file="sql/${database.name}.script" />
-									<equals arg1="${database.type}" arg2="hypersonic" />
-								</and>
-								<then>
-									<delete failonerror="false" includeemptydirs="true">
-										<fileset
-											dir="${liferay.home}/data"
-										>
-											<exclude name="hypersonic/lportal.lobs" />
-										</fileset>
-									</delete>
-
-									<copy
-										file="sql/${database.name}.properties"
-										tofile="${liferay.home}/data/hypersonic/${database.name}.properties"
-									/>
-									<copy
-										file="sql/${database.name}.script"
-										tofile="${liferay.home}/data/hypersonic/${database.name}.script"
-									/>
-								</then>
-							</elseif>
 							<elseif>
 								<or>
 									<equals arg1="${database.type}" arg2="mariadb" />

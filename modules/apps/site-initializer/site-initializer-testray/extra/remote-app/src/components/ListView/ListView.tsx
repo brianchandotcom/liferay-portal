@@ -14,10 +14,15 @@
 
 import {TypedDocumentNode, useQuery} from '@apollo/client';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {useContext, useMemo} from 'react';
 
+import ListViewContextProvider, {
+	ListViewContext,
+} from '../../context/ListViewContext';
 import i18n from '../../i18n';
 import {PAGINATION} from '../../util/constants';
 import EmptyState from '../EmptyState';
+import ManagementToolbar from '../ManagementToolbar';
 import Table, {TableProps} from '../Table';
 
 type LiferayQueryResponse<T = any> = {
@@ -41,6 +46,8 @@ const ListView: React.FC<ListViewProps> = ({
 	transformData,
 	variables,
 }) => {
+	const [{filters}] = useContext(ListViewContext);
+
 	const {data, error, loading, refetch} = useQuery(query, {
 		variables,
 	});
@@ -49,26 +56,23 @@ const ListView: React.FC<ListViewProps> = ({
 
 	const deltas = PAGINATION.delta.map((label) => ({label}));
 
+	const columns = useMemo(
+		() =>
+			tableProps.columns.filter(({key}) => {
+				const columns = filters.columns || {};
+
+				if (columns[key] === undefined) {
+					return true;
+				}
+
+				return columns[key];
+			}),
+		[filters.columns, tableProps.columns]
+	);
+
 	const onRefetch = (newVariables: any) => {
 		refetch({...variables, ...newVariables});
 	};
-
-	const Pagination = () => (
-		<ClayPaginationBarWithBasicItems
-			activeDelta={pageSize}
-			activePage={page}
-			deltas={deltas}
-			ellipsisBuffer={PAGINATION.ellipsisBuffer}
-			labels={{
-				paginationResults: i18n.translate('showing-x-to-x-of-x'),
-				perPageItems: i18n.translate('x-items'),
-				selectPerPageItems: i18n.translate('x-items'),
-			}}
-			onDeltaChange={(delta) => onRefetch({pageSize: delta})}
-			onPageChange={(page) => onRefetch({page})}
-			totalItems={totalCount}
-		/>
-	);
 
 	if (error) {
 		return <span>{error.message}</span>;
@@ -84,11 +88,35 @@ const ListView: React.FC<ListViewProps> = ({
 
 	return (
 		<>
-			<Pagination />
-			<Table {...tableProps} items={items} />
-			<Pagination />
+			<ManagementToolbar
+				tableProps={tableProps}
+				totalItems={items.length}
+			/>
+
+			<Table {...tableProps} columns={columns} items={items} />
+
+			<ClayPaginationBarWithBasicItems
+				activeDelta={pageSize}
+				activePage={page}
+				deltas={deltas}
+				ellipsisBuffer={PAGINATION.ellipsisBuffer}
+				labels={{
+					paginationResults: i18n.translate('showing-x-to-x-of-x'),
+					perPageItems: i18n.translate('x-items'),
+					selectPerPageItems: i18n.translate('x-items'),
+				}}
+				onDeltaChange={(delta) => onRefetch({pageSize: delta})}
+				onPageChange={(page) => onRefetch({page})}
+				totalItems={totalCount}
+			/>
 		</>
 	);
 };
 
-export default ListView;
+const ListViewWithContext: React.FC<ListViewProps> = (props) => (
+	<ListViewContextProvider>
+		<ListView {...props} />
+	</ListViewContextProvider>
+);
+
+export default ListViewWithContext;

@@ -59,6 +59,7 @@ import java.util.Set;
 import org.apache.axis2.client.Options;
 import org.apache.axis2.client.ServiceClient;
 import org.apache.axis2.client.Stub;
+import org.apache.axis2.namespace.Constants;
 import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.axis2.transport.http.impl.httpclient3.HttpTransportPropertiesImpl;
 import org.apache.http.client.config.AuthSchemes;
@@ -366,6 +367,8 @@ public class SharepointConnectionImpl implements SharepointConnection {
 		authenticator.setUsername(_sharepointConnectionInfo.getUserName());
 
 		options.setProperty(HTTPConstants.AUTHENTICATE, authenticator);
+
+		options.setSoapVersionURI(Constants.URI_SOAP11_ENV);
 	}
 
 	private URL _getServiceURL(String serviceName) {

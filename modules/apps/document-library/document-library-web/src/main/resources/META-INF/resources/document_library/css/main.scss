@@ -769,7 +769,14 @@ $productMenuWidth: 320px;
 	.upload-drop-active &,
 	.upload-drop-intent & {
 		.document-container {
-			background-color: #eef4ff;
+			background-color: $primary-l3;
+		}
+	}
+
+	.upload-drop-active & {
+		.document-container {
+			border-radius: 2px;
+			box-shadow: 0 0 0 2px $primary-l2 !important;
 		}
 	}
 

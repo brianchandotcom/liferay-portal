@@ -25,6 +25,8 @@ import {
 } from './utils/constants/columns-definitions';
 import {getColumnsByUserAccess} from './utils/getColumnsByUserAccess';
 
+const MAX_PAGE_SIZE = 9999;
+
 const TeamMembersTable = ({project}) => {
 	const [userAccounts, setUserAccounts] = useState([]);
 	const [isLoadingUserAccounts, setIsLoadingUserAccounts] = useState(false);
@@ -36,21 +38,22 @@ const TeamMembersTable = ({project}) => {
 				query: getAccountUserAccountsByExternalReferenceCode,
 				variables: {
 					externalReferenceCode: project.accountKey,
+					pageSize: MAX_PAGE_SIZE,
 				},
 			});
 
 			if (data) {
-				const accountUserAccounts = data.accountUserAccountsByExternalReferenceCode.items.reduce(
+				const accountUserAccounts = data.accountUserAccountsByExternalReferenceCode?.items?.reduce(
 					(userAccountsAccumulator, userAccount) => {
-						const currentAccountBrief = userAccount.accountBriefs.find(
+						const currentAccountBrief = userAccount.accountBriefs?.find(
 							(accountBrief) =>
 								accountBrief.externalReferenceCode ===
-								project.accountKey
+								project?.accountKey
 						);
 						if (currentAccountBrief) {
 							userAccountsAccumulator.push({
 								...userAccount,
-								roles: currentAccountBrief.roleBriefs.map(
+								roles: currentAccountBrief.roleBriefs?.map(
 									({name}) => name
 								),
 							});
@@ -70,7 +73,7 @@ const TeamMembersTable = ({project}) => {
 
 	const hasAdminAccess = useMemo(() => {
 		const currentUser = userAccounts?.find(
-			({id}) => id === Number(Liferay.ThemeDisplay.getUserId())
+			({id}) => id === +Liferay.ThemeDisplay.getUserId()
 		);
 
 		if (currentUser) {
@@ -84,34 +87,37 @@ const TeamMembersTable = ({project}) => {
 		}
 	}, [userAccounts]);
 
+	const columnsByUserAccess = getColumnsByUserAccess(hasAdminAccess);
+
 	return (
 		<div className="pt-2">
 			<TeamMembersTableHeader
 				hasAdminAccess={hasAdminAccess}
 				project={project}
+				setUserAccounts={setUserAccounts}
 				userAccounts={userAccounts}
 			/>
 
 			<Table
 				className="border-0 cp-team-members-table"
-				columns={getColumnsByUserAccess(hasAdminAccess)}
+				columns={columnsByUserAccess}
 				isLoading={isLoadingUserAccounts}
-				rows={userAccounts.map((userAccount) => ({
+				rows={userAccounts?.map((userAccount) => ({
 					email: (
 						<p className="m-0 text-truncate">
-							{userAccount.emailAddress}
+							{userAccount?.emailAddress}
 						</p>
 					),
 					name: <NameColumnType userAccount={userAccount} />,
 					options: <OptionsColumnType />,
-					role: <RoleColumnType roles={userAccount.roles} />,
+					role: <RoleColumnType roles={userAccount?.roles} />,
 					status: (
 						<StatusColumnType
-							hasLoggedBefore={userAccount.lastLoginDate}
+							hasLoggedBefore={userAccount?.lastLoginDate}
 						/>
 					),
 					supportSeat: (
-						<SupportSeatColumnType roles={userAccount.roles} />
+						<SupportSeatColumnType roles={userAccount?.roles} />
 					),
 				}))}
 			/>

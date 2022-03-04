@@ -40,6 +40,7 @@ class CustomerPortalWebComponent extends HTMLElement {
 			deployingActivationKeysURL: super.getAttribute(
 				'deploying-activation-keys-url'
 			),
+			gravatarAvatarURL: super.getAttribute('gravatar-avatar-url'),
 			licenseKeyDownloadURL: super.getAttribute(
 				'license-key-download-url'
 			),

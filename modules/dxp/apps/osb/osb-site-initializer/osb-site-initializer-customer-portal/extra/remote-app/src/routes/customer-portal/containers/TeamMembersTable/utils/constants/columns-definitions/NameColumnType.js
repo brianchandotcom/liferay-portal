@@ -10,18 +10,21 @@
  * distribution rights of the Software.
  */
 
+import {useApplicationProvider} from '../../../../../../../common/context/AppPropertiesProvider';
 import {Liferay} from '../../../../../../../common/services/liferay';
 import {getMd5Hash} from '../../../../../utils/getMd5Hash';
 
-const GRAVATAR_URL = 'https://www.gravatar.com/avatar';
 const AVATAR_SIZE_IN_PX = 40;
 
 const Avatar = ({emailAddress}) => {
+	const {gravatarAvatarURL} = useApplicationProvider();
+	const emailAddressMD5 = getMd5Hash(emailAddress);
+
 	return (
 		<div className="cp-team-members-avatar mr-2">
 			<img
 				height={AVATAR_SIZE_IN_PX}
-				src={`${GRAVATAR_URL}/${getMd5Hash(emailAddress)}`}
+				src={`${gravatarAvatarURL}/${emailAddressMD5}`}
 				width={AVATAR_SIZE_IN_PX}
 			/>
 		</div>
@@ -29,7 +32,7 @@ const Avatar = ({emailAddress}) => {
 };
 
 const NameColumnType = ({userAccount}) => {
-	const currentLoggedUserId = Number(Liferay.ThemeDisplay.getUserId());
+	const currentLoggedUserId = +Liferay.ThemeDisplay.getUserId();
 
 	return (
 		<div className="align-items-center d-flex">

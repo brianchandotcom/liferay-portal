@@ -13,7 +13,7 @@ import ClayIcon from '@clayui/icon';
 import {ROLE_TYPES} from '../../../../../../../common/utils/constants';
 
 const SupportSeatColumnType = ({roles}) => {
-	const hasAdministratorAccess = roles.find(
+	const hasAdministratorAccess = !!roles?.find(
 		(role) =>
 			role === ROLE_TYPES.admin.key || role === ROLE_TYPES.requestor.key
 	);

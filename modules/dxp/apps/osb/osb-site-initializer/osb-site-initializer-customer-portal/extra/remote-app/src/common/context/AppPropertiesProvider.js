@@ -15,6 +15,7 @@ const defaultProperties = {
 	createSupportRequest: '',
 	customerPortalRoles: '',
 	deployingActivationKeysURL: '',
+	gravatarAvatarURL: '',
 	licenseKeyDownloadURL: '',
 	liferaywebdavurl: '',
 	oktaSessionURL: '',

@@ -349,9 +349,11 @@ export const getAccountByExternalReferenceCode = gql`
 export const getAccountUserAccountsByExternalReferenceCode = gql`
 	query getAccountUserAccountsByExternalReferenceCode(
 		$externalReferenceCode: String!
+		$pageSize: Int = 20
 	) {
 		accountUserAccountsByExternalReferenceCode(
 			externalReferenceCode: $externalReferenceCode
+			pageSize: $pageSize
 		) {
 			items {
 				id

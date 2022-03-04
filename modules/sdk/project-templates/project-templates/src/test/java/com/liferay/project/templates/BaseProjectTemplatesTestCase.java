@@ -739,10 +739,37 @@ public interface BaseProjectTemplatesTestCase {
 			StandardOpenOption.APPEND);
 	}
 
-	public default void configurePomNpmConfiguration(File projectDir)
+	public default void configurePomNpmConfiguration(
+			File projectDir, String nodePackageManager)
 		throws Exception {
 
 		File pomXmlFile = testExists(projectDir, "pom.xml");
+
+		if (Objects.equals(nodePackageManager, "npm")) {
+			editXml(
+				pomXmlFile,
+				document -> {
+					modifyElementText(
+						document, "//id[contains(text(), 'yarn-install')]",
+						"npm-install");
+					modifyElementText(
+						document,
+						"//id[contains(text(), 'install-node-and-yarn')]",
+						"install-node-and-npm");
+					modifyElementText(
+						document, "//id[contains(text(), 'yarn-run-build')]",
+						"npm-run-build");
+					modifyElementText(
+						document,
+						"//goal[contains(text(), 'install-node-and-yarn')]",
+						"install-node-and-npm");
+					modifyElementText(
+						document, "//goal[contains(text(), 'yarn')]", "npm");
+
+					replaceElementByName(
+						document, "yarnVersion", "npmVersion", "8.1.0");
+				});
+		}
 
 		editXml(
 			pomXmlFile,
@@ -754,7 +781,8 @@ public interface BaseProjectTemplatesTestCase {
 
 					XPathExpression pomXmlYarnInstallXPathExpression =
 						xPath.compile(
-							"//id[contains(text(),'yarn-install')]/parent::*");
+							"//id[contains(text(),'" + nodePackageManager +
+								"-install')]/parent::*");
 
 					NodeList nodeList =
 						(NodeList)pomXmlYarnInstallXPathExpression.evaluate(
@@ -1095,6 +1123,65 @@ public interface BaseProjectTemplatesTestCase {
 		return false;
 	}
 
+	public default void modifyElementText(
+		Document document, String xPathExpression, String newText) {
+
+		XPathFactory xPathFactory = XPathFactory.newInstance();
+
+		XPath xPath = xPathFactory.newXPath();
+
+		try {
+			XPathExpression expression = xPath.compile(xPathExpression);
+
+			NodeList nodeList = (NodeList)expression.evaluate(
+				document, XPathConstants.NODESET);
+
+			for (int i = 0; i < nodeList.getLength(); i++) {
+				Node node = nodeList.item(i);
+
+				node.setTextContent(newText);
+			}
+		}
+		catch (XPathExpressionException xPathExpressionException) {
+		}
+	}
+
+	public default void replaceElementByName(
+		Document document, String oldElementName, String newElementName,
+		String textString) {
+
+		XPathFactory xPathFactory = XPathFactory.newInstance();
+
+		XPath xPath = xPathFactory.newXPath();
+
+		try {
+			XPathExpression expression = xPath.compile("//" + oldElementName);
+
+			NodeList nodeList = (NodeList)expression.evaluate(
+				document, XPathConstants.NODESET);
+
+			if (nodeList.getLength() > 0) {
+				Node node = nodeList.item(0);
+
+				Node parentNode = node.getParentNode();
+
+				parentNode.removeChild(node);
+
+				Element newElement = document.createElement(newElementName);
+
+				parentNode.appendChild(newElement);
+
+				if (textString != null) {
+					Text text = document.createTextNode(textString);
+
+					newElement.appendChild(text);
+				}
+			}
+		}
+		catch (Exception exception) {
+		}
+	}
+
 	public default List<String> sanitizeLines(List<String> lines) {
 		List<String> sanitizedLines = new ArrayList<>();
 
@@ -1110,7 +1197,8 @@ public interface BaseProjectTemplatesTestCase {
 	public default void testBuildTemplateNpm(
 			TemporaryFolder temporaryFolder, MavenExecutor mavenExecutor,
 			String template, String name, String packageName, String className,
-			String liferayVersion, URI gradleDistribution)
+			String liferayVersion, String nodePackageManager,
+			URI gradleDistribution)
 		throws Exception {
 
 		File gradleWorkspaceDir = buildWorkspace(
@@ -1161,7 +1249,7 @@ public interface BaseProjectTemplatesTestCase {
 			addNpmrc(gradleProjectDir);
 			addNpmrc(mavenProjectDir);
 			configureExecutePackageManagerTask(gradleProjectDir);
-			configurePomNpmConfiguration(mavenProjectDir);
+			configurePomNpmConfiguration(mavenProjectDir, nodePackageManager);
 		}
 
 		if (isBuildProjects()) {

@@ -21,6 +21,7 @@
 		"@clayui/icon": "^3.40.0",
 		"@clayui/layout": "^3.40.0",
 		"@clayui/loading-indicator": "^3.40.0",
+		"@clayui/modal": "^3.45.0",
 		"@clayui/pagination": "^3.43.0",
 		"@clayui/pagination-bar": "^3.43.0",
 		"@clayui/sticker": "^3.40.0",

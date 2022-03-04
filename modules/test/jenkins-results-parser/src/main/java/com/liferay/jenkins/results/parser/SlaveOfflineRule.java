@@ -76,6 +76,10 @@ public class SlaveOfflineRule {
 		if (consolePattern != null) {
 			String consoleText = build.getConsoleText();
 
+			if (JenkinsResultsParserUtil.isNullOrEmpty(consoleText)) {
+				return false;
+			}
+
 			for (String line : consoleText.split("\n")) {
 				Matcher matcher = consolePattern.matcher(line);
 

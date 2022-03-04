@@ -13,19 +13,7 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
-	}
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
-
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-	}
-
-	@description = "LPS-147844. Assert the tooltip message is displayed when hovered over the view button"
-	@priority = "3"
-	test ViewButtonCanDisplayTooltip {
 		task ("Add Clay Sample Portlet") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
@@ -43,7 +31,38 @@ definition {
 
 			Navigator.gotoPage(pageName = "Clay Sample Test Page");
 		}
+	}
 
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+		}
+	}
+
+	@description = "LPS-147864. Assert the New button is displayed as a text button"
+	@priority = "5"
+	test NewButtonRender {
+		task ("Navigate to Management Toolbars tab") {
+			Navigator.gotoNavTab(navTab = "Management Toolbars");
+		}
+
+		task ("Assert the new button is displayed as a text button") {
+			AssertTextEquals(
+				locator1 = "ManagementBar#NEW_BUTTON",
+				value1 = "New");
+		}
+	}
+
+	@description = "LPS-147844. Assert the tooltip message is displayed when hovered over the view button"
+	@priority = "3"
+	test ViewButtonCanDisplayTooltip {
 		task ("Navigate to Management Toolbars tab") {
 			Navigator.gotoNavTab(navTab = "Management Toolbars");
 		}
@@ -64,24 +83,6 @@ definition {
 	@description = "LPS-147839. Assert the view button displays a double caret icon"
 	@priority = "5"
 	test ViewButtonCanRenderDoubleCaret {
-		task ("Add Clay Sample Portlet") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page",
-				widgetName = "Clay Sample");
-
-			JSONLayout.updateLayoutTemplateOfPublicLayout(
-				groupName = "Guest",
-				layoutName = "Clay Sample Test Page",
-				layoutTemplate = "1 Column");
-
-			Navigator.gotoPage(pageName = "Clay Sample Test Page");
-		}
-
 		task ("Navigate to Management Toolbars tab") {
 			Navigator.gotoNavTab(navTab = "Management Toolbars");
 		}

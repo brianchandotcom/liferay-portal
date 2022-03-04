@@ -27,8 +27,8 @@ import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
 import Layout from '../Layout';
 import AdminInputs from './AdminInputs';
 
-const MAXIMUM_SETUP_ADMIN_COUNT = 20;
 const INITIAL_SETUP_ADMIN_COUNT = 1;
+const MAXIMUM_NUMBER_OF_CHARACTERS = 77;
 
 const SetupDXPCloudPage = ({
 	errors,
@@ -172,9 +172,12 @@ const SetupDXPCloudPage = ({
 
 								<p className="dxp-cloud-project-name text-neutral-6 text-paragraph-lg">
 									<strong>
-										{project.name.length > 71
-											? project.name.substring(0, 71) +
-											  '...'
+										{project.name.length >
+										MAXIMUM_NUMBER_OF_CHARACTERS
+											? project.name.substring(
+													0,
+													MAXIMUM_NUMBER_OF_CHARACTERS
+											  ) + '...'
 											: project.name}
 									</strong>
 								</p>
@@ -225,12 +228,10 @@ const SetupDXPCloudPage = ({
 								<AdminInputs
 									admin={admin}
 									id={index}
-									in
 									key={index}
 								/>
 							))}
 						</ClayForm.Group>
-
 						{values?.dxp?.admins?.length >
 							INITIAL_SETUP_ADMIN_COUNT && (
 							<Button
@@ -243,23 +244,18 @@ const SetupDXPCloudPage = ({
 								Remove this Admin
 							</Button>
 						)}
-
-						{values?.dxp?.admins?.length <
-							MAXIMUM_SETUP_ADMIN_COUNT && (
-							<Button
-								className="btn-outline-primary cp-btn-add-dxp-cloud ml-3 my-2 rounded-xs"
-								onClick={() => {
-									push(
-										getInitialDXPAdmin(values?.dxp?.admins)
-									);
-									setBaseButtonDisabled(true);
-								}}
-								prependIcon="plus"
-								small
-							>
-								Add Another Admin
-							</Button>
-						)}
+						<Button
+							className="btn-outline-primary cp-btn-add-dxp-cloud ml-3 my-2 rounded-xs"
+							disabled={baseButtonDisabled}
+							onClick={() => {
+								push(getInitialDXPAdmin(values?.dxp?.admins));
+								setBaseButtonDisabled(true);
+							}}
+							prependIcon="plus"
+							small
+						>
+							Add Another Admin
+						</Button>
 					</>
 				)}
 			/>

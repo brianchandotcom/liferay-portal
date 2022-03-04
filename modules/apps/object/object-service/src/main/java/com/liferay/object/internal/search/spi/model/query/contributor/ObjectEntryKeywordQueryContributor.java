@@ -15,6 +15,7 @@
 package com.liferay.object.internal.search.spi.model.query.contributor;
 
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.internal.configuration.activator.FFSearchAndSortMetadataColumnsConfigurationActivator;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectView;
 import com.liferay.object.model.ObjectViewColumn;
@@ -65,9 +66,13 @@ public class ObjectEntryKeywordQueryContributor
 	implements KeywordQueryContributor {
 
 	public ObjectEntryKeywordQueryContributor(
+		FFSearchAndSortMetadataColumnsConfigurationActivator
+			ffSearchAndSortMetadataColumnsConfigurationActivator,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectViewLocalService objectViewLocalService) {
 
+		_ffSearchAndSortMetadataColumnsConfigurationActivator =
+			ffSearchAndSortMetadataColumnsConfigurationActivator;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectViewLocalService = objectViewLocalService;
 	}
@@ -126,7 +131,9 @@ public class ObjectEntryKeywordQueryContributor
 
 				objectFields = stream.peek(
 					objectViewColumn -> {
-						if (Objects.equals(
+						if (_ffSearchAndSortMetadataColumnsConfigurationActivator.
+								enabled() &&
+							Objects.equals(
 								objectViewColumn.getObjectFieldName(), "id")) {
 
 							addObjectEntryTitle.set(true);
@@ -473,6 +480,8 @@ public class ObjectEntryKeywordQueryContributor
 
 	private static final Pattern _pattern = Pattern.compile("\\d{14}");
 
+	private final FFSearchAndSortMetadataColumnsConfigurationActivator
+		_ffSearchAndSortMetadataColumnsConfigurationActivator;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectViewLocalService _objectViewLocalService;
 

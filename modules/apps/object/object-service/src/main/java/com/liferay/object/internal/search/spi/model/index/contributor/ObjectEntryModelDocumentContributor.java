@@ -16,6 +16,7 @@ package com.liferay.object.internal.search.spi.model.index.contributor;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.internal.configuration.activator.FFSearchAndSortMetadataColumnsConfigurationActivator;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -57,12 +58,16 @@ public class ObjectEntryModelDocumentContributor
 
 	public ObjectEntryModelDocumentContributor(
 		String className,
+		FFSearchAndSortMetadataColumnsConfigurationActivator
+			ffSearchAndSortMetadataColumnsConfigurationActivator,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry) {
 
 		_className = className;
+		_ffSearchAndSortMetadataColumnsConfigurationActivator =
+			ffSearchAndSortMetadataColumnsConfigurationActivator;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
@@ -160,6 +165,16 @@ public class ObjectEntryModelDocumentContributor
 
 		document.add(
 			new Field("objectEntryTitle", objectEntry.getTitleValue()));
+
+		if (_ffSearchAndSortMetadataColumnsConfigurationActivator.enabled()) {
+			document.add(
+				new Field(
+					Field.getSortableFieldName(Field.ENTRY_CLASS_PK),
+					document.get(Field.ENTRY_CLASS_PK)));
+		}
+		else {
+			document.remove(Field.USER_NAME);
+		}
 	}
 
 	private void _contribute(
@@ -319,6 +334,8 @@ public class ObjectEntryModelDocumentContributor
 		ObjectEntryModelDocumentContributor.class);
 
 	private final String _className;
+	private final FFSearchAndSortMetadataColumnsConfigurationActivator
+		_ffSearchAndSortMetadataColumnsConfigurationActivator;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;

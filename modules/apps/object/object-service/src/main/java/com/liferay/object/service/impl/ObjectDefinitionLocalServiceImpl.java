@@ -30,6 +30,7 @@ import com.liferay.object.exception.ObjectDefinitionVersionException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.RequiredObjectDefinitionException;
 import com.liferay.object.exception.RequiredObjectFieldException;
+import com.liferay.object.internal.configuration.activator.FFSearchAndSortMetadataColumnsConfigurationActivator;
 import com.liferay.object.internal.deployer.ObjectDefinitionDeployerImpl;
 import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
@@ -456,6 +457,7 @@ public class ObjectDefinitionLocalServiceImpl
 		_addingObjectDefinitionDeployer(
 			new ObjectDefinitionDeployerImpl(
 				_bundleContext, _dynamicQueryBatchIndexingActionableFactory,
+				_ffSearchAndSortMetadataColumnsConfigurationActivator,
 				_listTypeEntryLocalService, _modelSearchRegistrarHelper, this,
 				_objectEntryLocalService, _objectFieldLocalService,
 				_objectRelationshipLocalService, _objectScopeProviderRegistry,
@@ -1164,6 +1166,10 @@ public class ObjectDefinitionLocalServiceImpl
 	@Reference
 	private DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
+
+	@Reference
+	private FFSearchAndSortMetadataColumnsConfigurationActivator
+		_ffSearchAndSortMetadataColumnsConfigurationActivator;
 
 	@Reference
 	private LayoutClassedModelUsageLocalService

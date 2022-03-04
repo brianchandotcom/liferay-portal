@@ -46,6 +46,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.web.internal.asset.model.ObjectEntryAssetRendererFactory;
+import com.liferay.object.web.internal.configuration.activator.FFSearchAndSortMetadataColumnsConfigurationActivator;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemCapabilitiesProvider;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemDetailsProvider;
 import com.liferay.object.web.internal.info.item.provider.ObjectEntryInfoItemFieldValuesProvider;
@@ -117,9 +118,11 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				FDSView.class,
 				new ObjectEntriesTableFDSView(
-					_fdsTableSchemaBuilderFactory, objectDefinition,
-					_objectDefinitionLocalService, _objectFieldLocalService,
-					_objectRelationshipLocalService, _objectViewLocalService),
+					_fdsTableSchemaBuilderFactory,
+					_ffSearchAndSortMetadataColumnsConfigurationActivator,
+					objectDefinition, _objectDefinitionLocalService,
+					_objectFieldLocalService, _objectRelationshipLocalService,
+					_objectViewLocalService),
 				HashMapDictionaryBuilder.put(
 					"frontend.data.set.name", objectDefinition.getPortletId()
 				).build()),
@@ -357,6 +360,10 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
+
+	@Reference
+	private FFSearchAndSortMetadataColumnsConfigurationActivator
+		_ffSearchAndSortMetadataColumnsConfigurationActivator;
 
 	@Reference
 	private InfoItemFieldReaderFieldSetProvider

@@ -12,7 +12,6 @@
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayLink from '@clayui/link';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayTable from '@clayui/table';
@@ -166,19 +165,22 @@ function SelectTypes({
 												)}
 											</span>
 
-											<ClayLink
-												className="component-text"
-												displayType="primary"
-												onClick={() => {
-													setModalSelectedTypes(
-														searchableTypesClassNames
-													);
-												}}
-											>
-												{Liferay.Language.get(
-													'select-all'
-												)}
-											</ClayLink>
+											{modalSelectedTypes.length <
+												searchableTypes.length && (
+												<ClayButton
+													displayType="link"
+													onClick={() => {
+														setModalSelectedTypes(
+															searchableTypesClassNames
+														);
+													}}
+													small
+												>
+													{Liferay.Language.get(
+														'select-all'
+													)}
+												</ClayButton>
+											)}
 										</>
 									) : (
 										<span className="component-text">

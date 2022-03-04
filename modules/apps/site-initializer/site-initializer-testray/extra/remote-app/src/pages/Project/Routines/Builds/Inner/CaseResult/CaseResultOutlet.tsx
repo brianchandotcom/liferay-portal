@@ -37,8 +37,6 @@ const CaseResultOutlet = () => {
 
 	const testrayCaseResult = data?.c?.testrayCase;
 
-	console.warn({testrayCaseResult});
-
 	const basePath = `/project/${projectId}/routines/${routineId}/build/${testrayBuildId}/case-result/${testrayCaseResultId}`;
 
 	const {setHeading, setTabs} = useHeader({shouldUpdate: false});

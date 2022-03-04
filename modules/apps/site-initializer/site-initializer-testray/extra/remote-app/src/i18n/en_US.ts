@@ -75,8 +75,10 @@ export default {
 	'manage-user-groups': 'Manage User Groups',
 	'manage-users': 'Manage Users',
 	'metrics': 'Metrics',
+	'modified-date': 'Modified Date',
 	'name': 'Name',
 	'new-project': 'New Project',
+	'order-by': 'Order By',
 	'overview': 'Overview',
 	'priority': 'Priority',
 	'product-version': 'Product Version',
@@ -97,6 +99,7 @@ export default {
 	'runs': 'Runs',
 	'score': 'Score',
 	'screen-name': 'Screen Name',
+	'search': 'Search',
 	'showing-x-to-x-of-x': 'Showing {0} to {1} of {2}',
 	'sign-out': 'Sign Out',
 	'start-date': 'Start Date',
@@ -132,4 +135,7 @@ export default {
 	'warnings-x': 'Warnings ({0})',
 	'x-items': '{0} Items',
 	'x-minutes': '{0} Minutes',
+	'x-results-for-x': '{0} Results for {1}',
+	'you-must-have-at-least-one-column-selected':
+		'You must have at least one column selected',
 };

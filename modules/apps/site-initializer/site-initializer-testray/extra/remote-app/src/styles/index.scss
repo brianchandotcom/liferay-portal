@@ -1,5 +1,3 @@
-// stylelint-disable selector-type-no-unknown
-
 *,
 *:after,
 *:before {
@@ -22,6 +20,7 @@ body {
 	margin-bottom: 0;
 }
 
+// stylelint-disable selector-type-no-unknown
 liferay-remote-app-testray {
 	@import 'variables';
 
@@ -33,4 +32,26 @@ liferay-remote-app-testray {
 	@import 'components/layout';
 	@import 'components/progress_bar';
 	@import 'components/table';
+}
+
+.dropdown-section .custom-control-label {
+	color: unset;
+}
+
+.management-bar {
+	div:nth-child(1) {
+		max-width: none;
+	}
+
+	.navbar-nav {
+		flex-wrap: initial;
+	}
+}
+
+.subnav-tbar {
+	background-color: #b3cdff;
+
+	div:nth-child(1) {
+		max-width: none;
+	}
 }

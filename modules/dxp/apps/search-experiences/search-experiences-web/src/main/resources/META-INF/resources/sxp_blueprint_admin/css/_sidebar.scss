@@ -1,4 +1,16 @@
 .sidebar {
+	&.info-sidebar {
+		.container-fluid {
+			padding-left: 24px;
+			padding-right: 24px;
+		}
+
+		.sidebar-header {
+			padding-left: 24px;
+			padding-right: 16px;
+		}
+	}
+
 	.empty-list-message {
 		padding: 16px;
 		text-align: center;

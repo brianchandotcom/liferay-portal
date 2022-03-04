@@ -88,8 +88,8 @@ export function sub(langKey, args, join = true) {
  *
  * @param {string} resourceKey Identifies which resource to render
  * @param {Object} learnMessages Contains the messages and urls
- * @param {string} locale
- * @param {string} defaultLocale
+ * @param {string} [locale=Liferay.ThemeDisplay.getLanguageId()]
+ * @param {string} [defaultLocale=Liferay.ThemeDisplay.getDefaultLanguageId()]
  * @return {Object}
  */
 export function getLocalizedLearnMessageObject(

@@ -21,15 +21,20 @@ import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporte
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporterRequest;
 import com.liferay.dynamic.data.mapping.io.exporter.DDMFormInstanceRecordExporterResponse;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
+import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceRecordIdComparator;
+import com.liferay.dynamic.data.mapping.util.comparator.DDMFormInstanceRecordModifiedDateComparator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
+import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -86,11 +91,35 @@ public class ExportFormInstanceMVCResourceCommand
 			DDMFormInstanceRecordExporterRequest.Builder.newBuilder(
 				formInstanceId, fileExtension);
 
+		boolean orderByAsc = false;
+
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			resourceRequest, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+			"view-entries-order-by-type", "asc");
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<DDMFormInstanceRecord> orderByComparator =
+			new DDMFormInstanceRecordIdComparator(orderByAsc);
+
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			resourceRequest, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+			"view-entries-order-by-col", "modified-date");
+
+		if (orderByCol.equals("modified-date")) {
+			orderByComparator = new DDMFormInstanceRecordModifiedDateComparator(
+				orderByAsc);
+		}
+
 		DDMFormInstanceRecordExporterRequest
 			ddmFormInstanceRecordExporterRequest = builder.withLocale(
 				themeDisplay.getLocale()
 			).withStatus(
 				WorkflowConstants.STATUS_APPROVED
+			).withOrderByComparator(
+				orderByComparator
 			).build();
 
 		byte[] content = null;

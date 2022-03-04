@@ -12,21 +12,11 @@
 import {ROLE_TYPES} from '../../../../../../../common/utils/constants';
 
 const RoleColumnType = ({roles}) => {
-	const filteredRoles = roles
-		.reduce((rolesAccumulator, role) => {
-			const roleToDisplay = Object.values(ROLE_TYPES).find(
-				(roleType) => roleType.key === role
-			);
+	const filteredRoles = Object.values(ROLE_TYPES).find(
+		(roleType) => roleType.key === roles[0]
+	);
 
-			if (roleToDisplay) {
-				rolesAccumulator.push(roleToDisplay.name);
-			}
-
-			return rolesAccumulator;
-		}, [])
-		.join(', ');
-
-	return <p className="m-0 text-truncate">{filteredRoles}</p>;
+	return <p className="m-0 text-truncate">{filteredRoles?.name}</p>;
 };
 
 export {RoleColumnType};

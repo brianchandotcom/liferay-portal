@@ -263,6 +263,8 @@ public class RESTBuilder {
 
 			context.put("schemaName", "openapi");
 
+			context.put("version", OpenAPIUtil.getVersion(openAPIYAML));
+
 			if (_configYAML.isGenerateOpenAPI() &&
 				(_configYAML.getResourceApplicationSelect() == null)) {
 

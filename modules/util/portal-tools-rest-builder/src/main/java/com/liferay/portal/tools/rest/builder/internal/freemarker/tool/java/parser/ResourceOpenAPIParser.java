@@ -878,6 +878,10 @@ public class ResourceOpenAPIParser {
 	private static String _getParentSchema(
 		String path, Map<String, PathItem> pathItems, String schemaName) {
 
+		if (path.matches(_PATH_BY_PATTERN)) {
+			path = path.substring(0, path.lastIndexOf("/"));
+		}
+
 		int lastIndexOfSlash = path.lastIndexOf("/");
 
 		if (lastIndexOfSlash < 1) {
@@ -1132,5 +1136,7 @@ public class ResourceOpenAPIParser {
 
 	private static final javax.ws.rs.core.Response.Status.Family
 		_FAMILY_SUCCESSFUL = javax.ws.rs.core.Response.Status.Family.SUCCESSFUL;
+
+	private static final String _PATH_BY_PATTERN = ".*\\/by-[^/]*$";
 
 }

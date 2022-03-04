@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaClassProperty;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodParameter;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.DTOOpenAPIParser;
@@ -38,6 +39,7 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.PathItem;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.RequestBody;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 import com.liferay.portal.vulcan.graphql.util.GraphQLNamingUtil;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -227,6 +229,13 @@ public class FreeMarkerTool {
 		return DTOOpenAPIParser.getEnumSchemas(openAPIYAML, schema);
 	}
 
+	public Map<String, JavaClassProperty> getDTOJavaClassProperties(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema) {
+
+		return DTOOpenAPIParser.getJavaClassProperties(
+			configYAML, openAPIYAML, schema);
+	}
+
 	public String getDTOParentClassName(
 		OpenAPIYAML openAPIYAML, String schemaName) {
 
@@ -283,6 +292,29 @@ public class FreeMarkerTool {
 		fieldName = fieldName.replaceAll("_+", "_");
 
 		return StringUtil.toUpperCase(fieldName);
+	}
+
+	public List<JavaMethodSignature> getGetSchemaJavaMethodSignatures(
+		List<JavaMethodSignature> javaMethodSignatures, String schemaJavaType,
+		String schemaName) {
+
+		List<JavaMethodSignature> getJavaMethodSignatures = new ArrayList<>();
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			if (Objects.equals(
+					getHTTPMethod(javaMethodSignature.getOperation()), "get") &&
+				Objects.equals(
+					StringBundler.concat(
+						Page.class.getName(), "<", schemaJavaType, ">"),
+					javaMethodSignature.getReturnType()) &&
+				Objects.equals(
+					schemaName, javaMethodSignature.getSchemaName())) {
+
+				getJavaMethodSignatures.add(javaMethodSignature);
+			}
+		}
+
+		return getJavaMethodSignatures;
 	}
 
 	public String getGraphQLArguments(
@@ -540,6 +572,52 @@ public class FreeMarkerTool {
 		);
 	}
 
+	public String getJavaMethodSignatureScope(
+		JavaMethodSignature javaMethodSignature) {
+
+		List<JavaMethodParameter> pathJavaMethodParameters =
+			javaMethodSignature.getPathJavaMethodParameters();
+
+		if (pathJavaMethodParameters.isEmpty()) {
+			return "company";
+		}
+
+		List<String> scopeParts = new ArrayList<>();
+
+		for (JavaMethodParameter pathJavaMethodParameter :
+				pathJavaMethodParameters) {
+
+			String scopePart = pathJavaMethodParameter.getParameterName();
+
+			if (scopePart.startsWith("parent")) {
+				scopePart = scopePart.substring(6);
+			}
+
+			if (scopePart.endsWith("Id")) {
+				scopePart = scopePart.substring(0, scopePart.length() - 2);
+			}
+
+			if ((javaMethodSignature.getParentSchemaName() == null) &&
+				(scopePart.equals("id") ||
+				 scopePart.equals("externalReferenceCode"))) {
+
+				continue;
+			}
+			else if (scopePart.equals("id")) {
+				scopePart = javaMethodSignature.getParentSchemaName();
+			}
+			else if (scopePart.equals("externalReferenceCode")) {
+				scopePart =
+					javaMethodSignature.getParentSchemaName() +
+						"ExternalReferenceCode";
+			}
+
+			scopeParts.add(StringUtil.lowerCaseFirstLetter(scopePart));
+		}
+
+		return StringUtil.merge(scopeParts);
+	}
+
 	public List<JavaMethodSignature>
 			getParentGraphQLRelationJavaMethodSignatures(
 				ConfigYAML configYAML, String graphQLType,
@@ -656,6 +734,40 @@ public class FreeMarkerTool {
 		}
 
 		return null;
+	}
+
+	public List<JavaMethodSignature> getPostSchemaJavaMethodSignatures(
+		List<JavaMethodSignature> javaMethodSignatures, String schemaJavaType,
+		String schemaName) {
+
+		List<JavaMethodSignature> postJavaMethodSignatures = new ArrayList<>();
+
+		for (JavaMethodSignature javaMethodSignature : javaMethodSignatures) {
+			if (Objects.equals(
+					getHTTPMethod(javaMethodSignature.getOperation()),
+					"post") &&
+				Objects.equals(
+					schemaJavaType, javaMethodSignature.getReturnType()) &&
+				Objects.equals(
+					schemaName, javaMethodSignature.getSchemaName())) {
+
+				List<JavaMethodParameter> javaMethodParameters =
+					javaMethodSignature.getJavaMethodParameters();
+
+				Stream<JavaMethodParameter> stream =
+					javaMethodParameters.stream();
+
+				if (stream.anyMatch(
+						javaMethodParameter -> Objects.equals(
+							schemaJavaType,
+							javaMethodParameter.getParameterType()))) {
+
+					postJavaMethodSignatures.add(javaMethodSignature);
+				}
+			}
+		}
+
+		return postJavaMethodSignatures;
 	}
 
 	public String getResourceArguments(

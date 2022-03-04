@@ -549,7 +549,7 @@ definition {
 			key_text = "Cancel",
 			locator1 = "Link#ANY");
 
-		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
+		Confirm();
 
 		Blueprints.editBlueprint(title = "Test Blueprint");
 
@@ -583,7 +583,7 @@ definition {
 			key_text = "Cancel",
 			locator1 = "Link#ANY");
 
-		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
+		Confirm();
 
 		Blueprints.editBlueprint(title = "Test Blueprint");
 
@@ -2191,7 +2191,7 @@ definition {
 			key_text = "Cancel",
 			locator1 = "Link#ANY");
 
-		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
+		Confirm();
 
 		Blueprints.editBlueprint(title = "Test Blueprint");
 

@@ -10,15 +10,11 @@
  */
 
 import ClayModal, {useModal} from '@clayui/modal';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
-import client from '../../../../../apolloClient';
 import {Button} from '../../../../../common/components';
 import InviteTeamMembersForm from '../../../../../common/containers/setup-forms/InviteTeamMembersForm';
-import {getDXPCloudEnvironment} from '../../../../../common/services/liferay/graphql/queries';
 import ManageProductUser from '../../../components/ManageProductUsers';
-import {PRODUCT_TYPES} from '../../../utils/constants/';
-import {STATUS_TAG_TYPE_NAMES} from '../../../utils/constants/statusTag';
 
 const InvitesModal = ({observer, onClose, project}) => {
 	return (
@@ -33,59 +29,12 @@ const InvitesModal = ({observer, onClose, project}) => {
 };
 
 const TeamMembers = () => {
-	const [dxpCloudEnvironment, setDxpCloudEnvironment] = useState();
-	const activationStatusAC = 'Active';
-	const groupId = 'groupid';
 	const {project, subscriptionGroups} = useOutletContext();
+
 	const [visible, setVisible] = useState(false);
 	const modalProps = useModal({
 		onClose: () => setVisible(false),
 	});
-	const [activatedStatusDXPC, setActivatedStatusDXPC] = useState();
-	const [activatedStatusAC, setActivatedStatusAC] = useState();
-	const [activatedLinkDXPC, setActivatedLinkDXPC] = useState();
-	const [activatedLinkAC, setActivatedLinkAC] = useState();
-
-	useEffect(() => {
-		const getOnboardingFormData = async () => {
-			const {data} = await client.query({
-				query: getDXPCloudEnvironment,
-				variables: {
-					filter: `accountKey eq '${project.accountKey}'`,
-					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
-				},
-			});
-
-			if (data) {
-				const dxpProjectId =
-					data.c?.dXPCloudEnvironments?.items[0]?.projectId;
-
-				setDxpCloudEnvironment(dxpProjectId);
-			}
-		};
-		getOnboardingFormData();
-
-		const accountSubscriptionFromDXPC = subscriptionGroups.find(
-			(subscriptionGroup) =>
-				subscriptionGroup.name === PRODUCT_TYPES.dxpCloud
-		);
-		const activationStatusDXPC =
-			accountSubscriptionFromDXPC?.activationStatus;
-
-		if (activationStatusDXPC === STATUS_TAG_TYPE_NAMES.active) {
-			setActivatedStatusDXPC(activationStatusDXPC);
-		}
-		if (activationStatusAC === STATUS_TAG_TYPE_NAMES.active) {
-			setActivatedStatusAC(activationStatusAC);
-		}
-
-		setActivatedLinkDXPC(
-			`https://console.liferay.cloud/projects/${dxpCloudEnvironment}/overview`
-		);
-		setActivatedLinkAC(
-			`https://analytics.liferay.com/workspace/${groupId}/sites`
-		);
-	}, [subscriptionGroups, project, dxpCloudEnvironment]);
 
 	return (
 		<>
@@ -110,12 +59,10 @@ const TeamMembers = () => {
 					</Button>
 				</div>
 			</div>
-			{(activatedStatusDXPC || activationStatusAC) && (
+			{subscriptionGroups && (
 				<ManageProductUser
-					activationStatusAC={activatedStatusAC}
-					activationStatusDXPC={activatedStatusDXPC}
-					refLinkAC={activatedLinkAC}
-					refLinkDXPC={activatedLinkDXPC}
+					project={project}
+					subscriptionGroups={subscriptionGroups}
 				/>
 			)}
 		</>

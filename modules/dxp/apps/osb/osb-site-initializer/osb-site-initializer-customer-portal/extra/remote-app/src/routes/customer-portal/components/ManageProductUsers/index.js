@@ -9,60 +9,113 @@
  * distribution rights of the Software.
  */
 
+import {useEffect, useState} from 'react';
+import client from '../../../../apolloClient';
 import {Button} from '../../../../common/components';
+import {getDXPCloudEnvironment} from '../../../../common/services/liferay/graphql/queries';
+import {PRODUCT_TYPES} from '../../utils/constants/productTypes';
+import {STATUS_TAG_TYPE_NAMES} from '../../utils/constants/statusTag';
 
-const ManageProductUser = ({
-	activationStatusAC,
-	activationStatusDXPC,
-	refLinkAC,
-	refLinkDXPC,
-}) => {
+const ManageProductUser = ({project, subscriptionGroups}) => {
+	const [dxpCloudEnvironment, setDxpCloudEnvironment] = useState('');
+	const [activationStatusDXPC, setActivatedStatusDXPC] = useState('');
+	const [activationStatusAC, setActivatedStatusAC] = useState('Active');
+	const groupId = 'groupid';
+	const activatedLinkDXPC = `https://console.liferay.cloud/projects/${dxpCloudEnvironment}/overview`;
+	const activatedLinkAC = `https://analytics.liferay.com/workspace/${groupId}/sites`;
+
+	useEffect(() => {
+		const getOnboardingFormData = async () => {
+			const {data} = await client.query({
+				query: getDXPCloudEnvironment,
+				variables: {
+					filter: `accountKey eq '${project.accountKey}'`,
+					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
+				},
+			});
+
+			if (data) {
+				const dxpProjectId =
+					data.c?.dXPCloudEnvironments?.items[0]?.projectId;
+
+				setDxpCloudEnvironment(dxpProjectId);
+			}
+		};
+		getOnboardingFormData();
+
+		const accountSubscriptionFromDXPC = subscriptionGroups.find(
+			(subscriptionGroup) =>
+				subscriptionGroup.name === PRODUCT_TYPES.dxpCloud
+		);
+		const activationStatusDXPC =
+			accountSubscriptionFromDXPC?.activationStatus;
+
+		if (activationStatusDXPC === STATUS_TAG_TYPE_NAMES.active) {
+			setActivatedStatusDXPC(activationStatusDXPC);
+		}
+		if (activationStatusAC === STATUS_TAG_TYPE_NAMES.active) {
+			setActivatedStatusAC(activationStatusAC);
+		}
+	}, [
+		activationStatusAC,
+		dxpCloudEnvironment,
+		project.accountKey,
+		subscriptionGroups,
+	]);
+
 	return (
-		<div className="bg-brand-primary-lighten-6 border-0 card card-flat cp-manager-product-container mt-5">
-			<div className="p-4">
-				<p className="h4">Manage Product Users</p>
+		<>
+			{(activationStatusDXPC || activationStatusAC) && (
+				<div className="bg-brand-primary-lighten-6 border-0 card card-flat cp-manager-product-container mt-5">
+					<div className="p-4">
+						<p className="h4">Manage Product Users</p>
 
-				<p className="mt-2 text-neutral-7 text-paragraph-sm">
-					Manage roles and permissions of users within each product.
-				</p>
+						<p className="mt-2 text-neutral-7 text-paragraph-sm">
+							Manage roles and permissions of users within each
+							product.
+						</p>
 
-				<div className="d-flex">
-					{activationStatusDXPC && (
-						<a
-							href={refLinkDXPC}
-							rel="noopener noreferrer"
-							target="_blank"
-						>
-							<Button
-								appendIcon="shortcut"
-								className="align-items-stretch btn btn-ghost cp-manager-product-button d-flex mr-3 p-2 text-neutral-10"
-							>
-								<p className="font-weight-semi-bold h6 m-0 pl-1">
-									Manage DXP Cloud Users
-								</p>
-							</Button>
-						</a>
-					)}
+						<div className="d-flex">
+							{activationStatusDXPC && (
+								<a
+									href={activatedLinkDXPC}
+									rel="noopener noreferrer"
+									target="_blank"
+								>
+									<Button
+										appendIcon="shortcut"
+										className="align-items-stretch btn cp-manager-product-button d-flex mr-3 p-2 text-neutral-10"
+										displayType="secudary"
+									>
+										<p className="font-weight-semi-bold h6 m-0 pl-1">
+											Manage DXP Cloud Users
+										</p>
+									</Button>
+								</a>
+							)}
 
-					{activationStatusAC && (
-						<a
-							href={refLinkAC}
-							rel="noopener noreferrer"
-							target="_blank"
-						>
-							<Button
-								appendIcon="shortcut"
-								className="align-items-stretch btn btn-ghost cp-manager-product-button d-flex p-2 text-neutral-10"
-							>
-								<p className="font-weight-semi-bold h6 m-0 pl-1">
-									Manage Analytics Cloud Users
-								</p>
-							</Button>
-						</a>
-					)}
+							{activationStatusAC && (
+								<a
+									href={activatedLinkAC}
+									rel="noopener noreferrer"
+									target="_blank"
+								>
+									<Button
+										appendIcon="shortcut"
+										className="align-items-stretch cp-manager-product-button d-flex p-2 text-neutral-10"
+										displayType="secudary"
+									>
+										<p className="font-weight-semi-bold h6 m-0 pl-1">
+											Manage Analytics Cloud Users
+										</p>
+									</Button>
+								</a>
+							)}
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
+			)}
+		</>
 	);
 };
 export default ManageProductUser;

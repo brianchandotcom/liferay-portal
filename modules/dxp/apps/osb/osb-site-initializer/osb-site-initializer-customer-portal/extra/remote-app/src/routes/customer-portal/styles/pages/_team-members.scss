@@ -16,6 +16,9 @@
 	}
 }
 .cp-manager-product-button {
+	&:hover {
+		border-color: var(--color-action-neutral-default);
+	}
 	& span {
 		width: 12px;
 		margin-left: 6px;

@@ -11,7 +11,9 @@ definition {
 
 		Pause(locator1 = "10000");
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.waitForSelectPopUp(
+			locator1 = "null",
+			value1 = "60000");
 
 		if (IsElementNotPresent(locator1 = "IFrame#WEB_APPLICATION")) {
 			Close.closeWindow(locator1 = "null");
@@ -32,7 +34,9 @@ definition {
 
 			Pause(locator1 = "10000");
 
-			SelectWindow.selectPopUp(locator1 = "null");
+			SelectWindow.waitForSelectPopUp(
+				locator1 = "null",
+				value1 = "60000");
 		}
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
@@ -73,7 +77,9 @@ definition {
 
 		WaitForPageLoad();
 
-		SelectWindow.selectPopUp(locator1 = "null");
+		SelectWindow.waitForSelectPopUp(
+			locator1 = "null",
+			value1 = "60000");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#WEB_APPLICATION");
 

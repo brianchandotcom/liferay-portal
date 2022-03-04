@@ -3121,4 +3121,86 @@ definition {
 		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
 	}
 
+	test ViewUnsavedChangesAlertForElements {
+		Blueprints.openBlueprintsAdmin();
+
+		Navigator.gotoNavItem(navItem = "Elements");
+
+		Click(locator1 = "Button#PLUS");
+
+		PortletEntry.inputTitle(title = "Test Element");
+
+		Button.click(button = "Create");
+
+		var elementSourceJson = '''
+{
+	"elementDefinition": {
+		"configuration": {},
+		"uiConfiguration": {}
+	},
+	"title_i18n": {
+		"en_US": "Unsaved Element"
+	}
+}
+		''';
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "${elementSourceJson}");
+
+		ClickNoError(
+			key_text = "Cancel",
+			locator1 = "Link#ANY");
+
+		Confirm.dismissAlert();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "Unsaved Element");
+
+		ClickNoError(
+			key_text = "Cancel",
+			locator1 = "Link#ANY");
+
+		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
+
+		Blueprints.editElement(element = "Test Element");
+
+		AssertTextNotEquals.assertNotPartialText(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "Unsaved Element");
+
+		Type.typeCodeMirrorEditorNoError(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "${elementSourceJson}");
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		ClickNoError(
+			key_category = "Search Experiences",
+			key_portlet = "Blueprints",
+			locator1 = "ApplicationsMenu#PORTLET");
+
+		Confirm.dismissAlert();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "Unsaved Element");
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		ClickNoError(
+			key_category = "Search Experiences",
+			key_portlet = "Blueprints",
+			locator1 = "ApplicationsMenu#PORTLET");
+
+		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
+
+		Blueprints.editElement(element = "Test Element");
+
+		AssertTextNotEquals.assertNotPartialText(
+			locator1 = "Blueprints#CODE_MIRROR_EDITOR",
+			value1 = "Unsaved Element");
+	}
+
 }

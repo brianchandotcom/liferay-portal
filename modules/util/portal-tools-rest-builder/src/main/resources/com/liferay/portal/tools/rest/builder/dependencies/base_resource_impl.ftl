@@ -1,7 +1,22 @@
 package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 
+<#list globalEnumSchemas?keys as globalEnumSchemaName>
+	import ${configYAML.apiPackagePath}.constant.${escapedVersion}.${globalEnumSchemaName};
+</#list>
+
 <#list allSchemas?keys as schemaName>
 	import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName};
+</#list>
+
+<#list allExternalSchemas?keys as externalSchemaName>
+	<#if javaDataTypeMap?keys?seq_contains(externalSchemaName)>
+		import ${javaDataTypeMap[externalSchemaName]};
+	</#if>
+</#list>
+
+<#assign enumSchemas = freeMarkerTool.getDTOEnumSchemas(openAPIYAML, schema) />
+<#list enumSchemas?keys as enumSchema>
+	import ${configYAML.apiPackagePath}.dto.${escapedVersion}.${schemaName}.${enumSchema};
 </#list>
 
 import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
@@ -50,10 +65,18 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.annotation.Generated;
 
@@ -393,6 +416,40 @@ public abstract class Base${schemaName}ResourceImpl
 		}
 
 		@Override
+		public List<String> getCreateEntityScopes() {
+			return Arrays.asList(
+				<#list freeMarkerTool.getPostSchemaJavaMethodSignatures(javaMethodSignatures, schemaJavaType, schemaName) as postSchemaJavaMethodSignature>
+					"${freeMarkerTool.getJavaMethodSignatureScope(postSchemaJavaMethodSignature)}"
+					<#sep>, </#sep>
+				</#list>
+			);
+		}
+
+		@Override
+		public String getEntityClassName() {
+			return ${javaDataType}.class.getName();
+		}
+
+		@Override
+		public List<com.liferay.portal.vulcan.batch.engine.Field> getEntityFields() {
+			<#assign
+				javaClassProperties = freeMarkerTool.getDTOJavaClassProperties(configYAML, openAPIYAML, schema)
+			/>
+			return Arrays.asList(
+				<#list javaClassProperties?keys as propertyName>
+					<#assign javaClassProperty = javaClassProperties[propertyName] />
+					<#if stringUtil.startsWith(javaClassProperty.type, "Map<")>
+						<#assign propertyType = "Map" />
+					<#else>
+						<#assign propertyType = javaClassProperty.type />
+					</#if>
+					com.liferay.portal.vulcan.batch.engine.Field.of("${javaClassProperty.description}", "${propertyName}", ${javaClassProperty.readOnly?c}, ${javaClassProperty.required?c}, ${propertyType}.class, ${javaClassProperty.writeOnly?c})
+					<#sep>, </#sep>
+				</#list>
+			);
+		}
+
+		@Override
 		public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap) throws Exception {
 			return getEntityModel(new MultivaluedHashMap<String, Object>(multivaluedMap));
 		}
@@ -400,6 +457,21 @@ public abstract class Base${schemaName}ResourceImpl
 		@Override
 		public EntityModel getEntityModel(MultivaluedMap multivaluedMap) throws Exception {
 			return null;
+		}
+
+		@Override
+		public List<String> getReadEntityScopes() {
+			return Arrays.asList(
+				<#list freeMarkerTool.getGetSchemaJavaMethodSignatures(javaMethodSignatures, schemaJavaType, schemaName) as getSchemaJavaMethodSignature>
+					"${freeMarkerTool.getJavaMethodSignatureScope(getSchemaJavaMethodSignature)}"
+					<#sep>, </#sep>
+				</#list>
+			);
+		}
+
+		@Override
+		public String getVersion() {
+			return "${version}";
 		}
 
 		@Override

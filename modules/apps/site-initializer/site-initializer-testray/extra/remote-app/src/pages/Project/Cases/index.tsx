@@ -26,9 +26,14 @@ const Cases = () => (
 					{
 						clickable: true,
 						key: 'name',
+						sorteable: true,
 						value: i18n.translate('case-name'),
 					},
-					{key: 'priority', value: i18n.translate('priority')},
+					{
+						key: 'priority',
+						sorteable: true,
+						value: i18n.translate('priority'),
+					},
 					{
 						key: 'testrayCaseType',
 						render: (testrayCaseType) => testrayCaseType?.name,
@@ -41,7 +46,6 @@ const Cases = () => (
 						value: i18n.translate('component'),
 					},
 					{key: 'issues', value: i18n.translate('issues')},
-
 					{
 						key: 'dateCreated',
 						value: i18n.translate('create-date'),

@@ -23,6 +23,7 @@ type Column<T = any> = {
 	key: string;
 	render?: (itemValue: any, item: T) => String | React.ReactNode;
 	size?: 'sm' | 'md' | 'lg' | 'xl' | 'none';
+	sorteable?: boolean;
 	value: string;
 };
 

@@ -56,6 +56,7 @@ public class CommerceAccountEntryDisplay {
 
 	private CommerceAccountEntryDisplay(AccountEntry accountEntry) {
 		_accountEntry = accountEntry;
+
 		_accountEntryId = accountEntry.getAccountEntryId();
 		_defaultCommercePaymentMethodKey =
 			accountEntry.getDefaultCPaymentMethodKey();

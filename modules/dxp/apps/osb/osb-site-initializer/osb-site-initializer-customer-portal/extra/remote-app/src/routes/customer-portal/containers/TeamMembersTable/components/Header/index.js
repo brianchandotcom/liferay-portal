@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -9,7 +10,7 @@
  * distribution rights of the Software.
  */
 
-import {useModal} from '@clayui/modal';
+import {useModal} from '@clayui/core';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import {Button} from '../../../../../../common/components';
@@ -17,12 +18,14 @@ import {ROLE_TYPES} from '../../../../../../common/utils/constants';
 import InvitesModal from '../InvitesModal';
 import PopoverIconButton from '../PopoverIconButton';
 
-const TeamMembersTableHeader = ({hasAdminAccess, project, userAccounts}) => {
+const TeamMembersTableHeader = ({
+	hasAdminAccess,
+	project,
+	setUserAccounts,
+	userAccounts,
+}) => {
 	const [visible, setVisible] = useState(false);
 	const [administratorsAvailable, setAdministratorsAvailable] = useState();
-	const modalProps = useModal({
-		onClose: () => setVisible(false),
-	});
 
 	useEffect(() => {
 		const currentAdministrators = userAccounts?.filter((userAccount) =>
@@ -38,6 +41,31 @@ const TeamMembersTableHeader = ({hasAdminAccess, project, userAccounts}) => {
 		);
 	}, [project.maxRequestors, userAccounts]);
 
+	const handleOnUserInvite = (invitedUsers) => {
+		setVisible(false);
+
+		if (invitedUsers) {
+			const formattedInvitedUsers = invitedUsers?.map((invite) => {
+				const userData = invite?.data?.c?.createTeamMembersInvitation;
+
+				return {
+					emailAddress: userData?.email,
+					name: userData?.email,
+					roles: [userData?.role],
+				};
+			});
+
+			setUserAccounts((previousUserAccounts) => [
+				...previousUserAccounts,
+				...formattedInvitedUsers,
+			]);
+		}
+	};
+
+	const modalProps = useModal({
+		onClose: () => setVisible(false),
+	});
+
 	return (
 		<div
 			className={classNames(
@@ -49,7 +77,7 @@ const TeamMembersTableHeader = ({hasAdminAccess, project, userAccounts}) => {
 			)}
 		>
 			<div className="align-items-center d-flex ml-auto">
-				{project.maxRequestors && (
+				{!!project?.maxRequestors && (
 					<>
 						<PopoverIconButton alignPosition="top" />
 
@@ -82,7 +110,13 @@ const TeamMembersTableHeader = ({hasAdminAccess, project, userAccounts}) => {
 				)}
 			</div>
 
-			{visible && <InvitesModal {...modalProps} project={project} />}
+			{visible && (
+				<InvitesModal
+					mutateUserData={handleOnUserInvite}
+					{...modalProps}
+					project={project}
+				/>
+			)}
 		</div>
 	);
 };

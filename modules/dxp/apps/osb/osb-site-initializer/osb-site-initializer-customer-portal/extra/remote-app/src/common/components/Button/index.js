@@ -20,6 +20,7 @@ const ButtonBase = (
 		appendIconClassName,
 		children,
 		isImagePrependIcon,
+		isLoading,
 		prependIcon,
 		prependIconClassName,
 		...props
@@ -54,6 +55,10 @@ const ButtonBase = (
 				>
 					<ClayIcon symbol={appendIcon} />
 				</span>
+			)}
+
+			{isLoading && (
+				<span className="cp-spinner ml-2 spinner-border spinner-border-sm"></span>
 			)}
 		</ClayButton>
 	);

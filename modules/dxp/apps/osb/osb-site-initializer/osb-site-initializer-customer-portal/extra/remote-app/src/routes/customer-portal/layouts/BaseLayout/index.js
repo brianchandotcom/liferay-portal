@@ -46,7 +46,7 @@ const Layout = () => {
 	const getCurrentProduct = () => {
 		const activationKey = 'activation';
 
-		const isProduct = !!currentPath?.find((path) => path === activationKey);
+		const isProduct = currentPath?.some((path) => path === activationKey);
 
 		if (isProduct) {
 			const [, ...productType] = currentPath;

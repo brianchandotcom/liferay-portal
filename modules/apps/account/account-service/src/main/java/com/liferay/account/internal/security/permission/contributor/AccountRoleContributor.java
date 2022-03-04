@@ -15,7 +15,7 @@
 package com.liferay.account.internal.security.permission.contributor;
 
 import com.liferay.account.constants.AccountRoleConstants;
-import com.liferay.account.manager.CurrentAccountEntryManager;
+import com.liferay.account.internal.manager.CurrentAccountEntryManagerStore;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
@@ -63,7 +63,7 @@ public class AccountRoleContributor implements RoleContributor {
 					AccountEntry.class.getName(), group.getClassName())) {
 
 				AccountEntry currentAccountEntry =
-					_currentAccountEntryManager.getCurrentAccountEntry(
+					_currentAccountEntryManagerStore.getCurrentAccountEntry(
 						roleCollection.getGroupId(), user.getUserId());
 
 				if ((currentAccountEntry != null) &&
@@ -113,7 +113,7 @@ public class AccountRoleContributor implements RoleContributor {
 	private AccountRoleLocalService _accountRoleLocalService;
 
 	@Reference
-	private CurrentAccountEntryManager _currentAccountEntryManager;
+	private CurrentAccountEntryManagerStore _currentAccountEntryManagerStore;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

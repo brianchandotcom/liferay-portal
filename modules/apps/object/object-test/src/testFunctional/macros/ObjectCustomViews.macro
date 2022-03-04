@@ -90,4 +90,16 @@ definition {
 			locator1 =  "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR");
 	}
 
+	macro assertColumnPresent {
+		AssertElementPresent(
+			key_columnName = "${colunmName}",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
+	}
+
+	macro assertColumnNotPresent {
+		AssertElementNotPresent(
+			key_columnName = "${colunmName}",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
+	}
+
 }

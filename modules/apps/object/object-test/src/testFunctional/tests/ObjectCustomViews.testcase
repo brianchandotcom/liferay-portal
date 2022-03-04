@@ -169,11 +169,46 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to search for a column on the View Builder tab"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchColumn {
 
-		// TODO LPS-147762 CanSearchColumn pending implementation
+		
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147762",
+			objectName = "CustomObject147762",
+			pluralLabelName = "Custom Objects 147762");
+		
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147762");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		Click.clickAtNotVisible(
+			key_columnOption = "Author",
+			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+
+		Click.clickAtNotVisible(
+			key_columnOption = "Creation Date",
+			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+
+		Click(
+			key_tab = "Save",
+			locator1 = "Button#TAB_SUBMIT_BTN");
+
+		ObjectCustomViews.searchOnViewBuilder(colunmName = "Author");
+
+		ObjectCustomViews.assertColumnPresent(colunmName = "Author");
+
+		ObjectCustomViews.assertColumnNotPresent(colunmName = "Creation Date");
 
 	}
 

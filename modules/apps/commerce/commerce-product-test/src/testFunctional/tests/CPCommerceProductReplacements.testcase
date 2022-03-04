@@ -25,6 +25,79 @@ definition {
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
+	@description = "COMMERCE-8160. Verify a product SKU can be set as discontinued with a replacement"
+	@priority = "3"
+	test CreateNewSKUWithReplacement {
+		task ("Given a simple replacement product with a SKU") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Test Simple Product Replacement",
+				productType = "simple",
+				sku = "SKU1001");
+		}
+
+		task ("And given a simple product") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Test Simple Product",
+				productType = "simple");
+		}
+
+		task ("When the product specialist is creating a new SKU") {
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Simple Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "SKUs");
+
+			Click(locator1 = "Button#PLUS");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			Type(
+				locator1 = "CommerceEntry#SKU_FIELD",
+				value1 = "SKU1002");
+		}
+
+		task ("And the SKU is set as Discontinued") {
+			Check.checkToggleSwitch(locator1 = "CommerceEntry#SKU_DISCONTINUED_TOGGLE");
+		}
+
+		task ("And a replacement product is set") {
+			Type(
+				locator1 = "TextInput#REPLACEMENT",
+				value1 = "SKU1001");
+		}
+
+		task ("Then the new SKU is created") {
+			CommerceEntry.publishEntry();
+
+			Click(locator1 = "Icon#CLOSE");
+
+			IFrame.selectTopFrame();
+
+			AssertElementPresent(
+				key_entryName = "SKU1002",
+				locator1 = "CommerceNavigation#DATA_SET_ENTRY_NAME");
+		}
+
+		task ("And the SKU is marked as Discontinued") {
+			CommerceNavigator.gotoEntry(entryName = "SKU1002");
+
+			SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+			AssertChecked.assertCheckedNotVisible(
+				key_toggleSwitchLabel = "Mark the SKU as Discontinued",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		task ("And the replacement product fields are saved") {
+			AssertTextEquals(
+				locator1 = "TextInput#REPLACEMENT",
+				value1 = "SKU1001");
+		}
+	}
+
 	@description = "Verify a replacement product can be removed"
 	@priority = "3"
 	test RemoveReplacementProduct {

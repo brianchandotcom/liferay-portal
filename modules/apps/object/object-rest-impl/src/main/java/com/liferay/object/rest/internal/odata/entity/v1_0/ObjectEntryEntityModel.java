@@ -42,6 +42,11 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 	public ObjectEntryEntityModel(List<ObjectField> objectFields) {
 		_entityFieldsMap = HashMapBuilder.<String, EntityField>put(
+			"creator",
+			new StringEntityField(
+				"creator",
+				locale -> Field.getSortableFieldName(Field.USER_NAME))
+		).put(
 			"creatorId",
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID)
 		).put(
@@ -59,7 +64,9 @@ public class ObjectEntryEntityModel implements EntityModel {
 		).put(
 			"id",
 			new IdEntityField(
-				"id", locale -> Field.ENTRY_CLASS_PK, String::valueOf)
+				"id",
+				locale -> Field.getSortableFieldName(Field.ENTRY_CLASS_PK),
+				String::valueOf)
 		).put(
 			"objectDefinitionId",
 			new IntegerEntityField(

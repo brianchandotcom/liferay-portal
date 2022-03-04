@@ -134,6 +134,11 @@ public class ObjectEntryModelDocumentContributor
 		document.addKeyword(
 			"objectDefinitionName", objectDefinition.getShortName());
 
+		document.add(
+			new Field(
+				Field.getSortableFieldName(Field.ENTRY_CLASS_PK),
+				document.get(Field.ENTRY_CLASS_PK)));
+
 		Map<String, Serializable> values = _objectEntryLocalService.getValues(
 			objectEntry.getObjectEntryId());
 

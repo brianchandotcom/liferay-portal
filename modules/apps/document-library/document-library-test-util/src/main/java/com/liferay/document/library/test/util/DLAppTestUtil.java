@@ -54,8 +54,8 @@ public abstract class DLAppTestUtil {
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 				null, userId, groupId, folderId, sourceFileName,
 				ContentTypes.TEXT_PLAIN, title, StringPool.BLANK,
-				StringPool.BLANK, TestDataConstants.TEST_BYTE_ARRAY, null, null,
-				serviceContext);
+				StringPool.BLANK, StringPool.BLANK,
+				TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
 
 			if (approved) {
 				return updateStatus(fileEntry, serviceContext);

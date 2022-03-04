@@ -79,7 +79,7 @@ public class DLFileVersionLocalServiceTest {
 		DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), null, ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			DLVersionNumberIncrease.MINOR, (byte[])null,
+			StringPool.BLANK, DLVersionNumberIncrease.MINOR, (byte[])null,
 			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 			serviceContext);
 

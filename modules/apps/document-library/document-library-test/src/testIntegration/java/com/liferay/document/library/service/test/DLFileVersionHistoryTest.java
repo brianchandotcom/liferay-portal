@@ -159,7 +159,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_1_1,
-				StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				DLVersionNumberIncrease.MINOR, (byte[])null,
 				_fileEntry.getExpirationDate(), _fileEntry.getReviewDate(),
 				serviceContext);
@@ -175,7 +175,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_PWC,
-				StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				DLVersionNumberIncrease.MINOR, (byte[])null,
 				_fileEntry.getExpirationDate(), _fileEntry.getReviewDate(),
 				serviceContext);
@@ -277,7 +277,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_1_1,
-				StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				DLVersionNumberIncrease.MINOR, (byte[])null,
 				_fileEntry.getExpirationDate(), _fileEntry.getReviewDate(),
 				serviceContext);
@@ -293,7 +293,7 @@ public class DLFileVersionHistoryTest extends BaseDLAppTestCase {
 
 			DLAppServiceUtil.updateFileEntry(
 				fileEntryId, null, ContentTypes.TEXT_PLAIN, _VERSION_PWC,
-				StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				DLVersionNumberIncrease.MINOR, (byte[])null,
 				_fileEntry.getExpirationDate(), _fileEntry.getReviewDate(),
 				serviceContext);

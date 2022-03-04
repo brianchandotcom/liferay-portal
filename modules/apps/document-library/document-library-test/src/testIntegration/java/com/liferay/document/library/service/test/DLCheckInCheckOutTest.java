@@ -519,7 +519,7 @@ public class DLCheckInCheckOutTest {
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			null, repositoryId, _folder.getFolderId(), fileName,
-			ContentTypes.TEXT_PLAIN, fileName, null, null, inputStream,
+			ContentTypes.TEXT_PLAIN, fileName, null, null, null, inputStream,
 			_TEST_CONTENT.length(), null, null, _serviceContext);
 
 		Assert.assertNotNull(fileEntry);
@@ -577,8 +577,8 @@ public class DLCheckInCheckOutTest {
 
 		return DLAppServiceUtil.updateFileEntry(
 			fileEntryId, fileName, ContentTypes.TEXT_PLAIN, fileName, null,
-			null, DLVersionNumberIncrease.MINOR, inputStream, content.length(),
-			null, null, _serviceContext);
+			null, null, DLVersionNumberIncrease.MINOR, inputStream,
+			content.length(), null, null, _serviceContext);
 	}
 
 	private static final String _FILE_NAME = "test1.txt";

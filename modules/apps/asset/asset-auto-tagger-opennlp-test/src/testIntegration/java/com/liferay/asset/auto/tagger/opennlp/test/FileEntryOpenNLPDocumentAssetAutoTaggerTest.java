@@ -97,8 +97,8 @@ public class FileEntryOpenNLPDocumentAssetAutoTaggerTest
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), mimeType,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			new ByteArrayInputStream(bytes), bytes.length, null, null,
-			ServiceContextTestUtil.getServiceContext());
+			StringPool.BLANK, new ByteArrayInputStream(bytes), bytes.length,
+			null, null, ServiceContextTestUtil.getServiceContext());
 
 		return assetEntryLocalService.fetchEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());

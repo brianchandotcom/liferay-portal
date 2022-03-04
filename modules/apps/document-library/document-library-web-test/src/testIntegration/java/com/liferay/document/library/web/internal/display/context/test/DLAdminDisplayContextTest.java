@@ -124,8 +124,8 @@ public class DLAdminDisplayContextTest {
 			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, content.getBytes(), null, null,
-			serviceContext);
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			content.getBytes(), null, null, serviceContext);
 	}
 
 	private MockLiferayPortletActionRequest

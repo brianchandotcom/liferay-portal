@@ -105,9 +105,10 @@ public class DLFileEntryActivityInterpreterTest
 		DLAppServiceUtil.updateFileEntry(
 			_fileEntry.getFileEntryId(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.MINOR,
-			TestDataConstants.TEST_BYTE_ARRAY, _fileEntry.getExpirationDate(),
-			_fileEntry.getReviewDate(), serviceContext);
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			DLVersionNumberIncrease.MINOR, TestDataConstants.TEST_BYTE_ARRAY,
+			_fileEntry.getExpirationDate(), _fileEntry.getReviewDate(),
+			serviceContext);
 	}
 
 	@Override

@@ -28,6 +28,7 @@ import com.liferay.document.library.sync.constants.DLSyncConstants;
 import com.liferay.document.library.test.util.BaseDLAppTestCase;
 import com.liferay.document.library.workflow.WorkflowHandlerInvocationCounter;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -141,7 +142,8 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), null, 0, null, null, serviceContext);
+			StringUtil.randomString(), StringUtil.randomString(), null, 0, null,
+			null, serviceContext);
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
@@ -167,8 +169,9 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			checkedOutFileEntry.getFileEntryId(),
 			checkedOutFileEntry.getFileName(),
 			checkedOutFileEntry.getMimeType(), checkedOutFileEntry.getTitle(),
-			checkedOutFileEntry.getDescription(), StringUtil.randomString(),
-			DLVersionNumberIncrease.NONE, null, 0, null, null, serviceContext);
+			StringPool.BLANK, checkedOutFileEntry.getDescription(),
+			StringUtil.randomString(), DLVersionNumberIncrease.NONE, null, 0,
+			null, null, serviceContext);
 
 		DLAppServiceUtil.checkInFileEntry(
 			updatedFileEntry.getFileEntryId(), DLVersionNumberIncrease.NONE,
@@ -223,8 +226,9 @@ public class DLAppServiceWhenCheckingInAFileEntryTest
 			checkedOutFileEntry.getFileEntryId(),
 			checkedOutFileEntry.getFileName(),
 			checkedOutFileEntry.getMimeType(), checkedOutFileEntry.getTitle(),
-			checkedOutFileEntry.getDescription(), StringUtil.randomString(),
-			DLVersionNumberIncrease.NONE, null, 0, null, null, serviceContext);
+			StringPool.BLANK, checkedOutFileEntry.getDescription(),
+			StringUtil.randomString(), DLVersionNumberIncrease.NONE, null, 0,
+			null, null, serviceContext);
 
 		DLAppServiceUtil.checkInFileEntry(
 			updatedFileEntry.getFileEntryId(), DLVersionNumberIncrease.NONE,

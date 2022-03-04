@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -67,8 +68,9 @@ public class FileEntryLayoutDisplayPageProviderTest {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				RandomTestUtil.randomString(),
 				ContentTypes.APPLICATION_OCTET_STREAM,
+				RandomTestUtil.randomString(), StringPool.BLANK,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), new byte[0], null, null,
+				new byte[0], null, null,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 		}
 	}

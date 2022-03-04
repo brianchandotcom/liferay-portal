@@ -131,10 +131,12 @@ public class DLAudioFFMPEGAudioConverterTest {
 
 	private FileEntry _createAudioFileEntry(String fileName) throws Exception {
 		return DLAppServiceUtil.addFileEntry(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			fileName, MimeTypesUtil.getContentType(fileName), "audio",
+			null, _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+			MimeTypesUtil.getContentType(fileName), "audio",
 			StringUtil.randomString(), StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), fileName), _serviceContext);
+			StringUtil.randomString(), FileUtil.getBytes(getClass(), fileName),
+			null, null, _serviceContext);
 	}
 
 	private void _withDLAudioFFMPEGAudioConverterConfiguration(

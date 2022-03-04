@@ -430,7 +430,7 @@ public class DLFileEntryLocalServiceTest {
 
 		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 			dlFileEntry.getFileEntryId(), "file.pdf", null, "file.txt",
-			StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.fromMajorVersion(false), null, 0,
 			dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
 			serviceContext);
@@ -697,9 +697,9 @@ public class DLFileEntryLocalServiceTest {
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, StringPool.BLANK,
-			ContentTypes.TEXT_PLAIN, "FE1.exe", RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), (byte[])null, null, null,
-			serviceContext);
+			ContentTypes.TEXT_PLAIN, "FE1.exe", StringPool.BLANK,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			(byte[])null, null, null, serviceContext);
 
 		Assert.assertEquals("FE1.exe", fileEntry.getFileName());
 
@@ -709,10 +709,11 @@ public class DLFileEntryLocalServiceTest {
 
 		fileEntry = DLAppLocalServiceUtil.updateFileEntry(
 			TestPropsValues.getUserId(), fileEntry.getFileEntryId(), "FE2.txt",
-			ContentTypes.TEXT_PLAIN, "FE1.exe", fileEntry.getDescription(),
-			RandomTestUtil.randomString(), DLVersionNumberIncrease.MINOR,
-			TestDataConstants.TEST_BYTE_ARRAY, fileEntry.getExpirationDate(),
-			fileEntry.getReviewDate(), serviceContext);
+			ContentTypes.TEXT_PLAIN, "FE1.exe", StringPool.BLANK,
+			fileEntry.getDescription(), RandomTestUtil.randomString(),
+			DLVersionNumberIncrease.MINOR, TestDataConstants.TEST_BYTE_ARRAY,
+			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
+			serviceContext);
 
 		Assert.assertEquals("FE2.txt", fileEntry.getFileName());
 
@@ -736,8 +737,8 @@ public class DLFileEntryLocalServiceTest {
 			null, TestPropsValues.getUserId(), dlFolder.getRepositoryId(),
 			dlFolder.getFolderId(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, inputStream, bytes.length, null,
-			null, serviceContext);
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, inputStream,
+			bytes.length, null, null, serviceContext);
 
 		inputStream = new ByteArrayInputStream(bytes);
 
@@ -745,8 +746,8 @@ public class DLFileEntryLocalServiceTest {
 			null, TestPropsValues.getUserId(), dlFolder.getRepositoryId(),
 			dlFolder.getFolderId(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, inputStream, bytes.length, null,
-			null, serviceContext);
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, inputStream,
+			bytes.length, null, null, serviceContext);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			DLFileEntry.class.getName(), noAssetFileEntry.getFileEntryId());
@@ -782,7 +783,7 @@ public class DLFileEntryLocalServiceTest {
 
 		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 			dlFileEntry.getFileEntryId(), "file.txt", null, "file.pdf",
-			StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.fromMajorVersion(false), null, 0,
 			dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
 			serviceContext);

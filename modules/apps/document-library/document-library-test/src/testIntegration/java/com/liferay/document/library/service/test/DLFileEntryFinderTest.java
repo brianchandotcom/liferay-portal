@@ -1283,7 +1283,7 @@ public class DLFileEntryFinderTest {
 		return DLAppLocalServiceUtil.addFileEntry(
 			null, userId, repositoryId, folderId, fileName, contentType,
 			fileName.concat(titleSuffix), StringPool.BLANK, StringPool.BLANK,
-			(byte[])null, null, null, serviceContext);
+			StringPool.BLANK, (byte[])null, null, null, serviceContext);
 	}
 
 	protected int doCountBy_G_U_F_M(
@@ -1516,9 +1516,9 @@ public class DLFileEntryFinderTest {
 		fileEntry = DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), "FE3.txt", ContentTypes.TEXT_PLAIN,
 			"FE3.txt".concat(titleSuffix), StringPool.BLANK, StringPool.BLANK,
-			DLVersionNumberIncrease.MINOR, TestDataConstants.TEST_BYTE_ARRAY,
-			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-			serviceContext);
+			StringPool.BLANK, DLVersionNumberIncrease.MINOR,
+			TestDataConstants.TEST_BYTE_ARRAY, fileEntry.getExpirationDate(),
+			fileEntry.getReviewDate(), serviceContext);
 
 		dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
 			fileEntry.getFileEntryId());

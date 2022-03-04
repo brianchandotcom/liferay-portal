@@ -340,8 +340,8 @@ public class WikiAttachmentsTest {
 			null, serviceContext.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
-			StringPool.BLANK, StringPool.BLANK, _CONTENT.getBytes(), null, null,
-			serviceContext);
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			_CONTENT.getBytes(), null, null, serviceContext);
 	}
 
 	private void _addWikiPageWithAttachmentFileName(String fileName)

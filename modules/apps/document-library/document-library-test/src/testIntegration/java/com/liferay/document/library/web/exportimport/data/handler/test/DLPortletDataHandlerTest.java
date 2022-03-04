@@ -301,7 +301,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			null, folder.getGroupId(), folder.getFolderId(),
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			BaseDLAppTestCase.CONTENT.getBytes(), null, null,
+			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
 			new ServiceContext());
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
@@ -357,7 +357,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			null, folder.getGroupId(), folder.getFolderId(),
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			BaseDLAppTestCase.CONTENT.getBytes(), null, null,
+			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(), null, null,
 			new ServiceContext());
 
 		FileVersion fileVersion = fileEntry.getFileVersion();

@@ -121,7 +121,7 @@ public class PDFProcessorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
@@ -142,7 +142,7 @@ public class PDFProcessorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
@@ -160,7 +160,7 @@ public class PDFProcessorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
@@ -168,7 +168,7 @@ public class PDFProcessorTest {
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			DLVersionNumberIncrease.MAJOR,
+			StringUtil.randomString(), DLVersionNumberIncrease.MAJOR,
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
 			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 			_serviceContext);
@@ -187,7 +187,7 @@ public class PDFProcessorTest {
 			null, _serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
-			StringUtil.randomString(), StringUtil.randomString(),
+			StringUtil.randomString(), null, StringUtil.randomString(),
 			StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
@@ -200,9 +200,9 @@ public class PDFProcessorTest {
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			DLVersionNumberIncrease.MAJOR, inputStream, bytes.length,
-			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-			_serviceContext);
+			StringUtil.randomString(), DLVersionNumberIncrease.MAJOR,
+			inputStream, bytes.length, fileEntry.getExpirationDate(),
+			fileEntry.getReviewDate(), _serviceContext);
 
 		Assert.assertTrue(cleanUp.get());
 	}
@@ -217,7 +217,7 @@ public class PDFProcessorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
@@ -238,7 +238,7 @@ public class PDFProcessorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
@@ -258,7 +258,7 @@ public class PDFProcessorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
@@ -268,7 +268,7 @@ public class PDFProcessorTest {
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			DLVersionNumberIncrease.MAJOR,
+			StringUtil.randomString(), DLVersionNumberIncrease.MAJOR,
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
 			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 			_serviceContext);
@@ -293,7 +293,7 @@ public class PDFProcessorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
@@ -301,7 +301,7 @@ public class PDFProcessorTest {
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			DLVersionNumberIncrease.MAJOR, null, 0,
+			StringUtil.randomString(), DLVersionNumberIncrease.MAJOR, null, 0,
 			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 			_serviceContext);
 
@@ -320,7 +320,7 @@ public class PDFProcessorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
@@ -328,9 +328,9 @@ public class PDFProcessorTest {
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			DLVersionNumberIncrease.MAJOR, new byte[0],
-			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-			_serviceContext);
+			StringUtil.randomString(), DLVersionNumberIncrease.MAJOR,
+			new byte[0], fileEntry.getExpirationDate(),
+			fileEntry.getReviewDate(), _serviceContext);
 
 		Assert.assertEquals(1, count.get());
 	}
@@ -345,7 +345,7 @@ public class PDFProcessorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
@@ -362,7 +362,7 @@ public class PDFProcessorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
@@ -387,7 +387,7 @@ public class PDFProcessorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
@@ -399,9 +399,9 @@ public class PDFProcessorTest {
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			DLVersionNumberIncrease.MAJOR, inputStream, bytes.length,
-			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-			_serviceContext);
+			StringUtil.randomString(), DLVersionNumberIncrease.MAJOR,
+			inputStream, bytes.length, fileEntry.getExpirationDate(),
+			fileEntry.getReviewDate(), _serviceContext);
 
 		Assert.assertEquals(2, count.get());
 	}
@@ -418,7 +418,7 @@ public class PDFProcessorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(),
+			StringUtil.randomString(), StringUtil.randomString(),
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"), null, null,
 			_serviceContext);
 
@@ -426,7 +426,7 @@ public class PDFProcessorTest {
 			fileEntry.getFileEntryId(), StringUtil.randomString() + ".pdf",
 			ContentTypes.APPLICATION_PDF, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			DLVersionNumberIncrease.MAJOR,
+			StringUtil.randomString(), DLVersionNumberIncrease.MAJOR,
 			FileUtil.getBytes(getClass(), "dependencies/test.pdf"),
 			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 			_serviceContext);

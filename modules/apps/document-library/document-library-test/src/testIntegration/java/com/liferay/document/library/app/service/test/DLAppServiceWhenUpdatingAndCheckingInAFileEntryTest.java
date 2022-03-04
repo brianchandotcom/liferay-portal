@@ -56,7 +56,7 @@ public class DLAppServiceWhenUpdatingAndCheckingInAFileEntryTest
 		fileEntry = DLAppServiceUtil.updateFileEntryAndCheckIn(
 			fileEntry.getFileEntryId(), fileEntry.getFileName(),
 			fileEntry.getMimeType(), fileEntry.getTitle(),
-			RandomTestUtil.randomString(), StringPool.BLANK,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.MINOR, null, null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 

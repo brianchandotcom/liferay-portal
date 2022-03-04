@@ -45,8 +45,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.anonymizer.UADAnonymizer;
 import com.liferay.user.associated.data.test.util.BaseHasAssetEntryUADAnonymizerTestCase;
 
-import java.io.InputStream;
-
 import java.util.List;
 
 import org.junit.Assert;
@@ -247,22 +245,13 @@ public class DLFileEntryUADAnonymizerTest
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(
 			dlFileEntryId);
 
-		long userId = dlFileEntry.getUserId();
-
-		long fileEntryId = dlFileEntryId;
-		String sourceFileName = RandomTestUtil.randomString();
-		String contentType = ContentTypes.TEXT;
-		String title = RandomTestUtil.randomString();
-		String description = RandomTestUtil.randomString();
-		String changeLog = RandomTestUtil.randomString();
-		boolean majorVersion = true;
-		InputStream inputStream = dlFileEntry.getContentStream();
-
 		_dlAppLocalService.updateFileEntry(
-			userId, fileEntryId, sourceFileName, contentType, title,
-			description, changeLog,
-			DLVersionNumberIncrease.fromMajorVersion(majorVersion), inputStream,
-			dlFileEntry.getSize(), null, null,
+			dlFileEntry.getUserId(), dlFileEntryId,
+			RandomTestUtil.randomString(), ContentTypes.TEXT,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			DLVersionNumberIncrease.fromMajorVersion(true),
+			dlFileEntry.getContentStream(), dlFileEntry.getSize(), null, null,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

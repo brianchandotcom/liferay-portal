@@ -71,8 +71,8 @@ public class DLFileEntryUADTestUtil {
 		FileEntry fileEntry = dlAppLocalService.addFileEntry(
 			null, userId, groupId, dlFolderId, RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, inputStream, bytes.length, null,
-			null, serviceContext);
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, inputStream,
+			bytes.length, null, null, serviceContext);
 
 		return dlFileEntryLocalService.getFileEntry(fileEntry.getFileEntryId());
 	}

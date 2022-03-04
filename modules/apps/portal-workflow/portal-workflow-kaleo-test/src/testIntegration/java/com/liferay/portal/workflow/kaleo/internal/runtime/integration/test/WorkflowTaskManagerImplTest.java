@@ -1335,7 +1335,8 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 			null, _adminUser.getUserId(), _group.getGroupId(), folderId,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
+			StringPool.BLANK, TestDataConstants.TEST_BYTE_ARRAY, null, null,
+			serviceContext);
 
 		return fileEntry.getLatestFileVersion();
 	}
@@ -1852,9 +1853,9 @@ public class WorkflowTaskManagerImplTest extends BaseWorkflowManagerTestCase {
 	private FileVersion _updateFileVersion(long fileEntryId) throws Exception {
 		FileEntry fileEntry = _dlAppService.updateFileEntry(
 			fileEntryId, StringPool.BLANK, ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomString(), StringPool.BLANK, null,
-			DLVersionNumberIncrease.AUTOMATIC, null, 0, null, null,
-			_serviceContext);
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK, null, DLVersionNumberIncrease.AUTOMATIC, null, 0,
+			null, null, _serviceContext);
 
 		return fileEntry.getLatestFileVersion();
 	}

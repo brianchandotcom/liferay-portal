@@ -84,8 +84,8 @@ public class DLAppServiceTestUtil {
 		return DLAppServiceUtil.addFileEntry(
 			externalReferenceCode, groupId, folderId, fileName,
 			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
-			BaseDLAppTestCase.CONTENT.getBytes(), expirationDate, reviewDate,
-			serviceContext);
+			StringPool.BLANK, BaseDLAppTestCase.CONTENT.getBytes(),
+			expirationDate, reviewDate, serviceContext);
 	}
 
 	protected static ConfigurationTemporarySwapper
@@ -203,7 +203,7 @@ public class DLAppServiceTestUtil {
 
 		return DLAppServiceUtil.updateFileEntry(
 			fileEntryId, fileName, ContentTypes.TEXT_PLAIN, fileName,
-			StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.fromMajorVersion(majorVersion),
 			TestDataConstants.TEST_BYTE_ARRAY, expirationDate, reviewDate,
 			ServiceContextTestUtil.getServiceContext(groupId));

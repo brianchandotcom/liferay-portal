@@ -269,9 +269,9 @@ public class DLFileEntryTrashHandlerTest
 		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 			primaryKey, RandomTestUtil.randomString() + ".txt",
 			ContentTypes.TEXT_PLAIN, dlFileEntry.getTitle(), StringPool.BLANK,
-			StringPool.BLANK, DLVersionNumberIncrease.MINOR, content.getBytes(),
-			dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
-			serviceContext);
+			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.MINOR,
+			content.getBytes(), dlFileEntry.getExpirationDate(),
+			dlFileEntry.getReviewDate(), serviceContext);
 
 		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
 

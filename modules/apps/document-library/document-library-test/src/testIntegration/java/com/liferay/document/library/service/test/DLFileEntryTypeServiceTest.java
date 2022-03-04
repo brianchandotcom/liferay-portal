@@ -86,12 +86,13 @@ public class DLFileEntryTypeServiceTest {
 
 		_folder = DLAppLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A", "",
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder A",
+			StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_subfolder = DLAppLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_folder.getFolderId(), "SubFolder AA", "",
+			_folder.getFolderId(), "SubFolder AA", StringPool.BLANK,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_basicDocumentDLFileEntryType =
@@ -226,7 +227,8 @@ public class DLFileEntryTypeServiceTest {
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			null, _group.getGroupId(), _folder.getFolderId(), name,
-			ContentTypes.TEXT_PLAIN, name, "", "", bytes, null, null,
+			ContentTypes.TEXT_PLAIN, name, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, bytes, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		assertFileEntryType(fileEntry, _dlFileEntryType1);
@@ -235,7 +237,8 @@ public class DLFileEntryTypeServiceTest {
 
 		fileEntry = DLAppServiceUtil.addFileEntry(
 			null, _group.getGroupId(), _subfolder.getFolderId(), name,
-			ContentTypes.TEXT_PLAIN, name, "", "", bytes, null, null,
+			ContentTypes.TEXT_PLAIN, name, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, bytes, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		assertFileEntryType(fileEntry, _dlFileEntryType1);

@@ -239,8 +239,8 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 				null, serviceContext.getUserId(),
 				serviceContext.getScopeGroupId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName, mimeType,
-				fileName, StringPool.BLANK, StringPool.BLANK, file, null, null,
-				serviceContext);
+				fileName, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+				file, null, null, serviceContext);
 		}
 		finally {
 			FileUtil.delete(file);
@@ -256,8 +256,8 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), ContentTypes.APPLICATION_OCTET_STREAM,
-			"Document", StringUtil.randomString(), StringUtil.randomString(),
-			new byte[0], null, null,
+			"Document", StringPool.BLANK, StringUtil.randomString(),
+			StringUtil.randomString(), new byte[0], null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		Folder folder = DLAppLocalServiceUtil.addFolder(
@@ -269,7 +269,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		DLAppLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			folder.getFolderId(), StringUtil.randomString(),
-			ContentTypes.APPLICATION_OCTET_STREAM, "Document",
+			ContentTypes.APPLICATION_OCTET_STREAM, "Document", StringPool.BLANK,
 			StringUtil.randomString(), StringUtil.randomString(), new byte[0],
 			null, null,
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
@@ -339,7 +339,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			content.getBytes(), null, null, serviceContext);
+			StringPool.BLANK, content.getBytes(), null, null, serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
 	}
@@ -515,7 +515,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 			dlFileEntry.getFileEntryId(), null, dlFileEntry.getMimeType(),
-			keywords, StringPool.BLANK, StringPool.BLANK,
+			keywords, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.MAJOR, (byte[])null,
 			dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
 			serviceContext);

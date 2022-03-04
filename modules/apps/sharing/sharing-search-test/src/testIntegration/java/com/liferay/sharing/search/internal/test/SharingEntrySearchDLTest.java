@@ -89,8 +89,9 @@ public class SharingEntrySearchDLTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(), "text/plain", _title,
-			StringUtil.randomString(), StringPool.BLANK, "Searching".getBytes(),
-			null, null, serviceContext);
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringPool.BLANK, "Searching".getBytes(), null, null,
+			serviceContext);
 
 		_classNameId = _classNameLocalService.getClassNameId(
 			DLFileEntry.class.getName());

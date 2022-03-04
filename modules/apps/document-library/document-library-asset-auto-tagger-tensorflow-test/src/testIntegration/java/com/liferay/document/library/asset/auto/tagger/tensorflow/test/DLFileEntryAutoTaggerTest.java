@@ -79,7 +79,7 @@ public class DLFileEntryAutoTaggerTest {
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 					"indigobunting.bmp", ContentTypes.IMAGE_BMP,
 					"indigobunting", StringUtil.randomString(),
-					StringUtil.randomString(),
+					StringUtil.randomString(), StringUtil.randomString(),
 					FileUtil.getBytes(getClass(), "indigobunting.bmp"), null,
 					null, _serviceContext);
 
@@ -100,6 +100,7 @@ public class DLFileEntryAutoTaggerTest {
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "goldfinch.jpg",
 					ContentTypes.IMAGE_JPEG, "goldfinch",
 					StringUtil.randomString(), StringUtil.randomString(),
+					StringUtil.randomString(),
 					FileUtil.getBytes(getClass(), "goldfinch.jpg"), null, null,
 					_serviceContext);
 
@@ -120,6 +121,7 @@ public class DLFileEntryAutoTaggerTest {
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 					"hummingbird.png", ContentTypes.IMAGE_PNG, "hummingbird",
 					StringUtil.randomString(), StringUtil.randomString(),
+					StringUtil.randomString(),
 					FileUtil.getBytes(getClass(), "hummingbird.png"), null,
 					null, _serviceContext);
 

@@ -63,12 +63,12 @@ public class FormDocumentResourceTest extends BaseFormDocumentResourceTestCase {
 			FormDocumentUtil.toFormDocument(
 				_dlurlHelper,
 				DLAppLocalServiceUtil.addFileEntry(
-					TestPropsValues.getUserId(), groupId,
+					null, TestPropsValues.getUserId(), groupId,
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 					RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 					RandomTestUtil.randomString(), StringUtil.randomString(),
-					StringUtil.randomString(), new byte[0],
-					new ServiceContext()));
+					StringUtil.randomString(), StringUtil.randomString(),
+					new byte[0], null, null, new ServiceContext()));
 
 		return FormDocument.toDTO(formDocument.toString());
 	}

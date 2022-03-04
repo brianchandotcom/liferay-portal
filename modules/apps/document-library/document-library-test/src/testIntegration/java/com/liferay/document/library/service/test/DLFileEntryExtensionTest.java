@@ -360,7 +360,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		return DLAppLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			parentFolder.getFolderId(), sourceFileName, ContentTypes.TEXT_PLAIN,
-			title, StringPool.BLANK, StringPool.BLANK,
+			title, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
 	}
 
@@ -374,7 +374,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 		DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), sourceFileName, ContentTypes.TEXT_PLAIN,
-			title, StringPool.BLANK, StringPool.BLANK,
+			title, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			DLVersionNumberIncrease.MINOR, TestDataConstants.TEST_BYTE_ARRAY,
 			fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 			serviceContext);

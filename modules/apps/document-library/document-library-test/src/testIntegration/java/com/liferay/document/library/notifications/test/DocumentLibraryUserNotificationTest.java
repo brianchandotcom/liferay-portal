@@ -120,8 +120,9 @@ public class DocumentLibraryUserNotificationTest
 		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
 			(Long)baseModel.getPrimaryKeyObj(), RandomTestUtil.randomString(),
 			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.MINOR,
-			TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			DLVersionNumberIncrease.MINOR, TestDataConstants.TEST_BYTE_ARRAY,
+			null, null, serviceContext);
 
 		return (BaseModel<?>)fileEntry.getModel();
 	}

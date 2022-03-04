@@ -89,12 +89,12 @@ public class DLFileVersionUpdateTest extends BaseDLAppTestCase {
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 			null, group.getGroupId(), parentFolder.getFolderId(), addFileName,
-			addMimeType, addFileName, description, changeLog, addBytes, null,
-			null, serviceContext);
+			addMimeType, addFileName, null, description, changeLog, addBytes,
+			null, null, serviceContext);
 
 		fileEntry = DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), updateFileName, updateMimeType,
-			updateFileName, description, changeLog,
+			updateFileName, null, description, changeLog,
 			DLVersionNumberIncrease.MINOR, updateBytes, new Date(), new Date(),
 			serviceContext);
 

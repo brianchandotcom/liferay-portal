@@ -61,8 +61,8 @@ public class FileEntryTextExtractorTest {
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			new ByteArrayInputStream(bytes), bytes.length, null, null,
-			ServiceContextTestUtil.getServiceContext());
+			StringPool.BLANK, new ByteArrayInputStream(bytes), bytes.length,
+			null, null, ServiceContextTestUtil.getServiceContext());
 
 		TextExtractor<FileEntry> textExtractor =
 			(TextExtractor<FileEntry>)_textExtractorTracker.getTextExtractor(

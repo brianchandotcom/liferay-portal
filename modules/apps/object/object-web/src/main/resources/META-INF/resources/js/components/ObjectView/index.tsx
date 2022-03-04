@@ -32,10 +32,6 @@ const TABS = [
 		Component: ViewBuilderScreen,
 		label: Liferay.Language.get('view-builder'),
 	},
-	{
-		Component: DefaultSortScreen,
-		label: Liferay.Language.get('default-sort'),
-	},
 ];
 
 const HEADERS = new Headers({
@@ -44,9 +40,24 @@ const HEADERS = new Headers({
 });
 
 const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
-	const [{isViewOnly, objectView, objectViewId}, dispatch] = useContext(
-		ViewContext
-	);
+	const [
+		{
+			isFFObjectViewSortColumnConfigurationEnabled,
+			isViewOnly,
+			objectView,
+			objectViewId,
+		},
+		dispatch,
+	] = useContext(ViewContext);
+
+	if (isFFObjectViewSortColumnConfigurationEnabled) {
+		if (TABS.length !== 3) {
+			TABS.push({
+				Component: DefaultSortScreen,
+				label: Liferay.Language.get('default-sort'),
+			});
+		}
+	}
 
 	const [activeIndex, setActiveIndex] = useState<number>(0);
 	const [loading, setLoading] = useState<boolean>(true);
@@ -104,6 +115,7 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 			dispatch({
 				payload: {
+					isFFObjectViewSortColumnConfigurationEnabled,
 					objectFields,
 					objectView,
 				},
@@ -114,7 +126,7 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 		};
 
 		makeFetch();
-	}, [objectViewId, dispatch]);
+	}, [dispatch, isFFObjectViewSortColumnConfigurationEnabled, objectViewId]);
 
 	const removeUnnecessaryPropertiesFromObjectView = (
 		objectView: TObjectView
@@ -128,20 +140,29 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			};
 		});
 
-		const newObjectViewSortColumns = objectViewSortColumns.map(
-			(sortColumn) => {
-				return {
-					objectFieldName: sortColumn.objectFieldName,
-					priority: sortColumn.priority,
-					sortOrder: sortColumn.sortOrder,
-				};
-			}
-		);
+		if (isFFObjectViewSortColumnConfigurationEnabled) {
+			const newObjectViewSortColumns = objectViewSortColumns.map(
+				(sortColumn) => {
+					return {
+						objectFieldName: sortColumn.objectFieldName,
+						priority: sortColumn.priority,
+						sortOrder: sortColumn.sortOrder,
+					};
+				}
+			);
+
+			const newObjectView = {
+				...objectView,
+				objectViewColumns: newObjectViewColumns,
+				objectViewSortColumns: newObjectViewSortColumns,
+			};
+
+			return newObjectView;
+		}
 
 		const newObjectView = {
 			...objectView,
 			objectViewColumns: newObjectViewColumns,
-			objectViewSortColumns: newObjectViewSortColumns,
 		};
 
 		return newObjectView;
@@ -249,17 +270,25 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 		</>
 	);
 };
-interface ICustonViewWrapperProps extends React.HTMLAttributes<HTMLElement> {
+interface ICustomViewWrapperProps extends React.HTMLAttributes<HTMLElement> {
+	isFFObjectViewSortColumnConfigurationEnabled: boolean;
 	isViewOnly: boolean;
 	objectViewId: string;
 }
 
-const CustomViewWrapper: React.FC<ICustonViewWrapperProps> = ({
+const CustomViewWrapper: React.FC<ICustomViewWrapperProps> = ({
+	isFFObjectViewSortColumnConfigurationEnabled,
 	isViewOnly,
 	objectViewId,
 }) => {
 	return (
-		<ViewContextProvider value={{isViewOnly, objectViewId}}>
+		<ViewContextProvider
+			value={{
+				isFFObjectViewSortColumnConfigurationEnabled,
+				isViewOnly,
+				objectViewId,
+			}}
+		>
 			<CustomView />
 		</ViewContextProvider>
 	);

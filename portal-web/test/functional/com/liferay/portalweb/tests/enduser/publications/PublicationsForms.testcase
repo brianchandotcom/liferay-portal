@@ -310,8 +310,14 @@ definition {
 			publicationName = "Publication Name 1");
 
 		PublicationsChanges.discardChanges(
+			changeCategory = "Form Instance",
+			changeTitle = "Created Form Name Edited",
+			conflictingChanges = "true",
+			entryTitle = "Form Instance");
+
+		PublicationsChanges.discardChanges(
 			changeCategory = "Dynamic Data Mapping Structure",
-			changeTitle = "Created Form Name",
+			changeTitle = "Created Form Name Edited",
 			conflictingChanges = "true",
 			entryTitle = "Dynamic Data Mapping Structure");
 

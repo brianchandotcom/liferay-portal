@@ -32,6 +32,18 @@ definition {
 		WaitForPageLoad();
 	}
 
+	macro assertColumnNotPresent {
+		AssertElementNotPresent(
+			key_columnName = "${colunmName}",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
+	}
+
+	macro assertColumnPresent {
+		AssertElementPresent(
+			key_columnName = "${colunmName}",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
+	}
+
 	macro assertEmptyStateTextOnViewBuilder {
 		AssertElementPresent(
 			key_text = "${text}",
@@ -86,20 +98,8 @@ definition {
 		Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR");
 
 		Type(
-			value1 =  "${colunmName}",
-			locator1 =  "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR");
-	}
-
-	macro assertColumnPresent {
-		AssertElementPresent(
-			key_columnName = "${colunmName}",
-			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
-	}
-
-	macro assertColumnNotPresent {
-		AssertElementNotPresent(
-			key_columnName = "${colunmName}",
-			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR",
+			value1 = "${colunmName}");
 	}
 
 }

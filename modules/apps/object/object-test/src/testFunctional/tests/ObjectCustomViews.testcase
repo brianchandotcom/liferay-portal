@@ -171,13 +171,11 @@ definition {
 	@description = "LPS-135394 - Verify it is possible to search for a column on the View Builder tab"
 	@priority = "4"
 	test CanSearchColumn {
-
-		
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147762",
 			objectName = "CustomObject147762",
 			pluralLabelName = "Custom Objects 147762");
-		
+
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 147762");
@@ -209,7 +207,6 @@ definition {
 		ObjectCustomViews.assertColumnPresent(colunmName = "Author");
 
 		ObjectCustomViews.assertColumnNotPresent(colunmName = "Creation Date");
-
 	}
 
 	@description = "LPS-135394 - Verify it is possible to search for a column on the Add Columns modal"
@@ -356,12 +353,11 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "3"
 	test NoResultMessageViewBuilder {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147761",
 			objectName = "CustomObject147761",
 			pluralLabelName = "Custom Objects 147761");
-		
+
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object 147761");
@@ -389,7 +385,6 @@ definition {
 		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No Results Found");
 
 		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "Sorry, no results were found.");
-
 	}
 
 }

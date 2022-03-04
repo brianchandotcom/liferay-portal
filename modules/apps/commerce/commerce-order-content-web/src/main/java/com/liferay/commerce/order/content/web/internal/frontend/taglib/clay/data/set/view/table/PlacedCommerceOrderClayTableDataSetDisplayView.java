@@ -47,7 +47,7 @@ public class PlacedCommerceOrderClayTableDataSetDisplayView
 		clayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
-			"externalReferenceCode", "ERC");
+			"externalReferenceCode", "erc");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"purchaseOrderNumber", "purchase-order-number");

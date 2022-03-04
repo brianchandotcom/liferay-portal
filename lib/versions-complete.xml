@@ -4304,6 +4304,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.tika.jar!juniversalchardet.jar</file-name>
+				<version>1.0.3</version>
+				<project-name>juniversalchardet</project-name>
+				<project-url>http://juniversalchardet.googlecode.com/</project-url>
+				<licenses>
+					<license>
+						<license-name>Mozilla Public License 1.1 (MPL 1.1)</license-name>
+						<license-url>http://www.mozilla.org/MPL/MPL-1.1.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.tika.jar!jna.jar</file-name>
 				<version>4.1.0</version>
 				<project-name>Java Native Access</project-name>

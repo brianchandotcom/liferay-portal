@@ -14,8 +14,10 @@
 
 package com.liferay.content.dashboard.web.internal.item.type;
 
+import com.liferay.content.dashboard.web.internal.info.item.provider.util.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,7 +43,9 @@ public class DDMStructureContentDashboardItemSubtype
 		_group = group;
 
 		_infoItemReference = new InfoItemReference(
-			DDMStructure.class.getName(), _ddmStructure.getStructureId());
+			JournalArticle.class.getName(),
+			new ClassNameClassPKInfoItemIdentifier(
+				DDMStructure.class.getName(), _ddmStructure.getStructureId()));
 	}
 
 	@Override
@@ -60,17 +64,35 @@ public class DDMStructureContentDashboardItemSubtype
 		InfoItemReference infoItemReference =
 			contentDashboardItemSubtype.getInfoItemReference();
 
-		if (Objects.equals(
+		if (!Objects.equals(
 				_infoItemReference.getClassName(),
-				infoItemReference.getClassName()) &&
-			Objects.equals(
-				_infoItemReference.getClassPK(),
-				infoItemReference.getClassPK())) {
+				infoItemReference.getClassName()) ||
+			!(infoItemReference.getInfoItemIdentifier() instanceof
+				ClassNameClassPKInfoItemIdentifier)) {
 
-			return true;
+			return false;
 		}
 
-		return false;
+		ClassNameClassPKInfoItemIdentifier
+			curClassNameClassPKInfoItemIdentifier =
+				(ClassNameClassPKInfoItemIdentifier)
+					_infoItemReference.getInfoItemIdentifier();
+
+		ClassNameClassPKInfoItemIdentifier classNameClassPKInfoItemIdentifier =
+			(ClassNameClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
+		if (!Objects.equals(
+				curClassNameClassPKInfoItemIdentifier.getClassName(),
+				classNameClassPKInfoItemIdentifier.getClassName()) ||
+			!Objects.equals(
+				curClassNameClassPKInfoItemIdentifier.getClassPK(),
+				classNameClassPKInfoItemIdentifier.getClassPK())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -119,10 +141,16 @@ public class DDMStructureContentDashboardItemSubtype
 
 	@Override
 	public String toJSONString(Locale locale) {
+		ClassNameClassPKInfoItemIdentifier classNameClassPKInfoItemIdentifier =
+			(ClassNameClassPKInfoItemIdentifier)
+				_infoItemReference.getInfoItemIdentifier();
+
 		return JSONUtil.put(
-			"className", _infoItemReference.getClassName()
+			"className", classNameClassPKInfoItemIdentifier.getClassName()
 		).put(
-			"classPK", _infoItemReference.getClassPK()
+			"classPK", classNameClassPKInfoItemIdentifier.getClassPK()
+		).put(
+			"entryClassName", _infoItemReference.getClassName()
 		).put(
 			"title", getFullLabel(locale)
 		).toJSONString();

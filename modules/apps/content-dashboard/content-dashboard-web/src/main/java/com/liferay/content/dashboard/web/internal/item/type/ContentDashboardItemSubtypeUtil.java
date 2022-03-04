@@ -14,6 +14,7 @@
 
 package com.liferay.content.dashboard.web.internal.item.type;
 
+import com.liferay.content.dashboard.web.internal.info.item.provider.util.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Optional;
 
@@ -51,6 +53,27 @@ public class ContentDashboardItemSubtypeUtil {
 				contentDashboardItemSubtypeFactoryTracker,
 			InfoItemReference infoItemReference) {
 
+		if (infoItemReference.getInfoItemIdentifier() instanceof
+				ClassNameClassPKInfoItemIdentifier) {
+
+			ClassNameClassPKInfoItemIdentifier
+				classNameClassPKInfoItemIdentifier =
+					(ClassNameClassPKInfoItemIdentifier)
+						infoItemReference.getInfoItemIdentifier();
+
+			Optional<ContentDashboardItemSubtypeFactory>
+				contentDashboardItemSubtypeFactoryOptional =
+					contentDashboardItemSubtypeFactoryTracker.
+						getContentDashboardItemSubtypeFactoryOptional(
+							classNameClassPKInfoItemIdentifier.getClassName());
+
+			return contentDashboardItemSubtypeFactoryOptional.flatMap(
+				contentDashboardItemSubtypeFactory ->
+					_toContentDashboardItemSubtypeOptional(
+						contentDashboardItemSubtypeFactoryOptional,
+						classNameClassPKInfoItemIdentifier.getClassPK()));
+		}
+
 		Optional<ContentDashboardItemSubtypeFactory>
 			contentDashboardItemSubtypeFactoryOptional =
 				contentDashboardItemSubtypeFactoryTracker.
@@ -70,15 +93,28 @@ public class ContentDashboardItemSubtypeUtil {
 				contentDashboardItemSubtypeFactoryTracker,
 			JSONObject contentDashboardItemSubtypePayloadJSONObject) {
 
+		String className =
+			contentDashboardItemSubtypePayloadJSONObject.getString("className");
+
+		if (Validator.isNull(className)) {
+			return toContentDashboardItemSubtypeOptional(
+				contentDashboardItemSubtypeFactoryTracker,
+				new InfoItemReference(
+					contentDashboardItemSubtypePayloadJSONObject.getString(
+						"entryClassName"),
+					0));
+		}
+
 		return toContentDashboardItemSubtypeOptional(
 			contentDashboardItemSubtypeFactoryTracker,
 			new InfoItemReference(
-				GetterUtil.getString(
-					contentDashboardItemSubtypePayloadJSONObject.getString(
-						"className")),
-				GetterUtil.getLong(
-					contentDashboardItemSubtypePayloadJSONObject.getLong(
-						"classPK"))));
+				contentDashboardItemSubtypePayloadJSONObject.getString(
+					"entryClassName"),
+				new ClassNameClassPKInfoItemIdentifier(
+					GetterUtil.getString(className),
+					GetterUtil.getLong(
+						contentDashboardItemSubtypePayloadJSONObject.getLong(
+							"classPK")))));
 	}
 
 	public static Optional<ContentDashboardItemSubtype>

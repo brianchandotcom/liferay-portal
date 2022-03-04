@@ -76,7 +76,7 @@ public class BlogsEntryContentDashboardItemSubtype
 	@Override
 	public String toJSONString(Locale locale) {
 		return JSONUtil.put(
-			"className", BlogsEntry.class.getName()
+			"entryClassName", BlogsEntry.class.getName()
 		).put(
 			"title", getFullLabel(locale)
 		).toJSONString();

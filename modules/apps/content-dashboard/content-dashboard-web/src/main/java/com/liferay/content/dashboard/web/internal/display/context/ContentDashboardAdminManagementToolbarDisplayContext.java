@@ -289,9 +289,8 @@ public class ContentDashboardAdminManagementToolbarDisplayContext
 														getInfoItemReference();
 
 											return !Objects.equals(
-												curInfoItemReference.
-													getClassPK(),
-												infoItemReference.getClassPK());
+												curInfoItemReference,
+												infoItemReference);
 										}
 									).map(
 										curContentDashboardItemSubtype ->

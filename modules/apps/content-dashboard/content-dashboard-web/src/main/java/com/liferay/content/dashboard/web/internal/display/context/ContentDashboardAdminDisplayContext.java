@@ -33,9 +33,11 @@ import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.portlet.url.builder.ResourceURLBuilder;
+import com.liferay.petra.reflect.GenericUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -223,7 +225,7 @@ public class ContentDashboardAdminDisplayContext {
 					"selectedContentDashboardItemSubtype",
 				contentDashboardItemSubtypeItemSelectorCriterion)
 		).setParameter(
-			"checkedContentDashboardItemSubtypes",
+			"checkedContentDashboardItemSubtypesPayload",
 			() -> {
 				List<? extends ContentDashboardItemSubtype>
 					contentDashboardItemSubtypes =
@@ -237,7 +239,16 @@ public class ContentDashboardAdminDisplayContext {
 						InfoItemReference infoItemReference =
 							contentDashboardItemSubtype.getInfoItemReference();
 
-						return String.valueOf(infoItemReference.getClassPK());
+						Class<?> genericClass = GenericUtil.getGenericClass(
+							contentDashboardItemSubtype);
+
+						return JSONUtil.put(
+							"className", infoItemReference.getClassName()
+						).put(
+							"classPK", infoItemReference.getClassPK()
+						).put(
+							"entryClassName", genericClass.getName()
+						).toString();
 					}
 				).toArray(
 					String[]::new

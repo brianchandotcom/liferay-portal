@@ -17,6 +17,7 @@ package com.liferay.content.dashboard.web.internal.item.selector;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.content.dashboard.web.internal.display.context.ContentDashboardItemSubtypeItemSelectorViewDisplayContext;
+import com.liferay.content.dashboard.web.internal.info.item.provider.util.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactory;
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
@@ -37,6 +38,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -48,7 +50,6 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -58,9 +59,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.portlet.PortletURL;
@@ -110,32 +113,74 @@ public class ContentDashboardItemSubtypeItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
+		try {
+			servletRequest.setAttribute(
+				ContentDashboardItemSubtypeItemSelectorViewDisplayContext.class.
+					getName(),
+				new ContentDashboardItemSubtypeItemSelectorViewDisplayContext(
+					_getContentDashboardItemTypesJSONArray(
+						servletRequest,
+						(ThemeDisplay)servletRequest.getAttribute(
+							WebKeys.THEME_DISPLAY)),
+					itemSelectedEventName));
+		}
+		catch (JSONException jsonException) {
+			throw new IOException(jsonException);
+		}
+
 		RequestDispatcher requestDispatcher =
 			_servletContext.getRequestDispatcher(
 				"/view_content_dashboard_item_types.jsp");
 
-		servletRequest.setAttribute(
-			ContentDashboardItemSubtypeItemSelectorViewDisplayContext.class.
-				getName(),
-			new ContentDashboardItemSubtypeItemSelectorViewDisplayContext(
-				_getContentDashboardItemTypesJSONArray(
-					servletRequest,
-					(ThemeDisplay)servletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY)),
-				itemSelectedEventName));
-
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
+	private Set<InfoItemReference>
+		_getCheckedContentDashboardItemSubtypesInfoItemReferences(
+			ServletRequest servletRequest) {
+
+		return Stream.of(
+			Optional.ofNullable(
+				servletRequest.getParameterValues(
+					"checkedContentDashboardItemSubtypesPayload")
+			).orElseGet(
+				() -> new String[0]
+			)
+		).map(
+			jsonObjectString -> {
+				try {
+					return JSONFactoryUtil.createJSONObject(jsonObjectString);
+				}
+				catch (JSONException jsonException) {
+					_log.error(jsonException);
+
+					return null;
+				}
+			}
+		).filter(
+			Objects::nonNull
+		).map(
+			jsonObject -> new InfoItemReference(
+				jsonObject.getString("entryClassName"),
+				new ClassNameClassPKInfoItemIdentifier(
+					jsonObject.getString("className"),
+					jsonObject.getLong("classPK")))
+		).collect(
+			Collectors.toSet()
+		);
+	}
+
 	private JSONArray _getContentDashboardItemTypesJSONArray(
-		ServletRequest servletRequest, ThemeDisplay themeDisplay) {
+			ServletRequest servletRequest, ThemeDisplay themeDisplay)
+		throws JSONException {
+
+		Set<InfoItemReference>
+			checkedContentDashboardItemSubtypesInfoItemReferences =
+				_getCheckedContentDashboardItemSubtypesInfoItemReferences(
+					servletRequest);
 
 		JSONArray contentDashboardItemTypesJSONArray =
 			JSONFactoryUtil.createJSONArray();
-
-		Set<String> checkedContentDashboardItemSubtypes = SetUtil.fromArray(
-			servletRequest.getParameterValues(
-				"checkedContentDashboardItemSubtypes"));
 
 		for (String className :
 				_contentDashboardItemFactoryTracker.getClassNames()) {
@@ -152,7 +197,7 @@ public class ContentDashboardItemSubtypeItemSelectorView
 				contentDashboardItemSubtypeFactory ->
 					_populateContentDashboardItemTypesJSONArray(
 						className, contentDashboardItemSubtypeFactory,
-						checkedContentDashboardItemSubtypes,
+						checkedContentDashboardItemSubtypesInfoItemReferences,
 						contentDashboardItemTypesJSONArray, themeDisplay)
 			);
 		}
@@ -215,7 +260,8 @@ public class ContentDashboardItemSubtypeItemSelectorView
 	private void _populateContentDashboardItemTypesJSONArray(
 		String className,
 		ContentDashboardItemSubtypeFactory contentDashboardItemSubtypeFactory,
-		Set<String> checkedContentDashboardItemSubtypes,
+		Set<InfoItemReference>
+			checkedContentDashboardItemSubtypeInfoItemReferences,
 		JSONArray contentDashboardItemTypesJSONArray,
 		ThemeDisplay themeDisplay) {
 
@@ -287,22 +333,29 @@ public class ContentDashboardItemSubtypeItemSelectorView
 				InfoItemReference infoItemReference =
 					contentDashboardItemSubtype.getInfoItemReference();
 
+				ClassNameClassPKInfoItemIdentifier
+					classNameClassPKInfoItemIdentifier =
+						(ClassNameClassPKInfoItemIdentifier)
+							infoItemReference.getInfoItemIdentifier();
+
 				itemSubtypesJSONArray.put(
 					JSONUtil.put(
-						"className", infoItemReference.getClassName()
+						"className",
+						classNameClassPKInfoItemIdentifier.getClassName()
 					).put(
 						"classPK",
-						String.valueOf(infoItemFormVariation.getKey())
+						String.valueOf(
+							classNameClassPKInfoItemIdentifier.getClassPK())
 					).put(
-						"entryClassName", className
+						"entryClassName", infoItemReference.getClassName()
 					).put(
 						"label",
 						_getInfoItemFormVariationLabel(
 							infoItemFormVariation, themeDisplay.getLocale())
 					).put(
 						"selected",
-						checkedContentDashboardItemSubtypes.contains(
-							infoItemFormVariation.getKey())
+						checkedContentDashboardItemSubtypeInfoItemReferences.
+							contains(infoItemReference)
 					));
 			}
 			catch (PortalException portalException) {

@@ -14,6 +14,7 @@
 
 package com.liferay.content.dashboard.web.internal.item.type;
 
+import com.liferay.content.dashboard.web.internal.info.item.provider.util.ClassNameClassPKInfoItemIdentifier;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.lang.HashUtil;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.util.Date;
 import java.util.Locale;
@@ -41,8 +43,10 @@ public class DLFileEntryTypeContentDashboardItemSubtype
 		_group = group;
 
 		_infoItemReference = new InfoItemReference(
-			DLFileEntryType.class.getName(),
-			_dlFileEntryType.getFileEntryTypeId());
+			FileEntry.class.getName(),
+			new ClassNameClassPKInfoItemIdentifier(
+				DLFileEntryType.class.getName(),
+				_dlFileEntryType.getFileEntryTypeId()));
 	}
 
 	@Override
@@ -61,17 +65,35 @@ public class DLFileEntryTypeContentDashboardItemSubtype
 		InfoItemReference infoItemReference =
 			contentDashboardItemSubtype.getInfoItemReference();
 
-		if (Objects.equals(
+		if (!Objects.equals(
 				_infoItemReference.getClassName(),
-				infoItemReference.getClassName()) &&
-			Objects.equals(
-				_infoItemReference.getClassPK(),
-				infoItemReference.getClassPK())) {
+				infoItemReference.getClassName()) ||
+			!(infoItemReference.getInfoItemIdentifier() instanceof
+				ClassNameClassPKInfoItemIdentifier)) {
 
-			return true;
+			return false;
 		}
 
-		return false;
+		ClassNameClassPKInfoItemIdentifier
+			curClassNameClassPKInfoItemIdentifier =
+				(ClassNameClassPKInfoItemIdentifier)
+					_infoItemReference.getInfoItemIdentifier();
+
+		ClassNameClassPKInfoItemIdentifier classNameClassPKInfoItemIdentifier =
+			(ClassNameClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+
+		if (!Objects.equals(
+				curClassNameClassPKInfoItemIdentifier.getClassName(),
+				classNameClassPKInfoItemIdentifier.getClassName()) ||
+			!Objects.equals(
+				curClassNameClassPKInfoItemIdentifier.getClassPK(),
+				classNameClassPKInfoItemIdentifier.getClassPK())) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -122,10 +144,16 @@ public class DLFileEntryTypeContentDashboardItemSubtype
 
 	@Override
 	public String toJSONString(Locale locale) {
+		ClassNameClassPKInfoItemIdentifier classNameClassPKInfoItemIdentifier =
+			(ClassNameClassPKInfoItemIdentifier)
+				_infoItemReference.getInfoItemIdentifier();
+
 		return JSONUtil.put(
-			"className", _infoItemReference.getClassName()
+			"className", classNameClassPKInfoItemIdentifier.getClassName()
 		).put(
-			"classPK", _infoItemReference.getClassPK()
+			"classPK", classNameClassPKInfoItemIdentifier.getClassPK()
+		).put(
+			"entryClassName", _infoItemReference.getClassName()
 		).put(
 			"title", getFullLabel(locale)
 		).toJSONString();

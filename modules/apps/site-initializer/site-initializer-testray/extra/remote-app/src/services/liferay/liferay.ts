@@ -21,8 +21,13 @@ interface IThemeDisplay {
 	getUserName: () => string;
 }
 
+interface LiferayUtil {
+	openToast: (options?: any) => void;
+}
+
 interface ILiferay {
 	ThemeDisplay: IThemeDisplay;
+	Util: LiferayUtil;
 	authToken: string;
 }
 

@@ -22,3 +22,8 @@ export type ActionMap<M extends {[index: string]: any}> = {
 				type: Key;
 		  };
 };
+
+export enum SortOption {
+	ASC = 'asc',
+	DESC = 'desc',
+}

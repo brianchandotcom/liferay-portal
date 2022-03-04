@@ -25,8 +25,6 @@ const PopoverIconButton = ({alignPosition = 'bottom'}) => {
 				<ClayButton className="px-1" displayType="unstyled">
 					<ClayIcon
 						className="cp-team-members-support-seat-icon py-0"
-						displayType="null"
-						small
 						symbol="info-circle"
 					/>
 				</ClayButton>

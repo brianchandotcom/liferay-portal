@@ -45,4 +45,16 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
+	function waitForSelectPopUp {
+		WaitForSPARefresh();
+
+		selenium.waitForPopUp("${locator1}", "${value1}");
+
+		selenium.selectPopUp();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 }

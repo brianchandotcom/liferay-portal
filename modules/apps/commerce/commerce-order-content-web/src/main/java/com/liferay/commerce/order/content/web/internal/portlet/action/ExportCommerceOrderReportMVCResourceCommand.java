@@ -20,9 +20,11 @@ import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.report.exporter.CommerceReportExporter;
 import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
@@ -139,6 +141,19 @@ public class ExportCommerceOrderReportMVCResourceCommand
 			"commerceOrderId", commerceOrder.getCommerceOrderId()
 		).put(
 			"commerceOrderItemsSize", commerceOrderItems.size()
+		).put(
+			"commerceOrderType",
+			() -> {
+				CommerceOrderType commerceOrderType =
+					_commerceOrderTypeService.fetchCommerceOrderType(
+						commerceOrder.getCommerceOrderTypeId());
+
+				if (commerceOrderType == null) {
+					return StringPool.BLANK;
+				}
+
+				return commerceOrderType.getName(themeDisplay.getLanguageId());
+			}
 		).put(
 			"companyId", commerceAccount.getCompanyId()
 		).put(
@@ -269,6 +284,9 @@ public class ExportCommerceOrderReportMVCResourceCommand
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceOrderTypeService _commerceOrderTypeService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

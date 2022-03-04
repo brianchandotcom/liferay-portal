@@ -16,7 +16,6 @@ package com.liferay.portal.tools.upgrade.table.builder;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 
@@ -174,9 +173,7 @@ public class UpgradeTableBuilder {
 
 		String upgradeFileContent = _read(upgradeFilePath);
 
-		if (ReleaseInfo.getBuildNumber() >=
-				ReleaseInfo.RELEASE_7_4_0_BUILD_NUMBER) {
-
+		if (_getVersion() >= 74) {
 			content = _getContent(
 				packagePath, className, upgradeFileContent,
 				_getAuthor(content));
@@ -532,6 +529,56 @@ public class UpgradeTableBuilder {
 		return paths.get(0);
 	}
 
+	private int _getVersion() throws IOException {
+		Path path;
+
+		if (_osgiModule) {
+			path = Paths.get(_baseDirName, "service.xml");
+		}
+		else {
+			Path[] pathArray = new Path[1];
+
+			Files.walkFileTree(
+				Paths.get(_baseDirName),
+				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult visitFile(
+							Path path, BasicFileAttributes basicFileAttributes)
+						throws IOException {
+
+						if (path.endsWith("service.xml")) {
+							pathArray[0] = path;
+
+							return FileVisitResult.TERMINATE;
+						}
+
+						return FileVisitResult.CONTINUE;
+					}
+
+				});
+
+			path = pathArray[0];
+		}
+
+		String content = _read(path);
+
+		int index = content.indexOf("http://www.liferay.com/dtd/");
+
+		String dtdUrl = content.substring(
+			content.indexOf(index), content.indexOf("\">", index));
+
+		Matcher matcher = _dtdVersionPattern.matcher(dtdUrl);
+
+		if (matcher.matches()) {
+			String version = StringUtil.removeSubstring(matcher.group(1), "_");
+
+			return Integer.valueOf(version.substring(0, 2));
+		}
+
+		throw new IOException("Unable to get Liferay version from " + path);
+	}
+
 	private boolean _isRelevantUpgradePackage(String upgradeFileVersion)
 		throws IOException {
 
@@ -559,6 +606,8 @@ public class UpgradeTableBuilder {
 
 	private static final String _AUTHOR = "Brian Wing Shun Chan";
 
+	private static final Pattern _dtdVersionPattern = Pattern.compile(
+		".*service-builder_([^\\.]+)\\.dtd");
 	private static final Pattern _packagePathPattern = Pattern.compile(
 		"package (.+?);");
 

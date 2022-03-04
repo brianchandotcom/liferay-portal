@@ -177,6 +177,12 @@ public class DiscountAccountGroupResourceTest
 
 	@Override
 	@Test
+	public void testGetDiscountIdDiscountAccountGroupsPageWithFilterDoubleEquals()
+		throws Exception {
+	}
+
+	@Override
+	@Test
 	public void testGetDiscountIdDiscountAccountGroupsPageWithFilterStringEquals()
 		throws Exception {
 	}
@@ -184,6 +190,12 @@ public class DiscountAccountGroupResourceTest
 	@Override
 	@Test
 	public void testGetDiscountIdDiscountAccountGroupsPageWithSortDateTime()
+		throws Exception {
+	}
+
+	@Override
+	@Test
+	public void testGetDiscountIdDiscountAccountGroupsPageWithSortDouble()
 		throws Exception {
 	}
 

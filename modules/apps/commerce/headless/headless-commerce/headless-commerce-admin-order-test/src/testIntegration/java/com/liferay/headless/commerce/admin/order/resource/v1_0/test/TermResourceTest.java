@@ -91,6 +91,7 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 					RandomTestUtil.randomLocaleStringMap());
 				name = FriendlyURLNormalizerUtil.normalize(
 					RandomTestUtil.randomString());
+				priority = RandomTestUtil.randomDouble();
 				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
@@ -186,6 +187,7 @@ public class TermResourceTest extends BaseTermResourceTestCase {
 				id = commerceTermEntry.getCommerceTermEntryId();
 				label = commerceTermEntry.getLanguageIdToLabelMap();
 				name = commerceTermEntry.getName();
+				priority = commerceTermEntry.getPriority();
 				type = commerceTermEntry.getType();
 			}
 		};

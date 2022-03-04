@@ -293,6 +293,7 @@ public class StructuredContentResourceTest
 					{
 						setContentStructureId(
 							structuredContent.getContentStructureId());
+						setPriority(structuredContent.getPriority());
 						setSiteId(structuredContent.getSiteId());
 						setTitle(structuredContent.getTitle());
 					}

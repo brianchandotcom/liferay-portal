@@ -16,6 +16,7 @@ package com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.pars
 
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaClassProperty;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.ConfigYAML;
@@ -27,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -61,6 +63,43 @@ public class DTOOpenAPIParser {
 		}
 
 		return enumSchemas;
+	}
+
+	public static Map<String, JavaClassProperty> getJavaClassProperties(
+		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Schema schema) {
+
+		Map<String, String> javaDataTypeMap =
+			OpenAPIParserUtil.getJavaDataTypeMap(configYAML, openAPIYAML);
+		Map<String, JavaClassProperty> properties = new TreeMap<>();
+
+		Map<String, Schema> propertySchemas = _getPropertySchemas(schema);
+
+		List<String> requiredPropertySchemaNames = Optional.ofNullable(
+			schema.getRequiredPropertySchemaNames()
+		).orElse(
+			Collections.emptyList()
+		);
+
+		for (Map.Entry<String, Schema> entry : propertySchemas.entrySet()) {
+			String propertySchemaName = entry.getKey();
+			Schema propertySchema = entry.getValue();
+
+			String propertyName = _getPropertyName(
+				propertySchema, propertySchemaName);
+			String propertyType = _getPropertyType(
+				javaDataTypeMap, openAPIYAML, propertySchema,
+				propertySchemaName);
+
+			properties.put(
+				propertyName,
+				new JavaClassProperty(
+					propertySchema.getDescription(), propertyName,
+					propertySchema.isReadOnly(),
+					requiredPropertySchemaNames.contains(propertySchemaName),
+					propertyType, propertySchema.isWriteOnly()));
+		}
+
+		return properties;
 	}
 
 	public static Map<String, String> getProperties(

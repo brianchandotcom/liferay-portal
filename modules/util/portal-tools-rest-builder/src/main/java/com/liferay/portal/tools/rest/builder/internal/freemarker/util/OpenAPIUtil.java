@@ -284,6 +284,12 @@ public class OpenAPIUtil {
 		return globalEnumSchemas;
 	}
 
+	public static String getVersion(OpenAPIYAML openAPIYAML) {
+		Info info = openAPIYAML.getInfo();
+
+		return info.getVersion();
+	}
+
 	private static void _addExternalReference(
 		Map<String, Schema> allExternalSchemas,
 		Map<String, Schema> externalSchemas, Queue<Map<String, Schema>> queue,

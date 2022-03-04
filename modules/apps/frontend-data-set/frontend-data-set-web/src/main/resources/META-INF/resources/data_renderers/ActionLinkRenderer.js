@@ -153,13 +153,13 @@ ActionLinkRenderer.propTypes = {
 		PropTypes.shape({
 			data: PropTypes.shape({
 				confirmationMessage: PropTypes.string,
-				method: PropTypes.oneOf(['get', 'delete']),
+				method: PropTypes.oneOf(['delete', 'get', 'patch', 'post']),
 				permissionKey: PropTypes.string,
 				successMessage: PropTypes.string,
 			}),
 			href: PropTypes.string,
 			icon: PropTypes.string,
-			method: PropTypes.oneOf(['get', 'delete']),
+			method: PropTypes.oneOf(['delete', 'get', 'patch', 'post']),
 			onClick: PropTypes.string,
 			size: PropTypes.string,
 			target: PropTypes.oneOf([

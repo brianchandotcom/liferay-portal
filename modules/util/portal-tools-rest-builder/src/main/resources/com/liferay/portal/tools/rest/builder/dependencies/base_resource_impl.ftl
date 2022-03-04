@@ -32,23 +32,15 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-
-<#if configYAML.generateBatch>
-	import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
-	import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
-	import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
-</#if>
-
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.permission.PermissionUtil;
-
-<#if configYAML.generateBatch>
-	import com.liferay.portal.vulcan.resource.EntityModelResource;
-</#if>
-
+import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.LocalDateTimeUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -449,6 +441,11 @@ public abstract class Base${schemaName}ResourceImpl
 		}
 
 		@Override
+		public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+			this.contextBatchStrategy = contextBatchStrategy;
+		}
+
+		@Override
 		public void setLanguageId(String languageId) {
 			this.contextAcceptLanguage = new AcceptLanguage() {
 
@@ -555,12 +552,6 @@ public abstract class Base${schemaName}ResourceImpl
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
-
-	<#if generateBatch>
-		public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
-			this.contextBatchStrategy = contextBatchStrategy;
-		}
-	</#if>
 
 	public void setContextCompany(com.liferay.portal.kernel.model.Company contextCompany) {
 		this.contextCompany = contextCompany;

@@ -1663,18 +1663,6 @@
 				</comments>
 			</library>
 			<library>
-				<file-name>lib/portal/juniversalchardet.jar</file-name>
-				<version>1.0.3</version>
-				<project-name>Universal Character Detection</project-name>
-				<project-url>http://juniversalchardet.googlecode.com</project-url>
-				<licenses>
-					<license>
-						<license-name>MPL 1.1</license-name>
-						<license-url>http://www.mozilla.org/MPL/1.1</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/jws-api.jar</file-name>
 				<version>1.1</version>
 				<project-name>Java EE Web Services Metadata API</project-name>

@@ -81,7 +81,7 @@ public class AccountUserAccountEntriesScreenNavigationEntry
 		if (AccountPermission.contains(
 				permissionChecker, AccountPortletKeys.ACCOUNT_USERS_ADMIN,
 				AccountActionKeys.ASSIGN_ACCOUNTS) ||
-			userPermission.contains(
+			_userPermission.contains(
 				permissionChecker, selUser.getUserId(), ActionKeys.UPDATE)) {
 
 			return true;
@@ -96,14 +96,14 @@ public class AccountUserAccountEntriesScreenNavigationEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		jspRenderer.renderJSP(
+		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse, getJspPath());
 	}
 
 	@Reference
-	protected JSPRenderer jspRenderer;
+	private JSPRenderer _jspRenderer;
 
 	@Reference
-	protected UserPermission userPermission;
+	private UserPermission _userPermission;
 
 }

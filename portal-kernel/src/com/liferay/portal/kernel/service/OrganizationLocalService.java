@@ -165,6 +165,13 @@ public interface OrganizationLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public Organization addOrUpdateOrganization(
+			String externalReferenceCode, long userId,
+			long parentOrganizationId, String name, String type, long regionId,
+			long countryId, long statusId, String comments, boolean hasLogo,
+			byte[] logoBytes, boolean site, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Assigns the password policy to the organizations, removing any other
 	 * currently assigned password policies.

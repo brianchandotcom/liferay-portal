@@ -141,6 +141,25 @@ public class OrganizationServiceUtil {
 			emailAddress, organizationId, serviceContext);
 	}
 
+	public static Organization addOrUpdateOrganization(
+			String externalReferenceCode, long parentOrganizationId,
+			String name, String type, long regionId, long countryId,
+			long statusId, String comments, boolean hasLogo, byte[] logoBytes,
+			boolean site,
+			List<com.liferay.portal.kernel.model.Address> addresses,
+			List<com.liferay.portal.kernel.model.EmailAddress> emailAddresses,
+			List<com.liferay.portal.kernel.model.OrgLabor> orgLabors,
+			List<com.liferay.portal.kernel.model.Phone> phones,
+			List<com.liferay.portal.kernel.model.Website> websites,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateOrganization(
+			externalReferenceCode, parentOrganizationId, name, type, regionId,
+			countryId, statusId, comments, hasLogo, logoBytes, site, addresses,
+			emailAddresses, orgLabors, phones, websites, serviceContext);
+	}
+
 	/**
 	 * Assigns the password policy to the organizations, removing any other
 	 * currently assigned password policies.
@@ -225,6 +244,14 @@ public class OrganizationServiceUtil {
 		throws PortalException {
 
 		return getService().getOrganization(organizationId);
+	}
+
+	public static Organization getOrganizationByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().getOrganizationByExternalReferenceCode(
+			companyId, externalReferenceCode);
 	}
 
 	/**

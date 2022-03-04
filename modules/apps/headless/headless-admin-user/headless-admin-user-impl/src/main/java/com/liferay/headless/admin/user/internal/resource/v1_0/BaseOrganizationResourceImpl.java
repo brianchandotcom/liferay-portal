@@ -130,7 +130,7 @@ public abstract class BaseOrganizationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations' -d $'{"childOrganizations": ___, "comment": ___, "customFields": ___, "id": ___, "location": ___, "name": ___, "organizationAccounts": ___, "organizationContactInformation": ___, "parentOrganization": ___, "services": ___, "userAccounts": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations' -d $'{"childOrganizations": ___, "comment": ___, "customFields": ___, "externalReferenceCode": ___, "id": ___, "location": ___, "name": ___, "organizationAccounts": ___, "organizationContactInformation": ___, "parentOrganization": ___, "services": ___, "userAccounts": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Creates a new organization"
@@ -191,6 +191,200 @@ public abstract class BaseOrganizationResourceImpl
 			vulcanBatchEngineImportTaskResource.postImportTask(
 				Organization.class.getName(), callbackURL, null, object)
 		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes an organization."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Organization")}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path(
+		"/organizations/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteOrganizationByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Organization")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path(
+		"/organizations/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Organization getOrganizationByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
+		throws Exception {
+
+		return new Organization();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/by-external-reference-code/{externalReferenceCode}' -d $'{"childOrganizations": ___, "comment": ___, "customFields": ___, "externalReferenceCode": ___, "id": ___, "location": ___, "name": ___, "organizationAccounts": ___, "organizationContactInformation": ___, "parentOrganization": ___, "services": ___, "userAccounts": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Updates the organization with information sent in the request body. Only the provided fields are updated."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Organization")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path(
+		"/organizations/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public Organization patchOrganizationByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			Organization organization)
+		throws Exception {
+
+		Organization existingOrganization =
+			getOrganizationByExternalReferenceCode(externalReferenceCode);
+
+		if (organization.getActions() != null) {
+			existingOrganization.setActions(organization.getActions());
+		}
+
+		if (organization.getComment() != null) {
+			existingOrganization.setComment(organization.getComment());
+		}
+
+		if (organization.getDateCreated() != null) {
+			existingOrganization.setDateCreated(organization.getDateCreated());
+		}
+
+		if (organization.getDateModified() != null) {
+			existingOrganization.setDateModified(
+				organization.getDateModified());
+		}
+
+		if (organization.getExternalReferenceCode() != null) {
+			existingOrganization.setExternalReferenceCode(
+				organization.getExternalReferenceCode());
+		}
+
+		if (organization.getImage() != null) {
+			existingOrganization.setImage(organization.getImage());
+		}
+
+		if (organization.getKeywords() != null) {
+			existingOrganization.setKeywords(organization.getKeywords());
+		}
+
+		if (organization.getName() != null) {
+			existingOrganization.setName(organization.getName());
+		}
+
+		if (organization.getNumberOfAccounts() != null) {
+			existingOrganization.setNumberOfAccounts(
+				organization.getNumberOfAccounts());
+		}
+
+		if (organization.getNumberOfOrganizations() != null) {
+			existingOrganization.setNumberOfOrganizations(
+				organization.getNumberOfOrganizations());
+		}
+
+		if (organization.getNumberOfUsers() != null) {
+			existingOrganization.setNumberOfUsers(
+				organization.getNumberOfUsers());
+		}
+
+		preparePatch(organization, existingOrganization);
+
+		return putOrganizationByExternalReferenceCode(
+			externalReferenceCode, existingOrganization);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/by-external-reference-code/{externalReferenceCode}' -d $'{"childOrganizations": ___, "comment": ___, "customFields": ___, "externalReferenceCode": ___, "id": ___, "location": ___, "name": ___, "organizationAccounts": ___, "organizationContactInformation": ___, "parentOrganization": ___, "services": ___, "userAccounts": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Replaces the organization with information sent in the request body. Any missing fields are deleted unless they are required."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "externalReferenceCode"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Organization")}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path(
+		"/organizations/by-external-reference-code/{externalReferenceCode}"
+	)
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public Organization putOrganizationByExternalReferenceCode(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode,
+			Organization organization)
+		throws Exception {
+
+		return new Organization();
 	}
 
 	/**
@@ -304,7 +498,7 @@ public abstract class BaseOrganizationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}' -d $'{"childOrganizations": ___, "comment": ___, "customFields": ___, "id": ___, "location": ___, "name": ___, "organizationAccounts": ___, "organizationContactInformation": ___, "parentOrganization": ___, "services": ___, "userAccounts": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}' -d $'{"childOrganizations": ___, "comment": ___, "customFields": ___, "externalReferenceCode": ___, "id": ___, "location": ___, "name": ___, "organizationAccounts": ___, "organizationContactInformation": ___, "parentOrganization": ___, "services": ___, "userAccounts": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the organization with the information sent in the request body. Fields not present in the request body are left unchanged."
@@ -352,6 +546,11 @@ public abstract class BaseOrganizationResourceImpl
 				organization.getDateModified());
 		}
 
+		if (organization.getExternalReferenceCode() != null) {
+			existingOrganization.setExternalReferenceCode(
+				organization.getExternalReferenceCode());
+		}
+
 		if (organization.getImage() != null) {
 			existingOrganization.setImage(organization.getImage());
 		}
@@ -387,7 +586,7 @@ public abstract class BaseOrganizationResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}' -d $'{"childOrganizations": ___, "comment": ___, "customFields": ___, "id": ___, "location": ___, "name": ___, "organizationAccounts": ___, "organizationContactInformation": ___, "parentOrganization": ___, "services": ___, "userAccounts": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/organizations/{organizationId}' -d $'{"childOrganizations": ___, "comment": ___, "customFields": ___, "externalReferenceCode": ___, "id": ___, "location": ___, "name": ___, "organizationAccounts": ___, "organizationContactInformation": ___, "parentOrganization": ___, "services": ___, "userAccounts": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Replaces the organization with information sent in the request body. Any missing fields are deleted unless they are required."

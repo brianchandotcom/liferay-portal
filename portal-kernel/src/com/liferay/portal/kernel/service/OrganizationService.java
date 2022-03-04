@@ -138,6 +138,16 @@ public interface OrganizationService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public Organization addOrUpdateOrganization(
+			String externalReferenceCode, long parentOrganizationId,
+			String name, String type, long regionId, long countryId,
+			long statusId, String comments, boolean hasLogo, byte[] logoBytes,
+			boolean site, List<Address> addresses,
+			List<EmailAddress> emailAddresses, List<OrgLabor> orgLabors,
+			List<Phone> phones, List<Website> websites,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Assigns the password policy to the organizations, removing any other
 	 * currently assigned password policies.
@@ -197,6 +207,11 @@ public interface OrganizationService extends BaseService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Organization getOrganization(long organizationId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Organization getOrganizationByExternalReferenceCode(
+			long companyId, String externalReferenceCode)
 		throws PortalException;
 
 	/**

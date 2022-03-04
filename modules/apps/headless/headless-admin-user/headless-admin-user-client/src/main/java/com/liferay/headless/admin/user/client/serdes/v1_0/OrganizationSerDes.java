@@ -163,6 +163,20 @@ public class OrganizationSerDes {
 			sb.append("\"");
 		}
 
+		if (organization.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(organization.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (organization.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -425,6 +439,15 @@ public class OrganizationSerDes {
 				liferayToJSONDateFormat.format(organization.getDateModified()));
 		}
 
+		if (organization.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(organization.getExternalReferenceCode()));
+		}
+
 		if (organization.getId() == null) {
 			map.put("id", null);
 		}
@@ -599,6 +622,14 @@ public class OrganizationSerDes {
 				if (jsonParserFieldValue != null) {
 					organization.setDateModified(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					organization.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

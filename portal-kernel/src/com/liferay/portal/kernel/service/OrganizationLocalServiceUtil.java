@@ -167,6 +167,19 @@ public class OrganizationLocalServiceUtil {
 			emailAddress, organizationId, serviceContext);
 	}
 
+	public static Organization addOrUpdateOrganization(
+			String externalReferenceCode, long userId,
+			long parentOrganizationId, String name, String type, long regionId,
+			long countryId, long statusId, String comments, boolean hasLogo,
+			byte[] logoBytes, boolean site, ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addOrUpdateOrganization(
+			externalReferenceCode, userId, parentOrganizationId, name, type,
+			regionId, countryId, statusId, comments, hasLogo, logoBytes, site,
+			serviceContext);
+	}
+
 	/**
 	 * Assigns the password policy to the organizations, removing any other
 	 * currently assigned password policies.

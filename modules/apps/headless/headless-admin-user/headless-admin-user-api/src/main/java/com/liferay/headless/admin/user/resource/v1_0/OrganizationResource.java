@@ -70,6 +70,22 @@ public interface OrganizationResource {
 	public Response postOrganizationBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteOrganizationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Organization getOrganizationByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Organization patchOrganizationByExternalReferenceCode(
+			String externalReferenceCode, Organization organization)
+		throws Exception;
+
+	public Organization putOrganizationByExternalReferenceCode(
+			String externalReferenceCode, Organization organization)
+		throws Exception;
+
 	public void deleteOrganization(String organizationId) throws Exception;
 
 	public Response deleteOrganizationBatch(String callbackURL, Object object)

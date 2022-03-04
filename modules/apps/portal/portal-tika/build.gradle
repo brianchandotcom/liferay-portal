@@ -1,6 +1,7 @@
 dependencies {
 	compileInclude group: "com.adobe.xmp", name: "xmpcore", version: "6.0.6"
 	compileInclude group: "com.drewnoakes", name: "metadata-extractor", version: "2.13.0"
+	compileInclude group: "com.googlecode.juniversalchardet", name: "juniversalchardet", version: "1.0.3"
 	compileInclude group: "com.liferay", name: "org.gagravarr.tika", version: "0.8.LIFERAY-PATCHED-1"
 	compileInclude group: "com.liferay", name: "org.mp4parser", version: "1.9.41.2.LIFERAY-PATCHED-2"
 	compileInclude group: "com.pff", name: "java-libpst", version: "0.8.1"

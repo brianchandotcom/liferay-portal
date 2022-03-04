@@ -80,6 +80,28 @@ definition {
 		}
 	}
 
+	@description = "LPS-147866. Assert the tooltip message is displayed when hovered over the new button in responsive mode"
+	@priority = "3"
+	test ResponsiveModeNewButtonTooltip {
+		task ("Set window size to phone size") {
+			SetWindowSize(value1 = "360,720");
+		}
+
+		task ("Navigate to Management Toolbars tab") {
+			Navigator.gotoNavTab(navTab = "Management Toolbars");
+		}
+
+		task ("Hover over the new button") {
+			MouseOver(locator1 = "ManagementBar#NEW_BUTTON_MOBILE");
+		}
+
+		task ("Assert tooltip message is displayed") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#TOOLTIP",
+				value1 = "New");
+		}
+	}
+
 	@description = "LPS-147844. Assert the tooltip message is displayed when hovered over the view button"
 	@priority = "3"
 	test ViewButtonCanDisplayTooltip {

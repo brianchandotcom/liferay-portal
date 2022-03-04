@@ -51,6 +51,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -105,7 +106,7 @@ public class ObjectEntryKeywordQueryContributor
 			}
 		}
 
-		boolean addObjectEntryTitle = true;
+		AtomicBoolean addObjectEntryTitle = new AtomicBoolean(true);
 		List<ObjectField> objectFields = null;
 
 		if (GetterUtil.getBoolean(
@@ -116,14 +117,22 @@ public class ObjectEntryKeywordQueryContributor
 					objectDefinitionId);
 
 			if (defaultObjectView != null) {
-				addObjectEntryTitle = false;
+				addObjectEntryTitle.set(false);
 
 				List<ObjectViewColumn> objectViewColumns =
 					defaultObjectView.getObjectViewColumns();
 
 				Stream<ObjectViewColumn> stream = objectViewColumns.stream();
 
-				objectFields = stream.map(
+				objectFields = stream.peek(
+					objectViewColumn -> {
+						if (Objects.equals(
+								objectViewColumn.getObjectFieldName(), "id")) {
+
+							addObjectEntryTitle.set(true);
+						}
+					}
+				).map(
 					objectViewColumn ->
 						_objectFieldLocalService.fetchObjectField(
 							defaultObjectView.getObjectDefinitionId(),
@@ -140,7 +149,7 @@ public class ObjectEntryKeywordQueryContributor
 		}
 
 		for (String token : _tokenizeKeywords(keywords)) {
-			if (addObjectEntryTitle && !Validator.isBlank(token)) {
+			if (addObjectEntryTitle.get() && !Validator.isBlank(token)) {
 				try {
 					booleanQuery.add(
 						new TermQueryImpl(Field.ENTRY_CLASS_PK, token),

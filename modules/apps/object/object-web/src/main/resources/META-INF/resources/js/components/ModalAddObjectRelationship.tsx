@@ -239,7 +239,7 @@ const ModalAddObjectRelationship: React.FC<IProps> = ({
 						id="objectDefinitionId2"
 						label={Liferay.Language.get('object')}
 						onChange={({target: {value}}: any) => {
-							const {id} = objectDefinitions[Number(value) - 1];
+							const {id} = objectDefinitions[Number(value)];
 
 							setValues({objectDefinitionId2: Number(id)});
 						}}

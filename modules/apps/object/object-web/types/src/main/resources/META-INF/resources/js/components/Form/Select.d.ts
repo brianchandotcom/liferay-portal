@@ -13,13 +13,24 @@
  */
 
 import React from 'react';
-interface ISelectProps extends React.HTMLAttributes<HTMLElement> {
+interface ISelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 	disabled?: boolean;
 	error?: string;
 	feedbackMessage?: string;
 	label: string;
-	options: string[];
+	options?: string[];
 	required?: boolean;
 }
-declare const Select: React.FC<ISelectProps>;
-export default Select;
+export default function Select({
+	className,
+	disabled,
+	error,
+	feedbackMessage,
+	id,
+	label,
+	onChange,
+	options,
+	required,
+	...otherProps
+}: ISelectProps): JSX.Element;
+export {};

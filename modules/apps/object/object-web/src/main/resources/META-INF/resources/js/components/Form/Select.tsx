@@ -20,16 +20,16 @@ import ErrorFeedback from './ErrorFeedback';
 import FeedbackMessage from './FeedbackMessage';
 import RequiredMask from './RequiredMask';
 
-interface ISelectProps extends React.HTMLAttributes<HTMLElement> {
+interface ISelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 	disabled?: boolean;
 	error?: string;
 	feedbackMessage?: string;
 	label: string;
-	options: string[];
+	options?: string[];
 	required?: boolean;
 }
 
-const Select: React.FC<ISelectProps> = ({
+export default function Select({
 	className,
 	disabled = false,
 	error,
@@ -37,18 +37,12 @@ const Select: React.FC<ISelectProps> = ({
 	id,
 	label,
 	onChange,
-	options: optionsProps,
+	options,
 	required = false,
 	...otherProps
-}) => {
-	const options = [Liferay.Language.get('choose-an-option'), ...optionsProps];
-
+}: ISelectProps) {
 	return (
-		<ClayForm.Group
-			className={classNames(className, {
-				'has-error': error,
-			})}
-		>
+		<ClayForm.Group className={classNames(className, {'has-error': error})}>
 			<label className={classNames({disabled})} htmlFor={id}>
 				{label}
 
@@ -57,13 +51,15 @@ const Select: React.FC<ISelectProps> = ({
 
 			<ClaySelect
 				{...otherProps}
-				defaultValue={options[0]}
 				disabled={disabled}
 				id={id}
 				onChange={onChange}
-				placeholder={Liferay.Language.get('choose-an-option')}
 			>
-				{options.map((label, index) => (
+				<ClaySelect.Option
+					label={Liferay.Language.get('choose-an-option')}
+				/>
+
+				{options?.map((label, index) => (
 					<ClaySelect.Option
 						key={index}
 						label={label}
@@ -79,6 +75,4 @@ const Select: React.FC<ISelectProps> = ({
 			)}
 		</ClayForm.Group>
 	);
-};
-
-export default Select;
+}

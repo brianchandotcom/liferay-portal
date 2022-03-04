@@ -162,9 +162,7 @@ export default function ObjectFieldFormBase({
 					label={Liferay.Language.get('picklist')}
 					onChange={({target: {value}}: any) =>
 						setValues({
-							listTypeDefinitionId: Number(
-								pickList[Number(value) - 1].id
-							),
+							listTypeDefinitionId: Number(pickList[value].id),
 						})
 					}
 					options={pickList.map(({name}) => name)}

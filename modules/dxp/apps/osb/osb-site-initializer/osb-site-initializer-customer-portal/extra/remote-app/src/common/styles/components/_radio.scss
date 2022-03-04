@@ -1,4 +1,4 @@
-.radio-card {
+.cp-radio-card {
 	border: 1px solid rgba($color: #000, $alpha: 0.1);
 	cursor: pointer !important;
 	gap: 0.75rem;
@@ -11,11 +11,11 @@
 		}
 	}
 
-	.radio-card-label {
+	.cp-radio-card-label {
 		gap: 0 !important;
 	}
 
-	.custom-control-label {
+	.cp-custom-control-label {
 		&::before {
 			top: 0.3rem;
 		}

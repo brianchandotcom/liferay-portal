@@ -5021,6 +5021,30 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.shared.dependencies.apache.commons.jar!commons-digester.jar</file-name>
+				<version>1.8.1</version>
+				<project-name>Commons Digester</project-name>
+				<project-url>http://commons.apache.org/digester/</project-url>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.apache.commons.jar!commons-validator.jar</file-name>
+				<version>1.5.1</version>
+				<project-name>Apache Commons Validator</project-name>
+				<project-url>http://commons.apache.org/proper/commons-validator/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.shared.dependencies.netty.jar!netty-buffer.jar</file-name>
 				<version>4.1.72.Final</version>
 				<project-name>Netty/Buffer</project-name>

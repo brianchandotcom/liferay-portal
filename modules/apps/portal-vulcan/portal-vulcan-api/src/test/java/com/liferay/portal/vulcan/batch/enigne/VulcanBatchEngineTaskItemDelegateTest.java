@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -91,6 +92,11 @@ public class VulcanBatchEngineTaskItemDelegateTest {
 			throws Exception {
 
 			return null;
+		}
+
+		@Override
+		public void setContextBatchStrategy(
+			BatchStrategy contextBatchStrategy) {
 		}
 
 		@Override

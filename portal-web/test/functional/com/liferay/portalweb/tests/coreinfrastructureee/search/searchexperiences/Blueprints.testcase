@@ -3067,4 +3067,58 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");
 	}
 
+	test ViewUnsavedChangesAlertForBlueprints {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createBlueprint(title = "Test Blueprint");
+
+		Blueprints.addElement(element = "Boost Tags Match");
+
+		ClickNoError(
+			key_text = "Cancel",
+			locator1 = "Link#ANY");
+
+		Confirm.dismissAlert();
+
+		AssertElementPresent(
+			element = "Boost Tags Match",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		ClickNoError(
+			key_text = "Cancel",
+			locator1 = "Link#ANY");
+
+		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
+
+		Blueprints.editBlueprint(title = "Test Blueprint");
+
+		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
+
+		Blueprints.addElement(element = "Boost Tags Match");
+
+		ApplicationsMenuHelper.openApplicationsMenu();
+
+		ClickNoError(
+			key_category = "Search Experiences",
+			key_portlet = "Blueprints",
+			locator1 = "ApplicationsMenu#PORTLET");
+
+		Confirm.dismissAlert();
+
+		AssertElementPresent(
+			element = "Boost Tags Match",
+			locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENT");
+
+		ClickNoError(
+			key_category = "Search Experiences",
+			key_portlet = "Blueprints",
+			locator1 = "ApplicationsMenu#PORTLET");
+
+		AssertConfirm(value1 = "You have unsaved changes. Do you want to proceed without saving?");
+
+		Blueprints.editBlueprint(title = "Test Blueprint");
+
+		AssertElementPresent(locator1 = "Blueprints#BLUEPRINTS_ADDED_ELEMENTS_EMPTY");
+	}
+
 }

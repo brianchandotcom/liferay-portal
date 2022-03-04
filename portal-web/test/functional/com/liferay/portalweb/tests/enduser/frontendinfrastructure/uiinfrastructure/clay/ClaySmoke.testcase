@@ -63,15 +63,6 @@ definition {
 			ClaySamplePortlet.assertNavTabVisualContent(tab = "Progress Bars");
 
 			ClaySamplePortlet.assertNavTabVisualContent(tab = "Stickers");
-
-			// They are commented because ocular not working for full page screenshots
-
-			//ClaySamplePortlet.assertNavTabVisualContent(tab = "Alerts");
-			//ClaySamplePortlet.assertNavTabVisualContent(tab = "Cards");
-			//ClaySamplePortlet.assertNavTabVisualContent(tab = "Form Elements");
-			//ClaySamplePortlet.assertNavTabVisualContent(tab = "Icons");
-			//ClaySamplePortlet.assertNavTabVisualContent(tab = "Management Toolbars");
-
 		}
 	}
 

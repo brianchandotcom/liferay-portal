@@ -28,9 +28,9 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-142486. View an alert is not shown when search a term with XSS in Collecion Filter."
+	@description = "This is a test for LPS-142486. View no alert shown when search a term with XSS in Collection Filter."
 	@priority = "4"
-	test ViewAlertNotShownInCollectionFilter {
+	test SearchTermWithXSSInCollectionFilter {
 		task ("Add a dynamic collection for All Types") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
 				groupName = "Test Site Name",
@@ -45,7 +45,7 @@ definition {
 				title = "Web Content Title");
 		}
 
-		task ("Add a Collection Display fragment to content page") {
+		task ("Add a Collection Display fragment to content page then select the dynamic collection") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Page Name",
@@ -58,9 +58,7 @@ definition {
 			PageEditor.addFragment(
 				collectionName = "Content Display",
 				fragmentName = "Collection Display");
-		}
 
-		task ("Select the dynamic collection in Collection Display") {
 			PageEditor.editCollectionDisplay(
 				assetListName = "Dynamic Collection",
 				fragmentName = "Collection Display");
@@ -77,14 +75,12 @@ definition {
 				targetCollection = "Dynamic Collection");
 		}
 
-		task ("Add a Collection Filter below Applied Filters") {
+		task ("Add a Collection Filter below Applied Filters then select the dynamic collection as Target Collection and select Keywords as Filter") {
 			PageEditor.addFragment(
 				collectionName = "Content Display",
 				fragmentName = "Collection Filter",
 				targetFragmentName = "Applied Filters");
-		}
 
-		task ("Select the dynamic collection as Target Collection and Select the Keywords as Filter") {
 			PageEditor.editCollectionFilter(
 				filter = "Keywords",
 				fragmentName = "Collection Filter",

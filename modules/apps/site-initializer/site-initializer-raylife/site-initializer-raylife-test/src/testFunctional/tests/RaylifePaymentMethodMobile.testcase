@@ -1,0 +1,193 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Raylife.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+    @description = "LPS-148197 - Verify if after you finish uploading the documents the payment section is expanded"
+	@priority = "5"
+	test CanViewPaymentSectionPhone {
+        RaylifePaymentMethod.enablePayPalPayment();
+
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+		SetWindowSize(value1 = "360,720");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeMobile.formsFlowPhone();
+
+        Click(
+			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+			policy = "standard");
+
+        RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		AssertElementPresent(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
+	}
+
+	@description = "LPS-148199 - Make sure the Pay now button is enabled after selecting the terms and conditions"
+	@priority = "5"
+	test CanViewPayButtonEnabledPhone {
+        RaylifePaymentMethod.enablePayPalPayment();
+
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+		SetWindowSize(value1 = "360,720");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeMobile.formsFlowPhone();
+
+        Click(
+			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+			policy = "standard");
+
+        RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
+
+        Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
+
+		AssertElementPresent(locator1 = "RaylifePaymentMethod#PAY_NOW");
+	}
+
+	@description = "LPS-148200 - Check if at the end of the document upload session the paypal payment button is disabled"
+	@priority = "4"
+	test CanPaypalPaymentButtonDisabledTablet {
+		RaylifePaymentMethod.enablePayPalPayment();
+
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+		SetWindowSize(value1 = "800,1024");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeProperty.typeAllPropertyInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(
+			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+			policy = "standard");
+
+        RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		AssertElementNotPresent(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_DISABLED");
+	}
+
+	@description = "LPS-148201 - Make sure the Pay now button is enabled after selecting the terms and conditions"
+	@priority = "5"
+	test CanViewPayButtonEnabledTablet {
+		RaylifePaymentMethod.enablePayPalPayment();
+
+        ApplicationsMenu.gotoSite(site = "Raylife");
+
+		SetWindowSize(value1 = "800,1024");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        RaylifeProperty.typeAllPropertyInfoFields();
+
+        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+        Click(
+			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+			policy = "standard");
+
+        RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
+
+        Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
+
+		AssertElementPresent(locator1 = "RaylifePaymentMethod#PAY_NOW");
+	}
+
+}

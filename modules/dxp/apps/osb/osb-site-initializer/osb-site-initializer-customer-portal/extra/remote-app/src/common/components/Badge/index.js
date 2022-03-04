@@ -10,12 +10,18 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 
-const Badge = ({children, ...props}) => {
+const Badge = ({badgeClassName, children, ...props}) => {
 	return (
 		<div
 			{...props}
-			className="alert alert-danger ml-3 mr-3 p-sm-2 text-danger text-paragraph-sm"
+			className={classNames(
+				'alert alert-danger ml-3 mr-3 p-sm-2 text-danger text-paragraph-sm',
+				{
+					[badgeClassName]: badgeClassName,
+				}
+			)}
 		>
 			<ClayIcon symbol="exclamation-full" />
 

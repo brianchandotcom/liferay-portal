@@ -203,8 +203,7 @@ const InviteTeamMembersPage = ({
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 			setshowEmptyEmailError(false);
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -259,8 +258,7 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({
@@ -269,12 +267,12 @@ const InviteTeamMembersPage = ({
 		}
 	};
 
-	const handleAddTeamMember = () => {
-		const emptyEmailAddress = values?.invites?.some(({email}) => !email);
+	const isAnyEmptyEmail = () => {
+		const hasEmptyEmails = values?.invites?.some(({email}) => !email);
 
-		setshowEmptyEmailError(emptyEmailAddress);
+		setshowEmptyEmailError(hasEmptyEmails);
 
-		return !emptyEmailAddress;
+		return hasEmptyEmails;
 	};
 
 	useEffect(() => {
@@ -360,7 +358,7 @@ const InviteTeamMembersPage = ({
 							</ClayForm.Group>
 
 							{showEmptyEmailError && (
-								<Badge>
+								<Badge badgeClassName="cp-badge-error-message">
 									<span className="pl-1">
 										Please enter your email address.
 									</span>
@@ -401,7 +399,9 @@ const InviteTeamMembersPage = ({
 										onClick={() => {
 											setBaseButtonDisabled(false);
 
-											if (handleAddTeamMember()) {
+											const hasEmptyEmails = isAnyEmptyEmail();
+
+											if (!hasEmptyEmails) {
 												push(
 													getInitialInvite(
 														accountMemberRole

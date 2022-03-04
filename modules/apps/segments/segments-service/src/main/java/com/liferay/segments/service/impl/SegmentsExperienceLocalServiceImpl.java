@@ -62,15 +62,14 @@ public class SegmentsExperienceLocalServiceImpl
 
 	@Override
 	public SegmentsExperience addSegmentsExperience(
-			long segmentsEntryId, long classNameId, long classPK,
-			Map<Locale, String> nameMap, boolean active,
+			long userId, long groupId, long segmentsEntryId, long classNameId,
+			long classPK, Map<Locale, String> nameMap, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		int lowestPriority = _getLowestPriority(
-			serviceContext.getScopeGroupId(), classNameId,
-			_getPublishedLayoutClassPK(classPK));
+			groupId, classNameId, _getPublishedLayoutClassPK(classPK));
 
 		if ((lowestPriority - 1) ==
 				SegmentsExperienceConstants.PRIORITY_DEFAULT) {
@@ -79,38 +78,39 @@ public class SegmentsExperienceLocalServiceImpl
 		}
 
 		return addSegmentsExperience(
-			segmentsEntryId, classNameId, classPK, nameMap, lowestPriority - 1,
-			active, typeSettingsUnicodeProperties, serviceContext);
+			userId, groupId, segmentsEntryId, classNameId, classPK, nameMap,
+			lowestPriority - 1, active, typeSettingsUnicodeProperties,
+			serviceContext);
 	}
 
 	@Override
 	public SegmentsExperience addSegmentsExperience(
-			long segmentsEntryId, long classNameId, long classPK,
-			Map<Locale, String> nameMap, int priority, boolean active,
-			UnicodeProperties typeSettingsUnicodeProperties,
+			long userId, long groupId, long segmentsEntryId, long classNameId,
+			long classPK, Map<Locale, String> nameMap, int priority,
+			boolean active, UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addSegmentsExperience(
-			segmentsEntryId, String.valueOf(counterLocalService.increment()),
-			classNameId, classPK, nameMap, priority, active,
-			typeSettingsUnicodeProperties, serviceContext);
+			userId, groupId, segmentsEntryId,
+			String.valueOf(counterLocalService.increment()), classNameId,
+			classPK, nameMap, priority, active, typeSettingsUnicodeProperties,
+			serviceContext);
 	}
 
 	@Override
 	public SegmentsExperience addSegmentsExperience(
-			long segmentsEntryId, String segmentsExperienceKey,
-			long classNameId, long classPK, Map<Locale, String> nameMap,
-			int priority, boolean active,
+			long userId, long groupId, long segmentsEntryId,
+			String segmentsExperienceKey, long classNameId, long classPK,
+			Map<Locale, String> nameMap, int priority, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Segments experience
 
-		User user = userLocalService.getUser(serviceContext.getUserId());
+		User user = userLocalService.getUser(userId);
 
-		long groupId = serviceContext.getScopeGroupId();
 		long publishedClassPK = _getPublishedLayoutClassPK(classPK);
 
 		_validateName(nameMap);
@@ -153,27 +153,26 @@ public class SegmentsExperienceLocalServiceImpl
 
 	@Override
 	public SegmentsExperience appendSegmentsExperience(
-			long segmentsEntryId, long classNameId, long classPK,
-			Map<Locale, String> nameMap, boolean active,
+			long userId, long groupId, long segmentsEntryId, long classNameId,
+			long classPK, Map<Locale, String> nameMap, boolean active,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return appendSegmentsExperience(
-			segmentsEntryId, classNameId, classPK, nameMap, active,
-			new UnicodeProperties(true), serviceContext);
+			userId, groupId, segmentsEntryId, classNameId, classPK, nameMap,
+			active, new UnicodeProperties(true), serviceContext);
 	}
 
 	@Override
 	public SegmentsExperience appendSegmentsExperience(
-			long segmentsEntryId, long classNameId, long classPK,
-			Map<Locale, String> nameMap, boolean active,
+			long userId, long groupId, long segmentsEntryId, long classNameId,
+			long classPK, Map<Locale, String> nameMap, boolean active,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		int highestPriority = _getHighestPriority(
-			serviceContext.getScopeGroupId(), classNameId,
-			_getPublishedLayoutClassPK(classPK));
+			groupId, classNameId, _getPublishedLayoutClassPK(classPK));
 
 		if ((highestPriority + 1) ==
 				SegmentsExperienceConstants.PRIORITY_DEFAULT) {
@@ -182,8 +181,9 @@ public class SegmentsExperienceLocalServiceImpl
 		}
 
 		return addSegmentsExperience(
-			segmentsEntryId, classNameId, classPK, nameMap, highestPriority + 1,
-			active, typeSettingsUnicodeProperties, serviceContext);
+			userId, groupId, segmentsEntryId, classNameId, classPK, nameMap,
+			highestPriority + 1, active, typeSettingsUnicodeProperties,
+			serviceContext);
 	}
 
 	@Override

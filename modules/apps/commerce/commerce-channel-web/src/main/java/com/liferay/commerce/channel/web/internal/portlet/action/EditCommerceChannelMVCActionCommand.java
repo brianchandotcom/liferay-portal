@@ -405,8 +405,8 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 					newFileEntry.getFileName(), newFileEntry.getMimeType(),
 					formattedFileName, StringPool.BLANK, StringPool.BLANK,
-					newFileEntry.getContentStream(), newFileEntry.getSize(),
-					null, null, new ServiceContext());
+					StringPool.BLANK, newFileEntry.getContentStream(),
+					newFileEntry.getSize(), null, null, new ServiceContext());
 			}
 			finally {
 				_dlAppLocalService.deleteFileEntry(fileEntryId);
@@ -416,7 +416,7 @@ public class EditCommerceChannelMVCActionCommand extends BaseMVCActionCommand {
 			_dlAppLocalService.updateFileEntry(
 				commerceChannel.getUserId(), existingFileEntry.getFileEntryId(),
 				newFileEntry.getFileName(), newFileEntry.getMimeType(),
-				existingFileEntry.getTitle(),
+				existingFileEntry.getTitle(), StringPool.BLANK,
 				existingFileEntry.getDescription(), StringPool.BLANK,
 				DLVersionNumberIncrease.NONE, newFileEntry.getContentStream(),
 				newFileEntry.getSize(), null, null, new ServiceContext());

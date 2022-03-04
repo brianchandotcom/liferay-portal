@@ -496,8 +496,9 @@ public class FileEntryStagedModelDataHandler
 						fileEntry.getExternalReferenceCode(), userId,
 						repositoryId, folderId, fileEntry.getFileName(),
 						fileEntry.getMimeType(), fileEntryTitle,
-						fileEntry.getDescription(), null, inputStream,
-						fileEntry.getSize(), fileEntry.getExpirationDate(),
+						StringPool.BLANK, fileEntry.getDescription(), null,
+						inputStream, fileEntry.getSize(),
+						fileEntry.getExpirationDate(),
 						fileEntry.getReviewDate(), serviceContext);
 
 					if (fileEntry.isInTrash()) {
@@ -569,6 +570,7 @@ public class FileEntryStagedModelDataHandler
 									userId, existingFileEntry.getFileEntryId(),
 									fileEntry.getFileName(),
 									fileEntry.getMimeType(), fileEntryTitle,
+									StringPool.BLANK,
 									fileEntry.getDescription(), null,
 									DLVersionNumberIncrease.MINOR, inputStream,
 									fileEntry.getSize(),
@@ -639,10 +641,10 @@ public class FileEntryStagedModelDataHandler
 				importedFileEntry = _dlAppLocalService.addFileEntry(
 					fileEntry.getExternalReferenceCode(), userId, repositoryId,
 					folderId, fileEntry.getFileName(), fileEntry.getMimeType(),
-					fileEntryTitle, fileEntry.getDescription(), null,
-					inputStream, fileEntry.getSize(),
-					fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
-					serviceContext);
+					fileEntryTitle, StringPool.BLANK,
+					fileEntry.getDescription(), null, inputStream,
+					fileEntry.getSize(), fileEntry.getExpirationDate(),
+					fileEntry.getReviewDate(), serviceContext);
 			}
 
 			for (DLPluggableContentDataHandler<?>

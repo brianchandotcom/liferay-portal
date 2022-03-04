@@ -467,8 +467,8 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			FileEntry fileEntry = _dlAppService.addFileEntry(
 				null, repositoryId, folderId, uniqueFileName,
-				tempFileEntry.getMimeType(), uniqueFileTitle, description,
-				changeLog, tempFileEntry.getContentStream(),
+				tempFileEntry.getMimeType(), uniqueFileTitle, uniqueFileTitle,
+				description, changeLog, tempFileEntry.getContentStream(),
 				tempFileEntry.getSize(), expirationDate, reviewDate,
 				serviceContext);
 
@@ -1243,7 +1243,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				fileEntry = _dlAppService.addFileEntry(
 					null, repositoryId, folderId, sourceFileName, contentType,
-					title, description, changeLog, inputStream, size,
+					title, title, description, changeLog, inputStream, size,
 					expirationDate, reviewDate, serviceContext);
 			}
 			else if (cmd.equals(Constants.ADD_DYNAMIC)) {
@@ -1260,8 +1260,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				fileEntry = _dlAppService.addFileEntry(
 					null, repositoryId, folderId, uniqueFileName, contentType,
-					uniqueFileTitle, description, changeLog, inputStream, size,
-					expirationDate, reviewDate, serviceContext);
+					uniqueFileTitle, uniqueFileTitle, description, changeLog,
+					inputStream, size, expirationDate, reviewDate,
+					serviceContext);
 
 				JSONObject jsonObject = JSONUtil.put(
 					"fileEntryId", fileEntry.getFileEntryId());
@@ -1279,7 +1280,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					// Update file entry and checkin
 
 					fileEntry = _dlAppService.updateFileEntryAndCheckIn(
-						fileEntryId, sourceFileName, contentType, title,
+						fileEntryId, sourceFileName, contentType, title, title,
 						description, changeLog, dlVersionNumberIncrease,
 						inputStream, size, expirationDate, reviewDate,
 						serviceContext);
@@ -1289,7 +1290,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					// Update file entry
 
 					fileEntry = _dlAppService.updateFileEntry(
-						fileEntryId, sourceFileName, contentType, title,
+						fileEntryId, sourceFileName, contentType, title, title,
 						description, changeLog, dlVersionNumberIncrease,
 						inputStream, size, expirationDate, reviewDate,
 						serviceContext);

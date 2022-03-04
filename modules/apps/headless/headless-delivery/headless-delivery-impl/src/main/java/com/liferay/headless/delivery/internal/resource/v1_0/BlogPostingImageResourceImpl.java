@@ -130,8 +130,8 @@ public class BlogPostingImageResourceImpl
 			).orElse(
 				binaryFile.getFileName()
 			),
-			null, null, binaryFile.getInputStream(), binaryFile.getSize(), null,
-			null,
+			null, null, null, binaryFile.getInputStream(), binaryFile.getSize(),
+			null, null,
 			ServiceContextRequestUtil.createServiceContext(
 				siteId, contextHttpServletRequest,
 				blogPostingImageOptional.map(

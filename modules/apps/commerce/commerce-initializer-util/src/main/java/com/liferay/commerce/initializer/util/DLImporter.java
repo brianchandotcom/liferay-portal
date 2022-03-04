@@ -156,8 +156,9 @@ public class DLImporter {
 			FileEntry fileEntry = _dlAppLocalService.addFileEntry(
 				null, userId, repository.getRepositoryId(),
 				dlFolder.getFolderId(), fileName,
-				MimeTypesUtil.getContentType(file), title, description,
-				StringPool.BLANK, file, null, null, serviceContext);
+				MimeTypesUtil.getContentType(file), title, StringPool.BLANK,
+				description, StringPool.BLANK, file, null, null,
+				serviceContext);
 
 			dlFileEntry = _dlFileEntryLocalService.getDLFileEntry(
 				fileEntry.getFileEntryId());

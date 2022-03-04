@@ -1191,7 +1191,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 			updateFileEntry(
 				userId, fileEntryId, contentStream.getFileName(), mimeType,
-				title, title, StringPool.BLANK, changeLog,
+				title, StringPool.BLANK, StringPool.BLANK, changeLog,
 				DLVersionNumberIncrease.MAJOR, contentStream.getStream(),
 				contentStream.getLength(), null, null, serviceContext);
 		}

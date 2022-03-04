@@ -359,7 +359,8 @@ public class EditFileEntryImageEditorMVCActionCommand
 
 			fileEntry = _dlAppService.updateFileEntry(
 				fileEntryId, fileEntry.getFileName(), contentType,
-				fileEntry.getTitle(), fileEntry.getDescription(), changeLog,
+				fileEntry.getTitle(), fileEntry.getTitle(),
+				fileEntry.getDescription(), changeLog,
 				DLVersionNumberIncrease.AUTOMATIC, inputStream, size,
 				fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 				serviceContext);

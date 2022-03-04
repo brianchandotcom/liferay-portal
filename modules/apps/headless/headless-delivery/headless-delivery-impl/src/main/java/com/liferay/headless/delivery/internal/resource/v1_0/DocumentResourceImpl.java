@@ -304,6 +304,7 @@ public class DocumentResourceImpl
 				).orElse(
 					existingFileEntry.getTitle()
 				),
+				null,
 				documentOptional.map(
 					Document::getDescription
 				).orElse(
@@ -449,6 +450,7 @@ public class DocumentResourceImpl
 				).orElse(
 					binaryFile.getFileName()
 				),
+				null,
 				documentOptional.map(
 					Document::getDescription
 				).orElse(
@@ -802,6 +804,7 @@ public class DocumentResourceImpl
 				).orElse(
 					fileEntry.getTitle()
 				),
+				null,
 				documentOptional.map(
 					Document::getDescription
 				).orElse(

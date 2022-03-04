@@ -89,8 +89,9 @@ public class DDMUserPersonalFolderUploadFileEntryHandler
 			return _dlAppService.addFileEntry(
 				null, repositoryId, folderId, uniqueFileName,
 				uploadPortletRequest.getContentType(_PARAMETER_NAME),
-				uniqueFileName, _getDescription(uploadPortletRequest),
-				StringPool.BLANK, inputStream, size, null, null,
+				uniqueFileName, uniqueFileName,
+				_getDescription(uploadPortletRequest), StringPool.BLANK,
+				inputStream, size, null, null,
 				_getServiceContext(uploadPortletRequest));
 		}
 	}

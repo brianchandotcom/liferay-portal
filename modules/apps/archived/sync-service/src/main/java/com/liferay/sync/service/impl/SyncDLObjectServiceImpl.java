@@ -171,7 +171,7 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 			FileEntry fileEntry = _dlAppService.addFileEntry(
 				null, repositoryId, folderId, sourceFileName, mimeType, title,
-				description, changeLog, file, null, null, serviceContext);
+				null, description, changeLog, file, null, null, serviceContext);
 
 			return toSyncDLObject(
 				fileEntry, SyncDLObjectConstants.EVENT_ADD, checksum);
@@ -392,7 +392,7 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 
 			FileEntry fileEntry = _dlAppService.addFileEntry(
 				null, repositoryId, folderId, sourceFileName,
-				sourceFileEntry.getMimeType(), title, null, null,
+				sourceFileEntry.getMimeType(), title, null, null, null,
 				fileVersion.getContentStream(false), sourceFileEntry.getSize(),
 				null, null, serviceContext);
 
@@ -1172,7 +1172,7 @@ public class SyncDLObjectServiceImpl extends SyncDLObjectServiceBaseImpl {
 			populateServiceContext(serviceContext, fileEntry.getGroupId());
 
 			fileEntry = _dlAppService.updateFileEntry(
-				fileEntryId, sourceFileName, mimeType, title, description,
+				fileEntryId, sourceFileName, mimeType, title, null, description,
 				changeLog,
 				DLVersionNumberIncrease.fromMajorVersion(majorVersion), file,
 				fileEntry.getExpirationDate(), fileEntry.getReviewDate(),

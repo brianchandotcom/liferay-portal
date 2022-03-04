@@ -617,8 +617,8 @@ public class CPFileImporterImpl implements CPFileImporter {
 		return _dlAppLocalService.addFileEntry(
 			null, serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName, mimeType,
-			fileName, StringPool.BLANK, StringPool.BLANK, byteArray, null, null,
-			serviceContext);
+			fileName, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			byteArray, null, null, serviceContext);
 	}
 
 	private long _getAssetEntryId(

@@ -780,7 +780,7 @@ public class FileSystemImporter extends BaseImporter {
 				fileEntry = dlAppLocalService.updateFileEntry(
 					userId, fileEntry.getFileEntryId(), fileName,
 					mimeTypes.getContentType(fileName), fileName,
-					StringPool.BLANK, StringPool.BLANK,
+					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 					DLVersionNumberIncrease.MAJOR, inputStream, length,
 					fileEntry.getExpirationDate(), fileEntry.getReviewDate(),
 					serviceContext);

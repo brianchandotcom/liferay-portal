@@ -125,7 +125,8 @@ public class FormResourceImpl extends BaseFormResourceImpl {
 			_dlAppService.addFileEntry(
 				null, ddmFormInstance.getGroupId(), folderId,
 				binaryFile.getFileName(), binaryFile.getContentType(),
-				formDocument.getTitle(), formDocument.getDescription(), null,
+				formDocument.getTitle(), formDocument.getTitle(),
+				formDocument.getDescription(), null,
 				binaryFile.getInputStream(), binaryFile.getSize(), null, null,
 				new ServiceContext()));
 	}

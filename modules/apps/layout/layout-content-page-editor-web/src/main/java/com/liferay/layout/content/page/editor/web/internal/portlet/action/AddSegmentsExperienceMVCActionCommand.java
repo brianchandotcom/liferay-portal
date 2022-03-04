@@ -169,7 +169,8 @@ public class AddSegmentsExperienceMVCActionCommand
 			}
 
 			return _segmentsExperienceService.appendSegmentsExperience(
-				segmentsEntryId, classNameId, classPK,
+				serviceContext.getScopeGroupId(), segmentsEntryId, classNameId,
+				classPK,
 				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(),
 					ParamUtil.getString(actionRequest, "name")),
@@ -177,6 +178,7 @@ public class AddSegmentsExperienceMVCActionCommand
 		}
 
 		return _segmentsExperienceService.addSegmentsExperience(
+			serviceContext.getScopeGroupId(),
 			ParamUtil.getLong(actionRequest, "segmentsEntryId"), classNameId,
 			classPK,
 			Collections.singletonMap(

@@ -285,6 +285,7 @@ public class SegmentsEntryLocalServiceTest {
 			_group.getGroupId());
 
 		_segmentsExperienceLocalService.addSegmentsExperience(
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			segmentsEntry.getSegmentsEntryId(), 0, 0,
 			RandomTestUtil.randomLocaleStringMap(), RandomTestUtil.randomInt(),
 			false, new UnicodeProperties(true),

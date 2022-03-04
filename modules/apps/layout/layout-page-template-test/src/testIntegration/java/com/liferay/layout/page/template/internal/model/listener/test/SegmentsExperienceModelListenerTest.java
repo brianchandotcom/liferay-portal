@@ -70,6 +70,7 @@ public class SegmentsExperienceModelListenerTest {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
+				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomLong(),
 				_classNameLocalService.getClassNameId(Layout.class),
 				RandomTestUtil.randomLong(),

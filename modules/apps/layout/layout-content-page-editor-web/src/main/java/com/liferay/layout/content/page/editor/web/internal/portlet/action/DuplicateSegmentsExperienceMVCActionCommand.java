@@ -88,6 +88,7 @@ public class DuplicateSegmentsExperienceMVCActionCommand
 
 		SegmentsExperience duplicatedSegmentsExperience =
 			_segmentsExperienceService.addSegmentsExperience(
+				serviceContext.getScopeGroupId(),
 				segmentsExperience.getSegmentsEntryId(),
 				segmentsExperience.getClassNameId(),
 				segmentsExperience.getClassPK(),

@@ -141,6 +141,7 @@ public class SegmentsTestUtil {
 		throws PortalException {
 
 		return SegmentsExperienceLocalServiceUtil.addSegmentsExperience(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			segmentsEntryId, classNameId, classPK,
 			RandomTestUtil.randomLocaleStringMap(), true,
 			new UnicodeProperties(true), serviceContext);

@@ -59,12 +59,10 @@ const TeamMembers = () => {
 					</Button>
 				</div>
 			</div>
-			{subscriptionGroups && (
-				<ManageProductUser
-					project={project}
-					subscriptionGroups={subscriptionGroups}
-				/>
-			)}
+			<ManageProductUser
+				project={project}
+				subscriptionGroups={subscriptionGroups}
+			/>
 		</>
 	);
 };

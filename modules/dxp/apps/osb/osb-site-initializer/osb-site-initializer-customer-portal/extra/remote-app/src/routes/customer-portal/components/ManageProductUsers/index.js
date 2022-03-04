@@ -11,18 +11,18 @@
 
 import {useEffect, useState} from 'react';
 import client from '../../../../apolloClient';
-import {Button} from '../../../../common/components';
 import {getDXPCloudEnvironment} from '../../../../common/services/liferay/graphql/queries';
 import {PRODUCT_TYPES} from '../../utils/constants/productTypes';
 import {STATUS_TAG_TYPE_NAMES} from '../../utils/constants/statusTag';
+import ManageProductButton from '../ManageProductButton';
 
 const ManageProductUser = ({project, subscriptionGroups}) => {
 	const [dxpCloudEnvironment, setDxpCloudEnvironment] = useState('');
 	const [activationStatusDXPC, setActivatedStatusDXPC] = useState('');
 	const [activationStatusAC, setActivatedStatusAC] = useState('Active');
-	const groupId = 'groupid';
+	const GROUP_ID = 'groupid';
 	const activatedLinkDXPC = `https://console.liferay.cloud/projects/${dxpCloudEnvironment}/overview`;
-	const activatedLinkAC = `https://analytics.liferay.com/workspace/${groupId}/sites`;
+	const activatedLinkAC = `https://analytics.liferay.com/workspace/${GROUP_ID}/sites`;
 
 	useEffect(() => {
 		const getOnboardingFormData = async () => {
@@ -77,39 +77,17 @@ const ManageProductUser = ({project, subscriptionGroups}) => {
 
 						<div className="d-flex">
 							{activationStatusDXPC && (
-								<a
-									href={activatedLinkDXPC}
-									rel="noopener noreferrer"
-									target="_blank"
-								>
-									<Button
-										appendIcon="shortcut"
-										className="align-items-stretch btn cp-manager-product-button d-flex mr-3 p-2 text-neutral-10"
-										displayType="secudary"
-									>
-										<p className="font-weight-semi-bold h6 m-0 pl-1">
-											Manage DXP Cloud Users
-										</p>
-									</Button>
-								</a>
+								<ManageProductButton
+									activatedLink={activatedLinkDXPC}
+									activatedTitle="Manage DXP Cloud Users"
+								/>
 							)}
 
 							{activationStatusAC && (
-								<a
-									href={activatedLinkAC}
-									rel="noopener noreferrer"
-									target="_blank"
-								>
-									<Button
-										appendIcon="shortcut"
-										className="align-items-stretch cp-manager-product-button d-flex p-2 text-neutral-10"
-										displayType="secudary"
-									>
-										<p className="font-weight-semi-bold h6 m-0 pl-1">
-											Manage Analytics Cloud Users
-										</p>
-									</Button>
-								</a>
+								<ManageProductButton
+									activatedLink={activatedLinkAC}
+									activatedTitle="Manage Analytics Cloud Users"
+								/>
 							)}
 						</div>
 					</div>

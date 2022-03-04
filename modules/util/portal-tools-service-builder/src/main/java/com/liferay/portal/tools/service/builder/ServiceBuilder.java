@@ -6555,6 +6555,7 @@ public class ServiceBuilder {
 				"name", externalReferenceCodeUpperCase.charAt(0) + "_ERC");
 
 			finderElement.addAttribute("return-type", entityName);
+			finderElement.addAttribute("unique", "true");
 
 			Element finderColumnElement = finderElement.addElement(
 				"finder-column");
@@ -6565,8 +6566,6 @@ public class ServiceBuilder {
 			finderColumnElement = finderElement.addElement("finder-column");
 
 			finderColumnElement.addAttribute("name", "externalReferenceCode");
-
-			finderElement.addAttribute("unique", "true");
 
 			finderElements.add(finderElement);
 		}

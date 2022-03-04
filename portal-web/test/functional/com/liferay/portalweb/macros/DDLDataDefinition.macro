@@ -19,13 +19,23 @@ definition {
 
 		DDLDataDefinition.editName(ddlDataDefinitionName = "${ddlDataDefinitionName}");
 
-		DDLDataDefinition._showDetails();
-
 		if (isSet(ddlDataDefinitionDescription)) {
+			DDLDataDefinition._showDetails();
+
 			Type.clickAtType(
 				locator1 = "TextInput#DESCRIPTION",
 				value1 = "${ddlDataDefinitionDescription}");
+
+			DDLDataDefinition._closeDetails();
 		}
+	}
+
+	macro _closeDetails {
+		if (IsElementPresent.isVisible(locator1 = "TextInput#DESCRIPTION")) {
+			Click(locator1 = "DDMEditStructure#DETAILS_TOGGLE");
+		}
+
+		AssertNotVisible(locator1 = "TextInput#DESCRIPTION");
 	}
 
 	macro _select {

@@ -990,6 +990,7 @@ public class ModulesStructureTest {
 			name.equals("com.liferay.whip") ||
 			!name.startsWith("com.liferay.") ||
 			_isInModulesRootDir(dirPath, "sdk", "third-party", "util") ||
+			Files.exists(dirPath.resolve("settings.gradle")) ||
 			Files.exists(dirPath.resolve(".lfrbuild-ci")) ||
 			_hasGitCommitMarkerFile(dirPath) || _isInGitRepoReadOnly(dirPath) ||
 			_isInPrivateModulesCheckoutDir(dirPath)) {

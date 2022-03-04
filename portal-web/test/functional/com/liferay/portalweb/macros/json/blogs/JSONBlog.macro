@@ -459,7 +459,7 @@ definition {
 					"image": {
 					"caption": "",
 					"imageId": ${coverImageId}
-					},
+					}
 				}
 		''';
 

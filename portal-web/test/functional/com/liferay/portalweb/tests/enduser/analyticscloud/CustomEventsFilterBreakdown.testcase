@@ -619,6 +619,87 @@ definition {
 		}
 	}
 
+	@description = "Feature ID: LRAC-9481 | Automation ID: LRAC-10696 | Test Summary: Event Analysis breakdown filter provide auto complete suggestions for all conditions"
+	@priority = "5"
+	test CreateEventAnalysisFilterProvideAutoCompleteSuggestionsForAllCondition {
+		var attributeName = "city";
+		var inputValue = "recife";
+		var attributeValueList = "${inputValue},los angeles,madrid";
+		var optionValueList = "contains,not contains,is,is not";
+
+		task ("Fill fields and create custom event") {
+			var customEventName = ACCustomEvents.generateCustomEventName();
+
+			for (var attributesValue : list "${attributeValueList}") {
+				ACCustomEvents.createCustomEvent(
+					attributesName = "${attributeName}",
+					attributesValue = "${attributesValue}",
+					customEventName = "${customEventName}",
+					timeToSendCustomEvent = "1");
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch the property in AC and go to event analysis") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+
+			ACNavigation.goToEventAnalysis();
+		}
+
+		task ("Add the custom event to analysis") {
+			ACEventAnalysis.addEvent(customEventName = "${customEventName}");
+		}
+
+		task ("Change the time filter to 24 hours") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		for (var optionValue : list "${optionValueList}") {
+			task ("Add the filter to analysis and check if the filter provides autocomplete suggestions") {
+				ACEventAnalysis.clickToAddFilterButton();
+
+				ACEventAnalysis.searchEventAnalysis(searchItem = "${attributeName}");
+
+				Click(
+					key_filterName = "${attributeName}",
+					locator1 = "ACEventAnalysis#CHOOSE_FILTER");
+
+				Select(
+					locator1 = "Select#SELECT",
+					value1 = "${optionValue}");
+
+				Click(locator1 = "ACEventAnalysis#INPUT_CONDITION");
+
+				for (var attributeValue : list "${attributeValueList}") {
+					AssertElementPresent(
+						key_buttonName = "${attributeValue}",
+						locator1 = "ACUtils#GENERIC_BUTTON");
+				}
+
+				Click(
+					key_buttonName = "${inputValue}",
+					locator1 = "ACUtils#GENERIC_BUTTON");
+
+				Click(locator1 = "ACEventAnalysis#FILTER_DONE_BUTTON");
+			}
+
+			task ("Check that the analysis result appears") {
+				ACEventAnalysis.viewAnalysisInformation(informationValueList = "${customEventName}");
+			}
+
+			task ("Remove the filter from the analysis") {
+				ACEventAnalysis.removeFromAnalysis(removeValue = "${attributeName}");
+			}
+		}
+	}
+
 	@description = "Feature ID: LRAC-7868 | Automation ID: LRAC-10286 | Test Summary: Event Analysis creation with Filtered Attribute (Boolean) and (True/False) condition"
 	@priority = "3"
 	test CreateEventAnalysisWithBooleanAttributeFilterTrueAndFalseCondition {

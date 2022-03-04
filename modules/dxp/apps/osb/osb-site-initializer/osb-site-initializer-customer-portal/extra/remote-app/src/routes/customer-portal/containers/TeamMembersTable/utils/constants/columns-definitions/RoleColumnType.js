@@ -12,11 +12,41 @@
 import {ROLE_TYPES} from '../../../../../../../common/utils/constants';
 
 const RoleColumnType = ({roles}) => {
-	const filteredRoles = Object.values(ROLE_TYPES).find(
-		(roleType) => roleType.key === roles[0]
-	);
+	const getCurrentActiveRole = () => {
+		const roleValues = Object.values(ROLE_TYPES);
 
-	return <p className="m-0 text-truncate">{filteredRoles?.name}</p>;
+		const filteredRoles = roles
+			?.filter((role) =>
+				roleValues?.some((roleType) => roleType?.key === role)
+			)
+			?.sort();
+
+		if (filteredRoles.length) {
+			const isAdminUser = roles.find(
+				(role) => role === ROLE_TYPES.admin.key
+			);
+			if (isAdminUser) {
+				return ROLE_TYPES.admin.name;
+			}
+			const isRequesterUser = roles.find(
+				(role) => role === ROLE_TYPES.requestor.key
+			);
+			if (isRequesterUser) {
+				return ROLE_TYPES.requestor.name;
+			}
+
+			const activeRole = roleValues.find(
+				(role) => role.key === filteredRoles[0]
+			)?.name;
+
+			return activeRole;
+		}
+
+		return ROLE_TYPES.member.name;
+	};
+	const currentRole = getCurrentActiveRole();
+
+	return <p className="m-0 text-truncate">{currentRole}</p>;
 };
 
 export {RoleColumnType};

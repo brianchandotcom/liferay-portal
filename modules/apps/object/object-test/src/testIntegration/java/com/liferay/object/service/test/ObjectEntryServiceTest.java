@@ -124,6 +124,10 @@ public class ObjectEntryServiceTest {
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _adminUser.getUserId())));
 
+		_setUser(_user);
+
+		_assertPrincipalException(ObjectActionKeys.ADD_OBJECT_ENTRY, null);
+
 		_setUser(_defaultUser);
 
 		_assertPrincipalException(ObjectActionKeys.ADD_OBJECT_ENTRY, null);
@@ -145,10 +149,6 @@ public class ObjectEntryServiceTest {
 				).build(),
 				ServiceContextTestUtil.getServiceContext(
 					TestPropsValues.getGroupId(), _defaultUser.getUserId())));
-
-		_setUser(_user);
-
-		_assertPrincipalException(ObjectActionKeys.ADD_OBJECT_ENTRY, null);
 	}
 
 	@Test

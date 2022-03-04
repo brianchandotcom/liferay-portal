@@ -82,4 +82,12 @@ definition {
 		Click(locator1 = "ObjectCustomViews#OBJECT_VIEWS_TAB");
 	}
 
+	macro searchOnViewBuilder {
+		Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR");
+
+		Type(
+			value1 =  "${colunmName}",
+			locator1 =  "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR");
+	}
+
 }

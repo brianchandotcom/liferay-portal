@@ -60,6 +60,11 @@
 		<td>//div[(@class='c-empty-state-title')]/..//*[contains(text(),'${key_text}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_BUILDER_SEARCH_BAR</td>
+		<td>//input[contains(@aria-label,'Search')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

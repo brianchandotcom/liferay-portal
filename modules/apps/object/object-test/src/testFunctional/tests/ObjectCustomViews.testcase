@@ -322,7 +322,38 @@ definition {
 	@priority = "3"
 	test NoResultMessageViewBuilder {
 
-		// TODO LPS-147761 NoResultMessageViewBuilder pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147761",
+			objectName = "CustomObject147761",
+			pluralLabelName = "Custom Objects 147761");
+		
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147761");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		Click.clickAtNotVisible(
+			key_columnOption = "Author",
+			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+
+		Click(
+			key_tab = "Save",
+			locator1 = "Button#TAB_SUBMIT_BTN");
+
+		ObjectCustomViews.searchOnViewBuilder(colunmName = "Teste");
+
+		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No Results Found");
+
+		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "Sorry, no results were found.");
 
 	}
 

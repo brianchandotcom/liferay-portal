@@ -52,7 +52,7 @@ public class SegmentsExperienceServiceHttp {
 
 	public static com.liferay.segments.model.SegmentsExperience
 			addSegmentsExperience(
-				HttpPrincipal httpPrincipal, long segmentsEntryId,
+				HttpPrincipal httpPrincipal, long groupId, long segmentsEntryId,
 				long classNameId, long classPK,
 				java.util.Map<java.util.Locale, String> nameMap, boolean active,
 				com.liferay.portal.kernel.util.UnicodeProperties
@@ -66,8 +66,8 @@ public class SegmentsExperienceServiceHttp {
 				_addSegmentsExperienceParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsEntryId, classNameId, classPK, nameMap,
-				active, typeSettingsUnicodeProperties, serviceContext);
+				methodKey, groupId, segmentsEntryId, classNameId, classPK,
+				nameMap, active, typeSettingsUnicodeProperties, serviceContext);
 
 			Object returnObj = null;
 
@@ -99,7 +99,7 @@ public class SegmentsExperienceServiceHttp {
 
 	public static com.liferay.segments.model.SegmentsExperience
 			appendSegmentsExperience(
-				HttpPrincipal httpPrincipal, long segmentsEntryId,
+				HttpPrincipal httpPrincipal, long groupId, long segmentsEntryId,
 				long classNameId, long classPK,
 				java.util.Map<java.util.Locale, String> nameMap, boolean active,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -111,8 +111,8 @@ public class SegmentsExperienceServiceHttp {
 				_appendSegmentsExperienceParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsEntryId, classNameId, classPK, nameMap,
-				active, serviceContext);
+				methodKey, groupId, segmentsEntryId, classNameId, classPK,
+				nameMap, active, serviceContext);
 
 			Object returnObj = null;
 
@@ -144,7 +144,7 @@ public class SegmentsExperienceServiceHttp {
 
 	public static com.liferay.segments.model.SegmentsExperience
 			appendSegmentsExperience(
-				HttpPrincipal httpPrincipal, long segmentsEntryId,
+				HttpPrincipal httpPrincipal, long groupId, long segmentsEntryId,
 				long classNameId, long classPK,
 				java.util.Map<java.util.Locale, String> nameMap, boolean active,
 				com.liferay.portal.kernel.util.UnicodeProperties
@@ -158,8 +158,8 @@ public class SegmentsExperienceServiceHttp {
 				_appendSegmentsExperienceParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsEntryId, classNameId, classPK, nameMap,
-				active, typeSettingsUnicodeProperties, serviceContext);
+				methodKey, groupId, segmentsEntryId, classNameId, classPK,
+				nameMap, active, typeSettingsUnicodeProperties, serviceContext);
 
 			Object returnObj = null;
 
@@ -579,20 +579,20 @@ public class SegmentsExperienceServiceHttp {
 
 	private static final Class<?>[] _addSegmentsExperienceParameterTypes0 =
 		new Class[] {
-			long.class, long.class, long.class, java.util.Map.class,
+			long.class, long.class, long.class, long.class, java.util.Map.class,
 			boolean.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _appendSegmentsExperienceParameterTypes1 =
 		new Class[] {
-			long.class, long.class, long.class, java.util.Map.class,
+			long.class, long.class, long.class, long.class, java.util.Map.class,
 			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _appendSegmentsExperienceParameterTypes2 =
 		new Class[] {
-			long.class, long.class, long.class, java.util.Map.class,
+			long.class, long.class, long.class, long.class, java.util.Map.class,
 			boolean.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

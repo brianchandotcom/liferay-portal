@@ -20,4 +20,17 @@
 
 .cp-team-members-support-seat-icon {
 	color: var(--color-action-primary-active);
+
+	&:hover,
+	&:focus,
+	&:active {
+		color: var(--color-action-primary-hover);
+	}
+}
+
+.cp-team-members-popover {
+	min-width: 350px;
+	a {
+		text-decoration: underline;
+	}
 }

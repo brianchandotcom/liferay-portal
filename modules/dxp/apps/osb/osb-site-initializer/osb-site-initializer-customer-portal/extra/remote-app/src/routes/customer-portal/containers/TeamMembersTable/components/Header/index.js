@@ -9,13 +9,13 @@
  * distribution rights of the Software.
  */
 
-import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import {Button} from '../../../../../../common/components';
 import {ROLE_TYPES} from '../../../../../../common/utils/constants';
 import InvitesModal from '../InvitesModal';
+import PopoverIconButton from '../PopoverIconButton';
 
 const TeamMembersTableHeader = ({hasAdminAccess, project, userAccounts}) => {
 	const [visible, setVisible] = useState(false);
@@ -51,10 +51,7 @@ const TeamMembersTableHeader = ({hasAdminAccess, project, userAccounts}) => {
 			<div className="align-items-center d-flex ml-auto">
 				{project.maxRequestors && (
 					<>
-						<ClayIcon
-							className="cp-team-members-support-seat-icon mr-2"
-							symbol="info-circle"
-						/>
+						<PopoverIconButton alignPosition="top" />
 
 						<p className="font-weight-bold m-0">
 							Support seats: &nbsp;

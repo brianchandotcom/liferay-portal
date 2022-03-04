@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import ClayIcon from '@clayui/icon';
+import PopoverIconButton from '../../components/PopoverIconButton';
 
 export const COLUMNS = [
 	{
@@ -40,14 +40,10 @@ export const COLUMNS = [
 
 		header: {
 			name: (
-				<div>
-					<p className="m-0">
-						Support Seat
-						<ClayIcon
-							className="cp-team-members-support-seat-icon ml-2"
-							symbol="info-circle"
-						/>
-					</p>
+				<div className="align-items-center d-flex justify-content-center">
+					<p className="m-0">Support Seat</p>
+
+					<PopoverIconButton />
 				</div>
 			),
 			noWrap: true,

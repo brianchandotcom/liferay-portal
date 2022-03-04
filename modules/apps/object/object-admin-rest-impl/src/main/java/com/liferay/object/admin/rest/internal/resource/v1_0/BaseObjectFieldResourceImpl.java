@@ -15,6 +15,11 @@
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectField.BusinessType;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectField.DBType;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectField.RelationshipType;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectField.Type;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectFieldSetting;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -35,6 +40,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -43,6 +49,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -478,9 +485,7 @@ public abstract class BaseObjectFieldResourceImpl
 				Long.parseLong((String)parameters.get("objectDefinitionId")),
 				objectField);
 
-		for (ObjectField objectField : objectFields) {
-			objectFieldUnsafeConsumer.accept(objectField);
-		}
+		contextBatchStrategy.apply(objectFields, objectFieldUnsafeConsumer);
 	}
 
 	@Override
@@ -492,6 +497,53 @@ public abstract class BaseObjectFieldResourceImpl
 		for (ObjectField objectField : objectFields) {
 			deleteObjectField(objectField.getId());
 		}
+	}
+
+	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("objectDefinition");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return ObjectField.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "DBType", false, false, DBType.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "businessType", false, false, BusinessType.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "indexed", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "indexedAsKeyword", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "indexedLanguageId", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "label", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "listTypeDefinitionId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "name", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "objectFieldSettings", false, false,
+				ObjectFieldSetting[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "relationshipType", true, false, RelationshipType.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "required", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "type", false, false, Type.class, false));
 	}
 
 	@Override
@@ -510,6 +562,16 @@ public abstract class BaseObjectFieldResourceImpl
 	}
 
 	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("objectDefinition");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
+	}
+
+	@Override
 	public Page<ObjectField> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
@@ -518,6 +580,11 @@ public abstract class BaseObjectFieldResourceImpl
 		return getObjectDefinitionObjectFieldsPage(
 			Long.parseLong((String)parameters.get("objectDefinitionId")),
 			search, pagination);
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -712,6 +779,7 @@ public abstract class BaseObjectFieldResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

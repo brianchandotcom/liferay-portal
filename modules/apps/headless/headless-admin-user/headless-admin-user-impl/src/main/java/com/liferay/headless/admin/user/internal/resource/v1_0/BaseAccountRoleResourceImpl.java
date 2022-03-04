@@ -35,6 +35,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -43,6 +44,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -700,9 +702,7 @@ public abstract class BaseAccountRoleResourceImpl
 				Long.parseLong((String)parameters.get("accountId")),
 				accountRole);
 
-		for (AccountRole accountRole : accountRoles) {
-			accountRoleUnsafeConsumer.accept(accountRole);
-		}
+		contextBatchStrategy.apply(accountRoles, accountRoleUnsafeConsumer);
 	}
 
 	@Override
@@ -710,6 +710,37 @@ public abstract class BaseAccountRoleResourceImpl
 			java.util.Collection<AccountRole> accountRoles,
 			Map<String, Serializable> parameters)
 		throws Exception {
+	}
+
+	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("externalReferenceCode", "account");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return AccountRole.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The primary key of the account that owns this role.",
+				"accountId", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "description", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "displayName", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "name", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The primary key of the underlying system role.", "roleId",
+				true, false, Long.class, false));
 	}
 
 	@Override
@@ -728,6 +759,19 @@ public abstract class BaseAccountRoleResourceImpl
 	}
 
 	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList(
+			"accountExternalReferenceCode,userAccountExternalReferenceCode",
+			"externalReferenceCode", "externalReferenceCode,emailAddress",
+			"account");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
+	}
+
+	@Override
 	public Page<AccountRole> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
@@ -736,6 +780,11 @@ public abstract class BaseAccountRoleResourceImpl
 		return getAccountAccountRolesPage(
 			Long.parseLong((String)parameters.get("accountId")),
 			(String)parameters.get("keywords"), pagination, sorts);
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -919,6 +968,7 @@ public abstract class BaseAccountRoleResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

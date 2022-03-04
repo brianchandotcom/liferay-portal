@@ -14,7 +14,12 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.headless.admin.user.dto.v1_0.Account;
+import com.liferay.headless.admin.user.dto.v1_0.CustomField;
+import com.liferay.headless.admin.user.dto.v1_0.Location;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
+import com.liferay.headless.admin.user.dto.v1_0.OrganizationContactInformation;
+import com.liferay.headless.admin.user.dto.v1_0.Service;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -36,6 +41,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -44,7 +50,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -768,9 +776,7 @@ public abstract class BaseOrganizationResourceImpl
 		UnsafeConsumer<Organization, Exception> organizationUnsafeConsumer =
 			organization -> postOrganization(organization);
 
-		for (Organization organization : organizations) {
-			organizationUnsafeConsumer.accept(organization);
-		}
+		contextBatchStrategy.apply(organizations, organizationUnsafeConsumer);
 	}
 
 	@Override
@@ -782,6 +788,78 @@ public abstract class BaseOrganizationResourceImpl
 		for (Organization organization : organizations) {
 			deleteOrganization(organization.getId());
 		}
+	}
+
+	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return Organization.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "childOrganizations", false, false, Organization[].class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The text of a comment associated with the organization.",
+				"comment", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "customFields", false, false, CustomField[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The organization's creation date.", "dateCreated", true, false,
+				Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The most recent time any of the organization's fields changed.",
+				"dateModified", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The organization's ID.", "id", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A relative URL to the organization's image.", "image", true,
+				false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of keywords describing the organization.", "keywords",
+				true, false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The organization's postal information (country and region).",
+				"location", false, false, Location.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The organization's name.", "name", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of this organization's associated accounts.",
+				"numberOfAccounts", true, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of this organization's child organizations.",
+				"numberOfOrganizations", true, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of this organization's associated users.",
+				"numberOfUsers", true, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "organizationAccounts", false, false, Account[].class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The organization's contact information, which includes email addresses, postal addresses, phone numbers, and web URLs. This is modeled internally as a `Contact`.",
+				"organizationContactInformation", false, false,
+				OrganizationContactInformation.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The organization's parent organization.", "parentOrganization",
+				false, false, Organization.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of services the organization provides. This follows the [`Service`](https://www.schema.org/Service) specification.",
+				"services", false, false, Service[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "userAccounts", false, false, UserAccount[].class, false));
 	}
 
 	@Override
@@ -800,6 +878,16 @@ public abstract class BaseOrganizationResourceImpl
 	}
 
 	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("company", "organization", "organization");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
+	}
+
+	@Override
 	public Page<Organization> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
@@ -808,6 +896,11 @@ public abstract class BaseOrganizationResourceImpl
 		return getOrganizationsPage(
 			Boolean.parseBoolean((String)parameters.get("flatten")), search,
 			filter, pagination, sorts);
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -1002,6 +1095,7 @@ public abstract class BaseOrganizationResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

@@ -14,7 +14,13 @@
 
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
+import com.liferay.headless.commerce.admin.order.dto.v1_0.Account;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.BillingAddress;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderItem;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.ShippingAddress;
+import com.liferay.headless.commerce.admin.order.dto.v1_0.Status;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -35,6 +41,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -43,7 +50,11 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -433,9 +444,7 @@ public abstract class BaseOrderResourceImpl
 		UnsafeConsumer<Order, Exception> orderUnsafeConsumer =
 			order -> postOrder(order);
 
-		for (Order order : orders) {
-			orderUnsafeConsumer.accept(order);
-		}
+		contextBatchStrategy.apply(orders, orderUnsafeConsumer);
 	}
 
 	@Override
@@ -447,6 +456,282 @@ public abstract class BaseOrderResourceImpl
 		for (Order order : orders) {
 			deleteOrder(order.getId());
 		}
+	}
+
+	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return Order.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "account", true, false, Account.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "accountExternalReferenceCode", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "accountId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "advanceStatus", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "billingAddress", false, false, BillingAddress.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "billingAddressId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "channel", true, false, Channel.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "channelExternalReferenceCode", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "channelId", false, true, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "couponCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "createDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "currencyCode", false, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "customFields", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "deliveryTermDescription", true, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "deliveryTermId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "deliveryTermName", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "externalReferenceCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "lastPriceUpdateDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "modifiedDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "orderDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "orderItems", false, false, OrderItem[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "orderStatus", false, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "orderStatusInfo", true, false, Status.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "orderTypeExternalReferenceCode", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "orderTypeId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "paymentMethod", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "paymentStatus", false, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "paymentStatusInfo", true, false, Status.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "paymentTermDescription", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "paymentTermId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "paymentTermName", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "printedNote", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "purchaseOrderNumber", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "requestedDeliveryDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingAddress", false, false, ShippingAddress.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingAddressId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingAmount", false, false, BigDecimal.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingAmountFormatted", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingAmountValue", false, false, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingDiscountAmount", false, false, BigDecimal.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingDiscountAmountFormatted", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingDiscountAmountValue", false, false, Double.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingDiscountPercentageLevel1", false, false,
+				Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingDiscountPercentageLevel1WithTaxAmount", false,
+				false, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingDiscountPercentageLevel2", false, false,
+				Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingDiscountPercentageLevel2WithTaxAmount", false,
+				false, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingDiscountPercentageLevel3", false, false,
+				Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingDiscountPercentageLevel3WithTaxAmount", false,
+				false, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingDiscountPercentageLevel4", false, false,
+				Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingDiscountPercentageLevel4WithTaxAmount", false,
+				false, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingDiscountWithTaxAmount", false, false, Double.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingDiscountWithTaxAmountFormatted", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingMethod", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingOption", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingWithTaxAmount", false, false, BigDecimal.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingWithTaxAmountFormatted", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingWithTaxAmountValue", false, false, Double.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotal", false, false, BigDecimal.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalAmount", true, false, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalDiscountAmount", false, false, Double.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalDiscountAmountFormatted", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalDiscountPercentageLevel1", false, false,
+				Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalDiscountPercentageLevel1WithTaxAmount", false,
+				false, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalDiscountPercentageLevel2", false, false,
+				Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalDiscountPercentageLevel2WithTaxAmount", false,
+				false, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalDiscountPercentageLevel3", false, false,
+				Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalDiscountPercentageLevel3WithTaxAmount", false,
+				false, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalDiscountPercentageLevel4", false, false,
+				Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalDiscountPercentageLevel4WithTaxAmount", false,
+				false, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalDiscountWithTaxAmount", false, false, Double.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalDiscountWithTaxAmountFormatted", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalFormatted", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalWithTaxAmount", false, false, BigDecimal.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalWithTaxAmountFormatted", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subtotalWithTaxAmountValue", true, false, Double.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "taxAmount", false, false, BigDecimal.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "taxAmountFormatted", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "taxAmountValue", false, false, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "total", false, false, BigDecimal.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalAmount", true, false, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalDiscountAmount", false, false, BigDecimal.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalDiscountAmountFormatted", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalDiscountAmountValue", false, false, Double.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalDiscountPercentageLevel1", false, false, Double.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalDiscountPercentageLevel1WithTaxAmount", false, false,
+				Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalDiscountPercentageLevel2", false, false, Double.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalDiscountPercentageLevel2WithTaxAmount", false, false,
+				Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalDiscountPercentageLevel3", false, false, Double.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalDiscountPercentageLevel3WithTaxAmount", false, false,
+				Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalDiscountPercentageLevel4", false, false, Double.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalDiscountPercentageLevel4WithTaxAmount", false, false,
+				Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalDiscountWithTaxAmount", false, false,
+				BigDecimal.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalDiscountWithTaxAmountFormatted", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalDiscountWithTaxAmountValue", false, false,
+				Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalFormatted", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalWithTaxAmount", false, false, BigDecimal.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalWithTaxAmountFormatted", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "totalWithTaxAmountValue", true, false, Double.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "transactionId", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "workflowStatusInfo", true, false, Status.class, false));
 	}
 
 	@Override
@@ -465,12 +750,27 @@ public abstract class BaseOrderResourceImpl
 	}
 
 	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
+	}
+
+	@Override
 	public Page<Order> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
 		return getOrdersPage(search, filter, pagination, sorts);
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -654,6 +954,7 @@ public abstract class BaseOrderResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

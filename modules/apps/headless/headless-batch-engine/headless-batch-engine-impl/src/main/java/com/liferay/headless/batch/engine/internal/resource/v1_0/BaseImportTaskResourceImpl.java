@@ -15,6 +15,7 @@
 package com.liferay.headless.batch.engine.internal.resource.v1_0;
 
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.dto.v1_0.ImportTask.Operation;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

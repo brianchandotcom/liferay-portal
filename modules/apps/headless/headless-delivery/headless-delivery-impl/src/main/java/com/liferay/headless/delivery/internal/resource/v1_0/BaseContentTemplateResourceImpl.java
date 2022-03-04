@@ -15,6 +15,8 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.ContentTemplate;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
+import com.liferay.headless.delivery.dto.v1_0.Field;
 import com.liferay.headless.delivery.resource.v1_0.ContentTemplateResource;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,6 +36,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -42,7 +45,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -242,6 +247,68 @@ public abstract class BaseContentTemplateResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return ContentTemplate.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Block of actions allowed by the user making the request.",
+				"actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The key of the asset library to which the content template is scoped.",
+				"assetLibraryKey", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The list of languages the content template has a translation for.",
+				"availableLanguages", true, false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the `ContentStructure`.", "contentStructureId",
+				false, true, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The content template's creator.", "creator", true, false,
+				Creator.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The content template's creation date.", "dateCreated", true,
+				false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The last time the content template changed.", "dateModified",
+				true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"the content template's description.", "description", false,
+				false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"the localized content template's descriptions.",
+				"description_i18n", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The content template's ID.", "id", true, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"the content template's name.", "name", false, true,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"the localized content template's name.", "name_i18n", false,
+				false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"the content template's programming language.",
+				"programmingLanguage", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the site to which the content template is scoped.",
+				"siteId", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The content template's script.", "templateScript", false,
+				false, String.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -254,6 +321,16 @@ public abstract class BaseContentTemplateResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("assetLibrary", "site");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -275,6 +352,11 @@ public abstract class BaseContentTemplateResourceImpl
 		else {
 			return null;
 		}
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -458,6 +540,7 @@ public abstract class BaseContentTemplateResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

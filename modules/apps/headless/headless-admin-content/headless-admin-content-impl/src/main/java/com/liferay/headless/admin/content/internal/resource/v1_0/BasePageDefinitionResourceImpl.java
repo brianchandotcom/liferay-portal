@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.content.internal.resource.v1_0;
 
 import com.liferay.headless.admin.content.resource.v1_0.PageDefinitionResource;
+import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -81,8 +82,7 @@ public abstract class BasePageDefinitionResourceImpl
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteId")
 			Long siteId,
-			com.liferay.headless.delivery.dto.v1_0.PageDefinition
-				pageDefinition)
+			PageDefinition pageDefinition)
 		throws Exception {
 
 		Response.ResponseBuilder responseBuilder = Response.ok();

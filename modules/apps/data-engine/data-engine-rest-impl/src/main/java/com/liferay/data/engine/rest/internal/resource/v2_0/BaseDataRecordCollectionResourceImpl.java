@@ -42,6 +42,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
@@ -52,6 +53,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -691,11 +693,8 @@ public abstract class BaseDataRecordCollectionResourceImpl
 					Long.parseLong((String)parameters.get("dataDefinitionId")),
 					dataRecordCollection);
 
-		for (DataRecordCollection dataRecordCollection :
-				dataRecordCollections) {
-
-			dataRecordCollectionUnsafeConsumer.accept(dataRecordCollection);
-		}
+		contextBatchStrategy.apply(
+			dataRecordCollections, dataRecordCollectionUnsafeConsumer);
 	}
 
 	@Override
@@ -709,6 +708,36 @@ public abstract class BaseDataRecordCollectionResourceImpl
 
 			deleteDataRecordCollection(dataRecordCollection.getId());
 		}
+	}
+
+	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("dataDefinition");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return DataRecordCollection.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dataDefinitionId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dataRecordCollectionKey", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "description", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "name", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "siteId", false, false, Long.class, false));
 	}
 
 	@Override
@@ -727,6 +756,16 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	}
 
 	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("dataDefinition");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v2.0";
+	}
+
+	@Override
 	public Page<DataRecordCollection> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
@@ -735,6 +774,11 @@ public abstract class BaseDataRecordCollectionResourceImpl
 		return getDataDefinitionDataRecordCollectionsPage(
 			Long.parseLong((String)parameters.get("dataDefinitionId")),
 			(String)parameters.get("keywords"), pagination);
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -990,6 +1034,7 @@ public abstract class BaseDataRecordCollectionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

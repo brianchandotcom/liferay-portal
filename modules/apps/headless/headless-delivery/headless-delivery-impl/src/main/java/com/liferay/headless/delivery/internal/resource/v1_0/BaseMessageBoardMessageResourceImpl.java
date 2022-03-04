@@ -14,8 +14,15 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.AggregateRating;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
+import com.liferay.headless.delivery.dto.v1_0.CreatorStatistics;
+import com.liferay.headless.delivery.dto.v1_0.CustomField;
+import com.liferay.headless.delivery.dto.v1_0.Field;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage.ViewableBy;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
+import com.liferay.headless.delivery.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -42,6 +49,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
@@ -52,7 +60,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1475,9 +1485,8 @@ public abstract class BaseMessageBoardMessageResourceImpl
 							(String)parameters.get("messageBoardThreadId")),
 						messageBoardMessage);
 
-		for (MessageBoardMessage messageBoardMessage : messageBoardMessages) {
-			messageBoardMessageUnsafeConsumer.accept(messageBoardMessage);
-		}
+		contextBatchStrategy.apply(
+			messageBoardMessages, messageBoardMessageUnsafeConsumer);
 	}
 
 	@Override
@@ -1489,6 +1498,102 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		for (MessageBoardMessage messageBoardMessage : messageBoardMessages) {
 			deleteMessageBoardMessage(messageBoardMessage.getId());
 		}
+	}
+
+	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("messageBoardMessage", "messageBoardThread");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return MessageBoardMessage.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Block of actions allowed by the user making the request.",
+				"actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The message's average rating.", "aggregateRating", true, false,
+				AggregateRating.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A flag that indicates whether the message's author is anonymous.",
+				"anonymous", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The message's main content.", "articleBody", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The message's author.", "creator", true, false, Creator.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The message's creator statistics (rank, join date, number of posts, ...)",
+				"creatorStatistics", false, false, CreatorStatistics.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of the custom fields associated with the blog post.",
+				"customFields", false, false, CustomField[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The date the message was created.", "dateCreated", true, false,
+				Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The last time the content or metadata of the message was changed.",
+				"dateModified", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The message's media format (e.g., HTML, BBCode, etc.).",
+				"encodingFormat", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The message's external reference code.",
+				"externalReferenceCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "friendlyUrlPath", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The message's main title.", "headline", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The message's ID.", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of keywords describing the message.", "keywords", false,
+				false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the Message Board Section to which this message is scoped.",
+				"messageBoardSectionId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the Message Board Thread to which this message is scoped.",
+				"messageBoardThreadId", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of the message's attachments.",
+				"numberOfMessageBoardAttachments", true, false, Integer.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of the message's child messages.",
+				"numberOfMessageBoardMessages", true, false, Integer.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the message's parent, if it exists.",
+				"parentMessageBoardMessageId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of related contents to this message.",
+				"relatedContents", true, false, RelatedContent[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A flag that indicates whether the message is answering a question.",
+				"showAsAnswer", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the site to which this message is scoped.", "siteId",
+				true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The message's status.", "status", true, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A flag that indicates whether the user making the requests is subscribed to this message.",
+				"subscribed", true, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only property that specifies the default permissions.",
+				"viewableBy", false, false, ViewableBy.class, true));
 	}
 
 	@Override
@@ -1504,6 +1609,17 @@ public abstract class BaseMessageBoardMessageResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList(
+			"messageBoardMessage", "messageBoardThread", "site");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -1523,6 +1639,11 @@ public abstract class BaseMessageBoardMessageResourceImpl
 				Long.parseLong((String)parameters.get("messageBoardThreadId")),
 				search, null, filter, pagination, sorts);
 		}
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -1781,6 +1902,7 @@ public abstract class BaseMessageBoardMessageResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

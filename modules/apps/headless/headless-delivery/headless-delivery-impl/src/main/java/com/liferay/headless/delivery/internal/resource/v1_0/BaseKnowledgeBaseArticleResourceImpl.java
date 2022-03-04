@@ -14,8 +14,16 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.AggregateRating;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
+import com.liferay.headless.delivery.dto.v1_0.CustomField;
+import com.liferay.headless.delivery.dto.v1_0.Field;
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle;
+import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseArticle.ViewableBy;
+import com.liferay.headless.delivery.dto.v1_0.ParentKnowledgeBaseFolder;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
+import com.liferay.headless.delivery.dto.v1_0.RelatedContent;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseArticleResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -42,6 +50,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
@@ -52,7 +61,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1595,11 +1606,8 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 					(Long)parameters.get("siteId"), knowledgeBaseArticle);
 		}
 
-		for (KnowledgeBaseArticle knowledgeBaseArticle :
-				knowledgeBaseArticles) {
-
-			knowledgeBaseArticleUnsafeConsumer.accept(knowledgeBaseArticle);
-		}
+		contextBatchStrategy.apply(
+			knowledgeBaseArticles, knowledgeBaseArticleUnsafeConsumer);
 	}
 
 	@Override
@@ -1616,6 +1624,102 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList(
+			"knowledgeBaseArticle", "knowledgeBaseFolder", "site");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return KnowledgeBaseArticle.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Block of actions allowed by the user making the request.",
+				"actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The article's average rating.", "aggregateRating", true, false,
+				AggregateRating.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The article's main content.", "articleBody", false, true,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The article's author.", "creator", true, false, Creator.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of the custom fields associated with the article.",
+				"customFields", false, false, CustomField[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The date the article was created.", "dateCreated", true, false,
+				Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The last time the article's content or metadata changed.",
+				"dateModified", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The article's description.", "description", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The article's media type (e.g., HTML, BBCode, etc.).",
+				"encodingFormat", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The article's external reference code.",
+				"externalReferenceCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The article's relative URL.", "friendlyUrlPath", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The article's ID.", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of keywords describing the article.", "keywords", false,
+				false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The article's number attachments.", "numberOfAttachments",
+				true, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of this article's child articles.",
+				"numberOfKnowledgeBaseArticles", true, false, Integer.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the article's parent, if it exists.",
+				"parentKnowledgeBaseArticleId", false, false, Long.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The article's parent folder, if it exists.",
+				"parentKnowledgeBaseFolder", true, false,
+				ParentKnowledgeBaseFolder.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the article's parent folder, if that folder exists.",
+				"parentKnowledgeBaseFolderId", false, false, Long.class, true),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of related contents to this article.",
+				"relatedContents", true, false, RelatedContent[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the site to which this article is scoped.", "siteId",
+				true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A flag that indicates whether the user making the requests is subscribed to this article.",
+				"subscribed", true, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The categories associated with this article.",
+				"taxonomyCategoryBriefs", true, false,
+				TaxonomyCategoryBrief[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only field that adds `TaxonomyCategory` instances to the article.",
+				"taxonomyCategoryIds", false, false, Long[].class, true),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The article's main title.", "title", false, true, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only property that specifies the article's default permissions.",
+				"viewableBy", false, false, ViewableBy.class, true));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -1628,6 +1732,17 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList(
+			"knowledgeBaseArticle", "knowledgeBaseFolder", "site");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -1648,6 +1763,11 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 				Boolean.parseBoolean((String)parameters.get("flatten")), search,
 				null, filter, pagination, sorts);
 		}
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -1908,6 +2028,7 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

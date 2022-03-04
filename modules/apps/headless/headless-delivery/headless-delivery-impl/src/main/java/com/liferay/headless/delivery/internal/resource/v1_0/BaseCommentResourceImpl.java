@@ -15,6 +15,8 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.Comment;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
+import com.liferay.headless.delivery.dto.v1_0.Field;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -35,6 +37,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -43,7 +46,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -809,9 +814,7 @@ public abstract class BaseCommentResourceImpl
 				Long.parseLong((String)parameters.get("blogPostingId")),
 				comment);
 
-		for (Comment comment : comments) {
-			commentUnsafeConsumer.accept(comment);
-		}
+		contextBatchStrategy.apply(comments, commentUnsafeConsumer);
 	}
 
 	@Override
@@ -823,6 +826,47 @@ public abstract class BaseCommentResourceImpl
 		for (Comment comment : comments) {
 			deleteComment(comment.getId());
 		}
+	}
+
+	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList(
+			"blogPosting", "comment", "document", "structuredContent");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return Comment.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Block of actions allowed by the user making the request.",
+				"actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The comment's author.", "creator", true, false, Creator.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The comment's creation date.", "dateCreated", true, false,
+				Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The comment's latest modification date.", "dateModified", true,
+				false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The comment's ID.", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of child comments on this comment.",
+				"numberOfComments", true, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"the ID of the comment's parent, if it exists.",
+				"parentCommentId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The comment's text content.", "text", false, false,
+				String.class, false));
 	}
 
 	@Override
@@ -841,6 +885,17 @@ public abstract class BaseCommentResourceImpl
 	}
 
 	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList(
+			"blogPosting", "comment", "document", "structuredContent");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
+	}
+
+	@Override
 	public Page<Comment> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
@@ -849,6 +904,11 @@ public abstract class BaseCommentResourceImpl
 		return getBlogPostingCommentsPage(
 			Long.parseLong((String)parameters.get("blogPostingId")), search,
 			null, filter, pagination, sorts);
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -1039,6 +1099,7 @@ public abstract class BaseCommentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

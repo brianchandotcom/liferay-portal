@@ -15,6 +15,8 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
+import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage.ViewableBy;
+import com.liferay.headless.delivery.dto.v1_0.Field;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -35,6 +37,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -44,6 +47,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -356,9 +360,8 @@ public abstract class BaseBlogPostingImageResourceImpl
 					(MultipartBody)parameters.get("multipartBody"));
 		}
 
-		for (BlogPostingImage blogPostingImage : blogPostingImages) {
-			blogPostingImageUnsafeConsumer.accept(blogPostingImage);
-		}
+		contextBatchStrategy.apply(
+			blogPostingImages, blogPostingImageUnsafeConsumer);
 	}
 
 	@Override
@@ -370,6 +373,46 @@ public abstract class BaseBlogPostingImageResourceImpl
 		for (BlogPostingImage blogPostingImage : blogPostingImages) {
 			deleteBlogPostingImage(blogPostingImage.getId());
 		}
+	}
+
+	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("site");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return BlogPostingImage.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The image's relative URL.", "contentUrl", true, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"optional field with the content of the image in Base64, can be embedded with nestedFields",
+				"contentValue", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The image's content type (e.g., `application/png`, etc.).",
+				"encodingFormat", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The image's file extension.", "fileExtension", true, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The image's ID.", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The image's size in bytes.", "sizeInBytes", true, false,
+				Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The image's title text.", "title", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only property that specifies the default permissions.",
+				"viewableBy", false, false, ViewableBy.class, true));
 	}
 
 	@Override
@@ -388,6 +431,16 @@ public abstract class BaseBlogPostingImageResourceImpl
 	}
 
 	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("site");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
+	}
+
+	@Override
 	public Page<BlogPostingImage> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
@@ -401,6 +454,11 @@ public abstract class BaseBlogPostingImageResourceImpl
 		else {
 			return null;
 		}
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -584,6 +642,7 @@ public abstract class BaseBlogPostingImageResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

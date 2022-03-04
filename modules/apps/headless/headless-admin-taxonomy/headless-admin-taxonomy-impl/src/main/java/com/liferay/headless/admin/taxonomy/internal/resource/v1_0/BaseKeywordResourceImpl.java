@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
 
+import com.liferay.headless.admin.taxonomy.dto.v1_0.Creator;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.Keyword;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.KeywordResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -41,6 +42,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
@@ -51,7 +53,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -901,9 +905,7 @@ public abstract class BaseKeywordResourceImpl
 				(Long)parameters.get("siteId"), keyword);
 		}
 
-		for (Keyword keyword : keywords) {
-			keywordUnsafeConsumer.accept(keyword);
-		}
+		contextBatchStrategy.apply(keywords, keywordUnsafeConsumer);
 	}
 
 	@Override
@@ -915,6 +917,50 @@ public abstract class BaseKeywordResourceImpl
 		for (Keyword keyword : keywords) {
 			deleteKeyword(keyword.getId());
 		}
+	}
+
+	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("assetLibrary", "site");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return Keyword.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "assetLibraryKey", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The keyword's creator.", "creator", true, false, Creator.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The keyword's creation date.", "dateCreated", true, false,
+				Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The keyword's most recent modification date.", "dateModified",
+				true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The keyword's ID.", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of times this keyword has been used with other assets.",
+				"keywordUsageCount", true, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The keyword's name.", "name", false, true, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the site to which this keyword is scoped.", "siteId",
+				true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A flag that indicates whether the user making the requests is subscribed to this keyword.",
+				"subscribed", true, false, Boolean.class, false));
 	}
 
 	@Override
@@ -930,6 +976,16 @@ public abstract class BaseKeywordResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("assetLibrary", "company", "site");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override
@@ -951,6 +1007,11 @@ public abstract class BaseKeywordResourceImpl
 		else {
 			return null;
 		}
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -1202,6 +1263,7 @@ public abstract class BaseKeywordResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

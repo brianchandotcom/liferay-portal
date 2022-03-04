@@ -14,7 +14,16 @@
 
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceEntry;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceList;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceList.Type;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListAccount;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListAccountGroup;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListChannel;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListDiscount;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceListOrderType;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceModifier;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Status;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceListResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -35,6 +44,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -43,7 +53,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -421,9 +433,7 @@ public abstract class BasePriceListResourceImpl
 		UnsafeConsumer<PriceList, Exception> priceListUnsafeConsumer =
 			priceList -> postPriceList(priceList);
 
-		for (PriceList priceList : priceLists) {
-			priceListUnsafeConsumer.accept(priceList);
-		}
+		contextBatchStrategy.apply(priceLists, priceListUnsafeConsumer);
 	}
 
 	@Override
@@ -435,6 +445,83 @@ public abstract class BasePriceListResourceImpl
 		for (PriceList priceList : priceLists) {
 			deletePriceList(priceList.getId());
 		}
+	}
+
+	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return PriceList.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "active", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "author", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "catalogBasePriceList", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "catalogId", false, true, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "catalogName", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "createDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "currencyCode", false, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "customFields", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "displayDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "expirationDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "externalReferenceCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "name", false, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "netPrice", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "neverExpire", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "parentPriceListId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceEntries", false, false, PriceEntry[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceListAccountGroups", false, false,
+				PriceListAccountGroup[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceListAccounts", false, false, PriceListAccount[].class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceListChannels", false, false, PriceListChannel[].class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceListDiscounts", false, false,
+				PriceListDiscount[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceListOrderTypes", false, false,
+				PriceListOrderType[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceModifiers", false, false, PriceModifier[].class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priority", false, false, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "type", false, true, Type.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "workflowStatusInfo", true, false, Status.class, false));
 	}
 
 	@Override
@@ -453,12 +540,27 @@ public abstract class BasePriceListResourceImpl
 	}
 
 	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v2.0";
+	}
+
+	@Override
 	public Page<PriceList> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
 		return getPriceListsPage(search, filter, pagination, sorts);
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -642,6 +744,7 @@ public abstract class BasePriceListResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

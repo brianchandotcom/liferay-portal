@@ -14,7 +14,10 @@
 
 package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
 
+import com.liferay.headless.admin.taxonomy.dto.v1_0.AssetType;
+import com.liferay.headless.admin.taxonomy.dto.v1_0.Creator;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
+import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary.ViewableBy;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -41,6 +44,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
@@ -51,7 +55,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1216,9 +1222,8 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 					(Long)parameters.get("siteId"), taxonomyVocabulary);
 		}
 
-		for (TaxonomyVocabulary taxonomyVocabulary : taxonomyVocabularies) {
-			taxonomyVocabularyUnsafeConsumer.accept(taxonomyVocabulary);
-		}
+		contextBatchStrategy.apply(
+			taxonomyVocabularies, taxonomyVocabularyUnsafeConsumer);
 	}
 
 	@Override
@@ -1230,6 +1235,67 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		for (TaxonomyVocabulary taxonomyVocabulary : taxonomyVocabularies) {
 			deleteTaxonomyVocabulary(taxonomyVocabulary.getId());
 		}
+	}
+
+	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("assetLibrary", "site");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return TaxonomyVocabulary.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "assetLibraryKey", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of asset types that can be associated with this vocabulary.",
+				"assetTypes", false, false, AssetType[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of languages the vocabulary has a translation for.",
+				"availableLanguages", true, false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The vocabulary's creator.", "creator", true, false,
+				Creator.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The vocabulary's creation date.", "dateCreated", true, false,
+				Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The vocabulary's most recent modification date.",
+				"dateModified", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The vocabulary's text description.", "description", false,
+				false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "description_i18n", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The vocabulary's external reference code.",
+				"externalReferenceCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The vocabulary's ID.", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The vocabulary's name.", "name", false, true, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "name_i18n", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of categories that directly depend on this vocabulary.",
+				"numberOfTaxonomyCategories", true, false, Integer.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the site to which this vocabulary is scoped.",
+				"siteId", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only property that specifies the vocabulary's default permissions.",
+				"viewableBy", false, false, ViewableBy.class, true));
 	}
 
 	@Override
@@ -1248,12 +1314,27 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	}
 
 	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("assetLibrary", "site");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
+	}
+
+	@Override
 	public Page<TaxonomyVocabulary> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -1512,6 +1593,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

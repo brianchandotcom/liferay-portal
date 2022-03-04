@@ -14,6 +14,8 @@
 
 package com.liferay.headless.form.internal.resource.v1_0;
 
+import com.liferay.headless.form.dto.v1_0.Creator;
+import com.liferay.headless.form.dto.v1_0.FormFieldValue;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -35,6 +37,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -43,7 +46,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -348,9 +353,7 @@ public abstract class BaseFormRecordResourceImpl
 			formRecord -> postFormFormRecord(
 				Long.parseLong((String)parameters.get("formId")), formRecord);
 
-		for (FormRecord formRecord : formRecords) {
-			formRecordUnsafeConsumer.accept(formRecord);
-		}
+		contextBatchStrategy.apply(formRecords, formRecordUnsafeConsumer);
 	}
 
 	@Override
@@ -358,6 +361,40 @@ public abstract class BaseFormRecordResourceImpl
 			java.util.Collection<FormRecord> formRecords,
 			Map<String, Serializable> parameters)
 		throws Exception {
+	}
+
+	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("form");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return FormRecord.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "creator", false, false, Creator.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dateCreated", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dateModified", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "datePublished", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "draft", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "formFieldValues", false, false, FormFieldValue[].class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "formId", false, false, Long.class, true),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", true, false, Long.class, false));
 	}
 
 	@Override
@@ -376,6 +413,16 @@ public abstract class BaseFormRecordResourceImpl
 	}
 
 	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("form");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
+	}
+
+	@Override
 	public Page<FormRecord> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
@@ -383,6 +430,11 @@ public abstract class BaseFormRecordResourceImpl
 
 		return getFormFormRecordsPage(
 			Long.parseLong((String)parameters.get("formId")), pagination);
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -573,6 +625,7 @@ public abstract class BaseFormRecordResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

@@ -14,7 +14,12 @@
 
 package com.liferay.headless.admin.taxonomy.internal.resource.v1_0;
 
+import com.liferay.headless.admin.taxonomy.dto.v1_0.Creator;
+import com.liferay.headless.admin.taxonomy.dto.v1_0.ParentTaxonomyCategory;
+import com.liferay.headless.admin.taxonomy.dto.v1_0.ParentTaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
+import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory.ViewableBy;
+import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategoryProperty;
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -41,6 +46,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
@@ -51,7 +57,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -961,9 +969,8 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 						(String)parameters.get("taxonomyVocabularyId")),
 					taxonomyCategory);
 
-		for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
-			taxonomyCategoryUnsafeConsumer.accept(taxonomyCategory);
-		}
+		contextBatchStrategy.apply(
+			taxonomyCategories, taxonomyCategoryUnsafeConsumer);
 	}
 
 	@Override
@@ -975,6 +982,79 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 		for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
 			deleteTaxonomyCategory(taxonomyCategory.getId());
 		}
+	}
+
+	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("taxonomyCategory", "taxonomyVocabulary");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return TaxonomyCategory.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of languages the category has a translation for.",
+				"availableLanguages", true, false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The category's creator.", "creator", true, false,
+				Creator.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The category's creation date.", "dateCreated", true, false,
+				Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The category's most recent modification date.", "dateModified",
+				true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The category's text description.", "description", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "description_i18n", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The category's external reference code",
+				"externalReferenceCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The category's ID.", "id", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The category's name.", "name", false, true, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "name_i18n", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of times this category has been used in other assets.",
+				"numberOfTaxonomyCategories", true, false, Integer.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The category's parent category, if it exists.",
+				"parentTaxonomyCategory", true, false,
+				ParentTaxonomyCategory.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The parent category's `TaxonomyVocabulary`, if such a parent category exists.",
+				"parentTaxonomyVocabulary", true, false,
+				ParentTaxonomyVocabulary.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the site to which this category is scoped.",
+				"siteId", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The category's properties.", "taxonomyCategoryProperties",
+				false, false, TaxonomyCategoryProperty[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "taxonomyCategoryUsageCount", true, false, Integer.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The `TaxonomyVocabulary` id, only if the category does not have a parent category.",
+				"taxonomyVocabularyId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only property that specifies the category's default permissions.",
+				"viewableBy", false, false, ViewableBy.class, true));
 	}
 
 	@Override
@@ -993,12 +1073,28 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	}
 
 	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList(
+			"company", "taxonomyCategory", "taxonomyVocabulary");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
+	}
+
+	@Override
 	public Page<TaxonomyCategory> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -1255,6 +1351,7 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

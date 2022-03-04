@@ -14,7 +14,14 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.AggregateRating;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
+import com.liferay.headless.delivery.dto.v1_0.CustomField;
+import com.liferay.headless.delivery.dto.v1_0.Field;
+import com.liferay.headless.delivery.dto.v1_0.RelatedContent;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.dto.v1_0.WikiPage;
+import com.liferay.headless.delivery.dto.v1_0.WikiPage.ViewableBy;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -41,6 +48,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
@@ -51,7 +59,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -792,9 +802,7 @@ public abstract class BaseWikiPageResourceImpl
 			wikiPage -> postWikiNodeWikiPage(
 				Long.parseLong((String)parameters.get("wikiNodeId")), wikiPage);
 
-		for (WikiPage wikiPage : wikiPages) {
-			wikiPageUnsafeConsumer.accept(wikiPage);
-		}
+		contextBatchStrategy.apply(wikiPages, wikiPageUnsafeConsumer);
 	}
 
 	@Override
@@ -806,6 +814,92 @@ public abstract class BaseWikiPageResourceImpl
 		for (WikiPage wikiPage : wikiPages) {
 			deleteWikiPage(wikiPage.getId());
 		}
+	}
+
+	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("wikiNode", "wikiPage");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return WikiPage.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Block of actions allowed by the user making the request.",
+				"actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The blog post's average rating.", "aggregateRating", true,
+				false, AggregateRating.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The wiki page's content.", "content", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The wiki page's creator.", "creator", true, false,
+				Creator.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of the custom fields associated with the wiki page.",
+				"customFields", false, false, CustomField[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The date the wiki page was created.", "dateCreated", true,
+				false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The last time any of the wiki page's fields changed.",
+				"dateModified", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The wiki page's description.", "description", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The wiki page's media format (e.g., HTML, BBCode, etc.).",
+				"encodingFormat", false, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The wiki page's external reference code.",
+				"externalReferenceCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The wiki page's main title.", "headline", false, true,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The wiki page's ID.", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of keywords describing the blog post.", "keywords",
+				false, false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The wiki page's number attachments.", "numberOfAttachments",
+				true, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of child wiki page on this wiki page.",
+				"numberOfWikiPages", true, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the wiki page's parent, if it exists.",
+				"parentWikiPageId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of related contents to this wiki page.",
+				"relatedContents", true, false, RelatedContent[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the site to which this wiki page is scoped.",
+				"siteId", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A flag that indicates whether the user making the requests is subscribed to this wiki page.",
+				"subscribed", true, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The categories associated with this wiki page.",
+				"taxonomyCategoryBriefs", true, false,
+				TaxonomyCategoryBrief[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only field that adds `TaxonomyCategory` instances to the wiki page.",
+				"taxonomyCategoryIds", false, false, Long[].class, true),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only property that specifies the default permissions.",
+				"viewableBy", false, false, ViewableBy.class, true),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the wiki node to which the wiki page belongs.",
+				"wikiNodeId", false, false, Long.class, false));
 	}
 
 	@Override
@@ -824,6 +918,16 @@ public abstract class BaseWikiPageResourceImpl
 	}
 
 	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("wikiNode", "wikiPage");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
+	}
+
+	@Override
 	public Page<WikiPage> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
@@ -832,6 +936,11 @@ public abstract class BaseWikiPageResourceImpl
 		return getWikiNodeWikiPagesPage(
 			Long.parseLong((String)parameters.get("wikiNodeId")), search, null,
 			filter, pagination, sorts);
+	}
+
+	@Override
+	public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	@Override
@@ -1083,6 +1192,7 @@ public abstract class BaseWikiPageResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected BatchStrategy contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

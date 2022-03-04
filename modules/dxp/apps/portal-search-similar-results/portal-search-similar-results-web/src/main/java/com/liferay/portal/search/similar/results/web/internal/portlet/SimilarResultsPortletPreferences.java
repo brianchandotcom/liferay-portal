@@ -51,6 +51,8 @@ public interface SimilarResultsPortletPreferences {
 
 	public static final String PREFERENCE_KEY_MIN_WORD_LENGTH = "minWordLength";
 
+	public static final String PREFERENCE_KEY_SEARCH_SCOPE = "searchScope";
+
 	public static final String PREFERENCE_KEY_STOP_WORDS = "stopWords";
 
 	public static final String PREFERENCE_KEY_TERM_BOOST = "termBoost";
@@ -80,6 +82,10 @@ public interface SimilarResultsPortletPreferences {
 	public Integer getMinTermFrequency();
 
 	public Integer getMinWordLength();
+
+	public SearchScope getSearchScope();
+
+	public String getSearchScopeString();
 
 	public String getStopWords();
 

@@ -556,12 +556,14 @@ public class PoshiContext {
 
 		String testBaseDirNames = PropsUtil.get("test.base.dir.names");
 
-		String[] testBaseDirNamesList = testBaseDirNames.split(",");
+		if ((testBaseDirNames != null) && !testBaseDirNames.isEmpty()) {
+			String[] testBaseDirNamesList = testBaseDirNames.split(",");
 
-		for (String testDirName : testBaseDirNamesList) {
-			if ((testDirName != null) && !testDirName.isEmpty()) {
-				baseDirNames = ArrayUtils.addAll(
-					baseDirNames, StringUtil.split(testDirName));
+			for (String testDirName : testBaseDirNamesList) {
+				if ((testDirName != null) && !testDirName.isEmpty()) {
+					baseDirNames = ArrayUtils.addAll(
+						baseDirNames, StringUtil.split(testDirName));
+				}
 			}
 		}
 

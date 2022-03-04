@@ -88,14 +88,6 @@ definition {
 		AssertElementPresent(locator1 = "CreateObject#SAVE_BUTTON_DISABLED");
 	}
 
-	macro assertDisabledFieldName {
-		AssertElementPresent(locator1 = "CreateObject#DISABLED_FIELD_NAME");
-	}
-
-	macro assertDisabledFieldType {
-		AssertElementPresent(locator1 = "CreateObject#DISABLED_FIELD_TYPE");
-	}
-
 	macro assertDisabledObjectName {
 		AssertElementPresent(locator1 = "CreateObject#DISABLED_OBJECT_NAME");
 	}
@@ -116,22 +108,10 @@ definition {
 			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
 	}
 
-	macro assertFieldName {
-		AssertTextEquals(
-			locator1 = "CreateObject#FIELD_NAME",
-			value1 = "${fieldName}");
-	}
-
 	macro assertFieldNotPresentInBlock {
 		AssertElementNotPresent(
 			key_fieldLabelName = "${fieldLabelName}",
 			locator1 = "CreateObject#FIELD_ADDED_ON_BLOCK");
-	}
-
-	macro assertFieldType {
-		AssertElementPresent(
-			locator1 = "CreateObject#FIELD_TYPE",
-			value1 = "${fieldType}");
 	}
 
 	macro assertLabelBasicInfo {
@@ -263,10 +243,6 @@ definition {
 		AssertChecked.assertCheckedNotVisible(locator1 = "CreateObject#TOGGLE_COLLAPSIBLE");
 	}
 
-	macro assertToggleMandatory {
-		AssertChecked.assertCheckedNotVisible(locator1 = "ObjectAdmin#OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH");
-	}
-
 	macro assertValuesOnObjectData {
 		var key_fieldType = "form-control";
 
@@ -305,14 +281,6 @@ definition {
 
 	macro checkToggleInactive {
 		Uncheck.uncheckToggleSwitch(locator1 = "CreateObject#TOGGLE_INACTIVE");
-
-		WaitForSPARefresh();
-
-		WaitForPageLoad();
-	}
-
-	macro checkToggleMandatory {
-		Check.checkToggleSwitch(locator1 = "CreateObject#TOGGLE_MANDATORY");
 
 		WaitForSPARefresh();
 
@@ -359,24 +327,10 @@ definition {
 			value1 = "${labelName}");
 	}
 
-	macro editName {
-		Type(
-			locator1 = "CreateObject#FIELD_NAME",
-			value1 = "${fieldName}");
-	}
-
 	macro editPluralLabel {
 		Type(
 			locator1 = "CreateObject#OBJECT_PLURAL_LABEL",
 			value1 = "${pluralLabelName}");
-	}
-
-	macro editType {
-		Click(locator1 = "CreateObject#FIELD_TYPE");
-
-		Click(
-			locator1 = "CreateObject#FIELD_TYPE_OPTION",
-			value1 = "${fieldType}");
 	}
 
 	macro inactiveCustomObject {
@@ -421,10 +375,6 @@ definition {
 		Select(
 			locator1 = "CreateObject#TITLE_FIELD",
 			value1 = "${fieldLabel}");
-	}
-
-	macro toggleMandatory {
-		Check.toggleSwitch(locator1 = "CreateObject#TOGGLE_MANDATORY");
 	}
 
 	macro viewEmptyFieldTable {

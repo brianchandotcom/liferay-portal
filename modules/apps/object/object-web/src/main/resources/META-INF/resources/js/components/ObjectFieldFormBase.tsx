@@ -16,7 +16,7 @@ import {ClayToggle} from '@clayui/form';
 import {fetch} from 'frontend-js-web';
 import React, {ChangeEventHandler, ReactNode, useMemo, useState} from 'react';
 
-import useForm from '../hooks/useForm';
+import useForm, {FormError} from '../hooks/useForm';
 import {toCamelCase} from '../utils/string';
 import CustomSelect from './Form/CustomSelect/CustomSelect';
 import Input from './Form/Input';
@@ -103,12 +103,14 @@ export default function ObjectFieldFormBase({
 				  ]
 				: undefined;
 
-		const indexedAsKeyword =
-			option.dbType === 'String' && values.indexedAsKeyword;
+		const isSearchableByText =
+			option.businessType === 'Attachment' || option.dbType === 'String';
+
+		const indexedAsKeyword = isSearchableByText && values.indexedAsKeyword;
 
 		const indexedLanguageId =
-			option.dbType === 'String' && !values.indexedAsKeyword
-				? values.indexedLanguageId
+			isSearchableByText && !values.indexedAsKeyword
+				? values.indexedLanguageId ?? defaultLanguageId
 				: null;
 
 		setValues({
@@ -173,6 +175,7 @@ export default function ObjectFieldFormBase({
 			<ClayToggle
 				disabled={disabled}
 				label={Liferay.Language.get('mandatory')}
+				name="required"
 				onToggle={(required) => setValues({required})}
 				toggled={values.required}
 			/>
@@ -185,23 +188,39 @@ export function useObjectFieldForm({
 	onSubmit,
 }: IUseObjectFieldForm) {
 	const validate = (field: Partial<ObjectField>) => {
-		const errors: any = {};
+		const errors: ObjectFieldErrors = {};
 
-		if (!field.label?.[defaultLanguageId]) {
+		const label = field.label?.[defaultLanguageId]?.trim();
+
+		if (!label) {
 			errors.label = REQUIRED_MSG;
 		}
 
-		if (
-			!(
-				field.name ??
-				toCamelCase(field.label?.[defaultLanguageId] as string)
-			)
-		) {
+		if (!(field.name?.trim() ?? label)) {
 			errors.name = REQUIRED_MSG;
 		}
 
 		if (!field.businessType) {
 			errors.businessType = REQUIRED_MSG;
+		}
+		else if (field.businessType === 'Attachment') {
+			const settings: {
+				[key in ObjectFieldSettingName]?: string | number;
+			} = {};
+
+			field.objectFieldSettings?.forEach(({name, value}) => {
+				settings[name] = value;
+			});
+
+			if (!settings.acceptedFileExtensions) {
+				errors.acceptedFileExtensions = REQUIRED_MSG;
+			}
+			if (!settings.fileSource) {
+				errors.fileSource = REQUIRED_MSG;
+			}
+			if (!settings.maximumFileSize) {
+				errors.maximumFileSize = REQUIRED_MSG;
+			}
 		}
 		else if (field.businessType === 'Picklist') {
 			if (!field.listTypeDefinitionId) {
@@ -212,7 +231,10 @@ export function useObjectFieldForm({
 		return errors;
 	};
 
-	const {errors, handleChange, handleSubmit, setValues, values} = useForm({
+	const {errors, handleChange, handleSubmit, setValues, values} = useForm<
+		ObjectField,
+		{[key in ObjectFieldSettingName]: any}
+	>({
 		initialValues,
 		onSubmit,
 		validate,
@@ -233,9 +255,13 @@ interface IPickList {
 interface IProps {
 	children?: ReactNode;
 	disabled?: boolean;
-	errors: {[key in keyof ObjectField]?: string};
+	errors: ObjectFieldErrors;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	objectField: Partial<ObjectField>;
 	objectFieldTypes: ObjectFieldType[];
 	setValues: (values: Partial<ObjectField>) => void;
 }
+
+export type ObjectFieldErrors = FormError<
+	ObjectField & {[key in ObjectFieldSettingName]: any}
+>;

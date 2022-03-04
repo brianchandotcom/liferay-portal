@@ -1,0 +1,79 @@
+definition {
+
+	macro assertLabel {
+		AssertTextEquals(
+			locator1 = "ObjectField#LABEL_LOCALIZED",
+			value1 = "${content}");
+	}
+
+	macro assertMandatory {
+		AssertChecked.assertCheckedNotVisible(locator1 = "ObjectField#MANDATORY_TOGGLE");
+	}
+
+	macro assertName {
+		AssertTextEquals(
+			locator1 = "ObjectField#NAME_FIELD",
+			value1 = "${fieldName}");
+	}
+
+	macro assertNameDisabled {
+		AssertElementPresent(locator1 = "ObjectField#NAME_FIELD_DISABLED");
+	}
+
+	macro assertSearchableLanguage {
+		AssertSelectedLabel(
+			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",
+			value1 = "${selected}");
+	}
+
+	macro assertType {
+		AssertSelectedLabel(
+			locator1 = "ObjectField#TYPE_FIELD",
+			value1 = "${fieldType}");
+	}
+
+	macro assertTypeDisabled {
+		AssertElementPresent(locator1 = "ObjectField#TYPE_FIELD_DISABLED");
+	}
+
+	macro checkToggleMandatory {
+		Check.checkToggleSwitch(locator1 = "ObjectField#MANDATORY_TOGGLE");
+	}
+
+	macro save {
+		Click(locator1 = "ObjectField#SAVE_BUTTON");
+
+		Refresh();
+	}
+
+	macro selectSearchableLanguage {
+		Select(
+			locator1 = "ObjectField#SEARCHABLE_LANGUAGE_SELECT",
+			value1 = "${language}");
+	}
+
+	macro selectType {
+		Click(locator1 = "ObjectField#TYPE_FIELD");
+
+		Click(
+			key_fieldType = "${fieldType}",
+			locator1 = "ObjectField#TYPE_OPTION");
+	}
+
+	macro toggleMandatory {
+		Check.toggleSwitch(locator1 = "ObjectField#MANDATORY_TOGGLE");
+	}
+
+	macro typeLabel {
+		Type(
+			locator1 = "ObjectField#LABEL_LOCALIZED",
+			value1 = "${content}");
+	}
+
+	macro typeName {
+		Type(
+			locator1 = "ObjectField#NAME_FIELD",
+			value1 = "${fieldName}");
+	}
+
+}

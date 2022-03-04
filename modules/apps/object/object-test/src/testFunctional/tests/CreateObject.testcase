@@ -652,11 +652,7 @@ definition {
 			locator1 = "ObjectAdmin#OBJECT_FIELDS_LABEL_INPUT",
 			value1 = "Custom Field");
 
-		Click(locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE");
-
-		Click(
-			key_fieldType = "Text",
-			locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE_OPTION");
+		ObjectField.selectType(fieldType = "Text");
 
 		Button.clickCancel();
 
@@ -2302,7 +2298,7 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
-		AssertElementPresent(locator1 = "ObjectAdmin#OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH_DISABLED");
+		AssertElementPresent(locator1 = "ObjectField#MANDATORY_TOGGLE_DISABLED");
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Name of a Field after the Object is published"
@@ -2333,7 +2329,7 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		CreateObject.assertDisabledFieldName();
+		ObjectField.assertNameDisabled();
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Type of a Field after the Object is published"
@@ -2362,7 +2358,7 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		CreateObject.assertDisabledFieldType();
+		ObjectField.assertTypeDisabled();
 	}
 
 	@description = "LPS-135635 - Verify it is not possible to update the Object name after it is published"
@@ -3164,7 +3160,7 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
-		CreateObject.assertToggleMandatory();
+		ObjectField.assertMandatory();
 	}
 
 	@description = "LPS-139005 - Verify that is possible to submit entries in a form with an Object that was reactivated"
@@ -3329,15 +3325,13 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		CreateObject.editLabel(labelName = "Text Update");
+		ObjectField.typeLabel(content = "Text Update");
 
-		CreateObject.saveObject();
-
-		Refresh();
+		ObjectField.save();
 
 		ObjectAdmin.goToFieldsDetails(label = "Text Update");
 
-		CreateObject.assertObjectLabel(labelName = "Text Update");
+		ObjectField.assertLabel(content = "Text Update");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Label of a Field before the Object is published"
@@ -3366,15 +3360,13 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		CreateObject.editLabel(labelName = "Text Update");
+		ObjectField.typeLabel(content = "Text Update");
 
-		CreateObject.saveObject();
-
-		Refresh();
+		ObjectField.save();
 
 		ObjectAdmin.goToFieldsDetails(label = "Text Update");
 
-		CreateObject.assertObjectLabel(labelName = "Text Update");
+		ObjectField.assertLabel(content = "Text Update");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Mandatory of a Field before the Object is published"
@@ -3401,15 +3393,13 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		CreateObject.toggleMandatory();
+		ObjectField.toggleMandatory();
 
-		CreateObject.saveObject();
-
-		Refresh();
+		ObjectField.save();
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		CreateObject.checkToggleMandatory();
+		ObjectField.checkToggleMandatory();
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Name of a Field before the Object is published"
@@ -3436,15 +3426,13 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		CreateObject.editName(fieldName = "customObjectFieldUpdate");
+		ObjectField.typeName(fieldName = "customObjectFieldUpdate");
 
-		CreateObject.saveObject();
-
-		Refresh();
+		ObjectField.save();
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		CreateObject.assertFieldName(fieldName = "customObjectFieldUpdate");
+		ObjectField.assertName(fieldName = "customObjectFieldUpdate");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Searchable section before the Object is published"
@@ -3473,13 +3461,11 @@ definition {
 
 		ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "Text");
 
-		CreateObject.saveObject();
-
-		Refresh();
+		ObjectField.save();
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		ObjectAdmin.viewFieldSearchableSectionLanguage();
+		ObjectField.assertSearchableLanguage(selected = "English (United States)");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Type of a Field before the Object is published"
@@ -3506,15 +3492,13 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		CreateObject.editType(fieldType = "Date");
+		ObjectField.selectType(fieldType = "Date");
 
-		Button.clickSave();
-
-		Refresh();
+		ObjectField.save();
 
 		ObjectAdmin.goToFieldsDetails(label = "Text");
 
-		CreateObject.assertFieldType(fieldType = "Date");
+		ObjectField.assertType(fieldType = "Date");
 	}
 
 	@description = "LPS-135635 - Verify it is possible to update the Object label after it is published"
@@ -5985,7 +5969,7 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
-		CreateObject.editType(fieldType = "Text");
+		ObjectField.selectType(fieldType = "Text");
 
 		CreateObject.assertSearchableSectionOptionsAppears(radioOption = "Keyword");
 
@@ -6016,7 +6000,7 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
-		CreateObject.editType(fieldType = "Integer");
+		ObjectField.selectType(fieldType = "Integer");
 
 		ObjectAdmin.assertKeywordAndTextNotPresent();
 	}
@@ -6078,7 +6062,7 @@ definition {
 
 		ObjectAdmin.clickFieldsSearchableSectionRadioOption(radioOption = "Text");
 
-		ObjectAdmin.viewFieldSearchableSectionLanguage();
+		ObjectField.assertSearchableLanguage(selected = "English (United States)");
 	}
 
 	@description = "LPS-137741 - Verify that Objects created on a Virtual Instance are not displayed on the Object Admin of the Main Instance and vice versa"

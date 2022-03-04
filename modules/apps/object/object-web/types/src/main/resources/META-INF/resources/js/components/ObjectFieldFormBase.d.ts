@@ -13,6 +13,7 @@
  */
 
 import React, {ChangeEventHandler, ReactNode} from 'react';
+import {FormError} from '../hooks/useForm';
 export default function ObjectFieldFormBase({
 	children,
 	disabled,
@@ -26,7 +27,13 @@ export declare function useObjectFieldForm({
 	initialValues,
 	onSubmit,
 }: IUseObjectFieldForm): {
-	errors: import('../hooks/useForm').FormError<ObjectField>;
+	errors: FormError<
+		ObjectField & {
+			acceptedFileExtensions: any;
+			fileSource: any;
+			maximumFileSize: any;
+		}
+	>;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
 	handleSubmit: React.FormEventHandler<HTMLFormElement>;
 	setValues: (values: Partial<ObjectField>) => void;
@@ -39,12 +46,16 @@ interface IUseObjectFieldForm {
 interface IProps {
 	children?: ReactNode;
 	disabled?: boolean;
-	errors: {
-		[key in keyof ObjectField]?: string;
-	};
+	errors: ObjectFieldErrors;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	objectField: Partial<ObjectField>;
 	objectFieldTypes: ObjectFieldType[];
 	setValues: (values: Partial<ObjectField>) => void;
 }
+export declare type ObjectFieldErrors = FormError<
+	ObjectField &
+		{
+			[key in ObjectFieldSettingName]: any;
+		}
+>;
 export {};

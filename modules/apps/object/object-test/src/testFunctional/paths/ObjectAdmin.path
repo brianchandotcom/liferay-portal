@@ -276,31 +276,6 @@
 		<td></td>
 	</tr>
 	<tr>
-		<td>OBJECT_FIELDS_NAME_INPUT</td>
-		<td>//input[contains(@class,'form-control') and @name='name']</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH</td>
-		<td>//input[contains(@class,'toggle-switch-check')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH_DISABLED</td>
-		<td>//label[contains(@class,'simple-toggle-switch toggle-switch disabled')]//span[contains(text(),'Mandatory')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>OBJECT_FIELDS_TYPE</td>
-		<td>//input[@placeholder='Choose an Option']</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>OBJECT_FIELDS_TYPE_OPTION</td>
-		<td>//button[@class='dropdown-item']//div[contains(text(),'${key_fieldType}')]</td>
-		<td></td>
-	</tr>
-	<tr>
 		<td>RELATIONSHIPS_TYPE_DESCRIPTION</td>
 		<td>//div[text() = '${key_type}']/..//span[@class = 'text-small']</td>
 		<td></td>
@@ -423,16 +398,6 @@
 	<tr>
 		<td>FIELDS_RADIO_OPTION</td>
 		<td>//label[contains(.,'${key_radioOption}')]/input[@type='radio']</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>FIELD_SEARCHABLE_LANGUAGE_LABEL</td>
-		<td>//div[contains(@class,'form-group input-select-wrapper')]//label[contains (., 'Language')]</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>FIELD_SEARCHABLE_LANGUAGE_OPTION</td>
-		<td>//div[contains(@class,'form-group input-select-wrapper')]//option[contains(@value, 'en_US')]</td>
 		<td></td>
 	</tr>
 	<tr>

@@ -77,7 +77,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		Click(locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE");
+		Click(locator1 = "ObjectField#TYPE_FIELD");
 
 		ObjectAdmin.viewDescriptionForEachFieldType();
 	}

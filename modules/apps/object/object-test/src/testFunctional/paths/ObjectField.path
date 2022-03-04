@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>ObjectField</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead><tr><td rowspan="1" colspan="3">ObjectField</td></tr></thead>
+<tbody>
+	<tr>
+		<td>LABEL_LOCALIZED</td>
+		<td>//div[contains(@class,'lfr-objects__input-localized')]//input</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>MANDATORY_TOGGLE</td>
+		<td>//input[@name="required"]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>MANDATORY_TOGGLE_DISABLED</td>
+		<td>//input[@name="required" and @disabled]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>NAME_FIELD</td>
+		<td>//input[@name="name"]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>NAME_FIELD_DISABLED</td>
+		<td>//input[@name="name" and @disabled]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SEARCHABLE_LANGUAGE_SELECT</td>
+		<td>//select[@name="indexedLanguageId"]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SEARCHABLE_LANGUAGE_OPTION</td>
+		<td>//select[@name="indexedLanguageId"]//option[contains(., '${key_language}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>TYPE_FIELD</td>
+		<td>//input[@placeholder='Choose an Option']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>TYPE_FIELD_DISABLED</td>
+		<td>//input[@placeholder='Choose an Option' and @disabled]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>TYPE_OPTION</td>
+		<td>//button[@class='dropdown-item']//div[contains(text(),'${key_fieldType}')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>SAVE_BUTTON</td>
+		<td>//div[contains(@class,'lfr-objects__edit-object-field-buttons')]//button[@type='submit']</td>
+		<td></td>
+	</tr>
+</tbody>
+</table>
+</body>
+</html>

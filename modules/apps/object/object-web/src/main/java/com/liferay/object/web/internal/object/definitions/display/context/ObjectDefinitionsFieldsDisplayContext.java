@@ -168,15 +168,23 @@ public class ObjectDefinitionsFieldsDisplayContext {
 
 	public JSONObject getObjectFieldJSONObject(ObjectField objectField) {
 		return JSONUtil.put(
+			// TODO: return indexedLanguageId as null instead of ""
+			"indexedLanguageId", objectField.getIndexedLanguageId()
+		).put(
 			"businessType", objectField.getBusinessType()
 		).put(
 			"DBType", objectField.getDBType()
 		).put(
-			"id", objectField.getObjectFieldId()
+			"id", Long.valueOf(objectField.getObjectFieldId())
 		).put(
 			"indexed", objectField.isIndexed()
 		).put(
+			"indexedAsKeyword", objectField.isIndexedAsKeyword()
+		).put(
 			"label", objectField.getLabelMap()
+		).put(
+			"listTypeDefinitionId",
+			Long.valueOf(objectField.getListTypeDefinitionId())
 		).put(
 			"name", objectField.getName()
 		).put(

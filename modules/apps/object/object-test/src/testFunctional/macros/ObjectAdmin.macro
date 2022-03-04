@@ -106,6 +106,7 @@ definition {
 			fieldType = "${fieldType}",
 			indexed = "${indexed}",
 			indexedAsKeyword = "${indexedAsKeyword}",
+			indexedLanguageId = "${indexedLanguageId}",
 			isRequired = "${isRequired}",
 			objectName = "${objectName}",
 			picklistName = "${picklistName}",
@@ -122,20 +123,16 @@ definition {
 
 		if (isSet(fieldName)) {
 			Type(
-				locator1 = "ObjectAdmin#OBJECT_FIELDS_NAME_INPUT",
+				locator1 = "ObjectField#NAME_FIELD",
 				value1 = "${fieldName}");
 		}
 
 		if (isSet(fieldType)) {
-			Click(locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE");
-
-			Click(
-				key_fieldType = "${fieldType}",
-				locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE_OPTION");
+			ObjectField.selectType(fieldType = "${fieldType}");
 		}
 
 		if ("${isMandatory}" == "true") {
-			Check.checkToggleSwitch(locator1 = "ObjectAdmin#OBJECT_FIELDS_MANDATORY_TOGGLE_SWITCH");
+			ObjectField.checkToggleMandatory();
 		}
 
 		if (isSet(fieldPicklist)) {
@@ -1020,12 +1017,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE",
 			value1 = "${message}");
-	}
-
-	macro viewFieldSearchableSectionLanguage {
-		AssertElementPresent(locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_LABEL");
-
-		AssertElementPresent(locator1 = "ObjectAdmin#FIELD_SEARCHABLE_LANGUAGE_OPTION");
 	}
 
 	macro viewFieldValueDisabled {

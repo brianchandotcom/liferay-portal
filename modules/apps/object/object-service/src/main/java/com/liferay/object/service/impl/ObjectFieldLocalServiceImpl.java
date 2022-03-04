@@ -267,10 +267,17 @@ public class ObjectFieldLocalServiceImpl
 		objectField.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 
 		if (objectDefinition.isApproved()) {
-			return objectFieldPersistence.update(objectField);
+			objectField = objectFieldPersistence.update(objectField);
+
+			_addObjectFieldSettings(
+				objectField.getUserId(), objectField.getObjectFieldId(),
+				objectFieldSettings);
+
+			return objectField;
 		}
 
-		_validateIndexed(dbType, indexed, indexedAsKeyword, indexedLanguageId);
+		_validateIndexed(
+			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId);
 
 		if (Validator.isNotNull(objectField.getRelationshipType())) {
 			if (!Objects.equals(objectField.getDBType(), dbType) ||
@@ -315,7 +322,8 @@ public class ObjectFieldLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
-		_validateIndexed(dbType, indexed, indexedAsKeyword, indexedLanguageId);
+		_validateIndexed(
+			businessType, dbType, indexed, indexedAsKeyword, indexedLanguageId);
 		_validateLabel(labelMap);
 		_validateName(0, objectDefinition, name);
 
@@ -497,15 +505,21 @@ public class ObjectFieldLocalServiceImpl
 	}
 
 	private void _validateIndexed(
-			String dbType, boolean indexed, boolean indexedAsKeyword,
-			String indexedLanguageId)
+			String businessType, String dbType, boolean indexed,
+			boolean indexedAsKeyword, String indexedLanguageId)
 		throws PortalException {
 
-		if (indexed && Objects.equals(dbType, "Blob")) {
+		if (indexed &&
+			Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_BLOB)) {
+
 			throw new ObjectFieldDBTypeException("Blob type is not indexable");
 		}
 
-		if ((!Objects.equals(dbType, "String") || indexedAsKeyword) &&
+		if (((!Objects.equals(dbType, ObjectFieldConstants.DB_TYPE_STRING) &&
+			  !Objects.equals(
+				  businessType,
+				  ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) ||
+			 indexedAsKeyword) &&
 			!Validator.isBlank(indexedLanguageId)) {
 
 			throw new ObjectFieldDBTypeException(

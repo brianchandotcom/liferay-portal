@@ -25,10 +25,17 @@ import com.liferay.account.settings.AccountEntryGroupSettings;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserConstants;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.log.LogCapture;
@@ -174,6 +181,34 @@ public class CurrentAccountEntryManagerTest {
 	}
 
 	@Test
+	public void testGetCurrentAccountEntryWithViewPermission()
+		throws Exception {
+
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+		User user = UserTestUtil.addUser();
+
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user.getUserId());
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(accountEntry.getAccountEntryId()), role.getRoleId(),
+			new String[] {ActionKeys.VIEW});
+
+		_currentAccountEntryManager.setCurrentAccountEntry(
+			accountEntry.getAccountEntryId(), TestPropsValues.getGroupId(),
+			user.getUserId());
+
+		Assert.assertEquals(
+			accountEntry,
+			_currentAccountEntryManager.getCurrentAccountEntry(
+				TestPropsValues.getGroupId(), user.getUserId()));
+	}
+
+	@Test
 	public void testSetCurrentAccountEntry() throws Exception {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
@@ -253,5 +288,8 @@ public class CurrentAccountEntryManagerTest {
 
 	@Inject
 	private CurrentAccountEntryManager _currentAccountEntryManager;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 }

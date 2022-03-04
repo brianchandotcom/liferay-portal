@@ -68,6 +68,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javax.ws.rs.BadRequestException;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 
 import org.osgi.service.component.annotations.Component;
@@ -215,7 +216,16 @@ public class ObjectEntryManagerImpl implements ObjectEntryManager {
 				searchContext.setAttribute(
 					"objectDefinitionId",
 					objectDefinition.getObjectDefinitionId());
-				searchContext.setAttribute("useObjectView", Boolean.TRUE);
+
+				if (uriInfo != null) {
+					MultivaluedMap<String, String> queryParameters =
+						uriInfo.getQueryParameters();
+
+					searchContext.setAttribute(
+						"searchByObjectView",
+						queryParameters.containsKey("searchByObjectView"));
+				}
+
 				searchContext.setCompanyId(companyId);
 				searchContext.setGroupIds(new long[] {groupId});
 

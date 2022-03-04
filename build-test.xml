@@ -8874,6 +8874,21 @@ dl.store.impl=com.liferay.portal.store.s3.S3Store</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="asset.publisher.selection.style" />
+
+		<if>
+			<not>
+				<isset property="asset.publisher.selection.style" />
+			</not>
+			<then>
+				<property name="asset.publisher.selection.style" value="dynamic" />
+			</then>
+		</if>
+
+		<echo append="true" file="portal-impl/src/portal-ext.properties">
+
+configuration.override.com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfiguration_defaultSelectionStyle="${asset.publisher.selection.style}"</echo>
+
 		<if>
 			<not>
 				<isset property="commerce.enabled" />

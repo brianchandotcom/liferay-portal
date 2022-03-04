@@ -603,113 +603,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 						}
 					}
 
-					@Test
-					public void test${javaMethodSignature.methodName?cap_first}WithFilterDoubleEquals() throws Exception {
-						List<EntityField> entityFields = getEntityFields(EntityField.Type.DOUBLE);
+					<@getFilterEqualsTest
+						fieldType="Double"
+						javaMethodSignature=javaMethodSignature
+					/>
 
-						if (entityFields.isEmpty()) {
-							return;
-						}
-
-						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-							${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}();
-						</#list>
-
-						${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
-
-						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-							${javaMethodParameter.parameterName},
-						</#list>
-
-						random${schemaName}());
-
-						@SuppressWarnings("PMD.UnusedLocalVariable")
-						${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
-
-						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-							${javaMethodParameter.parameterName},
-						</#list>
-
-						random${schemaName}());
-
-						for (EntityField entityField : entityFields) {
-							Page<${schemaName}> page = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
-
-							<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-								<#if !javaMethodParameter?is_first>
-									,
-								</#if>
-
-								<#if stringUtil.equals(javaMethodParameter.parameterName, "filter")>
-									getFilterString(entityField, "eq", ${schemaVarName}1)
-								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
-									Pagination.of(1, 2)
-								<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-									${javaMethodParameter.parameterName}
-								<#else>
-									null
-								</#if>
-							</#list>
-
-							);
-
-							assertEquals(Collections.singletonList(${schemaVarName}1), (List<${schemaName}>)page.getItems());
-						}
-					}
-
-					@Test
-					public void test${javaMethodSignature.methodName?cap_first}WithFilterStringEquals() throws Exception {
-						List<EntityField> entityFields = getEntityFields(EntityField.Type.STRING);
-
-						if (entityFields.isEmpty()) {
-							return;
-						}
-
-						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-							${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}();
-						</#list>
-
-						${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
-
-						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-							${javaMethodParameter.parameterName},
-						</#list>
-
-						random${schemaName}());
-
-						@SuppressWarnings("PMD.UnusedLocalVariable")
-						${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
-
-						<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
-							${javaMethodParameter.parameterName},
-						</#list>
-
-						random${schemaName}());
-
-						for (EntityField entityField : entityFields) {
-							Page<${schemaName}> page = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
-
-							<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-								<#if !javaMethodParameter?is_first>
-									,
-								</#if>
-
-								<#if stringUtil.equals(javaMethodParameter.parameterName, "filter")>
-									getFilterString(entityField, "eq", ${schemaVarName}1)
-								<#elseif stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
-									Pagination.of(1, 2)
-								<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-									${javaMethodParameter.parameterName}
-								<#else>
-									null
-								</#if>
-							</#list>
-
-							);
-
-							assertEquals(Collections.singletonList(${schemaVarName}1), (List<${schemaName}>)page.getItems());
-						}
-					}
+					<@getFilterEqualsTest
+						fieldType="String"
+						javaMethodSignature=javaMethodSignature
+					/>
 				</#if>
 
 				<#if parameters?contains("Pagination pagination")>
@@ -2606,6 +2508,65 @@ public abstract class Base${schemaName}ResourceTestCase {
 	<#else>
 		null
 	</#if>
+</#macro>
+
+<#macro getFilterEqualsTest
+	fieldType
+	javaMethodSignature
+>
+	@Test
+	public void test${javaMethodSignature.methodName?cap_first}WithFilter${fieldType?cap_first}Equals() throws Exception {
+		List<EntityField> entityFields = getEntityFields(EntityField.Type.${fieldType?upper_case});
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+			${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName} = test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}();
+		</#list>
+
+		${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
+
+		<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+			${javaMethodParameter.parameterName},
+		</#list>
+
+		random${schemaName}());
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}(
+
+		<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
+			${javaMethodParameter.parameterName},
+		</#list>
+
+		random${schemaName}());
+
+		for (EntityField entityField : entityFields) {
+			Page<${schemaName}> page = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
+
+			<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+				<#if !javaMethodParameter?is_first>
+					,
+				</#if>
+
+				<#if stringUtil.equals(javaMethodParameter.parameterName, "filter")>
+					getFilterString(entityField, "eq", ${schemaVarName}1)
+				<#elseif stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
+					Pagination.of(1, 2)
+				<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+					${javaMethodParameter.parameterName}
+				<#else>
+					null
+				</#if>
+			</#list>
+
+			);
+
+			assertEquals(Collections.singletonList(${schemaVarName}1), (List<${schemaName}>)page.getItems());
+		}
+	}
 </#macro>
 
 <#macro getGetterParameters

@@ -69,10 +69,8 @@ function ModalAddObjectField({
 		}
 		else {
 			const {type} = (await response.json()) as any;
-			const isMapped = Object.prototype.hasOwnProperty.call(ERRORS, type);
-			const errorMessage = isMapped
-				? ERRORS[type]
-				: Liferay.Language.get('an-error-occurred');
+			const errorMessage =
+				ERRORS[type] ?? Liferay.Language.get('an-error-occurred');
 
 			setError(errorMessage);
 		}
@@ -132,7 +130,7 @@ function ModalAddObjectField({
 								{Liferay.Language.get('cancel')}
 							</ClayButton>
 
-							<ClayButton displayType="primary" type="submit">
+							<ClayButton type="submit">
 								{Liferay.Language.get('save')}
 							</ClayButton>
 						</ClayButton.Group>

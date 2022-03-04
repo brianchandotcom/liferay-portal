@@ -542,6 +542,7 @@ definition {
 			warningMessage = "Duplicate Folder Name: Rename the folder in the publication.");
 
 		PublicationsChanges.gotoEditChanges(
+			changeCategory = "Documents Folder",
 			changeTitle = "DM Folder Name",
 			editInLocation = "Publication Name 2");
 

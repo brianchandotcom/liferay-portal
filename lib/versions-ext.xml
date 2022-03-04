@@ -1771,18 +1771,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/mp4parser.jar</file-name>
-				<version>1.9.41.2.LIFERAY-PATCHED-2</version>
-				<project-name>ISO Parser</project-name>
-				<project-url>https://github.com/tballison/mp4parser</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/netcdf.jar</file-name>
 				<version>4.3.23</version>
 				<project-name>NetCDF</project-name>

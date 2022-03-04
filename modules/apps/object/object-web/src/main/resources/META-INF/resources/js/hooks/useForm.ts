@@ -14,13 +14,13 @@
 
 import {ChangeEventHandler, FormEvent, FormEventHandler, useState} from 'react';
 
-export default function useForm<T, K extends Partial<T> = T>({
+export default function useForm<T, P = {}, K extends Partial<T> = Partial<T>>({
 	initialValues,
 	onSubmit,
 	validate,
-}: IProps<T, K>): IUseForm<T, K> {
+}: IProps<T, P, K>): IUseForm<T, P, K> {
 	const [values, setValues] = useState<K>(initialValues);
-	const [errors, setErrors] = useState<{[key in keyof T]?: string}>({});
+	const [errors, setErrors] = useState<FormError<T & P>>({});
 
 	const handleSubmit = (event: FormEvent) => {
 		event.preventDefault();
@@ -51,14 +51,18 @@ export default function useForm<T, K extends Partial<T> = T>({
 	};
 }
 
-interface IProps<T, K extends Partial<T> = T> {
+export type FormError<T> = {
+	[key in keyof T]?: string;
+};
+
+interface IProps<T, P = {}, K extends Partial<T> = Partial<T>> {
 	initialValues: K;
 	onSubmit: (values: T) => void;
-	validate: (values: K) => {[key in keyof T]?: string};
+	validate: (values: K) => FormError<T & P>;
 }
 
-interface IUseForm<T, K extends Partial<T> = T> {
-	errors: {[key in keyof T]?: string};
+interface IUseForm<T, P = {}, K extends Partial<T> = Partial<T>> {
+	errors: FormError<T & P>;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	handleSubmit: FormEventHandler<HTMLFormElement>;
 	setValues: (values: Partial<T>) => void;

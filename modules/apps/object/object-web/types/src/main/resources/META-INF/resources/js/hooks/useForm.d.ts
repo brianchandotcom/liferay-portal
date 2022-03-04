@@ -13,24 +13,21 @@
  */
 
 import {ChangeEventHandler, FormEventHandler} from 'react';
-export default function useForm<T, K extends Partial<T> = T>({
+export default function useForm<T, P = {}, K extends Partial<T> = Partial<T>>({
 	initialValues,
 	onSubmit,
 	validate,
-}: IProps<T, K>): IUseForm<T, K>;
-interface IProps<T, K extends Partial<T> = T> {
+}: IProps<T, P, K>): IUseForm<T, P, K>;
+export declare type FormError<T> = {
+	[key in keyof T]?: string;
+};
+interface IProps<T, P = {}, K extends Partial<T> = Partial<T>> {
 	initialValues: K;
 	onSubmit: (values: T) => void;
-	validate: (
-		values: K
-	) => {
-		[key in keyof T]?: string;
-	};
+	validate: (values: K) => FormError<T & P>;
 }
-interface IUseForm<T, K extends Partial<T> = T> {
-	errors: {
-		[key in keyof T]?: string;
-	};
+interface IUseForm<T, P = {}, K extends Partial<T> = Partial<T>> {
+	errors: FormError<T & P>;
 	handleChange: ChangeEventHandler<HTMLInputElement>;
 	handleSubmit: FormEventHandler<HTMLFormElement>;
 	setValues: (values: Partial<T>) => void;

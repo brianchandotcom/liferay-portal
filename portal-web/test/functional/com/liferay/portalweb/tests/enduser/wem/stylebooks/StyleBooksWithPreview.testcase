@@ -28,7 +28,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-116078. Can navigate to preview page via page preview info bar but not interact with preview page in style book editor."
+	@description = "This is a test for LPS-116078 and LPS-143302. Can navigate to preview page via page preview info bar but not interact with preview page in style book editor."
 	@priority = "4"
 	test CanNavigateToPreviewPageViaPagePreviewInfoBarButNotAllowInteractWithPreviewPage {
 		task ("Add a content page") {
@@ -81,7 +81,10 @@ definition {
 		}
 
 		task ("Assert not allow interact with preview page") {
-			AssertElementPresent(locator1 = "StyleBookEditor#CURSOR_NOT_ALLOWED");
+			AssertCssValue(
+				locator1 = "StyleBookEditor#CURSOR_NOT_ALLOWED",
+				locator2 = "z-index",
+				value1 = "100000");
 
 			SelectFrameTop();
 		}
@@ -106,7 +109,10 @@ definition {
 		}
 
 		task ("Assert not allow interact with preview page") {
-			AssertElementPresent(locator1 = "StyleBookEditor#CURSOR_NOT_ALLOWED");
+			AssertCssValue(
+				locator1 = "StyleBookEditor#CURSOR_NOT_ALLOWED",
+				locator2 = "z-index",
+				value1 = "100000");
 
 			SelectFrameTop();
 		}

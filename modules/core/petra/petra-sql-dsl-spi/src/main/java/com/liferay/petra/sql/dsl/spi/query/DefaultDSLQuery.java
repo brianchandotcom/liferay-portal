@@ -14,8 +14,12 @@
 
 package com.liferay.petra.sql.dsl.spi.query;
 
+import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * @author Preston Crary
@@ -24,7 +28,22 @@ public interface DefaultDSLQuery extends DSLQuery {
 
 	@Override
 	public default Table<?> as(String name) {
-		return new QueryTable(name, this);
+		return as(name, Collections.emptyList());
+	}
+
+	@Override
+	public default Table<?> as(
+		String name, Collection<Column<?, ?>> templateColumns) {
+
+		return new QueryTable(name, this, templateColumns);
+	}
+
+	@Override
+	public default <T extends Table<T>> T as(String name, T templateTable) {
+		return (T)as(
+			name,
+			(Collection<Column<?, ?>>)
+				(Collection<?>)templateTable.getColumns());
 	}
 
 	@Override

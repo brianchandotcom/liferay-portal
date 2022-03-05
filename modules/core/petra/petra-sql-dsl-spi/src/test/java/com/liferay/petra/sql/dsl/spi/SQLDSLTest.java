@@ -75,6 +75,7 @@ import java.sql.Types;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -1011,6 +1012,66 @@ public class SQLDSLTest {
 		queryTable = (QueryTable)table2;
 
 		Assert.assertSame(fromStep2, queryTable.getDslQuery());
+
+		Table<?> table3 = fromStep2.as(
+			"alias",
+			Arrays.asList(
+				MainExampleTable.INSTANCE.nameColumn,
+				MainExampleTable.INSTANCE.descriptionColumn));
+
+		Collection<Column<?, ?>> columns =
+			(Collection<Column<?, ?>>)table3.getColumns();
+
+		Assert.assertEquals(columns.toString(), 2, columns.size());
+
+		Iterator<Column<?, ?>> iterator = columns.iterator();
+
+		Column<?, ?> column = iterator.next();
+
+		Assert.assertSame(table3, column.getTable());
+		Assert.assertEquals(
+			MainExampleTable.INSTANCE.nameColumn.getName(), column.getName());
+
+		column = iterator.next();
+
+		Assert.assertSame(table3, column.getTable());
+		Assert.assertEquals(
+			MainExampleTable.INSTANCE.descriptionColumn.getName(),
+			column.getName());
+
+		Table<?> table4 = fromStep2.as("alias", MainExampleTable.INSTANCE);
+
+		columns = (Collection<Column<?, ?>>)table4.getColumns();
+
+		Assert.assertEquals(columns.toString(), 4, columns.size());
+
+		iterator = columns.iterator();
+
+		column = iterator.next();
+
+		Assert.assertSame(table4, column.getTable());
+		Assert.assertEquals(
+			MainExampleTable.INSTANCE.descriptionColumn.getName(),
+			column.getName());
+
+		column = iterator.next();
+
+		Assert.assertSame(table4, column.getTable());
+		Assert.assertEquals(
+			MainExampleTable.INSTANCE.flagColumn.getName(), column.getName());
+
+		column = iterator.next();
+
+		Assert.assertSame(table4, column.getTable());
+		Assert.assertEquals(
+			MainExampleTable.INSTANCE.mainExampleIdColumn.getName(),
+			column.getName());
+
+		column = iterator.next();
+
+		Assert.assertSame(table4, column.getTable());
+		Assert.assertEquals(
+			MainExampleTable.INSTANCE.nameColumn.getName(), column.getName());
 	}
 
 	@Test

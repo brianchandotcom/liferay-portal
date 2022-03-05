@@ -14,10 +14,12 @@
 
 package com.liferay.petra.sql.dsl.spi.query;
 
+import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.ast.ASTNodeListener;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 
+import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -26,12 +28,20 @@ import java.util.function.Consumer;
  */
 public class QueryTable extends BaseTable<QueryTable> {
 
-	public QueryTable(String name, DSLQuery dslQuery) {
-		super(null, () -> new QueryTable(name, dslQuery));
+	public QueryTable(
+		String name, DSLQuery dslQuery, Collection<Column<?, ?>> columns) {
+
+		super(null, () -> new QueryTable(name, dslQuery, columns));
 
 		setAlias(Objects.requireNonNull(name));
 
 		_dslQuery = Objects.requireNonNull(dslQuery);
+
+		for (Column<?, ?> column : columns) {
+			createColumn(
+				column.getName(), column.getJavaType(), column.getSQLType(),
+				column.getFlags());
+		}
 	}
 
 	@Override

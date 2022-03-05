@@ -38,6 +38,7 @@ import com.liferay.petra.string.StringPool;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -530,6 +531,18 @@ public class TableJoinHolderFactory {
 
 		@Override
 		public Table<?> as(String name) {
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public Table<?> as(
+			String name, Collection<Column<?, ?>> templateColumns) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		public <T extends Table<T>> T as(String name, T templateTable) {
 			throw new UnsupportedOperationException();
 		}
 

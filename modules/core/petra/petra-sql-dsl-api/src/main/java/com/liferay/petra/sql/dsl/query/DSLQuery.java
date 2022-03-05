@@ -14,8 +14,11 @@
 
 package com.liferay.petra.sql.dsl.query;
 
+import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.petra.sql.dsl.ast.ASTNode;
+
+import java.util.Collection;
 
 /**
  * @author Preston Crary
@@ -23,6 +26,10 @@ import com.liferay.petra.sql.dsl.ast.ASTNode;
 public interface DSLQuery extends ASTNode {
 
 	public Table<?> as(String name);
+
+	public Table<?> as(String name, Collection<Column<?, ?>> templateColumns);
+
+	public <T extends Table<T>> T as(String name, T templateTable);
 
 	public DSLQuery union(DSLQuery dslQuery);
 

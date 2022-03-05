@@ -69,23 +69,18 @@
 
 			DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 
+			SearchContainer<AuditEvent> auditEventSearchContainer = searchContainer;
+			long companyId = themeDisplay.getCompanyId();
+
 			if (displayTerms.isAdvancedSearch()) {
-				total = AuditEventManagerUtil.getAuditEventsCount(themeDisplay.getCompanyId(), userId, userName, startDate, endDate, eventType, className, classPK, clientHost, clientIP, serverName, serverPort, sessionID, displayTerms.isAndOperator());
-
-				searchContainer.setTotal(total);
-
-				searchContainer.setResults(AuditEventManagerUtil.getAuditEvents(themeDisplay.getCompanyId(), userId, userName, startDate, endDate, eventType, className, classPK, clientHost, clientIP, serverName, serverPort, sessionID, displayTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), new AuditEventCreateDateComparator()));
+				searchContainer.setResultsAndTotal(() -> AuditEventManagerUtil.getAuditEvents(companyId, userId, userName, startDate, endDate, eventType, className, classPK, clientHost, clientIP, serverName, serverPort, sessionID, displayTerms.isAndOperator(), auditEventSearchContainer.getStart(), auditEventSearchContainer.getEnd(), new AuditEventCreateDateComparator()), AuditEventManagerUtil.getAuditEventsCount(themeDisplay.getCompanyId(), userId, userName, startDate, endDate, eventType, className, classPK, clientHost, clientIP, serverName, serverPort, sessionID, displayTerms.isAndOperator()));
 			}
 			else {
 				String keywords = displayTerms.getKeywords();
 
 				String number = Validator.isNumber(keywords) ? keywords : String.valueOf(0);
 
-				total = AuditEventManagerUtil.getAuditEventsCount(themeDisplay.getCompanyId(), Long.valueOf(number), keywords, null, null, keywords, keywords, keywords, keywords, keywords, keywords, Integer.valueOf(number), keywords, false);
-
-				searchContainer.setTotal(total);
-
-				searchContainer.setResults(AuditEventManagerUtil.getAuditEvents(themeDisplay.getCompanyId(), Long.valueOf(number), keywords, null, null, keywords, keywords, keywords, keywords, keywords, keywords, Integer.valueOf(number), keywords, false, searchContainer.getStart(), searchContainer.getEnd(), new AuditEventCreateDateComparator()));
+				searchContainer.setResultsAndTotal(() -> AuditEventManagerUtil.getAuditEvents(companyId, Long.valueOf(number), keywords, null, null, keywords, keywords, keywords, keywords, keywords, keywords, Integer.valueOf(number), keywords, false, auditEventSearchContainer.getStart(), auditEventSearchContainer.getEnd(), new AuditEventCreateDateComparator()), AuditEventManagerUtil.getAuditEventsCount(themeDisplay.getCompanyId(), Long.valueOf(number), keywords, null, null, keywords, keywords, keywords, keywords, keywords, keywords, Integer.valueOf(number), keywords, false));
 			}
 			%>
 

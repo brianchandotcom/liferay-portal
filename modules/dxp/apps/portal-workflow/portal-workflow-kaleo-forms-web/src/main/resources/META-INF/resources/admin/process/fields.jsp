@@ -75,13 +75,11 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 	<liferay-ui:search-container-results>
 
 		<%
-		total = DDMStructureServiceUtil.searchCount(company.getCompanyId(), PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), scopeClassNameId, displayTerms.getKeywords(), WorkflowConstants.STATUS_ANY);
+		long companyId = company.getCompanyId();
+		long ddmStructureScopeGroupId = scopeGroupId;
+		SearchContainer<DDMStructure> ddmStructureSearchContainer = searchContainer;
 
-		searchContainer.setTotal(total);
-
-		results = DDMStructureServiceUtil.search(company.getCompanyId(), PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), scopeClassNameId, displayTerms.getKeywords(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd(), new StructureModifiedDateComparator(true));
-
-		searchContainer.setResults(results);
+		searchContainer.setResultsAndTotal(() -> DDMStructureServiceUtil.search(companyId, PortalUtil.getCurrentAndAncestorSiteGroupIds(ddmStructureScopeGroupId), scopeClassNameId, displayTerms.getKeywords(), WorkflowConstants.STATUS_ANY, ddmStructureSearchContainer.getStart(), ddmStructureSearchContainer.getEnd(), new StructureModifiedDateComparator(true)), DDMStructureServiceUtil.searchCount(companyId, PortalUtil.getCurrentAndAncestorSiteGroupIds(ddmStructureScopeGroupId), scopeClassNameId, displayTerms.getKeywords(), WorkflowConstants.STATUS_ANY));
 		%>
 
 	</liferay-ui:search-container-results>

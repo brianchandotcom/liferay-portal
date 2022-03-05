@@ -43,8 +43,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 
 			kaleoTaskFormPairs.add(0, initialStateKaleoTaskFormPair);
 
-			searchContainer.setResults(kaleoTaskFormPairs.list());
-			searchContainer.setTotal(kaleoTaskFormPairs.size());
+			searchContainer.setResultsAndTotal(kaleoTaskFormPairs::list, kaleoTaskFormPairs.size());
 			%>
 
 		</liferay-ui:search-container-results>

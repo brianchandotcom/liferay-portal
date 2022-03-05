@@ -1,6 +1,6 @@
-Bundle-Name: Liferay Site Initializer Raylife
-Bundle-SymbolicName: com.liferay.site.initializer.raylife
+Bundle-Name: Liferay Site Initializer Raylife D2C
+Bundle-SymbolicName: com.liferay.site.initializer.raylife.d2c
 Bundle-Version: 1.0.45
-Liferay-Site-Initializer-Name: Raylife
+Liferay-Site-Initializer-Name: Raylife D2C
 Provide-Capability: liferay.site.initializer
-Web-ContextPath: /site-initializer-raylife
+Web-ContextPath: /site-initializer-raylife-d2c

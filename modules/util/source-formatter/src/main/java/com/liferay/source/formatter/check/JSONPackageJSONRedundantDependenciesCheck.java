@@ -51,13 +51,13 @@ public class JSONPackageJSONRedundantDependenciesCheck extends BaseFileCheck {
 		List<String> excludedDirNames = getAttributeValues(
 			_EXCLUDED_DIR_NAMES_KEY, absolutePath);
 
+		_getInternalDependenciesNames(absolutePath, excludedDirNames);
+
 		for (String excludedDirName : excludedDirNames) {
 			if (absolutePath.contains(excludedDirName)) {
 				return content;
 			}
 		}
-
-		_getInternalDependenciesNames(absolutePath);
 
 		JSONObject jsonObject = new JSONObject(content);
 
@@ -83,7 +83,7 @@ public class JSONPackageJSONRedundantDependenciesCheck extends BaseFileCheck {
 	}
 
 	private synchronized List<String> _getInternalDependenciesNames(
-			String absolutePath)
+			String absolutePath, List<String> excludedDirNames)
 		throws IOException {
 
 		if (_internalDependenciesNames != null) {
@@ -133,6 +133,10 @@ public class JSONPackageJSONRedundantDependenciesCheck extends BaseFileCheck {
 
 		while (iterator.hasNext()) {
 			String dependencyName = iterator.next();
+
+			if (!dependencyName.startsWith("@")) {
+				excludedDirNames.add(dependencyName);
+			}
 
 			_internalDependenciesNames.add(dependencyName);
 

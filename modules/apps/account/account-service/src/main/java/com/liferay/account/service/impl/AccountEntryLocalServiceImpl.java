@@ -28,7 +28,6 @@ import com.liferay.account.model.impl.AccountEntryImpl;
 import com.liferay.account.service.base.AccountEntryLocalServiceBaseImpl;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
-import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
@@ -37,9 +36,6 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
-import com.liferay.petra.sql.dsl.spi.expression.TableStar;
-import com.liferay.petra.sql.dsl.spi.query.QueryTable;
-import com.liferay.petra.sql.dsl.spi.query.Select;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
@@ -485,57 +481,31 @@ public class AccountEntryLocalServiceImpl
 			return new ArrayList<>(accountEntriesMap.values());
 		}
 
-		DSLQuery dslQuery = _getOrganizationsAccountEntriesGroupByStep(
-			DSLQueryFactoryUtil.selectDistinct(AccountEntryTable.INSTANCE),
-			userId, parentAccountEntryId, keywords, types, status
-		).union(
-			_getOwnerAccountEntriesGroupByStep(
+		Table<AccountEntryTable> tempAccountEntryTable =
+			_getOrganizationsAccountEntriesGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(AccountEntryTable.INSTANCE),
-				userId, parentAccountEntryId, keywords, types, status)
-		).union(
-			_getUerAccountEntriesGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(AccountEntryTable.INSTANCE),
-				userId, parentAccountEntryId, keywords, types, status)
-		);
-
-		Table<?> table = new QueryTable("tempAccountEntryTable", dslQuery) {
-
-			@Override
-			public Column<QueryTable, ?> getColumn(String name) {
-				Column<AccountEntryTable, ?> accountEntryColumn =
-					AccountEntryTable.INSTANCE.getColumn(name);
-
-				return createColumn(
-					accountEntryColumn.getName(),
-					accountEntryColumn.getJavaType(),
-					accountEntryColumn.getSQLType(),
-					accountEntryColumn.getFlags());
-			}
-
-			@Override
-			public String getTableName() {
-				return "tempAccountEntryTable";
-			}
-
-		};
-
-		Select select = new Select(
-			true,
-			Collections.singleton(
-				new TableStar(table) {
-
-					@Override
-					public Table<?> getTable() {
-						return AccountEntryTable.INSTANCE;
-					}
-
-				}));
-
-		JoinStep joinStep = select.from(table);
+				userId, parentAccountEntryId, keywords, types, status
+			).union(
+				_getOwnerAccountEntriesGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						AccountEntryTable.INSTANCE),
+					userId, parentAccountEntryId, keywords, types, status)
+			).union(
+				_getUerAccountEntriesGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						AccountEntryTable.INSTANCE),
+					userId, parentAccountEntryId, keywords, types, status)
+			).as(
+				"tempAccountEntryTable", AccountEntryTable.INSTANCE
+			);
 
 		return dslQuery(
-			joinStep.orderBy(
-				table, orderByComparator
+			DSLQueryFactoryUtil.selectDistinct(
+				tempAccountEntryTable
+			).from(
+				tempAccountEntryTable
+			).orderBy(
+				tempAccountEntryTable, orderByComparator
 			).limit(
 				start, end
 			));

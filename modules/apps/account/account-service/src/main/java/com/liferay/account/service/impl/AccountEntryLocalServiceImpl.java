@@ -46,7 +46,6 @@ import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -459,26 +458,9 @@ public class AccountEntryLocalServiceImpl
 			String[] types, Integer status, int start, int end)
 		throws PortalException {
 
-		Map<Serializable, AccountEntry> accountEntriesMap =
-			accountEntryPersistence.fetchByPrimaryKeys(
-				_getUserAccountEntryIds(
-					userId, parentAccountEntryId, keywords, types, status));
-
-		if (accountEntriesMap.isEmpty()) {
-			return Collections.emptyList();
-		}
-
-		List<AccountEntry> accountEntries = new ArrayList<>(
-			accountEntriesMap.values());
-
-		if ((start == QueryUtil.ALL_POS) || (end == QueryUtil.ALL_POS)) {
-			return accountEntries;
-		}
-
-		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
-			start, end, accountEntries.size());
-
-		return accountEntries.subList(startAndEnd[0], startAndEnd[1]);
+		return getUserAccountEntries(
+			userId, parentAccountEntryId, keywords, types, status, start, end,
+			null);
 	}
 
 	@Override
@@ -487,6 +469,21 @@ public class AccountEntryLocalServiceImpl
 			String[] types, Integer status, int start, int end,
 			OrderByComparator<AccountEntry> orderByComparator)
 		throws PortalException {
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			Map<Serializable, AccountEntry> accountEntriesMap =
+				accountEntryPersistence.fetchByPrimaryKeys(
+					_getUserAccountEntryIds(
+						userId, parentAccountEntryId, keywords, types, status));
+
+			if (accountEntriesMap.isEmpty()) {
+				return Collections.emptyList();
+			}
+
+			return new ArrayList<>(accountEntriesMap.values());
+		}
 
 		DSLQuery dslQuery = _getOrganizationsAccountEntriesGroupByStep(
 			DSLQueryFactoryUtil.selectDistinct(AccountEntryTable.INSTANCE),

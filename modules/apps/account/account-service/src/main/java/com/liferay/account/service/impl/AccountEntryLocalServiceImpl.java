@@ -41,6 +41,7 @@ import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -465,7 +466,14 @@ public class AccountEntryLocalServiceImpl
 		List<AccountEntry> accountEntries = new ArrayList<>(
 			accountEntriesMap.values());
 
-		return accountEntries.subList(start, end);
+		if ((start == QueryUtil.ALL_POS) || (end == QueryUtil.ALL_POS)) {
+			return accountEntries;
+		}
+
+		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+			start, end, accountEntries.size());
+
+		return accountEntries.subList(startAndEnd[0], startAndEnd[1]);
 	}
 
 	@Override

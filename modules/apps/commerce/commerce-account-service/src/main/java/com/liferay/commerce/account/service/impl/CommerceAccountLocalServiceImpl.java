@@ -255,7 +255,9 @@ public class CommerceAccountLocalServiceImpl
 		//	TODO Check permissions
 
 		resourceLocalService.deleteResource(
-			commerceAccount, ResourceConstants.SCOPE_INDIVIDUAL);
+			commerceAccount.getCompanyId(), CommerceAccount.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(commerceAccount.getCommerceAccountId()));
 
 		// Expando
 

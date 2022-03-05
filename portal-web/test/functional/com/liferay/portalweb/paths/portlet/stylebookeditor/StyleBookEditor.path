@@ -24,7 +24,7 @@
 </tr>
 <tr>
 	<td>CURSOR_NOT_ALLOWED</td>
-	<td>//div[contains(@style,'cursor: not-allowed')]</td>
+	<td>//body/div[contains(@style,'cursor: not-allowed')]</td>
 	<td></td>
 </tr>
 <tr>

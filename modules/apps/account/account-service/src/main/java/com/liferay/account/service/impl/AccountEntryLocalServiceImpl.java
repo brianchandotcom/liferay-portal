@@ -498,7 +498,7 @@ public class AccountEntryLocalServiceImpl
 				userId, parentAccountEntryId, keywords, types, status)
 		);
 
-		Table table = new QueryTable("tempAccountEntryTable", dslQuery) {
+		Table<?> table = new QueryTable("tempAccountEntryTable", dslQuery) {
 
 			@Override
 			public Column<QueryTable, ?> getColumn(String name) {

@@ -43,6 +43,10 @@ public class QueryTable extends BaseTable<QueryTable> {
 		return false;
 	}
 
+	public DSLQuery getDslQuery() {
+		return _dslQuery;
+	}
+
 	@Override
 	public int hashCode() {
 		return System.identityHashCode(this);

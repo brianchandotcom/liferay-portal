@@ -31,6 +31,7 @@ import com.liferay.petra.sql.dsl.spi.expression.AggregateExpression;
 import com.liferay.petra.sql.dsl.spi.expression.DSLFunction;
 import com.liferay.petra.sql.dsl.spi.expression.DSLFunctionType;
 import com.liferay.petra.sql.dsl.spi.expression.TableStar;
+import com.liferay.petra.sql.dsl.spi.query.QueryTable;
 import com.liferay.petra.sql.dsl.spi.query.Select;
 import com.liferay.petra.sql.dsl.spi.query.SetOperation;
 import com.liferay.petra.string.StringBundler;
@@ -187,7 +188,11 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			if (astNode instanceof Select) {
 				select = (Select)astNode;
 
-				break;
+				astNode = _unwrapQueryTable(select);
+
+				if (astNode == null) {
+					break;
+				}
 			}
 
 			BaseASTNode baseASTNode = (BaseASTNode)astNode;
@@ -1150,6 +1155,35 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 		}
 
 		throw new IllegalArgumentException(expression.toString());
+	}
+
+	private ASTNode _unwrapQueryTable(Select select) {
+		Collection<? extends Expression<?>> expressions =
+			select.getExpressions();
+
+		if (expressions.size() != 1) {
+			return null;
+		}
+
+		Iterator<? extends Expression<?>> iterator = expressions.iterator();
+
+		Expression<?> expression = iterator.next();
+
+		if (!(expression instanceof TableStar)) {
+			return null;
+		}
+
+		TableStar tableStar = (TableStar)expression;
+
+		Table table = tableStar.getTable();
+
+		if (!(table instanceof QueryTable)) {
+			return null;
+		}
+
+		QueryTable queryTable = (QueryTable)table;
+
+		return queryTable.getDslQuery();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

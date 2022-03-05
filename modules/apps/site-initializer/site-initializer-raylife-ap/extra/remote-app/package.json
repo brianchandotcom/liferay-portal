@@ -25,13 +25,14 @@
 		"react-scripts": "4.0.3",
 		"sass": "^1.49.0"
 	},
+	"description": "Site Initializer Raylife Agent Portal",
 	"devDependencies": {
 		"@types/node": "^17.0.10",
 		"@types/react": "^17.0.38",
 		"@types/react-dom": "^17.0.11",
 		"typescript": "^4.5.4"
 	},
-	"name": "@liferay/site-initializer-raylife-agent-portal",
+	"name": "@liferay/site-initializer-raylife-ap",
 	"private": true,
 	"scripts": {
 		"build": "react-scripts build",

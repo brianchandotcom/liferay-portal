@@ -1391,6 +1391,10 @@ public class SQLDSLTest {
 		Assert.assertSame(MainExampleTable.INSTANCE, tableStar.getTable());
 
 		Assert.assertEquals("MainExample.*", tableStar.toString());
+
+		tableStar = new TableStar(MainExampleTable.INSTANCE.as("alias"));
+
+		Assert.assertEquals("alias.*", tableStar.toString());
 	}
 
 	@Test

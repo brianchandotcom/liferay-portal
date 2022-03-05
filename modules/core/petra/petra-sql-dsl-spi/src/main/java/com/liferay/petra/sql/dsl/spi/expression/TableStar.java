@@ -39,7 +39,7 @@ public class TableStar
 	protected void doToSQL(
 		Consumer<String> consumer, ASTNodeListener astNodeListener) {
 
-		consumer.accept(_table.getTableName());
+		consumer.accept(_table.getName());
 
 		consumer.accept(".*");
 	}

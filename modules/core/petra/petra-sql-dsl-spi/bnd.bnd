@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Petra SQL DSL SPI
 Bundle-SymbolicName: com.liferay.petra.sql.dsl.spi
-Bundle-Version: 2.0.7
+Bundle-Version: 3.0.0
 Export-Package:\
 	com.liferay.petra.sql.dsl.spi,\
 	com.liferay.petra.sql.dsl.spi.ast,\

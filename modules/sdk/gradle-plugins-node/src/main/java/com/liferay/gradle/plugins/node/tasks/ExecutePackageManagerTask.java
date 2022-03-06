@@ -192,8 +192,7 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 		_useNpm = useNpm;
 	}
 
-	@Input
-	@Optional
+	@Internal
 	@Override
 	protected List<String> getCompleteArgs() {
 		List<String> completeArgs = super.getCompleteArgs();

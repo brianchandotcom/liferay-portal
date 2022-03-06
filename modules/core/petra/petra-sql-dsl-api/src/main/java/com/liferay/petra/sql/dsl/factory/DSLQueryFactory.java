@@ -35,6 +35,6 @@ public interface DSLQueryFactory {
 
 	public FromStep selectDistinct(Expression<?>... expressions);
 
-	public <T extends Table<T>> FromStep selectDistinct(T table);
+	public <T extends Table<T>> FromStep selectDistinct(Table<T> table);
 
 }

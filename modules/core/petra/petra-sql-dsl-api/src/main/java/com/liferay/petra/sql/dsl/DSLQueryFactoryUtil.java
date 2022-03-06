@@ -42,7 +42,7 @@ public class DSLQueryFactoryUtil {
 		return _DSL_QUERY_FACTORY.select(expressions);
 	}
 
-	public static <T extends Table<T>> FromStep select(T table) {
+	public static <T extends Table<T>> FromStep select(Table<T> table) {
 		return _DSL_QUERY_FACTORY.select(table);
 	}
 
@@ -50,7 +50,7 @@ public class DSLQueryFactoryUtil {
 		return _DSL_QUERY_FACTORY.selectDistinct(expressions);
 	}
 
-	public static <T extends Table<T>> FromStep selectDistinct(T table) {
+	public static <T extends Table<T>> FromStep selectDistinct(Table<T> table) {
 		return _DSL_QUERY_FACTORY.selectDistinct(table);
 	}
 

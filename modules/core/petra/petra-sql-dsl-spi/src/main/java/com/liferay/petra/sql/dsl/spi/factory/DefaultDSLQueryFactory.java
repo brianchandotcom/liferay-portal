@@ -67,7 +67,7 @@ public class DefaultDSLQueryFactory implements DSLQueryFactory {
 	}
 
 	@Override
-	public <T extends Table<T>> FromStep selectDistinct(T table) {
+	public <T extends Table<T>> FromStep selectDistinct(Table<T> table) {
 		return new Select(true, Collections.singleton(new TableStar(table)));
 	}
 

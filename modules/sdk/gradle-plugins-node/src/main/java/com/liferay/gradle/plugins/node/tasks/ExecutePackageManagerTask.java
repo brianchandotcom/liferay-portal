@@ -26,6 +26,10 @@ import java.util.concurrent.Callable;
 import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.CacheableTask;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.Internal;
+import org.gradle.api.tasks.Optional;
 
 /**
  * @author Andrea Di Giorgi
@@ -101,38 +105,53 @@ public class ExecutePackageManagerTask extends ExecuteNodeScriptTask {
 		}
 	}
 
+	@InputDirectory
+	@Optional
 	public File getCacheDir() {
 		return GradleUtil.toFile(getProject(), _cacheDir);
 	}
 
+	@Input
+	@Optional
 	public String getLogLevel() {
 		return GradleUtil.toString(_logLevel);
 	}
 
+	@Internal
 	public File getNodeModulesDir() {
 		return GradleUtil.toFile(getProject(), _nodeModulesDir);
 	}
 
+	@Input
+	@Optional
 	public String getRegistry() {
 		return GradleUtil.toString(_registry);
 	}
 
+	@Input
+	@Optional
 	public boolean isCacheConcurrent() {
 		return GradleUtil.toBoolean(_cacheConcurrent);
 	}
 
+	@Internal
 	public boolean isOffline() {
 		return _offline;
 	}
 
+	@Input
+	@Optional
 	public boolean isProduction() {
 		return _production;
 	}
 
+	@Input
+	@Optional
 	public boolean isProgress() {
 		return _progress;
 	}
 
+	@Internal
 	public boolean isUseNpm() {
 		return GradleUtil.toBoolean(_useNpm);
 	}

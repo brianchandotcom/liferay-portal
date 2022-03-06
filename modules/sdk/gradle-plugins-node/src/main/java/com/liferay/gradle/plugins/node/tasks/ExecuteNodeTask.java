@@ -27,6 +27,9 @@ import java.util.Map;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.tasks.CacheableTask;
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.TaskAction;
 
 /**
@@ -105,26 +108,37 @@ public class ExecuteNodeTask extends DefaultTask {
 		}
 	}
 
+	@Input
+	@Optional
 	public List<Object> getArgs() {
 		return _nodeExecutor.getArgs();
 	}
 
+	@Input
+	@Optional
 	public String getCommand() {
 		return _nodeExecutor.getCommand();
 	}
 
+	@Input
+	@Optional
 	public Map<?, ?> getEnvironment() {
 		return _nodeExecutor.getEnvironment();
 	}
 
+	@InputDirectory
+	@Optional
 	public File getNodeDir() {
 		return _nodeExecutor.getNodeDir();
 	}
 
+	@Input
+	@Optional
 	public int getNpmInstallRetries() {
 		return _npmInstallRetries;
 	}
 
+	@Internal
 	public String getResult() {
 		if (_result == null) {
 			return "";
@@ -133,14 +147,20 @@ public class ExecuteNodeTask extends DefaultTask {
 		return _result;
 	}
 
+	@InputDirectory
+	@Optional
 	public File getWorkingDir() {
 		return _nodeExecutor.getWorkingDir();
 	}
 
+	@Input
+	@Optional
 	public boolean isInheritProxy() {
 		return _nodeExecutor.isInheritProxy();
 	}
 
+	@Input
+	@Optional
 	public boolean isUseGradleExec() {
 		return _nodeExecutor.isUseGradleExec();
 	}

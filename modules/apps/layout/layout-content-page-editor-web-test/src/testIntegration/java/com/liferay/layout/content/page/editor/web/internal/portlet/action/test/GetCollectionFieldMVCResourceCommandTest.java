@@ -308,7 +308,7 @@ public class GetCollectionFieldMVCResourceCommandTest {
 			).put(
 				"type", InfoListItemSelectorReturnType.class.getName()
 			).toString(),
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 1, 20, 0,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 1, 1, 1,
 			"regular", false, StringPool.BLANK);
 
 		Assert.assertEquals(2, jsonObject.getInt("length"));

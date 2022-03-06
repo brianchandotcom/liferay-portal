@@ -53,6 +53,10 @@ public class JSONPackageJSONRedundantDependenciesCheck extends BaseFileCheck {
 
 		_getInternalDependenciesNames(absolutePath, excludedDirNames);
 
+		if (_internalDependenciesNames.isEmpty()) {
+			return content;
+		}
+
 		for (String excludedDirName : excludedDirNames) {
 			if (absolutePath.contains(excludedDirName)) {
 				return content;

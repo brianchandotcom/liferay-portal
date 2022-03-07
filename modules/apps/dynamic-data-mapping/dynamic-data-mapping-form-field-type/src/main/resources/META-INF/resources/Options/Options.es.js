@@ -367,9 +367,26 @@ const Options = ({
 	};
 
 	const set = (fields) => {
+		const set = new Set();
+		const normalizedField = fields.map((option) => {
+			if (set.has(option.reference)) {
+				return {
+					...option,
+					reference: option.value,
+				};
+			}
+			else {
+				set.add(option.reference);
+
+				return option;
+			}
+		});
+
 		setFields(fields);
 
-		const synchronizedNormalizedValue = getSynchronizedValue(fields);
+		const synchronizedNormalizedValue = getSynchronizedValue(
+			normalizedField
+		);
 
 		onChange(synchronizedNormalizedValue);
 	};

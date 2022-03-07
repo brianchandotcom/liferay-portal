@@ -2083,67 +2083,83 @@ definition {
 			nestedFieldFieldLabel = "Select");
 	}
 
-	@ignore = "true"
 	@priority = "4"
 	test FormTemplateUniqueField {
-		Navigator.openURL();
+		task ("Create a Data Definition containing a boolean field and a text field") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+			DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
 
-		DDLDataDefinition.addCP(
-			ddlDataDefinitionDescription = "DDL Definition Description",
-			ddlDataDefinitionName = "DDL Data Definition");
+			DynamicDataMapping.addField(
+				field = "Boolean",
+				fieldFieldLabel = "Boolean",
+				fieldName = "Boolean");
 
-		DynamicDataMapping.addField(
-			field = "Boolean",
-			fieldFieldLabel = "This is a unique field",
-			fieldName = "ThisIsAUniqueField");
+			DynamicDataMapping.addField(
+				field = "Text",
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
 
-		DDLDataDefinition.save();
+			DDLDataDefinition.save();
+		}
 
-		Navigator.openURL();
+		task ("Go to Manage Templates of the created Data Definition") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+			DDLNavigator.gotoManageDataDefinitions();
 
-		DDLTemplate.addFormTemplateCP(
-			ddlDataDefinitionName = "DDL Data Definition",
-			ddlFormTemplateName = "DDL Data Definition Form Template Name");
+			var key_ddlDataDefinitionName = "Data Definition";
 
-		DynamicDataMapping.viewCannotAddField(field = "This is a unique field");
+			Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS");
 
-		DynamicDataMapping.addFieldFormTemplateSpecific(field = "Separator");
+			MenuItem.clickNoError(menuItem = "Manage Templates");
 
-		DynamicDataMapping.viewCanAddField(field = "Separator");
+			ClickNoError(
+				ariaLabel = "New",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-		DynamicDataMapping.deleteField(
-			fieldFieldLabel = "This is a unique field",
-			fieldName = "ThisIsAUniqueField");
+			MenuItem.clickNoError(menuItem = "Add Form Template");
 
-		DynamicDataMapping.addFieldFormTemplateSpecific(
-			field = "Fieldset",
-			fieldFieldLabel = "This is not a unique field");
+			Type.clickAtType(
+				locator1 = "TextInput#NAME",
+				value1 = "Form Template Name");
+		}
 
-		DynamicDataMapping.viewCanAddField(field = "Separator");
+		task ("Assert that boolean field and text field can't be added, as they're present") {
+			DynamicDataMapping.viewCannotAddField(field = "Boolean");
 
-		DynamicDataMapping.deleteField(
-			fieldFieldLabel = "Separator",
-			fieldName = "Separator");
+			DynamicDataMapping.viewCannotAddField(field = "Text");
+		}
 
-		DynamicDataMapping.viewCanAddField(field = "This is a unique field");
+		task ("Delete the boolean field and assert that it can be added again") {
+			MouseOver(
+				key_text = "Boolean",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_TEXT");
 
-		DynamicDataMapping.addFieldFormTemplateSpecific(field = "This is a unique field");
+			Click.mouseOverClick(locator1 = "DDMEditStructure#FORM_FIELD_DELETE_BUTTON_2");
 
-		DynamicDataMapping.addFieldFormTemplateSpecific(
-			field = "Fieldset",
-			fieldFieldLabel = "This is not a unique field");
+			AssertTextEquals(
+				locator1 = "IFrame#DIALOG_BOX",
+				value1 = "Boolean");
 
-		DynamicDataMapping.viewCannotAddField(field = "This is a unique field");
+			AssertTextEquals(
+				locator1 = "DDMEditStructure#ARE_YOU_SURE_DIALOG_BOX_BODY",
+				value1 = "Are you sure you want to delete the selected entries? They will be deleted immediately.");
 
-		DDLDataDefinition.save();
+			AssertClick(
+				locator1 = "Button#OK",
+				value1 = "OK");
+
+			SelectFrame(value1 = "relative=top");
+
+			DynamicDataMapping.viewCanAddField(field = "Boolean");
+
+			DDLDataDefinition.save();
+		}
 	}
 
 	@description = "This is a use case for LPS-65479."
@@ -2546,60 +2562,81 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-48743."
-	@ignore = "true"
 	@priority = "3"
 	test TemplateAddDeletedField {
-		property portal.upstream = "quarantine";
+		task ("Create a Data Definition containing a boolean field and a text field") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		Navigator.openURL();
+			DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+			DynamicDataMapping.addField(
+				field = "Boolean",
+				fieldFieldLabel = "Boolean",
+				fieldName = "Boolean");
 
-		DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
+			DynamicDataMapping.addField(
+				field = "Text",
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
 
-		DynamicDataMapping.addField(
-			field = "Text",
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			DDLDataDefinition.save();
+		}
 
-		DynamicDataMapping.addField(
-			field = "Text Box",
-			fieldFieldLabel = "Text Box",
-			fieldName = "TextBox");
+		task ("Go to Manage Templates of the created Data Definition") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		DDLDataDefinition.save();
+			DDLNavigator.gotoManageDataDefinitions();
 
-		Navigator.openURL();
+			var key_ddlDataDefinitionName = "Data Definition";
 
-		ProductMenu.gotoPortlet(
-			category = "Content & Data",
-			portlet = "Dynamic Data Lists");
+			Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS");
 
-		DDLTemplate.addFormTemplateCP(
-			ddlDataDefinitionName = "Data Definition",
-			ddlFormTemplateName = "Form Template Name");
+			MenuItem.clickNoError(menuItem = "Manage Templates");
 
-		DynamicDataMapping.viewCannotAddField(field = "Text Box");
+			ClickNoError(
+				ariaLabel = "New",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-		DynamicDataMapping.deleteField(fieldFieldLabel = "Text Box");
+			MenuItem.clickNoError(menuItem = "Add Form Template");
 
-		DynamicDataMapping.viewCanAddField(field = "Text Box");
+			Type.clickAtType(
+				locator1 = "TextInput#NAME",
+				value1 = "Form Template Name");
+		}
 
-		DDLTemplate.saveAndContinueFormTemplateCP();
+		task ("Assert that boolean field and text field can't be added, as they're present") {
+			DynamicDataMapping.viewCannotAddField(field = "Boolean");
 
-		DynamicDataMapping.viewCanAddField(field = "Text Box");
+			DynamicDataMapping.viewCannotAddField(field = "Text");
+		}
 
-		DynamicDataMapping.addFieldWithoutRename(
-			field = "Text Box",
-			fieldFieldLabel = "Text Box");
+		task ("Delete the boolean field and assert that it can be added again") {
+			MouseOver(
+				key_text = "Boolean",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_TEXT");
 
-		DynamicDataMapping.viewField(
-			fieldFieldLabel = "Text Box",
-			fieldName = "TextBox");
+			Click.mouseOverClick(locator1 = "DDMEditStructure#FORM_FIELD_DELETE_BUTTON_2");
 
-		DDLDataDefinition.save();
+			AssertTextEquals(
+				locator1 = "IFrame#DIALOG_BOX",
+				value1 = "Boolean");
+
+			AssertTextEquals(
+				locator1 = "DDMEditStructure#ARE_YOU_SURE_DIALOG_BOX_BODY",
+				value1 = "Are you sure you want to delete the selected entries? They will be deleted immediately.");
+
+			AssertClick(
+				locator1 = "Button#OK",
+				value1 = "OK");
+
+			SelectFrame(value1 = "relative=top");
+
+			DynamicDataMapping.viewCanAddField(field = "Boolean");
+		}
 	}
 
 	@description = "This is a use case for LPS-52865."

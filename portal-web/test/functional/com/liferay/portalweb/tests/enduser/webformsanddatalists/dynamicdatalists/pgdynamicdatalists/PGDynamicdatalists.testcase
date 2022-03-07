@@ -43,73 +43,111 @@ definition {
 		}
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test AddFormTemplate {
-		property portal.upstream = "quarantine";
+		task ("Create a Data Definition containing a boolean field and a text field") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+			DDLDataDefinition.addCP(ddlDataDefinitionName = "Data Definition");
 
-		DDLList.addViaDDLDisplayPG();
+			DynamicDataMapping.addField(
+				field = "Boolean",
+				fieldFieldLabel = "Boolean",
+				fieldName = "Boolean");
 
-		DDLDataDefinition.addViaDDLDisplayPG();
+			DynamicDataMapping.addField(
+				field = "Text",
+				fieldFieldLabel = "Text",
+				fieldName = "Text");
 
-		DynamicDataMapping.addField(
-			field = "Boolean",
-			fieldFieldLabel = "Boolean",
-			fieldName = "Boolean");
+			DDLDataDefinition.save();
+		}
 
-		DynamicDataMapping.addField(
-			field = "Text",
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+		task ("Go to Manage Templates of the created Data Definition") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		DDLDataDefinition.saveViaDDLDisplayPG();
+			DDLNavigator.gotoManageDataDefinitions();
 
-		DDLDataDefinition.selectViaDDLDisplayPG();
+			var key_ddlDataDefinitionName = "Data Definition";
 
-		DDLList.saveViaDDLDisplayPG();
+			Click.waitForMenuToggleJSClick(locator1 = "DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS");
 
-		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+			MenuItem.clickNoError(menuItem = "Manage Templates");
 
-		DDLTemplate.addFormTemplateViaDDLDisplayPG(ddlFormTemplateName = "Form Template");
+			ClickNoError(
+				ariaLabel = "New",
+				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
-		DynamicDataMapping.viewCannotAddField(field = "Boolean");
+			MenuItem.clickNoError(menuItem = "Add Form Template");
 
-		DynamicDataMapping.viewCannotAddField(field = "Text");
+			Type.clickAtType(
+				locator1 = "TextInput#NAME",
+				value1 = "Form Template Name");
+		}
 
-		DynamicDataMapping.deleteField(fieldFieldLabel = "Boolean");
+		task ("Assert that boolean field and text field can't be added, as they're present") {
+			DynamicDataMapping.viewCannotAddField(field = "Boolean");
 
-		DynamicDataMapping.viewCanAddField(field = "Boolean");
+			DynamicDataMapping.viewCannotAddField(field = "Text");
+		}
 
-		DynamicDataMapping.addFieldFormTemplateSpecific(field = "Separator");
+		task ("Delete the boolean field and assert that it can be added again") {
+			MouseOver(
+				key_text = "Boolean",
+				locator1 = "DDMEditStructure#FORM_FIELD_CONTAINER_TEXT");
 
-		DynamicDataMapping.addFieldFormTemplateSpecific(field = "Paragraph");
+			Click.mouseOverClick(locator1 = "DDMEditStructure#FORM_FIELD_DELETE_BUTTON_2");
 
-		DDLTemplate.saveFormTemplateViaDDLDisplayPG();
+			AssertTextEquals(
+				locator1 = "IFrame#DIALOG_BOX",
+				value1 = "Boolean");
 
-		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+			AssertTextEquals(
+				locator1 = "DDMEditStructure#ARE_YOU_SURE_DIALOG_BOX_BODY",
+				value1 = "Are you sure you want to delete the selected entries? They will be deleted immediately.");
 
-		DDLList.selectViaDDLDisplayPG();
+			AssertClick(
+				locator1 = "Button#OK",
+				value1 = "OK");
 
-		DDLTemplate.selectFormTemplateViaDDLDisplayPG(ddlFormTemplateName = "Form Template");
+			SelectFrame(value1 = "relative=top");
 
-		Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+			DynamicDataMapping.viewCanAddField(field = "Boolean");
+		}
 
-		DDLRecord.addViaDDLDisplayPG();
+		task ("Add separator and Paragraph fields to the template") {
+			DynamicDataMapping.addFieldFormTemplateSpecific(field = "Separator");
 
-		DDLRecord.viewFieldFormTemplateSpecific(field = "Separator");
+			DynamicDataMapping.addFieldFormTemplateSpecific(field = "Paragraph");
 
-		DDLRecord.viewFieldFormTemplateSpecific(
-			field = "Paragraph",
-			fieldText = "Paragraph");
+			DDLDataDefinition.save();
+		}
 
-		DDLRecord.populateFieldText(
-			ddlRecordFieldData = "Text",
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+		task ("Add a new dynamic data list") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Dynamic Data Lists");
 
-		PortletEntry.publish();
+			DDLList.addCP();
+
+			DDLDataDefinition.selectCP(ddlDataDefinitionName = "Data Definition");
+
+			DDLDataDefinition.save();
+		}
+
+		task ("Publish the template") {
+			Navigator.gotoPage(pageName = "Dynamic Data Lists Display Page");
+
+			DDLList.selectViaDDLDisplayPG();
+
+			DDLTemplate.selectFormTemplateViaDDLDisplayPG(ddlFormTemplateName = "Form Template Name");
+
+			Alert.viewSuccessMessage();
+		}
 	}
 
 	@priority = "4"

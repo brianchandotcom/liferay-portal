@@ -226,6 +226,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELD_CONTAINER_TEXT</td>
+	<td>//span[normalize-space(text())='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELD_SETS_COLLAPSE_BUTTON</td>
 	<td>//div[contains(@class,'fieldset')]//button[contains(@class,'collapse-icon')][//label[text()='${key_fieldsetLabel}']]</td>
 	<td></td>
@@ -258,6 +263,11 @@
 <tr>
 	<td>FORM_FIELD_DELETE_BUTTON</td>
 	<td>portal/screenshots/ddm/form_delete.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_DELETE_BUTTON_2</td>
+	<td>xpath=(//button//*[contains(@class,'lexicon-icon-trash')])[1]</td>
 	<td></td>
 </tr>
 <tr>

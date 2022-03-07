@@ -243,11 +243,7 @@ public class InlineSQLHelperImplTest {
 	public void testInvalidCompany() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		_groupThree = GroupTestUtil.addGroup();
-
-		_groupThree.setCompanyId(_company.getCompanyId());
-
-		_groupLocalService.updateGroup(_groupThree);
+		_groupThree = GroupTestUtil.addGroupToCompany(_company.getCompanyId());
 
 		_addGroupRole(_groupThree, RoleConstants.SITE_MEMBER);
 

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -198,6 +199,19 @@ public class GroupTestUtil {
 			).build(),
 			type, manualMembership, membershipRestriction, friendlyURL, site,
 			active, serviceContext);
+	}
+
+	public static Group addGroupToCompany(long companyId) throws Exception {
+		return addGroupToCompany(
+			companyId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
+	}
+
+	public static Group addGroupToCompany(long companyId, long parentGroupId)
+		throws Exception {
+
+		User user = UserTestUtil.getAdminUser(companyId);
+
+		return addGroup(companyId, user.getUserId(), parentGroupId);
 	}
 
 	public static void addLayoutSetVirtualHost(

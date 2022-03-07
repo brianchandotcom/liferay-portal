@@ -751,6 +751,14 @@ public class CommerceOrderItemLocalServiceUtil {
 			commerceOrderItemId, serviceContext);
 	}
 
+	public static CommerceOrderItem updateExternalReferenceCode(
+			long commerceOrderItemId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			commerceOrderItemId, externalReferenceCode);
+	}
+
 	public static CommerceOrderItemLocalService getService() {
 		return _service;
 	}

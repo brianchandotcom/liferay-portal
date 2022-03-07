@@ -542,4 +542,8 @@ public interface CommerceOrderItemLocalService
 			long commerceOrderItemId, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceOrderItem updateExternalReferenceCode(
+			long commerceOrderItemId, String externalReferenceCode)
+		throws PortalException;
+
 }

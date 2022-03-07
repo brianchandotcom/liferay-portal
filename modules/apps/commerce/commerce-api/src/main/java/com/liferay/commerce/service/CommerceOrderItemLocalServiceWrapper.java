@@ -865,6 +865,16 @@ public class CommerceOrderItemLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrderItem
+			updateExternalReferenceCode(
+				long commerceOrderItemId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderItemLocalService.updateExternalReferenceCode(
+			commerceOrderItemId, externalReferenceCode);
+	}
+
+	@Override
 	public CommerceOrderItemLocalService getWrappedService() {
 		return _commerceOrderItemLocalService;
 	}

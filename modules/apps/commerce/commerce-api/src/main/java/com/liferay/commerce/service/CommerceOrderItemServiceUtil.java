@@ -400,6 +400,14 @@ public class CommerceOrderItemServiceUtil {
 			commerceOrderItemId, serviceContext);
 	}
 
+	public static CommerceOrderItem updateExternalReferenceCode(
+			long commerceOrderItemId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().updateExternalReferenceCode(
+			commerceOrderItemId, externalReferenceCode);
+	}
+
 	public static CommerceOrderItemService getService() {
 		return _service;
 	}

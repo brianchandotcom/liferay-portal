@@ -268,4 +268,8 @@ public interface CommerceOrderItemService extends BaseService {
 			long commerceOrderItemId, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceOrderItem updateExternalReferenceCode(
+			long commerceOrderItemId, String externalReferenceCode)
+		throws PortalException;
+
 }

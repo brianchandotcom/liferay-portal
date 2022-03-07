@@ -64,12 +64,32 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to cancel the addition of a column for the View"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCancelColumnAddition {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147766",
+			objectName = "CustomObject147766",
+			pluralLabelName = "Custom Objects 147766");
 
-		// TODO LPS-147766 CanCancelColumnAddition pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147766");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		Button.clickCancel();
+
+		AssertElementNotPresent(locator1 = "Portlet#MODAL_TITLE");
+
+		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No columns added yet.");
 	}
 
 	@description = "LPS-135394 - Verify it is possible to cancel the creation of a View"

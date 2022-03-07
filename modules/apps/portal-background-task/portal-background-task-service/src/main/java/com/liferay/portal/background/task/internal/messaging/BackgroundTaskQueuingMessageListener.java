@@ -22,21 +22,25 @@ import com.liferay.portal.kernel.lock.LockManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.Validator;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
  */
-public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
-
-	public BackgroundTaskQueuingMessageListener(
-		BackgroundTaskManager backgroundTaskManager, LockManager lockManager) {
-
-		_backgroundTaskManager = backgroundTaskManager;
-
-		_backgroundTaskLockHelper = new BackgroundTaskLockHelper(lockManager);
+@Component(
+	immediate = true,
+	property = "destination.name=" + DestinationNames.BACKGROUND_TASK_STATUS,
+	service = {
+		BackgroundTaskQueuingMessageListener.class, MessageListener.class
 	}
+)
+public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -74,6 +78,11 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setLockManager(LockManager lockManager) {
+		_backgroundTaskLockHelper = new BackgroundTaskLockHelper(lockManager);
+	}
+
 	private void _executeQueuedBackgroundTasks(String taskExecutorClassName) {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -102,7 +111,9 @@ public class BackgroundTaskQueuingMessageListener extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BackgroundTaskQueuingMessageListener.class);
 
-	private final BackgroundTaskLockHelper _backgroundTaskLockHelper;
-	private final BackgroundTaskManager _backgroundTaskManager;
+	private BackgroundTaskLockHelper _backgroundTaskLockHelper;
+
+	@Reference
+	private BackgroundTaskManager _backgroundTaskManager;
 
 }

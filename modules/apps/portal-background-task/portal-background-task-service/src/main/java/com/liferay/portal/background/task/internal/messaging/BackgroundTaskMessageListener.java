@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.ServletContextClassLoaderPool;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
@@ -50,25 +51,18 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = "destination.name=" + DestinationNames.BACKGROUND_TASK,
+	service = {BackgroundTaskMessageListener.class, MessageListener.class}
+)
 public class BackgroundTaskMessageListener extends BaseMessageListener {
-
-	public BackgroundTaskMessageListener(
-		BackgroundTaskExecutorRegistry backgroundTaskExecutorRegistry,
-		BackgroundTaskManager backgroundTaskManager,
-		BackgroundTaskStatusRegistry backgroundTaskStatusRegistry,
-		BackgroundTaskThreadLocalManager backgroundTaskThreadLocalManager,
-		LockManager lockManager, MessageBus messageBus) {
-
-		_backgroundTaskExecutorRegistry = backgroundTaskExecutorRegistry;
-		_backgroundTaskManager = backgroundTaskManager;
-		_backgroundTaskStatusRegistry = backgroundTaskStatusRegistry;
-		_backgroundTaskThreadLocalManager = backgroundTaskThreadLocalManager;
-		_lockManager = lockManager;
-		_messageBus = messageBus;
-	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -332,13 +326,22 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BackgroundTaskMessageListener.class);
 
-	private final BackgroundTaskExecutorRegistry
-		_backgroundTaskExecutorRegistry;
-	private final BackgroundTaskManager _backgroundTaskManager;
-	private final BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
-	private final BackgroundTaskThreadLocalManager
-		_backgroundTaskThreadLocalManager;
-	private final LockManager _lockManager;
-	private final MessageBus _messageBus;
+	@Reference
+	private BackgroundTaskExecutorRegistry _backgroundTaskExecutorRegistry;
+
+	@Reference
+	private BackgroundTaskManager _backgroundTaskManager;
+
+	@Reference
+	private BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
+
+	@Reference
+	private BackgroundTaskThreadLocalManager _backgroundTaskThreadLocalManager;
+
+	@Reference
+	private LockManager _lockManager;
+
+	@Reference
+	private MessageBus _messageBus;
 
 }

@@ -17,22 +17,12 @@ package com.liferay.portal.background.task.internal;
 import com.liferay.background.task.kernel.util.comparator.BackgroundTaskCompletionDateComparator;
 import com.liferay.background.task.kernel.util.comparator.BackgroundTaskCreateDateComparator;
 import com.liferay.background.task.kernel.util.comparator.BackgroundTaskNameComparator;
-import com.liferay.portal.background.task.internal.messaging.BackgroundTaskMessageListener;
-import com.liferay.portal.background.task.internal.messaging.BackgroundTaskQueuingMessageListener;
-import com.liferay.portal.background.task.internal.messaging.RemoveOnCompletionBackgroundTaskStatusMessageListener;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutorRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.LockManager;
-import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.DestinationFactory;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -564,34 +554,6 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		Destination backgroundTaskDestination = _messageBus.getDestination(
-			DestinationNames.BACKGROUND_TASK);
-
-		BackgroundTaskMessageListener backgroundTaskMessageListener =
-			new BackgroundTaskMessageListener(
-				_backgroundTaskExecutorRegistry, this,
-				_backgroundTaskStatusRegistry,
-				_backgroundTaskThreadLocalManager, _lockManager, _messageBus);
-
-		backgroundTaskDestination.register(backgroundTaskMessageListener);
-
-		Destination backgroundTaskStatusDestination =
-			_messageBus.getDestination(DestinationNames.BACKGROUND_TASK_STATUS);
-
-		BackgroundTaskQueuingMessageListener
-			backgroundTaskQueuingMessageListener =
-				new BackgroundTaskQueuingMessageListener(this, _lockManager);
-
-		backgroundTaskStatusDestination.register(
-			backgroundTaskQueuingMessageListener);
-
-		RemoveOnCompletionBackgroundTaskStatusMessageListener
-			removeOnCompletionBackgroundTaskStatusMessageListener =
-				new RemoveOnCompletionBackgroundTaskStatusMessageListener(this);
-
-		backgroundTaskStatusDestination.register(
-			removeOnCompletionBackgroundTaskStatusMessageListener);
-
 		if (!_clusterMasterExecutor.isEnabled() ||
 			_clusterMasterExecutor.isMaster()) {
 
@@ -651,9 +613,6 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	@Reference
-	private BackgroundTaskExecutorRegistry _backgroundTaskExecutorRegistry;
-
-	@Reference
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
 
 	@Reference
@@ -661,21 +620,6 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 		_backgroundTaskMessagingConfigurator;
 
 	@Reference
-	private BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
-
-	@Reference
-	private BackgroundTaskThreadLocalManager _backgroundTaskThreadLocalManager;
-
-	@Reference
 	private ClusterMasterExecutor _clusterMasterExecutor;
-
-	@Reference
-	private DestinationFactory _destinationFactory;
-
-	@Reference
-	private LockManager _lockManager;
-
-	@Reference
-	private MessageBus _messageBus;
 
 }

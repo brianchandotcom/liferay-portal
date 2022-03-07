@@ -21,24 +21,31 @@ import com.liferay.portal.kernel.backgroundtask.constants.BackgroundTaskConstant
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = "destination.name=" + DestinationNames.BACKGROUND_TASK_STATUS,
+	service = {
+		MessageListener.class,
+		RemoveOnCompletionBackgroundTaskStatusMessageListener.class
+	}
+)
 public class RemoveOnCompletionBackgroundTaskStatusMessageListener
 	extends BaseMessageListener {
-
-	public RemoveOnCompletionBackgroundTaskStatusMessageListener(
-		BackgroundTaskManager backgroundTaskManager) {
-
-		_backgroundTaskManager = backgroundTaskManager;
-	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -82,6 +89,7 @@ public class RemoveOnCompletionBackgroundTaskStatusMessageListener
 	private static final Log _log = LogFactoryUtil.getLog(
 		RemoveOnCompletionBackgroundTaskStatusMessageListener.class);
 
-	private final BackgroundTaskManager _backgroundTaskManager;
+	@Reference
+	private BackgroundTaskManager _backgroundTaskManager;
 
 }

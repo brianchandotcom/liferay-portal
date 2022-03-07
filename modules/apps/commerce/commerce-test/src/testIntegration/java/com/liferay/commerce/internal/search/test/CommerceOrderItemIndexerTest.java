@@ -21,6 +21,7 @@ import com.liferay.commerce.internal.search.CommerceOrderItemIndexer;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
@@ -107,11 +108,11 @@ public class CommerceOrderItemIndexerTest {
 
 	@Test
 	public void testSkuPrefix() throws Exception {
-		CommerceTestUtil.addCommerceChannel(
+		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _group.getGroupId(),
+			_user.getUserId(), commerceChannel.getGroupId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
 		CPInstance cpInstance = CPTestUtil.addCPInstance(
@@ -153,11 +154,11 @@ public class CommerceOrderItemIndexerTest {
 
 		CommerceOrderItem[] commerceOrderItems = new CommerceOrderItem[count];
 
-		CommerceTestUtil.addCommerceChannel(
+		CommerceChannel commerceChannel = CommerceTestUtil.addCommerceChannel(
 			_group.getGroupId(), _commerceCurrency.getCode());
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			user.getUserId(), _group.getGroupId(),
+			user.getUserId(), commerceChannel.getGroupId(),
 			_commerceCurrency.getCommerceCurrencyId());
 
 		for (int i = 0; i < count; i++) {

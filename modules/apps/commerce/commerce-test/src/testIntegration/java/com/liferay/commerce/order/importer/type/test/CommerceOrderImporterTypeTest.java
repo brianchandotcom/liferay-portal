@@ -124,7 +124,7 @@ public class CommerceOrderImporterTypeTest {
 			_serviceContext);
 
 		_commerceOrder = CommerceTestUtil.addB2BCommerceOrder(
-			_group.getGroupId(), _user.getUserId(),
+			_group.getGroupId(), _commerceChannel.getUserId(),
 			_commerceAccount.getCommerceAccountId(),
 			_commerceCurrency.getCommerceCurrencyId());
 

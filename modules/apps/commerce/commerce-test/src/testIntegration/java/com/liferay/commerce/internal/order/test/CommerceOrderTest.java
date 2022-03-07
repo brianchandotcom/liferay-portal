@@ -185,7 +185,7 @@ public class CommerceOrderTest {
 			commerceContext instanceof TestCustomCommerceContextHttp);
 
 		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _group.getGroupId(),
+			_user.getUserId(), _commerceChannel.getGroupId(),
 			commerceContext.getCommerceCurrency());
 
 		Assert.assertEquals(

@@ -5321,11 +5321,6 @@ public class PortalImpl implements Portal {
 
 		sb.append(themeDisplay.getLanguageId());
 
-		// Build number
-
-		sb.append("&b=");
-		sb.append(ReleaseInfo.getBuildNumber());
-
 		// Timestamp
 
 		if (((parameterMap == null) || !parameterMap.containsKey("t")) &&

@@ -238,6 +238,146 @@ definition {
 		Publications.viewPublicationOrderInHistory(publicationList = "Publication Name 2,Publication Name 3,Publication Name 1");
 	}
 
+	@description = "Filter Publications Changes."
+	@priority = "4"
+	test CanFilterChangesInReview {
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content 1",
+			groupName = "Guest",
+			title = "WC WebContent Title 1");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			guestPermissions = "false",
+			mimeType = "image/jpeg",
+			sourceFileName = "Document_1.jpg");
+
+		JSONGroup.addGroup(groupName = "Test Site Name");
+
+		JSONPublications.addPublication(publicationName = "Publication Name");
+
+		JSONPublications.selectPublication(publicationName = "Publication Name");
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
+
+		WebContent.moveToRecycleBinCP(webContentTitle = "WC WebContent Title 1");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
+		RecycleBin.deleteCP(
+			assetName = "WC WebContent Title 1",
+			assetType = "Web Content Article");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.editCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentDescriptionEdit = "DM Document Description Edit",
+			dmDocumentTitle = "DM Document Title",
+			dmDocumentTitleEdit = "DM Document Title Edit");
+
+		JSONWebcontent.addWebContent(
+			content = "WC WebContent Content 2",
+			groupName = "Test Site Name",
+			title = "WC WebContent Title 2");
+
+		PublicationsNavigator.gotoReviewChanges();
+
+		PublicationsChanges.changeFilterByItems(
+			checkboxName = "Added",
+			menuItem = "Change Types");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Web Content Article",
+			changeSite = "Test Site Name",
+			changeTitle = "WC WebContent Title 2",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.changeFilterByItems(
+			checkboxName = "Deleted",
+			menuItem = "Change Types");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Web Content Article",
+			changeSite = "Guest",
+			changeTitle = "WC WebContent Title 1",
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		PublicationsChanges.changeFilterByItems(
+			checkboxName = "Modified",
+			menuItem = "Change Types");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Document",
+			changeSite = "Guest",
+			changeTitle = "DM Document Title Edit",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		PublicationsChanges.changeFilterByItems(
+			checkboxName = "Guest",
+			menuItem = "Sites");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Document",
+			changeSite = "Guest",
+			changeTitle = "DM Document Title Edit",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Web Content Article",
+			changeSite = "Guest",
+			changeTitle = "WC WebContent Title 1",
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		PublicationsChanges.changeFilterByItems(
+			checkboxName = "Test Site Name",
+			menuItem = "Sites");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Web Content Article",
+			changeSite = "Test Site Name",
+			changeTitle = "WC WebContent Title 2",
+			changeType = "Added",
+			changeUser = "Test Test");
+
+		PublicationsChanges.changeFilterByItems(
+			checkboxName = "Document",
+			menuItem = "Types");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Document",
+			changeSite = "Guest",
+			changeTitle = "DM Document Title Edit",
+			changeType = "Modified",
+			changeUser = "Test Test");
+
+		PublicationsChanges.changeFilterByItems(
+			checkboxName = "Web Content Article",
+			menuItem = "Types");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Web Content Article",
+			changeSite = "Guest",
+			changeTitle = "WC WebContent Title 1",
+			changeType = "Deleted",
+			changeUser = "Test Test");
+
+		PublicationsChanges.viewChanges(
+			changeCategory = "Web Content Article",
+			changeOrder = "2",
+			changeSite = "Test Site Name",
+			changeTitle = "WC WebContent Title 2",
+			changeType = "Added",
+			changeUser = "Test Test");
+	}
+
 	@description = "LPS-136380 - Add localization for translated titles and content."
 	@priority = "4"
 	test CanPublishLocalizedContent {

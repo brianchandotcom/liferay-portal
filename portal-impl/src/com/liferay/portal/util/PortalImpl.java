@@ -190,7 +190,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletCategoryKeys;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringComparator;
@@ -5202,7 +5201,7 @@ public class PortalImpl implements Portal {
 			parameterMap = HttpUtil.getParameterMap(queryString);
 		}
 
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(15);
 
 		// URI
 

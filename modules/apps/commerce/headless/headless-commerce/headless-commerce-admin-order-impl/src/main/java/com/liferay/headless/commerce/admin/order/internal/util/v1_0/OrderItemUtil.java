@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.math.BigDecimal;
 
@@ -110,6 +111,12 @@ public class OrderItemUtil {
 				commerceOrderItemService.updateCommerceOrderItemDeliveryDate(
 					commerceOrderItem.getCommerceOrderItemId(),
 					requestedDeliveryDate);
+		}
+
+		if (Validator.isNotNull(orderItem.getExternalReferenceCode())) {
+			commerceOrderItemService.updateExternalReferenceCode(
+				commerceOrderItem.getCommerceOrderItemId(),
+				orderItem.getExternalReferenceCode());
 		}
 
 		// Pricing

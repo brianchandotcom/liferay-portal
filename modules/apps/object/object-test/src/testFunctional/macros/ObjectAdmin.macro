@@ -970,6 +970,44 @@ definition {
 			locator1 = "ObjectAdmin#VIEW_OBJECT");
 	}
 
+	macro viewDescriptionForEachFieldType {
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Add a long integer up to 19 digits.",
+			type = "Long Integer");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Add text up to 280 characters.",
+			type = "Text");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Choose from a picklist.",
+			type = "Picklist");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Add a date.",
+			type = "Date");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Add an integer up to nine digits.",
+			type = "Integer");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Add a high precision decimal number without rounding.",
+			type = "Precision Decimal");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Add a decimal number that supports fractional portions.",
+			type = "Decimal");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Select between true or false.",
+			type = "Boolean");
+
+		ObjectAdmin.assertRelationshipsTypeDescription(
+			description = "Add text up to 65,000 characters.",
+			type = "Long Text");
+	}
+
 	macro viewFieldDetails {
 		SelectFrame(locator1 = "IFrame#IFRAME");
 

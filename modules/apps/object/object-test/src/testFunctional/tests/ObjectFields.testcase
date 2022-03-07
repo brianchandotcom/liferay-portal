@@ -50,14 +50,27 @@ definition {
 	}
 
 	@description = "LPS-144902 - Verify there is a description of each Field Type"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test DescriptionForEachFieldType {
 		property osgi.module.configuration.file.names = "com.liferay.object.web.internal.configuration.FFObjectFieldBusinessTypeConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;";
 
-		// TODO LPS-147723 DescriptionForEachFieldType pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147723",
+			objectName = "CustomObject147723",
+			pluralLabelName = "Custom Objects 147723");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147723");
+
+		ObjectAdmin.goToFieldsTab();
+
+		LexiconEntry.gotoAdd();
+
+		Click(locator1 = "ObjectAdmin#OBJECT_FIELDS_TYPE");
+
+		ObjectAdmin.viewDescriptionForEachFieldType();
 	}
 
 }

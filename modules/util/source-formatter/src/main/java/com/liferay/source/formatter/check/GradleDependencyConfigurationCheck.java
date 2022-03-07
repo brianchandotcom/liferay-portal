@@ -31,7 +31,9 @@ public class GradleDependencyConfigurationCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		if (!isModulesApp(absolutePath, false) || !_hasBNDFile(absolutePath) ||
+		if ((!isModulesApp(absolutePath, false) &&
+			 !absolutePath.contains("/third-party/")) ||
+			!_hasBNDFile(absolutePath) ||
 			GradleSourceUtil.isSpringBootExecutable(content)) {
 
 			return content;
@@ -40,13 +42,15 @@ public class GradleDependencyConfigurationCheck extends BaseFileCheck {
 		List<String> blocks = GradleSourceUtil.getDependenciesBlocks(content);
 
 		for (String dependencies : blocks) {
-			content = _formatDependencies(content, dependencies);
+			content = _formatDependencies(absolutePath, content, dependencies);
 		}
 
 		return content;
 	}
 
-	private String _formatDependencies(String content, String dependencies) {
+	private String _formatDependencies(
+		String absolutePath, String content, String dependencies) {
+
 		int x = dependencies.indexOf("\n");
 		int y = dependencies.lastIndexOf("\n");
 
@@ -61,20 +65,27 @@ public class GradleDependencyConfigurationCheck extends BaseFileCheck {
 				oldDependency);
 			String newDependency = oldDependency;
 
-			if (configuration.equals("compile")) {
-				newDependency = StringUtil.replaceFirst(
-					oldDependency, "compile", "compileOnly");
-
-				content = StringUtil.replaceFirst(
-					content, oldDependency, newDependency);
+			if (!absolutePath.contains("/third-party/")) {
+				if (configuration.equals("compile")) {
+					newDependency = StringUtil.replaceFirst(
+						oldDependency, "compile", "compileOnly");
+				}
+				else if (configuration.equals("compileOnly")) {
+					newDependency = StringUtil.removeSubstrings(
+						oldDependency, "transitive: false, ",
+						"transitive: true,");
+				}
 			}
-			else if (configuration.equals("compileOnly")) {
-				newDependency = StringUtil.removeSubstrings(
-					oldDependency, "transitive: false, ", "transitive: true,");
+			else {
+				if (configuration.equals("compileOnly") &&
+					!oldDependency.contains("transitive: false")) {
 
-				content = StringUtil.replaceFirst(
-					content, oldDependency, newDependency);
+					newDependency = oldDependency + ", transitive: false";
+				}
 			}
+
+			content = StringUtil.replaceFirst(
+				content, oldDependency, newDependency);
 		}
 
 		return content;

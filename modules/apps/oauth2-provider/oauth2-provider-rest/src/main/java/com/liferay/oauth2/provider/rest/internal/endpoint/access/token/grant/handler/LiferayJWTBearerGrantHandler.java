@@ -15,6 +15,7 @@
 package com.liferay.oauth2.provider.rest.internal.endpoint.access.token.grant.handler;
 
 import com.liferay.oauth2.provider.configuration.OAuth2ProviderConfiguration;
+import com.liferay.oauth2.provider.rest.internal.configuration.admin.service.OAuth2InAssertionManagedServiceFactory;
 import com.liferay.oauth2.provider.rest.internal.endpoint.constants.OAuth2ProviderRESTEndpointConstants;
 import com.liferay.oauth2.provider.rest.internal.endpoint.liferay.LiferayOAuthDataProvider;
 import com.liferay.petra.string.StringPool;
@@ -94,6 +95,10 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 	@Reference
 	private LiferayOAuthDataProvider _liferayOAuthDataProvider;
 
+	@Reference
+	private OAuth2InAssertionManagedServiceFactory
+		_oAuth2InAssertionManagedServiceFactory;
+
 	private OAuth2ProviderConfiguration _oAuth2ProviderConfiguration;
 
 	private class CustomJWTBearerGrantHandler extends JwtBearerGrantHandler {
@@ -150,6 +155,19 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 
 			String userAuthType = null;
 
+			try {
+				userAuthType =
+					_oAuth2InAssertionManagedServiceFactory.getUserAuthType(
+						companyId, issuer);
+			}
+			catch (IllegalArgumentException illegalArgumentException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(illegalArgumentException);
+				}
+
+				throw new OAuthServiceException(OAuthConstants.INVALID_GRANT);
+			}
+
 			UserSubject userSubject = new UserSubject(StringPool.BLANK);
 
 			if (userAuthType.equals(CompanyConstants.AUTH_TYPE_ID)) {
@@ -175,6 +193,21 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 			long companyId, JwtClaims jwtClaims, JwsHeaders jwsHeaders) {
 
 			JwsSignatureVerifier jwsSignatureVerifier = null;
+
+			try {
+				jwsSignatureVerifier =
+					_oAuth2InAssertionManagedServiceFactory.
+						getJWSSignatureVerifier(
+							companyId, jwtClaims.getIssuer(),
+							jwsHeaders.getKeyId());
+			}
+			catch (IllegalArgumentException illegalArgumentException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(illegalArgumentException);
+				}
+
+				throw new OAuthServiceException(OAuthConstants.INVALID_GRANT);
+			}
 
 			setJwsVerifier(jwsSignatureVerifier);
 		}

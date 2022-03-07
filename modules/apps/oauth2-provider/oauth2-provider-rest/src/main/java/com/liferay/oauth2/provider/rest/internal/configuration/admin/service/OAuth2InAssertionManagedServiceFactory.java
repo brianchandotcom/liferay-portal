@@ -49,7 +49,8 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = Constants.SERVICE_PID + "=com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration",
 	service = {
-		ManagedServiceFactory.class
+		ManagedServiceFactory.class,
+		OAuth2InAssertionManagedServiceFactory.class
 	}
 )
 public class OAuth2InAssertionManagedServiceFactory
@@ -70,9 +71,79 @@ public class OAuth2InAssertionManagedServiceFactory
 		}
 	}
 
+	public JwsSignatureVerifier getJWSSignatureVerifier(
+			long companyId, String issuer, String kid)
+		throws IllegalArgumentException {
+
+		StringBundler sb = new StringBundler(12);
+
+		Map<String, Map<String, JwsSignatureVerifier>> jwsSignatureVerifiers =
+			_jwsSignatureVerifiers.getOrDefault(
+				companyId, _jwsSignatureVerifiers.get(CompanyConstants.SYSTEM));
+
+		if (jwsSignatureVerifiers == null) {
+			sb.append("No JWS signature keys in company: ");
+			sb.append(companyId);
+
+			throw new IllegalArgumentException(sb.toString());
+		}
+
+		Map<String, JwsSignatureVerifier> kidJWSSignatureVerifiers =
+			jwsSignatureVerifiers.get(issuer);
+
+		if (kidJWSSignatureVerifiers == null) {
+			sb.append("No JWS signature keys for issuer: ");
+			sb.append(issuer);
+			sb.append(", in company: ");
+			sb.append(companyId);
+
+			throw new IllegalArgumentException(sb.toString());
+		}
+
+		if (!kidJWSSignatureVerifiers.containsKey(kid)) {
+			sb.append("No JWS signature key of kid: ");
+			sb.append(kid);
+			sb.append(", for issuer: ");
+			sb.append(issuer);
+			sb.append(", in company: ");
+			sb.append(companyId);
+
+			throw new IllegalArgumentException(sb.toString());
+		}
+
+		return kidJWSSignatureVerifiers.get(kid);
+	}
+
 	@Override
 	public String getName() {
 		return StringPool.BLANK;
+	}
+
+	public String getUserAuthType(long companyId, String issuer)
+		throws IllegalArgumentException {
+
+		StringBundler sb = new StringBundler(6);
+
+		Map<String, String> userAuthTypes = _userAuthTypes.getOrDefault(
+			companyId, _userAuthTypes.get(CompanyConstants.SYSTEM));
+
+		if (userAuthTypes == null) {
+			sb.append("No user auth types in company: ");
+			sb.append(companyId);
+
+			throw new IllegalArgumentException(sb.toString());
+		}
+
+		if (!userAuthTypes.containsKey(issuer)) {
+			sb.append("No user auth type for issuer: ");
+			sb.append(issuer);
+			sb.append(", in company: ");
+			sb.append(companyId);
+
+			throw new IllegalArgumentException(sb.toString());
+		}
+
+		return userAuthTypes.get(issuer);
 	}
 
 	@Override

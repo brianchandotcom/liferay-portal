@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DURATION_LOG=false
+
 set -e
 
 function echo_time {
@@ -8,7 +10,23 @@ function echo_time {
 	echo "completed in $((${duration} / 60)) minutes and $((${duration} % 60)) seconds."
 }
 
+function enable_duration_log {
+	for arg in "${@}"
+	do
+		if [ "${arg}" == "--log" ]
+		then
+			DURATION_LOG=true
+
+			echo "Log to record runs duration enabled"
+
+			break
+		fi
+	done
+}
+
 function main {
+	enable_duration_log "${@}"
+
 	pushd .. > /dev/null
 
 	local binaries_cache_dir_name=liferay-binaries-cache-2020

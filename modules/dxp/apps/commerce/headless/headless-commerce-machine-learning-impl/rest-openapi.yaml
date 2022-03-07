@@ -208,6 +208,155 @@ components:
                         The recommendation score.
                     format: float
                     type: number
+        Order:
+            properties:
+                accountId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                channelId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                createDate:
+                    example: 2017-07-21
+                    format: date
+                    type: string
+                currencyCode:
+                    example: USD
+                    type: string
+                customFields:
+                    additionalProperties: true
+                    type: object
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                modifiedDate:
+                    example: 2017-08-21
+                    format: date
+                    type: string
+                orderDate:
+                    example: 2017-07-21
+                    format: date
+                    type: string
+                orderItems:
+                    items:
+                        $ref: "#/components/schemas/OrderItem"
+                    type: array
+                orderStatus:
+                    example: 0
+                    format: int32
+                    minimum: 0
+                    type: integer
+                orderTypeExternalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                orderTypeId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                paymentMethod:
+                    example: paypal
+                    type: string
+                paymentStatus:
+                    example: 0
+                    format: int32
+                    minimum: 0
+                    type: integer
+                status:
+                    type: integer
+                total:
+                    example: 113
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                userId:
+                    format: int64
+                    type: integer
+            required:
+                - channelId
+                - currencyCode
+            type: object
+        OrderItem:
+            properties:
+                cpDefinitionId:
+                    format: int64
+                    type: integer
+                createDate:
+                    example: 2017-07-21
+                    format: date
+                    type: string
+                customFields:
+                    additionalProperties: true
+                    type: object
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                finalPrice:
+                    example: 200
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                modifiedDate:
+                    example: 2017-07-21
+                    format: date
+                    type: string
+                name:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Hand Saw
+                        hr_HR: Product Name HR
+                        hu_HU: Product Name HU
+                    type: object
+                options:
+                    type: string
+                orderId:
+                    example: 30128
+                    format: int64
+                    minimum: 0
+                    type: integer
+                parentOrderItemId:
+                    example: 30128
+                    format: int64
+                    minimum: 0
+                    type: integer
+                quantity:
+                    example: 2
+                    format: int32
+                    minimum: 0
+                    type: integer
+                sku:
+                    example: "12341234"
+                    type: string
+                subscription:
+                    example: true
+                    type: boolean
+                unitOfMeasure:
+                    example: pc
+                    type: string
+                unitPrice:
+                    example: 101
+                    format: bigdecimal
+                    minimum: 0
+                    type: number
+                userId:
+                    format: int64
+                    type: integer
+            type: object
         Product:
             properties:
                 catalogId:

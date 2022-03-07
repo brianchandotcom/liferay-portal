@@ -37,6 +37,37 @@ public class ObjectValidationRuleServiceWrapper
 		_objectValidationRuleService = objectValidationRuleService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectValidationRule
+			addObjectValidationRule(
+				long objectDefinitionId, boolean active,
+				java.util.Map<java.util.Locale, String> errorLabelMap,
+				java.util.Map<java.util.Locale, String> nameMap, String engine,
+				String script)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectValidationRuleService.addObjectValidationRule(
+			objectDefinitionId, active, errorLabelMap, nameMap, engine, script);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectValidationRule
+			deleteObjectValidationRule(long objectValidationRuleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectValidationRuleService.deleteObjectValidationRule(
+			objectValidationRuleId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectValidationRule
+			getObjectValidationRule(long objectValidationRuleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectValidationRuleService.getObjectValidationRule(
+			objectValidationRuleId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -45,6 +76,20 @@ public class ObjectValidationRuleServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _objectValidationRuleService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectValidationRule
+			updateObjectValidationRule(
+				long objectValidationRuleId, boolean active,
+				java.util.Map<java.util.Locale, String> errorLabelMap,
+				java.util.Map<java.util.Locale, String> nameMap, String engine,
+				String script)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectValidationRuleService.updateObjectValidationRule(
+			objectValidationRuleId, active, errorLabelMap, nameMap, engine,
+			script);
 	}
 
 	@Override

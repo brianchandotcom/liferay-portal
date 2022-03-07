@@ -14,13 +14,18 @@
 
 package com.liferay.object.service;
 
+import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -47,6 +52,20 @@ public interface ObjectValidationRuleService extends BaseService {
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectValidationRuleServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the object validation rule remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link ObjectValidationRuleServiceUtil} if injection and service tracking are not available.
 	 */
+	public ObjectValidationRule addObjectValidationRule(
+			long objectDefinitionId, boolean active,
+			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
+			String engine, String script)
+		throws PortalException;
+
+	public ObjectValidationRule deleteObjectValidationRule(
+			long objectValidationRuleId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectValidationRule getObjectValidationRule(
+			long objectValidationRuleId)
+		throws PortalException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -54,5 +73,11 @@ public interface ObjectValidationRuleService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public ObjectValidationRule updateObjectValidationRule(
+			long objectValidationRuleId, boolean active,
+			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
+			String engine, String script)
+		throws PortalException;
 
 }

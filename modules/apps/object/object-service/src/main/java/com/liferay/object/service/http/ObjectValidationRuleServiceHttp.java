@@ -14,13 +14,21 @@
 
 package com.liferay.object.service.http;
 
+import com.liferay.object.service.ObjectValidationRuleServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.object.service.ObjectValidationRuleServiceUtil</code> service
+ * <code>ObjectValidationRuleServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -41,4 +49,201 @@ package com.liferay.object.service.http;
  * @generated
  */
 public class ObjectValidationRuleServiceHttp {
+
+	public static com.liferay.object.model.ObjectValidationRule
+			addObjectValidationRule(
+				HttpPrincipal httpPrincipal, long objectDefinitionId,
+				boolean active,
+				java.util.Map<java.util.Locale, String> errorLabelMap,
+				java.util.Map<java.util.Locale, String> nameMap, String engine,
+				String script)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectValidationRuleServiceUtil.class,
+				"addObjectValidationRule",
+				_addObjectValidationRuleParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectDefinitionId, active, errorLabelMap, nameMap,
+				engine, script);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectValidationRule)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.object.model.ObjectValidationRule
+			deleteObjectValidationRule(
+				HttpPrincipal httpPrincipal, long objectValidationRuleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectValidationRuleServiceUtil.class,
+				"deleteObjectValidationRule",
+				_deleteObjectValidationRuleParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectValidationRuleId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectValidationRule)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.object.model.ObjectValidationRule
+			getObjectValidationRule(
+				HttpPrincipal httpPrincipal, long objectValidationRuleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectValidationRuleServiceUtil.class,
+				"getObjectValidationRule",
+				_getObjectValidationRuleParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectValidationRuleId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectValidationRule)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.object.model.ObjectValidationRule
+			updateObjectValidationRule(
+				HttpPrincipal httpPrincipal, long objectValidationRuleId,
+				boolean active,
+				java.util.Map<java.util.Locale, String> errorLabelMap,
+				java.util.Map<java.util.Locale, String> nameMap, String engine,
+				String script)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectValidationRuleServiceUtil.class,
+				"updateObjectValidationRule",
+				_updateObjectValidationRuleParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, objectValidationRuleId, active, errorLabelMap,
+				nameMap, engine, script);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.object.model.ObjectValidationRule)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ObjectValidationRuleServiceHttp.class);
+
+	private static final Class<?>[] _addObjectValidationRuleParameterTypes0 =
+		new Class[] {
+			long.class, boolean.class, java.util.Map.class, java.util.Map.class,
+			String.class, String.class
+		};
+	private static final Class<?>[] _deleteObjectValidationRuleParameterTypes1 =
+		new Class[] {long.class};
+	private static final Class<?>[] _getObjectValidationRuleParameterTypes2 =
+		new Class[] {long.class};
+	private static final Class<?>[] _updateObjectValidationRuleParameterTypes3 =
+		new Class[] {
+			long.class, boolean.class, java.util.Map.class, java.util.Map.class,
+			String.class, String.class
+		};
+
 }

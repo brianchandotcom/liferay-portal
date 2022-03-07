@@ -86,9 +86,9 @@ public class ObjectValidationRuleModelImpl
 		{"objectValidationRuleId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
-		{"objectDefinitionId", Types.BIGINT}, {"active_", Types.BOOLEAN},
-		{"errorLabel", Types.VARCHAR}, {"engine", Types.VARCHAR},
-		{"script", Types.VARCHAR}
+		{"objectDefinitionId", Types.BIGINT}, {"name", Types.VARCHAR},
+		{"errorLabel", Types.VARCHAR}, {"active_", Types.BOOLEAN},
+		{"engine", Types.VARCHAR}, {"script", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -104,14 +104,15 @@ public class ObjectValidationRuleModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("objectDefinitionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("errorLabel", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("engine", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("script", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectValidationRule (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectValidationRuleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,active_ BOOLEAN,errorLabel STRING null,engine VARCHAR(75) null,script VARCHAR(75) null)";
+		"create table ObjectValidationRule (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectValidationRuleId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,name STRING null,errorLabel STRING null,active_ BOOLEAN,engine VARCHAR(75) null,script VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table ObjectValidationRule";
@@ -354,17 +355,22 @@ public class ObjectValidationRuleModelImpl
 			"objectDefinitionId",
 			(BiConsumer<ObjectValidationRule, Long>)
 				ObjectValidationRule::setObjectDefinitionId);
-		attributeGetterFunctions.put("active", ObjectValidationRule::getActive);
+		attributeGetterFunctions.put("name", ObjectValidationRule::getName);
 		attributeSetterBiConsumers.put(
-			"active",
-			(BiConsumer<ObjectValidationRule, Boolean>)
-				ObjectValidationRule::setActive);
+			"name",
+			(BiConsumer<ObjectValidationRule, String>)
+				ObjectValidationRule::setName);
 		attributeGetterFunctions.put(
 			"errorLabel", ObjectValidationRule::getErrorLabel);
 		attributeSetterBiConsumers.put(
 			"errorLabel",
 			(BiConsumer<ObjectValidationRule, String>)
 				ObjectValidationRule::setErrorLabel);
+		attributeGetterFunctions.put("active", ObjectValidationRule::getActive);
+		attributeSetterBiConsumers.put(
+			"active",
+			(BiConsumer<ObjectValidationRule, Boolean>)
+				ObjectValidationRule::setActive);
 		attributeGetterFunctions.put("engine", ObjectValidationRule::getEngine);
 		attributeSetterBiConsumers.put(
 			"engine",
@@ -580,33 +586,109 @@ public class ObjectValidationRuleModelImpl
 
 	@JSON
 	@Override
-	public boolean getActive() {
-		return _active;
+	public String getName() {
+		if (_name == null) {
+			return "";
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public String getName(Locale locale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getName(languageId);
+	}
+
+	@Override
+	public String getName(Locale locale, boolean useDefault) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+
+		return getName(languageId, useDefault);
+	}
+
+	@Override
+	public String getName(String languageId) {
+		return LocalizationUtil.getLocalization(getName(), languageId);
+	}
+
+	@Override
+	public String getName(String languageId, boolean useDefault) {
+		return LocalizationUtil.getLocalization(
+			getName(), languageId, useDefault);
+	}
+
+	@Override
+	public String getNameCurrentLanguageId() {
+		return _nameCurrentLanguageId;
 	}
 
 	@JSON
 	@Override
-	public boolean isActive() {
-		return _active;
+	public String getNameCurrentValue() {
+		Locale locale = getLocale(_nameCurrentLanguageId);
+
+		return getName(locale);
 	}
 
 	@Override
-	public void setActive(boolean active) {
+	public Map<Locale, String> getNameMap() {
+		return LocalizationUtil.getLocalizationMap(getName());
+	}
+
+	@Override
+	public void setName(String name) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_active = active;
+		_name = name;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getColumnOriginalValue(String)}
-	 */
-	@Deprecated
-	public boolean getOriginalActive() {
-		return GetterUtil.getBoolean(
-			this.<Boolean>getColumnOriginalValue("active_"));
+	@Override
+	public void setName(String name, Locale locale) {
+		setName(name, locale, LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void setName(String name, Locale locale, Locale defaultLocale) {
+		String languageId = LocaleUtil.toLanguageId(locale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+
+		if (Validator.isNotNull(name)) {
+			setName(
+				LocalizationUtil.updateLocalization(
+					getName(), "Name", name, languageId, defaultLanguageId));
+		}
+		else {
+			setName(
+				LocalizationUtil.removeLocalization(
+					getName(), "Name", languageId));
+		}
+	}
+
+	@Override
+	public void setNameCurrentLanguageId(String languageId) {
+		_nameCurrentLanguageId = languageId;
+	}
+
+	@Override
+	public void setNameMap(Map<Locale, String> nameMap) {
+		setNameMap(nameMap, LocaleUtil.getDefault());
+	}
+
+	@Override
+	public void setNameMap(Map<Locale, String> nameMap, Locale defaultLocale) {
+		if (nameMap == null) {
+			return;
+		}
+
+		setName(
+			LocalizationUtil.updateLocalization(
+				nameMap, getName(), "Name",
+				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
 	@JSON
@@ -723,6 +805,37 @@ public class ObjectValidationRuleModelImpl
 
 	@JSON
 	@Override
+	public boolean getActive() {
+		return _active;
+	}
+
+	@JSON
+	@Override
+	public boolean isActive() {
+		return _active;
+	}
+
+	@Override
+	public void setActive(boolean active) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_active = active;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public boolean getOriginalActive() {
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("active_"));
+	}
+
+	@JSON
+	@Override
 	public String getEngine() {
 		if (_engine == null) {
 			return "";
@@ -809,6 +922,17 @@ public class ObjectValidationRuleModelImpl
 	public String[] getAvailableLanguageIds() {
 		Set<String> availableLanguageIds = new TreeSet<String>();
 
+		Map<Locale, String> nameMap = getNameMap();
+
+		for (Map.Entry<Locale, String> entry : nameMap.entrySet()) {
+			Locale locale = entry.getKey();
+			String value = entry.getValue();
+
+			if (Validator.isNotNull(value)) {
+				availableLanguageIds.add(LocaleUtil.toLanguageId(locale));
+			}
+		}
+
 		Map<Locale, String> errorLabelMap = getErrorLabelMap();
 
 		for (Map.Entry<Locale, String> entry : errorLabelMap.entrySet()) {
@@ -826,7 +950,7 @@ public class ObjectValidationRuleModelImpl
 
 	@Override
 	public String getDefaultLanguageId() {
-		String xml = getErrorLabel();
+		String xml = getName();
 
 		if (xml == null) {
 			return "";
@@ -860,6 +984,15 @@ public class ObjectValidationRuleModelImpl
 		Locale defaultLocale = LocaleUtil.getDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
+
+		String name = getName(defaultLocale);
+
+		if (Validator.isNull(name)) {
+			setName(getName(modelDefaultLanguageId), defaultLocale);
+		}
+		else {
+			setName(getName(defaultLocale), defaultLocale, defaultLocale);
+		}
 
 		String errorLabel = getErrorLabel(defaultLocale);
 
@@ -902,8 +1035,9 @@ public class ObjectValidationRuleModelImpl
 		objectValidationRuleImpl.setCreateDate(getCreateDate());
 		objectValidationRuleImpl.setModifiedDate(getModifiedDate());
 		objectValidationRuleImpl.setObjectDefinitionId(getObjectDefinitionId());
-		objectValidationRuleImpl.setActive(isActive());
+		objectValidationRuleImpl.setName(getName());
 		objectValidationRuleImpl.setErrorLabel(getErrorLabel());
+		objectValidationRuleImpl.setActive(isActive());
 		objectValidationRuleImpl.setEngine(getEngine());
 		objectValidationRuleImpl.setScript(getScript());
 
@@ -935,10 +1069,12 @@ public class ObjectValidationRuleModelImpl
 			this.<Date>getColumnOriginalValue("modifiedDate"));
 		objectValidationRuleImpl.setObjectDefinitionId(
 			this.<Long>getColumnOriginalValue("objectDefinitionId"));
-		objectValidationRuleImpl.setActive(
-			this.<Boolean>getColumnOriginalValue("active_"));
+		objectValidationRuleImpl.setName(
+			this.<String>getColumnOriginalValue("name"));
 		objectValidationRuleImpl.setErrorLabel(
 			this.<String>getColumnOriginalValue("errorLabel"));
+		objectValidationRuleImpl.setActive(
+			this.<Boolean>getColumnOriginalValue("active_"));
 		objectValidationRuleImpl.setEngine(
 			this.<String>getColumnOriginalValue("engine"));
 		objectValidationRuleImpl.setScript(
@@ -1069,7 +1205,13 @@ public class ObjectValidationRuleModelImpl
 		objectValidationRuleCacheModel.objectDefinitionId =
 			getObjectDefinitionId();
 
-		objectValidationRuleCacheModel.active = isActive();
+		objectValidationRuleCacheModel.name = getName();
+
+		String name = objectValidationRuleCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			objectValidationRuleCacheModel.name = null;
+		}
 
 		objectValidationRuleCacheModel.errorLabel = getErrorLabel();
 
@@ -1078,6 +1220,8 @@ public class ObjectValidationRuleModelImpl
 		if ((errorLabel != null) && (errorLabel.length() == 0)) {
 			objectValidationRuleCacheModel.errorLabel = null;
 		}
+
+		objectValidationRuleCacheModel.active = isActive();
 
 		objectValidationRuleCacheModel.engine = getEngine();
 
@@ -1197,9 +1341,11 @@ public class ObjectValidationRuleModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _objectDefinitionId;
-	private boolean _active;
+	private String _name;
+	private String _nameCurrentLanguageId;
 	private String _errorLabel;
 	private String _errorLabelCurrentLanguageId;
+	private boolean _active;
 	private String _engine;
 	private String _script;
 
@@ -1242,8 +1388,9 @@ public class ObjectValidationRuleModelImpl
 		_columnOriginalValues.put("createDate", _createDate);
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("objectDefinitionId", _objectDefinitionId);
-		_columnOriginalValues.put("active_", _active);
+		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("errorLabel", _errorLabel);
+		_columnOriginalValues.put("active_", _active);
 		_columnOriginalValues.put("engine", _engine);
 		_columnOriginalValues.put("script", _script);
 	}
@@ -1288,13 +1435,15 @@ public class ObjectValidationRuleModelImpl
 
 		columnBitmasks.put("objectDefinitionId", 256L);
 
-		columnBitmasks.put("active_", 512L);
+		columnBitmasks.put("name", 512L);
 
 		columnBitmasks.put("errorLabel", 1024L);
 
-		columnBitmasks.put("engine", 2048L);
+		columnBitmasks.put("active_", 2048L);
 
-		columnBitmasks.put("script", 4096L);
+		columnBitmasks.put("engine", 4096L);
+
+		columnBitmasks.put("script", 8192L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

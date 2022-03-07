@@ -31,6 +31,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface DLSizeLimitConfiguration {
 
+	@Meta.AD(
+		deflt = "0", description = "file-max-size-help",
+		name = "maximum-file-size", required = false
+	)
+	public long fileMaxSize();
+
 	@Meta.AD(deflt = "", name = "mime-type-size-limit-name", required = false)
 	public String[] mimeTypeSizeLimit();
 

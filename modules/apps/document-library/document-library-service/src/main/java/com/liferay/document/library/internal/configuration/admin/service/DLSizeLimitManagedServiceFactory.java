@@ -51,6 +51,13 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 		_unmapPid(pid);
 	}
 
+	public long getCompanyFileMaxSize(long companyId) {
+		DLSizeLimitConfiguration dlSizeLimitConfiguration =
+			_getCompanyDLSizeLimitConfiguration(companyId);
+
+		return dlSizeLimitConfiguration.fileMaxSize();
+	}
+
 	public long getCompanyMimeTypeSizeLimit(long companyId, String mimeType) {
 		if (Validator.isNull(mimeType)) {
 			return 0;

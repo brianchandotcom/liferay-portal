@@ -273,7 +273,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 						method: 'POST',
 						node: A.one(document.<portlet:namespace />fm2),
 					},
-					maxFileSize: <%= dlConfiguration.fileMaxSize() %>,
+					maxFileSize: <%= DLValidatorUtil.getMaxAllowableSize(null) %>,
 					namespace: '<portlet:namespace />',
 					openViewMoreFileEntryTypesURL:
 						'<%= dlViewDisplayContext.getViewMoreFileEntryTypesURL() %>',

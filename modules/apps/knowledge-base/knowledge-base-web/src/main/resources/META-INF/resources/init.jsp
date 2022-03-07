@@ -51,6 +51,7 @@ page import="com.liferay.blogs.model.BlogsEntry" %><%@
 page import="com.liferay.document.library.kernel.exception.FileNameException" %><%@
 page import="com.liferay.document.library.kernel.exception.FileSizeException" %><%@
 page import="com.liferay.document.library.kernel.exception.NoSuchFileException" %><%@
+page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %><%@
 page import="com.liferay.journal.model.JournalArticle" %><%@
 page import="com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration" %><%@
 page import="com.liferay.knowledge.base.constants.KBActionKeys" %><%@

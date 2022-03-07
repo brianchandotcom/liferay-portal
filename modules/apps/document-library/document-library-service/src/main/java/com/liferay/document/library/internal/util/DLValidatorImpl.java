@@ -80,7 +80,8 @@ public final class DLValidatorImpl implements DLValidator {
 
 	@Override
 	public long getMaxAllowableSize(String mimeType) {
-		long globalMaxAllowableSize = _getGlobalMaxAllowableSize();
+		long globalMaxAllowableSize = _getGlobalMaxAllowableSize(
+			CompanyThreadLocal.getCompanyId());
 
 		long mimeTypeFileMaxSize =
 			_dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
@@ -305,8 +306,9 @@ public final class DLValidatorImpl implements DLValidator {
 			uploadServletRequestConfigurationHelper;
 	}
 
-	private long _getGlobalMaxAllowableSize() {
-		long dlFileMaxSize = _dlConfiguration.fileMaxSize();
+	private long _getGlobalMaxAllowableSize(long companyId) {
+		long dlFileMaxSize =
+			_dlSizeLimitManagedServiceFactory.getCompanyFileMaxSize(companyId);
 		long uploadServletRequestFileMaxSize =
 			_uploadServletRequestConfigurationHelper.getMaxSize();
 

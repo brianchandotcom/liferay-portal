@@ -69,7 +69,8 @@ public class DLValidatorImplTest {
 	@Test
 	public void testMaxAllowableSizeDLFileMaxSizeTakesPrecedenceOverMimeTypeSizeLimit() {
 		Mockito.when(
-			_dlConfiguration.fileMaxSize()
+			_dlSizeLimitManagedServiceFactory.getCompanyFileMaxSize(
+				Mockito.anyLong())
 		).thenReturn(
 			10L
 		);
@@ -93,7 +94,8 @@ public class DLValidatorImplTest {
 		);
 
 		Mockito.when(
-			_dlConfiguration.fileMaxSize()
+			_dlSizeLimitManagedServiceFactory.getCompanyFileMaxSize(
+				Mockito.anyLong())
 		).thenReturn(
 			10L
 		);
@@ -117,7 +119,8 @@ public class DLValidatorImplTest {
 		);
 
 		Mockito.when(
-			_dlConfiguration.fileMaxSize()
+			_dlSizeLimitManagedServiceFactory.getCompanyFileMaxSize(
+				Mockito.anyLong())
 		).thenReturn(
 			15L
 		);

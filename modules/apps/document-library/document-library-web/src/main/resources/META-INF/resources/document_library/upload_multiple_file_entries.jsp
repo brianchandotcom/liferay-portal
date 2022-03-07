@@ -78,7 +78,7 @@ if (portletTitleBasedNavigation) {
 									'<liferay-portlet:actionURL name="/document_library/upload_multiple_file_entries"><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>',
 								fileDescription:
 									'<%= StringUtil.merge(dlConfiguration.fileExtensions()) %>',
-								maxFileSize: '<%= dlConfiguration.fileMaxSize() %> B',
+								maxFileSize: '<%= DLValidatorUtil.getMaxAllowableSize(null) %> B',
 								metadataContainer: '#<portlet:namespace />commonFileMetadataContainer',
 								metadataExplanationContainer:
 									'#<portlet:namespace />metadataExplanationContainer',

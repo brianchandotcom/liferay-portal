@@ -21,6 +21,7 @@ page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.asset.kernel.model.AssetRendererFactory" %><%@
 page import="com.liferay.document.library.configuration.DLConfiguration" %><%@
 page import="com.liferay.document.library.kernel.model.DLFileEntry" %><%@
+page import="com.liferay.document.library.kernel.util.DLValidatorUtil" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder" %><%@
 page import="com.liferay.portal.kernel.comment.Comment" %><%@
 page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@

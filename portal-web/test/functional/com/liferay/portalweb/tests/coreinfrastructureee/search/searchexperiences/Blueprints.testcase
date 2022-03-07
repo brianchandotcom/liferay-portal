@@ -3006,6 +3006,8 @@ definition {
 
 		AssertChecked.assertCheckedNotVisible(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_ALL_CHECKBOX");
 
+		AssertElementNotPresent(locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_REMAINING");
+
 		AssertChecked.assertCheckedNotVisible(
 			assetType = "Blogs Entry",
 			locator1 = "Blueprints#BLUEPRINTS_SEARCHABLE_ASSET_TYPE_CHECKBOX");

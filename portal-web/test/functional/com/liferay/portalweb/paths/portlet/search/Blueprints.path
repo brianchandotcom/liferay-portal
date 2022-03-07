@@ -282,12 +282,12 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_ALL_CHECKBOX</td>
-	<td>//div[contains(@class,'searchable-types-modal')]//ul[.//*[contains(.,'Select All')]]//input[@type='checkbox']</td>
+	<td>//div[contains(@class,'searchable-types-modal')]//ul[.//*[contains(.,'Select')]]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BLUEPRINTS_SEARCHABLE_ASSET_TYPE_SELECT_REMAINING</td>
-	<td>//div[contains(@class,'searchable-types-modal')]//a[contains(.,'Select All')]</td>
+	<td>//div[contains(@class,'searchable-types-modal')]//button[contains(.,'Select All')]</td>
 	<td></td>
 </tr>
 <tr>

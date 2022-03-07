@@ -25,7 +25,7 @@ const ProductsMiddlewareOutlet = () => {
 
 	const hasAccessToCurrentProduct = useMemo(() => {
 		const [pageKey] =
-			Object.entries(PAGE_TYPES).find((page) => page[1] === productId) ||
+			Object.entries(PAGE_TYPES)?.find((page) => page[1] === productId) ||
 			[];
 
 		if (pageKey) {

@@ -10,15 +10,20 @@
  */
 
 import {useOutletContext, useParams} from 'react-router-dom';
-import GenerateNewDXPKey from '../../../../containers/GenerateNewDXPKey/pages/GenerateNewDXPKey';
+import GenerateNewDXPKey from '../../../../containers/GenerateNewDXPKey';
 import {PAGE_TYPES} from '../../../../utils/constants';
 
 const NewProductOutlet = () => {
 	const {productId} = useParams();
-	const {hasAccessToCurrentProduct, sessionId} = useOutletContext();
+	const {hasAccessToCurrentProduct, project, sessionId} = useOutletContext();
 
 	const newActivationComponents = {
-		[PAGE_TYPES.dxpNew]: <GenerateNewDXPKey sessionId={sessionId} />,
+		[PAGE_TYPES.dxpNew]: (
+			<GenerateNewDXPKey
+				accountKey={project.accountKey}
+				sessionId={sessionId}
+			/>
+		),
 	};
 
 	const currentProduct = newActivationComponents[`${productId}_new`];

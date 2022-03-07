@@ -7397,16 +7397,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/sparse-bit-set.jar</file-name>
-				<version>1.2</version>
-				<project-name>SparseBitSet</project-name>
-				<project-url>https://github.com/brettwooldridge/SparseBitSet</project-url>
-				<licenses>
-					<license>Apache License 2.0</license>
-					<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/spring-aop.jar</file-name>
 				<version>5.2.10</version>
 				<project-name>Spring</project-name>

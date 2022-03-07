@@ -32,7 +32,9 @@ export type CTypePagination<ObjectKey extends string, Query = any> = {
 
 export * from './testrayBuild';
 export * from './testrayCase';
+export * from './testrayCaseType';
 export * from './testrayProject';
 export * from './testrayRequirement';
 export * from './testrayRoutine';
 export * from './testraySuite';
+export * from './testrayComponent';

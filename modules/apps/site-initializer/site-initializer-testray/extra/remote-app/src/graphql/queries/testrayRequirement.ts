@@ -14,6 +14,8 @@
 
 import {gql} from '@apollo/client';
 
+import {testrayRequirementFragment} from '../fragments';
+
 export type TestrayRequirement = {
 	components: string;
 	description: string;
@@ -26,6 +28,8 @@ export type TestrayRequirement = {
 };
 
 export const getTestrayRequirements = gql`
+	${testrayRequirementFragment}
+
 	query getTestrayRequirements(
 		$filter: String
 		$page: Int = 1
@@ -38,14 +42,7 @@ export const getTestrayRequirements = gql`
 				pageSize: $pageSize
 			) {
 				items {
-					components
-					description
-					descriptionType
-					key
-					linkTitle
-					linkURL
-					summary
-					testrayRequirementId
+					...TestrayRequirementFragment
 				}
 				lastPage
 				page
@@ -57,16 +54,12 @@ export const getTestrayRequirements = gql`
 `;
 
 export const getTestrayRequirement = gql`
+	${testrayRequirementFragment}
+
 	query getTestrayRequirement($testrayRequirementId: Long!) {
 		c {
 			testrayRequirement(testrayRequirementId: $testrayRequirementId) {
-				description
-				components
-				summary
-				key
-				linkTitle
-				linkURL
-				descriptionType
+				...TestrayRequirementFragment
 			}
 		}
 	}

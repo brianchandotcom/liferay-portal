@@ -14,17 +14,25 @@
 
 import {gql} from '@apollo/client';
 
+export type TestrayComponent = {
+	dateCreated: string;
+	dateModified: string;
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+	originationKey: string;
+	status: string;
+};
+
 const testrayComponentFragment = gql`
 	fragment TestrayComponentFragment on C_TestrayComponent {
 		dateCreated
 		dateModified
 		externalReferenceCode
+		id: testrayComponentId
 		name
 		originationKey
 		status
-		testrayComponentId
-		testrayProjectId
-		testrayTeamId
 	}
 `;
 

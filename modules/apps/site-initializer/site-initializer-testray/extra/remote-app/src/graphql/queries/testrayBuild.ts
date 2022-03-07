@@ -14,6 +14,7 @@
 
 import {gql} from '@apollo/client';
 
+import {testrayBuildFragment} from '../fragments/testrayBuild';
 import {TestrayProject} from './testrayProject';
 import {TestrayRoutine} from './testrayRoutine';
 
@@ -59,42 +60,13 @@ export const getTestrayBuilds = gql`
 	}
 `;
 
-export const getTestrayBuildsR = gql`
-	query getTestrayBuilds(
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
-	) {
-		c {
-			testrayBuilds(filter: $filter, page: $page, pageSize: $pageSize) {
-				items {
-					dateCreated
-					description
-					dueStatus
-					gitHash
-					name
-					promoted
-					testrayBuildId
-				}
-				lastPage
-				page
-				pageSize
-				totalCount
-			}
-		}
-	}
-`;
-
 export const getTestrayBuild = gql`
+	${testrayBuildFragment}
+
 	query getTestrayBuild($testrayBuildId: Long!) {
 		c {
 			testrayBuild(testrayBuildId: $testrayBuildId) {
-				dateCreated
-				description
-				dueStatus
-				gitHash
-				name
-				promoted
+				...TestrayBuildFragment
 			}
 		}
 	}

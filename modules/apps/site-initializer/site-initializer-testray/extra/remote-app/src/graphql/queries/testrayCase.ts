@@ -14,6 +14,8 @@
 
 import {gql} from '@apollo/client';
 
+import {testrayCaseFragment} from '../fragments';
+
 export type TestrayCase = {
 	caseNumber: number;
 	description: string;
@@ -28,25 +30,7 @@ export type TestrayCase = {
 	testrayCaseResult: number;
 };
 
-const testrayCaseFragment = gql`
-	fragment TestrayCaseFragment on C_TestrayCase {
-		caseNumber
-		description
-		descriptionType
-		estimatedDuration
-		name
-		originationKey
-		priority
-		steps
-		stepsType
-		testrayCaseResult
-		testrayCaseId
-	}
-`;
-
 export const getTestrayCases = gql`
-	${testrayCaseFragment}
-
 	query getTestrayCases(
 		$filter: String
 		$page: Int = 1

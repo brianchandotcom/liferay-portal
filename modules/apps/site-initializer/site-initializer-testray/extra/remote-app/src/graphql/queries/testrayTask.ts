@@ -14,6 +14,7 @@
 
 import {gql} from '@apollo/client';
 
+import {testrayTaskFragment} from '../fragments';
 import {TestrayBuild} from './testrayBuild';
 
 export type TestrayTask = {
@@ -21,14 +22,6 @@ export type TestrayTask = {
 	name: string;
 	testrayBuild?: TestrayBuild;
 };
-
-const testrayTaskFragment = gql`
-	fragment TestrayTaskFragment on C_TestrayTask {
-		dueStatus
-		name
-		testrayBuild
-	}
-`;
 
 export const getTestrayTask = gql`
 	${testrayTaskFragment}

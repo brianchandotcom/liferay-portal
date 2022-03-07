@@ -14,6 +14,8 @@
 
 import {gql} from '@apollo/client';
 
+import {testraySubTasksFragment} from '../fragments';
+
 export type TestraySubTask = {
 	dueStatus: number;
 	name: string;
@@ -21,6 +23,8 @@ export type TestraySubTask = {
 };
 
 export const getTestraySubTasks = gql`
+	${testraySubTasksFragment}
+
 	query getTestraySubTasks(
 		$filter: String
 		$page: Int = 1
@@ -29,9 +33,7 @@ export const getTestraySubTasks = gql`
 		c {
 			testraySubTasks(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
-					dueStatus
-					name
-					score
+					...TestraySubTasksFragment
 				}
 				lastPage
 				page

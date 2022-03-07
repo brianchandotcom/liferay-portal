@@ -14,6 +14,8 @@
 
 import {gql} from '@apollo/client';
 
+import {testraySuiteFragment} from '../fragments';
+
 export type TestraySuite = {
 	dateCreated: string;
 	dateModified: string;
@@ -22,17 +24,6 @@ export type TestraySuite = {
 	testraySuiteId: number;
 	type: string;
 };
-
-const testraySuiteFragment = gql`
-	fragment TestraySuiteFragment on C_TestraySuite {
-		dateCreated
-		dateModified
-		description
-		name
-		testraySuiteId
-		type
-	}
-`;
 
 export const getTestraySuite = gql`
 	${testraySuiteFragment}

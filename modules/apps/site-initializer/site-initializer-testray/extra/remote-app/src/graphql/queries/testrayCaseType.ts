@@ -14,6 +14,15 @@
 
 import {gql} from '@apollo/client';
 
+export type TestrayCaseType = {
+	dateCreated: string;
+	dateModified: string;
+	externalReferenceCode: string;
+	id: number;
+	name: string;
+	status: string;
+};
+
 const testrayCaseTypeFragment = gql`
 	fragment TestrayCaseTypeFragment on C_TestrayCaseType {
 		dateCreated
@@ -21,7 +30,7 @@ const testrayCaseTypeFragment = gql`
 		externalReferenceCode
 		name
 		status
-		testrayCaseTypeId
+		id: testrayCaseTypeId
 		testrayTask
 		testrayTaskId
 	}

@@ -27,8 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	id = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration",
-	localization = "content/Language",
-	name = "mime-type-size-limit-configuration-name"
+	localization = "content/Language", name = "dl-size-limit-configuration-name"
 )
 public interface DLSizeLimitConfiguration {
 

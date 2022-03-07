@@ -29,11 +29,7 @@ const Layout = ({
 	>
 		{headerProps ? <Header {...headerProps} /> : headerSkeleton}
 
-		<main
-			className={classNames('flex-grow-1', className, {
-				'overflow-auto': layoutType === 'onboarding',
-			})}
-		>
+		<main className={classNames('flex-grow-1 overflow-auto', className)}>
 			{children}
 		</main>
 

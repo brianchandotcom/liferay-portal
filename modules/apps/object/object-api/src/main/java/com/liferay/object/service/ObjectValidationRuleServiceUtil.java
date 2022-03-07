@@ -14,6 +14,11 @@
 
 package com.liferay.object.service;
 
+import com.liferay.object.model.ObjectValidationRule;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Map;
+
 /**
  * Provides the remote service utility for ObjectValidationRule. This utility wraps
  * <code>com.liferay.object.service.impl.ObjectValidationRuleServiceImpl</code> and is an
@@ -33,14 +38,48 @@ public class ObjectValidationRuleServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectValidationRuleServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectValidationRule addObjectValidationRule(
+			long objectDefinitionId, boolean active,
+			Map<java.util.Locale, String> errorLabelMap,
+			Map<java.util.Locale, String> nameMap, String engine, String script)
+		throws PortalException {
+
+		return getService().addObjectValidationRule(
+			objectDefinitionId, active, errorLabelMap, nameMap, engine, script);
+	}
+
+	public static ObjectValidationRule deleteObjectValidationRule(
+			long objectValidationRuleId)
+		throws PortalException {
+
+		return getService().deleteObjectValidationRule(objectValidationRuleId);
+	}
+
+	public static ObjectValidationRule getObjectValidationRule(
+			long objectValidationRuleId)
+		throws PortalException {
+
+		return getService().getObjectValidationRule(objectValidationRuleId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier
 	 */
-	public static java.lang.String getOSGiServiceIdentifier() {
+	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static ObjectValidationRule updateObjectValidationRule(
+			long objectValidationRuleId, boolean active,
+			Map<java.util.Locale, String> errorLabelMap,
+			Map<java.util.Locale, String> nameMap, String engine, String script)
+		throws PortalException {
+
+		return getService().updateObjectValidationRule(
+			objectValidationRuleId, active, errorLabelMap, nameMap, engine,
+			script);
 	}
 
 	public static ObjectValidationRuleService getService() {

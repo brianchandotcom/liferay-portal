@@ -78,7 +78,7 @@ public class ObjectValidationRuleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,10 +98,12 @@ public class ObjectValidationRuleCacheModel
 		sb.append(modifiedDate);
 		sb.append(", objectDefinitionId=");
 		sb.append(objectDefinitionId);
-		sb.append(", active=");
-		sb.append(active);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append(", errorLabel=");
 		sb.append(errorLabel);
+		sb.append(", active=");
+		sb.append(active);
 		sb.append(", engine=");
 		sb.append(engine);
 		sb.append(", script=");
@@ -152,7 +154,13 @@ public class ObjectValidationRuleCacheModel
 		}
 
 		objectValidationRuleImpl.setObjectDefinitionId(objectDefinitionId);
-		objectValidationRuleImpl.setActive(active);
+
+		if (name == null) {
+			objectValidationRuleImpl.setName("");
+		}
+		else {
+			objectValidationRuleImpl.setName(name);
+		}
 
 		if (errorLabel == null) {
 			objectValidationRuleImpl.setErrorLabel("");
@@ -160,6 +168,8 @@ public class ObjectValidationRuleCacheModel
 		else {
 			objectValidationRuleImpl.setErrorLabel(errorLabel);
 		}
+
+		objectValidationRuleImpl.setActive(active);
 
 		if (engine == null) {
 			objectValidationRuleImpl.setEngine("");
@@ -195,9 +205,10 @@ public class ObjectValidationRuleCacheModel
 		modifiedDate = objectInput.readLong();
 
 		objectDefinitionId = objectInput.readLong();
+		name = objectInput.readUTF();
+		errorLabel = objectInput.readUTF();
 
 		active = objectInput.readBoolean();
-		errorLabel = objectInput.readUTF();
 		engine = objectInput.readUTF();
 		script = objectInput.readUTF();
 	}
@@ -231,7 +242,12 @@ public class ObjectValidationRuleCacheModel
 
 		objectOutput.writeLong(objectDefinitionId);
 
-		objectOutput.writeBoolean(active);
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
 
 		if (errorLabel == null) {
 			objectOutput.writeUTF("");
@@ -239,6 +255,8 @@ public class ObjectValidationRuleCacheModel
 		else {
 			objectOutput.writeUTF(errorLabel);
 		}
+
+		objectOutput.writeBoolean(active);
 
 		if (engine == null) {
 			objectOutput.writeUTF("");
@@ -264,8 +282,9 @@ public class ObjectValidationRuleCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long objectDefinitionId;
-	public boolean active;
+	public String name;
 	public String errorLabel;
+	public boolean active;
 	public String engine;
 	public String script;
 

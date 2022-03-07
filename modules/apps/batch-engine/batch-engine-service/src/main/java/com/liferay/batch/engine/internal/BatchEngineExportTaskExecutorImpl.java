@@ -18,8 +18,10 @@ import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
+import com.liferay.batch.engine.constants.BatchEnginePortletKeys;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutor;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutorFactory;
+import com.liferay.batch.engine.internal.notification.BatchEngineNotificationSender;
 import com.liferay.batch.engine.internal.writer.BatchEngineExportTaskItemWriter;
 import com.liferay.batch.engine.internal.writer.BatchEngineExportTaskItemWriterFactory;
 import com.liferay.batch.engine.model.BatchEngineExportTask;
@@ -32,9 +34,11 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.jdbc.OutputBlob;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.filter.ExpressionConvert;
@@ -62,6 +66,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = BatchEngineExportTaskExecutor.class
 )
 public class BatchEngineExportTaskExecutorImpl
+	extends BatchEngineNotificationSender
 	implements BatchEngineExportTaskExecutor {
 
 	@Override
@@ -81,6 +86,14 @@ public class BatchEngineExportTaskExecutorImpl
 			_updateBatchEngineExportTask(
 				BatchEngineTaskExecuteStatus.COMPLETED, batchEngineExportTask,
 				null);
+
+			sendUserNotificationEvents(
+				batchEngineExportTask.getUserId(),
+				BatchEnginePortletKeys.BATCH_ENGINE,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE,
+				getNotificationEventJSONObject(
+					batchEngineExportTask.getClassName(),
+					BatchEngineTaskExecuteStatus.COMPLETED));
 		}
 		catch (Throwable throwable) {
 			_log.error(
@@ -91,6 +104,14 @@ public class BatchEngineExportTaskExecutorImpl
 			_updateBatchEngineExportTask(
 				BatchEngineTaskExecuteStatus.FAILED, batchEngineExportTask,
 				throwable.getMessage());
+
+			sendUserNotificationEvents(
+				batchEngineExportTask.getUserId(),
+				BatchEnginePortletKeys.BATCH_ENGINE,
+				UserNotificationDeliveryConstants.TYPE_WEBSITE,
+				getNotificationEventJSONObject(
+					batchEngineExportTask.getClassName(),
+					BatchEngineTaskExecuteStatus.FAILED));
 		}
 	}
 
@@ -114,6 +135,14 @@ public class BatchEngineExportTaskExecutorImpl
 			new BatchEngineTaskItemDelegateExecutorFactory(
 				_batchEngineTaskMethodRegistry, _expressionConvert,
 				_filterParserProvider, _sortParserProvider);
+
+		setUserNotificationEventLocalService(
+			_userNotificationEventLocalService);
+	}
+
+	@Override
+	protected String getTaskType() {
+		return "export";
 	}
 
 	private void _exportItems(BatchEngineExportTask batchEngineExportTask)
@@ -256,5 +285,9 @@ public class BatchEngineExportTaskExecutorImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	@Reference
+	private UserNotificationEventLocalService
+		_userNotificationEventLocalService;
 
 }

@@ -74,7 +74,7 @@ exports[`PieChart renders 1`] = `
               <circle
                 cx="10"
                 cy="10"
-                fill="#4b9bff"
+                fill="#4B9FFF"
                 r="9"
                 stroke-width="3"
               />
@@ -102,7 +102,7 @@ exports[`PieChart renders 1`] = `
               <circle
                 cx="10"
                 cy="10"
-                fill="#af78ff"
+                fill="#FFB46E"
                 r="9"
                 stroke-width="3"
               />

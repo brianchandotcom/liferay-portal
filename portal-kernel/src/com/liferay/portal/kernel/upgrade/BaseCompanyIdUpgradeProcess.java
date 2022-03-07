@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 
-import java.io.IOException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -99,9 +97,7 @@ public abstract class BaseCompanyIdUpgradeProcess extends UpgradeProcess {
 			_createCompanyIdColumn = createCompanyIdColumn;
 		}
 
-		public void update(Connection connection)
-			throws Exception {
-
+		public void update(Connection connection) throws Exception {
 			for (String[] foreignNames : _foreignNamesArray) {
 				runSQL(
 					connection,

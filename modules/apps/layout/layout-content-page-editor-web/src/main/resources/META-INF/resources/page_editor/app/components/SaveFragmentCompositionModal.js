@@ -253,7 +253,7 @@ const SaveFragmentCompositionModal = ({onCloseModal}) => {
 								<>
 									<p className="sheet-tertiary-title">
 										{Liferay.Language.get(
-											'select-collection'
+											'select-fragment-set'
 										)}
 									</p>
 
@@ -322,7 +322,7 @@ const SaveFragmentCompositionModal = ({onCloseModal}) => {
 									/>
 
 									{Liferay.Language.get(
-										'this-fragment-will-be-saved-in-a-new-collection-called-saved-fragments'
+										'this-fragment-will-be-saved-in-a-new-fragment-set-called-saved-fragments'
 									)}
 								</div>
 							)}

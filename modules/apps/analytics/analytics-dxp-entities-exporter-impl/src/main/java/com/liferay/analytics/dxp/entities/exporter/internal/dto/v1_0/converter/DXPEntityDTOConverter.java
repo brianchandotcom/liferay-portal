@@ -20,15 +20,24 @@ import com.liferay.analytics.dxp.entities.exporter.dto.v1_0.Field;
 import com.liferay.analytics.message.sender.util.AnalyticsExpandoBridgeUtil;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -37,6 +46,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,6 +75,65 @@ public class DXPEntityDTOConverter
 			_getExpandoFields(baseModel), _getFields(baseModel),
 			(String)baseModel.getPrimaryKeyObj(),
 			baseModel.getModelClassName());
+	}
+
+	private Field[] _getExpandoColumnFields(
+		String className, String dataType, ExpandoColumn expandoColumn) {
+
+		List<Field> fields = new ArrayList<Field>() {
+			{
+				add(
+					new Field() {
+						{
+							name = "className";
+							value = className;
+						}
+					});
+				add(
+					new Field() {
+						{
+							name = "companyId";
+							value = expandoColumn.getCompanyId();
+						}
+					});
+				add(
+					new Field() {
+						{
+							name = "dataType";
+							value = dataType;
+						}
+					});
+				add(
+					new Field() {
+						{
+							name = "displayType";
+							value =
+								ExpandoColumnConstants.
+									getDefaultDisplayTypeProperty(
+										expandoColumn.getType(),
+										expandoColumn.
+											getTypeSettingsProperties());
+						}
+					});
+				add(
+					new Field() {
+						{
+							name = "name";
+							value = expandoColumn.getName() + "-" + dataType;
+						}
+					});
+				add(
+					new Field() {
+						{
+							name = "typeLabel";
+							value = ExpandoColumnConstants.getTypeLabel(
+								expandoColumn.getType());
+						}
+					});
+			}
+		};
+
+		return fields.toArray(new Field[0]);
 	}
 
 	private ExpandoField[] _getExpandoFields(BaseModel<?> baseModel) {
@@ -124,6 +193,29 @@ public class DXPEntityDTOConverter
 	}
 
 	private Field[] _getFields(BaseModel<?> baseModel) {
+		if (StringUtil.equals(
+				baseModel.getModelClassName(), ExpandoColumn.class.getName())) {
+
+			ExpandoColumn expandoColumn = (ExpandoColumn)baseModel;
+
+			String className = User.class.getName();
+
+			if (_isCustomField(
+					Organization.class.getName(), expandoColumn.getTableId())) {
+
+				className = Organization.class.getName();
+			}
+
+			String dataType = ExpandoColumnConstants.getDataType(
+				expandoColumn.getType());
+
+			if (Validator.isBlank(dataType)) {
+				dataType = ExpandoColumnConstants.DATA_TYPE_TEXT;
+			}
+
+			return _getExpandoColumnFields(className, dataType, expandoColumn);
+		}
+
 		List<Field> fields = new ArrayList<>();
 
 		Map<String, Object> modelAttributes = baseModel.getModelAttributes();
@@ -140,6 +232,30 @@ public class DXPEntityDTOConverter
 		}
 
 		return fields.toArray(new Field[0]);
+	}
+
+	private boolean _isCustomField(String className, long tableId) {
+		long classNameId = _classNameLocalService.getClassNameId(className);
+
+		try {
+			ExpandoTable expandoTable = _expandoTableLocalService.getTable(
+				tableId);
+
+			if (Objects.equals(
+					ExpandoTableConstants.DEFAULT_TABLE_NAME,
+					expandoTable.getName()) &&
+				(expandoTable.getClassNameId() == classNameId)) {
+
+				return true;
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get expando table " + tableId, exception);
+			}
+		}
+
+		return false;
 	}
 
 	private DXPEntity _toDXPEntity(
@@ -161,11 +277,20 @@ public class DXPEntityDTOConverter
 		return dxpEntity;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DXPEntityDTOConverter.class);
+
 	@Reference
 	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Reference
+	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

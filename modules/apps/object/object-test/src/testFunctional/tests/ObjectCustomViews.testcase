@@ -292,22 +292,20 @@ definition {
 	@description = "LPS-135394 - Verify the empty state for the View tab"
 	@priority = "3"
 	test EmptyStateViewTab {
-
 		ObjectAdmin.addObjectViaAPI(
-            labelName = "Custom Object",
-            objectName = "CustomObject",
-            pluralLabelName = "Custom Objects");
-        
-        ObjectAdmin.openObjectAdmin();
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
-        ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectAdmin.openObjectAdmin();
 
-        ObjectCustomViews.goToViewsTab();
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
-        AssertTextEquals(
-                locator1 = "Message#EMPTY_INFO",
-                value1 = "No Items were found.");
+		ObjectCustomViews.goToViewsTab();
 
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No Items were found.");
 	}
 
 	@description = "LPS-135394 - Verify the Author, Creation Date, Modified Date, Workflow Status, ID columns (Metadata columns) are displayed to be selected"

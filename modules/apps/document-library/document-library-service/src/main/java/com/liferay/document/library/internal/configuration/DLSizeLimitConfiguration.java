@@ -33,6 +33,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface DLSizeLimitConfiguration {
 
 	@Meta.AD(deflt = "", name = "mime-type-size-limit-name", required = false)
-	public String[] contentTypeSizeLimit();
+	public String[] mimeTypeSizeLimit();
 
 }

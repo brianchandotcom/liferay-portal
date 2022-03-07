@@ -106,7 +106,7 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 		Map<String, Long> mimeTypeSizeLimits = new HashMap<>();
 
 		for (String mimeTypeSizeLimit :
-				dlSizeLimitConfiguration.contentTypeSizeLimit()) {
+				dlSizeLimitConfiguration.mimeTypeSizeLimit()) {
 
 			MimeTypeSizeLimitUtil.parseMimeTypeSizeLimit(
 				mimeTypeSizeLimit, mimeTypeSizeLimits::put);

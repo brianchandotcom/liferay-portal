@@ -45,7 +45,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-80085."
-	@ignore = "true"
 	@priority = "3"
 	test AddWebContentTemplateWithSmallImage {
 		Navigator.gotoStagedSitePage(

@@ -26,12 +26,14 @@ import ManagementToolbarResultsBar from './ManagementToolbarResultsBar';
 import ManagementToolbarRight from './ManagementToolbarRight';
 import ManagementToolbarSearch from './ManagementToolbarSearch';
 
-type ManagementToolbarProps = {
+export type ManagementToolbarProps = {
+	addButton?: () => void;
 	tableProps: Omit<TableProps, 'items'>;
 	totalItems: number;
 };
 
 const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
+	addButton,
 	tableProps,
 	totalItems,
 }) => {
@@ -152,7 +154,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 				/>
 
 				<ManagementToolbarRight
-					addButton={() => null}
+					addButton={addButton}
 					setShowMobile={setShowMobile}
 					viewTypes={viewTypes}
 				/>

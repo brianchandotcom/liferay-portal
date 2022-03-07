@@ -22,7 +22,7 @@ import ListViewContextProvider, {
 import i18n from '../../i18n';
 import {PAGINATION} from '../../util/constants';
 import EmptyState from '../EmptyState';
-import ManagementToolbar from '../ManagementToolbar';
+import ManagementToolbar, {ManagementToolbarProps} from '../ManagementToolbar';
 import Table, {TableProps} from '../Table';
 
 type LiferayQueryResponse<T = any> = {
@@ -34,6 +34,10 @@ type LiferayQueryResponse<T = any> = {
 };
 
 type ListViewProps<T = any> = {
+	managementToolbarProps?: Omit<
+		ManagementToolbarProps,
+		'tableProps' | 'totalItems'
+	>;
 	query: TypedDocumentNode;
 	tableProps: Omit<TableProps, 'items'>;
 	transformData: (data: T) => LiferayQueryResponse<T>;
@@ -41,6 +45,7 @@ type ListViewProps<T = any> = {
 };
 
 const ListView: React.FC<ListViewProps> = ({
+	managementToolbarProps,
 	query,
 	tableProps,
 	transformData,
@@ -89,6 +94,7 @@ const ListView: React.FC<ListViewProps> = ({
 	return (
 		<>
 			<ManagementToolbar
+				{...managementToolbarProps}
 				tableProps={tableProps}
 				totalItems={items.length}
 			/>

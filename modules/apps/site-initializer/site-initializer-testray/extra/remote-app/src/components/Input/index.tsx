@@ -14,23 +14,27 @@
 
 import {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
+import {InputHTMLAttributes} from 'react';
 
 import InputWarning from './InputWarning';
 
 type InputProps = {
 	error?: string;
 	id?: string;
-	label: string;
+	label?: string;
 	name: string;
 	required?: boolean;
-} & React.HTMLAttributes<HTMLInputElement>;
+	type?: string;
+} & InputHTMLAttributes<HTMLInputElement>;
 
 const Input: React.FC<InputProps> = ({
 	error,
 	label,
 	name,
 	id = name,
+	type,
 	required = false,
+	...otherProps
 }) => (
 	<>
 		{label && (
@@ -45,7 +49,13 @@ const Input: React.FC<InputProps> = ({
 			</label>
 		)}
 
-		<ClayInput id={id} name={name} type="text" />
+		<ClayInput
+			component={type === 'textarea' ? 'textarea' : 'input'}
+			id={id}
+			name={name}
+			type={type}
+			{...otherProps}
+		/>
 
 		{error && <InputWarning>{error}</InputWarning>}
 	</>

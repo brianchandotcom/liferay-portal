@@ -19,12 +19,13 @@ import ClayManagementToolbar from '@clayui/management-toolbar';
 import {Dispatch} from 'react';
 
 type ManagementToolbarRightProps = {
-	addButton: React.FC;
+	addButton?: () => void;
 	setShowMobile: Dispatch<boolean>;
 	viewTypes: any[];
 };
 
 const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
+	addButton,
 	setShowMobile,
 	viewTypes,
 }) => {
@@ -72,7 +73,7 @@ const ManagementToolbarRight: React.FC<ManagementToolbarRightProps> = ({
 				/>
 			</ClayManagementToolbar.Item>
 
-			<ClayManagementToolbar.Item>
+			<ClayManagementToolbar.Item onClick={addButton}>
 				<ClayButtonWithIcon
 					className="nav-btn nav-btn-monospaced"
 					symbol="plus"

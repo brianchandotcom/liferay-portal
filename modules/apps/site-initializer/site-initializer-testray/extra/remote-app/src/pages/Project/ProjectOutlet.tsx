@@ -17,10 +17,9 @@ import {useCallback, useContext, useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
 
 import {HeaderContext, HeaderTypes} from '../../context/HeaderContext';
-import {CTypePagination} from '../../graphql/queries';
+import {CType, CTypePagination} from '../../graphql/queries';
 import {
 	TestrayProject,
-	TestrayProjectQuery,
 	getTestrayProject,
 	getTestrayProjects,
 } from '../../graphql/queries/testrayProject';
@@ -34,9 +33,12 @@ const ProjectOutlet = () => {
 
 	const [, dispatch] = useContext(HeaderContext);
 
-	const {data} = useQuery<TestrayProjectQuery>(getTestrayProject, {
-		variables: {testrayProjectId: projectId},
-	});
+	const {data} = useQuery<CType<'testrayProject', TestrayProject>>(
+		getTestrayProject,
+		{
+			variables: {testrayProjectId: projectId},
+		}
+	);
 
 	const {data: dataTestrayProjects} = useQuery<
 		CTypePagination<'testrayProjects', TestrayProject>

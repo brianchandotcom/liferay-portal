@@ -292,9 +292,8 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 
 		for (Map.Entry<String, String> entry : attributesMap.entrySet()) {
 			sb.append(entry.getKey());
-			sb.append(": \"");
+			sb.append(": ");
 			sb.append(entry.getValue());
-			sb.append("\"");
 			sb.append(", ");
 		}
 
@@ -321,9 +320,9 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		"releasePortalAPIVersion";
 
 	private static final Pattern _dependencyAttributesPattern = Pattern.compile(
-		"(\\w+): \"([\\w.-]+)\"");
+		"(\\w+): ((\"?)[\\w.-]+\\3)");
 	private static final Pattern _dependencyPattern = Pattern.compile(
-		"^(\\w+) (\\w+: \"[\\w.-]+\"(, )?)+$");
+		"^(\\w+) (\\w+: (\"?)[\\w.-]+\\3(, )?)+$");
 	private static final Pattern _incorrectGroupNameVersionPattern =
 		Pattern.compile(
 			"(^[^\\s]+)\\s+\"([^:]+?):([^:]+?):([^\"]+?)\"(.*?)",

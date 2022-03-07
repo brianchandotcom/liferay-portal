@@ -916,6 +916,22 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-141572. 'Masterclass Modern' starts checked as the default Style Book in Masterclass Site"
+	@priority = "2"
+	test MasterclassModernDontStartAsDefaultStylebook {
+		task ("Go to Style Books and Assert the Masterclass Classic Card") {
+			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "${testSiteURL}");
+
+			StyleBooksAdmin.viewStyleBooksPresent(styleBookName = "Masterclass Classic");
+		}
+
+		task ("Assert the Stylebook Masterclass Classic is Masked as Default") {
+			LexiconCard.viewCardSticker(
+				card = "Masterclass Classic",
+				icon = "check-circle");
+		}
+	}
+
 	@description = "This is a test for LPS-140611. Masterclass My Learning Page in Desktop size"
 	@priority = "4"
 	test MasterclassMyLearninginDesktopSize {

@@ -125,6 +125,7 @@ const SetupAnalyticsCloudForm = (props) => {
 		<Formik
 			initialValues={{
 				dxp: {
+
 					// admins: [getInitialDXPAdmin()],
 
 					dataCenterRegion: '',

@@ -290,11 +290,23 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify the empty state for the View tab"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test EmptyStateViewTab {
 
-		// TODO LPS-147751 EmptyStateViewTab pending implementation
+		ObjectAdmin.addObjectViaAPI(
+            labelName = "Custom Object",
+            objectName = "CustomObject",
+            pluralLabelName = "Custom Objects");
+        
+        ObjectAdmin.openObjectAdmin();
+
+        ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+        ObjectCustomViews.goToViewsTab();
+
+        AssertTextEquals(
+                locator1 = "Message#EMPTY_INFO",
+                value1 = "No Items were found.");
 
 	}
 

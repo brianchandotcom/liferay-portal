@@ -337,7 +337,7 @@ definition {
 
 		Workflow.openWorkflowListView();
 
-		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		Workflow.saveDefinition(newKaleoDesigner = "True");
 

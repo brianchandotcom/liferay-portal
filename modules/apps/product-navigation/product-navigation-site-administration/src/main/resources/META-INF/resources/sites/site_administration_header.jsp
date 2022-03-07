@@ -53,7 +53,7 @@ int childPanelCategoriesSize = GetterUtil.getInteger(request.getAttribute("produ
 							cssClass="mr-4"
 							expand="<%= true %>"
 						>
-							<div class="lfr-portal-tooltip site-name text-truncate" title="<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>">
+							<div class="lfr-portal-tooltip site-name text-truncate" title="<%= HtmlUtil.escapeAttribute(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>">
 								<%= HtmlUtil.escape(siteAdministrationPanelCategoryDisplayContext.getGroupName()) %>
 
 								<c:if test="<%= siteAdministrationPanelCategoryDisplayContext.isShowStagingInfo() && !group.isStagedRemotely() %>">

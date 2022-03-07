@@ -1576,6 +1576,13 @@ definition {
 						value1 = "${filterResults}");
 				}
 
+				if (isSet(fieldLabel)) {
+					Select(
+						key_fieldLabel = "${fieldLabel}",
+						locator1 = "Select#GENERIC_SELECT_FIELD",
+						value1 = "${option}");
+				}
+
 				Button.clickApply();
 			}
 		}
@@ -2950,19 +2957,6 @@ definition {
 		AssertElementPresent(
 			key_collectionName = "${collectionName}",
 			locator1 = "PageEditor#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED");
-	}
-
-	macro filterCollection {
-		PageEditor.gotoEllipsisMenuItemInItemSelector(
-			fieldLabel = "Collection",
-			menuItem = "Filter Collection");
-
-		Select(
-			key_fieldLabel = "${fieldLabel}",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${option}");
-
-		Button.click(button = "Apply");
 	}
 
 	macro getFileSizeOfSelectedImageResolution {

@@ -92,16 +92,16 @@ const ListItem = React.forwardRef(({disabled, item}, ref) => {
 	return (
 		<li
 			className={classNames(
-				'page-editor__fragments-widgets__tab-list-item',
+				'mb-1 d-flex page-editor__fragments-widgets__tab-list-item rounded',
 				{
 					disabled,
-					'page-editor__fragments-widgets__tab-portlet-item':
+					'ml-3 page-editor__fragments-widgets__tab-portlet-item':
 						item.data.portletItemId,
 				}
 			)}
 			ref={ref}
 		>
-			<div className="page-editor__fragments-widgets__tab-list-item-body">
+			<div className="align-items-center d-flex page-editor__fragments-widgets__tab-list-item-body">
 				<ClayIcon className="mr-3" symbol={item.icon} />
 
 				<div className="text-truncate title">{item.label}</div>
@@ -140,7 +140,7 @@ const CardItem = React.forwardRef(({disabled, item}, ref) => {
 					)}
 				</ClayCard.AspectRatio>
 
-				<ClayCard.Body>
+				<ClayCard.Body className="align-items-center d-flex p-2 rounded-bottom">
 					<ClayCard.Row>
 						<div className="autofit-col autofit-col-expand">
 							<section className="autofit-section">

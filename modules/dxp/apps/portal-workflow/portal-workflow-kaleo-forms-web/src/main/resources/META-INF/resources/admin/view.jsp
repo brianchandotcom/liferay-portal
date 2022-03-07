@@ -43,7 +43,7 @@ String displayStyle = kaleoFormsAdminDisplayContext.getDisplayStyle();
 				modelVar="process"
 			>
 				<portlet:renderURL var="rowURL">
-					<portlet:param name="mvcPath" value='<%= "/admin/view_kaleo_process.jsp" %>' />
+					<portlet:param name="mvcPath" value="/admin/view_kaleo_process.jsp" />
 					<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 					<portlet:param name="kaleoProcessId" value="<%= String.valueOf(process.getKaleoProcessId()) %>" />
 					<portlet:param name="displayStyle" value="<%= displayStyle %>" />

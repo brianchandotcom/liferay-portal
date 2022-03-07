@@ -45,7 +45,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 	<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry_type" />
 </portlet:actionURL>
 
-<aui:form action="<%= editFileEntryTypeURL %>" cssClass="edit-metadata-type-form" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " %>'>
+<aui:form action="<%= editFileEntryTypeURL %>" cssClass="edit-metadata-type-form" method="post" name="fm" onSubmit="event.preventDefault(); ">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (fileEntryType == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="fileEntryTypeId" type="hidden" value="<%= fileEntryTypeId %>" />

@@ -173,7 +173,7 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 					CPCatalogEntry="<%= cpCatalogEntry %>"
 					inline="<%= true %>"
 					namespace="<%= liferayPortletResponse.getNamespace() %>"
-					options='<%= "[]" %>'
+					options="[]"
 					size="lg"
 				/>
 

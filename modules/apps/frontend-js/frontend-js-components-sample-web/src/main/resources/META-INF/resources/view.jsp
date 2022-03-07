@@ -22,7 +22,7 @@
 		refresh="<%= false %>"
 	>
 		<liferay-ui:section>
-			<liferay-util:include page='<%= "/partials/translation_manager.jsp" %>' servletContext="<%= application %>" />
+			<liferay-util:include page="/partials/translation_manager.jsp" servletContext="<%= application %>" />
 		</liferay-ui:section>
 	</liferay-ui:tabs>
 </div>

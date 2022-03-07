@@ -24,7 +24,7 @@ int selectedMonthlyMode = monthlyCPSubscriptionTypeDisplayContext.getSelectedMon
 
 <c:choose>
 	<c:when test="<%= monthlyCPSubscriptionTypeDisplayContext.isPayment() %>">
-		<aui:select label="mode" name="subscriptionTypeSettings--monthlyMode--" onChange='<%= "event.preventDefault(); changeMonthlyCPSubscriptionTypeSettingsMode();" %>'>
+		<aui:select label="mode" name="subscriptionTypeSettings--monthlyMode--" onChange="event.preventDefault(); changeMonthlyCPSubscriptionTypeSettingsMode();">
 
 			<%
 			for (int mode : CPSubscriptionTypeConstants.MONTHLY_MODES) {
@@ -73,7 +73,7 @@ int selectedMonthlyMode = monthlyCPSubscriptionTypeDisplayContext.getSelectedMon
 		</aui:script>
 	</c:when>
 	<c:otherwise>
-		<aui:select label="mode" name="deliverySubscriptionTypeSettings--deliveryMonthlyMode--" onChange='<%= "event.preventDefault(); changeMonthlyDeliveryCPSubscriptionTypeSettingsMode();" %>'>
+		<aui:select label="mode" name="deliverySubscriptionTypeSettings--deliveryMonthlyMode--" onChange="event.preventDefault(); changeMonthlyDeliveryCPSubscriptionTypeSettingsMode();">
 
 			<%
 			for (int mode : CPSubscriptionTypeConstants.MONTHLY_MODES) {

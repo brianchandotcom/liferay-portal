@@ -38,8 +38,7 @@ const Home = () => {
 							value: i18n.translate('description'),
 						},
 					],
-					navigateTo: (item) =>
-						`/project/${item.testrayProjectId}/routines`,
+					navigateTo: (project) => `/project/${project.id}/routines`,
 				}}
 				transformData={(data) => data?.c?.testrayProjects}
 			/>

@@ -13,6 +13,7 @@
  */
 
 export default {
+	'add-case': 'Add Case',
 	'all-issues-found': 'All Issues Found',
 	'archived': 'Archived',
 	'assign': 'Assign',
@@ -34,6 +35,7 @@ export default {
 	'case-types': 'Case Types',
 	'cases': 'Cases',
 	'change-password': 'Change Password',
+	'close': 'Close',
 	'comment': 'Comment',
 	'compare-runs': 'Compare Runs',
 	'complete-test': 'Complete Test',
@@ -51,6 +53,7 @@ export default {
 	'details': 'Details',
 	'edit': 'Edit',
 	'email-address': 'Email Address',
+	'enter-the-case-name': 'Enter the Case Name',
 	'environment-factors': 'Enviroment Factors',
 	'errors': 'Errors',
 	'estimated-duration': 'Estimated Duration',
@@ -77,6 +80,7 @@ export default {
 	'metrics': 'Metrics',
 	'modified-date': 'Modified Date',
 	'name': 'Name',
+	'new-case': 'New Case',
 	'new-project': 'New Project',
 	'order-by': 'Order By',
 	'overview': 'Overview',

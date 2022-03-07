@@ -30,11 +30,6 @@ import org.json.JSONObject;
 public class JSONPackageJSONRedundantDependenciesCheck extends BaseFileCheck {
 
 	@Override
-	public boolean isLiferaySourceCheck() {
-		return true;
-	}
-
-	@Override
 	public boolean isModuleSourceCheck() {
 		return true;
 	}

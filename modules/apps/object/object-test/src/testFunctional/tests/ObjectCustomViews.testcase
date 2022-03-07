@@ -311,27 +311,24 @@ definition {
 	@description = "LPS-135394 - Verify the no result message when searching for a view"
 	@priority = "3"
 	test NoResultMessageView {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
 			pluralLabelName = "Custom Objects");
-		
+
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectPortlet.selectCustomObject(label = "Custom Object");
 
 		ObjectCustomViews.goToViewsTab();
 
-	 	ObjectCustomViews.addObjectViewViaUI(
-			labelName = "Custom View");
-			
+		ObjectCustomViews.addObjectViewViaUI(labelName = "Custom View");
+
 		Search.searchCP(searchTerm = "ObjectTest");
 
 		AssertTextEquals(
-				locator1 = "Message#EMPTY_INFO",
-				value1 = "No Items were found.");
-
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No Items were found.");
 	}
 
 	@description = "LPS-135394 - Verify the no result message when searching for a column"

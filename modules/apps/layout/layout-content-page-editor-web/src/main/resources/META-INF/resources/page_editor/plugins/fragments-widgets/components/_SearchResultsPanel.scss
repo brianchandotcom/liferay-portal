@@ -3,11 +3,7 @@
 html#{$cadmin-selector} {
 	.cadmin {
 		.page-editor__fragments-widgets__search-results-panel__filter-subtitle {
-			color: $cadmin-dark;
-			font-size: 11.2px;
-			font-weight: 600;
-			margin-bottom: 8px;
-			padding-top: 8px;
+			font-size: 11px;
 			text-transform: uppercase;
 
 			~ .page-editor__collapse {

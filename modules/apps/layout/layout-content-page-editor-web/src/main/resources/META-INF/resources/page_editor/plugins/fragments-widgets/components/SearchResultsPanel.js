@@ -23,7 +23,7 @@ export default function SearchResultsPanel({filteredTabs}) {
 	return filteredTabs.length ? (
 		filteredTabs.map((tab, index) => (
 			<div key={index}>
-				<div className="page-editor__fragments-widgets__search-results-panel__filter-subtitle">
+				<div className="font-weight-semi-bold page-editor__fragments-widgets__search-results-panel__filter-subtitle py-2">
 					{tab.label}
 				</div>
 

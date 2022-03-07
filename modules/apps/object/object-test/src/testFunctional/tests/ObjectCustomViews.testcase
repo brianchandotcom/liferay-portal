@@ -25,13 +25,42 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to add a column for the View"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanAddColumn {
 		property portal.acceptance = "true";
 
-		// TODO LPS-147765 CanAddColumn pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147765",
+			objectName = "CustomObject147765",
+			pluralLabelName = "Custom Objects 147765");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147765");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		for (var columnOption : list "Author,Creation Date"){
+			Click.clickAtNotVisible(
+				key_columnOption = "${columnOption}",
+				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+		}
+
+		Click(
+			key_tab = "Save",
+			locator1 = "Button#TAB_SUBMIT_BTN");
+
+		for (var columnOption : list "Author,Creation Date"){
+			ObjectCustomViews.assertColumnPresent(colunmName = "${columnOption}");
+		}
 	}
 
 	@description = "LPS-135394 - Verify it is possible to cancel the addition of a column for the View"

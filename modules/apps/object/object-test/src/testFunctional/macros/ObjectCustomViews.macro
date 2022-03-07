@@ -38,10 +38,22 @@ definition {
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
 	}
 
+	macro assertColumnNotVisibleOnAddColumnModal {
+		AssertNotVisible(
+			key_columnName = "${columnOption}",
+			locator1 = "ObjectCustomViews#ADD_COLUMNS_COLUMN_LABEL");
+	}
+
 	macro assertColumnPresent {
 		AssertElementPresent(
 			key_columnName = "${colunmName}",
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT");
+	}
+
+	macro assertColumnVisibleOnAddColumnModal {
+		AssertVisible(
+			key_columnName = "${columnOption}",
+			locator1 = "ObjectCustomViews#ADD_COLUMNS_COLUMN_LABEL");
 	}
 
 	macro assertEmptyStateTextOnViewBuilder {
@@ -94,14 +106,6 @@ definition {
 		Click(locator1 = "ObjectCustomViews#OBJECT_VIEWS_TAB");
 	}
 
-	macro searchOnViewBuilder {
-		Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR");
-
-		Type(
-			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR",
-			value1 = "${colunmName}");
-	}
-
 	macro searchOnAddColumnModal {
 		Click(locator1 = "ObjectCustomViews#ADD_COLUMNS_SEARCH_BAR");
 
@@ -110,16 +114,12 @@ definition {
 			value1 = "${colunmName}");
 	}
 
-	macro assertColumnVisibleOnAddColumnModal {
-		AssertVisible(
-			key_columnName = "${columnOption}",
-			locator1 = "ObjectCustomViews#ADD_COLUMNS_COLUMN_LABEL");
-	}
+	macro searchOnViewBuilder {
+		Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR");
 
-	macro assertColumnNotVisibleOnAddColumnModal {
-		AssertNotVisible(
-			key_columnName = "${columnOption}",
-			locator1 = "ObjectCustomViews#ADD_COLUMNS_COLUMN_LABEL");
+		Type(
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR",
+			value1 = "${colunmName}");
 	}
 
 }

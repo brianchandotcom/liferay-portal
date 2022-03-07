@@ -99,6 +99,7 @@ export default function PieChart({data, height, totalEntries, width}) {
 						cy="50%"
 						data={data}
 						dataKey="count"
+						endAngle={-270}
 						innerRadius={80}
 						isAnimationActive={isAnimationActive}
 						label={Label}
@@ -107,6 +108,7 @@ export default function PieChart({data, height, totalEntries, width}) {
 						onMouseOver={(_, index) => handleOnMouseOver(index)}
 						outerRadius={135}
 						paddingAngle={0}
+						startAngle={90}
 					>
 						{data.map((_, index) => (
 							<Cell

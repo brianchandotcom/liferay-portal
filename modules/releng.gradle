@@ -1244,6 +1244,10 @@ private List<Dependency> _getPortalArtifactsDependencies(List<File> relengProper
 
 				String groupPath = group.replace('.' as char, '/' as char)
 
+				if (groupPath.equals("com/fasterxml/jackson-dataformat")) {
+					groupPath = "com/fasterxml/jackson/dataformat"
+				}
+
 				String name = array[1]
 				String version = array[2]
 
@@ -1450,6 +1454,10 @@ private List<File> _getPortalSourcesDependencies(List<File> relengPropertiesFile
 				String group = array[0]
 
 				String groupPath = group.replace('.' as char, '/' as char)
+
+				if (groupPath.equals("com/fasterxml/jackson-dataformat")) {
+					groupPath = "com/fasterxml/jackson/dataformat"
+				}
 
 				String name = array[1]
 				String version = array[2]

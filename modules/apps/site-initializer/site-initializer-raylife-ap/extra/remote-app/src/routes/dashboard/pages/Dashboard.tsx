@@ -12,10 +12,10 @@
  * details.
  */
 
-const AgentPortal = () => (
+const Dashboard = () => (
 	<div className="m-5">
-		<h1>Agent Portal</h1>
+		<h1>Dashboard</h1>
 	</div>
 );
 
-export default AgentPortal;
+export default Dashboard;

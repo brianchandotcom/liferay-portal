@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.CookieNotSupportedException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,7 +66,7 @@ public class CookieKeys {
 
 		addCookie(
 			httpServletRequest, httpServletResponse, cookie,
-			httpServletRequest.isSecure());
+			PortalUtil.isSecure(httpServletRequest));
 	}
 
 	public static void addCookie(

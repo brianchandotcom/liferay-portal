@@ -94,6 +94,12 @@ definition {
 		Click(locator1 = "ObjectCustomViews#OBJECT_VIEWS_TAB");
 	}
 
+	macro saveColumns {
+		Click(
+			key_tab = "Save",
+			locator1 = "Button#TAB_SUBMIT_BTN");
+	}
+
 	macro searchOnViewBuilder {
 		Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR");
 

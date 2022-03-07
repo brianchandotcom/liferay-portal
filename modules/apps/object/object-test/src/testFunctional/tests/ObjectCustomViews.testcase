@@ -48,17 +48,15 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		for (var columnOption : list "Author,Creation Date"){
+		for (var columnOption : list "Author,Creation Date") {
 			Click.clickAtNotVisible(
 				key_columnOption = "${columnOption}",
 				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
 		}
 
-		Click(
-			key_tab = "Save",
-			locator1 = "Button#TAB_SUBMIT_BTN");
+		ObjectCustomViews.saveColumns();
 
-		for (var columnOption : list "Author,Creation Date"){
+		for (var columnOption : list "Author,Creation Date") {
 			ObjectCustomViews.assertColumnPresent(colunmName = "${columnOption}");
 		}
 	}
@@ -123,13 +121,48 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to delete a column for the View by unselecting it"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDeleteColumnByUnselect {
 		property portal.acceptance = "true";
 
-		// TODO LPS-147768 CanDeleteColumnByUnselect pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147768",
+			objectName = "CustomObject147768",
+			pluralLabelName = "Custom Objects 147768");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147768");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		Click.clickAtNotVisible(
+			key_columnOption = "Author",
+			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+
+		ObjectCustomViews.saveColumns();
+
+		ObjectCustomViews.assertColumnPresent(colunmName = "Author");
+
+		LexiconEntry.gotoAdd();
+
+		Click.clickAtNotVisible(
+			key_columnOption = "Author",
+			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+
+		ObjectCustomViews.saveColumns();
+
+		ObjectCustomViews.assertColumnNotPresent(colunmName = "Author");
+
+		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No columns added yet.");
 	}
 
 	@description = "LPS-135394 - Verify it is possible to delete a column for the View through the delete button"

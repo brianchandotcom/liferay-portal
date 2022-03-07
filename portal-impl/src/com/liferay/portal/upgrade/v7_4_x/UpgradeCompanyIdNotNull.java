@@ -11,7 +11,7 @@ public class UpgradeCompanyIdNotNull extends UpgradeProcess {
 		"AssetEntries_AssetTags", "DLFileEntryTypes_DLFolders", "Groups_Orgs",
 		"Groups_Roles", "Groups_UserGroups", "UserGroups_Teams", "Users_Groups",
 		"Users_Orgs", "Users_Roles", "Users_Teams", "Users_UserGroups"};
-	
+
 	@Override
 	protected void doUpgrade() throws Exception {
 

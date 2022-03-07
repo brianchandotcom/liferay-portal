@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.BaseCompanyIdUpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.io.IOException;
@@ -41,7 +40,8 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 			new TableUpdater("AnnouncementsFlag", "User_", "userId"),
 			new CompanyIdNotNullTableUpdater(
 				"AssetEntries_AssetCategories", "AssetCategory", "categoryId"),
-			new CompanyIdNotNullTableUpdater("AssetEntries_AssetTags", "AssetTag", "tagId"),
+			new CompanyIdNotNullTableUpdater(
+				"AssetEntries_AssetTags", "AssetTag", "tagId"),
 			new TableUpdater("AssetTagStats", "AssetTag", "tagId"),
 			new TableUpdater("BrowserTracker", "User_", "userId"),
 			new TableUpdater(
@@ -49,9 +49,12 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 			new CompanyIdNotNullTableUpdater(
 				"DLFileEntryTypes_DLFolders", "DLFolder", "folderId"),
 			new DLSyncEventTableUpdater("DLSyncEvent"),
-			new CompanyIdNotNullTableUpdater("Groups_Orgs", "Group_", "groupId"),
-			new CompanyIdNotNullTableUpdater("Groups_Roles", "Group_", "groupId"),
-			new CompanyIdNotNullTableUpdater("Groups_UserGroups", "Group_", "groupId"),
+			new CompanyIdNotNullTableUpdater(
+				"Groups_Orgs", "Group_", "groupId"),
+			new CompanyIdNotNullTableUpdater(
+				"Groups_Roles", "Group_", "groupId"),
+			new CompanyIdNotNullTableUpdater(
+				"Groups_UserGroups", "Group_", "groupId"),
 			new TableUpdater(
 				"Image", "imageId",
 				new String[][] {
@@ -88,15 +91,42 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 			new TableUpdater("TrashVersion", "TrashEntry", "entryId"),
 			new TableUpdater("UserGroupGroupRole", "UserGroup", "userGroupId"),
 			new TableUpdater("UserGroupRole", "User_", "userId"),
-			new CompanyIdNotNullTableUpdater("UserGroups_Teams", "UserGroup", "userGroupId"),
+			new CompanyIdNotNullTableUpdater(
+				"UserGroups_Teams", "UserGroup", "userGroupId"),
 			new TableUpdater("UserIdMapper", "User_", "userId"),
 			new CompanyIdNotNullTableUpdater("Users_Groups", "User_", "userId"),
 			new CompanyIdNotNullTableUpdater("Users_Orgs", "User_", "userId"),
 			new CompanyIdNotNullTableUpdater("Users_Roles", "User_", "userId"),
 			new CompanyIdNotNullTableUpdater("Users_Teams", "User_", "userId"),
-			new CompanyIdNotNullTableUpdater("Users_UserGroups", "User_", "userId"),
+			new CompanyIdNotNullTableUpdater(
+				"Users_UserGroups", "User_", "userId"),
 			new TableUpdater("UserTrackerPath", "UserTracker", "userTrackerId")
 		};
+	}
+
+	protected class CompanyIdNotNullTableUpdater extends TableUpdater {
+
+		public CompanyIdNotNullTableUpdater(
+			String tableName, String foreignTableName, String columnName) {
+
+			super(tableName, foreignTableName, columnName);
+		}
+
+		public CompanyIdNotNullTableUpdater(
+			String tableName, String columnName, String[][] foreignNamesArray) {
+
+			super(tableName, columnName, foreignNamesArray);
+		}
+
+		@Override
+		public void update(Connection connection) throws Exception {
+			super.update(connection);
+
+			if (!hasColumnType(getTableName(), "companyId", "LONG NOT NULL")) {
+				alterColumnType(getTableName(), "companyId", "LONG NOT NULL");
+			}
+		}
+
 	}
 
 	protected class DLSyncEventTableUpdater extends TableUpdater {
@@ -248,28 +278,4 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 
 	}
 
-
-	protected class CompanyIdNotNullTableUpdater extends TableUpdater {
-
-		public CompanyIdNotNullTableUpdater(
-			String tableName, String foreignTableName, String columnName) {
-			super(tableName, foreignTableName, columnName);
-		}
-
-		public CompanyIdNotNullTableUpdater(
-			String tableName, String columnName, String[][] foreignNamesArray) {
-			super(tableName, columnName, foreignNamesArray);
-		}
-
-		@Override
-		public void update(Connection connection)
-			throws Exception {
-
-			super.update(connection);
-
-			if(!hasColumnType(getTableName(), "companyId", "LONG NOT NULL")) {
-				alterColumnType(getTableName(), "companyId", "LONG NOT NULL");
-			}
-		}
-	}
 }

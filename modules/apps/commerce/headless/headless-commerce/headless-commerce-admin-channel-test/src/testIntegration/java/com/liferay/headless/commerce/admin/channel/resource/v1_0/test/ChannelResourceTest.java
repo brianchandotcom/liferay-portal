@@ -118,7 +118,21 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 	}
 
 	@Override
+	protected Channel testDeleteChannelByExternalReferenceCode_addChannel()
+		throws Exception {
+
+		return _addChannel(randomChannel());
+	}
+
+	@Override
 	protected Channel testGetChannel_addChannel() throws Exception {
+		return _addChannel(randomChannel());
+	}
+
+	@Override
+	protected Channel testGetChannelByExternalReferenceCode_addChannel()
+		throws Exception {
+
 		return _addChannel(randomChannel());
 	}
 
@@ -140,6 +154,13 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 	}
 
 	@Override
+	protected Channel testPatchChannelByExternalReferenceCode_addChannel()
+		throws Exception {
+
+		return _addChannel(randomChannel());
+	}
+
+	@Override
 	protected Channel testPostChannel_addChannel(Channel channel)
 		throws Exception {
 
@@ -148,6 +169,13 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 
 	@Override
 	protected Channel testPutChannel_addChannel() throws Exception {
+		return _addChannel(randomChannel());
+	}
+
+	@Override
+	protected Channel testPutChannelByExternalReferenceCode_addChannel()
+		throws Exception {
+
 		return _addChannel(randomChannel());
 	}
 

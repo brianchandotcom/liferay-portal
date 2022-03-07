@@ -70,6 +70,16 @@
 		<td>//p[contains(@class,'list-group-title') and contains(text(),'${key_columnName}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>ADD_COLUMNS_SEARCH_BAR</td>
+		<td>//div[contains(@class,'modal-body')]//input[contains(@aria-label,'Search')]</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>ADD_COLUMNS_COLUMN_LABEL</td>
+		<td>//div[@class="modal-body"]//span[@class="custom-control-label-text" and contains(text(),'${key_columnName}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

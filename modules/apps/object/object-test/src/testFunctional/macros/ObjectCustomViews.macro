@@ -102,4 +102,24 @@ definition {
 			value1 = "${colunmName}");
 	}
 
+	macro searchOnAddColumnModal {
+		Click(locator1 = "ObjectCustomViews#ADD_COLUMNS_SEARCH_BAR");
+
+		Type(
+			locator1 = "ObjectCustomViews#ADD_COLUMNS_SEARCH_BAR",
+			value1 = "${colunmName}");
+	}
+
+	macro assertColumnVisibleOnAddColumnModal {
+		AssertVisible(
+			key_columnName = "${columnOption}",
+			locator1 = "ObjectCustomViews#ADD_COLUMNS_COLUMN_LABEL");
+	}
+
+	macro assertColumnNotVisibleOnAddColumnModal {
+		AssertNotVisible(
+			key_columnName = "${columnOption}",
+			locator1 = "ObjectCustomViews#ADD_COLUMNS_COLUMN_LABEL");
+	}
+
 }

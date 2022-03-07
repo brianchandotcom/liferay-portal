@@ -210,11 +210,33 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to search for a column on the Add Columns modal"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchColumnAddColumnModal {
 
-		// TODO LPS-147763 CanSearchColumnAddColumnModal pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147763",
+			objectName = "CustomObject147763",
+			pluralLabelName = "Custom Objects 147763");
+		
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147763");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		ObjectCustomViews.searchOnAddColumnModal(colunmName = "Author");
+
+		ObjectCustomViews.assertColumnVisibleOnAddColumnModal(columnOption = "Author");
+
+		ObjectCustomViews.assertColumnNotVisibleOnAddColumnModal(columnOption = "Creation Date");
 
 	}
 

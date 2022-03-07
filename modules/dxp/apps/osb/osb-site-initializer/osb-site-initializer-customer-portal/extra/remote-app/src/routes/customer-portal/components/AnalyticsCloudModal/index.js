@@ -9,42 +9,22 @@
  * distribution rights of the Software.
  */
 import ClayModal from '@clayui/modal';
-import Button from '../../../../common/components/Button';
-import AnalyticsCloudForm from '../AnalyticsCloudForm';
+import SetupAnalyticsCloud from '../../../../common/containers/setup-forms/SetupAnalyticsCloudForm';
 
-const AnalyticsCloudModal = ({observer, onClose}) => {
+const AnalyticsCloudModal = ({
+	observer,
+	onClose,
+	project,
+	subscriptionGroupId,
+}) => {
 	return (
-		<ClayModal center observer={observer} size="md">
-			<div className="m-4">
-				<div className="d-flex justify-content-between my-4">
-					<div className="flex-row">
-						<h1>Set up Analytics Cloud</h1>
-
-						<p>
-							We’ll need a few details to finish creating your
-							Analytics Cloud Workspace.
-						</p>
-					</div>
-
-					<Button
-						appendIcon="times"
-						aria-label="close"
-						className="align-self-start"
-						displayType="unstyled"
-						onClick={onClose}
-					/>
-				</div>
-
-				<AnalyticsCloudForm />
-
-				<div className="d-flex justify-content-between my-2">
-					<Button displayType="unstyled" onClick={onClose}>
-						Cancel
-					</Button>
-
-					<Button displayType="primary">Submit</Button>
-				</div>
-			</div>
+		<ClayModal center observer={observer}>
+			<SetupAnalyticsCloud
+				handlePage={onClose}
+				leftButton="Cancel"
+				project={project}
+				subscriptionGroupId={subscriptionGroupId}
+			/>
 		</ClayModal>
 	);
 };

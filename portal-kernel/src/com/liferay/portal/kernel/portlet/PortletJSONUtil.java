@@ -212,18 +212,20 @@ public class PortletJSONUtil {
 		}
 
 		jsonObject.put(
-			"footerCssPaths", JSONFactoryUtil.createJSONArray(footerCssSet));
-
-		jsonObject.put(
+			"footerCssPaths", JSONFactoryUtil.createJSONArray(footerCssSet)
+		).put(
 			"footerJavaScriptPaths",
-			JSONFactoryUtil.createJSONArray(footerJavaScriptSet));
-
-		jsonObject.put(
-			"headerCssPaths", JSONFactoryUtil.createJSONArray(headerCssSet));
-
-		jsonObject.put(
+			JSONFactoryUtil.createJSONArray(footerJavaScriptSet)
+		).put(
+			"headerCssPaths", JSONFactoryUtil.createJSONArray(headerCssSet)
+		).put(
 			"headerJavaScriptPaths",
-			JSONFactoryUtil.createJSONArray(headerJavaScriptSet));
+			JSONFactoryUtil.createJSONArray(headerJavaScriptSet)
+		).put(
+			"portletHTML", portletHTML
+		).put(
+			"refresh", !portlet.isAjaxable()
+		);
 
 		List<String> markupHeadElements =
 			(List<String>)httpServletRequest.getAttribute(
@@ -234,12 +236,6 @@ public class PortletJSONUtil {
 				"markupHeadElements",
 				StringUtil.merge(markupHeadElements, StringPool.BLANK));
 		}
-
-		jsonObject.put(
-			"portletHTML", portletHTML
-		).put(
-			"refresh", !portlet.isAjaxable()
-		);
 	}
 
 	public static void writeFooterPaths(

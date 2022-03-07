@@ -945,7 +945,7 @@ public class RenderLayoutStructureDisplayContext {
 				layoutSet.getThemeId());
 
 		if (frontendTokenDefinition == null) {
-			return JSONFactoryUtil.createJSONObject();
+			return _frontendTokensJSONObject;
 		}
 
 		JSONObject frontendTokenDefinitionJSONObject =

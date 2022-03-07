@@ -19,6 +19,7 @@ import com.liferay.analytics.dxp.entities.exporter.retriever.DXPEntityRetriever;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -49,8 +50,8 @@ public class RoleRetriever implements DXPEntityRetriever {
 		List<DXPEntity> dxpEntities = new ArrayList<>();
 
 		List<Role> roles = _roleLocalService.search(
-			companyId, null, null, pagination.getStartPosition(),
-			pagination.getEndPosition(), null);
+			companyId, null, new Integer[] {RoleConstants.TYPE_REGULAR},
+			pagination.getStartPosition(), pagination.getEndPosition(), null);
 
 		for (Role role : roles) {
 			dxpEntities.add(transformUnsafeFunction.apply(role));

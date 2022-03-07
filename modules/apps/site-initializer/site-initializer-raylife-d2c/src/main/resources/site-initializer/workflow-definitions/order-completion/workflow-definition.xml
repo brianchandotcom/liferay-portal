@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+	<name>Order Completion</name>
+	<description>Workflow to complete the order lifecycle after payment</description>
+	<version>1</version>
+	<state>
+		<name>StartNode</name>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						100,
+						40
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<transitions>
+			<transition>
+				<name>validation</name>
+				<target>EndNode</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>EndNode</name>
+		<metadata>
+			<![CDATA[
+				{
+					"terminal": true,
+					"xy": [
+						501,
+						45
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Approve</name>
+				<description>Approve</description>
+				<script>
+					<![CDATA[
+						import com.liferay.commerce.constants.CommerceOrderConstants;
+						import com.liferay.commerce.model.CommerceOrder;
+						import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
+						import com.liferay.portal.kernel.workflow.WorkflowConstants;
+						import com.liferay.portal.kernel.workflow.WorkflowStatusManagerUtil;
+
+						CommerceOrder commerceOrder = CommerceOrderLocalServiceUtil.getCommerceOrder(kaleoInstanceToken.getClassPK());
+
+						commerceOrder.setOrderStatus(CommerceOrderConstants.ORDER_STATUS_PROCESSING);
+						commerceOrder = CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
+						commerceOrder.setOrderStatus(CommerceOrderConstants.ORDER_STATUS_COMPLETED);
+						CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
+
+						WorkflowStatusManagerUtil.updateStatus(WorkflowConstants.getLabelStatus("approved"), workflowContext);
+					]]>
+				</script>
+				<script-language>groovy</script-language>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+	</state>
+</workflow-definition>

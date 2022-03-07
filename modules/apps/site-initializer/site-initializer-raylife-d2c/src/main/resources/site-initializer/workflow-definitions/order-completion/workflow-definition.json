@@ -1,0 +1,9 @@
+{
+	"active": true,
+	"description": "Workflow to complete the order lifecycle after payment",
+	"name": "Order Completion",
+	"title": "Order Completion",
+	"title_i18n": {
+		"en_US": "Order Completion"
+	}
+}

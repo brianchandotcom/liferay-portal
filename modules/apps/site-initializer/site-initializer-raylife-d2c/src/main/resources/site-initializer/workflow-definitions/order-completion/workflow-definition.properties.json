@@ -1,0 +1,7 @@
+[
+	{
+		"className": "com.liferay.commerce.model.CommerceOrder",
+		"scope": "site",
+		"typePK": 1
+	}
+]

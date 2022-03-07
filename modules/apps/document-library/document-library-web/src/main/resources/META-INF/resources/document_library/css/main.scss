@@ -808,3 +808,10 @@ $productMenuWidth: 320px;
 .autocomplete-dropdown-menu {
 	z-index: 2000;
 }
+
+.portlet-document-library-upload-mask {
+	.progress p {
+		font-weight: 600;
+		margin: auto;
+	}
+}

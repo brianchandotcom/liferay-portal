@@ -660,9 +660,15 @@ AUI.add(
 				},
 
 				_createOverlay(target, background) {
+					var instance = this;
+
+					var displayStyle = instance._getDisplayStyle();
 					var overlay = new A.OverlayMask({
 						background: background || null,
-						target,
+						target:
+							displayStyle !== CSS_ICON
+								? target
+								: target.one('.card'),
 					}).render();
 
 					overlay
@@ -673,12 +679,8 @@ AUI.add(
 				},
 
 				_createProgressBar(target) {
-					var height = target.height() / 5;
-
-					var width = target.width() * 0.8;
-
 					return new A.ProgressBar({
-						height,
+						height: 16,
 						on: {
 							complete() {
 								this.set(STR_LABEL, 'complete!');
@@ -687,7 +689,7 @@ AUI.add(
 								this.set(STR_LABEL, event.newVal + '%');
 							},
 						},
-						width,
+						width: target.width() * 0.8,
 					});
 				},
 

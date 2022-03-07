@@ -72,13 +72,19 @@ const Select = ({
 				</div>
 			</label>
 
-			{meta.touched && meta.error && props.required && (
-				<Badge>
-					<span className="pl-1">{meta.error}</span>
-				</Badge>
-			)}
+			{meta.touched &&
+				meta.error &&
+				props.required(
+					<Badge>
+						<span className="pl-1">{meta.error}</span>
+					</Badge>
+				)}
 
-			{helper && <div>{helper}</div>}
+			{helper && (
+				<div className="ml-3 pl-3 text-neutral-6 text-paragraph-sm">
+					{helper}
+				</div>
+			)}
 		</ClayForm.Group>
 	);
 };

@@ -12,7 +12,7 @@
 import ClayForm from '@clayui/form';
 import {Formik} from 'formik';
 import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
-import {Button, Input} from '../../../components';
+import {Button, Input, Select} from '../../../components';
 
 // import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
 
@@ -24,7 +24,11 @@ const SetupAnalyticsCloudPage = ({handlePage, leftButton}) => {
 			className="pt-1 px-3"
 			footerProps={{
 				leftButton: (
-					<Button borderless onClick={() => handlePage()}>
+					<Button
+						borderless
+						className="text-neutral-10"
+						onClick={() => handlePage()}
+					>
 						{leftButton}
 					</Button>
 				),
@@ -36,78 +40,77 @@ const SetupAnalyticsCloudPage = ({handlePage, leftButton}) => {
 				title: 'Set up Analytics Cloud',
 			}}
 		>
-			<ClayForm.Group className="mb-0">
-				<ClayForm.Group className="mb-0 pb-1">
-					<Input
-						groupStyle="pb-1"
-						helper="This user will create and manage the Analytics Cloud Workspace and must have a liferay.com account. The owner Email can be updated vis Support ticket if needed."
-						label="Owner Email"
-						name="dxp.projectId"
-						placeholder="user@company.com"
-						required
-						type="email"
-						validations={[(value) => isLowercaseAndNumbers(value)]}
-					/>
+			<ClayForm.Group className="pb-1">
+				<Input
+					groupStyle="pb-1"
+					helper="This user will create and manage the Analytics Cloud Workspace and must have a liferay.com account. The owner Email can be updated vis Support ticket if needed."
+					label="Owner Email"
+					name="analytics.ownerEmail"
+					placeholder="user@company.com"
+					required
+					type="email"
+					validations={[(value) => isLowercaseAndNumbers(value)]}
+				/>
 
-					<Input
-						groupStyle="pb-1"
-						helper="Lowercase letters and numbers only. Project IDs cannot be changed."
-						label="Workspace Name"
-						name="dxp.projectId"
-						placeholder="superbank1"
-						required
-						type="text"
-					/>
+				<Input
+					groupStyle="pb-1"
+					helper="Lowercase letters and numbers only. Project IDs cannot be changed."
+					label="Workspace Name"
+					name="analytics.workspaceName"
+					placeholder="superbank1"
+					required
+					type="text"
+				/>
 
-					{/* <Select
-						groupStyle="mb-0"
-						helper="Select a server location for your data to be stored."
-						label="Data Center Location"
-						required
-					/> */}
+				<Select
+					groupStyle="pb-1"
+					helper="Select a server location for your data to be stored."
+					label="Data Center Location"
+					name="analytics.dataCenterLocation"
+					options={['Name', 'Type', 'Age']}
+					required
+				/>
 
-					<Input
-						groupStyle="pb-1"
-						helper="Please note that the friendly URL cannot be changed once added."
-						label="Workspace Friendly URL"
-						name="analytics.workspaceURL"
-						placeholder="/myurl"
-						type="text"
-					/>
+				<Input
+					groupStyle="pb-1"
+					helper="Please note that the friendly URL cannot be changed once added."
+					label="Workspace Friendly URL"
+					name="analytics.workspaceURL"
+					placeholder="/myurl"
+					type="text"
+				/>
 
-					<Input
-						groupStyle="pb-1"
-						helper="Anyone with an email address at the provided domains can request access to your Workspace. If multiple, separate domains by commas."
-						label="Allowed Email Domains"
-						name="analytics.allowedEmailDomains"
-						placeholder="@mycompany.com"
-						type="email"
-					/>
+				<Input
+					groupStyle="pb-1"
+					helper="Anyone with an email address at the provided domains can request access to your Workspace. If multiple, separate domains by commas."
+					label="Allowed Email Domains"
+					name="analytics.allowedEmailDomains"
+					placeholder="@mycompany.com"
+					type="email"
+				/>
 
-					<Input
-						groupStyle="pb-1"
-						helper="Enter the timezone to be used for all data reporting in your Workspace."
-						label="Time Zone"
-						name="analytics.TimeZone"
-						placeholder="UTC-04:00"
-						type="text"
-					/>
+				<Input
+					groupStyle="pb-1"
+					helper="Enter the timezone to be used for all data reporting in your Workspace."
+					label="Time Zone"
+					name="analytics.TimeZone"
+					placeholder="UTC-04:00"
+					type="text"
+				/>
 
-					<Input
-						groupStyle="pb-1"
-						helper="This user will be the recepient of any high priority communications."
-						label="Incident Report Contact"
-						name="analytics.IncidentReportContact"
-						placeholder="user@company.com"
-						required
-						type="email"
-					/>
-				</ClayForm.Group>
+				<Input
+					groupStyle="pb-1"
+					helper="This user will be the recepient of any high priority communications."
+					label="Incident Report Contact"
+					name="analytics.IncidentReportContact"
+					placeholder="user@company.com"
+					required
+					type="email"
+				/>
 			</ClayForm.Group>
 
 			<Button
-				borderless
-				className="ml-3 my-2 text-brand-primary"
+				className="btn-outline-primary ml-3 my-2 rounded-xs"
 				prependIcon="plus"
 				small
 			>

@@ -24,6 +24,7 @@ import com.liferay.document.library.internal.upgrade.v1_1_2.DLFileEntryTypeUpgra
 import com.liferay.document.library.internal.upgrade.v2_0_0.UpgradeCompanyId;
 import com.liferay.document.library.internal.upgrade.v3_2_1.DDMStructureLinkUpgradeProcess;
 import com.liferay.document.library.internal.upgrade.v3_2_2.DLFileEntryUpgradeProcess;
+import com.liferay.document.library.internal.upgrade.v3_2_4.UpgradeDLSizeLimitConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.configuration.upgrade.PrefsPropsToConfigurationUpgradeHelper;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -37,6 +38,7 @@ import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.view.count.service.ViewCountEntryLocalService;
 
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -114,10 +116,17 @@ public class DLServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"3.2.2", "3.2.3",
 			new DLFileEntryUpgradeProcess(_classNameLocalService));
+
+		registry.register(
+			"3.2.3", "3.2.4",
+			new UpgradeDLSizeLimitConfiguration(_configurationAdmin));
 	}
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private PrefsPropsToConfigurationUpgradeHelper

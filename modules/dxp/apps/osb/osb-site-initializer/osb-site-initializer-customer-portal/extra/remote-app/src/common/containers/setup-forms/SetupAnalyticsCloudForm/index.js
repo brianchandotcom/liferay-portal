@@ -74,6 +74,34 @@ const SetupAnalyticsCloudPage = ({handlePage, leftButton}) => {
 						placeholder="/myurl"
 						type="text"
 					/>
+
+					<Input
+						groupStyle="pb-1"
+						helper="Anyone with an email address at the provided domains can request access to your Workspace. If multiple, separate domains by commas."
+						label="Allowed Email Domains"
+						name="analytics.allowedEmailDomains"
+						placeholder="@mycompany.com"
+						type="email"
+					/>
+
+					<Input
+						groupStyle="pb-1"
+						helper="Enter the timezone to be used for all data reporting in your Workspace."
+						label="Time Zone"
+						name="analytics.TimeZone"
+						placeholder="UTC-04:00"
+						type="text"
+					/>
+
+					<Input
+						groupStyle="pb-1"
+						helper="This user will be the recepient of any high priority communications."
+						label="Incident Report Contact"
+						name="analytics.IncidentReportContact"
+						placeholder="user@company.com"
+						required
+						type="email"
+					/>
 				</ClayForm.Group>
 			</ClayForm.Group>
 
@@ -83,7 +111,7 @@ const SetupAnalyticsCloudPage = ({handlePage, leftButton}) => {
 				prependIcon="plus"
 				small
 			>
-				Add Another Admin
+				Add Incident Report Contact
 			</Button>
 		</Layout>
 	);

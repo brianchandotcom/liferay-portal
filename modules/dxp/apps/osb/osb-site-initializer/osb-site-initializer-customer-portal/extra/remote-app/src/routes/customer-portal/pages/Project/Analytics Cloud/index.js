@@ -11,6 +11,7 @@
 import {useModal} from '@clayui/modal';
 import {useState} from 'react';
 import AnalyticsCloudModal from '../../../components/AnalyticsCloudModal';
+
 const AnalyticsCloud = () => {
 	const [isVisible, setIsVisible] = useState(false);
 	const {observer, onClose} = useModal({

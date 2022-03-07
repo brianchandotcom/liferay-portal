@@ -23,11 +23,11 @@ import Claims from './routes/claims/pages/Claims';
 import Policies from './routes/policies/pages/Policies';
 import Reports from './routes/reports/pages/Reports';
 
-interface Props {
+type Props = {
 	route: any;
-}
+};
 
-const DirectToCustomer = ({route}: Props) => {
+const DirectToCustomer: React.FC<Props> = ({route}) => {
 	const SearchParams = new URLSearchParams(window.location.search);
 
 	const routeEntry = SearchParams.get('raylife_dev_application') || route;

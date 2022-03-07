@@ -1,0 +1,61 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"layout": {
+						"borderWidth": 0,
+						"marginBottom": 0,
+						"marginLeft": 0,
+						"marginRight": 0,
+						"marginTop": 0,
+						"paddingBottom": 0,
+						"paddingLeft": 0,
+						"paddingRight": 0,
+						"paddingTop": 0,
+						"widthType": "Fluid"
+					}
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "layout"
+							},
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							]
+						},
+						"pageElements": [
+							{
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"properties": "route:applications"
+												},
+												"widgetName": "[$REMOTE_APP_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+											}
+										},
+										"type": "Widget"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "public"
+		}
+	}
+}

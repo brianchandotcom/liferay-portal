@@ -33,6 +33,19 @@
 						},
 						"pageElements": [
 							{
+								"pageElements": [
+									{
+										"definition": {
+											"widgetInstance": {
+												"widgetConfig": {
+													"properties": "route:dashboard"
+												},
+												"widgetName": "[$REMOTE_APP_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
+											}
+										},
+										"type": "Widget"
+									}
+								],
 								"type": "FragmentDropZone"
 							}
 						],

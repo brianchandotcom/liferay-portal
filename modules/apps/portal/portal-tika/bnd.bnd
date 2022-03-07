@@ -3,4 +3,7 @@ Bundle-Name: Liferay Portal Tika
 Bundle-SymbolicName: com.liferay.portal.tika
 Bundle-Version: 1.0.4
 Eclipse-BuddyPolicy: parent
-Import-Package: *;resolution:=optional
+Import-Package:\
+	!org.junit,\
+	\
+	*;resolution:=optional

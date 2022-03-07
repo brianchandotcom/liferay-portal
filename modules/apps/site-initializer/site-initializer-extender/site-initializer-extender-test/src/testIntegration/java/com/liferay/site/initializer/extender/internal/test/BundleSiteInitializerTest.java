@@ -25,7 +25,6 @@ import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
 import com.liferay.commerce.notification.model.CommerceNotificationTemplate;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
-import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
@@ -45,7 +44,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.fragment.model.FragmentEntry;
@@ -73,8 +71,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.io.StreamUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -85,7 +81,6 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -95,7 +90,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -898,22 +892,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("manyToMany", objectRelationshipType2.toString());
 	}
 
-	private void _assertWidgetTemplates(Group group) {
-
-		DDMTemplate ddmTemplate =
-		_ddmTemplateLocalService.fetchTemplate(
-			group.getGroupId(),
-			_portal.getClassNameId("com.liferay.portal.kernel.theme.NavItem"),
-			"TEST-WIDGET-TEMPLATE-001");
-
-		Assert.assertNotNull(ddmTemplate);
-
-		Assert.assertEquals("TEST WIDGET TEMPLATE 001",
-			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
-		Assert.assertEquals("${aField.getData()}",
-			ddmTemplate.getScript());
-	}
-
 	private void _assertPermissions(Group group) throws Exception {
 		_assertRoles(group);
 
@@ -1147,6 +1125,20 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("Test Role 3", role.getName());
 	}
 
+	private void _assertWidgetTemplates(Group group) {
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+			group.getGroupId(),
+			_portal.getClassNameId("com.liferay.portal.kernel.theme.NavItem"),
+			"TEST-WIDGET-TEMPLATE-001");
+
+		Assert.assertNotNull(ddmTemplate);
+
+		Assert.assertEquals(
+			"TEST WIDGET TEMPLATE 001",
+			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
+	}
+
 	private Bundle _installBundle(BundleContext bundleContext, String location)
 		throws Exception {
 
@@ -1240,9 +1232,6 @@ public class BundleSiteInitializerTest {
 	@Inject
 	private ObjectRelationshipResource.Factory
 		_objectRelationshipResourceFactory;
-
-	@Inject
-	private CPFileImporter _cpFileImporter;
 
 	@Inject
 	private Portal _portal;

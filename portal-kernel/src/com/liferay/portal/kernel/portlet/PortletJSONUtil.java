@@ -211,31 +211,19 @@ public class PortletJSONUtil {
 			}
 		}
 
-		String footerCssPaths = JSONFactoryUtil.serialize(
-			footerCssSet.toArray(new String[0]));
-
 		jsonObject.put(
-			"footerCssPaths", JSONFactoryUtil.createJSONArray(footerCssPaths));
-
-		String footerJavaScriptPaths = JSONFactoryUtil.serialize(
-			footerJavaScriptSet.toArray(new String[0]));
+			"footerCssPaths", JSONFactoryUtil.createJSONArray(footerCssSet));
 
 		jsonObject.put(
 			"footerJavaScriptPaths",
-			JSONFactoryUtil.createJSONArray(footerJavaScriptPaths));
-
-		String headerCssPaths = JSONFactoryUtil.serialize(
-			headerCssSet.toArray(new String[0]));
+			JSONFactoryUtil.createJSONArray(footerJavaScriptSet));
 
 		jsonObject.put(
-			"headerCssPaths", JSONFactoryUtil.createJSONArray(headerCssPaths));
-
-		String headerJavaScriptPaths = JSONFactoryUtil.serialize(
-			headerJavaScriptSet.toArray(new String[0]));
+			"headerCssPaths", JSONFactoryUtil.createJSONArray(headerCssSet));
 
 		jsonObject.put(
 			"headerJavaScriptPaths",
-			JSONFactoryUtil.createJSONArray(headerJavaScriptPaths));
+			JSONFactoryUtil.createJSONArray(headerJavaScriptSet));
 
 		List<String> markupHeadElements =
 			(List<String>)httpServletRequest.getAttribute(

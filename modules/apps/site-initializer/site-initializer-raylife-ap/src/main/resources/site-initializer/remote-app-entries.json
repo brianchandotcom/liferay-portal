@@ -9,7 +9,8 @@
 			"[$DOCUMENT_URL:/site-initializer/documents/company/remote-app/runtime-main.js$]"
 		],
 		"externalReferenceCode": "RAYLIFEAGENTPORTAL001",
-		"htmlElementName": "liferay-remote-app-raylife-agent-portal",
+		"htmlElementName": "liferay-remote-app-raylife-ap",
+		"instanceable": "true",
 		"name_i18n": {
 			"en_US": "Raylife Agent Portal"
 		},

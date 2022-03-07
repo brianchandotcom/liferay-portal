@@ -949,6 +949,20 @@ public class CommerceOrderItemLocalServiceImpl
 			commerceOrderItem);
 	}
 
+	@Override
+	public CommerceOrderItem updateExternalReferenceCode(
+			long commerceOrderItemId, String externalReferenceCode)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.getCommerceOrderItem(
+				commerceOrderItemId);
+
+		commerceOrderItem.setExternalReferenceCode(externalReferenceCode);
+
+		return commerceOrderItemPersistence.update(commerceOrderItem);
+	}
+
 	protected SearchContext buildSearchContext(
 			long commerceOrderId, Long parentCommerceOrderItemId, int start,
 			int end, Sort sort)

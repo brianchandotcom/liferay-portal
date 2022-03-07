@@ -676,6 +676,23 @@ public class CommerceOrderItemServiceImpl
 			commerceOrderItemId, serviceContext);
 	}
 
+	@Override
+	public CommerceOrderItem updateExternalReferenceCode(
+			long commerceOrderItemId, String externalReferenceCode)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.getCommerceOrderItem(
+				commerceOrderItemId);
+
+		_commerceOrderModelResourcePermission.check(
+			getPermissionChecker(), commerceOrderItem.getCommerceOrderId(),
+			ActionKeys.UPDATE);
+
+		return commerceOrderItemLocalService.updateExternalReferenceCode(
+			commerceOrderItemId, externalReferenceCode);
+	}
+
 	@ServiceReference(type = CommerceAccountPermission.class)
 	protected CommerceAccountPermission commerceAccountPermission;
 

@@ -72,7 +72,7 @@ function main {
 
 	popd > /dev/null
 
-	git clean -dfx -e "*.${USER}.*" > /dev/null
+	git clean -dfx -e "*.${USER}.*" -e portal-ext.properties > /dev/null
 
 	rm -fr ~/.liferay
 

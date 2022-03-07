@@ -12,7 +12,7 @@
  * details.
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -30,7 +30,6 @@ jest.mock(
 
 describe('CollectionSelector', () => {
 	afterEach(() => {
-		cleanup();
 		openItemSelector.mockClear();
 	});
 
@@ -42,7 +41,7 @@ describe('CollectionSelector', () => {
 			[langKey, ...args].join('-')
 		);
 
-		const {getByLabelText} = render(
+		render(
 			<StoreAPIContextProvider dispatch={() => {}} getState={() => ({})}>
 				<CollectionItemContextProvider
 					value={{
@@ -58,7 +57,7 @@ describe('CollectionSelector', () => {
 			</StoreAPIContextProvider>
 		);
 
-		const button = getByLabelText('select-x');
+		const button = screen.getByLabelText('select-x');
 
 		userEvent.click(button);
 
@@ -76,7 +75,7 @@ describe('CollectionSelector', () => {
 			[langKey, ...args].join('-')
 		);
 
-		const {getByLabelText} = render(
+		render(
 			<StoreAPIContextProvider dispatch={() => {}} getState={() => ({})}>
 				<CollectionSelector
 					itemSelectorURL={DEFAULT_ITEM_SELECTOR_URL}
@@ -86,7 +85,7 @@ describe('CollectionSelector', () => {
 			</StoreAPIContextProvider>
 		);
 
-		const button = getByLabelText('select-x');
+		const button = screen.getByLabelText('select-x');
 
 		userEvent.click(button);
 

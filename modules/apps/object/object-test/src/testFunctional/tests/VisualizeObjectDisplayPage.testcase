@@ -86,13 +86,12 @@ definition {
 			label = "Expand Collection Display");
 
 		PageEditor.editCollectionDisplay(
+			fieldLabel = "Field",
+			filterCollection = "true",
 			fragmentName = "Collection Display",
 			listStyle = "Table",
+			option = "True",
 			selectedName = "Custom Objects");
-
-		PageEditor.filterCollection(
-			fieldLabel = "Field",
-			option = "True");
 
 		PageEditor.clickPublish();
 

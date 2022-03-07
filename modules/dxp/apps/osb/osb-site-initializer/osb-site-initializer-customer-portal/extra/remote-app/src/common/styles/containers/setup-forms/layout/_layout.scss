@@ -5,7 +5,12 @@
 	width: 600px;
 }
 
-.generateKey {
-	height: 924px;
+.cp-generateKey {
+	min-height: 836px;
+	max-height: 936px;
 	width: 680px;
+}
+
+.cp-select-card {
+	background-image: none !important;
 }

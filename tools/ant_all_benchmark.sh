@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ANT_ALL_RUN_COUNT=0
+DURATION_ARRAY=( )
 DURATION_LOG=false
 
 set -e
@@ -22,6 +24,32 @@ function enable_duration_log {
 			break
 		fi
 	done
+}
+
+function log_durations {
+	if [ ${DURATION_LOG} == true ]
+	then
+		echo "" >> ant_all_duration.csv
+
+		for (( i = 0 ; i < ${#DURATION_ARRAY[@]}; i++ ))
+		do
+			echo -n "${DURATION_ARRAY[${i}]}" >> ant_all_duration.csv
+
+			if [ "${i}" -lt "$((${#DURATION_ARRAY[@]} - 1))" ]
+			then
+				echo -n "," >> ant_all_duration.csv
+			fi
+		done
+	fi
+}
+
+function save_duration {
+	if [ ${DURATION_LOG} == true ]
+	then
+		DURATION_ARRAY[${ANT_ALL_RUN_COUNT}]=${SECONDS}
+
+		let "ANT_ALL_RUN_COUNT=${ANT_ALL_RUN_COUNT} + 1"
+	fi
 }
 
 function main {
@@ -59,15 +87,23 @@ function main {
 
 	echo "Run 1 with a clean repository $(echo_time)"
 
+	save_duration
+
 	rm -fr .gradle/caches
 
 	run_ant_all
 
 	echo "Run 2 without Gradle cache $(echo_time)"
 
+	save_duration
+
 	run_ant_all
 
 	echo "Run 3 with all caches $(echo_time)"
+
+	save_duration
+
+	log_durations
 
 	popd > /dev/null
 }

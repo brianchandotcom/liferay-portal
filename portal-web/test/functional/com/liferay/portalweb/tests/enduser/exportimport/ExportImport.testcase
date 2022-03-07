@@ -1107,7 +1107,9 @@ definition {
 	@description = "This is a test for LPS-142076. Can import site with the 'Copy as new' option in the Update data section."
 	@priority = "3"
 	test ExportImportSiteWithCopyAsNew {
-		task ("Add a widget page") {
+		task ("Add a new site and add a widget page to site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
 				layoutName = "Test Site Name");

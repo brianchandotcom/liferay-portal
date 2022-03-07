@@ -777,6 +777,14 @@ $productMenuWidth: 320px;
 		.document-container {
 			border-radius: 2px;
 			box-shadow: 0 0 0 2px $primary-l2 !important;
+
+			.active-area {
+				background-color: transparent !important;
+
+				.card-type-directory .card {
+					box-shadow: 0 0 0 2px $primary-l2;
+				}
+			}
 		}
 	}
 

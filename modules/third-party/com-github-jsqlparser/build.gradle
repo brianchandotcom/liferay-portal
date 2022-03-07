@@ -5,7 +5,7 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-	compileOnly group: "com.github.jsqlparser", name: "jsqlparser", version: "2.1"
+	compileOnly group: "com.github.jsqlparser", name: "jsqlparser", transitive: false, version: "2.1"
 }
 
 patch {

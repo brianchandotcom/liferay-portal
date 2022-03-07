@@ -6,8 +6,8 @@ task patch(type: PatchTask)
 
 dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.scr", transitive: false, version: "2.0.6"
-	compileOnly group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
-	compileOnly group: "org.osgi", name: "osgi.cmpn", version: "6.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.core", transitive: false, version: "6.0.0"
+	compileOnly group: "org.osgi", name: "osgi.cmpn", transitive: false, version: "6.0.0"
 }
 
 liferay {

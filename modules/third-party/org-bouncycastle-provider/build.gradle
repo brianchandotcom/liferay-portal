@@ -1,7 +1,7 @@
 task jarPatched(type: Zip)
 
 dependencies {
-	compileOnly group: "org.bouncycastle", name: "bcprov-jdk15on", version: "1.61"
+	compileOnly group: "org.bouncycastle", name: "bcprov-jdk15on", transitive: false, version: "1.61"
 }
 
 jar {

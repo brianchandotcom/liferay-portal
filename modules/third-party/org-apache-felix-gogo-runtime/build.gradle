@@ -9,9 +9,9 @@ targetCompatibility = "1.7"
 
 dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.gogo.runtime", transitive: false, version: "1.1.2"
-	compileOnly group: "org.osgi", name: "org.osgi.annotation.bundle", version: "1.1.0"
-	compileOnly group: "org.osgi", name: "org.osgi.namespace.service", version: "1.0.0"
-	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.annotation.bundle", transitive: false, version: "1.1.0"
+	compileOnly group: "org.osgi", name: "org.osgi.namespace.service", transitive: false, version: "1.0.0"
+	compileOnly group: "org.osgi", name: "osgi.core", transitive: false, version: "6.0.0"
 }
 
 liferay {

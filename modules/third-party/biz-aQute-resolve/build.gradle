@@ -7,9 +7,9 @@ task patch(type: PatchTask)
 dependencies {
 	compile group: "biz.aQute.bnd", name: "biz.aQute.resolve", version: "4.1.0"
 
-	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "4.1.0"
-	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.repository", version: "4.1.0"
-	compileOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.25"
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", transitive: false, version: "4.1.0"
+	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.repository", transitive: false, version: "4.1.0"
+	compileOnly group: "org.slf4j", name: "slf4j-api", transitive: false, version: "1.7.25"
 }
 
 patch {

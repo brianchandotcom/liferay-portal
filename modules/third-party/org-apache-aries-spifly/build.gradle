@@ -9,7 +9,7 @@ task patch(type: PatchTask)
 dependencies {
 	compile group: "org.apache.aries.spifly", name: "org.apache.aries.spifly.dynamic.framework.extension", optional, version: "1.2.3"
 
-	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly group: "org.osgi", name: "osgi.core", transitive: false, version: "6.0.0"
 }
 
 liferay {

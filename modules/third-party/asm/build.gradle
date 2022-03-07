@@ -1,7 +1,7 @@
 task jarPatched(type: Zip)
 
 dependencies {
-	compileOnly group: "org.ow2.asm", name: "asm", version: "7.0"
+	compileOnly group: "org.ow2.asm", name: "asm", transitive: false, version: "7.0"
 }
 
 jar {

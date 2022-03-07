@@ -5,7 +5,7 @@ apply plugin: "com.liferay.patcher"
 task patch(type: PatchTask)
 
 dependencies {
-	compileOnly group: "org.jodd", name: "jodd-util", version: "6.0.1"
+	compileOnly group: "org.jodd", name: "jodd-util", transitive: false, version: "6.0.1"
 }
 
 patch {

@@ -1,7 +1,7 @@
 task jarPatched(type: Zip)
 
 dependencies {
-	compileOnly group: "javax.jws", name: "javax.jws-api", version: "1.1"
+	compileOnly group: "javax.jws", name: "javax.jws-api", transitive: false, version: "1.1"
 }
 
 jar {

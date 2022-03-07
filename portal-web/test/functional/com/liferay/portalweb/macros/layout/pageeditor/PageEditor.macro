@@ -1541,7 +1541,7 @@ definition {
 			if (isSet(filterCollection)) {
 				PageEditor.gotoEllipsisMenuItemInItemSelector(
 					fieldLabel = "Collection",
-					menuItem = "Filter Collection");
+					menuItem = "Prefilter Collection");
 
 				if (isSet(clearFilter)) {
 					Click(

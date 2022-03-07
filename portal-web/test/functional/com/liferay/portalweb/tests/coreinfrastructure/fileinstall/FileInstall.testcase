@@ -64,7 +64,11 @@ definition {
 		property custom.properties = "module.framework.file.install.subdir.mode=recurse";
 		property test.name.skip.portal.instance = "FileInstall#CustomizeRecursiveSubdirectoryMode";
 
-		Clustering.deployClusteringModule(nodePort = "8080");
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		Clustering.deployClusteringModule(
+			deployDir = "${liferayHome}/osgi/portal",
+			nodePort = "8080");
 
 		WaitForConsoleTextPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample.web_");
 
@@ -82,17 +86,21 @@ definition {
 		property custom.properties = "module.framework.file.install.subdir.mode=skip";
 		property test.name.skip.portal.instance = "FileInstall#CustomizeSkipSubdirectoryMode";
 
-		Clustering.deployClusteringModule(nodePort = "8080");
+		var liferayHome = PropsUtil.get("liferay.home.dir.name");
+
+		Clustering.deployClusteringModule(
+			deployDir = "${liferayHome}/osgi/portal",
+			nodePort = "8080");
 
 		GogoShell.openGogoShellAdmin();
 
 		AssertConsoleTextNotPresent(value1 = "STARTED com.liferay.portal.cluster.multiple.sample.web_");
 
-		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Sample'");
+		GogoShell.executeCommand(commandName = "lb | grep 'Cluster Multiple Sample'");
 
 		GogoShell.viewOutput(outputContent = "false");
 
-		GogoShell.viewNoOutput(outputContent = "Cluster Sample");
+		GogoShell.viewNoOutput(outputContent = "Cluster Multiple Sample");
 
 		GogoShell.viewNoOutput(outputContent = "Active");
 	}

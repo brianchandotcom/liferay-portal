@@ -172,7 +172,7 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 	private static volatile URLValidator _urlValidator =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			URLValidator.class, WebsiteLocalServiceImpl.class, "_urlValidator",
-			false);
+			true);
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;

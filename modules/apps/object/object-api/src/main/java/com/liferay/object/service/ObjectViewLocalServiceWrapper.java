@@ -92,6 +92,13 @@ public class ObjectViewLocalServiceWrapper
 		return _objectViewLocalService.createPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public void deleteObjectFieldFromObjectView(
+		com.liferay.object.model.ObjectField objectField) {
+
+		_objectViewLocalService.deleteObjectFieldFromObjectView(objectField);
+	}
+
 	/**
 	 * Deletes the object view with the primary key from the database. Also notifies the appropriate model listeners.
 	 *

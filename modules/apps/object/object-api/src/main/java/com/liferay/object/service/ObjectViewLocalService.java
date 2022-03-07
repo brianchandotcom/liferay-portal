@@ -15,6 +15,7 @@
 package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectView;
 import com.liferay.object.model.ObjectViewColumn;
 import com.liferay.object.model.ObjectViewSortColumn;
@@ -104,6 +105,8 @@ public interface ObjectViewLocalService
 	 */
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public void deleteObjectFieldFromObjectView(ObjectField objectField);
 
 	/**
 	 * Deletes the object view with the primary key from the database. Also notifies the appropriate model listeners.

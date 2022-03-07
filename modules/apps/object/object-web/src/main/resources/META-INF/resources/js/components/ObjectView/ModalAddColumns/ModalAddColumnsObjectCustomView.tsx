@@ -177,65 +177,60 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 			className="lfr-object__object-view-modal-add-columns"
 			observer={observer}
 		>
-			<ClayForm onSubmit={(event) => onSubmit(event)}>
-				<ClayModal.Header>
-					{Liferay.Language.get('add-columns')}
-				</ClayModal.Header>
+			<ClayModal.Header>
+				{Liferay.Language.get('add-columns')}
+			</ClayModal.Header>
 
-				<ClayModal.Body>
-					<div className="lfr-object__object-view-modal-add-columns-selection-title">
-						{Liferay.Language.get('select-the-columns')}
-					</div>
+			<ClayModal.Body>
+				<div className="lfr-object__object-view-modal-add-columns-selection-title">
+					{Liferay.Language.get('select-the-columns')}
+				</div>
 
-					<ClayManagementToolbar>
-						<ClayManagementToolbar.ItemList>
-							<ClayManagementToolbar.Item>
-								<ClayCheckbox
-									checked={fieldsChecked}
-									indeterminate={
-										!allFieldsChecked && fieldsChecked
+				<ClayManagementToolbar>
+					<ClayManagementToolbar.ItemList>
+						<ClayManagementToolbar.Item>
+							<ClayCheckbox
+								checked={fieldsChecked}
+								indeterminate={
+									!allFieldsChecked && fieldsChecked
+								}
+								onChange={({target}) => {
+									if (!allFieldsChecked && fieldsChecked) {
+										handleAllFieldsChecked(true);
 									}
-									onChange={({target}) => {
-										if (
-											!allFieldsChecked &&
-											fieldsChecked
-										) {
-											handleAllFieldsChecked(true);
-										}
-										else {
-											handleAllFieldsChecked(
-												target.checked
-											);
-										}
-									}}
-								/>
-							</ClayManagementToolbar.Item>
-						</ClayManagementToolbar.ItemList>
+									else {
+										handleAllFieldsChecked(target.checked);
+									}
+								}}
+							/>
+						</ClayManagementToolbar.Item>
+					</ClayManagementToolbar.ItemList>
 
-						<ManagementToolbarSearch
-							query={query}
-							setQuery={setQuery}
-						/>
-					</ClayManagementToolbar>
+					<ManagementToolbarSearch
+						query={query}
+						setQuery={setQuery}
+					/>
+				</ClayManagementToolbar>
+			</ClayModal.Body>
 
-					<ClayList className="lfr-object__object-view-modal-add-columns-list">
-						{filteredItems?.map((field, index) => (
-							<ClayList.Item
-								className={field?.filtered ? '' : 'hide'}
-								flex
-								key={`list-item-${index}`}
-							>
-								<ClayCheckbox
-									checked={field.checked}
-									label={field.label[defaultLanguageId]}
-									onChange={() => {
-										toggleFieldCheckbox(field.name);
-									}}
-								/>
-							</ClayList.Item>
-						))}
-					</ClayList>
-				</ClayModal.Body>
+			<ClayForm onSubmit={(event) => onSubmit(event)}>
+				<ClayList className="lfr-object__object-view-modal-add-columns-list">
+					{filteredItems?.map((field, index) => (
+						<ClayList.Item
+							className={field?.filtered ? '' : 'hide'}
+							flex
+							key={`list-item-${index}`}
+						>
+							<ClayCheckbox
+								checked={field.checked}
+								label={field.label[defaultLanguageId]}
+								onChange={() => {
+									toggleFieldCheckbox(field.name);
+								}}
+							/>
+						</ClayList.Item>
+					))}
+				</ClayList>
 
 				<ClayModal.Footer
 					last={

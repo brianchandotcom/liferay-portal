@@ -26,13 +26,17 @@ interface IProps {
 
 export function ManagementToolbarSearch({query, setQuery}: IProps) {
 	return (
-		<ClayManagementToolbar.Search>
+		<ClayManagementToolbar.Search
+			onSubmit={(event) => event.preventDefault()}
+		>
 			<ClayInput.Group>
 				<ClayInput.GroupItem>
 					<ClayInput
 						aria-label="Search"
 						className="form-control input-group-inset input-group-inset-after"
-						onChange={({target}) => setQuery(target.value)}
+						onChange={({target}) => {
+							setQuery(target.value);
+						}}
 						placeholder="Search"
 						type="text"
 						value={query}

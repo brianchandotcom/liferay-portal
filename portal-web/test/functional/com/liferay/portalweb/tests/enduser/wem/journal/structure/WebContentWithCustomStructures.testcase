@@ -407,7 +407,7 @@ definition {
 			fieldLabelList = "Text",
 			structureName = "Global WC Structure Name",
 			templateName = "Local WC Template Name",
-			text = "WC WebContent Text",
+			webContentTextSingleLine = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title");
 
 		WebContentDisplayPortlet.viewContent(
@@ -1014,7 +1014,7 @@ definition {
 			fieldLabelList = "Text",
 			structureName = "Global WC Structure Name",
 			templateName = "Global WC Template Name",
-			text = "WC WebContent Text",
+			webContentTextSingleLine = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title");
 
 		WebContentDisplayPortlet.viewContent(
@@ -1135,7 +1135,7 @@ definition {
 			fieldLabelList = "Text",
 			structureName = "Global WC Structure Name",
 			templateName = "Global WC Template Name",
-			text = "WC WebContent Text",
+			webContentTextSingleLine = "WC WebContent Text",
 			webContentTitle = "WC WebContent Title");
 
 		WebContentDisplayPortlet.viewContent(

@@ -284,8 +284,8 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 			WebContentDisplayPortlet.add(
 				fieldLabelList = "Text,Text Box",
 				structureName = "WC Structure Name",
-				text = "WC WebContent Text",
-				textBox = "${content}",
+				webContentTextMultipleLines = "${content}",
+				webContentTextSingleLine = "WC WebContent Text",
 				webContentTitle = "WC WebContent Title");
 		}
 

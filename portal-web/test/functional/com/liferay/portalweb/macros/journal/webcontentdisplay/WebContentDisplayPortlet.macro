@@ -18,11 +18,11 @@ definition {
 				if ("${fieldLabel}" == "Text Box") {
 					WebContent.addWithStructureCP(
 						fieldType = "Multiple Lines",
-						webContentText = "${textBox}",
+						webContentText = "${webContentTextMultipleLines}",
 						webContentTextFieldLabel = "Text Box");
 				}
 				else {
-					WebContent.addWithStructureCP(webContentText = "${text}");
+					WebContent.addWithStructureCP(webContentText = "${webContentTextSingleLine}");
 				}
 			}
 		}

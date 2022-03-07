@@ -8,6 +8,8 @@ Import-Package:\
 	*
 Main-Class: com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilder
 -includeresource:\
+	@com.liferay.petra.lang-*.jar!/com/liferay/petra/lang/CentralizedThreadLocal.class,\
+	@com.liferay.petra.string-*.jar!/com/liferay/petra/string/StringBundler.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/*,\

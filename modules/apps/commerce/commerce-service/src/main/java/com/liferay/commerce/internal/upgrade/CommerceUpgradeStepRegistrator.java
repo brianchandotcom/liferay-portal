@@ -38,6 +38,8 @@ import com.liferay.commerce.internal.upgrade.v4_6_0.SubscriptionUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v4_8_1.CommerceOrderStatusesUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v5_0_0.CommerceAddressRestrictionUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v5_0_1.CommercePermissionUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v7_2_0.util.CommerceOrderTypeRelTable;
+import com.liferay.commerce.internal.upgrade.v7_2_0.util.CommerceOrderTypeTable;
 import com.liferay.commerce.internal.upgrade.v8_2_0.CommerceShipmentExternalReferenceCodeUpgradeProcess;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
@@ -229,9 +231,8 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				CommerceOrderUpgradeProcess());
 
 		registry.register(
-			"7.1.0", "7.2.0",
-			new com.liferay.commerce.internal.upgrade.v7_2_0.
-				CommerceOrderTypeUpgradeProcess());
+			"7.1.0", "7.2.0", CommerceOrderTypeTable.create(),
+			CommerceOrderTypeRelTable.create());
 
 		registry.register(
 			"7.2.0", "7.3.0",

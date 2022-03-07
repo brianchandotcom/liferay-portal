@@ -20,10 +20,9 @@ definition {
 			var structureName = "Basic Web Content";
 		}
 
-		AssertClick(
+		Click(
 			key_menuItem = "${structureName}",
-			locator1 = "MenuItem#ANY_MENU_ITEM",
-			value1 = "${structureName}");
+			locator1 = "MenuItem#ANY_MENU_ITEM");
 
 		AssertVisible(locator1 = "TextInput#TITLE");
 

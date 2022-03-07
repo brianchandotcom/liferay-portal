@@ -2676,7 +2676,6 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-48913."
-	@ignore = "true"
 	@priority = "3"
 	test ViewFieldsNestedInDDLRecord {
 		property portal.upstream = "quarantine";
@@ -2743,11 +2742,21 @@ definition {
 
 		DDLNavigator.gotoListRecords(ddlListName = "List Name");
 
-		DDLRecord.viewFieldCP(
-			ddlRecordFieldData = "Text",
-			ddlRecordNestedFieldData = "123",
-			fieldFieldLabel = "Text",
-			nestedFieldFieldLabel = "Integer");
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "View",
+			rowEntry = "Text");
+
+		Click(locator1 = "Button#EDIT");
+
+		AssertTextEquals(
+			key_fieldName = "Text",
+			locator1 = "TextInput#DDM",
+			value1 = "Text");
+
+		AssertTextEquals(
+			key_fieldName = "Integer",
+			locator1 = "TextInput#DDM",
+			value1 = "123");
 	}
 
 	@description = "This is a use case for LPS-48591."

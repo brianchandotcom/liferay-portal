@@ -1499,9 +1499,15 @@ public class TestrayImporter {
 		Job job = getJob();
 
 		if (job instanceof QAWebsitesGitRepositoryJob) {
-			return JobPropertyFactory.newJobProperty(
+			JobProperty jobProperty = JobPropertyFactory.newJobProperty(
 				basePropertyName, job, testBaseDir,
 				JobProperty.Type.QA_WEBSITES_TEST_DIR);
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(
+					jobProperty.getValue())) {
+
+				return jobProperty;
+			}
 		}
 
 		return JobPropertyFactory.newJobProperty(basePropertyName, job);

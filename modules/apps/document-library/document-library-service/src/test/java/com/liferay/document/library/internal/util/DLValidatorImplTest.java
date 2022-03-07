@@ -15,7 +15,7 @@
 package com.liferay.document.library.internal.util;
 
 import com.liferay.document.library.configuration.DLConfiguration;
-import com.liferay.document.library.internal.configuration.admin.service.MimeTypeSizeLimitManagedServiceFactory;
+import com.liferay.document.library.internal.configuration.admin.service.DLSizeLimitManagedServiceFactory;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -46,11 +46,11 @@ public class DLValidatorImplTest {
 
 		dlValidatorImpl.setDLConfiguration(_dlConfiguration);
 
-		_mimeTypeSizeLimitManagedServiceFactory = Mockito.mock(
-			MimeTypeSizeLimitManagedServiceFactory.class);
+		_dlSizeLimitManagedServiceFactory = Mockito.mock(
+			DLSizeLimitManagedServiceFactory.class);
 
-		dlValidatorImpl.setMimeTypeSizeLimitManagedServiceFactory(
-			_mimeTypeSizeLimitManagedServiceFactory);
+		dlValidatorImpl.setDLSizeLimitManagedServiceFactory(
+			_dlSizeLimitManagedServiceFactory);
 
 		_uploadServletRequestConfigurationHelper = Mockito.mock(
 			UploadServletRequestConfigurationHelper.class);
@@ -75,7 +75,7 @@ public class DLValidatorImplTest {
 		);
 
 		Mockito.when(
-			_mimeTypeSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
+			_dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			15L
@@ -99,7 +99,7 @@ public class DLValidatorImplTest {
 		);
 
 		Mockito.when(
-			_mimeTypeSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
+			_dlSizeLimitManagedServiceFactory.getCompanyMimeTypeSizeLimit(
 				Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			5L
@@ -161,9 +161,8 @@ public class DLValidatorImplTest {
 	}
 
 	private DLConfiguration _dlConfiguration;
+	private DLSizeLimitManagedServiceFactory _dlSizeLimitManagedServiceFactory;
 	private DLValidator _dlValidator;
-	private MimeTypeSizeLimitManagedServiceFactory
-		_mimeTypeSizeLimitManagedServiceFactory;
 	private UploadServletRequestConfigurationHelper
 		_uploadServletRequestConfigurationHelper;
 

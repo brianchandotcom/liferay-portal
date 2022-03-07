@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.internal.configuration.persistence.listener;
 
-import com.liferay.document.library.internal.configuration.MimeTypeSizeLimitConfiguration;
-import com.liferay.document.library.internal.configuration.admin.service.MimeTypeSizeLimitManagedServiceFactory;
+import com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration;
+import com.liferay.document.library.internal.configuration.admin.service.DLSizeLimitManagedServiceFactory;
 import com.liferay.document.library.internal.util.MimeTypeSizeLimitUtil;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
@@ -30,10 +30,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	property = "model.class.name=com.liferay.document.library.internal.configuration.MimeTypeSizeLimitConfiguration",
+	property = "model.class.name=com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration",
 	service = ConfigurationModelListener.class
 )
-public class MimeTypeSizeLimitConfigurationModelListener
+public class DLSizeLimitConfigurationModelListener
 	implements ConfigurationModelListener {
 
 	@Override
@@ -55,8 +55,8 @@ public class MimeTypeSizeLimitConfigurationModelListener
 						throw new ConfigurationModelListenerException(
 							mimeTypeSizeString +
 								" does not contain a valid mime type name",
-							MimeTypeSizeLimitConfiguration.class,
-							MimeTypeSizeLimitConfigurationModelListener.class,
+							DLSizeLimitConfiguration.class,
+							DLSizeLimitConfigurationModelListener.class,
 							properties);
 					}
 
@@ -64,24 +64,21 @@ public class MimeTypeSizeLimitConfigurationModelListener
 						throw new ConfigurationModelListenerException(
 							mimeTypeSizeString +
 								" does not contain a valid size limit value",
-							MimeTypeSizeLimitConfiguration.class,
-							MimeTypeSizeLimitConfigurationModelListener.class,
+							DLSizeLimitConfiguration.class,
+							DLSizeLimitConfigurationModelListener.class,
 							properties);
 					}
 				});
 		}
 	}
 
-	protected void setMimeTypeSizeLimitManagedServiceFactory(
-		MimeTypeSizeLimitManagedServiceFactory
-			mimeTypeSizeLimitManagedServiceFactory) {
+	protected void setDLSizeLimitManagedServiceFactory(
+		DLSizeLimitManagedServiceFactory dlSizeLimitManagedServiceFactory) {
 
-		_mimeTypeSizeLimitManagedServiceFactory =
-			mimeTypeSizeLimitManagedServiceFactory;
+		_dlSizeLimitManagedServiceFactory = dlSizeLimitManagedServiceFactory;
 	}
 
 	@Reference
-	private MimeTypeSizeLimitManagedServiceFactory
-		_mimeTypeSizeLimitManagedServiceFactory;
+	private DLSizeLimitManagedServiceFactory _dlSizeLimitManagedServiceFactory;
 
 }

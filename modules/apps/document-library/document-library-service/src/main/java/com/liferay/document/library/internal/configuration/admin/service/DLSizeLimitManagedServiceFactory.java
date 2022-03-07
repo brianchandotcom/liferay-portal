@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.internal.configuration.admin.service;
 
-import com.liferay.document.library.internal.configuration.MimeTypeSizeLimitConfiguration;
+import com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration;
 import com.liferay.document.library.internal.util.MimeTypeSizeLimitUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
@@ -37,16 +37,14 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Adolfo Pérez
  */
 @Component(
-	configurationPid = "com.liferay.document.library.internal.configuration.MimeTypeSizeLimitConfiguration",
+	configurationPid = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration",
 	immediate = true,
-	property = Constants.SERVICE_PID + "=com.liferay.document.library.internal.configuration.MimeTypeSizeLimitConfiguration.scoped",
+	property = Constants.SERVICE_PID + "=com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration.scoped",
 	service = {
-		ManagedServiceFactory.class,
-		MimeTypeSizeLimitManagedServiceFactory.class
+		DLSizeLimitManagedServiceFactory.class, ManagedServiceFactory.class
 	}
 )
-public class MimeTypeSizeLimitManagedServiceFactory
-	implements ManagedServiceFactory {
+public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 
 	@Override
 	public void deleted(String pid) {
@@ -67,7 +65,7 @@ public class MimeTypeSizeLimitManagedServiceFactory
 	@Override
 	public String getName() {
 		return "com.liferay.document.library.internal.configuration." +
-			"MimeTypeSizeLimitConfiguration.scoped";
+			"DLSizeLimitConfiguration.scoped";
 	}
 
 	@Override
@@ -83,7 +81,7 @@ public class MimeTypeSizeLimitManagedServiceFactory
 			_companyConfigurationBeans.put(
 				companyId,
 				ConfigurableUtil.createConfigurable(
-					MimeTypeSizeLimitConfiguration.class, dictionary));
+					DLSizeLimitConfiguration.class, dictionary));
 			_companyIds.put(pid, companyId);
 			_mimeTypeSizeLimitsMap.remove(companyId);
 		}
@@ -92,9 +90,8 @@ public class MimeTypeSizeLimitManagedServiceFactory
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		_mimeTypeSizeLimitsMap = new ConcurrentHashMap<>();
-		_systemMimeTypeSizeLimitConfiguration =
-			ConfigurableUtil.createConfigurable(
-				MimeTypeSizeLimitConfiguration.class, properties);
+		_systemDLSizeLimitConfiguration = ConfigurableUtil.createConfigurable(
+			DLSizeLimitConfiguration.class, properties);
 	}
 
 	@Deactivate
@@ -103,13 +100,13 @@ public class MimeTypeSizeLimitManagedServiceFactory
 	}
 
 	private Map<String, Long> _computeCompanyMimeTypeSizeLimit(long companyId) {
-		MimeTypeSizeLimitConfiguration mimeTypeSizeLimitConfiguration =
-			_getCompanyMimeTypeSizeLimitConfiguration(companyId);
+		DLSizeLimitConfiguration dlSizeLimitConfiguration =
+			_getCompanyDLSizeLimitConfiguration(companyId);
 
 		Map<String, Long> mimeTypeSizeLimits = new HashMap<>();
 
 		for (String mimeTypeSizeLimit :
-				mimeTypeSizeLimitConfiguration.contentTypeSizeLimit()) {
+				dlSizeLimitConfiguration.contentTypeSizeLimit()) {
 
 			MimeTypeSizeLimitUtil.parseMimeTypeSizeLimit(
 				mimeTypeSizeLimit, mimeTypeSizeLimits::put);
@@ -118,14 +115,14 @@ public class MimeTypeSizeLimitManagedServiceFactory
 		return mimeTypeSizeLimits;
 	}
 
-	private MimeTypeSizeLimitConfiguration
-		_getCompanyMimeTypeSizeLimitConfiguration(long companyId) {
+	private DLSizeLimitConfiguration _getCompanyDLSizeLimitConfiguration(
+		long companyId) {
 
 		if (_companyConfigurationBeans.containsKey(companyId)) {
 			return _companyConfigurationBeans.get(companyId);
 		}
 
-		return _systemMimeTypeSizeLimitConfiguration;
+		return _systemDLSizeLimitConfiguration;
 	}
 
 	private void _unmapPid(String pid) {
@@ -137,11 +134,10 @@ public class MimeTypeSizeLimitManagedServiceFactory
 		}
 	}
 
-	private final Map<Long, MimeTypeSizeLimitConfiguration>
+	private final Map<Long, DLSizeLimitConfiguration>
 		_companyConfigurationBeans = new ConcurrentHashMap<>();
 	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
 	private Map<Long, Map<String, Long>> _mimeTypeSizeLimitsMap;
-	private volatile MimeTypeSizeLimitConfiguration
-		_systemMimeTypeSizeLimitConfiguration;
+	private volatile DLSizeLimitConfiguration _systemDLSizeLimitConfiguration;
 
 }

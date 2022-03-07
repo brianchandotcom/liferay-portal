@@ -26,11 +26,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.document.library.internal.configuration.MimeTypeSizeLimitConfiguration",
+	id = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration",
 	localization = "content/Language",
 	name = "mime-type-size-limit-configuration-name"
 )
-public interface MimeTypeSizeLimitConfiguration {
+public interface DLSizeLimitConfiguration {
 
 	@Meta.AD(deflt = "", name = "mime-type-size-limit-name", required = false)
 	public String[] contentTypeSizeLimit();

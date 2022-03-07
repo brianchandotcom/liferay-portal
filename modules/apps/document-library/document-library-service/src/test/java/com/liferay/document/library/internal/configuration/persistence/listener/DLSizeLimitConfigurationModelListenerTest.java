@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.internal.configuration.persistence.listener;
 
-import com.liferay.document.library.internal.configuration.admin.service.MimeTypeSizeLimitManagedServiceFactory;
+import com.liferay.document.library.internal.configuration.admin.service.DLSizeLimitManagedServiceFactory;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -31,7 +31,7 @@ import org.mockito.Mockito;
 /**
  * @author Adolfo Pérez
  */
-public class MimeTypeSizeLimitConfigurationModelListenerTest {
+public class DLSizeLimitConfigurationModelListenerTest {
 
 	@ClassRule
 	@Rule
@@ -40,14 +40,14 @@ public class MimeTypeSizeLimitConfigurationModelListenerTest {
 
 	@Before
 	public void setUp() {
-		_mimeTypeSizeLimitConfigurationModelListener.
-			setMimeTypeSizeLimitManagedServiceFactory(
-				Mockito.mock(MimeTypeSizeLimitManagedServiceFactory.class));
+		_dlSizeLimitConfigurationModelListener.
+			setDLSizeLimitManagedServiceFactory(
+				Mockito.mock(DLSizeLimitManagedServiceFactory.class));
 	}
 
 	@Test
 	public void testEmptyConfigurationValue() throws Exception {
-		_mimeTypeSizeLimitConfigurationModelListener.onBeforeSave(
+		_dlSizeLimitConfigurationModelListener.onBeforeSave(
 			RandomTestUtil.randomString(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"mimeTypeSizeLimit", new String[0]
@@ -56,7 +56,7 @@ public class MimeTypeSizeLimitConfigurationModelListenerTest {
 
 	@Test(expected = ConfigurationModelListenerException.class)
 	public void testInvalidMimeType() throws Exception {
-		_mimeTypeSizeLimitConfigurationModelListener.onBeforeSave(
+		_dlSizeLimitConfigurationModelListener.onBeforeSave(
 			RandomTestUtil.randomString(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"mimeTypeSizeLimit", new String[] {" type : 12345 "}
@@ -65,13 +65,13 @@ public class MimeTypeSizeLimitConfigurationModelListenerTest {
 
 	@Test
 	public void testNullConfigurationValue() throws Exception {
-		_mimeTypeSizeLimitConfigurationModelListener.onBeforeSave(
+		_dlSizeLimitConfigurationModelListener.onBeforeSave(
 			RandomTestUtil.randomString(), new HashMapDictionary<>());
 	}
 
 	@Test
 	public void testValidMimeType() throws Exception {
-		_mimeTypeSizeLimitConfigurationModelListener.onBeforeSave(
+		_dlSizeLimitConfigurationModelListener.onBeforeSave(
 			RandomTestUtil.randomString(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"mimeTypeSizeLimit", new String[] {"image/png:12345"}
@@ -80,7 +80,7 @@ public class MimeTypeSizeLimitConfigurationModelListenerTest {
 
 	@Test
 	public void testValidMimeTypeWithBlanks() throws Exception {
-		_mimeTypeSizeLimitConfigurationModelListener.onBeforeSave(
+		_dlSizeLimitConfigurationModelListener.onBeforeSave(
 			RandomTestUtil.randomString(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"mimeTypeSizeLimit", new String[] {" image/png : 12345 "}
@@ -89,15 +89,15 @@ public class MimeTypeSizeLimitConfigurationModelListenerTest {
 
 	@Test
 	public void testValidSimpleMimeType() throws Exception {
-		_mimeTypeSizeLimitConfigurationModelListener.onBeforeSave(
+		_dlSizeLimitConfigurationModelListener.onBeforeSave(
 			RandomTestUtil.randomString(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"mimeTypeSizeLimit", new String[] {"image/png:12345"}
 			).build());
 	}
 
-	private final MimeTypeSizeLimitConfigurationModelListener
-		_mimeTypeSizeLimitConfigurationModelListener =
-			new MimeTypeSizeLimitConfigurationModelListener();
+	private final DLSizeLimitConfigurationModelListener
+		_dlSizeLimitConfigurationModelListener =
+			new DLSizeLimitConfigurationModelListener();
 
 }

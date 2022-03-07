@@ -893,12 +893,12 @@
 </tr>
 <tr>
 	<td>VALIDATION_ARGUMENT</td>
-	<td>//div[contains(@data-field-name,'selectedValidation')]//div[contains(@class,'select-field-trigger')]</td>
+	<td>//div[contains(@class,'form-control')]//div[contains(@class,'option-selected') and text()='Contains']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>VALIDATION_ARGUMENT_OPTION</td>
-	<td>//div[contains(@data-field-name,'validation')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_validationArgument}')] | //div[contains(@class,'dropdown-menu') and contains(@class,'show')]//ul[contains(@class,'list-unstyled')]//button[contains(text(),'${key_validationArgument}')]</td>
+	<td>//div[contains(@class,'dropdown-menu ddm-btn-full ddm-select-dropdown show')]//ul//li//button[text()='${key_validationArgument}']</td>
 	<td></td>
 </tr>
 <tr>

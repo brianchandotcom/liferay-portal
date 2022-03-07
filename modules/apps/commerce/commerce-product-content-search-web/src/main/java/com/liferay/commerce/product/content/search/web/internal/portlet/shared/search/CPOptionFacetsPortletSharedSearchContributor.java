@@ -19,7 +19,6 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.search.web.internal.configuration.CPOptionFacetsPortletInstanceConfiguration;
 import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFacetsUtil;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPOption;
@@ -41,7 +40,6 @@ import com.liferay.portal.kernel.search.facet.SimpleFacet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -98,18 +96,8 @@ public class CPOptionFacetsPortletSharedSearchContributor
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			CPOptionFacetsPortletInstanceConfiguration
-				cpOptionFacetsPortletInstanceConfiguration =
-					portletDisplay.getPortletInstanceConfiguration(
-						CPOptionFacetsPortletInstanceConfiguration.class);
-
-			int frequencyThreshold =
-				cpOptionFacetsPortletInstanceConfiguration.
-					getFrequencyThreshold();
-			int maxTerms =
-				cpOptionFacetsPortletInstanceConfiguration.getMaxTerms();
+			int frequencyThreshold = 1;
+			int maxTerms = 10;
 
 			Optional<PortletPreferences> portletPreferencesOptional =
 				portletSharedSearchSettings.getPortletPreferencesOptional();

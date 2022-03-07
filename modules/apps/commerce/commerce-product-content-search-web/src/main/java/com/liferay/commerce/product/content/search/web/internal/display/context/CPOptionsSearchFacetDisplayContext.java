@@ -16,7 +16,6 @@ package com.liferay.commerce.product.content.search.web.internal.display.context
 
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
-import com.liferay.commerce.product.content.search.web.internal.configuration.CPOptionFacetsPortletInstanceConfiguration;
 import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFacetsUtil;
 import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CPOption;
@@ -25,7 +24,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -55,14 +53,6 @@ public class CPOptionsSearchFacetDisplayContext implements Serializable {
 		_cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
 		_renderRequest = _cpRequestHelper.getRenderRequest();
-
-		ThemeDisplay themeDisplay = _cpRequestHelper.getThemeDisplay();
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		_cpOptionFacetsPortletInstanceConfiguration =
-			portletDisplay.getPortletInstanceConfiguration(
-				CPOptionFacetsPortletInstanceConfiguration.class);
 	}
 
 	public CPOption getCPOption(long companyId, String fieldName) {
@@ -70,12 +60,6 @@ public class CPOptionsSearchFacetDisplayContext implements Serializable {
 			CPOptionFacetsUtil.getCPOptionKeyFromIndexFieldName(fieldName);
 
 		return _cpOptionLocalService.fetchCPOption(companyId, cpOptionKey);
-	}
-
-	public CPOptionFacetsPortletInstanceConfiguration
-		getCPOptionFacetsPortletInstanceConfiguration() {
-
-		return _cpOptionFacetsPortletInstanceConfiguration;
 	}
 
 	public String getCPOptionKey(long companyId, String fieldName)
@@ -105,8 +89,7 @@ public class CPOptionsSearchFacetDisplayContext implements Serializable {
 			return _displayStyleGroupId;
 		}
 
-		long displayStyleGroupId =
-			_cpOptionFacetsPortletInstanceConfiguration.displayStyleGroupId();
+		long displayStyleGroupId = _DISPLAY_STYLE_GROUP_ID;
 
 		if (displayStyleGroupId <= 0) {
 			ThemeDisplay themeDisplay =
@@ -201,8 +184,8 @@ public class CPOptionsSearchFacetDisplayContext implements Serializable {
 			cpOptionsSearchFacetTermDisplayContext;
 	}
 
-	private final CPOptionFacetsPortletInstanceConfiguration
-		_cpOptionFacetsPortletInstanceConfiguration;
+	private static final long _DISPLAY_STYLE_GROUP_ID = 0;
+
 	private CPOptionLocalService _cpOptionLocalService;
 	private List<CPOptionsSearchFacetTermDisplayContext>
 		_cpOptionsSearchFacetTermDisplayContext;

@@ -15,7 +15,6 @@
 package com.liferay.commerce.product.content.search.web.internal.display.context.builder;
 
 import com.liferay.commerce.product.constants.CPField;
-import com.liferay.commerce.product.content.search.web.internal.configuration.CPOptionFacetsPortletInstanceConfiguration;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionsSearchFacetDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPOptionsSearchFacetTermDisplayContext;
 import com.liferay.commerce.product.content.search.web.internal.util.CPOptionFacetsUtil;
@@ -26,14 +25,12 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.collector.TermCollector;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequest;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
@@ -65,22 +62,6 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 	public CPOptionsSearchFacetDisplayContext build() {
 		CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext =
 			_createCPOptionsSearchFacetDisplayContext();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		CPOptionFacetsPortletInstanceConfiguration
-			cpOptionFacetsPortletInstanceConfiguration =
-				_getCpOptionFacetsPortletInstanceConfiguration(
-					themeDisplay.getPortletDisplay());
-
-		_displayStyle =
-			cpOptionFacetsPortletInstanceConfiguration.displayStyle();
-		_frequencyThreshold =
-			cpOptionFacetsPortletInstanceConfiguration.getFrequencyThreshold();
-		_frequenciesVisible =
-			cpOptionFacetsPortletInstanceConfiguration.showFrequencies();
-		_maxTerms = cpOptionFacetsPortletInstanceConfiguration.getMaxTerms();
 
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			_portletSharedSearchRequest.search(_renderRequest);
@@ -275,19 +256,6 @@ public class CPOptionsSearchFacetDisplayContextBuilder implements Serializable {
 		try {
 			return new CPOptionsSearchFacetDisplayContext(
 				_portal.getHttpServletRequest(_renderRequest));
-		}
-		catch (ConfigurationException configurationException) {
-			throw new RuntimeException(configurationException);
-		}
-	}
-
-	private CPOptionFacetsPortletInstanceConfiguration
-		_getCpOptionFacetsPortletInstanceConfiguration(
-			PortletDisplay portletDisplay) {
-
-		try {
-			return portletDisplay.getPortletInstanceConfiguration(
-				CPOptionFacetsPortletInstanceConfiguration.class);
 		}
 		catch (ConfigurationException configurationException) {
 			throw new RuntimeException(configurationException);

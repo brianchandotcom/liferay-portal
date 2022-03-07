@@ -16,6 +16,7 @@ package com.liferay.object.service.impl;
 
 import com.liferay.object.exception.DefaultObjectViewException;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectView;
 import com.liferay.object.model.ObjectViewColumn;
 import com.liferay.object.model.ObjectViewSortColumn;
@@ -89,6 +90,21 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 				user, objectView.getObjectViewId(), objectViewSortColumns));
 
 		return objectView;
+	}
+
+	@Override
+	public void deleteObjectFieldFromObjectView(ObjectField objectField) {
+		List<ObjectView> objectViews =
+			objectViewPersistence.findByObjectDefinitionId(
+				objectField.getObjectDefinitionId());
+
+		for (ObjectView objectView : objectViews) {
+			_objectViewColumnPersistence.removeByOVI_OFN(
+				objectView.getObjectViewId(), objectField.getName());
+
+			_objectViewSortColumnPersistence.removeByOVI_OFN(
+				objectView.getObjectViewId(), objectField.getName());
+		}
 	}
 
 	@Indexable(type = IndexableType.DELETE)

@@ -353,12 +353,35 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify the Author, Creation Date, Modified Date, Workflow Status, ID columns (Metadata columns) are displayed to be selected"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test MetadataColumnsDisplayed {
 		property portal.acceptance = "true";
 
-		// TODO LPS-147764 MetadataColumnsDisplayed pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147764",
+			objectName = "CustomObject147764",
+			pluralLabelName = "Custom Objects 147764");
+		
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147764");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		for (var columnOption : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
+			ObjectCustomViews.assertColumnVisibleOnAddColumnModal(columnOption = "${columnOption}");
+		}
+
+
+
 
 	}
 

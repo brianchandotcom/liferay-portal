@@ -976,12 +976,12 @@ public class DLFileEntryFinderImpl
 						return null;
 					})
 			).as(
-				"tempDLFileEntryTable"
+				"tempDLFileEntry"
 			)
 		).innerJoinON(
 			DLFileEntryTable.INSTANCE,
 			DLFileEntryTable.INSTANCE.as(
-				"tempDLFileEntryTable"
+				"tempDLFileEntry"
 			).fileEntryId.eq(
 				DLFileEntryTable.INSTANCE.fileEntryId
 			)

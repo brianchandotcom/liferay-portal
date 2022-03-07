@@ -496,7 +496,7 @@ public class AccountEntryLocalServiceImpl
 						AccountEntryTable.INSTANCE),
 					userId, parentAccountEntryId, keywords, types, status)
 			).as(
-				"tempAccountEntryTable", AccountEntryTable.INSTANCE
+				"tempAccountEntry", AccountEntryTable.INSTANCE
 			);
 
 		return dslQuery(

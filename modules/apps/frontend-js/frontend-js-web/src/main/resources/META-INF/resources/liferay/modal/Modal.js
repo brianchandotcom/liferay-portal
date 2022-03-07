@@ -40,9 +40,12 @@ const openAlertModal = ({message}) => {
 	});
 };
 
+const modalLabelId = `modalLabelId-${crypto.randomUUID()}`;
+
 const Modal = ({
 	bodyHTML,
 	buttons,
+	center,
 	containerProps = {
 		className: 'cadmin',
 	},
@@ -192,16 +195,22 @@ const Modal = ({
 		<>
 			{visible && (
 				<ClayModal
+					aria-labelledby={modalLabelId}
+					center={center}
 					className="liferay-modal"
 					containerProps={{...containerProps}}
 					disableAutoClose={disableAutoClose}
 					id={id}
 					observer={observer}
+					role="dialog"
 					size={url && !size ? 'full-screen' : size}
 					status={status}
 					zIndex={zIndex}
 				>
-					<ClayModal.Header className={headerCssClass}>
+					<ClayModal.Header
+						className={headerCssClass}
+						id={modalLabelId}
+					>
 						{headerHTML ? (
 							<div
 								dangerouslySetInnerHTML={{
@@ -249,41 +258,24 @@ const Modal = ({
 							className={footerCssClass}
 							last={
 								<ClayButton.Group spaced>
-									{buttons.map(
-										(
-											{
-												displayType,
-												formId,
-												id,
-												label,
-												onClick,
-												type,
-												...otherProps
-											},
-											index
-										) => (
-											<ClayButton
-												displayType={displayType}
-												id={id}
-												key={index}
-												onClick={() => {
-													onButtonClick({
-														formId,
-														onClick,
-														type,
-													});
-												}}
-												type={
-													type === 'cancel'
-														? 'button'
-														: type
-												}
-												{...otherProps}
-											>
-												{label}
-											</ClayButton>
-										)
-									)}
+									{buttons.map((button, index) => (
+										<ClayButton
+											displayType={button.displayType}
+											id={button.id}
+											key={index}
+											onClick={() => {
+												onButtonClick(button);
+											}}
+											type={
+												button.type === 'cancel'
+													? 'button'
+													: button.type
+											}
+											{...button.otherProps}
+										>
+											{button.label}
+										</ClayButton>
+									))}
 								</ClayButton.Group>
 							}
 						/>

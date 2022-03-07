@@ -465,8 +465,9 @@
 		<!-- Other fields -->
 
 		<column name="objectDefinitionId" type="long" />
-		<column name="active" type="boolean" />
+		<column localized="true" name="name" type="String" />
 		<column localized="true" name="errorLabel" type="String" />
+		<column name="active" type="boolean" />
 		<column name="engine" type="String" />
 		<column name="script" type="String" />
 

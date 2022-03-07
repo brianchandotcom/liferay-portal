@@ -16,7 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="liferay-ui" %>
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%
 String cssClass = "cssClass";
@@ -28,6 +31,9 @@ String toolbarSet = "toolbarSet";
 
 boolean portletTitleBasedNavigation = true;
 %>
+
+<aui:form action="<%= editFileEntryTypeURL %>" cssClass="edit-metadata-type-form" method="post" name="fm" onSubmit="event.preventDefault(); ">
+</aui:form>
 
 <liferay-ui:input-editor
 	contents="<%= mainLanguageValue %>"
@@ -42,3 +48,7 @@ boolean portletTitleBasedNavigation = true;
 
 <div <%= portletTitleBasedNavigation ? "class=\"container-fluid-1280\"" : StringPool.BLANK %>>
 </div>
+
+<portlet:renderURL var="rowURL">
+	<portlet:param name="mvcPath" value="/admin/view_kaleo_process.jsp" />
+</portlet:renderURL>

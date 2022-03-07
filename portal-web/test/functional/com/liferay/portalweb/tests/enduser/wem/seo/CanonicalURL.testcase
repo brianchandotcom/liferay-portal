@@ -288,7 +288,7 @@ definition {
 		HeadlessPortalInstanceAPI.addPortalInstance(
 			domain = "liferay.com",
 			portalInstanceId = "www.able.com",
-			virtualHost = "true");
+			virtualHost = "www.able.com");
 
 		User.logoutPG();
 

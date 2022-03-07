@@ -169,3 +169,22 @@ export async function putDeactivateKeys(
 
 	return response;
 }
+
+export async function getNewGenerateKeyFormValues(
+	accountKey,
+	licenseKeyDownloadURL,
+	productGroupName,
+	sessionId
+) {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${licenseKeyDownloadURL}/accounts/${accountKey}/product-groups/${productGroupName}/generate-form`,
+		{
+			headers: {
+				'Okta-Session-ID': sessionId,
+			},
+		}
+	);
+
+	return response.json();
+}

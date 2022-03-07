@@ -442,13 +442,11 @@ public class CommerceOrderTypeLocalServiceImpl
 					PermissionThreadLocal.getPermissionChecker();
 
 				if (permissionChecker != null) {
-					User user = permissionChecker.getUser();
-
 					predicate = predicate.and(
 						_inlineSQLHelper.getPermissionWherePredicate(
 							CommerceOrderType.class.getName(),
-							CommerceOrderTypeTable.INSTANCE.commerceOrderTypeId,
-							user.getGroupIds()));
+							CommerceOrderTypeTable.INSTANCE.
+								commerceOrderTypeId));
 				}
 
 				Predicate commerceOrderTypeRelPredicate =

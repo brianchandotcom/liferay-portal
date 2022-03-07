@@ -58,7 +58,7 @@ public class JSPStylingCheck extends BaseStylingCheck {
 				"confirm(\"<%= UnicodeLanguageUtil.", ";\n"
 			});
 
-		content = content.replaceAll("'<%= (\"[^.(\\[\"]+\") %>'", "$1");
+		content = content.replaceAll("'<%= (\"((?!\").)*?\") %>'", "$1");
 
 		content = content.replaceAll(
 			"((['\"])<%= ((?<!%>).)*?)\\\\(\".+?)\\\\(\".*?%>\\2)", "$1$4$5");

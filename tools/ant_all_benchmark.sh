@@ -1,10 +1,51 @@
 #!/bin/bash
 
 ANT_ALL_RUN_COUNT=0
+CHECK_PERFORMANCE=false
 DURATION_ARRAY=( )
 DURATION_LOG=false
 
 set -e
+
+function check_performance {
+	if [ ${CHECK_PERFORMANCE} == true ]
+	then
+		local durations_min_lenght=2
+		local lines_count="$(($(cat ${ANT_ALL_DURATION_CSV_PATH} | wc -l) + 1))"
+
+		if [ "${lines_count}" -ge $((${durations_min_lenght} + 1)) ]
+		then
+			local actual_durations="$(tail -n 1 ant_all_duration.csv)"
+			local previous_durations="$(tail -n 2 ant_all_duration.csv | head -n 1)"
+			local one_minute=60
+
+			for (( i = 1 ; i <= 3; i++ ))
+			do
+				local actual_duration="$(echo ${actual_durations} | cut -d ',' -f ${i})"
+				local previous_duration="$(echo ${previous_durations} | cut -d ',' -f ${i})"
+
+				if [ $(("${actual_duration}" - "${previous_duration}")) -gt "${one_minute}" ]
+				then
+
+					if [ "${i}" -eq 1 ]
+					then
+						echo "Warning: performance reduced using clean repository"
+					fi
+
+					if [ "${i}" -eq 2 ]
+					then
+						echo "Warning: performance reduced NOT using Gradle cache"
+					fi
+
+					if [ "${i}" -eq 3 ]
+					then
+						echo "Warning: performance reduced using all caches"
+					fi
+				fi
+			done
+		fi
+	fi
+}
 
 function echo_time {
 	local duration=${SECONDS}
@@ -12,16 +53,21 @@ function echo_time {
 	echo "completed in $((${duration} / 60)) minutes and $((${duration} % 60)) seconds."
 }
 
-function enable_duration_log {
+function enable_optional_settings {
 	for arg in "${@}"
 	do
+		if [ "${arg}" == "--check-performance" ]
+		then
+			CHECK_PERFORMANCE=true
+
+			echo "Performance check enabled"
+		fi
+
 		if [ "${arg}" == "--log" ]
 		then
 			DURATION_LOG=true
 
 			echo "Log to record runs duration enabled"
-
-			break
 		fi
 	done
 }
@@ -53,7 +99,7 @@ function save_duration {
 }
 
 function main {
-	enable_duration_log "${@}"
+	enable_optional_settings "${@}"
 
 	pushd .. > /dev/null
 
@@ -104,6 +150,8 @@ function main {
 	save_duration
 
 	log_durations
+
+	check_performance
 
 	popd > /dev/null
 }

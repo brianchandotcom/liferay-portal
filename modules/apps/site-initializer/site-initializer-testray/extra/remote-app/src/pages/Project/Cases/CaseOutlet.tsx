@@ -60,7 +60,7 @@ const CaseOutlet = () => {
 				setHeading([
 					{
 						category: i18n.translate('project').toUpperCase(),
-						path: `/project/${testrayProject.testrayProjectId}/cases`,
+						path: `/project/${testrayProject.id}/cases`,
 						title: testrayProject.name,
 					},
 					{

@@ -44,8 +44,7 @@ const Routines = () => {
 							value: i18n.translate('metrics'),
 						},
 					],
-					navigateTo: ({testrayRoutineId}) =>
-						testrayRoutineId?.toString(),
+					navigateTo: ({id}) => id?.toString(),
 				}}
 				transformData={(data) => data?.c?.testrayRoutines}
 			/>

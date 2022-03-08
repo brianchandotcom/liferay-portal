@@ -33,15 +33,20 @@ const Cases = () => {
 				<ListView
 					managementToolbarProps={{
 						addButton: () => setVisible(true),
+						visible: true,
 					}}
 					query={getTestrayCases}
 					tableProps={{
 						columns: [
 							{
-								clickable: true,
-								key: 'name',
-								sorteable: true,
-								value: i18n.translate('case-name'),
+								key: 'dateCreated',
+
+								value: i18n.translate('create-date'),
+							},
+							{
+								key: 'dateModified',
+
+								value: i18n.translate('modified-date'),
 							},
 							{
 								key: 'priority',
@@ -54,7 +59,19 @@ const Cases = () => {
 									testrayCaseType?.name,
 								value: i18n.translate('case-type'),
 							},
-							{key: 'team', value: i18n.translate('team')},
+							{
+								clickable: true,
+								key: 'name',
+								size: 'md',
+								sorteable: true,
+								value: i18n.translate('case-name'),
+							},
+							{
+								key: 'testrayComponent',
+								render: (testrayComponent) =>
+									testrayComponent?.testrayTeam?.name,
+								value: i18n.translate('team'),
+							},
 							{
 								key: 'testrayComponent',
 								render: (testrayComponent) =>
@@ -62,17 +79,8 @@ const Cases = () => {
 								value: i18n.translate('component'),
 							},
 							{key: 'issues', value: i18n.translate('issues')},
-							{
-								key: 'dateCreated',
-								value: i18n.translate('create-date'),
-							},
-							{
-								key: 'dateModified',
-								value: i18n.translate('modified-date'),
-							},
 						],
-						navigateTo: ({testrayCaseId}) =>
-							testrayCaseId?.toString(),
+						navigateTo: ({id}) => id?.toString(),
 					}}
 					transformData={(data) => data?.testrayCases}
 				/>

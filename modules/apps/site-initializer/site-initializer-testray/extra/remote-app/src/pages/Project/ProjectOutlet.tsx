@@ -78,7 +78,7 @@ const ProjectOutlet = () => {
 							},
 							...testrayProjects.map((testrayProject) => ({
 								label: testrayProject.name,
-								path: `/project/${testrayProject.testrayProjectId}/routines`,
+								path: `/project/${testrayProject.id}/routines`,
 							})),
 						],
 					},
@@ -93,7 +93,7 @@ const ProjectOutlet = () => {
 			setHeading([
 				{
 					category: i18n.translate('project').toUpperCase(),
-					path: `/project/${testrayProject.testrayProjectId}/routines`,
+					path: `/project/${testrayProject.id}/routines`,
 					title: testrayProject.name,
 				},
 			]);

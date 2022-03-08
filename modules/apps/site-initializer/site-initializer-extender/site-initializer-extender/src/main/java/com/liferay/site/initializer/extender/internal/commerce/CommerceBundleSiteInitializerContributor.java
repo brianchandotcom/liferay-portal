@@ -78,6 +78,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -88,12 +92,12 @@ import org.osgi.service.component.annotations.Reference;
 public class CommerceBundleSiteInitializerContributor {
 
 	private void _addCommerceCatalogs(
-			Channel channel,
+			Bundle bundle, Channel channel,
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
+		Set<String> resourcePaths = servletContext.getResourcePaths(
 			"/site-initializer/commerce-catalogs");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
@@ -142,7 +146,7 @@ public class CommerceBundleSiteInitializerContributor {
 				StringUtil.replaceLast(resourcePath, ".json", ".options.json"),
 				serviceContext);
 			_addCPDefinitions(
-				assetVocabularyName, catalog, channel,
+				assetVocabularyName, bundle, catalog, channel,
 				commerceInventoryWarehouses,
 				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
 				serviceContext);
@@ -241,7 +245,7 @@ public class CommerceBundleSiteInitializerContributor {
 	}
 
 	private void _addCommerceNotificationTemplate(
-			long commerceChannelId,
+			Bundle bundle, long commerceChannelId,
 			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
 			String resourcePath, ServiceContext serviceContext)
@@ -262,7 +266,7 @@ public class CommerceBundleSiteInitializerContributor {
 
 		JSONObject bodyJSONObject = _jsonFactory.createJSONObject();
 
-		Enumeration<URL> enumeration = _bundle.findEntries(
+		Enumeration<URL> enumeration = bundle.findEntries(
 			resourcePath, "*.html", false);
 
 		if (enumeration != null) {
@@ -301,13 +305,13 @@ public class CommerceBundleSiteInitializerContributor {
 	}
 
 	private void _addCommerceNotificationTemplates(
-			long commerceChannelId,
+			Bundle bundle, long commerceChannelId,
 			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
-		Set<String> resourcePaths = _servletContext.getResourcePaths(
+		Set<String> resourcePaths = servletContext.getResourcePaths(
 			"/site-initializer/commerce-notification-templates");
 
 		if (SetUtil.isEmpty(resourcePaths)) {
@@ -316,7 +320,7 @@ public class CommerceBundleSiteInitializerContributor {
 
 		for (String resourcePath : resourcePaths) {
 			_addCommerceNotificationTemplate(
-				commerceChannelId, documentsStringUtilReplaceValues,
+				bundle, commerceChannelId, documentsStringUtilReplaceValues,
 				objectDefinitionIdsStringUtilReplaceValues, resourcePath,
 				serviceContext);
 		}
@@ -374,9 +378,9 @@ public class CommerceBundleSiteInitializerContributor {
 	}
 
 	private void _addCPDefinitions(
-			Map<String, String> documentsStringUtilReplaceValues,
+			Bundle bundle, Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
 		Channel channel = _addCommerceChannel(serviceContext);
@@ -386,15 +390,17 @@ public class CommerceBundleSiteInitializerContributor {
 		}
 
 		_addCommerceCatalogs(
-			channel, _addCommerceInventoryWarehouses(serviceContext),
-			serviceContext);
+			bundle, channel, _addCommerceInventoryWarehouses(serviceContext),
+			serviceContext, servletContext);
 		_addCommerceNotificationTemplates(
-			channel.getId(), documentsStringUtilReplaceValues,
-			objectDefinitionIdsStringUtilReplaceValues, serviceContext);
+			bundle, channel.getId(), documentsStringUtilReplaceValues,
+			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
+			servletContext);
 	}
 
 	private void _addCPDefinitions(
-			String assetVocabularyName, Catalog catalog, Channel channel,
+			String assetVocabularyName, Bundle bundle, Catalog catalog,
+			Channel channel,
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
 			String resourcePath, ServiceContext serviceContext)
 		throws Exception {
@@ -404,6 +410,8 @@ public class CommerceBundleSiteInitializerContributor {
 		if (json == null) {
 			return;
 		}
+
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
 		Group commerceCatalogGroup =
 			_commerceCatalogLocalService.getCommerceCatalogGroup(
@@ -416,7 +424,8 @@ public class CommerceBundleSiteInitializerContributor {
 				commerceInventoryWarehouses,
 				CommerceInventoryWarehouse.
 					COMMERCE_INVENTORY_WAREHOUSE_ID_ACCESSOR),
-			_classLoader, StringUtil.replace(resourcePath, ".json", "/"),
+			bundleWiring.getClassLoader(),
+			StringUtil.replace(resourcePath, ".json", "/"),
 			serviceContext.getScopeGroupId(), serviceContext.getUserId());
 	}
 

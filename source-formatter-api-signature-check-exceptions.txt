@@ -413,6 +413,7 @@ com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry#is
 com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuCategoryRegistry#getProductNavigationControlMenuCategories(String,HttpServletRequest)
 com.liferay.product.navigation.control.menu.util.ProductNavigationControlMenuEntryRegistry#getProductNavigationControlMenuEntries(ProductNavigationControlMenuCategory,HttpServletRequest)
 com.liferay.site.navigation.type.SiteNavigationMenuItemType#getItemSelectorURL(HttpServletRequest)
+com.liferay.site.initializer.extender.internal.commerce.CommerceBundleSiteInitializerContributor#addCPDefinitions(Bundle,Map<String, String>,Map<String, String>,ServiceContext,ServletContext)
 com.liferay.site.navigation.type.SiteNavigationMenuItemType#getRegularURL(HttpServletRequest,SiteNavigationMenuItem)
 com.liferay.site.navigation.type.SiteNavigationMenuItemType#getResetLayoutURL(HttpServletRequest,SiteNavigationMenuItem)
 com.liferay.site.navigation.type.SiteNavigationMenuItemType#getResetMaxStateURL(HttpServletRequest,SiteNavigationMenuItem)

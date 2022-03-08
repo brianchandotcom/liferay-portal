@@ -310,4 +310,14 @@ definition {
 		MessageboardsThread.viewNoBannedUsers();
 	}
 
+	@description = "This is a test for LPS-82508. It ensures that the number of threads and categories in a message board reflects the whole hierarchy."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewCountsFromRootCategory {
+		property portal.acceptance = "false";
+
+		// TODO LPS-82508 CanViewCountsFromRootCategory pending implementation
+
+	}
+
 }

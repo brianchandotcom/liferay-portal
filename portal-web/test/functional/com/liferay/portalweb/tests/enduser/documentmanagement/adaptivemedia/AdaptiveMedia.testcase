@@ -337,6 +337,16 @@ definition {
 		AdaptiveMedia.viewNoImageResolution(imageName = "testResolutionEdit");
 	}
 
+	@description = "This is a test for LPS-78626. It ensures that a reloaded image can be viewed after changing the screen resolution."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanRenderImageAfterChangingScreenResolution {
+		property portal.acceptance = "false";
+
+		// TODO LPS-78626 CanRenderImageAfterChangingScreenResolution pending implementation
+
+	}
+
 	@priority = "5"
 	@refactordone
 	test DisabledResolutionsWillNotAdaptNewImages {

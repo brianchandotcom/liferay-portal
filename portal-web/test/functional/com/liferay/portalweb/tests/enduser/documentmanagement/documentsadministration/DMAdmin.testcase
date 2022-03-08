@@ -37,6 +37,26 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-91199. It checks that all files selected on different pages can be deleted."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanDeleteAllDocumentsOnDifferentPagesAtOnce {
+		property portal.acceptance = "false";
+
+		// TODO LPS-91199 CanDeleteAllDocumentsOnDifferentPagesAtOnce pending implementation
+
+	}
+
+	@description = "This is a test for LPS-91861. It checks that the counts can be reset in management toolbar."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanResetCountsInManagementToolbar {
+		property portal.acceptance = "false";
+
+		// TODO LPS-91861 CanResetCountsInManagementToolbar pending implementation
+
+	}
+
 	@description = "This is a use case for LPS-50760."
 	@priority = "4"
 	@refactordone

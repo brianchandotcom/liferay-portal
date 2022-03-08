@@ -41,7 +41,8 @@ page import="com.liferay.portal.language.override.web.internal.display.context.V
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.Locale" %><%@
-page import="java.util.Objects" %>
+page import="java.util.Objects" %><%@
+page import="java.util.Set" %>
 
 <liferay-frontend:defineObjects />
 

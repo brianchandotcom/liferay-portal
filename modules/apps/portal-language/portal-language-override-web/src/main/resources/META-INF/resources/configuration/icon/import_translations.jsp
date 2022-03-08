@@ -41,6 +41,23 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-translations"));
 			<liferay-ui:message arguments='<%= ".properties" %>' key="support-file-format" />
 		</div>
 
+		<aui:select label="language" name="languageId">
+
+			<%
+			Set<Locale> locales = LanguageUtil.getCompanyAvailableLocales(themeDisplay.getCompanyId());
+
+			for (Locale curLocale : locales) {
+				String languageId = LanguageUtil.getLanguageId(curLocale);
+			%>
+
+				<aui:option label="<%= TextFormatter.format(languageId, TextFormatter.O) %>" value="<%= languageId %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+
 		<aui:input id="file" label="file-upload" name="file" type="file">
 			<aui:validator name="required" />
 

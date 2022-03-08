@@ -15,13 +15,14 @@
 package com.liferay.content.dashboard.web.internal.searcher;
 
 import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFactoryTracker;
-import com.liferay.content.dashboard.web.internal.util.ContentDashboardSearchClassNameUtil;
+import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardItemSearchClassMapperTracker;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Stream;
 
@@ -36,7 +37,14 @@ public class ContentDashboardSearchRequestBuilderFactory {
 
 	public SearchRequestBuilder builder(SearchContext searchContext) {
 		if (ArrayUtil.isEmpty(searchContext.getEntryClassNames())) {
-			searchContext.setEntryClassNames(_getClassNames());
+			searchContext.setEntryClassNames(
+				_getClassNames(
+					_contentDashboardItemFactoryTracker.getClassNames()));
+		}
+		else {
+			searchContext.setEntryClassNames(
+				_getClassNames(
+					Arrays.asList(searchContext.getEntryClassNames())));
 		}
 
 		return _searchRequestBuilderFactory.builder(
@@ -52,14 +60,11 @@ public class ContentDashboardSearchRequestBuilderFactory {
 		);
 	}
 
-	private String[] _getClassNames() {
-		Collection<String> classNames =
-			_contentDashboardItemFactoryTracker.getClassNames();
-
+	private String[] _getClassNames(Collection<String> classNames) {
 		Stream<String> stream = classNames.stream();
 
 		return stream.map(
-			ContentDashboardSearchClassNameUtil::getSearchClassName
+			_contentDashboardItemSearchClassMapperTracker::getSearchClassName
 		).toArray(
 			size -> new String[size]
 		);
@@ -68,6 +73,10 @@ public class ContentDashboardSearchRequestBuilderFactory {
 	@Reference
 	private ContentDashboardItemFactoryTracker
 		_contentDashboardItemFactoryTracker;
+
+	@Reference
+	private ContentDashboardItemSearchClassMapperTracker
+		_contentDashboardItemSearchClassMapperTracker;
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;

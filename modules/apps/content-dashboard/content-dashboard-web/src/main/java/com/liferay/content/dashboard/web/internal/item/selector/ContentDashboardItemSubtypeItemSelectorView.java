@@ -22,8 +22,8 @@ import com.liferay.content.dashboard.web.internal.item.ContentDashboardItemFacto
 import com.liferay.content.dashboard.web.internal.item.selector.criteria.content.dashboard.type.criterion.ContentDashboardItemSubtypeItemSelectorCriterion;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtype;
 import com.liferay.content.dashboard.web.internal.item.type.ContentDashboardItemSubtypeFactory;
+import com.liferay.content.dashboard.web.internal.search.request.ContentDashboardItemSearchClassMapperTracker;
 import com.liferay.content.dashboard.web.internal.util.ContentDashboardGroupUtil;
-import com.liferay.content.dashboard.web.internal.util.ContentDashboardSearchClassNameUtil;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.info.item.InfoItemClassDetails;
@@ -171,16 +171,16 @@ public class ContentDashboardItemSubtypeItemSelectorView
 	}
 
 	private String _getIcon(String className) {
-		AssetRendererFactory<?> assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				ContentDashboardSearchClassNameUtil.getSearchClassName(
-					className));
-
-		if (assetRendererFactory != null) {
-			return assetRendererFactory.getIconCssClass();
-		}
-
-		return null;
+		return Optional.ofNullable(
+			_contentDashboardItemSearchClassMapperTracker.getSearchClassName(
+				className)
+		).map(
+			AssetRendererFactoryRegistryUtil::getAssetRendererFactoryByClassName
+		).map(
+			AssetRendererFactory::getIconCssClass
+		).orElseGet(
+			null
+		);
 	}
 
 	private String _getInfoItemFormVariationLabel(
@@ -341,6 +341,10 @@ public class ContentDashboardItemSubtypeItemSelectorView
 	@Reference
 	private ContentDashboardItemFactoryTracker
 		_contentDashboardItemFactoryTracker;
+
+	@Reference
+	private ContentDashboardItemSearchClassMapperTracker
+		_contentDashboardItemSearchClassMapperTracker;
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;

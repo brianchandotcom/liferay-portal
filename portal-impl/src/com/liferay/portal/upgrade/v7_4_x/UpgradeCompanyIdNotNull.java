@@ -23,14 +23,14 @@ public class UpgradeCompanyIdNotNull extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		for (String tableName : _AFFECTED_TABLES) {
+		for (String tableName : _TABLE_NAMES) {
 			if (!hasColumnType(tableName, "companyId", "LONG NOT NULL")) {
 				alterColumnType(tableName, "companyId", "LONG NOT NULL");
 			}
 		}
 	}
 
-	private static final String[] _AFFECTED_TABLES = {
+	private static final String[] _TABLE_NAMES = {
 		"AssetEntries_AssetTags", "DLFileEntryTypes_DLFolders", "Groups_Orgs",
 		"Groups_Roles", "Groups_UserGroups", "UserGroups_Teams", "Users_Groups",
 		"Users_Orgs", "Users_Roles", "Users_Teams", "Users_UserGroups"

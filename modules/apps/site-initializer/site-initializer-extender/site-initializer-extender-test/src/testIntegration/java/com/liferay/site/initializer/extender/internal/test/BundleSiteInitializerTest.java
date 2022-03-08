@@ -193,7 +193,6 @@ public class BundleSiteInitializerTest {
 			_assertLayoutSets(group);
 			_assertListTypeDefinitions(serviceContext);
 			_assertObjectDefinitions(group, serviceContext);
-			_assertWidgetTemplates(group);
 			_assertPermissions(group);
 			_assertRemoteApp(group);
 			_assertSAPEntries(group);
@@ -201,6 +200,7 @@ public class BundleSiteInitializerTest {
 			_assertSiteNavigationMenu(group);
 			_assertStyleBookEntry(group);
 			_assertUserRoles(group);
+			_assertWidgetTemplates(group);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();

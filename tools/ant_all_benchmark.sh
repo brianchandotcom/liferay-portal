@@ -19,7 +19,7 @@ function check_performance {
 			local previous_durations="$(tail -n 2 ant_all_duration.csv | head -n 1)"
 			local one_minute=60
 
-			for (( i = 1 ; i <= 3; i++ ))
+			for (( i = 2 ; i <= 4; i++ ))
 			do
 				local actual_duration="$(echo ${actual_durations} | cut -d ',' -f ${i})"
 				local previous_duration="$(echo ${previous_durations} | cut -d ',' -f ${i})"
@@ -27,17 +27,17 @@ function check_performance {
 				if [ $(("${actual_duration}" - "${previous_duration}")) -gt "${one_minute}" ]
 				then
 
-					if [ "${i}" -eq 1 ]
+					if [ "${i}" -eq 2 ]
 					then
 						echo "Warning: performance reduced using clean repository"
 					fi
 
-					if [ "${i}" -eq 2 ]
+					if [ "${i}" -eq 3 ]
 					then
 						echo "Warning: performance reduced NOT using Gradle cache"
 					fi
 
-					if [ "${i}" -eq 3 ]
+					if [ "${i}" -eq 4 ]
 					then
 						echo "Warning: performance reduced using all caches"
 					fi
@@ -76,6 +76,7 @@ function log_durations {
 	if [ ${DURATION_LOG} == true ]
 	then
 		echo "" >> ant_all_duration.csv
+		echo -n "$(date +%c)," >> ant_all_duration.csv
 
 		for (( i = 0 ; i < ${#DURATION_ARRAY[@]}; i++ ))
 		do

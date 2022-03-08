@@ -210,39 +210,6 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 		Assert.assertEquals(4, assetListEntrySegmentsEntryRel4.getPriority());
 	}
 
-	@Test
-	public void testRetrieveVariationsBehavesLikeBeforeWhenFFDisabled()
-		throws Exception {
-
-		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
-			_group.getGroupId());
-
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel1 =
-			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-				_group.getGroupId(), assetListEntry);
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel2 =
-			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-				_group.getGroupId(), assetListEntry);
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel3 =
-			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-				_group.getGroupId(), assetListEntry);
-
-		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
-			AssetListEntrySegmentsEntryRelLocalServiceUtil.
-				getAssetListEntrySegmentsEntryRels(
-					assetListEntry.getAssetListEntryId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS);
-
-		Assert.assertTrue(
-			assetListEntrySegmentsEntryRels.contains(
-				assetListEntrySegmentsEntryRel1));
-		Assert.assertTrue(
-			assetListEntrySegmentsEntryRels.contains(
-				assetListEntrySegmentsEntryRel2));
-		Assert.assertTrue(
-			assetListEntrySegmentsEntryRels.contains(
-				assetListEntrySegmentsEntryRel3));
-	}
 
 	@Test
 	public void testUpdateAssetListEntrySegmentsEntryRelTypeSettings()
@@ -274,7 +241,7 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 	}
 
 	@Test
-	public void testUpdateVariationsWhenFFEnabled() throws Exception {
+	public void testUpdateVariations() throws Exception {
 		AssetListEntry assetListEntry = AssetListTestUtil.addAssetListEntry(
 			_group.getGroupId());
 

@@ -61,7 +61,7 @@ const Input = ({
 				</Badge>
 			) : (
 				helper && (
-					<div className="ml-3 pl-3 text-neutral-6 text-paragraph-sm">
+					<div className="ml-3 pl-3 pr-2 text-neutral-6 text-paragraph-sm">
 						{helper}
 					</div>
 				)

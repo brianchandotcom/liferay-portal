@@ -14,8 +14,6 @@ import {Formik} from 'formik';
 import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
 import {Button, Input, Select} from '../../../components';
 
-// import getInitialDXPAdmin from '../../../utils/getInitialDXPAdmin';
-
 import Layout from '../Layout';
 
 const SetupAnalyticsCloudPage = ({handlePage, leftButton}) => {
@@ -93,7 +91,7 @@ const SetupAnalyticsCloudPage = ({handlePage, leftButton}) => {
 					groupStyle="pb-1"
 					helper="Enter the timezone to be used for all data reporting in your Workspace."
 					label="Time Zone"
-					name="analytics.TimeZone"
+					name="analytics.timeZone"
 					placeholder="UTC-04:00"
 					type="text"
 				/>
@@ -102,7 +100,7 @@ const SetupAnalyticsCloudPage = ({handlePage, leftButton}) => {
 					groupStyle="pb-1"
 					helper="This user will be the recepient of any high priority communications."
 					label="Incident Report Contact"
-					name="analytics.IncidentReportContact"
+					name="analytics.incidentReportContact"
 					placeholder="user@company.com"
 					required
 					type="email"
@@ -124,13 +122,14 @@ const SetupAnalyticsCloudForm = (props) => {
 	return (
 		<Formik
 			initialValues={{
-				dxp: {
-
-					// admins: [getInitialDXPAdmin()],
-
-					dataCenterRegion: '',
-					disasterDataCenterRegion: '',
-					projectId: '',
+				analytics: {
+					allowedEmailDomains: '',
+					dataCenterLocation: '',
+					incidentReportContact: '',
+					ownerEmail: '',
+					timeZone: '',
+					workspaceName: '',
+					workspaceURL: '',
 				},
 			}}
 			validateOnChange

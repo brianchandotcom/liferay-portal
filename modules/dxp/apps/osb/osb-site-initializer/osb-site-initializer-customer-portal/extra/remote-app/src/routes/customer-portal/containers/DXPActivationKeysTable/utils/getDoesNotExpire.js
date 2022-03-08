@@ -9,11 +9,11 @@
  * distribution rights of the Software.
  */
 
-export * from './getFormatedProductName';
-export * from './getProductDescription';
-export * from './getProductName';
-export * from './getStatusActivationTag';
-export * from './hasVirtualCluster';
-export * from './getEnvironmentType';
-export * from './getDoesNotExpire';
-export * from './getInstanceSize';
+export function getsDoesNotExpire(date) {
+	const today = new Date();
+	const unlimitedLicenseDate = today.setFullYear(today.getFullYear() + 100);
+
+	if (new Date(date) >= new Date(unlimitedLicenseDate)) {
+		return 'Does Not Expire';
+	}
+}

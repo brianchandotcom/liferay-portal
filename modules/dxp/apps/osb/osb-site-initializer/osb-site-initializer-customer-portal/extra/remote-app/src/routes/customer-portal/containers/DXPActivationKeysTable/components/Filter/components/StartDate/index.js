@@ -10,64 +10,89 @@
  */
 import ClayButton from '@clayui/button';
 import ClayDatePicker from '@clayui/date-picker';
-import ClayPopover from '@clayui/popover';
 import {useState} from 'react';
-import {Button} from '../../../../../../../../common/components';
+import {useActivationKeys} from '../../../../context';
+import {actionTypes} from '../../../../context/reducer';
 const StartDateFilter = () => {
+	const [{toSearchAndFilterKeys}, dispatch] = useActivationKeys();
+	const [expandedOnOrAfter, setExpandedOnOrAfter] = useState(false);
+	const [expandedOnOrBefore, setExpandedOnOrBefore] = useState(false);
 	const [onOrAfter, setOnOrAfter] = useState('');
 	const [onOrBefore, setOnOrBefore] = useState('');
 
+	function filterStartDate(onOrAfter, onOrBefore) {
+		const updatedToSearchAndFilterKeys = {
+			...toSearchAndFilterKeys,
+			startDate: [onOrAfter, onOrBefore],
+		};
+
+		dispatch({
+			payload: updatedToSearchAndFilterKeys,
+			type: actionTypes.UPDATE_TO_SERACH_AND_FILTER_KEYS,
+		});
+
+		dispatch({
+			payload: onOrAfter || onOrBefore ? true : false,
+			type: actionTypes.UPDATE_WAS_FILTERED,
+		});
+	}
+	const now = new Date();
+
 	return (
 		<div>
-			<ClayPopover
-				alignPosition="bottom"
-				className="cp-popover"
-				disableScroll={true}
-				header="Start Date"
-				trigger={
-					<Button
-						borderless
-						className="btn-secondary p-2"
-						prependIcon="filter"
-					>
-						Filter
-					</Button>
-				}
-			>
-				<div className="w-100">
-					On or after
-					<ClayDatePicker
-						dateFormat="MM/dd/yyyy"
-						onValueChange={setOnOrAfter}
-						placeholder="MM/DD/YYYY"
-						value={onOrAfter}
-						years={{
-							end: 2024,
-							start: 1997,
-						}}
-					/>
-				</div>
+			<div className="w-100">
+				On or after
+				<ClayDatePicker
+					dateFormat="MM/dd/yyyy"
+					expanded={expandedOnOrAfter}
+					onExpandedChange={setExpandedOnOrAfter}
+					onValueChange={(val, type) => {
+						setOnOrAfter(val);
+						if (type === 'click') {
+							setExpandedOnOrAfter(false);
+						}
+					}}
+					placeholder="MM/DD/YYYY"
+					value={onOrAfter}
+					years={{
+						end: now.getFullYear() + 5,
+						start: now.getFullYear() - 5,
+					}}
+				/>
+			</div>
 
-				<div className="w-100">
-					On or before
-					<ClayDatePicker
-						dateFormat="MM/dd/yyyy"
-						onValueChange={setOnOrBefore}
-						placeholder="MM/DD/YYYY"
-						value={onOrBefore}
-						years={{
-							end: 2024,
-							start: 1997,
-						}}
-					/>
-				</div>
+			<div className="w-100">
+				On or before
+				<ClayDatePicker
+					dateFormat="MM/dd/yyyy"
+					expanded={expandedOnOrBefore}
+					onExpandedChange={setExpandedOnOrBefore}
+					onValueChange={(vals, type) => {
+						setOnOrBefore(vals);
+						if (type === 'click') {
+							setExpandedOnOrBefore(false);
+						}
+					}}
+					placeholder="MM/DD/YYYY"
+					value={onOrBefore}
+				/>
+			</div>
 
-				<div>
-					<ClayButton className="w-100" small={true}>
-						Apply
-					</ClayButton>
-				</div>
-			</ClayPopover>
+			<div>
+				<ClayButton
+					className="w-100"
+					onClick={() => {
+						filterStartDate(
+							onOrAfter ? new Date(onOrAfter) : '',
+							onOrBefore ? new Date(onOrBefore) : ''
+						);
+					}}
+					required
+					small={true}
+				>
+					Apply
+				</ClayButton>
+			</div>
 		</div>
 	);
 };

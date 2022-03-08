@@ -105,17 +105,27 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 				sessionId
 			);
 
-			items[0].sizing = 'Sizing 2';
 			items[0].startDate = '2023-11-05T00:00:00Z';
 			items[0].expirationDate = '2024-11-05T00:00:00Z';
+			items[0].licenseEntryType = 'virtual-cluster';
+			items[0].complimentary = true;
+			items[0].productName = 'DXP Developer';
+			items[0].maxClusterNodes = 2;
 			items[1].startDate = '2023-11-05T00:00:00Z';
+			items[1].licenseEntryType = 'virtual-cluster';
+			items[1].maxClusterNodes = 48;
+			items[1].complimentary = true;
 			items[1].expirationDate = '2024-11-05T00:00:00Z';
 			items[1].sizing = 'Sizing 4';
-			items[2].sizing = 'Sizing 2';
+			items[2].licenseEntryType = 'virtual-cluster';
+			items[2].maxClusterNodes = 14;
+			items[2].complimentary = true;
 			items[2].startDate = '2019-11-05T00:00:00Z';
 			items[2].expirationDate = '2020-11-05T00:00:00Z';
-			items[3].sizing = 'Sizing 2';
+			items[3].licenseEntryType = 'virtual-cluster';
+			items[3].maxClusterNodes = 5;
 			items[3].startDate = '2018-11-05T00:00:00Z';
+			items[3].complimentary = true;
 			items[3].expirationDate = '2021-11-05T00:00:00Z';
 			items[4].sizing = 'Sizing 3';
 			items[5].sizing = 'Sizing 3';

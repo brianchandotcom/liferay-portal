@@ -9,11 +9,14 @@
  * distribution rights of the Software.
  */
 
-export * from './getFormatedProductName';
-export * from './getProductDescription';
-export * from './getProductName';
-export * from './getStatusActivationTag';
-export * from './hasVirtualCluster';
-export * from './getEnvironmentType';
-export * from './getDoesNotExpire';
-export * from './getInstanceSize';
+import {hasVirtualCluster} from '.';
+
+export function getKeyType(licenseEntryType) {
+	const hasVirtualClusterForActivationKeys = hasVirtualCluster(
+		licenseEntryType
+	);
+
+	return hasVirtualClusterForActivationKeys
+		? 'Virtual Cluster'
+		: 'On-Premise';
+}

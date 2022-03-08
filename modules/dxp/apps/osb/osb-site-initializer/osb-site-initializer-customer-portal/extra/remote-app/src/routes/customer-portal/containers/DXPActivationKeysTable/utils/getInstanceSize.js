@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -9,11 +10,6 @@
  * distribution rights of the Software.
  */
 
-export * from './getFormatedProductName';
-export * from './getProductDescription';
-export * from './getProductName';
-export * from './getStatusActivationTag';
-export * from './hasVirtualCluster';
-export * from './getEnvironmentType';
-export * from './getDoesNotExpire';
-export * from './getInstanceSize';
+export function getInstanceSize(instaceSize) {
+	return instaceSize.replace('Sizing ', '');
+}

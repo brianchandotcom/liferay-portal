@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -10,9 +11,18 @@
  */
 
 import {useEffect} from 'react';
+import {Button} from '../../../../../../common/components';
+import DropDownWithDrillDown from '../../../../components/DropDownWithDrillDown';
 import {useActivationKeys} from '../../context';
 import {actionTypes} from '../../context/reducer';
-import {getStatusActivationTag} from '../../utils';
+import {
+	getEnvironmentType,
+	getInstanceSize,
+	getProductDescription,
+	getStatusActivationTag,
+	getsDoesNotExpire,
+} from '../../utils';
+import {getKeyType} from '../../utils/getKeyType';
 import EnvironmentTypeFilter from './components/EnvironmentType';
 import ExpirationDateFilter from './components/ExpirationDate';
 import InstanceSizeFilter from './components/InstanceSize';
@@ -24,40 +34,29 @@ import StatusFilter from './components/Status';
 
 const Filter = () => {
 	const [
-		{
-			activationKeys,
-			activationKeysFilteredByConditions,
-			toSearchAndFilterKeys,
-		},
+		{activationKeys, toSearchAndFilterKeys},
 		dispatch,
 	] = useActivationKeys();
+	console.log(
+		'🚀 ~ file: index.js ~ line 268 ~ Filter ~ toSearchAndFilterKeys',
+		toSearchAndFilterKeys
+	);
 
 	useEffect(() => {
-		searchAndFilter();
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [
-		toSearchAndFilterKeys.toSearchTerm,
-		toSearchAndFilterKeys.sizing,
-		toSearchAndFilterKeys.productVersion,
-		toSearchAndFilterKeys.status,
-	]);
-
-	function searchAndFilter() {
 		const searchedActivationKeysByConditions = activationKeys.filter(
 			(activationKey) =>
 				activationKey.name
 					.toLowerCase()
-					.includes(toSearchAndFilterKeys.toSearchTerm) +
+					.includes(toSearchAndFilterKeys.toSearchTerm) ||
 				activationKey.description
 					.toLowerCase()
-					.includes(toSearchAndFilterKeys.toSearchTerm) +
+					.includes(toSearchAndFilterKeys.toSearchTerm) ||
 				activationKey.macAddresses
 					.toLowerCase()
-					.includes(toSearchAndFilterKeys.toSearchTerm) +
+					.includes(toSearchAndFilterKeys.toSearchTerm) ||
 				activationKey.ipAddresses
 					.toLowerCase()
-					.includes(toSearchAndFilterKeys.toSearchTerm) +
+					.includes(toSearchAndFilterKeys.toSearchTerm) ||
 				activationKey.hostName
 					.toLowerCase()
 					.includes(toSearchAndFilterKeys.toSearchTerm)
@@ -65,7 +64,9 @@ const Filter = () => {
 
 		const filteredActivationKeysBySizing = toSearchAndFilterKeys.sizing[0]
 			? searchedActivationKeysByConditions.filter((activationKey) =>
-					toSearchAndFilterKeys.sizing.includes(activationKey.sizing)
+					toSearchAndFilterKeys.sizing.includes(
+						getInstanceSize(activationKey.sizing)
+					)
 			  )
 			: searchedActivationKeysByConditions;
 
@@ -86,39 +87,187 @@ const Filter = () => {
 			  )
 			: filteredActivationKeysByProductVersion;
 
+		const filteredActivationKeysByComplimentary = toSearchAndFilterKeys
+			.complimentary[0]
+			? filteredActivationKeysByStatus.filter((activationKey) =>
+					toSearchAndFilterKeys.complimentary.includes(
+						getProductDescription(activationKey.complimentary)
+					)
+			  )
+			: filteredActivationKeysByStatus;
+
+		const filteredActivationKeysByEnvironmentType = toSearchAndFilterKeys
+			.productName[0]
+			? filteredActivationKeysByComplimentary.filter((activationKey) =>
+					toSearchAndFilterKeys.productName.includes(
+						getEnvironmentType(activationKey.productName)
+					)
+			  )
+			: filteredActivationKeysByComplimentary;
+
+		const filteredActivationKeysByStartDateOnorAfter = isValidDate(
+			toSearchAndFilterKeys.startDate[0]
+		)
+			? filteredActivationKeysByEnvironmentType.filter(
+					(activationKey) =>
+						new Date(activationKey.startDate) >=
+						toSearchAndFilterKeys.startDate[0]
+			  )
+			: filteredActivationKeysByEnvironmentType;
+
+		const filteredActivationKeysByStartDateOnorBefore = isValidDate(
+			toSearchAndFilterKeys.startDate[1]
+		)
+			? filteredActivationKeysByStartDateOnorAfter.filter(
+					(activationKey) =>
+						new Date(activationKey.startDate) <=
+						toSearchAndFilterKeys.startDate[1]
+			  )
+			: filteredActivationKeysByStartDateOnorAfter;
+
+		const filteredActivationKeysByExpirationDateOnorAfter = isValidDate(
+			toSearchAndFilterKeys.expirationDate[0]
+		)
+			? filteredActivationKeysByStartDateOnorBefore.filter(
+					(activationKey) =>
+						new Date(activationKey.expirationDate) >=
+						toSearchAndFilterKeys.expirationDate[0]
+			  )
+			: filteredActivationKeysByStartDateOnorBefore;
+
+		const filteredActivationKeysByExpirationDateOnorBefore = isValidDate(
+			toSearchAndFilterKeys.expirationDate[1]
+		)
+			? filteredActivationKeysByExpirationDateOnorAfter.filter(
+					(activationKey) =>
+						new Date(activationKey.expirationDate) <=
+						toSearchAndFilterKeys.expirationDate[1]
+			  )
+			: filteredActivationKeysByExpirationDateOnorAfter;
+
+		const filteredActivationKeysByDoesNotExpire = toSearchAndFilterKeys
+			.dne[0]
+			? filteredActivationKeysByExpirationDateOnorBefore.filter(
+					(activationKey) =>
+						toSearchAndFilterKeys.dne.includes(
+							getsDoesNotExpire(activationKey.expirationDate)
+						)
+			  )
+			: filteredActivationKeysByExpirationDateOnorBefore;
+
+		const filteredActivationKeysByOnPremise = toSearchAndFilterKeys
+			.licenseEntryType[0]
+			? filteredActivationKeysByDoesNotExpire.filter((activationKey) =>
+					toSearchAndFilterKeys.licenseEntryType.includes(
+						getKeyType(activationKey.licenseEntryType)
+					)
+			  )
+			: filteredActivationKeysByDoesNotExpire;
+
+		const filteredActivationKeysByVirtualClusterAndMinNodes = toSearchAndFilterKeys
+			.maxClusterNodes[0]
+			? filteredActivationKeysByOnPremise.filter(
+					(activationKey) =>
+						activationKey.maxClusterNodes >=
+						toSearchAndFilterKeys.maxClusterNodes[0]
+			  )
+			: filteredActivationKeysByOnPremise;
+
+		const filteredActivationKeysByVirtualClusterAndMaxNodes = toSearchAndFilterKeys
+			.maxClusterNodes[1]
+			? filteredActivationKeysByVirtualClusterAndMinNodes.filter(
+					(activationKey) =>
+						activationKey.maxClusterNodes <=
+						toSearchAndFilterKeys.maxClusterNodes[1]
+			  )
+			: filteredActivationKeysByVirtualClusterAndMinNodes;
+
 		dispatch({
-			payload: filteredActivationKeysByStatus,
+			payload: filteredActivationKeysByVirtualClusterAndMaxNodes,
 			type: actionTypes.UPDATE_ACTIVATION_KEYS_FILTERED_BY_CONDITIONS,
 		});
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [
+		toSearchAndFilterKeys.toSearchTerm,
+		toSearchAndFilterKeys.sizing,
+		toSearchAndFilterKeys.productVersion,
+		toSearchAndFilterKeys.status,
+		toSearchAndFilterKeys.complimentary,
+		toSearchAndFilterKeys.productName,
+		toSearchAndFilterKeys.startDate,
+		toSearchAndFilterKeys.expirationDate,
+		toSearchAndFilterKeys.dne,
+		toSearchAndFilterKeys.licenseEntryType,
+		toSearchAndFilterKeys.maxClusterNodes,
+	]);
+
+	function isValidDate(date) {
+		return date instanceof Date && !isNaN(date);
 	}
 
-	// eslint-disable-next-line no-console
-	console.log('toSearchAndFilterKeys: ', toSearchAndFilterKeys);
-
-	// eslint-disable-next-line no-console
-	console.log(
-		'activationKeysFilteredByConditions: ',
-		activationKeysFilteredByConditions
-	);
-
 	return (
-		<>
-			<Search />
+		<div className="d-flex flex-column">
+			<div className="d-flex">
+				<Search />
 
-			<KeyTypeFilter />
+				<DropDownWithDrillDown
+					initialActiveMenu="x0a0"
+					menus={{
+						x0a0: [
+							{child: 'x0a1', title: 'Key Type'},
+							{child: 'x0a2', title: 'Environment Type'},
+							{child: 'x0a4', title: 'Start Date'},
+							{child: 'x0a5', title: 'Expiration Date'},
+							{child: 'x0a6', title: 'Status'},
+							{child: 'x0a7', title: 'Product Version'},
+							{child: 'x0a8', title: 'Instance Size'},
+						],
 
-			<EnvironmentTypeFilter />
+						x0a1: [{child: <KeyTypeFilter />, type: 'component'}],
+						x0a2: [
+							{
+								child: <EnvironmentTypeFilter />,
+								type: 'component',
+							},
+						],
 
-			<StartDateFilter />
-
-			<ExpirationDateFilter />
-
-			<StatusFilter />
-
-			<ProductVersionFilter />
-
-			<InstanceSizeFilter />
-		</>
+						x0a4: [{child: <StartDateFilter />, type: 'component'}],
+						x0a5: [
+							{
+								child: <ExpirationDateFilter />,
+								type: 'component',
+							},
+						],
+						x0a6: [
+							{
+								child: <StatusFilter />,
+								type: 'component',
+							},
+						],
+						x0a7: [
+							{
+								child: <ProductVersionFilter />,
+								type: 'component',
+							},
+						],
+						x0a8: [
+							{child: <InstanceSizeFilter />, type: 'component'},
+						],
+					}}
+					trigger={
+						<Button
+							borderless
+							className="btn-secondary p-2"
+							prependIcon="filter"
+						>
+							Filter
+						</Button>
+					}
+				/>
+			</div>
+		</div>
 	);
 };
+
 export default Filter;

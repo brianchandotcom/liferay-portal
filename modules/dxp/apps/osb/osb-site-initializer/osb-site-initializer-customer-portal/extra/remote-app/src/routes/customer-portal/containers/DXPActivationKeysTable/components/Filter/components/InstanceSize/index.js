@@ -11,11 +11,10 @@
 
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
-import ClayPopover from '@clayui/popover';
 import {useEffect, useState} from 'react';
-import {Button} from '../../../../../../../../common/components';
 import {useActivationKeys} from '../../../../context';
 import {actionTypes} from '../../../../context/reducer';
+import {getInstanceSize} from '../../../../utils';
 
 const InstanceSizeFilter = () => {
 	const [
@@ -30,9 +29,8 @@ const InstanceSizeFilter = () => {
 		setAvailableInstanceSizes(
 			activationKeys
 				.reduce((accumulatorInstanceSizes, activationKey) => {
-					const formatedInstanceSizing = activationKey.sizing.replace(
-						'Sizing ',
-						''
+					const formatedInstanceSizing = +getInstanceSize(
+						activationKey.sizing
 					);
 					if (
 						accumulatorInstanceSizes.includes(
@@ -47,12 +45,12 @@ const InstanceSizeFilter = () => {
 						formatedInstanceSizing,
 					];
 				}, [])
-				.sort((a, b) => a - b)
+				.sort((previewNumber, nextNumber) => previewNumber - nextNumber)
 		);
 	}, [activationKeys]);
 
 	function handleSelectedInstanceSize(instaceSize) {
-		const formatedInstanceSizing = `Sizing ${instaceSize}`;
+		const formatedInstanceSizing = `${instaceSize}`;
 		if (selectecKeysAttributes.includes(formatedInstanceSizing)) {
 			return setSelectecKeysAttributes(
 				selectecKeysAttributes.filter(
@@ -81,49 +79,31 @@ const InstanceSizeFilter = () => {
 
 	return (
 		<div>
-			<ClayPopover
-				alignPosition="bottom"
-				closeOnClickOutside={true}
-				disableScroll={true}
-				header="Instance Size"
-				trigger={
-					<Button
-						borderless
-						className="btn-secondary p-2"
-						prependIcon="filter"
-					>
-						Filter
-					</Button>
-				}
-			>
-				<div className="w-100">
-					{availableInstanceSizes.map((instaceSize) => (
-						<ClayCheckbox
-							checked={selectecKeysAttributes.includes(
-								`Sizing ${instaceSize}`
-							)}
-							key={instaceSize}
-							label={instaceSize}
-							onChange={() =>
-								handleSelectedInstanceSize(instaceSize)
-							}
-						/>
-					))}
-				</div>
+			<div className="w-100">
+				{availableInstanceSizes.map((instaceSize) => (
+					<ClayCheckbox
+						checked={selectecKeysAttributes.includes(
+							`${instaceSize}`
+						)}
+						key={instaceSize}
+						label={instaceSize}
+						onChange={() => handleSelectedInstanceSize(instaceSize)}
+					/>
+				))}
+			</div>
 
-				<div>
-					<ClayButton
-						className="w-100"
-						onClick={() => {
-							filterInstanceSize(selectecKeysAttributes);
-						}}
-						required
-						small={true}
-					>
-						Apply
-					</ClayButton>
-				</div>
-			</ClayPopover>
+			<div>
+				<ClayButton
+					className="w-100"
+					onClick={() => {
+						filterInstanceSize(selectecKeysAttributes);
+					}}
+					required
+					small={true}
+				>
+					Apply
+				</ClayButton>
+			</div>
 		</div>
 	);
 };

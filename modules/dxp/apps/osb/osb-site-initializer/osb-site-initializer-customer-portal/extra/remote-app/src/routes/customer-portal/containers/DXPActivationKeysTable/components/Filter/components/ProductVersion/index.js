@@ -11,9 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
-import ClayPopover from '@clayui/popover';
 import {useEffect, useState} from 'react';
-import {Button} from '../../../../../../../../common/components';
 import {useActivationKeys} from '../../../../context';
 import {actionTypes} from '../../../../context/reducer';
 
@@ -46,7 +44,7 @@ const ProductVersionFilter = () => {
 						formatedInstanceSizing,
 					];
 				}, [])
-				.sort((a, b) => a - b)
+				.sort((previewNumber, nextNumber) => previewNumber - nextNumber)
 		);
 	}, [activationKeys]);
 
@@ -80,49 +78,33 @@ const ProductVersionFilter = () => {
 
 	return (
 		<div>
-			<ClayPopover
-				alignPosition="bottom"
-				closeOnClickOutside={true}
-				disableScroll={true}
-				header="Product Version"
-				trigger={
-					<Button
-						borderless
-						className="btn-secondary p-2"
-						prependIcon="filter"
-					>
-						Filter
-					</Button>
-				}
-			>
-				<div className="w-100">
-					{availableProductVersions.map((productVersion) => (
-						<ClayCheckbox
-							checked={selectedProductVersions.includes(
-								`${productVersion}`
-							)}
-							key={productVersion}
-							label={productVersion}
-							onChange={() =>
-								handleSelectedInstanceSize(productVersion)
-							}
-						/>
-					))}
-				</div>
+			<div className="w-100">
+				{availableProductVersions.map((productVersion) => (
+					<ClayCheckbox
+						checked={selectedProductVersions.includes(
+							`${productVersion}`
+						)}
+						key={productVersion}
+						label={productVersion}
+						onChange={() =>
+							handleSelectedInstanceSize(productVersion)
+						}
+					/>
+				))}
+			</div>
 
-				<div>
-					<ClayButton
-						className="w-100"
-						onClick={() => {
-							filterInstanceSize(selectedProductVersions);
-						}}
-						required
-						small={true}
-					>
-						Apply
-					</ClayButton>
-				</div>
-			</ClayPopover>
+			<div>
+				<ClayButton
+					className="w-100"
+					onClick={() => {
+						filterInstanceSize(selectedProductVersions);
+					}}
+					required
+					small={true}
+				>
+					Apply
+				</ClayButton>
+			</div>
 		</div>
 	);
 };

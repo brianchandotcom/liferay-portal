@@ -11,85 +11,161 @@
 
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
-import ClayPopover from '@clayui/popover';
-import {useState} from 'react';
-import {Button} from '../../../../../../../../common/components';
+import {useEffect, useState} from 'react';
+import {useActivationKeys} from '../../../../context';
+import {actionTypes} from '../../../../context/reducer';
+import {getEnvironmentType, getProductDescription} from '../../../../utils';
 
-const EnvironmentTypeFilter = () => {
-	const [value, setValue] = useState(false);
+const EnvironementTypeFilter = () => {
+	const [
+		{activationKeys, toSearchAndFilterKeys},
+		dispatch,
+	] = useActivationKeys();
+
+	const [availableComplimentary, setAvailableComplimentary] = useState([]);
+
+	const [selectedComplimentary, setSelectedComplimentary] = useState([]);
+
+	const [availableProductNames, setAvailableProductNames] = useState([]);
+
+	const [selectedProductName, setSelectedProductName] = useState([]);
+
+	useEffect(() => {
+		setAvailableComplimentary(
+			activationKeys
+				.reduce((accumulatorComplimentary, activationKey) => {
+					const formatedComplimentary = getProductDescription(
+						activationKey?.complimentary
+					);
+
+					if (
+						accumulatorComplimentary.includes(formatedComplimentary)
+					) {
+						return accumulatorComplimentary;
+					}
+
+					return [...accumulatorComplimentary, formatedComplimentary];
+				}, [])
+				.sort((a, b) => (a < b ? 1 : -1))
+		);
+
+		setAvailableProductNames(
+			activationKeys
+				.reduce((accumulatorProductNames, activationKey) => {
+					const formatedProductNames = getEnvironmentType(
+						activationKey?.productName
+					);
+
+					if (
+						accumulatorProductNames.includes(formatedProductNames)
+					) {
+						return accumulatorProductNames;
+					}
+
+					return [...accumulatorProductNames, formatedProductNames];
+				}, [])
+				.sort((a, b) => (a < b ? 1 : -1))
+		);
+		activationKeys
+			.reduce((accumulatorComplimentary, activationKey) => {
+				const formatedComplimentary = getProductDescription(
+					activationKey?.complimentary
+				);
+
+				if (accumulatorComplimentary.includes(formatedComplimentary)) {
+					return accumulatorComplimentary;
+				}
+
+				return [...accumulatorComplimentary, formatedComplimentary];
+			}, [])
+			.sort((previewNumber, nextNumber) =>
+				previewNumber < nextNumber ? 1 : -1
+			);
+	}, [activationKeys]);
+
+	function handleComplimentary(complimentary) {
+		const formatedComplimentary = `${complimentary}`;
+		if (selectedComplimentary.includes(formatedComplimentary)) {
+			return setSelectedComplimentary(
+				selectedComplimentary.filter(
+					(complimentary) => complimentary !== formatedComplimentary
+				)
+			);
+		}
+		setSelectedComplimentary([
+			...selectedComplimentary,
+			formatedComplimentary,
+		]);
+	}
+
+	function handleProductName(productName) {
+		const formatedProductName = `${productName}`;
+		if (selectedProductName.includes(formatedProductName)) {
+			return setSelectedProductName(
+				selectedProductName.filter(
+					(productName) => productName !== formatedProductName
+				)
+			);
+		}
+		setSelectedProductName([...selectedProductName, formatedProductName]);
+	}
+
+	function filterComplimentary(selectedComplimentary, selectedProductName) {
+		toSearchAndFilterKeys.complimentary = selectedComplimentary;
+		toSearchAndFilterKeys.productName = selectedProductName;
+
+		dispatch({
+			payload: toSearchAndFilterKeys,
+			type: actionTypes.UPDATE_TO_SERACH_AND_FILTER_KEYS,
+		});
+		dispatch({
+			payload: selectedComplimentary.length ? true : false,
+			type: actionTypes.UPDATE_WAS_FILTERED,
+		});
+	}
 
 	return (
 		<div>
-			<ClayPopover
-				alignPosition="bottom"
-				closeOnClickOutside={true}
-				disableScroll={true}
-				header="Environment Type"
-				trigger={
-					<Button
-						borderless
-						className="btn-secondary p-2"
-						prependIcon="filter"
-					>
-						Filter
-					</Button>
-				}
-			>
-				<div className="w-100">
+			<div className="w-100">
+				{availableProductNames.map((productName) => (
 					<ClayCheckbox
-						aria-label="Option 1"
-						checked={value}
-						label="Production"
-						onChange={() => setValue((val) => !val)}
+						checked={selectedProductName.includes(`${productName}`)}
+						key={productName}
+						label={productName}
+						onChange={() => handleProductName(productName)}
 					/>
+				))}
+			</div>
 
+			<div className="w-100">
+				{availableComplimentary.map((complimentary) => (
 					<ClayCheckbox
-						aria-label="Option 1"
-						checked={value}
-						label="Non-Production"
-						onChange={() => setValue((val) => !val)}
+						checked={selectedComplimentary.includes(
+							`${complimentary}`
+						)}
+						key={complimentary}
+						label={complimentary}
+						onChange={() => handleComplimentary(complimentary)}
 					/>
+				))}
+			</div>
 
-					<ClayCheckbox
-						aria-label="Option 1"
-						checked={value}
-						label="Development"
-						onChange={() => setValue((val) => !val)}
-					/>
-
-					<ClayCheckbox
-						aria-label="Option 1"
-						checked={value}
-						label="Backup"
-						onChange={() => setValue((val) => !val)}
-					/>
-				</div>
-
-				<li className="dropdown-divider"></li>
-
-				<div>
-					<ClayCheckbox
-						aria-label="Option 1"
-						checked={value}
-						label="Subscription"
-						onChange={() => setValue((val) => !val)}
-					/>
-
-					<ClayCheckbox
-						aria-label="Option 1"
-						checked={value}
-						label="Complimentary"
-						onChange={() => setValue((val) => !val)}
-					/>
-				</div>
-
-				<div>
-					<ClayButton className="w-100" small={true}>
-						Apply
-					</ClayButton>
-				</div>
-			</ClayPopover>
+			<div>
+				<ClayButton
+					className="w-100"
+					onClick={() => {
+						filterComplimentary(
+							selectedComplimentary,
+							selectedProductName
+						);
+					}}
+					required
+					small={true}
+				>
+					Apply
+				</ClayButton>
+			</div>
 		</div>
 	);
 };
-export default EnvironmentTypeFilter;
+export default EnvironementTypeFilter;

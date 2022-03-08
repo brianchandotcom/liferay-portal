@@ -11,9 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
-import ClayPopover from '@clayui/popover';
 import {useEffect, useState} from 'react';
-import {Button} from '../../../../../../../../common/components';
 import {useActivationKeys} from '../../../../context';
 import {actionTypes} from '../../../../context/reducer';
 import {getStatusActivationTag} from '../../../../utils';
@@ -47,11 +45,12 @@ const StausFilter = () => {
 						formatedInstanceSizing,
 					];
 				}, [])
-				.sort((a, b) => a - b)
+				.sort((previewNumber, nextNumber) =>
+					previewNumber < nextNumber ? 1 : -1
+				)
 		);
 	}, [activationKeys]);
-	// eslint-disable-next-line no-console
-	console.log(availableStatus);
+
 	function handleSelectedInstanceSize(status) {
 		const formatedInstanceSizing = `${status}`;
 		if (selectedStatus.includes(formatedInstanceSizing)) {
@@ -79,45 +78,29 @@ const StausFilter = () => {
 
 	return (
 		<div>
-			<ClayPopover
-				alignPosition="bottom"
-				closeOnClickOutside={true}
-				disableScroll={true}
-				header="Product Version"
-				trigger={
-					<Button
-						borderless
-						className="btn-secondary p-2"
-						prependIcon="filter"
-					>
-						Filter
-					</Button>
-				}
-			>
-				<div className="w-100">
-					{availableStatus.map((status) => (
-						<ClayCheckbox
-							checked={selectedStatus.includes(`${status}`)}
-							key={status}
-							label={status}
-							onChange={() => handleSelectedInstanceSize(status)}
-						/>
-					))}
-				</div>
+			<div className="w-100">
+				{availableStatus.map((status) => (
+					<ClayCheckbox
+						checked={selectedStatus.includes(`${status}`)}
+						key={status}
+						label={status}
+						onChange={() => handleSelectedInstanceSize(status)}
+					/>
+				))}
+			</div>
 
-				<div>
-					<ClayButton
-						className="w-100"
-						onClick={() => {
-							filterInstanceSize(selectedStatus);
-						}}
-						required
-						small={true}
-					>
-						Apply
-					</ClayButton>
-				</div>
-			</ClayPopover>
+			<div>
+				<ClayButton
+					className="w-100"
+					onClick={() => {
+						filterInstanceSize(selectedStatus);
+					}}
+					required
+					small={true}
+				>
+					Apply
+				</ClayButton>
+			</div>
 		</div>
 	);
 };

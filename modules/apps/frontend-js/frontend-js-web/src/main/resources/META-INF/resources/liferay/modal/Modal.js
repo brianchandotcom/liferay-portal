@@ -24,6 +24,26 @@ import './Modal.scss';
 import delegate from '../delegate/delegate.es';
 import navigate from '../util/navigate.es';
 
+const alert = ({message}) => {
+	openModal({
+		bodyHTML: message,
+		buttons: [
+			{
+				label: Liferay.Language.get('ok'),
+				onClick: ({processClose}) => {
+					processClose();
+				},
+				otherProps: {
+					autoFocus: true,
+				},
+			},
+		],
+		size: 'sm',
+		title: Liferay.Language.get('alert'),
+		withTitle: false,
+	});
+};
+
 const Modal = ({
 	bodyHTML,
 	buttons,
@@ -45,6 +65,7 @@ const Modal = ({
 	status,
 	title,
 	url,
+	withTitle,
 	zIndex,
 }) => {
 	const [loading, setLoading] = useState(true);
@@ -185,7 +206,10 @@ const Modal = ({
 					status={status}
 					zIndex={zIndex}
 				>
-					<ClayModal.Header className={headerCssClass}>
+					<ClayModal.Header
+						className={headerCssClass}
+						withTitle={withTitle}
+					>
 						{headerHTML ? (
 							<div
 								dangerouslySetInnerHTML={{
@@ -193,7 +217,7 @@ const Modal = ({
 								}}
 							></div>
 						) : (
-							title
+							<ClayModal.Title>{title}</ClayModal.Title>
 						)}
 					</ClayModal.Header>
 
@@ -668,6 +692,7 @@ Modal.propTypes = {
 };
 
 export {
+	alert,
 	Modal,
 	openModal,
 	openPortletModal,

@@ -104,11 +104,29 @@ definition {
 		task ("Filter Attribute") {
 			ACNavigation.switchTab(tabName = "Distribution");
 
-			ACSegments.selectDistributionByAttribute(attribute = "birthDate");
+			ACSegments.selectDistributionByAttribute(attribute = "createDate");
 		}
 
+		task("Get current date") {
+			ACSegments.generateDayMonthAndYearValues(dateDifferenceFromCurrentDate = "0");
+
+			var monthNum = DateUtil.getCurrentMonth();
+
+			if (("${monthNum}" != "10") && ("${monthNum}" != "11") && ("${monthNum}" != "12")) {
+				var monthNum = "0${monthNum}";
+			}
+
+			var i = ${staticDay} / 10;
+
+			if ("${i}" == "0") {
+				var staticDay = "0${staticDay}";
+			}
+		}
+		
 		task ("View Chart Entry") {
-			ACSegments.viewBreakdownChartsEntry(key_entry = "1986-05-31T00:00:00.000Z - 100.0%");
+			ACSegments.viewBreakdownChartsEntry(key_entry = "${staticYear}-${monthNum}-${staticDay}");
+
+			ACSegments.viewBreakdownChartsEntry(key_entry = "100.0%");
 		}
 	}
 

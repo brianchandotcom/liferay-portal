@@ -1,0 +1,622 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.site.initializer.extender.internal.commerce;
+
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.CatalogResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductOptionResource;
+import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductSpecificationResource;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.pagination.Page;
+
+import java.math.BigDecimal;
+
+import java.net.URL;
+
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Rafael Praxedes
+ */
+@Component(service = CommerceBundleSiteInitializerContributor.class)
+public class CommerceBundleSiteInitializerContributor {
+
+	private void _addCommerceCatalogs(
+			Channel channel,
+			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/commerce-catalogs");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		CatalogResource.Builder builder =
+			_commerceReferencesHolder.catalogResourceFactory.create();
+
+		CatalogResource catalogResource = builder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		for (String resourcePath : resourcePaths) {
+			if (resourcePath.endsWith(".options.json") ||
+				resourcePath.endsWith(".products.json") ||
+				resourcePath.endsWith(".products.specifications.json") ||
+				resourcePath.endsWith(
+					".products.subscriptions.properties.json") ||
+				!resourcePath.endsWith(".json")) {
+
+				continue;
+			}
+
+			String json = _read(resourcePath);
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+
+			String assetVocabularyName = jsonObject.getString(
+				"assetVocabularyName");
+
+			jsonObject.remove("assetVocabularyName");
+
+			Catalog catalog = Catalog.toDTO(String.valueOf(jsonObject));
+
+			if (catalog == null) {
+				_log.error(
+					"Unable to transform commerce catalog from JSON: " + json);
+
+				continue;
+			}
+
+			catalog = catalogResource.postCatalog(catalog);
+
+			_addCPOptions(
+				catalog,
+				StringUtil.replaceLast(resourcePath, ".json", ".options.json"),
+				serviceContext);
+			_addCPDefinitions(
+				assetVocabularyName, catalog, channel,
+				commerceInventoryWarehouses,
+				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
+				serviceContext);
+
+			_addCommerceProductSpecifications(
+				StringUtil.replaceLast(
+					resourcePath, ".json", ".products.specifications.json"),
+				serviceContext);
+
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> {
+					_addCPInstanceSubscriptions(
+						StringUtil.replaceLast(
+							resourcePath, ".json",
+							".products.subscriptions.properties.json"),
+						serviceContext);
+
+					return null;
+				});
+		}
+	}
+
+	private Channel _addCommerceChannel(ServiceContext serviceContext)
+		throws Exception {
+
+		String resourcePath = "/site-initializer/commerce-channel.json";
+
+		String json = _read(resourcePath);
+
+		if (json == null) {
+			return null;
+		}
+
+		ChannelResource.Builder channelResourceBuilder =
+			_commerceReferencesHolder.channelResourceFactory.create();
+
+		ChannelResource channelResource = channelResourceBuilder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+
+		jsonObject.put("siteGroupId", serviceContext.getScopeGroupId());
+
+		Channel channel = Channel.toDTO(jsonObject.toString());
+
+		if (channel == null) {
+			_log.error(
+				"Unable to transform commerce channel from JSON: " + json);
+
+			return null;
+		}
+
+		channel = channelResource.postChannel(channel);
+
+		_addModelResourcePermissions(
+			CommerceChannel.class.getName(), String.valueOf(channel.getId()),
+			StringUtil.replaceLast(
+				resourcePath, ".json", ".model-resource-permissions.json"),
+			serviceContext);
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				serviceContext.getScopeGroupId(),
+				CommerceAccountConstants.SERVICE_NAME));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.setValue(
+			"commerceSiteType",
+			String.valueOf(CommerceAccountConstants.SITE_TYPE_B2C));
+
+		modifiableSettings.store();
+
+		_commerceReferencesHolder.commerceAccountRoleHelper.
+			checkCommerceAccountRoles(serviceContext);
+
+		_commerceReferencesHolder.commerceCurrencyLocalService.
+			importDefaultValues(serviceContext);
+
+		_commerceReferencesHolder.cpMeasurementUnitLocalService.
+			importDefaultValues(serviceContext);
+
+		return channel;
+	}
+
+	private List<CommerceInventoryWarehouse> _addCommerceInventoryWarehouses(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return _commerceReferencesHolder.commerceInventoryWarehousesImporter.
+			importCommerceInventoryWarehouses(
+				JSONFactoryUtil.createJSONArray(
+					_read(
+						"/site-initializer" +
+							"/commerce-inventory-warehouses.json")),
+				serviceContext.getScopeGroupId(), serviceContext.getUserId());
+	}
+
+	private void _addCommerceNotificationTemplate(
+			long commerceChannelId,
+			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
+			String resourcePath, ServiceContext serviceContext)
+		throws Exception {
+
+		String json = _read(
+			resourcePath + "commerce-notification-template.json");
+
+		if (Validator.isNull(json)) {
+			return;
+		}
+
+		JSONObject commerceNotificationTemplateJSONObject =
+			JSONFactoryUtil.createJSONObject(json);
+
+		CommerceChannel commerceChannel =
+			_commerceReferencesHolder.commerceChannelLocalService.
+				getCommerceChannel(commerceChannelId);
+
+		JSONObject bodyJSONObject = _jsonFactory.createJSONObject();
+
+		Enumeration<URL> enumeration = _bundle.findEntries(
+			resourcePath, "*.html", false);
+
+		if (enumeration != null) {
+			while (enumeration.hasMoreElements()) {
+				URL url = enumeration.nextElement();
+
+				bodyJSONObject.put(
+					FileUtil.getShortFileName(
+						FileUtil.stripExtension(url.getPath())),
+					StringUtil.replace(
+						StringUtil.read(url.openStream()), "[$", "$]",
+						documentsStringUtilReplaceValues));
+			}
+		}
+
+		_commerceReferencesHolder.commerceNotificationTemplateLocalService.
+			addCommerceNotificationTemplate(
+				serviceContext.getUserId(), commerceChannel.getGroupId(),
+				commerceNotificationTemplateJSONObject.getString("name"),
+				commerceNotificationTemplateJSONObject.getString("description"),
+				commerceNotificationTemplateJSONObject.getString("from"),
+				_toMap(
+					commerceNotificationTemplateJSONObject.getString(
+						"fromName")),
+				commerceNotificationTemplateJSONObject.getString("to"),
+				commerceNotificationTemplateJSONObject.getString("cc"),
+				commerceNotificationTemplateJSONObject.getString("bcc"),
+				StringUtil.replace(
+					commerceNotificationTemplateJSONObject.getString("type"),
+					"[$", "$]", objectDefinitionIdsStringUtilReplaceValues),
+				commerceNotificationTemplateJSONObject.getBoolean("enabled"),
+				_toMap(
+					commerceNotificationTemplateJSONObject.getString(
+						"subject")),
+				_toMap(bodyJSONObject.toString()), serviceContext);
+	}
+
+	private void _addCommerceNotificationTemplates(
+			long commerceChannelId,
+			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/commerce-notification-templates");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		for (String resourcePath : resourcePaths) {
+			_addCommerceNotificationTemplate(
+				commerceChannelId, documentsStringUtilReplaceValues,
+				objectDefinitionIdsStringUtilReplaceValues, resourcePath,
+				serviceContext);
+		}
+	}
+
+	private void _addCommerceProductSpecifications(
+			String resourcePath, ServiceContext serviceContext)
+		throws Exception {
+
+		ProductSpecificationResource.Builder
+			productSpecificationResourceBuilder =
+				_commerceReferencesHolder.productSpecificationResourceFactory.
+					create();
+
+		ProductSpecificationResource productSpecificationResource =
+			productSpecificationResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		String json = _read(resourcePath);
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		_commerceReferencesHolder.cpSpecificationOptionsImporter.
+			importCPSpecificationOptions(
+				jsonArray, serviceContext.getScopeGroupId(),
+				serviceContext.getUserId());
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			CPDefinition cpDefinition =
+				_commerceReferencesHolder.cpDefinitionLocalService.
+					fetchCPDefinitionByCProductExternalReferenceCode(
+						jsonObject.getString(
+							"cpDefinitionExternalReferenceCode"),
+						serviceContext.getCompanyId());
+
+			if (cpDefinition == null) {
+				continue;
+			}
+
+			ProductSpecification productSpecification =
+				new ProductSpecification() {
+					{
+						productId = cpDefinition.getCPDefinitionId();
+						specificationKey = jsonObject.getString("key");
+						value = JSONUtil.toStringMap(
+							jsonObject.getJSONObject(
+								"productSpecificationValue"));
+					}
+				};
+
+			productSpecificationResource.postProductIdProductSpecification(
+				cpDefinition.getCPDefinitionId(), productSpecification);
+		}
+	}
+
+	private void _addCPDefinitions(
+			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		Channel channel = _addCommerceChannel(serviceContext);
+
+		if (channel == null) {
+			return;
+		}
+
+		_addCommerceCatalogs(
+			channel, _addCommerceInventoryWarehouses(serviceContext),
+			serviceContext);
+		_addCommerceNotificationTemplates(
+			channel.getId(), documentsStringUtilReplaceValues,
+			objectDefinitionIdsStringUtilReplaceValues, serviceContext);
+	}
+
+	private void _addCPDefinitions(
+			String assetVocabularyName, Catalog catalog, Channel channel,
+			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
+			String resourcePath, ServiceContext serviceContext)
+		throws Exception {
+
+		String json = _read(resourcePath);
+
+		if (json == null) {
+			return;
+		}
+
+		Group commerceCatalogGroup =
+			CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
+				catalog.getId());
+
+		_commerceReferencesHolder.cpDefinitionsImporter.importCPDefinitions(
+			JSONFactoryUtil.createJSONArray(json), assetVocabularyName,
+			commerceCatalogGroup.getGroupId(), channel.getId(),
+			ListUtil.toLongArray(
+				commerceInventoryWarehouses,
+				CommerceInventoryWarehouse.
+					COMMERCE_INVENTORY_WAREHOUSE_ID_ACCESSOR),
+			_classLoader, StringUtil.replace(resourcePath, ".json", "/"),
+			serviceContext.getScopeGroupId(), serviceContext.getUserId());
+	}
+
+	private void _addCPInstanceSubscriptions(
+			String resourcePath, ServiceContext serviceContext)
+		throws Exception {
+
+		String json = _read(resourcePath);
+
+		if (json == null) {
+			return;
+		}
+
+		ProductOptionResource.Builder productOptionResourceBuilder =
+			_commerceReferencesHolder.productOptionResourceFactory.create();
+
+		ProductOptionResource productOptionResource =
+			productOptionResourceBuilder.user(
+				serviceContext.fetchUser()
+			).build();
+
+		OptionResource.Builder optionResourceBuilder =
+			_commerceReferencesHolder.optionResourceFactory.create();
+
+		OptionResource optionResource = optionResourceBuilder.user(
+			serviceContext.fetchUser()
+		).build();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject subscriptionPropertiesJSONObject =
+				jsonArray.getJSONObject(i);
+
+			Page<Option> optionsPage = optionResource.getOptionsPage(
+				null,
+				optionResource.toFilter(
+					StringBundler.concat(
+						"name eq '",
+						StringUtil.toLowerCase(
+							subscriptionPropertiesJSONObject.getString(
+								"optionName")),
+						"'")),
+				null, null);
+
+			Option option = optionsPage.fetchFirstItem();
+
+			if (option == null) {
+				continue;
+			}
+
+			ProductOption[] productOptions = new ProductOption[1];
+
+			productOptions[0] = new ProductOption() {
+				{
+					facetable = option.getFacetable();
+					fieldType = option.getFieldType(
+					).toString();
+					key = option.getKey();
+					name = option.getName();
+					optionId = option.getId();
+					required = option.getRequired();
+					skuContributor = option.getSkuContributor();
+				}
+			};
+
+			CPDefinition cpDefinition =
+				_commerceReferencesHolder.cpDefinitionLocalService.
+					fetchCPDefinitionByCProductExternalReferenceCode(
+						subscriptionPropertiesJSONObject.getString(
+							"cpDefinitionExternalReferenceCode"),
+						serviceContext.getCompanyId());
+
+			productOptionResource.postProductIdProductOptionsPage(
+				cpDefinition.getCProductId(), productOptions);
+
+			_commerceReferencesHolder.cpInstanceLocalService.buildCPInstances(
+				cpDefinition.getCPDefinitionId(), serviceContext);
+
+			JSONArray cpInstancePropertiesJSONArray =
+				subscriptionPropertiesJSONObject.getJSONArray(
+					"cpInstanceProperties");
+
+			if (cpInstancePropertiesJSONArray == null) {
+				continue;
+			}
+
+			for (int j = 0; j < cpInstancePropertiesJSONArray.length(); j++) {
+				JSONObject cpInstancePropertiesJSONObject =
+					cpInstancePropertiesJSONArray.getJSONObject(j);
+
+				_updateCPInstanceProperties(
+					cpDefinition, cpInstancePropertiesJSONObject);
+			}
+		}
+	}
+
+	private void _addCPOptions(
+			Catalog catalog, String resourcePath, ServiceContext serviceContext)
+		throws Exception {
+
+		String json = _read(resourcePath);
+
+		if (json == null) {
+			return;
+		}
+
+		Group commerceCatalogGroup =
+			CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
+				catalog.getId());
+
+		_commerceReferencesHolder.cpOptionsImporter.importCPOptions(
+			JSONFactoryUtil.createJSONArray(json),
+			commerceCatalogGroup.getGroupId(), serviceContext.getUserId());
+	}
+
+	private void _addModelResourcePermissions(
+			String className, String primKey, String resourcePath,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String json = _read(resourcePath);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			_resourcePermissionLocalService.addModelResourcePermissions(
+				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+				serviceContext.getUserId(), className, primKey,
+				ModelPermissionsFactory.create(
+					HashMapBuilder.put(
+						jsonObject.getString("roleName"),
+						ArrayUtil.toStringArray(
+							jsonObject.getJSONArray("actionIds"))
+					).build(),
+					null));
+		}
+	}
+
+	private void _updateCPInstanceProperties(
+			CPDefinition cpDefinition,
+			JSONObject cpInstancePropertiesJSONObject)
+		throws Exception {
+
+		CPInstance cpInstance =
+			_commerceReferencesHolder.cpInstanceLocalService.getCPInstance(
+				cpDefinition.getCPDefinitionId(),
+				cpInstancePropertiesJSONObject.getString("cpInstanceSku"));
+
+		if (cpInstance == null) {
+			return;
+		}
+
+		String propertyType = cpInstancePropertiesJSONObject.getString(
+			"propertyType");
+
+		if (StringUtil.equals(propertyType, "CREATE_SUBSCRIPTION")) {
+			JSONObject subscriptionTypeSettingsJSONObject =
+				cpInstancePropertiesJSONObject.getJSONObject(
+					"subscriptionTypeSettings");
+
+			_commerceReferencesHolder.cpInstanceLocalService.
+				updateSubscriptionInfo(
+					cpInstance.getCPInstanceId(),
+					cpInstancePropertiesJSONObject.getBoolean(
+						"overrideSubscriptionInfo"),
+					cpInstancePropertiesJSONObject.getBoolean(
+						"subscriptionEnabled"),
+					cpInstancePropertiesJSONObject.getInt("subscriptionLength"),
+					cpInstancePropertiesJSONObject.getString(
+						"subscriptionType"),
+					UnicodePropertiesBuilder.create(
+						JSONUtil.toStringMap(
+							subscriptionTypeSettingsJSONObject),
+						true
+					).build(),
+					cpInstancePropertiesJSONObject.getLong(
+						"maxSubscriptionCycles"),
+					cpInstancePropertiesJSONObject.getBoolean(
+						"deliverySubscriptionEnabled"),
+					cpInstancePropertiesJSONObject.getInt(
+						"deliverySubscriptionLength"),
+					cpInstancePropertiesJSONObject.getString(
+						"deliverySubscriptionType"),
+					new UnicodeProperties(),
+					cpInstancePropertiesJSONObject.getLong(
+						"deliveryMaxSubscriptionCycles"));
+		}
+		else if (StringUtil.equals(propertyType, "UPDATE_PRICE")) {
+			cpInstance.setPrice(
+				BigDecimal.valueOf(
+					cpInstancePropertiesJSONObject.getLong("skuPrice")));
+			cpInstance.setPromoPrice(
+				BigDecimal.valueOf(
+					cpInstancePropertiesJSONObject.getLong("skuPromoPrice")));
+
+			_commerceReferencesHolder.cpInstanceLocalService.updateCPInstance(
+				cpInstance);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceBundleSiteInitializerContributor.class);
+
+}

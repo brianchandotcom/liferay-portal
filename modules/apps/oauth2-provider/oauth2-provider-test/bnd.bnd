@@ -1,4 +1,17 @@
 Bundle-Name: Liferay OAuth2 Provider Test
 Bundle-SymbolicName: com.liferay.oauth2.provider.test
 Bundle-Version: 1.0.0
+Import-Package:\
+	!javax.cache.*,\
+	\
+	!org.bouncycastle.*,\
+	\
+	*
 Private-Package: com.liferay.oauth2.provider.internal.test.*
+-includeresource:\
+	@cxf-rt-rs-extension-providers*.jar,\
+	@cxf-rt-rs-json-basic*.jar,\
+	@cxf-rt-rs-security-jose*.jar,\
+	@cxf-rt-rs-security-jose-jaxrs*.jar,\
+	@cxf-rt-rs-security-oauth2*.jar,\
+	@cxf-rt-security*.jar

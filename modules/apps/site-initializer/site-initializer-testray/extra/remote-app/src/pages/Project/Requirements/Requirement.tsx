@@ -87,7 +87,7 @@ const Requirement = () => {
 						},
 						{
 							title: 'team',
-							value: testrayRequirement.testrayRequirementId,
+							value: testrayRequirement.id,
 						},
 						{
 							title: i18n.translate('component'),

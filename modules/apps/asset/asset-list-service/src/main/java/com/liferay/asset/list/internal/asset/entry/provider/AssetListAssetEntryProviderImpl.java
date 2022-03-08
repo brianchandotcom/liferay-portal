@@ -27,7 +27,6 @@ import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
 import com.liferay.asset.list.asset.entry.query.processor.AssetListAssetEntryQueryProcessor;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.internal.configuration.AssetListConfiguration;
-import com.liferay.asset.list.internal.configuration.FFCollectionsVariationsPrioritizationConfigurationUtil;
 import com.liferay.asset.list.internal.dynamic.data.mapping.util.DDMIndexerUtil;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntryAssetEntryRel;
@@ -540,17 +539,6 @@ public class AssetListAssetEntryProviderImpl
 		int end) {
 
 		if (_assetListConfiguration.combineAssetsFromAllSegmentsManual()) {
-			if (!FFCollectionsVariationsPrioritizationConfigurationUtil.
-					prioritizationEnabled()) {
-
-				return _assetListEntryAssetEntryRelLocalService.
-					getAssetListEntryAssetEntryRels(
-						assetListEntry.getAssetListEntryId(),
-						_getCombinedSegmentsEntryIds(
-							assetListEntry, segmentsEntryIds),
-						start, end);
-			}
-
 			List<AssetListEntryAssetEntryRel> assetListEntryAssetEntryRels =
 				new ArrayList<>();
 
@@ -848,32 +836,6 @@ public class AssetListAssetEntryProviderImpl
 
 	private long _getFirstSegmentsEntryId(
 		AssetListEntry assetListEntry, long[] segmentsEntryIds) {
-
-		if (!FFCollectionsVariationsPrioritizationConfigurationUtil.
-				prioritizationEnabled()) {
-
-			LongStream longStream = Arrays.stream(segmentsEntryIds);
-
-			return longStream.filter(
-				segmentsEntryId -> {
-					if (segmentsEntryId == SegmentsEntryConstants.ID_DEFAULT) {
-						return false;
-					}
-
-					AssetListEntrySegmentsEntryRel
-						assetListEntrySegmentsEntryRel =
-							_assetListEntrySegmentsEntryRelLocalService.
-								fetchAssetListEntrySegmentsEntryRel(
-									assetListEntry.getAssetListEntryId(),
-									segmentsEntryId);
-
-					return assetListEntrySegmentsEntryRel != null;
-				}
-			).findFirst(
-			).orElse(
-				SegmentsEntryConstants.ID_DEFAULT
-			);
-		}
 
 		if (segmentsEntryIds.length == 0) {
 			return SegmentsEntryConstants.ID_DEFAULT;

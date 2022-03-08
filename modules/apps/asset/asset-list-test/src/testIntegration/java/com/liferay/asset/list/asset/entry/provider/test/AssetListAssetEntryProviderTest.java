@@ -29,7 +29,6 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -93,135 +92,113 @@ public class AssetListAssetEntryProviderTest {
 
 	@Test
 	public void testCombineSegmentsOfDynamicCollection() throws Exception {
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.asset.list.web.internal.configuration." +
-						"FFCollectionsVariationsPrioritizationConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", true
-					).build())) {
+		_setCombinedAssetForDynamicCollections(true);
 
-			_setCombinedAssetForDynamicCollections(true);
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				"Dynamic title", AssetListEntryTypeConstants.TYPE_DYNAMIC, null,
+				_serviceContext);
 
-			AssetListEntry assetListEntry =
-				_assetListEntryLocalService.addAssetListEntry(
-					TestPropsValues.getUserId(), _group.getGroupId(),
-					"Dynamic title", AssetListEntryTypeConstants.TYPE_DYNAMIC,
-					null, _serviceContext);
+		User userTest = TestPropsValues.getUser();
 
-			User userTest = TestPropsValues.getUser();
+		String userName = "RandomName";
 
-			String userName = "RandomName";
+		User user = UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			StringPool.BLANK, userName + "@liferay.com", userName,
+			LocaleUtil.getDefault(), userName, RandomTestUtil.randomString(),
+			null, ServiceContextTestUtil.getServiceContext());
 
-			User user = UserTestUtil.addUser(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				StringPool.BLANK, userName + "@liferay.com", userName,
-				LocaleUtil.getDefault(), userName,
-				RandomTestUtil.randomString(), null,
-				ServiceContextTestUtil.getServiceContext());
+		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
+			_group.getGroupId(), userTest);
+		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
+			_group.getGroupId(), user);
 
-			SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
-				_group.getGroupId(), userTest);
-			SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
-				_group.getGroupId(), user);
+		JournalArticle journalArticle = _addJournalArticle(
+			new long[0], TestPropsValues.getUserId());
 
-			JournalArticle journalArticle = _addJournalArticle(
-				new long[0], TestPropsValues.getUserId());
+		_addJournalArticle(new long[0], TestPropsValues.getUserId());
+		_addJournalArticle(new long[0], user.getUserId());
 
-			_addJournalArticle(new long[0], TestPropsValues.getUserId());
-			_addJournalArticle(new long[0], user.getUserId());
+		long[] segmentsEntryIds = {
+			segmentsEntry1.getSegmentsEntryId(),
+			segmentsEntry2.getSegmentsEntryId()
+		};
 
-			long[] segmentsEntryIds = {
-				segmentsEntry1.getSegmentsEntryId(),
-				segmentsEntry2.getSegmentsEntryId()
-			};
+		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+			_group.getGroupId(), assetListEntry,
+			segmentsEntry1.getSegmentsEntryId(),
+			_getTypeSettings(userTest.getFirstName()));
 
-			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-				_group.getGroupId(), assetListEntry,
-				segmentsEntry1.getSegmentsEntryId(),
-				_getTypeSettings(userTest.getFirstName()));
+		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+			_group.getGroupId(), assetListEntry,
+			segmentsEntry2.getSegmentsEntryId(), _getTypeSettings(userName));
 
-			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-				_group.getGroupId(), assetListEntry,
-				segmentsEntry2.getSegmentsEntryId(),
-				_getTypeSettings(userName));
+		List<AssetEntry> assetEntries =
+			_assetListAssetEntryProvider.getAssetEntries(
+				assetListEntry, segmentsEntryIds);
 
-			List<AssetEntry> assetEntries =
-				_assetListAssetEntryProvider.getAssetEntries(
-					assetListEntry, segmentsEntryIds);
+		Assert.assertEquals(assetEntries.toString(), 3, assetEntries.size());
 
-			Assert.assertEquals(
-				assetEntries.toString(), 3, assetEntries.size());
+		AssetEntry firstAssetEntry = assetEntries.get(0);
 
-			AssetEntry firstAssetEntry = assetEntries.get(0);
-
-			Assert.assertEquals(
-				firstAssetEntry.getTitle(LocaleUtil.US),
-				journalArticle.getTitle(LocaleUtil.US));
-		}
+		Assert.assertEquals(
+			firstAssetEntry.getTitle(LocaleUtil.US),
+			journalArticle.getTitle(LocaleUtil.US));
 	}
 
 	@Test
 	public void testCombineSegmentsOfDynamicCollectionWithoutDuplications()
 		throws Exception {
 
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.asset.list.web.internal.configuration." +
-						"FFCollectionsVariationsPrioritizationConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", true
-					).build())) {
+		_setCombinedAssetForDynamicCollections(true);
 
-			_setCombinedAssetForDynamicCollections(true);
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				"Dynamic title", AssetListEntryTypeConstants.TYPE_DYNAMIC, null,
+				_serviceContext);
 
-			AssetListEntry assetListEntry =
-				_assetListEntryLocalService.addAssetListEntry(
-					TestPropsValues.getUserId(), _group.getGroupId(),
-					"Dynamic title", AssetListEntryTypeConstants.TYPE_DYNAMIC,
-					null, _serviceContext);
+		User userTest = TestPropsValues.getUser();
 
-			User userTest = TestPropsValues.getUser();
+		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
+			_group.getGroupId(), userTest);
+		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
+			_group.getGroupId(), userTest);
 
-			SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
-				_group.getGroupId(), userTest);
-			SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
-				_group.getGroupId(), userTest);
+		JournalArticle journalArticle = _addJournalArticle(
+			new long[0], TestPropsValues.getUserId());
 
-			JournalArticle journalArticle = _addJournalArticle(
-				new long[0], TestPropsValues.getUserId());
+		_addJournalArticle(new long[0], TestPropsValues.getUserId());
+		_addJournalArticle(new long[0], TestPropsValues.getUserId());
 
-			_addJournalArticle(new long[0], TestPropsValues.getUserId());
-			_addJournalArticle(new long[0], TestPropsValues.getUserId());
+		long[] segmentsEntryIds = {
+			segmentsEntry1.getSegmentsEntryId(),
+			segmentsEntry2.getSegmentsEntryId()
+		};
 
-			long[] segmentsEntryIds = {
-				segmentsEntry1.getSegmentsEntryId(),
-				segmentsEntry2.getSegmentsEntryId()
-			};
+		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+			_group.getGroupId(), assetListEntry,
+			segmentsEntry1.getSegmentsEntryId(),
+			_getTypeSettings(userTest.getFirstName()));
 
-			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-				_group.getGroupId(), assetListEntry,
-				segmentsEntry1.getSegmentsEntryId(),
-				_getTypeSettings(userTest.getFirstName()));
+		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+			_group.getGroupId(), assetListEntry,
+			segmentsEntry2.getSegmentsEntryId(),
+			_getTypeSettings(userTest.getFirstName()));
 
-			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-				_group.getGroupId(), assetListEntry,
-				segmentsEntry2.getSegmentsEntryId(),
-				_getTypeSettings(userTest.getFirstName()));
+		List<AssetEntry> assetEntries =
+			_assetListAssetEntryProvider.getAssetEntries(
+				assetListEntry, segmentsEntryIds);
 
-			List<AssetEntry> assetEntries =
-				_assetListAssetEntryProvider.getAssetEntries(
-					assetListEntry, segmentsEntryIds);
+		Assert.assertEquals(assetEntries.toString(), 3, assetEntries.size());
 
-			Assert.assertEquals(
-				assetEntries.toString(), 3, assetEntries.size());
+		AssetEntry firstAssetEntry = assetEntries.get(0);
 
-			AssetEntry firstAssetEntry = assetEntries.get(0);
-
-			Assert.assertEquals(
-				firstAssetEntry.getTitle(LocaleUtil.US),
-				journalArticle.getTitle(LocaleUtil.US));
-		}
+		Assert.assertEquals(
+			firstAssetEntry.getTitle(LocaleUtil.US),
+			journalArticle.getTitle(LocaleUtil.US));
 	}
 
 	@Test
@@ -804,72 +781,60 @@ public class AssetListAssetEntryProviderTest {
 
 	@Test
 	public void testNotCombineSegmentsOfDynamicCollection() throws Exception {
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.asset.list.web.internal.configuration." +
-						"FFCollectionsVariationsPrioritizationConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", true
-					).build())) {
+		_setCombinedAssetForDynamicCollections(false);
 
-			_setCombinedAssetForDynamicCollections(false);
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				"Dynamic title", AssetListEntryTypeConstants.TYPE_DYNAMIC, null,
+				_serviceContext);
 
-			AssetListEntry assetListEntry =
-				_assetListEntryLocalService.addAssetListEntry(
-					TestPropsValues.getUserId(), _group.getGroupId(),
-					"Dynamic title", AssetListEntryTypeConstants.TYPE_DYNAMIC,
-					null, _serviceContext);
+		User userTest = TestPropsValues.getUser();
 
-			User userTest = TestPropsValues.getUser();
+		String userName = "RandomName";
 
-			String userName = "RandomName";
+		User user = UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			StringPool.BLANK, userName + "@liferay.com", userName,
+			LocaleUtil.getDefault(), userName, RandomTestUtil.randomString(),
+			null, ServiceContextTestUtil.getServiceContext());
 
-			User user = UserTestUtil.addUser(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				StringPool.BLANK, userName + "@liferay.com", userName,
-				LocaleUtil.getDefault(), userName,
-				RandomTestUtil.randomString(), null,
-				ServiceContextTestUtil.getServiceContext());
+		SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
+			_group.getGroupId(), userTest);
+		SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
+			_group.getGroupId(), user);
 
-			SegmentsEntry segmentsEntry1 = _addSegmentsEntryByFirstName(
-				_group.getGroupId(), userTest);
-			SegmentsEntry segmentsEntry2 = _addSegmentsEntryByFirstName(
-				_group.getGroupId(), user);
+		JournalArticle journalArticle = _addJournalArticle(
+			new long[0], TestPropsValues.getUserId());
 
-			JournalArticle journalArticle = _addJournalArticle(
-				new long[0], TestPropsValues.getUserId());
+		_addJournalArticle(new long[0], TestPropsValues.getUserId());
+		_addJournalArticle(new long[0], user.getUserId());
 
-			_addJournalArticle(new long[0], TestPropsValues.getUserId());
-			_addJournalArticle(new long[0], user.getUserId());
+		long[] segmentsEntryIds = {
+			segmentsEntry1.getSegmentsEntryId(),
+			segmentsEntry2.getSegmentsEntryId()
+		};
 
-			long[] segmentsEntryIds = {
-				segmentsEntry1.getSegmentsEntryId(),
-				segmentsEntry2.getSegmentsEntryId()
-			};
+		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+			_group.getGroupId(), assetListEntry,
+			segmentsEntry1.getSegmentsEntryId(),
+			_getTypeSettings(userTest.getFirstName()));
 
-			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-				_group.getGroupId(), assetListEntry,
-				segmentsEntry1.getSegmentsEntryId(),
-				_getTypeSettings(userTest.getFirstName()));
+		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
+			_group.getGroupId(), assetListEntry,
+			segmentsEntry2.getSegmentsEntryId(), _getTypeSettings(userName));
 
-			AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
-				_group.getGroupId(), assetListEntry,
-				segmentsEntry2.getSegmentsEntryId(),
-				_getTypeSettings(userName));
+		List<AssetEntry> assetEntries =
+			_assetListAssetEntryProvider.getAssetEntries(
+				assetListEntry, segmentsEntryIds);
 
-			List<AssetEntry> assetEntries =
-				_assetListAssetEntryProvider.getAssetEntries(
-					assetListEntry, segmentsEntryIds);
+		Assert.assertEquals(assetEntries.toString(), 2, assetEntries.size());
 
-			Assert.assertEquals(
-				assetEntries.toString(), 2, assetEntries.size());
+		AssetEntry firstAssetEntry = assetEntries.get(0);
 
-			AssetEntry firstAssetEntry = assetEntries.get(0);
-
-			Assert.assertEquals(
-				firstAssetEntry.getTitle(LocaleUtil.US),
-				journalArticle.getTitle(LocaleUtil.US));
-		}
+		Assert.assertEquals(
+			firstAssetEntry.getTitle(LocaleUtil.US),
+			journalArticle.getTitle(LocaleUtil.US));
 	}
 
 	private JournalArticle _addJournalArticle(long[] assetCategories)

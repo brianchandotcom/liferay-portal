@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>ManageTranslations</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ManageTranslations</td></tr>
+</thead>
+
+<tbody>
+
+<tr>
+	<td>LIST_ITEM_LANGUAGE</td>
+	<td>//tr//td[contains(text(),'${key_language}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_ITEM_DELETE_LANGUAGE_BUTTON</td>
+	<td>//tr//td[contains(text(),'${key_language}')]/following-sibling::td//button[@*[contains(.,'Delete')]]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

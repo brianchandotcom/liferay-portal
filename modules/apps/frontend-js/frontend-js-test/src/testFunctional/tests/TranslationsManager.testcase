@@ -32,8 +32,6 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-			User.logoutPG();
-
 			JSONLayout.deletePublicLayout(
 				groupName = "Guest",
 				layoutName = "JS Components Sample Page");
@@ -44,7 +42,7 @@ definition {
 	@priority = "3"
 	test DefaultLanguageIsAvailableAndViewsNoOtherLanguagesOptions {
 		task ("Select translation language menu") {
-			TranslationManager.openSelectTranslationLanguageDropdownMenu(
+			TranslationManagerPortlet.goToManageTranslationsModal(
 				key_currentLocale = "en-us",
 				key_title = "Admin");
 		}
@@ -76,40 +74,35 @@ definition {
 		}
 	}
 
-	@description = "LPS-147946. Verifies the list will filter the results and the language will be deleted from the Manage Translation list."
+	@description = "LPS-147946. Validates language can be deleted from the Manage Translation list."
 	@priority = "3"
-	test SearchAndDeleteLanguageOnManageTranslationModal {
-		task ("Select translation language menu") {
-			TranslationManager.openSelectTranslationLanguageDropdownMenu(
+	test CanDeleteLanguageFromManageTranslationsList {
+		task ("Given manage translations modal") {
+			TranslationManagerPortlet.goToManageTranslationsModal(
 				key_currentLocale = "en-us",
 				key_title = "Admin");
 		}
 
-		task ("Click Manage Translations and type text in search field") {
+		task ("When delete Catalan language") {
+			ManageTranslations.deleteLanguage(key_language = "Catalan");
+		}
+
+		task ("Then assert Catalan language menu item is not present in select translation language dropdown") {
+			TranslationManagerPortlet.clickSelectTranslation(
+				key_currentLocale = "en-us",
+				key_title = "Admin");
+
+			AssertElementNotPresent(
+				key_locale = "ca-ES",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("Then assert Catalan language is not present in Manage Translations table list") {
 			Click(locator1 = "TranslationManager#MANAGE_TRANSLATIONS");
 
-			Type.type(
-				locator1 = "TranslationManager#MANAGE_TRANSLATIONS_DIALOG_SEARCH_FIELD",
-				value1 = "English");
-		}
-
-		task ("View the list will filter the results using Code and Language fields") {
-			AssertElementPresent(
-				key_text = "Code",
-				locator1 = "TranslationManager#MANAGE_TRANSLATIONS_DIALOG_SEARCH_RESULTS_TITLE");
-
-			AssertElementPresent(
-				key_text = "Language",
-				locator1 = "TranslationManager#MANAGE_TRANSLATIONS_DIALOG_SEARCH_RESULTS_TITLE");
-
-			Click(locator1 = "Modal#CLOSE_BUTTON");
-		}
-
-		task ("Delete language in Manage Translations dialog") {
-			TranslationManager.deleteLanguageFromDialogList(
-				key_currentLocale = "en-us",
-				key_locale = "ca-es",
-				key_title = "Admin");
+			AssertElementNotPresent(
+				locator1 = "ManageTranslations#LIST_ITEM_LANGUAGE",
+				value1 = "Catalan");
 		}
 	}
 
@@ -117,7 +110,7 @@ definition {
 	@priority = "3"
 	test TranslationResultsDisplayedByDifferentLanguage {
 		task ("Input different languages with the same word") {
-			TranslationManager.useDifferentLanguageInputText(
+			TranslationManagerPortlet.useDifferentLanguageInputText(
 				key_currentLocale = "en-us",
 				key_locale = "fr-FR",
 				key_title = "Admin",

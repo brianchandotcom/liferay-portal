@@ -1,0 +1,8 @@
+definition {
+
+	macro deleteLanguage {
+		Click(locator1 = "ManageTranslations#LIST_ITEM_DELETE_LANGUAGE_BUTTON");
+
+		Click(locator1 = "Button#DONE");
+	}
+}

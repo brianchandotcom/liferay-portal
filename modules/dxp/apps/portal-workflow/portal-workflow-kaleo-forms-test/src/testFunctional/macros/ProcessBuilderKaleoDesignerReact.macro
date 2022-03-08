@@ -34,7 +34,12 @@ definition {
 	}
 
 	macro clickDefaultToggle {
-		ProcessBuilderKaleoDesignerReact.selectConnector(connectorLabel = "${connectorLabel}");
+		if ("${defaultConnector}" == "False") {
+			Uncheck.uncheckToggleSwitch(locator1 = "//input[contains(@class,'toggle-switch-check')]");
+		}
+		else if ("${defaultConnector}" == "True") {
+			Check.checkToggleSwitch(locator1 = "//input[contains(@class,'toggle-switch-check')]");
+		}
 	}
 
 	macro deleteNodeOrConnection {

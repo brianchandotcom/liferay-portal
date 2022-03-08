@@ -381,13 +381,13 @@ definition {
 			connectorLabel = "STARTENDCONNECTOR",
 			defaultStatus = "True");
 
-		ProcessBuilderKaleoDesignerReact.clickDefaultToggle(connectorLabel = "STARTENDCONNECTOR");
+		ProcessBuilderKaleoDesignerReact.clickDefaultToggle(defaultConnector = "False");
 
 		ProcessBuilderKaleoDesignerReact.viewDefaultToggleStatus(
 			connectorLabel = "STARTENDCONNECTOR",
 			defaultStatus = "False");
 
-		ProcessBuilderKaleoDesignerReact.clickDefaultToggle(connectorLabel = "STARTENDCONNECTOR");
+		ProcessBuilderKaleoDesignerReact.clickDefaultToggle(defaultConnector = "True");
 
 		ProcessBuilderKaleoDesignerReact.viewDefaultToggleStatus(
 			connectorLabel = "STARTENDCONNECTOR",

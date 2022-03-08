@@ -64,8 +64,6 @@ definition {
 
 	@priority = "5"
 	test AddDisplayTemplateVelocity {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -921,8 +919,6 @@ definition {
 
 	@priority = "4"
 	test AddListRecordWithDocumentsAndMediaField {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

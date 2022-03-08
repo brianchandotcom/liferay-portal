@@ -12,5 +12,18 @@
  * details.
  */
 
-export * from './TestrayCase';
-export * from './testraySuite';
+import {gql} from '@apollo/client';
+
+import {testraySuiteFragment} from '../fragments';
+
+export const CreateTestraySuite = gql`
+	${testraySuiteFragment}
+
+	mutation CreateTestraySuite($TestraySuite: InputC_TestraySuite!) {
+		c {
+			createTestraySuite(TestraySuite: $TestraySuite) {
+				...TestraySuiteFragment
+			}
+		}
+	}
+`;

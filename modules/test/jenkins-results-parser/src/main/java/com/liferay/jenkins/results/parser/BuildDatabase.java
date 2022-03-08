@@ -37,6 +37,8 @@ public interface BuildDatabase {
 
 	public JSONObject getBuildDataJSONObject(URL buildURL);
 
+	public Job getJob(String key);
+
 	public Properties getProperties(String key);
 
 	public Properties getProperties(String key, Pattern pattern);
@@ -49,6 +51,8 @@ public interface BuildDatabase {
 
 	public boolean hasBuildData(String key);
 
+	public boolean hasJob(String key);
+
 	public boolean hasProperties(String key);
 
 	public boolean hasPullRequest(String key);
@@ -58,6 +62,8 @@ public interface BuildDatabase {
 	public boolean hasWorkspaceGitRepository(String key);
 
 	public void putBuildData(String key, BuildData buildData);
+
+	public void putJob(String key, Job job);
 
 	public void putProperties(String key, File propertiesFile);
 

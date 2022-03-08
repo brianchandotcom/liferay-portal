@@ -71,6 +71,19 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	}
 
 	@Override
+	public Job getJob(String key) {
+		if (!hasJob(key)) {
+			return null;
+		}
+
+		JSONObject jobsJSONObject = _jsonObject.getJSONObject("jobs");
+
+		JSONObject jobJSONObject = jobsJSONObject.getJSONObject(key);
+
+		return JobFactory.newJob(jobJSONObject);
+	}
+
+	@Override
 	public Properties getProperties(String key) {
 		return getProperties(key, null);
 	}
@@ -164,6 +177,13 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	}
 
 	@Override
+	public boolean hasJob(String key) {
+		JSONObject jobsJSONObject = _jsonObject.getJSONObject("jobs");
+
+		return jobsJSONObject.has(key);
+	}
+
+	@Override
 	public boolean hasProperties(String key) {
 		JSONObject buildsJSONObject = _jsonObject.getJSONObject("properties");
 
@@ -202,6 +222,19 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 			buildsJSONObject.put(key, buildData.getJSONObject());
 
 			_jsonObject.put("builds", buildsJSONObject);
+
+			_writeJSONObjectFile();
+		}
+	}
+
+	@Override
+	public void putJob(String key, Job job) {
+		JSONObject jobJSONObject = job.getJSONObject();
+
+		synchronized (_jsonObject) {
+			JSONObject jobsJSONObject = _jsonObject.getJSONObject("jobs");
+
+			jobsJSONObject.put(key, jobJSONObject);
 
 			_writeJSONObjectFile();
 		}
@@ -372,6 +405,10 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 
 		if (!_jsonObject.has("builds")) {
 			_jsonObject.put("builds", new JSONObject());
+		}
+
+		if (!_jsonObject.has("jobs")) {
+			_jsonObject.put("jobs", new JSONObject());
 		}
 
 		if (!_jsonObject.has("properties")) {

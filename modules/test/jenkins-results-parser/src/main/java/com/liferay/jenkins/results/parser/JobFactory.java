@@ -16,10 +16,13 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -35,7 +38,7 @@ public class JobFactory {
 			topLevelBuild.getBaseGitRepositoryName(),
 			topLevelBuild.getBuildProfile(),
 			_getPortalUpstreamBranchName(topLevelBuild),
-			topLevelBuild.getProjectNames(), null);
+			topLevelBuild.getProjectNames(), null, null);
 	}
 
 	public static Job newJob(BuildData buildData) {
@@ -49,23 +52,29 @@ public class JobFactory {
 
 		return _newJob(
 			buildData.getJobName(), null, upstreamBranchName, null, null, null,
-			null, null);
+			null, null, null);
+	}
+
+	public static Job newJob(JSONObject jsonObject) {
+		return _newJob(
+			null, null, null, null, null, null, null, null, jsonObject);
 	}
 
 	public static Job newJob(String jobName) {
-		return _newJob(jobName, null, null, null, null, null, null, null);
+		return _newJob(jobName, null, null, null, null, null, null, null, null);
 	}
 
 	public static Job newJob(String jobName, String testSuiteName) {
 		return _newJob(
-			jobName, testSuiteName, null, null, null, null, null, null);
+			jobName, testSuiteName, null, null, null, null, null, null, null);
 	}
 
 	public static Job newJob(
 		String jobName, String testSuiteName, String branchName) {
 
 		return _newJob(
-			jobName, testSuiteName, branchName, null, null, null, null, null);
+			jobName, testSuiteName, branchName, null, null, null, null, null,
+			null);
 	}
 
 	public static Job newJob(
@@ -74,7 +83,7 @@ public class JobFactory {
 
 		return _newJob(
 			jobName, testSuiteName, branchName, repositoryName, null, null,
-			null, null);
+			null, null, null);
 	}
 
 	public static Job newJob(
@@ -83,7 +92,7 @@ public class JobFactory {
 
 		return _newJob(
 			jobName, testSuiteName, branchName, repositoryName, buildProfile,
-			null, null, null);
+			null, null, null, null);
 	}
 
 	public static Job newJob(
@@ -93,7 +102,19 @@ public class JobFactory {
 
 		return _newJob(
 			jobName, testSuiteName, branchName, repositoryName, buildProfile,
-			null, null, portalGitWorkingDirectory);
+			null, null, portalGitWorkingDirectory, null);
+	}
+
+	public static Job newJob(
+		String jobName, String testSuiteName, String branchName,
+		String repositoryName, Job.BuildProfile buildProfile,
+		String portalUpstreamBranchName, List<String> projectNames,
+		PortalGitWorkingDirectory portalGitWorkingDirectory) {
+
+		return _newJob(
+			jobName, testSuiteName, branchName, repositoryName, buildProfile,
+			portalUpstreamBranchName, projectNames, portalGitWorkingDirectory,
+			null);
 	}
 
 	private static String _getPortalUpstreamBranchName(
@@ -113,25 +134,78 @@ public class JobFactory {
 		String jobName, String testSuiteName, String branchName,
 		String repositoryName, Job.BuildProfile buildProfile,
 		String portalUpstreamBranchName, List<String> projectNames,
-		PortalGitWorkingDirectory portalGitWorkingDirectory) {
+		PortalGitWorkingDirectory portalGitWorkingDirectory,
+		JSONObject jsonObject) {
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
 			portalUpstreamBranchName = branchName;
+		}
+
+		if (jsonObject != null) {
+			String buildProfileString = jsonObject.getString("build_profile");
+
+			buildProfile = Job.BuildProfile.valueOf(
+				buildProfileString.toUpperCase());
+
+			jobName = jsonObject.getString("job_name");
+			testSuiteName = jsonObject.getString("test_suite_name");
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(jobName);
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(branchName)) {
+			sb.append("_");
+			sb.append(branchName);
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(repositoryName)) {
+			sb.append("_");
+			sb.append(repositoryName);
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
+			sb.append("_liferay-portal");
+
+			if (!portalUpstreamBranchName.equals("master")) {
+				sb.append("-ee");
+			}
+
+			sb.append("_");
+			sb.append(portalUpstreamBranchName);
 		}
 
 		if (buildProfile == null) {
 			buildProfile = Job.BuildProfile.PORTAL;
 		}
 
-		String jobKey = JenkinsResultsParserUtil.combine(
-			jobName, "-", buildProfile.toString());
+		sb.append("_");
+		sb.append(buildProfile);
 
-		if ((testSuiteName != null) && !testSuiteName.isEmpty()) {
-			jobKey = JenkinsResultsParserUtil.combine(
-				jobName, "-", testSuiteName);
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testSuiteName)) {
+			testSuiteName = "default";
 		}
 
-		Job job = _jobs.get(jobKey);
+		sb.append("_");
+		sb.append(testSuiteName);
+
+		if (projectNames != null) {
+			Collections.sort(projectNames);
+
+			sb.append("_");
+			sb.append(JenkinsResultsParserUtil.join("_", projectNames));
+		}
+
+		String key = sb.toString();
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		if ((jsonObject == null) && buildDatabase.hasJob(key)) {
+			return buildDatabase.getJob(key);
+		}
+
+		Job job = _jobs.get(key);
 
 		if (job != null) {
 			return job;
@@ -168,243 +242,283 @@ public class JobFactory {
 				}
 			}
 
-			_jobs.put(
-				jobKey,
-				new PortalAcceptancePullRequestJob(
+			if (jsonObject != null) {
+				job = new PortalAcceptancePullRequestJob(jsonObject);
+			}
+			else {
+				job = new PortalAcceptancePullRequestJob(
 					jobName, buildProfile, testSuiteName, branchName,
-					portalGitWorkingDirectory));
-
-			return _jobs.get(jobKey);
+					portalGitWorkingDirectory);
+			}
 		}
 
 		if (jobName.equals("root-cause-analysis-tool")) {
-			_jobs.put(
-				jobKey,
-				new RootCauseAnalysisToolJob(
-					jobName, buildProfile, branchName));
-
-			return _jobs.get(jobKey);
+			if (jsonObject != null) {
+				job = new RootCauseAnalysisToolJob(jsonObject);
+			}
+			else {
+				job = new RootCauseAnalysisToolJob(
+					jobName, buildProfile, branchName);
+			}
 		}
 
 		if (jobName.equals("root-cause-analysis-tool-batch")) {
-			_jobs.put(
-				jobKey,
-				new RootCauseAnalysisToolBatchJob(
-					jobName, buildProfile, branchName));
-
-			return _jobs.get(jobKey);
+			if (jsonObject != null) {
+				job = new RootCauseAnalysisToolBatchJob(jsonObject);
+			}
+			else {
+				job = new RootCauseAnalysisToolBatchJob(
+					jobName, buildProfile, branchName);
+			}
 		}
 
 		if (jobName.equals("test-fixpack-builder-pullrequest")) {
-			FixPackBuilderGitRepositoryJob fixPackBuilderGitRepositoryJob =
-				new FixPackBuilderGitRepositoryJob(
+			if (jsonObject != null) {
+				job = new FixPackBuilderGitRepositoryJob(jsonObject);
+			}
+			else {
+				job = new FixPackBuilderGitRepositoryJob(
 					jobName, buildProfile, testSuiteName, branchName);
-
-			_jobs.put(jobKey, fixPackBuilderGitRepositoryJob);
-
-			return fixPackBuilderGitRepositoryJob;
+			}
 		}
 
 		if (jobName.startsWith("test-plugins-acceptance-pullrequest(")) {
-			PluginsAcceptancePullRequestJob pluginsAcceptancePullRequestJob =
-				new PluginsAcceptancePullRequestJob(
+			if (jsonObject != null) {
+				job = new PluginsAcceptancePullRequestJob(jsonObject);
+			}
+			else {
+				job = new PluginsAcceptancePullRequestJob(
 					jobName, buildProfile, branchName);
-
-			_jobs.put(jobKey, pluginsAcceptancePullRequestJob);
-
-			return pluginsAcceptancePullRequestJob;
+			}
 		}
 
 		if (jobName.equals("test-plugins-extraapps")) {
-			PluginsExtraAppsJob pluginsExtraAppsJob = new PluginsExtraAppsJob(
-				jobName, buildProfile, branchName);
-
-			_jobs.put(jobKey, pluginsExtraAppsJob);
-
-			return pluginsExtraAppsJob;
+			if (jsonObject != null) {
+				job = new PluginsExtraAppsJob(jsonObject);
+			}
+			else {
+				job = new PluginsExtraAppsJob(
+					jobName, buildProfile, branchName);
+			}
 		}
 
 		if (jobName.equals("test-plugins-marketplaceapp")) {
-			PluginsMarketplaceAppJob pluginsMarketplaceAppJob =
-				new PluginsMarketplaceAppJob(
+			if (jsonObject != null) {
+				job = new PluginsMarketplaceAppJob(jsonObject);
+			}
+			else {
+				job = new PluginsMarketplaceAppJob(
 					jobName, testSuiteName, buildProfile, branchName);
-
-			_jobs.put(jobKey, pluginsMarketplaceAppJob);
-
-			return pluginsMarketplaceAppJob;
+			}
 		}
 
 		if (jobName.equals("test-plugins-release")) {
-			PluginsReleaseJob pluginsReleaseJob = new PluginsReleaseJob(
-				jobName, testSuiteName, buildProfile, branchName);
-
-			_jobs.put(jobKey, pluginsReleaseJob);
-
-			return pluginsReleaseJob;
+			if (jsonObject != null) {
+				job = new PluginsReleaseJob(jsonObject);
+			}
+			else {
+				job = new PluginsReleaseJob(
+					jobName, testSuiteName, buildProfile, branchName);
+			}
 		}
 
 		if (jobName.equals("test-plugins-upstream")) {
-			PluginsUpstreamJob pluginsUpstreamJob = new PluginsUpstreamJob(
-				jobName, testSuiteName, buildProfile, branchName);
-
-			_jobs.put(jobKey, pluginsUpstreamJob);
-
-			return pluginsUpstreamJob;
+			if (jsonObject != null) {
+				job = new PluginsUpstreamJob(jsonObject);
+			}
+			else {
+				job = new PluginsUpstreamJob(
+					jobName, testSuiteName, buildProfile, branchName);
+			}
 		}
 
 		if (jobName.startsWith("test-portal-acceptance-pullrequest(")) {
-			_jobs.put(
-				jobKey,
-				new PortalAcceptancePullRequestJob(
+			if (jsonObject != null) {
+				job = new PortalAcceptancePullRequestJob(jsonObject);
+			}
+			else {
+				job = new PortalAcceptancePullRequestJob(
 					jobName, buildProfile, testSuiteName, branchName,
-					portalGitWorkingDirectory));
-
-			return _jobs.get(jobKey);
+					portalGitWorkingDirectory);
+			}
 		}
 
 		if (jobName.startsWith("test-portal-acceptance-upstream")) {
-			_jobs.put(
-				jobKey,
-				new PortalAcceptanceUpstreamJob(
+			if (jsonObject != null) {
+				job = new PortalAcceptanceUpstreamJob(jsonObject);
+			}
+			else {
+				job = new PortalAcceptanceUpstreamJob(
 					jobName, buildProfile, testSuiteName, branchName,
-					portalGitWorkingDirectory));
-
-			return _jobs.get(jobKey);
+					portalGitWorkingDirectory);
+			}
 		}
 
 		if (jobName.equals("test-portal-app-release")) {
-			_jobs.put(
-				jobKey,
-				new PortalAppReleaseJob(jobName, buildProfile, branchName));
-
-			return _jobs.get(jobKey);
+			if (jsonObject != null) {
+				job = new PortalAppReleaseJob(jsonObject);
+			}
+			else {
+				job = new PortalAppReleaseJob(
+					jobName, buildProfile, branchName);
+			}
 		}
 
 		if (jobName.startsWith("test-portal-aws(")) {
-			_jobs.put(
-				jobKey, new PortalAWSJob(jobName, buildProfile, branchName));
-
-			return _jobs.get(jobKey);
+			if (jsonObject != null) {
+				job = new PortalAWSJob(jsonObject);
+			}
+			else {
+				job = new PortalAWSJob(jobName, buildProfile, branchName);
+			}
 		}
 
 		if (jobName.startsWith("test-portal-environment(")) {
-			_jobs.put(
-				jobKey,
-				new PortalEnvironmentJob(jobName, buildProfile, branchName));
-
-			return _jobs.get(jobKey);
+			if (jsonObject != null) {
+				job = new PortalEnvironmentJob(jsonObject);
+			}
+			else {
+				job = new PortalEnvironmentJob(
+					jobName, buildProfile, branchName);
+			}
 		}
 
 		if (jobName.startsWith("test-portal-environment-release(")) {
-			_jobs.put(
-				jobKey,
-				new PortalReleaseEnvironmentJob(
-					jobName, buildProfile, branchName));
-
-			return _jobs.get(jobKey);
+			if (jsonObject != null) {
+				job = new PortalReleaseEnvironmentJob(jsonObject);
+			}
+			else {
+				job = new PortalReleaseEnvironmentJob(
+					jobName, buildProfile, branchName);
+			}
 		}
 
 		if (jobName.startsWith("test-portal-fixpack-environment(")) {
-			_jobs.put(
-				jobKey,
-				new PortalFixpackEnvironmentJob(
-					jobName, buildProfile, branchName));
-
-			return _jobs.get(jobKey);
+			if (jsonObject != null) {
+				job = new PortalFixpackEnvironmentJob(jsonObject);
+			}
+			else {
+				job = new PortalFixpackEnvironmentJob(
+					jobName, buildProfile, branchName);
+			}
 		}
 
 		if (jobName.equals("test-portal-fixpack-release")) {
-			_jobs.put(
-				jobKey,
-				new PortalFixpackReleaseJob(
+			if (jsonObject != null) {
+				job = new PortalFixpackReleaseJob(jsonObject);
+			}
+			else {
+				job = new PortalFixpackReleaseJob(
 					jobName, buildProfile, branchName, testSuiteName,
-					portalGitWorkingDirectory));
-
-			return _jobs.get(jobKey);
+					portalGitWorkingDirectory);
+			}
 		}
 
 		if (jobName.equals("test-portal-hotfix-release")) {
-			_jobs.put(
-				jobKey,
-				new PortalHotfixReleaseJob(
+			if (jsonObject != null) {
+				job = new PortalHotfixReleaseJob(jsonObject);
+			}
+			else {
+				job = new PortalHotfixReleaseJob(
 					jobName, buildProfile, branchName, testSuiteName,
-					portalGitWorkingDirectory));
-
-			return _jobs.get(jobKey);
+					portalGitWorkingDirectory);
+			}
 		}
 
 		if (jobName.equals("test-portal-release")) {
-			_jobs.put(
-				jobKey,
-				new PortalReleaseJob(
+			if (jsonObject != null) {
+				job = new PortalReleaseJob(jsonObject);
+			}
+			else {
+				job = new PortalReleaseJob(
 					jobName, buildProfile, branchName, testSuiteName,
-					portalGitWorkingDirectory));
-
-			return _jobs.get(jobKey);
+					portalGitWorkingDirectory);
+			}
 		}
 
 		if (jobName.equals("test-portal-source-format")) {
-			_jobs.put(
-				jobKey,
-				new PortalAcceptancePullRequestJob(
+			if (jsonObject != null) {
+				job = new PortalAcceptancePullRequestJob(jsonObject);
+			}
+			else {
+				job = new PortalAcceptancePullRequestJob(
 					jobName, buildProfile, "sf", branchName,
-					portalGitWorkingDirectory));
-
-			return _jobs.get(jobKey);
+					portalGitWorkingDirectory);
+			}
 		}
 
 		if (jobName.startsWith("test-portal-testsuite-upstream(")) {
-			_jobs.put(
-				jobKey,
-				new PortalTestSuiteUpstreamJob(
+			if (jsonObject != null) {
+				job = new PortalTestSuiteUpstreamJob(jsonObject);
+			}
+			else {
+				job = new PortalTestSuiteUpstreamJob(
 					jobName, buildProfile, testSuiteName, branchName,
-					portalGitWorkingDirectory));
-
-			return _jobs.get(jobKey);
+					portalGitWorkingDirectory);
+			}
 		}
 
 		if (jobName.startsWith("test-portal-testsuite-upstream-controller(") ||
 			jobName.startsWith(
 				"test-qa-websites-functional-daily-controller(")) {
 
-			_jobs.put(jobKey, new SimpleJob(jobName, buildProfile));
-
-			return _jobs.get(jobKey);
+			if (jsonObject != null) {
+				job = new SimpleJob(jsonObject);
+			}
+			else {
+				job = new SimpleJob(jobName, buildProfile);
+			}
 		}
 
 		if (jobName.equals("test-qa-websites-functional-daily") ||
 			jobName.equals("test-qa-websites-functional-environment") ||
 			jobName.equals("test-qa-websites-functional-weekly")) {
 
-			_jobs.put(
-				jobKey,
-				new QAWebsitesGitRepositoryJob(
+			if (jsonObject != null) {
+				job = new QAWebsitesGitRepositoryJob(jsonObject);
+			}
+			else {
+				job = new QAWebsitesGitRepositoryJob(
 					jobName, buildProfile, testSuiteName, branchName,
-					projectNames));
-
-			return _jobs.get(jobKey);
+					projectNames);
+			}
 		}
 
 		if (jobName.equals("test-results-consistency-report-controller")) {
-			_jobs.put(jobKey, new SimpleJob(jobName, buildProfile));
-
-			return _jobs.get(jobKey);
+			if (jsonObject != null) {
+				job = new SimpleJob(jsonObject);
+			}
+			else {
+				job = new SimpleJob(jobName, buildProfile);
+			}
 		}
 
 		if (jobName.startsWith("test-subrepository-acceptance-pullrequest(")) {
-			_jobs.put(
-				jobKey,
-				new SubrepositoryAcceptancePullRequestJob(
-					jobName, buildProfile, testSuiteName, repositoryName,
-					portalUpstreamBranchName));
-
-			return _jobs.get(jobKey);
+			if (jsonObject != null) {
+				job = new SubrepositoryAcceptancePullRequestJob(jsonObject);
+			}
+			else {
+				job = new SubrepositoryAcceptancePullRequestJob(
+					jobName, buildProfile, testSuiteName, branchName,
+					repositoryName, portalUpstreamBranchName);
+			}
 		}
 
-		_jobs.put(
-			jobKey, new DefaultPortalJob(jobName, buildProfile, testSuiteName));
+		if (job == null) {
+			if (jsonObject != null) {
+				job = new DefaultPortalJob(jsonObject);
+			}
+			else {
+				job = new DefaultPortalJob(
+					jobName, buildProfile, testSuiteName);
+			}
+		}
 
-		return _jobs.get(jobKey);
+		_jobs.put(key, job);
+
+		buildDatabase.putJob(key, job);
+
+		return _jobs.get(key);
 	}
 
 	private static final Map<String, Job> _jobs = new HashMap<>();

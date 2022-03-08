@@ -845,6 +845,41 @@ definition {
 		}
 	}
 
+	@description = "This test automates LPS-141217 and asserts that a user can still be added to an organization after initially using an invalid email"
+	@priority = "3"
+	test CanAddOrganizationUserAfterFirstUsingInvalidEmail {
+		task ("Given the creation of a user under an organization is attempted using an invalid email") {
+			JSONOrganization.addOrganization(organizationName = "Organization Name");
+
+			Organization.openOrganizationsAdmin();
+
+			Organization.addUser(
+				organizationName = "Organization Name",
+				userEmailAddress = "postmaster@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			Alert.viewErrorMessage(errorMessage = "Error:Please enter a valid email address.");
+		}
+
+		task ("When the email is changed to a valid email address and the user is saved") {
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+				value1 = "postmaster1@liferay.com");
+
+			Button.clickSave();
+		}
+
+		task ("Then the user should be created and associated under the organization") {
+			LexiconEntry.gotoEntry(rowEntry = "Organization Name");
+
+			LexiconEntry.viewEntryContent(
+				rowAny = "userfn userln",
+				rowEntry = "User");
+		}
+	}
+
 	@description = "This test asserts that an organization cannot be deleted if there is a suborganization associated with it."
 	@priority = "3"
 	test CannotDeleteAnOrganizationWithSuborganization {

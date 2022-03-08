@@ -173,6 +173,18 @@ export const getDXPCloudEnvironment = gql`
 	}
 `;
 
+export const getAnalyticsCloudWorkspace = gql`
+	query getAnalyticsCloudWorkspace($scopeKey: String, $filter: String) {
+		c {
+			AnalyticsCloudWorkspaces(filter: $filter, scopeKey: $scopeKey) {
+				items {
+					workspaceName
+				}
+			}
+		}
+	}
+`;
+
 export const addAdminDXPCloud = gql`
 	mutation addAdminDXPCloud(
 		$scopeKey: String!

@@ -606,6 +606,7 @@
 		<check name="JavaAPISignatureCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that types `HttpServletRequest`, `HttpServletResponse`, `ThemeDisplay`, and `ServiceContext` are not used in API method signatures." />
+			<property name="enabled" value="false" />
 			<property name="illegalAPIParameterTypes" value="HttpServletRequest" />
 			<property name="illegalAPIParameterTypes" value="HttpServletResponse" />
 			<property name="illegalAPIParameterTypes" value="ThemeDisplay" />

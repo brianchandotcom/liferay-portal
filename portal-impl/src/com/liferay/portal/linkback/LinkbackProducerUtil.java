@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlParserUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -42,9 +43,6 @@ import java.util.Map;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
-
-import net.htmlparser.jericho.Source;
-import net.htmlparser.jericho.StartTag;
 
 /**
  * @author Alexander Chow
@@ -227,21 +225,12 @@ public class LinkbackProducerUtil {
 		}
 
 		try {
-			Source clientSource = new Source(HttpUtil.URLtoString(targetUri));
-
-			List<StartTag> startTags = clientSource.getAllStartTags("link");
-
-			for (StartTag startTag : startTags) {
-				String rel = startTag.getAttributeValue("rel");
-
-				if (StringUtil.equalsIgnoreCase(rel, "pingback")) {
-					String href = startTag.getAttributeValue("href");
-
-					serverUri = HtmlUtil.escape(href);
-
-					break;
-				}
-			}
+			serverUri = HtmlParserUtil.findAttributeValue(
+				getAttributeValueFunction -> StringUtil.equalsIgnoreCase(
+					getAttributeValueFunction.apply("rel"), "pingback"),
+				getAttributeValueFunction -> HtmlUtil.escape(
+					getAttributeValueFunction.apply("href")),
+				HttpUtil.URLtoString(targetUri), "link");
 		}
 		catch (Exception exception) {
 			_log.error("Unable to call GET of " + targetUri, exception);

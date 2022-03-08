@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.language.override.exception.FileExtensionException;
+import com.liferay.portal.language.override.exception.InvalidFileException;
 import com.liferay.portal.language.override.provider.PLOOriginalTranslationProvider;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.language.override.service.PLOEntryService;
@@ -111,11 +113,14 @@ public class PLOPortlet extends MVCPortlet {
 
 		File file = uploadPortletRequest.getFile("file");
 
-		if ((file == null) ||
-			!Objects.equals(
+		if (file == null) {
+			throw new InvalidFileException();
+		}
+
+		if (!Objects.equals(
 				FileUtil.getExtension(file.getName()), "properties")) {
 
-			throw new PortalException();
+			throw new FileExtensionException();
 		}
 
 		String languageId = ParamUtil.getString(actionRequest, "languageId");

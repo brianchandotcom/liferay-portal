@@ -35,6 +35,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-translations"));
 	cssClass="container-view"
 >
 	<aui:form action="<%= importTranslationsURL %>" cssClass="sheet sheet-lg" enctype="multipart/form-data" method="post" name="fm">
+		<liferay-ui:error exception="<%= FileExtensionException.class %>" message='<%= LanguageUtil.format(request, "please-upload-a-file-with-a-valid-extension-x", "properties", false) %>' />
+		<liferay-ui:error exception="<%= InvalidFileException.class %>" message="please-select-a-valid-file" />
+
 		<h5><liferay-ui:message key="import-file" /></h5>
 
 		<div class="sheet-text">

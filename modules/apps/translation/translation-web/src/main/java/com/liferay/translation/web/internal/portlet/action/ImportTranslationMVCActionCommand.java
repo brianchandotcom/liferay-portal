@@ -21,6 +21,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -43,7 +44,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -63,12 +63,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -122,7 +121,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			TranslationRequestHelper translationRequestHelper =
 				new TranslationRequestHelper(
 					_infoItemServiceTracker, actionRequest);
-			Map<String, String> failureMessages = new HashMap<>();
+			List<Map<String, String>> failureMessages = new LinkedList<>();
 			List<String> successMessages = new ArrayList<>();
 			String fileName = uploadPortletRequest.getFileName("file");
 
@@ -312,7 +311,7 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest,
 			UploadPortletRequest uploadPortletRequest, long groupId,
 			String className, long classPK, List<String> successMessages,
-			Map<String, String> failureMessages, Locale locale)
+			List<Map<String, String>> failureMessages, Locale locale)
 		throws IOException, PortalException {
 
 		Map<String, FileItem[]> multipartParameterMap =
@@ -335,8 +334,9 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 	private void _processXLIFFInputStream(
 			ActionRequest actionRequest, long groupId, String className,
-			long classPK, String fileName, List<String> successMessages,
-			Map<String, String> failureMessages, InputStream inputStream,
+			long classPK, String container, String fileName,
+			List<String> successMessages,
+			List<Map<String, String>> failureMessages, InputStream inputStream,
 			Locale locale)
 		throws IOException, PortalException {
 
@@ -347,25 +347,30 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			successMessages.add(fileName);
 		}
 		catch (XLIFFFileException xliffFileException) {
-			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-				locale, getClass());
+			failureMessages.add(
+				HashMapBuilder.put(
+					"container", container
+				).put(
+					"errorMessage",
+					() -> {
+						Function<String, String> exceptionMessageFunction =
+							_exceptionMessageFunctions.getOrDefault(
+								xliffFileException.getClass(),
+								s -> "the-xliff-file-is-invalid");
 
-			Function<String, String> exceptionMessageFunction =
-				_exceptionMessageFunctions.getOrDefault(
-					xliffFileException.getClass(),
-					s -> "the-xliff-file-is-invalid");
-
-			failureMessages.put(
-				fileName,
-				_language.get(
-					resourceBundle, exceptionMessageFunction.apply(className)));
+						return _language.get(
+							locale, exceptionMessageFunction.apply(className));
+					}
+				).put(
+					"fileName", fileName
+				).build());
 		}
 	}
 
 	private void _processXLIFFTranslation(
 			ActionRequest actionRequest, long groupId, String className,
 			long classPK, Translation translation, List<String> successMessages,
-			Map<String, String> failureMessages, Locale locale)
+			List<Map<String, String>> failureMessages, Locale locale)
 		throws IOException, PortalException {
 
 		if (Objects.equals(
@@ -382,8 +387,9 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 
 							_processXLIFFInputStream(
 								actionRequest, groupId, className, classPK,
-								entry, successMessages, failureMessages,
-								inputStream2, locale);
+								translation.getFileName(), entry,
+								successMessages, failureMessages, inputStream2,
+								locale);
 						}
 					}
 				}
@@ -396,8 +402,8 @@ public class ImportTranslationMVCActionCommand extends BaseMVCActionCommand {
 			try (InputStream inputStream = translation.getInputStream()) {
 				_processXLIFFInputStream(
 					actionRequest, groupId, className, classPK,
-					translation.getFileName(), successMessages, failureMessages,
-					inputStream, locale);
+					StringPool.BLANK, translation.getFileName(),
+					successMessages, failureMessages, inputStream, locale);
 			}
 		}
 	}

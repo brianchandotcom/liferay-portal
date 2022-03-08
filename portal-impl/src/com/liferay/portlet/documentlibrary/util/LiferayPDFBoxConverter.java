@@ -90,8 +90,6 @@ public class LiferayPDFBoxConverter {
 			renderedImage = imageTool.scale(renderedImage, _width);
 		}
 
-		outputFile.createNewFile();
-
 		ImageIO.write(renderedImage, extension, outputFile);
 	}
 

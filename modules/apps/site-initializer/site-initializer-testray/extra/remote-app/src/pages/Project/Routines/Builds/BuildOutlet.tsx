@@ -24,6 +24,7 @@ import {
 
 import Container from '../../../../components/Layout/Container';
 import QATable from '../../../../components/Table/QATable';
+import useTotalTestCases from '../../../../data/useTotalTestCases';
 import {
 	CType,
 	TestrayBuild,
@@ -31,9 +32,8 @@ import {
 } from '../../../../graphql/queries';
 import useHeader from '../../../../hooks/useHeader';
 import i18n from '../../../../i18n';
-import {DATA_COLORS} from '../../../../util/constants';
 import {getDonutLegend} from '../../../../util/graph';
-import {TotalTestCases, getRandomMaximumValue} from '../../../../util/mock';
+import {TotalTestCases} from '../../../../util/mock';
 
 type BuildOverviewProps = {
 	testrayBuild: TestrayBuild;
@@ -42,9 +42,7 @@ type BuildOverviewProps = {
 const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 	const ref = useRef<any>();
 
-	const total = TotalTestCases.map(([, totalCase]) => totalCase).reduce(
-		(prevValue, currentValue) => Number(prevValue) + Number(currentValue)
-	);
+	const totalTestCases = useTotalTestCases();
 
 	return (
 		<>
@@ -109,15 +107,8 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 					<div className="col-2">
 						<ClayChart
 							data={{
-								colors: {
-									'BLOCKED': DATA_COLORS['metrics.blocked'],
-									'FAILED': DATA_COLORS['metrics.failed'],
-									'INCOMPLETE':
-										DATA_COLORS['metrics.incomplete'],
-									'PASSED': DATA_COLORS['metrics.passed'],
-									'TEST FIX': DATA_COLORS['metrics.test-fix'],
-								},
-								columns: TotalTestCases,
+								colors: totalTestCases.colors,
+								columns: totalTestCases.donut.columns,
 								type: 'donut',
 							}}
 							donut={{
@@ -128,7 +119,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 								legend: {
 									show: false,
 								},
-								title: total.toString(),
+								title: totalTestCases.donut.total.toString(),
 								width: 15,
 							}}
 							legend={{show: false}}
@@ -136,7 +127,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 								getDonutLegend(ref.current, {
 									data: TotalTestCases.map(([name]) => name),
 									elementId: 'testrayTotalMetricsGraphLegend',
-									total: total as number,
+									total: totalTestCases.donut.total as number,
 								});
 							}}
 							ref={ref}
@@ -168,45 +159,9 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 								},
 							}}
 							data={{
-								colors: {
-									'BLOCKED': DATA_COLORS['metrics.blocked'],
-									'FAILED': DATA_COLORS['metrics.failed'],
-									'INCOMPLETE':
-										DATA_COLORS['metrics.incomplete'],
-									'PASSED': DATA_COLORS['metrics.passed'],
-									'TEST FIX': DATA_COLORS['metrics.test-fix'],
-								},
-								columns: [
-									[
-										'PASSED',
-										...getRandomMaximumValue(20, 1000),
-									],
-									[
-										'FAILED',
-										...getRandomMaximumValue(20, 500),
-									],
-									[
-										'BLOCKED',
-										...getRandomMaximumValue(20, 100),
-									],
-									[
-										'TEST FIX',
-										...getRandomMaximumValue(20, 100),
-									],
-									[
-										'INCOMPLETE',
-										...getRandomMaximumValue(20, 100),
-									],
-								],
-								groups: [
-									[
-										'PASSED',
-										'FAILED',
-										'BLOCKED',
-										'TEST FIX',
-										'INCOMPLETE',
-									],
-								],
+								colors: totalTestCases.colors,
+								columns: totalTestCases.barChart.columns,
+								groups: [totalTestCases.statuses],
 								type: 'bar',
 							}}
 							legend={{

@@ -68,6 +68,12 @@ long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAM
 	<aui:fieldset helpMessage="service-provider-metadata-help" label="metadata">
 		<aui:input name="metadataUrl" />
 
+		<c:if test="<%= (samlIdpSpConnection != null) && Validator.isNull(samlIdpSpConnection.getMetadataUrl()) && Validator.isNotNull(samlIdpSpConnection.getMetadataXml()) %>">
+			<div class="portlet-msg-alert">
+				<liferay-ui:message arguments="<%= String.valueOf(samlIdpSpConnection.getSamlSpEntityId()) %>" key="the-x-is-configured-through-an-uploaded-metadata-file" />
+			</div>
+		</c:if>
+
 		<aui:button-row cssClass="sheet-footer">
 			<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "uploadMetadataXml();" %>' value="upload-metadata-xml" />
 		</aui:button-row>
@@ -116,10 +122,15 @@ long assertionLifetime = GetterUtil.getLong(request.getAttribute(SamlWebKeys.SAM
 			'<portlet:namespace />uploadMetadataXmlForm'
 		);
 
+		var metadataUrl = document.getElementById(
+			'<portlet:namespace />metadataUrl'
+		);
+
 		if (uploadMetadataXmlForm) {
 			uploadMetadataXmlForm.classList.remove('hide');
 			uploadMetadataXmlForm.removeAttribute('hidden');
 			uploadMetadataXmlForm.style.display = '';
+			metadataUrl.value = '';
 		}
 	};
 </aui:script>

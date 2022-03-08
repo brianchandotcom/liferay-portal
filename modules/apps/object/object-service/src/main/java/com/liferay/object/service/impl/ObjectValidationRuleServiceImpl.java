@@ -14,10 +14,19 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.service.base.ObjectValidationRuleServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -31,4 +40,80 @@ import org.osgi.service.component.annotations.Component;
 )
 public class ObjectValidationRuleServiceImpl
 	extends ObjectValidationRuleServiceBaseImpl {
+
+	@Override
+	public ObjectValidationRule addObjectValidationRule(
+			long objectDefinitionId, boolean active,
+			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
+			String engine, String script)
+		throws PortalException {
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
+
+		return objectValidationRuleLocalService.addObjectValidationRule(
+			getUserId(), objectDefinitionId, active, errorLabelMap, nameMap,
+			engine, script);
+	}
+
+	@Override
+	public ObjectValidationRule deleteObjectValidationRule(
+			long objectValidationRuleId)
+		throws PortalException {
+
+		ObjectValidationRule objectValidationRule =
+			objectValidationRulePersistence.findByPrimaryKey(
+				objectValidationRuleId);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(),
+			objectValidationRule.getObjectDefinitionId(), ActionKeys.UPDATE);
+
+		return objectValidationRuleLocalService.deleteObjectValidationRule(
+			objectValidationRule);
+	}
+
+	@Override
+	public ObjectValidationRule getObjectValidationRule(
+			long objectValidationRuleId)
+		throws PortalException {
+
+		ObjectValidationRule objectValidationRule =
+			objectValidationRulePersistence.findByPrimaryKey(
+				objectValidationRuleId);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(),
+			objectValidationRule.getObjectDefinitionId(), ActionKeys.VIEW);
+
+		return objectValidationRuleLocalService.getObjectValidationRule(
+			objectValidationRuleId);
+	}
+
+	@Override
+	public ObjectValidationRule updateObjectValidationRule(
+			long objectValidationRuleId, boolean active,
+			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
+			String engine, String script)
+		throws PortalException {
+
+		ObjectValidationRule objectValidationRule =
+			objectValidationRulePersistence.findByPrimaryKey(
+				objectValidationRuleId);
+
+		_objectDefinitionModelResourcePermission.check(
+			getPermissionChecker(),
+			objectValidationRule.getObjectDefinitionId(), ActionKeys.UPDATE);
+
+		return objectValidationRuleLocalService.updateObjectValidationRule(
+			objectValidationRuleId, active, errorLabelMap, nameMap, engine,
+			script);
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"
+	)
+	private ModelResourcePermission<ObjectDefinition>
+		_objectDefinitionModelResourcePermission;
+
 }

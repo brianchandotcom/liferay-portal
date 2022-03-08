@@ -6,6 +6,7 @@ package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 
 import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -34,7 +35,6 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
-import com.liferay.portal.vulcan.batch.engine.strategy.BatchStrategy;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -368,7 +368,14 @@ public abstract class Base${schemaName}ResourceImpl
 					}
 				</#if>
 
-				contextBatchStrategy.apply(${schemaVarNames}, ${schemaVarName}UnsafeConsumer);
+				if (contextBatchStrategy != null) {
+					contextBatchStrategy.accept(${schemaVarNames}, ${schemaVarName}UnsafeConsumer);
+				}
+				else {
+					for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
+						${schemaVarName}UnsafeConsumer.accept(${schemaVarName});
+					}
+				}
 			</#if>
 		}
 
@@ -438,11 +445,6 @@ public abstract class Base${schemaName}ResourceImpl
 			<#else>
 				return null;
 			</#if>
-		}
-
-		@Override
-		public void setContextBatchStrategy(BatchStrategy contextBatchStrategy) {
-			this.contextBatchStrategy = contextBatchStrategy;
 		}
 
 		@Override
@@ -553,6 +555,12 @@ public abstract class Base${schemaName}ResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	<#if generateBatch>
+		public void setContextBatchStrategy(UnsafeBiConsumer<java.util.Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchStrategy) {
+			this.contextBatchStrategy = contextBatchStrategy;
+		}
+	</#if>
+
 	public void setContextCompany(com.liferay.portal.kernel.model.Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
@@ -656,7 +664,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	<#if generateBatch>
-		protected BatchStrategy contextBatchStrategy;
+		protected UnsafeBiConsumer<java.util.Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchStrategy;
 	</#if>
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;

@@ -42,6 +42,21 @@ import org.osgi.service.component.annotations.Reference;
 public class PLOEntryServiceImpl extends PLOEntryServiceBaseImpl {
 
 	@Override
+	public PLOEntry addOrUpdatePLOEntry(
+			String key, String languageId, String value)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		_portalPermission.check(
+			permissionChecker, PLOActionKeys.MANAGE_LANGUAGE_OVERRIDES);
+
+		return ploEntryLocalService.addOrUpdatePLOEntry(
+			permissionChecker.getCompanyId(), permissionChecker.getUserId(),
+			key, languageId, value);
+	}
+
+	@Override
 	public void deletePLOEntries(String key) throws PortalException {
 		PermissionChecker permissionChecker = getPermissionChecker();
 

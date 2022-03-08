@@ -1,0 +1,54 @@
+definition {
+
+	macro _deleteBatchPlannerPlans {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var batchPlannerPlanIds = JSONBatchPlannerPlansAPI._getBatchPlannerPlanIds();
+
+		if ("${batchPlannerPlanIds}" != "") {
+			for (var batchPlannerPlanId : list "${batchPlannerPlanIds}") {
+				echo("Deleting Batch Planner Plan with ID: ${batchPlannerPlanId}");
+
+				var curl = '''
+					${baseURL}/api/jsonws/batchplanner.batchplannerplan/delete-batch-planner-plan \
+						-u test@liferay.com:test \
+                        -d batchPlannerPlanId=${batchPlannerPlanId}
+				''';
+
+				JSONCurlUtil.post("${curl}");
+			}
+		}
+		else {
+			echo("No Batch Planner Plans to be deleted");
+		}
+	}
+
+	macro _getBatchPlannerPlanIds {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var curl = '''
+			  ${baseURL}/api/jsonws/batchplanner.batchplannerplan/get-batch-planner-plans \
+              -u test@liferay.com:test \
+              -d companyId=${companyId} \
+              -d start=0 \
+              -d end=100 \
+              -d -orderByComparator=
+		''';
+		var batchPlannerPlanIds = JSONCurlUtil.post("${curl}", "$..['batchPlannerPlanId']");
+
+		echo("batchPlannerPlanIds: ${batchPlannerPlanIds}");
+
+		return "${batchPlannerPlanIds}";
+	}
+
+}

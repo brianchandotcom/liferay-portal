@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -133,9 +135,9 @@ public class JSONPackageJSONRedundantDependenciesCheck extends BaseFileCheck {
 		while (iterator.hasNext()) {
 			String dependencyName = iterator.next();
 
-			if (!dependencyName.startsWith("@")) {
-				excludedDirNames.add(dependencyName);
-			}
+			excludedDirNames.add(
+				StringUtil.replaceFirst(
+					dependencyName, "@liferay/", StringPool.BLANK));
 
 			_internalDependenciesNames.add(dependencyName);
 

@@ -34,7 +34,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-translations"));
 <clay:container-fluid
 	cssClass="container-view"
 >
-	<aui:form action="<%= importTranslationsURL %>" cssClass="sheet sheet-lg" method="post" name="fm">
+	<aui:form action="<%= importTranslationsURL %>" cssClass="sheet sheet-lg" enctype="multipart/form-data" method="post" name="fm">
 		<h5><liferay-ui:message key="import-file" /></h5>
 
 		<div class="sheet-text">

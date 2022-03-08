@@ -60,22 +60,24 @@ public class LiferayPDFBoxConverter {
 
 			for (int i = 0; i < count; i++) {
 				if (_generateThumbnail && (i == 0)) {
-					_generateImagesPB(
-						pdfRenderer, i, _thumbnailFile, _thumbnailExtension);
+					ImageIO.write(
+						_toRenderedImage(pdfRenderer, i), _thumbnailExtension,
+						_thumbnailFile);
 				}
 
 				if (!_generatePreview) {
 					break;
 				}
 
-				_generateImagesPB(pdfRenderer, i, _previewFiles[i], _extension);
+				ImageIO.write(
+					_toRenderedImage(pdfRenderer, i), _extension,
+					_previewFiles[i]);
 			}
 		}
 	}
 
-	private void _generateImagesPB(
-			PDFRenderer pdfRenderer, int pageIndex, File outputFile,
-			String extension)
+	private RenderedImage _toRenderedImage(
+			PDFRenderer pdfRenderer, int pageIndex)
 		throws Exception {
 
 		RenderedImage renderedImage = pdfRenderer.renderImageWithDPI(
@@ -83,14 +85,11 @@ public class LiferayPDFBoxConverter {
 
 		ImageTool imageTool = ImageToolImpl.getInstance();
 
-		if (_height != 0) {
-			renderedImage = imageTool.scale(renderedImage, _height, _width);
-		}
-		else {
-			renderedImage = imageTool.scale(renderedImage, _width);
+		if (_height == 0) {
+			return imageTool.scale(renderedImage, _width);
 		}
 
-		ImageIO.write(renderedImage, extension, outputFile);
+		return imageTool.scale(renderedImage, _height, _width);
 	}
 
 	private final int _dpi;

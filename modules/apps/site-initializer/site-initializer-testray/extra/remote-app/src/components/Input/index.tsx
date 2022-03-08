@@ -12,9 +12,9 @@
  * details.
  */
 
-import {ClayInput} from '@clayui/form';
+import {ClayDualListBox, ClayInput} from '@clayui/form';
 import classNames from 'classnames';
-import {InputHTMLAttributes} from 'react';
+import {InputHTMLAttributes, useEffect, useState} from 'react';
 
 import InputWarning from './InputWarning';
 
@@ -60,5 +60,61 @@ const Input: React.FC<InputProps> = ({
 		{error && <InputWarning>{error}</InputWarning>}
 	</>
 );
+
+export type BoxItem = {
+	label: string;
+	value: string;
+};
+
+export type Boxes = Array<Array<BoxItem>>;
+
+type DualListBoxProps = {
+	boxes?: Boxes;
+	leftLabel: string;
+	rightLabel: string;
+	setValue?: (value: any) => void;
+};
+
+const DualListBox: React.FC<DualListBoxProps> = ({
+	boxes = [[], []],
+	leftLabel,
+	rightLabel,
+	setValue = () => {},
+}) => {
+	const [items, setItems] = useState<Boxes>([[], []]);
+	const [leftSelected, setLeftSelected] = useState<string[]>([]);
+	const [rightSelected, setRightSelected] = useState<string[]>([]);
+
+	const initialBoxes = JSON.stringify(boxes);
+
+	useEffect(() => {
+		setItems(JSON.parse(initialBoxes));
+	}, [initialBoxes]);
+
+	return (
+		<ClayDualListBox
+			items={items}
+			left={{
+				label: leftLabel,
+				onSelectChange: setLeftSelected,
+				selected: leftSelected,
+			}}
+			onItemsChange={(items) => {
+				setItems(items);
+				setValue(items);
+			}}
+			right={{
+				label: rightLabel,
+				onSelectChange: (value) => {
+					setRightSelected(value);
+				},
+				selected: rightSelected,
+			}}
+			size={8}
+		/>
+	);
+};
+
+export {DualListBox};
 
 export default Input;

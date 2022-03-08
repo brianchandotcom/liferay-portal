@@ -102,8 +102,8 @@ public class BatchEngineImportTaskExecutorImpl
 				BatchEnginePortletKeys.BATCH_ENGINE,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE,
 				getNotificationEventJSONObject(
-					batchEngineImportTask.getClassName(),
-					BatchEngineTaskExecuteStatus.COMPLETED));
+					BatchEngineTaskExecuteStatus.COMPLETED,
+					batchEngineImportTask.getClassName()));
 		}
 		catch (Throwable throwable) {
 			_log.error(
@@ -120,8 +120,8 @@ public class BatchEngineImportTaskExecutorImpl
 				BatchEnginePortletKeys.BATCH_ENGINE,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE,
 				getNotificationEventJSONObject(
-					batchEngineImportTask.getClassName(),
-					BatchEngineTaskExecuteStatus.FAILED));
+					BatchEngineTaskExecuteStatus.FAILED,
+					batchEngineImportTask.getClassName()));
 		}
 	}
 

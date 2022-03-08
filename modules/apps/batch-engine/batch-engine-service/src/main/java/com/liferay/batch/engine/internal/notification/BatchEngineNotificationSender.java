@@ -27,8 +27,8 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 public abstract class BatchEngineNotificationSender {
 
 	protected JSONObject getNotificationEventJSONObject(
-		String className,
-		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus) {
+		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus,
+		String className) {
 
 		JSONObject notificationEventJSONObject =
 			JSONFactoryUtil.createJSONObject();

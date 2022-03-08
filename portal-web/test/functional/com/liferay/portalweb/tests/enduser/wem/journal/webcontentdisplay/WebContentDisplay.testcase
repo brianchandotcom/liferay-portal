@@ -354,7 +354,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				structureName = "Basic Web Content",
 				templateName = "Basic Web Content");
 
-			WebContent.publishViaWCD();
+			PortletEntry.publish();
 		}
 
 		task ("View web content is shown in Web Content Display") {

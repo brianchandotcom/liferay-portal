@@ -1559,14 +1559,6 @@ definition {
 		IFrame.closeFrame();
 	}
 
-	macro publishViaWCD {
-		Button.clickPublish();
-
-		AssertVisible(
-			index = "1",
-			locator1 = "WCD#WEB_CONTENT_CONTENT");
-	}
-
 	macro removeDuplicatedFieldsGroup {
 		Click(
 			key_fieldName = "FieldsGroup",

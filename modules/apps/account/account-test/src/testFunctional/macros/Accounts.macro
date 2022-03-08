@@ -1293,6 +1293,13 @@ definition {
 			locator1 = "Icon#HELPER",
 			value1 = "Enter the account's tax ID (EIN, VAT number, etc.).");
 
+		if (isSet(externalReferenceCode)) {
+			AssertTextEquals(
+				key_fieldLabel = "External Reference Code",
+				locator1 = "TextInput#GENERIC_TEXT_INPUT",
+				value1 = "${externalReferenceCode}");
+		}
+
 		if (isSet(domainName)) {
 			LexiconEntry.viewEntryName(rowEntry = "${domainName}");
 		}

@@ -18,11 +18,26 @@ import java.io.File;
 
 import java.util.Properties;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class DefaultPortalJob
 	extends BaseJob implements PortalTestClassJob, TestSuiteJob {
+
+	@Override
+	public JSONObject getJSONObject() {
+		if (jsonObject != null) {
+			return jsonObject;
+		}
+
+		jsonObject = super.getJSONObject();
+
+		jsonObject.put("test_suite_name", _testSuiteName);
+
+		return jsonObject;
+	}
 
 	@Override
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
@@ -67,6 +82,14 @@ public class DefaultPortalJob
 		return _testSuiteName;
 	}
 
+	protected DefaultPortalJob(JSONObject jsonObject) {
+		super(jsonObject);
+
+		_testSuiteName = jsonObject.getString("test_suite_name");
+
+		_initialize();
+	}
+
 	protected DefaultPortalJob(
 		String jobName, BuildProfile buildProfile, String testSuiteName) {
 
@@ -74,6 +97,10 @@ public class DefaultPortalJob
 
 		_testSuiteName = testSuiteName;
 
+		_initialize();
+	}
+
+	private void _initialize() {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			getPortalGitWorkingDirectory();
 

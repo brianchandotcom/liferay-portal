@@ -1504,7 +1504,6 @@ definition {
 
 	macro viewNoChildPagePGViaAllPages {
 		var key_wikiPageTitle = "${wikiPageTitle}";
-		var key_wikiPageUsername = "${wikiPageUsername}";
 
 		AssertTextEquals(
 			locator1 = "WikiTable#ALL_PAGES_WIKI_PAGE_TITLE",
@@ -1518,9 +1517,9 @@ definition {
 			locator1 = "WikiTable#ALL_PAGES_REVISION",
 			value1 = "${wikiPageRevision}");
 
-		AssertTextEquals(
-			locator1 = "WikiTable#ALL_PAGES_USER",
-			value1 = "${wikiPageUsername}");
+		AssertElementNotPresent(
+			key_wikiPageUsername = "Test Test",
+			locator1 = "WikiTable#ALL_PAGES_USER");
 
 		AssertElementPresent(locator1 = "WikiTable#ALL_PAGES_DATE");
 

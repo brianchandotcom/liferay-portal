@@ -83,6 +83,12 @@ else {
 	<aui:fieldset helpMessage="identity-provider-metadata-help" label="metadata">
 		<aui:input name="metadataUrl" />
 
+		<c:if test="<%= (samlSpIdpConnection != null) && Validator.isNull(samlSpIdpConnection.getMetadataUrl()) && Validator.isNotNull(samlSpIdpConnection.getMetadataXml()) %>">
+			<div class="portlet-msg-alert">
+				<liferay-ui:message arguments="<%= String.valueOf(samlSpIdpConnection.getSamlIdpEntityId()) %>" key="the-x-is-configured-through-an-uploaded-metadata-file" />
+			</div>
+		</c:if>
+
 		<aui:button-row cssClass="sheet-footer">
 			<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "uploadMetadataXml();" %>' value="upload-metadata-xml" />
 		</aui:button-row>
@@ -145,6 +151,12 @@ else {
 			uploadMetadataXmlForm.classList.remove('hide');
 			uploadMetadataXmlForm.removeAttribute('hidden');
 			uploadMetadataXmlForm.style.display = '';
+
+			var metadataUrl = document.getElementById(
+				'<portlet:namespace />metadataUrl'
+			);
+
+			metadataUrl.value = '';
 		}
 	};
 </aui:script>

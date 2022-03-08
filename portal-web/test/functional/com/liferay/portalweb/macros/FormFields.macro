@@ -613,7 +613,7 @@ definition {
 	macro editValidation {
 		Pause(locator1 = "1000");
 
-		Click(locator1 = "FormFields#VALIDATION_ARGUMENT");
+		Click(locator1 = "FormFields#VALIDATION_ARGUMENT_2");
 
 		Click(
 			key_validationArgument = "${validationArgument}",

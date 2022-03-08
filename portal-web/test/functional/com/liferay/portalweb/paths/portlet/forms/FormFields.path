@@ -893,6 +893,11 @@
 </tr>
 <tr>
 	<td>VALIDATION_ARGUMENT</td>
+	<td>//div[contains(@data-field-name,'selectedValidation')]//div[contains(@class,'select-field-trigger')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VALIDATION_ARGUMENT_2</td>
 	<td>//div[contains(@class,'form-control')]//div[contains(@class,'option-selected') and text()='Contains']</td>
 	<td></td>
 </tr>

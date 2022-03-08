@@ -29,7 +29,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
-import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
@@ -406,7 +406,7 @@ public class CommerceBundleSiteInitializerContributor {
 		}
 
 		Group commerceCatalogGroup =
-			CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
+			_commerceCatalogLocalService.getCommerceCatalogGroup(
 				catalog.getId());
 
 		_cpDefinitionsImporter.importCPDefinitions(
@@ -525,7 +525,7 @@ public class CommerceBundleSiteInitializerContributor {
 		}
 
 		Group commerceCatalogGroup =
-			CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
+			_commerceCatalogLocalService.getCommerceCatalogGroup(
 				catalog.getId());
 
 		_cpOptionsImporter.importCPOptions(
@@ -629,6 +629,9 @@ public class CommerceBundleSiteInitializerContributor {
 
 	@Reference
 	private CommerceAccountRoleHelper _commerceAccountRoleHelper;
+
+	@Reference
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

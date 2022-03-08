@@ -837,6 +837,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		// Portal preferences
 
+		if (layout == null) {
+			return;
+		}
+
 		_resetPortalPreferences(layout);
 
 		// System event

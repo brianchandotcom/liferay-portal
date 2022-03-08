@@ -34,6 +34,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	@Override
 	public void onAfterRemove(Layout layout) throws ModelListenerException {
 		try {
+			if (layout == null) {
+				return;
+			}
+
 			_segmentsExperienceLocalService.deleteSegmentsExperiences(
 				layout.getGroupId(),
 				_classNameLocalService.getClassNameId(Layout.class),

@@ -14,7 +14,7 @@
 
 import {TypedDocumentNode, useQuery} from '@apollo/client';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {useContext, useMemo} from 'react';
+import {useCallback, useContext, useEffect, useMemo} from 'react';
 
 import ListViewContextProvider, {
 	ListViewContext,
@@ -34,10 +34,10 @@ type LiferayQueryResponse<T = any> = {
 };
 
 type ListViewProps<T = any> = {
-	managementToolbarProps?: Omit<
-		ManagementToolbarProps,
-		'tableProps' | 'totalItems'
-	>;
+	forceRefetch?: number;
+	managementToolbarProps?: {
+		visible?: boolean;
+	} & Omit<ManagementToolbarProps, 'tableProps' | 'totalItems'>;
 	query: TypedDocumentNode;
 	tableProps: Omit<TableProps, 'items'>;
 	transformData: (data: T) => LiferayQueryResponse<T>;
@@ -45,7 +45,11 @@ type ListViewProps<T = any> = {
 };
 
 const ListView: React.FC<ListViewProps> = ({
-	managementToolbarProps,
+	forceRefetch,
+	managementToolbarProps: {
+		visible: managementToolbarVisible = true,
+		...managementToolbarProps
+	} = {},
 	query,
 	tableProps,
 	transformData,
@@ -56,6 +60,19 @@ const ListView: React.FC<ListViewProps> = ({
 	const {data, error, loading, refetch} = useQuery(query, {
 		variables,
 	});
+
+	const onRefetch = useCallback(
+		(newVariables: any) => {
+			refetch({...variables, ...newVariables});
+		},
+		[refetch, variables]
+	);
+
+	useEffect(() => {
+		if (forceRefetch) {
+			onRefetch({});
+		}
+	}, [forceRefetch, onRefetch]);
 
 	const {items = [], page, pageSize, totalCount} = transformData(data) || {};
 
@@ -75,10 +92,6 @@ const ListView: React.FC<ListViewProps> = ({
 		[filters.columns, tableProps.columns]
 	);
 
-	const onRefetch = (newVariables: any) => {
-		refetch({...variables, ...newVariables});
-	};
-
 	if (error) {
 		return <span>{error.message}</span>;
 	}
@@ -93,11 +106,13 @@ const ListView: React.FC<ListViewProps> = ({
 
 	return (
 		<>
-			<ManagementToolbar
-				{...managementToolbarProps}
-				tableProps={tableProps}
-				totalItems={items.length}
-			/>
+			{managementToolbarVisible && (
+				<ManagementToolbar
+					{...managementToolbarProps}
+					tableProps={tableProps}
+					totalItems={items.length}
+				/>
+			)}
 
 			<Table {...tableProps} columns={columns} items={items} />
 

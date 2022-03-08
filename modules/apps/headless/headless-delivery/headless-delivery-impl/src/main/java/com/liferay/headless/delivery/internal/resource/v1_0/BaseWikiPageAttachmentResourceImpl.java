@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.WikiPageAttachment;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageAttachmentResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -324,8 +325,14 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 					Long.parseLong((String)parameters.get("wikiPageId")),
 					(MultipartBody)parameters.get("multipartBody"));
 
-		for (WikiPageAttachment wikiPageAttachment : wikiPageAttachments) {
-			wikiPageAttachmentUnsafeConsumer.accept(wikiPageAttachment);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				wikiPageAttachments, wikiPageAttachmentUnsafeConsumer);
+		}
+		else {
+			for (WikiPageAttachment wikiPageAttachment : wikiPageAttachments) {
+				wikiPageAttachmentUnsafeConsumer.accept(wikiPageAttachment);
+			}
 		}
 	}
 
@@ -396,6 +403,15 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<WikiPageAttachment>,
+			 UnsafeConsumer<WikiPageAttachment, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -546,6 +562,10 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<WikiPageAttachment>,
+		 UnsafeConsumer<WikiPageAttachment, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

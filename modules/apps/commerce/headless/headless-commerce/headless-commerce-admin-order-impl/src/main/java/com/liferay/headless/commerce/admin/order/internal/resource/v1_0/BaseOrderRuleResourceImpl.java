@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRule;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderRuleResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -421,8 +422,14 @@ public abstract class BaseOrderRuleResourceImpl
 		UnsafeConsumer<OrderRule, Exception> orderRuleUnsafeConsumer =
 			orderRule -> postOrderRule(orderRule);
 
-		for (OrderRule orderRule : orderRules) {
-			orderRuleUnsafeConsumer.accept(orderRule);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				orderRules, orderRuleUnsafeConsumer);
+		}
+		else {
+			for (OrderRule orderRule : orderRules) {
+				orderRuleUnsafeConsumer.accept(orderRule);
+			}
 		}
 	}
 
@@ -492,6 +499,15 @@ public abstract class BaseOrderRuleResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<OrderRule>,
+			 UnsafeConsumer<OrderRule, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -642,6 +658,9 @@ public abstract class BaseOrderRuleResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<OrderRule>, UnsafeConsumer<OrderRule, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionCategoryResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -340,8 +341,14 @@ public abstract class BaseOptionCategoryResourceImpl
 		UnsafeConsumer<OptionCategory, Exception> optionCategoryUnsafeConsumer =
 			optionCategory -> postOptionCategory(optionCategory);
 
-		for (OptionCategory optionCategory : optionCategories) {
-			optionCategoryUnsafeConsumer.accept(optionCategory);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				optionCategories, optionCategoryUnsafeConsumer);
+		}
+		else {
+			for (OptionCategory optionCategory : optionCategories) {
+				optionCategoryUnsafeConsumer.accept(optionCategory);
+			}
 		}
 	}
 
@@ -411,6 +418,15 @@ public abstract class BaseOptionCategoryResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<OptionCategory>,
+			 UnsafeConsumer<OptionCategory, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -561,6 +577,10 @@ public abstract class BaseOptionCategoryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<OptionCategory>,
+		 UnsafeConsumer<OptionCategory, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

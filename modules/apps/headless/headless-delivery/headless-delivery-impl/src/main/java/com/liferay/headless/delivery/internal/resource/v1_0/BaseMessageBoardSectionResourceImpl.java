@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1006,8 +1007,16 @@ public abstract class BaseMessageBoardSectionResourceImpl
 					(Long)parameters.get("siteId"), messageBoardSection);
 		}
 
-		for (MessageBoardSection messageBoardSection : messageBoardSections) {
-			messageBoardSectionUnsafeConsumer.accept(messageBoardSection);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				messageBoardSections, messageBoardSectionUnsafeConsumer);
+		}
+		else {
+			for (MessageBoardSection messageBoardSection :
+					messageBoardSections) {
+
+				messageBoardSectionUnsafeConsumer.accept(messageBoardSection);
+			}
 		}
 	}
 
@@ -1155,6 +1164,15 @@ public abstract class BaseMessageBoardSectionResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<MessageBoardSection>,
+			 UnsafeConsumer<MessageBoardSection, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -1310,6 +1328,10 @@ public abstract class BaseMessageBoardSectionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<MessageBoardSection>,
+		 UnsafeConsumer<MessageBoardSection, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

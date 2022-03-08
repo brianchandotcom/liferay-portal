@@ -16,6 +16,7 @@ package com.liferay.headless.admin.list.type.internal.resource.v1_0;
 
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -452,8 +453,14 @@ public abstract class BaseListTypeDefinitionResourceImpl
 				listTypeDefinition -> postListTypeDefinition(
 					listTypeDefinition);
 
-		for (ListTypeDefinition listTypeDefinition : listTypeDefinitions) {
-			listTypeDefinitionUnsafeConsumer.accept(listTypeDefinition);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				listTypeDefinitions, listTypeDefinitionUnsafeConsumer);
+		}
+		else {
+			for (ListTypeDefinition listTypeDefinition : listTypeDefinitions) {
+				listTypeDefinitionUnsafeConsumer.accept(listTypeDefinition);
+			}
 		}
 	}
 
@@ -533,6 +540,15 @@ public abstract class BaseListTypeDefinitionResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<ListTypeDefinition>,
+			 UnsafeConsumer<ListTypeDefinition, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -688,6 +704,10 @@ public abstract class BaseListTypeDefinitionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<ListTypeDefinition>,
+		 UnsafeConsumer<ListTypeDefinition, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

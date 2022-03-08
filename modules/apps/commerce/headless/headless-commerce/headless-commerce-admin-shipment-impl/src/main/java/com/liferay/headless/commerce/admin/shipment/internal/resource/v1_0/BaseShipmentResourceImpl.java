@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.shipment.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Shipment;
 import com.liferay.headless.commerce.admin.shipment.resource.v1_0.ShipmentResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -706,8 +707,14 @@ public abstract class BaseShipmentResourceImpl
 		UnsafeConsumer<Shipment, Exception> shipmentUnsafeConsumer =
 			shipment -> postShipment(shipment);
 
-		for (Shipment shipment : shipments) {
-			shipmentUnsafeConsumer.accept(shipment);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				shipments, shipmentUnsafeConsumer);
+		}
+		else {
+			for (Shipment shipment : shipments) {
+				shipmentUnsafeConsumer.accept(shipment);
+			}
 		}
 	}
 
@@ -777,6 +784,15 @@ public abstract class BaseShipmentResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<Shipment>,
+			 UnsafeConsumer<Shipment, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -930,6 +946,9 @@ public abstract class BaseShipmentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<Shipment>, UnsafeConsumer<Shipment, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

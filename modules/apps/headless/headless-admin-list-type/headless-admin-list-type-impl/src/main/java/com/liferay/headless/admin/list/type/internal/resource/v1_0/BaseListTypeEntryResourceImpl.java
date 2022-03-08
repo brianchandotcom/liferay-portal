@@ -16,6 +16,7 @@ package com.liferay.headless.admin.list.type.internal.resource.v1_0;
 
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeEntryResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -422,8 +423,14 @@ public abstract class BaseListTypeEntryResourceImpl
 				Long.parseLong((String)parameters.get("listTypeDefinitionId")),
 				listTypeEntry);
 
-		for (ListTypeEntry listTypeEntry : listTypeEntries) {
-			listTypeEntryUnsafeConsumer.accept(listTypeEntry);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				listTypeEntries, listTypeEntryUnsafeConsumer);
+		}
+		else {
+			for (ListTypeEntry listTypeEntry : listTypeEntries) {
+				listTypeEntryUnsafeConsumer.accept(listTypeEntry);
+			}
 		}
 	}
 
@@ -500,6 +507,15 @@ public abstract class BaseListTypeEntryResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<ListTypeEntry>,
+			 UnsafeConsumer<ListTypeEntry, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -650,6 +666,10 @@ public abstract class BaseListTypeEntryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<ListTypeEntry>,
+		 UnsafeConsumer<ListTypeEntry, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

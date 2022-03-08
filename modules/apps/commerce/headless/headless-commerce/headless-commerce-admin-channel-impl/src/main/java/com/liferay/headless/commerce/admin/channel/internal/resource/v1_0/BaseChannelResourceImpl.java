@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.channel.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -588,8 +589,13 @@ public abstract class BaseChannelResourceImpl
 		UnsafeConsumer<Channel, Exception> channelUnsafeConsumer =
 			channel -> postChannel(channel);
 
-		for (Channel channel : channels) {
-			channelUnsafeConsumer.accept(channel);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(channels, channelUnsafeConsumer);
+		}
+		else {
+			for (Channel channel : channels) {
+				channelUnsafeConsumer.accept(channel);
+			}
 		}
 	}
 
@@ -666,6 +672,14 @@ public abstract class BaseChannelResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<Channel>, UnsafeConsumer<Channel, Exception>,
+			 Exception> contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -819,6 +833,9 @@ public abstract class BaseChannelResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<Channel>, UnsafeConsumer<Channel, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

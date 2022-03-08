@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.KnowledgeBaseAttachment;
 import com.liferay.headless.delivery.resource.v1_0.KnowledgeBaseAttachmentResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -346,11 +347,18 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 						(String)parameters.get("knowledgeBaseArticleId")),
 					(MultipartBody)parameters.get("multipartBody"));
 
-		for (KnowledgeBaseAttachment knowledgeBaseAttachment :
-				knowledgeBaseAttachments) {
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				knowledgeBaseAttachments,
+				knowledgeBaseAttachmentUnsafeConsumer);
+		}
+		else {
+			for (KnowledgeBaseAttachment knowledgeBaseAttachment :
+					knowledgeBaseAttachments) {
 
-			knowledgeBaseAttachmentUnsafeConsumer.accept(
-				knowledgeBaseAttachment);
+				knowledgeBaseAttachmentUnsafeConsumer.accept(
+					knowledgeBaseAttachment);
+			}
 		}
 	}
 
@@ -425,6 +433,15 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<KnowledgeBaseAttachment>,
+			 UnsafeConsumer<KnowledgeBaseAttachment, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -575,6 +592,10 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<KnowledgeBaseAttachment>,
+		 UnsafeConsumer<KnowledgeBaseAttachment, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

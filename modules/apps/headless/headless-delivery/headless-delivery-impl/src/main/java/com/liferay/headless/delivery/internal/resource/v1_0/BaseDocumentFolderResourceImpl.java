@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.DocumentFolder;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1250,8 +1251,14 @@ public abstract class BaseDocumentFolderResourceImpl
 					(Long)parameters.get("siteId"), documentFolder);
 		}
 
-		for (DocumentFolder documentFolder : documentFolders) {
-			documentFolderUnsafeConsumer.accept(documentFolder);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				documentFolders, documentFolderUnsafeConsumer);
+		}
+		else {
+			for (DocumentFolder documentFolder : documentFolders) {
+				documentFolderUnsafeConsumer.accept(documentFolder);
+			}
 		}
 	}
 
@@ -1403,6 +1410,15 @@ public abstract class BaseDocumentFolderResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<DocumentFolder>,
+			 UnsafeConsumer<DocumentFolder, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -1557,6 +1573,10 @@ public abstract class BaseDocumentFolderResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<DocumentFolder>,
+		 UnsafeConsumer<DocumentFolder, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

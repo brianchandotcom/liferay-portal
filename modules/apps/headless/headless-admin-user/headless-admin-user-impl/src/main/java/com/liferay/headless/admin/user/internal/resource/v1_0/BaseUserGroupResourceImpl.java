@@ -16,6 +16,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.resource.v1_0.UserGroupResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -639,8 +640,14 @@ public abstract class BaseUserGroupResourceImpl
 		UnsafeConsumer<UserGroup, Exception> userGroupUnsafeConsumer =
 			userGroup -> postUserGroup(userGroup);
 
-		for (UserGroup userGroup : userGroups) {
-			userGroupUnsafeConsumer.accept(userGroup);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				userGroups, userGroupUnsafeConsumer);
+		}
+		else {
+			for (UserGroup userGroup : userGroups) {
+				userGroupUnsafeConsumer.accept(userGroup);
+			}
 		}
 	}
 
@@ -717,6 +724,15 @@ public abstract class BaseUserGroupResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<UserGroup>,
+			 UnsafeConsumer<UserGroup, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -871,6 +887,9 @@ public abstract class BaseUserGroupResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<UserGroup>, UnsafeConsumer<UserGroup, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

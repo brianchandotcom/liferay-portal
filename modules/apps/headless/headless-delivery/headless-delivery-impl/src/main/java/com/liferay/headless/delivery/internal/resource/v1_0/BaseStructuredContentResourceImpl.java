@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -1895,8 +1896,14 @@ public abstract class BaseStructuredContentResourceImpl
 					(Long)parameters.get("siteId"), structuredContent);
 		}
 
-		for (StructuredContent structuredContent : structuredContents) {
-			structuredContentUnsafeConsumer.accept(structuredContent);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				structuredContents, structuredContentUnsafeConsumer);
+		}
+		else {
+			for (StructuredContent structuredContent : structuredContents) {
+				structuredContentUnsafeConsumer.accept(structuredContent);
+			}
 		}
 	}
 
@@ -2053,6 +2060,15 @@ public abstract class BaseStructuredContentResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<StructuredContent>,
+			 UnsafeConsumer<StructuredContent, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
+	}
+
 	public void setContextCompany(
 		com.liferay.portal.kernel.model.Company contextCompany) {
 
@@ -2206,6 +2222,10 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<StructuredContent>,
+		 UnsafeConsumer<StructuredContent, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

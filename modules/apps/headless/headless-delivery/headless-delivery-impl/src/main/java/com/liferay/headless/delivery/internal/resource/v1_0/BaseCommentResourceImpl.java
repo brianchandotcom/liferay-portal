@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.Comment;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -809,8 +810,13 @@ public abstract class BaseCommentResourceImpl
 				Long.parseLong((String)parameters.get("blogPostingId")),
 				comment);
 
-		for (Comment comment : comments) {
-			commentUnsafeConsumer.accept(comment);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(comments, commentUnsafeConsumer);
+		}
+		else {
+			for (Comment comment : comments) {
+				commentUnsafeConsumer.accept(comment);
+			}
 		}
 	}
 
@@ -889,6 +895,14 @@ public abstract class BaseCommentResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<Comment>, UnsafeConsumer<Comment, Exception>,
+			 Exception> contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -1039,6 +1053,9 @@ public abstract class BaseCommentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<Comment>, UnsafeConsumer<Comment, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

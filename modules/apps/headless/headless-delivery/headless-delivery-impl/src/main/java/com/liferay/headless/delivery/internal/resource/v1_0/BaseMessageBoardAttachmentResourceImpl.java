@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardAttachment;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardAttachmentResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -486,10 +487,17 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 						(String)parameters.get("messageBoardMessageId")),
 					(MultipartBody)parameters.get("multipartBody"));
 
-		for (MessageBoardAttachment messageBoardAttachment :
-				messageBoardAttachments) {
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				messageBoardAttachments, messageBoardAttachmentUnsafeConsumer);
+		}
+		else {
+			for (MessageBoardAttachment messageBoardAttachment :
+					messageBoardAttachments) {
 
-			messageBoardAttachmentUnsafeConsumer.accept(messageBoardAttachment);
+				messageBoardAttachmentUnsafeConsumer.accept(
+					messageBoardAttachment);
+			}
 		}
 	}
 
@@ -564,6 +572,15 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<MessageBoardAttachment>,
+			 UnsafeConsumer<MessageBoardAttachment, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -714,6 +731,10 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<MessageBoardAttachment>,
+		 UnsafeConsumer<MessageBoardAttachment, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

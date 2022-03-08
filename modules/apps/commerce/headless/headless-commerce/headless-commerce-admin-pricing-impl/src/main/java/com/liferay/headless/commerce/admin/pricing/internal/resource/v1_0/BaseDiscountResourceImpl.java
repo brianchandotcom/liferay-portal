@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.pricing.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.Discount;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.DiscountResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -416,8 +417,14 @@ public abstract class BaseDiscountResourceImpl
 		UnsafeConsumer<Discount, Exception> discountUnsafeConsumer =
 			discount -> postDiscount(discount);
 
-		for (Discount discount : discounts) {
-			discountUnsafeConsumer.accept(discount);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				discounts, discountUnsafeConsumer);
+		}
+		else {
+			for (Discount discount : discounts) {
+				discountUnsafeConsumer.accept(discount);
+			}
 		}
 	}
 
@@ -487,6 +494,15 @@ public abstract class BaseDiscountResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<Discount>,
+			 UnsafeConsumer<Discount, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -637,6 +653,9 @@ public abstract class BaseDiscountResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<Discount>, UnsafeConsumer<Discount, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

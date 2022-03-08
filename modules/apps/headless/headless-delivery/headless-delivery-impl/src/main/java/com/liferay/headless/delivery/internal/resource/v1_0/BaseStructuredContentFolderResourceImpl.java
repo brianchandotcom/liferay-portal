@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1327,11 +1328,18 @@ public abstract class BaseStructuredContentFolderResourceImpl
 					(Long)parameters.get("siteId"), structuredContentFolder);
 		}
 
-		for (StructuredContentFolder structuredContentFolder :
-				structuredContentFolders) {
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				structuredContentFolders,
+				structuredContentFolderUnsafeConsumer);
+		}
+		else {
+			for (StructuredContentFolder structuredContentFolder :
+					structuredContentFolders) {
 
-			structuredContentFolderUnsafeConsumer.accept(
-				structuredContentFolder);
+				structuredContentFolderUnsafeConsumer.accept(
+					structuredContentFolder);
+			}
 		}
 	}
 
@@ -1494,6 +1502,15 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<StructuredContentFolder>,
+			 UnsafeConsumer<StructuredContentFolder, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
+	}
+
 	public void setContextCompany(
 		com.liferay.portal.kernel.model.Company contextCompany) {
 
@@ -1647,6 +1664,10 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<StructuredContentFolder>,
+		 UnsafeConsumer<StructuredContentFolder, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

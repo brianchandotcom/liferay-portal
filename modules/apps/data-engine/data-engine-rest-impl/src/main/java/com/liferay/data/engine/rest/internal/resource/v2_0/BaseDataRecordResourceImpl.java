@@ -16,6 +16,7 @@ package com.liferay.data.engine.rest.internal.resource.v2_0;
 
 import com.liferay.data.engine.rest.dto.v2_0.DataRecord;
 import com.liferay.data.engine.rest.resource.v2_0.DataRecordResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -640,8 +641,14 @@ public abstract class BaseDataRecordResourceImpl
 				Long.parseLong((String)parameters.get("dataDefinitionId")),
 				dataRecord);
 
-		for (DataRecord dataRecord : dataRecords) {
-			dataRecordUnsafeConsumer.accept(dataRecord);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				dataRecords, dataRecordUnsafeConsumer);
+		}
+		else {
+			for (DataRecord dataRecord : dataRecords) {
+				dataRecordUnsafeConsumer.accept(dataRecord);
+			}
 		}
 	}
 
@@ -721,6 +728,15 @@ public abstract class BaseDataRecordResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<DataRecord>,
+			 UnsafeConsumer<DataRecord, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -875,6 +891,10 @@ public abstract class BaseDataRecordResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<DataRecord>,
+		 UnsafeConsumer<DataRecord, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

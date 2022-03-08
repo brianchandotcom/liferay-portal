@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.NavigationMenu;
 import com.liferay.headless.delivery.resource.v1_0.NavigationMenuResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -660,8 +661,14 @@ public abstract class BaseNavigationMenuResourceImpl
 					(Long)parameters.get("siteId"), navigationMenu);
 		}
 
-		for (NavigationMenu navigationMenu : navigationMenus) {
-			navigationMenuUnsafeConsumer.accept(navigationMenu);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				navigationMenus, navigationMenuUnsafeConsumer);
+		}
+		else {
+			for (NavigationMenu navigationMenu : navigationMenus) {
+				navigationMenuUnsafeConsumer.accept(navigationMenu);
+			}
 		}
 	}
 
@@ -805,6 +812,15 @@ public abstract class BaseNavigationMenuResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<NavigationMenu>,
+			 UnsafeConsumer<NavigationMenu, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -955,6 +971,10 @@ public abstract class BaseNavigationMenuResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<NavigationMenu>,
+		 UnsafeConsumer<NavigationMenu, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

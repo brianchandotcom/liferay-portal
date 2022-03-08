@@ -16,6 +16,7 @@ package com.liferay.headless.form.internal.resource.v1_0;
 
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -348,8 +349,14 @@ public abstract class BaseFormRecordResourceImpl
 			formRecord -> postFormFormRecord(
 				Long.parseLong((String)parameters.get("formId")), formRecord);
 
-		for (FormRecord formRecord : formRecords) {
-			formRecordUnsafeConsumer.accept(formRecord);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				formRecords, formRecordUnsafeConsumer);
+		}
+		else {
+			for (FormRecord formRecord : formRecords) {
+				formRecordUnsafeConsumer.accept(formRecord);
+			}
 		}
 	}
 
@@ -423,6 +430,15 @@ public abstract class BaseFormRecordResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<FormRecord>,
+			 UnsafeConsumer<FormRecord, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -573,6 +589,10 @@ public abstract class BaseFormRecordResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<FormRecord>,
+		 UnsafeConsumer<FormRecord, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

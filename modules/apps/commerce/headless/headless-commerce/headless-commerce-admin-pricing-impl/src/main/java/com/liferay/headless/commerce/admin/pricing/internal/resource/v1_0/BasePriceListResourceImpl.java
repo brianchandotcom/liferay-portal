@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.pricing.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.pricing.dto.v1_0.PriceList;
 import com.liferay.headless.commerce.admin.pricing.resource.v1_0.PriceListResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -426,8 +427,14 @@ public abstract class BasePriceListResourceImpl
 		UnsafeConsumer<PriceList, Exception> priceListUnsafeConsumer =
 			priceList -> postPriceList(priceList);
 
-		for (PriceList priceList : priceLists) {
-			priceListUnsafeConsumer.accept(priceList);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				priceLists, priceListUnsafeConsumer);
+		}
+		else {
+			for (PriceList priceList : priceLists) {
+				priceListUnsafeConsumer.accept(priceList);
+			}
 		}
 	}
 
@@ -497,6 +504,15 @@ public abstract class BasePriceListResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<PriceList>,
+			 UnsafeConsumer<PriceList, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -647,6 +663,9 @@ public abstract class BasePriceListResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<PriceList>, UnsafeConsumer<PriceList, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

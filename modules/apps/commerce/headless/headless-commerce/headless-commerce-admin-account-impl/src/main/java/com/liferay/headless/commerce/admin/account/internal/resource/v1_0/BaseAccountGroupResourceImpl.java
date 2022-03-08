@@ -17,6 +17,7 @@ package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountGroup;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.User;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountGroupResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -429,8 +430,14 @@ public abstract class BaseAccountGroupResourceImpl
 		UnsafeConsumer<AccountGroup, Exception> accountGroupUnsafeConsumer =
 			accountGroup -> postAccountGroup(accountGroup);
 
-		for (AccountGroup accountGroup : accountGroups) {
-			accountGroupUnsafeConsumer.accept(accountGroup);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				accountGroups, accountGroupUnsafeConsumer);
+		}
+		else {
+			for (AccountGroup accountGroup : accountGroups) {
+				accountGroupUnsafeConsumer.accept(accountGroup);
+			}
 		}
 	}
 
@@ -500,6 +507,15 @@ public abstract class BaseAccountGroupResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<AccountGroup>,
+			 UnsafeConsumer<AccountGroup, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -650,6 +666,10 @@ public abstract class BaseAccountGroupResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<AccountGroup>,
+		 UnsafeConsumer<AccountGroup, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

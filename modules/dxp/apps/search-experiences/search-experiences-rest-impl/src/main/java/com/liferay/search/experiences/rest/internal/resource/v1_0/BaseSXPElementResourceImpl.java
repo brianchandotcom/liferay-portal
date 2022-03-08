@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -410,8 +411,14 @@ public abstract class BaseSXPElementResourceImpl
 		UnsafeConsumer<SXPElement, Exception> sxpElementUnsafeConsumer =
 			sxpElement -> postSXPElement(sxpElement);
 
-		for (SXPElement sxpElement : sxpElements) {
-			sxpElementUnsafeConsumer.accept(sxpElement);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				sxpElements, sxpElementUnsafeConsumer);
+		}
+		else {
+			for (SXPElement sxpElement : sxpElements) {
+				sxpElementUnsafeConsumer.accept(sxpElement);
+			}
 		}
 	}
 
@@ -481,6 +488,15 @@ public abstract class BaseSXPElementResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<SXPElement>,
+			 UnsafeConsumer<SXPElement, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -631,6 +647,10 @@ public abstract class BaseSXPElementResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<SXPElement>,
+		 UnsafeConsumer<SXPElement, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

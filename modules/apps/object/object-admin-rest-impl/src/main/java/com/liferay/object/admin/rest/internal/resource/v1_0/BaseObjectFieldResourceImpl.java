@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -478,8 +479,14 @@ public abstract class BaseObjectFieldResourceImpl
 				Long.parseLong((String)parameters.get("objectDefinitionId")),
 				objectField);
 
-		for (ObjectField objectField : objectFields) {
-			objectFieldUnsafeConsumer.accept(objectField);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectFields, objectFieldUnsafeConsumer);
+		}
+		else {
+			for (ObjectField objectField : objectFields) {
+				objectFieldUnsafeConsumer.accept(objectField);
+			}
 		}
 	}
 
@@ -558,6 +565,15 @@ public abstract class BaseObjectFieldResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<ObjectField>,
+			 UnsafeConsumer<ObjectField, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -712,6 +728,10 @@ public abstract class BaseObjectFieldResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<ObjectField>,
+		 UnsafeConsumer<ObjectField, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

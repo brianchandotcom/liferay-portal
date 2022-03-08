@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductGroup;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductGroupResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -427,8 +428,14 @@ public abstract class BaseProductGroupResourceImpl
 		UnsafeConsumer<ProductGroup, Exception> productGroupUnsafeConsumer =
 			productGroup -> postProductGroup(productGroup);
 
-		for (ProductGroup productGroup : productGroups) {
-			productGroupUnsafeConsumer.accept(productGroup);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				productGroups, productGroupUnsafeConsumer);
+		}
+		else {
+			for (ProductGroup productGroup : productGroups) {
+				productGroupUnsafeConsumer.accept(productGroup);
+			}
 		}
 	}
 
@@ -498,6 +505,15 @@ public abstract class BaseProductGroupResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<ProductGroup>,
+			 UnsafeConsumer<ProductGroup, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -648,6 +664,10 @@ public abstract class BaseProductGroupResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<ProductGroup>,
+		 UnsafeConsumer<ProductGroup, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

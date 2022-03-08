@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectFieldSetting;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldSettingResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -400,8 +401,14 @@ public abstract class BaseObjectFieldSettingResourceImpl
 					Long.parseLong((String)parameters.get("objectFieldId")),
 					objectFieldSetting);
 
-		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
-			objectFieldSettingUnsafeConsumer.accept(objectFieldSetting);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectFieldSettings, objectFieldSettingUnsafeConsumer);
+		}
+		else {
+			for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
+				objectFieldSettingUnsafeConsumer.accept(objectFieldSetting);
+			}
 		}
 	}
 
@@ -482,6 +489,15 @@ public abstract class BaseObjectFieldSettingResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<ObjectFieldSetting>,
+			 UnsafeConsumer<ObjectFieldSetting, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -632,6 +648,10 @@ public abstract class BaseObjectFieldSettingResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<ObjectFieldSetting>,
+		 UnsafeConsumer<ObjectFieldSetting, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

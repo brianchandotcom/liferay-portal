@@ -16,6 +16,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -1381,8 +1382,14 @@ public abstract class BaseUserAccountResourceImpl
 				Long.parseLong((String)parameters.get("accountId")),
 				userAccount);
 
-		for (UserAccount userAccount : userAccounts) {
-			userAccountUnsafeConsumer.accept(userAccount);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				userAccounts, userAccountUnsafeConsumer);
+		}
+		else {
+			for (UserAccount userAccount : userAccounts) {
+				userAccountUnsafeConsumer.accept(userAccount);
+			}
 		}
 	}
 
@@ -1468,6 +1475,15 @@ public abstract class BaseUserAccountResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<UserAccount>,
+			 UnsafeConsumer<UserAccount, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -1622,6 +1638,10 @@ public abstract class BaseUserAccountResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<UserAccount>,
+		 UnsafeConsumer<UserAccount, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

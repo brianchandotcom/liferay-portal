@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -390,8 +391,14 @@ public abstract class BaseObjectViewResourceImpl
 				Long.parseLong((String)parameters.get("objectDefinitionId")),
 				objectView);
 
-		for (ObjectView objectView : objectViews) {
-			objectViewUnsafeConsumer.accept(objectView);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectViews, objectViewUnsafeConsumer);
+		}
+		else {
+			for (ObjectView objectView : objectViews) {
+				objectViewUnsafeConsumer.accept(objectView);
+			}
 		}
 	}
 
@@ -470,6 +477,15 @@ public abstract class BaseObjectViewResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<ObjectView>,
+			 UnsafeConsumer<ObjectView, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -620,6 +636,10 @@ public abstract class BaseObjectViewResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<ObjectView>,
+		 UnsafeConsumer<ObjectView, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

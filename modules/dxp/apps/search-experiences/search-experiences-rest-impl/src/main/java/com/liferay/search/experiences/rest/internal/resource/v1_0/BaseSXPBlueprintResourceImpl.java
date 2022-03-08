@@ -14,6 +14,7 @@
 
 package com.liferay.search.experiences.rest.internal.resource.v1_0;
 
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -414,8 +415,14 @@ public abstract class BaseSXPBlueprintResourceImpl
 		UnsafeConsumer<SXPBlueprint, Exception> sxpBlueprintUnsafeConsumer =
 			sxpBlueprint -> postSXPBlueprint(sxpBlueprint);
 
-		for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
-			sxpBlueprintUnsafeConsumer.accept(sxpBlueprint);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				sxpBlueprints, sxpBlueprintUnsafeConsumer);
+		}
+		else {
+			for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
+				sxpBlueprintUnsafeConsumer.accept(sxpBlueprint);
+			}
 		}
 	}
 
@@ -485,6 +492,15 @@ public abstract class BaseSXPBlueprintResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<SXPBlueprint>,
+			 UnsafeConsumer<SXPBlueprint, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -635,6 +651,10 @@ public abstract class BaseSXPBlueprintResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<SXPBlueprint>,
+		 UnsafeConsumer<SXPBlueprint, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

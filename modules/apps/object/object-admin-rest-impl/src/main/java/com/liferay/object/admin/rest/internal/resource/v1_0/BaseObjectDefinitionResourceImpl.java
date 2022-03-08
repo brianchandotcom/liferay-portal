@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -515,8 +516,14 @@ public abstract class BaseObjectDefinitionResourceImpl
 			objectDefinitionUnsafeConsumer =
 				objectDefinition -> postObjectDefinition(objectDefinition);
 
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			objectDefinitionUnsafeConsumer.accept(objectDefinition);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectDefinitions, objectDefinitionUnsafeConsumer);
+		}
+		else {
+			for (ObjectDefinition objectDefinition : objectDefinitions) {
+				objectDefinitionUnsafeConsumer.accept(objectDefinition);
+			}
 		}
 	}
 
@@ -595,6 +602,15 @@ public abstract class BaseObjectDefinitionResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<ObjectDefinition>,
+			 UnsafeConsumer<ObjectDefinition, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -750,6 +766,10 @@ public abstract class BaseObjectDefinitionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<ObjectDefinition>,
+		 UnsafeConsumer<ObjectDefinition, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

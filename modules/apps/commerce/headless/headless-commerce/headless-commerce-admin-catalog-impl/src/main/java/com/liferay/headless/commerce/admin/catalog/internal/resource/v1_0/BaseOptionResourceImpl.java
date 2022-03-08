@@ -16,6 +16,7 @@ package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.OptionResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -433,8 +434,13 @@ public abstract class BaseOptionResourceImpl
 		UnsafeConsumer<Option, Exception> optionUnsafeConsumer =
 			option -> postOption(option);
 
-		for (Option option : options) {
-			optionUnsafeConsumer.accept(option);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(options, optionUnsafeConsumer);
+		}
+		else {
+			for (Option option : options) {
+				optionUnsafeConsumer.accept(option);
+			}
 		}
 	}
 
@@ -504,6 +510,14 @@ public abstract class BaseOptionResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<Option>, UnsafeConsumer<Option, Exception>,
+			 Exception> contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -654,6 +668,9 @@ public abstract class BaseOptionResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<Option>, UnsafeConsumer<Option, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

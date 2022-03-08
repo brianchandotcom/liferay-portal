@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.WikiNode;
 import com.liferay.headless.delivery.resource.v1_0.WikiNodeResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -843,8 +844,14 @@ public abstract class BaseWikiNodeResourceImpl
 				(Long)parameters.get("siteId"), wikiNode);
 		}
 
-		for (WikiNode wikiNode : wikiNodes) {
-			wikiNodeUnsafeConsumer.accept(wikiNode);
+		if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				wikiNodes, wikiNodeUnsafeConsumer);
+		}
+		else {
+			for (WikiNode wikiNode : wikiNodes) {
+				wikiNodeUnsafeConsumer.accept(wikiNode);
+			}
 		}
 	}
 
@@ -989,6 +996,15 @@ public abstract class BaseWikiNodeResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchUnsafeConsumer(
+		UnsafeBiConsumer
+			<java.util.Collection<WikiNode>,
+			 UnsafeConsumer<WikiNode, Exception>, Exception>
+				contextBatchUnsafeConsumer) {
+
+		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 	}
 
 	public void setContextCompany(
@@ -1139,6 +1155,9 @@ public abstract class BaseWikiNodeResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<WikiNode>, UnsafeConsumer<WikiNode, Exception>,
+		 Exception> contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

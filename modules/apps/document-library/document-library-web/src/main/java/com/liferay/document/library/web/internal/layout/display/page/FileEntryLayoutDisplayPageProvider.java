@@ -14,6 +14,8 @@
 
 package com.liferay.document.library.web.internal.layout.display.page;
 
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
@@ -22,6 +24,8 @@ import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -70,15 +74,32 @@ public class FileEntryLayoutDisplayPageProvider
 	public LayoutDisplayPageObjectProvider<FileEntry>
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
-		return getLayoutDisplayPageObjectProvider(
-			new InfoItemReference(
-				FileEntry.class.getName(), Long.valueOf(urlTitle)));
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+				groupId, FileEntry.class, urlTitle);
+
+		if (friendlyURLEntry != null) {
+			return getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					FileEntry.class.getName(), friendlyURLEntry.getClassPK()));
+		}
+
+		if (Validator.isNumber(urlTitle)) {
+			return getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					FileEntry.class.getName(), GetterUtil.getLong(urlTitle)));
+		}
+
+		return null;
 	}
 
 	@Override
 	public String getURLSeparator() {
 		return FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY;
 	}
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
 	private RepositoryProvider _repositoryProvider;

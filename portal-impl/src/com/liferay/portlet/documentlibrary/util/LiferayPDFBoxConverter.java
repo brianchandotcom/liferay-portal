@@ -59,19 +59,18 @@ public class LiferayPDFBoxConverter {
 			int count = pdPageTree.getCount();
 
 			for (int i = 0; i < count; i++) {
+				RenderedImage renderedImage = _toRenderedImage(pdfRenderer, i);
+
 				if (_generateThumbnail && (i == 0)) {
 					ImageIO.write(
-						_toRenderedImage(pdfRenderer, i), _thumbnailExtension,
-						_thumbnailFile);
+						renderedImage, _thumbnailExtension, _thumbnailFile);
 				}
 
 				if (!_generatePreview) {
 					break;
 				}
 
-				ImageIO.write(
-					_toRenderedImage(pdfRenderer, i), _extension,
-					_previewFiles[i]);
+				ImageIO.write(renderedImage, _extension, _previewFiles[i]);
 			}
 		}
 	}

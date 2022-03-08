@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.site.initializer.extender.internal.util.BundleSiteInitializerUtil;
 
 import java.math.BigDecimal;
 
@@ -121,7 +122,8 @@ public class CommerceBundleSiteInitializerContributor {
 				continue;
 			}
 
-			String json = _read(resourcePath);
+			String json = BundleSiteInitializerUtil.read(
+				resourcePath, servletContext);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
 
@@ -144,17 +146,17 @@ public class CommerceBundleSiteInitializerContributor {
 			_addCPOptions(
 				catalog,
 				StringUtil.replaceLast(resourcePath, ".json", ".options.json"),
-				serviceContext);
+				serviceContext, servletContext);
 			_addCPDefinitions(
 				assetVocabularyName, bundle, catalog, channel,
 				commerceInventoryWarehouses,
 				StringUtil.replaceLast(resourcePath, ".json", ".products.json"),
-				serviceContext);
+				serviceContext, servletContext);
 
 			_addCommerceProductSpecifications(
 				StringUtil.replaceLast(
 					resourcePath, ".json", ".products.specifications.json"),
-				serviceContext);
+				serviceContext, servletContext);
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
@@ -162,19 +164,21 @@ public class CommerceBundleSiteInitializerContributor {
 						StringUtil.replaceLast(
 							resourcePath, ".json",
 							".products.subscriptions.properties.json"),
-						serviceContext);
+						serviceContext, servletContext);
 
 					return null;
 				});
 		}
 	}
 
-	private Channel _addCommerceChannel(ServiceContext serviceContext)
+	private Channel _addCommerceChannel(
+			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
 		String resourcePath = "/site-initializer/commerce-channel.json";
 
-		String json = _read(resourcePath);
+		String json = BundleSiteInitializerUtil.read(
+			resourcePath, servletContext);
 
 		if (json == null) {
 			return null;
@@ -206,7 +210,7 @@ public class CommerceBundleSiteInitializerContributor {
 			CommerceChannel.class.getName(), String.valueOf(channel.getId()),
 			StringUtil.replaceLast(
 				resourcePath, ".json", ".model-resource-permissions.json"),
-			serviceContext);
+			serviceContext, servletContext);
 
 		Settings settings = _settingsFactory.getSettings(
 			new GroupServiceSettingsLocator(
@@ -232,15 +236,15 @@ public class CommerceBundleSiteInitializerContributor {
 	}
 
 	private List<CommerceInventoryWarehouse> _addCommerceInventoryWarehouses(
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
 		return _commerceInventoryWarehousesImporter.
 			importCommerceInventoryWarehouses(
 				JSONFactoryUtil.createJSONArray(
-					_read(
-						"/site-initializer" +
-							"/commerce-inventory-warehouses.json")),
+					BundleSiteInitializerUtil.read(
+						"/site-initializer/commerce-inventory-warehouses.json",
+						servletContext)),
 				serviceContext.getScopeGroupId(), serviceContext.getUserId());
 	}
 
@@ -248,11 +252,13 @@ public class CommerceBundleSiteInitializerContributor {
 			Bundle bundle, long commerceChannelId,
 			Map<String, String> documentsStringUtilReplaceValues,
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
-			String resourcePath, ServiceContext serviceContext)
+			String resourcePath, ServiceContext serviceContext,
+			ServletContext servletContext)
 		throws Exception {
 
-		String json = _read(
-			resourcePath + "commerce-notification-template.json");
+		String json = BundleSiteInitializerUtil.read(
+			resourcePath + "commerce-notification-template.json",
+			servletContext);
 
 		if (Validator.isNull(json)) {
 			return;
@@ -288,7 +294,7 @@ public class CommerceBundleSiteInitializerContributor {
 				commerceNotificationTemplateJSONObject.getString("name"),
 				commerceNotificationTemplateJSONObject.getString("description"),
 				commerceNotificationTemplateJSONObject.getString("from"),
-				_toMap(
+				BundleSiteInitializerUtil.toMap(
 					commerceNotificationTemplateJSONObject.getString(
 						"fromName")),
 				commerceNotificationTemplateJSONObject.getString("to"),
@@ -298,10 +304,11 @@ public class CommerceBundleSiteInitializerContributor {
 					commerceNotificationTemplateJSONObject.getString("type"),
 					"[$", "$]", objectDefinitionIdsStringUtilReplaceValues),
 				commerceNotificationTemplateJSONObject.getBoolean("enabled"),
-				_toMap(
+				BundleSiteInitializerUtil.toMap(
 					commerceNotificationTemplateJSONObject.getString(
 						"subject")),
-				_toMap(bodyJSONObject.toString()), serviceContext);
+				BundleSiteInitializerUtil.toMap(bodyJSONObject.toString()),
+				serviceContext);
 	}
 
 	private void _addCommerceNotificationTemplates(
@@ -322,12 +329,13 @@ public class CommerceBundleSiteInitializerContributor {
 			_addCommerceNotificationTemplate(
 				bundle, commerceChannelId, documentsStringUtilReplaceValues,
 				objectDefinitionIdsStringUtilReplaceValues, resourcePath,
-				serviceContext);
+				serviceContext, servletContext);
 		}
 	}
 
 	private void _addCommerceProductSpecifications(
-			String resourcePath, ServiceContext serviceContext)
+			String resourcePath, ServiceContext serviceContext,
+			ServletContext servletContext)
 		throws Exception {
 
 		ProductSpecificationResource.Builder
@@ -339,7 +347,8 @@ public class CommerceBundleSiteInitializerContributor {
 				serviceContext.fetchUser()
 			).build();
 
-		String json = _read(resourcePath);
+		String json = BundleSiteInitializerUtil.read(
+			resourcePath, servletContext);
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
@@ -383,14 +392,15 @@ public class CommerceBundleSiteInitializerContributor {
 			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
-		Channel channel = _addCommerceChannel(serviceContext);
+		Channel channel = _addCommerceChannel(serviceContext, servletContext);
 
 		if (channel == null) {
 			return;
 		}
 
 		_addCommerceCatalogs(
-			bundle, channel, _addCommerceInventoryWarehouses(serviceContext),
+			bundle, channel,
+			_addCommerceInventoryWarehouses(serviceContext, servletContext),
 			serviceContext, servletContext);
 		_addCommerceNotificationTemplates(
 			bundle, channel.getId(), documentsStringUtilReplaceValues,
@@ -402,10 +412,12 @@ public class CommerceBundleSiteInitializerContributor {
 			String assetVocabularyName, Bundle bundle, Catalog catalog,
 			Channel channel,
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
-			String resourcePath, ServiceContext serviceContext)
+			String resourcePath, ServiceContext serviceContext,
+			ServletContext servletContext)
 		throws Exception {
 
-		String json = _read(resourcePath);
+		String json = BundleSiteInitializerUtil.read(
+			resourcePath, servletContext);
 
 		if (json == null) {
 			return;
@@ -430,10 +442,12 @@ public class CommerceBundleSiteInitializerContributor {
 	}
 
 	private void _addCPInstanceSubscriptions(
-			String resourcePath, ServiceContext serviceContext)
+			String resourcePath, ServiceContext serviceContext,
+			ServletContext servletContext)
 		throws Exception {
 
-		String json = _read(resourcePath);
+		String json = BundleSiteInitializerUtil.read(
+			resourcePath, servletContext);
 
 		if (json == null) {
 			return;
@@ -524,10 +538,12 @@ public class CommerceBundleSiteInitializerContributor {
 	}
 
 	private void _addCPOptions(
-			Catalog catalog, String resourcePath, ServiceContext serviceContext)
+			Catalog catalog, String resourcePath, ServiceContext serviceContext,
+			ServletContext servletContext)
 		throws Exception {
 
-		String json = _read(resourcePath);
+		String json = BundleSiteInitializerUtil.read(
+			resourcePath, servletContext);
 
 		if (json == null) {
 			return;
@@ -544,10 +560,11 @@ public class CommerceBundleSiteInitializerContributor {
 
 	private void _addModelResourcePermissions(
 			String className, String primKey, String resourcePath,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, ServletContext servletContext)
 		throws Exception {
 
-		String json = _read(resourcePath);
+		String json = BundleSiteInitializerUtil.read(
+			resourcePath, servletContext);
 
 		if (json == null) {
 			return;

@@ -15,11 +15,22 @@
 package com.liferay.site.initializer.extender.internal.commerce;
 
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.account.util.CommerceAccountRoleHelper;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.initializer.util.CPDefinitionsImporter;
+import com.liferay.commerce.initializer.util.CPOptionsImporter;
+import com.liferay.commerce.initializer.util.CPSpecificationOptionsImporter;
+import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
@@ -32,17 +43,20 @@ import com.liferay.headless.commerce.admin.channel.dto.v1_0.Channel;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ModifiableSettings;
 import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -65,6 +79,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -85,8 +100,7 @@ public class CommerceBundleSiteInitializerContributor {
 			return;
 		}
 
-		CatalogResource.Builder builder =
-			_commerceReferencesHolder.catalogResourceFactory.create();
+		CatalogResource.Builder builder = _catalogResourceFactory.create();
 
 		CatalogResource catalogResource = builder.user(
 			serviceContext.fetchUser()
@@ -163,7 +177,7 @@ public class CommerceBundleSiteInitializerContributor {
 		}
 
 		ChannelResource.Builder channelResourceBuilder =
-			_commerceReferencesHolder.channelResourceFactory.create();
+			_channelResourceFactory.create();
 
 		ChannelResource channelResource = channelResourceBuilder.user(
 			serviceContext.fetchUser()
@@ -204,14 +218,11 @@ public class CommerceBundleSiteInitializerContributor {
 
 		modifiableSettings.store();
 
-		_commerceReferencesHolder.commerceAccountRoleHelper.
-			checkCommerceAccountRoles(serviceContext);
+		_commerceAccountRoleHelper.checkCommerceAccountRoles(serviceContext);
 
-		_commerceReferencesHolder.commerceCurrencyLocalService.
-			importDefaultValues(serviceContext);
+		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
 
-		_commerceReferencesHolder.cpMeasurementUnitLocalService.
-			importDefaultValues(serviceContext);
+		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
 
 		return channel;
 	}
@@ -220,7 +231,7 @@ public class CommerceBundleSiteInitializerContributor {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		return _commerceReferencesHolder.commerceInventoryWarehousesImporter.
+		return _commerceInventoryWarehousesImporter.
 			importCommerceInventoryWarehouses(
 				JSONFactoryUtil.createJSONArray(
 					_read(
@@ -247,8 +258,7 @@ public class CommerceBundleSiteInitializerContributor {
 			JSONFactoryUtil.createJSONObject(json);
 
 		CommerceChannel commerceChannel =
-			_commerceReferencesHolder.commerceChannelLocalService.
-				getCommerceChannel(commerceChannelId);
+			_commerceChannelLocalService.getCommerceChannel(commerceChannelId);
 
 		JSONObject bodyJSONObject = _jsonFactory.createJSONObject();
 
@@ -268,7 +278,7 @@ public class CommerceBundleSiteInitializerContributor {
 			}
 		}
 
-		_commerceReferencesHolder.commerceNotificationTemplateLocalService.
+		_commerceNotificationTemplateLocalService.
 			addCommerceNotificationTemplate(
 				serviceContext.getUserId(), commerceChannel.getGroupId(),
 				commerceNotificationTemplateJSONObject.getString("name"),
@@ -318,8 +328,7 @@ public class CommerceBundleSiteInitializerContributor {
 
 		ProductSpecificationResource.Builder
 			productSpecificationResourceBuilder =
-				_commerceReferencesHolder.productSpecificationResourceFactory.
-					create();
+				_productSpecificationResourceFactory.create();
 
 		ProductSpecificationResource productSpecificationResource =
 			productSpecificationResourceBuilder.user(
@@ -330,16 +339,15 @@ public class CommerceBundleSiteInitializerContributor {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
 
-		_commerceReferencesHolder.cpSpecificationOptionsImporter.
-			importCPSpecificationOptions(
-				jsonArray, serviceContext.getScopeGroupId(),
-				serviceContext.getUserId());
+		_cpSpecificationOptionsImporter.importCPSpecificationOptions(
+			jsonArray, serviceContext.getScopeGroupId(),
+			serviceContext.getUserId());
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			CPDefinition cpDefinition =
-				_commerceReferencesHolder.cpDefinitionLocalService.
+				_cpDefinitionLocalService.
 					fetchCPDefinitionByCProductExternalReferenceCode(
 						jsonObject.getString(
 							"cpDefinitionExternalReferenceCode"),
@@ -401,7 +409,7 @@ public class CommerceBundleSiteInitializerContributor {
 			CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
 				catalog.getId());
 
-		_commerceReferencesHolder.cpDefinitionsImporter.importCPDefinitions(
+		_cpDefinitionsImporter.importCPDefinitions(
 			JSONFactoryUtil.createJSONArray(json), assetVocabularyName,
 			commerceCatalogGroup.getGroupId(), channel.getId(),
 			ListUtil.toLongArray(
@@ -423,7 +431,7 @@ public class CommerceBundleSiteInitializerContributor {
 		}
 
 		ProductOptionResource.Builder productOptionResourceBuilder =
-			_commerceReferencesHolder.productOptionResourceFactory.create();
+			_productOptionResourceFactory.create();
 
 		ProductOptionResource productOptionResource =
 			productOptionResourceBuilder.user(
@@ -431,7 +439,7 @@ public class CommerceBundleSiteInitializerContributor {
 			).build();
 
 		OptionResource.Builder optionResourceBuilder =
-			_commerceReferencesHolder.optionResourceFactory.create();
+			_optionResourceFactory.create();
 
 		OptionResource optionResource = optionResourceBuilder.user(
 			serviceContext.fetchUser()
@@ -476,7 +484,7 @@ public class CommerceBundleSiteInitializerContributor {
 			};
 
 			CPDefinition cpDefinition =
-				_commerceReferencesHolder.cpDefinitionLocalService.
+				_cpDefinitionLocalService.
 					fetchCPDefinitionByCProductExternalReferenceCode(
 						subscriptionPropertiesJSONObject.getString(
 							"cpDefinitionExternalReferenceCode"),
@@ -485,7 +493,7 @@ public class CommerceBundleSiteInitializerContributor {
 			productOptionResource.postProductIdProductOptionsPage(
 				cpDefinition.getCProductId(), productOptions);
 
-			_commerceReferencesHolder.cpInstanceLocalService.buildCPInstances(
+			_cpInstanceLocalService.buildCPInstances(
 				cpDefinition.getCPDefinitionId(), serviceContext);
 
 			JSONArray cpInstancePropertiesJSONArray =
@@ -520,7 +528,7 @@ public class CommerceBundleSiteInitializerContributor {
 			CommerceCatalogLocalServiceUtil.getCommerceCatalogGroup(
 				catalog.getId());
 
-		_commerceReferencesHolder.cpOptionsImporter.importCPOptions(
+		_cpOptionsImporter.importCPOptions(
 			JSONFactoryUtil.createJSONArray(json),
 			commerceCatalogGroup.getGroupId(), serviceContext.getUserId());
 	}
@@ -559,10 +567,9 @@ public class CommerceBundleSiteInitializerContributor {
 			JSONObject cpInstancePropertiesJSONObject)
 		throws Exception {
 
-		CPInstance cpInstance =
-			_commerceReferencesHolder.cpInstanceLocalService.getCPInstance(
-				cpDefinition.getCPDefinitionId(),
-				cpInstancePropertiesJSONObject.getString("cpInstanceSku"));
+		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
+			cpDefinition.getCPDefinitionId(),
+			cpInstancePropertiesJSONObject.getString("cpInstanceSku"));
 
 		if (cpInstance == null) {
 			return;
@@ -576,32 +583,28 @@ public class CommerceBundleSiteInitializerContributor {
 				cpInstancePropertiesJSONObject.getJSONObject(
 					"subscriptionTypeSettings");
 
-			_commerceReferencesHolder.cpInstanceLocalService.
-				updateSubscriptionInfo(
-					cpInstance.getCPInstanceId(),
-					cpInstancePropertiesJSONObject.getBoolean(
-						"overrideSubscriptionInfo"),
-					cpInstancePropertiesJSONObject.getBoolean(
-						"subscriptionEnabled"),
-					cpInstancePropertiesJSONObject.getInt("subscriptionLength"),
-					cpInstancePropertiesJSONObject.getString(
-						"subscriptionType"),
-					UnicodePropertiesBuilder.create(
-						JSONUtil.toStringMap(
-							subscriptionTypeSettingsJSONObject),
-						true
-					).build(),
-					cpInstancePropertiesJSONObject.getLong(
-						"maxSubscriptionCycles"),
-					cpInstancePropertiesJSONObject.getBoolean(
-						"deliverySubscriptionEnabled"),
-					cpInstancePropertiesJSONObject.getInt(
-						"deliverySubscriptionLength"),
-					cpInstancePropertiesJSONObject.getString(
-						"deliverySubscriptionType"),
-					new UnicodeProperties(),
-					cpInstancePropertiesJSONObject.getLong(
-						"deliveryMaxSubscriptionCycles"));
+			_cpInstanceLocalService.updateSubscriptionInfo(
+				cpInstance.getCPInstanceId(),
+				cpInstancePropertiesJSONObject.getBoolean(
+					"overrideSubscriptionInfo"),
+				cpInstancePropertiesJSONObject.getBoolean(
+					"subscriptionEnabled"),
+				cpInstancePropertiesJSONObject.getInt("subscriptionLength"),
+				cpInstancePropertiesJSONObject.getString("subscriptionType"),
+				UnicodePropertiesBuilder.create(
+					JSONUtil.toStringMap(subscriptionTypeSettingsJSONObject),
+					true
+				).build(),
+				cpInstancePropertiesJSONObject.getLong("maxSubscriptionCycles"),
+				cpInstancePropertiesJSONObject.getBoolean(
+					"deliverySubscriptionEnabled"),
+				cpInstancePropertiesJSONObject.getInt(
+					"deliverySubscriptionLength"),
+				cpInstancePropertiesJSONObject.getString(
+					"deliverySubscriptionType"),
+				new UnicodeProperties(),
+				cpInstancePropertiesJSONObject.getLong(
+					"deliveryMaxSubscriptionCycles"));
 		}
 		else if (StringUtil.equals(propertyType, "UPDATE_PRICE")) {
 			cpInstance.setPrice(
@@ -611,12 +614,71 @@ public class CommerceBundleSiteInitializerContributor {
 				BigDecimal.valueOf(
 					cpInstancePropertiesJSONObject.getLong("skuPromoPrice")));
 
-			_commerceReferencesHolder.cpInstanceLocalService.updateCPInstance(
-				cpInstance);
+			_cpInstanceLocalService.updateCPInstance(cpInstance);
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceBundleSiteInitializerContributor.class);
+
+	@Reference
+	private CatalogResource.Factory _catalogResourceFactory;
+
+	@Reference
+	private ChannelResource.Factory _channelResourceFactory;
+
+	@Reference
+	private CommerceAccountRoleHelper _commerceAccountRoleHelper;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
+
+	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
+
+	@Reference
+	private CommerceInventoryWarehousesImporter
+		_commerceInventoryWarehousesImporter;
+
+	@Reference
+	private CommerceNotificationTemplateLocalService
+		_commerceNotificationTemplateLocalService;
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private CPDefinitionsImporter _cpDefinitionsImporter;
+
+	@Reference
+	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
+
+	@Reference
+	private CPOptionsImporter _cpOptionsImporter;
+
+	@Reference
+	private CPSpecificationOptionsImporter _cpSpecificationOptionsImporter;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private OptionResource.Factory _optionResourceFactory;
+
+	@Reference
+	private ProductOptionResource.Factory _productOptionResourceFactory;
+
+	@Reference
+	private ProductSpecificationResource.Factory
+		_productSpecificationResourceFactory;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private SettingsFactory _settingsFactory;
 
 }

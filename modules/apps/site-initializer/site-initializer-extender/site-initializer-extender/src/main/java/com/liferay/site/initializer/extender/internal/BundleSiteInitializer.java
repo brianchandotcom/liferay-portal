@@ -140,6 +140,7 @@ import com.liferay.remote.app.service.RemoteAppEntryLocalService;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.initializer.extender.internal.commerce.CommerceBundleSiteInitializerContributor;
 import com.liferay.site.initializer.extender.internal.util.BundleSiteInitializerUtil;
 import com.liferay.site.navigation.menu.item.layout.constants.SiteNavigationMenuItemTypeConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -320,7 +321,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	public void initialize(long groupId) throws InitializationException {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Commerce references holder " + _commerceReferencesHolder);
+				"Commerce bundle site initializer contributor " +
+					_commerceBundleSiteInitializerContributor);
 		}
 
 		long startTime = System.currentTimeMillis();
@@ -463,10 +465,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 		return true;
 	}
 
-	protected void setCommerceReferencesHolder(
-		CommerceReferencesHolder commerceReferencesHolder) {
+	protected void setCommerceBundleSiteInitializerContributor(
+		CommerceBundleSiteInitializerContributor
+			commerceBundleSiteInitializerContributor) {
 
-		_commerceReferencesHolder = commerceReferencesHolder;
+		_commerceBundleSiteInitializerContributor =
+			commerceBundleSiteInitializerContributor;
 	}
 
 	protected void setServletContext(ServletContext servletContext) {
@@ -608,6 +612,25 @@ public class BundleSiteInitializer implements SiteInitializer {
 				map, true
 			).buildString(),
 			serviceContext);
+	}
+
+	private void _addCPDefinitions(
+			Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if ((_commerceBundleSiteInitializerContributor == null) ||
+			!GetterUtil.getBoolean(
+				PropsUtil.get("enterprise.product.commerce.enabled"))) {
+
+			return;
+		}
+
+		_commerceBundleSiteInitializerContributor.addCPDefinitions(
+			_bundle, documentsStringUtilReplaceValues,
+			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
+			_servletContext);
 	}
 
 	private void _addDDMStructures(ServiceContext serviceContext)

@@ -92,6 +92,28 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = CommerceBundleSiteInitializerContributor.class)
 public class CommerceBundleSiteInitializerContributor {
 
+	public void addCPDefinitions(
+			Bundle bundle, Map<String, String> documentsStringUtilReplaceValues,
+			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
+			ServiceContext serviceContext, ServletContext servletContext)
+		throws Exception {
+
+		Channel channel = _addCommerceChannel(serviceContext, servletContext);
+
+		if (channel == null) {
+			return;
+		}
+
+		_addCommerceCatalogs(
+			bundle, channel,
+			_addCommerceInventoryWarehouses(serviceContext, servletContext),
+			serviceContext, servletContext);
+		_addCommerceNotificationTemplates(
+			bundle, channel.getId(), documentsStringUtilReplaceValues,
+			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
+			servletContext);
+	}
+
 	private void _addCommerceCatalogs(
 			Bundle bundle, Channel channel,
 			List<CommerceInventoryWarehouse> commerceInventoryWarehouses,
@@ -384,28 +406,6 @@ public class CommerceBundleSiteInitializerContributor {
 			productSpecificationResource.postProductIdProductSpecification(
 				cpDefinition.getCPDefinitionId(), productSpecification);
 		}
-	}
-
-	private void _addCPDefinitions(
-			Bundle bundle, Map<String, String> documentsStringUtilReplaceValues,
-			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
-			ServiceContext serviceContext, ServletContext servletContext)
-		throws Exception {
-
-		Channel channel = _addCommerceChannel(serviceContext, servletContext);
-
-		if (channel == null) {
-			return;
-		}
-
-		_addCommerceCatalogs(
-			bundle, channel,
-			_addCommerceInventoryWarehouses(serviceContext, servletContext),
-			serviceContext, servletContext);
-		_addCommerceNotificationTemplates(
-			bundle, channel.getId(), documentsStringUtilReplaceValues,
-			objectDefinitionIdsStringUtilReplaceValues, serviceContext,
-			servletContext);
 	}
 
 	private void _addCPDefinitions(

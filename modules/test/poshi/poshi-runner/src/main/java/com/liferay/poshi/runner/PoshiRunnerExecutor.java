@@ -434,18 +434,9 @@ public class PoshiRunnerExecutor {
 			PoshiGetterUtil.getClassCommandNameFromNamespacedClassCommandName(
 				namespacedClassCommandName);
 
-		String className =
-			PoshiGetterUtil.getClassNameFromNamespacedClassCommandName(
-				classCommandName);
-
 		Exception exception = null;
 
-		int locatorCount = PoshiContext.getFunctionLocatorCount(
-			className,
-			PoshiStackTraceUtil.getCurrentNamespace(
-				namespacedClassCommandName));
-
-		for (int i = 1; i <= locatorCount; i++) {
+		for (int i = 1; i <= 3; i++) {
 			String locator = executeElement.attributeValue("locator" + i);
 
 			if (locator == null) {
@@ -909,6 +900,10 @@ public class PoshiRunnerExecutor {
 					if (selenium.equals("assertCssValue")) {
 						argument = PoshiVariablesUtil.getStringFromCommandMap(
 							"value1");
+					}
+					else if (selenium.equals("ocularAssertElementImage")) {
+						argument = PoshiVariablesUtil.getStringFromCommandMap(
+							"value2");
 					}
 					else if (_isJavaScriptMethod(selenium)) {
 						argument = PoshiVariablesUtil.getStringFromCommandMap(

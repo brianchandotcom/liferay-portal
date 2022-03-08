@@ -532,7 +532,7 @@ public class ComboServlet extends HttpServlet {
 			PortalCacheManagerNames.SINGLE_VM, FileContentBag.class.getName());
 
 	private final Set<String> _protectedParameters = SetUtil.fromArray(
-		"b", "browserId", "minifierType", "languageId", "t", "themeId", "zx");
+		"browserId", "minifierType", "languageId", "t", "themeId", "zx");
 
 	private static class FileContentBag implements Serializable {
 

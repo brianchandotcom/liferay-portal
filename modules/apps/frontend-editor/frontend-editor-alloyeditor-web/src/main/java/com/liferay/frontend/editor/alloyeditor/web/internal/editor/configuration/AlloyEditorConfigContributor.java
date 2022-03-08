@@ -49,7 +49,11 @@ public class AlloyEditorConfigContributor
 			jsonObject, inputEditorTaglibAttributes, themeDisplay,
 			requestBackedPortletURLFactory);
 
-		jsonObject.put("entities", Boolean.FALSE);
+		jsonObject.put(
+			"enterMode", 2
+		).put(
+			"entities", Boolean.FALSE
+		);
 
 		String extraPlugins = jsonObject.getString("extraPlugins");
 

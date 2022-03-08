@@ -12,18 +12,20 @@
 import {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
 import {Liferay} from '../../../../../common/services/liferay';
-import {getDXPCloudEnvironment} from '../../../../../common/services/liferay/graphql/queries';
+import {getAnalyticsCloudWorkspace} from '../../../../../common/services/liferay/graphql/queries';
 import ActivationStatus from '../../../components/ActivationStatus/index';
-import DeveloperKeysLayouts from '../../../layouts/DeveloperKeysLayout';
 import {PRODUCT_TYPES} from '../../../utils/constants';
 
-const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
-	const [dxpCloudEnvironment, setDxpCloudEnvironment] = useState();
+const AnalyticsCloud = ({project, subscriptionGroups, userAccount}) => {
+	const [
+		analyticsCloudEnvironment,
+		setAnalyticsCloudEnvironment,
+	] = useState();
 
 	useEffect(() => {
-		const getOnboardingFormData = async () => {
+		const getAnalyticsCloudData = async () => {
 			const {data} = await client.query({
-				query: getDXPCloudEnvironment,
+				query: getAnalyticsCloudWorkspace,
 				variables: {
 					filter: `accountKey eq '${project.accountKey}'`,
 					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
@@ -31,40 +33,30 @@ const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
 			});
 
 			if (data) {
-				const items = data.c?.dXPCloudEnvironments?.items;
+				const items = data.c?.AnalyticsCloudWorkspaces?.items;
 
 				if (items.length) {
-					setDxpCloudEnvironment(items[0]);
+					setAnalyticsCloudEnvironment(items[0]);
 				}
 			}
 		};
 
-		getOnboardingFormData();
+		getAnalyticsCloudData();
 	}, [project]);
 
 	return (
 		<div className="mr-4">
-			<ActivationStatus.DXPCloud
-				dxpCloudEnvironment={dxpCloudEnvironment}
+			<ActivationStatus.AnalyticsCloud
+				analyticsCloudEnvironment={analyticsCloudEnvironment}
 				project={project}
-				subscriptionGroupDXPCloud={subscriptionGroups.find(
+				subscriptionGroupAnalyticsCloud={subscriptionGroups.find(
 					(subscriptionGroup) =>
-						subscriptionGroup.name === PRODUCT_TYPES.dxpCloud
+						subscriptionGroup.name === PRODUCT_TYPES.analyticsCloud
 				)}
 				userAccount={userAccount}
 			/>
-
-			<DeveloperKeysLayouts>
-				<DeveloperKeysLayouts.Inputs
-					accountKey={project.accountKey}
-					downloadTextHelper="To activate a local instance of Liferay DXP, download a developer key for your Liferay DXP version."
-					dxpVersion={project.dxpVersion}
-					projectName={project.name}
-					sessionId={sessionId}
-				></DeveloperKeysLayouts.Inputs>
-			</DeveloperKeysLayouts>
 		</div>
 	);
 };
 
-export default DXPCloud;
+export default AnalyticsCloud;

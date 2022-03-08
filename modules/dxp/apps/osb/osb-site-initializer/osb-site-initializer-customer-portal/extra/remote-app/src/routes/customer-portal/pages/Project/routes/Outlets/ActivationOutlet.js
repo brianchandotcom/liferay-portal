@@ -13,7 +13,7 @@ import {useEffect} from 'react';
 import {Outlet, useNavigate, useOutletContext} from 'react-router-dom';
 import {PAGE_TYPES, PRODUCT_TYPES} from '../../../../utils/constants';
 import ActivationKeys from '../../ActivationKeys';
-import AnalyticsCloud from '../../Analytics Cloud';
+import AnalyticsCloud from '../../AnalyticsCloud';
 import DXP from '../../DXP';
 import DXPCloud from '../../DXPCloud';
 
@@ -48,7 +48,10 @@ const ActivationOutlet = () => {
 		[PAGE_TYPES.analyticsCloud]: (
 			<AnalyticsCloud
 				accountKey={project?.accountKey}
+				project={project}
 				sessionId={sessionId}
+				subscriptionGroups={subscriptionGroups}
+				userAccount={userAccount}
 			/>
 		),
 		[PAGE_TYPES.commerce]: (

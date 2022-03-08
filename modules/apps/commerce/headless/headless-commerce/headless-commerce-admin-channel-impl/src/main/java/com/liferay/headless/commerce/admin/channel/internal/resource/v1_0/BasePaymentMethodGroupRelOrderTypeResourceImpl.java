@@ -16,6 +16,8 @@ package com.liferay.headless.commerce.admin.channel.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.PaymentMethodGroupRelOrderType;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelOrderTypeResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -336,6 +338,15 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchStrategy(
+		UnsafeBiConsumer
+			<java.util.Collection<PaymentMethodGroupRelOrderType>,
+			 UnsafeConsumer<PaymentMethodGroupRelOrderType, Exception>,
+			 Exception> contextBatchStrategy) {
+
+		this.contextBatchStrategy = contextBatchStrategy;
+	}
+
 	public void setContextCompany(
 		com.liferay.portal.kernel.model.Company contextCompany) {
 
@@ -484,6 +495,10 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<PaymentMethodGroupRelOrderType>,
+		 UnsafeConsumer<PaymentMethodGroupRelOrderType, Exception>, Exception>
+			contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

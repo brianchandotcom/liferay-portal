@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.WikiPage;
 import com.liferay.headless.delivery.resource.v1_0.WikiPageResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -792,8 +793,13 @@ public abstract class BaseWikiPageResourceImpl
 			wikiPage -> postWikiNodeWikiPage(
 				Long.parseLong((String)parameters.get("wikiNodeId")), wikiPage);
 
-		for (WikiPage wikiPage : wikiPages) {
-			wikiPageUnsafeConsumer.accept(wikiPage);
+		if (contextBatchStrategy != null) {
+			contextBatchStrategy.accept(wikiPages, wikiPageUnsafeConsumer);
+		}
+		else {
+			for (WikiPage wikiPage : wikiPages) {
+				wikiPageUnsafeConsumer.accept(wikiPage);
+			}
 		}
 	}
 
@@ -933,6 +939,15 @@ public abstract class BaseWikiPageResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchStrategy(
+		UnsafeBiConsumer
+			<java.util.Collection<WikiPage>,
+			 UnsafeConsumer<WikiPage, Exception>, Exception>
+				contextBatchStrategy) {
+
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	public void setContextCompany(
@@ -1083,6 +1098,9 @@ public abstract class BaseWikiPageResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<WikiPage>, UnsafeConsumer<WikiPage, Exception>,
+		 Exception> contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

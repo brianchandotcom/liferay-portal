@@ -14,6 +14,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -406,8 +407,13 @@ public abstract class BaseInstanceResourceImpl
 			instance -> postProcessInstance(
 				Long.parseLong((String)parameters.get("processId")), instance);
 
-		for (Instance instance : instances) {
-			instanceUnsafeConsumer.accept(instance);
+		if (contextBatchStrategy != null) {
+			contextBatchStrategy.accept(instances, instanceUnsafeConsumer);
+		}
+		else {
+			for (Instance instance : instances) {
+				instanceUnsafeConsumer.accept(instance);
+			}
 		}
 	}
 
@@ -481,6 +487,15 @@ public abstract class BaseInstanceResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchStrategy(
+		UnsafeBiConsumer
+			<java.util.Collection<Instance>,
+			 UnsafeConsumer<Instance, Exception>, Exception>
+				contextBatchStrategy) {
+
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	public void setContextCompany(
@@ -631,6 +646,9 @@ public abstract class BaseInstanceResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<Instance>, UnsafeConsumer<Instance, Exception>,
+		 Exception> contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

@@ -16,6 +16,7 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -417,8 +418,14 @@ public abstract class BaseObjectRelationshipResourceImpl
 						(String)parameters.get("objectDefinitionId")),
 					objectRelationship);
 
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			objectRelationshipUnsafeConsumer.accept(objectRelationship);
+		if (contextBatchStrategy != null) {
+			contextBatchStrategy.accept(
+				objectRelationships, objectRelationshipUnsafeConsumer);
+		}
+		else {
+			for (ObjectRelationship objectRelationship : objectRelationships) {
+				objectRelationshipUnsafeConsumer.accept(objectRelationship);
+			}
 		}
 	}
 
@@ -499,6 +506,15 @@ public abstract class BaseObjectRelationshipResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchStrategy(
+		UnsafeBiConsumer
+			<java.util.Collection<ObjectRelationship>,
+			 UnsafeConsumer<ObjectRelationship, Exception>, Exception>
+				contextBatchStrategy) {
+
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	public void setContextCompany(
@@ -649,6 +665,10 @@ public abstract class BaseObjectRelationshipResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<ObjectRelationship>,
+		 UnsafeConsumer<ObjectRelationship, Exception>, Exception>
+			contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

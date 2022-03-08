@@ -17,6 +17,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 import com.liferay.headless.delivery.dto.v1_0.Document;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.resource.v1_0.DocumentResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
@@ -1442,8 +1443,13 @@ public abstract class BaseDocumentResourceImpl
 				(MultipartBody)parameters.get("multipartBody"));
 		}
 
-		for (Document document : documents) {
-			documentUnsafeConsumer.accept(document);
+		if (contextBatchStrategy != null) {
+			contextBatchStrategy.accept(documents, documentUnsafeConsumer);
+		}
+		else {
+			for (Document document : documents) {
+				documentUnsafeConsumer.accept(document);
+			}
 		}
 	}
 
@@ -1600,6 +1606,15 @@ public abstract class BaseDocumentResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchStrategy(
+		UnsafeBiConsumer
+			<java.util.Collection<Document>,
+			 UnsafeConsumer<Document, Exception>, Exception>
+				contextBatchStrategy) {
+
+		this.contextBatchStrategy = contextBatchStrategy;
+	}
+
 	public void setContextCompany(
 		com.liferay.portal.kernel.model.Company contextCompany) {
 
@@ -1748,6 +1763,9 @@ public abstract class BaseDocumentResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<Document>, UnsafeConsumer<Document, Exception>,
+		 Exception> contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

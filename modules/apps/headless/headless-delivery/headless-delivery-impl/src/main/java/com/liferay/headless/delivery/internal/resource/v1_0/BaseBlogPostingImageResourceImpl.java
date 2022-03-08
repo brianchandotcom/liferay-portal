@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -356,8 +357,14 @@ public abstract class BaseBlogPostingImageResourceImpl
 					(MultipartBody)parameters.get("multipartBody"));
 		}
 
-		for (BlogPostingImage blogPostingImage : blogPostingImages) {
-			blogPostingImageUnsafeConsumer.accept(blogPostingImage);
+		if (contextBatchStrategy != null) {
+			contextBatchStrategy.accept(
+				blogPostingImages, blogPostingImageUnsafeConsumer);
+		}
+		else {
+			for (BlogPostingImage blogPostingImage : blogPostingImages) {
+				blogPostingImageUnsafeConsumer.accept(blogPostingImage);
+			}
 		}
 	}
 
@@ -434,6 +441,15 @@ public abstract class BaseBlogPostingImageResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchStrategy(
+		UnsafeBiConsumer
+			<java.util.Collection<BlogPostingImage>,
+			 UnsafeConsumer<BlogPostingImage, Exception>, Exception>
+				contextBatchStrategy) {
+
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	public void setContextCompany(
@@ -584,6 +600,10 @@ public abstract class BaseBlogPostingImageResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<BlogPostingImage>,
+		 UnsafeConsumer<BlogPostingImage, Exception>, Exception>
+			contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

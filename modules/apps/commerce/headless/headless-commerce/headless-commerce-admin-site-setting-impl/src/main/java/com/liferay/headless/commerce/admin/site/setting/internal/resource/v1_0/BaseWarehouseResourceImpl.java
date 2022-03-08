@@ -16,6 +16,8 @@ package com.liferay.headless.commerce.admin.site.setting.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.site.setting.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.site.setting.resource.v1_0.WarehouseResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -423,6 +425,15 @@ public abstract class BaseWarehouseResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchStrategy(
+		UnsafeBiConsumer
+			<java.util.Collection<Warehouse>,
+			 UnsafeConsumer<Warehouse, Exception>, Exception>
+				contextBatchStrategy) {
+
+		this.contextBatchStrategy = contextBatchStrategy;
+	}
+
 	public void setContextCompany(
 		com.liferay.portal.kernel.model.Company contextCompany) {
 
@@ -571,6 +582,9 @@ public abstract class BaseWarehouseResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<Warehouse>, UnsafeConsumer<Warehouse, Exception>,
+		 Exception> contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

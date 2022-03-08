@@ -17,6 +17,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -768,8 +769,14 @@ public abstract class BaseOrganizationResourceImpl
 		UnsafeConsumer<Organization, Exception> organizationUnsafeConsumer =
 			organization -> postOrganization(organization);
 
-		for (Organization organization : organizations) {
-			organizationUnsafeConsumer.accept(organization);
+		if (contextBatchStrategy != null) {
+			contextBatchStrategy.accept(
+				organizations, organizationUnsafeConsumer);
+		}
+		else {
+			for (Organization organization : organizations) {
+				organizationUnsafeConsumer.accept(organization);
+			}
 		}
 	}
 
@@ -848,6 +855,15 @@ public abstract class BaseOrganizationResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchStrategy(
+		UnsafeBiConsumer
+			<java.util.Collection<Organization>,
+			 UnsafeConsumer<Organization, Exception>, Exception>
+				contextBatchStrategy) {
+
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	public void setContextCompany(
@@ -1002,6 +1018,10 @@ public abstract class BaseOrganizationResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<Organization>,
+		 UnsafeConsumer<Organization, Exception>, Exception>
+			contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

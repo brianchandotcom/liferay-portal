@@ -16,6 +16,8 @@ package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceEntry;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceEntryResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -585,6 +587,15 @@ public abstract class BasePriceEntryResourceImpl
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
 
+	public void setContextBatchStrategy(
+		UnsafeBiConsumer
+			<java.util.Collection<PriceEntry>,
+			 UnsafeConsumer<PriceEntry, Exception>, Exception>
+				contextBatchStrategy) {
+
+		this.contextBatchStrategy = contextBatchStrategy;
+	}
+
 	public void setContextCompany(
 		com.liferay.portal.kernel.model.Company contextCompany) {
 
@@ -733,6 +744,9 @@ public abstract class BasePriceEntryResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<PriceEntry>,
+		 UnsafeConsumer<PriceEntry, Exception>, Exception> contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

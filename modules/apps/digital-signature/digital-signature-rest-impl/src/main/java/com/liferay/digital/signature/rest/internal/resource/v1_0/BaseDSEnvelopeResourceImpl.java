@@ -16,6 +16,7 @@ package com.liferay.digital.signature.rest.internal.resource.v1_0;
 
 import com.liferay.digital.signature.rest.dto.v1_0.DSEnvelope;
 import com.liferay.digital.signature.rest.resource.v1_0.DSEnvelopeResource;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -246,8 +247,13 @@ public abstract class BaseDSEnvelopeResourceImpl
 				(Long)parameters.get("siteId"), dsEnvelope);
 		}
 
-		for (DSEnvelope dsEnvelope : dsEnvelopes) {
-			dsEnvelopeUnsafeConsumer.accept(dsEnvelope);
+		if (contextBatchStrategy != null) {
+			contextBatchStrategy.accept(dsEnvelopes, dsEnvelopeUnsafeConsumer);
+		}
+		else {
+			for (DSEnvelope dsEnvelope : dsEnvelopes) {
+				dsEnvelopeUnsafeConsumer.accept(dsEnvelope);
+			}
 		}
 	}
 
@@ -319,6 +325,15 @@ public abstract class BaseDSEnvelopeResourceImpl
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
+	}
+
+	public void setContextBatchStrategy(
+		UnsafeBiConsumer
+			<java.util.Collection<DSEnvelope>,
+			 UnsafeConsumer<DSEnvelope, Exception>, Exception>
+				contextBatchStrategy) {
+
+		this.contextBatchStrategy = contextBatchStrategy;
 	}
 
 	public void setContextCompany(
@@ -469,6 +484,9 @@ public abstract class BaseDSEnvelopeResourceImpl
 	}
 
 	protected AcceptLanguage contextAcceptLanguage;
+	protected UnsafeBiConsumer
+		<java.util.Collection<DSEnvelope>,
+		 UnsafeConsumer<DSEnvelope, Exception>, Exception> contextBatchStrategy;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;

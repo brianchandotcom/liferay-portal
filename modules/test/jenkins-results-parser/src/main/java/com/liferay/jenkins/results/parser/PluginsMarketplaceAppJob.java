@@ -19,6 +19,8 @@ import java.io.File;
 import java.util.Collections;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -31,6 +33,21 @@ public class PluginsMarketplaceAppJob
 	}
 
 	@Override
+	public JSONObject getJSONObject() {
+		if (jsonObject != null) {
+			return jsonObject;
+		}
+
+		jsonObject = super.getJSONObject();
+
+		jsonObject.put("app_type", _appType);
+		jsonObject.put(
+			"portal_upstream_branch_name", _portalUpstreamBranchName);
+
+		return jsonObject;
+	}
+
+	@Override
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		return _portalGitWorkingDirectory;
 	}
@@ -40,9 +57,19 @@ public class PluginsMarketplaceAppJob
 		return _appType;
 	}
 
+	protected PluginsMarketplaceAppJob(JSONObject jsonObject) {
+		super(jsonObject);
+
+		_appType = jsonObject.getString("app_type");
+		_portalUpstreamBranchName = jsonObject.getString(
+			"portal_upstream_branch_name");
+
+		_initialize();
+	}
+
 	protected PluginsMarketplaceAppJob(
 		String jobName, String appType, BuildProfile buildProfile,
-		String portalBranchName) {
+		String portalUpstreamBranchName) {
 
 		super(jobName, buildProfile);
 
@@ -56,9 +83,15 @@ public class PluginsMarketplaceAppJob
 
 		_appType = appType;
 
+		_portalUpstreamBranchName = portalUpstreamBranchName;
+
+		_initialize();
+	}
+
+	private void _initialize() {
 		_portalGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-				portalBranchName);
+				_portalUpstreamBranchName);
 
 		jobPropertiesFiles.add(
 			new File(
@@ -67,6 +100,7 @@ public class PluginsMarketplaceAppJob
 	}
 
 	private final String _appType;
-	private final PortalGitWorkingDirectory _portalGitWorkingDirectory;
+	private PortalGitWorkingDirectory _portalGitWorkingDirectory;
+	private final String _portalUpstreamBranchName;
 
 }

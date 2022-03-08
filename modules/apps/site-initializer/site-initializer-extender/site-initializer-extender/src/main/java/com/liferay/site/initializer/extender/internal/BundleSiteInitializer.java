@@ -85,7 +85,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -100,7 +99,6 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -191,7 +189,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		AccountRoleResource.Factory accountRoleResourceFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
-		CompanyLocalService companyLocalService,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -243,7 +240,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_bundle = bundle;
-		_companyLocalService = companyLocalService;
 		_ddmStructureLocalService = ddmStructureLocalService;
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 		_defaultDDMStructureHelper = defaultDDMStructureHelper;
@@ -2652,13 +2648,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		Company company = _companyLocalService.getCompany(
+		Group group = _groupLocalService.getCompanyGroup(
 			serviceContext.getCompanyId());
 
 		_portletSettingsImporter.importPortletSettings(
 			JSONFactoryUtil.createJSONArray(json), _classLoader,
 			StringUtil.replace(resourcePath, ".json", "/"),
-			serviceContext.getScopeGroupId(), company.getGroupId(),
+			serviceContext.getScopeGroupId(), group.getGroupId(),
 			serviceContext.getUserId());
 	}
 

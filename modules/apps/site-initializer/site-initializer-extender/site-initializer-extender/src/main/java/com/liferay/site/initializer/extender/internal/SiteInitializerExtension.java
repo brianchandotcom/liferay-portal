@@ -44,7 +44,6 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -85,7 +84,7 @@ public class SiteInitializerExtension {
 		AccountRoleResource.Factory accountRoleResourceFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetListEntryLocalService assetListEntryLocalService, Bundle bundle,
-		BundleContext bundleContext, CompanyLocalService companyLocalService,
+		BundleContext bundleContext,
 		DDMStructureLocalService ddmStructureLocalService,
 		DDMTemplateLocalService ddmTemplateLocalService,
 		DefaultDDMStructureHelper defaultDDMStructureHelper,
@@ -139,9 +138,8 @@ public class SiteInitializerExtension {
 			new BundleSiteInitializer(
 				accountResourceFactory, accountRoleLocalService,
 				accountRoleResourceFactory, assetCategoryLocalService,
-				assetListEntryLocalService, bundle, companyLocalService,
-				ddmStructureLocalService, ddmTemplateLocalService,
-				defaultDDMStructureHelper, dlURLHelper,
+				assetListEntryLocalService, bundle, ddmStructureLocalService,
+				ddmTemplateLocalService, defaultDDMStructureHelper, dlURLHelper,
 				documentFolderResourceFactory, documentResourceFactory,
 				fragmentsImporter, groupLocalService,
 				journalArticleLocalService, jsonFactory, layoutCopyHelper,

@@ -35,6 +35,7 @@ import {
 } from '../../utils/data';
 import {addParams, fetchData} from '../../utils/fetch';
 import {getLocalizedText} from '../../utils/language';
+import {setItemAddSXPElementSidebar} from '../../utils/sessionStorage';
 
 const DEFAULT_CATEGORY = 'other';
 const DEFAULT_EXPANDED_LIST = ['match'];
@@ -319,10 +320,16 @@ function AddSXPElementSidebar({
 		return null;
 	}
 
+	const _handleClose = () => {
+		setItemAddSXPElementSidebar('closed');
+
+		onClose();
+	};
+
 	return (
 		<Sidebar
 			className="add-sxp-element-sidebar"
-			onClose={onClose}
+			onClose={_handleClose}
 			title={Liferay.Language.get('add-query-elements')}
 			visible={visible}
 		>

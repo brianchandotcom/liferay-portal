@@ -18,6 +18,7 @@ import React, {useState} from 'react';
 import JSONSXPElement from '../../shared/JSONSXPElement';
 import SXPElement from '../../shared/sxp_element/index';
 import {SXP_ELEMENT_PREFIX} from '../../utils/constants';
+import {setItemAddSXPElementSidebar} from '../../utils/sessionStorage';
 import {isCustomJSONSXPElement} from '../../utils/utils';
 
 function QuerySXPElements({
@@ -36,6 +37,12 @@ function QuerySXPElements({
 	touched = [],
 }) {
 	const [collapseAll, setCollapseAll] = useState(false);
+
+	const _handleClickAddQueryElement = () => {
+		setItemAddSXPElementSidebar();
+
+		onChangeAddSXPElementVisibility();
+	};
 
 	return (
 		<div className="query-sxp-elements">
@@ -64,9 +71,7 @@ function QuerySXPElements({
 								)}
 								displayType="primary"
 								monospaced
-								onClick={() =>
-									onChangeAddSXPElementVisibility()
-								}
+								onClick={_handleClickAddQueryElement}
 								small
 								title={Liferay.Language.get(
 									'add-query-element'

@@ -13,21 +13,26 @@ export const ROLE_TYPES = {
 	admin: {
 		key: 'Account Administrator',
 		name: 'Administrator',
+		raysourceName: 'Administrator',
 	},
 	member: {
 		key: 'Account Member',
 		name: 'User',
+		raysourceName: 'Support Watcher',
 	},
 	partnerManager: {
 		key: 'Partner Manager',
 		name: 'Partner Manager',
+		raysourceName: 'Partner Manager',
 	},
 	partnerMember: {
 		key: 'Partner Member',
 		name: 'Partner Member',
+		raysourceName: 'Partner Member',
 	},
 	requestor: {
 		key: 'Requestor',
 		name: 'Requestor',
+		raysourceName: 'Support Developer',
 	},
 };

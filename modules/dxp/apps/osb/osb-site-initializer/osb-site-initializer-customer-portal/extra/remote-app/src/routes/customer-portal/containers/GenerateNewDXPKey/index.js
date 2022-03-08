@@ -9,17 +9,6 @@
  * distribution rights of the Software.
  */
 
-/* eslint-disable no-unused-vars */
-/**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
- *
- * The contents of this file are subject to the terms of the Liferay Enterprise
- * Subscription License ("License"). You may not use this file except in
- * compliance with the License. You can obtain a copy of the License by
- * contacting Liferay, Inc. See the License for the specific language governing
- * permissions and limitations under the License, including but not limited to
- * distribution rights of the Software.
- */
 import ClayAlert from '@clayui/alert';
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -38,6 +27,7 @@ import GenerateNewKeySkeleton from './Skeleton';
 const ACTIVATION_ROOT_ROUTER = 'activation';
 const INICIAL_SELECTED_VERSION = '7.0';
 const INICIAL_SELECTED_TYPE = 'Backup';
+const DXP_PRODUCT = 'DXP ';
 
 const GenerateNewDXPKey = ({accountKey, productGroupName, sessionId}) => {
 	const {licenseKeyDownloadURL} = useApplicationProvider();
@@ -74,14 +64,10 @@ const GenerateNewDXPKey = ({accountKey, productGroupName, sessionId}) => {
 		a.label - b.label > 0 ? 1 : -1
 	);
 
-	const productTypes = generateFormValues?.versions?.map(
-		(version) => version.types
-	);
-
-	const productKeyTypes = productTypes?.map((productType) =>
-		productType
+	const productKeyTypes = generateFormValues?.versions?.map(({types}) =>
+		types
 			.map((licenseKey) =>
-				licenseKey.licenseEntryName.replace('DXP ', '')
+				licenseKey.licenseEntryName.replace(DXP_PRODUCT, '')
 			)
 			.sort()
 	);
@@ -92,8 +78,8 @@ const GenerateNewDXPKey = ({accountKey, productGroupName, sessionId}) => {
 
 	const selectedProductKey =
 		productVersions &&
-		productVersions[returnSelectedVersionIndex].types.find(
-			(key) => key.licenseEntryName === `DXP ${selectedKeyType}`
+		productVersions[returnSelectedVersionIndex]?.types?.find(
+			(key) => key.licenseEntryName === `${DXP_PRODUCT}${selectedKeyType}`
 		).productKey;
 
 	const getSubscriptionTerms = generateFormValues?.subscriptionTerms?.filter(
@@ -226,6 +212,11 @@ const GenerateNewDXPKey = ({accountKey, productGroupName, sessionId}) => {
 									(subscriptionterm, index) => {
 										const wasSelected =
 											selected === subscriptionterm;
+										const getCurrentStartAndEndDate = `${getCurrentEndDate(
+											subscriptionterm.startDate
+										)} - ${getCurrentEndDate(
+											subscriptionterm.endDate
+										)}`;
 										const displayAlertType = hasNotPermanentLicence ? (
 											<ClayAlert
 												className="px-4 py-3"
@@ -280,15 +271,11 @@ const GenerateNewDXPKey = ({accountKey, productGroupName, sessionId}) => {
 												isActivationKeyAvailable={
 													subscriptionterm.provisionedCount >
 													0
-														? true
-														: false
 												}
 												key={index}
-												label={`${getCurrentEndDate(
-													subscriptionterm.startDate
-												)} - ${getCurrentEndDate(
-													subscriptionterm.endDate
-												)}`}
+												label={
+													getCurrentStartAndEndDate
+												}
 												onChange={(event) =>
 													setSelected(
 														event.target.value

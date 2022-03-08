@@ -59,12 +59,6 @@ const Layout = () => {
 		return;
 	};
 
-	// eslint-disable-next-line no-console
-	console.log('getCurrentpage', getCurrentPage());
-
-	// eslint-disable-next-line no-console
-	console.log('getCurrentProduct', getCurrentProduct());
-
 	const hasProjectContact = getCurrentPage() === PAGE_TYPES.overview;
 	const currentPage = getCurrentPage();
 	const currentProduct = getCurrentProduct();

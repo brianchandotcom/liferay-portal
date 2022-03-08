@@ -38,7 +38,19 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"servlet-context-name=", "servlet-filter-name=Commerce Context Filter",
-		"url-pattern=/o/*"
+		"url-pattern=/o/headless-batch-engine/*",
+		"url-pattern=/o/headless-commerce-admin-account/*",
+		"url-pattern=/o/headless-commerce-admin-catalog/*",
+		"url-pattern=/o/headless-commerce-admin-channel/*",
+		"url-pattern=/o/headless-commerce-admin-inventory/*",
+		"url-pattern=/o/headless-commerce-admin-order/*",
+		"url-pattern=/o/headless-commerce-admin-pricing/*",
+		"url-pattern=/o/headless-commerce-admin-shipment/*",
+		"url-pattern=/o/headless-commerce-admin-site-setting/*",
+		"url-pattern=/o/headless-commerce-delivery-cart/*",
+		"url-pattern=/o/headless-commerce-delivery-catalog/*",
+		"url-pattern=/o/headless-commerce-machine-learning/*",
+		"url-pattern=/o/headless-commerce-punchout/*"
 	},
 	service = Filter.class
 )

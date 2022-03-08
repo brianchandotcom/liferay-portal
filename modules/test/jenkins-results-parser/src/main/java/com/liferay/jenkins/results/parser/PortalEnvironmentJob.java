@@ -22,6 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -37,24 +39,61 @@ public class PortalEnvironmentJob
 	public List<String> getJobPropertyOptions() {
 		List<String> jobPropertyOptions = super.getJobPropertyOptions();
 
-		jobPropertyOptions.add(getPortalBranchName());
+		jobPropertyOptions.add(_portalUpstreamBranchName);
 
 		return jobPropertyOptions;
 	}
 
 	@Override
+	public JSONObject getJSONObject() {
+		if (jsonObject != null) {
+			return jsonObject;
+		}
+
+		jsonObject = super.getJSONObject();
+
+		jsonObject.put(
+			"portal_upstream_branch_name", _portalUpstreamBranchName);
+
+		return jsonObject;
+	}
+
+	@Override
 	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
 		return GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-			getPortalBranchName());
+			_portalUpstreamBranchName);
+	}
+
+	protected PortalEnvironmentJob(JSONObject jsonObject) {
+		super(jsonObject);
+
+		_portalUpstreamBranchName = jsonObject.getString(
+			"portal_upstream_branch_name");
+
+		_initialize();
 	}
 
 	protected PortalEnvironmentJob(
-		String jobName, BuildProfile buildProfile, String portalBranchName) {
+		String jobName, BuildProfile buildProfile,
+		String portalUpstreamBranchName) {
 
 		super(jobName, buildProfile);
 
-		_portalBranchName = portalBranchName;
+		_portalUpstreamBranchName = portalUpstreamBranchName;
 
+		_initialize();
+	}
+
+	@Override
+	protected Set<String> getRawBatchNames() {
+		JobProperty jobProperty = getJobProperty("environment.job.names");
+
+		recordJobProperty(jobProperty);
+
+		return getSetFromString(jobProperty.getValue());
+	}
+
+	private void _initialize() {
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
 			getPortalGitWorkingDirectory();
 
@@ -72,19 +111,6 @@ public class PortalEnvironmentJob
 				"commands/dependencies/test-environment.properties"));
 	}
 
-	protected String getPortalBranchName() {
-		return _portalBranchName;
-	}
-
-	@Override
-	protected Set<String> getRawBatchNames() {
-		JobProperty jobProperty = getJobProperty("environment.job.names");
-
-		recordJobProperty(jobProperty);
-
-		return getSetFromString(jobProperty.getValue());
-	}
-
-	private final String _portalBranchName;
+	private final String _portalUpstreamBranchName;
 
 }

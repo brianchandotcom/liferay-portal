@@ -19,23 +19,74 @@ import java.io.File;
 import java.util.Collections;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class RootCauseAnalysisToolJob
 	extends BaseJob implements PortalTestClassJob {
 
-	public RootCauseAnalysisToolJob(
-		String jobName, BuildProfile buildProfile, String portalBranchName) {
+	@Override
+	public Set<String> getDistTypes() {
+		return Collections.emptySet();
+	}
+
+	public GitWorkingDirectory getJenkinsGitWorkingDirectory() {
+		return _jenkinsGitWorkingDirectory;
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		if (jsonObject != null) {
+			return jsonObject;
+		}
+
+		jsonObject = super.getJSONObject();
+
+		jsonObject.put(
+			"portal_upstream_branch_name", _portalUpstreamBranchName);
+
+		return jsonObject;
+	}
+
+	@Override
+	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
+		return _portalGitWorkingDirectory;
+	}
+
+	@Override
+	public boolean isSegmentEnabled() {
+		return true;
+	}
+
+	protected RootCauseAnalysisToolJob(JSONObject jsonObject) {
+		super(jsonObject);
+
+		_portalUpstreamBranchName = jsonObject.getString(
+			"portal_upstream_branch_name");
+
+		_initialize();
+	}
+
+	protected RootCauseAnalysisToolJob(
+		String jobName, BuildProfile buildProfile,
+		String portalUpstreamBranchName) {
 
 		super(jobName, buildProfile);
 
+		_portalUpstreamBranchName = portalUpstreamBranchName;
+
+		_initialize();
+	}
+
+	private void _initialize() {
 		_jenkinsGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newJenkinsGitWorkingDirectory();
 
 		_portalGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-				portalBranchName);
+				_portalUpstreamBranchName);
 
 		jobPropertiesFiles.add(
 			new File(
@@ -53,26 +104,8 @@ public class RootCauseAnalysisToolJob
 				"test.properties"));
 	}
 
-	@Override
-	public Set<String> getDistTypes() {
-		return Collections.emptySet();
-	}
-
-	public GitWorkingDirectory getJenkinsGitWorkingDirectory() {
-		return _jenkinsGitWorkingDirectory;
-	}
-
-	@Override
-	public PortalGitWorkingDirectory getPortalGitWorkingDirectory() {
-		return _portalGitWorkingDirectory;
-	}
-
-	@Override
-	public boolean isSegmentEnabled() {
-		return true;
-	}
-
-	private final GitWorkingDirectory _jenkinsGitWorkingDirectory;
-	private final PortalGitWorkingDirectory _portalGitWorkingDirectory;
+	private GitWorkingDirectory _jenkinsGitWorkingDirectory;
+	private PortalGitWorkingDirectory _portalGitWorkingDirectory;
+	private final String _portalUpstreamBranchName;
 
 }

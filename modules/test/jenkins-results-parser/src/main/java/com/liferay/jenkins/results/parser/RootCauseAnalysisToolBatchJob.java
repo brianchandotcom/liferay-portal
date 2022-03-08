@@ -16,16 +16,29 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class RootCauseAnalysisToolBatchJob extends RootCauseAnalysisToolJob {
 
-	public RootCauseAnalysisToolBatchJob(
-		String jobName, BuildProfile buildProfile, String portalBranchName) {
+	protected RootCauseAnalysisToolBatchJob(JSONObject jsonObject) {
+		super(jsonObject);
 
-		super(jobName, buildProfile, portalBranchName);
+		_initialize();
+	}
 
+	protected RootCauseAnalysisToolBatchJob(
+		String jobName, BuildProfile buildProfile,
+		String portalUpstreamBranchName) {
+
+		super(jobName, buildProfile, portalUpstreamBranchName);
+
+		_initialize();
+	}
+
+	private void _initialize() {
 		GitWorkingDirectory jenkinsGitWorkingDirectory =
 			getJenkinsGitWorkingDirectory();
 

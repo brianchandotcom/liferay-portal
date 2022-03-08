@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*"
 	},
 	"name": "@liferay/commerce-order-content-web",
 	"scripts": {

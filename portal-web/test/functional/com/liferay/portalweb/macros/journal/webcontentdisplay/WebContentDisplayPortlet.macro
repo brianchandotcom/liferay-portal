@@ -563,6 +563,14 @@ definition {
 		}
 	}
 
+	macro viewMenuItem {
+		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = "${webContentTitle}");
+
+		for (var menuItem : list "${menuItemList}") {
+			MenuItem.viewPresent(menuItem = "${menuItem}");
+		}
+	}
+
 	macro viewMessage {
 		if (isSet(recycleBinWebContentTitle)) {
 			AssertTextEquals.assertPartialText(

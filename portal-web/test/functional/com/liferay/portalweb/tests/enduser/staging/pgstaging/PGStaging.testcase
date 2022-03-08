@@ -248,8 +248,12 @@ definition {
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 
-		WebContent.viewEditWCViaWCD(
+		WebContentDisplayPortlet.viewContent(
 			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		WebContentDisplayPortlet.viewMenuItem(
+			menuItemList = "Edit Web Content",
 			webContentTitle = "Web Content Title");
 
 		JSONStaging.enableLocalStaging(
@@ -285,8 +289,12 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		WebContent.viewEditWCViaWCD(
+		WebContentDisplayPortlet.viewContent(
 			webContentContent = "Web Content Content",
+			webContentTitle = "Web Content Title");
+
+		WebContentDisplayPortlet.viewMenuItem(
+			menuItemList = "Edit Web Content",
 			webContentTitle = "Web Content Title");
 	}
 

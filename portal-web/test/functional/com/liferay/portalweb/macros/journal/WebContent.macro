@@ -2004,19 +2004,6 @@ definition {
 		}
 	}
 
-	macro viewEditWCViaWCD {
-		AssertElementPresent(
-			index = "1",
-			locator1 = "WCD#WEB_CONTENT_CONTENT");
-
-		WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = "${webContentTitle}");
-
-		AssertTextEquals(
-			key_menuItem = "Edit Web Content",
-			locator1 = "MenuItem#ANY_MENU_ITEM",
-			value1 = "Edit Web Content");
-	}
-
 	macro viewEmailConfigurationCP {
 		SiteAdmin.gotoPortletConfiguration();
 

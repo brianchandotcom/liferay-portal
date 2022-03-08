@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JavaAPISignatureCheck" files="layout-api/src/main/java/com/liferay/layout/list/retriever/DefaultLayoutListRetrieverContext\.java" />
-	</source-check>
-</suppressions>

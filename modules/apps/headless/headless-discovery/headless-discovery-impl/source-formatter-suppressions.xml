@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<source-check>
-		<suppress checks="JavaAPISignatureCheck" files="src/main/java/com/liferay/headless/discovery/internal/jaxrs/application/HeadlessDiscoveryAPIApplication\.java" />
-	</source-check>
-</suppressions>

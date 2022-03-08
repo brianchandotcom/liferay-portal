@@ -87,7 +87,7 @@ const GenerateNewDXPKey = ({accountKey, productGroupName, sessionId}) => {
 	);
 
 	const hasNotPermanentLicence =
-		generateFormValues?.allowPermanentLicenses === false ||
+		!generateFormValues?.allowPermanentLicenses ||
 		selectedKeyType?.includes('Virtual Cluster');
 
 	return (

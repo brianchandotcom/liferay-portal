@@ -623,4 +623,33 @@ definition {
 		}
 	}
 
+	macro viewWithWorkflow {
+		AssertTextEquals(
+			locator1 = "Message#ERROR_3",
+			value1 = "${webContentTitle} is not approved.");
+
+		AssertClick(
+			locator1 = "Message#ERROR_3_LINK",
+			value1 = "${webContentTitle} is not approved.");
+
+		AssertTextEquals(
+			key_status = "Pending",
+			locator1 = "WCEditWebContent#WORKFLOW_STATUS",
+			value1 = "Pending");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "${webContentTitle}");
+
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "content",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+		AssertTextEquals(
+			locator1 = "CKEditor#BODY",
+			value1 = "${webContentContent}");
+
+		SelectFrameTop();
+	}
+
 }

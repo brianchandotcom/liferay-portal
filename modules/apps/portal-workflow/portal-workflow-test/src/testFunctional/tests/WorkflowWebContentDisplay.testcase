@@ -62,7 +62,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		WebContent.viewWithWorkflowPGViaWCD(
+		WebContentDisplayPortlet.viewWithWorkflow(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title",
 			workflowTask = "Review");
@@ -76,7 +76,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		WebContent.viewWithWorkflowPGViaWCD(
+		WebContentDisplayPortlet.viewWithWorkflow(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title",
 			workflowTask = "Review");
@@ -125,7 +125,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Web Content Display Page");
 
-		WebContent.viewWithWorkflowPGViaWCD(
+		WebContentDisplayPortlet.viewWithWorkflow(
 			webContentContent = "WC WebContent Content",
 			webContentTitle = "WC WebContent Title",
 			workflowTask = "Update");

@@ -51,7 +51,7 @@ const Suite = () => {
 			setHeading([
 				{
 					category: i18n.translate('project').toUpperCase(),
-					path: `/project/${testrayProject.testrayProjectId}/suites`,
+					path: `/project/${testrayProject.id}/suites`,
 					title: testrayProject.name,
 				},
 				{

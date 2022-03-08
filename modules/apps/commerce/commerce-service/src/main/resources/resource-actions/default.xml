@@ -94,6 +94,7 @@
 				<action-key>MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES</action-key>
 				<action-key>MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS</action-key>
 				<action-key>MANAGE_COMMERCE_ORDERS</action-key>
+				<action-key>VIEW_BILLING_ADDRESS</action-key>
 				<action-key>VIEW_COMMERCE_ORDERS</action-key>
 				<action-key>VIEW_OPEN_COMMERCE_ORDERS</action-key>
 			</supports>

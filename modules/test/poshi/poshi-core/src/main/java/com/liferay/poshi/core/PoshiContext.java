@@ -512,62 +512,57 @@ public class PoshiContext {
 			poshiFileIncludes.toArray(new String[0]), "default/testFunctional",
 			"testFunctional");
 
-		String testBaseDirName = PropsUtil.get("test.base.dir.name");
+		if (((baseDirNames == null) || (baseDirNames.length == 0)) &&
+			(Validator.isNull(PropsValues.TEST_BASE_DIR_NAME) ||
+			 PropsValues.TEST_BASE_DIR_NAME.isEmpty())) {
 
-		if ((baseDirNames == null) || (baseDirNames.length == 0)) {
-			if ((testBaseDirName == null) || testBaseDirName.isEmpty()) {
-				throw new RuntimeException("Please set 'test.base.dir.name'");
-			}
-
-			baseDirNames = new String[] {testBaseDirName};
+			throw new RuntimeException("Please set 'test.base.dir.name'");
 		}
 
-		String testSubrepoDirs = PropsUtil.get("test.subrepo.dirs");
+		List<URL> poshiURLs = new ArrayList<>();
 
-		if ((testSubrepoDirs != null) && !testSubrepoDirs.isEmpty()) {
-			baseDirNames = ArrayUtils.addAll(
-				baseDirNames, StringUtil.split(testSubrepoDirs));
+		Set<String> testDirNames = new HashSet<>();
+
+		if (Validator.isNotNull(baseDirNames)) {
+			Collections.addAll(testDirNames, baseDirNames);
 		}
 
-		String testIncludeDirNames = PropsUtil.get("test.include.dir.names");
-
-		if ((testIncludeDirNames != null) && !testIncludeDirNames.isEmpty()) {
-			Set<String> testIncludeDirPaths = new HashSet<>();
-
-			for (String testIncludeDirName :
-					StringUtil.split(testIncludeDirNames)) {
-
-				File testIncludeDir = new File(testIncludeDirName);
-
-				if (!testIncludeDir.exists()) {
-					testIncludeDir = new File(
-						testBaseDirName, testIncludeDirName);
-				}
-
-				if (!testIncludeDir.exists()) {
-					continue;
-				}
-
-				testIncludeDirPaths.add(testIncludeDir.getCanonicalPath());
-			}
-
-			baseDirNames = ArrayUtils.addAll(baseDirNames, testIncludeDirNames);
+		if (Validator.isNotNull(PropsValues.TEST_BASE_DIR_NAME)) {
+			testDirNames.add(PropsValues.TEST_BASE_DIR_NAME);
 		}
 
-		String testBaseDirNames = PropsUtil.get("test.base.dir.names");
-
-		if ((testBaseDirNames != null) && !testBaseDirNames.isEmpty()) {
-			String[] testBaseDirNamesList = testBaseDirNames.split(",");
-
-			for (String testDirName : testBaseDirNamesList) {
-				if ((testDirName != null) && !testDirName.isEmpty()) {
-					baseDirNames = ArrayUtils.addAll(
-						baseDirNames, StringUtil.split(testDirName));
-				}
-			}
+		if (Validator.isNotNull(PropsValues.TEST_DIRS)) {
+			Collections.addAll(testDirNames, PropsValues.TEST_DIRS);
 		}
 
-		_readPoshiFiles(poshiFileIncludes.toArray(new String[0]), baseDirNames);
+		if (Validator.isNotNull(PropsValues.TEST_SUBREPO_DIRS)) {
+			Collections.addAll(testDirNames, PropsValues.TEST_SUBREPO_DIRS);
+		}
+
+		for (String testDirName : testDirNames) {
+			poshiURLs.addAll(
+				_getPoshiURLs(
+					poshiFileIncludes.toArray(new String[0]), testDirName));
+		}
+
+		Set<String> testSupportDirNames = new HashSet<>();
+
+		if (Validator.isNotNull(PropsValues.TEST_INCLUDE_DIR_NAMES)) {
+			Collections.addAll(
+				testSupportDirNames, PropsValues.TEST_INCLUDE_DIR_NAMES);
+		}
+
+		if (Validator.isNotNull(PropsValues.TEST_SUPPORT_DIRS)) {
+			Collections.addAll(
+				testSupportDirNames, PropsValues.TEST_SUPPORT_DIRS);
+		}
+
+		for (String testSupportDirName : testSupportDirNames) {
+			poshiURLs.addAll(
+				_getPoshiURLs(POSHI_SUPPORT_FILE_INCLUDES, testSupportDirName));
+		}
+
+		_readPoshiFiles(poshiURLs);
 		_readSeleniumFiles();
 
 		_initComponentCommandNamesMap();
@@ -1140,16 +1135,7 @@ public class PoshiContext {
 		}
 	}
 
-	private static void _readPoshiFiles(
-			String[] includes, String... baseDirNames)
-		throws Exception {
-
-		List<URL> poshiURLs = new ArrayList<>();
-
-		for (String baseDirName : baseDirNames) {
-			poshiURLs.addAll(_getPoshiURLs(includes, baseDirName));
-		}
-
+	private static void _readPoshiFiles(List<URL> poshiURLs) throws Exception {
 		_storeRootElements(poshiURLs, _DEFAULT_NAMESPACE);
 
 		if (!_duplicateLocatorMessages.isEmpty()) {

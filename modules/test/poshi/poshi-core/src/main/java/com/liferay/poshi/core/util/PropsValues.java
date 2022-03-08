@@ -162,6 +162,9 @@ public class PropsValues {
 	public static final String TEST_DEPENDENCIES_DIR_NAME = PropsUtil.get(
 		"test.dependencies.dir.name");
 
+	public static final String[] TEST_DIRS = StringUtil.split(
+		PropsUtil.get("test.dirs"));
+
 	public static final String[] TEST_INCLUDE_DIR_NAMES = StringUtil.split(
 		PropsUtil.get("test.include.dir.names"));
 
@@ -190,6 +193,9 @@ public class PropsValues {
 
 	public static final String[] TEST_SUBREPO_DIRS = StringUtil.split(
 		PropsUtil.get("test.subrepo.dirs"));
+
+	public static final String[] TEST_SUPPORT_DIRS = StringUtil.split(
+		PropsUtil.get("test.support.dirs"));
 
 	public static final int TEST_TESTCASE_MAX_RETRIES = GetterUtil.getInteger(
 		PropsUtil.get("test.testcase.max.retries"));

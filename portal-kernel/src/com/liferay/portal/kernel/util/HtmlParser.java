@@ -14,12 +14,20 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.util.function.Function;
+import java.util.function.Predicate;
+
 /**
  * @author Guilherme Camacho
  */
 public interface HtmlParser {
 
 	public String extractText(String html);
+
+	public String findAttributeValue(
+		Predicate<Function<String, String>> findValuePredicate,
+		Function<Function<String, String>, String> returnValueFunction,
+		String html, String startTagName);
 
 	public String render(String html);
 

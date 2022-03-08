@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.util.function.Function;
+import java.util.function.Predicate;
+
 /**
  * Provides utility methods for rendering HTML text.
  * This class uses XSS recommendations from <a
@@ -42,6 +45,15 @@ public class HtmlParserUtil {
 	 */
 	public static String extractText(String html) {
 		return _htmlParser.extractText(html);
+	}
+
+	public static String findAttributeValue(
+		Predicate<Function<String, String>> findValuePredicate,
+		Function<Function<String, String>, String> returnValueFunction,
+		String html, String startTagName) {
+
+		return _htmlParser.findAttributeValue(
+			findValuePredicate, returnValueFunction, html, startTagName);
 	}
 
 	/**

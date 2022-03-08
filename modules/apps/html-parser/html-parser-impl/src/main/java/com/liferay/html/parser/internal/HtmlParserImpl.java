@@ -16,7 +16,12 @@ package com.liferay.html.parser.internal;
 
 import com.liferay.portal.kernel.util.HtmlParser;
 
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
+
 import net.htmlparser.jericho.Source;
+import net.htmlparser.jericho.StartTag;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -57,6 +62,28 @@ public class HtmlParserImpl implements HtmlParser {
 		Source source = new Source(html);
 
 		return String.valueOf(source.getTextExtractor());
+	}
+
+	@Override
+	public String findAttributeValue(
+		Predicate<Function<String, String>> findValuePredicate,
+		Function<Function<String, String>, String> returnValueFunction,
+		String html, String startTagName) {
+
+		Source clientSource = new Source(html);
+
+		List<StartTag> startTags = clientSource.getAllStartTags(startTagName);
+
+		for (StartTag startTag : startTags) {
+			boolean found = findValuePredicate.test(
+				startTag::getAttributeValue);
+
+			if (found) {
+				return returnValueFunction.apply(startTag::getAttributeValue);
+			}
+		}
+
+		return null;
 	}
 
 	/**

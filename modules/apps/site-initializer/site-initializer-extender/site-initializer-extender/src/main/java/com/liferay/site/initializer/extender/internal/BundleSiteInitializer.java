@@ -90,6 +90,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
@@ -101,6 +102,7 @@ import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -210,6 +212,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
 		ObjectEntryLocalService objectEntryLocalService, Portal portal,
 		RemoteAppEntryLocalService remoteAppEntryLocalService,
+		ResourceActionLocalService resourceActionLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService,
 		RoleLocalService roleLocalService,
 		SAPEntryLocalService sapEntryLocalService,
@@ -262,6 +265,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectEntryLocalService = objectEntryLocalService;
 		_portal = portal;
 		_remoteAppEntryLocalService = remoteAppEntryLocalService;
+		_resourceActionLocalService = resourceActionLocalService;
 		_resourcePermissionLocalService = resourcePermissionLocalService;
 		_roleLocalService = roleLocalService;
 		_sapEntryLocalService = sapEntryLocalService;
@@ -1892,6 +1896,24 @@ public class BundleSiteInitializer implements SiteInitializer {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+			ResourceAction resourceAction =
+				_resourceActionLocalService.fetchResourceAction(
+					jsonObject.getString("resourceName"),
+					jsonObject.getString("actionId"));
+
+			if (resourceAction == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"No resource action found with resourceName ",
+							jsonObject.getString("resourceName"),
+							" with the actionId: ",
+							jsonObject.getString("actionId")));
+				}
+
+				continue;
+			}
+
 			Role role = _roleLocalService.fetchRole(
 				serviceContext.getCompanyId(),
 				jsonObject.getString("roleName"));
@@ -3009,6 +3031,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectRelationshipResourceFactory;
 	private final Portal _portal;
 	private final RemoteAppEntryLocalService _remoteAppEntryLocalService;
+	private final ResourceActionLocalService _resourceActionLocalService;
 	private final ResourcePermissionLocalService
 		_resourcePermissionLocalService;
 	private final RoleLocalService _roleLocalService;

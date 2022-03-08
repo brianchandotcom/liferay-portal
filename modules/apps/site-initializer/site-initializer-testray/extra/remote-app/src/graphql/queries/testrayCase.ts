@@ -39,7 +39,7 @@ export const getTestrayCases = gql`
 		testrayCases(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
 				type: "C_TestrayCase"
-				path: "testraycases?page={args.page}&pageSize={args.pageSize}&nestedFields=testrayComponent,testrayCaseType"
+				path: "testraycases?page={args.page}&pageSize={args.pageSize}&nestedFields=testrayComponent.testrayTeam,testrayCaseType"
 			) {
 			items {
 				caseNumber
@@ -53,13 +53,16 @@ export const getTestrayCases = gql`
 				priority
 				steps
 				stepsType
-				testrayCaseId
+				id: testrayCaseId
 				testrayCaseResult
 				testrayCaseType: r_caseCaseType_c_testrayCaseType {
 					name
 				}
 				testrayComponent: r_casesComponents_c_testrayComponent {
 					name
+					testrayTeam: r_componentTeam_c_testrayTeam {
+						name
+					}
 				}
 			}
 			lastPage

@@ -20,11 +20,11 @@ export type TestrayRequirement = {
 	components: string;
 	description: string;
 	descriptionType: string;
+	id: number;
 	key: string;
 	linkTitle: string;
 	linkURL: string;
 	summary: string;
-	testrayRequirementId: number;
 };
 
 export const getTestrayRequirements = gql`

@@ -18,8 +18,8 @@ import {testrayProjectFragment} from '../fragments';
 
 export type TestrayProject = {
 	description: string;
+	id: number;
 	name: string;
-	testrayProjectId: number;
 };
 
 export const getTestrayProjects = gql`

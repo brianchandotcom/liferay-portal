@@ -100,6 +100,47 @@ public abstract class BaseClientTestCase {
 		_bundleActivator.stop(_bundleContext);
 	}
 
+	protected static Invocation.Builder getInvocationBuilder(
+		String hostname, WebTarget webTarget,
+		Function<Invocation.Builder, Invocation.Builder>
+			invocationBuilderFunction) {
+
+		Invocation.Builder invocationBuilder = webTarget.request();
+
+		if (hostname != null) {
+			invocationBuilder = invocationBuilder.header("Host", hostname);
+		}
+
+		return invocationBuilderFunction.apply(invocationBuilder);
+	}
+
+	protected static WebTarget getOAuth2WebTarget() {
+		WebTarget webTarget = getWebTarget();
+
+		webTarget = webTarget.path("o");
+		webTarget = webTarget.path("oauth2");
+
+		return webTarget;
+	}
+
+	protected static WebTarget getTokenWebTarget() {
+		WebTarget webTarget = getOAuth2WebTarget();
+
+		return webTarget.path("token");
+	}
+
+	protected static WebTarget getWebTarget() {
+		ClientBuilder clientBuilder = new ClientBuilderImpl();
+
+		Client client = clientBuilder.build();
+
+		RuntimeDelegate runtimeDelegate = new RuntimeDelegateImpl();
+
+		UriBuilder uriBuilder = runtimeDelegate.createUriBuilder();
+
+		return client.target(uriBuilder.uri("http://localhost:8080"));
+	}
+
 	protected Invocation.Builder authorize(
 		Invocation.Builder invocationBuilder, String token) {
 
@@ -431,20 +472,6 @@ public abstract class BaseClientTestCase {
 		return getInvocationBuilder(hostname, webTarget, Function.identity());
 	}
 
-	protected Invocation.Builder getInvocationBuilder(
-		String hostname, WebTarget webTarget,
-		Function<Invocation.Builder, Invocation.Builder>
-			invocationBuilderFunction) {
-
-		Invocation.Builder invocationBuilder = webTarget.request();
-
-		if (hostname != null) {
-			invocationBuilder = invocationBuilder.header("Host", hostname);
-		}
-
-		return invocationBuilderFunction.apply(invocationBuilder);
-	}
-
 	protected WebTarget getJsonWebTarget(String... paths) {
 		WebTarget webTarget = getWebTarget();
 
@@ -464,15 +491,6 @@ public abstract class BaseClientTestCase {
 		webTarget = webTarget.path("c");
 		webTarget = webTarget.path("portal");
 		webTarget = webTarget.path("login");
-
-		return webTarget;
-	}
-
-	protected WebTarget getOAuth2WebTarget() {
-		WebTarget webTarget = getWebTarget();
-
-		webTarget = webTarget.path("o");
-		webTarget = webTarget.path("oauth2");
 
 		return webTarget;
 	}
@@ -544,24 +562,6 @@ public abstract class BaseClientTestCase {
 
 	protected Invocation.Builder getTokenInvocationBuilder(String hostname) {
 		return getInvocationBuilder(hostname, getTokenWebTarget());
-	}
-
-	protected WebTarget getTokenWebTarget() {
-		WebTarget webTarget = getOAuth2WebTarget();
-
-		return webTarget.path("token");
-	}
-
-	protected WebTarget getWebTarget() {
-		ClientBuilder clientBuilder = new ClientBuilderImpl();
-
-		Client client = clientBuilder.build();
-
-		RuntimeDelegate runtimeDelegate = new RuntimeDelegateImpl();
-
-		UriBuilder uriBuilder = runtimeDelegate.createUriBuilder();
-
-		return client.target(uriBuilder.uri("http://localhost:8080"));
 	}
 
 	protected WebTarget getWebTarget(String... paths) {

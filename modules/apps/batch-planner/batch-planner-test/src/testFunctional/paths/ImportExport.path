@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>ImportExport</title>
+</head>//div[not(contains(@class,'hide'))]/div[label[contains(.,'${key_selectFieldLabel}')]]/select
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ImportExport</td></tr>
+</thead>//div[not(contains(@class,'hide'))]/div[label[contains(.,'Headless Endpoint')]]/select
+
+<tbody>
+<tr>
+	<td>EXECUTION_ENTRY</td>
+	<td>//table[contains(@class,'table-list')]//td[contains(@class,'lfr-title-column')]/a[contains(text(),'${key_entityType} Plan Execution')]/following::td[contains(@class,'action-column') and contains(text(),'${key_executionAction}')]/following-sibling::td[contains(@class,'type-column') and contains(text(),'${key_entityType}')]/following-sibling::td[contains(@class,'status-column')]//h6[contains(text(),'${key_executionStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXECUTION_SUCCESS</td>
+	<td>//div[contains(@class,'progress-group-feedback')]//*[name()='svg' and contains(@class,'check-circle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMPORT_CHOOSE_FILE</td>
+	<td>//div[contains(@class,'form-group')]/input[contains(@id,'importFile')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMPORT_MAPPING_SELECT</td>
+	<td>//div[contains(@class,'import-mapping-table')]//select[contains(@id,'input-field-${key_destinationField}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT</td>
+	<td>//div[not(contains(@class,'hide'))]/div[label[contains(.,'${key_selectFieldLabel}')]]/select[not(@disabled)]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

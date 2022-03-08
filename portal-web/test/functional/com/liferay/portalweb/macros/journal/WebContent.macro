@@ -2160,16 +2160,6 @@ definition {
 			locator1 = "AP#ASSET_ELLIPSIS_ICON");
 	}
 
-	macro viewNoEditWCViaWCD {
-		AssertElementPresent(
-			index = "1",
-			locator1 = "WCD#WEB_CONTENT_CONTENT");
-
-		AssertElementNotPresent(
-			key_portletName = "Web Content Display",
-			locator1 = "Portlet#SPECIFIC_BORDERLESS_ELLIPSIS_ICON");
-	}
-
 	macro viewNoPermissionCP {
 		SiteAdmin.viewPortletTitle(portletTitle = "Web Content");
 

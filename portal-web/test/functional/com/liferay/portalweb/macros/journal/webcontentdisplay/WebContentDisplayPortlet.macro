@@ -571,6 +571,21 @@ definition {
 		}
 	}
 
+	macro viewMenuItemNotPresent {
+		if (IsElementPresent(key_webContentTitle = "${webContentTitle}", locator1 = "WCD#ARTICLE_ELLIPSIS_ICON")) {
+			WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = "${webContentTitle}");
+
+			for (var menuItem : list "${menuItemList}") {
+				MenuItem.viewNotPresent(menuItem = "${menuItem}");
+			}
+		}
+		else {
+			AssertElementNotPresent(
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
+		}
+	}
+
 	macro viewMessage {
 		if (isSet(recycleBinWebContentTitle)) {
 			AssertTextEquals.assertPartialText(

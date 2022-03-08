@@ -265,7 +265,9 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Site Name");
 
-		WebContent.viewNoEditWCViaWCD(webContentContent = "Web Content Content");
+		WebContentDisplayPortlet.viewMenuItemNotPresent(
+			menuItemList = "Edit Web Content",
+			webContentTitle = "Web Content Title");
 
 		WebContent.viewNoEditWCViaAP(assetTitle = "Web Content Title");
 

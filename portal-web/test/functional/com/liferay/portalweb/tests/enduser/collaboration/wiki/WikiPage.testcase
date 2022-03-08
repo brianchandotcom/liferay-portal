@@ -672,8 +672,7 @@ definition {
 		WikiPage.viewNoChildPagePGViaAllPages(
 			wikiChildPageTitle = "Wiki FrontPage Child Page Title",
 			wikiPageRevision = "1.1",
-			wikiPageTitle = "FrontPage",
-			wikiPageUsername = "Test Test");
+			wikiPageTitle = "FrontPage");
 	}
 
 	@description = "This ensures that javascript can not be viewed in wiki page content."

@@ -125,6 +125,26 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro edit {
+		WebContent.addCP(webContentTitle = "${webContentTitleEdit}");
+
+		if (isSet(webContentTextSingleLine)) {
+			Type(
+				key_fieldFieldLabel = "Text",
+				locator1 = "WCEditWebContent#TEXT_INPUT",
+				value1 = "${webContentTextSingleLine}");
+		}
+		else {
+			CKEditor.addContentInWebContent(
+				content = "${webContentContentEdit}",
+				fieldLabel = "content");
+		}
+
+		PortletEntry.publish();
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 	macro editTemplate {
 		if ("${editTemplateButton}" == "true") {
 			WebContentDisplayPortlet.gotoEditTemplate(webContentTitle = "${webContentTitle}");

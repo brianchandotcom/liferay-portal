@@ -787,7 +787,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				menuItem = "Edit Web Content",
 				webContentTitle = "Web Content Title");
 
-			WebContent.editPGViaWCD(
+			WebContentDisplayPortlet.edit(
 				webContentContentEdit = "Web Content Content Edit",
 				webContentTitleEdit = "Web Content Title Edit");
 		}

@@ -1257,46 +1257,6 @@ definition {
 		AssertElementPresent(locator1 = "TextInput#REQUIRED_ALERT");
 	}
 
-	macro editPGViaWCD {
-		WebContent.addCP(webContentTitle = "${webContentTitleEdit}");
-
-		if (isSet(webContentText)) {
-			Type(
-				key_fieldFieldLabel = "Text",
-				locator1 = "WCEditWebContent#TEXT_INPUT",
-				value1 = "${webContentText}");
-		}
-		else {
-			CKEditor.addContentInWebContent(
-				content = "${webContentContentEdit}",
-				fieldLabel = "content");
-		}
-
-		Click(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
-
-		SelectFrame(value1 = "relative=top");
-
-		if ("${webContentJavascript}" == "true") {
-			AssertTextEquals(
-				locator1 = "//div[@class='journal-content-article']//span[contains(@class,'portlet-title-text')]",
-				value1 = "${embeddedPortletTitle}");
-		}
-		else if (isSet(templateName)) {
-			AssertTextEquals(
-				index = "1",
-				locator1 = "WCD#WEB_CONTENT_CONTENT",
-				value1 = "${webContentContentEdit}");
-		}
-		else {
-			AssertTextEquals(
-				index = "1",
-				locator1 = "WCD#WEB_CONTENT_CONTENT",
-				value1 = "${webContentContentEdit}");
-		}
-	}
-
 	macro editViaContentPanel {
 		PageEditor.gotoEllipsisMenuItemInPageContentPanel(
 			itemName = "${webContentTitle}",

@@ -1029,11 +1029,8 @@ definition {
 			menuItem = "Edit Web Content",
 			webContentTitle = "WC WebContent Title");
 
-		WebContent.editPGViaWCD(
-			structureName = "Global WC Structure Name",
-			templateName = "WC Template2 Name",
-			webContentContentEdit = "WC WebContent Text Edit",
-			webContentText = "WC WebContent Text Edit",
+		WebContentDisplayPortlet.edit(
+			webContentTextSingleLine = "WC WebContent Text Edit",
 			webContentTitleEdit = "WC WebContent Title Edit");
 
 		WebContentDisplayPortlet.viewContent(

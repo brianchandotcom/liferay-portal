@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -250,8 +251,12 @@ public class DLAppServiceWhenAddingAFileEntryTest extends BaseDLAppTestCase {
 	@Test(expected = FileSizeException.class)
 	public void testShouldFailIfSizeLimitExceeded() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				DLAppServiceTestUtil.getConfigurationTemporarySwapper(
-					"fileMaxSize", 1L)) {
+				new ConfigurationTemporarySwapper(
+					"com.liferay.document.library.internal.configuration." +
+						"DLSizeLimitConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"fileMaxSize", 1L
+					).build())) {
 
 			String fileName = RandomTestUtil.randomString();
 

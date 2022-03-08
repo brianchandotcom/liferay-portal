@@ -3566,7 +3566,7 @@ definition {
 
 		var character18 = '''}''';
 
-		var character19 = '''\''';
+		var character19 = '''?''';
 
 		var character20 = '''|''';
 
@@ -3584,9 +3584,7 @@ definition {
 		var character27 = '''.''';
 
 		var character28 = '''/''';
-
-		var character29 = '''?''';
-		var character30 = "test space";
+		var character29 = "test space";
 
 		var characterValid = '''_''';
 
@@ -3605,7 +3603,7 @@ definition {
 			fieldFieldLabel = "Text",
 			fieldName = "Text");
 
-		for (var fieldName : list "${character1},${character2},${character3},${character4},${character5},${character6},${character7},${character8},${character9},${character10},${character11},${character12},${character13},${character14},${character15},${character16},${character17}.${character18},${character19},${character20},${character21},${character22},${character23},${character24},${character25},${character26},${character27},${character28},${character29},${character30}") {
+		for (var fieldName : list "${character1},${character2},${character3},${character4},${character5},${character6},${character7},${character8},${character9},${character10},${character11},${character12},${character13},${character14},${character15},${character16},${character17}.${character18},${character19},${character20},${character21},${character22},${character23},${character24},${character25},${character26},${character27},${character28},${character29}") {
 			DynamicDataMapping.editFieldNameInvalidCharacter(
 				field = "Text",
 				fieldFieldLabel = "Text",

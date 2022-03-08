@@ -1446,12 +1446,12 @@ AUI.add(
 						var folderEntryNodeOverlay = folderEntryNode.overlay;
 
 						if (folderEntryNodeOverlay) {
-							folderEntryNodeOverlay.show();
-
 							instance._updateProgress(
 								folderEntryNode.progressBar,
 								0
 							);
+
+							folderEntryNodeOverlay.show();
 						}
 						else {
 							instance._createUploadStatus(folderEntryNode);

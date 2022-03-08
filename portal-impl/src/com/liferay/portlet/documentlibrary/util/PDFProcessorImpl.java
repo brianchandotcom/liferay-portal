@@ -792,19 +792,14 @@ public class PDFProcessorImpl
 					}
 				}
 				else {
-					LiferayPDFBoxConverter liferayConverter =
-						new LiferayPDFBoxConverter(
-							decryptedFile, thumbnailFile, previewFiles,
-							getPreviewType(fileVersion),
-							getThumbnailType(fileVersion),
-							PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
-							PropsValues.
-								DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
-							PropsValues.
-								DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,
-							generatePreview, generateThumbnail);
-
-					liferayConverter.generateImagesPB();
+					LiferayPDFBoxUtil.generateImagesPB(
+						decryptedFile, thumbnailFile, previewFiles,
+						getPreviewType(fileVersion),
+						getThumbnailType(fileVersion),
+						PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
+						PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
+						PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,
+						generatePreview, generateThumbnail);
 				}
 			}
 			catch (TimeoutException timeoutException) {
@@ -1120,13 +1115,10 @@ public class PDFProcessorImpl
 				new Log4jLogFactoryImpl(), _customLogSettings);
 
 			try {
-				LiferayPDFBoxConverter liferayConverter =
-					new LiferayPDFBoxConverter(
-						_inputFile, _thumbnailFile, _previewFiles, _extension,
-						_thumbnailExtension, _dpi, _height, _width,
-						_generatePreview, _generateThumbnail);
-
-				liferayConverter.generateImagesPB();
+				LiferayPDFBoxUtil.generateImagesPB(
+					_inputFile, _thumbnailFile, _previewFiles, _extension,
+					_thumbnailExtension, _dpi, _height, _width,
+					_generatePreview, _generateThumbnail);
 			}
 			catch (Exception exception) {
 				throw new ProcessException(exception);

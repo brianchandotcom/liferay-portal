@@ -26,7 +26,6 @@ import React from 'react';
 import {getImportTaskStatusURL} from '../../../src/main/resources/META-INF/resources/js/BatchPlannerImport';
 import {
 	POLL_INTERVAL,
-	PROCESS_COMPLETED,
 	PROCESS_STARTED,
 } from '../../../src/main/resources/META-INF/resources/js/constants';
 import ImportSubmit from '../../../src/main/resources/META-INF/resources/js/import/ImportSubmit';
@@ -52,9 +51,9 @@ describe('ImportSubmit', () => {
 		const form = document.createElement('form');
 
 		form.innerHTML = `
-            <input name="${BASE_PROPS.portletNamespace}internalFieldName_${internalFieldName}" value="${internalFieldName}" />
-            <input name="${BASE_PROPS.portletNamespace}externalFieldName_${externalFieldName}" value="${externalFieldName}" />
-        `;
+			 <input name="${BASE_PROPS.portletNamespace}internalFieldName_${internalFieldName}" value="${internalFieldName}" />
+			 <input name="${BASE_PROPS.portletNamespace}externalFieldName_${externalFieldName}" value="${externalFieldName}" />
+		 `;
 
 		document.body.appendChild(form);
 
@@ -71,13 +70,13 @@ describe('ImportSubmit', () => {
 		const {getByText} = render(<ImportSubmit {...BASE_PROPS} />);
 
 		act(() => {
-			fireEvent.click(getByText(Liferay.Language.get('import')));
+			fireEvent.click(getByText(Liferay.Language.get('next')));
 		});
 
-		expect(mockApi.called(BASE_PROPS.formImportURL)).toBeTruthy();
+		expect(document.querySelector('.modal-content')).toBeInTheDocument();
 	});
 
-	it('must start polling import status', async () => {
+	it('must start polling import status and enable button when import process is completed', async () => {
 		jest.useFakeTimers();
 		const importTaskStatusURL = getImportTaskStatusURL(mockTaskID);
 
@@ -102,48 +101,27 @@ describe('ImportSubmit', () => {
 		const {getByText} = render(<ImportSubmit {...BASE_PROPS} />);
 
 		act(() => {
-			fireEvent.click(getByText(Liferay.Language.get('import')));
-		});
-
-		await act(async () => {
-			jest.advanceTimersByTime(POLL_INTERVAL);
-		});
-
-		await waitFor(() => {
-			expect(mockApi.called(importTaskStatusURL)).toBeTruthy();
+			fireEvent.click(getByText(Liferay.Language.get('next')));
 		});
 
 		jest.useRealTimers();
-	});
 
-	it('must enable button when import process is completed', async () => {
-		const importTaskStatusURL = getImportTaskStatusURL(mockTaskID);
+		waitFor(() => {
+			expect(
+				getByText(Liferay.Language.get('start-import'))
+			).toBeInTheDocument();
 
-		mockApi.mock(
-			importTaskStatusURL,
-			{
-				body: {
-					className:
-						'com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Product',
-					contentType: 'CSV',
-					endTime: null,
-					errorMessage: null,
-					executeStatus: PROCESS_COMPLETED,
-					id: mockTaskID,
-					processedItemsCount: 25,
-					startTime: '2021-11-10T10:36:08Z',
-					totalItemsCount: 50,
-				},
-			},
-			{sendAsJson: false}
-		);
-		const {getByText} = render(<ImportSubmit {...BASE_PROPS} />);
+			const button = document.querySelector(
+				`[data-testid*="start-import"]`
+			);
+			button.click();
 
-		await act(async () => {
-			fireEvent.click(getByText(Liferay.Language.get('import')));
-		});
+			act(async () => {
+				jest.advanceTimersByTime(POLL_INTERVAL);
+			});
 
-		await waitFor(() => {
+			expect(mockApi.called(importTaskStatusURL)).toBeTruthy();
+
 			expect(
 				getByText(Liferay.Language.get('done'), {
 					selector: 'button',

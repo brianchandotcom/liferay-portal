@@ -46,14 +46,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class UpgradeCompanyIdTest {
 
-	public static final String MAIN_TABLE_NAME = "MainTableTest";
-
-	public static final String NXM_TABLE_NAME = "MainTableTest_Related";
-
-	public static final String RELATED_COLUMN = "mainId";
-
-	public static final int RELATED_KEY = 99999;
-
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
@@ -70,67 +62,76 @@ public class UpgradeCompanyIdTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_upgrader = new UpgradeCompanyIdCustom();
+		_company = null;
 
-		_upgrader.runSQL(
+		_upgradeProcess = new UpgradeCompanyIdCustom();
+
+		_upgradeProcess.runSQL(
 			StringBundler.concat(
-				"create table ", MAIN_TABLE_NAME, " (", RELATED_COLUMN,
+				"create table ", _TABLE_NAME, " (", _COLUMN_NAME,
 				" LONG not null primary key, companyId LONG);"));
 
-		_upgrader.runSQL(
+		_upgradeProcess.runSQL(
 			StringBundler.concat(
-				"create table ", NXM_TABLE_NAME, " (", RELATED_COLUMN,
+				"create table ", _NXM_TABLE_NAME, " (", _COLUMN_NAME,
 				" LONG not null primary key);"));
 
-		_upgrader.runSQL(
+		_upgradeProcess.runSQL(
 			StringBundler.concat(
-				"insert into ", MAIN_TABLE_NAME, " (", RELATED_COLUMN,
-				", companyId) values (", RELATED_KEY,
+				"insert into ", _TABLE_NAME, " (", _COLUMN_NAME,
+				", companyId) values (", _COLUMN_VALUE,
 				", (select max(companyId) from Company));"));
 
-		_upgrader.runSQL(
+		_upgradeProcess.runSQL(
 			StringBundler.concat(
-				"insert into ", NXM_TABLE_NAME, " (", RELATED_COLUMN, ")",
-				" values (", RELATED_KEY, ");"));
+				"insert into ", _NXM_TABLE_NAME, " (", _COLUMN_NAME, ")",
+				" values (", _COLUMN_VALUE, ");"));
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_upgrader.runSQL("drop table " + MAIN_TABLE_NAME);
-		_upgrader.runSQL("drop table " + NXM_TABLE_NAME);
+		_upgradeProcess.runSQL("drop table " + _TABLE_NAME);
+		_upgradeProcess.runSQL("drop table " + _NXM_TABLE_NAME);
 
 		if (_company != null) {
 			_companyLocalService.deleteCompany(_company);
-			_company = null;
 		}
 	}
 
 	@Test
-	public void testUpgradeFrom6_2() throws Exception {
-		_upgrader.upgrade();
+	public void testUpgradeNullColumn() throws Exception {
+		_upgradeProcess.upgrade();
 
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
-				NXM_TABLE_NAME, "companyId", "LONG NOT NULL"));
+				_NXM_TABLE_NAME, "companyId", "LONG NOT NULL"));
 	}
 
 	@Test
 	public void testUpgradeWithNullValues() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		_upgrader.runSQL(
+		_upgradeProcess.runSQL(
 			StringBundler.concat(
-				"insert into ", NXM_TABLE_NAME, " (", RELATED_COLUMN, ")",
-				" values (", RELATED_KEY - 1, ");"));
+				"insert into ", _NXM_TABLE_NAME, " (", _COLUMN_NAME, ")",
+				" values (", _COLUMN_VALUE - 1, ");"));
 
 		try {
-			_upgrader.upgrade();
+			_upgradeProcess.upgrade();
+
 			Assert.fail("Expected exception was not thrown");
 		}
 		catch (Exception exception) {
-			Assert.assertNotNull(exception);
 		}
 	}
+
+	private static final String _COLUMN_NAME = "mainId";
+
+	private static final int _COLUMN_VALUE = 99999;
+
+	private static final String _NXM_TABLE_NAME = "MainTableTest_Related";
+
+	private static final String _TABLE_NAME = "MainTableTest";
 
 	private static Company _company;
 
@@ -139,7 +140,7 @@ public class UpgradeCompanyIdTest {
 
 	private static Connection _connection;
 	private static DBInspector _dbInspector;
-	private static UpgradeCompanyIdCustom _upgrader;
+	private static UpgradeCompanyIdCustom _upgradeProcess;
 
 	private class UpgradeCompanyIdCustom extends UpgradeCompanyId {
 
@@ -147,7 +148,7 @@ public class UpgradeCompanyIdTest {
 		protected TableUpdater[] getTableUpdaters() {
 			return new TableUpdater[] {
 				new CompanyIdNotNullTableUpdater(
-					NXM_TABLE_NAME, MAIN_TABLE_NAME, RELATED_COLUMN)
+					_NXM_TABLE_NAME, _TABLE_NAME, _COLUMN_NAME)
 			};
 		}
 

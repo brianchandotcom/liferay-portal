@@ -27,7 +27,7 @@ import {getColumnsByUserAccess} from './utils/getColumnsByUserAccess';
 
 const MAX_PAGE_SIZE = 9999;
 
-const TeamMembersTable = ({project}) => {
+const TeamMembersTable = ({project, sessionId}) => {
 	const [userAccounts, setUserAccounts] = useState([]);
 	const [isLoadingUserAccounts, setIsLoadingUserAccounts] = useState(false);
 
@@ -94,6 +94,7 @@ const TeamMembersTable = ({project}) => {
 			<TeamMembersTableHeader
 				hasAdminAccess={hasAdminAccess}
 				project={project}
+				sessionId={sessionId}
 				setUserAccounts={setUserAccounts}
 				userAccounts={userAccounts}
 			/>

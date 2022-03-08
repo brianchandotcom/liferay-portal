@@ -12,7 +12,13 @@
 import ClayModal from '@clayui/modal';
 import InviteTeamMembersForm from '../../../../../../common/containers/setup-forms/InviteTeamMembersForm';
 
-const InvitesModal = ({mutateUserData, observer, onClose, project}) => {
+const InvitesModal = ({
+	mutateUserData,
+	observer,
+	onClose,
+	project,
+	sessionId,
+}) => {
 	return (
 		<ClayModal center observer={observer}>
 			<InviteTeamMembersForm
@@ -20,6 +26,7 @@ const InvitesModal = ({mutateUserData, observer, onClose, project}) => {
 				leftButton="Cancel"
 				mutateUserData={mutateUserData}
 				project={project}
+				sessionId={sessionId}
 			/>
 		</ClayModal>
 	);

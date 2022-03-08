@@ -12,9 +12,11 @@
 import {useOutletContext} from 'react-router-dom';
 import ManageProductUser from '../../../components/ManageProductUsers';
 import TeamMembersTable from '../../../containers/TeamMembersTable';
+import {useCustomerPortal} from '../../../context';
 
 const TeamMembers = () => {
 	const {project, subscriptionGroups} = useOutletContext();
+	const [{sessionId}] = useCustomerPortal();
 
 	return (
 		<div>
@@ -27,7 +29,7 @@ const TeamMembers = () => {
 			</div>
 
 			<div className="mt-4">
-				<TeamMembersTable project={project} />
+				<TeamMembersTable project={project} sessionId={sessionId} />
 			</div>
 
 			<div className="mt-5">

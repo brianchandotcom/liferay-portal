@@ -21,6 +21,7 @@ import PopoverIconButton from '../PopoverIconButton';
 const TeamMembersTableHeader = ({
 	hasAdminAccess,
 	project,
+	sessionId,
 	setUserAccounts,
 	userAccounts,
 }) => {
@@ -115,6 +116,7 @@ const TeamMembersTableHeader = ({
 					mutateUserData={handleOnUserInvite}
 					{...modalProps}
 					project={project}
+					sessionId={sessionId}
 				/>
 			)}
 		</div>

@@ -4,8 +4,8 @@
 			"assetVocabularyId": "Test Asset Vocabulary 1",
 			"displayDepth": "0",
 			"displayStyle": {
-				"fileName": "TEST_WIDGET_TEMPLATE_001.ftl",
-				"name": "TEST WIDGET TEMPLATE 001",
+				"fileName": "TEST_WIDGET_TEMPLATE_1.ftl",
+				"name": "TEST WIDGET TEMPLATE 1",
 				"portletClassName": "com.liferay.portal.kernel.theme.NavItem"
 			},
 			"displayStyleGroupId": "",

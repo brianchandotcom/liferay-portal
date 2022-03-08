@@ -1180,12 +1180,12 @@ public class BundleSiteInitializerTest {
 		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
 			group.getGroupId(),
 			_portal.getClassNameId("com.liferay.portal.kernel.theme.NavItem"),
-			"TEST-WIDGET-TEMPLATE-001");
+			"TEST-WIDGET-TEMPLATE-1");
 
 		Assert.assertNotNull(ddmTemplate);
 
 		Assert.assertEquals(
-			"TEST WIDGET TEMPLATE 001",
+			"TEST WIDGET TEMPLATE 1",
 			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
 		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
 	}

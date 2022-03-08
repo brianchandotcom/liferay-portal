@@ -90,35 +90,26 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 			UnicodeProperties typeSettingsUnicodeProperties)
 		throws Exception {
 
-		String[] devices = StringUtil.split(
-			ParamUtil.getString(actionRequest, "devices"));
+		long groupId = liveGroupId;
 
-		for (String device : devices) {
-			String deviceThemeId = ParamUtil.getString(
-				actionRequest, device + "ThemeId");
-			String deviceColorSchemeId = ParamUtil.getString(
-				actionRequest, device + "ColorSchemeId");
-			String deviceCss = ParamUtil.getString(
-				actionRequest, device + "Css");
+		if (stagingGroupId > 0) {
+			groupId = stagingGroupId;
+		}
 
-			if (Validator.isNotNull(deviceThemeId)) {
-				deviceColorSchemeId = ActionUtil.getColorSchemeId(
-					companyId, deviceThemeId, deviceColorSchemeId);
+		_updateLookAndFeel(
+			actionRequest, companyId, groupId, privateLayout,
+			typeSettingsUnicodeProperties);
 
-				ActionUtil.updateThemeSettingsProperties(
-					actionRequest, companyId, typeSettingsUnicodeProperties,
-					device, deviceThemeId, false);
-			}
+		if (privateLayout) {
+			return;
+		}
 
-			long groupId = liveGroupId;
+		Group group = _groupLocalService.getGroup(groupId);
 
-			if (stagingGroupId > 0) {
-				groupId = stagingGroupId;
-			}
-
-			_layoutSetService.updateLookAndFeel(
-				groupId, privateLayout, deviceThemeId, deviceColorSchemeId,
-				deviceCss);
+		if (!group.hasPrivateLayouts()) {
+			_updateLookAndFeel(
+				actionRequest, companyId, groupId, true,
+				typeSettingsUnicodeProperties);
 		}
 	}
 
@@ -147,6 +138,38 @@ public class EditLayoutSetMVCActionCommand extends BaseMVCActionCommand {
 
 		_layoutSetService.updateLogo(
 			groupId, privateLayout, !deleteLogo, logoBytes);
+	}
+
+	private void _updateLookAndFeel(
+			ActionRequest actionRequest, long companyId, long groupId,
+			boolean privateLayout,
+			UnicodeProperties typeSettingsUnicodeProperties)
+		throws Exception {
+
+		String[] devices = StringUtil.split(
+			ParamUtil.getString(actionRequest, "devices"));
+
+		for (String device : devices) {
+			String deviceThemeId = ParamUtil.getString(
+				actionRequest, device + "ThemeId");
+			String deviceColorSchemeId = ParamUtil.getString(
+				actionRequest, device + "ColorSchemeId");
+			String deviceCss = ParamUtil.getString(
+				actionRequest, device + "Css");
+
+			if (Validator.isNotNull(deviceThemeId)) {
+				deviceColorSchemeId = ActionUtil.getColorSchemeId(
+					companyId, deviceThemeId, deviceColorSchemeId);
+
+				ActionUtil.updateThemeSettingsProperties(
+					actionRequest, companyId, typeSettingsUnicodeProperties,
+					device, deviceThemeId, false);
+			}
+
+			_layoutSetService.updateLookAndFeel(
+				groupId, privateLayout, deviceThemeId, deviceColorSchemeId,
+				deviceCss);
+		}
 	}
 
 	private void _updateMergePages(

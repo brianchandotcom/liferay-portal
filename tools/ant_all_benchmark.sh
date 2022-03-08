@@ -1,5 +1,6 @@
 #!/bin/bash
 
+ANT_ALL_DURATION_CSV_PATH="tools/ant_all_duration.csv"
 ANT_ALL_RUN_COUNT=0
 CHECK_PERFORMANCE=false
 DURATION_ARRAY=( )
@@ -15,8 +16,8 @@ function check_performance {
 
 		if [ "${lines_count}" -ge $((${durations_min_lenght} + 1)) ]
 		then
-			local actual_durations="$(tail -n 1 ant_all_duration.csv)"
-			local previous_durations="$(tail -n 2 ant_all_duration.csv | head -n 1)"
+			local actual_durations="$(tail -n 1 ${ANT_ALL_DURATION_CSV_PATH})"
+			local previous_durations="$(tail -n 2 ${ANT_ALL_DURATION_CSV_PATH} | head -n 1)"
 			local one_minute=60
 
 			for (( i = 2 ; i <= 4; i++ ))
@@ -26,7 +27,6 @@ function check_performance {
 
 				if [ $(("${actual_duration}" - "${previous_duration}")) -gt "${one_minute}" ]
 				then
-
 					if [ "${i}" -eq 2 ]
 					then
 						echo "Warning: performance reduced using clean repository"
@@ -75,16 +75,16 @@ function enable_optional_settings {
 function log_durations {
 	if [ ${DURATION_LOG} == true ]
 	then
-		echo "" >> ant_all_duration.csv
-		echo -n "$(date +%c)," >> ant_all_duration.csv
+		echo "" >> ${ANT_ALL_DURATION_CSV_PATH}
+		echo -n "$(date +%c)," >> ${ANT_ALL_DURATION_CSV_PATH}
 
 		for (( i = 0 ; i < ${#DURATION_ARRAY[@]}; i++ ))
 		do
-			echo -n "${DURATION_ARRAY[${i}]}" >> ant_all_duration.csv
+			echo -n "${DURATION_ARRAY[${i}]}" >> ${ANT_ALL_DURATION_CSV_PATH}
 
 			if [ "${i}" -lt "$((${#DURATION_ARRAY[@]} - 1))" ]
 			then
-				echo -n "," >> ant_all_duration.csv
+				echo -n "," >> ${ANT_ALL_DURATION_CSV_PATH}
 			fi
 		done
 	fi

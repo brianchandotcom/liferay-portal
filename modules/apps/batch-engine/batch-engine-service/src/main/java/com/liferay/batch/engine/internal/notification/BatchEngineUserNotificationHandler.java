@@ -55,8 +55,7 @@ public class BatchEngineUserNotificationHandler
 
 		return String.format(
 			"<h2 class=\"title\">%s</h2><div class=\"body\">%s</div>",
-			serviceContext.translate(
-				"x-batch-engine-task-x", taskType, status),
+			serviceContext.translate("x-batch-engine-task-x", taskType, status),
 			serviceContext.translate(
 				"x-batch-engine-task-for-x-x", taskType,
 				jsonObject.getString("className"), status));

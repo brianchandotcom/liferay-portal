@@ -113,10 +113,12 @@ const NumericInputMask: React.FC<IProps> = ({
 			return {
 				...item,
 				disabled: item.reference === decimalSymbol?.[0],
-				label: item.label?.[editingLanguageId] ?? item.label,
+				label:
+					item.label?.[Liferay.ThemeDisplay.getLanguageId()] ??
+					item.label,
 			};
 		});
-	}, [decimalSymbol, editingLanguageId, thousandsSeparatorsProp]);
+	}, [decimalSymbol, thousandsSeparatorsProp]);
 
 	useEffect(() => {
 		const newValue =

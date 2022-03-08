@@ -19,6 +19,8 @@ definition {
 		}
 		else {
 			Accounts.tearDownCP();
+
+			BatchPlanner.batchPlannerTearDown();
 		}
 	}
 

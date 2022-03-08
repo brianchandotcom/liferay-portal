@@ -17,44 +17,20 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
-
-KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS);
-
-long kaleoProcessId = BeanParamUtil.getLong(kaleoProcess, request, "kaleoProcessId");
-
-long ddmStructureId = KaleoFormsUtil.getKaleoProcessDDMStructureId(kaleoProcessId, portletSession);
-
-String workflowDefinition = ParamUtil.getString(request, "workflowDefinition");
-
-KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialStateKaleoTaskFormPair(kaleoProcessId, ddmStructureId, workflowDefinition, KaleoFormsUtil.getInitialStateName(company.getCompanyId(), workflowDefinition), portletSession);
+KaleoFormsTaskTemplateSearchDisplayContext kaleoFormsTaskTemplateSearchDisplayContext = new KaleoFormsTaskTemplateSearchDisplayContext(request, liferayPortletRequest, liferayPortletResponse, renderRequest);
 %>
 
 <div id="<portlet:namespace />formsSearchContainer">
-	<liferay-portlet:renderURL varImpl="portletURL" />
-
 	<liferay-ui:search-container
-		searchContainer='<%= new SearchContainer<Object>(renderRequest, portletURL, null, "no-tasks-were-found") %>'
+		searchContainer="<%= kaleoFormsTaskTemplateSearchDisplayContext.getSearchContainer() %>"
 	>
-		<liferay-ui:search-container-results>
-
-			<%
-			KaleoTaskFormPairs kaleoTaskFormPairs = KaleoFormsUtil.getKaleoTaskFormPairs(company.getCompanyId(), kaleoProcessId, ddmStructureId, workflowDefinition, portletSession);
-
-			kaleoTaskFormPairs.add(0, initialStateKaleoTaskFormPair);
-
-			searchContainer.setResultsAndTotal(kaleoTaskFormPairs::list, kaleoTaskFormPairs.size());
-			%>
-
-		</liferay-ui:search-container-results>
-
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.workflow.kaleo.forms.model.KaleoTaskFormPair"
 			modelVar="taskFormsPair"
 		>
 			<liferay-ui:search-container-row-parameter
 				name="backURL"
-				value="<%= backURL %>"
+				value="<%= kaleoFormsTaskTemplateSearchDisplayContext.getBackURL() %>"
 			/>
 
 			<liferay-ui:search-container-column-text
@@ -81,7 +57,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 			<liferay-util:buffer
 				var="taskInputBuffer"
 			>
-				<c:if test="<%= taskFormsPair.equals(initialStateKaleoTaskFormPair) %>">
+				<c:if test="<%= taskFormsPair.equals(kaleoFormsTaskTemplateSearchDisplayContext.getInitialStateKaleoTaskFormPair()) %>">
 					<aui:input name="ddmTemplateId" type="hidden" value="<%= Validator.isNull(formName) ? StringPool.BLANK : String.valueOf(ddmTemplateId) %>">
 						<aui:validator name="required" />
 					</aui:input>
@@ -111,7 +87,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 <liferay-frontend:component
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"backURL", HtmlUtil.escapeURL(backURL)
+			"backURL", HtmlUtil.escapeURL(kaleoFormsTaskTemplateSearchDisplayContext.getBackURL())
 		).put(
 			"itemSelectorURL",
 			PortletURLBuilder.create(
@@ -190,7 +166,7 @@ KaleoTaskFormPair initialStateKaleoTaskFormPair = KaleoFormsUtil.getInitialState
 				after: {
 					success: function () {
 						window.location = decodeURIComponent(
-							'<%= HtmlUtil.escapeURL(backURL) %>'
+							'<%= HtmlUtil.escapeURL(kaleoFormsTaskTemplateSearchDisplayContext.getBackURL()) %>'
 						);
 					},
 				},

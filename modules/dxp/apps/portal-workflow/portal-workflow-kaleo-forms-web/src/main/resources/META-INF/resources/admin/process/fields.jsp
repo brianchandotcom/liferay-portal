@@ -17,24 +17,7 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-String backURL = HttpUtil.setParameter(currentURL, liferayPortletResponse.getNamespace() + "historyKey", "fields");
-
-KaleoProcess kaleoProcess = (KaleoProcess)request.getAttribute(KaleoFormsWebKeys.KALEO_PROCESS);
-
-long kaleoProcessId = BeanParamUtil.getLong(kaleoProcess, request, "kaleoProcessId");
-
-long ddmStructureId = KaleoFormsUtil.getKaleoProcessDDMStructureId(kaleoProcess, portletSession);
-
-String ddmStructureName = StringPool.BLANK;
-
-if (ddmStructureId > 0) {
-	DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchDDMStructure(ddmStructureId);
-
-	if (ddmStructure != null) {
-		ddmStructureName = ddmStructure.getName(locale);
-	}
-}
+KaleoFormsAdminFieldsDisplayContext kaleoFormsAdminFieldsDisplayContext = new KaleoFormsAdminFieldsDisplayContext(request, kaleoFormsAdminDisplayContext, liferayPortletRequest, liferayPortletResponse, renderRequest);
 
 JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 %>
@@ -46,49 +29,25 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 <aui:field-wrapper>
 	<liferay-ui:message key="selected-field-set" />:
 
-	<aui:a cssClass="badge badge-info kaleo-process-preview-definition" data-definition-id="<%= ddmStructureId %>" href="javascript:;" id="ddmStructureDisplay" label="<%= HtmlUtil.escape(ddmStructureName) %>" />
+	<aui:a cssClass="badge badge-info kaleo-process-preview-definition" data-definition-id="<%= kaleoFormsAdminFieldsDisplayContext.getDDMStructureId() %>" href="javascript:;" id="ddmStructureDisplay" label="<%= HtmlUtil.escape(kaleoFormsAdminFieldsDisplayContext.getDDMStructureName()) %>" />
 
-	<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
+	<aui:input name="ddmStructureId" type="hidden" value="<%= kaleoFormsAdminFieldsDisplayContext.getDDMStructureId() %>" />
 
-	<aui:input name="ddmStructureName" type="hidden" value="<%= ddmStructureName %>">
+	<aui:input name="ddmStructureName" type="hidden" value="<%= kaleoFormsAdminFieldsDisplayContext.getDDMStructureName() %>">
 		<aui:validator name="required" />
 	</aui:input>
 </aui:field-wrapper>
 
 <liferay-ui:error exception="<%= RecordSetDDMStructureIdException.class %>" message="please-enter-a-valid-definition" />
 
-<liferay-portlet:renderURL varImpl="iteratorURL">
-	<portlet:param name="mvcPath" value="/admin/edit_kaleo_process.jsp" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="historyKey" value="fields" />
-	<portlet:param name="kaleoProcessId" value="<%= String.valueOf(kaleoProcessId) %>" />
-</liferay-portlet:renderURL>
-
 <liferay-ui:search-container
-	searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, iteratorURL, null, "there-are-no-results") %>'
+	searchContainer="<%= kaleoFormsAdminFieldsDisplayContext.getSearchContainer() %>"
 >
-
-	<%
-	DisplayTerms displayTerms = searchContainer.getDisplayTerms();
-	%>
-
-	<liferay-ui:search-container-results>
-
-		<%
-		long companyId = company.getCompanyId();
-		long ddmStructureScopeGroupId = scopeGroupId;
-		SearchContainer<DDMStructure> ddmStructureSearchContainer = searchContainer;
-
-		searchContainer.setResultsAndTotal(() -> DDMStructureServiceUtil.search(companyId, PortalUtil.getCurrentAndAncestorSiteGroupIds(ddmStructureScopeGroupId), scopeClassNameId, displayTerms.getKeywords(), WorkflowConstants.STATUS_ANY, ddmStructureSearchContainer.getStart(), ddmStructureSearchContainer.getEnd(), new StructureModifiedDateComparator(true)), DDMStructureServiceUtil.searchCount(companyId, PortalUtil.getCurrentAndAncestorSiteGroupIds(ddmStructureScopeGroupId), scopeClassNameId, displayTerms.getKeywords(), WorkflowConstants.STATUS_ANY));
-		%>
-
-	</liferay-ui:search-container-results>
-
 	<c:if test="<%= DDMStructurePermission.containsAddStructurePermission(permissionChecker, scopeGroupId, scopeClassNameId) %>">
 		<liferay-portlet:renderURL portletName="<%= PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT) %>" var="addURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/edit_structure.jsp" />
 			<portlet:param name="navigationStartsOn" value="<%= DDMNavigationHelper.EDIT_STRUCTURE %>" />
-			<portlet:param name="closeRedirect" value="<%= backURL %>" />
+			<portlet:param name="closeRedirect" value="<%= kaleoFormsAdminFieldsDisplayContext.getBackURL() %>" />
 			<portlet:param name="saveAndContinue" value="<%= Boolean.TRUE.toString() %>" />
 			<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
 			<portlet:param name="refererPortletName" value="<%= KaleoFormsPortletKeys.KALEO_FORMS_ADMIN %>" />
@@ -108,7 +67,7 @@ JSONArray availableDefinitionsJSONArray = JSONFactoryUtil.createJSONArray();
 	>
 		<liferay-ui:search-container-row-parameter
 			name="backURL"
-			value="<%= backURL %>"
+			value="<%= kaleoFormsAdminFieldsDisplayContext.getBackURL() %>"
 		/>
 
 		<liferay-util:buffer

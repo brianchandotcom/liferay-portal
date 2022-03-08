@@ -81,7 +81,8 @@ const InviteTeamMembersPage = ({
 		project?.slaCurrent?.includes(SLA.platinum);
 
 	const getRaysourceRoleName = (roleKey) => {
-		const currentRole = Object.values(ROLE_TYPES).find(
+		const roleValues = Object.values(ROLE_TYPES);
+		const currentRole = roleValues.find(
 			(roleType) => roleType.key === roleKey
 		);
 
@@ -106,15 +107,9 @@ const InviteTeamMembersPage = ({
 					(rolesAccumulator, role) => {
 						let isValidRole = true;
 
-						const isActiveRaysourceRole = Object.values(
-							ROLE_TYPES
-						).some((roleType) => roleType.key === role.name);
+						const raysourceName = getRaysourceRoleName(role.name);
 
-						if (isActiveRaysourceRole) {
-							const raysourceName = getRaysourceRoleName(
-								role.name
-							);
-
+						if (raysourceName) {
 							if (!projectHasSLAGoldPlatinum) {
 								isValidRole =
 									role.name !== ROLE_TYPES.requestor.key;
@@ -225,7 +220,8 @@ const InviteTeamMembersPage = ({
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 			setshowEmptyEmailError(false);
-		} else if (touched['invites']?.some((field) => field?.email)) {
+		}
+		else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -280,7 +276,8 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		} else {
+		}
+		else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({

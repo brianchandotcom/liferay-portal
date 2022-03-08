@@ -149,7 +149,6 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
-import java.io.InputStream;
 import java.io.Serializable;
 
 import java.net.URL;
@@ -2761,49 +2760,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return t;
-	}
-
-	private String _read(String resourcePath) throws Exception {
-		InputStream inputStream = _servletContext.getResourceAsStream(
-			resourcePath);
-
-		if (inputStream == null) {
-			return null;
-		}
-
-		return StringUtil.read(inputStream);
-	}
-
-	private String _read(String fileName, URL url) throws Exception {
-		String urlPath = url.getPath();
-
-		URL entryURL = _bundle.getEntry(
-			urlPath.substring(0, urlPath.lastIndexOf("/") + 1) + fileName);
-
-		return StringUtil.read(entryURL.openStream());
-	}
-
-	private Map<Locale, String> _toMap(String values) {
-		return _toMap(StringPool.BLANK, values);
-	}
-
-	private Map<Locale, String> _toMap(String prefix, String values) {
-		if (Validator.isBlank(values)) {
-			return Collections.emptyMap();
-		}
-
-		Map<Locale, String> map = new HashMap<>();
-
-		Map<String, String> valuesMap = ObjectMapperUtil.readValue(
-			HashMap.class, values);
-
-		for (Map.Entry<String, String> entry : valuesMap.entrySet()) {
-			map.put(
-				LocaleUtil.fromLanguageId(entry.getKey()),
-				prefix + entry.getValue());
-		}
-
-		return map;
 	}
 
 	private Layout _updateDraftLayout(

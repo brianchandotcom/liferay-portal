@@ -17,9 +17,10 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -27,35 +28,78 @@ import java.util.Set;
 public class PluginsAcceptancePullRequestJob extends PluginsGitRepositoryJob {
 
 	@Override
+	public JSONObject getJSONObject() {
+		if (jsonObject != null) {
+			return jsonObject;
+		}
+
+		jsonObject = super.getJSONObject();
+
+		jsonObject.put("plugins_test_base_dirs", _pluginsTestBaseDirs);
+
+		return jsonObject;
+	}
+
+	@Override
 	public List<File> getPluginsTestBaseDirs() {
 		return _pluginsTestBaseDirs;
 	}
 
-	protected PluginsAcceptancePullRequestJob(
-		String jobName, BuildProfile buildProfile, String branchName) {
+	protected PluginsAcceptancePullRequestJob(JSONObject jsonObject) {
+		super(jsonObject);
 
-		super(jobName, buildProfile, branchName);
+		_pluginsTestBaseDirs = new ArrayList<>();
 
-		_pluginsTestBaseDirs = _getPluginsTestBaseDirs();
+		JSONArray pluginsTestBaseDirJSONArray = jsonObject.getJSONArray(
+			"plugins_test_base_dirs");
+
+		if (pluginsTestBaseDirJSONArray == null) {
+			return;
+		}
+
+		for (int i = 0; i < pluginsTestBaseDirJSONArray.length(); i++) {
+			String pluginsTestBaseDirPath =
+				pluginsTestBaseDirJSONArray.getString(i);
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(
+					pluginsTestBaseDirPath)) {
+
+				continue;
+			}
+
+			File pluginsTestBaseDir = new File(pluginsTestBaseDirPath);
+
+			if (_pluginsTestBaseDirs.contains(pluginsTestBaseDir)) {
+				continue;
+			}
+
+			_pluginsTestBaseDirs.add(pluginsTestBaseDir);
+		}
 	}
 
-	private List<File> _getPluginsTestBaseDirs() {
-		Set<File> pluginsTestBaseDirs = new HashSet<>();
+	protected PluginsAcceptancePullRequestJob(
+		String jobName, BuildProfile buildProfile, String upstreamBranchName) {
+
+		super(jobName, buildProfile, upstreamBranchName);
+
+		_pluginsTestBaseDirs = new ArrayList<>();
 
 		PluginsGitWorkingDirectory pluginsGitWorkingDirectory =
 			portalGitWorkingDirectory.getPluginsGitWorkingDirectory();
 
-		List<File> modifiedFilesList =
-			pluginsGitWorkingDirectory.getModifiedFilesList();
+		for (File modifiedFile :
+				pluginsGitWorkingDirectory.getModifiedFilesList()) {
 
-		for (File modifiedFile : modifiedFilesList) {
 			File parentDir = new File(modifiedFile.getPath());
 
 			while (parentDir != null) {
-				File testBaseDir = new File(parentDir, "test/functional");
+				File pluginsTestBaseDir = new File(
+					parentDir, "test/functional");
 
-				if (testBaseDir.exists()) {
-					pluginsTestBaseDirs.add(testBaseDir);
+				if (pluginsTestBaseDir.exists()) {
+					if (!_pluginsTestBaseDirs.contains(pluginsTestBaseDir)) {
+						_pluginsTestBaseDirs.add(pluginsTestBaseDir);
+					}
 
 					break;
 				}
@@ -63,8 +107,6 @@ public class PluginsAcceptancePullRequestJob extends PluginsGitRepositoryJob {
 				parentDir = parentDir.getParentFile();
 			}
 		}
-
-		return new ArrayList<>(pluginsTestBaseDirs);
 	}
 
 	private final List<File> _pluginsTestBaseDirs;

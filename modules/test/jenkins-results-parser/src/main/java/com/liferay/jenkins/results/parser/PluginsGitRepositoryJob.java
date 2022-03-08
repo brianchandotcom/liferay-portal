@@ -20,16 +20,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
+import org.json.JSONObject;
+
 /**
  * @author Peter Yoo
  */
 public abstract class PluginsGitRepositoryJob
 	extends GitRepositoryJob implements PortalTestClassJob {
-
-	@Override
-	public String getBranchName() {
-		return _branchName;
-	}
 
 	@Override
 	public GitWorkingDirectory getGitWorkingDirectory() {
@@ -56,13 +53,38 @@ public abstract class PluginsGitRepositoryJob
 		return portalGitWorkingDirectory;
 	}
 
+	protected PluginsGitRepositoryJob(JSONObject jsonObject) {
+		super(jsonObject);
+
+		_initialize();
+	}
+
 	protected PluginsGitRepositoryJob(
-		String jobName, BuildProfile buildProfile, String branchName) {
+		String jobName, BuildProfile buildProfile, String upstreamBranchName) {
 
-		super(jobName, buildProfile);
+		super(jobName, buildProfile, upstreamBranchName);
 
-		_branchName = branchName;
+		_initialize();
+	}
 
+	protected String getBuildPropertyValue(String buildPropertyName) {
+		if (buildProperties == null) {
+			try {
+				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(
+					"Unable to get build properties", ioException);
+			}
+		}
+
+		return buildProperties.getProperty(buildPropertyName);
+	}
+
+	protected Properties buildProperties;
+	protected PortalGitWorkingDirectory portalGitWorkingDirectory;
+
+	private void _initialize() {
 		getGitWorkingDirectory();
 
 		setGitRepositoryDir(gitWorkingDirectory.getWorkingDirectory());
@@ -86,24 +108,5 @@ public abstract class PluginsGitRepositoryJob
 				GitWorkingDirectoryFactory.newGitWorkingDirectory(
 					portalBranchName, portalGitRepositoryDir.getPath());
 	}
-
-	protected String getBuildPropertyValue(String buildPropertyName) {
-		if (buildProperties == null) {
-			try {
-				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-			}
-			catch (IOException ioException) {
-				throw new RuntimeException(
-					"Unable to get build properties", ioException);
-			}
-		}
-
-		return buildProperties.getProperty(buildPropertyName);
-	}
-
-	protected Properties buildProperties;
-	protected PortalGitWorkingDirectory portalGitWorkingDirectory;
-
-	private final String _branchName;
 
 }

@@ -20,21 +20,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class PortalAcceptancePullRequestJob
 	extends PortalAcceptanceTestSuiteJob {
-
-	public PortalAcceptancePullRequestJob(
-		String jobName, BuildProfile buildProfile, String testSuiteName,
-		String branchName,
-		PortalGitWorkingDirectory portalGitWorkingDirectory) {
-
-		super(
-			jobName, buildProfile, testSuiteName, branchName,
-			portalGitWorkingDirectory);
-	}
 
 	public boolean isCentralMergePullRequest() {
 		if (_centralMergePullRequest != null) {
@@ -61,6 +53,20 @@ public class PortalAcceptancePullRequestJob
 		_centralMergePullRequest = false;
 
 		return _centralMergePullRequest;
+	}
+
+	protected PortalAcceptancePullRequestJob(JSONObject jsonObject) {
+		super(jsonObject);
+	}
+
+	protected PortalAcceptancePullRequestJob(
+		String jobName, BuildProfile buildProfile, String testSuiteName,
+		String upstreamBranchName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory) {
+
+		super(
+			jobName, buildProfile, testSuiteName, upstreamBranchName,
+			portalGitWorkingDirectory);
 	}
 
 	@Override

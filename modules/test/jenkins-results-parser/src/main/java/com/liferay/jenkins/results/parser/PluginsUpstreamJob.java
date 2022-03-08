@@ -14,16 +14,22 @@
 
 package com.liferay.jenkins.results.parser;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class PluginsUpstreamJob extends PluginsTestSuiteJob {
 
+	protected PluginsUpstreamJob(JSONObject jsonObject) {
+		super(jsonObject);
+	}
+
 	protected PluginsUpstreamJob(
 		String jobName, String pluginName, BuildProfile buildProfile,
-		String branchName) {
+		String upstreamBranchName) {
 
-		super(jobName, pluginName, buildProfile, branchName);
+		super(jobName, pluginName, buildProfile, upstreamBranchName);
 	}
 
 }

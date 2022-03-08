@@ -16,6 +16,8 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -33,6 +35,12 @@ public abstract class PortalGitRepositoryJob
 		return (PortalGitWorkingDirectory)gitWorkingDirectory;
 	}
 
+	protected PortalGitRepositoryJob(JSONObject jsonObject) {
+		super(jsonObject);
+
+		_initialize(null);
+	}
+
 	protected PortalGitRepositoryJob(
 		String jobName, BuildProfile buildProfile) {
 
@@ -40,10 +48,16 @@ public abstract class PortalGitRepositoryJob
 	}
 
 	protected PortalGitRepositoryJob(
-		String jobName, BuildProfile buildProfile, String branchName,
+		String jobName, BuildProfile buildProfile, String upstreamBranchName,
 		PortalGitWorkingDirectory portalGitWorkingDirectory) {
 
-		super(jobName, buildProfile, branchName);
+		super(jobName, buildProfile, upstreamBranchName);
+
+		_initialize(portalGitWorkingDirectory);
+	}
+
+	private void _initialize(
+		PortalGitWorkingDirectory portalGitWorkingDirectory) {
 
 		if (portalGitWorkingDirectory != null) {
 			gitWorkingDirectory = portalGitWorkingDirectory;
@@ -51,7 +65,7 @@ public abstract class PortalGitRepositoryJob
 		else {
 			gitWorkingDirectory =
 				GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-					getBranchName());
+					getUpstreamBranchName());
 		}
 
 		setGitRepositoryDir(gitWorkingDirectory.getWorkingDirectory());

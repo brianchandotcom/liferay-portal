@@ -16,26 +16,56 @@ package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class SubrepositoryAcceptancePullRequestJob
 	extends SubrepositoryGitRepositoryJob implements TestSuiteJob {
 
-	public SubrepositoryAcceptancePullRequestJob(
-		String jobName, BuildProfile buildProfile, String testSuiteName,
-		String repositoryName, String portalUpstreamBranchName) {
+	@Override
+	public JSONObject getJSONObject() {
+		if (jsonObject != null) {
+			return jsonObject;
+		}
 
-		super(jobName, buildProfile, repositoryName, portalUpstreamBranchName);
+		jsonObject = super.getJSONObject();
 
-		_testSuiteName = testSuiteName;
+		jsonObject.put("test_suite_name", _testSuiteName);
 
-		_setValidationRequired();
+		return jsonObject;
 	}
 
 	@Override
 	public String getTestSuiteName() {
 		return _testSuiteName;
+	}
+
+	protected SubrepositoryAcceptancePullRequestJob(JSONObject jsonObject) {
+		super(jsonObject);
+
+		_testSuiteName = jsonObject.getString("test_suite_name");
+
+		_initialize();
+	}
+
+	protected SubrepositoryAcceptancePullRequestJob(
+		String jobName, BuildProfile buildProfile, String testSuiteName,
+		String upstreamBranchName, String repositoryName,
+		String portalUpstreamBranchName) {
+
+		super(
+			jobName, buildProfile, upstreamBranchName, repositoryName,
+			portalUpstreamBranchName);
+
+		_testSuiteName = testSuiteName;
+
+		_initialize();
+	}
+
+	private void _initialize() {
+		_setValidationRequired();
 	}
 
 	private void _setValidationRequired() {

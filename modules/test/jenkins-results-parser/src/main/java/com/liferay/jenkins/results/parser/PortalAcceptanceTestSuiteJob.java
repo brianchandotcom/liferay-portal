@@ -23,25 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 /**
  * @author Yi-Chen Tsai
  */
 public abstract class PortalAcceptanceTestSuiteJob
 	extends PortalGitRepositoryJob implements BatchDependentJob, TestSuiteJob {
-
-	public PortalAcceptanceTestSuiteJob(
-		String jobName, BuildProfile buildProfile, String testSuiteName,
-		String branchName,
-		PortalGitWorkingDirectory portalGitWorkingDirectory) {
-
-		super(jobName, buildProfile, branchName, portalGitWorkingDirectory);
-
-		if (testSuiteName == null) {
-			testSuiteName = "default";
-		}
-
-		_testSuiteName = testSuiteName;
-	}
 
 	@Override
 	public List<AxisTestClassGroup> getDependentAxisTestClassGroups() {
@@ -113,8 +101,43 @@ public abstract class PortalAcceptanceTestSuiteJob
 	}
 
 	@Override
+	public JSONObject getJSONObject() {
+		if (jsonObject != null) {
+			return jsonObject;
+		}
+
+		jsonObject = super.getJSONObject();
+
+		jsonObject.put("test_suite_name", _testSuiteName);
+
+		return jsonObject;
+	}
+
+	@Override
 	public String getTestSuiteName() {
 		return _testSuiteName;
+	}
+
+	protected PortalAcceptanceTestSuiteJob(JSONObject jsonObject) {
+		super(jsonObject);
+
+		_testSuiteName = jsonObject.getString("test_suite_name");
+	}
+
+	protected PortalAcceptanceTestSuiteJob(
+		String jobName, BuildProfile buildProfile, String testSuiteName,
+		String upstreamBranchName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory) {
+
+		super(
+			jobName, buildProfile, upstreamBranchName,
+			portalGitWorkingDirectory);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testSuiteName)) {
+			testSuiteName = "default";
+		}
+
+		_testSuiteName = testSuiteName;
 	}
 
 	@Override

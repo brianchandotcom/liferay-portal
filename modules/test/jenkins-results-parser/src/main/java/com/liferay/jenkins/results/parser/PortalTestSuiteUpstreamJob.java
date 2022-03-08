@@ -14,18 +14,24 @@
 
 package com.liferay.jenkins.results.parser;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class PortalTestSuiteUpstreamJob extends PortalAcceptancePullRequestJob {
 
-	public PortalTestSuiteUpstreamJob(
+	protected PortalTestSuiteUpstreamJob(JSONObject jsonObject) {
+		super(jsonObject);
+	}
+
+	protected PortalTestSuiteUpstreamJob(
 		String jobName, BuildProfile buildProfile, String testSuiteName,
-		String branchName,
+		String upstreamBranchName,
 		PortalGitWorkingDirectory portalGitWorkingDirectory) {
 
 		super(
-			jobName, buildProfile, testSuiteName, branchName,
+			jobName, buildProfile, testSuiteName, upstreamBranchName,
 			portalGitWorkingDirectory);
 	}
 

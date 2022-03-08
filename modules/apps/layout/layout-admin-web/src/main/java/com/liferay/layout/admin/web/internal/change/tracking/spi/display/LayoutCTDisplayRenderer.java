@@ -16,8 +16,13 @@ package com.liferay.layout.admin.web.internal.change.tracking.spi.display;
 
 import com.liferay.change.tracking.spi.display.BaseCTDisplayRenderer;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.context.DisplayContext;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.crawler.LayoutCrawler;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Group;
@@ -112,6 +117,34 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 	}
 
 	@Override
+	public String renderPreview(DisplayContext<Layout> displayContext)
+		throws Exception {
+
+		Layout layout = displayContext.getModel();
+
+		HttpServletRequest httpServletRequest =
+			displayContext.getHttpServletRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("<div style=\"pointer-events: none;\">");
+		sb.append("<iframe frameborder=\"0\" onload=\"this.style.height=");
+		sb.append("(this.contentWindow.document.body.scrollHeight+20)");
+		sb.append("+'px';\" src=\"");
+		sb.append(_portal.getLayoutFullURL(layout, themeDisplay));
+		sb.append("?p_l_mode=preview&previewCTCollectionId=");
+		sb.append(layout.getCtCollectionId());
+		sb.append("\" width=\"100%\"></iframe>");
+		sb.append("</div>");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected void buildDisplay(DisplayBuilder<Layout> displayBuilder) {
 		Layout layout = displayBuilder.getModel();
 
@@ -198,6 +231,17 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 			"priority", layout.getPriority()
 		);
 	}
+
+	@Reference
+	private LayoutCrawler _layoutCrawler;
+
+	@Reference
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private LayoutPermission _layoutPermission;

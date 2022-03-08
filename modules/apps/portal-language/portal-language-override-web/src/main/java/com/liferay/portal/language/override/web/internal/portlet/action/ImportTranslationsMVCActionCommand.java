@@ -16,12 +16,11 @@ package com.liferay.portal.language.override.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.language.override.exception.FileExtensionException;
-import com.liferay.portal.language.override.exception.InvalidFileException;
 import com.liferay.portal.language.override.service.PLOEntryService;
 import com.liferay.portal.language.override.web.internal.constants.PLOPortletKeys;
 
@@ -60,23 +59,34 @@ public class ImportTranslationsMVCActionCommand extends BaseMVCActionCommand {
 			_portal.getUploadPortletRequest(actionRequest);
 
 		_importTranslations(
-			uploadPortletRequest.getFile("file"),
+			actionRequest, uploadPortletRequest.getFile("file"),
 			ParamUtil.getString(actionRequest, "languageId"));
 
-		sendRedirect(actionRequest, actionResponse);
+		if (!SessionErrors.isEmpty(actionRequest)) {
+			actionResponse.setRenderParameter(
+				"mvcPath", "/configuration/icon/import_translations.jsp");
+		}
+		else {
+			sendRedirect(actionRequest, actionResponse);
+		}
 	}
 
-	private void _importTranslations(File file, String languageId)
+	private void _importTranslations(
+			ActionRequest actionRequest, File file, String languageId)
 		throws Exception {
 
-		if (file == null) {
-			throw new InvalidFileException();
+		if ((file == null) || !file.exists()) {
+			SessionErrors.add(actionRequest, "fileInvalid");
+
+			return;
 		}
 
 		if (!Objects.equals(
 				FileUtil.getExtension(file.getName()), "properties")) {
 
-			throw new FileExtensionException();
+			SessionErrors.add(actionRequest, "fileExtensionInvalid");
+
+			return;
 		}
 
 		Properties languageProperties = new Properties();
@@ -84,7 +94,9 @@ public class ImportTranslationsMVCActionCommand extends BaseMVCActionCommand {
 		languageProperties.load(new FileInputStream(file));
 
 		if (languageProperties.size() == 0) {
-			throw new InvalidFileException();
+			SessionErrors.add(actionRequest, "fileInvalid");
+
+			return;
 		}
 
 		Enumeration<String> languageKeyEnumeration =

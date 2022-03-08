@@ -614,4 +614,13 @@ definition {
 		}
 	}
 
+	macro viewRelatedAssets {
+		for (var relatedAssetTitle : list "${relatedAssetTitleList}") {
+			AssertTextEquals(
+				key_relatedAssetTitle = "${relatedAssetTitle}",
+				locator1 = "AssetRelatedAssets#ASSET_TITLE",
+				value1 = "${relatedAssetTitle}");
+		}
+	}
+
 }

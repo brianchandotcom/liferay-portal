@@ -2238,13 +2238,6 @@ definition {
 			value1 = "${webContentContent}");
 	}
 
-	macro viewRelatedAssetsPGViaWCD {
-		AssertTextEquals(
-			key_relatedAssetTitle = "${relatedAssetTitle}",
-			locator1 = "AssetRelatedAssets#ASSET_TITLE",
-			value1 = "${relatedAssetTitle}");
-	}
-
 	macro viewRepeatedField {
 		AssertElementPresent(locator1 = "xpath=(//div[@data-fieldname='${fieldName}'][1]//a[contains(@class,'ddm-repeatable-add-button')]/../div)");
 

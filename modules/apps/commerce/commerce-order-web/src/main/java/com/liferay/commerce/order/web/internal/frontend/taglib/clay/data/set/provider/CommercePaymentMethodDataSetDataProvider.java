@@ -85,11 +85,12 @@ public class CommercePaymentMethodDataSetDataProvider
 
 			paymentMethods.add(
 				new PaymentMethod(
-					commercePaymentMethod.getDescription(
+					commercePaymentMethodGroupRel.getDescription(
 						themeDisplay.getLocale()),
-					commercePaymentMethod.getKey(),
+					commercePaymentMethodGroupRel.getEngineKey(),
 					_getThumbnail(commercePaymentMethodGroupRel, themeDisplay),
-					commercePaymentMethod.getName(themeDisplay.getLocale())));
+					commercePaymentMethodGroupRel.getName(
+						themeDisplay.getLocale())));
 		}
 
 		return paymentMethods;

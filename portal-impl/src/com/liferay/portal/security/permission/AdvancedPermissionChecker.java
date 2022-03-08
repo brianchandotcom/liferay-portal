@@ -96,7 +96,16 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		roleIds = ListUtil.toLongArray(roles, Role.ROLE_ID_ACCESSOR);
 
-		Arrays.sort(roleIds);
+		if (roleIds.length > 1) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"More than one role id was returned for the Guest user. " +
+						"This may cause Guest users to have more permissions " +
+							"than intended.");
+			}
+
+			Arrays.sort(roleIds);
+		}
 
 		PermissionCacheUtil.putUserGroupRoleIds(
 			defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID, roleIds);

@@ -115,13 +115,13 @@ definition {
 
 		MouseOver(locator1 = "Portlet#PORTLET_CONTENT");
 
-		WebContentDisplayPortlet.configureScopePG(scopeSelection = "Staging Test Page");
+		WebContentDisplayPortlet.configureScope(scopeSelection = "Staging Test Page");
 
 		Navigator.openSiteURL(siteName = "Site Name");
 
 		MouseOver(locator1 = "Portlet#PORTLET_CONTENT");
 
-		WebContentDisplayPortlet.viewConfigureScopePG(scopeSelection = "Staging Test Page");
+		WebContentDisplayPortlet.viewConfigureScope(scopeSelection = "Staging Test Page");
 
 		var pageScopeId = JSONLayout.getPageScopeIdByGroupName(groupName = "Site Name");
 

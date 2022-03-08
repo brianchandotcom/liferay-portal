@@ -151,7 +151,7 @@ definition {
 		}
 
 		task ("Enable comments in Web Content Display") {
-			WebContentDisplayPortlet.configureSetupPG(
+			WebContentDisplayPortlet.configureSetup(
 				enableViewCountIncrement = "true",
 				metadataNameList = "Comments");
 

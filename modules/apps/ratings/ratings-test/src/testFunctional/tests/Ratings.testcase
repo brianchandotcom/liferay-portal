@@ -677,7 +677,7 @@ definition {
 			portletName = "Web Content Display",
 			portletOption = "Configuration");
 
-		WebContentDisplayPortlet.configureSetupPG(metadataNameList = "Ratings");
+		WebContentDisplayPortlet.configureSetup(metadataNameList = "Ratings");
 
 		WebContentDisplayPortlet.saveConfiguration();
 

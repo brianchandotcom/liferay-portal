@@ -130,7 +130,7 @@ definition {
 			portletName = "Web Content Display",
 			portletOption = "Configuration");
 
-		WebContentDisplayPortlet.configureSetupPG(
+		WebContentDisplayPortlet.configureSetup(
 			enableViewCountIncrement = "true",
 			metadataNameList = "Comments");
 

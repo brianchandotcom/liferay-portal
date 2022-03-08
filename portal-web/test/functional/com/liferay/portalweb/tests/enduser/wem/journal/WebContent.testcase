@@ -1991,7 +1991,7 @@ definition {
 
 		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent 3 Title");
 
-		WebContentDisplayPortlet.configureSetupPG(metadataNameList = "Related Assets");
+		WebContentDisplayPortlet.configureSetup(metadataNameList = "Related Assets");
 
 		WebContentDisplayPortlet.saveConfiguration();
 

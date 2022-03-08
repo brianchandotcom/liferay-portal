@@ -544,7 +544,7 @@ definition {
 				portletName = "Web Content Display",
 				portletOption = "Configuration");
 
-			WebContentDisplayPortlet.configureSetupPG(userToolNameList = "Translations");
+			WebContentDisplayPortlet.configureSetup(userToolNameList = "Translations");
 
 			WebContentDisplayPortlet.saveConfiguration();
 

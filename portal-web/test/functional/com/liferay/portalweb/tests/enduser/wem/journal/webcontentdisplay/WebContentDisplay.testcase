@@ -145,7 +145,7 @@ definition {
 					pageName = "Test Page Name ${i}",
 					siteName = "Test Site Name");
 
-				WebContentDisplayPortlet.configureScopePG(scopeSelection = "Test Page Name 1");
+				WebContentDisplayPortlet.configureScope(scopeSelection = "Test Page Name 1");
 			}
 		}
 
@@ -155,7 +155,7 @@ definition {
 					pageName = "Test Page Name ${i}",
 					siteName = "Test Site Name");
 
-				WebContentDisplayPortlet.viewConfigureScopePG(scopeSelection = "Test Page Name 1");
+				WebContentDisplayPortlet.viewConfigureScope(scopeSelection = "Test Page Name 1");
 			}
 		}
 
@@ -492,7 +492,7 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				portletName = "Web Content Display",
 				portletOption = "Configuration");
 
-			WebContentDisplayPortlet.configureSetupPG(metadataNameList = "Related Assets");
+			WebContentDisplayPortlet.configureSetup(metadataNameList = "Related Assets");
 
 			WebContentDisplayPortlet.saveConfiguration();
 
@@ -887,13 +887,13 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			WebContentDisplayPortlet.configureScopePG(scopeSelection = "Global");
+			WebContentDisplayPortlet.configureScope(scopeSelection = "Global");
 
 			IFrame.closeFrame();
 		}
 
 		task ("View Global site is selected") {
-			WebContentDisplayPortlet.viewConfigureScopePG(scopeSelection = "Global");
+			WebContentDisplayPortlet.viewConfigureScope(scopeSelection = "Global");
 
 			IFrame.closeFrame();
 		}
@@ -1151,7 +1151,7 @@ ${runtimeInstance}
 				portletName = "Web Content Display",
 				portletOption = "Configuration");
 
-			WebContentDisplayPortlet.configureSetupPG(userToolNameList = "Download as DOC,Download as ODT,Download as PDF,Download as TXT");
+			WebContentDisplayPortlet.configureSetup(userToolNameList = "Download as DOC,Download as ODT,Download as PDF,Download as TXT");
 
 			WebContentDisplayPortlet.saveConfiguration();
 
@@ -1215,7 +1215,7 @@ ${runtimeInstance}
 		}
 
 		task ("Enable assets types in Web Content Display") {
-			WebContentDisplayPortlet.configureSetupPG(
+			WebContentDisplayPortlet.configureSetup(
 				enableViewCountIncrement = "true",
 				metadataNameList = "Related Assets,Ratings,Comments,Comment Ratings",
 				userToolNameList = "Translations,Print");
@@ -1224,7 +1224,7 @@ ${runtimeInstance}
 		}
 
 		task ("View all settings are shown in Web Content Display") {
-			WebContentDisplayPortlet.viewAllSettingsEnabledPG(
+			WebContentDisplayPortlet.viewAllSettingsEnabled(
 				locale = "español-España",
 				relatedAssetTitle = "Web Content Title 2",
 				webContentContentLocalized = "Web Contenido Contenido 1",

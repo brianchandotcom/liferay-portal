@@ -91,7 +91,7 @@ definition {
 			value1 = "${webContentTitle} is not approved.");
 	}
 
-	macro configureScopePG {
+	macro configureScope {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",
 			portletOption = "Configuration");
@@ -107,7 +107,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro configureSetupPG {
+	macro configureSetup {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
 		if (isSet(userToolNameList)) {
@@ -399,7 +399,7 @@ definition {
 			value1 = "Undo");
 	}
 
-	macro viewAllSettingsEnabledPG {
+	macro viewAllSettingsEnabled {
 		Click(locator1 = "WCD#WEB_CONTENT_TRANSLATION_DROPDOWN");
 
 		Click(
@@ -450,7 +450,7 @@ definition {
 			locator1 = "Ratings#THUMB");
 	}
 
-	macro viewConfigureScopePG {
+	macro viewConfigureScope {
 		AssertElementPresent(
 			key_portletName = "Web Content Display (${scopeSelection})",
 			locator1 = "Portlet#TITLE");

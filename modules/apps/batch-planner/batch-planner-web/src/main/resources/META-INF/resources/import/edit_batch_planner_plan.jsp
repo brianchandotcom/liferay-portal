@@ -64,7 +64,8 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 
 							<div class="mt-2">
 								<clay:checkbox
-									checked="<%= true %>"
+									checked="<%= false %>"
+									disabled="<%= true %>"
 									label='<%= LanguageUtil.get(request, "detect-category-names-from-CSV-file") %>'
 									name="headerCheckbox"
 								/>
@@ -72,7 +73,8 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 
 							<div class="mt-2">
 								<clay:checkbox
-									checked="<%= true %>"
+									checked="<%= false %>"
+									disabled="<%= true %>"
 									label='<%= LanguageUtil.get(request, "override-existing-records") %>'
 									name="headerCheckbox"
 								/>
@@ -81,6 +83,7 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 							<div class="mt-2">
 								<clay:checkbox
 									checked="<%= true %>"
+									disabled="<%= true %>"
 									label='<%= LanguageUtil.get(request, "ignore-blank-field-values-during-import") %>'
 									name="headerCheckbox"
 								/>

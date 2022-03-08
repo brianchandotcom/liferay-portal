@@ -48,4 +48,8 @@
 			<finder-column name="languageId" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>FileExtension</exception>
+		<exception>InvalidFile</exception>
+	</exceptions>
 </service-builder>

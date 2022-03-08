@@ -14,18 +14,24 @@
 
 package com.liferay.jenkins.results.parser;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class PortalReleaseJob extends BasePortalReleaseJob {
 
-	public PortalReleaseJob(
-		String jobName, BuildProfile buildProfile, String portalBranchName,
-		String testSuiteName,
+	protected PortalReleaseJob(JSONObject jsonObject) {
+		super(jsonObject);
+	}
+
+	protected PortalReleaseJob(
+		String jobName, BuildProfile buildProfile,
+		String portalUpstreamBranchName, String testSuiteName,
 		PortalGitWorkingDirectory portalGitWorkingDirectory) {
 
 		super(
-			jobName, buildProfile, portalBranchName, testSuiteName,
+			jobName, buildProfile, portalUpstreamBranchName, testSuiteName,
 			portalGitWorkingDirectory);
 	}
 

@@ -26,37 +26,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public abstract class BasePortalReleaseJob
 	extends BaseJob
 	implements BatchDependentJob, PortalTestClassJob, TestSuiteJob {
-
-	public BasePortalReleaseJob(
-		String jobName, BuildProfile buildProfile, String portalBranchName,
-		String testSuiteName,
-		PortalGitWorkingDirectory portalGitWorkingDirectory) {
-
-		super(jobName, buildProfile);
-
-		_portalBranchName = portalBranchName;
-		_testSuiteName = testSuiteName;
-
-		if (portalGitWorkingDirectory != null) {
-			_portalGitWorkingDirectory = portalGitWorkingDirectory;
-		}
-		else {
-			_portalGitWorkingDirectory =
-				GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-					portalBranchName);
-		}
-
-		jobPropertiesFiles.add(
-			new File(
-				_portalGitWorkingDirectory.getWorkingDirectory(),
-				"test.properties"));
-	}
 
 	@Override
 	public List<AxisTestClassGroup> getDependentAxisTestClassGroups() {
@@ -101,11 +78,26 @@ public abstract class BasePortalReleaseJob
 	public List<String> getJobPropertyOptions() {
 		List<String> jobPropertyOptions = super.getJobPropertyOptions();
 
-		jobPropertyOptions.add(_portalBranchName);
+		jobPropertyOptions.add(_portalUpstreamBranchName);
 
 		jobPropertyOptions.removeAll(Collections.singleton(null));
 
 		return jobPropertyOptions;
+	}
+
+	@Override
+	public JSONObject getJSONObject() {
+		if (jsonObject != null) {
+			return jsonObject;
+		}
+
+		jsonObject = super.getJSONObject();
+
+		jsonObject.put(
+			"portal_upstream_branch_name", _portalUpstreamBranchName);
+		jsonObject.put("test_suite_name", _testSuiteName);
+
+		return jsonObject;
 	}
 
 	@Override
@@ -116,6 +108,29 @@ public abstract class BasePortalReleaseJob
 	@Override
 	public String getTestSuiteName() {
 		return _testSuiteName;
+	}
+
+	protected BasePortalReleaseJob(JSONObject jsonObject) {
+		super(jsonObject);
+
+		_portalUpstreamBranchName = jsonObject.getString(
+			"portal_upstream_branch_name");
+		_testSuiteName = jsonObject.getString("test_suite_name");
+
+		_initialize(null);
+	}
+
+	protected BasePortalReleaseJob(
+		String jobName, BuildProfile buildProfile,
+		String portalUpstreamBranchName, String testSuiteName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory) {
+
+		super(jobName, buildProfile);
+
+		_portalUpstreamBranchName = portalUpstreamBranchName;
+		_testSuiteName = testSuiteName;
+
+		_initialize(portalGitWorkingDirectory);
 	}
 
 	@Override
@@ -136,8 +151,26 @@ public abstract class BasePortalReleaseJob
 		return getSetFromString(jobProperty.getValue());
 	}
 
-	private final String _portalBranchName;
-	private final PortalGitWorkingDirectory _portalGitWorkingDirectory;
+	private void _initialize(
+		PortalGitWorkingDirectory portalGitWorkingDirectory) {
+
+		if (portalGitWorkingDirectory != null) {
+			_portalGitWorkingDirectory = portalGitWorkingDirectory;
+		}
+		else {
+			_portalGitWorkingDirectory =
+				GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
+					_portalUpstreamBranchName);
+		}
+
+		jobPropertiesFiles.add(
+			new File(
+				_portalGitWorkingDirectory.getWorkingDirectory(),
+				"test.properties"));
+	}
+
+	private PortalGitWorkingDirectory _portalGitWorkingDirectory;
+	private final String _portalUpstreamBranchName;
 	private final String _testSuiteName;
 
 }

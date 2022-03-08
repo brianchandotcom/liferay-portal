@@ -17,8 +17,13 @@ package com.liferay.commerce.internal.events;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
+import com.liferay.commerce.internal.context.CommerceGroupThreadLocal;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,12 +52,29 @@ public class CommerceContextPreAction extends Action {
 
 		httpServletRequest.setAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
+
+		try {
+			CommerceGroupThreadLocal.set(
+				_groupLocalService.fetchGroup(
+					commerceContext.getCommerceChannelGroupId()));
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceContextPreAction.class);
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	private volatile CommerceContextFactory _commerceContextFactory;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

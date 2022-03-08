@@ -12,49 +12,14 @@
  * details.
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
 import ClayTable from '@clayui/table';
-import React, {useState} from 'react';
+import React from 'react';
 
-const CellPreview = ({cell, cellIndex, handleEditCell, rowIndex}) => {
-	const [isCellEditing, setIsCellEditing] = useState(false);
-	const [cellValue, setCellValue] = useState(cell);
+const CellPreview = ({cell, cellIndex,}) => {
 
 	return (
 		<ClayTable.Cell key={cellIndex}>
-			{!isCellEditing && <>{cellValue}</>}
-
-			{isCellEditing && (
-				<ClayForm.Group>
-					<ClayInput
-						id={cell.replace(/ /, '-')}
-						onBlur={(event) => {
-							if (
-								!event.currentTarget.contains(
-									event.relatedTarget
-								)
-							) {
-								setIsCellEditing(false);
-								handleEditCell(cellValue, cellIndex, rowIndex);
-							}
-						}}
-						onChange={(event) => {
-							setCellValue(event.target.value);
-						}}
-						onFocus={(event) => {
-							if (
-								!event.currentTarget.contains(
-									event.relatedTarget
-								)
-							) {
-								setIsCellEditing(true);
-							}
-						}}
-						type="text"
-						value={cellValue}
-					/>
-				</ClayForm.Group>
-			)}
+			{cell}
 		</ClayTable.Cell>
 	);
 };

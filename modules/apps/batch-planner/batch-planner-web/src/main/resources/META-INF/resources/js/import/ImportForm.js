@@ -20,7 +20,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import SaveTemplate from '../SaveTemplate';
 import {
 	CSV_HEADERS,
-	FILE_FORMATTED_CONTENT,
 	FILE_SCHEMA_EVENT,
 	SCHEMA_SELECTED_EVENT,
 	TEMPLATE_SELECTED_EVENT,
@@ -173,7 +172,8 @@ function ImportForm({
 			setDbFields(newDBFields);
 		}
 
-		function handleFileSchemaUpdate({firstItemDetails, schema}) {
+		function handleFileSchemaUpdate({fileContent, firstItemDetails, schema}) {
+			setFileContent(fileContent);
 			setFileFields(schema);
 			setDemoFileValues(firstItemDetails);
 		}
@@ -190,14 +190,17 @@ function ImportForm({
 			setCsvHeaders(csvContainsHeaders);
 		}
 
+		function handleCsvHeaders({csvContainsHeaders}) {
+			setCsvHeaders(csvContainsHeaders);
+		}
+
 		Liferay.on(CSV_HEADERS, handleCsvHeaders);
-		Liferay.on(FILE_FORMATTED_CONTENT, handlesFileFormattedContent);
 		Liferay.on(FILE_SCHEMA_EVENT, handleFileSchemaUpdate);
 		Liferay.on(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 		Liferay.on(TEMPLATE_SELECTED_EVENT, handleTemplateSelect);
 
 		return () => {
-			Liferay.detach(FILE_FORMATTED_CONTENT, handlesFileFormattedContent);
+			Liferay.detach(CSV_HEADERS, handleCsvHeaders);
 			Liferay.detach(FILE_SCHEMA_EVENT, handleFileSchemaUpdate);
 			Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 			Liferay.detach(TEMPLATE_SELECTED_EVENT, handleTemplateSelect);

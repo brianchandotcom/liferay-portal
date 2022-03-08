@@ -27,7 +27,7 @@ const ImportPreviewModal = ({
 	setStartImport,
 }) => {
 	const fileFieldsToMap = fieldsSelections
-		? Object.values(fieldsSelections)
+		? Object.keys(fieldsSelections)
 		: {};
 
 	return (
@@ -36,25 +36,16 @@ const ImportPreviewModal = ({
 				{Liferay.Language.get('preview')}
 			</ClayModal.Header>
 
-			<ClayModal.Body>
-				<ClayTable>
+			<ClayModal.Body className="p-2">
+				<ClayTable borderless hover={false}>
 					<ClayTable.Head>
 						<ClayTable.Row>
 							{Array.from(fileFieldsToMap).map(
 								(element, index) => {
-									let label;
-									if (isNaN(parseInt(element, 10))) {
-										label = element;
-									}
-									else {
-										label = `${Liferay.Language.get(
-											'column'
-										)} ${parseInt(element, 10) + 1}`;
-									}
-
 									return (
 										<ClayTable.Cell headingCell key={index}>
-											{label}
+											{element.charAt(0).toUpperCase() +
+												element.slice(1)}
 										</ClayTable.Cell>
 									);
 								}
@@ -62,7 +53,7 @@ const ImportPreviewModal = ({
 						</ClayTable.Row>
 					</ClayTable.Head>
 
-					<ClayTable.Body>
+					<ClayTable.Body className="inline-scroller w-100">
 						{fileContent?.map((row, index) => {
 							return (
 								<ClayTable.Row key={index}>

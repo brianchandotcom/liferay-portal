@@ -39,6 +39,13 @@ public class PLOEntryServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.language.override.service.impl.PLOEntryServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static PLOEntry addOrUpdatePLOEntry(
+			String key, String languageId, String value)
+		throws PortalException {
+
+		return getService().addOrUpdatePLOEntry(key, languageId, value);
+	}
+
 	public static void deletePLOEntries(String key) throws PortalException {
 		getService().deletePLOEntries(key);
 	}

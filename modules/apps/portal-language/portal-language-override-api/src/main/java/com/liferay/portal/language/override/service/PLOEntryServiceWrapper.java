@@ -35,6 +35,14 @@ public class PLOEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.language.override.model.PLOEntry
+			addOrUpdatePLOEntry(String key, String languageId, String value)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _ploEntryService.addOrUpdatePLOEntry(key, languageId, value);
+	}
+
+	@Override
 	public void deletePLOEntries(String key)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

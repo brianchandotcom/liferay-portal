@@ -30,16 +30,16 @@
 .miller-columns-item {
 	border-bottom: 1px solid $gray-300;
 	cursor: pointer;
-	height: 4.25rem;
+	height: 4rem;
 	padding: 1rem;
 	position: relative;
 
+	&:not(:first-child) {
+		border-top: 1px solid $gray-300;
+	}
+
 	&--active {
 		background-color: $light-l1;
-
-		&.miller-columns-item.autofit-row {
-			margin-top: 1px;
-		}
 	}
 
 	&.dragging {
@@ -73,14 +73,14 @@
 
 	.miller-columns-item-actions,
 	.miller-columns-item-quick-action {
-		padding: 0 0.25rem;
+		padding: 0 0 0 0.25rem;
 		z-index: 2;
 	}
 
 	.miller-columns-item-drag-handler {
 		color: $gray-500;
 		cursor: move;
-		font-size: 1.375rem;
+		font-size: 0.75rem;
 		top: 2px;
 		z-index: 2;
 	}

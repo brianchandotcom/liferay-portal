@@ -2654,12 +2654,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONObject workflowDefinitionJSONObject =
 				JSONFactoryUtil.createJSONObject(
 					SiteInitializerUtil.read(
-						resourcePath + "workflow-definition.json"));
+						resourcePath + "workflow-definition.json",
+						_servletContext));
 
 			workflowDefinitionJSONObject.put(
-				"content", 
+				"content",
 				SiteInitializerUtil.read(
-					resourcePath + "workflow-definition.xml"));
+					resourcePath + "workflow-definition.xml", _servletContext));
 
 			WorkflowDefinition workflowDefinition =
 				workflowDefinitionResource.postWorkflowDefinitionDeploy(
@@ -2667,7 +2668,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 						workflowDefinitionJSONObject.toString()));
 
 			String propertiesJSON = SiteInitializerUtil.read(
-				resourcePath + "workflow-definition.properties.json");
+				resourcePath + "workflow-definition.properties.json",
+				_servletContext);
 
 			if (propertiesJSON == null) {
 				continue;
@@ -2716,28 +2718,27 @@ public class BundleSiteInitializer implements SiteInitializer {
 						className, "#", objectDefinition.getId());
 				}
 
-				if (StringUtil.equals(
-						className, CommerceOrder.class.getName())) {
+				long typePK = 0;
 
-					_workflowDefinitionLinkLocalService.
-						updateWorkflowDefinitionLink(
-							serviceContext.getUserId(),
-							serviceContext.getCompanyId(), groupId, className,
-							0, propertiesJSONObject.getLong("typePK"),
-							StringBundler.concat(
-								workflowDefinition.getName(), "@",
-								workflowDefinition.getVersion()));
+				if (StringUtil.equals(
+						className,
+						_commerceSiteInitializer.getCommerceOrderClassName())) {
+
+					groupId =
+						_commerceSiteInitializer.getCommerceChannelGroupId(
+							groupId);
+
+					typePK = propertiesJSONObject.getLong("typePK");
 				}
-				else {
-					_workflowDefinitionLinkLocalService.
-						updateWorkflowDefinitionLink(
-							serviceContext.getUserId(),
-							serviceContext.getCompanyId(), groupId, className,
-							0, 0,
-							StringBundler.concat(
-								workflowDefinition.getName(), "@",
-								workflowDefinition.getVersion()));
-				}
+
+				_workflowDefinitionLinkLocalService.
+					updateWorkflowDefinitionLink(
+						serviceContext.getUserId(),
+						serviceContext.getCompanyId(), groupId, className, 0,
+						typePK,
+						StringBundler.concat(
+							workflowDefinition.getName(), "@",
+							workflowDefinition.getVersion()));
 			}
 		}
 	}

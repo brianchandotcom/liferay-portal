@@ -1,0 +1,197 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		//Raylife.createRaylifeSite(siteName = "Raylife");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		//Raylife.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "LPS-148625 - Make sure that the 'Create Account' button is only active after all fields are filled in"
+	@priority = "5"
+	test CreateAccountButtonIsEnabledTablet {
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		SetWindowSize(value1 = "800,1024");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeProperty.typeAllPropertyInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+			policy = "standard");
+
+		Type(
+			locator1 = "RaylifeCreateAccount#EMAIL_FIELD",
+			value1 = "test@liferay.com");
+
+		Type(
+			label = "password",
+			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
+			value1 = "test@123");
+
+		Type(
+			label = "rePassword",
+			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
+			value1 = "test@123");
+
+		AssertElementPresent(locator1 = "RaylifeCreateAccount#CREATE_ACCOUNT");
+	}
+
+	@description = "LPS-148623 - Make sure that the 'Create Account' button is only active after all fields are filled in"
+	@priority = "5"
+	test CreateAccountButtonIsEnabledPhone {
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		SetWindowSize(value1 = "360,720");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeMobile.formsFlowPhone();
+
+		Click(
+			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+			policy = "standard");
+
+		Type(
+			locator1 = "RaylifeCreateAccount#EMAIL_FIELD",
+			value1 = "test@liferay.com");
+
+		Type(
+			label = "password",
+			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
+			value1 = "test@123");
+
+		Type(
+			label = "rePassword",
+			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
+			value1 = "test@123");
+
+		Click(locator1 = "RaylifeCreateAccount#CREATE_ACCOUNT");
+
+		AssertElementPresent(
+			locator1 = "RaylifeCreateAccount#PANEL_SUCCESS",
+			title = "Create");
+	}
+
+	@description = "LPS-148626 - Verify if when users complete the account creation section, that completed section is indicated with a green checkmark"
+	@priority = "4"
+	test CreateAccountSectionCompletedTablet {
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		SetWindowSize(value1 = "800,1024");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeContactInfo.typeAllBasicsInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeBusiness.typeAllBusinessInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeEmployees.typeAllEmployeesInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		RaylifeProperty.typeAllPropertyInfoFields();
+
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
+
+		Click(
+			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+			policy = "standard");
+
+		Type(
+			locator1 = "RaylifeCreateAccount#EMAIL_FIELD",
+			value1 = "test@liferay.com");
+
+		Type(
+			label = "password",
+			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
+			value1 = "test@123");
+
+		Type(
+			label = "rePassword",
+			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
+			value1 = "test@123");
+
+		Click(locator1 = "RaylifeCreateAccount#CREATE_ACCOUNT");
+
+		AssertElementPresent(
+			locator1 = "RaylifeCreateAccount#PANEL_SUCCESS",
+			title = "Create");
+	}
+
+	@description = "LPS-148624 - Verify if when users complete the account creation section, that completed section is indicated with a green checkmark"
+	@priority = "4"
+	test CreateAccountSectionCompletedPhone {
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		SetWindowSize(value1 = "360,720");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeMobile.formsFlowPhone();
+
+		Click(
+			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+			policy = "standard");
+
+		Type(
+			locator1 = "RaylifeCreateAccount#EMAIL_FIELD",
+			value1 = "test@liferay.com");
+
+		Type(
+			label = "password",
+			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
+			value1 = "test@123");
+
+		Type(
+			label = "rePassword",
+			locator1 = "RaylifeCreateAccount#PASSWORD_FIELD",
+			value1 = "test@123");
+
+		Click(locator1 = "RaylifeCreateAccount#CREATE_ACCOUNT");
+
+		AssertElementPresent(
+			locator1 = "RaylifeCreateAccount#PANEL_SUCCESS",
+			title = "Create");
+	}
+
+}

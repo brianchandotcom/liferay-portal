@@ -112,12 +112,6 @@ public class UpgradeCompanyId extends BaseCompanyIdUpgradeProcess {
 			super(tableName, foreignTableName, columnName);
 		}
 
-		public CompanyIdNotNullTableUpdater(
-			String tableName, String columnName, String[][] foreignNamesArray) {
-
-			super(tableName, columnName, foreignNamesArray);
-		}
-
 		@Override
 		public void update(Connection connection) throws Exception {
 			super.update(connection);

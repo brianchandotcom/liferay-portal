@@ -18,6 +18,7 @@ import React, {useEffect, useState} from 'react';
 
 import parseFile from '../FileParsers';
 import {
+	CSV_HEADERS,
 	FILE_EXTENSION_INPUT_PARTIAL_NAME,
 	FILE_SCHEMA_EVENT,
 	IMPORT_FILE_FORMATS,
@@ -51,6 +52,12 @@ function FileUpload({portletNamespace}) {
 		csvSeparator: ',',
 	});
 
+	useEffect(() => {
+		Liferay.fire(CSV_HEADERS, {
+			csvContainsHeaders: parserOptions.csvContainsHeaders,
+		});
+	}, [parserOptions]);
+
 	const fileExtension = fileToBeUploaded
 		? fileToBeUploaded.name
 				.substring(fileToBeUploaded.name.lastIndexOf('.') + 1)
@@ -62,6 +69,7 @@ function FileUpload({portletNamespace}) {
 			updateExtensionInputValue(portletNamespace, '');
 
 			Liferay.fire(FILE_SCHEMA_EVENT, {
+				contentItemDetails: null,
 				firstItemDetails: null,
 				schema: null,
 			});
@@ -69,10 +77,15 @@ function FileUpload({portletNamespace}) {
 			return;
 		}
 
-		const onComplete = ({extension, firstItemDetails, schema}) => {
+		const onComplete = ({
+			contentItemDetails,
+			extension,
+			firstItemDetails,
+			schema,
+		}) => {
 			updateExtensionInputValue(portletNamespace, extension);
-
 			Liferay.fire(FILE_SCHEMA_EVENT, {
+				contentItemDetails,
 				firstItemDetails,
 				schema,
 			});

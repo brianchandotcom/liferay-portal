@@ -15,10 +15,12 @@
 import ClayLink from '@clayui/link';
 import ClayTable from '@clayui/table';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import SaveTemplate from '../SaveTemplate';
 import {
+	CSV_HEADERS,
+	FILE_FORMATTED_CONTENT,
 	FILE_SCHEMA_EVENT,
 	SCHEMA_SELECTED_EVENT,
 	TEMPLATE_SELECTED_EVENT,
@@ -60,27 +62,82 @@ function ImportForm({
 	});
 	const [formEvaluated, setFormEvaluated] = useState(false);
 	const [fileFields, setFileFields] = useState();
+	const [fileContent, setFileContent] = useState();
 	const [demoFileValues, setDemoFileValues] = useState({});
 	const [fieldsSelections, setFieldsSelections] = useState({});
 	const [mappingsToBeEvaluated, setMappingsToBeEvaluated] = useState(
 		mappedFields
 	);
+	const [fileContentPreview, setFileContentPreview] = useState([]);
 	const useTemplateMappingRef = useRef();
+	const [formIsValid, setFormIsValid] = useState(false);
+	const [csvHeaders, setCsvHeaders] = useState(true);
 
-	const formIsValid = useMemo(() => {
+	useEffect(() => {
+		const requiredFieldNotFilled = dbFields.required
+			? dbFields.required.some(
+					(dbField) => !fieldsSelections[dbField.name]
+			  )
+			: false;
+
 		if (
-			!Object.keys(fieldsSelections).length ||
-			!(dbFields.optional.length + dbFields.required.length)
+			fieldsSelections &&
+			Object.keys(fieldsSelections).length > 0 &&
+			dbFields.optional?.length > 0 &&
+			!requiredFieldNotFilled
 		) {
-			return false;
+			setFormIsValid(true);
 		}
-
-		const requiredFieldNotFilled = dbFields.required.some(
-			(dbField) => !fieldsSelections[dbField.name]
-		);
-
-		return !requiredFieldNotFilled;
+		else {
+			setFormIsValid(false);
+		}
 	}, [fieldsSelections, dbFields]);
+
+	useEffect(() => {
+		setFieldsSelections({});
+	}, [csvHeaders]);
+
+	useEffect(() => {
+		const fieldsIndex = [];
+		let filePreview;
+		if (Object.keys(fieldsSelections)?.length > 0) {
+			fileFields.filter((element, index) => {
+				if (csvHeaders) {
+					if (Object.values(fieldsSelections).indexOf(element) > -1) {
+						fieldsIndex.push(index);
+					}
+				}
+				else {
+					if (
+						Object.values(fieldsSelections).indexOf(
+							element.toString()
+						) > -1
+					) {
+						fieldsIndex.push(parseInt(index, 10));
+					}
+				}
+			});
+			if (!csvHeaders) {
+				filePreview = fileContent?.map((row) => {
+					return row.filter((element, index) => {
+						if (fieldsIndex.includes(index)) {
+							return element;
+						}
+					});
+				});
+			}
+			else {
+				filePreview = fileContent?.map((row) => {
+					return row.filter((element, index) => {
+						if (fieldsIndex.includes(index)) {
+							return element;
+						}
+					});
+				});
+			}
+			setFileContentPreview(filePreview);
+		}
+	}, [fileFields, fieldsSelections, fileContent, csvHeaders]);
 
 	const updateFieldMapping = (fileField, dbFieldName) => {
 		setFieldsSelections((prevSelections) => ({
@@ -118,7 +175,6 @@ function ImportForm({
 
 		function handleFileSchemaUpdate({firstItemDetails, schema}) {
 			setFileFields(schema);
-
 			setDemoFileValues(firstItemDetails);
 		}
 
@@ -127,12 +183,21 @@ function ImportForm({
 				setMappingsToBeEvaluated(template.mappings);
 			}
 		}
+		function handlesFileFormattedContent({fileContent}) {
+			setFileContent(fileContent);
+		}
+		function handleCsvHeaders({csvContainsHeaders}) {
+			setCsvHeaders(csvContainsHeaders);
+		}
 
+		Liferay.on(CSV_HEADERS, handleCsvHeaders);
+		Liferay.on(FILE_FORMATTED_CONTENT, handlesFileFormattedContent);
 		Liferay.on(FILE_SCHEMA_EVENT, handleFileSchemaUpdate);
 		Liferay.on(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 		Liferay.on(TEMPLATE_SELECTED_EVENT, handleTemplateSelect);
 
 		return () => {
+			Liferay.detach(FILE_FORMATTED_CONTENT, handlesFileFormattedContent);
 			Liferay.detach(FILE_SCHEMA_EVENT, handleFileSchemaUpdate);
 			Liferay.detach(SCHEMA_SELECTED_EVENT, handleSchemaUpdated);
 			Liferay.detach(TEMPLATE_SELECTED_EVENT, handleTemplateSelect);
@@ -279,12 +344,18 @@ function ImportForm({
 				/>
 
 				<ImportSubmit
+					dbFields={dbFields}
+					disabled={!formIsValid}
 					evaluateForm={() => setFormEvaluated(true)}
+					fieldsSelections={fieldsSelections}
+					fileContent={fileContentPreview}
+					fileFields={fileFields}
 					formDataQuerySelector={formDataQuerySelector}
 					formImportURL={formImportURL}
 					formIsValid={formIsValid}
 					formIsVisible={formIsVisible}
 					portletNamespace={portletNamespace}
+					setFileContent={setFileContent}
 				/>
 			</div>
 		</>

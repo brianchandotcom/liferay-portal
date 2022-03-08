@@ -12,85 +12,63 @@
  * details.
  */
 
-import ClayButton from '@clayui/button';
-import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import ClayProgressBar from '@clayui/progress-bar';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import {importStatus} from '../BatchPlannerImport';
-import Poller from '../Poller';
+import ImportPreviewModal from './ImportPreviewModal';
+import ImportProcessModal from './ImportProcessModal';
 
 const ImportModal = ({
 	closeModal,
+	dbFields,
+	fieldsSelections,
+	fileContent,
+	fileFields,
 	formDataQuerySelector,
 	formSubmitURL,
 	observer,
+	portletNamespace,
+	setFileContent,
+	setStartImport,
+	startImport,
 }) => {
-	const {errorMessage, loading, percentage} = Poller(
-		formDataQuerySelector,
-		formSubmitURL,
-		importStatus
-	);
+	const handleEditCell = (newValue, cellIndex, rowIndex) => {
+		const newRow = fileContent[rowIndex];
+		const newFileContent = fileContent;
+		Object.entries(newRow).forEach(([key], index) => {
+			if (cellIndex === index) {
+				newRow[key] = newValue;
+			}
+		});
+
+		newFileContent.splice(rowIndex, 1, newRow);
+		setFileContent(newFileContent);
+	};
 
 	return (
-		<ClayModal observer={observer} size="md">
-			<ClayModal.Header>
-				{Liferay.Language.get('import')}
-			</ClayModal.Header>
+		<ClayModal observer={observer} size={startImport ? 'lg' : 'md'}>
+			{!startImport && (
+				<ImportPreviewModal
+					closeModal={closeModal}
+					dbFields={dbFields}
+					fieldsSelections={fieldsSelections}
+					fileContent={fileContent}
+					fileFields={fileFields}
+					handleEditCell={handleEditCell}
+					setStartImport={setStartImport}
+				/>
+			)}
 
-			<ClayModal.Body>
-				<ClayForm.Group className={errorMessage ? 'has-error' : ''}>
-					<div className="progress-container">
-						<ClayProgressBar
-							value={percentage}
-							warn={!!errorMessage}
-						/>
-					</div>
-
-					{errorMessage && (
-						<ClayForm.FeedbackGroup>
-							<ClayForm.FeedbackItem>
-								<ClayForm.FeedbackIndicator symbol="exclamation-full" />
-
-								{errorMessage}
-							</ClayForm.FeedbackItem>
-						</ClayForm.FeedbackGroup>
-					)}
-				</ClayForm.Group>
-			</ClayModal.Body>
-
-			<ClayModal.Footer
-				last={
-					<ClayButton.Group spaced>
-						<ClayButton
-							displayType="secondary"
-							onClick={closeModal}
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-
-						<ClayButton
-							disabled={loading}
-							displayType="primary"
-							onClick={closeModal}
-							type="submit"
-						>
-							{loading && (
-								<span className="inline-item inline-item-before">
-									<span
-										aria-hidden="true"
-										className="loading-animation"
-									></span>
-								</span>
-							)}
-
-							{Liferay.Language.get('done')}
-						</ClayButton>
-					</ClayButton.Group>
-				}
-			/>
+			{startImport && (
+				<ImportProcessModal
+					closeModal={closeModal}
+					formDataQuerySelector={formDataQuerySelector}
+					formSubmitURL={formSubmitURL}
+					namespace={portletNamespace}
+					observer={observer}
+				/>
+			)}
 		</ClayModal>
 	);
 };

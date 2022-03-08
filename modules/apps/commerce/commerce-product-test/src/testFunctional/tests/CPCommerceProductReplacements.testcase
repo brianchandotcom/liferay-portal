@@ -25,7 +25,7 @@ definition {
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
-	@description = "COMMERCE-8160. Verify a product SKU can be set as discontinued with a replacement"
+	@description = "COMMERCE-8160. Verify a product can be marked as 'discontinued' when adding a new SKU"
 	@priority = "3"
 	test CreateNewSKUWithReplacement {
 		task ("Given a simple replacement product with a SKU") {

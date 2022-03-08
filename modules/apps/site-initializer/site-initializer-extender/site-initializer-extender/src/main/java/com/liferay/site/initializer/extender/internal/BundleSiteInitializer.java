@@ -1924,6 +1924,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 						"No role found with name " +
 							jsonObject.getString("roleName"));
 				}
+
+				continue;
 			}
 
 			int scope = jsonObject.getInt("scope");

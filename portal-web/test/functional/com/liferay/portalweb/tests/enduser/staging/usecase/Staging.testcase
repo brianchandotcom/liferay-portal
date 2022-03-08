@@ -797,7 +797,7 @@ definition {
 			menuItem = "Edit Web Content",
 			webContentTitle = "WebContent Title");
 
-		WebContent.addTagPGViaWCD(tagName = "tag name");
+		WebContentDisplayPortlet.addTag(tagNameList = "tag name");
 
 		JSONStaging.enableLocalStaging(groupName = "Site Name");
 

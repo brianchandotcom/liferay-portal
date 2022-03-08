@@ -302,29 +302,6 @@ definition {
 			value1 = "${priority}");
 	}
 
-	macro addTagPGViaWCD {
-		Panel.expandPanel(panel = "Categorization");
-
-		Type(
-			locator1 = "AssetCategorization#TAGS_FIELD",
-			value1 = "${tagName}");
-
-		KeyPress(
-			locator1 = "AssetCategorization#TAGS_FIELD",
-			value1 = ",");
-
-		AssertTextEquals(
-			key_tagName = "${tagName}",
-			locator1 = "AssetCategorization#TAG",
-			value1 = "${tagName}");
-
-		AssertClick(
-			locator1 = "Button#PUBLISH",
-			value1 = "Publish");
-
-		SelectFrame(value1 = "relative=top");
-	}
-
 	macro addViaCKEditor {
 		AssertVisible(locator1 = "WCEditWebContent#SIDEBAR");
 

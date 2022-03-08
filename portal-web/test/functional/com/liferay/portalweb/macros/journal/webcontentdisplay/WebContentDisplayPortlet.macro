@@ -63,6 +63,18 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro addTag {
+		Panel.expandPanel(panel = "Categorization");
+
+		for (var tagName : list "${tagNameList}") {
+			AssetCategorization.addTag(tagName = "${tagName}");
+		}
+
+		PortletEntry.publish();
+
+		SelectFrame(value1 = "relative=top");
+	}
+
 	macro addWithWorkflow {
 		WebContentDisplayPortletNavigator.gotoAdd(structureName = "${selectStructureName}");
 

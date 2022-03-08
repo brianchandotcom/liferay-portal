@@ -53,6 +53,7 @@ export default function CustomSelect<T extends IItem = IItem>({
 			<ClayAutocomplete>
 				<ClayAutocomplete.Input
 					className="object__custom-select-input"
+					disabled={disabled}
 					onClick={() => setActive(!active)}
 					placeholder={Liferay.Language.get('choose-an-option')}
 					ref={inputRef}

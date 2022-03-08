@@ -51,7 +51,6 @@ InstanceofOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Check
 JSONNamingCheck | [Naming Conventions](naming_conventions_checks.markdown#naming-conventions-checks) | Checks if variable names follow naming conventions. |
 [JSONUtilCheck](check/json_util_check.markdown#jsonutilcheck) | [Styling](styling_checks.markdown#styling-checks) | Checks for utilization of class `JSONUtil`. |
 Java2HTMLCheck | [Miscellaneous](miscellaneous_checks.markdown#miscellaneous-checks) | Finds incorrect use of `.java.html` in `.jsp` files. |
-[JavaAPISignatureCheck](check/java_api_signature_check.markdown#javaapisignaturecheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Checks that types `HttpServletRequest`, `HttpServletResponse`, `ThemeDisplay`, and `ServiceContext` are not used in API method signatures. |
 JavaAbstractMethodCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds incorrect `abstract` methods in `interface`. |
 JavaAggregateTestRuleParameterOrderCheck | [Styling](styling_checks.markdown#styling-checks) | Checks the order of parameters in `new AggregateTestRule` calls. |
 JavaAnnotationDefaultAttributeCheck | [Styling](styling_checks.markdown#styling-checks) | Finds cases where the default value is passed to annotations in package `*.bnd.annotations` or `*.bind.annotations`. |

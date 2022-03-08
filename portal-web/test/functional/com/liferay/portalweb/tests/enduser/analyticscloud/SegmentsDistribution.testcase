@@ -107,7 +107,7 @@ definition {
 			ACSegments.selectDistributionByAttribute(attribute = "createDate");
 		}
 
-		task("Get current date") {
+		task ("Get current date") {
 			ACSegments.generateDayMonthAndYearValues(dateDifferenceFromCurrentDate = "0");
 
 			var monthNum = DateUtil.getCurrentMonth();
@@ -122,7 +122,7 @@ definition {
 				var staticDay = "0${staticDay}";
 			}
 		}
-		
+
 		task ("View Chart Entry") {
 			ACSegments.viewBreakdownChartsEntry(key_entry = "${staticYear}-${monthNum}-${staticDay}");
 

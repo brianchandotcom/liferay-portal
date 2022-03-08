@@ -17,53 +17,6 @@
 		<suppress checks="BNDExportsCheck" files="commerce-shipping-web/bnd\.bnd" />
 		<suppress checks="CopyrightCheck" files="commerce-theme-minium/commerce-theme-minium/src/js/intersection-observer\.js" />
 		<suppress checks="CopyrightCheck" files="commerce-theme-speedwell/commerce-theme-speedwell/src/js/intersection-observer\.js" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-account-api/src/main/java/com/liferay/commerce/account/util/CommerceAccountHelper\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-account-api/src/main/java/com/liferay/commerce/account/util/CommerceAccountRoleHelper\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-api/src/main/java/com/liferay/commerce/context/CommerceContextFactory\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-api/src/main/java/com/liferay/commerce/order/importer/type/CommerceOrderImporterType\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-api/src/main/java/com/liferay/commerce/payment/engine/CommercePaymentEngine\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-api/src/main/java/com/liferay/commerce/payment/engine/CommerceSubscriptionEngine\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-api/src/main/java/com/liferay/commerce/util/CommerceCheckoutStep\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-api/src/main/java/com/liferay/commerce/util/CommerceCheckoutStepServicesTracker\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/account/CommerceAccountResource\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/address/AddressResource\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/cart/CommerceCartResource\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/order/CommerceOrderResource\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/search/CommerceSearchResource\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/search/util/CommerceSearchUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/wishlist/CommerceWishListResource\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-media-api/src/main/java/com/liferay/commerce/media/CommerceMediaResolver\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-media-api/src/main/java/com/liferay/commerce/media/CommerceMediaResolverUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-payment-api/src/main/java/com/liferay/commerce/payment/util/CommercePaymentUtils\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-product-api/src/main/java/com/liferay/commerce/product/data/source/CPDataSource\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-product-api/src/main/java/com/liferay/commerce/product/importer/CPFileImporter\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-product-api/src/main/java/com/liferay/commerce/product/util/CPContentContributor\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-product-api/src/main/java/com/liferay/commerce/product/util/CPDefinitionHelper\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-product-content-api/src/main/java/com/liferay/commerce/product/content/util/CPCompareContentHelper\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-product-content-api/src/main/java/com/liferay/commerce/product/content/util/CPContentHelper\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-product-type-virtual-api/src/main/java/com/liferay/commerce/product/type/virtual/util/VirtualCPTypeHelper\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-theme-minium/commerce-theme-minium-site-initializer/src/main/java/com/liferay/commerce/theme/minium/site/initializer/internal/MiniumLayoutsInitializer\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="commerce-theme-speedwell/commerce-theme-speedwell-site-initializer/src/main/java/com/liferay/commerce/theme/speedwell/site/initializer/internal/SpeedwellLayoutsInitializer\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-account-impl/src/main/java/com/liferay/headless/commerce/admin/account/internal/util/v1_0/AccountMemberUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-catalog-impl/src/main/java/com/liferay/headless/commerce/admin/catalog/internal/util/v1_0/AttachmentUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-catalog-impl/src/main/java/com/liferay/headless/commerce/admin/catalog/internal/util/v1_0/ProductConfigurationUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-catalog-impl/src/main/java/com/liferay/headless/commerce/admin/catalog/internal/util/v1_0/ProductOptionUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-catalog-impl/src/main/java/com/liferay/headless/commerce/admin/catalog/internal/util/v1_0/ProductOptionValueUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-catalog-impl/src/main/java/com/liferay/headless/commerce/admin/catalog/internal/util/v1_0/ProductShippingConfigurationUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-catalog-impl/src/main/java/com/liferay/headless/commerce/admin/catalog/internal/util/v1_0/ProductSpecificationUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-catalog-impl/src/main/java/com/liferay/headless/commerce/admin/catalog/internal/util/v1_0/ProductSubscriptionConfigurationUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-catalog-impl/src/main/java/com/liferay/headless/commerce/admin/catalog/internal/util/v1_0/ProductUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-catalog-impl/src/main/java/com/liferay/headless/commerce/admin/catalog/internal/util/v1_0/RelatedProductUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-catalog-impl/src/main/java/com/liferay/headless/commerce/admin/catalog/internal/util/v1_0/SkuUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-order-impl/src/main/java/com/liferay/headless/commerce/admin/order/internal/util/v1_0/BillingAddressUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-order-impl/src/main/java/com/liferay/headless/commerce/admin/order/internal/util/v1_0/OrderItemUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-order-impl/src/main/java/com/liferay/headless/commerce/admin/order/internal/util/v1_0/ShippingAddressUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-pricing-impl/src/main/java/com/liferay/headless/commerce/admin/pricing/internal/util/v1_0/DiscountAccountGroupUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-pricing-impl/src/main/java/com/liferay/headless/commerce/admin/pricing/internal/util/v1_0/DiscountCategoryUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-pricing-impl/src/main/java/com/liferay/headless/commerce/admin/pricing/internal/util/v1_0/DiscountProductUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-pricing-impl/src/main/java/com/liferay/headless/commerce/admin/pricing/internal/util/v1_0/DiscountRuleUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-pricing-impl/src/main/java/com/liferay/headless/commerce/admin/pricing/internal/util/v1_0/PriceListAccountGroupUtil\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="headless/headless-commerce/headless-commerce-admin-pricing-impl/src/main/java/com/liferay/headless/commerce/admin/pricing/internal/util/v1_0/TierPriceUtil\.java" />
 		<suppress checks="JavaConfigurationCategoryCheck" files=".*" />
 		<suppress checks="JavaHelperUtilCheck" files="commerce-checkout-web/src/main/java/com/liferay/commerce/checkout/web/internal/util/AddressCommerceCheckoutStepUtil\.java" />
 		<suppress checks="JavaHelperUtilCheck" files="commerce-frontend-impl/src/main/java/com/liferay/commerce/frontend/internal/cart/CommerceCartResourceUtil\.java" />

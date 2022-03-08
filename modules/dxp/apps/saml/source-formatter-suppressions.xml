@@ -4,8 +4,4 @@
 	<checkstyle>
 		<suppress checks="ReferenceAnnotationCheck" files="saml-opensaml-integration/src/main/java/com/liferay/saml/opensaml/integration/internal/servlet/profile/SingleLogoutProfileImpl\.java" />
 	</checkstyle>
-	<source-check>
-		<suppress checks="JavaAPISignatureCheck" files="saml-opensaml-integration/src/main/java/com/liferay/saml/opensaml/integration/processor/context/ProcessorContext\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="saml-opensaml-integration/src/main/java/com/liferay/saml/opensaml/integration/processor/Processor\.java" />
-	</source-check>
 </suppressions>

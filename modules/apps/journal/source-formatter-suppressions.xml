@@ -4,8 +4,4 @@
 	<checkstyle>
 		<suppress checks="StaticVariableNameCheck" files="journal-api/src/main/java/com/liferay/journal/configuration/JournalServiceConfigurationValues\.java" />
 	</checkstyle>
-	<source-check>
-		<suppress checks="JavaAPISignatureCheck" files="journal-service/src/main/java/com/liferay/journal/internal/transformer/JournalTransformer\.java" />
-		<suppress checks="JavaAPISignatureCheck" files="journal-service/src/main/java/com/liferay/journal/internal/util/JournalUtil\.java" />
-	</source-check>
 </suppressions>

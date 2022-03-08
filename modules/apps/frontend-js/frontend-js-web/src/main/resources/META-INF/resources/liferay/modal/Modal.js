@@ -286,6 +286,33 @@ const Modal = ({
 	);
 };
 
+const confirm = ({message, onConfirm}) => {
+	openModal({
+		bodyHTML: message,
+		buttons: [
+			{
+				displayType: 'secondary',
+				label: Liferay.Language.get('cancel'),
+				type: 'cancel',
+			},
+			{
+				label: Liferay.Language.get('ok'),
+				onClick: ({processClose}) => {
+					processClose();
+
+					onConfirm(true);
+				},
+				otherProps: {
+					autoFocus: true,
+				},
+			},
+		],
+		onClose: () => onConfirm(false),
+		size: 'sm',
+		title: Liferay.Language.get('confirm'),
+	});
+};
+
 const openModal = (props) => {
 	if (
 		props &&
@@ -694,6 +721,7 @@ Modal.propTypes = {
 };
 
 export {
+	confirm,
 	Modal,
 	openAlertModal,
 	openModal,

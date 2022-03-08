@@ -28,7 +28,6 @@ import {
 	getComponentCache,
 	initComponentCache,
 } from './component.es';
-import {confirm} from './confirm';
 import {
 	getLayoutIcons,
 	hideLayoutPane,
@@ -167,7 +166,14 @@ Liferay.Util.openAlertModal = (...args) => {
 	);
 };
 
-Liferay.Util.confirm = confirm;
+Liferay.Util.confirm = (...args) => {
+	Liferay.Loader.require(
+		'frontend-js-web/liferay/modal/Modal',
+		(commands) => {
+			commands.confirm(...args);
+		}
+	);
+};
 
 /**
  * @deprecated As of Athanasius (7.3.x), with no direct replacement

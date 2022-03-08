@@ -3,6 +3,7 @@
 <suppressions>
 	<source-check>
 		<suppress checks="CDNCheck" files="build.gradle" />
-		<suppress checks="GradleDependencyArtifactsCheck" files="build.gradle" />
+		<suppress checks="GradleDependenciesCheck" files=".*" />
+		<suppress checks="GradleDependencyArtifactsCheck" files=".*" />
 	</source-check>
 </suppressions>

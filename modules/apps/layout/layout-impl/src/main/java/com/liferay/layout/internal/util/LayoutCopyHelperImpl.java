@@ -571,6 +571,10 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					_portletPreferencesLocalService.fetchPreferences(
 						portletPreferencesIds);
 
+				if (jxPortletPreferences == null) {
+					continue;
+				}
+
 				PortletPreferences targetPortletPreferences =
 					_portletPreferencesLocalService.fetchPortletPreferences(
 						portletPreferencesIds.getOwnerId(),

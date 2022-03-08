@@ -327,8 +327,8 @@ public class PortalInstancesLocalServiceImpl
 		themeDisplay.setPlid(controlPanelPlid);
 		themeDisplay.setRealUser(user);
 		themeDisplay.setRequest(httpServletRequest);
-		themeDisplay.setScopeGroupId(group.getGroupId());
-		themeDisplay.setSiteGroupId(group.getGroupId());
+		themeDisplay.setScopeGroupId(controlPanelLayout.getGroupId());
+		themeDisplay.setSiteGroupId(controlPanelLayout.getGroupId());
 		themeDisplay.setUser(user);
 
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);

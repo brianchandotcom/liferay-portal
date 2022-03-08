@@ -86,14 +86,13 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	@Override
 	public long[] getGuestUserRoleIds() {
 		long[] roleIds = PermissionCacheUtil.getUserGroupRoleIds(
-			defaultUserId, _guestGroupId);
+			defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		if (roleIds != null) {
 			return roleIds;
 		}
 
-		List<Role> roles = RoleLocalServiceUtil.getUserRelatedRoles(
-			defaultUserId, _guestGroupId);
+		List<Role> roles = RoleLocalServiceUtil.getUserRoles(defaultUserId);
 
 		// Only use the guest group for deriving the roles for unauthenticated
 		// users. Do not add the group to the permission bag as this implies
@@ -105,7 +104,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		Arrays.sort(roleIds);
 
 		PermissionCacheUtil.putUserGroupRoleIds(
-			defaultUserId, _guestGroupId, roleIds);
+			defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID, roleIds);
 
 		return roleIds;
 	}
@@ -251,21 +250,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			groupId, name, primKey, roleIds, actionId, value);
 
 		return value;
-	}
-
-	@Override
-	public void init(User user) {
-		super.init(user);
-
-		try {
-			Group guestGroup = GroupLocalServiceUtil.getGroup(
-				user.getCompanyId(), GroupConstants.GUEST);
-
-			_guestGroupId = guestGroup.getGroupId();
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
 	}
 
 	@Override
@@ -1427,7 +1411,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		AdvancedPermissionChecker.class);
 
 	private Map<Long, long[]> _contributedRoleIds;
-	private long _guestGroupId;
 	private RoleContributor[] _roleContributors;
 
 }

@@ -11,12 +11,21 @@
 
 import ClayForm from '@clayui/form';
 import {Formik} from 'formik';
-import {isLowercaseAndNumbers} from '../../../../common/utils/validations.form';
+import {useEffect, useState} from 'react';
+import {isValidEmail} from '../../../../common/utils/validations.form';
 import {Button, Input, Select} from '../../../components';
-
 import Layout from '../Layout';
 
-const SetupAnalyticsCloudPage = ({handlePage, leftButton}) => {
+const SetupAnalyticsCloudPage = ({errors, handlePage, leftButton, touched}) => {
+	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
+
+	useEffect(() => {
+		const hasTouched = !Object.keys(touched).length;
+		const hasError = Object.keys(errors).length;
+
+		setBaseButtonDisabled(hasTouched || hasError);
+	}, [touched, errors]);
+
 	return (
 		<Layout
 			className="pt-1 px-3"
@@ -25,6 +34,7 @@ const SetupAnalyticsCloudPage = ({handlePage, leftButton}) => {
 					<Button
 						borderless
 						className="text-neutral-10"
+						disabled={baseButtonDisabled}
 						onClick={() => handlePage()}
 					>
 						{leftButton}
@@ -47,7 +57,7 @@ const SetupAnalyticsCloudPage = ({handlePage, leftButton}) => {
 					placeholder="user@company.com"
 					required
 					type="email"
-					validations={[(value) => isLowercaseAndNumbers(value)]}
+					validations={[(value) => isValidEmail(value)]}
 				/>
 
 				<Input

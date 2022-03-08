@@ -1,22 +1,18 @@
 [
 	{
 		"description": "",
-		"name": "Cert Manual Smoke",
-		"type": "Smart"
+		"name": "Cert Manual Smoke"
 	},
 	{
 		"description": "",
-		"name": "Fix Pack Cert Manual Smoke",
-		"type": "Smart"
+		"name": "Fix Pack Cert Manual Smoke"
 	},
 	{
 		"description": "",
-		"name": "Fix Pack Cert Upgrade",
-		"type": "Smart"
+		"name": "Fix Pack Cert Upgrade"
 	},
 	{
 		"description": "",
-		"name": "Frontend Infra | 7.3 Manual Release Testing",
-		"type": "Smart"
+		"name": "Frontend Infra | 7.3 Manual Release Testing"
 	}
 ]

@@ -8,16 +8,6 @@
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
-				"en_US": "Testray Project Id"
-			},
-			"name": "testrayProjectId",
-			"required": false,
-			"type": "Long"
-		},
-		{
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
 				"en_US": "Name"
 			},
 			"name": "name",
@@ -32,7 +22,7 @@
 			},
 			"name": "description",
 			"required": false,
-			"type": "String"
+			"type": "Clob"
 		},
 		{
 			"indexed": false,
@@ -42,17 +32,7 @@
 			},
 			"name": "caseParameters",
 			"required": false,
-			"type": "String"
-		},
-		{
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Type"
-			},
-			"name": "type",
-			"required": false,
-			"type": "String"
+			"type": "Clob"
 		}
 	],
 	"pluralLabel": {

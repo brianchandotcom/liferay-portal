@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.Dictionary;
@@ -35,8 +34,6 @@ import java.util.Map;
 
 import javax.ws.rs.core.MultivaluedMap;
 
-import org.apache.cxf.jaxrs.utils.JAXRSUtils;
-import org.apache.cxf.message.Message;
 import org.apache.cxf.rs.security.jose.jwk.JsonWebKey;
 import org.apache.cxf.rs.security.jose.jwk.JsonWebKeys;
 import org.apache.cxf.rs.security.jose.jwk.JwkUtils;
@@ -399,21 +396,6 @@ public class LiferayJWTBearerGrantHandler
 
 			setJwsVerifier(
 				kidsJWSSignatureVerifiers.get(jwsHeaders.getKeyId()));
-
-			Message message = JAXRSUtils.getCurrentMessage();
-
-			String audience = getAudience();
-
-			String expectedAudience = (String)message.get(Message.REQUEST_URL);
-
-			if (Validator.isNotNull(audience) &&
-				!audience.equals(expectedAudience)) {
-
-				throw new IllegalStateException(
-					"Already initialized for the audience " + audience);
-			}
-
-			setAudience(expectedAudience);
 		}
 
 	}

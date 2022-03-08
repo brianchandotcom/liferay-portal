@@ -17,6 +17,8 @@ package com.liferay.portal.language.override.web.internal.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -28,7 +30,13 @@ import com.liferay.portal.language.override.web.internal.constants.PLOPortletKey
 import com.liferay.portal.language.override.web.internal.display.context.EditDisplayContextFactory;
 import com.liferay.portal.language.override.web.internal.display.context.ViewDisplayContextFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+
+import java.util.Enumeration;
+import java.util.Objects;
+import java.util.Properties;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -92,6 +100,42 @@ public class PLOPortlet extends MVCPortlet {
 		_ploEntryService.setPLOEntries(
 			ParamUtil.getString(actionRequest, "key"),
 			LocalizationUtil.getLocalizationMap(actionRequest, "value"));
+	}
+
+	public void importTranslations(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		UploadPortletRequest uploadPortletRequest =
+			_portal.getUploadPortletRequest(actionRequest);
+
+		File file = uploadPortletRequest.getFile("file");
+
+		if ((file == null) ||
+			!Objects.equals(
+				FileUtil.getExtension(file.getName()), "properties")) {
+
+			throw new PortalException();
+		}
+
+		String languageId = ParamUtil.getString(actionRequest, "languageId");
+
+		Properties languageProperties = new Properties();
+
+		languageProperties.load(new FileInputStream(file));
+
+		Enumeration<String> languageKeyEnumeration =
+			(Enumeration<String>)languageProperties.propertyNames();
+
+		while (languageKeyEnumeration.hasMoreElements()) {
+			String languageKey = languageKeyEnumeration.nextElement();
+
+			_ploEntryService.addOrUpdatePLOEntry(
+				languageKey, languageId,
+				languageProperties.getProperty(languageKey));
+		}
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Activate

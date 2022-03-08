@@ -15,27 +15,49 @@
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import {getTestraySuites} from '../../../graphql/queries';
+import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
+import SuiteModal from './SuiteModal';
 
-const Suites = () => (
-	<Container title={i18n.translate('suites')}>
-		<ListView
-			query={getTestraySuites}
-			tableProps={{
-				columns: [
-					{
-						clickable: true,
-						key: 'name',
-						value: i18n.translate('case-name'),
-					},
-					{key: 'description', value: i18n.translate('description')},
-					{key: 'type', value: i18n.translate('type')},
-				],
-				navigateTo: ({testraySuiteId}) => testraySuiteId?.toString(),
-			}}
-			transformData={(data) => data?.c?.testraySuites}
-		/>
-	</Container>
-);
+const Suites = () => {
+	const {forceRefetch, modal} = useFormModal({isVisible: false});
+
+	return (
+		<>
+			<Container title={i18n.translate('suites')}>
+				<ListView
+					forceRefetch={forceRefetch}
+					managementToolbarProps={{addButton: modal.open}}
+					query={getTestraySuites}
+					tableProps={{
+						columns: [
+							{
+								clickable: true,
+								key: 'name',
+								value: i18n.translate('case-name'),
+							},
+							{
+								key: 'description',
+								value: i18n.translate('description'),
+							},
+							{
+								key: 'caseParameters',
+								render: (caseParameters) =>
+									i18n.translate(
+										caseParameters ? 'smart' : 'static'
+									),
+								value: i18n.translate('type'),
+							},
+						],
+						navigateTo: ({id}) => id?.toString(),
+					}}
+					transformData={(data) => data?.c?.testraySuites}
+				/>
+			</Container>
+
+			<SuiteModal modal={modal} />
+		</>
+	);
+};
 
 export default Suites;

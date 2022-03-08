@@ -1,0 +1,59 @@
+definition {
+
+	macro assertExecutionEntry {
+		AssertElementPresent(
+			key_entityType = "${entityType}",
+			key_executionAction = "${executionAction}",
+			key_executionStatus = "${executionStatus}",
+			locator1 = "ImportExport#EXECUTION_ENTRY");
+	}
+
+	macro gotoImport {
+		Click(locator1 = "Button#PLUS");
+
+		MenuItem.click(menuItem = "Import File");
+	}
+
+	macro mapImport {
+		for (var fieldMapping : list "${fieldMappings}") {
+			var destinationField = StringUtil.extractFirst("${fieldMapping}", ":");
+			var sourceField = StringUtil.extractLast("${fieldMapping}", ":");
+
+			echo("Mapping ${destinationField} to ${sourceField} source field");
+
+			Select(
+				key_destinationField = "${destinationField}",
+				locator1 = "ImportExport#IMPORT_MAPPING_SELECT",
+				value1 = "${sourceField}");
+		}
+	}
+
+	macro openImportExportAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/guest/~/control_panel/manage?p_p_id=com_liferay_batch_planner_web_internal_portlet_BatchPlannerPortlet");
+
+		WaitForVisible(locator1 = "Button#PLUS");
+	}
+
+	macro selectEntity {
+		Select(
+			key_selectFieldLabel = "Headless Endpoint",
+			locator1 = "ImportExport#SELECT",
+			value1 = "${headlessEndpoint}");
+
+		if (IsElementPresent(key_selectFieldLabel = "Entity Type", locator1 = "Select#ANY")) {
+			Select(
+				key_selectFieldLabel = "Entity Type",
+				locator1 = "ImportExport#SELECT",
+				value1 = "${entityType}");
+		}
+		else {
+			Select(
+				key_selectFieldLabel = "Entity Name",
+				locator1 = "ImportExport#SELECT",
+				value1 = "${entityType}");
+		}
+	}
+
+}

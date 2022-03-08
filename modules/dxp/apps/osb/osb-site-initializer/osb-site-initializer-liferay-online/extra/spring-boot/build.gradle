@@ -1,0 +1,43 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+sourceCompatibility = '11'
+
+group = 'com.liferay.site.initializer.liferay.online.extra'
+version = '0.0.1-SNAPSHOT'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+dependencies {
+	annotationProcessor "org.projectlombok:lombok"
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+	compileOnly "org.projectlombok:lombok"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.function", version: "5.1.2"
+	compileOnly group: "com.liferay", name: "com.liferay.petra.string", version: "5.0.4"
+	compileOnly group: "com.liferay", name: "com.liferay.headless.portal.instances.client", version: "1.0.3"
+	compileOnly group: "com.liferay.commerce", name: "com.liferay.headless.commerce.admin.order.client", version: "4.0.12"
+
+	implementation "org.springframework.boot:spring-boot-starter-actuator"
+	implementation "org.springframework.boot:spring-boot-starter-data-rest"
+	implementation "org.springframework.boot:spring-boot-starter-quartz"
+	implementation "org.springframework.boot:spring-boot-starter-security"
+	implementation "org.springframework.boot:spring-boot-starter-web"
+
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
+
+repositories {
+	mavenCentral()
+}
+
+test {
+	useJUnitPlatform()
+}

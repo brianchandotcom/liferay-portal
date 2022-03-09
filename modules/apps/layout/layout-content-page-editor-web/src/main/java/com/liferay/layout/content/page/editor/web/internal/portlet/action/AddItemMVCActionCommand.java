@@ -29,9 +29,11 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.Objects;
 
@@ -126,24 +128,52 @@ public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getScopeGroupId(), segmentsExperienceId,
 					themeDisplay.getPlid(),
 					layoutStructure -> {
-						LayoutStructureItem layoutStructureItem =
-							layoutStructure.addRowStyledLayoutStructureItem(
-								parentItemId, position, _DEFAULT_ROW_COLUMNS);
+						if (GetterUtil.getBoolean(
+								PropsUtil.get("feature.flag.LPS-119551"))) {
 
-						for (int i = 0; i < _DEFAULT_ROW_COLUMNS; i++) {
-							ColumnLayoutStructureItem
-								columnLayoutStructureItem =
-									(ColumnLayoutStructureItem)
-										layoutStructure.
-											addColumnLayoutStructureItem(
-												layoutStructureItem.getItemId(),
-												i);
+							LayoutStructureItem layoutStructureItem =
+								layoutStructure.addRowStyledLayoutStructureItem(
+									parentItemId, position,
+									_DEFAULT_ROW_COLUMNS);
 
-							columnLayoutStructureItem.setSize(4);
+							for (int i = 0; i < _DEFAULT_ROW_COLUMNS; i++) {
+								ColumnLayoutStructureItem
+									columnLayoutStructureItem =
+										(ColumnLayoutStructureItem)
+											layoutStructure.
+												addColumnLayoutStructureItem(
+													layoutStructureItem.
+														getItemId(),
+													i);
+
+								columnLayoutStructureItem.setSize(4);
+							}
+
+							jsonObject.put(
+								"addedItemId", layoutStructureItem.getItemId());
 						}
+						else {
+							LayoutStructureItem layoutStructureItem =
+								layoutStructure.addRowStyledLayoutStructureItem(
+									parentItemId, position,
+									_DEFAULT_ROW_COLUMNS);
 
-						jsonObject.put(
-							"addedItemId", layoutStructureItem.getItemId());
+							for (int i = 0; i < _DEFAULT_ROW_COLUMNS; i++) {
+								ColumnLayoutStructureItem
+									columnLayoutStructureItem =
+										(ColumnLayoutStructureItem)
+											layoutStructure.
+												addColumnLayoutStructureItem(
+													layoutStructureItem.
+														getItemId(),
+													i);
+
+								columnLayoutStructureItem.setSize(4);
+							}
+
+							jsonObject.put(
+								"addedItemId", layoutStructureItem.getItemId());
+						}
 					});
 		}
 		else {

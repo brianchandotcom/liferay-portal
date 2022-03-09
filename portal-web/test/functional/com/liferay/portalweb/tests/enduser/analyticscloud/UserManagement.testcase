@@ -68,7 +68,9 @@ definition {
 
 			ACNavigation.openItem(itemName = "${dataSource}");
 
-			ACSettings.assertDataSourceStatus(status = "Active");
+			ACSettings.assertDataSourceStatus(
+				section = "Current Status",
+				status = "Active");
 		}
 	}
 
@@ -158,7 +160,9 @@ definition {
 
 			ACNavigation.openItem(itemName = "${dataSource}");
 
-			ACSettings.assertDataSourceStatus(status = "Active");
+			ACSettings.assertDataSourceStatus(
+				section = "Current Status",
+				status = "Active");
 		}
 
 		task ("Assert that the data source was removed") {
@@ -554,7 +558,9 @@ definition {
 
 			ACNavigation.openItem(itemName = "${dataSource}");
 
-			ACSettings.assertDataSourceStatus(status = "Active");
+			ACSettings.assertDataSourceStatus(
+				section = "Current Status",
+				status = "Active");
 		}
 	}
 

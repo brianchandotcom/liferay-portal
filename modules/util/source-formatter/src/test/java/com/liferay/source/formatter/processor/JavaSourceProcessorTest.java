@@ -140,6 +140,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testExceptionPrintStackTrace() throws Exception {
+		test(
+			"ExceptionPrintStackTrace.testjava",
+			"Avoid using method 'printStackTrace'" ,31);
+	}
+
+	@Test
 	public void testFormatAnnotations() throws Exception {
 		test("FormatAnnotations1.testjava");
 		test("FormatAnnotations2.testjava");

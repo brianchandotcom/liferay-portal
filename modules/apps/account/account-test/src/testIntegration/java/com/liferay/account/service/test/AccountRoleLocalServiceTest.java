@@ -477,7 +477,7 @@ public class AccountRoleLocalServiceTest {
 			AccountRoleLocalServiceUtil.searchAccountRoles(
 				_accountEntry1.getCompanyId(),
 				new long[] {_accountEntry1.getAccountEntryId()}, keywords, null,
-				0, 2, null);
+				0, 2, new RoleNameComparator(true));
 
 		Assert.assertEquals(
 			expectedAccountRoles.toString(), 5,

@@ -729,8 +729,7 @@ public class PoshiContext {
 		return urls;
 	}
 
-	private static Set<URL> _getPoshiURLs(
-			String[] includes, String baseDirName)
+	private static Set<URL> _getPoshiURLs(String[] includes, String baseDirName)
 		throws Exception {
 
 		return _getPoshiURLs(null, includes, baseDirName);

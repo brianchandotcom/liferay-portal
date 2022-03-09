@@ -18,7 +18,6 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.exception.CommerceOrderImporterTypeException;
-import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.exception.NoSuchOrderException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
@@ -114,21 +113,23 @@ public class ImportCommerceOrderItemsMVCActionCommand
 
 						importedRowsCount++;
 					}
-					catch (CommerceOrderValidatorException
-								commerceOrderValidatorException) {
+					catch (Exception exception) {
+						if (exception instanceof
+								CommerceOrderImporterTypeException ||
+							exception instanceof NoSuchCPInstanceException ||
+							exception instanceof PrincipalException) {
 
-						notImportedRowsCount++;
-					}
-					catch (NoSuchCPInstanceException
-								noSuchCPInstanceException) {
-
-						notImportedRowsCount++;
+							notImportedRowsCount++;
+						}
 					}
 				}
 			}
 		}
 		catch (Exception exception) {
-			if (exception instanceof CommerceOrderImporterTypeException) {
+			if (exception instanceof CommerceOrderImporterTypeException ||
+				exception instanceof NoSuchCPInstanceException ||
+				exception instanceof PrincipalException) {
+
 				SessionErrors.add(
 					actionRequest, CommerceOrderImporterTypeException.class,
 					commerceOrderImporterTypeKey);
@@ -137,9 +138,7 @@ public class ImportCommerceOrderItemsMVCActionCommand
 					actionRequest, actionResponse,
 					_getOrderDetailRedirect(commerceOrderId, actionRequest));
 			}
-			else if (exception instanceof NoSuchOrderException ||
-					 exception instanceof PrincipalException) {
-
+			else if (exception instanceof NoSuchOrderException) {
 				SessionErrors.add(actionRequest, exception.getClass());
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");

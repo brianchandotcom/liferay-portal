@@ -13,16 +13,18 @@ definition {
 
 		User.firstLoginPG();
 
-		JSONLayout.addPublicLayout(
-			groupName = "Guest",
-			layoutName = "JS Components Sample Page");
+		task ("Given translations manager sample portlet") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "JS Components Sample Page");
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Guest",
-			layoutName = "JS Components Sample Page",
-			widgetName = "JS Components Sample");
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Guest",
+				layoutName = "JS Components Sample Page",
+				widgetName = "JS Components Sample");
 
-		Navigator.gotoPage(pageName = "JS Components Sample Page");
+			Navigator.gotoPage(pageName = "JS Components Sample Page");
+		}
 	}
 
 	tearDown {
@@ -72,14 +74,14 @@ definition {
 
 	@description = "LPS-147499. Verifies default options are present in translation manager language menu."
 	@priority = "3"
-	test DefaultLanguageIsAvailableAndViewsNoOtherLanguagesOptions {
-		task ("Select translation language menu") {
-			TranslationManagerPortlet.goToManageTranslationsModal(
+	test CanDisplayDefaultLanguageDropdownOptionsOnly {
+		task ("When select translation language dropdown") {
+			TranslationManagerPortlet.clickSelectTranslation(
 				key_currentLocale = "en-us",
 				key_title = "Admin");
 		}
 
-		task ("Assert only default language options are available") {
+		task ("Then only default language options are available") {
 			AssertElementPresent(
 				key_locale = "en-US",
 				locator1 = "Translation#DROPDOWN_MENU_ITEM");
@@ -97,12 +99,6 @@ definition {
 			AssertElementNotPresent(
 				key_index = "6",
 				locator1 = "TranslationManager#SELECT_TRANSLATION_LANGUAGE_MENU_ITEM_INDEX");
-		}
-
-		task ("Assert link to Manage Translations is available") {
-			Click(locator1 = "TranslationManager#MANAGE_TRANSLATIONS");
-
-			AssertElementPresent(locator1 = "Portlet#MODAL_TITLE");
 		}
 	}
 

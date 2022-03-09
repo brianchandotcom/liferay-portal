@@ -1110,62 +1110,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-148457. Masterclass create account and forgot password are not displayed in sign in page"
-	@priority = "3"
-	test MasterclassSignInPageDoesNotDisplayCreateAndForgotPage {
-		property portal.acceptance = "true";
-
-		task ("Go to Masterclass Site") {
-			ApplicationsMenu.gotoSite(site = "${testSiteName}");
-		}
-
-		task ("Go to Sign In Page") {
-			Masterclass.gotoNavItem(navItem = "Sign Out");
-
-			Click(locator1 = "Masterclass#NAV_TAB");
-		}
-
-		task ("Go to Create Account") {
-			Click(
-				labelOption = "Create Account",
-				locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
-		}
-
-		task ("Go Back Using History function") {
-			Masterclass.goBack();
-		}
-
-		task ("Assert Create Account Form is not displayed") {
-			AssertElementNotPresent(
-				labelTitle = "Screen Name",
-				locator1 = "Masterclass#SIGN_IN_FORM");
-		}
-
-		task ("Assert Sign In form is displayed") {
-			Masterclass.verifySignInForm();
-		}
-
-		task ("Go to Forgot Password") {
-			Click(
-				labelOption = "Forgot Password",
-				locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
-		}
-
-		task ("Go Back Using History function") {
-			Masterclass.goBack();
-		}
-
-		task ("Assert Create Account Form is not displayed") {
-			AssertElementNotPresent(
-				labelTitle = "Text Verification",
-				locator1 = "Masterclass#SIGN_IN_FORM");
-		}
-
-		task ("Assert Sign In form is displayed") {
-			Masterclass.verifySignInForm();
-		}
-	}
-
 	@description = "This is a test for LPS-141750. Masterclass Sign Out"
 	@priority = "4"
 	test MasterclassSignOut {
@@ -1352,6 +1296,60 @@ definition {
 				key_permissionDefinitionValue = "Site Settings",
 				key_permissionNavigationValue = "Site: View",
 				locator1 = "RolesPermissionsSummary#PERMISSION_TABLE_PERMISSIONS");
+		}
+	}
+
+	@description = "This is a test for LPS-148457. Masterclass create account and forgot password are not displayed in sign in page"
+	@priority = "3"
+	test SignInPageDoesNotDisplayCreateAndForgotPage {
+		task ("Go to Masterclass Site") {
+			ApplicationsMenu.gotoSite(site = "${testSiteName}");
+		}
+
+		task ("Go to Sign In Page") {
+			Masterclass.gotoNavItem(navItem = "Sign Out");
+
+			Click(locator1 = "Masterclass#NAV_TAB");
+		}
+
+		task ("Go to Create Account") {
+			Click(
+				labelOption = "Create Account",
+				locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
+		}
+
+		task ("Go Back Using History function") {
+			Masterclass.goBack();
+		}
+
+		task ("Assert Create Account Form is not displayed") {
+			AssertElementNotPresent(
+				labelTitle = "Screen Name",
+				locator1 = "Masterclass#SIGN_IN_FORM");
+		}
+
+		task ("Assert Sign In form is displayed") {
+			Masterclass.verifySignInForm();
+		}
+
+		task ("Go to Forgot Password") {
+			Click(
+				labelOption = "Forgot Password",
+				locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
+		}
+
+		task ("Go Back Using History function") {
+			Masterclass.goBack();
+		}
+
+		task ("Assert Create Account Form is not displayed") {
+			AssertElementNotPresent(
+				labelTitle = "Text Verification",
+				locator1 = "Masterclass#SIGN_IN_FORM");
+		}
+
+		task ("Assert Sign In form is displayed") {
+			Masterclass.verifySignInForm();
 		}
 	}
 

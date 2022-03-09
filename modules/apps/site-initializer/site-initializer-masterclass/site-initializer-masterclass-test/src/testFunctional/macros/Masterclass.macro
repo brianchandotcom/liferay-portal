@@ -49,7 +49,7 @@ definition {
 		Click(locator1 = "Button#SUBMIT");
 	}
 
-	macro goBack {
+	macro goBackUsingBrowserHistory {
 		RunScript(locator1 = "window.history.go(-1)");
 	}
 

@@ -76,6 +76,10 @@ public class StringUtil {
 		return s;
 	}
 
+	public static String center(String s, String size) {
+		return StringUtils.center(s, GetterUtil.getInteger(size));
+	}
+
 	public static String combine(String... strings) {
 		if ((strings == null) || (strings.length == 0)) {
 			return "";

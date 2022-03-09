@@ -29,18 +29,13 @@ export const SESSION_IDS = {
  */
 export function setItemAddSXPElementSidebar(state) {
 	if (!isDefined(state)) {
-		if (
+		sessionStorage.setItem(
+			SESSION_IDS.ADD_SXP_ELEMENT_SIDEBAR,
 			sessionStorage.getItem(SESSION_IDS.ADD_SXP_ELEMENT_SIDEBAR) ===
-			'open'
-		) {
-			sessionStorage.setItem(
-				SESSION_IDS.ADD_SXP_ELEMENT_SIDEBAR,
-				'closed'
-			);
-		}
-		else {
-			sessionStorage.setItem(SESSION_IDS.ADD_SXP_ELEMENT_SIDEBAR, 'open');
-		}
+				'open'
+				? 'closed'
+				: 'open'
+		);
 	}
 	else {
 		sessionStorage.setItem(SESSION_IDS.ADD_SXP_ELEMENT_SIDEBAR, state);

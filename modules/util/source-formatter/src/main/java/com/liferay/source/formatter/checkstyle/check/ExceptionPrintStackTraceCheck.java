@@ -42,10 +42,6 @@ public class ExceptionPrintStackTraceCheck extends BaseCheck {
 			return;
 		}
 
-		_checkPrintStackTraceCall(detailAST);
-	}
-
-	private void _checkPrintStackTraceCall(DetailAST detailAST) {
 		DetailAST parameterDefinitionDetailAST = detailAST.findFirstToken(
 			TokenTypes.PARAMETER_DEF);
 

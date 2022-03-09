@@ -68,7 +68,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.ThemeFactoryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -884,20 +883,21 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		if ((type == LayoutPageTemplateEntryTypeConstants.TYPE_MASTER_LAYOUT) ||
 			(masterLayoutPlid > 0)) {
 
-			String defaultRegularThemeId =
-				ThemeFactoryUtil.getDefaultRegularThemeId(
-					layout.getCompanyId());
+			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
+				groupId, false);
+
+			String themeId = layoutSet.getThemeId();
 
 			String colorSchemeId = _getColorSchemeId(
-				layout.getCompanyId(), defaultRegularThemeId, StringPool.BLANK);
+				layout.getCompanyId(), themeId, StringPool.BLANK);
 
 			draftLayout = _layoutLocalService.updateLookAndFeel(
-				groupId, privateLayout, draftLayout.getLayoutId(),
-				defaultRegularThemeId, colorSchemeId, StringPool.BLANK);
+				groupId, privateLayout, draftLayout.getLayoutId(), themeId,
+				colorSchemeId, StringPool.BLANK);
 
 			layout = _layoutLocalService.updateLookAndFeel(
-				groupId, privateLayout, layout.getLayoutId(),
-				defaultRegularThemeId, colorSchemeId, StringPool.BLANK);
+				groupId, privateLayout, layout.getLayoutId(), themeId,
+				colorSchemeId, StringPool.BLANK);
 		}
 
 		if (status == WorkflowConstants.STATUS_DRAFT) {

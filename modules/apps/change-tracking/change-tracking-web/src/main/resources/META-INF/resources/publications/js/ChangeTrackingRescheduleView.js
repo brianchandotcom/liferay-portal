@@ -40,7 +40,7 @@ class ChangeTrackingRescheduleView extends ChangeTrackingBaseScheduleView {
 		this.unscheduleURL = unscheduleURL;
 
 		this.state = {
-			date: new Date(scheduledDate + ' 12:00:00'),
+			date: new Date(scheduledDate + 'T12:00:00'),
 			dateError: '',
 			formError: null,
 			time: scheduledTime,
@@ -69,7 +69,20 @@ class ChangeTrackingRescheduleView extends ChangeTrackingBaseScheduleView {
 									placeholder="YYYY-MM-DD"
 									spritemap={this.spritemap}
 									timezone={this.timeZone}
-									value={this.state.date}
+									value={
+										typeof this.state.date === 'string'
+											? this.state.date
+											: this.state.date.getFullYear() +
+											  '-' +
+											  this.pad(
+													this.state.date.getMonth() +
+														1
+											  ) +
+											  '-' +
+											  this.pad(
+													this.state.date.getDate()
+											  )
+									}
 									years={{
 										end: new Date().getFullYear() + 1,
 										start: new Date().getFullYear() - 1,

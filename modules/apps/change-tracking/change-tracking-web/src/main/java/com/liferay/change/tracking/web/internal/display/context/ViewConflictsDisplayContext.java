@@ -24,7 +24,6 @@ import com.liferay.change.tracking.web.internal.util.PublicationsPortletURLUtil;
 import com.liferay.learn.LearnMessage;
 import com.liferay.learn.LearnMessageUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -39,11 +38,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.time.Instant;
-
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
@@ -157,14 +153,7 @@ public class ViewConflictsDisplayContext {
 			() -> {
 				TimeZone timeZone = _themeDisplay.getTimeZone();
 
-				if (Objects.equals(timeZone.getID(), StringPool.UTC)) {
-					return "GMT";
-				}
-
-				Instant instant = Instant.now();
-
-				return "GMT" +
-					String.format("%tz", instant.atZone(timeZone.toZoneId()));
+				return timeZone.getID();
 			}
 		).put(
 			"unresolvedConflicts", unresolvedConflictsJSONArray

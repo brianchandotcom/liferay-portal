@@ -131,31 +131,50 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 	}
 
 	getPublishDate(date, time) {
+		let publishDate = null;
+
 		if (typeof date === 'string') {
-			return new Date(
-				date +
-					' ' +
+			publishDate = new Date(
+				date + 'T' + time.hours + ':' + time.minutes + ':00'
+			);
+		}
+		else {
+			publishDate = new Date(
+				date.getFullYear() +
+					'-' +
+					this.pad(date.getMonth() + 1) +
+					'-' +
+					this.pad(date.getDate()) +
+					'T' +
 					time.hours +
 					':' +
 					time.minutes +
-					':00 ' +
-					this.timeZone
+					':00'
 			);
 		}
 
-		return new Date(
-			date.getFullYear() +
-				'-' +
-				(date.getMonth() + 1) +
-				'-' +
-				date.getDate() +
-				' ' +
-				time.hours +
-				':' +
-				time.minutes +
-				':00 ' +
-				this.timeZone
+		publishDate = new Date(
+			Date.UTC(
+				publishDate.getFullYear(),
+				publishDate.getMonth(),
+				publishDate.getDate(),
+				publishDate.getHours(),
+				publishDate.getMinutes()
+			)
 		);
+
+		const tzDate = new Date(
+			publishDate.toLocaleString('en-US', {timeZone: this.timeZone})
+		);
+		const utcDate = new Date(
+			publishDate.toLocaleString('en-US', {timeZone: 'UTC'})
+		);
+
+		const offset = utcDate.getTime() - tzDate.getTime();
+
+		publishDate.setTime(publishDate.getTime() + offset);
+
+		return publishDate;
 	}
 
 	getTimeClassName() {
@@ -265,6 +284,14 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 		}
 
 		return false;
+	}
+
+	pad(value) {
+		if (value < 10) {
+			return '0' + value;
+		}
+
+		return value.toString();
 	}
 }
 

@@ -29,11 +29,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.time.Instant;
-
 import java.util.Calendar;
 import java.util.Map;
-import java.util.Objects;
 import java.util.TimeZone;
 
 import javax.portlet.RenderRequest;
@@ -88,14 +85,16 @@ public class ReschedulePublicationDisplayContext {
 			"scheduledDate",
 			StringBundler.concat(
 				calendar.get(Calendar.YEAR), StringPool.DASH,
-				calendar.get(Calendar.MONTH) + 1, StringPool.DASH,
-				calendar.get(Calendar.DAY_OF_MONTH))
+				String.format("%02d", calendar.get(Calendar.MONTH) + 1),
+				StringPool.DASH,
+				String.format("%02d", calendar.get(Calendar.DAY_OF_MONTH)))
 		).put(
 			"scheduledTime",
 			JSONUtil.put(
-				"hours", calendar.get(Calendar.HOUR_OF_DAY)
+				"hours",
+				String.format("%02d", calendar.get(Calendar.HOUR_OF_DAY))
 			).put(
-				"minutes", calendar.get(Calendar.MINUTE)
+				"minutes", String.format("%02d", calendar.get(Calendar.MINUTE))
 			)
 		).put(
 			"spritemap", _themeDisplay.getPathThemeImages() + "/clay/icons.svg"
@@ -104,14 +103,7 @@ public class ReschedulePublicationDisplayContext {
 			() -> {
 				TimeZone timeZone = _themeDisplay.getTimeZone();
 
-				if (Objects.equals(timeZone.getID(), StringPool.UTC)) {
-					return "GMT";
-				}
-
-				Instant instant = Instant.now();
-
-				return "GMT" +
-					String.format("%tz", instant.atZone(timeZone.toZoneId()));
+				return timeZone.getID();
 			}
 		).put(
 			"unscheduleURL",

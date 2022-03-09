@@ -1,107 +1,59 @@
 @component-name = "portal-solutions"
 definition {
 
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Raylife";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        User.firstLoginPG();
+		User.firstLoginPG();
 
-        Raylife.createRaylifeSite(siteName = "Raylife");
-    }
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        Raylife.tearDownCP();
+		Raylife.tearDownCP();
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        else {
-            User.logoutPG();
-        }
-    }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
 
-    @description = "LPS-148219 - Verify the page header title: '<User First Name>, here's your custom quote!' shows the same First Name as the user entry on the Basic - Contact Information page (Smartphone)"
-    @priority = "4"
-    test IfEqualHeaderTitlePhone {
-        SetWindowSize(value1 = "360,720");
+	@description = "LPS-148223 -  Verify that pressing the 'Back to Edit Info' button works (Smartphone)"
+	@priority = "4"
+	test CanBackFlowInQuotationPhone {
+		SetWindowSize(value1 = "360,720");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        RaylifeHomePage.startFlow();
+		RaylifeHomePage.startFlow();
 
-        RaylifeMobile.formsFlowPhone();
+		RaylifeMobile.formsFlowPhone();
 
-        AssertElementPresent(
-            locator1 = "RaylifeQuoteComparison#QUOTE_COMPARISON_TITLE",
-            userName = "FirstName");        
-    }
+		Click(locator1 = "Raylife#BTN_BACK_TO_EDIT_INFO_QUOTE_PAGE");
 
-    @description = "LPS-148220 - Check that pressing the 'Purchase this policy' button on the 'Standard' quote redirects to another page (Smartphone)"
-    @priority = "5"
-    test CanContinueFlowInQuotationPhone {
-        SetWindowSize(value1 = "360,720");
+		AssertElementPresent(
+			field = "Do you own the",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
+	}
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+	@description = "Check that by pressing the 'Back to Edit Info' button I can go back to the page (Tablet)"
+	@priority = "4"
+	test CanBackFlowInQuotationTablet {
+		SetWindowSize(value1 = "800,1024");
 
-        RaylifeHomePage.startFlow();
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        RaylifeMobile.formsFlowPhone();
+		RaylifeHomePage.startFlow();
 
-        Click(
-            locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
-            policy = "standard");
-
-        AssertElementPresent(locator1 = "RaylifeCreateAccount#EMAIL_FIELD");
-    }
-
-    @description = "LPS-148223 -  Verify that pressing the 'Back to Edit Info' button works (Smartphone)"
-    @priority = "4"
-    test CanBackFlowInQuotationPhone {
-        SetWindowSize(value1 = "360,720");
-
-        ApplicationsMenu.gotoSite(site = "Raylife");
-
-        RaylifeHomePage.startFlow();
-
-        RaylifeMobile.formsFlowPhone();
-
-        Click(locator1 = "Raylife#BTN_BACK_TO_EDIT_INFO_QUOTE_PAGE");
-
-        AssertElementPresent(
-            field = "Do you own the",
-            locator1 = "Raylife#BUTTON_YES_OPTION");
-    }
-
-    @description = "Check that pressing the 'Purchase this policy' button in the 'Standard' quote redirects you to another page (Tablet)"
-    @priority = "5"
-    test CanContinueFlowInQuotationTablet {
-        SetWindowSize(value1 = "800,1024");
-
-        ApplicationsMenu.gotoSite(site = "Raylife");
-
-        RaylifeHomePage.startFlow();
-
-        Raylife.formsFlow();
-
-        AssertElementPresent(locator1 = "RaylifeCreateAccount#EMAIL_FIELD");
-    }
-
-    @description = "Check that by pressing the 'Back to Edit Info' button I can go back to the page (Tablet)"
-    @priority = "4"
-    test CanBackFlowInQuotationTablet {
-        SetWindowSize(value1 = "800,1024");
-
-        ApplicationsMenu.gotoSite(site = "Raylife");
-
-        RaylifeHomePage.startFlow();
-
-        RaylifeContactInfo.typeAllBasicsInfoFields();
+		RaylifeContactInfo.typeAllBasicsInfoFields();
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
@@ -117,14 +69,61 @@ definition {
 
 		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BTN_BACK_TO_EDIT_INFO_QUOTE_PAGE");
+		Click(locator1 = "Raylife#BTN_BACK_TO_EDIT_INFO_QUOTE_PAGE");
 
 		AssertElementPresent(
 			locator1 = "Raylife#TABLET_SECTION_TITLE",
 			title = "More about");
 
-        Raylife.dismissAlert();
-    }
+		Raylife.dismissAlert();
+	}
 
+	@description = "LPS-148220 - Check that pressing the 'Purchase this policy' button on the 'Standard' quote redirects to another page (Smartphone)"
+	@priority = "5"
+	test CanContinueFlowInQuotationPhone {
+		SetWindowSize(value1 = "360,720");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeMobile.formsFlowPhone();
+
+		Click(
+			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+			policy = "standard");
+
+		AssertElementPresent(locator1 = "RaylifeCreateAccount#EMAIL_FIELD");
+	}
+
+	@description = "Check that pressing the 'Purchase this policy' button in the 'Standard' quote redirects you to another page (Tablet)"
+	@priority = "5"
+	test CanContinueFlowInQuotationTablet {
+		SetWindowSize(value1 = "800,1024");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		AssertElementPresent(locator1 = "RaylifeCreateAccount#EMAIL_FIELD");
+	}
+
+	@description = "LPS-148219 - Verify the page header title: '<User First Name>, here's your custom quote!' shows the same First Name as the user entry on the Basic - Contact Information page (Smartphone)"
+	@priority = "4"
+	test IfEqualHeaderTitlePhone {
+		SetWindowSize(value1 = "360,720");
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeMobile.formsFlowPhone();
+
+		AssertElementPresent(
+			locator1 = "RaylifeQuoteComparison#QUOTE_COMPARISON_TITLE",
+			userName = "FirstName");
+	}
 
 }

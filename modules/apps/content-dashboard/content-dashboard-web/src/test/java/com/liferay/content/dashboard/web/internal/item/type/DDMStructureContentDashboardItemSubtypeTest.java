@@ -61,12 +61,6 @@ public class DDMStructureContentDashboardItemSubtypeTest {
 		Assert.assertEquals(
 			"structureName",
 			ddmStructureContentDashboardItemSubtype.getLabel(LocaleUtil.US));
-		Assert.assertEquals(
-			ddmStructure.getModifiedDate(),
-			ddmStructureContentDashboardItemSubtype.getModifiedDate());
-		Assert.assertEquals(
-			ddmStructure.getUserId(),
-			ddmStructureContentDashboardItemSubtype.getUserId());
 
 		InfoItemReference infoItemReference =
 			ddmStructureContentDashboardItemSubtype.getInfoItemReference();

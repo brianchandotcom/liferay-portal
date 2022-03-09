@@ -62,12 +62,6 @@ public class DLFileEntryTypeContentDashboardItemSubtypeTest {
 		Assert.assertEquals(
 			"fileEntryTypeName",
 			dLFileEntryTypeContentDashboardItemSubtype.getLabel(LocaleUtil.US));
-		Assert.assertEquals(
-			dLFileEntryType.getModifiedDate(),
-			dLFileEntryTypeContentDashboardItemSubtype.getModifiedDate());
-		Assert.assertEquals(
-			dLFileEntryType.getUserId(),
-			dLFileEntryTypeContentDashboardItemSubtype.getUserId());
 
 		InfoItemReference infoItemReference =
 			dLFileEntryTypeContentDashboardItemSubtype.getInfoItemReference();

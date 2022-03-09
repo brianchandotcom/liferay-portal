@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 
-import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -120,16 +119,6 @@ public class DDMStructureContentDashboardItemSubtype
 	@Override
 	public String getLabel(Locale locale) {
 		return _ddmStructure.getName(locale);
-	}
-
-	@Override
-	public Date getModifiedDate() {
-		return _ddmStructure.getModifiedDate();
-	}
-
-	@Override
-	public long getUserId() {
-		return _ddmStructure.getUserId();
 	}
 
 	@Override

@@ -280,16 +280,6 @@ public class FileEntryContentDashboardItemTest {
 					}
 
 					@Override
-					public Date getModifiedDate() {
-						return null;
-					}
-
-					@Override
-					public long getUserId() {
-						return 0;
-					}
-
-					@Override
 					public String toJSONString(Locale locale) {
 						return StringPool.BLANK;
 					}

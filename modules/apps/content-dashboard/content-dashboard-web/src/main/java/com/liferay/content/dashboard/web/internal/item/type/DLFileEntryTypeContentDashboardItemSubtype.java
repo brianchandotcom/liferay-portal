@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
-import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -123,16 +122,6 @@ public class DLFileEntryTypeContentDashboardItemSubtype
 	@Override
 	public String getLabel(Locale locale) {
 		return _dlFileEntryType.getName(locale);
-	}
-
-	@Override
-	public Date getModifiedDate() {
-		return _dlFileEntryType.getModifiedDate();
-	}
-
-	@Override
-	public long getUserId() {
-		return _dlFileEntryType.getUserId();
 	}
 
 	@Override

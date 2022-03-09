@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -234,16 +233,6 @@ public class ContentDashboardItemSubtypeUtilTest {
 			@Override
 			public String getLabel(Locale locale) {
 				return null;
-			}
-
-			@Override
-			public Date getModifiedDate() {
-				return new Date();
-			}
-
-			@Override
-			public long getUserId() {
-				return 0;
 			}
 
 			@Override

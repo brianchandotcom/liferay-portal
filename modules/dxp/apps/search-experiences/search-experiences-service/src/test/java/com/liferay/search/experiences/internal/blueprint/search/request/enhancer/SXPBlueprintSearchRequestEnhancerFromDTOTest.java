@@ -89,7 +89,7 @@ import org.mockito.Mockito;
 /**
  * @author André de Oliveira
  */
-public class SXPBlueprintSearchRequestEnhancerImplTest {
+public class SXPBlueprintSearchRequestEnhancerFromDTOTest {
 
 	@ClassRule
 	@Rule

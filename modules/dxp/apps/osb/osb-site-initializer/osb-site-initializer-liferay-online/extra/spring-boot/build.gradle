@@ -6,7 +6,7 @@ plugins {
 
 sourceCompatibility = '11'
 
-group = 'com.liferay.site.initializer.liferay.online.extra'
+group = 'com.liferay.site.initializer.liferay.online.extra.spring.boot'
 version = '0.0.1-SNAPSHOT'
 
 configurations {

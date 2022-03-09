@@ -236,6 +236,83 @@ components:
                 - shippingFixedOptionId
                 - termId
             type: object
+        ShippingMethod:
+            properties:
+                active:
+                    example: true
+                    type: boolean
+                description:
+                    type: object
+                    additionalProperties:
+                        type: string
+                    example:
+                        hu_HU: Product Description HU
+                        hr_HR: Product Description HR
+                        en_US: Professional hand stainless steel saw for wood. Made to last and
+                            saw forever. Made of best steel
+                engineKey:
+                    example: DAB-34098-789-N
+                    type: string
+                id:
+                    example: 30324
+                    format: int64
+                    minimum: 0
+                    type: integer
+                name:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Professional hand stainless steel saw for wood. Made to last and
+                            saw forever. Made of best steel
+                        hr_HR: Product Description HR
+                        hu_HU: Product Description HU
+                    type: object
+                priority:
+                    example: 1.2
+                    format: double
+                    type: number
+                shippingOptions:
+                    items:
+                        $ref: "#/components/schemas/ShippingOption"
+                    type: array
+            type: object
+        ShippingOption:
+            properties:
+                active:
+                    example: true
+                    type: boolean
+                amount:
+                    example: 1.2
+                    format: double
+                    type: number
+                description:
+                    type: object
+                    additionalProperties:
+                        type: string
+                    example:
+                        hu_HU: Product Description HU
+                        hr_HR: Product Description HR
+                        en_US: Professional hand stainless steel saw for wood. Made to last and
+                            saw forever. Made of best steel
+                id:
+                    example: 30324
+                    format: int64
+                    minimum: 0
+                    type: integer
+                name:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Professional hand stainless steel saw for wood. Made to last and
+                            saw forever. Made of best steel
+                        hr_HR: Product Description HR
+                        hu_HU: Product Description HU
+                    type: object
+                priority:
+                    example: 1.2
+                    format: double
+                    type: number
+            type: object
         TaxCategory:
             properties:
                 description:
@@ -898,6 +975,77 @@ paths:
                         Unexpected error
             summary: Updates a Channel.
             tags: ["Channel"]
+    /channels/{channelId}/shipping-methods:
+        get:
+            description:
+                Retrieves channel shipping methods.
+            parameters:
+                - in: path
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      format: int64
+                      type: integer
+                  style: simple
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ShippingMethod"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ShippingMethod"
+                                type: array
+                    description:
+                        Successful operation
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["ShippingMethod"]
     /payment-method-group-rel-order-types/{paymentMethodGroupRelOrderTypeId}:
         delete:
             parameters:

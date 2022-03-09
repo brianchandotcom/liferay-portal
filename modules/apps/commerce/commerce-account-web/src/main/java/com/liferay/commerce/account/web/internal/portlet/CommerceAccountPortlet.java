@@ -29,7 +29,8 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.display-category=category.hidden",
-		"javax.portlet.name=com_liferay_commerce_account_web_internal_portlet_CommerceAccountPortlet"
+		"javax.portlet.name=com_liferay_commerce_account_web_internal_portlet_CommerceAccountPortlet",
+		"javax.portlet.version=3.0"
 	},
 	service = {CommerceAccountPortlet.class, Portlet.class}
 )

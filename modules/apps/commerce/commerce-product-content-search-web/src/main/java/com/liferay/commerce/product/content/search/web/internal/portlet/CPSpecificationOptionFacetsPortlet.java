@@ -58,7 +58,8 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/specification_option_facets/view.jsp",
 		"javax.portlet.name=" + CPPortletKeys.CP_SPECIFICATION_OPTION_FACETS,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=guest,power-user,user"
+		"javax.portlet.security-role-ref=guest,power-user,user",
+		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )

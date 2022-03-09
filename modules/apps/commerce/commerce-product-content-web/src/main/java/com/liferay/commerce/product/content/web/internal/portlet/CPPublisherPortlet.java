@@ -61,7 +61,8 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/product_publisher/view.jsp",
 		"javax.portlet.name=" + CPPortletKeys.CP_PUBLISHER_WEB,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
+		"javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.version=3.0"
 	},
 	service = {CPPublisherPortlet.class, Portlet.class}
 )

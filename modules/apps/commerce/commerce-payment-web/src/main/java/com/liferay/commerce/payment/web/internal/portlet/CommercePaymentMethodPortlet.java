@@ -54,7 +54,8 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/edit_commerce_payment_method.jsp",
 		"javax.portlet.name=" + CPPortletKeys.COMMERCE_PAYMENT_METHODS,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
+		"javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.version=3.0"
 	},
 	service = {CommercePaymentMethodPortlet.class, Portlet.class}
 )

@@ -216,7 +216,7 @@ definition {
 
 		// Workaround LPS-140997 and LPS-129369
 
-		property database.types = "hypersonic,mariadb,mysql,postgresql,sqlserver";
+		property database.types = "hypersonic,mariadb,mysql,postgresql";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

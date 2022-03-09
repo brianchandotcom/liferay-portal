@@ -189,7 +189,7 @@ definition {
 
 		// Workaround LPS-148719
 
-		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql";
+		property database.types = "db2,hypersonic,mariadb,mysql,postgresql";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 

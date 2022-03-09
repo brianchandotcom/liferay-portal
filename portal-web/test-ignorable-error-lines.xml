@@ -240,6 +240,10 @@
 			<contains></contains>
 			<matches>Attempting to upgrade table .* by adding a temporary column [\s\S]*</matches>
 		</ignore-error>
+		<ignore-error description="LPS-140679 - temporarily ignore until fixed">
+			<contains>Illegal 'domain' attribute "lax.liferay.com". Domain of origin: "localhost"</contains>
+			<matches></matches>
+		</ignore-error>
 		<ignore-error description="LPS-141256 - temporarily ignore until fixed">
 			<contains>The following session is not valid</contains>
 			<matches></matches>

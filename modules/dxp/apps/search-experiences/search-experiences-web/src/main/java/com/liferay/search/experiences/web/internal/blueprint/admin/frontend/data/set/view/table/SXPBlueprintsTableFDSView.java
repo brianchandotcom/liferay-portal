@@ -47,6 +47,8 @@ public class SXPBlueprintsTableFDSView extends BaseTableFDSView {
 
 		titleFDSTableSchemaField.setContentRenderer("actionLink");
 
+		titleFDSTableSchemaField.setSortable(true);
+
 		fdsTableSchemaBuilder.addFDSTableSchemaField(
 			"description", "description");
 
@@ -60,11 +62,15 @@ public class SXPBlueprintsTableFDSView extends BaseTableFDSView {
 
 		createDateFDSTableSchemaField.setContentRenderer("dateTime");
 
+		createDateFDSTableSchemaField.setSortable(true);
+
 		FDSTableSchemaField modifiedDateFDSTableSchemaField =
 			fdsTableSchemaBuilder.addFDSTableSchemaField(
 				"modifiedDate", "modified");
 
 		modifiedDateFDSTableSchemaField.setContentRenderer("dateTime");
+
+		modifiedDateFDSTableSchemaField.setSortable(true);
 
 		return fdsTableSchemaBuilder.build();
 	}

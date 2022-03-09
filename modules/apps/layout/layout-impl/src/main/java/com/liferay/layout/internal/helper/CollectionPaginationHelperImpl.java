@@ -16,24 +16,16 @@ package com.liferay.layout.internal.helper;
 
 import com.liferay.info.pagination.Pagination;
 import com.liferay.layout.helper.CollectionPaginationHelper;
-import com.liferay.layout.internal.configuration.FFRenderCollectionLayoutStructureItemConfiguration;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.util.PropsValues;
 
-import java.util.Map;
 import java.util.Objects;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	configurationPid = "com.liferay.layout.internal.configuration.FFRenderCollectionLayoutStructureItemConfiguration",
-	immediate = true, service = CollectionPaginationHelper.class
-)
+@Component(immediate = true, service = CollectionPaginationHelper.class)
 public class CollectionPaginationHelperImpl
 	implements CollectionPaginationHelper {
 
@@ -53,42 +45,21 @@ public class CollectionPaginationHelperImpl
 			numberOfItemsPerPage = PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
 		}
 
-		if (_ffRenderCollectionLayoutStructureItemConfiguration.
-				paginationImprovementsEnabled()) {
+		if (isPaginationEnabled(paginationType)) {
+			int maxNumberOfItems = count;
 
-			if (isPaginationEnabled(paginationType)) {
-				int maxNumberOfItems = count;
-
-				if (!displayAllPages && (numberOfPages > 0)) {
-					maxNumberOfItems = numberOfPages * numberOfItemsPerPage;
-				}
-
-				end = Math.min(
-					Math.min(
-						activePage * numberOfItemsPerPage, maxNumberOfItems),
-					count);
-
-				start = (activePage - 1) * numberOfItemsPerPage;
+			if (!displayAllPages && (numberOfPages > 0)) {
+				maxNumberOfItems = numberOfPages * numberOfItemsPerPage;
 			}
-			else if (displayAllItems) {
-				end = count;
-			}
+
+			end = Math.min(
+				Math.min(activePage * numberOfItemsPerPage, maxNumberOfItems),
+				count);
+
+			start = (activePage - 1) * numberOfItemsPerPage;
 		}
-		else {
-			if (isPaginationEnabled(paginationType)) {
-				int maxNumberOfItems = numberOfItems;
-
-				if (showAllItems) {
-					maxNumberOfItems = count;
-				}
-
-				end = Math.min(
-					Math.min(
-						activePage * numberOfItemsPerPage, maxNumberOfItems),
-					count);
-
-				start = (activePage - 1) * numberOfItemsPerPage;
-			}
+		else if (displayAllItems) {
+			end = count;
 		}
 
 		return Pagination.of(end, start);
@@ -100,37 +71,26 @@ public class CollectionPaginationHelperImpl
 		int numberOfItems, int numberOfItemsPerPage, int numberOfPages,
 		String paginationType, boolean showAllItems) {
 
-		if (_ffRenderCollectionLayoutStructureItemConfiguration.
-				paginationImprovementsEnabled()) {
-
-			if (!isPaginationEnabled(paginationType)) {
-				if (displayAllItems) {
-					return count;
-				}
-
-				return Math.min(count, numberOfItems);
-			}
-
-			if (displayAllPages || (numberOfPages <= 0)) {
+		if (!isPaginationEnabled(paginationType)) {
+			if (displayAllItems) {
 				return count;
 			}
 
-			if ((numberOfItemsPerPage <= 0) ||
-				(numberOfItemsPerPage >
-					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA)) {
-
-				numberOfItemsPerPage =
-					PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
-			}
-
-			return Math.min(count, numberOfPages * numberOfItemsPerPage);
+			return Math.min(count, numberOfItems);
 		}
 
-		if (isPaginationEnabled(paginationType) && showAllItems) {
+		if (displayAllPages || (numberOfPages <= 0)) {
 			return count;
 		}
 
-		return Math.min(count, numberOfItems);
+		if ((numberOfItemsPerPage <= 0) ||
+			(numberOfItemsPerPage >
+				PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA)) {
+
+			numberOfItemsPerPage = PropsValues.SEARCH_CONTAINER_PAGE_MAX_DELTA;
+		}
+
+		return Math.min(count, numberOfPages * numberOfItemsPerPage);
 	}
 
 	@Override
@@ -150,17 +110,5 @@ public class CollectionPaginationHelperImpl
 
 		return false;
 	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ffRenderCollectionLayoutStructureItemConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFRenderCollectionLayoutStructureItemConfiguration.class,
-				properties);
-	}
-
-	private static volatile FFRenderCollectionLayoutStructureItemConfiguration
-		_ffRenderCollectionLayoutStructureItemConfiguration;
 
 }

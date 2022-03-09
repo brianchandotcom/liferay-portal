@@ -36,7 +36,6 @@ import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactoryTracker;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.layout.taglib.internal.util.FFRenderCollectionLayoutStructureItemConfigurationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -552,30 +551,6 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 	}
 
 	private int _getNumberOfPages() {
-		if (FFRenderCollectionLayoutStructureItemConfigurationUtil.
-				paginationImprovementsEnabled()) {
-
-			return _getNumberOfPagesWithPaginationImprovementsEnabled();
-		}
-
-		return _getNumberOfPagesWithPaginationImprovementsDisabled();
-	}
-
-	private int _getNumberOfPagesWithPaginationImprovementsDisabled() {
-		int maxNumberOfItems = Math.min(
-			getCollectionCount(),
-			_collectionStyledLayoutStructureItem.getNumberOfItems());
-
-		if (_collectionStyledLayoutStructureItem.isShowAllItems()) {
-			maxNumberOfItems = getCollectionCount();
-		}
-
-		return (int)Math.ceil(
-			(double)maxNumberOfItems /
-				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage());
-	}
-
-	private int _getNumberOfPagesWithPaginationImprovementsEnabled() {
 		int numberOfItemsPerPage = _getNumberOfItemsPerPage();
 
 		int maxNumberOfItems = getCollectionCount();

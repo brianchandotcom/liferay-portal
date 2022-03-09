@@ -33,27 +33,10 @@ export default function CollectionPagination({
 	const isActive = useIsActive();
 	const {
 		displayAllPages,
-		numberOfItems,
 		numberOfItemsPerPage,
 		numberOfPages,
 		paginationType,
-		showAllItems,
 	} = collectionConfig;
-
-	const numericPaginationLabel = [
-		numberOfItemsPerPage && numberOfItems && totalNumberOfItems
-			? (activePage - 1) * numberOfItemsPerPage + 1
-			: 0,
-		paginationType && showAllItems
-			? Math.min(activePage * numberOfItemsPerPage, totalNumberOfItems)
-			: Math.min(
-					Math.min(activePage * numberOfItemsPerPage, numberOfItems),
-					totalNumberOfItems
-			  ),
-		paginationType && showAllItems
-			? totalNumberOfItems
-			: Math.min(numberOfItems, totalNumberOfItems),
-	];
 
 	const itemsPerPage = Math.min(
 		numberOfItemsPerPage,
@@ -85,15 +68,13 @@ export default function CollectionPagination({
 					<ClayPaginationBar.Results>
 						{Liferay.Util.sub(
 							Liferay.Language.get('showing-x-to-x-of-x-entries'),
-							config.paginationImprovementsEnabled
-								? numericPaginationLabelValues
-								: numericPaginationLabel
+							numericPaginationLabelValues
 						)}
 					</ClayPaginationBar.Results>
 
 					<ClayPaginationWithBasicItems
 						activePage={activePage}
-						disableEllipsis={config.paginationImprovementsEnabled}
+						disableEllipsis
 						onPageChange={onPageChange}
 						totalPages={
 							(Number.isFinite(totalPages) && totalPages) || 1

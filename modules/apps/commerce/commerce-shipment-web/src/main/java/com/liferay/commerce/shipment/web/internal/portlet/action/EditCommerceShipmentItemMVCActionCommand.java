@@ -231,7 +231,8 @@ public class EditCommerceShipmentItemMVCActionCommand
 				commerceShipmentItem =
 					_commerceShipmentItemService.addCommerceShipmentItem(
 						null, commerceShipmentId, commerceOrderItemId,
-						commerceInventoryWarehouseId, quantity, serviceContext);
+						commerceInventoryWarehouseId, quantity, true,
+						serviceContext);
 			}
 			else if ((commerceShipmentItem != null) &&
 					 (quantity != commerceShipmentItem.getQuantity())) {

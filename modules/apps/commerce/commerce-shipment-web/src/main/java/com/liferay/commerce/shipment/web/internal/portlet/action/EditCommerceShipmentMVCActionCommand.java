@@ -153,7 +153,7 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long commerceOrderItemId : commerceOrderItemIds) {
 			_commerceShipmentItemService.addCommerceShipmentItem(
-				null, commerceShipmentId, commerceOrderItemId, 0, 0,
+				null, commerceShipmentId, commerceOrderItemId, 0, 0, true,
 				serviceContext);
 		}
 	}

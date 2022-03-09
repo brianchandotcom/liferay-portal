@@ -87,7 +87,7 @@ public class CommerceShipmentTestUtil {
 			null, commerceShipmentId,
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			addQuantity, serviceContext);
+			addQuantity, true, serviceContext);
 	}
 
 	public static CommerceShipment createEmptyOrderShipment(
@@ -118,7 +118,7 @@ public class CommerceShipmentTestUtil {
 			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
 				null, commerceShipment.getCommerceShipmentId(),
 				commerceOrderItem.getCommerceOrderItemId(), warehouseId,
-				commerceOrderItem.getQuantity(), serviceContext);
+				commerceOrderItem.getQuantity(), true, serviceContext);
 		}
 	}
 
@@ -142,7 +142,7 @@ public class CommerceShipmentTestUtil {
 			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
 				null, commerceShipment.getCommerceShipmentId(),
 				commerceOrderItem.getCommerceOrderItemId(), commerceWarehouseId,
-				commerceOrderItem.getQuantity(), serviceContext);
+				commerceOrderItem.getQuantity(), true, serviceContext);
 		}
 
 		return commerceShipment;

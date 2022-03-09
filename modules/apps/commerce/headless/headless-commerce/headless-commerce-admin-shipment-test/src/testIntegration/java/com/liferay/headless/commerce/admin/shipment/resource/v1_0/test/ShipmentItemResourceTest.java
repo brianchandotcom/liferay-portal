@@ -284,7 +284,7 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 			CommerceShipmentItemLocalServiceUtil.addCommerceShipmentItem(
 				externalReferenceCode, commerceShipmentId, commerceOrderItemId,
 				_commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				5, _serviceContext);
+				5, true, _serviceContext);
 
 		_commerceShipmentItems.add(_commerceShipmentItem);
 

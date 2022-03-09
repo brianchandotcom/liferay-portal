@@ -171,7 +171,7 @@ public class CommerceShipmentGenerator {
 				null, commerceShipmentId,
 				commerceOrderItem.getCommerceOrderItemId(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				commerceInventoryWarehouseItemQuantity, serviceContext);
+				commerceInventoryWarehouseItemQuantity, true, serviceContext);
 		}
 	}
 

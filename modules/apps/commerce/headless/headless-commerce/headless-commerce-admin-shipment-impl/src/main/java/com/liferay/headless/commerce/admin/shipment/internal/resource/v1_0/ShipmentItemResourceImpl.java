@@ -216,6 +216,8 @@ public class ShipmentItemResourceImpl
 				shipmentItem.getExternalReferenceCode(), shipmentId,
 				shipmentItem.getOrderItemId(), shipmentItem.getWarehouseId(),
 				shipmentItem.getQuantity(),
+				GetterUtil.getBoolean(
+					shipmentItem.getValidateInventory(), true),
 				_serviceContextHelper.getServiceContext(contextUser));
 
 		return _toShipmentItem(commerceShipmentItem);

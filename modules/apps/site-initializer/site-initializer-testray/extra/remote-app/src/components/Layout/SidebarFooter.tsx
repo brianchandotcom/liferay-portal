@@ -16,6 +16,7 @@ import ClayButton from '@clayui/button';
 import {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {Context} from '@clayui/modal';
+import {Size} from '@clayui/modal/lib/types';
 import {ReactElement, useContext} from 'react';
 
 import i18n from '../../i18n';
@@ -48,7 +49,7 @@ const USER_DROPDOWN = [
 const SidebarFooter = () => {
 	const [state, dispatch] = useContext(Context);
 
-	const onOpenModal = (title: string, body: ReactElement, size: any) => {
+	const onOpenModal = (title: string, body: ReactElement, size: Size) => {
 		dispatch({
 			payload: {
 				body,
@@ -85,7 +86,7 @@ const SidebarFooter = () => {
 						onOpenModal(
 							i18n.translate('new-project'),
 							<NewProject onClose={() => state.onClose()} />,
-							'xl'
+							'lg'
 						),
 					path: '/',
 				},

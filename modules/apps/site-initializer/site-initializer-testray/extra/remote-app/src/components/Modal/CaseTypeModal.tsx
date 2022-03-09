@@ -30,7 +30,7 @@ const CaseTypeModal = () => {
 					],
 				}}
 				transformData={(data) => data?.c?.testrayCaseTypes}
-			></ListView>
+			/>
 		</Container>
 	);
 };

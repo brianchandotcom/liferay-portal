@@ -30,13 +30,13 @@ const AddRequirements: React.FC = () => {
 							<ClayForm.Group className="form-group-sm">
 								<Input
 									label={i18n.translate('first-name')}
-									name="firstname"
+									name="firstName"
 									required
 								/>
 
 								<Input
 									label={i18n.translate('last-name')}
-									name="lastname"
+									name="lastName"
 									required
 								/>
 
@@ -48,7 +48,7 @@ const AddRequirements: React.FC = () => {
 
 								<Input
 									label={i18n.translate('screen-name')}
-									name="screeName"
+									name="screenName"
 									required
 								/>
 							</ClayForm.Group>
@@ -60,7 +60,7 @@ const AddRequirements: React.FC = () => {
 					<ClayLayout.Row justify="start">
 						<ClayLayout.Col size={3} sm={12} xl={3}>
 							<h5 className="font-weight-normal">
-								{i18n.translate('Description')}
+								{i18n.translate('description')}
 							</h5>
 						</ClayLayout.Col>
 
@@ -69,8 +69,7 @@ const AddRequirements: React.FC = () => {
 								<br />
 
 								<Input
-									label=""
-									name=""
+									name="firstName"
 									placeholder={i18n.translate('first-name')}
 									type="textarea"
 								/>

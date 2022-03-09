@@ -15,15 +15,17 @@
 import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 
 import Input from '../../components/Input';
 import {CreateTestrayProject} from '../../graphql/mutations/TestrayProject';
+import i18n from '../../i18n';
 import {Liferay} from '../../services/liferay/liferay';
 
 type NewProjectProps = {
-	onClose: any;
+	onClose: () => void;
 };
+
 const NewProject: React.FC<NewProjectProps> = ({onClose}) => {
 	const [project, setProject] = useState({
 		description: '',
@@ -39,63 +41,68 @@ const NewProject: React.FC<NewProjectProps> = ({onClose}) => {
 		});
 	}
 
-	const [save, {data, error}] = useMutation(CreateTestrayProject);
+	const [createTestrayProject] = useMutation(CreateTestrayProject);
 
-	useEffect(() => {
-		error &&
-			Liferay.Util.openToast({
-				message: `Error ${error}`,
-				type: 'danger',
+	const onSubmit = async (event: any) => {
+		event.preventDefault();
+
+		try {
+			await createTestrayProject({
+				variables: {
+					TestrayProject: {
+						description: project.description,
+						name: project.name,
+					},
+				},
 			});
-		if (data) {
+
 			Liferay.Util.openToast({
 				message: 'Project created',
 				type: 'success',
 			});
-			onClose();
 		}
-	}, [project, data, error, onClose]);
+		catch (error) {
+			Liferay.Util.openToast({
+				message: `Error ${error}`,
+				type: 'danger',
+			});
+		}
+
+		onClose();
+	};
 
 	return (
-		<ClayForm>
+		<ClayForm onSubmit={onSubmit}>
 			<ClayForm.Group>
 				<Input
 					label="Name"
 					name="name"
 					onChange={(element) => handleChange(element)}
 					required
-				></Input>
+				/>
 			</ClayForm.Group>
 
-			<ClayForm.Group className="">
+			<ClayForm.Group>
 				<Input
 					label="Description"
 					name="description"
 					onChange={(element) => handleChange(element)}
 					required
 					type="textarea"
-				></Input>
+				/>
 			</ClayForm.Group>
 
 			<ClayForm.Group className="d-flex mt-5">
 				<div className="mr-3">
-					<ClayButton
-						displayType="primary"
-						onClick={() =>
-							save({
-								variables: {
-									description: project.description,
-									name: project.name,
-								},
-							})
-						}
-					>
-						Add
+					<ClayButton displayType="primary" type="submit">
+						{i18n.translate('add')}
 					</ClayButton>
 				</div>
 
 				<div>
-					<ClayButton displayType="secondary">Cancel</ClayButton>
+					<ClayButton displayType="secondary">
+						{i18n.translate('cancel')}
+					</ClayButton>
 				</div>
 			</ClayForm.Group>
 		</ClayForm>

@@ -18,9 +18,6 @@ import ClayLayout from '@clayui/layout';
 import {useState} from 'react';
 
 import Input from '../../components/Input';
-
-// import {EMAIL_REGEX} from '../../components/Input/validations';
-
 import Container from '../../components/Layout/Container';
 import i18n from '../../i18n';
 
@@ -32,34 +29,28 @@ const AddUser: React.FC = () => {
 		lastName: '',
 		password: '',
 		screenName: '',
-		testRayAnalyst: false,
 		testrayAdministrator: false,
+		testrayAnalyst: false,
 		testrayLead: false,
 		testrayUser: false,
 	});
 
-	function handleChange({target}: any): void {
-		const {name, value} = target;
+	const onChange = (event: any) => {
+		const {
+			target: {checked, name, type, ...target},
+		} = event;
+
+		let {value} = target;
+
+		if (type === 'checkbox') {
+			value = checked;
+		}
 
 		setForm({
 			...form,
 			[name]: value,
 		});
-	}
-
-	function onCheckonChange({target}: any) {
-		const {checked, name} = target;
-
-		checked
-			? setForm({
-					...form,
-					[name]: checked,
-			  })
-			: setForm({
-					...form,
-					[name]: false,
-			  });
-	}
+	};
 
 	return (
 		<ClayLayout.Container>
@@ -77,27 +68,21 @@ const AddUser: React.FC = () => {
 								<Input
 									label={i18n.translate('first-name')}
 									name="firstName"
-									onChange={(element) => {
-										handleChange(element);
-									}}
+									onChange={onChange}
 									required
 								/>
 
 								<Input
 									label={i18n.translate('last-name')}
 									name="lastName"
-									onChange={(element) => {
-										handleChange(element);
-									}}
+									onChange={onChange}
 									required
 								/>
 
 								<Input
 									label={i18n.translate('email-address')}
 									name="emailAddress"
-									onChange={(element) => {
-										handleChange(element);
-									}}
+									onChange={onChange}
 									required
 									type="email"
 								/>
@@ -105,9 +90,7 @@ const AddUser: React.FC = () => {
 								<Input
 									label={i18n.translate('screen-name')}
 									name={form.screenName}
-									onChange={(element) => {
-										handleChange(element);
-									}}
+									onChange={onChange}
 									required
 								/>
 							</ClayForm.Group>
@@ -126,9 +109,7 @@ const AddUser: React.FC = () => {
 								<Input
 									label={i18n.translate('password')}
 									name={form.password}
-									onChange={(element) => {
-										handleChange(element);
-									}}
+									onChange={onChange}
 									required
 									type="password"
 								/>
@@ -136,9 +117,7 @@ const AddUser: React.FC = () => {
 								<Input
 									label="Confirm Password"
 									name={form.confirmPassword}
-									onChange={(element) => {
-										handleChange(element);
-									}}
+									onChange={onChange}
 									required
 									type="password"
 								/>
@@ -157,22 +136,18 @@ const AddUser: React.FC = () => {
 							<div>
 								<ClayCheckbox
 									checked={form.testrayAdministrator}
-									label=" Testray Administrator"
+									label="Testray Administrator"
 									name="testrayAdministrator"
-									onChange={(element) => {
-										onCheckonChange(element);
-									}}
+									onChange={onChange}
 								/>
 							</div>
 
 							<div>
 								<ClayCheckbox
-									checked={form.testRayAnalyst}
+									checked={form.testrayAnalyst}
 									label="Testray Analyst"
-									name="testRayAnalyst"
-									onChange={(element) => {
-										onCheckonChange(element);
-									}}
+									name="testrayAnalyst"
+									onChange={onChange}
 								/>
 							</div>
 
@@ -181,9 +156,7 @@ const AddUser: React.FC = () => {
 									checked={form.testrayLead}
 									label="Testray Lead"
 									name="testrayLead"
-									onChange={(element) => {
-										onCheckonChange(element);
-									}}
+									onChange={onChange}
 								/>
 							</div>
 
@@ -192,9 +165,7 @@ const AddUser: React.FC = () => {
 									checked={form.testrayUser}
 									label="Testray User"
 									name="testrayUser"
-									onChange={(element) => {
-										onCheckonChange(element);
-									}}
+									onChange={onChange}
 								/>
 							</div>
 						</ClayLayout.Col>
@@ -207,13 +178,7 @@ const AddUser: React.FC = () => {
 								key={3}
 								spaced
 							>
-								<ClayButton
-									className="bg-primary-2 borderless mr-2 primary text-primary-7"
-									onClick={() => {
-										// eslint-disable-next-line no-console
-										console.log(form);
-									}}
-								>
+								<ClayButton className="bg-primary-2 borderless mr-2 primary text-primary-7">
 									Save
 								</ClayButton>
 

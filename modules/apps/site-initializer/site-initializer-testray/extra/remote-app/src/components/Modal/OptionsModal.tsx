@@ -12,7 +12,7 @@
  * details.
  */
 
-import {getTestrayFactorOptions} from '../../graphql/queries/testrayOptions';
+import {getTestrayFactorOptions} from '../../graphql/queries';
 import ListView from '../ListView/ListView';
 
 const OptionsModal = () => {
@@ -28,7 +28,7 @@ const OptionsModal = () => {
 				],
 			}}
 			transformData={(data) => data?.c?.testrayFactorOptions}
-		></ListView>
+		/>
 	);
 };
 

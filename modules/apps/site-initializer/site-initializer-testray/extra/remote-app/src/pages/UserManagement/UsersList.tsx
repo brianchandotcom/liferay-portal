@@ -15,7 +15,7 @@
 import {Container} from '@clayui/layout';
 
 import ListView from '../../components/ListView/ListView';
-import {getLiferayUsers} from '../../graphql/queries/liferayUser';
+import {getLiferayUserAccounts} from '../../graphql/queries/liferayUser';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
 
@@ -32,7 +32,7 @@ const UserList: React.FC = () => {
 	return (
 		<Container fluid title={i18n.translate('cases')}>
 			<ListView
-				query={getLiferayUsers}
+				query={getLiferayUserAccounts}
 				tableProps={{
 					columns: [
 						{
@@ -62,7 +62,7 @@ const UserList: React.FC = () => {
 					navigateTo: () => '/manage/adduser',
 				}}
 				transformData={(data) => data?.userAccounts}
-			></ListView>
+			/>
 		</Container>
 	);
 };

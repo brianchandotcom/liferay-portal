@@ -101,8 +101,14 @@ const Grid = ({
 			collectionLength,
 			getNumberOfItems(collection, collectionConfig)
 		) || 1;
+
+	const numberOfItemsToDisplay = Math.min(
+		maxNumberOfItems,
+		config.maxNumberOfItemsEditMode
+	);
+
 	const numberOfRows = Math.ceil(
-		maxNumberOfItems / collectionConfig.numberOfColumns
+		numberOfItemsToDisplay / collectionConfig.numberOfColumns
 	);
 
 	return (
@@ -124,7 +130,7 @@ const Grid = ({
 										][collectionConfig.numberOfColumns][j]
 									}
 								>
-									{index < maxNumberOfItems && (
+									{index < numberOfItemsToDisplay && (
 										<ColumnContext
 											collectionConfig={collectionConfig}
 											collectionId={collectionId}

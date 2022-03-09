@@ -1971,6 +1971,7 @@ definition {
 	test AddSegmentUsingCustomFields {
 		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "SegmentationCreateSegment#AddSegmentUsingCustomFields";
+
 		task ("Add custom field in User") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",
@@ -2007,7 +2008,7 @@ definition {
 
 		task ("Create a segment using the custom field") {
 			Navigator.openURL();
-			
+
 			ProductMenu.gotoPortlet(
 				category = "People",
 				portlet = "Segments");

@@ -1966,6 +1966,74 @@ definition {
 		}
 	}
 
+	@description = "LPS-147454 Validate if the user can use a custom field as criteria to create a segment"
+	@priority = "4"
+	test AddSegmentUsingCustomFields {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "SegmentationCreateSegment#AddSegmentUsingCustomFields";
+		task ("Add custom field in User") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Custom Fields");
+
+			CustomFields.addCP(
+				customFieldName = "Business Unit",
+				customFieldType = "Input Field",
+				customInputDataType = "Text",
+				resourceName = "User",
+				startingValue = "COIN");
+		}
+
+		task ("Add a new user and view the Custom Fields") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.gotoEditCP(userScreenName = "usersn");
+
+			User.viewUserCustomFieldsCP(
+				customFieldName = "Business Unit",
+				customFieldType = "Text Area",
+				startingValue = "COIN");
+		}
+
+		task ("Create a segment using the custom field") {
+			Navigator.openURL();
+			
+			ProductMenu.gotoPortlet(
+				category = "People",
+				portlet = "Segments");
+
+			LexiconEntry.gotoAdd();
+
+			Segmentation.addProperties(propertyOption = "Business Unit");
+
+			Segmentation.fillProperty(propertyField = "COIN");
+
+			Segmentation.fillTitle(titleField = "COINers");
+
+			Segmentation.viewMembers(memberName = "userfn userln");
+
+			Button.clickSave();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Assert the segment is correctly created") {
+			Segmentation.editSegment(entry = "COINers");
+
+			Segmentation.viewSegment(propertyField = "COIN");
+		}
+	}
+
 	@description = "LPS-135495 Validate if, The criteria default language must be tagged as such in the language selection dropdown."
 	@priority = "3"
 	test CheckDefaultLanguageTag {

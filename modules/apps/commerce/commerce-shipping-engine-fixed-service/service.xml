@@ -136,6 +136,7 @@
 		</finder>
 	</entity>
 	<exceptions>
+		<exception>CommerceShippingFixedOptionKey</exception>
 		<exception>DuplicateCommerceShippingFixedOptionQualifier</exception>
 	</exceptions>
 </service-builder>

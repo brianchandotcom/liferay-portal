@@ -93,6 +93,8 @@ public class OpenAPIResourceImpl {
 
 			add(ShippingFixedOptionTermResourceImpl.class);
 
+			add(ShippingMethodResourceImpl.class);
+
 			add(TaxCategoryResourceImpl.class);
 
 			add(TermResourceImpl.class);

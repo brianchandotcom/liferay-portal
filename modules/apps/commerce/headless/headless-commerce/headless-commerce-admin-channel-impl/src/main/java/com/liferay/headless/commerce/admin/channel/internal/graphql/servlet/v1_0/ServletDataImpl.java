@@ -22,6 +22,7 @@ import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGr
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelTermResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingFixedOptionOrderTypeResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingFixedOptionTermResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingMethodResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.TaxCategoryResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.TermResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -69,6 +70,8 @@ public class ServletDataImpl implements ServletData {
 			_shippingFixedOptionOrderTypeResourceComponentServiceObjects);
 		Query.setShippingFixedOptionTermResourceComponentServiceObjects(
 			_shippingFixedOptionTermResourceComponentServiceObjects);
+		Query.setShippingMethodResourceComponentServiceObjects(
+			_shippingMethodResourceComponentServiceObjects);
 		Query.setTaxCategoryResourceComponentServiceObjects(
 			_taxCategoryResourceComponentServiceObjects);
 		Query.setTermResourceComponentServiceObjects(
@@ -113,6 +116,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<OrderTypeResource>
 		_orderTypeResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ShippingMethodResource>
+		_shippingMethodResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<TaxCategoryResource>

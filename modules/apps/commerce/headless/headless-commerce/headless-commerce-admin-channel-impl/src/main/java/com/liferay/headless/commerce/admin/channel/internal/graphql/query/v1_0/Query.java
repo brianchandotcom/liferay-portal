@@ -20,6 +20,7 @@ import com.liferay.headless.commerce.admin.channel.dto.v1_0.PaymentMethodGroupRe
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.PaymentMethodGroupRelTerm;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingFixedOptionOrderType;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingFixedOptionTerm;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingMethod;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.TaxCategory;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.Term;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ChannelResource;
@@ -28,6 +29,7 @@ import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGr
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelTermResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingFixedOptionOrderTypeResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingFixedOptionTermResource;
+import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingMethodResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.TaxCategoryResource;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.TermResource;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLTypeExtension;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -111,6 +114,14 @@ public class Query {
 
 		_shippingFixedOptionTermResourceComponentServiceObjects =
 			shippingFixedOptionTermResourceComponentServiceObjects;
+	}
+
+	public static void setShippingMethodResourceComponentServiceObjects(
+		ComponentServiceObjects<ShippingMethodResource>
+			shippingMethodResourceComponentServiceObjects) {
+
+		_shippingMethodResourceComponentServiceObjects =
+			shippingMethodResourceComponentServiceObjects;
 	}
 
 	public static void setTaxCategoryResourceComponentServiceObjects(
@@ -357,6 +368,26 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {channelShippingMethods(channelId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves channel shipping methods.")
+	public ShippingMethodPage channelShippingMethods(
+			@GraphQLName("channelId") Long channelId,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_shippingMethodResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			shippingMethodResource -> new ShippingMethodPage(
+				shippingMethodResource.getChannelShippingMethodsPage(
+					channelId, Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taxCategories(page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -423,6 +454,31 @@ public class Query {
 			this::_populateResourceContext,
 			termResource -> termResource.getShippingFixedOptionTermTerm(
 				shippingFixedOptionTermId));
+	}
+
+	@GraphQLTypeExtension(Channel.class)
+	public class GetChannelShippingMethodsPageTypeExtension {
+
+		public GetChannelShippingMethodsPageTypeExtension(Channel channel) {
+			_channel = channel;
+		}
+
+		@GraphQLField(description = "Retrieves channel shipping methods.")
+		public ShippingMethodPage shippingMethods(
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_shippingMethodResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				shippingMethodResource -> new ShippingMethodPage(
+					shippingMethodResource.getChannelShippingMethodsPage(
+						_channel.getId(), Pagination.of(page, pageSize))));
+		}
+
+		private Channel _channel;
+
 	}
 
 	@GraphQLName("ChannelPage")
@@ -629,6 +685,39 @@ public class Query {
 
 	}
 
+	@GraphQLName("ShippingMethodPage")
+	public class ShippingMethodPage {
+
+		public ShippingMethodPage(Page shippingMethodPage) {
+			actions = shippingMethodPage.getActions();
+
+			items = shippingMethodPage.getItems();
+			lastPage = shippingMethodPage.getLastPage();
+			page = shippingMethodPage.getPage();
+			pageSize = shippingMethodPage.getPageSize();
+			totalCount = shippingMethodPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected java.util.Collection<ShippingMethod> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("TaxCategoryPage")
 	public class TaxCategoryPage {
 
@@ -818,6 +907,22 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			ShippingMethodResource shippingMethodResource)
+		throws Exception {
+
+		shippingMethodResource.setContextAcceptLanguage(_acceptLanguage);
+		shippingMethodResource.setContextCompany(_company);
+		shippingMethodResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		shippingMethodResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		shippingMethodResource.setContextUriInfo(_uriInfo);
+		shippingMethodResource.setContextUser(_user);
+		shippingMethodResource.setGroupLocalService(_groupLocalService);
+		shippingMethodResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			TaxCategoryResource taxCategoryResource)
 		throws Exception {
 
@@ -857,6 +962,8 @@ public class Query {
 		_shippingFixedOptionOrderTypeResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ShippingFixedOptionTermResource>
 		_shippingFixedOptionTermResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ShippingMethodResource>
+		_shippingMethodResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TaxCategoryResource>
 		_taxCategoryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<TermResource>

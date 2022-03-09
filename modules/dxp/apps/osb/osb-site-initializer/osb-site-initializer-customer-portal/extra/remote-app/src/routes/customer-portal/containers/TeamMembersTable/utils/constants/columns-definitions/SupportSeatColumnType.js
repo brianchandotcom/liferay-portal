@@ -15,7 +15,7 @@ import {ROLE_TYPES} from '../../../../../../../common/utils/constants';
 const SupportSeatColumnType = ({roles}) => {
 	const hasAdministratorAccess = !!roles?.find(
 		(role) =>
-			role === ROLE_TYPES.admin.key || role === ROLE_TYPES.requestor.key
+			role === ROLE_TYPES.admin.key || role === ROLE_TYPES.requester.key
 	);
 
 	return (

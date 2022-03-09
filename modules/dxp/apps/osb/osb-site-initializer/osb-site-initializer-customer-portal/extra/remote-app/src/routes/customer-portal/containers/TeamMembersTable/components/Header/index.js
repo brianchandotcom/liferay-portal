@@ -33,7 +33,7 @@ const TeamMembersTableHeader = ({
 			userAccount?.roles?.some(
 				(role) =>
 					role === ROLE_TYPES.admin.key ||
-					role === ROLE_TYPES.requestor.key
+					role === ROLE_TYPES.requester.key
 			)
 		)?.length;
 

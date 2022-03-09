@@ -30,9 +30,9 @@ export const ROLE_TYPES = {
 		name: 'Partner Member',
 		raysourceName: 'Partner Member',
 	},
-	requestor: {
-		key: 'Requestor',
-		name: 'Requestor',
+	requester: {
+		key: 'Requester',
+		name: 'Requester',
 		raysourceName: 'Support Developer',
 	},
 };

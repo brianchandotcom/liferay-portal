@@ -102,7 +102,7 @@ const InviteTeamMembersPage = ({
 						if (roleType?.raysourceName) {
 							if (!projectHasSLAGoldPlatinum) {
 								isValidRole =
-									role.name !== ROLE_TYPES.requestor.key;
+									role.name !== ROLE_TYPES.requester.key;
 							}
 
 							if (!isProjectPartner) {
@@ -135,11 +135,11 @@ const InviteTeamMembersPage = ({
 
 				setFieldValue(
 					'invites[0].role',
-					project.maxRequestors < 1
+					availableAdministratorAssets < 1
 						? accountMember
 						: roles?.find(
 								({name}) =>
-									name === ROLE_TYPES.requestor.name ||
+									name === ROLE_TYPES.requester.name ||
 									name === ROLE_TYPES.admin.name
 						  )
 				);
@@ -160,14 +160,19 @@ const InviteTeamMembersPage = ({
 		};
 
 		getRoles();
-	}, [project, projectHasSLAGoldPlatinum, setFieldValue]);
+	}, [
+		availableAdministratorAssets,
+		project,
+		projectHasSLAGoldPlatinum,
+		setFieldValue,
+	]);
 
 	useEffect(() => {
 		if (values && accountRoles?.length) {
 			const totalAdmins = values.invites?.reduce(
 				(totalInvites, currentInvite) => {
 					if (
-						currentInvite.role.name === ROLE_TYPES.requestor.name ||
+						currentInvite.role.name === ROLE_TYPES.requester.name ||
 						currentInvite.role.name === ROLE_TYPES.admin.name
 					) {
 						return ++totalInvites;
@@ -185,7 +190,7 @@ const InviteTeamMembersPage = ({
 						...previousAccountRole,
 						disabled:
 							previousAccountRole.label ===
-								ROLE_TYPES.requestor.name ||
+								ROLE_TYPES.requester.name ||
 							previousAccountRole.label === ROLE_TYPES.admin.name,
 					}))
 				);
@@ -384,7 +389,7 @@ const InviteTeamMembersPage = ({
 												removedItem.role.name ===
 													ROLE_TYPES.admin.name ||
 												removedItem.role.name ===
-													ROLE_TYPES.requestor.name
+													ROLE_TYPES.requester.name
 											) {
 												setAvailableAdminsRoles(
 													(previousAdmins) =>
@@ -429,7 +434,7 @@ const InviteTeamMembersPage = ({
 								<h5 className="text-neutral-7">
 									{`${
 										projectHasSLAGoldPlatinum
-											? ROLE_TYPES.requestor.name
+											? ROLE_TYPES.requester.name
 											: ROLE_TYPES.admin.name
 									}	roles available: ${availableAdminsRoles} of ${
 										project.maxRequestors

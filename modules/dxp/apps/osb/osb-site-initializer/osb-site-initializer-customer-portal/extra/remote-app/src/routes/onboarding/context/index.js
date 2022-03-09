@@ -105,7 +105,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 								(role) => role.name === ROLE_TYPES.admin.key
 							);
 							const isRequester = currentAccountBrief?.roleBriefs?.some(
-								(role) => role.name === ROLE_TYPES.requestor.key
+								(role) => role.name === ROLE_TYPES.requester.key
 							);
 
 							if (isAdmin || isRequester) {

@@ -80,7 +80,7 @@ const TeamMembersTable = ({project, sessionId}) => {
 			const hasAdminRoles = currentUser?.roles?.some(
 				(role) =>
 					role === ROLE_TYPES.admin.key ||
-					role === ROLE_TYPES.requestor.key
+					role === ROLE_TYPES.requester.key
 			);
 
 			return hasAdminRoles;

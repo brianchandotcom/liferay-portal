@@ -29,10 +29,10 @@ const RoleColumnType = ({roles}) => {
 				return ROLE_TYPES.admin.name;
 			}
 			const isRequesterUser = roles.find(
-				(role) => role === ROLE_TYPES.requestor.key
+				(role) => role === ROLE_TYPES.requester.key
 			);
 			if (isRequesterUser) {
-				return ROLE_TYPES.requestor.name;
+				return ROLE_TYPES.requester.name;
 			}
 
 			const activeRole = roleValues.find(

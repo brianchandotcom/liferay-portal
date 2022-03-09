@@ -91,6 +91,10 @@ public class ConfigYAML {
 		return _generateGraphQL;
 	}
 
+	public boolean isGenerateLatestFeatures() {
+		return _generateLatestFeatures;
+	}
+
 	public boolean isGenerateOpenAPI() {
 		return _generateOpenAPI;
 	}
@@ -165,6 +169,10 @@ public class ConfigYAML {
 		_generateGraphQL = generateGraphQL;
 	}
 
+	public void setGenerateLatestFeatures(boolean generateLatestFeatures) {
+		_generateLatestFeatures = generateLatestFeatures;
+	}
+
 	public void setGenerateOpenAPI(boolean generateOpenAPI) {
 		_generateOpenAPI = generateOpenAPI;
 	}
@@ -217,6 +225,7 @@ public class ConfigYAML {
 	private boolean _forcePredictableSchemaPropertyName = true;
 	private boolean _generateBatch = true;
 	private boolean _generateGraphQL = true;
+	private boolean _generateLatestFeatures;
 	private boolean _generateOpenAPI = true;
 	private boolean _generateREST = true;
 	private String _graphQLNamespace;

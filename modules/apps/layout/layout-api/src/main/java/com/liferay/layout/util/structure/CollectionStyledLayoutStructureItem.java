@@ -14,6 +14,7 @@
 
 package com.liferay.layout.util.structure;
 
+import com.liferay.layout.helper.CollectionPaginationHelper;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -301,14 +302,15 @@ public class CollectionStyledLayoutStructureItem
 
 	private JSONObject _collectionJSONObject;
 	private boolean _displayAllItems;
-	private boolean _displayAllPages;
+	private boolean _displayAllPages = true;
 	private String _listItemStyle;
 	private String _listStyle;
 	private int _numberOfColumns = 1;
 	private int _numberOfItems = 5;
-	private int _numberOfItemsPerPage = 5;
+	private int _numberOfItemsPerPage = 20;
 	private int _numberOfPages = 5;
-	private String _paginationType;
+	private String _paginationType =
+		CollectionPaginationHelper.PAGINATION_TYPE_NUMERIC;
 	private boolean _showAllItems;
 	private String _templateKey;
 

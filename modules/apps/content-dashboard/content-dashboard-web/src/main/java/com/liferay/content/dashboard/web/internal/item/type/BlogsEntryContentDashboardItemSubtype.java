@@ -20,7 +20,6 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 
-import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -56,16 +55,6 @@ public class BlogsEntryContentDashboardItemSubtype
 			BlogsEntry.class.getName());
 
 		return infoItemClassDetails.getLabel(locale);
-	}
-
-	@Override
-	public Date getModifiedDate() {
-		return new Date();
-	}
-
-	@Override
-	public long getUserId() {
-		return 0;
 	}
 
 	@Override

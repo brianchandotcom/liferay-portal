@@ -15,12 +15,12 @@
 package com.liferay.content.dashboard.web.internal.item.type;
 
 import com.liferay.content.dashboard.web.internal.info.item.provider.util.ClassNameClassPKInfoItemIdentifier;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -38,7 +38,7 @@ import org.mockito.Mockito;
 /**
  * @author Cristina González
  */
-public class DDMStructureContentDashboardItemSubtypeTest {
+public class DLFileEntryTypeContentDashboardItemSubtypeTest {
 
 	@ClassRule
 	@Rule
@@ -47,95 +47,100 @@ public class DDMStructureContentDashboardItemSubtypeTest {
 
 	@Test
 	public void testCreation() throws PortalException {
-		DDMStructure ddmStructure = _getDDMStructure("structureName");
+		DLFileEntryType dLFileEntryType = _getDLFileEntryType(
+			"fileEntryTypeName");
 
-		DDMStructureContentDashboardItemSubtype
-			ddmStructureContentDashboardItemSubtype =
-				new DDMStructureContentDashboardItemSubtype(
-					ddmStructure, _getGroup("groupName"));
+		DLFileEntryTypeContentDashboardItemSubtype
+			dLFileEntryTypeContentDashboardItemSubtype =
+				new DLFileEntryTypeContentDashboardItemSubtype(
+					dLFileEntryType, _getGroup("groupName"));
 
 		Assert.assertEquals(
-			"structureName (groupName)",
-			ddmStructureContentDashboardItemSubtype.getFullLabel(
+			"fileEntryTypeName (groupName)",
+			dLFileEntryTypeContentDashboardItemSubtype.getFullLabel(
 				LocaleUtil.US));
 		Assert.assertEquals(
-			"structureName",
-			ddmStructureContentDashboardItemSubtype.getLabel(LocaleUtil.US));
+			"fileEntryTypeName",
+			dLFileEntryTypeContentDashboardItemSubtype.getLabel(LocaleUtil.US));
 		Assert.assertEquals(
-			ddmStructure.getModifiedDate(),
-			ddmStructureContentDashboardItemSubtype.getModifiedDate());
+			dLFileEntryType.getModifiedDate(),
+			dLFileEntryTypeContentDashboardItemSubtype.getModifiedDate());
 		Assert.assertEquals(
-			ddmStructure.getUserId(),
-			ddmStructureContentDashboardItemSubtype.getUserId());
+			dLFileEntryType.getUserId(),
+			dLFileEntryTypeContentDashboardItemSubtype.getUserId());
 
 		InfoItemReference infoItemReference =
-			ddmStructureContentDashboardItemSubtype.getInfoItemReference();
+			dLFileEntryTypeContentDashboardItemSubtype.getInfoItemReference();
 
 		Assert.assertEquals(
-			JournalArticle.class.getName(), infoItemReference.getClassName());
+			FileEntry.class.getName(), infoItemReference.getClassName());
 
 		ClassNameClassPKInfoItemIdentifier classNameClassPKInfoItemIdentifier =
 			(ClassNameClassPKInfoItemIdentifier)
 				infoItemReference.getInfoItemIdentifier();
 
 		Assert.assertEquals(
-			DDMStructure.class.getName(),
+			DLFileEntryType.class.getName(),
 			classNameClassPKInfoItemIdentifier.getClassName());
 		Assert.assertEquals(
-			ddmStructure.getStructureId(),
+			dLFileEntryType.getFileEntryTypeId(),
 			classNameClassPKInfoItemIdentifier.getClassPK());
 	}
 
 	@Test
 	public void testEquals() throws PortalException {
-		DDMStructure ddmStructure = _getDDMStructure("structureName");
+		DLFileEntryType dLFileEntryType = _getDLFileEntryType(
+			"fileEntryTypeName");
 
-		DDMStructureContentDashboardItemSubtype
-			ddmStructureContentDashboardItemSubtype1 =
-				new DDMStructureContentDashboardItemSubtype(
-					ddmStructure, _getGroup("groupName"));
-		DDMStructureContentDashboardItemSubtype
-			ddmStructureContentDashboardItemSubtype2 =
-				new DDMStructureContentDashboardItemSubtype(
-					ddmStructure, _getGroup("groupName"));
+		DLFileEntryTypeContentDashboardItemSubtype
+			dLFileEntryTypeContentDashboardItemSubtype1 =
+				new DLFileEntryTypeContentDashboardItemSubtype(
+					dLFileEntryType, _getGroup("groupName"));
+		DLFileEntryTypeContentDashboardItemSubtype
+			dLFileEntryTypeContentDashboardItemSubtype2 =
+				new DLFileEntryTypeContentDashboardItemSubtype(
+					dLFileEntryType, _getGroup("groupName"));
 
 		Assert.assertTrue(
-			ddmStructureContentDashboardItemSubtype1.equals(
-				ddmStructureContentDashboardItemSubtype2));
+			dLFileEntryTypeContentDashboardItemSubtype1.equals(
+				dLFileEntryTypeContentDashboardItemSubtype2));
 	}
 
 	@Test
 	public void testNoEquals() throws PortalException {
-		DDMStructure ddmStructure1 = _getDDMStructure("structureName");
+		DLFileEntryType dLFileEntryType1 = _getDLFileEntryType(
+			"fileEntryTypeName");
 
-		DDMStructureContentDashboardItemSubtype
-			ddmStructureContentDashboardItemSubtype1 =
-				new DDMStructureContentDashboardItemSubtype(
-					ddmStructure1, _getGroup("groupName"));
+		DLFileEntryTypeContentDashboardItemSubtype
+			dLFileEntryTypeContentDashboardItemSubtype1 =
+				new DLFileEntryTypeContentDashboardItemSubtype(
+					dLFileEntryType1, _getGroup("groupName"));
 
-		DDMStructure ddmStructure2 = _getDDMStructure("structureName");
+		DLFileEntryType dLFileEntryType2 = _getDLFileEntryType(
+			"fileEntryTypeName");
 
-		DDMStructureContentDashboardItemSubtype
-			ddmStructureContentDashboardItemSubtype2 =
-				new DDMStructureContentDashboardItemSubtype(
-					ddmStructure2, _getGroup("groupName"));
+		DLFileEntryTypeContentDashboardItemSubtype
+			dLFileEntryTypeContentDashboardItemSubtype2 =
+				new DLFileEntryTypeContentDashboardItemSubtype(
+					dLFileEntryType2, _getGroup("groupName"));
 
 		Assert.assertFalse(
-			ddmStructureContentDashboardItemSubtype1.equals(
-				ddmStructureContentDashboardItemSubtype2));
+			dLFileEntryTypeContentDashboardItemSubtype1.equals(
+				dLFileEntryTypeContentDashboardItemSubtype2));
 	}
 
 	@Test
 	public void testToJSONString() throws PortalException {
-		DDMStructure ddmStructure = _getDDMStructure("structureName");
+		DLFileEntryType dLFileEntryType = _getDLFileEntryType(
+			"fileEntryTypeName");
 
-		DDMStructureContentDashboardItemSubtype
-			ddmStructureContentDashboardItemSubtype =
-				new DDMStructureContentDashboardItemSubtype(
-					ddmStructure, _getGroup("groupName"));
+		DLFileEntryTypeContentDashboardItemSubtype
+			dLFileEntryTypeContentDashboardItemSubtype =
+				new DLFileEntryTypeContentDashboardItemSubtype(
+					dLFileEntryType, _getGroup("groupName"));
 
 		InfoItemReference infoItemReference =
-			ddmStructureContentDashboardItemSubtype.getInfoItemReference();
+			dLFileEntryTypeContentDashboardItemSubtype.getInfoItemReference();
 
 		ClassNameClassPKInfoItemIdentifier classNameClassPKInfoItemIdentifier =
 			(ClassNameClassPKInfoItemIdentifier)
@@ -150,41 +155,41 @@ public class DDMStructureContentDashboardItemSubtypeTest {
 				"entryClassName", infoItemReference.getClassName()
 			).put(
 				"title",
-				ddmStructureContentDashboardItemSubtype.getFullLabel(
+				dLFileEntryTypeContentDashboardItemSubtype.getFullLabel(
 					LocaleUtil.US)
 			).toJSONString(),
-			ddmStructureContentDashboardItemSubtype.toJSONString(
+			dLFileEntryTypeContentDashboardItemSubtype.toJSONString(
 				LocaleUtil.US));
 	}
 
-	private DDMStructure _getDDMStructure(String name) {
-		DDMStructure ddmStructure = Mockito.mock(DDMStructure.class);
+	private DLFileEntryType _getDLFileEntryType(String name) {
+		DLFileEntryType dLFileEntryType = Mockito.mock(DLFileEntryType.class);
 
 		Mockito.when(
-			ddmStructure.getName(Mockito.any(Locale.class))
+			dLFileEntryType.getName(Mockito.any(Locale.class))
 		).thenReturn(
 			name
 		);
 
 		Mockito.when(
-			ddmStructure.getModifiedDate()
+			dLFileEntryType.getModifiedDate()
 		).thenReturn(
 			new Date()
 		);
 
 		Mockito.when(
-			ddmStructure.getStructureId()
+			dLFileEntryType.getFileEntryTypeId()
 		).thenReturn(
 			RandomTestUtil.randomLong()
 		);
 
 		Mockito.when(
-			ddmStructure.getUserId()
+			dLFileEntryType.getUserId()
 		).thenReturn(
 			RandomTestUtil.randomLong()
 		);
 
-		return ddmStructure;
+		return dLFileEntryType;
 	}
 
 	private Group _getGroup(String name) throws PortalException {

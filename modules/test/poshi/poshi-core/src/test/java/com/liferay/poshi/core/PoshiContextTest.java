@@ -15,6 +15,7 @@
 package com.liferay.poshi.core;
 
 import com.liferay.poshi.core.util.FileUtil;
+import com.liferay.poshi.core.util.PropsUtil;
 
 import java.io.File;
 
@@ -44,6 +45,10 @@ public class PoshiContextTest extends TestCase {
 
 		String poshiFileDir =
 			"src/test/resources/com/liferay/poshi/core/dependencies/test";
+
+		PropsUtil.clear();
+
+		PropsUtil.set("test.base.dir.name", poshiFileDir);
 
 		PoshiContext.readFiles(poshiFileNames, poshiFileDir);
 	}

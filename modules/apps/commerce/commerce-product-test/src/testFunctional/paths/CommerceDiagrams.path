@@ -38,8 +38,18 @@
 </tr>
 <!--DIAGRAM_MAPPING-->
 <tr>
+	<td>DIAGRAM_FILE</td>
+	<td>//div[contains(@class,'image-wrapper cropper')]/img[contains(@src,'${key_image}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DIAGRAM_IMAGE</td>
 	<td>//div[contains(@class,'view-wrapper')]//*[name()='g']//*[name()='image']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_IMAGE_SPECIFIC</td>
+	<td>//div[contains(@class,'view-wrapper')]//*[name()='g']//*[name()='image' and contains(@href,'${key_image}')]</td>
 	<td></td>
 </tr>
 <tr>

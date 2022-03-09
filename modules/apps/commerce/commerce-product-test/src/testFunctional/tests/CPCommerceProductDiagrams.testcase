@@ -28,6 +28,67 @@ definition {
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
+		@description = "COMMERCE-7024 User is able to remove and replace a diagram product image."
+	@priority = "3"
+	test CanReplaceAnImage {
+		property portal.acceptance = "false";
+
+		task ("Given a diagram product has an image") {
+			CommerceJSONProductsAPI._addCommerceProduct(
+				catalogName = "Master",
+				productName = "Diagram Product",
+				productType = "diagram");
+
+			CommerceProducts.openProductsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Diagram Product");
+
+			CommerceEntry.gotoMenuTab(menuTab = "Diagram");
+
+			CommerceProductImages.addDiagramImages(
+				imageTitles = "Black",
+				productType = "Diagram");
+
+			Button.click(button = "Publish");
+
+			Alert.viewSuccessMessage();
+
+			WaitForElementPresent(
+				key_image = "Commerce_Black",
+				locator1 = "CommerceDiagrams#DIAGRAM_FILE");
+
+			WaitForElementPresent(
+				key_image = "Commerce_Black",
+				locator1 = "CommerceDiagrams#DIAGRAM_IMAGE_SPECIFIC");
+		}
+
+		task ("When I replace the image") {
+			Button.clickTrash();
+
+			AssertElementNotPresent(
+				key_image = "Commerce_Black",
+				locator1 = "CommerceDiagrams#DIAGRAM_FILE");
+
+			CommerceEntry.uploadCatalogEntrySingleImage(
+				productType = "Diagram",
+				uploadFileName = "Commerce_White.jpg");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("Then the image should be replaced.") {
+			WaitForElementPresent(
+				key_image = "Commerce_White",
+				locator1 = "CommerceDiagrams#DIAGRAM_FILE");
+
+			WaitForElementPresent(
+				key_image = "Commerce_White",
+				locator1 = "CommerceDiagrams#DIAGRAM_IMAGE_SPECIFIC");
+		}
+	}
+
 	@description = "This is a test for COMMERCE-7025. AddANewPin"
 	@priority = "3"
 	test AddANewPin {

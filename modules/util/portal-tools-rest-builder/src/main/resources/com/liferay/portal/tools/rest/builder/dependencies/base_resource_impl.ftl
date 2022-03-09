@@ -417,39 +417,41 @@ public abstract class Base${schemaName}ResourceImpl
 			</#if>
 		}
 
-		@Override
-		public List<String> getCreateEntityScopes() {
-			return Arrays.asList(
-				<#list freeMarkerTool.getPostSchemaJavaMethodSignatures(javaMethodSignatures, schemaJavaType, schemaName) as postSchemaJavaMethodSignature>
-					"${freeMarkerTool.getJavaMethodSignatureScope(postSchemaJavaMethodSignature)}"
-					<#sep>, </#sep>
-				</#list>
-			);
-		}
+		<#if configYAML.generateLatestFeatures>
+			@Override
+			public List<String> getCreateEntityScopes() {
+				return Arrays.asList(
+					<#list freeMarkerTool.getPostSchemaJavaMethodSignatures(javaMethodSignatures, schemaJavaType, schemaName) as postSchemaJavaMethodSignature>
+						"${freeMarkerTool.getJavaMethodSignatureScope(postSchemaJavaMethodSignature)}"
+						<#sep>, </#sep>
+					</#list>
+				);
+			}
 
-		@Override
-		public String getEntityClassName() {
-			return ${javaDataType}.class.getName();
-		}
+			@Override
+			public String getEntityClassName() {
+				return ${javaDataType}.class.getName();
+			}
 
-		@Override
-		public List<com.liferay.portal.vulcan.batch.engine.Field> getEntityFields() {
-			<#assign
-				javaClassProperties = freeMarkerTool.getDTOJavaClassProperties(configYAML, openAPIYAML, schema)
-			/>
-			return Arrays.asList(
-				<#list javaClassProperties?keys as propertyName>
-					<#assign javaClassProperty = javaClassProperties[propertyName] />
-					<#if stringUtil.startsWith(javaClassProperty.type, "Map<")>
-						<#assign propertyType = "Map" />
-					<#else>
-						<#assign propertyType = javaClassProperty.type />
-					</#if>
-					com.liferay.portal.vulcan.batch.engine.Field.of("${javaClassProperty.description}", "${propertyName}", ${javaClassProperty.readOnly?c}, ${javaClassProperty.required?c}, ${propertyType}.class, ${javaClassProperty.writeOnly?c})
-					<#sep>, </#sep>
-				</#list>
-			);
-		}
+			@Override
+			public List<com.liferay.portal.vulcan.batch.engine.Field> getEntityFields() {
+				<#assign
+					javaClassProperties = freeMarkerTool.getDTOJavaClassProperties(configYAML, openAPIYAML, schema)
+				/>
+				return Arrays.asList(
+					<#list javaClassProperties?keys as propertyName>
+						<#assign javaClassProperty = javaClassProperties[propertyName] />
+						<#if stringUtil.startsWith(javaClassProperty.type, "Map<")>
+							<#assign propertyType = "Map" />
+						<#else>
+							<#assign propertyType = javaClassProperty.type />
+						</#if>
+						com.liferay.portal.vulcan.batch.engine.Field.of("${javaClassProperty.description}", "${propertyName}", ${javaClassProperty.readOnly?c}, ${javaClassProperty.required?c}, ${propertyType}.class, ${javaClassProperty.writeOnly?c})
+						<#sep>, </#sep>
+					</#list>
+				);
+			}
+		</#if>
 
 		@Override
 		public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap) throws Exception {
@@ -461,20 +463,22 @@ public abstract class Base${schemaName}ResourceImpl
 			return null;
 		}
 
-		@Override
-		public List<String> getReadEntityScopes() {
-			return Arrays.asList(
-				<#list freeMarkerTool.getGetSchemaJavaMethodSignatures(javaMethodSignatures, schemaJavaType, schemaName) as getSchemaJavaMethodSignature>
-					"${freeMarkerTool.getJavaMethodSignatureScope(getSchemaJavaMethodSignature)}"
-					<#sep>, </#sep>
-				</#list>
-			);
-		}
+		<#if configYAML.generateLatestFeatures>
+			@Override
+			public List<String> getReadEntityScopes() {
+				return Arrays.asList(
+					<#list freeMarkerTool.getGetSchemaJavaMethodSignatures(javaMethodSignatures, schemaJavaType, schemaName) as getSchemaJavaMethodSignature>
+						"${freeMarkerTool.getJavaMethodSignatureScope(getSchemaJavaMethodSignature)}"
+						<#sep>, </#sep>
+					</#list>
+				);
+			}
 
-		@Override
-		public String getVersion() {
-			return "${version}";
-		}
+			@Override
+			public String getVersion() {
+				return "${version}";
+			}
+		</#if>
 
 		@Override
 		public Page<${javaDataType}> read(Filter filter, Pagination pagination, Sort[] sorts, Map<String, Serializable> parameters, String search) throws Exception {

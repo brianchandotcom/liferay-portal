@@ -48,7 +48,7 @@ CommercePaymentMethodRegistry commercePaymentMethodRegistry = (CommercePaymentMe
 			</div>
 
 			<c:choose>
-				<c:when test="<%= Validator.isNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) %>">
+				<c:when test="<%= Validator.isNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) || (commercePaymentMethodRegistry.getCommercePaymentMethod(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) == null) %>">
 					<span style="margin-bottom: 1rem;"><liferay-ui:message key="use-priority-settings" /></span>
 				</c:when>
 				<c:otherwise>

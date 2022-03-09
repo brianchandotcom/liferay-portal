@@ -285,7 +285,7 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
-		PublicationsChanges.changeFilterByItems(
+		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Added",
 			menuItem = "Change Types");
 
@@ -296,7 +296,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.changeFilterByItems(
+		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Deleted",
 			menuItem = "Change Types");
 
@@ -307,7 +307,7 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		PublicationsChanges.changeFilterByItems(
+		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Modified",
 			menuItem = "Change Types");
 
@@ -318,7 +318,7 @@ definition {
 			changeType = "Modified",
 			changeUser = "Test Test");
 
-		PublicationsChanges.changeFilterByItems(
+		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Guest",
 			menuItem = "Sites");
 
@@ -336,7 +336,7 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
-		PublicationsChanges.changeFilterByItems(
+		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Test Site Name",
 			menuItem = "Sites");
 
@@ -347,7 +347,7 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.changeFilterByItems(
+		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Document",
 			menuItem = "Types");
 
@@ -358,7 +358,7 @@ definition {
 			changeType = "Modified",
 			changeUser = "Test Test");
 
-		PublicationsChanges.changeFilterByItems(
+		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Web Content Article",
 			menuItem = "Types");
 

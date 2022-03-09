@@ -11112,6 +11112,19 @@ tokenLocation="REQUEST"</echo>
 	</target>
 
 	<target name="prepare-selenium-testcase-properties">
+		<get-testcase-property property.name="asset.publisher.selection.style" />
+
+		<if>
+			<not>
+				<isset property="asset.publisher.selection.style" />
+			</not>
+			<then>
+				<property name="asset.publisher.selection.style" value="dynamic" />
+			</then>
+		</if>
+
+		<echo file="${liferay.home}/osgi/configs/com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfiguration.config">defaultSelectionStyle="${asset.publisher.selection.style}"</echo>
+
 		<get-testcase-property property.name="cmis.repository.type" />
 
 		<if>

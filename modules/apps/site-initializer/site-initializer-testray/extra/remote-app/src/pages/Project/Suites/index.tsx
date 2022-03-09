@@ -34,7 +34,7 @@ const Suites = () => {
 							{
 								clickable: true,
 								key: 'name',
-								value: i18n.translate('case-name'),
+								value: i18n.translate('suite-name'),
 							},
 							{
 								key: 'description',

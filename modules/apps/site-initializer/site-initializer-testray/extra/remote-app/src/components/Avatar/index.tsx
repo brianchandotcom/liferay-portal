@@ -43,7 +43,11 @@ const Avatar: React.FC<AvatarProps> = ({
 	url,
 }) => (
 	<div className="align-items-center d-flex">
-		<ClaySticker className={className} shape="circle" size="lg">
+		<ClaySticker
+			className={classNames(className, getRandomColor())}
+			shape="circle"
+			size="lg"
+		>
 			{url ? (
 				<ClaySticker.Image alt={name} src={url} title={name} />
 			) : (
@@ -87,10 +91,7 @@ const AvatarGroup: React.FC<AvatarGroupProps> = ({
 					.map((user, index) => (
 						<div className="avatar-group-item" key={index}>
 							<Avatar
-								className={classNames(
-									'avatar avatar-skeleton-loader shadow-lg',
-									getRandomColor()
-								)}
+								className="avatar avatar-skeleton-loader shadow-lg"
 								name={user.name}
 								url={user.url}
 							/>

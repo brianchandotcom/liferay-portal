@@ -12,11 +12,6 @@
 <tbody>
 
 <tr>
-	<td>SIDEBAR_NODE_DESCRIPTION</td>
-	<td>//div[@class='form-group']//label[@for='nodeDescription']/..//textarea[@type='text']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ICON_COUNTRY</td>
 	<td>//button[contains(@class,'btn')]//*[contains(@class,'lexicon-icon-${key_translationOptionSelected}')]</td>
 	<td></td>
@@ -37,18 +32,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>REACT_PANEL</td>
-	<td>//div[@class='react-flow__pane']</td>
+	<td>SIDEBAR_CONNECTOR_LABEL</td>
+	<td>//input[@id='edgeLabel']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONNECTOR_SOURCE</td>
 	<td>//div[@class='node ${key_nodeType}-node']/..//div[@data-handleid='${key_direction}Source']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SIDEBAR_CONNECTOR_LABEL</td>
-	<td>//input[@id='edgeLabel']</td>
 	<td></td>
 </tr>
 <tr>
@@ -72,28 +62,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATION_NEW_BUTTON</td>
-	<td>//span[contains(., 'Notifications')]/../..//button[contains(.,'New')]</td>
+	<td>PROPERTIES_NEW_BUTTON</td>
+	<td>//span[contains(., '${key_propertyName}')]/../..//button[contains(.,'New')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATIONS_INPUT</td>
+	<td>PROPERTIES_INPUT</td>
 	<td>//label[contains(., '${key_inputOption}')]/..//input</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATION_SELECTORS</td>
+	<td>PROPERTIES_SELECTORS</td>
 	<td>//label[contains(., '${key_selectorField}')]/..//select</td>
 	<td></td>
 </tr>
 <tr>
-	<td>NOTIFICATIONS_TEMPLATE_TEXTAREA</td>
+	<td>PROPERTIES_TEMPLATE_TEXTAREA</td>
 	<td>//label[contains(., 'Template')]/..//textarea</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFAULT_TOGGLE_SWITCH</td>
-	<td>//span[@class='toggle-switch-bar']</td>
+	<td>//input[contains(@class,'toggle-switch-check')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -106,6 +96,77 @@
 	<td>//*[name()='path'][contains(@style,'stroke: rgb(128, 172, 255); stroke-dasharray: ${key_transitionStyle}; stroke-width: 2;')]/..//*[normalize-space(text())='${key_connectorLabel}']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SELECTED_NODE</td>
+	<td>//div[contains(@class, 'react-flow__node-${key_nodeType} selected')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONNECTOR_SOURCE_SELECTED</td>
+	<td>//div[@class='node ${key_nodeType}-node selected']/..//div[@data-handleid='${key_direction}Source']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REACT_PANEL</td>
+	<td>//div[@class='react-flow__pane']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_POSITION</td>
+	<td>//div[@class='react-flow']//span[contains(text(),'${key_nodeLabel}')]/../../..//div[@xpos='${key_nodeXPosition}' and @ypos='${key_nodeYPosition}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_FIELD_LABEL</td>
+	<td>//div[@class='sidebar']//span[contains(text(),'${key_fieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_INFO</td>
+	<td>//span[contains(., 'Information')]/../..//input[@id='${key_infoOption}' and @value='${key_infoValue}'] | //span[contains(., 'Information')]/../..//textarea[@id='${key_infoOption}' and contains(., '${key_infoValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUIRED_FIELD</td>
+	<td>//div[@class='sidebar']//label[@for='${key_requiredField}']//span[contains(text(),'*')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUIRED_FEEDBACK_MESSAGE</td>
+	<td>//label[@for='${key_requiredField}']/..//div[@class='form-feedback-item'][contains(text(),'This field is required.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_NODE_LABEL_SPECIFIC</td>
+	<td>//div[contains(@class, 'node ${key_nodeType}-node')]//span[contains(text(),'${key_nodeLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_NODE_LABEL</td>
+	<td>//span[contains(@class, 'node-label') and contains(text(), '${key_nodeLabel}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NODE_INFO_INPUT</td>
+	<td>//div[@class='sidebar']//input[contains(@ID,'node${key_infoOption}')] | //div[@class='sidebar']//textarea[contains(@ID,'node${key_infoOption}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_PROPERTY</td>
+	<td>//span[contains(., '${key_propertyName}')]/../..//div[@class='panel-body']/..//span[contains(.,'${key_propertyValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATIONS_TYPE_DROPDOWN</td>
+	<td>//label[contains(., 'Notification Types')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_TYPE_OPTIONS</td>
+	<td>//input[@type='checkbox' and @value ='${key_checkboxValue}']</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

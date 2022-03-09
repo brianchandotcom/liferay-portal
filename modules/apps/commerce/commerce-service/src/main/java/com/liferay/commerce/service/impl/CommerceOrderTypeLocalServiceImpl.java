@@ -17,6 +17,7 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.exception.CommerceOrderTypeDisplayDateException;
 import com.liferay.commerce.exception.CommerceOrderTypeExpirationDateException;
 import com.liferay.commerce.exception.CommerceOrderTypeNameException;
+import com.liferay.commerce.internal.context.CommerceGroupThreadLocal;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceOrderTypeRelTable;
 import com.liferay.commerce.model.CommerceOrderTypeTable;
@@ -30,6 +31,7 @@ import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -441,12 +443,14 @@ public class CommerceOrderTypeLocalServiceImpl
 				PermissionChecker permissionChecker =
 					PermissionThreadLocal.getPermissionChecker();
 
-				if (permissionChecker != null) {
+				Group group = CommerceGroupThreadLocal.get();
+
+				if ((permissionChecker != null) && (group != null)) {
 					predicate = predicate.and(
 						_inlineSQLHelper.getPermissionWherePredicate(
 							CommerceOrderType.class.getName(),
-							CommerceOrderTypeTable.INSTANCE.
-								commerceOrderTypeId));
+							CommerceOrderTypeTable.INSTANCE.commerceOrderTypeId,
+							group.getGroupId()));
 				}
 
 				Predicate commerceOrderTypeRelPredicate =

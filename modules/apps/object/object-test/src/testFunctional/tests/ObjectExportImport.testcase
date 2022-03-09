@@ -50,15 +50,6 @@ definition {
 
 	}
 
-	@description = "LPS-142175 - Verify it is possible to export and import an already published Object"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanExportImportPublishedObject {
-
-		// TODO LPS-146362 CanExportImportPublishedObject pending implementation
-
-	}
-
 	@description = "LPS-142175 - Verify if it is possible to import the data structure to a custom objects"
 	@ignore = "Test Stub"
 	@priority = "5"
@@ -120,15 +111,6 @@ definition {
 	test CanPublishImportedObject {
 
 		// TODO LPS-146365 CanPublishImportedObject pending implementation
-
-	}
-
-	@description = "LPS-142175 - Verify that an imported custom object has the same Label of the source Object"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test ImportedObjectHasSameLabel {
-
-		// TODO LPS-146364 ImportedObjectHasSameLabel pending implementation
 
 	}
 

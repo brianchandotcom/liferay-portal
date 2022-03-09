@@ -1,5 +1,27 @@
 definition {
 
+	macro viewAdminRoleName {
+		Publications.createNewPublication(
+			gotoPublicationsAdmin = "true",
+			publicationName = "Publication Name");
+
+		PublicationsNavigator._gotoPublicationEllipsisItem(
+			menuItem = "Invite Users",
+			publicationName = "Publication Name");
+
+		Click(
+			key_title = "Viewers can view. Viewers cannot edit, publish, or invite other users.",
+			locator1 = "Button#ANY_TITLE");
+
+		AssertElementNotPresent(
+			key_publicationRole = "Inviter",
+			locator1 = "Publications#PUBLICATION_ROLE_BUTTON");
+
+		AssertElementPresent(
+			key_publicationRole = "Admin",
+			locator1 = "Publications#PUBLICATION_ROLE_BUTTON");
+	}
+
 	macro viewOutOfDatePublications {
 		AssertTextPresent(
 			key_publicationName = "Production",

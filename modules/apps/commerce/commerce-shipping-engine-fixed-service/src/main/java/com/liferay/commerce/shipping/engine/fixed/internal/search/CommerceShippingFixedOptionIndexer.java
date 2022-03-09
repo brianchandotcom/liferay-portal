@@ -91,6 +91,7 @@ public class CommerceShippingFixedOptionIndexer
 		addSearchTerm(
 			searchQuery, searchContext, "commerceShippingMethodId", false);
 		addSearchTerm(searchQuery, searchContext, "description", false);
+		addSearchTerm(searchQuery, searchContext, "key", true);
 	}
 
 	@Override
@@ -117,12 +118,13 @@ public class CommerceShippingFixedOptionIndexer
 		Document document = getBaseModelDocument(
 			CLASS_NAME, commerceShippingFixedOption);
 
-		document.addKeyword(Field.NAME, commerceShippingFixedOption.getName());
 		document.addKeyword(
 			Field.DESCRIPTION, commerceShippingFixedOption.getDescription());
+		document.addKeyword(Field.NAME, commerceShippingFixedOption.getName());
 		document.addKeyword(
 			"commerceShippingMethodId",
 			commerceShippingFixedOption.getCommerceShippingMethodId());
+		document.addKeyword("key", commerceShippingFixedOption.getKey());
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(

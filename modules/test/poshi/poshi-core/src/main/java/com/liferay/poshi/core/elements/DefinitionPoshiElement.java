@@ -131,6 +131,11 @@ public class DefinitionPoshiElement extends PoshiElement {
 	}
 
 	@Override
+	public void setFilePathURL(URL filePathURL) {
+		_filePathURL = filePathURL;
+	}
+
+	@Override
 	public String toPoshiScript() {
 		StringBuilder sb = new StringBuilder();
 
@@ -203,11 +208,6 @@ public class DefinitionPoshiElement extends PoshiElement {
 
 	protected boolean isElementType(String poshiScript) {
 		return isValidPoshiScriptBlock(_blockNamePattern, poshiScript);
-	}
-
-	@Override
-	protected void setFilePathURL(URL filePathURL) {
-		_filePathURL = filePathURL;
 	}
 
 	private static final String _ELEMENT_NAME = "definition";

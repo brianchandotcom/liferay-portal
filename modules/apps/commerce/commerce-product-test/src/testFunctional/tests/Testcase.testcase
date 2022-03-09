@@ -1,0 +1,198 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Product Info Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		Navigator.openURL();
+
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.logoutPG();
+		}
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceAdminTearDown();
+
+		CommerceConfiguration.commerceInitializersTearDown();
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertOnlyNonSubscriptionProductsAreImportedWhenTheSubscriptionProductIsNotTheFirstOnTheListWhenImporting {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7791 AssertOnlyNonSubscriptionProductsAreImportedWhenTheSubscriptionProductIsNotTheFirstOnTheListWhenImporting pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertOnlyOneWishlistCanBeChosenForTheImport {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7715 AssertOnlyOneWishlistCanBeChosenForTheImport pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertOnlyTheFirstSubscriptionProductInTheWishListIsImportedWhenTheOrderIsEmpty {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7790 AssertOnlyTheFirstSubscriptionProductInTheWishListIsImportedWhenTheOrderIsEmpty pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertProductsCannotBeImportedIfASubscriptionProductIsInTheOrder {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7792 AssertProductsCannotBeImportedIfASubscriptionProductIsInTheOrder pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertSubscriptionProductCannotBeImportedIfThereAreNonSubscriptionProductsInTheOrder {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7793 AssertSubscriptionProductCannotBeImportedIfThereAreNonSubscriptionProductsInTheOrder pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CheckoutAfterImportFromWishList {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7885 CheckoutAfterImportFromWishList pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DownloadCSVTemplate {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7697 DownloadCSVTemplate pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ImportProductsFromWishlist {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7714 ImportProductsFromWishlist pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ImportProductsFromWishlistWithPriceVariations {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7721 ImportProductsFromWishlistWithPriceVariations pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test UploadNonCSVOrderFile {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7707 UploadNonCSVOrderFile pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test UploadNotValidCSVOrderFile {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7706 UploadNotValidCSVOrderFile pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test UploadNotValidERCCSVFile {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7704 UploadNotValidERCCSVFile pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test UploadNotValidQuantityCSVOrderFile {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7705 UploadNotValidQuantityCSVOrderFile pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test UploadNotValidSkuIDCSVFile {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7702 UploadNotValidSkuIDCSVFile pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test UploadValidCSVOrderFile {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7699 UploadValidCSVOrderFile pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewImportedWishlistItemsPreview {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7716 ViewImportedWishlistItemsPreview pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ViewPaginationOnImportFromWishlist {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7718 ViewPaginationOnImportFromWishlist pending implementation
+
+	}
+
+}

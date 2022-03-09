@@ -237,4 +237,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	@description = "[Please Update]"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyIfSaveAndSaveAsDraftButtonsAreNotPresent {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7074 VerifyIfSaveAndSaveAsDraftButtonsAreNotPresent
+
+	}
+
 }

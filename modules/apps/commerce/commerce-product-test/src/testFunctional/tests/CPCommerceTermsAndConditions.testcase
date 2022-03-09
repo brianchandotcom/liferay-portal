@@ -1,0 +1,88 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Product Info Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		Navigator.openURL();
+
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.logoutPG();
+		}
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceAdminTearDown();
+
+		CommerceConfiguration.commerceInitializersTearDown();
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AddADefaultDeliveryTerm {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8332 AddADefaultDeliveryTerm pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AddADefaultPaymentTerm {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8319 AddADefaultPaymentTerm pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test RemoveADeliveryTermLinkedToAnAccountAsDefaultOne {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8333 RemoveADeliveryTermLinkedToAnAccountAsDefaultOne pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test RemoveAPaymentTermLinkedToAnAccountAsDefaultOne {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8320 RemoveAPaymentTermLinkedToAnAccountAsDefaultOne pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test SetAnInactiveDeliveryTermLinkedToAnAccountAsDefaultOne {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8334 SetAnInactiveDeliveryTermLinkedToAnAccountAsDefaultOne pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test SetAnInactivePaymentTermLinkedToAnAccountAsDefaultOne {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8328 SetAnInactivePaymentTermLinkedToAnAccountAsDefaultOne pending implementation
+
+	}
+
+}

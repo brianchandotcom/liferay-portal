@@ -1265,4 +1265,14 @@ definition {
 		CommerceNavigator.viewFilterResultsSpecificOrder(resultsList = "U-Joint,Transmission Cooler Line Assembly,Torque Converters");
 	}
 
+	@description = "[Please Update]"
+	@ignore = "true"
+	@priority = "4"
+	test VerifyIfCategorizationIsWorking {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7075 VerifyIfCategorizationIsWorking
+
+	}
+
 }

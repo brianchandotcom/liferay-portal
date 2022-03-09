@@ -138,6 +138,26 @@ definition {
 
 	}
 
+	@description = "[Please Update]"
+	@ignore = "true"
+	@priority = "3"
+	test CanEditOrderMeasurementUnit {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7982 CanEditOrderMeasurementUnit Pending Implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "true"
+	@priority = "3"
+	test CanSetOrderQuantityToDecimal {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7983 CanSetOrderQuantityToDecimal Pending Implementation
+
+	}
+
 	@description = "This is a test for COMMERCE-5843. Deactivate Currency"
 	@priority = "3"
 	test DeactivateCurrency {

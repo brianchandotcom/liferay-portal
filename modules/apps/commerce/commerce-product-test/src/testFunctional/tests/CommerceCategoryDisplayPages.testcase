@@ -252,6 +252,16 @@ definition {
 		}
 	}
 
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test OverrideDefaultCategoryDisplayPageForDifferentCategories {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7853 OverrideDefaultCategoryDisplayPageForDifferentCategories pending implementation
+
+	}
+
 	@description = "This is a test for COMMERCE-7852. Verify user can override a private default category display page with another private page"
 	@priority = "3"
 	test OverridePrivateDefaultCategoryDisplayPageWithAPrivatePage {

@@ -13,10 +13,9 @@
  */
 
 import {useQuery} from '@apollo/client';
-import {useCallback, useContext, useEffect} from 'react';
+import {useCallback, useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
 
-import {HeaderContext, HeaderTypes} from '../../context/HeaderContext';
 import {CType, CTypePagination} from '../../graphql/queries';
 import {
 	TestrayProject,
@@ -29,9 +28,7 @@ import i18n from '../../i18n';
 const ProjectOutlet = () => {
 	const {projectId, ...otherParams} = useParams();
 	const {pathname} = useLocation();
-	const {setHeading, setTabs} = useHeader();
-
-	const [, dispatch] = useContext(HeaderContext);
+	const {setActions, setDropdown, setHeading, setTabs} = useHeader();
 
 	const {data} = useQuery<CType<'testrayProject', TestrayProject>>(
 		getTestrayProject,
@@ -66,27 +63,62 @@ const ProjectOutlet = () => {
 	);
 
 	useEffect(() => {
-		if (testrayProjects) {
-			dispatch({
-				payload: [
+		setActions([
+			{
+				items: [
 					{
-						items: [
-							{
-								divider: true,
-								label: i18n.translate('project-directory'),
-								path: '/',
-							},
-							...testrayProjects.map((testrayProject) => ({
-								label: testrayProject.name,
-								path: `/project/${testrayProject.id}/routines`,
-							})),
-						],
+						label: i18n.translate('edit-project'),
+					},
+					{
+						label: i18n.translate('delete-project'),
 					},
 				],
-				type: HeaderTypes.SET_DROPDOWN,
-			});
+				title: i18n.translate('project'),
+			},
+			{
+				items: [
+					{
+						label: i18n.translate('manage-components'),
+					},
+					{
+						label: i18n.translate('manage-teams'),
+					},
+					{
+						label: i18n.translate('manage-product-version'),
+					},
+				],
+				title: i18n.translate('manage'),
+			},
+			{
+				items: [
+					{
+						label: i18n.translate('export-cases'),
+					},
+				],
+				title: i18n.translate('reports'),
+			},
+		]);
+	}, [setActions]);
+
+	useEffect(() => {
+		if (testrayProjects) {
+			setDropdown([
+				{
+					items: [
+						{
+							divider: true,
+							label: i18n.translate('project-directory'),
+							path: '/',
+						},
+						...testrayProjects.map((testrayProject) => ({
+							label: testrayProject.name,
+							path: `/project/${testrayProject.id}/routines`,
+						})),
+					],
+				},
+			]);
 		}
-	}, [dispatch, testrayProjects]);
+	}, [setDropdown, testrayProjects]);
 
 	useEffect(() => {
 		if (testrayProject) {

@@ -133,7 +133,7 @@ AUI.add(
 
 		var STR_THUMBNAIL_PATH = PATH_THEME_IMAGES + '/file_system/large/';
 
-		var TPL_ENTRIES_CONTAINER = '<ul class="{cssClass}"></ul>';
+		var TPL_ENTRIES_CONTAINER = '<dl class="{cssClass}"></dl>';
 
 		var TPL_ENTRY_ROW_TITLE =
 			'<span class="' +
@@ -152,7 +152,7 @@ AUI.add(
 			'</span>';
 
 		var TPL_ENTRY_WRAPPER =
-			'<li class="card-page-item card-page-item-asset" data-title="{title}"></li>';
+			'<dd class="card-page-item card-page-item-asset" data-title="{title}"></dd>';
 
 		var TPL_ERROR_FOLDER = new A.Template(
 			'<span class="lfr-status-success-label">{validFilesLength}</span>',
@@ -534,11 +534,11 @@ AUI.add(
 					}
 					else {
 						var entriesContainerSelector =
-							'ul.list-group:last-of-type';
+							'dl.list-group:last-of-type';
 
 						if (displayStyle === CSS_ICON) {
 							entriesContainerSelector =
-								'ul.card-page:last-of-type';
+								'dl.card-page:last-of-type';
 						}
 
 						entriesContainer =

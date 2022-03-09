@@ -186,7 +186,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 										</liferay-frontend:vertical-card-header>
 									</liferay-frontend:vertical-card>
 
-									<li class="display-descriptive entry-display-style list-group-item list-group-item-flex">
+									<dd class="display-descriptive entry-display-style list-group-item list-group-item-flex">
 										<div class="autofit-col"></div>
 
 										<div class="autofit-col">
@@ -210,7 +210,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 										</div>
 
 										<div class="autofit-col"></div>
-									</li>
+									</dd>
 								</div>
 							</div>
 						</aui:form>

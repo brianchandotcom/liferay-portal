@@ -121,6 +121,21 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			groupId, folderId, queryDefinition);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getFileEntriesAndFileShortcutsCount(long, long, String[],
+	 *             int)}
+	 */
+	@Deprecated
+	@Override
+	public int getFileEntriesAndFileShortcutsCount(
+			long groupId, long folderId, int status, String[] mimeTypes)
+		throws PortalException {
+
+		return getFileEntriesAndFileShortcutsCount(
+			groupId, folderId, mimeTypes, status);
+	}
+
 	@Override
 	public int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, String[] mimeTypes, int status)
@@ -205,6 +220,24 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 			orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getFolders(long, long, boolean, int, int, int,
+	 *             OrderByComparator)}
+	 */
+	@Deprecated
+	@Override
+	public List<DLFolder> getFolders(
+			long groupId, long parentFolderId, int status,
+			boolean includeMountfolders, int start, int end,
+			OrderByComparator<DLFolder> orderByComparator)
+		throws PortalException {
+
+		return getFolders(
+			groupId, parentFolderId, includeMountfolders, status, start, end,
+			orderByComparator);
+	}
+
 	@Override
 	public List<DLFolder> getFolders(
 			long groupId, long parentFolderId, int start, int end,
@@ -235,6 +268,42 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		return dlFolderFinder.filterFindF_FE_FS_ByG_F_M_M(
 			groupId, folderId, null, includeMountFolders, queryDefinition);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getFoldersAndFileEntriesAndFileShortcuts(long, long,
+	 *             boolean, int, int, int, OrderByComparator)}
+	 */
+	@Deprecated
+	@Override
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long groupId, long folderId, int status,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator<?> orderByComparator)
+		throws PortalException {
+
+		return getFoldersAndFileEntriesAndFileShortcuts(
+			groupId, folderId, includeMountFolders, status, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getFoldersAndFileEntriesAndFileShortcuts(long, long,
+	 *             String[], boolean, int, int, int, OrderByComparator)}
+	 */
+	@Deprecated
+	@Override
+	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+			long groupId, long folderId, int status, String[] mimeTypes,
+			boolean includeMountFolders, int start, int end,
+			OrderByComparator<?> orderByComparator)
+		throws PortalException {
+
+		return getFoldersAndFileEntriesAndFileShortcuts(
+			groupId, folderId, mimeTypes, includeMountFolders, status, start,
+			end, orderByComparator);
 	}
 
 	@Override
@@ -428,6 +497,21 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		return dlFolderPersistence.filterCountByG_M_P_H_S(
 			groupId, false, parentFolderId, false, status);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getFoldersCount(long, long, boolean, int)}
+	 */
+	@Deprecated
+	@Override
+	public int getFoldersCount(
+			long groupId, long parentFolderId, int status,
+			boolean includeMountfolders)
+		throws PortalException {
+
+		return getFoldersCount(
+			groupId, parentFolderId, includeMountfolders, status);
 	}
 
 	@Override

@@ -543,6 +543,22 @@ public class DLFolderLocalServiceUtil {
 			orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getFolders(long, long, boolean, int, int,
+	 OrderByComparator)}
+	 */
+	@Deprecated
+	public static List<DLFolder> getFolders(
+		long groupId, long parentFolderId, int status,
+		boolean includeMountfolders, int start, int end,
+		OrderByComparator<DLFolder> orderByComparator) {
+
+		return getService().getFolders(
+			groupId, parentFolderId, status, includeMountfolders, start, end,
+			orderByComparator);
+	}
+
 	public static List<DLFolder> getFolders(
 		long groupId, long parentFolderId, int start, int end,
 		OrderByComparator<DLFolder> orderByComparator) {
@@ -586,6 +602,19 @@ public class DLFolderLocalServiceUtil {
 
 		return getService().getFoldersCount(
 			groupId, parentFolderId, includeMountfolders, status);
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 #getFoldersCount(long, long, boolean, int)}
+	 */
+	@Deprecated
+	public static int getFoldersCount(
+		long groupId, long parentFolderId, int status,
+		boolean includeMountfolders) {
+
+		return getService().getFoldersCount(
+			groupId, parentFolderId, status, includeMountfolders);
 	}
 
 	public static List<Long> getGroupFolderIds(

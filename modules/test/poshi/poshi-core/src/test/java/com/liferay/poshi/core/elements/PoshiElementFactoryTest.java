@@ -17,10 +17,10 @@ package com.liferay.poshi.core.elements;
 import com.liferay.poshi.core.PoshiContext;
 import com.liferay.poshi.core.util.Dom4JUtil;
 import com.liferay.poshi.core.util.FileUtil;
+import com.liferay.poshi.core.util.PropsUtil;
 
 import java.io.File;
 
-import com.liferay.poshi.core.util.PropsUtil;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;

@@ -18,16 +18,18 @@ export type CType<ObjectKey extends string, Query = any> = {
 	};
 };
 
-export type CTypePagination<ObjectKey extends string, Query = any> = {
-	c: {
-		[key in ObjectKey]: {
-			items: Query[];
-			lastPage: number;
-			page: number;
-			pageSize: number;
-			totalCount: number;
-		};
+export type TypePagination<ObjectKey extends string, Query = any> = {
+	[key in ObjectKey]: {
+		items: Query[];
+		lastPage: number;
+		page: number;
+		pageSize: number;
+		totalCount: number;
 	};
+};
+
+export type CTypePagination<ObjectKey extends string, Query = any> = {
+	c: TypePagination<ObjectKey, Query>;
 };
 
 export * from './testrayBuild';

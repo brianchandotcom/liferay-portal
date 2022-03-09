@@ -3129,7 +3129,7 @@ components:
                 numberOfItems:
                     # @review
                     description:
-                        The number of items in the page collection.
+                        The maximum number of items to display in the page collection when pagination is disabled.
                     type: integer
                 numberOfItemsPerPage:
                     # @review

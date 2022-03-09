@@ -429,7 +429,7 @@ public class RenderLayoutStructureDisplayContext {
 				cssClassSB.append(StringPool.SPACE);
 			}
 
-			cssClassSB.append(styledLayoutStructureItem.getTextAlignCssClass());
+			cssClassSB.append(textAlignCssClass);
 		}
 
 		String textColorCssClass =

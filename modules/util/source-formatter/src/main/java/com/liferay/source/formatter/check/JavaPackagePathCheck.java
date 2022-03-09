@@ -367,37 +367,37 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 			String[] array = StringUtil.split(
 				expectedPackagePathDataEntry, CharPool.COLON);
 
-			if (array.length == 2) {
-				String expectedPackagePath = array[1];
+			if (array.length != 2) {
+				continue;
+			}
 
-				if (StringUtil.startsWith(array[0], CharPool.PERIOD) &&
-					className.matches(array[0]) &&
-					!packageName.endsWith("." + expectedPackagePath) &&
-					!packageName.contains("." + expectedPackagePath + ".")) {
+			String expectedPackagePath = array[1];
+
+			if (StringUtil.startsWith(array[0], CharPool.PERIOD) &&
+				className.matches(array[0]) &&
+				!packageName.endsWith("." + expectedPackagePath) &&
+				!packageName.contains("." + expectedPackagePath + ".")) {
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Class '", className,
+						"' should be in package ending with '.", array[1],
+						"'"));
+
+				return;
+			}
+
+			for (String extendedClassName : javaClass.getExtendedClassNames()) {
+				if (extendedClassName.equals(array[0]) &&
+					!packageName.endsWith("." + expectedPackagePath)) {
 
 					addMessage(
 						fileName,
 						StringBundler.concat(
-							"Class '", className,
+							"Class extends '", className,
 							"' should be in package ending with '.", array[1],
 							"'"));
-
-					return;
-				}
-
-				for (String extendedClassName :
-						javaClass.getExtendedClassNames()) {
-
-					if (extendedClassName.equals(array[0]) &&
-						!packageName.endsWith("." + expectedPackagePath)) {
-
-						addMessage(
-							fileName,
-							StringBundler.concat(
-								"Class extends '", className,
-								"' should be in package ending with '.",
-								array[1], "'"));
-					}
 				}
 			}
 		}

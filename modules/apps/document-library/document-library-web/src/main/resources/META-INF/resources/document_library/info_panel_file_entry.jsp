@@ -159,7 +159,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 																add(
 																	dropdownItem -> {
 																		dropdownItem.setData(data);
-																		dropdownItem.setHref(DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true));
+																		dropdownItem.setHref(dlViewFileVersionDisplayContext.getDownloadURL(fileEntry, fileVersion, true));
 																		dropdownItem.setLabel(LanguageUtil.get(httpServletRequest, "this-version"));
 																		dropdownItem.setSeparator(true);
 																	});
@@ -194,7 +194,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 												<clay:link
 													data-analytics-file-entry-id="<%= fileEntry.getFileEntryId() %>"
 													displayType="primary"
-													href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
+													href="<%= dlViewFileVersionDisplayContext.getDownloadURL(fileEntry, fileVersion, false) %>"
 													label="download"
 													small="<%= true %>"
 													title='<%= LanguageUtil.format(resourceBundle, "file-size-x", LanguageUtil.formatStorageSize(fileVersion.getSize(), locale), false) %>'
@@ -208,7 +208,7 @@ long assetClassPK = DLAssetHelperUtil.getAssetClassPK(fileEntry, fileVersion);
 									<div class="btn-group-item" data-analytics-file-entry-id="<%= String.valueOf(fileEntry.getFileEntryId()) %>">
 										<clay:link
 											displayType="primary"
-											href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
+											href="<%= dlViewFileVersionDisplayContext.getDownloadURL(fileEntry, fileVersion, false) %>"
 											label="download"
 											small="<%= true %>"
 											title='<%= LanguageUtil.format(resourceBundle, "file-size-x", LanguageUtil.formatStorageSize(fileVersion.getSize(), locale), false) %>'

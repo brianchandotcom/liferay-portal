@@ -27,6 +27,8 @@ import com.liferay.document.library.preview.exception.DLFileEntryPreviewGenerati
 import com.liferay.document.library.preview.exception.DLPreviewGenerationInProcessException;
 import com.liferay.document.library.preview.exception.DLPreviewSizeException;
 import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.document.library.util.DLURLHelperUtil;
+import com.liferay.document.library.web.internal.configuration.FFFriendlyURLEntryFileEntryConfigurationUtil;
 import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.display.context.helper.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.helper.DLRequestHelper;
@@ -39,17 +41,27 @@ import com.liferay.dynamic.data.mapping.exception.StorageException;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.friendly.url.model.FriendlyURLEntry;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -171,6 +183,29 @@ public class DefaultDLViewFileVersionDisplayContext
 	@Override
 	public String getDiscussionLabel(Locale locale) {
 		return LanguageUtil.get(_resourceBundle, "comments");
+	}
+
+	@Override
+	public String getDownloadURL(
+			FileEntry fileEntry, FileVersion fileVersion, boolean useVersion)
+		throws PortalException {
+
+		String friendlyURL = _getFriendlyURL(fileEntry.getFileEntryId());
+
+		if (!useVersion &&
+			FFFriendlyURLEntryFileEntryConfigurationUtil.enabled() &&
+			!Validator.isBlank(friendlyURL)) {
+
+			return HttpUtil.addParameter(friendlyURL, "download", true);
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return DLURLHelperUtil.getDownloadURL(
+			fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false,
+			true);
 	}
 
 	@Override
@@ -377,6 +412,48 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		return null;
+	}
+
+	private String _getFriendlyURL(long fileEntryId) throws PortalException {
+		if (!FFFriendlyURLEntryFileEntryConfigurationUtil.enabled() ||
+			(fileEntryId == 0)) {
+
+			return null;
+		}
+
+		FriendlyURLEntry friendlyURLEntry =
+			FriendlyURLEntryLocalServiceUtil.fetchMainFriendlyURLEntry(
+				PortalUtil.getClassNameId(FileEntry.class), fileEntryId);
+
+		if (friendlyURLEntry == null) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(themeDisplay.getPortalURL());
+
+		sb.append("/documents");
+
+		String urlSeparatorFileEntry =
+			FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY;
+
+		sb.append(
+			urlSeparatorFileEntry.substring(
+				0, urlSeparatorFileEntry.length() - 1));
+
+		Group group = themeDisplay.getScopeGroup();
+
+		sb.append(group.getFriendlyURL());
+
+		sb.append(StringPool.SLASH);
+		sb.append(friendlyURLEntry.getUrlTitle());
+
+		return sb.toString();
 	}
 
 	private List<MenuItem> _getMenuItems() throws PortalException {

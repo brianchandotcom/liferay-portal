@@ -91,35 +91,13 @@ public class ExportFormInstanceMVCResourceCommand
 			DDMFormInstanceRecordExporterRequest.Builder.newBuilder(
 				formInstanceId, fileExtension);
 
-		boolean orderByAsc = false;
-
-		String orderByType = SearchOrderByUtil.getOrderByType(
-			resourceRequest, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-			"view-entries-order-by-type", "asc");
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<DDMFormInstanceRecord> orderByComparator =
-			new DDMFormInstanceRecordIdComparator(orderByAsc);
-
-		String orderByCol = SearchOrderByUtil.getOrderByCol(
-			resourceRequest, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-			"view-entries-order-by-col", "modified-date");
-
-		if (orderByCol.equals("modified-date")) {
-			orderByComparator = new DDMFormInstanceRecordModifiedDateComparator(
-				orderByAsc);
-		}
-
 		DDMFormInstanceRecordExporterRequest
 			ddmFormInstanceRecordExporterRequest = builder.withLocale(
 				themeDisplay.getLocale()
 			).withStatus(
 				WorkflowConstants.STATUS_APPROVED
 			).withOrderByComparator(
-				orderByComparator
+				_getOrderByComparator(resourceRequest)
 			).build();
 
 		byte[] content = null;
@@ -154,6 +132,30 @@ public class ExportFormInstanceMVCResourceCommand
 		DDMFormWebConfigurationActivator ddmFormWebConfigurationActivator) {
 
 		_ddmFormWebConfigurationActivator = null;
+	}
+
+	private OrderByComparator<DDMFormInstanceRecord> _getOrderByComparator(
+		ResourceRequest resourceRequest) {
+
+		boolean orderByAsc = false;
+
+		String orderByType = SearchOrderByUtil.getOrderByType(
+			resourceRequest, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+			"view-entries-order-by-type", "asc");
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		String orderByCol = SearchOrderByUtil.getOrderByCol(
+			resourceRequest, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+			"view-entries-order-by-col", "modified-date");
+
+		if (orderByCol.equals("modified-date")) {
+			return new DDMFormInstanceRecordModifiedDateComparator(orderByAsc);
+		}
+
+		return new DDMFormInstanceRecordIdComparator(orderByAsc);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

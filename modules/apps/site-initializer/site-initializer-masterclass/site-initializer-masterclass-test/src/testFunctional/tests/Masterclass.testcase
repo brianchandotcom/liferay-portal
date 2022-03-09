@@ -1319,7 +1319,7 @@ definition {
 		}
 
 		task ("Go Back Using History function") {
-			Masterclass.goBack();
+			Masterclass.goBackUsingBrowserHistory();
 		}
 
 		task ("Assert Create Account Form is not displayed") {
@@ -1339,7 +1339,7 @@ definition {
 		}
 
 		task ("Go Back Using History function") {
-			Masterclass.goBack();
+			Masterclass.goBackUsingBrowserHistory();
 		}
 
 		task ("Assert Create Account Form is not displayed") {

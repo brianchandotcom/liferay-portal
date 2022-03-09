@@ -45,10 +45,12 @@ definition {
 	@description = "Check if each nav section of clay sample portlet looks normal from screenshot"
 	@priority = "3"
 	test CanRenderUI {
+		task ("Set browser window size") {
+			SetWindowSize(value1 = "800,800");
+		}
+
 		task ("Change tabs and take a screenshot") {
 			ClaySamplePortlet.assertNavTabVisualContent(tab = "Badges");
-
-			ClaySamplePortlet.assertNavTabVisualContent(tab = "Buttons");
 
 			ClaySamplePortlet.assertNavTabVisualContent(tab = "Dropdowns");
 

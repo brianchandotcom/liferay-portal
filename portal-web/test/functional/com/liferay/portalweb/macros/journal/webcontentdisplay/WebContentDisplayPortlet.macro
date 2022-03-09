@@ -621,7 +621,7 @@ definition {
 		}
 	}
 
-	macro viewWithWorkflow {
+	macro viewWorkflow {
 		AssertTextEquals(
 			locator1 = "Message#ERROR_3",
 			value1 = "${webContentTitle} is not approved.");

@@ -296,6 +296,14 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
+		PublicationsChanges.viewChangesResultNotPresent(
+			changeCategory = "Web Content Article",
+			changeTitle = "WC WebContent Title 1");
+
+		PublicationsChanges.viewChangesResultNotPresent(
+			changeCategory = "Document",
+			changeTitle = "DM Document Title Edit");
+
 		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Deleted",
 			menuItem = "Change Types");
@@ -307,6 +315,15 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
+		PublicationsChanges.viewChangesResultNotPresent(
+			changeCategory = "Web Content Article",
+			changeOrder = "2",
+			changeTitle = "WC WebContent Title 2");
+
+		PublicationsChanges.viewChangesResultNotPresent(
+			changeCategory = "Document",
+			changeTitle = "DM Document Title Edit");
+
 		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Modified",
 			menuItem = "Change Types");
@@ -317,6 +334,15 @@ definition {
 			changeTitle = "DM Document Title Edit",
 			changeType = "Modified",
 			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesResultNotPresent(
+			changeCategory = "Web Content Article",
+			changeTitle = "WC WebContent Title 1");
+
+		PublicationsChanges.viewChangesResultNotPresent(
+			changeCategory = "Web Content Article",
+			changeOrder = "2",
+			changeTitle = "WC WebContent Title 2");
 
 		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Guest",
@@ -336,6 +362,11 @@ definition {
 			changeType = "Deleted",
 			changeUser = "Test Test");
 
+		PublicationsChanges.viewChangesResultNotPresent(
+			changeCategory = "Web Content Article",
+			changeOrder = "2",
+			changeTitle = "WC WebContent Title 2");
+
 		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Test Site Name",
 			menuItem = "Sites");
@@ -347,6 +378,14 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
+		PublicationsChanges.viewChangesResultNotPresent(
+			changeCategory = "Web Content Article",
+			changeTitle = "WC WebContent Title 1");
+
+		PublicationsChanges.viewChangesResultNotPresent(
+			changeCategory = "Document",
+			changeTitle = "DM Document Title Edit");
+
 		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Document",
 			menuItem = "Types");
@@ -357,6 +396,15 @@ definition {
 			changeTitle = "DM Document Title Edit",
 			changeType = "Modified",
 			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesResultNotPresent(
+			changeCategory = "Web Content Article",
+			changeTitle = "WC WebContent Title 1");
+
+		PublicationsChanges.viewChangesResultNotPresent(
+			changeCategory = "Web Content Article",
+			changeOrder = "2",
+			changeTitle = "WC WebContent Title 2");
 
 		PublicationsChanges.filterChangesByItem(
 			checkboxName = "Web Content Article",
@@ -376,6 +424,10 @@ definition {
 			changeTitle = "WC WebContent Title 2",
 			changeType = "Added",
 			changeUser = "Test Test");
+
+		PublicationsChanges.viewChangesResultNotPresent(
+			changeCategory = "Document",
+			changeTitle = "DM Document Title Edit");
 	}
 
 	@description = "LPS-136380 - Add localization for translated titles and content."

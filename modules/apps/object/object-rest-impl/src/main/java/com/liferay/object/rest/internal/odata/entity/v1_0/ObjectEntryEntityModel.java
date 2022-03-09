@@ -42,6 +42,8 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 	public ObjectEntryEntityModel(List<ObjectField> objectFields) {
 		_entityFieldsMap = HashMapBuilder.<String, EntityField>put(
+			"creator", new StringEntityField("creator", locale -> "creator")
+		).put(
 			"creatorId",
 			new IntegerEntityField("creatorId", locale -> Field.USER_ID)
 		).put(

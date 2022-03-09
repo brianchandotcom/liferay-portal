@@ -73,6 +73,10 @@ definition {
 		}
 
 		task ("Assert the new button is displayed as an icon button") {
+			ScrollWebElementIntoView(locator1 = "ManagementBar#NEW_BUTTON_MOBILE");
+
+			Pause(locator1 = "3000");
+
 			AssertElementPresent(locator1 = "ManagementBar#NEW_BUTTON_MOBILE");
 
 			AssertTextNotEquals(
@@ -93,6 +97,10 @@ definition {
 		}
 
 		task ("Hover over the new button") {
+			ScrollWebElementIntoView(locator1 = "ManagementBar#NEW_BUTTON_MOBILE");
+
+			Pause(locator1 = "3000");
+
 			MouseOver(locator1 = "ManagementBar#NEW_BUTTON_MOBILE");
 		}
 

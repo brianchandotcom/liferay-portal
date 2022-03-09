@@ -552,7 +552,7 @@ definition {
 			ACSegments.editTextCriterion(textInput = "VIP");
 		}
 
-		task ("View the user showns on the Preview mode") {
+		task ("View the user shown on the Preview mode") {
 			ACSegments.previewSegmentMembership();
 
 			ACUtils.viewNameList(nameList = "ac ac");

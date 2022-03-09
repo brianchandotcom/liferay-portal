@@ -12,12 +12,14 @@
  * details.
  */
 
+import ClayButton from '@clayui/button';
 import {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {Context} from '@clayui/modal';
 import {ReactElement, useContext} from 'react';
 
 import i18n from '../../i18n';
+import NewProject from '../../pages/Project/NewProject';
 import {Liferay} from '../../services/liferay/liferay';
 import {Avatar} from '../Avatar';
 import DropDown from '../DropDown';
@@ -44,15 +46,30 @@ const USER_DROPDOWN = [
 ];
 
 const SidebarFooter = () => {
-	const [, dispatch] = useContext(Context);
+	const [state, dispatch] = useContext(Context);
 
-	const onOpenModal = (title: string, body: ReactElement) => {
+	const onOpenModal = (title: string, body: ReactElement, size: any) => {
 		dispatch({
 			payload: {
 				body,
-				footer: [],
+				footer: [
+					undefined,
+					undefined,
+					<ClayButton.Group key={3} spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={state.onClose}
+						>
+							Cancel
+						</ClayButton>
+
+						<ClayButton key={4} onClick={state.onClose}>
+							Save
+						</ClayButton>
+					</ClayButton.Group>,
+				],
 				header: title,
-				size: 'lg',
+				size,
 			},
 			type: 1,
 		});
@@ -61,39 +78,52 @@ const SidebarFooter = () => {
 	const MANAGE_DROPDOWN = [
 		{
 			items: [
-				{icon: 'plus', label: i18n.translate('new-project'), path: '/'},
+				{
+					icon: 'plus',
+					label: i18n.translate('new-project'),
+					onClick: () =>
+						onOpenModal(
+							i18n.translate('new-project'),
+							<NewProject onClose={() => state.onClose()} />,
+							'xl'
+						),
+					path: '/',
+				},
 				{
 					icon: 'cog',
-					label: 'Case Types',
+					label: i18n.translate('case-types'),
 					onClick: () =>
 						onOpenModal(
 							i18n.translate('case-types'),
-							<CaseTypeModal />
+							<CaseTypeModal />,
+							'full-screen'
 						),
 					path: '/',
 				},
 			],
-			title: 'System',
+			title: i18n.translate('system'),
 		},
 		{
 			items: [
 				{
 					icon: 'cog',
-					label: 'Categories',
+					label: i18n.translate('categories'),
 					onClick: () =>
 						onOpenModal(
 							i18n.translate('categories'),
-							<CategoryModal />
+							<CategoryModal />,
+							'full-screen'
 						),
 					path: '/',
 				},
 				{
 					icon: 'cog',
-					label: 'Options',
+					label: i18n.translate('options'),
 					onClick: () =>
 						onOpenModal(
 							i18n.translate('options'),
-							<OptionsModal />
+							<OptionsModal />,
+							'full-screen'
 						),
 					path: '/',
 				},
@@ -103,9 +133,24 @@ const SidebarFooter = () => {
 		{
 			items: [
 				{
+					icon: 'plus',
+					label: i18n.translate('add-case'),
+					path: '/manage/addcase',
+				},
+				{
+					icon: 'plus',
+					label: i18n.translate('add-requirement'),
+					path: '/manage/requirements',
+				},
+			],
+			title: '',
+		},
+		{
+			items: [
+				{
 					icon: 'pencil',
 					label: i18n.translate('manage-users'),
-					path: '/',
+					path: '/manage/userlist',
 				},
 				{
 					icon: 'pencil',

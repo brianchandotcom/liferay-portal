@@ -389,6 +389,9 @@
 		<finder name="ObjectLayoutId" return-type="Collection">
 			<finder-column name="objectLayoutId" />
 		</finder>
+		<finder name="ObjectRelationshipId" return-type="Collection">
+			<finder-column name="objectRelationshipId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectRelationship" remote-service="true" uuid="true">
 

@@ -102,7 +102,11 @@ const ModalAddObjectLayoutField: React.FC<IModalAddObjectLayoutFieldProps> = ({
 
 	const filteredObjectFields = useMemo(() => {
 		return objectFields.filter(({inLayout, label}) => {
-			return label[defaultLanguageId].match(query) && !inLayout;
+			return (
+				label[defaultLanguageId]
+					.toLowerCase()
+					.match(query.toLowerCase()) && !inLayout
+			);
 		});
 	}, [objectFields, query]);
 

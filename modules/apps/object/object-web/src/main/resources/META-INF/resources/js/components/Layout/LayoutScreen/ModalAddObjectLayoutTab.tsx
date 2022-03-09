@@ -132,8 +132,10 @@ const ModalAddObjectLayoutTab: React.FC<IModalAddObjectLayoutTabProps> = ({
 	const filteredRelationships = useMemo(() => {
 		return objectRelationships.filter(({inLayout, label, name}) => {
 			return (
-				(label[defaultLanguageId]?.match(query) ??
-					name?.match(query)) &&
+				(label[defaultLanguageId]
+					.toLowerCase()
+					?.match(query.toLowerCase()) ??
+					name.toLowerCase()?.match(query.toLowerCase())) &&
 				!inLayout
 			);
 		});

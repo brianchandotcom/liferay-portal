@@ -1008,8 +1008,9 @@ definition {
 	@priority = "4"
 	test ViewPublicationsChangeDetails {
 
-		// Workaround LPS-140997
+		// Workaround LPS-140997 and LPS-148148
 
+		property app.server.types = "jboss,tomcat,weblogic,wildfly";
 		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
 
 		JSONWebcontent.addWebContent(

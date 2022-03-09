@@ -85,6 +85,11 @@ public class BaseDLEditFileEntryDisplayContext
 	}
 
 	@Override
+	public String getFriendlyURLBase() throws PortalException {
+		return parentDisplayContext.getFriendlyURLBase();
+	}
+
+	@Override
 	public long getMaximumUploadRequestSize() throws PortalException {
 		return parentDisplayContext.getMaximumUploadRequestSize();
 	}

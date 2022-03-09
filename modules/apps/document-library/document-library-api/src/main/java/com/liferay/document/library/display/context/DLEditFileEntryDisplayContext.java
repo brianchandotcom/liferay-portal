@@ -28,6 +28,10 @@ public interface DLEditFileEntryDisplayContext extends DLDisplayContext {
 	public DLFilePicker getDLFilePicker(String onFilePickCallback)
 		throws PortalException;
 
+	public default String getFriendlyURLBase() throws PortalException {
+		return null;
+	}
+
 	public long getMaximumUploadRequestSize() throws PortalException;
 
 	public long getMaximumUploadSize() throws PortalException;

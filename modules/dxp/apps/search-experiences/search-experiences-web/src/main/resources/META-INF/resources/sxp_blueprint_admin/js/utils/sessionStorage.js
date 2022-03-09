@@ -18,6 +18,7 @@ const NAMESPACE = 'com.liferay.search.experiences.web_';
  */
 export const SESSION_IDS = {
 	ADD_SXP_ELEMENT_SIDEBAR: `${NAMESPACE}addSXPElementSidebar`,
+	SUCCESS_MESSAGE: `${NAMESPACE}successMessage`,
 };
 
 /**

@@ -11,8 +11,7 @@
 
 import {openToast} from 'frontend-js-web';
 
-const SUCCESS_MESSAGE_SESSION_ID =
-	'com.liferay.search.experiences.web_successMessage';
+import {SESSION_IDS} from './sessionStorage';
 
 export function openErrorToast(config) {
 	openToast({
@@ -37,12 +36,12 @@ export function openSuccessToast(config) {
  * when a new blueprint is created and redirected to the edit page.
  */
 export function openInitialSuccessToast() {
-	const successMessage = sessionStorage.getItem(SUCCESS_MESSAGE_SESSION_ID);
+	const successMessage = sessionStorage.getItem(SESSION_IDS.SUCCESS_MESSAGE);
 
 	if (successMessage) {
 		openSuccessToast({message: successMessage});
 
-		sessionStorage.removeItem(SUCCESS_MESSAGE_SESSION_ID);
+		sessionStorage.removeItem(SESSION_IDS.SUCCESS_MESSAGE);
 	}
 }
 
@@ -52,5 +51,5 @@ export function openInitialSuccessToast() {
  * @param {String} message The success message to display in the toast.
  */
 export function setInitialSuccessToast(message) {
-	return sessionStorage.setItem(SUCCESS_MESSAGE_SESSION_ID, message);
+	return sessionStorage.setItem(SESSION_IDS.SUCCESS_MESSAGE, message);
 }

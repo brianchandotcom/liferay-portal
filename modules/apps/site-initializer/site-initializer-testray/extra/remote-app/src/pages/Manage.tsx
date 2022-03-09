@@ -162,7 +162,9 @@ const UserManagement = () => {
 								<div className="col-12">
 									<ClayCheckbox
 										checked={value}
-										label="Testray Administrator"
+										label={i18n.translate(
+											'testray-administrator'
+										)}
 										onChange={() =>
 											setValue((value) => !value)
 										}

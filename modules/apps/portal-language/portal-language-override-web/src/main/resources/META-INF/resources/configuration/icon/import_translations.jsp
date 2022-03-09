@@ -27,7 +27,7 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(LanguageUtil.get(request, "import-translations"));
 %>
 
-<portlet:actionURL name="importTranslations" var="importTranslationsURL">
+<portlet:actionURL name="/portal_language_override/import_translations" var="importTranslationsURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
 </portlet:actionURL>
 

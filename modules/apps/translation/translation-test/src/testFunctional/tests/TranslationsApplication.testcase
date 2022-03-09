@@ -492,7 +492,6 @@ definition {
 
 		Translations.translateFragmentField(
 			experienceName = "Segment Email Experience",
-			ff = "true",
 			fieldName = "element-text",
 			fragmentText = "経験をテストする");
 

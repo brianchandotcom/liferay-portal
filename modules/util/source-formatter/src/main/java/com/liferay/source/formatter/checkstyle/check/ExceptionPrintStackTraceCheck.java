@@ -33,8 +33,11 @@ public class ExceptionPrintStackTraceCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		String absolutePath = getAbsolutePath();
 
-		if (absolutePath.contains("/test/") ||
-			absolutePath.contains("/testIntegration/")) {
+		if (absolutePath.contains("/modules/sdk/") ||
+			absolutePath.contains("/modules/util/") ||
+			absolutePath.contains("/test/") ||
+			absolutePath.contains("/testIntegration/") ||
+			absolutePath.endsWith("Jdk14LogFactoryImpl.java")) {
 
 			return;
 		}

@@ -84,22 +84,41 @@ public class ExpandoColumnRetriever implements DXPEntityRetriever {
 		Property tableIdProperty = PropertyFactoryUtil.forName("tableId");
 
 		ExpandoTable organizationExpandoTable =
-			_expandoTableLocalService.getTable(
+			_expandoTableLocalService.fetchTable(
 				companyId,
 				_classNameLocalService.getClassNameId(
 					Organization.class.getName()),
 				ExpandoTableConstants.DEFAULT_TABLE_NAME);
-		ExpandoTable userExpandoTable = _expandoTableLocalService.getTable(
+
+		ExpandoTable userExpandoTable = _expandoTableLocalService.fetchTable(
 			companyId,
 			_classNameLocalService.getClassNameId(User.class.getName()),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.or(
-				tableIdProperty.eq(organizationExpandoTable.getTableId()),
+		if ((organizationExpandoTable == null) && (userExpandoTable == null)) {
+			dynamicQuery.add(RestrictionsFactoryUtil.sqlRestriction("0=1"));
+		}
+		else if ((organizationExpandoTable != null) &&
+				 (userExpandoTable != null)) {
+
+			dynamicQuery.add(
+				RestrictionsFactoryUtil.or(
+					tableIdProperty.eq(organizationExpandoTable.getTableId()),
+					RestrictionsFactoryUtil.and(
+						tableIdProperty.eq(userExpandoTable.getTableId()),
+						nameProperty.in(
+							_getUserExpandoColumnNames(companyId)))));
+		}
+		else if (organizationExpandoTable != null) {
+			dynamicQuery.add(
+				tableIdProperty.eq(organizationExpandoTable.getTableId()));
+		}
+		else {
+			dynamicQuery.add(
 				RestrictionsFactoryUtil.and(
 					tableIdProperty.eq(userExpandoTable.getTableId()),
-					nameProperty.in(_getUserExpandoColumnNames(companyId)))));
+					nameProperty.in(_getUserExpandoColumnNames(companyId))));
+		}
 
 		return dynamicQuery;
 	}

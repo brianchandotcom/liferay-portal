@@ -33,7 +33,7 @@ public class CollectionPaginationHelperImpl
 	public Pagination getPagination(
 		int activePage, int count, boolean displayAllPages,
 		boolean displayAllItems, int numberOfItems, int numberOfItemsPerPage,
-		int numberOfPages, String paginationType, boolean showAllItems) {
+		int numberOfPages, String paginationType) {
 
 		int end = numberOfItems;
 		int start = 0;
@@ -69,7 +69,7 @@ public class CollectionPaginationHelperImpl
 	public int getTotalNumberOfItems(
 		int count, boolean displayAllPages, boolean displayAllItems,
 		int numberOfItems, int numberOfItemsPerPage, int numberOfPages,
-		String paginationType, boolean showAllItems) {
+		String paginationType) {
 
 		if (!isPaginationEnabled(paginationType)) {
 			if (displayAllItems) {

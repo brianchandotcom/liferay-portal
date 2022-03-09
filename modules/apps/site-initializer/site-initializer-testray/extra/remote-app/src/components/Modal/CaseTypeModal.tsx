@@ -12,8 +12,27 @@
  * details.
  */
 
+import {getTestrayCaseTypes} from '../../graphql/queries/testrayCaseType';
+import Container from '../Layout/Container';
+import ListView from '../ListView/ListView';
+
 const CaseTypeModal = () => {
-	return <div>Modal CaseTpye</div>;
+	return (
+		<Container>
+			<ListView
+				query={getTestrayCaseTypes}
+				tableProps={{
+					columns: [
+						{
+							key: 'name',
+							value: 'Name',
+						},
+					],
+				}}
+				transformData={(data) => data?.c?.testrayCaseTypes}
+			></ListView>
+		</Container>
+	);
 };
 
 export default CaseTypeModal;

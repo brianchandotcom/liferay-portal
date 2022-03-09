@@ -48,7 +48,7 @@ const Modal: React.FC<ModalProps> = ({
 
 			{subtitle && (
 				<ClayModal.SubtitleSection>
-					<ClayModal.Subtitle className="legend-text mt-2 pl-4 pr-4">
+					<ClayModal.Subtitle className="legend-text">
 						{subtitle}
 					</ClayModal.Subtitle>
 				</ClayModal.SubtitleSection>

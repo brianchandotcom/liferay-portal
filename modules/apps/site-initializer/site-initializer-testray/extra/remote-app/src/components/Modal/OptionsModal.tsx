@@ -12,8 +12,24 @@
  * details.
  */
 
+import {getTestrayFactorOptions} from '../../graphql/queries/testrayOptions';
+import ListView from '../ListView/ListView';
+
 const OptionsModal = () => {
-	return <div>Modal Option</div>;
+	return (
+		<ListView
+			query={getTestrayFactorOptions}
+			tableProps={{
+				columns: [
+					{
+						key: 'name',
+						value: 'Name',
+					},
+				],
+			}}
+			transformData={(data) => data?.c?.testrayFactorOptions}
+		></ListView>
+	);
 };
 
 export default OptionsModal;

@@ -12,8 +12,28 @@
  * details.
  */
 
+import {getTestrayFactorCategories} from '../../graphql/queries/testrayFactorCategory';
+import i18n from '../../i18n';
+import Container from '../Layout/Container';
+import ListView from '../ListView/ListView';
+
 const CategoryModal = () => {
-	return <div>Modal Category</div>;
+	return (
+		<Container>
+			<ListView
+				query={getTestrayFactorCategories}
+				tableProps={{
+					columns: [
+						{
+							key: 'name',
+							value: i18n.translate('name'),
+						},
+					],
+				}}
+				transformData={(data) => data?.c?.testrayFactorCategories}
+			></ListView>
+		</Container>
+	);
 };
 
 export default CategoryModal;

@@ -832,6 +832,7 @@
 					"type": "string"
 				},
 				"showAllItems": {
+					"deprecationMessage": "Deprecated as of Cavanaugh (7.4.x), replaced by displayAllPages",
 					"title": "The showAllItems Schema",
 					"type": "boolean"
 				},

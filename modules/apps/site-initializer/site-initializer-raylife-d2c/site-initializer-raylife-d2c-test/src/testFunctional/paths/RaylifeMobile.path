@@ -65,6 +65,11 @@
 	<td>//span[contains(., 'SAVE')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PAYMENT_METHOD_MOBILE</td>
+	<td>//span[contains(text(),'Select Payment Method')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -4234,6 +4234,56 @@ public class DLAppServiceHttp {
 				String description, String changeLog,
 				com.liferay.document.library.kernel.model.
 					DLVersionNumberIncrease dlVersionNumberIncrease,
+				byte[] bytes,
+				com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				DLAppServiceUtil.class, "updateFileEntry",
+				_updateFileEntryParameterTypes99);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, fileEntryId, sourceFileName, mimeType, title,
+				description, changeLog, dlVersionNumberIncrease, bytes,
+				serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.repository.model.FileEntry)
+				returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.portal.kernel.repository.model.FileEntry
+			updateFileEntry(
+				HttpPrincipal httpPrincipal, long fileEntryId,
+				String sourceFileName, String mimeType, String title,
+				String description, String changeLog,
+				com.liferay.document.library.kernel.model.
+					DLVersionNumberIncrease dlVersionNumberIncrease,
 				java.io.File file, java.util.Date expirationDate,
 				java.util.Date reviewDate,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -4242,7 +4292,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFileEntry",
-				_updateFileEntryParameterTypes99);
+				_updateFileEntryParameterTypes100);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, sourceFileName, mimeType, title,
@@ -4292,7 +4342,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFileEntry",
-				_updateFileEntryParameterTypes100);
+				_updateFileEntryParameterTypes101);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, sourceFileName, mimeType, title,
@@ -4343,7 +4393,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFileEntry",
-				_updateFileEntryParameterTypes101);
+				_updateFileEntryParameterTypes102);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, sourceFileName, mimeType, title,
@@ -4393,7 +4443,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFileEntry",
-				_updateFileEntryParameterTypes102);
+				_updateFileEntryParameterTypes103);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, sourceFileName, mimeType, title,
@@ -4444,7 +4494,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFileEntryAndCheckIn",
-				_updateFileEntryAndCheckInParameterTypes103);
+				_updateFileEntryAndCheckInParameterTypes104);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, sourceFileName, mimeType, title,
@@ -4494,7 +4544,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFileEntryAndCheckIn",
-				_updateFileEntryAndCheckInParameterTypes104);
+				_updateFileEntryAndCheckInParameterTypes105);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, sourceFileName, mimeType, title,
@@ -4545,7 +4595,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFileEntryAndCheckIn",
-				_updateFileEntryAndCheckInParameterTypes105);
+				_updateFileEntryAndCheckInParameterTypes106);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, sourceFileName, mimeType, title,
@@ -4595,7 +4645,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFileEntryAndCheckIn",
-				_updateFileEntryAndCheckInParameterTypes106);
+				_updateFileEntryAndCheckInParameterTypes107);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileEntryId, sourceFileName, mimeType, title,
@@ -4641,7 +4691,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFileShortcut",
-				_updateFileShortcutParameterTypes107);
+				_updateFileShortcutParameterTypes108);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, fileShortcutId, folderId, toFileEntryId,
@@ -4686,7 +4736,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "updateFolder",
-				_updateFolderParameterTypes108);
+				_updateFolderParameterTypes109);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, folderId, name, description, serviceContext);
@@ -4727,7 +4777,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "verifyFileEntryCheckOut",
-				_verifyFileEntryCheckOutParameterTypes109);
+				_verifyFileEntryCheckOutParameterTypes110);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, fileEntryId, lockUuid);
@@ -4768,7 +4818,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "verifyFileEntryLock",
-				_verifyFileEntryLockParameterTypes110);
+				_verifyFileEntryLockParameterTypes111);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, fileEntryId, lockUuid);
@@ -4809,7 +4859,7 @@ public class DLAppServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				DLAppServiceUtil.class, "verifyInheritableLock",
-				_verifyInheritableLockParameterTypes111);
+				_verifyInheritableLockParameterTypes112);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, repositoryId, folderId, lockUuid);
@@ -5193,8 +5243,7 @@ public class DLAppServiceHttp {
 			String.class,
 			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
 				class,
-			java.io.File.class, java.util.Date.class, java.util.Date.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
+			byte[].class, com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateFileEntryParameterTypes100 =
 		new Class[] {
@@ -5202,7 +5251,7 @@ public class DLAppServiceHttp {
 			String.class,
 			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
 				class,
-			java.io.File.class,
+			java.io.File.class, java.util.Date.class, java.util.Date.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateFileEntryParameterTypes101 =
@@ -5211,8 +5260,7 @@ public class DLAppServiceHttp {
 			String.class,
 			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
 				class,
-			java.io.InputStream.class, long.class, java.util.Date.class,
-			java.util.Date.class,
+			java.io.File.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateFileEntryParameterTypes102 =
@@ -5221,16 +5269,17 @@ public class DLAppServiceHttp {
 			String.class,
 			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
 				class,
-			java.io.InputStream.class, long.class,
+			java.io.InputStream.class, long.class, java.util.Date.class,
+			java.util.Date.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[]
-		_updateFileEntryAndCheckInParameterTypes103 = new Class[] {
+	private static final Class<?>[] _updateFileEntryParameterTypes103 =
+		new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
 			String.class,
 			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
 				class,
-			java.io.File.class, java.util.Date.class, java.util.Date.class,
+			java.io.InputStream.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
@@ -5239,11 +5288,20 @@ public class DLAppServiceHttp {
 			String.class,
 			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
 				class,
-			java.io.File.class,
+			java.io.File.class, java.util.Date.class, java.util.Date.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
 		_updateFileEntryAndCheckInParameterTypes105 = new Class[] {
+			long.class, String.class, String.class, String.class, String.class,
+			String.class,
+			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
+				class,
+			java.io.File.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[]
+		_updateFileEntryAndCheckInParameterTypes106 = new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
 			String.class,
 			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
@@ -5253,7 +5311,7 @@ public class DLAppServiceHttp {
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
-		_updateFileEntryAndCheckInParameterTypes106 = new Class[] {
+		_updateFileEntryAndCheckInParameterTypes107 = new Class[] {
 			long.class, String.class, String.class, String.class, String.class,
 			String.class,
 			com.liferay.document.library.kernel.model.DLVersionNumberIncrease.
@@ -5261,21 +5319,21 @@ public class DLAppServiceHttp {
 			java.io.InputStream.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateFileShortcutParameterTypes107 =
+	private static final Class<?>[] _updateFileShortcutParameterTypes108 =
 		new Class[] {
 			long.class, long.class, long.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateFolderParameterTypes108 =
+	private static final Class<?>[] _updateFolderParameterTypes109 =
 		new Class[] {
 			long.class, String.class, String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _verifyFileEntryCheckOutParameterTypes109 =
+	private static final Class<?>[] _verifyFileEntryCheckOutParameterTypes110 =
 		new Class[] {long.class, long.class, String.class};
-	private static final Class<?>[] _verifyFileEntryLockParameterTypes110 =
+	private static final Class<?>[] _verifyFileEntryLockParameterTypes111 =
 		new Class[] {long.class, long.class, String.class};
-	private static final Class<?>[] _verifyInheritableLockParameterTypes111 =
+	private static final Class<?>[] _verifyInheritableLockParameterTypes112 =
 		new Class[] {long.class, long.class, String.class};
 
 }

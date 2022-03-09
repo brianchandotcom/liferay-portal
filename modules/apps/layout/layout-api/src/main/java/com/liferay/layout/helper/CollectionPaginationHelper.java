@@ -35,7 +35,7 @@ public interface CollectionPaginationHelper {
 	public int getTotalNumberOfItems(
 		int count, boolean displayAllPages, boolean displayAllItems,
 		int numberOfItems, int numberOfItemsPerPage, int numberOfPages,
-		String paginationType);
+		String paginationType, boolean showAllItems);
 
 	public boolean isPaginationEnabled(String paginationType);
 

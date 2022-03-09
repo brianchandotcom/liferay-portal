@@ -2,11 +2,6 @@
 
 <jboss-deployment-structure xmlns="urn:jboss:deployment-structure:1.1">
 	<deployment>
-		<exclusions>
-			<module name="org.apache.log4j" />
-			<module name="org.hibernate" />
-			<module name="org.slf4j" />
-		</exclusions>
 		<dependencies>
 			<module name="javax.mail.api" />
 			<module name="org.apache.xerces" />

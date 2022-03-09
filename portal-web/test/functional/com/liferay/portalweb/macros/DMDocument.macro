@@ -1062,6 +1062,61 @@ definition {
 			value1 = "You now have a lock on this document. No one else can edit this document until you unlock it. This lock will automatically expire in 1 day.");
 	}
 
+	macro configureCacheControl {
+		DMNavigator.openToConfigInSystemSettings(portlet = "Cache Control");
+
+		if (isSet(cacheControl)) {
+			AssertTextEquals(
+				key_fieldName = "cacheControl",
+				locator1 = "FormFields#HELP_TEXT",
+				value1 = "Set the cache control policy for documents with view permissions for guests.");
+
+			Click(locator1 = "Dropdown#TRIGGER");
+
+			DropdownMenuItem.click(menuItem = "${cacheControl}");
+
+			AssertTextEquals(
+				locator1 = "Dropdown#SELECTED_VALUE",
+				value1 = "${cacheControl}");
+		}
+
+		if (isSet(maxAge)) {
+			AssertTextEquals(
+				key_fieldName = "maxAge",
+				locator1 = "FormFields#HELP_TEXT",
+				value1 = "Set the number of seconds after a response is generated in which a response will be considered fresh.");
+
+			Type(
+				key_text = "Max Age",
+				locator1 = "TextInput#ANY",
+				value1 = "${maxAge}");
+		}
+
+		if (isSet(uncacheableMimeTypes)) {
+			AssertTextEquals(
+				key_fieldName = "notCacheableMimeTypes",
+				locator1 = "FormFields#HELP_TEXT",
+				value1 = "Set a list of mime types that will be uncacheable.");
+
+			var count = "1";
+
+			for (var uncacheableMimeType : list "${uncacheableMimeTypes}") {
+				if ("${count}" != "1") {
+					Click(locator1 = "Icon#PLUS_LAST");
+				}
+
+				Type(
+					key_position = "${count}",
+					locator1 = "DDMField#CUSTOM_TEXT_BOX",
+					value1 = "${uncacheableMimeType}");
+
+				var count = ${count} + 1;
+			}
+		}
+
+		SystemSettings.saveConfiguration();
+	}
+
 	macro configureDocumentEmailTemplate {
 		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "${siteURLKey}");
 

@@ -1,0 +1,30 @@
+.lfr-objects__attachment {
+	display: flex;
+	gap: 1rem;
+
+	&-download {
+		display: none;
+	}
+
+	&-button {
+		background-color: unset;
+	}
+
+	&-loading {
+		margin: 0;
+	}
+
+	&-title {
+		align-items: center;
+		display: flex;
+
+		&:focus-within,
+		&:hover {
+			.lfr-objects__attachment-download {
+				color: black;
+				display: unset;
+				margin-left: 1rem;
+			}
+		}
+	}
+}

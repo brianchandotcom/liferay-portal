@@ -2465,6 +2465,27 @@ definition {
 		}
 	}
 
+	macro viewCacheControlConfigurationInConsole {
+		if (isSet(uncacheableMimeType)) {
+			if (contains("${responseHeader}", "Cache-Control: private, no-cache, no-store, must-revalidate")) {
+				echo("This file can not be cached");
+			}
+			else {
+				fail("The cache control setting is incorrect");
+			}
+		}
+		else {
+			var cacheControlAttribute = "Cache-Control: ${cacheControl}, max-age: ${maxAge}";
+
+			if (contains("${responseHeader}", "${cacheControlAttribute}")) {
+				echo("The cache control setting is correct");
+			}
+			else {
+				fail("The cache control setting is incorrect");
+			}
+		}
+	}
+
 	macro viewCannotAddRepository {
 		Portlet.clickPortletPlusIconPG(portletName = "Documents and Media");
 

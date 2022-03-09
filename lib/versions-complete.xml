@@ -4340,6 +4340,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.tika.jar!netcdf.jar</file-name>
+				<version>4.3.23</version>
+				<project-name>NetCDF-Java Library</project-name>
+				<project-url>http://www.unidata.ucar.edu/software/netcdf-java/documentation.htm</project-url>
+				<licenses>
+					<license>
+						<license-name>(MIT-style) netCDF C library license</license-name>
+						<license-url>http://www.unidata.ucar.edu/software/netcdf/copyright.html</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.tika.jar!org.gagravarr.tika.jar</file-name>
 				<version>0.8.LIFERAY-PATCHED-1</version>
 				<project-name>org.gagravarr.tika</project-name>

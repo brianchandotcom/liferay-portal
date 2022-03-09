@@ -68,7 +68,7 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 										<div class="autofit-section">
 											<span class="alert-indicator">
 												<svg class="lexicon-icon lexicon-icon-info-circle" focusable="false" role="presentation">
-												<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#info-circle" />
+													<use xlink:href="<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg#info-circle" />
 												</svg>
 											</span>
 

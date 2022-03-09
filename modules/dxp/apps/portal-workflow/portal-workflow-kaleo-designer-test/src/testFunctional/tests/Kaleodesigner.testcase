@@ -150,7 +150,6 @@ definition {
 
 	@priority = "5"
 	test AddJoinXORWorkflowDefinitionViaViewTab {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#AddJoinXORWorkflowDefinitionViaViewTab";
 
 		ApplicationsMenu.gotoPortlet(
@@ -235,7 +234,7 @@ definition {
 
 	@priority = "5"
 	test AddNewWorkflowDefinitionViaViewTab {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#AddNewWorkflowDefinitionViaViewTab";
 
 		ApplicationsMenu.gotoPortlet(
@@ -593,7 +592,7 @@ definition {
 
 	@priority = "5"
 	test DeleteConnectors {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#DeleteConnectors";
 
 		ApplicationsMenu.gotoPortlet(
@@ -794,7 +793,7 @@ definition {
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithConnectorPointingToStartNodeAndViewErrorMessage {
-		property portal.acceptance = "quarantine";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithConnectorPointingToStartNodeAndViewErrorMessage";
 
 		ApplicationsMenu.gotoPortlet(
@@ -905,7 +904,6 @@ definition {
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithInvalidForkNodeAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidForkNodeAndViewErrorMessage";
 
 		ApplicationsMenu.gotoPortlet(
@@ -950,7 +948,6 @@ definition {
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithInvalidJoinNodeAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidJoinNodeAndViewErrorMessage";
 
 		ApplicationsMenu.gotoPortlet(
@@ -995,7 +992,6 @@ definition {
 
 	@priority = "3"
 	test PublishWorkflowDefinitionWithInvalidJoinXORNodeAndViewErrorMessage {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#PublishWorkflowDefinitionWithInvalidJoinXORNodeAndViewErrorMessage";
 
 		ApplicationsMenu.gotoPortlet(
@@ -1133,7 +1129,6 @@ definition {
 
 	@priority = "3"
 	test UndoDraftDefinition {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "Kaleodesigner#UndoDraftDefinition";
 
 		ApplicationsMenu.gotoPortlet(

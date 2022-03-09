@@ -14,6 +14,8 @@
 
 import {gql} from '@apollo/client';
 
+import {liferayUserAccountFragment} from '../fragments';
+
 export type User = {
 	additionalName: string;
 	alternateName: string;
@@ -24,40 +26,32 @@ export type User = {
 	image: string;
 };
 
-export const getLiferayUsers = gql`
-	query getLiferayUsers(
+export const getLiferayUserAccounts = gql`
+	${liferayUserAccountFragment}
+
+	query getLiferayUserAccount(
 		$filter: String
 		$page: Int = 1
 		$pageSize: Int = 20
 	) {
 		userAccounts(filter: $filter, page: $page, pageSize: $pageSize) {
+			items {
+				...LiferayUserAccountFragment
+			}
 			lastPage
 			page
 			pageSize
 			totalCount
-			items {
-				id
-				additionalName
-				alternateName
-				emailAddress
-				image
-				familyName
-				givenName
-			}
 		}
 	}
 `;
 
-export const getLiferayUser = gql`
-	query getLiferayuser($userAccountId: Long) {
+export const getLiferayUserAccount = gql`
+	${liferayUserAccountFragment}
+
+	query getLiferayUserAccount($userAccountId: Long) {
 		userAccount(userAccountId: $userAccountId) {
-			id
-			additionalName
-			alternateName
-			emailAddress
-			image
-			familyName
-			givenName
+			...LiferayUserAccountFragment
 		}
 	}
 `;

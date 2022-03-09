@@ -14,26 +14,15 @@
 
 import {gql} from '@apollo/client';
 
-export type CreateTestrayProject = {
-	description: string;
-	name: string;
-	testrayProjectId: number;
-};
+import {testrayProjectFragment} from '../fragments';
 
 export const CreateTestrayProject = gql`
-	mutation CreateTestrayProject($description: String!, $name: String!) {
+	${testrayProjectFragment}
+
+	mutation CreateTestrayProject($TestrayProject: InputC_TestrayProject!) {
 		c {
-			createTestrayProject(
-				TestrayProject: {description: $description, name: $name}
-			) {
-				c_testrayProjectId
-				dateCreated
-				dateModified
-				description
-				externalReferenceCode
-				name
-				status
-				testrayProjectId
+			createTestrayProject(TestrayProject: $TestrayProject) {
+				...TestrayProjectFragment
 			}
 		}
 	}

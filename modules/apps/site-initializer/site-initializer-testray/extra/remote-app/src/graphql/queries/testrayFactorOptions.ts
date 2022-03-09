@@ -14,64 +14,39 @@
 
 import {gql} from '@apollo/client';
 
+import {testrayFactorOptionsFragment} from '../fragments';
+
 export type TestrayFactorOptions = {
-	c_testrayFactorOptionId: any;
 	dateCreated: string;
 	dateModified: string;
-	externalReferenceCode: string;
 	name: string;
-	status: string;
-	testrayFactorCategoryId: number;
-	testrayFactorOptionId: number;
-};
-
-export type TestrayFactoryOptionsQuery = {
-	c: {
-		testrayFactorOptions: TestrayFactorOptions;
-	};
-};
-
-export type TestrayFactoryoOtionQuery = {
-	c: {
-		getTestrayFactoroption: TestrayFactorOptions;
-	};
 };
 
 export const getTestrayFactorOptions = gql`
+	${testrayFactorOptionsFragment}
+
 	query getTestrayFactorOptions {
 		c {
 			testrayFactorOptions {
+				items {
+					...TestrayFactorOptionsFragment
+				}
 				lastPage
 				page
 				pageSize
 				totalCount
-				items {
-					c_testrayFactorOptionId
-					dateCreated
-					dateModified
-					externalReferenceCode
-					name
-					status
-					testrayFactorCategoryId
-					testrayFactorOptionId
-				}
 			}
 		}
 	}
 `;
 
 export const getTestrayFactorOption = gql`
+	${testrayFactorOptionsFragment}
+
 	query getTestrayFactoroption($testrayFactorOptionId: Long) {
 		c {
 			testrayFactorOption(testrayFactorOption: $testrayFactorOptionId) {
-				c_testrayFactorOptionId
-				dateCreated
-				dateModified
-				externalReferenceCode
-				name
-				status
-				testrayFactorCategoryId
-				testrayFactorOptionId
+				...TestrayFactorOptionsFragment
 			}
 		}
 	}

@@ -14,6 +14,8 @@
 
 import {gql} from '@apollo/client';
 
+import {testrayFactorCategoryFragment} from '../fragments/testrayFactorCategory';
+
 export type TestrayFactorCategory = {
 	dateCreated: string;
 	dateModified: string;
@@ -23,46 +25,41 @@ export type TestrayFactorCategory = {
 	testrayFactorCategoryId: number;
 };
 
-export type TestrayFactorCategoryQuery = {
-	c: {
-		testrayFactorCategory: TestrayFactorCategory;
-	};
-};
-
 export const getTestrayFactorCategory = gql`
+	${testrayFactorCategoryFragment}
+
 	query getTestrayFactorCategory($testrayFactorCategoryId: Long) {
 		c {
 			testrayFactorCategory(
 				testrayFactorCategoryId: $testrayFactorCategoryId
 			) {
-				dateCreated
-				dateModified
-				externalReferenceCode
-				name
-				status
-				testrayFactorCategoryId
+				...TestrayFactorCategoryFragment
 			}
 		}
 	}
 `;
 
 export const getTestrayFactorCategories = gql`
-	query getTestrayFactorCategories {
+	${testrayFactorCategoryFragment}
+
+	query getTestrayFactorCategories(
+		$filter: String
+		$page: Int = 1
+		$pageSize: Int = 20
+	) {
 		c {
-			testrayFactorCategories {
+			testrayFactorCategories(
+				filter: $filter
+				page: $page
+				pageSize: $pageSize
+			) {
+				items {
+					...TestrayFactorCategoryFragment
+				}
 				lastPage
 				page
 				pageSize
 				totalCount
-				items {
-					c_testrayFactorCategoryId
-					dateCreated
-					dateModified
-					externalReferenceCode
-					name
-					status
-					testrayFactorCategoryId
-				}
 			}
 		}
 	}

@@ -81,16 +81,28 @@ public class CollectionLayoutStructureItemImporter
 
 			collectionStyledLayoutStructureItem.setDisplayAllItems(
 				(Boolean)definitionMap.get("displayAllItems"));
+
+			Boolean displayAllPages = (Boolean)definitionMap.get(
+				"displayAllPages");
+			Boolean showAllItems = (Boolean)definitionMap.get("showAllItems");
+
+			if (displayAllPages == null) {
+				displayAllPages = showAllItems;
+			}
+
 			collectionStyledLayoutStructureItem.setDisplayAllPages(
-				(Boolean)definitionMap.get("displayAllPages"));
+				displayAllPages);
+
 			collectionStyledLayoutStructureItem.setListItemStyle(
 				(String)definitionMap.get("listItemStyle"));
 			collectionStyledLayoutStructureItem.setListStyle(
 				(String)definitionMap.get("listStyle"));
 			collectionStyledLayoutStructureItem.setNumberOfColumns(
 				(Integer)definitionMap.get("numberOfColumns"));
-			collectionStyledLayoutStructureItem.setNumberOfItems(
-				(Integer)definitionMap.get("numberOfItems"));
+
+			Integer numberOfItems = (Integer)definitionMap.get("numberOfItems");
+
+			collectionStyledLayoutStructureItem.setNumberOfItems(numberOfItems);
 
 			Integer numberOfItemsPerPage = (Integer)definitionMap.get(
 				"numberOfItemsPerPage");
@@ -102,15 +114,25 @@ public class CollectionLayoutStructureItemImporter
 
 			Integer numberOfPages = (Integer)definitionMap.get("numberOfPages");
 
-			if (numberOfPages != null) {
+			if (numberOfPages == null) {
+				if ((numberOfItemsPerPage != null) &&
+					(numberOfItemsPerPage > 0)) {
+
+					collectionStyledLayoutStructureItem.setNumberOfPages(
+						(int)Math.ceil(
+							numberOfItems / (double)numberOfItemsPerPage));
+				}
+			}
+			else {
 				collectionStyledLayoutStructureItem.setNumberOfPages(
 					numberOfPages);
 			}
 
 			collectionStyledLayoutStructureItem.setPaginationType(
 				_toPaginationType((String)definitionMap.get("paginationType")));
-			collectionStyledLayoutStructureItem.setShowAllItems(
-				(Boolean)definitionMap.get("showAllItems"));
+
+			collectionStyledLayoutStructureItem.setShowAllItems(showAllItems);
+
 			collectionStyledLayoutStructureItem.setTemplateKey(
 				(String)definitionMap.get("templateKey"));
 

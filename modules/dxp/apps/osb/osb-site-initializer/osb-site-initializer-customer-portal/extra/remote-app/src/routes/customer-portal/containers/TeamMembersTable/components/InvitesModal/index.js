@@ -13,6 +13,7 @@ import ClayModal from '@clayui/modal';
 import InviteTeamMembersForm from '../../../../../../common/containers/setup-forms/InviteTeamMembersForm';
 
 const InvitesModal = ({
+	availableAdministratorAssets,
 	mutateUserData,
 	observer,
 	onClose,
@@ -22,6 +23,7 @@ const InvitesModal = ({
 	return (
 		<ClayModal center observer={observer}>
 			<InviteTeamMembersForm
+				availableAdministratorAssets={availableAdministratorAssets}
 				handlePage={onClose}
 				leftButton="Cancel"
 				mutateUserData={mutateUserData}

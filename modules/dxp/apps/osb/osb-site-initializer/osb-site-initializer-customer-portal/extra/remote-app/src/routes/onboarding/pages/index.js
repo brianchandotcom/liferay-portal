@@ -26,6 +26,7 @@ const Pages = () => {
 			sessionId,
 			step,
 			subscriptionGroups,
+			totalAdministratorAccounts,
 		},
 		dispatch,
 	] = useOnboarding();
@@ -38,18 +39,26 @@ const Pages = () => {
 				payload: ONBOARDING_STEP_TYPES.dxpCloud,
 				type: actionTypes.CHANGE_STEP,
 			});
-		}
-		else {
+		} else {
 			window.location.href = PAGE_ROUTER_TYPES.project(
 				project.accountKey
 			);
 		}
 	};
 
+	const getAvailableAdministratorAssets = () => {
+		if (project) {
+			return project.maxRequestors - totalAdministratorAccounts;
+		}
+	};
+
+	const availableAdministratorAssets = getAvailableAdministratorAssets();
+
 	const StepsLayout = {
 		[ONBOARDING_STEP_TYPES.invites]: {
 			Component: (
 				<InviteTeamMembersForm
+					availableAdministratorAssets={availableAdministratorAssets}
 					handlePage={invitesPageHandle}
 					leftButton="Skip for now"
 					project={project}
@@ -66,8 +75,7 @@ const Pages = () => {
 								payload: ONBOARDING_STEP_TYPES.successDxpCloud,
 								type: actionTypes.CHANGE_STEP,
 							});
-						}
-						else {
+						} else {
 							window.location.href = PAGE_ROUTER_TYPES.project(
 								project.accountKey
 							);

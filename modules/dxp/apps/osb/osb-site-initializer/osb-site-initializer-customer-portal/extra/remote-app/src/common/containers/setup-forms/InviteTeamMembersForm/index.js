@@ -36,12 +36,8 @@ const SLA = {
 	platinum: 'Platinum',
 };
 
-const ROLE_NAME_KEY = {
-	[ROLE_TYPES.admin.key]: ROLE_TYPES.admin.name,
-	[ROLE_TYPES.member.key]: ROLE_TYPES.member.name,
-};
-
 const InviteTeamMembersPage = ({
+	availableAdministratorAssets = 0,
 	errors,
 	handlePage,
 	leftButton,
@@ -75,20 +71,14 @@ const InviteTeamMembersPage = ({
 	);
 	const [showEmptyEmailError, setshowEmptyEmailError] = useState(false);
 
-	const maxRequestors = project.maxRequestors < 1 ? 1 : project.maxRequestors;
 	const projectHasSLAGoldPlatinum =
 		project?.slaCurrent?.includes(SLA.gold) ||
 		project?.slaCurrent?.includes(SLA.platinum);
 
-	const getRaysourceRoleName = (roleKey) => {
+	const getCurrentRoleType = (roleKey) => {
 		const roleValues = Object.values(ROLE_TYPES);
-		const currentRole = roleValues.find(
-			(roleType) => roleType.key === roleKey
-		);
 
-		if (currentRole) {
-			return currentRole.raysourceName;
-		}
+		return roleValues.find((roleType) => roleType.key === roleKey);
 	};
 
 	useEffect(() => {
@@ -107,9 +97,9 @@ const InviteTeamMembersPage = ({
 					(rolesAccumulator, role) => {
 						let isValidRole = true;
 
-						const raysourceName = getRaysourceRoleName(role.name);
+						const roleType = getCurrentRoleType(role.name);
 
-						if (raysourceName) {
+						if (roleType?.raysourceName) {
 							if (!projectHasSLAGoldPlatinum) {
 								isValidRole =
 									role.name !== ROLE_TYPES.requestor.key;
@@ -123,13 +113,11 @@ const InviteTeamMembersPage = ({
 							}
 
 							if (isValidRole) {
-								const roleName =
-									ROLE_NAME_KEY[role.name] || role.name;
-
 								rolesAccumulator.push({
 									...role,
-									name: roleName,
-									raysourceName,
+									key: roleType?.key,
+									name: roleType?.name,
+									raysourceName: roleType?.raysourceName,
 								});
 							}
 						}
@@ -147,7 +135,7 @@ const InviteTeamMembersPage = ({
 
 				setFieldValue(
 					'invites[0].role',
-					maxRequestors < 2
+					project.maxRequestors < 1
 						? accountMember
 						: roles?.find(
 								({name}) =>
@@ -172,7 +160,7 @@ const InviteTeamMembersPage = ({
 		};
 
 		getRoles();
-	}, [maxRequestors, project, projectHasSLAGoldPlatinum, setFieldValue]);
+	}, [project, projectHasSLAGoldPlatinum, setFieldValue]);
 
 	useEffect(() => {
 		if (values && accountRoles?.length) {
@@ -187,10 +175,9 @@ const InviteTeamMembersPage = ({
 
 					return totalInvites;
 				},
-				1
+				0
 			);
-
-			const remainingAdmins = maxRequestors - totalAdmins;
+			const remainingAdmins = availableAdministratorAssets - totalAdmins;
 
 			if (remainingAdmins < 1) {
 				setAccountRolesOptions((previousAccountRoles) =>
@@ -202,10 +189,13 @@ const InviteTeamMembersPage = ({
 							previousAccountRole.label === ROLE_TYPES.admin.name,
 					}))
 				);
+				setAvailableAdminsRoles(0);
+
+				return;
 			}
 			setAvailableAdminsRoles(remainingAdmins);
 		}
-	}, [values, project, maxRequestors, accountRoles]);
+	}, [values, project, accountRoles, availableAdministratorAssets]);
 
 	useEffect(() => {
 		const filledEmails =
@@ -220,8 +210,7 @@ const InviteTeamMembersPage = ({
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 			setshowEmptyEmailError(false);
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -238,7 +227,7 @@ const InviteTeamMembersPage = ({
 						variables: {
 							TeamMembersInvitation: {
 								email,
-								role: role.name,
+								role: role.key,
 							},
 							scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 						},
@@ -276,8 +265,7 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({
@@ -394,9 +382,9 @@ const InviteTeamMembersPage = ({
 
 											if (
 												removedItem.role.name ===
-													'Administrator' ||
+													ROLE_TYPES.admin.name ||
 												removedItem.role.name ===
-													'Requestor'
+													ROLE_TYPES.requestor.name
 											) {
 												setAvailableAdminsRoles(
 													(previousAdmins) =>
@@ -443,12 +431,14 @@ const InviteTeamMembersPage = ({
 										projectHasSLAGoldPlatinum
 											? ROLE_TYPES.requestor.name
 											: ROLE_TYPES.admin.name
-									}	roles available: ${availableAdminsRoles} of ${maxRequestors}`}
+									}	roles available: ${availableAdminsRoles} of ${
+										project.maxRequestors
+									}`}
 								</h5>
 
 								<p className="mb-0 text-neutral-7 text-paragraph-sm">
-									{`Only ${maxRequestors} member${
-										maxRequestors > 1 ? 's' : ''
+									{`Only ${project.maxRequestors} member${
+										project.maxRequestors > 1 ? 's' : ''
 									} per project (including yourself) have
 								 role permissions (Admins & Requestors) to open Support
 								 tickets. `}

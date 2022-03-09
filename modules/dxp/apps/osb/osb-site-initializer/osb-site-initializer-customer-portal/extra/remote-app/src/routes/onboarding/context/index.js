@@ -16,6 +16,7 @@ import {Liferay} from '../../../common/services/liferay';
 import {
 	addAccountFlag,
 	getAccountSubscriptionGroups,
+	getAccountUserAccountsByExternalReferenceCode,
 	getDXPCloudEnvironment,
 	getKoroneikiAccounts,
 	getUserAccount,
@@ -30,6 +31,8 @@ import reducer, {actionTypes} from './reducer';
 
 const AppContext = createContext();
 
+const MAX_PAGE_SIZE = 9999;
+
 const AppContextProvider = ({assetsPath, children}) => {
 	const {oktaSessionURL} = useApplicationProvider();
 	const [state, dispatch] = useReducer(reducer, {
@@ -40,6 +43,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 		sessionId: '',
 		step: ONBOARDING_STEP_TYPES.welcome,
 		subscriptionGroups: undefined,
+		totalAdministratorAccounts: 0,
 		userAccount: undefined,
 	});
 
@@ -77,6 +81,49 @@ const AppContextProvider = ({assetsPath, children}) => {
 			}
 		};
 
+		const getTotalAdministratorAccounts = async (
+			projectExternalReferenceCode
+		) => {
+			const {data} = await client.query({
+				query: getAccountUserAccountsByExternalReferenceCode,
+				variables: {
+					externalReferenceCode: projectExternalReferenceCode,
+					pageSize: MAX_PAGE_SIZE,
+				},
+			});
+
+			if (data) {
+				const totalAdministratorAccounts = data.accountUserAccountsByExternalReferenceCode?.items?.reduce(
+					(totalAdministrators, userAccount) => {
+						const currentAccountBrief = userAccount.accountBriefs?.find(
+							(accountBrief) =>
+								accountBrief.externalReferenceCode ===
+								projectExternalReferenceCode
+						);
+						if (currentAccountBrief) {
+							const isAdmin = currentAccountBrief?.roleBriefs?.some(
+								(role) => role.name === ROLE_TYPES.admin.key
+							);
+							const isRequester = currentAccountBrief?.roleBriefs?.some(
+								(role) => role.name === ROLE_TYPES.requestor.key
+							);
+
+							if (isAdmin || isRequester) {
+								return ++totalAdministrators;
+							}
+						}
+
+						return totalAdministrators;
+					},
+					0
+				);
+
+				dispatch({
+					payload: totalAdministratorAccounts,
+					type: actionTypes.UPDATE_CURRENT_TOTAL_ADMINISTRATORS,
+				});
+			}
+		};
 		const getProject = async (externalReferenceCode, accountBrief) => {
 			const {data: projects} = await client.query({
 				query: getKoroneikiAccounts,
@@ -172,6 +219,7 @@ const AppContextProvider = ({assetsPath, children}) => {
 					getSubscriptionGroups(projectExternalReferenceCode);
 					getDXPCloudActivationStatus(projectExternalReferenceCode);
 					getSessionId();
+					getTotalAdministratorAccounts(projectExternalReferenceCode);
 
 					client.mutate({
 						mutation: addAccountFlag,

@@ -78,7 +78,7 @@ const TeamMembersTableHeader = ({
 			)}
 		>
 			<div className="align-items-center d-flex ml-auto">
-				{!!project?.maxRequestors && (
+				{project?.maxRequestors > 0 && (
 					<>
 						<PopoverIconButton alignPosition="top" />
 
@@ -115,6 +115,7 @@ const TeamMembersTableHeader = ({
 				<InvitesModal
 					mutateUserData={handleOnUserInvite}
 					{...modalProps}
+					availableAdministratorAssets={administratorsAvailable}
 					project={project}
 					sessionId={sessionId}
 				/>

@@ -121,6 +121,7 @@ definition {
 
 		task ("View the site page") {
 			ACUtils.navigateToSitePage(
+				documentTitleList = "1,2,3",
 				pageName = "AC Page",
 				siteName = "Site Name");
 		}

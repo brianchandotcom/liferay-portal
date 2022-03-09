@@ -30,9 +30,13 @@ import com.liferay.dynamic.data.mapping.kernel.DDMFormField;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -84,6 +88,32 @@ public class DefaultDLEditFileEntryDisplayContext
 	@Override
 	public DLFilePicker getDLFilePicker(String onFilePickCallback) {
 		return null;
+	}
+
+	@Override
+	public String getFriendlyURLBase() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append("/documents");
+
+		String urlSeparatorFileEntry =
+			FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY;
+
+		sb.append(
+			urlSeparatorFileEntry.substring(
+				0, urlSeparatorFileEntry.length() - 1));
+
+		Group group = themeDisplay.getScopeGroup();
+
+		sb.append(group.getFriendlyURL());
+
+		sb.append(StringPool.SLASH);
+
+		return sb.toString();
 	}
 
 	@Override

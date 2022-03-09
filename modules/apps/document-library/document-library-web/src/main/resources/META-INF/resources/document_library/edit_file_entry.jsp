@@ -571,20 +571,17 @@ renderResponse.setTitle(headerTitle);
 
 				<c:if test="<%= FFFriendlyURLEntryFileEntryConfigurationUtil.enabled() %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="friendly-url">
-
-						<%
-						Portlet portlet = PortletLocalServiceUtil.getPortletById(DLPortletKeys.DOCUMENT_LIBRARY);
-						%>
-
 						<liferay-friendly-url:input
 							className="<%= FileEntry.class.getName() %>"
 							classPK="<%= fileEntryId %>"
 							disabled="<%= true %>"
-							inputAddon='<%= StringUtil.shorten("/-/" + portlet.getFriendlyURLMapping(), 40) + StringPool.SLASH %>'
+							inputAddon="<%= dlEditFileEntryDisplayContext.getFriendlyURLBase() %>"
 							localizable="<%= false %>"
 							name="urlTitle"
 							showHistory="<%= false %>"
 						/>
+
+						<p class="text-secondary"><liferay-ui:message key="the-friendly-url-may-be-modified-to-ensure-uniqueness" /></p>
 					</aui:fieldset>
 				</c:if>
 

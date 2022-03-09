@@ -64,7 +64,8 @@ public interface CommerceShipmentItemService extends BaseService {
 	public CommerceShipmentItem addCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, ServiceContext serviceContext)
+			int quantity, boolean validateInventory,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceShipmentItem addOrUpdateCommerceShipmentItem(

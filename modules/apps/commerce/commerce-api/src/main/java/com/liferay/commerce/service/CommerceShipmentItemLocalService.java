@@ -83,7 +83,8 @@ public interface CommerceShipmentItemLocalService
 	public CommerceShipmentItem addCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, ServiceContext serviceContext)
+			int quantity, boolean validateInventory,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

@@ -19,24 +19,4 @@ definition {
 			locator1 = "TranslationManager#SELECT_TRANSLATION_LANGUAGE_MENU");
 	}
 
-	macro useDifferentLanguageInputText {
-		Type.type(
-			key_title = "${key_title}",
-			locator1 = "TranslationManager#AUI_TAG_INPUT_TEXT_FIELD",
-			value1 = "${languagefirst}");
-
-		Click.clickNoMouseOver(
-			key_currentLocale = "${key_currentLocale}",
-			locator1 = "TranslationManager#SELECT_TRANSLATION_LANGUAGE_AUI_TAG_ADMINMENU");
-
-		Click(
-			key_locale = "${key_locale}",
-			locator1 = "Translation#DROPDOWN_MENU_ITEM");
-
-		Type.type(
-			key_title = "${key_title}",
-			locator1 = "TranslationManager#AUI_TAG_INPUT_TEXT_FIELD",
-			value1 = "${languagesecond}");
-	}
-
 }

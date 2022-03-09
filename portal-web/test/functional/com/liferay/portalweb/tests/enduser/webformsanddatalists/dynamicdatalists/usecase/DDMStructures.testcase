@@ -1,0 +1,581 @@
+@component-name = "portal-web-forms-and-data-lists"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Dynamic Data Lists";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.firstLoginPG();
+
+			DDLList.tearDownCP();
+
+			DDLDataDefinition.tearDownCP();
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			Site.tearDownCP();
+		}
+	}
+
+	@description = "This is a use case for LPS-80085."
+	@priority = "3"
+	test AddWebContentTemplateWithSmallImage {
+		JSONGroup.addGroup(groupName = "Staging Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Staging Site Name",
+			layoutName = "Staging Page");
+
+		Navigator.openSiteURL(siteName = "Staging Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Staging Site Name");
+
+		Navigator.openSiteURL(siteName = "Staging Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Page",
+			siteName = "Staging Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Documents and Media");
+
+		DMDocument.addCP(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentFile = "Document_1.jpg",
+			dmDocumentTitle = "Document_1.jpg");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		WebContentTemplates.addCP(
+			imageSourceURL = "http://localhost:8080/webdav/staging-site-name-staging/document_library/Document_1.jpg",
+			templateName = "WC Template Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		WebContentTemplates.viewCardsEntryCP2(
+			templateName = "WC Template Name",
+			templateSmallImage = "true");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Page",
+			siteName = "Staging Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoLiveSite(site = "Staging Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		LexiconEntry.changeDisplayStyle(displayStyle = "cards");
+
+		WebContentTemplates.viewCardsEntryCP2(
+			templateName = "WC Template Name",
+			templateSmallImage = "true");
+	}
+
+	@description = "This is a use case for LPS-68661 and LPS-77957."
+	@priority = "4"
+	test CreateWebContentStructureAndTemplate {
+		JSONGroup.addGroup(groupName = "Staging Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Staging Site Name",
+			layoutName = "Staging Page");
+
+		Navigator.openSiteURL(siteName = "Staging Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Publishing",
+			portlet = "Staging");
+
+		Staging.activateStagingCP(
+			pageVersioningEnabled = "true",
+			siteName = "Staging Site Name");
+
+		Navigator.openSiteURL(siteName = "Staging Site Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Page",
+			siteName = "Staging Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Navigator.gotoNavItem(navItem = "Structures");
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Navigator.gotoNavItem(navItem = "Structures");
+
+		WebContentStructures.viewCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Text",
+			templateName = "WC Template Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		WebContentTemplates.viewCP(
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name");
+
+		Navigator.gotoStagedSitePage(
+			pageName = "Staging Page",
+			siteName = "Staging Site Name");
+
+		Staging.gotoPublishToLive();
+
+		Staging.publishToLive();
+
+		ProductMenu.gotoLiveSite(site = "Staging Site Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Navigator.gotoNavItem(navItem = "Structures");
+
+		AssertElementNotPresent(locator1 = "Button#PLUS");
+
+		for (var menuItem : list "Edit,Edit Default Values,Permissions,Copy") {
+			LexiconEntry.viewNoEntryMenuItem(
+				menuItem = "${menuItem}",
+				rowEntry = "WC Structure Name");
+		}
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		AssertElementNotPresent(locator1 = "Button#PLUS");
+
+		for (var menuItem : list "Edit,Permissions,Copy") {
+			LexiconEntry.viewNoEntryMenuItem(
+				menuItem = "${menuItem}",
+				rowEntry = "WC Template Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-67094."
+	@priority = "4"
+	test ViewCacheableCheckbox {
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Navigator.gotoNavItem(navItem = "Structures");
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		LexiconEntry.gotoAdd();
+
+		WebContentTemplates.inputTemplateAddScreenFields(
+			templateDescription = "WC Template Description",
+			templateName = "WC Template Name");
+
+		AssertElementPresent(locator1 = "DDMEditTemplate#CACHEABLE_CHECKBOX");
+
+		WebContentTemplates.inputTemplateAddScreenFields(
+			structureName = "WC Structure Name",
+			templateFieldNames = "Text");
+
+		DDLDataDefinition.save();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		LexiconEntry.gotoEntryMenuItem(
+			menuItem = "Edit",
+			rowEntry = "WC Template Name");
+
+		AssertElementPresent(locator1 = "DDMEditTemplate#CACHEABLE_CHECKBOX");
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addWithStructureCP(
+			structureName = "WC Structure Name",
+			templateName = "WC Template Name",
+			webContentText = "Test",
+			webContentTitle = "WC WebContent Title");
+
+		PortletEntry.publish();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPublicPage(pageName = "Test Page");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		Portlet.addPG(portletName = "Web Content Display");
+
+		WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC WebContent Title");
+
+		Navigator.gotoPage(pageName = "Test Page");
+
+		WebContentDisplayPortlet.gotoEditTemplate(webContentTitle = "WC WebContent Title");
+
+		AssertElementPresent(locator1 = "DDMEditTemplate#CACHEABLE_CHECKBOX");
+	}
+
+	@description = "This is a use case for LPS-69325."
+	@priority = "4"
+	test ViewFieldInputWhenSwitchingTranslations {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.addCP();
+
+		var sourceJson = TestCase.getFileContent(fileName = "complexDDMStructure.json");
+
+		DynamicDataMapping.addFieldViaJSON(sourceJson = "${sourceJson}");
+
+		DDLDataDefinition.setInputFieldLocalization(languageValue = "pt-BR");
+
+		DDLDataDefinition.editName();
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLList.addCP();
+
+		DDLDataDefinition.selectCP();
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.addCP();
+
+		for (var language : list "es-ES,en-US,pt-BR") {
+			PortletEntry.changeLocale(locale = "${language}");
+
+			DDLRecord.populateFieldText(
+				ddlRecordFieldData = "${language} Categoria",
+				fieldName = "Categoria");
+
+			DDLRecord.populateFieldText(
+				ddlRecordFieldData = "${language} Pergunta",
+				fieldName = "Pergunta");
+		}
+
+		for (var language : list "pt-BR,en-US,es-ES") {
+			PortletEntry.changeLocale(locale = "${language}");
+
+			FormFields.viewTextValue(
+				fieldName = "Categoria",
+				fieldValue = "${language} Categoria");
+
+			FormFields.viewTextValue(
+				fieldName = "Pergunta",
+				fieldValue = "${language} Pergunta");
+		}
+	}
+
+	@description = "This is a use case for LPS-69593 and LRQA-61632. Assert the selected image is kept in Image field under localized."
+	@priority = "4"
+	test ViewFieldTranslationsWithImageField {
+		property test.name.skip.portal.instance = "DDMStructureWithImageField#ViewFieldTranslations";
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Navigator.gotoNavItem(navItem = "Structures");
+
+		WebContentStructures.addCP(
+			structureDescription = "WC Structure Description",
+			structureName = "WC Structure Name");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		WebContentStructures.saveCP(structureName = "WC Structure Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		Navigator.gotoNavItem(navItem = "Templates");
+
+		WebContentTemplates.addCP(
+			structureName = "WC Structure Name",
+			templateDescription = "WC Template Description",
+			templateFieldNames = "Image",
+			templateName = "WC Template Name");
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "WC Structure Name");
+
+		WebContent.addCP(webContentTitle = "English (United States) Title");
+
+		Click(
+			fieldLabel = "Image",
+			locator1 = "Button#BUTTON_LABEL",
+			text = "Select");
+
+		ItemSelector.uploadFileWithSelectFrameNoLoading(
+			navTab = "Web Content Images",
+			uploadFileName = "Document_3.png");
+
+		FormFields.editTextDescription(
+			fieldName = "Image",
+			fieldValue = "English (United States) Image Description");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		FormFields.editText(
+			fieldName = "title",
+			fieldValue = "Spanish (Spain) Title");
+
+		FormFields.editTextDescription(
+			fieldName = "Image",
+			fieldValue = "Spanish (Spain) Image Description");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		FormFields.editText(
+			fieldName = "title",
+			fieldValue = "Portuguese (Brazil) Title");
+
+		FormFields.editTextDescription(
+			fieldName = "Image",
+			fieldValue = "Portuguese (Brazil) Image Description");
+
+		PortletEntry.publish();
+
+		WebContentAdmin.gotoEntry(entry = "English (United States) Title");
+
+		FormFields.viewTextValue(
+			fieldName = "title",
+			fieldValue = "English (United States) Title");
+
+		AssertAttributeValue(
+			attribute1 = "value",
+			key_fieldFieldLabel = "Image",
+			locator1 = "TextInput#SELECTOR_INPUT",
+			value1 = "Document_3.png");
+
+		FormFields.viewTextValueDescription(
+			fieldName = "Image",
+			fieldValue = "English (United States) Image Description");
+
+		PortletEntry.changeLocale(locale = "es-ES");
+
+		FormFields.viewTextValue(
+			fieldName = "title",
+			fieldValue = "Spanish (Spain) Title");
+
+		AssertAttributeValue(
+			attribute1 = "value",
+			key_fieldFieldLabel = "Image",
+			locator1 = "TextInput#SELECTOR_INPUT",
+			value1 = "Document_3.png");
+
+		FormFields.viewTextValueDescription(
+			fieldName = "Image",
+			fieldValue = "Spanish (Spain) Image Description");
+
+		PortletEntry.changeLocale(locale = "pt-BR");
+
+		FormFields.viewTextValue(
+			fieldName = "title",
+			fieldValue = "Portuguese (Brazil) Title");
+
+		AssertAttributeValue(
+			attribute1 = "value",
+			key_fieldFieldLabel = "Image",
+			locator1 = "TextInput#SELECTOR_INPUT",
+			value1 = "Document_3.png");
+
+		FormFields.viewTextValueDescription(
+			fieldName = "Image",
+			fieldValue = "Portuguese (Brazil) Image Description");
+	}
+
+	@description = "This is a use case for LPS-69335."
+	@priority = "4"
+	test ViewFieldTranslationsWithNestedTextField {
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLDataDefinition.addCP();
+
+		DynamicDataMapping.addField(
+			field = "Text",
+			fieldFieldLabel = "Text Parent",
+			fieldName = "textParent");
+
+		DynamicDataMapping.addFieldNested(
+			field = "Text",
+			fieldFieldLabel = "Text Child",
+			fieldName = "textChild");
+
+		Form.addTranslation(localizedLanguage = "Spanish (Spain)");
+
+		Form.addTranslation(localizedLanguage = "Chinese (China)");
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLList.addCP();
+
+		DDLDataDefinition.selectCP();
+
+		DDLDataDefinition.save();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Content & Data",
+			portlet = "Dynamic Data Lists");
+
+		DDLRecord.addCP();
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "en-US Parent",
+			fieldName = "textParent");
+
+		DDLRecord.populateFieldText(
+			ddlRecordFieldData = "en-US Child",
+			fieldName = "textChild");
+
+		for (var language : list "es-ES,zh-CN") {
+			PortletEntry.changeLocale(locale = "${language}");
+
+			DDLRecord.populateFieldText(
+				ddlRecordFieldData = "${language} Parent",
+				fieldName = "textParent");
+
+			DDLRecord.populateFieldText(
+				ddlRecordFieldData = "${language} Child",
+				fieldName = "textChild");
+		}
+
+		for (var language : list "en-US,es-ES,zh-CN") {
+			PortletEntry.changeLocale(locale = "${language}");
+
+			FormFields.viewTextValue(
+				fieldName = "textParent",
+				fieldValue = "${language} Parent");
+
+			FormFields.viewTextValue(
+				fieldName = "textChild",
+				fieldValue = "${language} Child");
+		}
+	}
+
+}

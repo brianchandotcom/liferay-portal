@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Document Library API
 Bundle-SymbolicName: com.liferay.document.library.api
-Bundle-Version: 8.1.2
+Bundle-Version: 8.2.0
 Export-Package:\
 	com.liferay.document.library.bulk.selection,\
 	com.liferay.document.library.configuration,\

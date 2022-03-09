@@ -38,6 +38,38 @@ definition {
 		}
 	}
 
+	@description = "LPS-147946. Validates language can be deleted from the Manage Translation list."
+	@priority = "3"
+	test CanDeleteLanguageFromManageTranslationsList {
+		task ("Given manage translations modal") {
+			TranslationManagerPortlet.goToManageTranslationsModal(
+				key_currentLocale = "en-us",
+				key_title = "Admin");
+		}
+
+		task ("When delete Catalan language") {
+			ManageTranslations.deleteLanguage(key_language = "Catalan");
+		}
+
+		task ("Then assert Catalan language menu item is not present in select translation language dropdown") {
+			TranslationManagerPortlet.clickSelectTranslation(
+				key_currentLocale = "en-us",
+				key_title = "Admin");
+
+			AssertElementNotPresent(
+				key_locale = "ca-ES",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+		}
+
+		task ("Then assert Catalan language is not present in Manage Translations table list") {
+			Click(locator1 = "TranslationManager#MANAGE_TRANSLATIONS");
+
+			AssertElementNotPresent(
+				locator1 = "ManageTranslations#LIST_ITEM_LANGUAGE",
+				value1 = "Catalan");
+		}
+	}
+
 	@description = "LPS-147499. Verifies default options are present in translation manager language menu."
 	@priority = "3"
 	test DefaultLanguageIsAvailableAndViewsNoOtherLanguagesOptions {
@@ -71,38 +103,6 @@ definition {
 			Click(locator1 = "TranslationManager#MANAGE_TRANSLATIONS");
 
 			AssertElementPresent(locator1 = "Portlet#MODAL_TITLE");
-		}
-	}
-
-	@description = "LPS-147946. Validates language can be deleted from the Manage Translation list."
-	@priority = "3"
-	test CanDeleteLanguageFromManageTranslationsList {
-		task ("Given manage translations modal") {
-			TranslationManagerPortlet.goToManageTranslationsModal(
-				key_currentLocale = "en-us",
-				key_title = "Admin");
-		}
-
-		task ("When delete Catalan language") {
-			ManageTranslations.deleteLanguage(key_language = "Catalan");
-		}
-
-		task ("Then assert Catalan language menu item is not present in select translation language dropdown") {
-			TranslationManagerPortlet.clickSelectTranslation(
-				key_currentLocale = "en-us",
-				key_title = "Admin");
-
-			AssertElementNotPresent(
-				key_locale = "ca-ES",
-				locator1 = "Translation#DROPDOWN_MENU_ITEM");
-		}
-
-		task ("Then assert Catalan language is not present in Manage Translations table list") {
-			Click(locator1 = "TranslationManager#MANAGE_TRANSLATIONS");
-
-			AssertElementNotPresent(
-				locator1 = "ManageTranslations#LIST_ITEM_LANGUAGE",
-				value1 = "Catalan");
 		}
 	}
 

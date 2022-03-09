@@ -1,638 +1,637 @@
 @component-name = "portal-solutions"
 definition {
 
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Raylife";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        User.firstLoginPG();
+		User.firstLoginPG();
 
-        Raylife.createRaylifeSite(siteName = "Raylife");
-    }
+		Raylife.createRaylifeSite(siteName = "Raylife");
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        Raylife.tearDownCP();
+		Raylife.tearDownCP();
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-        else {
-            User.logoutPG();
-        }
-    }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
 
-    @description = "LPS-148228 - Verify that when the user clicks on any option on the 'Do you own the building at Address?' page they go directly to the next page (Smartphone)"
-    @priority = "5"
-    test ClickOptionInBuildingAddressPhone {
-        SetWindowSize(value1 = "360,720");
+	@description = "LPS-148235 - Verify that when the user clicks on the 'No' option in the 'Are there swimming pool(s) on the premises?' section, I can be redirected to the next page by clicking the continue button (residence in product) (Smartphone)"
+	@priority = "5"
+	test CanContinueFlowInSwimmingPoolPhone {
+		SetWindowSize(value1 = "360,720");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        RaylifeHomePage.startFlow();
+		RaylifeHomePage.getAQuote();
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		RaylifeIndustry.typeIndustry(primaryIndustry = "Residential");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Do you own the building",
-            locator1 = "Raylife#BUTTON_YES_OPTION");
+		RaylifeBusiness.typeBusinessInfoFields(
+			label = "business.yearsOfExperience",
+			value = "3");
 
-        AssertElementPresent(
-            label = "property.stories",
-            locator1 = "Raylife#FORMS_FIELDS");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Raylife.dismissAlert();
-    }
+		Click(
+			field = "Do you store personally identifiable information about your customers?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-    @description = "LPS-148229 - Verify that the Continue button is only enable when the fied 'How many stories is this building?' and filled in (Smartphone)"
-    @priority = "5"
-    test EnabledContinueButtonInStoriesBuildingPhone {
-        SetWindowSize(value1 = "360,720");
+		Click(
+			field = "Do you have a Raylife Auto policy?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Select(
+			locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
+			value1 = "Association");
 
-        RaylifeHomePage.startFlow();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		RaylifeMobile.typeAllPropertyInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(
+			field = "Are there swimming",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		AssertElementPresent(locator1 = "RaylifeLoadingPage#HANG_TIGHT_PAGE");
 
-        Click(
-            field = "Do you own the building",
-            locator1 = "Raylife#BUTTON_YES_OPTION");
+		Raylife.dismissAlert();
+	}
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+	@description = "LPS-148240 - Verify if previous to the Employees page and back to the Property page, all information is present (Tablet)"
+	@priority = "5"
+	test CanViewInformationPresentWhenReturnPageTablet {
+		SetWindowSize(value1 = "800,1024");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.stories",
-            value = "3");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
-        Raylife.dismissAlert();
-    }
+		RaylifeContactInfo.typeAllBasicsInfoFields();
 
-    @description = "LPS-148230 - Verify that the Contnue button is only enable when the field 'How many square feet of the building does your business occupy?' and filled in (Smartphone)"
-    @priority = "5"
-    test EnabledContinueButtonInSquareBuildingPhone {
-        SetWindowSize(value1 = "360,720");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		RaylifeBusiness.typeAllBusinessInfoFields();
 
-        RaylifeHomePage.startFlow();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		RaylifeEmployees.typeAllEmployeesInfoFields();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		RaylifeProperty.typeAllPropertyInfoFields();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_PREVIOUS");
 
-        RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
+		AssertElementPresent(
+			locator1 = "Raylife#TABLET_SECTION_TITLE",
+			title = "Tell us about your employees!");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Raylife.dismissAlert();
+	}
 
-        Click(
-            field = "Do you own the building",
-            locator1 = "Raylife#BUTTON_YES_OPTION");
+	@description = "LPS-148228 - Verify that when the user clicks on any option on the 'Do you own the building at Address?' page they go directly to the next page (Smartphone)"
+	@priority = "5"
+	test ClickOptionInBuildingAddressPhone {
+		SetWindowSize(value1 = "360,720");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.stories",
-            value = "3");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.buildingSquareFeetOccupied",
-            value = "1,000 ft²");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        Raylife.dismissAlert();
-    }
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-    @description = "LPS-148231 - Verify that the Contnue button is only enable when the field 'How many total square feet is the building?' and filled in (Smartphone)"
-    @priority = "5"
-    test EnabledContinueButtonInTotalSquareBuildingPhone {
-        SetWindowSize(value1 = "360,720");
+		RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeHomePage.startFlow();
+		Click(
+			field = "Do you own the building",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		AssertElementPresent(
+			label = "property.stories",
+			locator1 = "Raylife#FORMS_FIELDS");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Raylife.dismissAlert();
+	}
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+	@description = "LPS-148233 -   Verify that when the user clicks on any option on the 'Is this the primary location where you conduct business?' page the continue button is enable (Smartphone)"
+	@priority = "5"
+	test ClickOptionInConductBusinessPhone {
+		SetWindowSize(value1 = "360,720");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
+		RaylifeHomePage.startFlow();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        Click(
-            field = "Do you own the building",
-            locator1 = "Raylife#BUTTON_YES_OPTION");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.stories",
-            value = "3");
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.buildingSquareFeetOccupied",
-            value = "1,000 ft²");
+		RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+		RaylifeMobile.typeAllPropertyInfoFieldsPhone();
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.totalBuildingSquareFeet",
-            value = "800 ft²");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		Raylife.dismissAlert();
+	}
 
-        Raylife.dismissAlert();
-    }
+	@description = "LPS-148234 - Verify that when the user clicks on the 'No' option in the 'Are there swimming pool(s) on the premises?' section, the Continue button is enabled (residence in product)(Smartphone)"
+	@priority = "5"
+	test ClickOptionInSwimmingPoolPhone {
+		SetWindowSize(value1 = "360,720");
 
-    @description = "LPS-148232 -  Verify that the Contnue button is only enable when the field 'What year was the building construted?' and filled in (Smartphone)"
-    @priority = "5"
-    test EnabledContinueButtonBuildingConstrutedPhone {
-        SetWindowSize(value1 = "360,720");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		RaylifeHomePage.getAQuote();
 
-        RaylifeHomePage.startFlow();
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeIndustry.typeIndustry(primaryIndustry = "Residential");
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeBusiness.typeBusinessInfoFields(
+			label = "business.yearsOfExperience",
+			value = "3");
 
-        Click(
-            field = "Do you own the building",
-            locator1 = "Raylife#BUTTON_YES_OPTION");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.stories",
-            value = "3");
+		Click(
+			field = "Do you store personally identifiable information about your customers?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(
+			field = "Do you have a Raylife Auto policy?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.buildingSquareFeetOccupied",
-            value = "1,000 ft²");
+		Select(
+			locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
+			value1 = "Association");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.totalBuildingSquareFeet",
-            value = "800 ft²");
+		RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+		RaylifeMobile.typeAllPropertyInfoFieldsPhone();
 
-        RaylifeProperty.typePropertyInfoFields(
-            label = "property.yearBuilding",
-            value = "2015");
+		Click(
+			field = "Are there swimming",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Raylife.dismissAlert();
-    }
+		Raylife.dismissAlert();
+	}
 
+	@description = "LPS-148232 -  Verify that the Contnue button is only enable when the field 'What year was the building construted?' and filled in (Smartphone)"
+	@priority = "5"
+	test EnabledContinueButtonBuildingConstrutedPhone {
+		SetWindowSize(value1 = "360,720");
 
-    @description = "LPS-148233 -   Verify that when the user clicks on any option on the 'Is this the primary location where you conduct business?' page the continue button is enable (Smartphone)"
-    @priority = "5"
-    test ClickOptionInConductBusinessPhone {
-        SetWindowSize(value1 = "360,720");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		RaylifeHomePage.startFlow();
 
-        RaylifeHomePage.startFlow();
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        RaylifeMobile.typeAllBusinessInfoFieldsPhone();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
 
-        RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(
+			field = "Do you own the building",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
 
-        RaylifeMobile.typeAllPropertyInfoFieldsPhone();
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.stories",
+			value = "3");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Raylife.dismissAlert();
-    }
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.buildingSquareFeetOccupied",
+			value = "1,000 ft²");
 
-    @description = "LPS-148234 - Verify that when the user clicks on the 'No' option in the 'Are there swimming pool(s) on the premises?' section, the Continue button is enabled (residence in product)(Smartphone)"
-    @priority = "5"
-    test ClickOptionInSwimmingPoolPhone {
-        SetWindowSize(value1 = "360,720");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.totalBuildingSquareFeet",
+			value = "800 ft²");
 
-        RaylifeHomePage.getAQuote();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            locator1 = "RaylifeProduct#SELECT_PRODUCT",
-            selectProduct = "Business Owners Policy");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.yearBuilding",
+			value = "2015");
 
-        RaylifeIndustry.typeIndustry(primaryIndustry = "Residential");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Raylife.dismissAlert();
+	}
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+	@description = "LPS-148230 - Verify that the Contnue button is only enable when the field 'How many square feet of the building does your business occupy?' and filled in (Smartphone)"
+	@priority = "5"
+	test EnabledContinueButtonInSquareBuildingPhone {
+		SetWindowSize(value1 = "360,720");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        RaylifeBusiness.typeBusinessInfoFields(
-            label = "business.yearsOfExperience",
-            value = "3");
+		RaylifeHomePage.startFlow();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        Click(
-            field = "Do you store personally identifiable information about your customers?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Do you have a Raylife Auto policy?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        Select(
-            locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
-            value1 = "Association");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
 
-        RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(
+			field = "Do you own the building",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
 
-        RaylifeMobile.typeAllPropertyInfoFieldsPhone();
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.stories",
+			value = "3");
 
-        Click(
-            field = "Are there swimming",
-            locator1 = "Raylife#BUTTON_YES_OPTION");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-        Raylife.dismissAlert();
-    }
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.buildingSquareFeetOccupied",
+			value = "1,000 ft²");
 
-    @description = "LPS-148235 - Verify that when the user clicks on the 'No' option in the 'Are there swimming pool(s) on the premises?' section, I can be redirected to the next page by clicking the continue button (residence in product) (Smartphone)"
-    @priority = "5"
-    test CanContinueFlowInSwimmingPoolPhone {
-        SetWindowSize(value1 = "360,720");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Raylife.dismissAlert();
+	}
 
-        RaylifeHomePage.getAQuote();
+	@description = "LPS-148229 - Verify that the Continue button is only enable when the fied 'How many stories is this building?' and filled in (Smartphone)"
+	@priority = "5"
+	test EnabledContinueButtonInStoriesBuildingPhone {
+		SetWindowSize(value1 = "360,720");
 
-        Click(
-            locator1 = "RaylifeProduct#SELECT_PRODUCT",
-            selectProduct = "Business Owners Policy");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
-        RaylifeIndustry.typeIndustry(primaryIndustry = "Residential");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeBusiness.typeBusinessInfoFields(
-            label = "business.yearsOfExperience",
-            value = "3");
+		RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Do you store personally identifiable information about your customers?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		Click(
+			field = "Do you own the building",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
 
-        Click(
-            field = "Do you have a Raylife Auto policy?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-        Select(
-            locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
-            value1 = "Association");
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.stories",
+			value = "3");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
+		Raylife.dismissAlert();
+	}
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+	@description = "LPS-148231 - Verify that the Contnue button is only enable when the field 'How many total square feet is the building?' and filled in (Smartphone)"
+	@priority = "5"
+	test EnabledContinueButtonInTotalSquareBuildingPhone {
+		SetWindowSize(value1 = "360,720");
 
-        RaylifeMobile.typeAllPropertyInfoFieldsPhone();
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(
-            field = "Are there swimming",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		RaylifeHomePage.startFlow();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        AssertElementPresent(locator1 = "RaylifeLoadingPage#HANG_TIGHT_PAGE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Raylife.dismissAlert();
-    }
+		RaylifeMobile.typeAllBusinessInfoFieldsPhone();
 
-    @description = "LPS-148236 - Verify that when the user clicks on the 'Yes' option in the 'Are there swimming pool(s) on the premises?' section, the 'Are there diving boards or slides?' section appears (residence in product) (Smartphone)"
-    @priority = "5"
-    test SectionDivingBoardsAppearsPhone {
-        SetWindowSize(value1 = "360,720");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
 
-        RaylifeHomePage.getAQuote();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            locator1 = "RaylifeProduct#SELECT_PRODUCT",
-            selectProduct = "Business Owners Policy");
+		Click(
+			field = "Do you own the building",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.stories",
+			value = "3");
 
-        RaylifeIndustry.typeIndustry(primaryIndustry = "Residential");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.buildingSquareFeetOccupied",
+			value = "1,000 ft²");
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-        RaylifeBusiness.typeBusinessInfoFields(
-            label = "business.yearsOfExperience",
-            value = "3");
+		RaylifeProperty.typePropertyInfoFields(
+			label = "property.totalBuildingSquareFeet",
+			value = "800 ft²");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Do you store personally identifiable information about your customers?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		Raylife.dismissAlert();
+	}
 
-        Click(
-            field = "Do you have a Raylife Auto policy?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+	@description = "LPS-148239 - Verify if Continue button is only enable when all required fields have been fillled in (Tablet)"
+	@priority = "5"
+	test EnabledContinueButtonTablet {
+		SetWindowSize(value1 = "800,1024");
 
-        Select(
-            locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
-            value1 = "Association");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.startFlow();
 
-        RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
+		RaylifeContactInfo.typeAllBasicsInfoFields();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllPropertyInfoFieldsPhone();
+		RaylifeBusiness.typeAllBusinessInfoFields();
 
-        Click(
-            field = "Are there swimming",
-            locator1 = "Raylife#BUTTON_YES_OPTION");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(
-            label = "property.isThereDivingBoards",
-            locator1 = "Raylife#FORMS_FIELDS");
+		RaylifeEmployees.typeAllEmployeesInfoFields();
 
-        Raylife.dismissAlert();
-    }
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-    @description = "LPS-148237 - Verify that when the user clicks on the 'No' option in the 'Are there diving boards or slides?' section, the Continue button is enabled (residence in product) (Smartphone)"
-    @priority = "5"
-    test WhenClickOptionNoContinueButtonEnabledPhone {
-        SetWindowSize(value1 = "360,720");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		RaylifeProperty.typeAllPropertyInfoFields();
 
-        RaylifeHomePage.getAQuote();
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            locator1 = "RaylifeProduct#SELECT_PRODUCT",
-            selectProduct = "Business Owners Policy");
+		Raylife.dismissAlert();
+	}
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+	@description = "LPS-148236 - Verify that when the user clicks on the 'Yes' option in the 'Are there swimming pool(s) on the premises?' section, the 'Are there diving boards or slides?' section appears (residence in product) (Smartphone)"
+	@priority = "5"
+	test SectionDivingBoardsAppearsPhone {
+		SetWindowSize(value1 = "360,720");
 
-        RaylifeIndustry.typeIndustry(primaryIndustry = "Residential");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.getAQuote();
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeBusiness.typeBusinessInfoFields(
-            label = "business.yearsOfExperience",
-            value = "3");
+		RaylifeIndustry.typeIndustry(primaryIndustry = "Residential");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Do you store personally identifiable information about your customers?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        Click(
-            field = "Do you have a Raylife Auto policy?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Select(
-            locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
-            value1 = "Association");
+		RaylifeBusiness.typeBusinessInfoFields(
+			label = "business.yearsOfExperience",
+			value = "3");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
+		Click(
+			field = "Do you store personally identifiable information about your customers?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(
+			field = "Do you have a Raylife Auto policy?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        RaylifeMobile.typeAllPropertyInfoFieldsPhone();
+		Select(
+			locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
+			value1 = "Association");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Are there swimming",
-            locator1 = "Raylife#BUTTON_YES_OPTION");
+		RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
 
-        Click(
-            field = "Are there diving ",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllPropertyInfoFieldsPhone();
 
-        Raylife.dismissAlert();
-    }
+		Click(
+			field = "Are there swimming",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
 
-    @description = "LPS-148238 - Verify that when the user clicks on the 'No' option in the 'Are there diving boards or slides?' section, I can be redirected to the next page by clicking the continue button (residence in product) (Smartphone)"
-    @priority = "5"
-    test WhenClickOptionNoFlowContinuePhone {
-        SetWindowSize(value1 = "360,720");
+		AssertElementPresent(
+			label = "property.isThereDivingBoards",
+			locator1 = "Raylife#FORMS_FIELDS");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Raylife.dismissAlert();
+	}
 
-        RaylifeHomePage.getAQuote();
+	@description = "LPS-148237 - Verify that when the user clicks on the 'No' option in the 'Are there diving boards or slides?' section, the Continue button is enabled (residence in product) (Smartphone)"
+	@priority = "5"
+	test WhenClickOptionNoContinueButtonEnabledPhone {
+		SetWindowSize(value1 = "360,720");
 
-        Click(
-            locator1 = "RaylifeProduct#SELECT_PRODUCT",
-            selectProduct = "Business Owners Policy");
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.getAQuote();
 
-        RaylifeIndustry.typeIndustry(primaryIndustry = "Residential");
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllBasicsInfoFieldsPhone();
+		RaylifeIndustry.typeIndustry(primaryIndustry = "Residential");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeBusiness.typeBusinessInfoFields(
-            label = "business.yearsOfExperience",
-            value = "3");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Do you store personally identifiable information about your customers?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		RaylifeBusiness.typeBusinessInfoFields(
+			label = "business.yearsOfExperience",
+			value = "3");
 
-        Click(
-            field = "Do you have a Raylife Auto policy?",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Select(
-            locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
-            value1 = "Association");
+		Click(
+			field = "Do you store personally identifiable information about your customers?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(
+			field = "Do you have a Raylife Auto policy?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
+		Select(
+			locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
+			value1 = "Association");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeMobile.typeAllPropertyInfoFieldsPhone();
+		RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
 
-        Click(
-            field = "Are there swimming",
-            locator1 = "Raylife#BUTTON_YES_OPTION");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(
-            field = "Are there diving ",
-            locator1 = "Raylife#BUTTON_NO_OPTION");
+		RaylifeMobile.typeAllPropertyInfoFieldsPhone();
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
 
-        AssertElementPresent(locator1 = "RaylifeLoadingPage#HANG_TIGHT_PAGE");
+		Click(
+			field = "Are there swimming",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
 
-        Raylife.dismissAlert();
-    }
+		Click(
+			field = "Are there diving ",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-    @description = "LPS-148239 - Verify if Continue button is only enable when all required fields have been fillled in (Tablet)"
-    @priority = "5"
-    test EnabledContinueButtonTablet {
-        SetWindowSize(value1 = "800,1024");
+		AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Raylife.dismissAlert();
+	}
 
-        RaylifeHomePage.startFlow();
+	@description = "LPS-148238 - Verify that when the user clicks on the 'No' option in the 'Are there diving boards or slides?' section, I can be redirected to the next page by clicking the continue button (residence in product) (Smartphone)"
+	@priority = "5"
+	test WhenClickOptionNoFlowContinuePhone {
+		SetWindowSize(value1 = "360,720");
 
-        RaylifeContactInfo.typeAllBasicsInfoFields();
+		ApplicationsMenu.gotoSite(site = "Raylife");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeHomePage.getAQuote();
 
-        RaylifeBusiness.typeAllBusinessInfoFields();
+		Click(
+			locator1 = "RaylifeProduct#SELECT_PRODUCT",
+			selectProduct = "Business Owners Policy");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        RaylifeEmployees.typeAllEmployeesInfoFields();
+		RaylifeIndustry.typeIndustry(primaryIndustry = "Residential");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE_DISABLED");
+		RaylifeMobile.typeAllBasicsInfoFieldsPhone();
 
-        RaylifeProperty.typeAllPropertyInfoFields();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        AssertElementPresent(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeBusiness.typeBusinessInfoFields(
+			label = "business.yearsOfExperience",
+			value = "3");
 
-        Raylife.dismissAlert();
-    }
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-    @description = "LPS-148240 - Verify if previous to the Employees page and back to the Property page, all information is present (Tablet)"
-    @priority = "5"
-    test CanViewInformationPresentWhenReturnPageTablet {
-        SetWindowSize(value1 = "800,1024");
+		Click(
+			field = "Do you store personally identifiable information about your customers?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        ApplicationsMenu.gotoSite(site = "Raylife");
+		Click(
+			field = "Do you have a Raylife Auto policy?",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        RaylifeHomePage.startFlow();
+		Select(
+			locator1 = "RaylifeBusiness#SELECT_LEGAL_ENTITY",
+			value1 = "Association");
 
-        RaylifeContactInfo.typeAllBasicsInfoFields();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllEmployeesInfoFieldsPhone();
 
-        RaylifeBusiness.typeAllBusinessInfoFields();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		RaylifeMobile.typeAllPropertyInfoFieldsPhone();
 
-        RaylifeEmployees.typeAllEmployeesInfoFields();
+		Click(
+			field = "Are there swimming",
+			locator1 = "Raylife#BUTTON_YES_OPTION");
 
-        Click(locator1 = "Raylife#BUTTON_CONTINUE");
+		Click(
+			field = "Are there diving ",
+			locator1 = "Raylife#BUTTON_NO_OPTION");
 
-        RaylifeProperty.typeAllPropertyInfoFields();
+		Click(locator1 = "Raylife#BUTTON_CONTINUE");
 
-        Click(locator1 = "Raylife#BUTTON_PREVIOUS");
+		AssertElementPresent(locator1 = "RaylifeLoadingPage#HANG_TIGHT_PAGE");
 
-        AssertElementPresent(
-            locator1 = "Raylife#TABLET_SECTION_TITLE",
-            title = "Tell us about your employees!");
-
-        Raylife.dismissAlert();
-    }
+		Raylife.dismissAlert();
+	}
 
 }

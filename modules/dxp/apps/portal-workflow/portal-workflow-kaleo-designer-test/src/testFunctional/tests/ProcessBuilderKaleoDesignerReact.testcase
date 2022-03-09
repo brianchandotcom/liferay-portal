@@ -1039,8 +1039,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewRequiredField(
 			requiredField = "nodeLabel",
 			save = "true");
-
-			
 	}
 
 	@description = "Verify that the Task node has Timers property"

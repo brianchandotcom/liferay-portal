@@ -151,7 +151,7 @@ public class AccountEntryUserRelLocalServiceImpl
 		long[] organizationIds = null;
 		long[] roleIds = null;
 		long[] userGroupIds = null;
-		boolean sendEmail = false;
+		boolean sendEmail = true;
 
 		ServiceContext serviceContext = null;
 

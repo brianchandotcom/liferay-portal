@@ -48,7 +48,6 @@ public class DXPEntityRetrieverTrackerImpl
 		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, DXPEntityRetriever>
-		_serviceTrackerMap;
+	private ServiceTrackerMap<String, DXPEntityRetriever> _serviceTrackerMap;
 
 }

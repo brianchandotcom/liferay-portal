@@ -37,6 +37,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -59,9 +60,13 @@ public class ExpandoColumnRetriever implements DXPEntityRetriever {
 				transformUnsafeFunction)
 		throws Exception {
 
-		List<DXPEntity> dxpEntities = new ArrayList<>();
-
 		DynamicQuery dynamicQuery = _buildDynamicQuery(companyId);
+
+		if (dynamicQuery == null) {
+			return Page.of(Collections.emptyList(), pagination, 0);
+		}
+
+		List<DXPEntity> dxpEntities = new ArrayList<>();
 
 		List<ExpandoColumn> expandoColumns =
 			_expandoColumnLocalService.dynamicQuery(
@@ -77,30 +82,28 @@ public class ExpandoColumnRetriever implements DXPEntityRetriever {
 			_expandoColumnLocalService.dynamicQueryCount(dynamicQuery));
 	}
 
-	private DynamicQuery _buildDynamicQuery(long companyId) throws Exception {
-		DynamicQuery dynamicQuery = _expandoColumnLocalService.dynamicQuery();
-
-		Property nameProperty = PropertyFactoryUtil.forName("name");
-		Property tableIdProperty = PropertyFactoryUtil.forName("tableId");
-
+	private DynamicQuery _buildDynamicQuery(long companyId) {
 		ExpandoTable organizationExpandoTable =
 			_expandoTableLocalService.fetchTable(
 				companyId,
 				_classNameLocalService.getClassNameId(
 					Organization.class.getName()),
 				ExpandoTableConstants.DEFAULT_TABLE_NAME);
-
 		ExpandoTable userExpandoTable = _expandoTableLocalService.fetchTable(
 			companyId,
 			_classNameLocalService.getClassNameId(User.class.getName()),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
 		if ((organizationExpandoTable == null) && (userExpandoTable == null)) {
-			dynamicQuery.add(RestrictionsFactoryUtil.sqlRestriction("0=1"));
+			return null;
 		}
-		else if ((organizationExpandoTable != null) &&
-				 (userExpandoTable != null)) {
 
+		DynamicQuery dynamicQuery = _expandoColumnLocalService.dynamicQuery();
+
+		Property nameProperty = PropertyFactoryUtil.forName("name");
+		Property tableIdProperty = PropertyFactoryUtil.forName("tableId");
+
+		if ((organizationExpandoTable != null) && (userExpandoTable != null)) {
 			dynamicQuery.add(
 				RestrictionsFactoryUtil.or(
 					tableIdProperty.eq(organizationExpandoTable.getTableId()),

@@ -79,9 +79,8 @@ public class SXPBlueprintSearchResultTestUtil {
 			).findFirst(
 			).get();
 
-			ElementDefinition elementDefinition =
-				ElementDefinitionUtil.toElementDefinition(
-					sxpElement.getElementDefinitionJSON());
+			ElementDefinition elementDefinition = ElementDefinitionUtil.unpack(
+				ElementDefinition.toDTO(sxpElement.getElementDefinitionJSON()));
 
 			String configurationJSON = String.valueOf(
 				elementDefinition.getConfiguration());

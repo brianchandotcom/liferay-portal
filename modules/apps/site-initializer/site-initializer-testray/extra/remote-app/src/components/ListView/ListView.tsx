@@ -18,6 +18,7 @@ import {useCallback, useContext, useEffect, useMemo} from 'react';
 
 import ListViewContextProvider, {
 	ListViewContext,
+	ListViewContextProviderProps,
 } from '../../context/ListViewContext';
 import i18n from '../../i18n';
 import {PAGINATION} from '../../util/constants';
@@ -134,10 +135,14 @@ const ListView: React.FC<ListViewProps> = ({
 	);
 };
 
-const ListViewWithContext: React.FC<ListViewProps> = (props) => (
-	<ListViewContextProvider>
-		<ListView {...props} />
-	</ListViewContextProvider>
-);
+const ListViewWithContext: React.FC<
+	ListViewProps & {initialContext?: ListViewContextProviderProps}
+> = ({initialContext, ...otherProps}) => {
+	return (
+		<ListViewContextProvider {...initialContext}>
+			<ListView {...otherProps} />
+		</ListViewContextProvider>
+	);
+};
 
 export default ListViewWithContext;

@@ -60,8 +60,7 @@ const Requirements = () => (
 						value: i18n.translate('summary'),
 					},
 				],
-				navigateTo: ({testrayRequirementId}) =>
-					testrayRequirementId?.toString(),
+				navigateTo: ({id}) => id?.toString(),
 			}}
 			transformData={(data) => data?.c?.testrayRequirements}
 		/>

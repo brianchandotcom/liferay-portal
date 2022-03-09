@@ -31,6 +31,17 @@ const Cases = () => {
 		<>
 			<Container title={i18n.translate('cases')}>
 				<ListView
+					initialContext={{
+						filters: {
+							columns: {
+								dateCreated: false,
+								dateModified: false,
+								issues: false,
+								testrayCaseType: false,
+								testrayTeam: false,
+							},
+						},
+					}}
 					managementToolbarProps={{
 						addButton: () => setVisible(true),
 						visible: true,
@@ -40,12 +51,10 @@ const Cases = () => {
 						columns: [
 							{
 								key: 'dateCreated',
-
 								value: i18n.translate('create-date'),
 							},
 							{
 								key: 'dateModified',
-
 								value: i18n.translate('modified-date'),
 							},
 							{
@@ -67,8 +76,8 @@ const Cases = () => {
 								value: i18n.translate('case-name'),
 							},
 							{
-								key: 'testrayComponent',
-								render: (testrayComponent) =>
+								key: 'testrayTeam',
+								render: (_, {testrayComponent}) =>
 									testrayComponent?.testrayTeam?.name,
 								value: i18n.translate('team'),
 							},

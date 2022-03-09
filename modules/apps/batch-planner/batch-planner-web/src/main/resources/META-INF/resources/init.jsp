@@ -67,3 +67,5 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
+
+<link href="<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathModule() + "/batch-planner-web/css/main.css") %>" rel="stylesheet" />

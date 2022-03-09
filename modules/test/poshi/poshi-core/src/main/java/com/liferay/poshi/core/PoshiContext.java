@@ -519,7 +519,7 @@ public class PoshiContext {
 			throw new RuntimeException("Please set 'test.base.dir.name'");
 		}
 
-		List<URL> poshiURLs = new ArrayList<>();
+		Set<URL> poshiURLs = new HashSet<>();
 
 		Set<String> testDirNames = new HashSet<>();
 
@@ -706,24 +706,30 @@ public class PoshiContext {
 		return "true";
 	}
 
-	private static List<URL> _getPoshiURLs(
+	private static Set<URL> _getPoshiURLs(
 			FileSystem fileSystem, String[] includes, String baseDirName)
 		throws IOException {
 
-		List<URL> urls = null;
+		File file = new File(baseDirName);
+
+		baseDirName = file.getCanonicalPath();
+
+		Set<URL> urls = new HashSet<>();
 
 		if (fileSystem == null) {
-			urls = FileUtil.getIncludedResourceURLs(includes, baseDirName);
+			urls.addAll(
+				FileUtil.getIncludedResourceURLs(includes, baseDirName));
 		}
 		else {
-			urls = FileUtil.getIncludedResourceURLs(
-				fileSystem, includes, baseDirName);
+			urls.addAll(
+				FileUtil.getIncludedResourceURLs(
+					fileSystem, includes, baseDirName));
 		}
 
 		return urls;
 	}
 
-	private static List<URL> _getPoshiURLs(
+	private static Set<URL> _getPoshiURLs(
 			String[] includes, String baseDirName)
 		throws Exception {
 
@@ -1135,7 +1141,7 @@ public class PoshiContext {
 		}
 	}
 
-	private static void _readPoshiFiles(List<URL> poshiURLs) throws Exception {
+	private static void _readPoshiFiles(Set<URL> poshiURLs) throws Exception {
 		_storeRootElements(poshiURLs, _DEFAULT_NAMESPACE);
 
 		if (!_duplicateLocatorMessages.isEmpty()) {
@@ -1195,7 +1201,7 @@ public class PoshiContext {
 
 					_namespaces.add(namespace);
 
-					List<URL> poshiURLs = _getPoshiURLs(
+					Set<URL> poshiURLs = _getPoshiURLs(
 						fileSystem, includes,
 						resourceURLString.substring(x + 1));
 
@@ -1468,7 +1474,7 @@ public class PoshiContext {
 		}
 	}
 
-	private static void _storeRootElements(List<URL> urls, String namespace)
+	private static void _storeRootElements(Set<URL> urls, String namespace)
 		throws Exception {
 
 		List<PoshiFileCallable> dependencyPoshiFileCallables =

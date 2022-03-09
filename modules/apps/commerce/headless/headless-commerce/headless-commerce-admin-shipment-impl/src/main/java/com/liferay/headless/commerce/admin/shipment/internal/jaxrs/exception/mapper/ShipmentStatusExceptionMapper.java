@@ -15,8 +15,7 @@
 package com.liferay.headless.commerce.admin.shipment.internal.jaxrs.exception.mapper;
 
 import com.liferay.commerce.exception.CommerceShipmentStatusException;
-import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
-import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
+import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -25,6 +24,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Andrea Sbarra
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	enabled = false,
@@ -39,12 +39,13 @@ public class ShipmentStatusExceptionMapper
 	extends BaseExceptionMapper<CommerceShipmentStatusException> {
 
 	@Override
-	protected Problem getProblem(
-		CommerceShipmentStatusException commerceShipmentStatusException) {
+	public String getErrorDescription() {
+		return "Invalid shipment status";
+	}
 
-		return new Problem(
-			Response.Status.BAD_REQUEST,
-			commerceShipmentStatusException.getMessage());
+	@Override
+	public Response.Status getStatus() {
+		return Response.Status.BAD_REQUEST;
 	}
 
 }

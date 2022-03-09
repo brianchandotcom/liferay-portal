@@ -15,8 +15,7 @@
 package com.liferay.headless.commerce.admin.shipment.internal.jaxrs.exception.mapper;
 
 import com.liferay.commerce.exception.CommerceAddressZipException;
-import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
-import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
+import com.liferay.headless.commerce.core.exception.mapper.BaseExceptionMapper;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -39,12 +38,13 @@ public class ShippingAddressZipExceptionMapper
 	extends BaseExceptionMapper<CommerceAddressZipException> {
 
 	@Override
-	protected Problem getProblem(
-		CommerceAddressZipException commerceAddressZipException) {
+	public String getErrorDescription() {
+		return "Invalid shipping address zip";
+	}
 
-		return new Problem(
-			Response.Status.BAD_REQUEST,
-			commerceAddressZipException.getMessage());
+	@Override
+	public Response.Status getStatus() {
+		return Response.Status.BAD_REQUEST;
 	}
 
 }

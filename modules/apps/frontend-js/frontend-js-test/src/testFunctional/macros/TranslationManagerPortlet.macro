@@ -1,5 +1,12 @@
 definition {
 
+	macro clickSelectTranslation {
+		Click.clickNoMouseOver(
+			key_currentLocale = "${key_currentLocale}",
+			key_title = "${key_title}",
+			locator1 = "TranslationManager#SELECT_TRANSLATION_LANGUAGE_MENU");
+	}
+
 	macro deleteLanguage {
 		Click(locator1 = "TranslationManager#MANAGE_TRANSLATIONS_DIALOG_LANGUAGE_DELETE");
 	}
@@ -10,13 +17,6 @@ definition {
 			key_title = "${key_title}");
 
 		Click(locator1 = "TranslationManager#MANAGE_TRANSLATIONS");
-	}
-
-	macro clickSelectTranslation {
-		Click.clickNoMouseOver(
-			key_currentLocale = "${key_currentLocale}",
-			key_title = "${key_title}",
-			locator1 = "TranslationManager#SELECT_TRANSLATION_LANGUAGE_MENU");
 	}
 
 }

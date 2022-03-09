@@ -117,12 +117,12 @@ definition {
 
 		task ("Then assert Catalan language is only present in Manage Translations table list") {
 			AssertElementPresent(
-				locator1 = "ManageTranslations#LIST_ITEM_LANGUAGE",
-				value1 = "Catalan");
+				key_language = "Catalan",
+				locator1 = "ManageTranslations#LIST_ITEM_LANGUAGE");
 
 			AssertElementNotPresent(
-				locator1 = "ManageTranslations#TABLE_BODY_ROW_INDEX",
-				key_index = "2");
+				key_index = "2",
+				locator1 = "ManageTranslations#TABLE_BODY_ROW_INDEX");
 		}
 	}
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -34,10 +35,12 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.persistence.PortletPersistence;
@@ -239,6 +242,29 @@ public class PermissionCheckerTest {
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				journalFolder.getFolderId());
 		}
+	}
+
+	@Test
+	public void testGetGuestUserRoleIdsDoesNotIncludeGuestGroupRole()
+		throws Exception {
+
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			_userLocalService.getDefaultUser(TestPropsValues.getCompanyId()));
+
+		_role = RoleTestUtil.addRole(
+			RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
+
+		Group guestGroup = _groupLocalService.getGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.GUEST);
+
+		_groupLocalService.addRoleGroup(_role.getRoleId(), guestGroup);
+
+		Role guestRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		Assert.assertArrayEquals(
+			new long[] {guestRole.getRoleId()},
+			permissionChecker.getGuestUserRoleIds());
 	}
 
 	@Test
@@ -1229,6 +1255,9 @@ public class PermissionCheckerTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private GroupLocalService _groupLocalService;
+
 	@DeleteAfterTestRun
 	private final List<Group> _groups = new ArrayList<>();
 
@@ -1252,6 +1281,9 @@ public class PermissionCheckerTest {
 
 	@DeleteAfterTestRun
 	private Role _role;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;

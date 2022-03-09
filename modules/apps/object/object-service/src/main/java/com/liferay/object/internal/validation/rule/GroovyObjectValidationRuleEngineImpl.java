@@ -19,7 +19,9 @@ import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scripting.Scripting;
+import com.liferay.portal.kernel.scripting.ScriptingException;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -54,8 +56,8 @@ public class GroovyObjectValidationRuleEngineImpl
 	public boolean isValidScript(String script) {
 		try {
 			_scripting.eval(
-				null, Collections.emptyMap(), new HashSet<>(),
-				ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY, script);
+				null, Collections.emptyMap(), new HashSet<>(), "groovy",
+				script);
 		}
 		catch (ScriptingException scriptingException) {
 			if (_log.isDebugEnabled()) {

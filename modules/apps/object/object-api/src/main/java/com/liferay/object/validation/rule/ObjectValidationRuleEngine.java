@@ -25,4 +25,6 @@ public interface ObjectValidationRuleEngine {
 
 	public String getName();
 
+	public boolean isValidScript(String script);
+
 }

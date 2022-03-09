@@ -44,12 +44,104 @@ import org.osgi.service.component.annotations.Reference;
 public class ObjectValidationRuleLocalServiceImpl
 	extends ObjectValidationRuleLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ObjectValidationRule addObjectValidationRule(
+			long userId, long objectDefinitionId, boolean active,
+			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
+			String engine, String script)
+		throws PortalException {
+
+		_validateScript(engine, script);
+
+		ObjectValidationRule objectValidationRule =
+			objectValidationRulePersistence.create(
+				counterLocalService.increment());
+
+		User user = _userLocalService.getUser(userId);
+
+		objectValidationRule.setCompanyId(user.getCompanyId());
+		objectValidationRule.setUserId(user.getUserId());
+		objectValidationRule.setUserName(user.getFullName());
+
+		objectValidationRule.setObjectDefinitionId(objectDefinitionId);
+		objectValidationRule.setActive(active);
+		objectValidationRule.setErrorLabelMap(errorLabelMap);
+		objectValidationRule.setNameMap(nameMap);
+		objectValidationRule.setEngine(engine);
+		objectValidationRule.setScript(script);
+
+		return objectValidationRulePersistence.update(objectValidationRule);
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public ObjectValidationRule deleteObjectValidationRule(
+			long objectValidationRuleId)
+		throws PortalException {
+
+		ObjectValidationRule objectValidationRule =
+			objectValidationRulePersistence.findByPrimaryKey(
+				objectValidationRuleId);
+
+		return deleteObjectValidationRule(objectValidationRule);
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public ObjectValidationRule deleteObjectValidationRule(
+		ObjectValidationRule objectValidationRule) {
+
+		return objectValidationRulePersistence.remove(objectValidationRule);
+	}
+
+	@Override
+	public ObjectValidationRule getObjectValidationRule(
+			long objectValidationRuleId)
+		throws PortalException {
+
+		return objectValidationRulePersistence.findByPrimaryKey(
+			objectValidationRuleId);
+	}
+
+	@Override
+	public List<ObjectValidationRule> getObjectValidationRules(
+		long objectDefinitionId) {
+
+		return objectValidationRulePersistence.findByObjectDefinitionId(
+			objectDefinitionId);
+	}
+
 	@Override
 	public List<ObjectValidationRule> getObjectValidationRules(
 		long objectDefinitionId, boolean active, int start, int end) {
 
 		return objectValidationRulePersistence.findByODI_A(
 			objectDefinitionId, active, start, end);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ObjectValidationRule updateObjectValidationRule(
+			long objectValidationRuleId, boolean active,
+			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
+			String engine, String script)
+		throws PortalException {
+
+		_validateScript(engine, script);
+
+		ObjectValidationRule objectValidationRule =
+			objectValidationRulePersistence.findByPrimaryKey(
+				objectValidationRuleId);
+
+		objectValidationRule.setActive(active);
+		objectValidationRule.setErrorLabelMap(errorLabelMap);
+		objectValidationRule.setNameMap(nameMap);
+		objectValidationRule.setEngine(engine);
+		objectValidationRule.setScript(script);
+
+		return objectValidationRulePersistence.update(objectValidationRule);
 	}
 
 	@Override
@@ -107,6 +199,18 @@ public class ObjectValidationRuleLocalServiceImpl
 					objectValidationRule.getErrorLabel(
 						LocaleUtil.getMostRelevantLocale()));
 			}
+		}
+	}
+
+	private void _validateScript(String engine, String script)
+		throws PortalException {
+
+		ObjectValidationRuleEngine objectValidationRuleEngine =
+			_objectValidationRuleEngineServicesTracker.
+				getObjectValidationRuleEngine(engine);
+
+		if (!objectValidationRuleEngine.isValidScript(script)) {
+			throw new ObjectValidationRuleException("invalid script");
 		}
 	}
 

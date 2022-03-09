@@ -1,0 +1,9 @@
+{
+	"active": true,
+	"description": "This is a description for Test workflow Definition 2",
+	"name": "Test workflow Definition 2",
+	"title": "Test workflow Definition 2",
+	"title_i18n": {
+		"en_US": "Test workflow Definition 2"
+	}
+}

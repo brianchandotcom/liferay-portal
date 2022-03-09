@@ -9,6 +9,7 @@ dependencies {
 	testIntegrationCompile project(":apps:fragment:fragment-api")
 	testIntegrationCompile project(":apps:headless:headless-admin-list-type:headless-admin-list-type-api")
 	testIntegrationCompile project(":apps:headless:headless-admin-user:headless-admin-user-api")
+	testIntegrationCompile project(":apps:headless:headless-admin-workflow:headless-admin-workflow-api")
 	testIntegrationCompile project(":apps:journal:journal-api")
 	testIntegrationCompile project(":apps:layout:layout-page-template-api")
 	testIntegrationCompile project(":apps:object:object-admin-rest-api")

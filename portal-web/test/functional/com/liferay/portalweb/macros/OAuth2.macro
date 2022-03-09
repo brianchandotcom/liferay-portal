@@ -564,6 +564,35 @@ definition {
 		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
 	}
 
+	@description = "Request the liferay access token for OAuth2 application with the JWT via curl."
+	macro requestAccessTokenWithJWTViaCurl {
+		var portalURL = PropsUtil.get("portal.url");
+		var jwt = FileUtil.read("${jwtFileBaseDir}/${jwtFileName}");
+
+		var curl = '''
+				${portalURL}/o/oauth2/token \
+					-H 'Content-Type: application/x-www-form-urlencoded' \
+					--data-urlencode 'client_id=${clientId}' \
+					--data-urlencode 'client_secret=${clientSecret}' \
+					--data-urlencode 'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer' \
+					--data-urlencode 'scope=${scopes}'
+					--data-urlencode 'assertion=${jwt}'
+				''';
+
+		if (!(isSet(noResponse))) {
+			var scopeList = JSONCurlUtil.post("${curl}", "$['scope']");
+
+			echo("## * Scope list: ${scopeList}");
+
+			return "${scopeList}";
+		}
+		else{
+			var errorType = JSONCurlUtil.post("${curl}", "$['error']");
+
+			echo("## * No access token is returned due to ${errorType}");
+		}
+	}
+
 	macro revokeApplicationAuthorization {
 		LexiconEntry.viewEntryMenuItem(
 			menuItem = "Revoke Authorizations",

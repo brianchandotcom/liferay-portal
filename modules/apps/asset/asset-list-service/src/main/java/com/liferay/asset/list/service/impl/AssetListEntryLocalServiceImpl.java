@@ -198,8 +198,7 @@ public class AssetListEntryLocalServiceImpl
 		if (!ExportImportThreadLocal.isImportInProcess()) {
 			_assetListEntrySegmentsEntryRelLocalService.
 				addAssetListEntrySegmentsEntryRel(
-					serviceContext.getUserId(),
-					serviceContext.getScopeGroupId(), assetListEntryId,
+					userId, groupId, assetListEntryId,
 					SegmentsEntryConstants.ID_DEFAULT, typeSettings,
 					serviceContext);
 		}

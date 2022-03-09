@@ -349,7 +349,8 @@ public class GetCollectionFieldMVCResourceCommand
 			"totalNumberOfItems",
 			_collectionPaginationHelper.getTotalNumberOfItems(
 				listCount, displayAllPages, displayAllItems, numberOfItems,
-				numberOfItemsPerPage, numberOfPages, paginationType)
+				numberOfItemsPerPage, numberOfPages, paginationType,
+				showAllItems)
 		);
 
 		return jsonObject;

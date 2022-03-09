@@ -321,7 +321,8 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			_collectionStyledLayoutStructureItem.getNumberOfItems(),
 			_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage(),
 			_collectionStyledLayoutStructureItem.getNumberOfPages(),
-			_collectionStyledLayoutStructureItem.getPaginationType());
+			_collectionStyledLayoutStructureItem.getPaginationType(),
+			_collectionStyledLayoutStructureItem.isShowAllItems());
 	}
 
 	private Map<String, String[]> _getConfiguration() {

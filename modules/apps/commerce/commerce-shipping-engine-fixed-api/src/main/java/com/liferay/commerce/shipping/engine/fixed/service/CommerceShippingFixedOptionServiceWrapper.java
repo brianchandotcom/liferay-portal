@@ -45,36 +45,14 @@ public class CommerceShippingFixedOptionServiceWrapper
 					long groupId, long commerceShippingMethodId,
 					java.math.BigDecimal amount,
 					java.util.Map<java.util.Locale, String> descriptionMap,
-					java.util.Map<java.util.Locale, String> nameMap,
+					String key, java.util.Map<java.util.Locale, String> nameMap,
 					double priority)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShippingFixedOptionService.
 			addCommerceShippingFixedOption(
-				groupId, commerceShippingMethodId, amount, descriptionMap,
+				groupId, commerceShippingMethodId, amount, descriptionMap, key,
 				nameMap, priority);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public
-		com.liferay.commerce.shipping.engine.fixed.model.
-			CommerceShippingFixedOption addCommerceShippingFixedOption(
-					long commerceShippingMethodId,
-					java.util.Map<java.util.Locale, String> nameMap,
-					java.util.Map<java.util.Locale, String> descriptionMap,
-					java.math.BigDecimal amount, double priority,
-					com.liferay.portal.kernel.service.ServiceContext
-						serviceContext)
-				throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceShippingFixedOptionService.
-			addCommerceShippingFixedOption(
-				commerceShippingMethodId, nameMap, descriptionMap, amount,
-				priority, serviceContext);
 	}
 
 	@Override
@@ -175,14 +153,14 @@ public class CommerceShippingFixedOptionServiceWrapper
 					long commerceShippingFixedOptionId,
 					java.math.BigDecimal amount,
 					java.util.Map<java.util.Locale, String> descriptionMap,
-					java.util.Map<java.util.Locale, String> nameMap,
+					String key, java.util.Map<java.util.Locale, String> nameMap,
 					double priority)
 				throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceShippingFixedOptionService.
 			updateCommerceShippingFixedOption(
-				commerceShippingFixedOptionId, amount, descriptionMap, nameMap,
-				priority);
+				commerceShippingFixedOptionId, amount, descriptionMap, key,
+				nameMap, priority);
 	}
 
 	@Override

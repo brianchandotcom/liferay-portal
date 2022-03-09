@@ -43,30 +43,13 @@ public class CommerceShippingFixedOptionServiceUtil {
 	public static CommerceShippingFixedOption addCommerceShippingFixedOption(
 			long groupId, long commerceShippingMethodId,
 			java.math.BigDecimal amount,
-			Map<java.util.Locale, String> descriptionMap,
+			Map<java.util.Locale, String> descriptionMap, String key,
 			Map<java.util.Locale, String> nameMap, double priority)
 		throws PortalException {
 
 		return getService().addCommerceShippingFixedOption(
-			groupId, commerceShippingMethodId, amount, descriptionMap, nameMap,
-			priority);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public static CommerceShippingFixedOption addCommerceShippingFixedOption(
-			long commerceShippingMethodId,
-			Map<java.util.Locale, String> nameMap,
-			Map<java.util.Locale, String> descriptionMap,
-			java.math.BigDecimal amount, double priority,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addCommerceShippingFixedOption(
-			commerceShippingMethodId, nameMap, descriptionMap, amount, priority,
-			serviceContext);
+			groupId, commerceShippingMethodId, amount, descriptionMap, key,
+			nameMap, priority);
 	}
 
 	public static void deleteCommerceShippingFixedOption(
@@ -143,12 +126,12 @@ public class CommerceShippingFixedOptionServiceUtil {
 
 	public static CommerceShippingFixedOption updateCommerceShippingFixedOption(
 			long commerceShippingFixedOptionId, java.math.BigDecimal amount,
-			Map<java.util.Locale, String> descriptionMap,
+			Map<java.util.Locale, String> descriptionMap, String key,
 			Map<java.util.Locale, String> nameMap, double priority)
 		throws PortalException {
 
 		return getService().updateCommerceShippingFixedOption(
-			commerceShippingFixedOptionId, amount, descriptionMap, nameMap,
+			commerceShippingFixedOptionId, amount, descriptionMap, key, nameMap,
 			priority);
 	}
 

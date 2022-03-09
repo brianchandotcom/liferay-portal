@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -88,18 +87,8 @@ public interface CommerceShippingFixedOptionLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceShippingFixedOption addCommerceShippingFixedOption(
 			long userId, long groupId, long commerceShippingMethodId,
-			BigDecimal amount, Map<Locale, String> descriptionMap,
+			BigDecimal amount, Map<Locale, String> descriptionMap, String key,
 			Map<Locale, String> nameMap, double priority)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public CommerceShippingFixedOption addCommerceShippingFixedOption(
-			long commerceShippingMethodId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, BigDecimal amount,
-			double priority, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -348,8 +337,8 @@ public interface CommerceShippingFixedOptionLocalService
 
 	public CommerceShippingFixedOption updateCommerceShippingFixedOption(
 			long commerceShippingFixedOptionId, BigDecimal amount,
-			Map<Locale, String> descriptionMap, Map<Locale, String> nameMap,
-			double priority)
+			Map<Locale, String> descriptionMap, String key,
+			Map<Locale, String> nameMap, double priority)
 		throws PortalException;
 
 }

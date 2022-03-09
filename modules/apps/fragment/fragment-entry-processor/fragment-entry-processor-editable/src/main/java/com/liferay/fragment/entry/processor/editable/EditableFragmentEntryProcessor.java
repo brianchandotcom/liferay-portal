@@ -145,8 +145,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			jsonObject.put(
 				clazz.getName(),
 				getDefaultEditableValuesJSONObject(
-					fragmentEntryLink.getHtml(),
-					fragmentEntryLink.getConfiguration()));
+					html, fragmentEntryLink.getConfiguration()));
 		}
 
 		Document document = _getDocument(html);

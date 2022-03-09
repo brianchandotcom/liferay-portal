@@ -357,8 +357,6 @@ public class OrganizationResourceImpl
 				_organizationLocalService.fetchOrganizationByReferenceCode(
 					contextCompany.getCompanyId(), externalReferenceCode);
 
-		long countryId = _getCountryId(organization);
-
 		String type = OrganizationConstants.TYPE_ORGANIZATION;
 		long statusId = ListTypeConstants.ORGANIZATION_STATUS_DEFAULT;
 		boolean site = false;
@@ -371,6 +369,8 @@ public class OrganizationResourceImpl
 
 			site = group.isSite();
 		}
+
+		long countryId = _getCountryId(organization);
 
 		serviceBuilderOrganization =
 			_organizationService.addOrUpdateOrganization(

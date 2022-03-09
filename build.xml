@@ -1111,26 +1111,6 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 
 	<target name="update-app-server-scripts">
 		<if>
-			<or>
-				<equals arg1="${app.server.type}" arg2="jboss" />
-				<equals arg1="${app.server.type}" arg2="wildfly" />
-			</or>
-			<then>
-				<if>
-					<not>
-						<available file="${app.server.lib.global.dir}/module.xml" />
-					</not>
-					<then>
-						<copy
-							file="tools/servers/jboss/modules/module.xml"
-							tofile="${app.server.lib.global.dir}/module.xml"
-						/>
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
 				<if>

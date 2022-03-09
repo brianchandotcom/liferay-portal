@@ -12,15 +12,16 @@
  * details.
  */
 
-export * from './liferayUserAccount';
-export * from './testrayCase';
-export * from './TestrayComponent';
-export * from './testrayFactorCategory';
-export * from './testrayFactorOptions';
-export * from './testrayProject';
-export * from './testrayRequirement';
-export * from './testrayRoutine';
-export * from './testraySubTask';
-export * from './testraySuite';
-export * from './testrayTask';
-export * from './testrayTeam';
+import {gql} from '@apollo/client';
+
+export const liferayUserAccountFragment = gql`
+	fragment LiferayUserAccountFragment on UserAccount {
+		additionalName
+		alternateName
+		emailAddress
+		familyName
+		givenName
+		id
+		image
+	}
+`;

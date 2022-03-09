@@ -145,7 +145,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "Test Page Name");
 
-		WebContentDisplayPortlet.viewMenuItemNotPresent(webContentTitle = "DHS Title");
+		WebContentDisplayPortlet.viewNoEditWC(webContentTitle = "DHS Title");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "test@liferay.com",

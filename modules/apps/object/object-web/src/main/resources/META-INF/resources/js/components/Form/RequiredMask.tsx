@@ -22,9 +22,7 @@ const RequiredMask: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				<ClayIcon symbol="asterisk" />
 			</span>
 
-			<span className="sr-only">
-				{Liferay.Language.get('mandatory')}
-			</span>
+			<span className="sr-only">{Liferay.Language.get('mandatory')}</span>
 		</>
 	);
 };

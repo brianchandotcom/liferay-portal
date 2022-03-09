@@ -2088,6 +2088,9 @@ public interface PropsKeys {
 	public static final String NOTIFICATIONS_MAX_EVENTS =
 		"notifications.max.events";
 
+	public static final String OBJECT_NESTED_FIELDS_MAX_QUERY_DEPTH =
+		"object.nested.fields.max.query.depth";
+
 	public static final String OMNIADMIN_USERS = "omniadmin.users";
 
 	public static final String OPEN_ID_AUTH_ENABLED = "open.id.auth.enabled";

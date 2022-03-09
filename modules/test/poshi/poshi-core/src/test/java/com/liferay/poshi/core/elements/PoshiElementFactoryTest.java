@@ -20,6 +20,7 @@ import com.liferay.poshi.core.util.FileUtil;
 
 import java.io.File;
 
+import com.liferay.poshi.core.util.PropsUtil;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -41,6 +42,10 @@ public class PoshiElementFactoryTest {
 		String poshiFileDir =
 			"../poshi-runner-resources/src/main/resources/default" +
 				"/testFunctional/functions";
+
+		PropsUtil.clear();
+
+		PropsUtil.set("test.base.dir.name", poshiFileDir);
 
 		PoshiContext.readFiles(poshiFileNames, poshiFileDir);
 

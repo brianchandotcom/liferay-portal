@@ -340,7 +340,6 @@ definition {
 		PortletEntry.publish();
 	}
 
-	@ignore = "true"
 	@priority = "3"
 	test AddVelocityDisplayTemplate {
 		property custom.properties = "freemarker.engine.restricted.variables=${line.separator}restricted.variables=";

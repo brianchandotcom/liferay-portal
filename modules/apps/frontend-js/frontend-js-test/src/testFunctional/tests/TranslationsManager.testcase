@@ -106,6 +106,30 @@ definition {
 		}
 	}
 
+	@description = "LPS-147946. Validates languages are searchable from the Manage Translations list."
+	@priority = "3"
+	test CanSearchLanguageFromManageTranslationsList {
+		task ("Given manage translations modal") {
+			TranslationManagerPortlet.goToManageTranslationsModal(
+				key_currentLocale = "en-us",
+				key_title = "Admin");
+		}
+
+		task ("When search for Catalan language") {
+			ManageTranslations.searchLanguage(key_language = "Catalan");
+		}
+
+		task ("Then assert Catalan language is only present in Manage Translations table list") {
+			AssertElementPresent(
+				locator1 = "ManageTranslations#LIST_ITEM_LANGUAGE",
+				value1 = "Catalan");
+
+			AssertElementNotPresent(
+				locator1 = "ManageTranslations#TABLE_BODY_ROW_INDEX",
+				key_index = "2");
+		}
+	}
+
 	@description = "LPS-147612. Verifies translation results displayed by different language."
 	@priority = "3"
 	test TranslationResultsDisplayedByDifferentLanguage {

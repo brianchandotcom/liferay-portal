@@ -21,6 +21,11 @@
 	<td>//tr//td[contains(text(),'${key_language}')]/following-sibling::td//button[@*[contains(.,'Delete')]]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>TABLE_BODY_ROW_INDEX</td>
+	<td>//tbody//tr[${key_index}]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

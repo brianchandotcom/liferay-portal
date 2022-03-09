@@ -616,8 +616,6 @@ definition {
 
 	@priority = "4"
 	test AddRepeatableFieldAndAssertOrderInTranslation {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -835,8 +833,6 @@ definition {
 	@description = "This is a use case for LPS-68216."
 	@priority = "4"
 	test AddSelectFieldWithTranslationAndViewInSpreadsheetView {
-		property portal.upstream = "quarantine";
-
 		var portalURL = PropsUtil.get("portal.url");
 
 		Navigator.openURL();
@@ -1996,8 +1992,6 @@ definition {
 	@description = "This is a use case for LPS-59272."
 	@priority = "3"
 	test EditListRecordWithNestedFieldViaSpreadsheetView {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2230,8 +2224,6 @@ definition {
 
 	@priority = "3"
 	test RemoveRepeatableFieldAndAssertOrderInTranslation {
-		property portal.upstream = "quarantine";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -3261,10 +3253,6 @@ definition {
 	@description = "This is a use case for LPS-60155."
 	@priority = "5"
 	test ViewRequiredNestedDocumentsAndMediaField {
-		property portal.acceptance = "false";
-		property portal.upstream = "quarantine";
-		property testray.component.names = "Training";
-
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

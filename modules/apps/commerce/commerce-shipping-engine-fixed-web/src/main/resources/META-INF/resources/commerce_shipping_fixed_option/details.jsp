@@ -38,6 +38,8 @@ if (commerceShippingFixedOption != null) {
 	<aui:input name="commerceShippingFixedOptionId" type="hidden" value="<%= commerceShippingFixedOptionId %>" />
 	<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
 
+	<liferay-ui:error exception="<%= CommerceShippingFixedOptionKeyException.class %>" message="please-enter-a-valid-key" />
+
 	<commerce-ui:panel>
 		<aui:input autoFocus="<%= true %>" bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="name" />
 
@@ -50,9 +52,26 @@ if (commerceShippingFixedOption != null) {
 		</c:if>
 
 		<aui:input bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" name="priority" />
+
+		<aui:input bean="<%= commerceShippingFixedOption %>" helpMessage="key-help" model="<%= CommerceShippingFixedOption.class %>" name="key" />
 	</commerce-ui:panel>
 
 	<aui:button-row>
 		<aui:button type="submit" value="save" />
 	</aui:button-row>
 </aui:form>
+
+<c:if test="<%= commerceShippingFixedOption == null %>">
+	<aui:script require="commerce-frontend-js/utilities/debounce as debounce">
+		var form = document.getElementById('<portlet:namespace />fm');
+
+		var keyInput = form.querySelector('#<portlet:namespace />key');
+		var titleInput = form.querySelector('#<portlet:namespace />name');
+
+		var handleOnTitleInput = function () {
+			keyInput.value = titleInput.value;
+		};
+
+		titleInput.addEventListener('input', debounce.default(handleOnTitleInput, 200));
+	</aui:script>
+</c:if>

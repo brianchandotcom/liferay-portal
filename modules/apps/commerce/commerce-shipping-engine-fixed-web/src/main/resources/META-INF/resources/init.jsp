@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.commerce.inventory.model.CommerceInventoryWarehouse" %><%@
 page import="com.liferay.commerce.product.constants.CPMeasurementUnitConstants" %><%@
+page import="com.liferay.commerce.shipping.engine.fixed.exception.CommerceShippingFixedOptionKeyException" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.exception.DuplicateCommerceShippingFixedOptionQualifierException" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel" %><%@

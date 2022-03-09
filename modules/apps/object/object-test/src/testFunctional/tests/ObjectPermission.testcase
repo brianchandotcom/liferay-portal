@@ -924,15 +924,4 @@ definition {
 
 	}
 
-	@description = "LPS-146757 - Verify that single Entry permissions will be checked and greyed out if the permissions were already given to the user's role"
-	@ignore = "Test Stub"
-	@priority = "3"
-	test RolePermissionsOverlapSingleObjectEntryPermissions {
-		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
-
-		// TODO LPS-147747 RolePermissionsOverlapSingleObjectEntryPermissions pending implementation
-
-	}
-
 }

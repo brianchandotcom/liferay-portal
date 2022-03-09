@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_TEXT_BOX</td>
+	<td>//div[contains(@class,'ddm-field')][${key_position}]//textarea</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WEB_CONTENT</td>
 	<td>//div[@data-field-name='${key_fieldName}']//label[contains(.,'${key_fieldFieldLabel}')]</td>
 	<td></td>

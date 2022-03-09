@@ -891,7 +891,7 @@ public class SpeedwellSiteInitializer implements SiteInitializer {
 		_commerceShippingFixedOptionLocalService.addCommerceShippingFixedOption(
 			serviceContext.getUserId(), commerceShippingMethod.getGroupId(),
 			commerceShippingMethod.getCommerceShippingMethodId(), price,
-			descriptionMap, nameMap, 0);
+			descriptionMap, null, nameMap, 0);
 	}
 
 	private void _setDefaultCatalogImage(

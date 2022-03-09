@@ -892,6 +892,7 @@ public class MiniumSiteInitializer implements SiteInitializer {
 			HashMapBuilder.put(
 				serviceContext.getLocale(), description
 			).build(),
+			null,
 			HashMapBuilder.put(
 				serviceContext.getLocale(), name
 			).build(),

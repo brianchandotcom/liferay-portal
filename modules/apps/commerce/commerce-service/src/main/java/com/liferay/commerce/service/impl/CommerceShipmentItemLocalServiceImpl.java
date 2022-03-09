@@ -57,7 +57,8 @@ public class CommerceShipmentItemLocalServiceImpl
 	public CommerceShipmentItem addCommerceShipmentItem(
 			String externalReferenceCode, long commerceShipmentId,
 			long commerceOrderItemId, long commerceInventoryWarehouseId,
-			int quantity, ServiceContext serviceContext)
+			int quantity, boolean validateInventory,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce shipment item
@@ -69,11 +70,13 @@ public class CommerceShipmentItemLocalServiceImpl
 			commerceOrderItemLocalService.getCommerceOrderItem(
 				commerceOrderItemId);
 
-		validate(
-			commerceOrderItem,
-			commerceShipmentLocalService.getCommerceShipment(
-				commerceShipmentId),
-			commerceInventoryWarehouseId, quantity, quantity);
+		if (validateInventory) {
+			validate(
+				commerceOrderItem,
+				commerceShipmentLocalService.getCommerceShipment(
+					commerceShipmentId),
+				commerceInventoryWarehouseId, quantity, quantity);
+		}
 
 		long commerceShipmentItemId = counterLocalService.increment();
 
@@ -157,7 +160,8 @@ public class CommerceShipmentItemLocalServiceImpl
 		if (commerceShipmentItem == null) {
 			return commerceShipmentItemLocalService.addCommerceShipmentItem(
 				externalReferenceCode, commerceShipmentId, commerceOrderItemId,
-				commerceInventoryWarehouseId, quantity, serviceContext);
+				commerceInventoryWarehouseId, quantity, validateInventory,
+				serviceContext);
 		}
 
 		return commerceShipmentItemLocalService.updateCommerceShipmentItem(

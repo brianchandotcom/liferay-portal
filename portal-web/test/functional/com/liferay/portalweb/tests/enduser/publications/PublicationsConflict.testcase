@@ -214,9 +214,9 @@ definition {
 	@priority = "5"
 	test ConflictingPublicationsAutomaticallyResolved {
 
-		// Workaround LPS-140997
+		// Workaround LPS-140997 and LPS-129369
 
-		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
+		property database.types = "hypersonic,mariadb,mysql,postgresql,sqlserver";
 
 		JSONWebcontent.addWebContent(
 			content = "WC WebContent Content",

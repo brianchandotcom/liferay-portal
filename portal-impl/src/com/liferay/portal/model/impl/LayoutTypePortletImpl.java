@@ -339,12 +339,6 @@ public class LayoutTypePortletImpl
 			portlets.addAll(getAllPortlets(columnId));
 		}
 
-		for (Portlet portlet : getPortlets()) {
-			if (!portlets.contains(portlet)) {
-				portlets.add(portlet);
-			}
-		}
-
 		return portlets;
 	}
 
@@ -477,24 +471,6 @@ public class LayoutTypePortletImpl
 		for (String column : getColumns()) {
 			Collections.addAll(
 				portletIds, StringUtil.split(getColumnValue(column)));
-		}
-
-		Layout layout = getLayout();
-
-		if (layout.isTypeAssetDisplay() || layout.isTypeContent()) {
-			List<com.liferay.portal.kernel.model.PortletPreferences>
-				portletPreferencesList =
-					PortletPreferencesLocalServiceUtil.getPortletPreferences(
-						PortletKeys.PREFS_OWNER_ID_DEFAULT,
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
-
-			for (com.liferay.portal.kernel.model.PortletPreferences
-					portletPreferences : portletPreferencesList) {
-
-				if (!portletIds.contains(portletPreferences.getPortletId())) {
-					portletIds.add(portletPreferences.getPortletId());
-				}
-			}
 		}
 
 		return portletIds;

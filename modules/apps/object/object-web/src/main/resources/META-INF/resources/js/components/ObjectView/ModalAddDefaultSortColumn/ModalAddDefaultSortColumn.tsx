@@ -86,8 +86,8 @@ export function ModalAddDefaultSortColumn({
 	const [query, setQuery] = useState<string>('');
 
 	const filtredObjectSortColumn = useMemo(() => {
-		return availableViewColumns.filter(({objectFieldName}) => {
-			return objectFieldName.toLowerCase().includes(query.toLowerCase());
+		return availableViewColumns.filter(({label}) => {
+			return label.toLowerCase().includes(query.toLowerCase());
 		});
 	}, [availableViewColumns, query]);
 

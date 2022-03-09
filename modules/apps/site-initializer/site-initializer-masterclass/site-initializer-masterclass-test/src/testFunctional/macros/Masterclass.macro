@@ -49,6 +49,10 @@ definition {
 		Click(locator1 = "Button#SUBMIT");
 	}
 
+	macro goBack {
+		RunScript(locator1 = "window.history.go(-1)");
+	}
+
 	macro goToLink {
 		Click(
 			key_buttonName = "${key_buttonName}",
@@ -128,6 +132,16 @@ definition {
 				key_fragmentName = "${element}",
 				locator1 = "Masterclass#FRAGMENTS_IN_SIMULATION");
 		}
+	}
+
+	macro verifySignInForm {
+		AssertElementPresent(
+			labelTitle = "Email Address",
+			locator1 = "Masterclass#SIGN_IN_FORM");
+
+		AssertElementPresent(
+			labelTitle = "Password",
+			locator1 = "Masterclass#SIGN_IN_FORM");
 	}
 
 	macro viewCoursesInPage {

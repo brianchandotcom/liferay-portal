@@ -144,7 +144,7 @@ public class UIItemsBuilder {
 		}
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.CANCEL_CHECKOUT,
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.CANCEL_CHECKOUT,
 			"cancel-checkout[document]",
 			PortletURLBuilder.create(
 				_getActionURL(
@@ -165,7 +165,7 @@ public class UIItemsBuilder {
 		}
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems,
+			new JavaScriptToolbarItem(), toolbarItems, "",
 			DLUIItemKeys.CANCEL_CHECKOUT,
 			LanguageUtil.get(_resourceBundle, "cancel-checkout[document]"),
 			_getSubmitFormJavaScript(Constants.CANCEL_CHECKOUT, null));
@@ -192,7 +192,7 @@ public class UIItemsBuilder {
 
 		JavaScriptToolbarItem javaScriptToolbarItem = _addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKIN,
-			LanguageUtil.get(_resourceBundle, "checkin"),
+			LanguageUtil.get(_resourceBundle, "checkin"), "",
 			StringBundler.concat(
 				_getNamespace(), "showVersionDetailsDialog('",
 				HtmlUtil.escapeJS(
@@ -237,7 +237,7 @@ public class UIItemsBuilder {
 		}
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.CHECKOUT,
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.CHECKOUT,
 			"checkout[document]",
 			PortletURLBuilder.create(
 				_getActionURL(
@@ -257,7 +257,8 @@ public class UIItemsBuilder {
 		}
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKOUT,
+			new JavaScriptToolbarItem(), toolbarItems, "",
+			DLUIItemKeys.CHECKOUT,
 			LanguageUtil.get(_resourceBundle, "checkout[document]"),
 			_getSubmitFormJavaScript(Constants.CHECKOUT, null));
 	}
@@ -279,7 +280,7 @@ public class UIItemsBuilder {
 			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems,
+			new URLMenuItem(), menuItems, "",
 			DLUIItemKeys.COLLECT_DIGITAL_SIGNATURE,
 			LanguageUtil.get(_resourceBundle, "collect-digital-signature"),
 			PortletURLBuilder.create(
@@ -297,7 +298,7 @@ public class UIItemsBuilder {
 		throws PortalException {
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems,
+			new JavaScriptToolbarItem(), toolbarItems, "",
 			DLUIItemKeys.COLLECT_DIGITAL_SIGNATURE,
 			LanguageUtil.get(_resourceBundle, "collect-digital-signature"),
 			null);
@@ -335,7 +336,7 @@ public class UIItemsBuilder {
 		String jsNamespace = _getNamespace() + _fileVersion.getFileVersionId();
 
 		JavaScriptMenuItem javaScriptMenuItem = _addJavaScriptUIItem(
-			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.COMPARE_TO,
+			new JavaScriptMenuItem(), menuItems, "", DLUIItemKeys.COMPARE_TO,
 			"compare-to",
 			StringBundler.concat(
 				jsNamespace, "compareVersionDialog('",
@@ -460,7 +461,7 @@ public class UIItemsBuilder {
 		sb.append("}");
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.DELETE,
+			new JavaScriptToolbarItem(), toolbarItems, "", DLUIItemKeys.DELETE,
 			LanguageUtil.get(_resourceBundle, "delete"), sb.toString());
 	}
 
@@ -533,7 +534,8 @@ public class UIItemsBuilder {
 			appendVersion, true);
 
 		URLMenuItem urlMenuItem = _addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.DOWNLOAD, label, url);
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.DOWNLOAD, label,
+			url);
 
 		urlMenuItem.setData(
 			HashMapBuilder.<String, Object>put(
@@ -563,7 +565,7 @@ public class UIItemsBuilder {
 			).build());
 
 		_addURLUIItem(
-			urlToolbarItem, toolbarItems, DLUIItemKeys.DOWNLOAD,
+			urlToolbarItem, toolbarItems, "", DLUIItemKeys.DOWNLOAD,
 			StringBundler.concat(
 				LanguageUtil.get(_resourceBundle, "download"), " (", label,
 				")"),
@@ -585,7 +587,7 @@ public class UIItemsBuilder {
 		}
 
 		_addJavaScriptUIItem(
-			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.EDIT_IMAGE,
+			new JavaScriptMenuItem(), menuItems, "", DLUIItemKeys.EDIT_IMAGE,
 			LanguageUtil.get(_resourceBundle, "edit-image"),
 			_getEditImageOnClickJavaScript());
 	}
@@ -615,7 +617,7 @@ public class UIItemsBuilder {
 		portletURL.setParameter("backURL", _getCurrentURL());
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.EDIT, "edit",
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.EDIT, "edit",
 			portletURL.toString());
 	}
 
@@ -630,7 +632,7 @@ public class UIItemsBuilder {
 			"/document_library/edit_file_entry");
 
 		_addURLUIItem(
-			new URLToolbarItem(), toolbarItems, DLUIItemKeys.EDIT,
+			new URLToolbarItem(), toolbarItems, "", DLUIItemKeys.EDIT,
 			LanguageUtil.get(_resourceBundle, "edit"), portletURL.toString());
 	}
 
@@ -646,7 +648,7 @@ public class UIItemsBuilder {
 		}
 
 		_addJavaScriptUIItem(
-			new JavaScriptMenuItem(), menuItems, DLUIItemKeys.MOVE,
+			new JavaScriptMenuItem(), menuItems, "", DLUIItemKeys.MOVE,
 			LanguageUtil.get(_resourceBundle, "move"),
 			_getMoveEntryOnClickJavaScript());
 	}
@@ -659,7 +661,7 @@ public class UIItemsBuilder {
 		}
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.MOVE,
+			new JavaScriptToolbarItem(), toolbarItems, "", DLUIItemKeys.MOVE,
 			LanguageUtil.get(_resourceBundle, "move"),
 			_getMoveEntryOnClickJavaScript());
 	}
@@ -693,7 +695,7 @@ public class UIItemsBuilder {
 			"folderId", String.valueOf(_fileEntry.getFolderId()));
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems,
+			new JavaScriptToolbarItem(), toolbarItems, "",
 			DLUIItemKeys.MOVE_TO_THE_RECYCLE_BIN,
 			LanguageUtil.get(_resourceBundle, "move-to-recycle-bin"),
 			_getSubmitFormJavaScript(
@@ -737,7 +739,7 @@ public class UIItemsBuilder {
 		}
 
 		URLMenuItem urlMenuItem = _addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.PERMISSIONS,
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.PERMISSIONS,
 			"permissions", url);
 
 		urlMenuItem.setMethod("get");
@@ -767,7 +769,8 @@ public class UIItemsBuilder {
 		}
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.PERMISSIONS,
+			new JavaScriptToolbarItem(), toolbarItems, "",
+			DLUIItemKeys.PERMISSIONS,
 			LanguageUtil.get(_resourceBundle, "permissions"),
 			StringBundler.concat(
 				"Liferay.Util.openModal({title: '",
@@ -845,7 +848,7 @@ public class UIItemsBuilder {
 		sb.append("';}");
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.PUBLISH,
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.PUBLISH,
 			"publish-to-live", sb.toString());
 	}
 
@@ -870,7 +873,7 @@ public class UIItemsBuilder {
 			"/document_library/view_file_entry", _getRedirect());
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.REVERT, "revert",
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.REVERT, "revert",
 			PortletURLBuilder.create(
 				_getActionURL(
 					"/document_library/edit_file_entry", Constants.REVERT,
@@ -888,7 +891,7 @@ public class UIItemsBuilder {
 		}
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.VIEW_ORIGINAL_FILE,
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.VIEW_ORIGINAL_FILE,
 			"view-original-file",
 			PortletURLBuilder.create(
 				_getRenderURL("/document_library/view_file_entry")
@@ -903,7 +906,7 @@ public class UIItemsBuilder {
 		}
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLUIItemKeys.VIEW_VERSION,
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.VIEW_VERSION,
 			"view[action]",
 			PortletURLBuilder.create(
 				_getRenderURL(
@@ -1006,8 +1009,12 @@ public class UIItemsBuilder {
 	}
 
 	private <T extends JavaScriptUIItem> T _addJavaScriptUIItem(
-		T javascriptUIItem, List<? super T> javascriptUIItems, String key,
-		String label, String onClick) {
+		T javascriptUIItem, List<? super T> javascriptUIItems, String icon,
+		String key, String label, String onClick) {
+
+		if (Validator.isNotNull(icon)) {
+			javascriptUIItem.setIcon(icon);
+		}
 
 		javascriptUIItem.setKey(key);
 		javascriptUIItem.setLabel(label);
@@ -1019,8 +1026,12 @@ public class UIItemsBuilder {
 	}
 
 	private <T extends URLUIItem> T _addURLUIItem(
-		T urlUIItem, List<? super T> urlUIItems, String key, String label,
-		String url) {
+		T urlUIItem, List<? super T> urlUIItems, String icon, String key,
+		String label, String url) {
+
+		if (Validator.isNotNull(icon)) {
+			urlUIItem.setIcon(icon);
+		}
 
 		urlUIItem.setKey(key);
 		urlUIItem.setLabel(label);

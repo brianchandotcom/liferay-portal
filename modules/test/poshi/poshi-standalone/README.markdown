@@ -8,6 +8,13 @@ This repository contains the minimal configuration to begin writing and running 
 
  1. [Gradle](https://gradle.org/install/) or [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:adding_wrapper) 6.6.1 or higher.
 
+## Setup
+
+To create the necessary files to use Poshi Standalone, run the following command from the desired directory in a terminal/command line window:
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/test/poshi/poshi-standalone/setup.sh)"
+```
+
 ## Poshi Configuration
 
 ### Poshi Properties

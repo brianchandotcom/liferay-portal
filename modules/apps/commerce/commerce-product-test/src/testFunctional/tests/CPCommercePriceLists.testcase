@@ -1093,6 +1093,16 @@ definition {
 			value1 = "7.45");
 	}
 
+	@description = "This is a test for COMMERCE-6220. When creating a price list only catalogs for which the user has permission should be visible in the drop down"
+	@ignore = "true"
+	@priority = "3"
+	test AllowMultiplePriceEntriesOnTheSamePriceList {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8568 AllowMultiplePriceEntriesOnTheSamePriceList Pending Implementation
+
+	}
+
 	test AssertPriceEntriesAreProductsInTheSameCatalogAsPriceList {
 		property portal.acceptance = "false";
 		property portal.upstream = "true";

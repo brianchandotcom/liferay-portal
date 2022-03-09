@@ -1,0 +1,148 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Product Info Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		Navigator.openURL();
+
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.logoutPG();
+		}
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceAdminTearDown();
+
+		CommerceConfiguration.commerceInitializersTearDown();
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AddMultipleSKUToTheCart {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8146 AddMultipleSKUToTheCart pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertDefaultTypeDiagramStoreFront {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8068 AssertDefaultTypeDiagramStoreFront pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertDiagramThumbnailIntoSearchResults {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8129 AssertDiagramThumbnailIntoSearchResults pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertIfDiagramIsRendered {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8207 AssertIfDiagramIsRendered pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertIfTheQuantityFromThePopupAreCorrect {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8209 AssertIfTheQuantityFromThePopupAreCorrect pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertSVGTypeDiagramStoreFront {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8078 AssertSVGTypeDiagramStoreFront pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test VerifyAllPinTypeAndMappedProductInformation {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8147 VerifyAllPinTypeAndMappedProductInformation pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test VerifyBreadcrumbWidget {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8265 VerifyBreadcrumbWidget pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test VerifyIfDiagramWithProductPublisherWidgets {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8358 VerifyIfDiagramWithProductPublisherWidgets pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test VerifyNameAndDescriptionDefaultRender {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8565 VerifyNameAndDescriptionDefaultRender pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test VerifyTheVisibilityRules {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8153 VerifyTheVisibilityRules pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test VerifyTooltipPinInformation {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8566 VerifyTooltipPinInformation pending implementation
+
+	}
+
+}

@@ -25,6 +25,56 @@ definition {
 		CommerceConfiguration.commerceInitializersTearDown();
 	}
 
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AddANewPaymentTerm {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8279 AddANewPaymentTerm pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertPaymentTermIsSortedByPriority {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8295 AssertPaymentTermIsSortedByPriority pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertPaymentTermPriority {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8293 AssertPaymentTermPriority pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AssertPaymentTermPriorityIsUnique {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8296 AssertPaymentTermPriorityIsUnique pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CancelTheCreationOfANewEntry {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8286 CancelTheCreationOfANewEntry pending implementation
+
+	}
+
 	@description = "Delete a new payment term to Terms and Conditions."
 	@priority = "3"
 	test CanDeleteAPaymentTerm {
@@ -57,7 +107,56 @@ definition {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No Items were found.");
-		}
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ChangeTheStatus {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8280 ChangeTheStatus pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test EditAPaymentTerm {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8282 EditAPaymentTerm pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PaymentTermNameIsUnique {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8283 PaymentTermNameIsUnique pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test UseFilterAndSearch {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8291 UseFilterAndSearch pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test UseTheLocalization {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8284 UseTheLocalization pending implementation
+
 	}
 
 }

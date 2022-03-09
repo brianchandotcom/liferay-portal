@@ -98,6 +98,16 @@ definition {
 		}
 	}
 
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test EditReplacementProduct {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8165 EditReplacementProduct pending implementation
+
+	}
+
 	@description = "Verify a replacement product can be removed"
 	@priority = "3"
 	test RemoveReplacementProduct {
@@ -191,6 +201,16 @@ definition {
 				locator1 = "TextInput#REPLACEMENT",
 				value1 = "SKU1002");
 		}
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ReplacementLoopIsPrevented {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8164 ReplacementLoopIsPrevented pending implementation
+
 	}
 
 	@description = "Verify a product can be set as discontinued"

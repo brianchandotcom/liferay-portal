@@ -163,6 +163,16 @@ definition {
 			locator1 = "CommerceEntry#CHANNELS_GENERAL_ACTIVE_STATUS");
 	}
 
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test AddANewDefaultPaymentMethod {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8534 AddANewDefaultPaymentMethod pending implementation
+
+	}
+
 	@description = "This is a test for COMMERCE-6116. AddShippingOptionFedEx"
 	@priority = "3"
 	test AddShippingOptionFedEx {
@@ -542,6 +552,56 @@ definition {
 			locator1 = "CommerceEntry#ENTRY_NAME_BODY_VERTICAL_ELLIPSIS");
 	}
 
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CompleteCheckoutWhereDefaultPaymentMethodIsDisabledIntoChannel {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8539 CompleteCheckoutWhereDefaultPaymentMethodIsDisabledIntoChannel pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CompleteCheckoutWhereDefaultPaymentMethodIsNotPresentIntoOrderType {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8536 CompleteCheckoutWhereDefaultPaymentMethodIsNotPresentIntoOrderType pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CompleteCheckoutWhereDefaultPaymentMethodIsPresentIntoOrderType {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8537 CompleteCheckoutWhereDefaultPaymentMethodIsPresentIntoOrderType pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CompleteCheckoutWhereDefaultPaymentMethodIsPresentIntoOrderTypeButDisabledIntoChannel {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8538 CompleteCheckoutWhereDefaultPaymentMethodIsPresentIntoOrderTypeButDisabledIntoChannel pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CompleteCheckoutWithDefaultPaymentMethod {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8535 CompleteCheckoutWithDefaultPaymentMethod pending implementation
+
+	}
+
 	@description = "This is a test for COMMERCE-6195. CreateCategoryDisplayPage"
 	@ignore = "true"
 	@priority = "3"
@@ -794,6 +854,16 @@ definition {
 		AssertElementPresent(
 			key_entryName = "ABS Sensor",
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DeactivatePaymentMethodLinkedToAnAccount {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8545 DeactivatePaymentMethodLinkedToAnAccount pending implementation
+
 	}
 
 	@description = "This is a test for COMMERCE-6109. EditAuthorizePaymentMethod"
@@ -1582,6 +1652,16 @@ definition {
 			locator1 = "CommerceEntry#TABLE_LIST_TITLE");
 	}
 
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test RemoveOfflinePaymentLinkedAsDefaultPaymentMethod {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8542 RemoveOfflinePaymentLinkedAsDefaultPaymentMethod pending implementation
+
+	}
+
 	@description = "This is a test for COMMERCE-6196. RemoveProductDisplayPage"
 	@priority = "3"
 	test RemoveProductDisplayPage {
@@ -2176,6 +2256,16 @@ definition {
 			key_name = "Test",
 			key_order = "1",
 			locator1 = "CommerceEntry#ASSERT_NOTIFICATION_QUEUE");
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test VerifyPriorityColumnForShippingOption {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8663 VerifyPriorityColumnForShippingOption pending implementation
+
 	}
 
 }

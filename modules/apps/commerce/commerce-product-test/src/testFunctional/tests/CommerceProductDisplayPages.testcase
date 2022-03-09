@@ -364,6 +364,46 @@ definition {
 		}
 	}
 
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test OverridePrivateDefaultProductDisplayPageWithAPrivatePage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7841 OverridePrivateDefaultProductDisplayPageWithAPrivatePage pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test OverridePrivateDefaultProductDisplayPageWithAPublicPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7840 OverridePrivateDefaultProductDisplayPageWithAPublicPage pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test OverridePublicDefaultProductDisplayPageWithAPrivatePage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7839 OverridePublicDefaultProductDisplayPageWithAPrivatePage pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test OverridePublicDefaultProductDisplayPageWithAPublicPage {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-7838 OverridePublicDefaultProductDisplayPageWithAPublicPage pending implementation
+
+	}
+
 	@description = "Verify user is redirected to private content and widget pages with a Product Details widget when clicking on a catalog product after the page is defined as the Default Product Display Page."
 	@priority = "3"
 	test ViewDefaultProductDisplayPageWithPrivateContentAndWidgetPages {

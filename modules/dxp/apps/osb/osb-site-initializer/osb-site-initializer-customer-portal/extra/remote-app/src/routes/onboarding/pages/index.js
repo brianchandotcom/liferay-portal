@@ -39,20 +39,16 @@ const Pages = () => {
 				payload: ONBOARDING_STEP_TYPES.dxpCloud,
 				type: actionTypes.CHANGE_STEP,
 			});
-		} else {
+		}
+		else {
 			window.location.href = PAGE_ROUTER_TYPES.project(
 				project.accountKey
 			);
 		}
 	};
 
-	const getAvailableAdministratorAssets = () => {
-		if (project) {
-			return project.maxRequestors - totalAdministratorAccounts;
-		}
-	};
-
-	const availableAdministratorAssets = getAvailableAdministratorAssets();
+	const availableAdministratorAssets =
+		project && project.maxRequestors - totalAdministratorAccounts;
 
 	const StepsLayout = {
 		[ONBOARDING_STEP_TYPES.invites]: {
@@ -75,7 +71,8 @@ const Pages = () => {
 								payload: ONBOARDING_STEP_TYPES.successDxpCloud,
 								type: actionTypes.CHANGE_STEP,
 							});
-						} else {
+						}
+						else {
 							window.location.href = PAGE_ROUTER_TYPES.project(
 								project.accountKey
 							);

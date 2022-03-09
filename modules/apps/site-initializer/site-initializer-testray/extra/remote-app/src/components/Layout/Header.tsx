@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
@@ -29,7 +30,7 @@ type BreadCrumbTriggerProps = {
 };
 
 const Header = () => {
-	const [{dropdown, heading, tabs}] = useContext(HeaderContext);
+	const [{actions, dropdown, heading, tabs}] = useContext(HeaderContext);
 	const navigate = useNavigate();
 
 	const BreadCrumbTrigger: React.FC<BreadCrumbTriggerProps> = ({
@@ -72,8 +73,8 @@ const Header = () => {
 					)}
 				</div>
 
-				<div className="d-flex flex-column">
-					<div className="d-flex flex-wrap">
+				<div className="d-flex flex-row justify-content-between w-100">
+					<div className="d-flex flex-1 flex-wrap">
 						{heading.map((header, index) => {
 							const isClickable =
 								header.path && index !== heading.length - 1;
@@ -118,6 +119,19 @@ const Header = () => {
 							);
 						})}
 					</div>
+
+					{!!actions.length && (
+						<DropDown
+							items={actions}
+							position={Align.BottomLeft}
+							trigger={
+								<ClayButtonWithIcon
+									displayType="unstyled"
+									symbol="ellipsis-v"
+								/>
+							}
+						/>
+					)}
 				</div>
 			</div>
 

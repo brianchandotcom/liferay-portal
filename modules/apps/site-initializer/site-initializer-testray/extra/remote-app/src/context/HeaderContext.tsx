@@ -22,7 +22,7 @@ type DropdownItem = {
 	icon?: string;
 	label: string;
 	onClick?: () => void;
-	path: string;
+	path?: string;
 };
 
 type DropdownSection = {
@@ -45,12 +45,14 @@ export type HeaderTitle = {
 };
 
 type InitialState = {
+	actions: Dropdown;
 	dropdown: Dropdown;
 	heading: HeaderTitle[];
 	tabs: HeaderTabs[];
 };
 
 export const initialState: InitialState = {
+	actions: [],
 	dropdown: [
 		{
 			items: [],
@@ -71,6 +73,7 @@ export const HeaderContext = createContext<
 >([initialState, () => null]);
 
 export enum HeaderTypes {
+	SET_ACTIONS = 'SET_ACTIONS',
 	SET_DROPDOWN = 'SET_DROPDOWN',
 	SET_HEADING = 'SET_HEADING',
 	SET_RESET_HEADER = 'SET_RESET_HEADER',
@@ -78,6 +81,7 @@ export enum HeaderTypes {
 }
 
 export type HeaderActionsPayload = {
+	[HeaderTypes.SET_ACTIONS]: Dropdown;
 	[HeaderTypes.SET_DROPDOWN]: Dropdown;
 	[HeaderTypes.SET_HEADING]: {append?: boolean; heading: HeaderTitle[]};
 	[HeaderTypes.SET_RESET_HEADER]: null;
@@ -90,6 +94,13 @@ export type AppActions = ActionMap<HeaderActionsPayload>[keyof ActionMap<
 
 const reducer = (state: InitialState, action: AppActions): InitialState => {
 	switch (action.type) {
+		case HeaderTypes.SET_ACTIONS: {
+			return {
+				...state,
+				actions: action.payload,
+			};
+		}
+
 		case HeaderTypes.SET_DROPDOWN: {
 			return {
 				...state,

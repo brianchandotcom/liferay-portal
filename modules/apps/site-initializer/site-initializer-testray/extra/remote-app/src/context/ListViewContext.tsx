@@ -134,8 +134,16 @@ const reducer = (state: InitialState, action: AppActions) => {
 	}
 };
 
-const ListViewContextProvider: React.FC = ({children}) => {
-	const [state, dispatch] = useReducer(reducer, initialState);
+export type ListViewContextProviderProps = Partial<InitialState>;
+
+const ListViewContextProvider: React.FC<ListViewContextProviderProps> = ({
+	children,
+	...initialStateProps
+}) => {
+	const [state, dispatch] = useReducer(reducer, {
+		...initialState,
+		...initialStateProps,
+	});
 
 	return (
 		<ListViewContext.Provider value={[state, dispatch]}>

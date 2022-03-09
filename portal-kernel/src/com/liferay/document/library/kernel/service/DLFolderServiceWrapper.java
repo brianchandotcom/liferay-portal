@@ -86,21 +86,6 @@ public class DLFolderServiceWrapper
 			groupId, folderId, status);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFileEntriesAndFileShortcutsCount(long, long, String[],
-	 int)}
-	 */
-	@Deprecated
-	@Override
-	public int getFileEntriesAndFileShortcutsCount(
-			long groupId, long folderId, int status, String[] mimeTypes)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlFolderService.getFileEntriesAndFileShortcutsCount(
-			groupId, folderId, status, mimeTypes);
-	}
-
 	@Override
 	public int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, String[] mimeTypes, int status)
@@ -144,25 +129,6 @@ public class DLFolderServiceWrapper
 			orderByComparator);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFolders(long, long, boolean, int, int, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<DLFolder> getFolders(
-			long groupId, long parentFolderId, int status,
-			boolean includeMountfolders, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator<DLFolder>
-				orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlFolderService.getFolders(
-			groupId, parentFolderId, status, includeMountfolders, start, end,
-			orderByComparator);
-	}
-
 	@Override
 	public java.util.List<DLFolder> getFolders(
 			long groupId, long parentFolderId, int start, int end,
@@ -185,44 +151,6 @@ public class DLFolderServiceWrapper
 		return _dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(
 			groupId, folderId, includeMountFolders, status, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFoldersAndFileEntriesAndFileShortcuts(long, long,
-	 boolean, int, int, int, OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-			long groupId, long folderId, int status,
-			boolean includeMountFolders, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator<?>
-				orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(
-			groupId, folderId, status, includeMountFolders, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFoldersAndFileEntriesAndFileShortcuts(long, long,
-	 String[], boolean, int, int, int, OrderByComparator)}
-	 */
-	@Deprecated
-	@Override
-	public java.util.List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-			long groupId, long folderId, int status, String[] mimeTypes,
-			boolean includeMountFolders, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator<?>
-				orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _dlFolderService.getFoldersAndFileEntriesAndFileShortcuts(
-			groupId, folderId, status, mimeTypes, includeMountFolders, start,
-			end, orderByComparator);
 	}
 
 	@Override

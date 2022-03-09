@@ -84,20 +84,6 @@ public class DLFolderServiceUtil {
 			groupId, folderId, status);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFileEntriesAndFileShortcutsCount(long, long, String[],
-	 int)}
-	 */
-	@Deprecated
-	public static int getFileEntriesAndFileShortcutsCount(
-			long groupId, long folderId, int status, String[] mimeTypes)
-		throws PortalException {
-
-		return getService().getFileEntriesAndFileShortcutsCount(
-			groupId, folderId, status, mimeTypes);
-	}
-
 	public static int getFileEntriesAndFileShortcutsCount(
 			long groupId, long folderId, String[] mimeTypes, int status)
 		throws PortalException {
@@ -134,23 +120,6 @@ public class DLFolderServiceUtil {
 			orderByComparator);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFolders(long, long, boolean, int, int, int,
-	 OrderByComparator)}
-	 */
-	@Deprecated
-	public static List<DLFolder> getFolders(
-			long groupId, long parentFolderId, int status,
-			boolean includeMountfolders, int start, int end,
-			OrderByComparator<DLFolder> orderByComparator)
-		throws PortalException {
-
-		return getService().getFolders(
-			groupId, parentFolderId, status, includeMountfolders, start, end,
-			orderByComparator);
-	}
-
 	public static List<DLFolder> getFolders(
 			long groupId, long parentFolderId, int start, int end,
 			OrderByComparator<DLFolder> orderByComparator)
@@ -169,40 +138,6 @@ public class DLFolderServiceUtil {
 		return getService().getFoldersAndFileEntriesAndFileShortcuts(
 			groupId, folderId, includeMountFolders, status, start, end,
 			orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFoldersAndFileEntriesAndFileShortcuts(long, long,
-	 boolean, int, int, int, OrderByComparator)}
-	 */
-	@Deprecated
-	public static List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-			long groupId, long folderId, int status,
-			boolean includeMountFolders, int start, int end,
-			OrderByComparator<?> orderByComparator)
-		throws PortalException {
-
-		return getService().getFoldersAndFileEntriesAndFileShortcuts(
-			groupId, folderId, status, includeMountFolders, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 #getFoldersAndFileEntriesAndFileShortcuts(long, long,
-	 String[], boolean, int, int, int, OrderByComparator)}
-	 */
-	@Deprecated
-	public static List<Object> getFoldersAndFileEntriesAndFileShortcuts(
-			long groupId, long folderId, int status, String[] mimeTypes,
-			boolean includeMountFolders, int start, int end,
-			OrderByComparator<?> orderByComparator)
-		throws PortalException {
-
-		return getService().getFoldersAndFileEntriesAndFileShortcuts(
-			groupId, folderId, status, mimeTypes, includeMountFolders, start,
-			end, orderByComparator);
 	}
 
 	public static List<Object> getFoldersAndFileEntriesAndFileShortcuts(

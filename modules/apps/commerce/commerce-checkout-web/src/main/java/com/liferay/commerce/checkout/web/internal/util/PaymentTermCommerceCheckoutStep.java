@@ -14,45 +14,33 @@
 
 package com.liferay.commerce.checkout.web.internal.util;
 
-import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.checkout.web.internal.display.context.TermCommerceCheckoutStepDisplayContext;
-import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceOrderConstants;
-import com.liferay.commerce.constants.CommerceWebKeys;
-import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalService;
-import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
-import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -93,6 +81,12 @@ public class PaymentTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			(CommerceOrder)httpServletRequest.getAttribute(
 				CommerceCheckoutWebKeys.COMMERCE_ORDER);
 
+		boolean activePaymentTermCommerceCheckoutStep =
+			_commerceCheckoutStepHttpHelper.
+				isActivePaymentTermCommerceCheckoutStep(
+					commerceOrder,
+					LanguageUtil.getLanguageId(httpServletRequest.getLocale()));
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -111,23 +105,13 @@ public class PaymentTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			return false;
 		}
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannelByOrderGroupId(
-				commerceOrder.getGroupId());
+		commerceOrder = _commerceOrderLocalService.getCommerceOrder(
+			commerceOrder.getCommerceOrderId());
 
-		CommerceOrderCheckoutConfiguration commerceOrderCheckoutConfiguration =
-			ConfigurationProviderUtil.getConfiguration(
-				CommerceOrderCheckoutConfiguration.class,
-				new GroupServiceSettingsLocator(
-					commerceChannel.getGroupId(),
-					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+		httpServletRequest.setAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
 
-		return _commerceCheckoutStepHttpHelper.
-			isActivePaymentTermCommerceCheckoutStep(
-				commerceOrder,
-				LanguageUtil.getLanguageId(httpServletRequest.getLocale()),
-				commerceOrderCheckoutConfiguration.
-					viewPaymentTermCheckoutStepEnabled());
+		return activePaymentTermCommerceCheckoutStep;
 	}
 
 	@Override
@@ -161,50 +145,6 @@ public class PaymentTermCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
-
-		CommerceContext commerceContext =
-			(CommerceContext)httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
-		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
-
-		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
-			commerceAccount.getCommerceAccountId());
-
-		CommerceTermEntry commerceTermEntry =
-			_commerceTermEntryLocalService.fetchCommerceTermEntry(
-				accountEntry.getDefaultPaymentCTermEntryId());
-
-		if ((commerceTermEntry != null) && commerceTermEntry.isActive()) {
-			CommerceOrder commerceOrder =
-				(CommerceOrder)httpServletRequest.getAttribute(
-					CommerceCheckoutWebKeys.COMMERCE_ORDER);
-
-			CommercePaymentMethodGroupRel commercePaymentMethodGroupRel =
-				_commercePaymentMethodGroupRelLocalService.
-					getCommercePaymentMethodGroupRel(
-						commerceOrder.getGroupId(),
-						commerceOrder.getCommercePaymentMethodKey());
-
-			List<CommerceTermEntry> paymentCommerceTermEntries =
-				_commerceTermEntryLocalService.getPaymentCommerceTermEntries(
-					commerceOrder.getCompanyId(),
-					commerceOrder.getCommerceOrderTypeId(),
-					commercePaymentMethodGroupRel.
-						getCommercePaymentMethodGroupRelId());
-
-			if (paymentCommerceTermEntries.contains(commerceTermEntry)) {
-				commerceOrder =
-					_commerceOrderLocalService.updateTermsAndConditions(
-						commerceOrder.getCommerceOrderId(), 0,
-						accountEntry.getDefaultPaymentCTermEntryId(),
-						LanguageUtil.getLanguageId(
-							httpServletRequest.getLocale()));
-
-				httpServletRequest.setAttribute(
-					CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
-			}
-		}
 
 		TermCommerceCheckoutStepDisplayContext
 			termCommerceCheckoutStepDisplayContext =

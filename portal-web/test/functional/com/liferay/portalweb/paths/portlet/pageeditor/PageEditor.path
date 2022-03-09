@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>COLLECTION_ITEM_CONTENT_IN_BULLETED_LIST_AT_VIEW_MODE</td>
-	<td>//div[contains(@class,'layout-content')]//ul[not(contains(@class,'list-group'))]/li[${key_position}]${key_entryContent}</td>
+	<td>//div[contains(@class,'layout-content')]//ul[not(contains(@class,'list-group'))][not(contains(@class,'pagination'))]/li[${key_position}]${key_entryContent}</td>
 	<td></td>
 </tr>
 <tr>

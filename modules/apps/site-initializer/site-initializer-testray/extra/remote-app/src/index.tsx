@@ -13,7 +13,6 @@
  */
 
 import {ApolloProvider} from '@apollo/client';
-import {ClayModalProvider} from '@clayui/modal';
 import ReactDOM from 'react-dom';
 
 import TestrayRouter from './TestrayRouter';
@@ -27,9 +26,7 @@ class WebComponent extends HTMLElement {
 		ReactDOM.render(
 			<ApolloProvider client={apolloClient}>
 				<ClayIconProvider>
-					<ClayModalProvider>
-						<TestrayRouter />
-					</ClayModalProvider>
+					<TestrayRouter />
 				</ClayIconProvider>
 			</ApolloProvider>,
 			this

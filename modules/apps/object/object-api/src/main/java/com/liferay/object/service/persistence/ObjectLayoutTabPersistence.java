@@ -484,6 +484,150 @@ public interface ObjectLayoutTabPersistence
 	public int countByObjectLayoutId(long objectLayoutId);
 
 	/**
+	 * Returns all the object layout tabs where objectRelationshipId = &#63;.
+	 *
+	 * @param objectRelationshipId the object relationship ID
+	 * @return the matching object layout tabs
+	 */
+	public java.util.List<ObjectLayoutTab> findByObjectRelationshipId(
+		long objectRelationshipId);
+
+	/**
+	 * Returns a range of all the object layout tabs where objectRelationshipId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectRelationshipId the object relationship ID
+	 * @param start the lower bound of the range of object layout tabs
+	 * @param end the upper bound of the range of object layout tabs (not inclusive)
+	 * @return the range of matching object layout tabs
+	 */
+	public java.util.List<ObjectLayoutTab> findByObjectRelationshipId(
+		long objectRelationshipId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object layout tabs where objectRelationshipId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectRelationshipId the object relationship ID
+	 * @param start the lower bound of the range of object layout tabs
+	 * @param end the upper bound of the range of object layout tabs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object layout tabs
+	 */
+	public java.util.List<ObjectLayoutTab> findByObjectRelationshipId(
+		long objectRelationshipId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutTab>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the object layout tabs where objectRelationshipId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectLayoutTabModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectRelationshipId the object relationship ID
+	 * @param start the lower bound of the range of object layout tabs
+	 * @param end the upper bound of the range of object layout tabs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object layout tabs
+	 */
+	public java.util.List<ObjectLayoutTab> findByObjectRelationshipId(
+		long objectRelationshipId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutTab>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first object layout tab in the ordered set where objectRelationshipId = &#63;.
+	 *
+	 * @param objectRelationshipId the object relationship ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object layout tab
+	 * @throws NoSuchObjectLayoutTabException if a matching object layout tab could not be found
+	 */
+	public ObjectLayoutTab findByObjectRelationshipId_First(
+			long objectRelationshipId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutTab>
+				orderByComparator)
+		throws NoSuchObjectLayoutTabException;
+
+	/**
+	 * Returns the first object layout tab in the ordered set where objectRelationshipId = &#63;.
+	 *
+	 * @param objectRelationshipId the object relationship ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object layout tab, or <code>null</code> if a matching object layout tab could not be found
+	 */
+	public ObjectLayoutTab fetchByObjectRelationshipId_First(
+		long objectRelationshipId,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutTab>
+			orderByComparator);
+
+	/**
+	 * Returns the last object layout tab in the ordered set where objectRelationshipId = &#63;.
+	 *
+	 * @param objectRelationshipId the object relationship ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object layout tab
+	 * @throws NoSuchObjectLayoutTabException if a matching object layout tab could not be found
+	 */
+	public ObjectLayoutTab findByObjectRelationshipId_Last(
+			long objectRelationshipId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutTab>
+				orderByComparator)
+		throws NoSuchObjectLayoutTabException;
+
+	/**
+	 * Returns the last object layout tab in the ordered set where objectRelationshipId = &#63;.
+	 *
+	 * @param objectRelationshipId the object relationship ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object layout tab, or <code>null</code> if a matching object layout tab could not be found
+	 */
+	public ObjectLayoutTab fetchByObjectRelationshipId_Last(
+		long objectRelationshipId,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutTab>
+			orderByComparator);
+
+	/**
+	 * Returns the object layout tabs before and after the current object layout tab in the ordered set where objectRelationshipId = &#63;.
+	 *
+	 * @param objectLayoutTabId the primary key of the current object layout tab
+	 * @param objectRelationshipId the object relationship ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object layout tab
+	 * @throws NoSuchObjectLayoutTabException if a object layout tab with the primary key could not be found
+	 */
+	public ObjectLayoutTab[] findByObjectRelationshipId_PrevAndNext(
+			long objectLayoutTabId, long objectRelationshipId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectLayoutTab>
+				orderByComparator)
+		throws NoSuchObjectLayoutTabException;
+
+	/**
+	 * Removes all the object layout tabs where objectRelationshipId = &#63; from the database.
+	 *
+	 * @param objectRelationshipId the object relationship ID
+	 */
+	public void removeByObjectRelationshipId(long objectRelationshipId);
+
+	/**
+	 * Returns the number of object layout tabs where objectRelationshipId = &#63;.
+	 *
+	 * @param objectRelationshipId the object relationship ID
+	 * @return the number of matching object layout tabs
+	 */
+	public int countByObjectRelationshipId(long objectRelationshipId);
+
+	/**
 	 * Caches the object layout tab in the entity cache if it is enabled.
 	 *
 	 * @param objectLayoutTab the object layout tab

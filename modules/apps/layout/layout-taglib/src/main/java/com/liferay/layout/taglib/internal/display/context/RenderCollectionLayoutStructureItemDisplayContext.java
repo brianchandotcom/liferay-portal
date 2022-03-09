@@ -130,8 +130,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 				_collectionStyledLayoutStructureItem.getNumberOfItems(),
 				_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage(),
 				_collectionStyledLayoutStructureItem.getNumberOfPages(),
-				_collectionStyledLayoutStructureItem.getPaginationType(),
-				_collectionStyledLayoutStructureItem.isShowAllItems()));
+				_collectionStyledLayoutStructureItem.getPaginationType()));
 
 		return layoutListRetriever.getList(
 			listObjectReference, defaultLayoutListRetrieverContext);
@@ -320,8 +319,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 			_collectionStyledLayoutStructureItem.getNumberOfItems(),
 			_collectionStyledLayoutStructureItem.getNumberOfItemsPerPage(),
 			_collectionStyledLayoutStructureItem.getNumberOfPages(),
-			_collectionStyledLayoutStructureItem.getPaginationType(),
-			_collectionStyledLayoutStructureItem.isShowAllItems());
+			_collectionStyledLayoutStructureItem.getPaginationType());
 	}
 
 	private Map<String, String[]> _getConfiguration() {

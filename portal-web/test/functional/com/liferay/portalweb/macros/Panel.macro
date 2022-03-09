@@ -1,5 +1,23 @@
 definition {
 
+	macro collapsePanel {
+		Portlet.waitForForm();
+
+		var key_panel = "${panel}";
+
+		AssertVisible(
+			key_panel = "${panel}",
+			locator1 = "Panel#PANEL");
+
+		if ((IsElementPresent(locator1 = "Panel#PANEL_EXPANDED")) && (IsVisible(locator1 = "Panel#PANEL_EXPANDED"))) {
+			AssertClick(
+				locator1 = "Panel#PANEL_EXPANDED",
+				value1 = "${panel}");
+		}
+
+		AssertElementPresent(locator1 = "Panel#PANEL_COLLAPSED");
+	}
+
 	macro expandPanel {
 		Portlet.waitForForm();
 

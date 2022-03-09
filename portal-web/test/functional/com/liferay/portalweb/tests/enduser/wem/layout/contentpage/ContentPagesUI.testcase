@@ -70,6 +70,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-136412. View collapse style changes in fragment configuration."
+	@priority = "5"
+	test ViewCollapseStyleInFragmentConfiguration {
+		task ("Add a dropdown fragment to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Basic Components",
+				fragmentName = "Dropdown");
+		}
+
+		task ("Go to configuration") {
+			PageEditor.gotoConfiguration(fragmentName = "Dropdown");
+		}
+
+		task ("Assert the styles are collapsible and are listed in groups") {
+			Panel.collapsePanel(panel = "Dropdown Options");
+
+			Panel.collapsePanel(panel = "Frame");
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'fieldset')]");
+
+			Panel.expandPanel(panel = "Dropdown Options");
+
+			Panel.expandPanel(panel = "Frame");
+		}
+
+		task ("Go to Styles and assert the styles are collapsible and are listed in groups") {
+			Navigator.gotoNavTab(navTab = "Styles");
+
+			for (var key_panel : list "Margin,Padding,Text,Background,Borders,Effects") {
+				Panel.collapsePanel(panel = "${key_panel}");
+			}
+
+			AssertElementNotPresent(locator1 = "//div[contains(@class,'fieldset')]");
+
+			for (var key_panel : list "Margin,Padding,Text,Background,Borders,Effects") {
+				Panel.expandPanel(panel = "${key_panel}");
+			}
+		}
+	}
+
 	@description = "This is a test for LPS-140266. The color samples are sorted by the token definition doc order and sections."
 	@priority = "5"
 	@uitest

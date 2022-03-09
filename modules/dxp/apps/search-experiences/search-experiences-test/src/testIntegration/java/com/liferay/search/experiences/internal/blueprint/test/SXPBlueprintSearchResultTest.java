@@ -133,7 +133,8 @@ public class SXPBlueprintSearchResultTest {
 
 		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
 			_user.getUserId(),
-			SXPBlueprintSearchResultTestUtil.JSON_QUERY_CONFIGURATION,
+			SXPBlueprintSearchResultTestUtil.
+				JSON_QUERY_CONFIGURATION_JSON_OBJECT.toString(),
 			Collections.singletonMap(LocaleUtil.US, ""), null, "",
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
@@ -453,19 +454,13 @@ public class SXPBlueprintSearchResultTest {
 		throws Exception {
 
 		_sxpBlueprint.setConfigurationJSON(
-			JSONUtil.put(
-				"generalConfiguration",
-				JSONUtil.put(
-					"searchableAssetTypes",
-					JSONUtil.put("com.liferay.journal.model.JournalArticle"))
-			).put(
-				"parameterConfiguration",
-				JSONUtil.put(
-					"parameters",
-					JSONUtil.put("myparam", JSONUtil.put("type", "String")))
-			).put(
-				"queryConfiguration", JSONUtil.put("applyIndexerClauses", true)
-			).toString());
+			SXPBlueprintSearchResultTestUtil.
+				JSON_QUERY_CONFIGURATION_JSON_OBJECT.put(
+					"parameterConfiguration",
+					JSONUtil.put(
+						"parameters",
+						JSONUtil.put("myparam", JSONUtil.put("type", "String")))
+				).toString());
 
 		_updateSXPBlueprint();
 
@@ -482,10 +477,7 @@ public class SXPBlueprintSearchResultTest {
 					JSONUtil.put(
 						"match",
 						JSONUtil.put(
-							"title_en_US",
-							JSONUtil.put(
-								"query", "${myparam}"
-							)))
+							"title_en_US", JSONUtil.put("query", "${myparam}")))
 				).build()
 			},
 			new String[] {"Paste Any Elasticsearch Query"});
@@ -657,7 +649,8 @@ public class SXPBlueprintSearchResultTest {
 
 		_assertSearchIgnoreRelevance("[cola coca, cola pepsi, cola sprite]");
 
-		_updateElementInstancesJSON(null, new String[] {"Limit Search to My Contents"});
+		_updateElementInstancesJSON(
+			null, new String[] {"Limit Search to My Contents"});
 
 		_assertSearchIgnoreRelevance("[cola coca, cola pepsi, cola sprite]");
 
@@ -665,7 +658,8 @@ public class SXPBlueprintSearchResultTest {
 
 		_serviceContext.setUserId(user.getUserId());
 
-		_updateElementInstancesJSON(null, new String[] {"Limit Search to My Sites"});
+		_updateElementInstancesJSON(
+			null, new String[] {"Limit Search to My Sites"});
 
 		_assertSearchIgnoreRelevance("[cola coca]");
 

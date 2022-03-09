@@ -48,14 +48,15 @@ public class SXPBlueprintSearchResultTestUtil {
 		"content_${context.language_id}^1"
 	};
 
-	public static final String JSON_QUERY_CONFIGURATION = JSONUtil.put(
-		"generalConfiguration",
+	public static final JSONObject JSON_QUERY_CONFIGURATION_JSON_OBJECT =
 		JSONUtil.put(
-			"searchableAssetTypes",
-			JSONUtil.put("com.liferay.journal.model.JournalArticle"))
-	).put(
-		"queryConfiguration", JSONUtil.put("applyIndexerClauses", true)
-	).toString();
+			"generalConfiguration",
+			JSONUtil.put(
+				"searchableAssetTypes",
+				JSONUtil.put("com.liferay.journal.model.JournalArticle"))
+		).put(
+			"queryConfiguration", JSONUtil.put("applyIndexerClauses", true)
+		);
 
 	public static String getElementInstancesJSON(
 			Object[] configurationValuesArray, String[] sxpElementNames,

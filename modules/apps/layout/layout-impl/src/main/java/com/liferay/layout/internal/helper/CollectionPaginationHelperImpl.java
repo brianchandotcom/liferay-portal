@@ -98,7 +98,7 @@ public class CollectionPaginationHelperImpl
 	public int getTotalNumberOfItems(
 		int count, boolean displayAllPages, boolean displayAllItems,
 		int numberOfItems, int numberOfItemsPerPage, int numberOfPages,
-		String paginationType) {
+		String paginationType, boolean showAllItems) {
 
 		if (_ffRenderCollectionLayoutStructureItemConfiguration.
 				paginationImprovementsEnabled()) {
@@ -126,7 +126,7 @@ public class CollectionPaginationHelperImpl
 			return Math.min(count, numberOfPages * numberOfItemsPerPage);
 		}
 
-		if (isPaginationEnabled(paginationType) && displayAllItems) {
+		if (isPaginationEnabled(paginationType) && showAllItems) {
 			return count;
 		}
 

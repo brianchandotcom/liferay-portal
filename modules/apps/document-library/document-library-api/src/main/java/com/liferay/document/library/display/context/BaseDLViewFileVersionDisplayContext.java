@@ -17,6 +17,7 @@ package com.liferay.document.library.display.context;
 import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
@@ -92,6 +93,15 @@ public class BaseDLViewFileVersionDisplayContext
 	@Override
 	public String getDiscussionLabel(Locale locale) {
 		return parentDisplayContext.getDiscussionLabel(locale);
+	}
+
+	@Override
+	public String getDownloadURL(
+			FileEntry fileEntry, FileVersion fileVersion, boolean useVersion)
+		throws PortalException {
+
+		return parentDisplayContext.getDownloadURL(
+			fileEntry, fileVersion, useVersion);
 	}
 
 	@Override

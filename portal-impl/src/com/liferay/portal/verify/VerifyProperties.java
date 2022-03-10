@@ -1857,6 +1857,7 @@ public class VerifyProperties extends VerifyProcess {
 		"portal.fabric.server.rpc.relay.timeout",
 		"portal.fabric.server.warmup.agent.on.register",
 		"portal.fabric.shutdown.quiet.period", "portal.fabric.shutdown.timeout",
+		"portal.jaas.impl", "portal.jaas.strict.password",
 		"portal.resiliency.enabled", "portal.resiliency.portlet.show.footer",
 		"portal.resiliency.spi.agent.client.pool.max.size",
 		"portal.security.manager.enable",

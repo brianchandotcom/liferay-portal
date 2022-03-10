@@ -52,6 +52,7 @@ export function createOrder(accountId, channelId, skuId) {
 		currencyCode: 'USD',
 		orderItems: [
 			{
+				id: 0,
 				quantity: 1,
 				skuId,
 			},

@@ -89,6 +89,7 @@ const PaymentMethod = () => {
 						orderItem: {
 							discountAmount: promoPrice,
 							finalPrice: productDiscount,
+							id: 0,
 							quantity: 1,
 							skuId: fullPriceSKU.id,
 							unitPrice: productDiscount,
@@ -103,6 +104,7 @@ const PaymentMethod = () => {
 						id: 1,
 						orderItem: {
 							finalPrice: productPriceParcel,
+							id: 0,
 							quantity: 1,
 							skuId: installmentSKU.id,
 							unitPrice: productPriceParcel,

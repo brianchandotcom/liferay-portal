@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.publisher.web.internal.portlet.template;
+package com.liferay.asset.publisher.web.internal.portlet.display.template;
 
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -24,9 +24,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + AssetPublisherPortletKeys.RELATED_ASSETS,
+	property = "javax.portlet.name=" + AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS,
 	service = TemplateHandler.class
 )
-public class RelatedAssetsPortletDisplayTemplateHandler
+public class HighestRatedAssetsPortletDisplayTemplateHandler
 	extends AssetPublisherPortletDisplayTemplateHandler {
 }

@@ -761,7 +761,7 @@ function EditSXPBlueprintForm({
 	};
 
 	const _handleToggleSidebar = (type) => () => {
-		if (openSidebar === SIDEBARS.ADD_SXP_ELEMENT) {
+		if (type === SIDEBARS.PREVIEW) {
 			setStorageAddSXPElementSidebar('closed');
 		}
 

@@ -2579,12 +2579,6 @@ public interface PropsKeys {
 	public static final String SESSION_COOKIE_USE_FULL_HOSTNAME =
 		"session.cookie.use.full.hostname";
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String SESSION_DISABLED = "session.disabled";
-
 	public static final String SESSION_ENABLE_PERSISTENT_COOKIES =
 		"session.enable.persistent.cookies";
 

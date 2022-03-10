@@ -2143,13 +2143,6 @@ public class PropsValues {
 				PropsKeys.SESSION_COOKIE_USE_FULL_HOSTNAME,
 				new Filter(ServerDetector.getServerId())));
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final boolean SESSION_DISABLED = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.SESSION_DISABLED));
-
 	public static final boolean SESSION_ENABLE_PERSISTENT_COOKIES =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.SESSION_ENABLE_PERSISTENT_COOKIES));

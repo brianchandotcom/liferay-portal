@@ -23,6 +23,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.util.List;
 
@@ -39,11 +40,13 @@ public class BillingAddressCheckoutStepDisplayContext
 		ModelResourcePermission<AccountEntry>
 			accountEntryModelResourcePermission,
 		CommerceAddressService commerceAddressService,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		PortletResourcePermission portletResourcePermission) {
 
 		super(
 			accountRoleLocalService, accountEntryModelResourcePermission,
-			commerceAddressService, httpServletRequest);
+			commerceAddressService, httpServletRequest,
+			portletResourcePermission);
 	}
 
 	@Override

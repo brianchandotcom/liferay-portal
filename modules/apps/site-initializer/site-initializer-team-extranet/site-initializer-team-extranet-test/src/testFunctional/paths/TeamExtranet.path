@@ -41,6 +41,11 @@
 	<td>//h3[contains(.,'${key_entryTitle}')]//a</td>
 	<td></td>
 </tr>
+<tr>
+	<td>BACKGROUND_IMAGE</td>
+	<td>//div[contains(@data-lfr-background-image-id,'${key_imageName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

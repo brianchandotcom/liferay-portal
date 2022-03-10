@@ -83,6 +83,73 @@ definition {
 		}
 	}
 
+	@description = "Verify users can import entities via a CSV file without headers"
+	@priority = "3"
+	test CanImportCSVFileWithoutHeaders {
+		task ("Given a CSV file without headers and account data") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			UploadDependencyFile.uploadFile(fileName = "csv_account_import_noHeaders.csv");
+		}
+
+		task ("When the user unchecks "Contains Headers" and selects Account as Entity Type") {
+			Click.clickAtNotVisible(
+				checkboxName = "Headers",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			ImportExport.selectEntity(
+				entityType = "Account",
+				headlessEndpoint = "/headless-admin-user");
+		}
+
+		task ("Then the user should be able to map account fields to columns in the CSV file") {
+			ImportExport.mapImport(fieldMappings = "name:Column 1,type:Column 2,description:Column 3,externalReferenceCode:Column 4");
+		}
+
+		task ("When the user imports the file") {
+			Button.click(button = "Import");
+		}
+
+		task ("Then the accounts in the file should be imported successfully") {
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+
+			Button.clickDone();
+
+			Button.clickCancel();
+
+			ImportExport.assertExecutionEntry(
+				entityType = "Account",
+				executionAction = "Import",
+				executionStatus = "Completed");
+
+			Accounts.openAccountsAdmin();
+
+			Accounts.viewAccountDetails(
+				accountDescription = "Test Business Account Description",
+				accountName = "Test Business Account",
+				accountType = "Business",
+				externalReferenceCode = "101");
+
+			Navigator.gotoBack();
+
+			Accounts.viewAccountDetails(
+				accountDescription = "Test Guest Account Description",
+				accountName = "Test Guest Account",
+				accountType = "Guest",
+				externalReferenceCode = "102");
+
+			Navigator.gotoBack();
+
+			Accounts.viewAccountDetails(
+				accountDescription = "Test Person Account Description",
+				accountName = "Test Person Account",
+				accountType = "Person",
+				externalReferenceCode = "103");
+		}
+	}
+
 	@description = "Verify users can import entities via JSON files"
 	@priority = "3"
 	test CanImportJSONFiles {

@@ -82,8 +82,7 @@ public class PortalUpgradeProcessRegistryImpl
 
 		upgradeProcesses.put(new Version(13, 3, 1), new UpgradeRepository());
 
-		upgradeProcesses.put(
-			new Version(13, 3, 2), new UpgradeCompanyIdNotNull());
+		upgradeProcesses.put(new Version(13, 3, 2), new UpgradeMappingTables());
 	}
 
 }

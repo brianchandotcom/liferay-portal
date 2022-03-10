@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 /**
  * @author Luis Ortiz
  */
-public class UpgradeCompanyIdNotNull extends UpgradeProcess {
+public class UpgradeMappingTables extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

@@ -73,7 +73,7 @@ public class UpgradeCompanyIdTest {
 
 		_upgradeProcess.runSQL(
 			StringBundler.concat(
-				"create table ", _NXM_TABLE_NAME, " (", _COLUMN_NAME,
+				"create table ", _MAPPING_TABLE_NAME, " (", _COLUMN_NAME,
 				" LONG not null primary key);"));
 
 		_upgradeProcess.runSQL(
@@ -84,14 +84,14 @@ public class UpgradeCompanyIdTest {
 
 		_upgradeProcess.runSQL(
 			StringBundler.concat(
-				"insert into ", _NXM_TABLE_NAME, " (", _COLUMN_NAME, ")",
-				" values (", _COLUMN_VALUE, ");"));
+				"insert into ", _MAPPING_TABLE_NAME, " (", _COLUMN_NAME,
+				") values (", _COLUMN_VALUE, ");"));
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		_upgradeProcess.runSQL("drop table " + _TABLE_NAME);
-		_upgradeProcess.runSQL("drop table " + _NXM_TABLE_NAME);
+		_upgradeProcess.runSQL("drop table " + _MAPPING_TABLE_NAME);
 
 		if (_company != null) {
 			_companyLocalService.deleteCompany(_company);
@@ -104,7 +104,7 @@ public class UpgradeCompanyIdTest {
 
 		Assert.assertTrue(
 			_dbInspector.hasColumnType(
-				_NXM_TABLE_NAME, "companyId", "LONG NOT NULL"));
+				_MAPPING_TABLE_NAME, "companyId", "LONG NOT NULL"));
 	}
 
 	@Test
@@ -113,8 +113,8 @@ public class UpgradeCompanyIdTest {
 
 		_upgradeProcess.runSQL(
 			StringBundler.concat(
-				"insert into ", _NXM_TABLE_NAME, " (", _COLUMN_NAME, ")",
-				" values (", _COLUMN_VALUE - 1, ");"));
+				"insert into ", _MAPPING_TABLE_NAME, " (", _COLUMN_NAME,
+				") values (", _COLUMN_VALUE - 1, ");"));
 
 		try {
 			_upgradeProcess.upgrade();
@@ -125,13 +125,14 @@ public class UpgradeCompanyIdTest {
 		}
 	}
 
-	private static final String _COLUMN_NAME = "mainId";
+	private static final String _COLUMN_NAME = "id";
 
 	private static final int _COLUMN_VALUE = 99999;
 
-	private static final String _NXM_TABLE_NAME = "MainTableTest_Related";
+	private static final String _MAPPING_TABLE_NAME =
+		"UpgradeCompanyIdMappingTest";
 
-	private static final String _TABLE_NAME = "MainTableTest";
+	private static final String _TABLE_NAME = "UpgradeCompanyIdTest";
 
 	private static Company _company;
 
@@ -148,7 +149,7 @@ public class UpgradeCompanyIdTest {
 		protected TableUpdater[] getTableUpdaters() {
 			return new TableUpdater[] {
 				new CompanyIdNotNullTableUpdater(
-					_NXM_TABLE_NAME, _TABLE_NAME, _COLUMN_NAME)
+					_MAPPING_TABLE_NAME, _TABLE_NAME, _COLUMN_NAME)
 			};
 		}
 

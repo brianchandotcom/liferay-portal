@@ -542,13 +542,15 @@ public class BundleSiteInitializerTest {
 			group.getCompanyId(), "test-option-1");
 
 		Assert.assertNotNull(cpOption1);
-		Assert.assertEquals("test-option-1", cpOption1.getKey());
+		Assert.assertEquals(
+			"Test Option 1", cpOption1.getName(LocaleUtil.getSiteDefault()));
 
 		CPOption cpOption2 = _cpOptionLocalService.fetchCPOption(
 			group.getCompanyId(), "test-option-2");
 
 		Assert.assertNotNull(cpOption2);
-		Assert.assertEquals("test-option-2", cpOption2.getKey());
+		Assert.assertEquals(
+			"Test Option 2", cpOption2.getName(LocaleUtil.getSiteDefault()));
 
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.
@@ -563,20 +565,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			cpDefinitionOptionRels.toString(), 2,
 			cpDefinitionOptionRels.size());
-
-		CPDefinitionOptionRel cpDefinitionOptionRel1 =
-			cpDefinitionOptionRels.get(0);
-
-		cpOption1 = cpDefinitionOptionRel1.getCPOption();
-
-		Assert.assertEquals("test-option-1", cpOption1.getKey());
-
-		CPDefinitionOptionRel cpDefinitionOptionRel2 =
-			cpDefinitionOptionRels.get(1);
-
-		cpOption2 = cpDefinitionOptionRel2.getCPOption();
-
-		Assert.assertEquals("test-option-2", cpOption2.getKey());
 	}
 
 	private void _assertDDMStructure(Group group) {

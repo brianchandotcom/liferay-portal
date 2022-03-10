@@ -2640,8 +2640,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		String resourcePath = "/site-initializer/widget-templates.json";
 
-		String json = SiteInitializerUtil.read(
-			resourcePath, _servletContext);
+		String json = SiteInitializerUtil.read(resourcePath, _servletContext);
 
 		if (json == null) {
 			return;

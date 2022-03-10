@@ -123,7 +123,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 
 		_ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
+		_addRecordMVCCommandHelper.updateNonevaluableDDMFormFields(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Value value = _getFieldValue(_FIELD_NAME);
@@ -161,7 +161,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 
 		_ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
+		_addRecordMVCCommandHelper.updateNonevaluableDDMFormFields(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Assert.assertNull(_getFieldValue(_FIELD_NAME));
@@ -177,7 +177,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 
 		_ddmFormField.setRequired(false);
 
-		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
+		_addRecordMVCCommandHelper.updateNonevaluableDDMFormFields(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Assert.assertEquals(
@@ -198,7 +198,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 
 		_ddmFormField.setRequired(false);
 
-		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
+		_addRecordMVCCommandHelper.updateNonevaluableDDMFormFields(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Assert.assertEquals(
@@ -216,7 +216,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 				"visible", false
 			).build());
 
-		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
+		_addRecordMVCCommandHelper.updateNonevaluableDDMFormFields(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Assert.assertEquals(
@@ -235,7 +235,7 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 				"visible", true
 			).build());
 
-		_addRecordMVCCommandHelper.updateRequiredFieldsAccordingToVisibility(
+		_addRecordMVCCommandHelper.updateNonevaluableDDMFormFields(
 			_actionRequest, _ddmForm, _ddmFormValues, LocaleUtil.US);
 
 		Assert.assertEquals(

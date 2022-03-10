@@ -116,11 +116,10 @@ public class AddFormInstanceRecordMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_addFormInstanceMVCCommandHelper.
-			updateRequiredFieldsAccordingToVisibility(
-				actionRequest, ddmForm, ddmFormValues,
-				LocaleUtil.fromLanguageId(
-					LanguageUtil.getLanguageId(actionRequest)));
+		_addFormInstanceMVCCommandHelper.updateNonevaluableDDMFormFields(
+			actionRequest, ddmForm, ddmFormValues,
+			LocaleUtil.fromLanguageId(
+				LanguageUtil.getLanguageId(actionRequest)));
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMFormInstanceRecord.class.getName(), actionRequest);

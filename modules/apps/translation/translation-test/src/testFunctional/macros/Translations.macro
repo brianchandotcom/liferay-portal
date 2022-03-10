@@ -275,7 +275,7 @@ definition {
 			value1 = "Select File");
 
 		if (isSet(dependencyfile)) {
-			UploadDependencyFile.uploadFile(fileName = "${fileName}");
+			UploadDependencyFile.uploadArchiveFile(fileName = "${fileName}");
 		}
 		else {
 			Translations.uploadTranslationsFile(

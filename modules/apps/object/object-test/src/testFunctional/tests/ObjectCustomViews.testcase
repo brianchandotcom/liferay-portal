@@ -54,7 +54,7 @@ definition {
 				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
 		}
 
-		ObjectCustomViews.saveColumns();
+		ObjectCustomViews.saveColumnsModal();
 
 		for (var columnOption : list "Author,Creation Date") {
 			ObjectCustomViews.assertColumnPresent(colunmName = "${columnOption}");
@@ -148,7 +148,7 @@ definition {
 			key_columnOption = "Author",
 			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
 
-		ObjectCustomViews.saveColumns();
+		ObjectCustomViews.saveColumnsModal();
 
 		ObjectCustomViews.assertColumnPresent(colunmName = "Author");
 
@@ -158,7 +158,7 @@ definition {
 			key_columnOption = "Author",
 			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
 
-		ObjectCustomViews.saveColumns();
+		ObjectCustomViews.saveColumnsModal();
 
 		ObjectCustomViews.assertColumnNotPresent(colunmName = "Author");
 
@@ -280,9 +280,7 @@ definition {
 			key_columnOption = "Creation Date",
 			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
 
-		Click(
-			key_tab = "Save",
-			locator1 = "Button#TAB_SUBMIT_BTN");
+		ObjectCustomViews.saveColumnsModal();
 
 		ObjectCustomViews.searchOnViewBuilder(colunmName = "Author");
 
@@ -521,9 +519,7 @@ definition {
 			key_columnOption = "Author",
 			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
 
-		Click(
-			key_tab = "Save",
-			locator1 = "Button#TAB_SUBMIT_BTN");
+		ObjectCustomViews.saveColumnsModal();
 
 		ObjectCustomViews.searchOnViewBuilder(colunmName = "Teste");
 

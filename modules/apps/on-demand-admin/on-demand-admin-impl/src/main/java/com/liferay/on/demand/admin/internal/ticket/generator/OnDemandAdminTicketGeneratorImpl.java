@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Date;
@@ -66,15 +67,24 @@ public class OnDemandAdminTicketGeneratorImpl
 		Role role = _roleLocalService.getRole(
 			company.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
+		boolean autoPassword = false;
+		boolean sendEmail = false;
+
+		String password = PropsValues.DEFAULT_ADMIN_PASSWORD;
+
+		if (Validator.isNull(password)) {
+			autoPassword = true;
+			sendEmail = true;
+		}
+
 		User user = _userLocalService.addUser(
-			requestorUser.getUserId(), company.getCompanyId(), false,
-			PropsValues.DEFAULT_ADMIN_PASSWORD,
-			PropsValues.DEFAULT_ADMIN_PASSWORD, true, null,
-			requestorUser.getEmailAddress(), requestorUser.getLocale(),
-			requestorUser.getFirstName(), requestorUser.getMiddleName(),
-			requestorUser.getLastName(), 0, 0, requestorUser.getMale(),
-			date.getMonth(), date.getDay(), date.getYear(), null, null, null,
-			new long[] {role.getRoleId()}, null, false, new ServiceContext());
+			requestorUser.getUserId(), company.getCompanyId(), autoPassword,
+			password, password, true, null, requestorUser.getEmailAddress(),
+			requestorUser.getLocale(), requestorUser.getFirstName(),
+			requestorUser.getMiddleName(), requestorUser.getLastName(), 0, 0,
+			requestorUser.getMale(), date.getMonth(), date.getDay(),
+			date.getYear(), null, null, null, new long[] {role.getRoleId()},
+			null, sendEmail, new ServiceContext());
 
 		String screenName = _getScreenName(
 			requestorUser.getUserId(), user.getUserId());

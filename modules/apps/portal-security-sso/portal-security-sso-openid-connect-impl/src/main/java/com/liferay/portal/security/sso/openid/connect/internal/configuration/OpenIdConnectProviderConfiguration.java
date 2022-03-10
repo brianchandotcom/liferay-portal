@@ -122,4 +122,17 @@ public interface OpenIdConnectProviderConfiguration {
 	)
 	public String registeredIdTokenSigningAlg();
 
+	@Meta.AD(
+		deflt = "",
+		description = "custom-authorization-request-parameters-help",
+		name = "custom-authorization-request-parameters", required = false
+	)
+	public String[] customAuthorizationRequestParameters();
+
+	@Meta.AD(
+		deflt = "", description = "custom-token-request-parameters-help",
+		name = "custom-token-request-parameters", required = false
+	)
+	public String[] customTokenRequestParameters();
+
 }

@@ -136,7 +136,7 @@ const ActivationKeysInputs = ({
 		setLicenseDownloadError(true);
 	};
 
-	const AccountBrief = userAccount.accountBriefs?.find(
+	const accountBrief = userAccount.accountBriefs?.find(
 		(accountBrief) =>
 			accountBrief.externalReferenceCode === project?.accountKey
 	);
@@ -174,7 +174,7 @@ const ActivationKeysInputs = ({
 	);
 
 	const currentEnterpriseMessage = useMemo(() => {
-		const isAdminOrRequester = AccountBrief.roleBriefs?.some(
+		const isAdminOrRequester = accountBrief.roleBriefs?.some(
 			({name}) =>
 				name === ROLE_TYPES.admin.key ||
 				name === ROLE_TYPES.requestor.key
@@ -183,7 +183,7 @@ const ActivationKeysInputs = ({
 		return isAdminOrRequester
 			? errorDownloadMessage.messageRequestersAdministrators
 			: errorDownloadMessage.messageUsers;
-	}, [AccountBrief.roleBriefs, errorDownloadMessage]);
+	}, [accountBrief.roleBriefs, errorDownloadMessage]);
 
 	return (
 		<div className="mt-3">

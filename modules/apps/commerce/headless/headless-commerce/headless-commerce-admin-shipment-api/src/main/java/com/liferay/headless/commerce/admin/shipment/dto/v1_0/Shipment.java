@@ -42,7 +42,6 @@ import javax.annotation.Generated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotNull;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -53,7 +52,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Generated("")
 @GraphQLName("Shipment")
 @JsonFilter("Liferay.Vulcan")
-@Schema(requiredProperties = {"orderId"})
 @XmlRootElement(name = "Shipment")
 public class Shipment implements Serializable {
 
@@ -318,7 +316,6 @@ public class Shipment implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
 	protected Long orderId;
 
 	@Schema

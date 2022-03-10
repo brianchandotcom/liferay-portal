@@ -343,9 +343,6 @@ public class PoshiValidation {
 			}
 
 			if (primaryAttributeName.equals("function")) {
-				validateRequiredAttributeNames(
-					poshiElement, Arrays.asList("locator1"), filePath);
-
 				List<String> possibleAttributeNames = Arrays.asList(
 					"function", "line-number", "locator1", "value1");
 

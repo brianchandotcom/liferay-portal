@@ -21,6 +21,7 @@ import com.liferay.commerce.checkout.helper.CommerceCheckoutStepHttpHelper;
 import com.liferay.commerce.checkout.web.internal.display.context.ShippingAddressCheckoutStepDisplayContext;
 import com.liferay.commerce.constants.CommerceAddressConstants;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.exception.CommerceAddressCityException;
 import com.liferay.commerce.exception.CommerceAddressCountryException;
 import com.liferay.commerce.exception.CommerceAddressNameException;
@@ -36,6 +37,7 @@ import com.liferay.commerce.util.CommerceCheckoutStep;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 
 import javax.portlet.ActionRequest;
@@ -132,7 +134,8 @@ public class ShippingAddressCommerceCheckoutStep
 				new ShippingAddressCheckoutStepDisplayContext(
 					accountRoleLocalService,
 					_accountEntryModelResourcePermission,
-					_commerceAddressService, httpServletRequest);
+					_commerceAddressService, httpServletRequest,
+					_portletResourcePermission);
 
 		CommerceOrder commerceOrder =
 			shippingAddressCheckoutStepDisplayContext.getCommerceOrder();
@@ -205,5 +208,10 @@ public class ShippingAddressCommerceCheckoutStep
 
 	@Reference
 	private JSPRenderer _jspRenderer;
+
+	@Reference(
+		target = "(resource.name=" + CommerceOrderConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 }

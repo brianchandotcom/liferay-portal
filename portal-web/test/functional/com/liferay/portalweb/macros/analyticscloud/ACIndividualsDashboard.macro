@@ -207,6 +207,14 @@ definition {
 				key_visitors = "${type}",
 				locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS");
 
+			if (isSet(notEquals)) {
+				AssertTextNotEquals(
+					key_value = "${value}",
+					key_visitors = "${type}",
+					locator1 = "ACSites#TOOLTIP_UNIQUE_VISITORS",
+					value1 = "${notEquals}");
+			}
+
 			var i = ${i} + 1;
 			var i = StringUtil.valueOf("${i}");
 		}

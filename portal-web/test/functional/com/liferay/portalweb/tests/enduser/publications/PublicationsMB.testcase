@@ -143,6 +143,11 @@ definition {
 	@description = "Assert we can publish the publication with message board thread and reiview the changes."
 	@priority = "4"
 	test PublishNewMessageBoardThreadAndMessage {
+
+		// Workaround LPS-148424
+
+		property database.types = "hypersonic,mariadb,mysql,oracle,postgresql,sqlserver";
+
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");

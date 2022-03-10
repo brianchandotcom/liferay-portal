@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -61,6 +62,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -93,6 +95,29 @@ public class UserLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testAddDefaultAdminUser() throws Exception {
+		String defaultAdminPassword = PropsValues.DEFAULT_ADMIN_PASSWORD;
+
+		try {
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "DEFAULT_ADMIN_PASSWORD", StringPool.BLANK);
+
+			User user = _userLocalService.addDefaultAdminUser(
+				TestPropsValues.getCompanyId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + "@liferay.com",
+				LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+			Assert.assertTrue(user.isPasswordReset());
+		}
+		finally {
+			ReflectionTestUtil.setFieldValue(
+				PropsValues.class, "DEFAULT_ADMIN_PASSWORD",
+				defaultAdminPassword);
+		}
+	}
 
 	@Test
 	public void testDeleteUserDeletesNotificationEvents() throws Exception {

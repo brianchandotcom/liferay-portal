@@ -241,8 +241,11 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			oidcProviderMetadata.getAuthorizationEndpointURI()
 		);
 
+		OpenIdConnectProviderImpl openIdConnectProviderImpl =
+			(OpenIdConnectProviderImpl)openIdConnectProvider;
+
 		Map<String, List<String>> customAuthorizationRequestParameters =
-			openIdConnectProvider.getCustomAuthorizationRequestParameters();
+			openIdConnectProviderImpl.getCustomAuthorizationRequestParameters();
 
 		for (Map.Entry<String, List<String>> entry :
 				customAuthorizationRequestParameters.entrySet()) {

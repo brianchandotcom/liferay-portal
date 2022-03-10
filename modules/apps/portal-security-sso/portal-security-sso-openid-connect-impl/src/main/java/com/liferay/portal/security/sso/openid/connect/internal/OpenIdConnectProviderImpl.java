@@ -66,12 +66,10 @@ public class OpenIdConnectProviderImpl
 		return _configurationPid;
 	}
 
-	@Override
 	public Map<String, List<String>> getCustomAuthorizationRequestParameters() {
 		return _customAuthorizationRequestParameters;
 	}
 
-	@Override
 	public Map<String, List<String>> getCustomTokenRequestParameters() {
 		return _customTokenRequestParameters;
 	}

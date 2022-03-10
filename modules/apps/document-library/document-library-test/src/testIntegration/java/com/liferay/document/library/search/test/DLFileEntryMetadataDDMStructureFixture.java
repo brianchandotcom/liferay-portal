@@ -145,7 +145,7 @@ public class DLFileEntryMetadataDDMStructureFixture {
 
 	protected void deleteAllFileEntryTypes() throws PortalException {
 		for (DLFileEntryType dlFileEntryType : _fileEntryTypes) {
-			_dlFileEntryTypeLocalService.deleteDLFileEntryType(dlFileEntryType);
+			_dlFileEntryTypeLocalService.deleteFileEntryType(dlFileEntryType);
 		}
 
 		_fileEntryTypes.clear();

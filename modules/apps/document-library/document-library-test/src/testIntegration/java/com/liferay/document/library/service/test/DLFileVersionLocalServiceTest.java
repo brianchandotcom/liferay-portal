@@ -91,9 +91,8 @@ public class DLFileVersionLocalServiceTest {
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), "1.0"));
 
-		_dlFileVersionLocalService.deleteDLFileVersion(
-			_dlFileVersionLocalService.getFileVersion(
-				fileEntry.getFileEntryId(), "1.0"));
+		_dlFileEntryLocalService.deleteFileVersion(
+			TestPropsValues.getUserId(), fileEntry.getFileEntryId(), "1.0");
 
 		Assert.assertFalse(
 			DLStoreUtil.hasFile(

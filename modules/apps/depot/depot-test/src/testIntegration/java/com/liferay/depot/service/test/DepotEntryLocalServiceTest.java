@@ -146,7 +146,7 @@ public class DepotEntryLocalServiceTest {
 	public void testDeleteDepotEntry() throws Exception {
 		DepotEntry depotEntry = _addDepotEntry("name", "description");
 
-		_depotEntryLocalService.deleteDepotEntry(depotEntry);
+		_depotEntryLocalService.deleteDepotEntry(depotEntry.getDepotEntryId());
 
 		_depotEntries.remove(depotEntry);
 

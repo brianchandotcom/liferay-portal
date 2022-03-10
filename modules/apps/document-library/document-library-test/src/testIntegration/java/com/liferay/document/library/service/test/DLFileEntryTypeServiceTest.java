@@ -206,7 +206,7 @@ public class DLFileEntryTypeServiceTest {
 
 		Assert.assertTrue(hasUserLocale);
 
-		DLFileEntryTypeLocalServiceUtil.deleteDLFileEntryType(dlFileEntryType);
+		DLFileEntryTypeLocalServiceUtil.deleteFileEntryType(dlFileEntryType);
 	}
 
 	@Test

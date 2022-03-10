@@ -409,7 +409,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 	@Override
 	protected void deleteBaseModel(long primaryKey) throws Exception {
-		DLFileEntryLocalServiceUtil.deleteDLFileEntry(primaryKey);
+		DLFileEntryLocalServiceUtil.deleteFileEntry(primaryKey);
 	}
 
 	@Override

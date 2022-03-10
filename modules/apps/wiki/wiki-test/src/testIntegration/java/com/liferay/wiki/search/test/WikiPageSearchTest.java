@@ -133,7 +133,9 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 
 	@Override
 	protected void deleteBaseModel(long primaryKey) throws Exception {
-		WikiPageLocalServiceUtil.deleteWikiPage(primaryKey);
+		WikiPage page = WikiPageLocalServiceUtil.getPageByPageId(primaryKey);
+
+		WikiPageLocalServiceUtil.deletePage(page);
 	}
 
 	@Override

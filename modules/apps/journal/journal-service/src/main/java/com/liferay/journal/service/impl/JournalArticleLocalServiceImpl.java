@@ -513,10 +513,16 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			_portal.getSiteGroupId(groupId),
+			_classNameLocalService.getClassNameId(JournalArticle.class),
+			ddmStructureKey, true);
+
 		boolean validate = !ExportImportThreadLocal.isImportInProcess();
 
 		if (validate) {
-			validateDDMStructureId(groupId, folderId, ddmStructureKey);
+			validateDDMStructureId(
+				groupId, folderId, ddmStructure.getStructureId());
 		}
 
 		if (autoArticleId) {
@@ -529,14 +535,15 @@ public class JournalArticleLocalServiceImpl
 			validate(
 				externalReferenceCode, user.getCompanyId(), groupId,
 				classNameId, articleId, autoArticleId, version, titleMap,
-				content, ddmStructureKey, ddmTemplateKey, displayDate,
-				expirationDate, smallImage, smallImageURL, smallImageFile,
-				smallImageBytes, serviceContext);
+				content, ddmStructure.getStructureId(), ddmTemplateKey,
+				displayDate, expirationDate, smallImage, smallImageURL,
+				smallImageFile, smallImageBytes, serviceContext);
 
 			try {
 				validateReferences(
-					groupId, ddmStructureKey, ddmTemplateKey, layoutUuid,
-					smallImage, smallImageURL, smallImageBytes, 0, content);
+					groupId, ddmStructure.getStructureId(), ddmTemplateKey,
+					layoutUuid, smallImage, smallImageURL, smallImageBytes, 0,
+					content);
 			}
 			catch (ExportImportContentValidationException
 						exportImportContentValidationException) {
@@ -584,14 +591,7 @@ public class JournalArticleLocalServiceImpl
 		article.setArticleId(articleId);
 		article.setVersion(version);
 		article.setUrlTitle(urlTitleMap.get(LocaleUtil.toLanguageId(locale)));
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			_portal.getSiteGroupId(groupId),
-			_classNameLocalService.getClassNameId(JournalArticle.class),
-			ddmStructureKey, true);
-
 		article.setDDMStructureId(ddmStructure.getStructureId());
-
 		article.setDDMStructureKey(ddmStructureKey);
 		article.setDDMTemplateKey(ddmTemplateKey);
 		article.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
@@ -815,11 +815,17 @@ public class JournalArticleLocalServiceImpl
 
 		sanitize(user.getCompanyId(), groupId, userId, classPK, descriptionMap);
 
+		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
+			_portal.getSiteGroupId(groupId),
+			_classNameLocalService.getClassNameId(JournalArticle.class),
+			ddmStructureKey, true);
+
 		validate(
 			externalReferenceCode, user.getCompanyId(), groupId, classNameId,
-			articleId, true, 0, titleMap, content, ddmStructureKey,
-			ddmTemplateKey, displayDate, expirationDate, smallImage,
-			smallImageURL, smallImageFile, smallImageBytes, serviceContext);
+			articleId, true, 0, titleMap, content,
+			ddmStructure.getStructureId(), ddmTemplateKey, displayDate,
+			expirationDate, smallImage, smallImageURL, smallImageFile,
+			smallImageBytes, serviceContext);
 
 		serviceContext.setAttribute("articleId", articleId);
 
@@ -844,11 +850,6 @@ public class JournalArticleLocalServiceImpl
 		article.setClassNameId(classNameId);
 		article.setClassPK(classPK);
 		article.setArticleId(articleId);
-
-		DDMStructure ddmStructure = _ddmStructureLocalService.getStructure(
-			_portal.getSiteGroupId(groupId),
-			_classNameLocalService.getClassNameId(JournalArticle.class),
-			ddmStructureKey, true);
 
 		article.setDDMStructureId(ddmStructure.getStructureId());
 
@@ -4082,7 +4083,7 @@ public class JournalArticleLocalServiceImpl
 		JournalArticle latestArticle = getLatestArticle(groupId, articleId);
 
 		validateDDMStructureId(
-			groupId, newFolderId, latestArticle.getDDMStructureKey());
+			groupId, newFolderId, latestArticle.getDDMStructureId());
 
 		List<JournalArticle> articles = journalArticlePersistence.findByG_A(
 			groupId, articleId);
@@ -5784,14 +5785,14 @@ public class JournalArticleLocalServiceImpl
 		if (validate) {
 			validate(
 				user.getCompanyId(), groupId, latestArticle.getClassNameId(),
-				titleMap, content, ddmStructureKey, ddmTemplateKey, displayDate,
-				expirationDate, smallImage, smallImageURL, smallImageFile,
-				smallImageBytes, serviceContext);
+				titleMap, content, latestArticle.getDDMStructureId(),
+				ddmTemplateKey, displayDate, expirationDate, smallImage,
+				smallImageURL, smallImageFile, smallImageBytes, serviceContext);
 
 			try {
 				validateReferences(
-					groupId, ddmStructureKey, ddmTemplateKey, layoutUuid,
-					smallImage, smallImageURL, smallImageBytes,
+					groupId, latestArticle.getDDMStructureId(), ddmTemplateKey,
+					layoutUuid, smallImage, smallImageURL, smallImageBytes,
 					latestArticle.getSmallImageId(), content);
 			}
 			catch (ExportImportContentValidationException
@@ -6371,7 +6372,7 @@ public class JournalArticleLocalServiceImpl
 
 		validate(
 			user.getCompanyId(), groupId, article.getClassNameId(), titleMap,
-			content, ddmStructureKey, ddmTemplateKey, displayDate,
+			content, article.getDDMStructureId(), ddmTemplateKey, displayDate,
 			expirationDate, smallImage, smallImageURL, smallImageFile,
 			smallImageBytes, serviceContext);
 
@@ -8410,15 +8411,14 @@ public class JournalArticleLocalServiceImpl
 
 	protected void validate(
 			long companyId, long groupId, long classNameId,
-			Map<Locale, String> titleMap, String content,
-			String ddmStructureKey, String ddmTemplateKey, Date displayDate,
-			Date expirationDate, boolean smallImage, String smallImageURL,
-			File smallImageFile, byte[] smallImageBytes,
-			ServiceContext serviceContext)
+			Map<Locale, String> titleMap, String content, long ddmStructureId,
+			String ddmTemplateKey, Date displayDate, Date expirationDate,
+			boolean smallImage, String smallImageURL, File smallImageFile,
+			byte[] smallImageBytes, ServiceContext serviceContext)
 		throws PortalException {
 
 		_getModelValidator().validate(
-			companyId, groupId, classNameId, titleMap, content, ddmStructureKey,
+			companyId, groupId, classNameId, titleMap, content, ddmStructureId,
 			ddmTemplateKey, displayDate, expirationDate, smallImage,
 			smallImageURL, smallImageFile, smallImageBytes, serviceContext);
 	}
@@ -8431,7 +8431,7 @@ public class JournalArticleLocalServiceImpl
 			String externalReferenceCode, long companyId, long groupId,
 			long classNameId, String articleId, boolean autoArticleId,
 			double version, Map<Locale, String> titleMap, String content,
-			String ddmStructureKey, String ddmTemplateKey, Date displayDate,
+			long ddmStructureId, String ddmTemplateKey, Date displayDate,
 			Date expirationDate, boolean smallImage, String smallImageURL,
 			File smallImageFile, byte[] smallImageBytes,
 			ServiceContext serviceContext)
@@ -8439,7 +8439,7 @@ public class JournalArticleLocalServiceImpl
 
 		_getModelValidator().validate(
 			externalReferenceCode, companyId, groupId, classNameId, articleId,
-			autoArticleId, version, titleMap, content, ddmStructureKey,
+			autoArticleId, version, titleMap, content, ddmStructureId,
 			ddmTemplateKey, displayDate, expirationDate, smallImage,
 			smallImageURL, smallImageFile, smallImageBytes, serviceContext);
 	}
@@ -8449,21 +8449,21 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void validateDDMStructureId(
-			long groupId, long folderId, String ddmStructureKey)
+			long groupId, long folderId, long ddmStructureId)
 		throws PortalException {
 
 		_getModelValidator().validateDDMStructureId(
-			groupId, folderId, ddmStructureKey);
+			groupId, folderId, ddmStructureId);
 	}
 
 	protected void validateReferences(
-			long groupId, String ddmStructureKey, String ddmTemplateKey,
+			long groupId, long ddmStructureId, String ddmTemplateKey,
 			String layoutUuid, boolean smallImage, String smallImageURL,
 			byte[] smallImageBytes, long smallImageId, String content)
 		throws PortalException {
 
 		_getModelValidator().validateReferences(
-			groupId, ddmStructureKey, ddmTemplateKey, layoutUuid, smallImage,
+			groupId, ddmStructureId, ddmTemplateKey, layoutUuid, smallImage,
 			smallImageURL, smallImageBytes, smallImageId, content);
 	}
 

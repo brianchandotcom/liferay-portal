@@ -53,16 +53,16 @@ public abstract class PluginsGitRepositoryJob
 		return portalGitWorkingDirectory;
 	}
 
-	protected PluginsGitRepositoryJob(JSONObject jsonObject) {
-		super(jsonObject);
+	protected PluginsGitRepositoryJob(
+		BuildProfile buildProfile, String jobName, String upstreamBranchName) {
+
+		super(buildProfile, jobName, upstreamBranchName);
 
 		_initialize();
 	}
 
-	protected PluginsGitRepositoryJob(
-		String jobName, BuildProfile buildProfile, String upstreamBranchName) {
-
-		super(jobName, buildProfile, upstreamBranchName);
+	protected PluginsGitRepositoryJob(JSONObject jsonObject) {
+		super(jsonObject);
 
 		_initialize();
 	}

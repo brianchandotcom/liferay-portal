@@ -77,6 +77,19 @@ public class QAWebsitesGitRepositoryJob
 		return _testSuiteName;
 	}
 
+	protected QAWebsitesGitRepositoryJob(
+		BuildProfile buildProfile, String jobName, List<String> projectNames,
+		String testSuiteName, String upstreamBranchName) {
+
+		super(buildProfile, jobName);
+
+		_projectNames = projectNames;
+		_testSuiteName = testSuiteName;
+		_upstreamBranchName = upstreamBranchName;
+
+		_initialize();
+	}
+
 	protected QAWebsitesGitRepositoryJob(JSONObject jsonObject) {
 		super(jsonObject);
 
@@ -99,19 +112,6 @@ public class QAWebsitesGitRepositoryJob
 				_projectNames.add(projectName);
 			}
 		}
-
-		_initialize();
-	}
-
-	protected QAWebsitesGitRepositoryJob(
-		String jobName, BuildProfile buildProfile, String testSuiteName,
-		String upstreamBranchName, List<String> projectNames) {
-
-		super(jobName, buildProfile);
-
-		_testSuiteName = testSuiteName;
-		_upstreamBranchName = upstreamBranchName;
-		_projectNames = projectNames;
 
 		_initialize();
 	}

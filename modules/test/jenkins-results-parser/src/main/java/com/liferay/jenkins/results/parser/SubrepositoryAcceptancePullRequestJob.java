@@ -42,24 +42,24 @@ public class SubrepositoryAcceptancePullRequestJob
 		return _testSuiteName;
 	}
 
-	protected SubrepositoryAcceptancePullRequestJob(JSONObject jsonObject) {
-		super(jsonObject);
+	protected SubrepositoryAcceptancePullRequestJob(
+		BuildProfile buildProfile, String jobName,
+		String portalUpstreamBranchName, String repositoryName,
+		String testSuiteName, String upstreamBranchName) {
 
-		_testSuiteName = jsonObject.getString("test_suite_name");
+		super(
+			buildProfile, jobName, portalUpstreamBranchName, repositoryName,
+			upstreamBranchName);
+
+		_testSuiteName = testSuiteName;
 
 		_initialize();
 	}
 
-	protected SubrepositoryAcceptancePullRequestJob(
-		String jobName, BuildProfile buildProfile, String testSuiteName,
-		String upstreamBranchName, String repositoryName,
-		String portalUpstreamBranchName) {
+	protected SubrepositoryAcceptancePullRequestJob(JSONObject jsonObject) {
+		super(jsonObject);
 
-		super(
-			jobName, buildProfile, upstreamBranchName, repositoryName,
-			portalUpstreamBranchName);
-
-		_testSuiteName = testSuiteName;
+		_testSuiteName = jsonObject.getString("test_suite_name");
 
 		_initialize();
 	}

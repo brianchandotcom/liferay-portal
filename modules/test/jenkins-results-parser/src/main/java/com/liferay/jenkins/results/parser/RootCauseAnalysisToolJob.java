@@ -60,22 +60,22 @@ public class RootCauseAnalysisToolJob
 		return true;
 	}
 
+	protected RootCauseAnalysisToolJob(
+		BuildProfile buildProfile, String jobName,
+		String portalUpstreamBranchName) {
+
+		super(buildProfile, jobName);
+
+		_portalUpstreamBranchName = portalUpstreamBranchName;
+
+		_initialize();
+	}
+
 	protected RootCauseAnalysisToolJob(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_portalUpstreamBranchName = jsonObject.getString(
 			"portal_upstream_branch_name");
-
-		_initialize();
-	}
-
-	protected RootCauseAnalysisToolJob(
-		String jobName, BuildProfile buildProfile,
-		String portalUpstreamBranchName) {
-
-		super(jobName, buildProfile);
-
-		_portalUpstreamBranchName = portalUpstreamBranchName;
 
 		_initialize();
 	}

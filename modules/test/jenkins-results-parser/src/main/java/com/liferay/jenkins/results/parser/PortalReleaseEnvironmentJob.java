@@ -25,15 +25,15 @@ import org.json.JSONObject;
  */
 public class PortalReleaseEnvironmentJob extends PortalEnvironmentJob {
 
-	protected PortalReleaseEnvironmentJob(JSONObject jsonObject) {
-		super(jsonObject);
-	}
-
 	protected PortalReleaseEnvironmentJob(
-		String jobName, BuildProfile buildProfile,
+		BuildProfile buildProfile, String jobName,
 		String portalUpstreamBranchName) {
 
-		super(jobName, buildProfile, portalUpstreamBranchName);
+		super(buildProfile, jobName, portalUpstreamBranchName);
+	}
+
+	protected PortalReleaseEnvironmentJob(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 	@Override

@@ -16,12 +16,14 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -32,94 +34,6 @@ public class JobFactory {
 	public static Job newJob(Build build) {
 		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
 
-		return _newJob(
-			topLevelBuild.getJobName(), topLevelBuild.getTestSuiteName(),
-			topLevelBuild.getBranchName(),
-			topLevelBuild.getBaseGitRepositoryName(),
-			topLevelBuild.getBuildProfile(),
-			_getPortalUpstreamBranchName(topLevelBuild),
-			topLevelBuild.getProjectNames(), null, null);
-	}
-
-	public static Job newJob(BuildData buildData) {
-		String upstreamBranchName = null;
-
-		if (buildData instanceof PortalBuildData) {
-			PortalBuildData portalBuildData = (PortalBuildData)buildData;
-
-			upstreamBranchName = portalBuildData.getPortalUpstreamBranchName();
-		}
-
-		return _newJob(
-			buildData.getJobName(), null, upstreamBranchName, null, null, null,
-			null, null, null);
-	}
-
-	public static Job newJob(JSONObject jsonObject) {
-		return _newJob(
-			null, null, null, null, null, null, null, null, jsonObject);
-	}
-
-	public static Job newJob(String jobName) {
-		return _newJob(jobName, null, null, null, null, null, null, null, null);
-	}
-
-	public static Job newJob(String jobName, String testSuiteName) {
-		return _newJob(
-			jobName, testSuiteName, null, null, null, null, null, null, null);
-	}
-
-	public static Job newJob(
-		String jobName, String testSuiteName, String branchName) {
-
-		return _newJob(
-			jobName, testSuiteName, branchName, null, null, null, null, null,
-			null);
-	}
-
-	public static Job newJob(
-		String jobName, String testSuiteName, String branchName,
-		String repositoryName) {
-
-		return _newJob(
-			jobName, testSuiteName, branchName, repositoryName, null, null,
-			null, null, null);
-	}
-
-	public static Job newJob(
-		String jobName, String testSuiteName, String branchName,
-		String repositoryName, Job.BuildProfile buildProfile) {
-
-		return _newJob(
-			jobName, testSuiteName, branchName, repositoryName, buildProfile,
-			null, null, null, null);
-	}
-
-	public static Job newJob(
-		String jobName, String testSuiteName, String branchName,
-		String repositoryName, Job.BuildProfile buildProfile,
-		PortalGitWorkingDirectory portalGitWorkingDirectory) {
-
-		return _newJob(
-			jobName, testSuiteName, branchName, repositoryName, buildProfile,
-			null, null, portalGitWorkingDirectory, null);
-	}
-
-	public static Job newJob(
-		String jobName, String testSuiteName, String branchName,
-		String repositoryName, Job.BuildProfile buildProfile,
-		String portalUpstreamBranchName, List<String> projectNames,
-		PortalGitWorkingDirectory portalGitWorkingDirectory) {
-
-		return _newJob(
-			jobName, testSuiteName, branchName, repositoryName, buildProfile,
-			portalUpstreamBranchName, projectNames, portalGitWorkingDirectory,
-			null);
-	}
-
-	private static String _getPortalUpstreamBranchName(
-		TopLevelBuild topLevelBuild) {
-
 		String portalUpstreamBranchName = topLevelBuild.getParameterValue(
 			"PORTAL_UPSTREAM_BRANCH_NAME");
 
@@ -127,37 +41,116 @@ public class JobFactory {
 			portalUpstreamBranchName = topLevelBuild.getBranchName();
 		}
 
-		return portalUpstreamBranchName;
+		return _newJob(
+			topLevelBuild.getBuildProfile(), topLevelBuild.getJobName(), null,
+			null, portalUpstreamBranchName, topLevelBuild.getProjectNames(),
+			topLevelBuild.getBaseGitRepositoryName(),
+			topLevelBuild.getTestSuiteName(), topLevelBuild.getBranchName());
+	}
+
+	public static Job newJob(BuildData buildData) {
+		Job.BuildProfile buildProfile = null;
+		String portalUpstreamBranchName = null;
+		String repositoryName = null;
+
+		if (buildData instanceof PortalBuildData) {
+			PortalBuildData portalBuildData = (PortalBuildData)buildData;
+
+			buildProfile = portalBuildData.getBuildProfile();
+			portalUpstreamBranchName =
+				portalBuildData.getPortalUpstreamBranchName();
+			repositoryName = portalBuildData.getPortalGitHubRepositoryName();
+		}
+
+		return _newJob(
+			buildProfile, buildData.getJobName(), null, null,
+			portalUpstreamBranchName, null, repositoryName, null, null);
+	}
+
+	public static Job newJob(
+		Job.BuildProfile buildProfile, String jobName, JSONObject jsonObject,
+		PortalGitWorkingDirectory portalGitWorkingDirectory,
+		String portalUpstreamBranchName, List<String> projectNames,
+		String repositoryName, String testSuiteName,
+		String upstreamBranchName) {
+
+		return _newJob(
+			buildProfile, jobName, jsonObject, portalGitWorkingDirectory,
+			portalUpstreamBranchName, projectNames, repositoryName,
+			testSuiteName, upstreamBranchName);
+	}
+
+	public static Job newJob(JSONObject jsonObject) {
+		return _newJob(
+			null, null, jsonObject, null, null, null, null, null, null);
+	}
+
+	public static Job newJob(String jobName) {
+		return _newJob(null, jobName, null, null, null, null, null, null, null);
+	}
+
+	public static Job newJob(
+		String jobName, String testSuiteName, String upstreamBranchName) {
+
+		return _newJob(
+			null, jobName, null, null, null, null, null, testSuiteName,
+			upstreamBranchName);
 	}
 
 	private static Job _newJob(
-		String jobName, String testSuiteName, String branchName,
-		String repositoryName, Job.BuildProfile buildProfile,
-		String portalUpstreamBranchName, List<String> projectNames,
+		Job.BuildProfile buildProfile, String jobName, JSONObject jsonObject,
 		PortalGitWorkingDirectory portalGitWorkingDirectory,
-		JSONObject jsonObject) {
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
-			portalUpstreamBranchName = branchName;
-		}
+		String portalUpstreamBranchName, List<String> projectNames,
+		String repositoryName, String testSuiteName,
+		String upstreamBranchName) {
 
 		if (jsonObject != null) {
-			String buildProfileString = jsonObject.getString("build_profile");
-
-			buildProfile = Job.BuildProfile.valueOf(
-				buildProfileString.toUpperCase());
-
+			buildProfile = Job.BuildProfile.getByString(
+				jsonObject.getString("build_profile"));
 			jobName = jsonObject.getString("job_name");
-			testSuiteName = jsonObject.getString("test_suite_name");
+			portalUpstreamBranchName = jsonObject.optString(
+				"portal_upstream_branch_name");
+			repositoryName = jsonObject.optString("repository_name");
+
+			JSONArray projectNamesJSONArray = jsonObject.optJSONArray(
+				"project_names");
+
+			if ((projectNamesJSONArray != null) &&
+				!projectNamesJSONArray.isEmpty()) {
+
+				projectNames = new ArrayList<>();
+
+				for (int i = 0; i < projectNamesJSONArray.length(); i++) {
+					String projectName = projectNamesJSONArray.getString(i);
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(projectName) ||
+						projectNames.contains(projectName)) {
+
+						continue;
+					}
+
+					projectNames.add(projectName);
+				}
+			}
+
+			testSuiteName = jsonObject.optString("test_suite_name");
+			upstreamBranchName = jsonObject.optString("upstream_branch_name");
 		}
 
 		StringBuilder sb = new StringBuilder();
 
+		if (buildProfile == null) {
+			buildProfile = Job.BuildProfile.DXP;
+		}
+
+		sb.append("_");
+		sb.append(buildProfile);
+
 		sb.append(jobName);
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(branchName)) {
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
 			sb.append("_");
-			sb.append(branchName);
+			sb.append(portalUpstreamBranchName);
 		}
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(repositoryName)) {
@@ -165,23 +158,12 @@ public class JobFactory {
 			sb.append(repositoryName);
 		}
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
-			sb.append("_liferay-portal");
-
-			if (!portalUpstreamBranchName.equals("master")) {
-				sb.append("-ee");
-			}
+		if ((projectNames != null) && !projectNames.isEmpty()) {
+			Collections.sort(projectNames);
 
 			sb.append("_");
-			sb.append(portalUpstreamBranchName);
+			sb.append(JenkinsResultsParserUtil.join("_", projectNames));
 		}
-
-		if (buildProfile == null) {
-			buildProfile = Job.BuildProfile.PORTAL;
-		}
-
-		sb.append("_");
-		sb.append(buildProfile);
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(testSuiteName)) {
 			testSuiteName = "default";
@@ -190,11 +172,9 @@ public class JobFactory {
 		sb.append("_");
 		sb.append(testSuiteName);
 
-		if (projectNames != null) {
-			Collections.sort(projectNames);
-
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
 			sb.append("_");
-			sb.append(JenkinsResultsParserUtil.join("_", projectNames));
+			sb.append(upstreamBranchName);
 		}
 
 		String key = sb.toString();
@@ -222,19 +202,19 @@ public class JobFactory {
 					JenkinsResultsParserUtil.getProperties(
 						new File(gitWorkingDir, "build.properties"));
 
-				String upstreamBranchName =
+				String gitWorkingBranchName =
 					JenkinsResultsParserUtil.getProperty(
 						buildProperties, "git.working.branch.name");
 
 				String gitRepositoryName = "liferay-portal";
 
-				if (!upstreamBranchName.equals("master")) {
+				if (!gitWorkingBranchName.equals("master")) {
 					gitRepositoryName += "-ee";
 				}
 
 				GitWorkingDirectory gitWorkingDirectory =
 					GitWorkingDirectoryFactory.newGitWorkingDirectory(
-						upstreamBranchName, gitWorkingDir, gitRepositoryName);
+						gitWorkingBranchName, gitWorkingDir, gitRepositoryName);
 
 				if (gitWorkingDirectory instanceof PortalGitWorkingDirectory) {
 					portalGitWorkingDirectory =
@@ -247,8 +227,8 @@ public class JobFactory {
 			}
 			else {
 				job = new PortalAcceptancePullRequestJob(
-					jobName, buildProfile, testSuiteName, branchName,
-					portalGitWorkingDirectory);
+					buildProfile, jobName, portalGitWorkingDirectory,
+					testSuiteName, upstreamBranchName);
 			}
 		}
 
@@ -258,7 +238,7 @@ public class JobFactory {
 			}
 			else {
 				job = new RootCauseAnalysisToolJob(
-					jobName, buildProfile, branchName);
+					buildProfile, jobName, upstreamBranchName);
 			}
 		}
 
@@ -268,7 +248,7 @@ public class JobFactory {
 			}
 			else {
 				job = new RootCauseAnalysisToolBatchJob(
-					jobName, buildProfile, branchName);
+					buildProfile, jobName, upstreamBranchName);
 			}
 		}
 
@@ -278,7 +258,7 @@ public class JobFactory {
 			}
 			else {
 				job = new FixPackBuilderGitRepositoryJob(
-					jobName, buildProfile, testSuiteName, branchName);
+					buildProfile, jobName, testSuiteName, upstreamBranchName);
 			}
 		}
 
@@ -288,7 +268,7 @@ public class JobFactory {
 			}
 			else {
 				job = new PluginsAcceptancePullRequestJob(
-					jobName, buildProfile, branchName);
+					buildProfile, jobName, upstreamBranchName);
 			}
 		}
 
@@ -298,7 +278,7 @@ public class JobFactory {
 			}
 			else {
 				job = new PluginsExtraAppsJob(
-					jobName, buildProfile, branchName);
+					buildProfile, jobName, upstreamBranchName);
 			}
 		}
 
@@ -308,7 +288,7 @@ public class JobFactory {
 			}
 			else {
 				job = new PluginsMarketplaceAppJob(
-					jobName, testSuiteName, buildProfile, branchName);
+					buildProfile, jobName, upstreamBranchName);
 			}
 		}
 
@@ -318,7 +298,7 @@ public class JobFactory {
 			}
 			else {
 				job = new PluginsReleaseJob(
-					jobName, testSuiteName, buildProfile, branchName);
+					buildProfile, jobName, testSuiteName, upstreamBranchName);
 			}
 		}
 
@@ -328,7 +308,7 @@ public class JobFactory {
 			}
 			else {
 				job = new PluginsUpstreamJob(
-					jobName, testSuiteName, buildProfile, branchName);
+					buildProfile, jobName, testSuiteName, upstreamBranchName);
 			}
 		}
 
@@ -338,8 +318,8 @@ public class JobFactory {
 			}
 			else {
 				job = new PortalAcceptancePullRequestJob(
-					jobName, buildProfile, testSuiteName, branchName,
-					portalGitWorkingDirectory);
+					buildProfile, jobName, portalGitWorkingDirectory,
+					testSuiteName, upstreamBranchName);
 			}
 		}
 
@@ -349,8 +329,8 @@ public class JobFactory {
 			}
 			else {
 				job = new PortalAcceptanceUpstreamJob(
-					jobName, buildProfile, testSuiteName, branchName,
-					portalGitWorkingDirectory);
+					buildProfile, jobName, portalGitWorkingDirectory,
+					testSuiteName, upstreamBranchName);
 			}
 		}
 
@@ -360,7 +340,7 @@ public class JobFactory {
 			}
 			else {
 				job = new PortalAppReleaseJob(
-					jobName, buildProfile, branchName);
+					buildProfile, jobName, upstreamBranchName);
 			}
 		}
 
@@ -369,7 +349,8 @@ public class JobFactory {
 				job = new PortalAWSJob(jsonObject);
 			}
 			else {
-				job = new PortalAWSJob(jobName, buildProfile, branchName);
+				job = new PortalAWSJob(
+					buildProfile, jobName, upstreamBranchName);
 			}
 		}
 
@@ -379,7 +360,7 @@ public class JobFactory {
 			}
 			else {
 				job = new PortalEnvironmentJob(
-					jobName, buildProfile, branchName);
+					buildProfile, jobName, upstreamBranchName);
 			}
 		}
 
@@ -389,7 +370,7 @@ public class JobFactory {
 			}
 			else {
 				job = new PortalReleaseEnvironmentJob(
-					jobName, buildProfile, branchName);
+					buildProfile, jobName, upstreamBranchName);
 			}
 		}
 
@@ -399,7 +380,7 @@ public class JobFactory {
 			}
 			else {
 				job = new PortalFixpackEnvironmentJob(
-					jobName, buildProfile, branchName);
+					buildProfile, jobName, upstreamBranchName);
 			}
 		}
 
@@ -409,8 +390,8 @@ public class JobFactory {
 			}
 			else {
 				job = new PortalFixpackReleaseJob(
-					jobName, buildProfile, branchName, testSuiteName,
-					portalGitWorkingDirectory);
+					buildProfile, jobName, portalGitWorkingDirectory,
+					testSuiteName, upstreamBranchName);
 			}
 		}
 
@@ -420,8 +401,8 @@ public class JobFactory {
 			}
 			else {
 				job = new PortalHotfixReleaseJob(
-					jobName, buildProfile, branchName, testSuiteName,
-					portalGitWorkingDirectory);
+					buildProfile, jobName, portalGitWorkingDirectory,
+					testSuiteName, upstreamBranchName);
 			}
 		}
 
@@ -431,8 +412,8 @@ public class JobFactory {
 			}
 			else {
 				job = new PortalReleaseJob(
-					jobName, buildProfile, branchName, testSuiteName,
-					portalGitWorkingDirectory);
+					buildProfile, jobName, portalGitWorkingDirectory,
+					testSuiteName, upstreamBranchName);
 			}
 		}
 
@@ -442,8 +423,8 @@ public class JobFactory {
 			}
 			else {
 				job = new PortalAcceptancePullRequestJob(
-					jobName, buildProfile, "sf", branchName,
-					portalGitWorkingDirectory);
+					buildProfile, jobName, portalGitWorkingDirectory, "sf",
+					upstreamBranchName);
 			}
 		}
 
@@ -453,12 +434,13 @@ public class JobFactory {
 			}
 			else {
 				job = new PortalTestSuiteUpstreamJob(
-					jobName, buildProfile, testSuiteName, branchName,
-					portalGitWorkingDirectory);
+					buildProfile, jobName, portalGitWorkingDirectory,
+					testSuiteName, upstreamBranchName);
 			}
 		}
 
 		if (jobName.startsWith("test-portal-testsuite-upstream-controller(") ||
+			jobName.equals("test-results-consistency-report-controller") ||
 			jobName.startsWith(
 				"test-qa-websites-functional-daily-controller(")) {
 
@@ -466,7 +448,7 @@ public class JobFactory {
 				job = new SimpleJob(jsonObject);
 			}
 			else {
-				job = new SimpleJob(jobName, buildProfile);
+				job = new SimpleJob(buildProfile, jobName);
 			}
 		}
 
@@ -479,17 +461,8 @@ public class JobFactory {
 			}
 			else {
 				job = new QAWebsitesGitRepositoryJob(
-					jobName, buildProfile, testSuiteName, branchName,
-					projectNames);
-			}
-		}
-
-		if (jobName.equals("test-results-consistency-report-controller")) {
-			if (jsonObject != null) {
-				job = new SimpleJob(jsonObject);
-			}
-			else {
-				job = new SimpleJob(jobName, buildProfile);
+					buildProfile, jobName, projectNames, testSuiteName,
+					upstreamBranchName);
 			}
 		}
 
@@ -499,8 +472,8 @@ public class JobFactory {
 			}
 			else {
 				job = new SubrepositoryAcceptancePullRequestJob(
-					jobName, buildProfile, testSuiteName, branchName,
-					repositoryName, portalUpstreamBranchName);
+					buildProfile, jobName, portalUpstreamBranchName,
+					repositoryName, testSuiteName, upstreamBranchName);
 			}
 		}
 
@@ -510,7 +483,7 @@ public class JobFactory {
 			}
 			else {
 				job = new DefaultPortalJob(
-					jobName, buildProfile, testSuiteName);
+					buildProfile, jobName, testSuiteName);
 			}
 		}
 

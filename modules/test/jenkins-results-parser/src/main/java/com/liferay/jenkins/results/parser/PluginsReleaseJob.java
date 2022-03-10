@@ -21,15 +21,15 @@ import org.json.JSONObject;
  */
 public class PluginsReleaseJob extends PluginsTestSuiteJob {
 
-	protected PluginsReleaseJob(JSONObject jsonObject) {
-		super(jsonObject);
-	}
-
 	protected PluginsReleaseJob(
-		String jobName, String pluginName, BuildProfile buildProfile,
+		BuildProfile buildProfile, String jobName, String pluginName,
 		String upstreamBranchName) {
 
-		super(jobName, pluginName, buildProfile, upstreamBranchName);
+		super(buildProfile, jobName, pluginName, upstreamBranchName);
+	}
+
+	protected PluginsReleaseJob(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 }

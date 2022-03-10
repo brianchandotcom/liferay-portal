@@ -110,6 +110,19 @@ public abstract class BasePortalReleaseJob
 		return _testSuiteName;
 	}
 
+	protected BasePortalReleaseJob(
+		BuildProfile buildProfile, String jobName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory,
+		String portalUpstreamBranchName, String testSuiteName) {
+
+		super(buildProfile, jobName);
+
+		_portalUpstreamBranchName = portalUpstreamBranchName;
+		_testSuiteName = testSuiteName;
+
+		_initialize(portalGitWorkingDirectory);
+	}
+
 	protected BasePortalReleaseJob(JSONObject jsonObject) {
 		super(jsonObject);
 
@@ -118,19 +131,6 @@ public abstract class BasePortalReleaseJob
 		_testSuiteName = jsonObject.getString("test_suite_name");
 
 		_initialize(null);
-	}
-
-	protected BasePortalReleaseJob(
-		String jobName, BuildProfile buildProfile,
-		String portalUpstreamBranchName, String testSuiteName,
-		PortalGitWorkingDirectory portalGitWorkingDirectory) {
-
-		super(jobName, buildProfile);
-
-		_portalUpstreamBranchName = portalUpstreamBranchName;
-		_testSuiteName = testSuiteName;
-
-		_initialize(portalGitWorkingDirectory);
 	}
 
 	@Override

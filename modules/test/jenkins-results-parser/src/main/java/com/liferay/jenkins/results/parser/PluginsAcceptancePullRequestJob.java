@@ -45,6 +45,38 @@ public class PluginsAcceptancePullRequestJob extends PluginsGitRepositoryJob {
 		return _pluginsTestBaseDirs;
 	}
 
+	protected PluginsAcceptancePullRequestJob(
+		BuildProfile buildProfile, String jobName, String upstreamBranchName) {
+
+		super(buildProfile, jobName, upstreamBranchName);
+
+		_pluginsTestBaseDirs = new ArrayList<>();
+
+		PluginsGitWorkingDirectory pluginsGitWorkingDirectory =
+			portalGitWorkingDirectory.getPluginsGitWorkingDirectory();
+
+		for (File modifiedFile :
+				pluginsGitWorkingDirectory.getModifiedFilesList()) {
+
+			File parentDir = new File(modifiedFile.getPath());
+
+			while (parentDir != null) {
+				File pluginsTestBaseDir = new File(
+					parentDir, "test/functional");
+
+				if (pluginsTestBaseDir.exists()) {
+					if (!_pluginsTestBaseDirs.contains(pluginsTestBaseDir)) {
+						_pluginsTestBaseDirs.add(pluginsTestBaseDir);
+					}
+
+					break;
+				}
+
+				parentDir = parentDir.getParentFile();
+			}
+		}
+	}
+
 	protected PluginsAcceptancePullRequestJob(JSONObject jsonObject) {
 		super(jsonObject);
 
@@ -74,38 +106,6 @@ public class PluginsAcceptancePullRequestJob extends PluginsGitRepositoryJob {
 			}
 
 			_pluginsTestBaseDirs.add(pluginsTestBaseDir);
-		}
-	}
-
-	protected PluginsAcceptancePullRequestJob(
-		String jobName, BuildProfile buildProfile, String upstreamBranchName) {
-
-		super(jobName, buildProfile, upstreamBranchName);
-
-		_pluginsTestBaseDirs = new ArrayList<>();
-
-		PluginsGitWorkingDirectory pluginsGitWorkingDirectory =
-			portalGitWorkingDirectory.getPluginsGitWorkingDirectory();
-
-		for (File modifiedFile :
-				pluginsGitWorkingDirectory.getModifiedFilesList()) {
-
-			File parentDir = new File(modifiedFile.getPath());
-
-			while (parentDir != null) {
-				File pluginsTestBaseDir = new File(
-					parentDir, "test/functional");
-
-				if (pluginsTestBaseDir.exists()) {
-					if (!_pluginsTestBaseDirs.contains(pluginsTestBaseDir)) {
-						_pluginsTestBaseDirs.add(pluginsTestBaseDir);
-					}
-
-					break;
-				}
-
-				parentDir = parentDir.getParentFile();
-			}
 		}
 	}
 

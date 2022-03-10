@@ -58,23 +58,23 @@ public class FixPackBuilderGitRepositoryJob
 		return _testSuiteName;
 	}
 
+	protected FixPackBuilderGitRepositoryJob(
+		BuildProfile buildProfile, String jobName, String testSuiteName,
+		String upstreamBranchName) {
+
+		super(buildProfile, jobName);
+
+		_testSuiteName = testSuiteName;
+		_upstreamBranchName = upstreamBranchName;
+
+		_initialize();
+	}
+
 	protected FixPackBuilderGitRepositoryJob(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_testSuiteName = jsonObject.getString("test_suite_name");
 		_upstreamBranchName = jsonObject.getString("upstream_branch_name");
-
-		_initialize();
-	}
-
-	protected FixPackBuilderGitRepositoryJob(
-		String jobName, BuildProfile buildProfile, String testSuiteName,
-		String upstreamBranchName) {
-
-		super(jobName, buildProfile);
-
-		_testSuiteName = testSuiteName;
-		_upstreamBranchName = upstreamBranchName;
 
 		_initialize();
 	}

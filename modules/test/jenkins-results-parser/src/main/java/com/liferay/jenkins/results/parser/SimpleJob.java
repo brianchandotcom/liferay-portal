@@ -29,12 +29,12 @@ public class SimpleJob extends BaseJob {
 		return Collections.emptySet();
 	}
 
-	protected SimpleJob(JSONObject jsonObject) {
-		super(jsonObject);
+	protected SimpleJob(BuildProfile buildProfile, String jobName) {
+		super(buildProfile, jobName);
 	}
 
-	protected SimpleJob(String jobName, BuildProfile buildProfile) {
-		super(jobName, buildProfile);
+	protected SimpleJob(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 	@Override

@@ -118,26 +118,26 @@ public abstract class PortalAcceptanceTestSuiteJob
 		return _testSuiteName;
 	}
 
-	protected PortalAcceptanceTestSuiteJob(JSONObject jsonObject) {
-		super(jsonObject);
-
-		_testSuiteName = jsonObject.getString("test_suite_name");
-	}
-
 	protected PortalAcceptanceTestSuiteJob(
-		String jobName, BuildProfile buildProfile, String testSuiteName,
-		String upstreamBranchName,
-		PortalGitWorkingDirectory portalGitWorkingDirectory) {
+		BuildProfile buildProfile, String jobName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory,
+		String testSuiteName, String upstreamBranchName) {
 
 		super(
-			jobName, buildProfile, upstreamBranchName,
-			portalGitWorkingDirectory);
+			buildProfile, jobName, portalGitWorkingDirectory,
+			upstreamBranchName);
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(testSuiteName)) {
 			testSuiteName = "default";
 		}
 
 		_testSuiteName = testSuiteName;
+	}
+
+	protected PortalAcceptanceTestSuiteJob(JSONObject jsonObject) {
+		super(jsonObject);
+
+		_testSuiteName = jsonObject.getString("test_suite_name");
 	}
 
 	@Override

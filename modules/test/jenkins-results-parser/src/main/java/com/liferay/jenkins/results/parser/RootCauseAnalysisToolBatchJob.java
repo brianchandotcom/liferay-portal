@@ -23,17 +23,17 @@ import org.json.JSONObject;
  */
 public class RootCauseAnalysisToolBatchJob extends RootCauseAnalysisToolJob {
 
-	protected RootCauseAnalysisToolBatchJob(JSONObject jsonObject) {
-		super(jsonObject);
+	protected RootCauseAnalysisToolBatchJob(
+		BuildProfile buildProfile, String jobName,
+		String portalUpstreamBranchName) {
+
+		super(buildProfile, jobName, portalUpstreamBranchName);
 
 		_initialize();
 	}
 
-	protected RootCauseAnalysisToolBatchJob(
-		String jobName, BuildProfile buildProfile,
-		String portalUpstreamBranchName) {
-
-		super(jobName, buildProfile, portalUpstreamBranchName);
+	protected RootCauseAnalysisToolBatchJob(JSONObject jsonObject) {
+		super(jsonObject);
 
 		_initialize();
 	}

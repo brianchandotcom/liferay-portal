@@ -144,6 +144,20 @@ public class SubrepositoryGitRepositoryJob
 		super.setGitRepositoryDir(repositoryDir);
 	}
 
+	protected SubrepositoryGitRepositoryJob(
+		BuildProfile buildProfile, String jobName,
+		String portalUpstreamBranchName, String repositoryName,
+		String upstreamBranchName) {
+
+		super(buildProfile, jobName, upstreamBranchName);
+
+		_portalUpstreamBranchName = portalUpstreamBranchName;
+		_repositoryName = repositoryName;
+		_upstreamBranchName = upstreamBranchName;
+
+		_initialize();
+	}
+
 	protected SubrepositoryGitRepositoryJob(JSONObject jsonObject) {
 		super(jsonObject);
 
@@ -151,19 +165,6 @@ public class SubrepositoryGitRepositoryJob
 		_portalUpstreamBranchName = jsonObject.getString(
 			"portal_upstream_branch_name");
 		_upstreamBranchName = jsonObject.getString("upstream_branch_name");
-
-		_initialize();
-	}
-
-	protected SubrepositoryGitRepositoryJob(
-		String jobName, BuildProfile buildProfile, String upstreamBranchName,
-		String repositoryName, String portalUpstreamBranchName) {
-
-		super(jobName, buildProfile, upstreamBranchName);
-
-		_upstreamBranchName = upstreamBranchName;
-		_repositoryName = repositoryName;
-		_portalUpstreamBranchName = portalUpstreamBranchName;
 
 		_initialize();
 	}

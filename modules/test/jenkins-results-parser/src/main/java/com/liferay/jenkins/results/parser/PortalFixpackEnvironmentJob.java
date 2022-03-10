@@ -30,10 +30,10 @@ public class PortalFixpackEnvironmentJob extends PortalEnvironmentJob {
 	}
 
 	protected PortalFixpackEnvironmentJob(
-		String jobName, BuildProfile buildProfile,
+		BuildProfile buildProfile, String jobName,
 		String portalUpstreamBranchName) {
 
-		super(jobName, buildProfile, portalUpstreamBranchName);
+		super(buildProfile, jobName, portalUpstreamBranchName);
 	}
 
 	@Override

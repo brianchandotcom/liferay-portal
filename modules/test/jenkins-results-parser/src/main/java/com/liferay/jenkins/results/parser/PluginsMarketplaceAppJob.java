@@ -57,33 +57,31 @@ public class PluginsMarketplaceAppJob
 		return _appType;
 	}
 
+	protected PluginsMarketplaceAppJob(
+		BuildProfile buildProfile, String jobName,
+		String portalUpstreamBranchName) {
+
+		super(buildProfile, jobName);
+
+		String appType = System.getenv("TEST_APP_TYPE");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(appType)) {
+			appType = "community";
+		}
+
+		_portalUpstreamBranchName = portalUpstreamBranchName;
+
+		_appType = appType;
+
+		_initialize();
+	}
+
 	protected PluginsMarketplaceAppJob(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_appType = jsonObject.getString("app_type");
 		_portalUpstreamBranchName = jsonObject.getString(
 			"portal_upstream_branch_name");
-
-		_initialize();
-	}
-
-	protected PluginsMarketplaceAppJob(
-		String jobName, String appType, BuildProfile buildProfile,
-		String portalUpstreamBranchName) {
-
-		super(jobName, buildProfile);
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(appType)) {
-			appType = System.getenv("TEST_APP_TYPE");
-		}
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(appType)) {
-			appType = "community";
-		}
-
-		_appType = appType;
-
-		_portalUpstreamBranchName = portalUpstreamBranchName;
 
 		_initialize();
 	}

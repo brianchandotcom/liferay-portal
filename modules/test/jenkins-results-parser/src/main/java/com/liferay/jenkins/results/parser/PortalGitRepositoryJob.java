@@ -35,25 +35,26 @@ public abstract class PortalGitRepositoryJob
 		return (PortalGitWorkingDirectory)gitWorkingDirectory;
 	}
 
+	protected PortalGitRepositoryJob(
+		BuildProfile buildProfile, String jobName) {
+
+		this(buildProfile, jobName, null, null);
+	}
+
+	protected PortalGitRepositoryJob(
+		BuildProfile buildProfile, String jobName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory,
+		String upstreamBranchName) {
+
+		super(buildProfile, jobName, upstreamBranchName);
+
+		_initialize(portalGitWorkingDirectory);
+	}
+
 	protected PortalGitRepositoryJob(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_initialize(null);
-	}
-
-	protected PortalGitRepositoryJob(
-		String jobName, BuildProfile buildProfile) {
-
-		this(jobName, buildProfile, null, null);
-	}
-
-	protected PortalGitRepositoryJob(
-		String jobName, BuildProfile buildProfile, String upstreamBranchName,
-		PortalGitWorkingDirectory portalGitWorkingDirectory) {
-
-		super(jobName, buildProfile, upstreamBranchName);
-
-		_initialize(portalGitWorkingDirectory);
 	}
 
 	private void _initialize(

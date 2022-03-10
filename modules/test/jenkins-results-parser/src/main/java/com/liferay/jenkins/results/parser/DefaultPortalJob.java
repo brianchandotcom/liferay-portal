@@ -82,20 +82,20 @@ public class DefaultPortalJob
 		return _testSuiteName;
 	}
 
-	protected DefaultPortalJob(JSONObject jsonObject) {
-		super(jsonObject);
+	protected DefaultPortalJob(
+		BuildProfile buildProfile, String jobName, String testSuiteName) {
 
-		_testSuiteName = jsonObject.getString("test_suite_name");
+		super(buildProfile, jobName);
+
+		_testSuiteName = testSuiteName;
 
 		_initialize();
 	}
 
-	protected DefaultPortalJob(
-		String jobName, BuildProfile buildProfile, String testSuiteName) {
+	protected DefaultPortalJob(JSONObject jsonObject) {
+		super(jsonObject);
 
-		super(jobName, buildProfile);
-
-		_testSuiteName = testSuiteName;
+		_testSuiteName = jsonObject.getString("test_suite_name");
 
 		_initialize();
 	}

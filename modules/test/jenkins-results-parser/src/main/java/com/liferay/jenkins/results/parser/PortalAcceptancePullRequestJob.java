@@ -55,18 +55,18 @@ public class PortalAcceptancePullRequestJob
 		return _centralMergePullRequest;
 	}
 
-	protected PortalAcceptancePullRequestJob(JSONObject jsonObject) {
-		super(jsonObject);
-	}
-
 	protected PortalAcceptancePullRequestJob(
-		String jobName, BuildProfile buildProfile, String testSuiteName,
-		String upstreamBranchName,
-		PortalGitWorkingDirectory portalGitWorkingDirectory) {
+		BuildProfile buildProfile, String jobName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory,
+		String testSuiteName, String upstreamBranchName) {
 
 		super(
-			jobName, buildProfile, testSuiteName, upstreamBranchName,
-			portalGitWorkingDirectory);
+			buildProfile, jobName, portalGitWorkingDirectory, testSuiteName,
+			upstreamBranchName);
+	}
+
+	protected PortalAcceptancePullRequestJob(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 	@Override

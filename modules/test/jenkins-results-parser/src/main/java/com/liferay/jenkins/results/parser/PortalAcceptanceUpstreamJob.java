@@ -21,18 +21,18 @@ import org.json.JSONObject;
  */
 public class PortalAcceptanceUpstreamJob extends PortalAcceptanceTestSuiteJob {
 
-	protected PortalAcceptanceUpstreamJob(JSONObject jsonObject) {
-		super(jsonObject);
-	}
-
 	protected PortalAcceptanceUpstreamJob(
-		String jobName, BuildProfile buildProfile, String testSuite,
-		String upstreamBranchName,
-		PortalGitWorkingDirectory portalGitWorkingDirectory) {
+		BuildProfile buildProfile, String jobName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory,
+		String testSuiteName, String upstreamBranchName) {
 
 		super(
-			jobName, buildProfile, testSuite, upstreamBranchName,
-			portalGitWorkingDirectory);
+			buildProfile, jobName, portalGitWorkingDirectory, testSuiteName,
+			upstreamBranchName);
+	}
+
+	protected PortalAcceptanceUpstreamJob(JSONObject jsonObject) {
+		super(jsonObject);
 	}
 
 }

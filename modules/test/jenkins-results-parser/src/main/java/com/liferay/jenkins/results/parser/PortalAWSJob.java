@@ -51,22 +51,22 @@ public class PortalAWSJob extends BaseJob implements PortalTestClassJob {
 			_portalUpstreamBranchName);
 	}
 
+	protected PortalAWSJob(
+		BuildProfile buildProfile, String jobName,
+		String portalUpstreamBranchName) {
+
+		super(buildProfile, jobName);
+
+		_portalUpstreamBranchName = portalUpstreamBranchName;
+
+		_initialize();
+	}
+
 	protected PortalAWSJob(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_portalUpstreamBranchName = jsonObject.getString(
 			"portal_upstream_branch_name");
-
-		_initialize();
-	}
-
-	protected PortalAWSJob(
-		String jobName, BuildProfile buildProfile,
-		String portalUpstreamBranchName) {
-
-		super(jobName, buildProfile);
-
-		_portalUpstreamBranchName = portalUpstreamBranchName;
 
 		_initialize();
 	}

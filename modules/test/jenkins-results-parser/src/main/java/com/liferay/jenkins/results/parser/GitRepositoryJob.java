@@ -87,20 +87,14 @@ public abstract class GitRepositoryJob extends BaseJob {
 		this.gitRepositoryDir = gitRepositoryDir;
 	}
 
-	protected GitRepositoryJob(JSONObject jsonObject) {
-		super(jsonObject);
-
-		_upstreamBranchName = jsonObject.getString("upstream_branch_name");
-	}
-
-	protected GitRepositoryJob(String jobName, BuildProfile buildProfile) {
-		this(jobName, buildProfile, null);
+	protected GitRepositoryJob(BuildProfile buildProfile, String jobName) {
+		this(buildProfile, jobName, null);
 	}
 
 	protected GitRepositoryJob(
-		String jobName, BuildProfile buildProfile, String upstreamBranchName) {
+		BuildProfile buildProfile, String jobName, String upstreamBranchName) {
 
-		super(jobName, buildProfile);
+		super(buildProfile, jobName);
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
 			upstreamBranchName = "master";
@@ -113,6 +107,12 @@ public abstract class GitRepositoryJob extends BaseJob {
 		}
 
 		_upstreamBranchName = upstreamBranchName;
+	}
+
+	protected GitRepositoryJob(JSONObject jsonObject) {
+		super(jsonObject);
+
+		_upstreamBranchName = jsonObject.getString("upstream_branch_name");
 	}
 
 	protected void checkGitRepositoryDir() {

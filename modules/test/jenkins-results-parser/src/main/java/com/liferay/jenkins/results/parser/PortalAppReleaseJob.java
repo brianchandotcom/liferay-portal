@@ -66,22 +66,22 @@ public class PortalAppReleaseJob extends BaseJob implements PortalTestClassJob {
 		return true;
 	}
 
+	protected PortalAppReleaseJob(
+		BuildProfile buildProfile, String jobName,
+		String portalUpstreamBranchName) {
+
+		super(buildProfile, jobName);
+
+		_portalUpstreamBranchName = portalUpstreamBranchName;
+
+		_initialize();
+	}
+
 	protected PortalAppReleaseJob(JSONObject jsonObject) {
 		super(jsonObject);
 
 		_portalUpstreamBranchName = jsonObject.getString(
 			"portal_upstream_branch_name");
-
-		_initialize();
-	}
-
-	protected PortalAppReleaseJob(
-		String jobName, BuildProfile buildProfile,
-		String portalUpstreamBranchName) {
-
-		super(jobName, buildProfile);
-
-		_portalUpstreamBranchName = portalUpstreamBranchName;
 
 		_initialize();
 	}

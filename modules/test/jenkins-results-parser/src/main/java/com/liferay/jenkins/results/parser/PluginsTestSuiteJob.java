@@ -54,21 +54,21 @@ public abstract class PluginsTestSuiteJob
 		return getPluginName();
 	}
 
-	protected PluginsTestSuiteJob(JSONObject jsonObject) {
-		super(jsonObject);
+	protected PluginsTestSuiteJob(
+		BuildProfile buildProfile, String jobName, String pluginName,
+		String upstreamBranchName) {
 
-		_pluginName = jsonObject.getString("plugin_name");
+		super(buildProfile, jobName, upstreamBranchName);
+
+		_pluginName = pluginName;
 
 		_initialize();
 	}
 
-	protected PluginsTestSuiteJob(
-		String jobName, String pluginName, BuildProfile buildProfile,
-		String upstreamBranchName) {
+	protected PluginsTestSuiteJob(JSONObject jsonObject) {
+		super(jsonObject);
 
-		super(jobName, buildProfile, upstreamBranchName);
-
-		_pluginName = pluginName;
+		_pluginName = jsonObject.getString("plugin_name");
 
 		_initialize();
 	}

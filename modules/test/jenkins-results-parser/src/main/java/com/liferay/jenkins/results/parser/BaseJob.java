@@ -432,17 +432,17 @@ public abstract class BaseJob implements Job {
 		return false;
 	}
 
+	protected BaseJob(BuildProfile buildProfile, String jobName) {
+		_buildProfile = buildProfile;
+		_jobName = jobName;
+	}
+
 	protected BaseJob(JSONObject jsonObject) {
 		this.jsonObject = jsonObject;
 
-		_jobName = jsonObject.getString("job_name");
 		_buildProfile = BuildProfile.getByString(
 			jsonObject.getString("build_profile"));
-	}
-
-	protected BaseJob(String jobName, BuildProfile buildProfile) {
-		_jobName = jobName;
-		_buildProfile = buildProfile;
+		_jobName = jsonObject.getString("job_name");
 	}
 
 	protected List<BatchTestClassGroup> getBatchTestClassGroups(

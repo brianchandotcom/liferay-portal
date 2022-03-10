@@ -10591,6 +10591,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 		</if>
 
 		<if>
+			<isset property="marketplace.email.address.6" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					marketplace.email.address.6=${marketplace.email.address.6}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="marketplace.email.password.1" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -10631,6 +10640,15 @@ auto.deploy.dest.dir=C:/WINDOWS/system32/config/systemprofile/liferay/websphere-
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.password.5=${marketplace.email.password.5}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="marketplace.email.password.6" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					marketplace.email.password.6=${marketplace.email.password.6}
 				</echo>
 			</then>
 		</if>

@@ -81,6 +81,7 @@ definition {
 	@ignore = "true"
 	@priority = "5"
 	test AssertChartTooltipEventsAndSessions {
+
 		// AC Bug ticket: LRAC-10734
 
 		var username = "ac1 ac1";
@@ -109,11 +110,10 @@ definition {
 			ACIndividualsDashboard.goToKnownIndividualsTab();
 		}
 
-		task ("Navigate to the individuals page of new user") {
+		task ("Get the total number of user activities and navigate to the new individual's page") {
 			ACUtils.viewNameList(nameList = "${username}");
 
 			var key_userName = "${username}";
-
 			var currentTotalActivities = selenium.getText("ACIndividualsDashboard#TOTAL_ACTIVITIES");
 
 			ACNavigation.openItem(itemName = "${username}");
@@ -161,9 +161,8 @@ definition {
 			ACIndividualsDashboard.goToKnownIndividualsTab();
 		}
 
-		task ("Navigate to the individuals page of new user") {
+		task ("Get the total number of user activities and navigate to the new individual's page") {
 			var key_userName = "${username}";
-
 			var newTotalActivities = selenium.getText("ACIndividualsDashboard#TOTAL_ACTIVITIES");
 
 			ACNavigation.openItem(itemName = "${username}");

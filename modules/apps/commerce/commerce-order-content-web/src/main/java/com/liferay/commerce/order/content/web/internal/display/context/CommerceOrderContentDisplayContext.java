@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
@@ -664,6 +665,24 @@ public class CommerceOrderContentDisplayContext {
 		return _portletResourcePermission.contains(
 			_cpRequestHelper.getPermissionChecker(),
 			_cpRequestHelper.getScopeGroupId(), actionId);
+	}
+
+	public boolean hasViewBillingAddressPermission(
+			PermissionChecker permissionChecker,
+			CommerceAccount commerceAccount)
+		throws PortalException {
+
+		if ((commerceAccount.getType() ==
+				CommerceAccountConstants.ACCOUNT_TYPE_GUEST) ||
+			commerceAccount.isPersonalAccount() ||
+			_portletResourcePermission.contains(
+				permissionChecker, commerceAccount.getCommerceAccountGroup(),
+				CommerceWebKeys.VIEW_BILLING_ADDRESS)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isCommerceSiteTypeB2C() {

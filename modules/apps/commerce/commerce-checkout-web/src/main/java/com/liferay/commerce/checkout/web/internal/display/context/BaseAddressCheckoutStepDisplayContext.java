@@ -19,6 +19,7 @@ import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
+import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceAddressService;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.util.List;
 
@@ -43,12 +45,14 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 		ModelResourcePermission<AccountEntry>
 			accountEntryModelResourcePermission,
 		CommerceAddressService commerceAddressService,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		PortletResourcePermission portletResourcePermission) {
 
 		this.accountRoleLocalService = accountRoleLocalService;
 		this.accountEntryModelResourcePermission =
 			accountEntryModelResourcePermission;
 		this.commerceAddressService = commerceAddressService;
+		this.portletResourcePermission = portletResourcePermission;
 
 		_commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_ORDER);
@@ -99,6 +103,24 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 		return false;
 	}
 
+	public boolean hasViewBillingAddressPermission(
+			PermissionChecker permissionChecker,
+			CommerceAccount commerceAccount)
+		throws PortalException {
+
+		if ((commerceAccount.getType() ==
+				CommerceAccountConstants.ACCOUNT_TYPE_GUEST) ||
+			commerceAccount.isPersonalAccount() ||
+			portletResourcePermission.contains(
+				permissionChecker, commerceAccount.getCommerceAccountGroup(),
+				CommerceWebKeys.VIEW_BILLING_ADDRESS)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isShippingUsedAsBilling() throws PortalException {
 		CommerceAccount commerceAccount = _commerceOrder.getCommerceAccount();
 		CommerceAddress shippingAddress = _commerceOrder.getShippingAddress();
@@ -122,6 +144,7 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 		accountEntryModelResourcePermission;
 	protected final AccountRoleLocalService accountRoleLocalService;
 	protected final CommerceAddressService commerceAddressService;
+	protected PortletResourcePermission portletResourcePermission;
 
 	private final CommerceOrder _commerceOrder;
 

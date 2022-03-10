@@ -65,6 +65,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -224,12 +227,33 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		OIDCProviderMetadata oidcProviderMetadata =
 			openIdConnectProvider.getOIDCProviderMetadata();
 
-		ResponseType responseType = new ResponseType(ResponseType.Value.CODE);
+		AuthenticationRequest.Builder builder =
+			new AuthenticationRequest.Builder(
+				new ResponseType(ResponseType.Value.CODE), scope,
+				new ClientID(openIdConnectProvider.getClientId()),
+				loginRedirectURI);
 
-		AuthenticationRequest authenticationRequest = new AuthenticationRequest(
-			oidcProviderMetadata.getAuthorizationEndpointURI(), responseType,
-			scope, new ClientID(openIdConnectProvider.getClientId()),
-			loginRedirectURI, state, nonce);
+		builder = builder.state(
+			state
+		).nonce(
+			nonce
+		).endpointURI(
+			oidcProviderMetadata.getAuthorizationEndpointURI()
+		);
+
+		Map<String, List<String>> customAuthorizationRequestParameters =
+			openIdConnectProvider.getCustomAuthorizationRequestParameters();
+
+		for (Map.Entry<String, List<String>> entry :
+				customAuthorizationRequestParameters.entrySet()) {
+
+			List<String> values = entry.getValue();
+
+			builder.customParameter(
+				entry.getKey(), values.toArray(new String[0]));
+		}
+
+		AuthenticationRequest authenticationRequest = builder.build();
 
 		return authenticationRequest.toURI();
 	}

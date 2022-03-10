@@ -106,7 +106,8 @@ public class OpenIdConnectTokenRequestUtil {
 
 		TokenRequest tokenRequest = new TokenRequest(
 			uri, new ClientSecretBasic(clientID, secret),
-			authorizationCodeGrant);
+			authorizationCodeGrant, null, null,
+			openIdConnectProvider.getCustomTokenRequestParameters());
 
 		HTTPRequest httpRequest = tokenRequest.toHTTPRequest();
 

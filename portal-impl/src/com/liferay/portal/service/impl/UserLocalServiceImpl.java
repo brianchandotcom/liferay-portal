@@ -252,15 +252,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		long creatorUserId = 0;
 		boolean autoPassword = false;
+		boolean passwordReset = _isPasswordReset(companyId);
+		boolean sendEmail = false;
 
 		String password1 = PropsValues.DEFAULT_ADMIN_PASSWORD;
 
-		Boolean resetpassword = _isPasswordReset(companyId);
-		boolean sendEmail = false;
-
 		if (Validator.isNull(password1)) {
 			autoPassword = true;
-			resetpassword = true;
+			passwordReset = true;
 			sendEmail = true;
 		}
 
@@ -326,7 +325,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		updateLastLogin(
 			defaultAdminUser.getUserId(), defaultAdminUser.getLoginIP());
 
-		updatePasswordReset(defaultAdminUser.getUserId(), resetpassword);
+		updatePasswordReset(defaultAdminUser.getUserId(), passwordReset);
 
 		return defaultAdminUser;
 	}

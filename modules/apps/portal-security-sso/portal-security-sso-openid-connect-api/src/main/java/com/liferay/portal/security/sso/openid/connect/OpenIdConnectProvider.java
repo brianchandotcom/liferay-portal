@@ -16,6 +16,9 @@ package com.liferay.portal.security.sso.openid.connect;
 
 import org.osgi.annotation.versioning.ProviderType;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Michael C. Han
  */
@@ -34,6 +37,9 @@ public interface OpenIdConnectProvider<S, T> {
 		throws OpenIdConnectServiceException.ProviderException;
 
 	public String getScopes();
+
+	public Map<String, List<String>> getCustomAuthorizationRequestParameters();
+	public Map<String, List<String>> getCustomTokenRequestParameters();
 
 	public default int getTokenConnectionTimeout() {
 		return 500;

@@ -20,6 +20,9 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceExcept
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 import com.nimbusds.openid.connect.sdk.rp.OIDCClientMetadata;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Thuong Dinh
  * @author Edward C. Han
@@ -30,6 +33,8 @@ public class OpenIdConnectProviderImpl
 	public OpenIdConnectProviderImpl(
 		String name, String clientId, String clientSecret,
 		String configurationPid, String scopes,
+		Map<String, List<String>> customAuthorizationRequestParameters,
+		Map<String, List<String>> customTokenRequestParameters,
 		OpenIdConnectMetadataFactory openIdConnectMetadataFactory,
 		int tokenConnectionTimeout) {
 
@@ -40,6 +45,9 @@ public class OpenIdConnectProviderImpl
 		_clientSecret = clientSecret;
 		_configurationPid = configurationPid;
 		_scopes = scopes;
+		_customAuthorizationRequestParameters =
+			customAuthorizationRequestParameters;
+		_customTokenRequestParameters = customTokenRequestParameters;
 		_openIdConnectMetadataFactory = openIdConnectMetadataFactory;
 		_tokenConnectionTimeout = tokenConnectionTimeout;
 	}
@@ -56,6 +64,16 @@ public class OpenIdConnectProviderImpl
 
 	public String getConfigurationPid() {
 		return _configurationPid;
+	}
+
+	@Override
+	public Map<String, List<String>> getCustomAuthorizationRequestParameters() {
+		return _customAuthorizationRequestParameters;
+	}
+
+	@Override
+	public Map<String, List<String>> getCustomTokenRequestParameters() {
+		return _customTokenRequestParameters;
 	}
 
 	@Override
@@ -88,6 +106,9 @@ public class OpenIdConnectProviderImpl
 	private final String _clientId;
 	private final String _clientSecret;
 	private final String _configurationPid;
+	private final Map<String, List<String>>
+		_customAuthorizationRequestParameters;
+	private final Map<String, List<String>> _customTokenRequestParameters;
 	private final String _name;
 	private final OpenIdConnectMetadataFactory _openIdConnectMetadataFactory;
 	private final String _scopes;

@@ -926,12 +926,14 @@ public class RenderLayoutStructureDisplayContext {
 				_themeDisplay.getLayout());
 		}
 
-		JSONObject frontendTokenValuesJSONObject =
-			JSONFactoryUtil.createJSONObject();
+		JSONObject frontendTokenValuesJSONObject = null;
 
 		if (styleBookEntry != null) {
 			frontendTokenValuesJSONObject = JSONFactoryUtil.createJSONObject(
 				styleBookEntry.getFrontendTokensValues());
+		}
+		else {
+			frontendTokenValuesJSONObject = JSONFactoryUtil.createJSONObject();
 		}
 
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =

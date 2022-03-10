@@ -224,7 +224,8 @@ public class OrderItemUtil {
 		long shippingAddressId = 0;
 
 		CommerceOrderItem commerceOrderItem =
-			commerceOrderItemService.fetchCommerceOrderItem(orderItem.getId());
+			commerceOrderItemService.fetchCommerceOrderItem(
+				GetterUtil.getLong(orderItem.getId()));
 
 		if (commerceOrderItem == null) {
 			commerceOrderItemService.fetchByExternalReferenceCode(
@@ -263,7 +264,8 @@ public class OrderItemUtil {
 
 			commerceOrderItem =
 				commerceOrderItemService.importCommerceOrderItem(
-					orderItem.getExternalReferenceCode(), orderItem.getId(),
+					orderItem.getExternalReferenceCode(),
+					GetterUtil.getLong(orderItem.getId()),
 					commerceOrder.getCommerceOrderId(),
 					cpInstance.getCPInstanceId(),
 					GetterUtil.getString(orderItem.getUnitOfMeasure()),

@@ -1143,15 +1143,15 @@ public class BundleSiteInitializerTest {
 
 		WorkflowDefinition workflowDefinitionTest1 =
 			workflowDefinitionResource.getWorkflowDefinitionByName(
-				"Test workflow Definition 1", 1);
+				"Test Workflow Definition 1", 1);
 
 		Assert.assertNotNull(workflowDefinitionTest1);
 		Assert.assertEquals(
-			"Test workflow Definition 1", workflowDefinitionTest1.getName());
+			"Test Workflow Definition 1", workflowDefinitionTest1.getName());
 		Assert.assertEquals(
-			"Test workflow Definition 1", workflowDefinitionTest1.getTitle());
+			"Test Workflow Definition 1", workflowDefinitionTest1.getTitle());
 		Assert.assertEquals(
-			"This is a description for Test workflow Definition 1",
+			"This is a description for Test Workflow Definition 1",
 			workflowDefinitionTest1.getDescription());
 
 		WorkflowDefinitionLink workflowDefinitionLink1 =
@@ -1161,7 +1161,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(workflowDefinitionLink1);
 		Assert.assertEquals(
-			"Test workflow Definition 1",
+			"Test Workflow Definition 1",
 			workflowDefinitionLink1.getWorkflowDefinitionName());
 
 		WorkflowDefinition workflowDefinitionTest2 =

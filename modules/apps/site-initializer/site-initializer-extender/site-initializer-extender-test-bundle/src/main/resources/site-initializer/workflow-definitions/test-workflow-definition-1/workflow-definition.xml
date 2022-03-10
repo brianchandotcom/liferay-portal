@@ -5,8 +5,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
-	<name>Test workflow Definition 1</name>
-	<description>This is a description for Test workflow Definition 1</description>
+	<name>Test Workflow Definition 1</name>
+	<description>This is a description for Test Workflow Definition 1</description>
 	<version>1</version>
 	<state>
 		<name>StartNode</name>

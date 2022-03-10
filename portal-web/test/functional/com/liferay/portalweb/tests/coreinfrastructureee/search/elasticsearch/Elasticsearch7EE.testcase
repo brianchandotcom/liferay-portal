@@ -301,6 +301,7 @@ definition {
 		property portal.suite.search.engine = "";
 		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
+		property test.assert.warning.exceptions = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackWithJDK11";
 
 		JSONWebcontent.addWebContent(

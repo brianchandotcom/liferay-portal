@@ -23,7 +23,7 @@ const ActivationStatusLayout = ({
 }) => {
 	return (
 		<div className="mb-5">
-			<h2>Activation Status</h2>
+			<h2>{activationStatus.title}</h2>
 
 			<p className="font-weight-normal text-neutral-7 text-paragraph">
 				{activationStatus.subtitle}

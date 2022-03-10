@@ -150,11 +150,13 @@ const ActivationStatusDXPCloud = ({
 			id: STATUS_TAG_TYPES.active,
 			subtitle:
 				'Your DXP Cloud environments are ready. Go to the Product Console to view DXP Cloud details.',
+			title: 'Activation Status',
 		},
 		[STATUS_TAG_TYPE_NAMES.inProgress]: {
 			id: STATUS_TAG_TYPES.inProgress,
 			subtitle:
 				'Your DXP Cloud environments are being set up and will be available soon.',
+			title: 'Activation Status',
 		},
 		[STATUS_TAG_TYPE_NAMES.notActivated]: {
 			buttonLink: userAccount.isAdmin && (
@@ -170,6 +172,7 @@ const ActivationStatusDXPCloud = ({
 			id: STATUS_TAG_TYPES.notActivated,
 			subtitle:
 				'Almost there! Setup DXP Cloud by finishing the activation form.',
+			title: 'Activation Status',
 		},
 	};
 

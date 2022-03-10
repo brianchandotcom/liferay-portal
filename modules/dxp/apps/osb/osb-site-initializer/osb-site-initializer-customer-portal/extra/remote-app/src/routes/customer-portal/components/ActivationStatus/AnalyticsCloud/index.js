@@ -10,11 +10,13 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
 import {Button} from '../../../../../common/components';
 import {getAccountSubscriptionsTerms} from '../../../../../common/services/liferay/graphql/queries';
 import getActivaionStatusDateRange from '../../../../../common/utils/getActivationStatusDateRange';
+import AnalyticsCloudModal from '../../../components/AnalyticsCloudModal';
 import {useCustomerPortal} from '../../../context';
 import {
 	STATUS_TAG_TYPES,
@@ -30,6 +32,10 @@ const ActivationStatusAnalyticsCloud = ({
 }) => {
 	const [{assetsPath}] = useCustomerPortal();
 	const [activationStatusDate, setActivationStatusDate] = useState('');
+	const [isVisible, setIsVisible] = useState(false);
+	const {observer, onClose} = useModal({
+		onClose: () => setIsVisible(false),
+	});
 
 	const subscriptionGroupActivationStatus =
 		subscriptionGroupAnalyticsCloud?.activationStatus;
@@ -50,11 +56,13 @@ const ActivationStatusAnalyticsCloud = ({
 			id: STATUS_TAG_TYPES.active,
 			subtitle:
 				'Your Analytics Cloud environments are ready. Visit the workspace to view Analytics Cloud details.',
+			title: 'Analytics Cloud Activation',
 		},
 		[STATUS_TAG_TYPE_NAMES.inProgress]: {
 			id: STATUS_TAG_TYPES.inProgress,
 			subtitle:
 				'Your Analytics Cloud workspace is being set up and will be available soon',
+			title: 'Analytics Cloud Activation',
 		},
 		[STATUS_TAG_TYPE_NAMES.notActivated]: {
 			buttonLink: userAccount.isAdmin && (
@@ -62,6 +70,7 @@ const ActivationStatusAnalyticsCloud = ({
 					appendIcon="order-arrow-right"
 					className="btn btn-link font-weight-semi-bold p-0 text-brand-primary text-paragraph"
 					displayType="link"
+					onClick={() => setIsVisible(true)}
 				>
 					Finish Activation
 				</Button>
@@ -69,6 +78,7 @@ const ActivationStatusAnalyticsCloud = ({
 			id: STATUS_TAG_TYPES.notActivated,
 			subtitle:
 				'Almost there! Setup Analytics Cloud by finishing the activation form',
+			title: 'Analytics Cloud Activation',
 		},
 	};
 
@@ -110,6 +120,9 @@ const ActivationStatusAnalyticsCloud = ({
 
 	return (
 		<>
+			{isVisible && (
+				<AnalyticsCloudModal observer={observer} onClose={onClose} />
+			)}
 			<ActivationStatusLayout
 				activationStatus={activationStatus}
 				activationStatusDate={activationStatusDate}

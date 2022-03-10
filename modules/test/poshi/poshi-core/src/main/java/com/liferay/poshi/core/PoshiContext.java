@@ -213,6 +213,10 @@ public class PoshiContext {
 		return 0;
 	}
 
+	public static int getFunctionMaxArgumentCount() {
+		return _MAX_ARGUMENT_COUNT;
+	}
+
 	public static Element getFunctionRootElement(
 		String className, String namespace) {
 
@@ -1791,6 +1795,8 @@ public class PoshiContext {
 	}
 
 	private static final String _DEFAULT_NAMESPACE = "LocalFile";
+
+	private static final int _MAX_ARGUMENT_COUNT = 3;
 
 	private static final Map<String, Element> _commandElements =
 		Collections.synchronizedMap(new HashMap<>());

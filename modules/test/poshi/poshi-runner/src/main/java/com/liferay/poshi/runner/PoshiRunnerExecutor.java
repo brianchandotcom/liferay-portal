@@ -436,7 +436,7 @@ public class PoshiRunnerExecutor {
 
 		Exception exception = null;
 
-		for (int i = 1; i <= _MAX_ARGUMENT_COUNT; i++) {
+		for (int i = 1; i <= PoshiContext.getFunctionMaxArgumentCount(); i++) {
 			String locator = executeElement.attributeValue("locator" + i);
 
 			if (locator == null) {
@@ -1342,8 +1342,6 @@ public class PoshiRunnerExecutor {
 
 		return false;
 	}
-
-	private static final int _MAX_ARGUMENT_COUNT = 3;
 
 	private static final Pattern _locatorKeyPattern = Pattern.compile(
 		"((?<namespace>[\\w]+)\\.)?(\\w+)#(\\$\\{\\w+\\}|[A-Z0-9_]+)");

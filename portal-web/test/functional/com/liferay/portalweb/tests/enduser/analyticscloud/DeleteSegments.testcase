@@ -34,7 +34,7 @@ definition {
 		}
 		else {
 			JSONGroup.deleteGroupByName(groupName = "Site Name");
-			
+
 			CustomFields.tearDownCP();
 
 			JSONUser.tearDownNonAdminUsers();
@@ -358,7 +358,6 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8592 | Test Summary: Deleting a custom field that is used by a segment should reset the data"
-	@ignore = "true"
 	@priority = "4"
 	test DeleteCustomFieldUsedSegmentResetData {
 		property portal.upstream = "quarantine";
@@ -372,7 +371,7 @@ definition {
 				category = "Configuration",
 				panel = "Control Panel",
 				portlet = "Custom Fields");
-				
+
 			CustomFields.addCP(
 				customFieldName = "Hobby",
 				customFieldType = "Input Field",

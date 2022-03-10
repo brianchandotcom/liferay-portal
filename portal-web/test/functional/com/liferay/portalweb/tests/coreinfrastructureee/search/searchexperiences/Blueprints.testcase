@@ -1202,9 +1202,21 @@ definition {
 
 		AssertNotVisible(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_HEADER");
 
+		Navigator.gotoNavNested(navNested = "Query Settings");
+
+		Navigator.gotoNavNested(navNested = "Query Elements");
+
+		AssertNotVisible(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_HEADER");
+
 		Click(
 			ariaLabel = "Add Query Element",
 			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+		AssertVisible(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_HEADER");
+
+		Navigator.gotoNavNested(navNested = "Query Settings");
+
+		Navigator.gotoNavNested(navNested = "Query Elements");
 
 		AssertVisible(locator1 = "Blueprints#BLUEPRINTS_ADD_ELEMENTS_SIDEBAR_HEADER");
 	}

@@ -56,6 +56,18 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 			return;
 		}
 
+		const date = this.getJSDate(this.state.date, this.state.time);
+
+		if (Number.isNaN(date.getTime())) {
+			this.setState({
+				validationError: Liferay.Language.get(
+					'please-enter-a-valid-date'
+				),
+			});
+
+			return;
+		}
+
 		const publishDate = this.getPublishDate(
 			this.state.date,
 			this.state.time
@@ -130,28 +142,29 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 		return '';
 	}
 
-	getPublishDate(date, time) {
-		let publishDate = null;
-
+	getJSDate(date, time) {
 		if (typeof date === 'string') {
-			publishDate = new Date(
+			return new Date(
 				date + 'T' + time.hours + ':' + time.minutes + ':00'
 			);
 		}
-		else {
-			publishDate = new Date(
-				date.getFullYear() +
-					'-' +
-					this.pad(date.getMonth() + 1) +
-					'-' +
-					this.pad(date.getDate()) +
-					'T' +
-					time.hours +
-					':' +
-					time.minutes +
-					':00'
-			);
-		}
+
+		return new Date(
+			date.getFullYear() +
+				'-' +
+				this.pad(date.getMonth() + 1) +
+				'-' +
+				this.pad(date.getDate()) +
+				'T' +
+				time.hours +
+				':' +
+				time.minutes +
+				':00'
+		);
+	}
+
+	getPublishDate(date, time) {
+		let publishDate = this.getJSDate(date, time);
 
 		publishDate = new Date(
 			Date.UTC(

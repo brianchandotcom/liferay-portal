@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>CommercePaymentTerms</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CommercePaymentTerms</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>ORDER_DETAILS_TERMS_AND_CONDITIONS_ACTIVE_STATUS</td>
+	<td>//div[@class='dnd-td' and contains(.,'${key_termsAndConditionActiveStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_TERMS_AND_CONDITIONS_NAME</td>
+	<td>//div[@class='table-list-title' and contains(.,'${key_termsAndConditionName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_TERMS_AND_CONDITIONS_PRIORITY</td>
+	<td>//div[@class='dnd-td' and contains(.,'${key_valuePosition}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORDER_DETAILS_TERMS_AND_CONDITIONS_TYPE</td>
+	<td>//div[@class='dnd-td' and contains(.,'${key_termsAndConditionType}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

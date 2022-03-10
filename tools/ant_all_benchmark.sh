@@ -9,7 +9,7 @@ DURATION_LOG=false
 set -e
 
 function check_performance {
-	if [ ${CHECK_PERFORMANCE} == true ]
+	if [ "${CHECK_PERFORMANCE}" == true ]
 	then
 		local durations_min_lenght=2
 		local lines_count="$(($(cat ${ANT_ALL_DURATION_CSV_PATH} | wc -l) + 1))"
@@ -75,7 +75,7 @@ function enable_optional_settings {
 }
 
 function log_durations {
-	if [ ${DURATION_LOG} == true ]
+	if [ "${DURATION_LOG}" == true ]
 	then
 		echo "" >> ${ANT_ALL_DURATION_CSV_PATH}
 		echo -n "$(date +%c)," >> ${ANT_ALL_DURATION_CSV_PATH}
@@ -112,7 +112,7 @@ function remove_oldest_durations {
 }
 
 function save_duration {
-	if [ ${DURATION_LOG} == true ]
+	if [ "${DURATION_LOG}" == true ]
 	then
 		DURATION_ARRAY[${ANT_ALL_RUN_COUNT}]=${SECONDS}
 

@@ -487,10 +487,6 @@ definition {
 			locator1 = "AuditReports#REPORTS_TABLE_RESOURCE_ACTION",
 			value1 = "LOGIN");
 
-		Navigator.openURL();
-
-		Pause(locator1 = "3000");
-
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",
 			panel = "Control Panel",

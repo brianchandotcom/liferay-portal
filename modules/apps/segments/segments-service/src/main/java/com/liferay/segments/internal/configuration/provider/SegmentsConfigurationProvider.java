@@ -54,6 +54,24 @@ public class SegmentsConfigurationProvider {
 		return true;
 	}
 
+	public boolean isRoleSegmentationEnabled(long companyId)
+		throws ConfigurationException {
+
+		if (!_segmentsConfiguration.roleSegmentationEnabled()) {
+			return false;
+		}
+
+		SegmentsCompanyConfiguration segmentsCompanyConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				SegmentsCompanyConfiguration.class, companyId);
+
+		if (!segmentsCompanyConfiguration.roleSegmentationEnabled()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {

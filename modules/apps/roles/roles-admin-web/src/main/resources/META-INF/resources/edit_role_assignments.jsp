@@ -102,7 +102,7 @@ renderResponse.setTitle(role.getTitle(locale));
 	viewTypeItems="<%= editRoleAssignmentsManagementToolbarDisplayContext.getViewTypeItems() %>"
 />
 
-<c:if test='<%= !SegmentsEntryDisplayContext.isRoleSegmentationEnabled() && tabs2.equals("segments") %>'>
+<c:if test='<%= !SegmentsEntryDisplayContext.isRoleSegmentationEnabled(themeDisplay.getCompanyId()) && tabs2.equals("segments") %>'>
 	<clay:stripe
 		elementClasses="assign-roles-segments-warning"
 		message="assigning-roles-by-segment-is-disabled-.to-enable,-go-to-system-settings-segments-segments-service"

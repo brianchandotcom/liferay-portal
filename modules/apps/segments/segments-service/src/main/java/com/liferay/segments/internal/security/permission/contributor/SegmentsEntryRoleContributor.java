@@ -15,10 +15,11 @@
 package com.liferay.segments.internal.security.permission.contributor;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -26,24 +27,18 @@ import com.liferay.portal.kernel.security.permission.contributor.RoleCollection;
 import com.liferay.portal.kernel.security.permission.contributor.RoleContributor;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.segments.SegmentsEntryRetriever;
-import com.liferay.segments.configuration.SegmentsConfiguration;
+import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.model.SegmentsEntryRole;
 import com.liferay.segments.provider.SegmentsEntryProviderRegistry;
 import com.liferay.segments.service.SegmentsEntryRoleLocalService;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -51,12 +46,25 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.segments.configuration.SegmentsConfiguration",
-	service = {}
+	service = RoleContributor.class
 )
 public class SegmentsEntryRoleContributor implements RoleContributor {
 
 	@Override
 	public void contribute(RoleCollection roleCollection) {
+		try {
+			if (!_segmentsConfigurationProvider.isRoleSegmentationEnabled(
+					roleCollection.getCompanyId())) {
+
+				return;
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			_log.error(configurationException);
+
+			return;
+		}
+
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
@@ -79,27 +87,6 @@ public class SegmentsEntryRoleContributor implements RoleContributor {
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
-		}
-	}
-
-	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
-		SegmentsConfiguration segmentsConfiguration =
-			ConfigurableUtil.createConfigurable(
-				SegmentsConfiguration.class, properties);
-
-		if (segmentsConfiguration.roleSegmentationEnabled()) {
-			_serviceRegistration = bundleContext.registerService(
-				RoleContributor.class, this, new HashMapDictionary<>());
-		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
 		}
 	}
 
@@ -137,11 +124,17 @@ public class SegmentsEntryRoleContributor implements RoleContributor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SegmentsEntryRoleContributor.class);
 
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
 	@Reference(target = "(permission.checker.type=liberal)")
 	private PermissionCheckerFactory _liberalPermissionCheckerFactory;
 
 	@Reference
 	private RequestContextMapper _requestContextMapper;
+
+	@Reference
+	private SegmentsConfigurationProvider _segmentsConfigurationProvider;
 
 	@Reference
 	private SegmentsEntryProviderRegistry _segmentsEntryProviderRegistry;
@@ -151,7 +144,5 @@ public class SegmentsEntryRoleContributor implements RoleContributor {
 
 	@Reference
 	private SegmentsEntryRoleLocalService _segmentsEntryRoleLocalService;
-
-	private ServiceRegistration<RoleContributor> _serviceRegistration;
 
 }

@@ -24,6 +24,65 @@ definition {
 		}
 	}
 
+	@description = "Verify users can exclude fields from being imported"
+	@priority = "3"
+	test CanExcludeFieldsFromImport {
+		task ("Given the user is importing CSV file with account data") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			UploadDependencyFile.uploadFile(fileName = "csv_account_import.csv");
+
+			ImportExport.selectEntity(
+				entityType = "Account",
+				headlessEndpoint = "/headless-admin-user");
+		}
+
+		task ("When the user maps only specific fields and imports the file") {
+			ImportExport.mapImport(fieldMappings = "name:name,type:type,externalReferenceCode:externalReferenceCode");
+
+			Button.click(button = "Import");
+		}
+
+		task ("Then only those fields should be imported") {
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+
+			Button.clickDone();
+
+			Button.clickCancel();
+
+			ImportExport.assertExecutionEntry(
+				entityType = "Account",
+				executionAction = "Import",
+				executionStatus = "Completed");
+
+			Accounts.openAccountsAdmin();
+
+			Accounts.viewAccountDetails(
+				accountDescription = "",
+				accountName = "Test Business Account",
+				accountType = "Business",
+				externalReferenceCode = "101");
+
+			Navigator.gotoBack();
+
+			Accounts.viewAccountDetails(
+				accountDescription = "",
+				accountName = "Test Guest Account",
+				accountType = "Guest",
+				externalReferenceCode = "102");
+
+			Navigator.gotoBack();
+
+			Accounts.viewAccountDetails(
+				accountDescription = "",
+				accountName = "Test Person Account",
+				accountType = "Person",
+				externalReferenceCode = "103");
+		}
+	}
+
 	@description = "Verify users can import entities via CSV files"
 	@priority = "3"
 	test CanImportCSVFiles {

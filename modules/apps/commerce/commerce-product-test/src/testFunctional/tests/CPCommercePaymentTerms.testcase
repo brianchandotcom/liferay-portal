@@ -107,6 +107,7 @@ definition {
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
 				value1 = "No Items were found.");
+		}
 	}
 
 	@description = "[Please Update]"

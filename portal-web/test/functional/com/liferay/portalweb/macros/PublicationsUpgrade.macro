@@ -23,11 +23,6 @@ definition {
 	}
 
 	macro viewOutOfDatePublications {
-		AssertTextPresent(
-			key_publicationName = "Production",
-			locator1 = "Publications#PUBLICATIONS_INDICATOR_TITLE",
-			value1 = "Production");
-
 		PublicationsNavigator.openPublicationsAdmin();
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");

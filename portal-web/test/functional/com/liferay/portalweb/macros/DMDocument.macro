@@ -1775,6 +1775,15 @@ definition {
 		return "${dmDocumentURL}";
 	}
 
+	macro getFileResponseHeader {
+		var dmDocumentURL = selenium.getAttribute("//img[contains(@class,'preview-file-image') and contains(@src,'${dmDocumentFileName}')]@src");
+
+		var curl = '''${dmDocumentURL} -I''';
+		var responseHeader = JSONCurlUtil.post("${curl}");
+
+		return "${responseHeader}";
+	}
+
 	macro gotoEntry {
 		Click(
 			key_card = "${dmDocumentTitle}",

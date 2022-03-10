@@ -473,66 +473,6 @@ public class PropsValues {
 		GetterUtil.getLong(
 			PropsUtil.get(PropsKeys.DATA_LIMIT_DL_STORAGE_MAX_SIZE));
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final long DATA_LIMIT_MAX_DL_STORAGE_SIZE =
-		GetterUtil.getLong(
-			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_DL_STORAGE_SIZE));
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final long DATA_LIMIT_MAX_JOURNAL_ARTICLE_COUNT =
-		GetterUtil.getLong(
-			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_JOURNAL_ARTICLE_COUNT));
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final long DATA_LIMIT_MAX_JOURNAL_FOLDER_COUNT =
-		GetterUtil.getLong(
-			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_JOURNAL_FOLDER_COUNT));
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final long DATA_LIMIT_MAX_ORGANIZATION_COUNT =
-		GetterUtil.getLong(
-			PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_ORGANIZATION_COUNT));
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final long DATA_LIMIT_MAX_ROLE_COUNT = GetterUtil.getLong(
-		PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_ROLE_COUNT));
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final long DATA_LIMIT_MAX_SITE_COUNT = GetterUtil.getLong(
-		PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_SITE_COUNT));
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final long DATA_LIMIT_MAX_TEAM_COUNT = GetterUtil.getLong(
-		PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_TEAM_COUNT));
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final long DATA_LIMIT_MAX_USER_COUNT = GetterUtil.getLong(
-		PropsUtil.get(PropsKeys.DATA_LIMIT_MAX_USER_COUNT));
-
 	public static final long DATA_LIMIT_SITE_MAX_COUNT = GetterUtil.getLong(
 		PropsUtil.get(PropsKeys.DATA_LIMIT_SITE_MAX_COUNT));
 
@@ -2669,14 +2609,6 @@ public class PropsValues {
 	public static final boolean VERIFY_DATABASE_TRANSACTIONS_DISABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.VERIFY_DATABASE_TRANSACTIONS_DISABLED));
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final int VERIFY_PROCESS_CONCURRENCY_THRESHOLD =
-		GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.VERIFY_PROCESS_CONCURRENCY_THRESHOLD));
 
 	public static String VIRTUAL_HOSTS_DEFAULT_SITE_NAME = PropsUtil.get(
 		PropsKeys.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);

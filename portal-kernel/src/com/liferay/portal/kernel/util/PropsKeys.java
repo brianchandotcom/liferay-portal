@@ -595,27 +595,6 @@ public interface PropsKeys {
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
-	public static final String DATA_LIMIT_MAX_DL_STORAGE_SIZE =
-		"data.limit.max.dl.storage.size";
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String DATA_LIMIT_MAX_JOURNAL_ARTICLE_COUNT =
-		"data.limit.max.journal.article.count";
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String DATA_LIMIT_MAX_JOURNAL_FOLDER_COUNT =
-		"data.limit.max.journal.folder.count";
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
 	public static final String DATA_LIMIT_MAX_MAIL_MESSAGE_COUNT =
 		"data.limit.max.mail.message.count";
 
@@ -625,41 +604,6 @@ public interface PropsKeys {
 	@Deprecated
 	public static final String DATA_LIMIT_MAX_MAIL_MESSAGE_PERIOD =
 		"data.limit.max.mail.message.period";
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String DATA_LIMIT_MAX_ORGANIZATION_COUNT =
-		"data.limit.max.organization.count";
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String DATA_LIMIT_MAX_ROLE_COUNT =
-		"data.limit.max.role.count";
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String DATA_LIMIT_MAX_SITE_COUNT =
-		"data.limit.max.site.count";
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String DATA_LIMIT_MAX_TEAM_COUNT =
-		"data.limit.max.team.count";
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String DATA_LIMIT_MAX_USER_COUNT =
-		"data.limit.max.user.count";
 
 	public static final String DATA_LIMIT_SITE_MAX_COUNT =
 		"data.limit.site.max.count";
@@ -3239,13 +3183,6 @@ public interface PropsKeys {
 	 */
 	@Deprecated
 	public static final String VERIFY_FREQUENCY = "verify.frequency";
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String VERIFY_PROCESS_CONCURRENCY_THRESHOLD =
-		"verify.process.concurrency.threshold";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement

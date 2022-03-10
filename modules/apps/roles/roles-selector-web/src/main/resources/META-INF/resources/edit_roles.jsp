@@ -24,10 +24,12 @@ Group group = (Group)request.getAttribute("edit_roles.jsp-group");
 int roleType = (Integer)request.getAttribute("edit_roles.jsp-roleType");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portletURL");
+
+RoleSearch roleSearch = new RoleSearch(renderRequest, portletURL);
 %>
 
 <liferay-ui:search-container
-	searchContainer="<%= new RoleSearch(renderRequest, portletURL) %>"
+	searchContainer="<%= roleSearch %>"
 >
 
 	<%
@@ -39,7 +41,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_roles.jsp-portlet
 
 	total = roles.size();
 
-	searchContainer.setTotal(total);
+	searchContainer.setResultsAndTotal(roleSearch::getResults, total);
 	%>
 
 	<liferay-ui:search-container-results

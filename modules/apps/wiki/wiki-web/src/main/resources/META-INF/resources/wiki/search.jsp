@@ -90,12 +90,10 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 
 		Hits hits = indexer.search(searchContext);
 
-		searchContainer.setTotal(hits.getLength());
-		%>
+		java.util.Locale searchLocale = locale;
 
-		<liferay-ui:search-container-results
-			results="<%= SearchResultUtil.getSearchResults(hits, locale) %>"
-		/>
+		searchContainer.setResultsAndTotal(() -> SearchResultUtil.getSearchResults(hits, searchLocale), hits.getLength());
+		%>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.search.SearchResult"

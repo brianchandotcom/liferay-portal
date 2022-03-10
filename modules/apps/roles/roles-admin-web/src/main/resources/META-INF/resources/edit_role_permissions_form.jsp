@@ -205,7 +205,7 @@ if (Validator.isNotNull(portletResource)) {
 						resultRows.add(row);
 					}
 
-					searchContainer.setTotal(relatedPortletResources.size());
+					searchContainer.setResultsAndTotal(Collections::emptyList, relatedPortletResources.size());
 					%>
 
 					<aui:input name="relatedPortletResources" type="hidden" value="<%= StringUtil.merge(relatedPortletResources) %>" />

@@ -63,6 +63,12 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 
 			String sqlClause = matcher.group(3);
 
+			if (Validator.isNull(sqlClause)) {
+				continue;
+			}
+
+			sqlClause = sqlClause.trim();
+
 			sqlClause = _translateOneDate(sqlClause);
 			sqlClause = _parseSql(sqlClause, false);
 
@@ -120,6 +126,7 @@ public class PropertiesStylingCheck extends BaseFileCheck {
 		sqlClause = sqlClause.replaceAll(" OR (?=\\()", " OR \\\\\n");
 		sqlClause = sqlClause.replaceAll("\\((?=\\()", "(\\\\\n");
 		sqlClause = sqlClause.replaceAll("\\)(?=\\))", ")\\\\\n");
+		sqlClause = sqlClause.replaceAll("\\)(?= \\))", ")\\\\\n");
 
 		String[] sqlClauses = sqlClause.split("\n");
 

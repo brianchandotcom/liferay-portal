@@ -144,8 +144,6 @@ components:
                     example: "John"
                     readOnly: true
                     type: string
-            required:
-                - orderId
             type: object
         ShipmentItem:
             properties:

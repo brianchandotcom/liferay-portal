@@ -154,7 +154,7 @@ public class JournalDisplayContext {
 		return _journalHelper.getAbsolutePath(_liferayPortletRequest, folderId);
 	}
 
-	public String[] getAddMenuFavItems() throws PortalException {
+	public long[] getAddMenuFavItems() throws PortalException {
 		if (_addMenuFavItems != null) {
 			return _addMenuFavItems;
 		}
@@ -163,7 +163,7 @@ public class JournalDisplayContext {
 			PortletPreferencesFactoryUtil.getPortalPreferences(
 				_httpServletRequest);
 
-		List<String> addMenuFavItemsList = new ArrayList<>();
+		List<Long> addMenuFavItemsList = new ArrayList<>();
 
 		String[] addMenuFavItems = portalPreferences.getValues(
 			JournalPortletKeys.JOURNAL,
@@ -173,19 +173,20 @@ public class JournalDisplayContext {
 
 		for (DDMStructure ddmStructure : getDDMStructures()) {
 			if (ArrayUtil.contains(
-					addMenuFavItems, ddmStructure.getStructureKey())) {
+					addMenuFavItems,
+					String.valueOf(ddmStructure.getStructureId()))) {
 
-				addMenuFavItemsList.add(ddmStructure.getStructureKey());
+				addMenuFavItemsList.add(ddmStructure.getStructureId());
 			}
 		}
 
-		_addMenuFavItems = ArrayUtil.toStringArray(addMenuFavItemsList);
+		_addMenuFavItems = ArrayUtil.toLongArray(addMenuFavItemsList);
 
 		return _addMenuFavItems;
 	}
 
 	public int getAddMenuFavItemsLength() throws PortalException {
-		String[] addMenuFavItems = getAddMenuFavItems();
+		long[] addMenuFavItems = getAddMenuFavItems();
 
 		return addMenuFavItems.length;
 	}
@@ -1495,7 +1496,7 @@ public class JournalDisplayContext {
 		searchContext.setStart(start);
 	}
 
-	private String[] _addMenuFavItems;
+	private long[] _addMenuFavItems;
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;
 	private SearchContainer<?> _articleSearchContainer;

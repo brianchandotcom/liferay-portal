@@ -597,7 +597,7 @@ public class JournalManagementToolbarDisplayContext
 
 						if (ArrayUtil.contains(
 								_journalDisplayContext.getAddMenuFavItems(),
-								ddmStructure.getStructureKey())) {
+								ddmStructure.getStructureId())) {
 
 							addFavoriteDropdownItem(unsafeConsumer);
 						}

@@ -79,12 +79,12 @@ public class AddMenuFavItemMVCActionCommand extends BaseMVCActionCommand {
 			throw new MaxAddMenuFavItemsException();
 		}
 
-		String ddmStructureKey = ParamUtil.getString(
-			actionRequest, "ddmStructureKey");
+		long ddmStructureId = ParamUtil.getLong(
+			actionRequest, "ddmStructureId");
 
 		portalPreferences.setValues(
 			JournalPortletKeys.JOURNAL, key,
-			ArrayUtil.append(addMenuFavItems, ddmStructureKey));
+			ArrayUtil.append(addMenuFavItems, String.valueOf(ddmStructureId)));
 	}
 
 	@Reference

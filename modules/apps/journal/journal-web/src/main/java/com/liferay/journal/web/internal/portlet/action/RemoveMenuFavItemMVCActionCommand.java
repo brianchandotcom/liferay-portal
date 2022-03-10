@@ -47,8 +47,8 @@ public class RemoveMenuFavItemMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String ddmStructureKey = ParamUtil.getString(
-			actionRequest, "ddmStructureKey");
+		long ddmStructureId = ParamUtil.getLong(
+			actionRequest, "ddmStructureId");
 
 		PortalPreferences portalPreferences =
 			PortletPreferencesFactoryUtil.getPortalPreferences(actionRequest);
@@ -61,7 +61,7 @@ public class RemoveMenuFavItemMVCActionCommand extends BaseMVCActionCommand {
 
 		portalPreferences.setValues(
 			JournalPortletKeys.JOURNAL, key,
-			ArrayUtil.remove(addMenuFavItems, ddmStructureKey));
+			ArrayUtil.remove(addMenuFavItems, String.valueOf(ddmStructureId)));
 	}
 
 	@Reference

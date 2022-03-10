@@ -3950,15 +3950,8 @@ public class PortalImpl implements Portal {
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
-		if (layout != null) {
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			if (layoutTypePortlet.hasDefaultScopePortletId(
-					groupId, portletId)) {
-
-				validPlid = true;
-			}
+		if ((layout != null) && _layoutContainsPortletId(layout, portletId)) {
+			validPlid = true;
 		}
 
 		if (!validPlid) {
@@ -7680,17 +7673,8 @@ public class PortalImpl implements Portal {
 				continue;
 			}
 
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			for (Portlet portlet : layoutTypePortlet.getAllPortlets()) {
-				if ((portletId.equals(portlet.getPortletId()) ||
-					 portletId.equals(portlet.getRootPortletId())) &&
-					!layout.isPortletEmbedded(portletId, layout.getGroupId()) &&
-					!layoutTypePortlet.isPortletCustomizable(portletId)) {
-
-					return layout.getPlid();
-				}
+			if (_layoutContainsPortletId(layout, portletId)) {
+				return layout.getPlid();
 			}
 		}
 
@@ -8703,6 +8687,23 @@ public class PortalImpl implements Portal {
 		}
 
 		return virtualHostnames.firstKey();
+	}
+
+	private boolean _layoutContainsPortletId(Layout layout, String portletId) {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		for (Portlet portlet : layoutTypePortlet.getAllPortlets()) {
+			if ((portletId.equals(portlet.getPortletId()) ||
+				 portletId.equals(portlet.getRootPortletId())) &&
+				!layout.isPortletEmbedded(portletId, layout.getGroupId()) &&
+				!layoutTypePortlet.isPortletCustomizable(portletId)) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private boolean _requiresLayoutFriendlyURL(

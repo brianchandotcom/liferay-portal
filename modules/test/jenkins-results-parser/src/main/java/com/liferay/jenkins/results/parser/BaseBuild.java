@@ -1339,7 +1339,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public List<URL> getTestrayAttachmentURLs() {
+	public synchronized List<URL> getTestrayAttachmentURLs() {
 		if (_testrayAttachmentURLs != null) {
 			return _testrayAttachmentURLs;
 		}
@@ -1367,7 +1367,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public List<URL> getTestrayS3AttachmentURLs() {
+	public synchronized List<URL> getTestrayS3AttachmentURLs() {
 		if (_testrayS3AttachmentURLs != null) {
 			return _testrayS3AttachmentURLs;
 		}

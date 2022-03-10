@@ -224,7 +224,7 @@ public class TestrayCaseResult {
 
 	protected final JSONObject jsonObject;
 
-	private void _initTestrayAttachments() {
+	private synchronized void _initTestrayAttachments() {
 		if (_testrayAttachments != null) {
 			return;
 		}

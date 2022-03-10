@@ -132,13 +132,12 @@ public class VarPoshiElement extends PoshiElement {
 
 				nestedCDATAMatcher.find();
 
-				String initialCDATA = nestedCDATAMatcher.group("firstCDATA");
+				String cdata1 = nestedCDATAMatcher.group("cdata1");
+				String cdata2 = nestedCDATAMatcher.group("cdata2");
 
-				String nestedCDATA = nestedCDATAMatcher.group("secondCDATA");
+				add(new PoshiCDATA(cdata1));
 
-				add(new PoshiCDATA(initialCDATA));
-
-				add(new PoshiCDATA(nestedCDATA));
+				add(new PoshiCDATA(cdata2));
 			}
 			else {
 				add(new PoshiCDATA(getPoshiScriptEscapedContent(value)));
@@ -530,7 +529,7 @@ public class VarPoshiElement extends PoshiElement {
 	private static final Pattern _mathUtilMethodCallPattern = Pattern.compile(
 		"MathUtil\\.(\\w+)\\('(.+)', '(.+)'\\)");
 	private static final Pattern _nestedCDATAPattern = Pattern.compile(
-		"(?<firstCDATA><.+]])(?<secondCDATA>>.+>)");
+		"(?<cdata1><.+]])(?<cdata2>>.+>)");
 	private static final Pattern _statementPattern;
 	private static final Pattern _varValueMathExpressionPattern;
 

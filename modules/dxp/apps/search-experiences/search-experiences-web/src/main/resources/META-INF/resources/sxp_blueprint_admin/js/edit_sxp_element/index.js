@@ -89,22 +89,18 @@ export default function ({
 		openInitialSuccessToast();
 
 		fetchData(
-			`/o/search-experiences-rest/v1.0/sxp-elements/${sxpElementId}`,
-			{
-				method: 'GET',
-			},
-			(responseContent) => setSXPElementResponse(responseContent),
-			() => setSXPElementResponse({})
-		);
+			`/o/search-experiences-rest/v1.0/sxp-elements/${sxpElementId}`
+		)
+			.then((responseContent) => setSXPElementResponse(responseContent))
+			.catch(() => setSXPElementResponse({}));
 
 		fetchData(
-			'/o/search-experiences-rest/v1.0/sxp-parameter-contributor-definitions',
-			{
-				method: 'GET',
-			},
-			(responseContent) => setPredefinedVariables(responseContent.items),
-			() => setPredefinedVariables([])
-		);
+			'/o/search-experiences-rest/v1.0/sxp-parameter-contributor-definitions'
+		)
+			.then((responseContent) =>
+				setPredefinedVariables(responseContent.items)
+			)
+			.catch(() => setPredefinedVariables([]));
 	}, []); //eslint-disable-line
 
 	if (!sxpElementResponse || !predefinedVariables) {

@@ -36,11 +36,10 @@ export default function ({
 		openInitialSuccessToast();
 
 		fetchData(
-			`/o/search-experiences-rest/v1.0/sxp-blueprints/${sxpBlueprintId}`,
-			{method: 'GET'},
-			(responseContent) => setResource(responseContent),
-			() => setResource({})
-		);
+			`/o/search-experiences-rest/v1.0/sxp-blueprints/${sxpBlueprintId}`
+		)
+			.then((responseContent) => setResource(responseContent))
+			.catch(() => setResource({}));
 	}, []); //eslint-disable-line
 
 	if (!resource) {

@@ -20,10 +20,22 @@ const DEFAULT_HEADERS = new Headers({
 	'Content-Type': 'application/json',
 });
 
-export function fetchData(url = '', parameters, onSuccess, onError) {
-	fetch(url, {
+const DEFAULT_METHOD = 'GET';
+
+/**
+ * A wrapper around frontend-js-web's `fetch` function with commonly used
+ * default `init` options.
+ * @see {@link https://github.com/liferay/liferay-portal/blob/master/modules/apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/fetch.es.js}
+ * @param {!string|!Request} resource The URL to the resource, or a Resource
+ * object.
+ * @param {Object=} init An optional object containing custom configuration.
+ * @return {Promise} A Promise that resolves to a Response object.
+ */
+export function fetchData(resource = '', init) {
+	return fetch(resource, {
 		headers: DEFAULT_HEADERS,
-		...parameters,
+		method: DEFAULT_METHOD,
+		...init,
 	})
 		.then((response) => {
 			if (!response.ok) {
@@ -32,9 +44,6 @@ export function fetchData(url = '', parameters, onSuccess, onError) {
 
 			return response.json();
 		})
-		.then((responseContent) => {
-			onSuccess(responseContent);
-		})
 		.catch((error) => {
 			openErrorToast();
 
@@ -42,7 +51,7 @@ export function fetchData(url = '', parameters, onSuccess, onError) {
 				console.error(error);
 			}
 
-			onError(error);
+			throw error;
 		});
 }
 

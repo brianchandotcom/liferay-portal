@@ -379,18 +379,16 @@ function EditSXPBlueprintForm({
 
 	useEffect(() => {
 		fetchData(
-			`/o/search-experiences-rest/v1.0/searchable-asset-names/${locale}`,
-			{method: 'GET'},
-			(responseContent) => setSearchableTypes(responseContent.items),
-			() => setSearchableTypes([])
-		);
+			`/o/search-experiences-rest/v1.0/searchable-asset-names/${locale}`
+		)
+			.then((responseContent) =>
+				setSearchableTypes(responseContent.items)
+			)
+			.catch(() => setSearchableTypes([]));
 
-		fetchData(
-			`/o/search-experiences-rest/v1.0/field-mapping-infos`,
-			{method: 'GET'},
-			(responseContent) => setIndexFields(responseContent.items),
-			() => setIndexFields([])
-		);
+		fetchData(`/o/search-experiences-rest/v1.0/field-mapping-infos`)
+			.then((responseContent) => setIndexFields(responseContent.items))
+			.catch(() => setIndexFields([]));
 
 		[
 			{
@@ -409,13 +407,11 @@ function EditSXPBlueprintForm({
 					'/o/search-experiences-rest/v1.0/query-prefilter-contributors',
 			},
 		].forEach(({setProperty, url}) =>
-			fetchData(
-				url,
-				{method: 'GET'},
-				(responseContent) =>
-					setProperty(filterAndSortClassNames(responseContent.items)),
-				() => setProperty([])
-			)
+			fetchData(url)
+				.then((responseContent) =>
+					setProperty(filterAndSortClassNames(responseContent.items))
+				)
+				.catch(() => setProperty([]))
 		);
 	}, []); //eslint-disable-line
 

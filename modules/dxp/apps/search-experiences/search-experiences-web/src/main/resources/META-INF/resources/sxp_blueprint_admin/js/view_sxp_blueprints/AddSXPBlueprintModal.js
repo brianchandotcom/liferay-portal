@@ -306,13 +306,11 @@ export function AddSXPBlueprintModal({
 					'/o/search-experiences-rest/v1.0/query-prefilter-contributors',
 			},
 		].forEach(({setProperty, url}) =>
-			fetchData(
-				url,
-				{method: 'GET'},
-				(responseContent) =>
-					setProperty(filterAndSortClassNames(responseContent.items)),
-				() => setProperty([])
-			)
+			fetchData(url)
+				.then((responseContent) =>
+					setProperty(filterAndSortClassNames(responseContent.items))
+				)
+				.catch(() => setProperty([]))
 		);
 	}, []); //eslint-disable-line
 

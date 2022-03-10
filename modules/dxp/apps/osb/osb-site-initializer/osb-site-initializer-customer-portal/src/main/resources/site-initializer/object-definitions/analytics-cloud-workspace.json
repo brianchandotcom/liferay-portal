@@ -73,6 +73,16 @@
 			},
 			"name": "timeZone",
 			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Group Id"
+			},
+			"name": "groupId",
+			"required": false
 		}
 	],
 	"pluralLabel": {

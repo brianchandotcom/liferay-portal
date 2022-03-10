@@ -14,12 +14,14 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.HoursAvailable;
 import com.liferay.headless.admin.user.dto.v1_0.Location;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.OrganizationContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.Service;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.internal.dto.v1_0.converter.AccountResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.OrganizationResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.UserResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderAddressUtil;
@@ -104,6 +106,26 @@ public class OrganizationResourceImpl
 	extends BaseOrganizationResourceImpl implements NestedFieldSupport {
 
 	@Override
+	public void deleteAccountByExternalReferenceCodeOrganization(
+			String externalReferenceCode, String organizationId)
+		throws Exception {
+
+		long accountId = _accountResourceDTOConverter.getAccountEntryId(
+			externalReferenceCode);
+
+		deleteAccountOrganization(accountId, organizationId);
+	}
+
+	@Override
+	public void deleteAccountOrganization(Long accountId, String organizationId)
+		throws Exception {
+
+		_accountEntryOrganizationRelLocalService.
+			deleteAccountEntryOrganizationRel(
+				accountId, GetterUtil.getLong(organizationId));
+	}
+
+	@Override
 	public void deleteOrganization(String organizationId) throws Exception {
 		long serviceBuilderOrganizationId = _getServiceBuilderOrganizationId(
 			organizationId);
@@ -141,6 +163,49 @@ public class OrganizationResourceImpl
 		for (String emailAddress : emailAddresses) {
 			deleteUserAccountByEmailAddress(organizationId, emailAddress);
 		}
+	}
+
+	@Override
+	public Page<Organization>
+			getAccountByExternalReferenceCodeOrganizationsPage(
+				String externalReferenceCode, String search, Filter filter,
+				Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		long accountId = _accountResourceDTOConverter.getAccountEntryId(
+			externalReferenceCode);
+
+		return getAccountOrganizationsPage(
+			accountId, search, filter, pagination, sorts);
+	}
+
+	@Override
+	public Page<Organization> getAccountOrganizationsPage(
+			Long accountId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception {
+
+		return SearchUtil.search(
+			Collections.emptyMap(),
+			booleanQuery -> {
+				BooleanFilter booleanFilter =
+					booleanQuery.getPreBooleanFilter();
+
+				booleanFilter.add(
+					new TermFilter(
+						"accountEntryIds", String.valueOf(accountId)),
+					BooleanClauseOccur.MUST);
+			},
+			filter,
+			com.liferay.portal.kernel.model.Organization.class.getName(),
+			search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> searchContext.setCompanyId(
+				contextCompany.getCompanyId()),
+			sorts,
+			document -> _toOrganization(
+				GetterUtil.getString(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	@Override
@@ -231,6 +296,25 @@ public class OrganizationResourceImpl
 					0L)
 			).build(),
 			null, flatten, filter, search, pagination, sorts);
+	}
+
+	@Override
+	public void postAccountByExternalReferenceCodeOrganization(
+			String externalReferenceCode, String organizationId)
+		throws Exception {
+
+		long accountId = _accountResourceDTOConverter.getAccountEntryId(
+			externalReferenceCode);
+
+		postAccountOrganization(accountId, organizationId);
+	}
+
+	@Override
+	public void postAccountOrganization(Long accountId, String organizationId)
+		throws Exception {
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			accountId, GetterUtil.getLong(organizationId));
 	}
 
 	@Override
@@ -799,6 +883,13 @@ public class OrganizationResourceImpl
 
 	private static final EntityModel _entityModel =
 		new OrganizationEntityModel();
+
+	@Reference
+	private AccountEntryOrganizationRelLocalService
+		_accountEntryOrganizationRelLocalService;
+
+	@Reference
+	private AccountResourceDTOConverter _accountResourceDTOConverter;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

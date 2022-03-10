@@ -85,14 +85,15 @@ definition {
 				category = "Order Management",
 				portlet = "Terms and Conditions");
 
-			CommerceOrders.addTermsAndCondition(
+			CommercePaymentTerms.addTermsAndCondition(
+				active = "true",
 				termsAndConditionName = "Test Terms and Condition",
 				termsAndConditionType = "Payment Terms",
 				valuePosition = "");
 
 			Click(locator1 = "Icon#BACK");
 
-			CommerceOrders.viewTermsAndConditionEntry(
+			CommercePaymentTerms.viewTermsAndConditionEntry(
 				termsAndConditionActiveStatus = "Yes",
 				termsAndConditionName = "Test Terms and Condition",
 				termsAndConditionType = "Payment Terms",
@@ -100,7 +101,7 @@ definition {
 		}
 
 		task ("When I delete the terms and conditions") {
-			CommerceOrders.deleteTermsAndCondition(termsAndConditionName = "Test Terms and Condition");
+			CommercePaymentTerms.deleteTermsAndCondition(termsAndConditionName = "Test Terms and Condition");
 		}
 
 		task ("Then the entry is deleted") {
@@ -140,14 +141,42 @@ definition {
 
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "The Sales Manager can use the search bar to search a specific entry or can use the filters."
 	@priority = "4"
 	test UseFilterAndSearch {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8291 UseFilterAndSearch pending implementation
+		task ("Add some new entrys into the Terms and Conditions with the status to Active") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
 
+			CommercePaymentTerms.addTermsAndCondition(
+				termsAndConditionName = "Terms1",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = "");
+
+			Click(locator1 = "Icon#BACK");
+
+			CommercePaymentTerms.addTermsAndCondition(
+				termsAndConditionName = "Terms2",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = "1");
+
+			Click(locator1 = "Icon#BACK");
+		}
+
+		task ("Search the specific entry by search bar") {
+			Search.searchCP(searchTerm = "Terms1");
+
+			AssertTextPresent(
+				locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_NAME",
+				value1 = "Terms1");
+
+			AssertTextNotPresent(
+				locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_NAME",
+				value1 = "Terms2");
+		}
 	}
 
 	@description = "[Please Update]"

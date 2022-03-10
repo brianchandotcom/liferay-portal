@@ -23,6 +23,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.commerce.initializer.util.PortletSettingsImporter;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -152,10 +153,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import com.liferay.style.book.zip.processor.StyleBookEntryZipProcessor;
 
-import java.io.InputStream;
 import java.io.Serializable;
-
-import java.math.BigDecimal;
 
 import java.net.URL;
 import java.net.URLConnection;
@@ -2642,7 +2640,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		String resourcePath = "/site-initializer/widget-templates.json";
 
-		String json = _read(resourcePath);
+		String json = SiteInitializerUtil.read(
+			resourcePath, _servletContext);
 
 		if (json == null) {
 			return;

@@ -15,7 +15,7 @@ import React, {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
 import {Button} from '../../../../../common/components';
 import {getAccountSubscriptionsTerms} from '../../../../../common/services/liferay/graphql/queries';
-import getActivaionStatusDateRange from '../../../../../common/utils/getActivationStatusDateRange';
+import getActivationStatusDateRange from '../../../../../common/utils/getActivationStatusDateRange';
 import AnalyticsCloudModal from '../../../components/AnalyticsCloudModal';
 import {useCustomerPortal} from '../../../context';
 import {
@@ -99,17 +99,8 @@ const ActivationStatusAnalyticsCloud = ({
 			});
 
 			if (data) {
-				const endDates = data.c?.accountSubscriptionTerms?.items.map(
-					(accountSubscriptionTerm) => accountSubscriptionTerm.endDate
-				);
-				const startDates = data.c?.accountSubscriptionTerms?.items.map(
-					(accountSubscriptionTerm) =>
-						accountSubscriptionTerm.startDate
-				);
-
-				const ActivationStatusDateRange = getActivaionStatusDateRange(
-					endDates,
-					startDates
+				const ActivationStatusDateRange = getActivationStatusDateRange(
+					data.c?.accountSubscriptionTerms?.items
 				);
 				setActivationStatusDate(ActivationStatusDateRange);
 			}

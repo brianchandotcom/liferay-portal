@@ -19,7 +19,7 @@ import {
 	getAccountSubscriptionGroups,
 	getAccountSubscriptionsTerms,
 } from '../../../../../common/services/liferay/graphql/queries';
-import getActivaionStatusDateRange from '../../../../../common/utils/getActivationStatusDateRange';
+import getActivationStatusDateRange from '../../../../../common/utils/getActivationStatusDateRange';
 import {useCustomerPortal} from '../../../context';
 import {actionTypes} from '../../../context/reducer';
 import {
@@ -193,17 +193,8 @@ const ActivationStatusDXPCloud = ({
 			});
 
 			if (data) {
-				const endDates = data.c?.accountSubscriptionTerms?.items.map(
-					(accountSubscriptionTerm) => accountSubscriptionTerm.endDate
-				);
-				const startDates = data.c?.accountSubscriptionTerms?.items.map(
-					(accountSubscriptionTerm) =>
-						accountSubscriptionTerm.startDate
-				);
-
-				const ActivationStatusDateRange = getActivaionStatusDateRange(
-					endDates,
-					startDates
+				const ActivationStatusDateRange = getActivationStatusDateRange(
+					data.c?.accountSubscriptionTerms?.items
 				);
 				setActivationStatusDate(ActivationStatusDateRange);
 			}

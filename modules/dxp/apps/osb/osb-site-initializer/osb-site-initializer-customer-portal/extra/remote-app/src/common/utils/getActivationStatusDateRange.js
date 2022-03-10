@@ -11,12 +11,27 @@
 
 import getCurrentEndDate from './getCurrentEndDate';
 
-export default function getActicationStatusDateRange(endDates, startDates) {
+export default function getActivationStatusDateRange(accountSubscriptionTerms) {
+	const dates = accountSubscriptionTerms.reduce(
+		(dateAccumulator, accountSubscriptionTerm) => {
+			return {
+				endDates: [
+					...dateAccumulator.endDates,
+					accountSubscriptionTerm.endDate,
+				],
+				startDates: [
+					...dateAccumulator.startDates,
+					accountSubscriptionTerm.startDate,
+				],
+			};
+		},
+		{endDates: [], startDates: []}
+	);
 	const earliestStartDate = new Date(
-		Math.min(...startDates.map((date) => new Date(date)))
+		Math.min(...dates.startDates.map((date) => new Date(date)))
 	);
 	const farthestEndDate = new Date(
-		Math.max(...endDates.map((date) => new Date(date)))
+		Math.max(...dates.endDates.map((date) => new Date(date)))
 	);
 	const ActivationStatusDateRange = `${getCurrentEndDate(
 		earliestStartDate

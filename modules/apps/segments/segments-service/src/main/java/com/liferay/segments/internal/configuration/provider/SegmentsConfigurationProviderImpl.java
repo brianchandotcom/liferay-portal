@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.segments.configuration.SegmentsCompanyConfiguration;
 import com.liferay.segments.configuration.SegmentsConfiguration;
+import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 
 import java.util.Map;
 
@@ -34,26 +35,10 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.segments.configuration.SegmentsConfiguration",
 	service = SegmentsConfigurationProvider.class
 )
-public class SegmentsConfigurationProvider {
+public class SegmentsConfigurationProviderImpl
+	implements SegmentsConfigurationProvider {
 
-	public boolean isSegmentationEnabled(long companyId)
-		throws ConfigurationException {
-
-		if (!_segmentsConfiguration.segmentationEnabled()) {
-			return false;
-		}
-
-		SegmentsCompanyConfiguration segmentsCompanyConfiguration =
-			_configurationProvider.getCompanyConfiguration(
-				SegmentsCompanyConfiguration.class, companyId);
-
-		if (!segmentsCompanyConfiguration.segmentationEnabled()) {
-			return false;
-		}
-
-		return true;
-	}
-
+	@Override
 	public boolean isRoleSegmentationEnabled(long companyId)
 		throws ConfigurationException {
 
@@ -66,6 +51,25 @@ public class SegmentsConfigurationProvider {
 				SegmentsCompanyConfiguration.class, companyId);
 
 		if (!segmentsCompanyConfiguration.roleSegmentationEnabled()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean isSegmentationEnabled(long companyId)
+		throws ConfigurationException {
+
+		if (!_segmentsConfiguration.segmentationEnabled()) {
+			return false;
+		}
+
+		SegmentsCompanyConfiguration segmentsCompanyConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				SegmentsCompanyConfiguration.class, companyId);
+
+		if (!segmentsCompanyConfiguration.segmentationEnabled()) {
 			return false;
 		}
 

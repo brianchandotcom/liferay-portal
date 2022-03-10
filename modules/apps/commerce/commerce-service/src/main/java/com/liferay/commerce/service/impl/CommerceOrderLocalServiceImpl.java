@@ -344,10 +344,15 @@ public class CommerceOrderLocalServiceImpl
 				subtotalWithTaxAmount, shippingWithTaxAmount,
 				totalWithTaxAmount, advanceStatus, commerceContext);
 
-			commerceOrderLocalService.updateOrderDate(
-				commerceOrder.getCommerceOrderId(), orderDateMonth,
-				orderDateDay, orderDateYear, orderDateHour, orderDateMinute,
-				serviceContext);
+			Date orderDate = PortalUtil.getDate(
+				orderDateMonth, orderDateDay, orderDateYear);
+
+			if (orderDate != null) {
+				commerceOrderLocalService.updateOrderDate(
+					commerceOrder.getCommerceOrderId(), orderDateMonth,
+					orderDateDay, orderDateYear, orderDateHour, orderDateMinute,
+					serviceContext);
+			}
 
 			commerceOrderLocalService.updatePaymentStatus(
 				userId, commerceOrder.getCommerceOrderId(), paymentStatus);

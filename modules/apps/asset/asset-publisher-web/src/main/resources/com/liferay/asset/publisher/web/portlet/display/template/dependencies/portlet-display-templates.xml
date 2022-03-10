@@ -6,7 +6,7 @@
 		<name>portlet-display-template-name-map</name>
 		<description>portlet-display-template-description-map</description>
 		<language>ftl</language>
-		<script-file>com/liferay/asset/publisher/web/portlet/template/dependencies/portlet_display_template_geolocalized.ftl</script-file>
+		<script-file>com/liferay/asset/publisher/web/portlet/display/template/dependencies/portlet_display_template_geolocalized.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -14,7 +14,7 @@
 		<name>portlet-display-template-name-rich-summary</name>
 		<description>portlet-display-template-description-rich-summary</description>
 		<language>ftl</language>
-		<script-file>com/liferay/asset/publisher/web/portlet/template/dependencies/portlet_display_template_rich_summary.ftl</script-file>
+		<script-file>com/liferay/asset/publisher/web/portlet/display/template/dependencies/portlet_display_template_rich_summary.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 </root>

@@ -63,7 +63,7 @@ export default function ({
 		getSelectedItems: () => Promise.resolve([]),
 		inputPlaceholder: Liferay.Language.get('find-a-delivery-term'),
 		itemCreation: false,
-		itemSelectedMessage: Liferay.Language.get('delivery-term-selected'),
+		itemSelectedMessage: Liferay.Language.get('delivery-terms-selected'),
 		itemsKey: 'id',
 		linkedDatasetsId: [datasetId],
 		onItemSelected: selectItem,

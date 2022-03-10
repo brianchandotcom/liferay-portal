@@ -61,7 +61,7 @@ boolean hasPermission = commerceShippingFixedOptionQualifiersDisplayContext.hasP
 		bodyClasses="flex-fill"
 		collapsed="<%= false %>"
 		collapsible="<%= false %>"
-		title='<%= LanguageUtil.get(request, "delivery-term-eligibility") %>'
+		title='<%= LanguageUtil.get(request, "delivery-terms-eligibility") %>'
 	>
 		<aui:fieldset markupView="lexicon">
 			<aui:input checked='<%= Objects.equals(termEntryQualifiers, "none") %>' label="no-delivery-terms" name="qualifiers--termEntry--" type="radio" value="none" />

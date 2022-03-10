@@ -70,7 +70,7 @@ boolean hasPermission = commercePaymentMethodGroupRelQualifiersDisplayContext.ha
 				bodyClasses="flex-fill"
 				collapsed="<%= false %>"
 				collapsible="<%= false %>"
-				title='<%= LanguageUtil.get(request, "payment-term-eligibility") %>'
+				title='<%= LanguageUtil.get(request, "payment-terms-eligibility") %>'
 			>
 				<div class="row">
 					<aui:fieldset markupView="lexicon">

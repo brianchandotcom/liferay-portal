@@ -26,13 +26,13 @@ export default function ({
 	const getTitle = (type) => {
 		if (type === 'payment') {
 			return Liferay.Language.get(
-				'set-default-payment-commerce-term-entry'
+				'set-default-payment-commerce-terms-entry'
 			);
 		}
 
 		if (type === 'delivery') {
 			return Liferay.Language.get(
-				'set-default-delivery-commerce-term-entry'
+				'set-default-delivery-commerce-terms-entry'
 			);
 		}
 

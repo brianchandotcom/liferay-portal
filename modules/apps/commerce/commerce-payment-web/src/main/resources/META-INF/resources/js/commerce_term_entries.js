@@ -63,7 +63,7 @@ export default function ({
 		getSelectedItems: () => Promise.resolve([]),
 		inputPlaceholder: Liferay.Language.get('find-a-payment-term'),
 		itemCreation: false,
-		itemSelectedMessage: Liferay.Language.get('payment-term-selected'),
+		itemSelectedMessage: Liferay.Language.get('payment-terms-selected'),
 		itemsKey: 'id',
 		linkedDatasetsId: [datasetId],
 		onItemSelected: selectItem,

@@ -4,6 +4,7 @@ Bundle-Version: 6.0.1
 Export-Package:\
 	com.liferay.segments,\
 	com.liferay.segments.configuration,\
+	com.liferay.segments.configuration.provider,\
 	com.liferay.segments.constants,\
 	com.liferay.segments.context,\
 	com.liferay.segments.context.contributor,\

@@ -56,6 +56,8 @@ List<CommerceAddress> shippingAddresses = commerceOrderContentDisplayContext.get
 List<CommerceAddress> billingAddresses = commerceOrderContentDisplayContext.getBillingCommerceAddresses(commerceAccount.getCommerceAccountId(), commerceAccount.getCompanyId());
 
 List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.COMMERCE_ORDER_ERROR_MESSAGES);
+
+boolean hasViewBillingAddressPermission = commerceOrderContentDisplayContext.hasViewBillingAddressPermission(permissionChecker, commerceAccount);
 %>
 
 <c:if test="<%= (errorMessages != null) && !errorMessages.isEmpty() %>">
@@ -255,40 +257,42 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 				<div class="commerce-panel__content">
 					<div class="row">
 						<div class="col-md-12">
-							<c:choose>
-								<c:when test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) %>">
-									<dl class="commerce-list">
-										<aui:select cssClass="commerce-input" inlineField="<%= true %>" label="" name="billingAddressId" showEmptyOption="<%= true %>" wrappedField="<%= false %>">
+							<c:if test="<%= hasViewBillingAddressPermission %>">
+								<c:choose>
+									<c:when test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) %>">
+										<dl class="commerce-list">
+											<aui:select cssClass="commerce-input" inlineField="<%= true %>" label="" name="billingAddressId" showEmptyOption="<%= true %>" wrappedField="<%= false %>">
 
-											<%
-											for (CommerceAddress commerceAddress : billingAddresses) {
-											%>
+												<%
+												for (CommerceAddress commerceAddress : billingAddresses) {
+												%>
 
-												<aui:option label="<%= HtmlUtil.escape(commerceAddress.getName()) %>" selected="<%= billingCommerceAddressId == commerceAddress.getCommerceAddressId() %>" value="<%= commerceAddress.getCommerceAddressId() %>" />
+													<aui:option label="<%= HtmlUtil.escape(commerceAddress.getName()) %>" selected="<%= billingCommerceAddressId == commerceAddress.getCommerceAddressId() %>" value="<%= commerceAddress.getCommerceAddressId() %>" />
 
-											<%
-											}
-											%>
+												<%
+												}
+												%>
 
-										</aui:select>
-									</dl>
-								</c:when>
-								<c:otherwise>
-									<c:if test="<%= billingCommerceAddress != null %>">
-										<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet1()) %></p>
+											</aui:select>
+										</dl>
+									</c:when>
+									<c:otherwise>
+										<c:if test="<%= billingCommerceAddress != null %>">
+											<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet1()) %></p>
 
-										<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet2()) %>">
-											<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet2()) %></p>
+											<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet2()) %>">
+												<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet2()) %></p>
+											</c:if>
+
+											<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet3()) %>">
+												<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet3()) %></p>
+											</c:if>
+
+											<p><%= HtmlUtil.escape(billingCommerceAddress.getCity() + StringPool.SPACE + billingCommerceAddress.getZip()) %></p>
 										</c:if>
-
-										<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet3()) %>">
-											<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet3()) %></p>
-										</c:if>
-
-										<p><%= HtmlUtil.escape(billingCommerceAddress.getCity() + StringPool.SPACE + billingCommerceAddress.getZip()) %></p>
-									</c:if>
-								</c:otherwise>
-							</c:choose>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
 						</div>
 					</div>
 				</div>

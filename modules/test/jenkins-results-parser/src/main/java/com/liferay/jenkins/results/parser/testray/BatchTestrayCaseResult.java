@@ -274,17 +274,6 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 			return null;
 		}
 
-		for (URL testrayS3AttachmentURL : build.getTestrayS3AttachmentURLs()) {
-			String testrayS3AttachmentURLString = String.valueOf(
-				testrayS3AttachmentURL);
-
-			if (!testrayS3AttachmentURLString.contains(key)) {
-				continue;
-			}
-
-			return new S3TestrayAttachment(this, name, key);
-		}
-
 		for (URL testrayAttachmentURL : build.getTestrayAttachmentURLs()) {
 			String testrayAttachmentURLString = String.valueOf(
 				testrayAttachmentURL);
@@ -295,6 +284,21 @@ public class BatchTestrayCaseResult extends TestrayCaseResult {
 
 			return new DefaultTestrayAttachment(
 				this, name, key, testrayAttachmentURL);
+		}
+
+		if (TestrayS3Bucket.googleCredentialsAvailable()) {
+			for (URL testrayS3AttachmentURL :
+					build.getTestrayS3AttachmentURLs()) {
+
+				String testrayS3AttachmentURLString = String.valueOf(
+					testrayS3AttachmentURL);
+
+				if (!testrayS3AttachmentURLString.contains(key)) {
+					continue;
+				}
+
+				return new S3TestrayAttachment(this, name, key);
+			}
 		}
 
 		return null;

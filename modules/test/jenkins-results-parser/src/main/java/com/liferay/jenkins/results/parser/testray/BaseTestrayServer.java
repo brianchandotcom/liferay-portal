@@ -117,6 +117,10 @@ public abstract class BaseTestrayServer implements TestrayServer {
 	}
 
 	private void _importCaseResultsFromCI(TopLevelBuild topLevelBuild) {
+		if (!JenkinsResultsParserUtil.isCINode()) {
+			return;
+		}
+
 		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
 
 		String command = JenkinsResultsParserUtil.combine(
@@ -144,6 +148,10 @@ public abstract class BaseTestrayServer implements TestrayServer {
 	}
 
 	private void _importCaseResultsToGCP(TopLevelBuild topLevelBuild) {
+		if (!TestrayS3Bucket.googleCredentialsAvailable()) {
+			return;
+		}
+
 		File resultsDir = getResultsDir();
 
 		File resultsTarGzFile = new File(

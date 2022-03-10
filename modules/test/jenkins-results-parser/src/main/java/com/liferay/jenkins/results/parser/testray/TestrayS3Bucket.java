@@ -55,6 +55,13 @@ public class TestrayS3Bucket {
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(
 				googleApplicationCredentials)) {
 
+			try {
+				_testrayS3Bucket._getBucket();
+			}
+			catch (Exception exception) {
+				return false;
+			}
+
 			return true;
 		}
 

@@ -59,6 +59,31 @@ public interface OrganizationResource {
 		return FactoryHolder.factory.create();
 	}
 
+	public Page<Organization>
+			getAccountByExternalReferenceCodeOrganizationsPage(
+				String externalReferenceCode, String search, Filter filter,
+				Pagination pagination, Sort[] sorts)
+		throws Exception;
+
+	public void deleteAccountByExternalReferenceCodeOrganization(
+			String externalReferenceCode, String organizationId)
+		throws Exception;
+
+	public void postAccountByExternalReferenceCodeOrganization(
+			String externalReferenceCode, String organizationId)
+		throws Exception;
+
+	public Page<Organization> getAccountOrganizationsPage(
+			Long accountId, String search, Filter filter, Pagination pagination,
+			Sort[] sorts)
+		throws Exception;
+
+	public void deleteAccountOrganization(Long accountId, String organizationId)
+		throws Exception;
+
+	public void postAccountOrganization(Long accountId, String organizationId)
+		throws Exception;
+
 	public Page<Organization> getOrganizationsPage(
 			Boolean flatten, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)

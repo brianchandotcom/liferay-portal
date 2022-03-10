@@ -518,6 +518,72 @@ public class Mutation {
 		return true;
 	}
 
+	@GraphQLField
+	public boolean deleteAccountByExternalReferenceCodeOrganization(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("organizationId") String organizationId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_organizationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			organizationResource ->
+				organizationResource.
+					deleteAccountByExternalReferenceCodeOrganization(
+						externalReferenceCode, organizationId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean createAccountByExternalReferenceCodeOrganization(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("organizationId") String organizationId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_organizationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			organizationResource ->
+				organizationResource.
+					postAccountByExternalReferenceCodeOrganization(
+						externalReferenceCode, organizationId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean deleteAccountOrganization(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("organizationId") String organizationId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_organizationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			organizationResource ->
+				organizationResource.deleteAccountOrganization(
+					accountId, organizationId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public boolean createAccountOrganization(
+			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("organizationId") String organizationId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_organizationResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			organizationResource ->
+				organizationResource.postAccountOrganization(
+					accountId, organizationId));
+
+		return true;
+	}
+
 	@GraphQLField(description = "Creates a new organization")
 	public Organization createOrganization(
 			@GraphQLName("organization") Organization organization)

@@ -73,9 +73,11 @@ definition {
 
 			ACIndividualsDashboard.goToKnownIndividualsTab();
 
-			ACIndividualsDashboard.viewTotalActivities(
-				activitiesNumber = "12",
-				userName = "${name} ${name}");
+			ACUtils.viewNameList(nameList = "${name} ${name}");
+
+			var key_userName = "${name} ${name}";
+
+			var currentTotalActivities = selenium.getText("ACIndividualsDashboard#TOTAL_ACTIVITIES");
 
 			ACNavigation.openItem(itemName = "${name} ${name}");
 
@@ -83,7 +85,7 @@ definition {
 
 			ACTimeFilter.setLast24Hours();
 
-			ACIndividualsDashboard.viewActivitiesNumberInPeriod(activitiesNumber = "12");
+			ACIndividualsDashboard.viewActivitiesNumberInPeriod(activitiesNumber = "${currentTotalActivities}");
 		}
 	}
 

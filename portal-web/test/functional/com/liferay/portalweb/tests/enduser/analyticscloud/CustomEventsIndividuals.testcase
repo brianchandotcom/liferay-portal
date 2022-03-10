@@ -80,6 +80,8 @@ definition {
 	@description = "Feature ID: LRAC-7536 | Automation ID: LRAC-10512 | Test Summary: Individual activities chart tooltip events and sessions shown"
 	@priority = "5"
 	test AssertChartTooltipEventsAndSessions {
+		var username = "ac1 ac1";
+
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
@@ -105,9 +107,13 @@ definition {
 		}
 
 		task ("Navigate to the individuals page of new user") {
-			ACUtils.searchBar(searchItem = "ac1 ac1");
+			ACUtils.viewNameList(nameList = "${username}");
 
-			ACNavigation.openItem(itemName = "ac1 ac1");
+			var key_userName = "${username}";
+
+			var currentTotalActivities = selenium.getText("ACIndividualsDashboard#TOTAL_ACTIVITIES");
+
+			ACNavigation.openItem(itemName = "${username}");
 		}
 
 		task ("Select Last 24 hours time period in Individuals Events chart") {
@@ -119,7 +125,7 @@ definition {
 		task ("Mouse over the user activity graph and confirm the elements that are shown in the tooltip") {
 			ACIndividualsDashboard.viewActivitiesOnGraph(
 				typeList = "Events,Sessions",
-				valueList = "12,1");
+				valueList = "${currentTotalActivities},1");
 		}
 
 		task ("Go to DXP and create a new custom event") {
@@ -153,9 +159,11 @@ definition {
 		}
 
 		task ("Navigate to the individuals page of new user") {
-			ACUtils.searchBar(searchItem = "ac1 ac1");
+			var key_userName = "${username}";
 
-			ACNavigation.openItem(itemName = "ac1 ac1");
+			var newTotalActivities = selenium.getText("ACIndividualsDashboard#TOTAL_ACTIVITIES");
+
+			ACNavigation.openItem(itemName = "${username}");
 		}
 
 		task ("Select Last 24 hours time period in Individuals Events chart") {
@@ -166,8 +174,9 @@ definition {
 
 		task ("Mouse over the user activity graph and confirm the elements that are shown in the tooltip") {
 			ACIndividualsDashboard.viewActivitiesOnGraph(
+				notEquals = "${currentTotalActivities}",
 				typeList = "Events,Sessions",
-				valueList = "24,2");
+				valueList = "${newTotalActivities},2");
 		}
 	}
 

@@ -78,8 +78,11 @@ definition {
 	}
 
 	@description = "Feature ID: LRAC-7536 | Automation ID: LRAC-10512 | Test Summary: Individual activities chart tooltip events and sessions shown"
+	@ignore = "true"
 	@priority = "5"
 	test AssertChartTooltipEventsAndSessions {
+		// AC Bug ticket: LRAC-10734
+
 		var username = "ac1 ac1";
 
 		task ("Fill fields and create custom event") {

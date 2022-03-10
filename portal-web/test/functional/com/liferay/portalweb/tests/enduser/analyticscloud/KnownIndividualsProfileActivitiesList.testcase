@@ -34,9 +34,10 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8151 | Test Summary: Individual activities list shows accurate activities from today when switched to 24 hour view"
+	@ignore = "true"
 	@priority = "5"
 	test IndividualActivitiesListShowsAccurateActivitiesWhenSwitchedTo24HourView {
-		property portal.upstream = "quarantine";
+		// AC Bug ticket: LRAC-10734
 
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";

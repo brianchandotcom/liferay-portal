@@ -425,10 +425,6 @@ definition {
 
 		Navigator.gotoNavNested(navNested = "Query Elements");
 
-		Click(
-			ariaLabel = "Add Query Element",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
-
 		Blueprints.addElement(element = "Boost Asset Type");
 
 		Blueprints.configureElementDropdown(

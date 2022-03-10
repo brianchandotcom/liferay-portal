@@ -22,11 +22,12 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import './Modal.scss';
 import delegate from '../delegate/delegate.es';
+import {escapeHTML} from '../util/html_util';
 import navigate from '../util/navigate.es';
 
 const alert = ({message}) => {
 	openModal({
-		bodyHTML: message,
+		bodyHTML: escapeHTML(message),
 		buttons: [
 			{
 				label: Liferay.Language.get('ok'),

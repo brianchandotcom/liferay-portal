@@ -39,7 +39,7 @@ definition {
 	}
 
 	@description = "This checks that users can configure the cache control as private."
-	@priority = "3"
+	@priority = "4"
 	test CanConfigureCacheControlAsPrivate {
 		property test.name.skip.portal.instance = "DMCache#CanConfigureCacheControlAsPrivate";
 

@@ -1210,7 +1210,7 @@ public class AssetPublisherExportImportTest
 				" does not belong to group ", expectedGroupId),
 			expectedGroupId, importedVocabulary.getGroupId());
 
-		_assetVocabularyLocalService.deleteAssetVocabulary(assetVocabulary);
+		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
 	}
 
 	private static Configuration _assetPublisherWebConfiguration;

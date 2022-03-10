@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -417,6 +418,11 @@ public class JournalArticleLocalServiceTest {
 				PortalUtil.getClassNameId(JournalArticle.class),
 				curArticle.getPrimaryKey());
 
+			_resourceLocalService.deleteResource(
+				curArticle.getCompanyId(), JournalArticle.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				curArticle.getResourcePrimKey());
+
 			_journalArticleLocalService.deleteJournalArticle(
 				curArticle.getPrimaryKey());
 		}
@@ -690,6 +696,9 @@ public class JournalArticleLocalServiceTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private ResourceLocalService _resourceLocalService;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

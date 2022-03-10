@@ -77,7 +77,7 @@ public class DDMStructureRelatedInfoCollectionProviderTest {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
 
-		_ddmStructureLocalService.deleteDDMStructure(ddmStructure);
+		_ddmStructureLocalService.deleteStructure(ddmStructure);
 
 		RelatedInfoItemCollectionProvider<?, ?>
 			relatedInfoItemCollectionProvider =

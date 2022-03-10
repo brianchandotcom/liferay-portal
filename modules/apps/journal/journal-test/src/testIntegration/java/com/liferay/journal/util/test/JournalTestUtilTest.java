@@ -243,7 +243,7 @@ public class JournalTestUtilTest {
 				ddmStructure.getStructureKey(), null,
 				LocaleUtil.getSiteDefault()));
 
-		DDMStructureLocalServiceUtil.deleteDDMStructure(ddmStructure);
+		DDMStructureLocalServiceUtil.deleteStructure(ddmStructure);
 
 		try {
 			Assert.assertNull(

@@ -29,17 +29,17 @@ function check_performance {
 				then
 					if [ "${i}" -eq 2 ]
 					then
-						echo "Warning: performance reduced using clean repository"
+						echo "Warning: portal compile with clean repository is taking more than 1 minute than previous compile"
 					fi
 
 					if [ "${i}" -eq 3 ]
 					then
-						echo "Warning: performance reduced NOT using Gradle cache"
+						echo "Warning: portal compile without Gradle cache is taking more than 1 minute than previous compile"
 					fi
 
 					if [ "${i}" -eq 4 ]
 					then
-						echo "Warning: performance reduced using all caches"
+						echo "Warning: portal compile with all caches is taking more than 1 minute than previous compile"
 					fi
 				fi
 			done

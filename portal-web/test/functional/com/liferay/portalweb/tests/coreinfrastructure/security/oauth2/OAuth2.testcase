@@ -115,6 +115,89 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-145190 TC-5 TC-6 TC-7 Request the liferay access token for OAuth2 application with invalid JWTs."
+	@priority = "3"
+	test ApplicationCannotBeAuthorizedWithInvalidJWT {
+		property test.name.skip.portal.instance = "OAuth2#ApplicationCannotBeAuthorizedWithInvalidJWT";
+
+		task ("Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance.config");
+		}
+
+		task ("Add a new OAuth2 application") {
+			OAuth2.openOAuth2Admin();
+
+			OAuth2.addApplication(
+				applicationName = "OAuth2 Application",
+				checkboxUncheckList = "Authorization Code");
+		}
+
+		task ("Input OAuth2 valuies") {
+			OAuth2.inputApplicationValues(
+				clientId = "abc123",
+				clientSecret = "abc123");
+		}
+
+		task ("Edit OAuth2 scopes") {
+			Navigator.gotoBack();
+
+			OAuth2.editScopes(
+				applicationName = "OAuth2 Application",
+				resourceCheckList = "analytics.read,analytics.write",
+				resourcePanels = "Analytics");
+		}
+
+		task ("Authorize application with the JWT which lack the kid confirmation method value.") {
+			OAuth2.requestAccessTokenWithJWTViaCurl(
+				clientId = "abc123",
+				clientSecret = "abc123",
+				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				jwtFileName = "JWT_Lack_Kid.txt",
+				noResponse = "true",
+				scopes = "");
+		}
+
+		task ("Verify that there is no granted authorization via admin ") {
+			OAuth2.viewGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				noAuthorizations = "true");
+		}
+
+		task ("Authorize application with an expired JWT.") {
+			OAuth2.requestAccessTokenWithJWTViaCurl(
+				clientId = "abc123",
+				clientSecret = "abc123",
+				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				jwtFileName = "JWT_Expired.txt",
+				noResponse = "true",
+				scopes = "");
+		}
+
+		task ("Verify that there is no granted authorization via admin ") {
+			OAuth2.viewGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				noAuthorizations = "true");
+		}
+
+		task ("Authorize application with the JWT which includes a non-existent user in liferay.") {
+			OAuth2.requestAccessTokenWithJWTViaCurl(
+				clientId = "abc123",
+				clientSecret = "abc123",
+				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				jwtFileName = "JWT_Nonexistent_User.txt",
+				noResponse = "true",
+				scopes = "");
+		}
+
+		task ("Verify that there is no granted authorization via admin ") {
+			OAuth2.viewGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				noAuthorizations = "true");
+		}
+	}
+
 	@description = "This is a use case for OAUTH2-242. Verify that 2 portals and an external application authorization works in a clustered environment."
 	@priority = "5"
 	test AuthCodeShouldWorkWithClusteredPortals {

@@ -21,6 +21,7 @@ import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Alessio Antonio Rendina
@@ -41,10 +42,14 @@ public class ShipmentItemUtil {
 		ServiceContext serviceContext =
 			serviceContextHelper.getServiceContext();
 
-		CommerceShipmentItem commerceShipmentItem =
-			commerceShipmentItemService.
-				fetchCommerceShipmentItemByExternalReferenceCode(
-					serviceContext.getCompanyId(), externalReferenceCode);
+		CommerceShipmentItem commerceShipmentItem = null;
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			commerceShipmentItem =
+				commerceShipmentItemService.
+					fetchCommerceShipmentItemByExternalReferenceCode(
+						serviceContext.getCompanyId(), externalReferenceCode);
+		}
 
 		if (commerceShipmentItem != null) {
 			defaultOrderItemId = commerceShipmentItem.getCommerceOrderItemId();

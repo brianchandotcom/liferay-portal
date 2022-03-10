@@ -153,9 +153,12 @@ public class CommerceShipmentItemLocalServiceImpl
 			externalReferenceCode = null;
 		}
 
-		CommerceShipmentItem commerceShipmentItem =
-			commerceShipmentItemPersistence.fetchByC_ERC(
+		CommerceShipmentItem commerceShipmentItem = null;
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			commerceShipmentItem = commerceShipmentItemPersistence.fetchByC_ERC(
 				serviceContext.getCompanyId(), externalReferenceCode);
+		}
 
 		if (commerceShipmentItem == null) {
 			return commerceShipmentItemLocalService.addCommerceShipmentItem(

@@ -76,11 +76,11 @@ public class VarPoshiElement extends PoshiElement {
 
 	public String getVarValue() {
 		if (valueAttributeName == null) {
-			List<Node> poshiCDATANodes = new ArrayList<>();
+			List<Node> cdataNodes = new ArrayList<>();
 
 			for (Node node : Dom4JUtil.toNodeList(content())) {
 				if (node instanceof CDATA) {
-					poshiCDATANodes.add(node);
+					cdataNodes.add(node);
 				}
 			}
 
@@ -88,8 +88,8 @@ public class VarPoshiElement extends PoshiElement {
 
 			sb.append("\'\'\'");
 
-			for (Node poshiCDATANode : poshiCDATANodes) {
-				sb.append(poshiCDATANode.getText());
+			for (Node cdataNode : cdataNodes) {
+				sb.append(cdataNode.getText());
 			}
 
 			sb.append("\'\'\'");

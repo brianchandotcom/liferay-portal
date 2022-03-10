@@ -57,6 +57,10 @@ public class EditSXPElementMVCActionCommand extends BaseMVCActionCommand {
 			}
 		}
 		catch (Exception exception) {
+			if (exception instanceof SXPElementReadOnlyException) {
+				hideDefaultErrorMessage(actionRequest);
+			}
+
 			SessionErrors.add(actionRequest, exception.getClass(), exception);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");

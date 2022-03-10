@@ -64,3 +64,13 @@ ViewSXPElementsDisplayContext viewSXPElementsDisplayContext = (ViewSXPElementsDi
 <liferay-frontend:component
 	module="sxp_blueprint_admin/js/utils/openInitialSuccessToastHandler"
 />
+
+<c:if test="<%= SessionErrors.contains(renderRequest, SXPElementReadOnlyException.class) %>">
+	<aui:script>
+		Liferay.Util.openToast({
+			message:
+				'<liferay-ui:message key="system-read-only-elements-cannot-be-deleted" />',
+			type: 'danger',
+		});
+	</aui:script>
+</c:if>

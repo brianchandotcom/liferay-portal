@@ -166,7 +166,7 @@ public class ContentDashboardAdminPortletGetPropsTest {
 				String.valueOf(props.get("vocabularies")));
 		}
 		finally {
-			_assetVocabularyLocalService.deleteAssetVocabulary(assetVocabulary);
+			_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
 		}
 	}
 
@@ -483,9 +483,8 @@ public class ContentDashboardAdminPortletGetPropsTest {
 				String.valueOf(props.get("vocabularies")));
 		}
 		finally {
-			_assetVocabularyLocalService.deleteAssetVocabulary(assetVocabulary);
-			_assetVocabularyLocalService.deleteAssetVocabulary(
-				childAssetVocabulary);
+			_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
+			_assetVocabularyLocalService.deleteVocabulary(childAssetVocabulary);
 		}
 	}
 
@@ -592,9 +591,8 @@ public class ContentDashboardAdminPortletGetPropsTest {
 				String.valueOf(props.get("vocabularies")));
 		}
 		finally {
-			_assetVocabularyLocalService.deleteAssetVocabulary(assetVocabulary);
-			_assetVocabularyLocalService.deleteAssetVocabulary(
-				childAssetVocabulary);
+			_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
+			_assetVocabularyLocalService.deleteVocabulary(childAssetVocabulary);
 		}
 	}
 

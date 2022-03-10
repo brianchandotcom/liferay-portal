@@ -79,7 +79,7 @@ public class AssetVocabularyConfigurationOptionsProviderTest {
 				).isPresent());
 		}
 		finally {
-			_assetVocabularyLocalService.deleteAssetVocabulary(
+			_assetVocabularyLocalService.deleteVocabulary(
 				assetVocabulary.getVocabularyId());
 		}
 	}

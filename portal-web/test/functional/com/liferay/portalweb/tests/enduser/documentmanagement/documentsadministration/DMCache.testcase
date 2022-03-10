@@ -1,0 +1,125 @@
+@component-name = "portal-document-management"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Document Management";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Documents and Media Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			column = "1",
+			groupName = "Guest",
+			layoutName = "Documents and Media Page",
+			widgetName = "Documents and Media");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMDocument.enableActionsMenuOnPortlet();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			DMDocument.tearDownCP();
+
+			PagesAdmin.tearDownCP();
+		}
+	}
+
+	@description = "This checks that users can configure the cache control as private."
+	@priority = "3"
+	test CanConfigureCacheControlAsPrivate {
+		property test.name.skip.portal.instance = "DMCache#CanConfigureCacheControlAsPrivate";
+
+		DMDocument.configureCacheControl(
+			cacheControl = "Private",
+			maxAge = "30");
+
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "Tag Name",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Commerce_Blue.jpg");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
+
+		var responseHeader = DMDocument.getFileResponseHeader(dmDocumentFileName = "Commerce_Blue.jpg");
+
+		DMDocument.viewCacheControlConfigurationInConsole(
+			cacheControl = "private",
+			maxAge = "30",
+			responseHeader = "${responseHeader}");
+	}
+
+	@description = "This checks that users can configure the cache control as public."
+	@priority = "3"
+	test CanConfigureCacheControlAsPublic {
+		property test.name.skip.portal.instance = "DMCache#CanConfigureCacheControlAsPublic";
+
+		DMDocument.configureCacheControl(
+			cacheControl = "Public",
+			maxAge = "30");
+
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "Tag Name",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Commerce_Blue.jpg");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
+
+		var responseHeader = DMDocument.getFileResponseHeader(dmDocumentFileName = "Commerce_Blue.jpg");
+
+		DMDocument.viewCacheControlConfigurationInConsole(
+			cacheControl = "public",
+			maxAge = "30",
+			responseHeader = "${responseHeader}");
+	}
+
+	@description = "This checks that users can configure uncacheable mime type in the cache control."
+	@priority = "3"
+	test CanConfigureUncacheableMimeTypeInCacheControl {
+		property test.name.skip.portal.instance = "DMCache#CanConfigureUncacheableMimeTypeInCacheControl";
+
+		DMDocument.configureCacheControl(uncacheableMimeTypes = "image/jpeg");
+
+		JSONDocument.addFileWithUploadedFile(
+			assetTagNames = "Tag Name",
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest",
+			mimeType = "image/jpeg",
+			sourceFileName = "Commerce_Blue.jpg");
+
+		Navigator.gotoPage(pageName = "Documents and Media Page");
+
+		DMNavigator.gotoDocumentPG(dmDocumentTitle = "DM Document Title");
+
+		var responseHeader = DMDocument.getFileResponseHeader(dmDocumentFileName = "Commerce_Blue.jpg");
+
+		DMDocument.viewCacheControlConfigurationInConsole(
+			responseHeader = "${responseHeader}",
+			uncacheableMimeType = "true");
+	}
+
+}

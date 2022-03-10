@@ -1182,7 +1182,7 @@ public class PortalImpl implements Portal {
 		throws PortalException {
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales(
-			themeDisplay.getSiteGroupId());
+			layout.getGroupId());
 
 		return _getAlternateURLs(
 			canonicalURL, themeDisplay, layout, availableLocales);

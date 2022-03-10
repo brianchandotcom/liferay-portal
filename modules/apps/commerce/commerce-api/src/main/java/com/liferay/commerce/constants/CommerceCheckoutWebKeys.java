@@ -34,4 +34,7 @@ public class CommerceCheckoutWebKeys {
 	public static final String SHIPPING_ADDRESS_PARAM_NAME =
 		"shippingAddressId";
 
+	public static final String SHOW_ERROR_NO_BILLING_ADDRESS =
+		"SHOW_ERROR_NO_BILLING_ADDRESS";
+
 }

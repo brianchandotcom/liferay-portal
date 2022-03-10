@@ -40,4 +40,6 @@ public class CommerceWebKeys {
 	public static final String COMMERCE_SHIPMENT_ITEM =
 		"COMMERCE_SHIPMENT_ITEM";
 
+	public static final String VIEW_BILLING_ADDRESS = "VIEW_BILLING_ADDRESS";
+
 }

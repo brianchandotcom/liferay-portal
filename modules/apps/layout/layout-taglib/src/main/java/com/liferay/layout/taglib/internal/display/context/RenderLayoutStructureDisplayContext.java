@@ -916,6 +916,20 @@ public class RenderLayoutStructureDisplayContext {
 
 		_frontendTokensJSONObject = JSONFactoryUtil.createJSONObject();
 
+		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
+			ServletContextUtil.getFrontendTokenDefinitionRegistry();
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
+			_themeDisplay.getSiteGroupId(), false);
+
+		FrontendTokenDefinition frontendTokenDefinition =
+			frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+				layoutSet.getThemeId());
+
+		if (frontendTokenDefinition == null) {
+			return _frontendTokensJSONObject;
+		}
+
 		StyleBookEntry styleBookEntry = null;
 
 		if (!ParamUtil.getBoolean(
@@ -933,20 +947,6 @@ public class RenderLayoutStructureDisplayContext {
 		}
 		else {
 			frontendTokenValuesJSONObject = JSONFactoryUtil.createJSONObject();
-		}
-
-		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
-			ServletContextUtil.getFrontendTokenDefinitionRegistry();
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
-			_themeDisplay.getSiteGroupId(), false);
-
-		FrontendTokenDefinition frontendTokenDefinition =
-			frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
-				layoutSet.getThemeId());
-
-		if (frontendTokenDefinition == null) {
-			return _frontendTokensJSONObject;
 		}
 
 		JSONObject frontendTokenDefinitionJSONObject =

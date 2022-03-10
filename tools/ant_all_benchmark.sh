@@ -16,6 +16,8 @@ function check_performance {
 
 		if [ "${lines_count}" -ge $((${durations_min_lenght} + 1)) ]
 		then
+			remove_oldest_durations ${lines_count}
+
 			local actual_durations="$(tail -n 1 ${ANT_ALL_DURATION_CSV_PATH})"
 			local previous_durations="$(tail -n 2 ${ANT_ALL_DURATION_CSV_PATH} | head -n 1)"
 			local one_minute=60
@@ -87,6 +89,25 @@ function log_durations {
 				echo -n "," >> ${ANT_ALL_DURATION_CSV_PATH}
 			fi
 		done
+	fi
+}
+
+function remove_oldest_durations {
+	local durations_max_lenght=30
+
+	if [ "${lines_count}" -eq $((${durations_max_lenght} + 1)) ]
+	then
+		local tmp_csv_path="tools/.tmp_$(date +%s).csv"
+
+		touch ${tmp_csv_path}
+
+		head -n 1 ${ANT_ALL_DURATION_CSV_PATH} > ${tmp_csv_path}
+
+		tail -n 29 ${ANT_ALL_DURATION_CSV_PATH} >> ${tmp_csv_path}
+
+		cat ${tmp_csv_path} > ${ANT_ALL_DURATION_CSV_PATH}
+
+		rm ${tmp_csv_path}
 	fi
 }
 

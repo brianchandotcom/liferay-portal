@@ -152,11 +152,11 @@ Liferay.Util.MAP_HTML_CHARS_ESCAPED = MAP_HTML_CHARS_ESCAPED;
  */
 Liferay.Util.addParams = addParams;
 
-Liferay.Util.alert = (...args) => {
+Liferay.Util.openAlertModal = (...args) => {
 	Liferay.Loader.require(
 		'frontend-js-web/liferay/modal/Modal',
 		(commands) => {
-			commands.alert(...args);
+			commands.openAlertModal(...args);
 		}
 	);
 };

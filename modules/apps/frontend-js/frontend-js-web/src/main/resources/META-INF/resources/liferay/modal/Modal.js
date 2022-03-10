@@ -25,7 +25,7 @@ import delegate from '../delegate/delegate.es';
 import {escapeHTML} from '../util/html_util';
 import navigate from '../util/navigate.es';
 
-const alert = ({message}) => {
+const openAlertModal = ({message}) => {
 	openModal({
 		bodyHTML: escapeHTML(message),
 		buttons: [
@@ -693,8 +693,8 @@ Modal.propTypes = {
 };
 
 export {
-	alert,
 	Modal,
+	openAlertModal,
 	openModal,
 	openPortletModal,
 	openPortletWindow,

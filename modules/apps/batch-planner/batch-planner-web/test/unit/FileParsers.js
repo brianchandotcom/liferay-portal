@@ -19,10 +19,10 @@ import parseFile, {
 } from '../../src/main/resources/META-INF/resources/js/FileParsers';
 
 const csvFileContents =
-	'currencyCode,name,type\nUSD,My Channel 0,site\nUSD,My Channel 1,site\nUSD,My Channel 2,site\nUSD,My Channel 3,site\nUSD,My Channel 4,site';
-const fileSchema = ['currencyCode', 'name', 'type'];
-const jsonlFileContent = `{"currencyCode": "ciao", "name": "test", "type": 1}`;
-const jsonFileContent = `[{"currencyCode": "ciao", "name": "test", "type": 1}, {"currencyCode": "ciao", "name": "test", "type": 1}, {"currencyCode": "ciao", "name": "test", "type": 1}]`;
+	'currencyCode,type,name\nUSD,site,My Channel 0\nUSD,site,My Channel 1\nUSD,site,My Channel 2\nUSD,site,My Channel 3\nUSD,site,My Channel 4';
+const fileSchema = ['currencyCode', 'type', 'name'];
+const jsonlFileContent = `{"currencyCode": "ciao", "type": 1, "name": "test"}`;
+const jsonFileContent = `[{"currencyCode": "ciao", "type": 1, "name": "test"}, {"currencyCode": "ciao", "type": 1, "name": "test"}, {"currencyCode": "ciao", "type": 1, "name": "test"}]`;
 const readAsText = jest.fn();
 
 let dummyFileReader;
@@ -88,7 +88,7 @@ describe('parseFile', () => {
 
 		const onProgressEvent = {
 			target: {
-				result: 'currencyCode,name,type\nUSD,My Channel 0,site\n',
+				result: 'currencyCode,type,name\nUSD,site,My Channel 0\n',
 			},
 		};
 
@@ -156,20 +156,16 @@ describe('extractFieldsFromJSONL', () => {
 
 	it('must correctly extract the first item details', () => {
 		expect(
-			Object.keys(
-				extractFieldsFromJSONL(jsonlFileContent).firstItemDetails
-			)
-		).toStrictEqual(
-			Object.keys({currencyCode: 'ciao', name: 'test', type: 1})
-		);
+			extractFieldsFromJSONL(jsonlFileContent).firstItemDetails
+		).toStrictEqual({currencyCode: 'ciao', name: 'test', type: 1});
 	});
 });
 
 describe('extractFieldsFromJSON', () => {
 	it('must correctly find file schema', () => {
-		expect(
-			Object.values(extractFieldsFromJSON(jsonFileContent).schema)
-		).toStrictEqual(fileSchema);
+		expect(extractFieldsFromJSON(jsonFileContent).schema).toStrictEqual(
+			fileSchema
+		);
 	});
 
 	it('must correctly extract the first item details', () => {

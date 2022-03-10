@@ -57,10 +57,6 @@ const firstItemDetails = {
 	name: 'car',
 	type: 'default',
 };
-const contentItemDetails = [
-	['USD', 'bike', 'default'],
-	['EUR', 'truck', 'default'],
-];
 
 describe('ImportForm', () => {
 	afterEach(cleanup);
@@ -78,7 +74,6 @@ describe('ImportForm', () => {
 			});
 
 			Liferay.fire(FILE_SCHEMA_EVENT, {
-				contentItemDetails,
 				firstItemDetails,
 				schema: FILE_SCHEMA,
 			});
@@ -96,7 +91,6 @@ describe('ImportForm', () => {
 			});
 
 			Liferay.fire(FILE_SCHEMA_EVENT, {
-				contentItemDetails,
 				firstItemDetails,
 				schema: FILE_SCHEMA,
 			});

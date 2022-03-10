@@ -129,4 +129,83 @@ definition {
 			uncheckPropagation = "${uncheckPropagation}");
 	}
 
+	macro editFragmentImage {
+		Click(
+			key_imageName = "${id}",
+			locator1 = "TeamExtranet#BACKGROUND_IMAGE");
+
+		Click(
+			key_documentTitle = "${container}",
+			locator1 = "OneDrive#FILES_CHECKBOX");
+
+		Navigator.gotoNavTab(navTab = "Image Source");
+
+		if (!(IsSelectedLabel(key_fieldLabel = "Source Selection", locator1 = "Select#GENERIC_SELECT_FIELD", value1 = "Direct"))) {
+			Select(
+				key_fieldLabel = "Source Selection",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Direct");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Source Selection",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "Direct");
+		}
+
+		if (IsTextEqual(key_fieldLabel = "Image", locator1 = "PageEditor#ITEM_SELECTOR_CONTENT_INPUT", value1 = "")) {
+			Click(
+				key_fieldLabel = "Image",
+				key_text = "plus",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
+		else {
+			Click(
+				key_fieldLabel = "Image",
+				key_text = "change",
+				locator1 = "Icon#ANY_ITEM_SELECTOR");
+		}
+
+		if (isSet(imageFileName)) {
+			ItemSelector.selectDMImage(
+				imageFileName = "${imageFileName}",
+				navTab = "Documents and Media");
+		}
+		else if (isSet(imageSourceURL)) {
+			ItemSelector.addImageFromURL(
+				imageSourceURL = "${imageSourceURL}",
+				navTab = "URL");
+		}
+		else {
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			AssertElementPresent.assertVisible(locator1 = "Button#SELECT_FILE");
+
+			UploadCommonFile.uploadCommonFileHiddenNoMouseOver(
+				locator1 = "TextInput#FILE",
+				value1 = "${fileName}");
+
+			Pause(locator1 = "3000");
+
+			Button.clickAdd();
+		}
+
+		if (isSet(imageDescription)) {
+			Type(
+				key_text = "Image Description",
+				locator1 = "TextInput#ANY",
+				value1 = "${imageDescription}");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			PageEditor.waitForAutoSave();
+
+			AssertTextEquals(
+				key_text = "Image Description",
+				locator1 = "TextInput#ANY",
+				value1 = "${imageDescription}");
+		}
+	}
+
 }

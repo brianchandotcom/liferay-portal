@@ -127,6 +127,8 @@ public class VarPoshiElement extends PoshiElement {
 		String value = getValueFromAssignment(poshiScript);
 
 		if (value.startsWith("\'\'\'")) {
+			value = getPoshiScriptEscapedContent(value);
+
 			if (value.contains("CDATA")) {
 				Matcher nestedCDATAMatcher = _nestedCDATAPattern.matcher(value);
 
@@ -140,7 +142,7 @@ public class VarPoshiElement extends PoshiElement {
 				add(new PoshiCDATA(cdata2));
 			}
 			else {
-				add(new PoshiCDATA(getPoshiScriptEscapedContent(value)));
+				add(new PoshiCDATA(value));
 			}
 
 			return;

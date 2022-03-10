@@ -241,14 +241,6 @@ public class TestrayS3Bucket {
 		}
 	}
 
-	private TestrayS3Bucket() {
-		if (!googleCredentialsAvailable()) {
-			throw new RuntimeException(
-				"Please set the environment variable " +
-					"\"GOOGLE_APPLICATION_CREDENTIALS\"");
-		}
-	}
-
 	private Bucket _getBucket() {
 		Storage storage = _getStorage();
 

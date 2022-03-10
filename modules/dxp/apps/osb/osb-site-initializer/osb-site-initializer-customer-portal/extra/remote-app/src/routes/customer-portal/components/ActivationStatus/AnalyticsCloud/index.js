@@ -14,7 +14,7 @@ import React, {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
 import {Button} from '../../../../../common/components';
 import {getAccountSubscriptionsTerms} from '../../../../../common/services/liferay/graphql/queries';
-import getCurrentEndDate from '../../../../../common/utils/getCurrentEndDate';
+import getActivaionStatusDateRange from '../../../../../common/utils/getActivationStatusDateRange';
 import {useCustomerPortal} from '../../../context';
 import {
 	STATUS_TAG_TYPES,
@@ -97,17 +97,11 @@ const ActivationStatusAnalyticsCloud = ({
 						accountSubscriptionTerm.startDate
 				);
 
-				const earliestStartDate = new Date(
-					Math.min(...startDates.map((date) => new Date(date)))
+				const ActivationStatusDateRange = getActivaionStatusDateRange(
+					endDates,
+					startDates
 				);
-				const farthestEndDate = new Date(
-					Math.max(...endDates.map((date) => new Date(date)))
-				);
-				setActivationStatusDate(
-					`${getCurrentEndDate(
-						earliestStartDate
-					)} - ${getCurrentEndDate(farthestEndDate)}`
-				);
+				setActivationStatusDate(ActivationStatusDateRange);
 			}
 		};
 

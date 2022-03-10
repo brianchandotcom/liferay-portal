@@ -7303,38 +7303,25 @@ public class PortalImpl implements Portal {
 				groupId = scopeLayout.getGroupId();
 			}
 
-			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-				groupId, privateLayout, LayoutConstants.TYPE_PORTLET);
+			String[] validLayoutTypes = {
+				LayoutConstants.TYPE_PORTLET,
+				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
+				LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_CONTENT
+			};
 
-			long plid = getPlidFromPortletId(layouts, portletId, scopeGroupId);
+			for (String layoutType : validLayoutTypes) {
+				List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+					groupId, privateLayout, layoutType);
 
-			if (plid != LayoutConstants.DEFAULT_PLID) {
-				return plid;
+				long plid = getPlidFromPortletId(
+					layouts, portletId, scopeGroupId);
+
+				if (plid != LayoutConstants.DEFAULT_PLID) {
+					return plid;
+				}
 			}
 
-			layouts = LayoutLocalServiceUtil.getLayouts(
-				groupId, privateLayout,
-				LayoutConstants.TYPE_FULL_PAGE_APPLICATION);
-
-			plid = getPlidFromPortletId(layouts, portletId, scopeGroupId);
-
-			if (plid != LayoutConstants.DEFAULT_PLID) {
-				return plid;
-			}
-
-			layouts = LayoutLocalServiceUtil.getLayouts(
-				groupId, privateLayout, LayoutConstants.TYPE_CONTENT);
-
-			plid = getPlidFromPortletId(layouts, portletId, scopeGroupId);
-
-			if (plid != LayoutConstants.DEFAULT_PLID) {
-				return plid;
-			}
-
-			layouts = LayoutLocalServiceUtil.getLayouts(
-				groupId, privateLayout, LayoutConstants.TYPE_PANEL);
-
-			return getPlidFromPortletId(layouts, portletId, scopeGroupId);
+			return LayoutConstants.DEFAULT_PLID;
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

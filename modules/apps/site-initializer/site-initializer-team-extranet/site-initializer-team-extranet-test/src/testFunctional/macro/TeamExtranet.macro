@@ -184,8 +184,6 @@ definition {
 				locator1 = "TextInput#FILE",
 				value1 = "${fileName}");
 
-			Pause(locator1 = "3000");
-
 			Button.clickAdd();
 		}
 

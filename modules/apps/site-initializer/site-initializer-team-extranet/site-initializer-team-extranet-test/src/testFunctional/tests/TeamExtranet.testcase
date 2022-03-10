@@ -55,6 +55,32 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-148459. Background image changed from the page editor"
+	@priority = "3"
+	test BackgroundImageChangedFromPageEditor {
+		task ("Open to Edit the Home Page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Home",
+				siteName = "${testSiteName}");
+		}
+
+		task ("Change the Image of Parallax Container") {
+			TeamExtranet.editFragmentImage(
+				container = "parallaxContainerImage",
+				id = "parallaxContainerImage",
+				imageFileName = "entry_01.jpg");
+		}
+
+		task ("Assert the Image presence") {
+			SelectFrameTop();
+
+			AssertElementPresent(
+				id = "parallaxContainerImage",
+				key_image = "entry_01.jpg",
+				locator1 = "Fragment#BACKGROUND_IMAGE_EDITABLE_FIELD_IMAGE_PROPERTIES");
+		}
+	}
+
 	@description = "This is a test for LPS-144166. Verify the Blog Entry DPT on Desktop Size"
 	@priority = "4"
 	test BlogEntryDPTOnDesktopSize {

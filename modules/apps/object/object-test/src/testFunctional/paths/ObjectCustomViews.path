@@ -85,6 +85,11 @@
 		<td>//ul[@class='list-group show-quick-actions-on-hover']//li[@class='lfr-object__object-custom-view-builder-item list-group-item list-group-item-flex'][${key_position}]//p[contains(text(),'${key_colunmName1}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>MARK_AS_DEFAULT</td>
+		<td>//input[contains(@class,'custom-control-input')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

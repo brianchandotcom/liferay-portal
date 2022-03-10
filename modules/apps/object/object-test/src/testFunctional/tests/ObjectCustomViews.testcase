@@ -412,12 +412,59 @@ definition {
 	}
 
 	@description = "LPS-144902 - Verify if the entries from an object in a table view defined as default are presented correctly"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewEntries {
 		property portal.acceptance = "true";
 
-		// TODO LPS-147770 CanViewEntries pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147770",
+			objectName = "CustomObject147770",
+			pluralLabelName = "Custom Objects 147770");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject147770");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147770");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		Click.clickAtNotVisible(
+			key_columnOption = "Custom Field",
+			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+
+		ObjectCustomViews.saveColumnsModal();
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject147770");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject147770",
+			value = "Entry Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject147770");
+
+		ObjectPortlet.viewEntry(entry = "Entry Test");
 
 	}
 

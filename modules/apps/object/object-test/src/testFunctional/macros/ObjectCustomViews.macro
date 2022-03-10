@@ -135,4 +135,10 @@ definition {
 			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION");
 	}
 
+	macro markViewAsDefault {
+		Click(locator1 = "ObjectAdmin#LAYOUT_INFO_TAB");
+		
+		Click.clickAtNotVisible(locator1 = "ObjectCustomViews#MARK_AS_DEFAULT");
+	}
+
 }

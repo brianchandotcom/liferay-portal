@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class State extends AbstractState implements Serializable {
 
@@ -39,9 +40,9 @@ public class State extends AbstractState implements Serializable {
 
     public static final String FILE_NAME = "state.ser";
 
-    private Map<Long, Long> bundlesLastModified = new HashMap<>();
+    private Map<Long, Long> bundlesLastModified = new ConcurrentHashMap<>();
 
-    private Map<Long, Long> bundlesConfigAdminBundleId = new HashMap<>();
+    private Map<Long, Long> bundlesConfigAdminBundleId = new ConcurrentHashMap<>();
 
     private volatile Set<String> initialHashes;
 
@@ -179,3 +180,4 @@ public class State extends AbstractState implements Serializable {
         return new HashSet<>(this.bundlesConfigAdminBundleId.keySet());
     }
 }
+/* @generated */

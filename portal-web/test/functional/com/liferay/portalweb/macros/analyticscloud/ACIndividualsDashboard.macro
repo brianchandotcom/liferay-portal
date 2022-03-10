@@ -320,13 +320,4 @@ definition {
 		}
 	}
 
-	macro viewTotalActivities {
-		var key_userName = "${userName}";
-		var key_activitiesNumber = "${activitiesNumber}";
-
-		AssertTextEquals(
-			locator1 = "ACIndividualsDashboard#TOTAL_ACTIVITIES",
-			value1 = "${activitiesNumber}");
-	}
-
 }

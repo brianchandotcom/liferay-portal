@@ -60,6 +60,8 @@ public class CommerceOrderActionKeys {
 	public static final String MANAGE_COMMERCE_ORDERS =
 		"MANAGE_COMMERCE_ORDERS";
 
+	public static final String VIEW_BILLING_ADDRESS = "VIEW_BILLING_ADDRESS";
+
 	public static final String VIEW_COMMERCE_ORDER_TYPES =
 		"VIEW_COMMERCE_ORDER_TYPES";
 

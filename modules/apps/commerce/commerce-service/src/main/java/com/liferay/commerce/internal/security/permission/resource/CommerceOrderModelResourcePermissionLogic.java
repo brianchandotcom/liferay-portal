@@ -109,6 +109,41 @@ public class CommerceOrderModelResourcePermissionLogic
 			return _containsManageNotes(permissionChecker, commerceOrder, true);
 		}
 
+		if (actionId.equals(
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_DELIVERY_TERMS)) {
+
+			return _containsManageDeliveryTerms(
+				permissionChecker, commerceOrder);
+		}
+
+		if (actionId.equals(
+				CommerceOrderActionKeys.
+					MANAGE_COMMERCE_ORDER_PAYMENT_METHODS)) {
+
+			return _containsManagePaymentMethods(
+				permissionChecker, commerceOrder);
+		}
+
+		if (actionId.equals(
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS)) {
+
+			return _containsManagePaymentTerms(
+				permissionChecker, commerceOrder);
+		}
+
+		if (actionId.equals(
+				CommerceOrderActionKeys.
+					MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS)) {
+
+			return _containsManageShippingOptions(
+				permissionChecker, commerceOrder);
+		}
+
+		if (actionId.equals(CommerceOrderActionKeys.VIEW_BILLING_ADDRESS)) {
+			return _containsViewBillingAddress(
+				permissionChecker, commerceOrder);
+		}
+
 		if (actionId.equals(ActionKeys.DELETE)) {
 			return _containsDeletePermission(permissionChecker, commerceOrder);
 		}
@@ -183,6 +218,27 @@ public class CommerceOrderModelResourcePermissionLogic
 			CommerceOrderActionKeys.DELETE_COMMERCE_ORDERS);
 	}
 
+	private boolean _containsManageDeliveryTerms(
+			PermissionChecker permissionChecker, CommerceOrder commerceOrder)
+		throws PortalException {
+
+		if (!commerceOrder.isOpen()) {
+			return false;
+		}
+
+		User user = permissionChecker.getUser();
+
+		if (user.isDefaultUser() && commerceOrder.isGuestOrder()) {
+			return true;
+		}
+
+		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+
+		return _portletResourcePermission.contains(
+			permissionChecker, commerceAccount.getCommerceAccountGroup(),
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_DELIVERY_TERMS);
+	}
+
 	private boolean _containsManageNotes(
 			PermissionChecker permissionChecker, CommerceOrder commerceOrder,
 			boolean restricted)
@@ -199,6 +255,69 @@ public class CommerceOrderModelResourcePermissionLogic
 		return _hasAncestorPermission(
 			permissionChecker, commerceAccount.getCommerceAccountGroupId(),
 			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
+	}
+
+	private boolean _containsManagePaymentMethods(
+			PermissionChecker permissionChecker, CommerceOrder commerceOrder)
+		throws PortalException {
+
+		if (!commerceOrder.isOpen()) {
+			return false;
+		}
+
+		User user = permissionChecker.getUser();
+
+		if (user.isDefaultUser() && commerceOrder.isGuestOrder()) {
+			return true;
+		}
+
+		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+
+		return _portletResourcePermission.contains(
+			permissionChecker, commerceAccount.getCommerceAccountGroup(),
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_METHODS);
+	}
+
+	private boolean _containsManagePaymentTerms(
+			PermissionChecker permissionChecker, CommerceOrder commerceOrder)
+		throws PortalException {
+
+		if (!commerceOrder.isOpen()) {
+			return false;
+		}
+
+		User user = permissionChecker.getUser();
+
+		if (user.isDefaultUser() && commerceOrder.isGuestOrder()) {
+			return true;
+		}
+
+		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+
+		return _portletResourcePermission.contains(
+			permissionChecker, commerceAccount.getCommerceAccountGroup(),
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_PAYMENT_TERMS);
+	}
+
+	private boolean _containsManageShippingOptions(
+			PermissionChecker permissionChecker, CommerceOrder commerceOrder)
+		throws PortalException {
+
+		if (!commerceOrder.isOpen()) {
+			return false;
+		}
+
+		User user = permissionChecker.getUser();
+
+		if (user.isDefaultUser() && commerceOrder.isGuestOrder()) {
+			return true;
+		}
+
+		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+
+		return _portletResourcePermission.contains(
+			permissionChecker, commerceAccount.getCommerceAccountGroup(),
+			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS);
 	}
 
 	private boolean _containsUpdatePermission(
@@ -245,6 +364,27 @@ public class CommerceOrderModelResourcePermissionLogic
 		return _hasAncestorPermission(
 			permissionChecker, commerceAccount.getCommerceAccountGroupId(),
 			CommerceOrderActionKeys.MANAGE_COMMERCE_ORDERS);
+	}
+
+	private boolean _containsViewBillingAddress(
+			PermissionChecker permissionChecker, CommerceOrder commerceOrder)
+		throws PortalException {
+
+		if (!commerceOrder.isOpen()) {
+			return false;
+		}
+
+		User user = permissionChecker.getUser();
+
+		if (user.isDefaultUser() && commerceOrder.isGuestOrder()) {
+			return true;
+		}
+
+		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
+
+		return _portletResourcePermission.contains(
+			permissionChecker, commerceAccount.getCommerceAccountGroup(),
+			CommerceOrderActionKeys.VIEW_BILLING_ADDRESS);
 	}
 
 	private boolean _containsViewPermission(

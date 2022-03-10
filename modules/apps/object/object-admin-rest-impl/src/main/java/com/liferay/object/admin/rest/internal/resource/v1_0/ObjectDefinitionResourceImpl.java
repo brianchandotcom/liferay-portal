@@ -20,7 +20,6 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
-import com.liferay.object.admin.rest.internal.configuration.activator.FFObjectDefinitionPermissionsActionConfigurationActivator;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectActionUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectLayoutUtil;
@@ -211,18 +210,10 @@ public class ObjectDefinitionResourceImpl
 						objectDefinition.getObjectDefinitionId())
 				).put(
 					"permissions",
-					() -> {
-						if (!_ffObjectDefinitionPermissionsActionConfigurationActivator.
-								enabled()) {
-
-							return null;
-						}
-
-						return addAction(
-							ActionKeys.PERMISSIONS, "patchObjectDefinition",
-							permissionName,
-							objectDefinition.getObjectDefinitionId());
-					}
+					addAction(
+						ActionKeys.PERMISSIONS, "patchObjectDefinition",
+						permissionName,
+						objectDefinition.getObjectDefinitionId())
 				).put(
 					"publish",
 					() -> {
@@ -303,10 +294,6 @@ public class ObjectDefinitionResourceImpl
 
 	private static final EntityModel _entityModel =
 		new ObjectDefinitionEntityModel();
-
-	@Reference
-	private FFObjectDefinitionPermissionsActionConfigurationActivator
-		_ffObjectDefinitionPermissionsActionConfigurationActivator;
 
 	@Reference
 	private ObjectActionLocalService _objectActionLocalService;

@@ -16,7 +16,6 @@ package com.liferay.headless.admin.list.type.internal.resource.v1_0;
 
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
-import com.liferay.headless.admin.list.type.internal.configuration.activator.FFListTypeDefinitionPermissionsActionConfigurationActivator;
 import com.liferay.headless.admin.list.type.internal.dto.v1_0.util.ListTypeEntryUtil;
 import com.liferay.headless.admin.list.type.internal.odata.entity.v1_0.ListTypeDefinitionEntityModel;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
@@ -174,20 +173,12 @@ public class ListTypeDefinitionResourceImpl
 							getListTypeDefinitionId())
 				).put(
 					"permissions",
-					() -> {
-						if (!_ffListTypeDefinitionPermissionsActionConfigurationActivator.
-								enabled()) {
-
-							return null;
-						}
-
-						return addAction(
-							ActionKeys.PERMISSIONS, "patchListTypeDefinition",
-							com.liferay.list.type.model.ListTypeDefinition.
-								class.getName(),
-							serviceBuilderListTypeDefinition.
-								getListTypeDefinitionId());
-					}
+					addAction(
+						ActionKeys.PERMISSIONS, "patchListTypeDefinition",
+						com.liferay.list.type.model.ListTypeDefinition.class.
+							getName(),
+						serviceBuilderListTypeDefinition.
+							getListTypeDefinitionId())
 				).put(
 					"update",
 					addAction(
@@ -220,10 +211,6 @@ public class ListTypeDefinitionResourceImpl
 
 	private static final EntityModel _entityModel =
 		new ListTypeDefinitionEntityModel();
-
-	@Reference
-	private FFListTypeDefinitionPermissionsActionConfigurationActivator
-		_ffListTypeDefinitionPermissionsActionConfigurationActivator;
 
 	@Reference
 	private ListTypeDefinitionService _listTypeDefinitionService;

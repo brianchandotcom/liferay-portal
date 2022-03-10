@@ -140,10 +140,11 @@ public class VarPoshiElement extends PoshiElement {
 				add(new PoshiCDATA(cdata1));
 
 				add(new PoshiCDATA(cdata2));
+
+				return;
 			}
-			else {
-				add(new PoshiCDATA(value));
-			}
+
+			add(new PoshiCDATA(value));
 
 			return;
 		}

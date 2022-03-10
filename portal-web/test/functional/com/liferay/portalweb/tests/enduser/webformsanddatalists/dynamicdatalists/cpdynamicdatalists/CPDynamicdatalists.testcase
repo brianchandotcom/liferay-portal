@@ -1457,6 +1457,9 @@ definition {
 	@description = "This is a use case for LPS-65248"
 	@priority = "4"
 	test AddListRecordWithRequiredBooleanField {
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -2549,6 +2552,9 @@ definition {
 
 	@priority = "4"
 	test EditBooleanFieldShowLabel {
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(

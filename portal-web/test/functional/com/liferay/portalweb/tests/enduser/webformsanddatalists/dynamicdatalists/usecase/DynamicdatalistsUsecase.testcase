@@ -40,6 +40,9 @@ definition {
 
 	@priority = "3"
 	test AddDataDefinitionWithoutANameAndAssertErrorMessage {
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
+
 		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
@@ -1088,6 +1091,9 @@ definition {
 
 	@priority = "3"
 	test AssertDecimalFieldInvalidDataErrorMessage {
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -1338,6 +1344,9 @@ definition {
 
 	@priority = "3"
 	test AssertIntegerFieldInvalidDataErrorMessage {
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");
@@ -1394,6 +1403,9 @@ definition {
 
 	@priority = "4"
 	test AssertNumberFieldInvalidDataErrorMessage {
+		property portal.acceptance = "quarantine";
+		property portal.upstream = "quarantine";
+
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
 			portlet = "Pages");

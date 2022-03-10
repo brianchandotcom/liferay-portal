@@ -22,7 +22,7 @@
 	},
 	"search-blueprint-on-search-page": {
 		"en_US": {
-			"message": "Learn how.",
+			"message": "Learn how",
 			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/using-a-search-blueprint-on-a-search-page.html"
 		}
 	}

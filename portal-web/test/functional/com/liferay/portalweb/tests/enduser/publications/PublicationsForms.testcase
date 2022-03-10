@@ -33,11 +33,9 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		JSONGroup.addGroup(groupName = "Site Name");
-
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -61,7 +59,7 @@ definition {
 
 		FormsAdmin.saveDataProvider();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
@@ -88,17 +86,15 @@ definition {
 		Form.save();
 
 		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
+			groupName = "Guest",
 			layoutName = "Form Page");
 
 		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
+			groupName = "Guest",
 			layoutName = "Form Page",
 			widgetName = "Form");
 
-		Navigator.gotoSitePage(
-			pageName = "Form Page",
-			siteName = "Site Name");
+		Navigator.gotoPage(pageName = "Form Page");
 
 		FormPortletNavigator.gotoSelectForm();
 
@@ -106,13 +102,13 @@ definition {
 
 		PortletEntry.save();
 
+		Navigator.openURL();
+
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 
 		Publications.viewPublicationPublished(publicationName = "Publication Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Form Page",
-			siteName = "Site Name");
+		Navigator.gotoPage(pageName = "Form Page");
 
 		FormPortlet.waitFormRenderer(text = "Submit");
 
@@ -126,7 +122,7 @@ definition {
 
 		FormPortlet.submitSuccessfully();
 
-		PagesAdmin.openPagesAdmin(siteURLKey = "Site Name");
+		Navigator.openURL();
 
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",

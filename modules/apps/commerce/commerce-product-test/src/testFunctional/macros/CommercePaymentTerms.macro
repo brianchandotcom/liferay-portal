@@ -1,0 +1,65 @@
+definition {
+
+	macro addTermsAndCondition {
+		LexiconEntry.gotoAdd();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${termsAndConditionName}");
+
+		Select(
+			locator1 = "Select#TYPE",
+			value1 = "${termsAndConditionType}");
+
+		Type(
+			locator1 = "CommerceEntry#PRIORITY_FIELD",
+			value1 = "${valuePosition}");
+
+		Button.clickSubmitButton();
+
+		if ("${active}" == "true") {
+			ClickNoError(locator1 = "ToggleSwitch#ACTIVE");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
+	macro deleteTermsAndCondition {
+		CommerceNavigator.searchEntry(entryName = "${termsAndConditionName}");
+
+		Click(
+			key_value = "${termsAndConditionName}",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Delete");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro viewTermsAndConditionEntry {
+		AssertTextEquals.assertPartialText(
+			key_termsAndConditionName = "${termsAndConditionName}",
+			locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_NAME",
+			value1 = "${termsAndConditionName}");
+
+		AssertTextEquals.assertPartialText(
+			key_termsAndConditionType = "${termsAndConditionType}",
+			locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_TYPE",
+			value1 = "${termsAndConditionType}");
+
+		AssertTextEquals.assertPartialText(
+			key_valuePosition = "${valuePosition}",
+			locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_PRIORITY",
+			value1 = "${valuePosition}");
+
+		AssertTextEquals.assertPartialText(
+			key_termsAndConditionActiveStatus = "${termsAndConditionActiveStatus}",
+			locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_ACTIVE_STATUS",
+			value1 = "${termsAndConditionActiveStatus}");
+	}
+
+}

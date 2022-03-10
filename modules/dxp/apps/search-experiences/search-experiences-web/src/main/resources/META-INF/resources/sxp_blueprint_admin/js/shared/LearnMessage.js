@@ -44,7 +44,12 @@ export default function LearnMessage({resourceKey}) {
 
 	if (learnMessageObject.url) {
 		return (
-			<ClayLink className="learn-message" href={learnMessageObject.url}>
+			<ClayLink
+				className="learn-message"
+				href={learnMessageObject.url}
+				rel="noopener noreferrer"
+				target="_blank"
+			>
 				{learnMessageObject.message}
 			</ClayLink>
 		);

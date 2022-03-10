@@ -131,6 +131,8 @@ const Configuration = ({
 									className="learn-message"
 									href={learnMessageObject.url}
 									key="learn-how"
+									rel="noopener noreferrer"
+									target="_blank"
 								>
 									{learnMessageObject.message}
 								</ClayLink>,

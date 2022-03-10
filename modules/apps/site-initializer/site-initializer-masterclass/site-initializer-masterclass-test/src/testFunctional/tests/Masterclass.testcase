@@ -1318,8 +1318,8 @@ definition {
 				locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
 		}
 
-		task ("Go Back Using History function") {
-			Masterclass.goBackUsingBrowserHistory();
+		task ("Go Back Using Browser Button") {
+			Masterclass.goBackUsingBrowserButton();
 		}
 
 		task ("Assert Create Account Form is not displayed") {
@@ -1338,8 +1338,8 @@ definition {
 				locator1 = "FormViewBuilder#FIELD_LABEL_OPTION");
 		}
 
-		task ("Go Back Using History function") {
-			Masterclass.goBackUsingBrowserHistory();
+		task ("Go Back Using Browser Button") {
+			Masterclass.goBackUsingBrowserButton();
 		}
 
 		task ("Assert Create Account Form is not displayed") {

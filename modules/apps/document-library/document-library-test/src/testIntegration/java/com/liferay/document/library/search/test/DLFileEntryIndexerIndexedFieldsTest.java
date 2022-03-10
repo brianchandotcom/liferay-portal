@@ -197,14 +197,16 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			"CONTENT_TYPE", "text/plain; charset=UTF-8", ddmStructureId, map);
 	}
 
-	protected void populateDates(AssetEntry assetEntry, FileEntry fileEntry, Map<String, String> map) {
+	protected void populateDates(FileEntry fileEntry, Map<String, String> map) {
+
+		Date createDate = fileEntry.getCreateDate();
 
 		indexedFieldsFixture.populateDate(
-			Field.CREATE_DATE, fileEntry.getCreateDate(), map);
+			Field.CREATE_DATE, createDate, map);
 		indexedFieldsFixture.populateDate(
 			Field.MODIFIED_DATE, fileEntry.getModifiedDate(), map);
 		indexedFieldsFixture.populateDate(
-			Field.PUBLISH_DATE, assetEntry.getPublishDate(), map);
+			Field.PUBLISH_DATE, createDate, map);
 
 		indexedFieldsFixture.populateExpirationDateWithForever(map);
 	}
@@ -267,7 +269,7 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 		map.put("contentLength_ja_JP", "5");
 		map.put("contentLength_ja_JP_sortable", "5");
 
-		populateDates(assetEntry, fileEntry, map);
+		populateDates(fileEntry, map);
 
 		if (_ddmIndexer.isLegacyDDMIndexFieldsEnabled()) {
 			legacyPopulateHttpHeaders(fileEntry, map);

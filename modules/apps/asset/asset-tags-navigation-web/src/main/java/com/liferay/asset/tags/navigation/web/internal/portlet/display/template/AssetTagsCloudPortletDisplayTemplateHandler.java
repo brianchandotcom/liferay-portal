@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.tags.navigation.web.internal.portlet.template;
+package com.liferay.asset.tags.navigation.web.internal.portlet.display.template;
 
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.tags.navigation.constants.AssetTagsNavigationPortletKeys;

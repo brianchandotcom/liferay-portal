@@ -15,7 +15,6 @@
 package com.liferay.layout.content.page.editor.web.internal.display.context;
 
 import com.liferay.asset.list.service.AssetListEntryLocalService;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -130,13 +129,13 @@ public class ContentPageEditorDisplayContextProvider {
 		}
 
 		return new ContentPageEditorLayoutPageTemplateDisplayContext(
-			_ddmStructureLocalService, _getContentPageEditorSidebarPanels(),
-			_fragmentCollectionManager, _fragmentEntryLinkManager,
-			_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
-			_frontendTokenDefinitionRegistry, httpServletRequest,
-			_infoItemServiceRegistry, _infoSearchClassMapperRegistry,
-			_itemSelector, _jsonFactory, _language, _layoutLocalService,
-			_layoutSetLocalService, _layoutPageTemplateEntryLocalService,
+			_getContentPageEditorSidebarPanels(), _fragmentCollectionManager,
+			_fragmentEntryLinkManager, _fragmentEntryLinkLocalService,
+			_fragmentEntryLocalService, _frontendTokenDefinitionRegistry,
+			httpServletRequest, _infoItemServiceRegistry,
+			_infoSearchClassMapperRegistry, _itemSelector, _jsonFactory,
+			_language, _layoutLocalService, _layoutSetLocalService,
+			_layoutPageTemplateEntryLocalService,
 			_layoutPageTemplateEntryService, _layoutPermission,
 			_pageEditorConfiguration, pageIsDisplayPage, _portal,
 			portletRequest, _portletURLFactory, renderResponse,
@@ -171,9 +170,6 @@ public class ContentPageEditorDisplayContextProvider {
 
 	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;
-
-	@Reference
-	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private FragmentCollectionManager _fragmentCollectionManager;

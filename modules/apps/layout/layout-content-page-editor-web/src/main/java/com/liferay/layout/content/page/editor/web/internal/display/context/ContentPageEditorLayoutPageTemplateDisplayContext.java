@@ -17,8 +17,6 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -85,7 +83,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 	extends ContentPageEditorDisplayContext {
 
 	public ContentPageEditorLayoutPageTemplateDisplayContext(
-		DDMStructureLocalService ddmStructureLocalService,
 		List<ContentPageEditorSidebarPanel> contentPageEditorSidebarPanels,
 		FragmentCollectionManager fragmentCollectionManager,
 		FragmentEntryLinkManager fragmentEntryLinkManager,
@@ -128,7 +125,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			staging, stagingGroupHelper, styleBookEntryLocalService,
 			userLocalService, workflowDefinitionLinkLocalService);
 
-		_ddmStructureLocalService = ddmStructureLocalService;
 		_itemSelector = itemSelector;
 		_pageIsDisplayPage = pageIsDisplayPage;
 	}
@@ -396,7 +392,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 		).build();
 	}
 
-	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final ItemSelector _itemSelector;
 	private LayoutPageTemplateEntry _layoutPageTemplateEntry;
 	private final boolean _pageIsDisplayPage;

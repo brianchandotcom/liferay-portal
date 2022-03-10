@@ -71,6 +71,10 @@ definition {
 		Click.clickAtNotVisible(locator1 = "ACDXPSettings#AC_GENERIC_CHECKBOX");
 
 		Button.clickSubmitButton();
+
+		WaitForElementPresent(
+			key_textValue = "Welcome to Analytics Cloud",
+			locator1 = "ACUtils#GENERIC_TEXT");
 	}
 
 	macro openWorkspace {

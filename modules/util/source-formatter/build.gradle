@@ -33,7 +33,7 @@ dependencies {
 	compileInclude group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.nio", version: "1.0.0"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "2.0.0"
-	compileInclude group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.53"
+	compileInclude group: "com.liferay", name: "com.liferay.poshi.core", version: "1.0.54"
 
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.1.0"

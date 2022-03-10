@@ -13,28 +13,22 @@ import {useMutation} from '@apollo/client';
 import ClayForm from '@clayui/form';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useState} from 'react';
-import client from '../../../../apolloClient';
 import {Badge, Button} from '../../../components';
 import {useApplicationProvider} from '../../../context/AppPropertiesProvider';
 import {Liferay} from '../../../services/liferay';
 import {
 	addTeamMembersInvitation,
 	associateUserAccountWithAccountAndAccountRole,
-	getAccountRoles,
 } from '../../../services/liferay/graphql/queries';
 import {associateContactRoleNameByEmailByProject} from '../../../services/liferay/rest/raysource/LicenseKeys';
-import {ROLE_TYPES} from '../../../utils/constants';
+import {ROLE_TYPES, SLA_TYPES} from '../../../utils/constants';
 import getInitialInvite from '../../../utils/getInitialInvite';
+import getProjectRoles from '../../../utils/getProjectRoles';
 import Layout from '../Layout';
 import TeamMemberInputs from './TeamMemberInputs';
 
 const MAXIMUM_INVITES_COUNT = 10;
 const INITIAL_INVITES_COUNT = 1;
-
-const SLA = {
-	gold: 'Gold',
-	platinum: 'Platinum',
-};
 
 const InviteTeamMembersPage = ({
 	availableAdministratorAssets = 0,
@@ -72,61 +66,14 @@ const InviteTeamMembersPage = ({
 	const [showEmptyEmailError, setshowEmptyEmailError] = useState(false);
 
 	const projectHasSLAGoldPlatinum =
-		project?.slaCurrent?.includes(SLA.gold) ||
-		project?.slaCurrent?.includes(SLA.platinum);
-
-	const getCurrentRoleType = (roleKey) => {
-		const roleValues = Object.values(ROLE_TYPES);
-
-		return roleValues.find((roleType) => roleType.key === roleKey);
-	};
+		project?.slaCurrent?.includes(SLA_TYPES.gold) ||
+		project?.slaCurrent?.includes(SLA_TYPES.platinum);
 
 	useEffect(() => {
-		const isProjectPartner = project.partner;
-
 		const getRoles = async () => {
-			const {data} = await client.query({
-				query: getAccountRoles,
-				variables: {
-					accountId: project.id,
-				},
-			});
+			const roles = await getProjectRoles(project);
 
-			if (data) {
-				const roles = data.accountAccountRoles?.items?.reduce(
-					(rolesAccumulator, role) => {
-						let isValidRole = true;
-
-						const roleType = getCurrentRoleType(role.name);
-
-						if (roleType?.raysourceName) {
-							if (!projectHasSLAGoldPlatinum) {
-								isValidRole =
-									role.name !== ROLE_TYPES.requester.key;
-							}
-
-							if (!isProjectPartner) {
-								isValidRole =
-									role.name !==
-										ROLE_TYPES.partnerManager.key &&
-									role.name !== ROLE_TYPES.partnerMember.key;
-							}
-
-							if (isValidRole) {
-								rolesAccumulator.push({
-									...role,
-									key: roleType?.key,
-									name: roleType?.name,
-									raysourceName: roleType?.raysourceName,
-								});
-							}
-						}
-
-						return rolesAccumulator;
-					},
-					[]
-				);
-
+			if (roles) {
 				const accountMember = roles?.find(
 					({name}) => name === ROLE_TYPES.member.name
 				);
@@ -215,8 +162,7 @@ const InviteTeamMembersPage = ({
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 			setshowEmptyEmailError(false);
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -271,8 +217,7 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({

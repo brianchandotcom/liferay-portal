@@ -9,9 +9,9 @@
  * distribution rights of the Software.
  */
 
-export * from './apiBaseUrl';
-export * from './roleTypes';
-export * from './routeTypes';
-export * from './storageKeys';
-export * from './pageRouterTypes';
-export * from './slaTypes';
+const SLA_TYPES = {
+	gold: 'Gold',
+	platinum: 'Platinum',
+};
+
+export {SLA_TYPES};

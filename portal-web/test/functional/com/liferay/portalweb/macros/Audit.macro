@@ -41,6 +41,27 @@ definition {
 
 		Click(locator1 = "Icon#ADVANCED_SEARCH");
 
+		// Workaround for LPS-148998
+
+		while (IsElementPresent(locator1 = "Message#INFO")) {
+			Navigator.openURL();
+
+			ApplicationsMenu.gotoPortlet(
+				category = "Security",
+				panel = "Control Panel",
+				portlet = "Audit");
+
+			Click(locator1 = "Icon#ADVANCED_SEARCH");
+
+			Type(
+				locator1 = "AuditReports#ADVANCED_SEARCH_${reportFieldKey}_FIELD",
+				value1 = "${searchTerm}");
+
+			AssertClick(
+				locator1 = "Button#SEARCH",
+				value1 = "Search");
+		}
+
 		AssertTextEquals(
 			locator1 = "AuditReports#REPORTS_TABLE_${reportFieldKey}_1",
 			value1 = "${searchTerm}");

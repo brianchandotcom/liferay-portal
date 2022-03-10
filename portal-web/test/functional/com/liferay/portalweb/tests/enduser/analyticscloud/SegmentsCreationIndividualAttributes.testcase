@@ -516,6 +516,23 @@ definition {
 			ACDXPSettings.syncNewUserData(fieldNameList = "user custom field");
 		}
 
+		task ("Redefine the value of the custom field") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.gotoEditCP(userScreenName = "ac");
+
+			User.editUserInformation(
+				userCustomField = "VIP AC",
+				userCustomFieldLabel = "User Custom Field");
+		}
+
+		task ("Sync the Contact Data") {
+			ACDXPSettings.syncNewContactData();
+		}
+
 		task ("View the page as the new added user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "ac@liferay.com",
@@ -549,7 +566,7 @@ definition {
 
 			ACSegments.selectOperator(operator = "contains");
 
-			ACSegments.editTextCriterion(textInput = "VIP");
+			ACSegments.editTextCriterion(textInput = "VIP AC");
 		}
 
 		task ("View the user shown on the Preview mode") {

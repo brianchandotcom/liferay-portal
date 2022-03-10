@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -126,6 +127,24 @@ public class JournalArticleItemSelectorViewDisplayContext {
 
 		if (Validator.isNull(ddmStructureKey)) {
 			ddmStructureKey = _infoItemItemSelectorCriterion.getItemSubtype();
+
+			long ddmStructureId = ParamUtil.getLong(
+				_httpServletRequest, "ddmStructureId");
+
+			if (ddmStructureId == 0) {
+				ddmStructureId = GetterUtil.getLong(
+					_infoItemItemSelectorCriterion.getItemSubtype());
+			}
+
+			if (ddmStructureId > 0) {
+				DDMStructure ddmStructure =
+					DDMStructureLocalServiceUtil.fetchDDMStructure(
+						ddmStructureId);
+
+				if (ddmStructure != null) {
+					ddmStructureKey = ddmStructure.getStructureKey();
+				}
+			}
 		}
 
 		_ddmStructureKey = ddmStructureKey;
@@ -194,9 +213,7 @@ public class JournalArticleItemSelectorViewDisplayContext {
 			JournalArticleAssetRenderer.getClassPK(journalArticle));
 
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
-			journalArticle.getGroupId(),
-			PortalUtil.getClassNameId(JournalArticle.class),
-			journalArticle.getDDMStructureKey(), true);
+			journalArticle.getDDMStructureId());
 
 		return JSONUtil.put(
 			"assetEntryId", String.valueOf(assetEntry.getEntryId())

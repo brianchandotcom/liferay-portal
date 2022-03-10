@@ -280,13 +280,6 @@ public class ContentPageEditorLayoutPageTemplateDisplayContext
 			return StringPool.BLANK;
 		}
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
-			classTypeId);
-
-		if (ddmStructure != null) {
-			return ddmStructure.getStructureKey();
-		}
-
 		return String.valueOf(classTypeId);
 	}
 

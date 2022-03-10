@@ -199,7 +199,7 @@ public class JournalArticleAssetRendererFactory
 
 			if (ddmStructure != null) {
 				itemSelectorCriterion.setItemSubtype(
-					ddmStructure.getStructureKey());
+					String.valueOf(ddmStructure.getStructureId()));
 			}
 		}
 

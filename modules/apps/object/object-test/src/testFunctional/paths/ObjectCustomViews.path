@@ -77,7 +77,7 @@
 	</tr>
 	<tr>
 		<td>ADD_COLUMNS_COLUMN_LABEL</td>
-		<td>//div[@class="modal-body"]//span[@class="custom-control-label-text" and contains(text(),'${key_columnName}')]</td>
+		<td>//span[@class="custom-control-label-text" and contains(text(),'${key_columnName}')]</td>
 		<td></td>
 	</tr>
 </tbody>

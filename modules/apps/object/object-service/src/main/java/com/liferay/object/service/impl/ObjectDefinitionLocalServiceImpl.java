@@ -35,6 +35,7 @@ import com.liferay.object.internal.petra.sql.dsl.DynamicObjectDefinitionTable;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
@@ -294,6 +295,23 @@ public class ObjectDefinitionLocalServiceImpl
 
 		// TODO Deleting an object definition should delete related object
 		// relationships
+
+		for (ObjectRelationship objectRelationship :
+				_objectRelationshipLocalService.getObjectRelationships(
+					objectDefinition.getObjectDefinitionId())) {
+
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship);
+		}
+
+		for (ObjectRelationship objectRelationship :
+				_objectRelationshipLocalService.
+					getObjectRelationshipsByObjectDefinitionId2(
+						objectDefinition.getObjectDefinitionId())) {
+
+			_objectRelationshipLocalService.deleteObjectRelationship(
+				objectRelationship);
+		}
 
 		objectDefinitionPersistence.remove(objectDefinition);
 

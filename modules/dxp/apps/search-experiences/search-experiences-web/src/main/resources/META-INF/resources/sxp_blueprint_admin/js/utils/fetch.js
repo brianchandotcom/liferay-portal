@@ -14,8 +14,17 @@ import {fetch} from 'frontend-js-web';
 import {DEFAULT_ERROR} from './constants';
 import {openErrorToast} from './toasts';
 
+const DEFAULT_HEADERS = new Headers({
+	'Accept': 'application/json',
+	'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+	'Content-Type': 'application/json',
+});
+
 export function fetchData(url = '', parameters, onSuccess, onError) {
-	fetch(url, parameters)
+	fetch(url, {
+		headers: DEFAULT_HEADERS,
+		...parameters,
+	})
 		.then((response) => {
 			if (!response.ok) {
 				throw DEFAULT_ERROR;
@@ -66,9 +75,7 @@ export function fetchPreviewSearch(urlParameters, options) {
 	return fetch(
 		addParams('/o/search-experiences-rest/v1.0/search', urlParameters),
 		{
-			headers: new Headers({
-				'Content-Type': 'application/json',
-			}),
+			headers: DEFAULT_HEADERS,
 			method: 'POST',
 			...options,
 		}

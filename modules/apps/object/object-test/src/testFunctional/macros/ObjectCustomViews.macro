@@ -106,6 +106,12 @@ definition {
 		Click(locator1 = "ObjectCustomViews#OBJECT_VIEWS_TAB");
 	}
 
+	macro markViewAsDefault {
+		Click(locator1 = "ObjectAdmin#LAYOUT_INFO_TAB");
+
+		Click.clickAtNotVisible(locator1 = "ObjectCustomViews#MARK_AS_DEFAULT");
+	}
+
 	macro saveColumnsModal {
 		Click(
 			key_tab = "Save",
@@ -130,15 +136,9 @@ definition {
 
 	macro viewOrdersOfTheColumns {
 		AssertVisible(
-			key_position = "${position}",
 			key_colunmName1 = "${colunmName}",
+			key_position = "${position}",
 			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION");
-	}
-
-	macro markViewAsDefault {
-		Click(locator1 = "ObjectAdmin#LAYOUT_INFO_TAB");
-		
-		Click.clickAtNotVisible(locator1 = "ObjectCustomViews#MARK_AS_DEFAULT");
 	}
 
 }

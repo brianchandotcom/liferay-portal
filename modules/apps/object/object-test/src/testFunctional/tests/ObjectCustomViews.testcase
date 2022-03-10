@@ -224,7 +224,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		for (var selectColumns : list "Author,Creation Date,Modified Date"){
+		for (var selectColumns : list "Author,Creation Date,Modified Date") {
 			Click.clickAtNotVisible(
 				key_columnOption = "${selectColumns}",
 				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
@@ -233,36 +233,36 @@ definition {
 		ObjectCustomViews.saveColumnsModal();
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			position = "1",
-			colunmName = "Author");
+			colunmName = "Author",
+			position = "1");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			position = "2",
-			colunmName = "Creation Date");
+			colunmName = "Creation Date",
+			position = "2");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			position = "3",
-			colunmName = "Modified Date");
-		
+			colunmName = "Modified Date",
+			position = "3");
+
 		DragAndDrop.javaScriptDragAndDropToUp(
-			key_position = "1",
-			key_colunmName1 = "Author",
 			key_columnName = "Creation Date",
+			key_colunmName1 = "Author",
+			key_position = "1",
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT",
 			locator2 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION",
 			value1 = "");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			position = "1",
-			colunmName = "Creation Date");
+			colunmName = "Creation Date",
+			position = "1");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			position = "2",
-			colunmName = "Author");
+			colunmName = "Author",
+			position = "2");
 
 		ObjectCustomViews.viewOrdersOfTheColumns(
-			position = "3",
-			colunmName = "Modified Date");
+			colunmName = "Modified Date",
+			position = "3");
 	}
 
 	@description = "LPS-135394 - Verify the Name is required when creating a View"
@@ -465,17 +465,70 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject147770");
 
 		ObjectPortlet.viewEntry(entry = "Entry Test");
-
 	}
 
 	@description = "LPS-144902 - Verify if selected Columns on custom view are presented correctly during visualization"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewOnlySelectedColumns {
 		property portal.acceptance = "true";
 
-		// TODO LPS-147771 CanViewOnlySelectedColumns pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147771",
+			objectName = "CustomObject147771",
+			pluralLabelName = "Custom Objects 147771");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject147771");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147771");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		for (var columnOption : list "Author,Creation Date,Custom Field") {
+			Click.clickAtNotVisible(
+				key_columnOption = "${columnOption}",
+				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+		}
+
+		ObjectCustomViews.saveColumnsModal();
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject147771");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject147771",
+			value = "Entry Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject147771");
+
+		for (var columnName : list "Author,Created Date,Custom Field") {
+			ObjectPortlet.assertEntryColumnPresent(column = "${columnName}");
+		}
+
+		for (var columnName : list "Modified Date,Workflow Status,ID") {
+			ObjectPortlet.assertEntryColumnNotPresent(column = "${columnName}");
+		}
 	}
 
 	@description = "LPS-144902 - Verify that custom view title is presented correctly"

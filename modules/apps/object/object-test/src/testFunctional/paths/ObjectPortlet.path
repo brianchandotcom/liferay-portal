@@ -47,7 +47,7 @@
 	</tr>
 	<tr>
 		<td>ENTRY_COLUMN</td>
-		<td>//div[contains(@class,'dnd-th')]//div[contains(text(),'${key_column}')]</td>
+		<td>//div[contains(@class,'dnd-th')]//*[contains(text(),'${key_column}')]</td>
 		<td></td>
 	</tr>
 	<tr>

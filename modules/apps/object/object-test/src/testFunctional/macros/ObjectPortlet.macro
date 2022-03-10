@@ -44,6 +44,12 @@ definition {
 			locator1 = "ObjectPortlet#ENTRY_COLUMN");
 	}
 
+	macro assertEntryColumnPresent {
+		AssertElementPresent(
+			key_column = "${column}",
+			locator1 = "ObjectPortlet#ENTRY_COLUMN");
+	}
+
 	macro assertEntryDetailsCheckedPresent {
 		AssertChecked.assertCheckedNotVisible(locator1 = "//input[@type='checkbox']");
 	}

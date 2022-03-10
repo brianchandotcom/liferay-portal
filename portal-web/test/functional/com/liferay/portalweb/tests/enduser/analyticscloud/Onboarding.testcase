@@ -55,7 +55,7 @@ definition {
 			}
 
 			task ("Check fix pack versions") {
-				for (var key_version : list "${versionList}") {
+				for (var key_version : list "${supportedFPVersionList}") {
 					AssertElementPresent(locator1 = "ACSettings#FIX_PACK_DROPDOWN");
 				}
 			}
@@ -115,7 +115,7 @@ definition {
 			}
 
 			task ("Check fix pack versions") {
-				for (var key_version : list "${versionList}") {
+				for (var key_version : list "${supportedFPVersionList}") {
 					AssertElementPresent(locator1 = "ACSettings#FIX_PACK_DROPDOWN");
 				}
 			}

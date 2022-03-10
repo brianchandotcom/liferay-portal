@@ -586,7 +586,7 @@ definition {
 
 			return "${scopeList}";
 		}
-		else{
+		else {
 			var errorType = JSONCurlUtil.post("${curl}", "$['error']");
 
 			echo("## * No access token is returned due to ${errorType}");

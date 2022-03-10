@@ -178,7 +178,7 @@ definition {
 		var statusSyncSite = ListUtil.newListFromString("Active,Configured,Unconfigured");
 		var statusSyncContact = ListUtil.newListFromString("Active,Configured,Configured");
 		var statusDisconnect = ListUtil.newListFromString("Disconnected,Unconfigured,Unconfigured");
-		var size = ListUtil.size("${list1}");
+		var size = ListUtil.size("${sectionTitleList}");
 
 		task ("Connect DXP to AC, create a property, and sync the site only") {
 			ACDXPSettings.goToInstanceSettingsAC();

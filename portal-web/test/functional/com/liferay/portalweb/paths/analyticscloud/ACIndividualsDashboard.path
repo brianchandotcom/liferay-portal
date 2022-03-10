@@ -104,7 +104,7 @@
 </tr>
 <tr>
 	<td>TOTAL_ACTIVITIES</td>
-	<td>//a[@class='text-truncate'and text()='${key_userName}']/ancestor::td/following-sibling::td[text()='${key_activitiesNumber}']</td>
+	<td>//a[@class='text-truncate'and text()='${key_userName}']/ancestor::td/following-sibling::td[@class='table-column-text-end']</td>
 	<td></td>
 </tr>
 <tr>

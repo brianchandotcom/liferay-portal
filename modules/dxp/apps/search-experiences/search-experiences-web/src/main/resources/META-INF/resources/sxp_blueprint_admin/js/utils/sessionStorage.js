@@ -27,7 +27,7 @@ export const SESSION_IDS = {
  * Toggles the state if `state` is undefined.
  * @param {String} state Either 'open' or 'closed'.
  */
-export function setItemAddSXPElementSidebar(state) {
+export function setStorageAddSXPElementSidebar(state) {
 	if (!isDefined(state)) {
 		sessionStorage.setItem(
 			SESSION_IDS.ADD_SXP_ELEMENT_SIDEBAR,

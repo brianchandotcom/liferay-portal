@@ -32,7 +32,7 @@ import {DEFAULT_ERROR, SIDEBARS} from '../utils/constants';
 import {fetchData, fetchPreviewSearch} from '../utils/fetch';
 import {INPUT_TYPES} from '../utils/inputTypes';
 import {getLocalizedText} from '../utils/language';
-import {setItemAddSXPElementSidebar} from '../utils/sessionStorage';
+import {setStorageAddSXPElementSidebar} from '../utils/sessionStorage';
 import {TEST_IDS} from '../utils/testIds';
 import {
 	openErrorToast,
@@ -419,7 +419,7 @@ function EditSXPBlueprintForm({
 			)
 		);
 
-		setItemAddSXPElementSidebar('open');
+		setStorageAddSXPElementSidebar('open');
 	}, []); //eslint-disable-line
 
 	/**
@@ -762,7 +762,7 @@ function EditSXPBlueprintForm({
 
 	const _handleToggleSidebar = (type) => () => {
 		if (openSidebar === SIDEBARS.ADD_SXP_ELEMENT) {
-			setItemAddSXPElementSidebar('closed');
+			setStorageAddSXPElementSidebar('closed');
 		}
 
 		setOpenSidebar(openSidebar === type ? '' : type);

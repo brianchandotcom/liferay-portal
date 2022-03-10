@@ -35,7 +35,7 @@ import {
 } from '../../utils/data';
 import {addParams, fetchData} from '../../utils/fetch';
 import {getLocalizedText} from '../../utils/language';
-import {setItemAddSXPElementSidebar} from '../../utils/sessionStorage';
+import {setStorageAddSXPElementSidebar} from '../../utils/sessionStorage';
 
 const DEFAULT_CATEGORY = 'other';
 const DEFAULT_EXPANDED_LIST = ['match'];
@@ -321,7 +321,7 @@ function AddSXPElementSidebar({
 	}
 
 	const _handleClose = () => {
-		setItemAddSXPElementSidebar('closed');
+		setStorageAddSXPElementSidebar('closed');
 
 		onClose();
 	};

@@ -18,7 +18,7 @@ import React, {useState} from 'react';
 import JSONSXPElement from '../../shared/JSONSXPElement';
 import SXPElement from '../../shared/sxp_element/index';
 import {SXP_ELEMENT_PREFIX} from '../../utils/constants';
-import {setItemAddSXPElementSidebar} from '../../utils/sessionStorage';
+import {setStorageAddSXPElementSidebar} from '../../utils/sessionStorage';
 import {isCustomJSONSXPElement} from '../../utils/utils';
 
 function QuerySXPElements({
@@ -39,7 +39,7 @@ function QuerySXPElements({
 	const [collapseAll, setCollapseAll] = useState(false);
 
 	const _handleClickAddQueryElement = () => {
-		setItemAddSXPElementSidebar();
+		setStorageAddSXPElementSidebar();
 
 		onChangeAddSXPElementVisibility();
 	};

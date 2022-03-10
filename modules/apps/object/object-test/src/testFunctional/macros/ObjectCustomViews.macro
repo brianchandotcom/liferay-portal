@@ -128,4 +128,11 @@ definition {
 			value1 = "${colunmName}");
 	}
 
+	macro viewOrdersOfTheColumns {
+		AssertVisible(
+			key_position = "${position}",
+			key_colunmName1 = "${colunmName}",
+			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION");
+	}
+
 }

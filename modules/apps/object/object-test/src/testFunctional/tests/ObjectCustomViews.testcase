@@ -201,13 +201,68 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to drag the columns"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDragColumns {
 		property portal.acceptance = "true";
 
-		// TODO LPS-147769 CanDragColumns pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147769",
+			objectName = "CustomObject147769",
+			pluralLabelName = "Custom Objects 147769");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147769");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		for (var selectColumns : list "Author,Creation Date,Modified Date"){
+			Click.clickAtNotVisible(
+				key_columnOption = "${selectColumns}",
+				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+		}
+
+		ObjectCustomViews.saveColumnsModal();
+
+		ObjectCustomViews.viewOrdersOfTheColumns(
+			position = "1",
+			colunmName = "Author");
+
+		ObjectCustomViews.viewOrdersOfTheColumns(
+			position = "2",
+			colunmName = "Creation Date");
+
+		ObjectCustomViews.viewOrdersOfTheColumns(
+			position = "3",
+			colunmName = "Modified Date");
+		
+		DragAndDrop.javaScriptDragAndDropToUp(
+			key_position = "1",
+			key_colunmName1 = "Author",
+			key_columnName = "Creation Date",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT",
+			locator2 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION",
+			value1 = "");
+
+		ObjectCustomViews.viewOrdersOfTheColumns(
+			position = "1",
+			colunmName = "Creation Date");
+
+		ObjectCustomViews.viewOrdersOfTheColumns(
+			position = "2",
+			colunmName = "Author");
+
+		ObjectCustomViews.viewOrdersOfTheColumns(
+			position = "3",
+			colunmName = "Modified Date");
 	}
 
 	@description = "LPS-135394 - Verify the Name is required when creating a View"

@@ -80,6 +80,11 @@
 		<td>//div[@class="modal-body"]//span[@class="custom-control-label-text" and contains(text(),'${key_columnName}')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_LIST_COLUMNS_BY_POSITION</td>
+		<td>//ul[@class='list-group show-quick-actions-on-hover']//li[@class='lfr-object__object-custom-view-builder-item list-group-item list-group-item-flex'][${key_position}]//p[contains(text(),'${key_colunmName1}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

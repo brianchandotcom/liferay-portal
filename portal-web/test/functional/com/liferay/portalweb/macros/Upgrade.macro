@@ -1669,7 +1669,7 @@ definition {
 
 		Translations.importTranslation(
 			dependencyfile = "true",
-			fileName = "WebContentTitle-en_US-de_DE.xlf",
+			fileName = "WebContentTitle-en_US.zip",
 			webContentTitle = "WebContentTitle");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WebContentTitle");

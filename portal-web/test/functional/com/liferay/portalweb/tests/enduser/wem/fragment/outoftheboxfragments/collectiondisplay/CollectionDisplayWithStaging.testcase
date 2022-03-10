@@ -46,13 +46,12 @@ definition {
 		}
 
 		task ("Add a dynamic collection for Web Content Article and All Subtypes") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
-
-			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
-
-			AssetListsAdmin.configureItemTypeInDynamicCollection(
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name (Staging)",
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article");
+				itemType = "Web Content Article",
+				site = "false",
+				title = "Dynamic Collection");
 		}
 
 		task ("Add a Collection Display to a content page") {
@@ -388,13 +387,12 @@ definition {
 		}
 
 		task ("Add a dynamic collection for Web Content Article and All Subtypes") {
-			AssetListsAdmin.openAssetListsAdmin(siteURLKey = "test-site-name-staging");
-
-			AssetListsAdmin.addDynamicSelection(assetListTitle = "Dynamic Collection");
-
-			AssetListsAdmin.configureItemTypeInDynamicCollection(
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name (Staging)",
 				itemSubtype = "All Subtypes",
-				itemType = "Web Content Article");
+				itemType = "Web Content Article",
+				site = "false",
+				title = "Dynamic Collection");
 		}
 
 		task ("Add a Collection Display to a content page") {

@@ -40,9 +40,11 @@ definition {
 		}
 
 		task ("When the user maps only specific fields and imports the file") {
-			ImportExport.mapImport(fieldMappings = "name:name,type:type,externalReferenceCode:externalReferenceCode");
+			ImportExport.mapImport(fieldMappings = "name:Account Name,type:Account Type,externalReferenceCode:External Reference Code");
 
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 		}
 
 		task ("Then only those fields should be imported") {
@@ -101,7 +103,9 @@ definition {
 
 			ImportExport.mapImport(fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code");
 
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 		}
 
 		task ("Then the accounts should be imported successfully") {
@@ -168,7 +172,9 @@ definition {
 		}
 
 		task ("When the user imports the file") {
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 		}
 
 		task ("Then the accounts in the file should be imported successfully") {
@@ -227,7 +233,9 @@ definition {
 
 			ImportExport.mapImport(fieldMappings = "name:name,type:type,description:description,externalReferenceCode:externalReferenceCode");
 
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 		}
 
 		task ("Then the accounts should be imported successfully") {
@@ -286,7 +294,9 @@ definition {
 
 			ImportExport.mapImport(fieldMappings = "name:name,type:type,description:description,externalReferenceCode:externalReferenceCode");
 
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 		}
 
 		task ("Then the accounts should be imported successfully") {

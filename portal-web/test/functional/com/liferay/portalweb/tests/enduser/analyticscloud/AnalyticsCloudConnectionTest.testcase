@@ -218,7 +218,7 @@ definition {
 			var i = "0";
 
 			while ("${i}" != "${size}") {
-				var section = ListUtil.get("${list1}", "${i}");
+				var section = ListUtil.get("${sectionTitleList}", "${i}");
 				var status = ListUtil.get("${statusSyncSite}", "${i}");
 
 				ACSettings.assertDataSourceStatus(
@@ -256,7 +256,7 @@ definition {
 			var i = "0";
 
 			while ("${i}" != "${size}") {
-				var section = ListUtil.get("${list1}", "${i}");
+				var section = ListUtil.get("${sectionTitleList}", "${i}");
 				var status = ListUtil.get("${statusSyncContact}", "${i}");
 
 				ACSettings.assertDataSourceStatus(
@@ -274,7 +274,7 @@ definition {
 			var i = "0";
 
 			while ("${i}" != "${size}") {
-				var section = ListUtil.get("${list1}", "${i}");
+				var section = ListUtil.get("${sectionTitleList}", "${i}");
 				var status = ListUtil.get("${statusDisconnect}", "${i}");
 
 				ACSettings.assertDataSourceStatus(

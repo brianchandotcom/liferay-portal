@@ -152,6 +152,8 @@ definition {
 	@description = "Verify that the user can navigate to the next page."
 	@priority = "3"
 	test NavigateToTheNextPage {
+		property portal.upstream = "quarantine";
+
 		Pagination.changePagination(itemsPerPage = "4");
 
 		KaleoFormsAdmin.viewNextFieldSetPage();

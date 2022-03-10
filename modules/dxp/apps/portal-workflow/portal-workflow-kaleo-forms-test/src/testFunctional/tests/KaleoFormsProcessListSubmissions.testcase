@@ -244,6 +244,8 @@ definition {
 	@description = "Verify that user can nagivate through pages."
 	@priority = "3"
 	test CanNavigateThroughPages {
+		property portal.upstream = "quarantine";
+
 		for (var kfProcessName : list "1,2,3,4") {
 			KaleoFormsAdmin.submitNewProcess(kfProcessName = "Kaleo Forms Process");
 

@@ -67,7 +67,7 @@ for (int i = startCount; i < numCount; i++) {
 	titleMap.put(locale, "Article_" + i);
 
 try {
-JournalArticleLocalServiceUtil.addArticle(userId, groupId, folderId,
+JournalArticleLocalServiceUtil.addArticle(null, userId, groupId, folderId,
 				titleMap, descriptionMap,
 				content, "BASIC-WEB-CONTENT", "BASIC-WEB-CONTENT",
 				serviceContext)

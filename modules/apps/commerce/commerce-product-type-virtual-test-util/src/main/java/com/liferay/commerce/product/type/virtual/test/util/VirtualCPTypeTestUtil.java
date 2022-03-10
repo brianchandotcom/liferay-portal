@@ -104,7 +104,7 @@ public class VirtualCPTypeTestUtil {
 			PortalUtil.getClassNameId(JournalArticle.class));
 
 		return JournalArticleLocalServiceUtil.addArticle(
-			serviceContext.getUserId(), groupId,
+			null, serviceContext.getUserId(), groupId,
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), content,

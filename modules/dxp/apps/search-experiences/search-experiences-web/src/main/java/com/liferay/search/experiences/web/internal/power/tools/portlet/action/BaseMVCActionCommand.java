@@ -55,7 +55,7 @@ public abstract class BaseMVCActionCommand
 		serviceContext.setAssetTagNames(assetTagNames);
 
 		return journalArticleLocalService.addArticle(
-			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), 0,
+			null, themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), 0,
 			HashMapBuilder.put(
 				themeDisplay.getLocale(), title
 			).build(),

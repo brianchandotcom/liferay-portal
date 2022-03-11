@@ -84,8 +84,12 @@ definition {
 			textIcon = "english-United States");
 	}
 
-	macro toggleDisplayTemplate {
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+	macro viewCurrentLanguage {
+		AssertElementPresent(
+			key_locale = "${locale}",
+			key_portletName = "LanguagePortlet",
+			locator1 = "Language#DROPDOWN_CURRENT_LANGUAGE");
+	}
 
 		Panel.expandPanel(panel = "Languages");
 

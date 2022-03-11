@@ -29,9 +29,7 @@ definition {
 		PortletEntry.save();
 	}
 
-	macro moveLanguagesToAvailable {
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
+	macro configureLanguages {
 		Panel.expandPanel(panel = "Languages");
 
 		while (IsElementPresent(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT")) {
@@ -39,10 +37,8 @@ definition {
 
 			Click(locator1 = "Button#MOVE_CURRENT_TO_AVAILABLE");
 		}
-	}
 
-	macro moveLanguagesToCurrent {
-		for (var currentLanguage : list "${currentLanguages}") {
+		for (var currentLanguage : list "${currentLanguageList}") {
 			var key_currentLanguage = "${currentLanguage}";
 
 			Select(
@@ -57,8 +53,6 @@ definition {
 		}
 
 		PortletEntry.save();
-
-		SelectFrame(value1 = "relative=top");
 	}
 
 	macro selectLanguagePG {

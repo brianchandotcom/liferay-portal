@@ -1269,7 +1269,6 @@ definition {
 	}
 
 	@description = "This test adds more than 3 Owned Roles to an account and asserts correct pagination in the Roles list."
-	@ignore = "true"
 	@priority = "3"
 	test CanChangePaginationInRolesList {
 		JSONAccountEntry.addAccountEntry(

@@ -13,8 +13,11 @@
  */
 
 export default function ({namespace}) {
-	const addButton = document.getElementById(`${namespace}addButton`);
-	const loading = addButton.querySelector('.loading-animation');
+	const loading = document.querySelector('.add-group-loading');
+	const content = document.querySelector(
+		'.add-group-form .add-group-content'
+	);
+	const footer = document.querySelector('.add-group-form .sheet-footer');
 
 	const form = document.getElementById(`${namespace}fm`);
 
@@ -22,12 +25,10 @@ export default function ({namespace}) {
 		event.preventDefault();
 		event.stopPropagation();
 
-		if (addButton.disabled) {
-			return;
-		}
-
-		addButton.disabled = true;
+		content.classList.toggle('d-none');
+		loading.classList.add('d-flex');
 		loading.classList.remove('d-none');
+		footer.classList.toggle('d-none');
 
 		const formData = new FormData(form);
 
@@ -60,8 +61,10 @@ export default function ({namespace}) {
 						type: 'danger',
 					});
 
-					addButton.disabled = false;
+					content.classList.toggle('d-none');
+					loading.classList.remove('d-flex');
 					loading.classList.add('d-none');
+					footer.classList.toggle('d-none');
 				}
 			});
 	});

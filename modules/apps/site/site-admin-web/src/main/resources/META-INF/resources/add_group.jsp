@@ -62,17 +62,19 @@ AddGroupDisplayContext addGroupDisplayContext = (AddGroupDisplayContext)request.
 			</liferay-frontend:edit-form-body>
 		</div>
 
+		<div class="add-group-loading align-items-center d-none flex-column justify-content-center">
+			<span aria-hidden="true" class="loading-animation mb-4"></span>
+
+			<p class="text-3 text-center text-secondary"><liferay-ui:message key="the-creation-of-the-site-may-take-some-minutes" /></p>
+		</div>
 
 		<liferay-frontend:edit-form-footer>
 			<clay:button
 				cssClass="d-flex"
 				id='<%= liferayPortletResponse.getNamespace() + "addButton" %>'
+				label="add"
 				type="submit"
-			>
-				<liferay-ui:message key="add" />
-
-				<span aria-hidden="true" class="d-none loading-animation loading-animation-sm ml-2 mt-1"></span>
-			</clay:button>
+			/>
 
 			<clay:button
 				cssClass="btn-cancel"

@@ -222,11 +222,7 @@ public class BulkLayoutConverterTest {
 	}
 
 	private void _addLayouts() throws Exception {
-		_contentLayout = LayoutTestUtil.addTypePortletLayout(_group);
-
-		_contentLayout.setType(LayoutConstants.TYPE_CONTENT);
-
-		_contentLayout = _layoutLocalService.updateLayout(_contentLayout);
+		_contentLayout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_corruptedLayout = LayoutTestUtil.addTypePortletLayout(_group);
 

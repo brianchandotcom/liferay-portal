@@ -63,7 +63,7 @@ public class LayoutModelListenerTest {
 	public void testRelatedSegmentsExperiencesAreRemovedAfterRemovingLayout()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_segmentsExperienceLocalService.addSegmentsExperience(
 			SegmentsEntryConstants.ID_DEFAULT, _classNameId, layout.getPlid(),

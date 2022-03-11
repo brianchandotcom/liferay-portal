@@ -217,7 +217,9 @@ public class AddFormInstanceRecordMVCCommandHelper {
 			stream = entrySet.stream();
 
 		return stream.filter(
-			result -> !MapUtil.getBoolean(result.getValue(), "visible", true)
+			result ->
+				MapUtil.getBoolean(result.getValue(), "readOnly") ||
+				!MapUtil.getBoolean(result.getValue(), "visible", true)
 		).map(
 			result -> result.getKey()
 		).map(

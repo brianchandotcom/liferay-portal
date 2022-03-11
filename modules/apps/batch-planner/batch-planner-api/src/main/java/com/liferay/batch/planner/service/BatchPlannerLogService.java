@@ -69,8 +69,22 @@ public interface BatchPlannerLogService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
+			long companyId, boolean export, int start, int end,
+			OrderByComparator<BatchPlannerLog> orderByComparator,
+			String searchByField, String searchByKeyword)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
 			long companyId, int start, int end,
 			OrderByComparator<BatchPlannerLog> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
+			long companyId, int start, int end,
+			OrderByComparator<BatchPlannerLog> orderByComparator,
+			String searchByField, String searchByKeyword)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -79,6 +93,17 @@ public interface BatchPlannerLogService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyBatchPlannerLogsCount(long companyId, boolean export)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyBatchPlannerLogsCount(
+			long companyId, boolean export, String searchByField,
+			String searchByKeyword)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyBatchPlannerLogsCount(
+			long companyId, String searchByField, String searchByKeyword)
 		throws PortalException;
 
 	/**

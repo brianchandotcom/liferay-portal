@@ -36,11 +36,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "batch.engine.task.item.delegate.name=sku-monthly-quantity-forecast",
+	property = "batch.engine.task.item.delegate.name=" + SkuForecastBatchEngineTaskItemDelegate.KEY,
 	service = BatchEngineTaskItemDelegate.class
 )
 public class SkuForecastBatchEngineTaskItemDelegate
 	extends BaseBatchEngineTaskItemDelegate<SkuForecast> {
+
+	public static final String KEY = "sku-monthly-quantity-forecast";
 
 	@Override
 	public void createItem(

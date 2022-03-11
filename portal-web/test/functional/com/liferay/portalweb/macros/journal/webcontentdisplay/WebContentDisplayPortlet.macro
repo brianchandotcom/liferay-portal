@@ -599,7 +599,7 @@ definition {
 		}
 	}
 
-	macro viewNoEditWC {
+	macro viewCannotEditWC {
 		if (IsElementPresent(key_webContentTitle = "${webContentTitle}", locator1 = "WCD#ARTICLE_ELLIPSIS_ICON")) {
 			WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = "${webContentTitle}");
 

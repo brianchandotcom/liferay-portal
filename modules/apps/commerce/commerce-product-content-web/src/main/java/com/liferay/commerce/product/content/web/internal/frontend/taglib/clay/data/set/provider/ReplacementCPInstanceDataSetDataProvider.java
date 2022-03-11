@@ -14,6 +14,10 @@
 
 package com.liferay.commerce.product.content.web.internal.frontend.taglib.clay.data.set.provider;
 
+import com.liferay.commerce.context.CommerceContext;
+import com.liferay.commerce.context.CommerceContextFactory;
+import com.liferay.commerce.frontend.model.PriceModel;
+import com.liferay.commerce.frontend.util.ProductHelper;
 import com.liferay.commerce.product.catalog.CPSku;
 import com.liferay.commerce.product.content.web.internal.frontend.constants.CPContentDataSetConstants;
 import com.liferay.commerce.product.content.web.internal.model.ReplacementSku;
@@ -24,6 +28,7 @@ import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -33,6 +38,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -56,9 +62,22 @@ public class ReplacementCPInstanceDataSetDataProvider
 			Pagination pagination, Sort sort)
 		throws PortalException {
 
+		long commerceAccountId = ParamUtil.getLong(
+			httpServletRequest, "commerceAccountId");
+		long commerceChannelGroupId = ParamUtil.getLong(
+			httpServletRequest, "commerceChannelGroupId");
+		long commerceOrderId = ParamUtil.getLong(
+			httpServletRequest, "commerceOrderId");
 		String cpInstanceUuid = ParamUtil.getString(
 			httpServletRequest, "cpInstanceUuid");
 		long cProductId = ParamUtil.getLong(httpServletRequest, "cProductId");
+
+		CommerceContext commerceContext = _commerceContextFactory.create(
+			_portal.getCompanyId(httpServletRequest), commerceChannelGroupId,
+			_portal.getUserId(httpServletRequest), commerceOrderId,
+			commerceAccountId);
+
+		Locale locale = _portal.getLocale(httpServletRequest);
 
 		return TransformUtil.transform(
 			_getReplacementCPSkus(cpInstanceUuid, cProductId),
@@ -69,10 +88,11 @@ public class ReplacementCPInstanceDataSetDataProvider
 				CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 				return new ReplacementSku(
-					cpDefinition.getName(
-						LocaleUtil.toLanguageId(
-							_portal.getLocale(httpServletRequest))),
-					null, cpInstance.getCPInstanceId(), cpInstance.getSku());
+					cpDefinition.getName(LocaleUtil.toLanguageId(locale)),
+					_getPriceModel(
+						commerceContext, cpDefinition.getCPDefinitionId(),
+						cpInstance.getCPInstanceId(), locale),
+					cpInstance.getCPInstanceId(), cpInstance.getSku());
 			});
 	}
 
@@ -88,6 +108,20 @@ public class ReplacementCPInstanceDataSetDataProvider
 		List<CPSku> cpSkus = _getReplacementCPSkus(cpInstanceUuid, cProductId);
 
 		return cpSkus.size();
+	}
+
+	private PriceModel _getPriceModel(
+			CommerceContext commerceContext, long cpDefinitionId,
+			long cpInstanceId, Locale locale)
+		throws PortalException {
+
+		if (cpInstanceId > 0) {
+			return _productHelper.getPriceModel(
+				cpInstanceId, 1, commerceContext, StringPool.BLANK, locale);
+		}
+
+		return _productHelper.getMinPrice(
+			cpDefinitionId, commerceContext, locale);
 	}
 
 	private List<CPSku> _getReplacementCPSkus(
@@ -116,6 +150,9 @@ public class ReplacementCPInstanceDataSetDataProvider
 	}
 
 	@Reference
+	private CommerceContextFactory _commerceContextFactory;
+
+	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
 
 	@Reference
@@ -123,5 +160,8 @@ public class ReplacementCPInstanceDataSetDataProvider
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private ProductHelper _productHelper;
 
 }

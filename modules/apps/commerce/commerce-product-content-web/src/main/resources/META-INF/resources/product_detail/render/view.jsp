@@ -17,6 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
+
+CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+CommerceOrder commerceOrder = commerceContext.getCommerceOrder();
+
 CPContentHelper cpContentHelper = (CPContentHelper)request.getAttribute(CPContentWebKeys.CP_CONTENT_HELPER);
 
 CPCatalogEntry cpCatalogEntry = cpContentHelper.getCPCatalogEntry(request);
@@ -303,6 +308,12 @@ List<CPOptionCategory> cpOptionCategories = cpContentHelper.getCPOptionCategorie
 		<clay:data-set-display
 			contextParams='<%=
 				HashMapBuilder.<String, String>put(
+					"commerceAccountId", (commerceAccount == null) ? "0" : String.valueOf(commerceAccount.getCommerceAccountId())
+				).put(
+					"commerceChannelGroupId", String.valueOf(commerceContext.getCommerceChannelGroupId())
+				).put(
+					"commerceOrderId", (commerceOrder == null) ? "0" : String.valueOf(commerceOrder.getCommerceOrderId())
+				).put(
 					"cpInstanceUuid", cpSku.getCPInstanceUuid()
 				).put(
 					"cProductId", String.valueOf(cpCatalogEntry.getCProductId())

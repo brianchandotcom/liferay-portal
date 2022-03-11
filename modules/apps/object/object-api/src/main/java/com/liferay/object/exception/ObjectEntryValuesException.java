@@ -30,33 +30,33 @@ public class ObjectEntryValuesException extends PortalException {
 
 	}
 
-	public static class IntegerSizeExceeded extends ObjectEntryValuesException {
+	public static class ExceedsIntegerSize extends ObjectEntryValuesException {
 
-		public IntegerSizeExceeded() {
+		public ExceedsIntegerSize() {
 			super("Object entry value exceeds integer field allowed size");
 		}
 
 	}
 
-	public static class LongMaxSizeExceeded extends ObjectEntryValuesException {
+	public static class ExceedsLongMaxSize extends ObjectEntryValuesException {
 
-		public LongMaxSizeExceeded() {
+		public ExceedsLongMaxSize() {
 			super("Object entry value exceeds maximum long field allowed size");
 		}
 
 	}
 
-	public static class LongMinSizeExceeded extends ObjectEntryValuesException {
+	public static class ExceedsLongMinSize extends ObjectEntryValuesException {
 
-		public LongMinSizeExceeded() {
+		public ExceedsLongMinSize() {
 			super("Object entry value exceeds minimum long field allowed size");
 		}
 
 	}
 
-	public static class LongSizeExceeded extends ObjectEntryValuesException {
+	public static class ExceedsLongSize extends ObjectEntryValuesException {
 
-		public LongSizeExceeded() {
+		public ExceedsLongSize() {
 			super("Object entry value exceeds long field allowed size");
 		}
 

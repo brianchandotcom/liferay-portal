@@ -127,7 +127,7 @@ definition {
 			webContentContent = "Web Content Content",
 			webContentTitle = "Web Content Title");
 
-		WebContentDisplayPortlet.viewNoEditWC(webContentTitle = "Web Content Title");
+		WebContentDisplayPortlet.viewCannotEditWC(webContentTitle = "Web Content Title");
 	}
 
 }

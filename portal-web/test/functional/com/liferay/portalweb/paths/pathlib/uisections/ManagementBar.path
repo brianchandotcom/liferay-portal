@@ -97,6 +97,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>QUICK_ACTION_DROPDOWN_ITEM</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//li//*[contains(@class,'dropdown-item') and contains(., '${key_action}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_BUTTON</td>
 	<td>//nav[contains(@class,'management-bar')]//*[(@title="Show View Options")][*[name()='svg'][contains(@class,'icon-${key_text}')]]</td>
 	<td></td>

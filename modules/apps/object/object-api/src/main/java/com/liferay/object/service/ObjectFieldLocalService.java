@@ -144,6 +144,9 @@ public interface ObjectFieldLocalService
 	public ObjectField deleteObjectField(ObjectField objectField)
 		throws PortalException;
 
+	public void deleteObjectFieldByObjectDefinitionId(Long objectDefinitionId)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

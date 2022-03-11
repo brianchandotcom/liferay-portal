@@ -18,6 +18,10 @@ import {
 	deleteAccountUserAccount,
 	getAccountUserAccountsByExternalReferenceCode,
 } from '../../../../common/services/liferay/graphql/queries';
+import {
+	associateContactRoleNameByEmailByProject,
+	deleteContactRoleNameByEmailByProject,
+} from '../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import {ROLE_TYPES} from '../../../../common/utils/constants';
 import TeamMembersTableHeader from './components/Header';
 import RemoveUserModal from './components/RemoveUserModal';
@@ -34,8 +38,9 @@ import {deleteAllPreviousUserRoles} from './utils/constants/deleteAllPreviousUse
 import {getColumnsByUserAccess} from './utils/getColumnsByUserAccess';
 
 const MAX_PAGE_SIZE = 9999;
+const ROLE_FILTER_NAME = 'contactRoleNames';
 
-const TeamMembersTable = ({project, sessionId}) => {
+const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 	const {
 		accountRoles,
 		administratorsAvailable,
@@ -109,6 +114,14 @@ const TeamMembersTable = ({project, sessionId}) => {
 				},
 			});
 
+			associateContactRoleNameByEmailByProject(
+				project.accountKey,
+				licenseKeyDownloadURL,
+				sessionId,
+				encodeURI(userAccount?.emailAddress),
+				currentRole?.raysourceName
+			);
+
 			setUserAccounts((previousUserAccounts) => {
 				const newUserAcconts = [...previousUserAccounts];
 				const accountIndexToUpdate = newUserAcconts.findIndex(
@@ -142,6 +155,29 @@ const TeamMembersTable = ({project, sessionId}) => {
 					emailAddress: userToBeRemoved?.emailAddress,
 				},
 			});
+
+			const rolesToBeRemoved = userToBeRemoved.roles.reduce(
+				(rolesAccumulator, role, index) => {
+					const raysourceRole = accountRoles.find(
+						(roleType) => roleType.name === role
+					);
+
+					return `${rolesAccumulator}${
+						index > 0
+							? `&${ROLE_FILTER_NAME}=${raysourceRole.raysourceName}`
+							: `${ROLE_FILTER_NAME}=${raysourceRole.raysourceName}`
+					}`;
+				},
+				''
+			);
+
+			deleteContactRoleNameByEmailByProject(
+				project.accountKey,
+				licenseKeyDownloadURL,
+				sessionId,
+				encodeURI(userToBeRemoved?.emailAddress),
+				rolesToBeRemoved
+			);
 
 			setUserAccounts((previousUserAccounts) =>
 				previousUserAccounts.filter(

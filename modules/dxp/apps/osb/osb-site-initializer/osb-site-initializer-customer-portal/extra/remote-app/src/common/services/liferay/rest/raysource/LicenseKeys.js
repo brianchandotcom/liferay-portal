@@ -150,6 +150,27 @@ export async function associateContactRoleNameByEmailByProject(
 	return response;
 }
 
+export async function deleteContactRoleNameByEmailByProject(
+	accountKey,
+	licenseKeyDownloadURL,
+	sessionId,
+	emailURI,
+	rolesToDelete
+) {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${licenseKeyDownloadURL}/accounts/${accountKey}/contacts/by-email-address/${emailURI}/roles?${rolesToDelete}`,
+		{
+			headers: {
+				'Okta-Session-ID': sessionId,
+			},
+			method: 'DELETE',
+		}
+	);
+
+	return response;
+}
+
 export async function putDeactivateKeys(
 	licenseKeyDownloadURL,
 	licenseKeyIds,

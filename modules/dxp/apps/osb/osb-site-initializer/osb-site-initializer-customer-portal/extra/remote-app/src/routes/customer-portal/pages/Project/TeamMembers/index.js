@@ -10,6 +10,7 @@
  */
 
 import {useOutletContext} from 'react-router-dom';
+import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
 import ManageProductUser from '../../../components/ManageProductUsers';
 import TeamMembersTable from '../../../containers/TeamMembersTable';
 import {useCustomerPortal} from '../../../context';
@@ -17,6 +18,7 @@ import {useCustomerPortal} from '../../../context';
 const TeamMembers = () => {
 	const {project, subscriptionGroups} = useOutletContext();
 	const [{sessionId}] = useCustomerPortal();
+	const {licenseKeyDownloadURL} = useApplicationProvider();
 
 	return (
 		<div>
@@ -29,7 +31,11 @@ const TeamMembers = () => {
 			</div>
 
 			<div className="mt-4">
-				<TeamMembersTable project={project} sessionId={sessionId} />
+				<TeamMembersTable
+					licenseKeyDownloadURL={licenseKeyDownloadURL}
+					project={project}
+					sessionId={sessionId}
+				/>
 			</div>
 
 			<div className="mt-5">

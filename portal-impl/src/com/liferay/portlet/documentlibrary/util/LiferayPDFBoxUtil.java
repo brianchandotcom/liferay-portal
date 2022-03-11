@@ -34,33 +34,30 @@ import org.apache.pdfbox.rendering.PDFRenderer;
 public class LiferayPDFBoxUtil {
 
 	public static void generateImagesPB(
-			File inputFile, File thumbnailFile, File[] previewFiles,
+			PDDocument pdDocument, File thumbnailFile, File[] previewFiles,
 			String extension, String thumbnailExtension, int dpi, int height,
 			int width, boolean generatePreview, boolean generateThumbnail)
 		throws Exception {
 
-		try (PDDocument pdDocument = PDDocument.load(inputFile)) {
-			PDFRenderer pdfRenderer = new PDFRenderer(pdDocument);
+		PDFRenderer pdfRenderer = new PDFRenderer(pdDocument);
 
-			PDPageTree pdPageTree = pdDocument.getPages();
+		PDPageTree pdPageTree = pdDocument.getPages();
 
-			int count = pdPageTree.getCount();
+		int count = pdPageTree.getCount();
 
-			for (int i = 0; i < count; i++) {
-				RenderedImage renderedImage = _toRenderedImage(
-					pdfRenderer, i, dpi, height, width);
+		for (int i = 0; i < count; i++) {
+			RenderedImage renderedImage = _toRenderedImage(
+				pdfRenderer, i, dpi, height, width);
 
-				if (generateThumbnail && (i == 0)) {
-					ImageIO.write(
-						renderedImage, thumbnailExtension, thumbnailFile);
-				}
-
-				if (!generatePreview) {
-					break;
-				}
-
-				ImageIO.write(renderedImage, extension, previewFiles[i]);
+			if (generateThumbnail && (i == 0)) {
+				ImageIO.write(renderedImage, thumbnailExtension, thumbnailFile);
 			}
+
+			if (!generatePreview) {
+				break;
+			}
+
+			ImageIO.write(renderedImage, extension, previewFiles[i]);
 		}
 	}
 

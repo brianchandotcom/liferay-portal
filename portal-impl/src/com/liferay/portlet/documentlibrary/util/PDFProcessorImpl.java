@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.repository.event.FileVersionPreviewEventListener;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -652,7 +651,6 @@ public class PDFProcessorImpl
 		String tempFileId = DLUtil.getTempFileId(
 			fileVersion.getFileEntryId(), fileVersion.getVersion());
 
-		File decryptedFile = null;
 		File[] previewFiles = null;
 		File thumbnailFile = null;
 
@@ -661,10 +659,8 @@ public class PDFProcessorImpl
 		boolean generatePreview = _isGeneratePreview(fileVersion);
 		boolean generateThumbnail = _isGenerateThumbnail(fileVersion);
 
-		try {
-			decryptedFile = getDecryptedTempFile(tempFileId);
-
-			int previewFilesCount = _getPreviewFilesCount(file, decryptedFile);
+		try (PDDocument pdDocument = _openPDDocument(file)) {
+			int previewFilesCount = pdDocument.getNumberOfPages();
 
 			if (previewFilesCount == 0) {
 				if (_log.isWarnEnabled()) {
@@ -690,6 +686,16 @@ public class PDFProcessorImpl
 
 			try {
 				if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
+					File decryptedFile = file;
+
+					if (pdDocument.isEncrypted()) {
+						decryptedFile = getDecryptedTempFile(tempFileId);
+
+						pdDocument.setAllSecurityToBeRemoved(true);
+
+						pdDocument.save(decryptedFile);
+					}
+
 					ProcessCallable<String> processCallable =
 						new LiferayPDFBoxProcessCallable(
 							ServerDetector.getServerId(),
@@ -790,10 +796,15 @@ public class PDFProcessorImpl
 
 						throw timeoutException;
 					}
+					finally {
+						if (pdDocument.isEncrypted()) {
+							FileUtil.delete(decryptedFile);
+						}
+					}
 				}
 				else {
 					LiferayPDFBoxUtil.generateImagesPB(
-						decryptedFile, thumbnailFile, previewFiles,
+						pdDocument, thumbnailFile, previewFiles,
 						getPreviewType(fileVersion),
 						getThumbnailType(fileVersion),
 						PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
@@ -843,7 +854,6 @@ public class PDFProcessorImpl
 			}
 		}
 		finally {
-			FileUtil.delete(decryptedFile);
 			FileUtil.delete(thumbnailFile);
 
 			for (File previewFile : previewFiles) {
@@ -897,32 +907,6 @@ public class PDFProcessorImpl
 		finally {
 			FileUtil.delete(file);
 		}
-	}
-
-	private int _getPreviewFilesCount(File encryptedFile, File decryptedFile) {
-		String[] decryptPasswords = ArrayUtil.append(
-			PropsValues.
-				DL_FILE_ENTRY_PREVIEW_GENERATION_DECRYPT_PASSWORDS_PDFBOX,
-			StringPool.BLANK);
-
-		for (String decryptPassword : decryptPasswords) {
-			try (PDDocument pdDocument = PDDocument.load(
-					encryptedFile, decryptPassword)) {
-
-				pdDocument.setAllSecurityToBeRemoved(true);
-
-				pdDocument.save(decryptedFile);
-
-				return pdDocument.getNumberOfPages();
-			}
-			catch (IOException ioException) {
-				if (!(ioException instanceof InvalidPasswordException)) {
-					_log.error(ioException);
-				}
-			}
-		}
-
-		return 0;
 	}
 
 	private Map<String, Integer> _getScaledDimensions(File file)
@@ -997,6 +981,24 @@ public class PDFProcessorImpl
 		}
 
 		return false;
+	}
+
+	private PDDocument _openPDDocument(File file) throws IOException {
+		for (String decryptPassword :
+				PropsValues.
+					DL_FILE_ENTRY_PREVIEW_GENERATION_DECRYPT_PASSWORDS_PDFBOX) {
+
+			try {
+				return PDDocument.load(file, decryptPassword);
+			}
+			catch (IOException ioException) {
+				if (!(ioException instanceof InvalidPasswordException)) {
+					_log.error(ioException);
+				}
+			}
+		}
+
+		return PDDocument.load(file);
 	}
 
 	private void _queueGeneration(
@@ -1114,9 +1116,9 @@ public class PDFProcessorImpl
 				_serverId, _liferayHome, clazz.getClassLoader(),
 				new Log4jLogFactoryImpl(), _customLogSettings);
 
-			try {
+			try (PDDocument pdDocument = PDDocument.load(_inputFile)) {
 				LiferayPDFBoxUtil.generateImagesPB(
-					_inputFile, _thumbnailFile, _previewFiles, _extension,
+					pdDocument, _thumbnailFile, _previewFiles, _extension,
 					_thumbnailExtension, _dpi, _height, _width,
 					_generatePreview, _generateThumbnail);
 			}

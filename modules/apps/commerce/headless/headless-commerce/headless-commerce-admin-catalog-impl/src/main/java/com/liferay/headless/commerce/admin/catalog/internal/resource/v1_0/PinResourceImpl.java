@@ -70,8 +70,7 @@ public class PinResourceImpl
 				csDiagramPin.getCPDefinitionId(), csDiagramPin.getSequence());
 
 		if (csDiagramEntry != null) {
-			_csDiagramEntryService.deleteCSDiagramEntry(
-				csDiagramEntry.getCSDiagramEntryId());
+			_csDiagramEntryService.deleteCSDiagramEntry(csDiagramEntry);
 		}
 
 		_csDiagramPinService.deleteCSDiagramPin(pinId);

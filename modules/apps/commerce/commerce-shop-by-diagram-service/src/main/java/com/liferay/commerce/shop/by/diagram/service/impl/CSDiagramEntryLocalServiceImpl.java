@@ -18,9 +18,12 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.shop.by.diagram.exception.DuplicateCSDiagramEntryException;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
+import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
+import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinLocalService;
 import com.liferay.commerce.shop.by.diagram.service.base.CSDiagramEntryLocalServiceBaseImpl;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -82,7 +85,9 @@ public class CSDiagramEntryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCSDiagramEntries(long cpDefinitionId) {
+	public void deleteCSDiagramEntries(long cpDefinitionId)
+		throws PortalException {
+
 		List<CSDiagramEntry> csDiagramEntries =
 			csDiagramEntryPersistence.findByCPDefinitionId(cpDefinitionId);
 
@@ -94,8 +99,26 @@ public class CSDiagramEntryLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public CSDiagramEntry deleteCSDiagramEntry(CSDiagramEntry csDiagramEntry) {
+	public CSDiagramEntry deleteCSDiagramEntry(CSDiagramEntry csDiagramEntry)
+		throws PortalException {
+
 		csDiagramEntry = csDiagramEntryPersistence.remove(csDiagramEntry);
+
+		List<CSDiagramPin> csDiagramPins =
+			_csDiagramPinLocalService.getCSDiagramPins(
+				csDiagramEntry.getCPDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		for (CSDiagramPin csDiagramPin : csDiagramPins) {
+			if ((csDiagramEntry.getCPDefinitionId() ==
+					csDiagramPin.getCPDefinitionId()) &&
+				Objects.equals(
+					csDiagramEntry.getSequence(), csDiagramPin.getSequence())) {
+
+				_csDiagramPinLocalService.deleteCSDiagramPin(
+					csDiagramPin.getCSDiagramPinId());
+			}
+		}
 
 		_expandoRowLocalService.deleteRows(
 			csDiagramEntry.getCSDiagramEntryId());
@@ -190,6 +213,9 @@ public class CSDiagramEntryLocalServiceImpl
 
 	@Reference
 	private CPInstanceLocalService _cpInstanceLocalService;
+
+	@Reference
+	private CSDiagramPinLocalService _csDiagramPinLocalService;
 
 	@Reference
 	private ExpandoRowLocalService _expandoRowLocalService;

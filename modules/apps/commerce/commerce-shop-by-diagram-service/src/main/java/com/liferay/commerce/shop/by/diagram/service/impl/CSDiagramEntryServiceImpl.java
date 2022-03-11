@@ -67,11 +67,8 @@ public class CSDiagramEntryServiceImpl extends CSDiagramEntryServiceBaseImpl {
 	}
 
 	@Override
-	public void deleteCSDiagramEntry(long csDiagramEntryId)
+	public void deleteCSDiagramEntry(CSDiagramEntry csDiagramEntry)
 		throws PortalException {
-
-		CSDiagramEntry csDiagramEntry =
-			csDiagramEntryLocalService.getCSDiagramEntry(csDiagramEntryId);
 
 		_cpDefinitionModelResourcePermission.check(
 			getPermissionChecker(), csDiagramEntry.getCPDefinitionId(),

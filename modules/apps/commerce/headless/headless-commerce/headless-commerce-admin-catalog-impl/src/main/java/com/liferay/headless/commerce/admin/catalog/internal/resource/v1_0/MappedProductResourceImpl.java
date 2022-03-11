@@ -20,16 +20,13 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
-import com.liferay.commerce.shop.by.diagram.model.CSDiagramPin;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryService;
-import com.liferay.commerce.shop.by.diagram.service.CSDiagramPinService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter.MappedProductDTOConverter;
 import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.MappedProductUtil;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -44,9 +41,7 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,23 +64,7 @@ public class MappedProductResourceImpl
 		CSDiagramEntry csDiagramEntry =
 			_csDiagramEntryService.getCSDiagramEntry(mappedProductId);
 
-		List<CSDiagramPin> csDiagramPins =
-			_csDiagramPinService.getCSDiagramPins(
-				csDiagramEntry.getCPDefinitionId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		for (CSDiagramPin csDiagramPin : csDiagramPins) {
-			if ((csDiagramEntry.getCPDefinitionId() ==
-					csDiagramPin.getCPDefinitionId()) &&
-				Objects.equals(
-					csDiagramEntry.getSequence(), csDiagramPin.getSequence())) {
-
-				_csDiagramPinService.deleteCSDiagramPin(
-					csDiagramPin.getCSDiagramPinId());
-			}
-		}
-
-		_csDiagramEntryService.deleteCSDiagramEntry(mappedProductId);
+		_csDiagramEntryService.deleteCSDiagramEntry(csDiagramEntry);
 	}
 
 	@Override
@@ -311,9 +290,6 @@ public class MappedProductResourceImpl
 
 	@Reference
 	private CSDiagramEntryService _csDiagramEntryService;
-
-	@Reference
-	private CSDiagramPinService _csDiagramPinService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

@@ -61,9 +61,11 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 			if (fileName.endsWith(".jar") || fileName.endsWith(".lar") ||
 				fileName.endsWith(".war") || fileName.endsWith(".zip")) {
 
-				if (fileName.matches(
-						".*/(modules/.*|portal-web)/tests?/(.*/)?" +
-							"dependencies/.+")) {
+				if ((fileName.contains("/modules/") ||
+					 fileName.contains("/portal-web/")) &&
+					(fileName.contains("/test/") ||
+					 fileName.contains("/tests/")) &&
+					fileName.contains("/dependencies/")) {
 
 					processMessage(
 						fileName,

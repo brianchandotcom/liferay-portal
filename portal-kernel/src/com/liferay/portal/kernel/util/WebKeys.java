@@ -21,6 +21,8 @@ public interface WebKeys {
 
 	public static final String ADDRESS = "ADDRESS";
 
+	public static final String ALL_PORTLETS = "ALL_PORTLETS";
+
 	public static final String ASSET_ADDON_ENTRIES = "ASSET_ADDON_ENTRIES";
 
 	public static final String ASSET_ADDON_ENTRY = "ASSET_ADDON_ENTRY";

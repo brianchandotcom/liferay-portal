@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -52,17 +53,10 @@ public class PortletJSONUtil {
 		boolean portletOnLayout = false;
 
 		if (portlet.isInstanceable()) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			LayoutTypePortlet layoutTypePortlet =
-				themeDisplay.getLayoutTypePortlet();
-
 			String rootPortletId = _getRootPortletId(portlet);
 			String portletId = portlet.getPortletId();
 
-			for (Portlet layoutPortlet : layoutTypePortlet.getAllPortlets()) {
+			for (Portlet layoutPortlet : _getAllPortlets(httpServletRequest)) {
 
 				// Check to see if an instance of this portlet is already in the
 				// layout, but ignore the portlet that was just added
@@ -101,6 +95,31 @@ public class PortletJSONUtil {
 		_writePaths(
 			httpServletResponse, jsonObject.getJSONArray("headerCssPaths"),
 			jsonObject.getJSONArray("headerJavaScriptPaths"));
+	}
+
+	private static List<Portlet> _getAllPortlets(
+		HttpServletRequest httpServletRequest) {
+
+		List<Portlet> allPortlets =
+			(List<Portlet>)httpServletRequest.getAttribute(
+				WebKeys.ALL_PORTLETS);
+
+		if (ListUtil.isNotEmpty(allPortlets)) {
+			return allPortlets;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
+
+		allPortlets = layoutTypePortlet.getAllPortlets();
+
+		httpServletRequest.setAttribute(WebKeys.ALL_PORTLETS, allPortlets);
+
+		return allPortlets;
 	}
 
 	private static String _getRootPortletId(Portlet portlet) {

@@ -38,6 +38,6 @@ public class DDMFormInstanceReportTable {
 	private static final String _TABLE_NAME = "DDMFormInstanceReport";
 
 	private static final String _TABLE_SQL_CREATE =
-		"create table DDMFormInstanceReport (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,formInstanceReportId LONG not null,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,formInstanceId LONG,data_ TEXT null,primary key (formInstanceReportId, ctCollectionId))";
+		"create table DDMFormInstanceReport (mvccVersion LONG default 0 not null,formInstanceReportId LONG not null primary key,groupId LONG,companyId LONG,createDate DATE null,modifiedDate DATE null,formInstanceId LONG,data_ TEXT null)";
 
 }

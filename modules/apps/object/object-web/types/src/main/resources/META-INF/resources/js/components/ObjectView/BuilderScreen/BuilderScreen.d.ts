@@ -27,6 +27,7 @@ interface IProps {
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
 	onEditingSort?: (boolean: boolean) => void;
 	onVisibleModal: (boolean: boolean) => void;
+	secondColumnHeader: string;
 	title: string;
 }
 export declare function BuilderScreen({
@@ -36,6 +37,7 @@ export declare function BuilderScreen({
 	onEditingObjectFieldName,
 	onEditingSort,
 	onVisibleModal,
+	secondColumnHeader,
 	title,
 }: IProps): JSX.Element;
 export {};

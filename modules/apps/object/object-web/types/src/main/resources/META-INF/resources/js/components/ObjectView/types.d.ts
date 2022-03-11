@@ -30,13 +30,15 @@ export declare type TObjectField = {
 	type: string;
 };
 export declare type TObjectViewColumn = {
-	isDefaultSort: boolean;
 	fieldLabel: string;
+	isDefaultSort: boolean;
+	label: TName;
 	objectFieldName: string;
 	priority?: number;
 };
 export declare type TObjectViewSortColumn = {
 	fieldLabel: string;
+	label: TName;
 	objectFieldName: string;
 	priority?: number;
 	sortOrder?: string;

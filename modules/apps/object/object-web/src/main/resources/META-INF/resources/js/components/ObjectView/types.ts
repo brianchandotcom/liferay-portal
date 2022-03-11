@@ -33,14 +33,16 @@ export type TObjectField = {
 };
 
 export type TObjectViewColumn = {
-	isDefaultSort: boolean;
 	fieldLabel: string;
+	isDefaultSort: boolean;
+	label: TName;
 	objectFieldName: string;
 	priority?: number;
 };
 
 export type TObjectViewSortColumn = {
 	fieldLabel: string;
+	label: TName;
 	objectFieldName: string;
 	priority?: number;
 	sortOrder?: string;

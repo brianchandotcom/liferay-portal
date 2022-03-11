@@ -44,6 +44,7 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 				}}
 				objectColumns={objectViewColumns ?? []}
 				onVisibleModal={setVisibleModal}
+				secondColumnHeader={Liferay.Language.get('column-label')}
 				title={Liferay.Language.get('columns')}
 			/>
 

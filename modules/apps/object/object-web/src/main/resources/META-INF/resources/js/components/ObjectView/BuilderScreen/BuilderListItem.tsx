@@ -31,7 +31,7 @@ interface Iprops {
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
 	onEditingSort?: (boolean: boolean) => void;
 	onVisibleModal?: (boolean: boolean) => void;
-	sortOrder?: string;
+	secondColumntext?: string;
 }
 
 type TItemHover = {
@@ -52,7 +52,7 @@ const BuilderListItem: React.FC<Iprops> = ({
 	onEditingObjectFieldName,
 	onEditingSort,
 	onVisibleModal,
-	sortOrder,
+	secondColumntext,
 }) => {
 	const [
 		{isFFObjectViewSortColumnConfigurationEnabled},
@@ -166,18 +166,12 @@ const BuilderListItem: React.FC<Iprops> = ({
 				<ClayList.ItemTitle>{label}</ClayList.ItemTitle>
 			</ClayList.ItemField>
 
-			{isDefaultSort && (
-				<ClayList.ItemField
-					className="lfr-object__object-builder-list-item-sort-order"
-					expand
-				>
-					<ClayList.ItemText>
-						{sortOrder === 'asc'
-							? Liferay.Language.get('ascending')
-							: Liferay.Language.get('descending')}
-					</ClayList.ItemText>
-				</ClayList.ItemField>
-			)}
+			<ClayList.ItemField
+				className="lfr-object__object-builder-list-item-sort-order"
+				expand
+			>
+				<ClayList.ItemText>{secondColumntext}</ClayList.ItemText>
+			</ClayList.ItemField>
 
 			<ClayList.ItemField className="lfr-object__object-custom-view-builder-item-action-menu">
 				{isDefaultSort && (

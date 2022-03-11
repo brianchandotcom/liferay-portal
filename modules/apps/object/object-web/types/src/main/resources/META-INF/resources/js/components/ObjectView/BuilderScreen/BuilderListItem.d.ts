@@ -22,7 +22,7 @@ interface Iprops {
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
 	onEditingSort?: (boolean: boolean) => void;
 	onVisibleModal?: (boolean: boolean) => void;
-	sortOrder?: string;
+	secondColumntext?: string;
 }
 declare const BuilderListItem: React.FC<Iprops>;
 export default BuilderListItem;

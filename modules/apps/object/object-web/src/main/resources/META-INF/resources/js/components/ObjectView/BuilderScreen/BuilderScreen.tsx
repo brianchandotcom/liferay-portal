@@ -38,8 +38,11 @@ interface IProps {
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
 	onEditingSort?: (boolean: boolean) => void;
 	onVisibleModal: (boolean: boolean) => void;
+	secondColumnHeader: string;
 	title: string;
 }
+
+const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function BuilderScreen({
 	emptyState,
@@ -48,6 +51,7 @@ export function BuilderScreen({
 	onEditingObjectFieldName,
 	onEditingSort,
 	onVisibleModal,
+	secondColumnHeader,
 	title,
 }: IProps) {
 	const [query, setQuery] = useState('');
@@ -102,18 +106,14 @@ export function BuilderScreen({
 													</ClayList.ItemField>
 												</ClayList.ItemField>
 
-												{isDefaultSort && (
-													<ClayList.ItemField
-														className="object-builder-screen-sorting"
-														expand
-													>
-														<ClayList.ItemField>
-															{Liferay.Language.get(
-																'sorting'
-															)}
-														</ClayList.ItemField>
+												<ClayList.ItemField
+													className="object-builder-screen-second-column"
+													expand
+												>
+													<ClayList.ItemField>
+														{secondColumnHeader}
 													</ClayList.ItemField>
-												)}
+												</ClayList.ItemField>
 											</ClayList.Item>
 										)}
 
@@ -179,18 +179,14 @@ export function BuilderScreen({
 													</ClayList.ItemField>
 												</ClayList.ItemField>
 
-												{isDefaultSort && (
-													<ClayList.ItemField
-														className="object-builder-screen-sorting"
-														expand
-													>
-														<ClayList.ItemField>
-															{Liferay.Language.get(
-																'sorting'
-															)}
-														</ClayList.ItemField>
+												<ClayList.ItemField
+													className="object-builder-screen-second-column"
+													expand
+												>
+													<ClayList.ItemField>
+														{secondColumnHeader}
 													</ClayList.ItemField>
-												)}
+												</ClayList.ItemField>
 											</ClayList.Item>
 										)}
 
@@ -207,7 +203,20 @@ export function BuilderScreen({
 												}
 												onEditingSort={onEditingSort}
 												onVisibleModal={onVisibleModal}
-												sortOrder={viewColumn.sortOrder}
+												secondColumntext={
+													isDefaultSort
+														? viewColumn.sortOrder ===
+														  'asc'
+															? Liferay.Language.get(
+																	'ascending'
+															  )
+															: Liferay.Language.get(
+																	'descending'
+															  )
+														: viewColumn.label[
+																defaultLanguageId
+														  ]
+												}
 											/>
 										</DndProvider>
 									</React.Fragment>

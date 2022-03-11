@@ -14,7 +14,7 @@
 
 import {gql} from '@apollo/client';
 
-import {testrayBuildFragment} from '../fragments/testrayBuild';
+import {TestrayProductVersion} from './testrayProductVersion';
 import {TestrayProject} from './testrayProject';
 import {TestrayRoutine} from './testrayRoutine';
 
@@ -23,8 +23,10 @@ export type TestrayBuild = {
 	description: string;
 	dueStatus: number;
 	gitHash: string;
+	id: number;
 	name: string;
 	promoted: boolean;
+	testrayProductVersion?: TestrayProductVersion;
 	testrayProject?: TestrayProject;
 	testrayRoutine?: TestrayRoutine;
 };
@@ -61,12 +63,21 @@ export const getTestrayBuilds = gql`
 `;
 
 export const getTestrayBuild = gql`
-	${testrayBuildFragment}
-
-	query getTestrayBuild($testrayBuildId: Long!) {
-		c {
-			testrayBuild(testrayBuildId: $testrayBuildId) {
-				...TestrayBuildFragment
+	query gettestrayBuild($testrayBuildId: Long!) {
+		testrayBuild(testrayBuildId: $testrayBuildId)
+			@rest(
+				type: "C_TestrayBuild"
+				path: "testraybuilds/{args.testrayBuildId}?nestedFields=testrayProductVersion"
+			) {
+			dateCreated
+			description
+			dueStatus
+			gitHash
+			name
+			promoted
+			id
+			testrayProductVersion: r_buildProductVersion_c_testrayProductVersion {
+				name
 			}
 		}
 	}

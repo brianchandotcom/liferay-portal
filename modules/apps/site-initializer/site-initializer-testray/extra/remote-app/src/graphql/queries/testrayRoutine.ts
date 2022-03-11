@@ -17,8 +17,8 @@ import {gql} from '@apollo/client';
 import {testrayRoutineFragment} from '../fragments';
 
 export type TestrayRoutine = {
+	id: number;
 	name: String;
-	testrayRoutineId: String;
 };
 
 export const getTestrayRoutines = gql`

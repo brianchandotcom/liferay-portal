@@ -14,52 +14,76 @@
 
 import {gql} from '@apollo/client';
 
-import {testrayRequirementFragment} from '../fragments';
+import {DescriptionType} from '../../types';
+import {TestrayComponent} from './testrayComponent';
 
 export type TestrayRequirement = {
 	components: string;
 	description: string;
-	descriptionType: string;
+	descriptionType: keyof typeof DescriptionType;
 	id: number;
 	key: string;
 	linkTitle: string;
 	linkURL: string;
 	summary: string;
+	testrayComponent?: TestrayComponent;
 };
 
 export const getTestrayRequirements = gql`
-	${testrayRequirementFragment}
-
 	query getTestrayRequirements(
 		$filter: String
 		$page: Int = 1
 		$pageSize: Int = 20
 	) {
-		c {
-			testrayRequirements(
-				filter: $filter
-				page: $page
-				pageSize: $pageSize
+		testrayRequirements(filter: $filter, page: $page, pageSize: $pageSize)
+			@rest(
+				type: "C_TestrayRequirement"
+				path: "testrayrequirements?page={args.page}&pageSize={args.pageSize}&nestedFields=testrayComponent,testrayTeam"
 			) {
-				items {
-					...TestrayRequirementFragment
+			items {
+				components
+				description
+				descriptionType
+				id
+				key
+				linkTitle
+				linkURL
+				summary
+				testrayComponent: r_requirementComponent_c_testrayComponent {
+					name
+					testrayTeam: r_componentTeam_c_testrayTeam {
+						name
+					}
 				}
-				lastPage
-				page
-				pageSize
-				totalCount
 			}
+			lastPage
+			page
+			pageSize
+			totalCount
 		}
 	}
 `;
 
 export const getTestrayRequirement = gql`
-	${testrayRequirementFragment}
-
 	query getTestrayRequirement($testrayRequirementId: Long!) {
-		c {
-			testrayRequirement(testrayRequirementId: $testrayRequirementId) {
-				...TestrayRequirementFragment
+		testrayRequirement(testrayRequirementId: $testrayRequirementId)
+			@rest(
+				type: "C_TestrayRequirement"
+				path: "testrayrequirements/{args.testrayRequirementId}?nestedFields=testrayComponent,testrayTeam"
+			) {
+			components
+			description
+			descriptionType
+			id
+			key
+			linkTitle
+			linkURL
+			summary
+			testrayComponent: r_requirementComponent_c_testrayComponent {
+				name
+				testrayTeam: r_componentTeam_c_testrayTeam {
+					name
+				}
 			}
 		}
 	}

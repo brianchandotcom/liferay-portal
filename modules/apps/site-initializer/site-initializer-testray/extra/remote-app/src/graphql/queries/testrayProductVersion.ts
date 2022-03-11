@@ -14,53 +14,48 @@
 
 import {gql} from '@apollo/client';
 
-import {testrayComponentFragment} from '../fragments';
-import {TestrayTeam} from './testrayTeam';
+import {testrayProductVersionFragment} from '../fragments';
 
-export type TestrayComponent = {
-	dateCreated: string;
-	dateModified: string;
-	externalReferenceCode: string;
-	id: number;
-	name: string;
-	originationKey: string;
-	status: string;
-	testrayTeam?: TestrayTeam;
+export type TestrayProductVersion = {
+	id: String;
+	name: String;
 };
 
-export const getTestrayComponent = gql`
-	${testrayComponentFragment}
+export const getTestrayProductVersions = gql`
+	${testrayProductVersionFragment}
 
-	query getTestrayComponent($testrayComponentId: Long!) {
-		c {
-			testrayComponent(testrayComponentId: $testrayComponentId) {
-				...TestrayComponentFragment
-			}
-		}
-	}
-`;
-
-export const getTestrayComponents = gql`
-	${testrayComponentFragment}
-
-	query getTestrayComponents(
+	query getTestrayProductVersions(
 		$filter: String
 		$page: Int = 1
 		$pageSize: Int = 20
 	) {
 		c {
-			testrayComponents(
+			testrayProductVersions(
 				filter: $filter
 				page: $page
 				pageSize: $pageSize
 			) {
 				items {
-					...TestrayComponentFragment
+					...TestrayProductVersionFragment
 				}
 				lastPage
 				page
 				pageSize
 				totalCount
+			}
+		}
+	}
+`;
+
+export const getTestrayProductVersion = gql`
+	${testrayProductVersionFragment}
+
+	query getTestrayProductVersion($testrayProductVersionId: Long!) {
+		c {
+			testrayProductVersion(
+				testrayProductVersionId: $testrayProductVersionId
+			) {
+				...TestrayProductVersionFragment
 			}
 		}
 	}

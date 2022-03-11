@@ -14,26 +14,15 @@
 
 import {gql} from '@apollo/client';
 
-import {testrayTaskFragment} from '../fragments';
 import {TestrayBuild} from './testrayBuild';
 
 export type TestrayTask = {
+	dateCreated: string;
 	dueStatus: number;
+	id: number;
 	name: string;
 	testrayBuild?: TestrayBuild;
 };
-
-export const getTestrayTask = gql`
-	${testrayTaskFragment}
-
-	query getTestrayTask($testrayTaskId: Long!) {
-		c {
-			testrayTask(testrayTaskId: $testrayTaskId) {
-				...TestrayTaskFragment
-			}
-		}
-	}
-`;
 
 export const getTestrayTasks = gql`
 	query getTestrayTasks(
@@ -47,15 +36,19 @@ export const getTestrayTasks = gql`
 				path: "testraytasks?page={args.page}&pageSize={args.pageSize}&nestedFields=testrayBuild.testrayProject,testrayBuild.testrayRoutine"
 			) {
 			items {
+				dateCreated
 				dueStatus
 				name
-				testrayBuild {
+				testrayBuild: r_taskBuild_c_testrayBuild {
+					id
 					dueDate
 					name
-					testrayProject {
+					testrayProject: r_buildProject_c_testrayProject {
+						id
 						name
 					}
-					testrayRoutine {
+					testrayRoutine: r_buildRoutine_c_testrayRoutine {
+						id
 						name
 					}
 				}
@@ -69,46 +62,30 @@ export const getTestrayTasks = gql`
 	}
 `;
 
-export const getTestrayTaskRest = gql`
+export const getTestrayTask = gql`
 	query getTestrayTask($testrayTaskId: Long!) {
 		testrayTask(testrayTaskId: $testrayTaskId)
 			@rest(
 				type: "C_TestrayTask"
 				path: "testraytasks/{args.testrayTaskId}?nestedFields=testrayBuild.testrayProject,testrayBuild.testrayRoutine"
 			) {
+			dateCreated
 			dueStatus
 			name
-			testrayBuild {
+			testrayBuild: r_taskBuild_c_testrayBuild {
+				id
 				dueDate
 				name
-				testrayProject {
+				testrayProject: r_buildProject_c_testrayProject {
+					id
 					name
 				}
-				testrayRoutine {
+				testrayRoutine: r_buildRoutine_c_testrayRoutine {
+					id
 					name
 				}
 			}
 			id
-		}
-	}
-`;
-
-export const getTestrayTasksXXX = gql`
-	query getTestrayTasks(
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
-	) {
-		c {
-			testrayTasks(filter: $filter, page: $page, pageSize: $pageSize) {
-				items {
-					...TestrayTaskFragment
-				}
-				lastPage
-				page
-				pageSize
-				totalCount
-			}
 		}
 	}
 `;

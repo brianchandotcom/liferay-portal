@@ -18,14 +18,16 @@ export type CType<ObjectKey extends string, Query = any> = {
 	};
 };
 
+export type APIResponse<Query = any> = {
+	items: Query[];
+	lastPage: number;
+	page: number;
+	pageSize: number;
+	totalCount: number;
+};
+
 export type TypePagination<ObjectKey extends string, Query = any> = {
-	[key in ObjectKey]: {
-		items: Query[];
-		lastPage: number;
-		page: number;
-		pageSize: number;
-		totalCount: number;
-	};
+	[key in ObjectKey]: APIResponse<Query>;
 };
 
 export type CTypePagination<ObjectKey extends string, Query = any> = {
@@ -34,12 +36,13 @@ export type CTypePagination<ObjectKey extends string, Query = any> = {
 
 export * from './testrayBuild';
 export * from './testrayCase';
+export * from './testrayCaseResult';
 export * from './testrayCaseType';
 export * from './testrayComponent';
+export * from './testrayFactorCategory';
 export * from './testrayFactorOptions';
 export * from './testrayProject';
 export * from './testrayRequirement';
-export * from './testrayFactorCategory';
 export * from './testrayRoutine';
 export * from './testrayShared';
 export * from './testraySuite';

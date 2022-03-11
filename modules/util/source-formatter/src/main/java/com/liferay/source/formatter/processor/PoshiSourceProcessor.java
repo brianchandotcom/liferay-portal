@@ -58,24 +58,25 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 		while (iterator.hasNext()) {
 			String fileName = iterator.next();
 
-			if (fileName.endsWith(".jar") || fileName.endsWith(".lar") ||
-				fileName.endsWith(".war") || fileName.endsWith(".zip")) {
+			if (!fileName.endsWith(".jar") && !fileName.endsWith(".lar") &&
+				!fileName.endsWith(".war") && !fileName.endsWith(".zip")) {
 
-				if ((fileName.contains("/modules/") ||
-					 fileName.contains("/portal-web/")) &&
-					(fileName.contains("/test/") ||
-					 fileName.contains("/tests/")) &&
-					fileName.contains("/dependencies/") &&
-					!fileName.contains("/testIntegration/")) {
-
-					processMessage(
-						fileName,
-						"Do not add archive files for tests, they must be " +
-							"expanded");
-				}
-
-				iterator.remove();
+				continue;
 			}
+
+			if ((fileName.contains("/modules/") ||
+				 fileName.contains("/portal-web/")) &&
+				(fileName.contains("/test/") || fileName.contains("/tests/")) &&
+				fileName.contains("/dependencies/") &&
+				!fileName.contains("/testIntegration/")) {
+
+				processMessage(
+					fileName,
+					"Do not add archive files for tests, they must be " +
+						"expanded");
+			}
+
+			iterator.remove();
 		}
 
 		return fileNames;

@@ -200,10 +200,130 @@ public class BatchPlannerLogLocalServiceImpl
 
 	@Override
 	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
+		long companyId, boolean export, int start, int end,
+		OrderByComparator<BatchPlannerLog> orderByComparator,
+		String searchByField, String searchByKeyword) {
+
+		if (!searchByKeyword.isEmpty()) {
+			if (searchByField.equals("title")) {
+				return batchPlannerLogPersistence.dslQuery(
+					DSLQueryFactoryUtil.select(
+						BatchPlannerLogTable.INSTANCE
+					).from(
+						BatchPlannerLogTable.INSTANCE
+					).innerJoinON(
+						BatchPlannerPlanTable.INSTANCE,
+						BatchPlannerLogTable.INSTANCE.batchPlannerPlanId.eq(
+							BatchPlannerPlanTable.INSTANCE.batchPlannerPlanId)
+					).where(
+						BatchPlannerLogTable.INSTANCE.companyId.eq(
+							companyId
+						).and(
+							BatchPlannerPlanTable.INSTANCE.export.eq(export)
+						).and(
+							BatchPlannerPlanTable.INSTANCE.name.like(
+								"%" + searchByKeyword + "%")
+						)
+					).orderBy(
+						BatchPlannerLogTable.INSTANCE, orderByComparator
+					).limit(
+						start, end
+					));
+			}
+
+			return batchPlannerLogPersistence.dslQuery(
+				DSLQueryFactoryUtil.select(
+					BatchPlannerLogTable.INSTANCE
+				).from(
+					BatchPlannerLogTable.INSTANCE
+				).innerJoinON(
+					BatchPlannerPlanTable.INSTANCE,
+					BatchPlannerLogTable.INSTANCE.batchPlannerPlanId.eq(
+						BatchPlannerPlanTable.INSTANCE.batchPlannerPlanId)
+				).where(
+					BatchPlannerLogTable.INSTANCE.companyId.eq(
+						companyId
+					).and(
+						BatchPlannerPlanTable.INSTANCE.export.eq(export)
+					).and(
+						BatchPlannerPlanTable.INSTANCE.internalClassName.like(
+							"%" + searchByKeyword + "%")
+					)
+				).orderBy(
+					BatchPlannerLogTable.INSTANCE, orderByComparator
+				).limit(
+					start, end
+				));
+		}
+
+		return getCompanyBatchPlannerLogs(
+			companyId, export, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
 		long companyId, int start, int end,
 		OrderByComparator<BatchPlannerLog> orderByComparator) {
 
 		return batchPlannerLogPersistence.findByCompanyId(
+			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
+		long companyId, int start, int end,
+		OrderByComparator<BatchPlannerLog> orderByComparator,
+		String searchByField, String searchByKeyword) {
+
+		if (!searchByKeyword.isEmpty()) {
+			if (searchByField.equals("title")) {
+				return batchPlannerLogPersistence.dslQuery(
+					DSLQueryFactoryUtil.select(
+						BatchPlannerLogTable.INSTANCE
+					).from(
+						BatchPlannerLogTable.INSTANCE
+					).innerJoinON(
+						BatchPlannerPlanTable.INSTANCE,
+						BatchPlannerLogTable.INSTANCE.batchPlannerPlanId.eq(
+							BatchPlannerPlanTable.INSTANCE.batchPlannerPlanId)
+					).where(
+						BatchPlannerLogTable.INSTANCE.companyId.eq(
+							companyId
+						).and(
+							BatchPlannerPlanTable.INSTANCE.name.like(
+								"%" + searchByKeyword + "%")
+						)
+					).orderBy(
+						BatchPlannerLogTable.INSTANCE, orderByComparator
+					).limit(
+						start, end
+					));
+			}
+
+			return batchPlannerLogPersistence.dslQuery(
+				DSLQueryFactoryUtil.select(
+					BatchPlannerLogTable.INSTANCE
+				).from(
+					BatchPlannerLogTable.INSTANCE
+				).innerJoinON(
+					BatchPlannerPlanTable.INSTANCE,
+					BatchPlannerLogTable.INSTANCE.batchPlannerPlanId.eq(
+						BatchPlannerPlanTable.INSTANCE.batchPlannerPlanId)
+				).where(
+					BatchPlannerLogTable.INSTANCE.companyId.eq(
+						companyId
+					).and(
+						BatchPlannerPlanTable.INSTANCE.internalClassName.like(
+							"%" + searchByKeyword + "%")
+					)
+				).orderBy(
+					BatchPlannerLogTable.INSTANCE, orderByComparator
+				).limit(
+					start, end
+				));
+		}
+
+		return getCompanyBatchPlannerLogs(
 			companyId, start, end, orderByComparator);
 	}
 
@@ -225,6 +345,101 @@ public class BatchPlannerLogLocalServiceImpl
 			).where(
 				_getPredicate(companyId, export)
 			));
+	}
+
+	@Override
+	public int getCompanyBatchPlannerLogsCount(
+		long companyId, boolean export, String searchByField,
+		String searchByKeyword) {
+
+		if (!searchByKeyword.isEmpty()) {
+			if (searchByField.equals("title")) {
+				return dslQueryCount(
+					DSLQueryFactoryUtil.count(
+					).from(
+						BatchPlannerLogTable.INSTANCE
+					).innerJoinON(
+						BatchPlannerPlanTable.INSTANCE,
+						BatchPlannerLogTable.INSTANCE.batchPlannerPlanId.eq(
+							BatchPlannerPlanTable.INSTANCE.batchPlannerPlanId)
+					).where(
+						BatchPlannerLogTable.INSTANCE.companyId.eq(
+							companyId
+						).and(
+							BatchPlannerPlanTable.INSTANCE.export.eq(export)
+						).and(
+							BatchPlannerPlanTable.INSTANCE.name.like(
+								"%" + searchByKeyword + "%")
+						)
+					));
+			}
+
+			return dslQueryCount(
+				DSLQueryFactoryUtil.count(
+				).from(
+					BatchPlannerLogTable.INSTANCE
+				).innerJoinON(
+					BatchPlannerPlanTable.INSTANCE,
+					BatchPlannerLogTable.INSTANCE.batchPlannerPlanId.eq(
+						BatchPlannerPlanTable.INSTANCE.batchPlannerPlanId)
+				).where(
+					BatchPlannerLogTable.INSTANCE.companyId.eq(
+						companyId
+					).and(
+						BatchPlannerPlanTable.INSTANCE.export.eq(export)
+					).and(
+						BatchPlannerPlanTable.INSTANCE.internalClassName.like(
+							"%" + searchByKeyword + "%")
+					)
+				));
+		}
+
+		return getCompanyBatchPlannerLogsCount(companyId, export);
+	}
+
+	@Override
+	public int getCompanyBatchPlannerLogsCount(
+		long companyId, String searchByField, String searchByKeyword) {
+
+		if (!searchByKeyword.isEmpty()) {
+			if (searchByField.equals("title")) {
+				return dslQueryCount(
+					DSLQueryFactoryUtil.count(
+					).from(
+						BatchPlannerLogTable.INSTANCE
+					).innerJoinON(
+						BatchPlannerPlanTable.INSTANCE,
+						BatchPlannerLogTable.INSTANCE.batchPlannerPlanId.eq(
+							BatchPlannerPlanTable.INSTANCE.batchPlannerPlanId)
+					).where(
+						BatchPlannerLogTable.INSTANCE.companyId.eq(
+							companyId
+						).and(
+							BatchPlannerPlanTable.INSTANCE.name.like(
+								"%" + searchByKeyword + "%")
+						)
+					));
+			}
+
+			return dslQueryCount(
+				DSLQueryFactoryUtil.count(
+				).from(
+					BatchPlannerLogTable.INSTANCE
+				).innerJoinON(
+					BatchPlannerPlanTable.INSTANCE,
+					BatchPlannerLogTable.INSTANCE.batchPlannerPlanId.eq(
+						BatchPlannerPlanTable.INSTANCE.batchPlannerPlanId)
+				).where(
+					BatchPlannerLogTable.INSTANCE.companyId.eq(
+						companyId
+					).and(
+						BatchPlannerPlanTable.INSTANCE.internalClassName.like(
+							"%" + searchByKeyword + "%")
+					)
+				));
+		}
+
+		return batchPlannerLogPersistence.countByCompanyId(companyId);
 	}
 
 	@Override

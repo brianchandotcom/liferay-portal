@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 
+import java.util.Date;
+
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -121,6 +123,20 @@ public interface ExpandoColumnModel
 	 */
 	@Override
 	public void setCompanyId(long companyId);
+
+	/**
+	 * Returns the modified date of this expando column.
+	 *
+	 * @return the modified date of this expando column
+	 */
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this expando column.
+	 *
+	 * @param modifiedDate the modified date of this expando column
+	 */
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the table ID of this expando column.

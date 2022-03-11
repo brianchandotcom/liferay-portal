@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing ExpandoColumn in entity cache.
  *
@@ -75,7 +77,7 @@ public class ExpandoColumnCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -85,6 +87,8 @@ public class ExpandoColumnCacheModel
 		sb.append(columnId);
 		sb.append(", companyId=");
 		sb.append(companyId);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", tableId=");
 		sb.append(tableId);
 		sb.append(", name=");
@@ -108,6 +112,14 @@ public class ExpandoColumnCacheModel
 		expandoColumnImpl.setCtCollectionId(ctCollectionId);
 		expandoColumnImpl.setColumnId(columnId);
 		expandoColumnImpl.setCompanyId(companyId);
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			expandoColumnImpl.setModifiedDate(null);
+		}
+		else {
+			expandoColumnImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		expandoColumnImpl.setTableId(tableId);
 
 		if (name == null) {
@@ -149,6 +161,7 @@ public class ExpandoColumnCacheModel
 		columnId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 
 		tableId = objectInput.readLong();
 		name = objectInput.readUTF();
@@ -167,6 +180,7 @@ public class ExpandoColumnCacheModel
 		objectOutput.writeLong(columnId);
 
 		objectOutput.writeLong(companyId);
+		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(tableId);
 
@@ -198,6 +212,7 @@ public class ExpandoColumnCacheModel
 	public long ctCollectionId;
 	public long columnId;
 	public long companyId;
+	public long modifiedDate;
 	public long tableId;
 	public String name;
 	public int type;

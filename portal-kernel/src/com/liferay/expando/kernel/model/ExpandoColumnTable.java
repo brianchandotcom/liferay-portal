@@ -20,6 +20,8 @@ import com.liferay.petra.sql.dsl.base.BaseTable;
 import java.sql.Clob;
 import java.sql.Types;
 
+import java.util.Date;
+
 /**
  * The table class for the &quot;ExpandoColumn&quot; database table.
  *
@@ -39,6 +41,8 @@ public class ExpandoColumnTable extends BaseTable<ExpandoColumnTable> {
 		"columnId", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
 	public final Column<ExpandoColumnTable, Long> companyId = createColumn(
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ExpandoColumnTable, Date> modifiedDate = createColumn(
+		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<ExpandoColumnTable, Long> tableId = createColumn(
 		"tableId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ExpandoColumnTable, String> name = createColumn(

@@ -427,7 +427,7 @@ public abstract class BasePortletExportImportTestCase
 			larFile = ExportImportLocalServiceUtil.exportPortletInfoAsFile(
 				exportImportConfiguration);
 
-			importedLayout = LayoutTestUtil.addLayout(importedGroup);
+			importedLayout = LayoutTestUtil.addTypePortletLayout(importedGroup);
 
 			MapUtil.merge(getImportParameterMap(), importParameterMap);
 
@@ -510,7 +510,7 @@ public abstract class BasePortletExportImportTestCase
 				buildFullPublishParameterMap();
 
 		if (importedLayout == null) {
-			importedLayout = LayoutTestUtil.addLayout(importedGroup);
+			importedLayout = LayoutTestUtil.addTypePortletLayout(importedGroup);
 		}
 
 		Map<String, Serializable> settingsMap =

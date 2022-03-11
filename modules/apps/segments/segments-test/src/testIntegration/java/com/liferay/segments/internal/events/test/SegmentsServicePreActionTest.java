@@ -122,7 +122,8 @@ public class SegmentsServicePreActionTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group.getGroupId());
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));

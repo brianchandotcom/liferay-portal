@@ -248,7 +248,7 @@ public class PortalImplAlternateURLTest {
 		_group = GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
 
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), "welcome", false);
 
 		String canonicalURL = _generateURL(
@@ -307,7 +307,7 @@ public class PortalImplAlternateURLTest {
 		_group = GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
 
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), "welcome", false);
 
 		String canonicalURL = _generateURL(

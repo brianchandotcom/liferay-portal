@@ -109,7 +109,7 @@ public class JournalContentCompatibilityConverterTest {
 
 	@Test
 	public void testGetLinkToLayoutValue() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		String value = ReflectionTestUtil.invoke(
 			_journalContentCompatibilityConverter, "_convertLinkToLayoutValue",
@@ -131,7 +131,7 @@ public class JournalContentCompatibilityConverterTest {
 
 	@Test
 	public void testGetLinkToLayoutValueWithoutGroupId() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		String value = ReflectionTestUtil.invoke(
 			_journalContentCompatibilityConverter, "_convertLinkToLayoutValue",

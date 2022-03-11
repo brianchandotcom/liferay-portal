@@ -201,7 +201,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 		LayoutPrototype layoutPrototype = addLayoutPrototype(
 			dependentStagedModelsMap);
 
-		Layout prototypedLayout = LayoutTestUtil.addLayout(
+		Layout prototypedLayout = LayoutTestUtil.addTypePortletLayout(
 			_layoutSetPrototype.getGroupId(), true, layoutPrototype, true);
 
 		addLayout(LayoutSetPrototype.class, prototypedLayout);

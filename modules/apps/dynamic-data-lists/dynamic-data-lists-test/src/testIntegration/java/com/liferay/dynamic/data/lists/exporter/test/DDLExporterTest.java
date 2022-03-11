@@ -608,7 +608,7 @@ public class DDLExporterTest {
 	}
 
 	protected String createLinkToPageDDMFormFieldValue() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), "Link to Page content", false);
 
 		return JSONUtil.put(

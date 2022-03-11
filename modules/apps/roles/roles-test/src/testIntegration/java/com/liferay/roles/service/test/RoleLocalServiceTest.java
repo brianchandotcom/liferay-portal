@@ -486,7 +486,7 @@ public class RoleLocalServiceTest {
 
 		Group group = GroupTestUtil.addGroup(
 			TestPropsValues.getUserId(), _organization.getGroupId(),
-			LayoutTestUtil.addLayout(_organization.getGroupId()));
+			LayoutTestUtil.addTypePortletLayout(_organization.getGroupId()));
 
 		assertGetTeamRoleMap(
 			_roleLocalService.getTeamRoleMap(group.getGroupId()), _team, true);

@@ -87,7 +87,7 @@ public class UpdateStyleBookEntryPreviewMVCActionCommandTest {
 		_themeDisplay.setLanguageId(
 			LanguageUtil.getLanguageId(LocaleUtil.getDefault()));
 
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		_themeDisplay.setLayout(layout);
 		_themeDisplay.setLayoutTypePortlet(

@@ -79,7 +79,7 @@ public class WikiExportImportPortletPreferencesProcessorTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		_layout = LayoutTestUtil.addLayout(_group.getGroupId());
+		_layout = LayoutTestUtil.addTypePortletLayout(_group.getGroupId());
 
 		LayoutTestUtil.addPortletToLayout(
 			TestPropsValues.getUserId(), _layout, WikiPortletKeys.WIKI,

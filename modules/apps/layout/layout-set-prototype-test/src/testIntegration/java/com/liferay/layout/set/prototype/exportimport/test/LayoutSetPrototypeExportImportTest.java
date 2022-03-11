@@ -102,12 +102,13 @@ public class LayoutSetPrototypeExportImportTest
 				LayoutTestUtil.addLayoutPrototype(
 					RandomTestUtil.randomString());
 
-			LayoutTestUtil.addLayout(
+			LayoutTestUtil.addTypePortletLayout(
 				exportedLayoutSetPrototypeGroup, true, exportedLayoutPrototype,
 				true);
 		}
 		else {
-			LayoutTestUtil.addLayout(exportedLayoutSetPrototypeGroup, true);
+			LayoutTestUtil.addTypePortletLayout(
+				exportedLayoutSetPrototypeGroup, true);
 		}
 
 		exportImportPortlet(LayoutSetPrototypePortletKeys.LAYOUT_SET_PROTOTYPE);

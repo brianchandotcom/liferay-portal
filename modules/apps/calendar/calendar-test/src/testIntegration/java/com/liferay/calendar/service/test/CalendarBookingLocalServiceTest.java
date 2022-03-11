@@ -798,7 +798,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Group liveGroup = GroupTestUtil.addGroup();
 
-		Layout targetLayout = LayoutTestUtil.addLayout(liveGroup);
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(liveGroup);
 
 		Calendar liveCalendar = CalendarTestUtil.getDefaultCalendar(liveGroup);
 
@@ -1205,7 +1205,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Group liveGroup = GroupTestUtil.addGroup();
 
-		Layout targetLayout = LayoutTestUtil.addLayout(liveGroup);
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(liveGroup);
 
 		Calendar invitingCalendar = CalendarTestUtil.addCalendar(_user);
 
@@ -1344,7 +1344,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Group liveGroup = GroupTestUtil.addGroup();
 
-		Layout targetLayout = LayoutTestUtil.addLayout(liveGroup);
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(liveGroup);
 
 		Calendar invitedCalendar = CalendarTestUtil.addCalendar(_user);
 
@@ -1383,7 +1383,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Group liveGroup = GroupTestUtil.addGroup();
 
-		Layout targetLayout = LayoutTestUtil.addLayout(liveGroup);
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(liveGroup);
 
 		_activateWorkflow(liveGroup);
 
@@ -1442,7 +1442,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Group liveGroup = GroupTestUtil.addGroup();
 
-		Layout targetLayout = LayoutTestUtil.addLayout(liveGroup);
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(liveGroup);
 
 		_activateWorkflow(liveGroup);
 
@@ -1545,7 +1545,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Group liveGroup = GroupTestUtil.addGroup();
 
-		Layout targetLayout = LayoutTestUtil.addLayout(liveGroup);
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(liveGroup);
 
 		Calendar liveCalendar = CalendarTestUtil.getDefaultCalendar(liveGroup);
 
@@ -1614,7 +1614,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Group liveGroup = GroupTestUtil.addGroup();
 
-		Layout targetLayout = LayoutTestUtil.addLayout(liveGroup);
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(liveGroup);
 
 		Calendar liveCalendar = CalendarTestUtil.getDefaultCalendar(liveGroup);
 
@@ -1672,7 +1672,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Group liveGroup = GroupTestUtil.addGroup();
 
-		Layout targetLayout = LayoutTestUtil.addLayout(liveGroup);
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(liveGroup);
 
 		Calendar liveCalendar1 = CalendarTestUtil.getDefaultCalendar(liveGroup);
 		Calendar liveCalendar2 = CalendarTestUtil.addCalendar(liveGroup);
@@ -1759,7 +1759,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Group liveGroup = GroupTestUtil.addGroup();
 
-		Layout targetLayout = LayoutTestUtil.addLayout(liveGroup);
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(liveGroup);
 
 		Calendar liveCalendar = CalendarTestUtil.getDefaultCalendar(liveGroup);
 
@@ -2015,7 +2015,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Group liveGroup = GroupTestUtil.addGroup();
 
-		Layout targetLayout = LayoutTestUtil.addLayout(liveGroup);
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(liveGroup);
 
 		Calendar liveCalendar = CalendarTestUtil.getDefaultCalendar(liveGroup);
 
@@ -2055,7 +2055,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Group liveGroup = GroupTestUtil.addGroup();
 
-		Layout targetLayout = LayoutTestUtil.addLayout(liveGroup);
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(liveGroup);
 
 		Calendar liveCalendar = CalendarTestUtil.getDefaultCalendar(liveGroup);
 
@@ -3106,7 +3106,7 @@ public class CalendarBookingLocalServiceTest {
 
 		Group liveGroup = GroupTestUtil.addGroup();
 
-		Layout targetLayout = LayoutTestUtil.addLayout(liveGroup);
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(liveGroup);
 
 		Calendar liveCalendar = CalendarTestUtil.getDefaultCalendar(liveGroup);
 

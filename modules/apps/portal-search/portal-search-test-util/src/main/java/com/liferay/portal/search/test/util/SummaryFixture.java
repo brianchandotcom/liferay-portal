@@ -143,7 +143,7 @@ public class SummaryFixture<T> {
 
 		themeDisplay.setCompany(
 			CompanyLocalServiceUtil.getCompany(_group.getCompanyId()));
-		themeDisplay.setLayout(LayoutTestUtil.addLayout(_group));
+		themeDisplay.setLayout(LayoutTestUtil.addTypePortletLayout(_group));
 
 		LayoutSet layoutSet = _group.getPublicLayoutSet();
 

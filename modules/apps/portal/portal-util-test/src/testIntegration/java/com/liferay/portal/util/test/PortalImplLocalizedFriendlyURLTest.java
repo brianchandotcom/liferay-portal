@@ -120,7 +120,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 			_assertLocalizedSiteLayoutFriendlyURL(
 				_group.getGroupId(),
-				LayoutTestUtil.addLayout(
+				LayoutTestUtil.addTypePortletLayout(
 					_group.getGroupId(), false, _nameMap, _friendlyURLMap),
 				"/inicio", LocaleUtil.SPAIN, LocaleUtil.SPAIN, "/inicio",
 				false);
@@ -141,7 +141,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 			_assertLocalizedSiteLayoutFriendlyURL(
 				_group.getGroupId(),
-				LayoutTestUtil.addLayout(
+				LayoutTestUtil.addTypePortletLayout(
 					_group.getGroupId(), false, _nameMap, _friendlyURLMap),
 				"/inicio", LocaleUtil.SPAIN, LocaleUtil.SPAIN, "/inicio", true);
 		}
@@ -161,7 +161,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 			_assertLocalizedSiteLayoutFriendlyURL(
 				_group.getGroupId(),
-				LayoutTestUtil.addLayout(
+				LayoutTestUtil.addTypePortletLayout(
 					_group.getGroupId(), false, _nameMap, _friendlyURLMap),
 				"/inicio", LocaleUtil.SPAIN, LocaleUtil.SPAIN, "/inicio", true);
 		}
@@ -181,7 +181,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 			_assertLocalizedSiteLayoutFriendlyURL(
 				_group.getGroupId(),
-				LayoutTestUtil.addLayout(
+				LayoutTestUtil.addTypePortletLayout(
 					_group.getGroupId(), false, _nameMap, _friendlyURLMap),
 				"/home", LocaleUtil.US, LocaleUtil.US, "/home", false);
 		}
@@ -201,7 +201,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 			_assertLocalizedSiteLayoutFriendlyURL(
 				_group.getGroupId(),
-				LayoutTestUtil.addLayout(
+				LayoutTestUtil.addTypePortletLayout(
 					_group.getGroupId(), false, _nameMap, _friendlyURLMap),
 				"/home", LocaleUtil.US, LocaleUtil.US, "/home", false);
 		}
@@ -221,7 +221,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 			_assertLocalizedSiteLayoutFriendlyURL(
 				_group.getGroupId(),
-				LayoutTestUtil.addLayout(
+				LayoutTestUtil.addTypePortletLayout(
 					_group.getGroupId(), false, _nameMap, _friendlyURLMap),
 				"/home", LocaleUtil.US, LocaleUtil.US, "/home", true);
 		}
@@ -269,7 +269,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 					}
 
 				},
-				LayoutTestUtil.addLayout(
+				LayoutTestUtil.addTypePortletLayout(
 					_group.getGroupId(), false, _nameMap, _friendlyURLMap),
 				locale, LocaleUtil.US));
 	}
@@ -716,7 +716,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		_assertLocalizedSiteLayoutFriendlyURL(
 			_group.getGroupId(),
-			LayoutTestUtil.addLayout(
+			LayoutTestUtil.addTypePortletLayout(
 				_group.getGroupId(), privateLayout, _nameMap, _friendlyURLMap),
 			"/inicio", LocaleUtil.SPAIN, LocaleUtil.SPAIN, "/inicio", true);
 	}
@@ -737,7 +737,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		_assertLocalizedVirtualLayoutFriendlyURL(
 			userGroupGroup.getGroupId(),
-			LayoutTestUtil.addLayout(
+			LayoutTestUtil.addTypePortletLayout(
 				userGroupGroup.getGroupId(), privateLayout, _nameMap,
 				_friendlyURLMap),
 			"/inicio", LocaleUtil.SPAIN, LocaleUtil.SPAIN, "/inicio", true);
@@ -749,7 +749,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		_assertLocalizedSiteLayoutFriendlyURL(
 			_group.getGroupId(),
-			LayoutTestUtil.addLayout(
+			LayoutTestUtil.addTypePortletLayout(
 				_group.getGroupId(), privateLayout, _nameMap, _friendlyURLMap),
 			"/home", LocaleUtil.GERMANY, LocaleUtil.US, "/home", true);
 	}
@@ -771,7 +771,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		_assertLocalizedVirtualLayoutFriendlyURL(
 			userGroupGroup.getGroupId(),
-			LayoutTestUtil.addLayout(
+			LayoutTestUtil.addTypePortletLayout(
 				userGroupGroup.getGroupId(), privateLayout, _nameMap,
 				_friendlyURLMap),
 			"/home", LocaleUtil.GERMANY, LocaleUtil.US, "/home", true);
@@ -783,7 +783,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		_assertLocalizedSiteLayoutFriendlyURL(
 			_group.getGroupId(),
-			LayoutTestUtil.addLayout(
+			LayoutTestUtil.addTypePortletLayout(
 				_group.getGroupId(), privateLayout, _nameMap, _friendlyURLMap),
 			"/inicio", LocaleUtil.GERMANY, LocaleUtil.SPAIN, "/home", true);
 	}
@@ -805,7 +805,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		_assertLocalizedVirtualLayoutFriendlyURL(
 			userGroupGroup.getGroupId(),
-			LayoutTestUtil.addLayout(
+			LayoutTestUtil.addTypePortletLayout(
 				userGroupGroup.getGroupId(), privateLayout, _nameMap,
 				_friendlyURLMap),
 			"/inicio", LocaleUtil.US, LocaleUtil.SPAIN, "/home", true);
@@ -826,7 +826,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		_assertLocalizedSiteLayoutFriendlyURL(
 			_group.getGroupId(),
-			LayoutTestUtil.addLayout(
+			LayoutTestUtil.addTypePortletLayout(
 				_group.getGroupId(), privateLayout, _nameMap, _friendlyURLMap),
 			requestedFriendlyURL, locale, LocaleUtil.SPAIN,
 			expectedLayoutFriendlyURL, true);
@@ -858,7 +858,7 @@ public class PortalImplLocalizedFriendlyURLTest {
 
 		_assertLocalizedVirtualLayoutFriendlyURL(
 			userGroupGroup.getGroupId(),
-			LayoutTestUtil.addLayout(
+			LayoutTestUtil.addTypePortletLayout(
 				userGroupGroup.getGroupId(), privateLayout, _nameMap,
 				_friendlyURLMap),
 			requestedFriendlyURL, locale, LocaleUtil.SPAIN,

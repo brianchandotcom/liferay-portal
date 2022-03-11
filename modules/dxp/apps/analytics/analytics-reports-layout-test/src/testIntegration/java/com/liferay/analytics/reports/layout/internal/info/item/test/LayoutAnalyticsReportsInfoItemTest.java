@@ -353,7 +353,8 @@ public class LayoutAnalyticsReportsInfoItemTest {
 		User user = UserTestUtil.addUser(_group.getGroupId());
 
 		try {
-			Layout layout = LayoutTestUtil.addLayout(_group.getGroupId());
+			Layout layout = LayoutTestUtil.addTypePortletLayout(
+				_group.getGroupId());
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId());

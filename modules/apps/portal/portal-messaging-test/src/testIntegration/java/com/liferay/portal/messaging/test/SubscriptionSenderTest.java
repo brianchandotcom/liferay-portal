@@ -80,8 +80,8 @@ public class SubscriptionSenderTest {
 	public void testGetPortalURLFromPrivateLayoutSetWithEntryURL()
 		throws Exception {
 
-		LayoutTestUtil.addLayout(_group, true);
-		LayoutTestUtil.addLayout(_group, false);
+		LayoutTestUtil.addTypePortletLayout(_group, true);
+		LayoutTestUtil.addTypePortletLayout(_group, false);
 
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
@@ -104,7 +104,7 @@ public class SubscriptionSenderTest {
 	public void testGetPortalURLFromPrivateLayoutSetWithVirtualHost()
 		throws Exception {
 
-		LayoutTestUtil.addLayout(_group, true);
+		LayoutTestUtil.addTypePortletLayout(_group, true);
 
 		_layoutSetLocalService.updateVirtualHosts(
 			_group.getGroupId(), true,
@@ -130,7 +130,7 @@ public class SubscriptionSenderTest {
 	public void testGetPortalURLFromPrivateLayoutSetWithVirtualHostAndEntryURL()
 		throws Exception {
 
-		LayoutTestUtil.addLayout(_group, true);
+		LayoutTestUtil.addTypePortletLayout(_group, true);
 
 		_layoutSetLocalService.updateVirtualHosts(
 			_group.getGroupId(), true,
@@ -140,7 +140,7 @@ public class SubscriptionSenderTest {
 
 		// Include a public layout set to test for LPS-113218
 
-		LayoutTestUtil.addLayout(_group, false);
+		LayoutTestUtil.addTypePortletLayout(_group, false);
 
 		_layoutSetLocalService.updateVirtualHosts(
 			_group.getGroupId(), false,
@@ -169,7 +169,7 @@ public class SubscriptionSenderTest {
 	public void testGetPortalURLFromPublicLayoutSetWithVirtualHost()
 		throws Exception {
 
-		LayoutTestUtil.addLayout(_group, false);
+		LayoutTestUtil.addTypePortletLayout(_group, false);
 
 		_layoutSetLocalService.updateVirtualHosts(
 			_group.getGroupId(), false,

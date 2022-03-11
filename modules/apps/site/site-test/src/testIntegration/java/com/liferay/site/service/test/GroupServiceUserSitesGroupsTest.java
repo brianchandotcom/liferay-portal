@@ -86,7 +86,7 @@ public class GroupServiceUserSitesGroupsTest {
 	public void testInactiveGroups() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		LayoutTestUtil.addLayout(_group);
+		LayoutTestUtil.addTypePortletLayout(_group);
 
 		_user = UserTestUtil.addGroupUser(_group, RoleConstants.USER);
 
@@ -114,7 +114,7 @@ public class GroupServiceUserSitesGroupsTest {
 
 		Group group = organization.getGroup();
 
-		LayoutTestUtil.addLayout(group);
+		LayoutTestUtil.addTypePortletLayout(group);
 
 		group = _groupLocalService.getGroup(group.getGroupId());
 
@@ -181,7 +181,7 @@ public class GroupServiceUserSitesGroupsTest {
 
 		Group organizationGroup = organization.getGroup();
 
-		LayoutTestUtil.addLayout(organizationGroup);
+		LayoutTestUtil.addTypePortletLayout(organizationGroup);
 
 		List<Group> groups = _groupService.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
@@ -204,7 +204,7 @@ public class GroupServiceUserSitesGroupsTest {
 
 		Group organizationGroup = organization.getGroup();
 
-		LayoutTestUtil.addLayout(organizationGroup);
+		LayoutTestUtil.addTypePortletLayout(organizationGroup);
 
 		List<Group> groups = _groupService.getUserSitesGroups(
 			_user.getUserId(), null, QueryUtil.ALL_POS);
@@ -272,7 +272,7 @@ public class GroupServiceUserSitesGroupsTest {
 	public void testUsersGroups() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		LayoutTestUtil.addLayout(_group);
+		LayoutTestUtil.addTypePortletLayout(_group);
 
 		_user = UserTestUtil.addGroupUser(_group, RoleConstants.USER);
 

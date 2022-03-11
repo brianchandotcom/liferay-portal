@@ -67,7 +67,7 @@ public class LayoutFriendlyURLServiceTest {
 
 		String name = RandomTestUtil.randomString();
 
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
 				LocaleUtil.GERMANY, name
@@ -114,7 +114,7 @@ public class LayoutFriendlyURLServiceTest {
 
 		String name = RandomTestUtil.randomString();
 
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
 				LocaleUtil.SPAIN, name

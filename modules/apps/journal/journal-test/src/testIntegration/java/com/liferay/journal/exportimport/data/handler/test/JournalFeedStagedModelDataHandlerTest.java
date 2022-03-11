@@ -77,7 +77,7 @@ public class JournalFeedStagedModelDataHandlerTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_layout = LayoutTestUtil.addLayout(stagingGroup);
+		_layout = LayoutTestUtil.addTypePortletLayout(stagingGroup);
 
 		ServiceContext serviceContext = new ServiceContext();
 

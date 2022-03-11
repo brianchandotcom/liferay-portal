@@ -98,14 +98,14 @@ public abstract class BaseExportImportTestCase {
 		group = GroupTestUtil.addGroup();
 		importedGroup = GroupTestUtil.addGroup();
 
-		layout = LayoutTestUtil.addLayout(group);
+		layout = LayoutTestUtil.addTypePortletLayout(group);
 
 		// Delete and readd to ensure a different layout ID (not ID or UUID).
 		// See LPS-32132.
 
 		LayoutLocalServiceUtil.deleteLayout(layout, new ServiceContext());
 
-		layout = LayoutTestUtil.addLayout(group);
+		layout = LayoutTestUtil.addTypePortletLayout(group);
 	}
 
 	@After

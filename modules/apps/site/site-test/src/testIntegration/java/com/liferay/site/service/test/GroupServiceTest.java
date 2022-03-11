@@ -1054,7 +1054,7 @@ public class GroupServiceTest {
 
 		_groups.addFirst(group);
 
-		Layout layout = LayoutTestUtil.addLayout(group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(group);
 
 		Assert.assertFalse(layout.hasScopeGroup());
 
@@ -1285,7 +1285,7 @@ public class GroupServiceTest {
 	}
 
 	private Group _addScopeGroup(Group group) throws Exception {
-		Layout scopeLayout = LayoutTestUtil.addLayout(group);
+		Layout scopeLayout = LayoutTestUtil.addTypePortletLayout(group);
 
 		return _groupLocalService.addGroup(
 			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,

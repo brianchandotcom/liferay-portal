@@ -62,7 +62,7 @@ public class LayoutTypeURLTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		_publicLayout = LayoutTestUtil.addLayout(_group);
+		_publicLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		setUpVirtualHostname();
 	}

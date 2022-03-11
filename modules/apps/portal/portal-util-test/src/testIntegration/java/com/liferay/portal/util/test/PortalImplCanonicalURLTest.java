@@ -125,7 +125,7 @@ public class PortalImplCanonicalURLTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_layout1 = LayoutTestUtil.addLayout(
+		_layout1 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
 				LocaleUtil.GERMANY, "Zuhause1"
@@ -142,7 +142,7 @@ public class PortalImplCanonicalURLTest {
 				LocaleUtil.US, "/home1"
 			).build());
 
-		_layout2 = LayoutTestUtil.addLayout(
+		_layout2 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
 				LocaleUtil.GERMANY, "Zuhause2"
@@ -159,7 +159,7 @@ public class PortalImplCanonicalURLTest {
 				LocaleUtil.US, "/home2"
 			).build());
 
-		_layout3 = LayoutTestUtil.addLayout(
+		_layout3 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
 				LocaleUtil.GERMANY, _group.getName(LocaleUtil.GERMANY)
@@ -172,7 +172,7 @@ public class PortalImplCanonicalURLTest {
 				LocaleUtil.US, _group.getFriendlyURL()
 			).build());
 
-		_layout4 = LayoutTestUtil.addLayout(
+		_layout4 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
 				LocaleUtil.US, "weben"
@@ -196,10 +196,11 @@ public class PortalImplCanonicalURLTest {
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 			if (_defaultGrouplayout1 == null) {
-				_defaultGrouplayout1 = LayoutTestUtil.addLayout(_defaultGroup);
+				_defaultGrouplayout1 = LayoutTestUtil.addTypePortletLayout(
+					_defaultGroup);
 			}
 
-			_defaultGrouplayout2 = LayoutTestUtil.addLayout(
+			_defaultGrouplayout2 = LayoutTestUtil.addTypePortletLayout(
 				_defaultGroup.getGroupId());
 		}
 	}

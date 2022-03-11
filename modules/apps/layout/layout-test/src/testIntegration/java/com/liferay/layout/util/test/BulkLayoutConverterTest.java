@@ -87,7 +87,7 @@ public class BulkLayoutConverterTest {
 
 	@Test(expected = LayoutConvertException.class)
 	public void testConvertCorruptedLayout() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		Assert.assertEquals(LayoutConstants.TYPE_PORTLET, layout.getType());
 
@@ -122,7 +122,7 @@ public class BulkLayoutConverterTest {
 
 	@Test
 	public void testConvertLinkedLayout() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(),
 			UnicodePropertiesBuilder.put(
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column"
@@ -156,7 +156,7 @@ public class BulkLayoutConverterTest {
 
 	@Test
 	public void testConvertPrivateLayout() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), true, RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
@@ -180,7 +180,7 @@ public class BulkLayoutConverterTest {
 
 	@Test
 	public void testConvertPublicLayout() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(),
 			UnicodePropertiesBuilder.put(
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column"
@@ -222,13 +222,13 @@ public class BulkLayoutConverterTest {
 	}
 
 	private void _addLayouts() throws Exception {
-		_contentLayout = LayoutTestUtil.addLayout(_group);
+		_contentLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		_contentLayout.setType(LayoutConstants.TYPE_CONTENT);
 
 		_contentLayout = _layoutLocalService.updateLayout(_contentLayout);
 
-		_corruptedLayout = LayoutTestUtil.addLayout(_group);
+		_corruptedLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		_layoutLocalService.updateLayout(
 			_corruptedLayout.getGroupId(), _corruptedLayout.isPrivateLayout(),
@@ -239,7 +239,7 @@ public class BulkLayoutConverterTest {
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column"
 			).build();
 
-		_privateLayout = LayoutTestUtil.addLayout(
+		_privateLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), true, RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
@@ -247,7 +247,7 @@ public class BulkLayoutConverterTest {
 			RandomTestUtil.randomLocaleStringMap(),
 			typeSettingsUnicodeProperties.toString(), new HashMap<>(), false);
 
-		_publicLayout = LayoutTestUtil.addLayout(
+		_publicLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), typeSettingsUnicodeProperties.toString());
 
 		Assert.assertEquals(

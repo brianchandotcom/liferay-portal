@@ -939,7 +939,7 @@ public class StagingGroupHelperTest {
 	}
 
 	private Group _addScopeGroup(Group group) throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(group);
 
 		return GroupLocalServiceUtil.addGroup(
 			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,

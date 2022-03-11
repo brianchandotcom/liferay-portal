@@ -129,7 +129,7 @@ public class StagingImplTest {
 	public void testGetRemoteLayout() throws Exception {
 		enableRemoteStaging(false);
 
-		Layout remoteStagingGroupLayout = LayoutTestUtil.addLayout(
+		Layout remoteStagingGroupLayout = LayoutTestUtil.addTypePortletLayout(
 			_remoteStagingGroup);
 
 		Map<String, String[]> parameters =
@@ -158,7 +158,7 @@ public class StagingImplTest {
 	public void testHasRemoteLayout() throws Exception {
 		enableRemoteStaging(false);
 
-		Layout remoteStagingGroupLayout = LayoutTestUtil.addLayout(
+		Layout remoteStagingGroupLayout = LayoutTestUtil.addTypePortletLayout(
 			_remoteStagingGroup);
 
 		Assert.assertFalse(
@@ -302,8 +302,8 @@ public class StagingImplTest {
 	}
 
 	protected void doTestInitialPublication() throws Exception {
-		LayoutTestUtil.addLayout(_group);
-		LayoutTestUtil.addLayout(_group, true);
+		LayoutTestUtil.addTypePortletLayout(_group);
+		LayoutTestUtil.addTypePortletLayout(_group, true);
 
 		JournalTestUtil.addArticle(
 			_group.getGroupId(), RandomTestUtil.randomString(),
@@ -456,8 +456,8 @@ public class StagingImplTest {
 
 		// Layouts
 
-		LayoutTestUtil.addLayout(_group);
-		LayoutTestUtil.addLayout(_group);
+		LayoutTestUtil.addTypePortletLayout(_group);
+		LayoutTestUtil.addTypePortletLayout(_group);
 
 		// Create content
 

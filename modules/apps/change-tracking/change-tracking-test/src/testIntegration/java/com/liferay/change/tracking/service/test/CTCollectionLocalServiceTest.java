@@ -314,7 +314,7 @@ public class CTCollectionLocalServiceTest {
 
 	@Test
 	public void testDeletePreDeletedLayout() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -347,7 +347,7 @@ public class CTCollectionLocalServiceTest {
 	public void testDeletePreDeletedLayoutWithTwoCollections()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -427,9 +427,9 @@ public class CTCollectionLocalServiceTest {
 	public void testUndoCTCollection() throws Exception {
 		Layout addedLayout = null;
 
-		Layout deletedLayout = LayoutTestUtil.addLayout(_group);
+		Layout deletedLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
-		Layout modifiedLayout = LayoutTestUtil.addLayout(_group);
+		Layout modifiedLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		String tagName1 = "layoutcttesttag1";
 		String tagName2 = "layoutcttesttag2";
@@ -446,7 +446,7 @@ public class CTCollectionLocalServiceTest {
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection1.getCtCollectionId())) {
 
-			addedLayout = LayoutTestUtil.addLayout(_group);
+			addedLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
 			_layoutLocalService.deleteLayout(deletedLayout);
 

@@ -47,7 +47,8 @@ public class LayoutRatingsTest extends BaseRatingsTestCase {
 
 		Layout parentLayout = (Layout)parentBaseModel;
 
-		return LayoutTestUtil.addLayout(group, parentLayout.getPlid());
+		return LayoutTestUtil.addTypePortletLayout(
+			group, parentLayout.getPlid());
 	}
 
 	@Override
@@ -72,7 +73,7 @@ public class LayoutRatingsTest extends BaseRatingsTestCase {
 			Group group, ServiceContext serviceContext)
 		throws Exception {
 
-		return LayoutTestUtil.addLayout(group);
+		return LayoutTestUtil.addTypePortletLayout(group);
 	}
 
 }

@@ -66,7 +66,7 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		LayoutTestUtil.addLayout(stagingGroup);
+		LayoutTestUtil.addTypePortletLayout(stagingGroup);
 	}
 
 	@Test

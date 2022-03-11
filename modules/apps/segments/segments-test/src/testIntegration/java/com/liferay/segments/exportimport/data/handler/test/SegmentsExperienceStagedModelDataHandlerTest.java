@@ -60,7 +60,7 @@ public class SegmentsExperienceStagedModelDataHandlerTest
 		_classNameId = _classNameLocalService.getClassNameId(
 			Layout.class.getName());
 
-		Layout layout = LayoutTestUtil.addLayout(stagingGroup);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(stagingGroup);
 
 		layout.setType(LayoutConstants.TYPE_CONTENT);
 

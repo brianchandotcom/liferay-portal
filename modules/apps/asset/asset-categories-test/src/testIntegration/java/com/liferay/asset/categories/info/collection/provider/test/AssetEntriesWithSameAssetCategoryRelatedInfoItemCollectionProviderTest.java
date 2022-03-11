@@ -160,7 +160,7 @@ public class
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setLayout(LayoutTestUtil.addLayout(_group));
+		themeDisplay.setLayout(LayoutTestUtil.addTypePortletLayout(_group));
 
 		return themeDisplay;
 	}

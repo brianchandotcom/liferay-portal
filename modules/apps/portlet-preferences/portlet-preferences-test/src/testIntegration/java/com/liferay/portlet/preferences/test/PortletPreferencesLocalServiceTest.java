@@ -714,7 +714,8 @@ public class PortletPreferencesLocalServiceTest
 		addLayoutPortletPreferences(testLayout, testPortlet);
 
 		addLayoutPortletPreferences(
-			LayoutTestUtil.addLayout(testLayout.getGroup()), testPortlet);
+			LayoutTestUtil.addTypePortletLayout(testLayout.getGroup()),
+			testPortlet);
 
 		List<PortletPreferences> portletPreferencesList =
 			portletPreferencesLocalService.getPortletPreferences(
@@ -788,7 +789,7 @@ public class PortletPreferencesLocalServiceTest
 		addLayoutPortletPreferences(testLayout, testPortlet);
 
 		addLayoutPortletPreferences(
-			LayoutTestUtil.addLayout(testGroup), testPortlet);
+			LayoutTestUtil.addTypePortletLayout(testGroup), testPortlet);
 
 		Assert.assertEquals(
 			2,
@@ -1112,7 +1113,7 @@ public class PortletPreferencesLocalServiceTest
 		addLayoutPortletPreferences(testLayout, testPortlet);
 
 		addLayoutPortletPreferences(
-			LayoutTestUtil.addLayout(testGroup), testPortlet);
+			LayoutTestUtil.addTypePortletLayout(testGroup), testPortlet);
 
 		Assert.assertEquals(
 			2,
@@ -1133,7 +1134,7 @@ public class PortletPreferencesLocalServiceTest
 	public void testGetPortletPreferencesByPlid() throws Exception {
 		addLayoutPortletPreferences(testLayout, testPortlet);
 
-		Layout layout = LayoutTestUtil.addLayout(testGroup);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(testGroup);
 
 		Portlet portlet1 = portletLocalService.getPortletById(
 			layout.getCompanyId(), String.valueOf(_PORTLET_ID + 1));
@@ -1159,7 +1160,7 @@ public class PortletPreferencesLocalServiceTest
 		addLayoutPortletPreferences(testLayout, testPortlet);
 
 		addLayoutPortletPreferences(
-			LayoutTestUtil.addLayout(testGroup), testPortlet);
+			LayoutTestUtil.addTypePortletLayout(testGroup), testPortlet);
 
 		List<PortletPreferences> portletPreferencesList =
 			portletPreferencesLocalService.getPortletPreferences(
@@ -1406,7 +1407,7 @@ public class PortletPreferencesLocalServiceTest
 
 		_groups.add(group);
 
-		return LayoutTestUtil.addLayout(group, privateLayout);
+		return LayoutTestUtil.addTypePortletLayout(group, privateLayout);
 	}
 
 	private PortletPreferencesImpl _toPortletPreferencesImpl(

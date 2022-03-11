@@ -91,7 +91,7 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 		_fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
 			_fragmentCollection.getFragmentCollectionId());
 
-		_layout = LayoutTestUtil.addLayout(_group);
+		_layout = LayoutTestUtil.addTypePortletLayout(_group);
 	}
 
 	@Test

@@ -147,7 +147,7 @@ public class JournalPortletDataHandlerTest
 
 	@Override
 	protected void addStagedModels() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(stagingGroup);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(stagingGroup);
 
 		JournalFolder folder = JournalTestUtil.addFolder(
 			stagingGroup.getGroupId(), RandomTestUtil.randomString());

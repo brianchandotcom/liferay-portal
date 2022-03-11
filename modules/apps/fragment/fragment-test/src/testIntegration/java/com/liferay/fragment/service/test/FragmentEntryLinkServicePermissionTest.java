@@ -78,7 +78,7 @@ public class FragmentEntryLinkServicePermissionTest {
 		_fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
 			fragmentCollection.getFragmentCollectionId());
 
-		_layout = LayoutTestUtil.addLayout(_group);
+		_layout = LayoutTestUtil.addTypePortletLayout(_group);
 	}
 
 	@Test

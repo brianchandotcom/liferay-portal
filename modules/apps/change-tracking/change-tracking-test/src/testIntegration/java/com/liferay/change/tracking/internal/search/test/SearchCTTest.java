@@ -178,8 +178,8 @@ public class SearchCTTest {
 
 		Layout addedLayout = null;
 
-		Layout deletedLayout = LayoutTestUtil.addLayout(_group);
-		Layout modifiedLayout = LayoutTestUtil.addLayout(_group);
+		Layout deletedLayout = LayoutTestUtil.addTypePortletLayout(_group);
+		Layout modifiedLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
@@ -195,7 +195,7 @@ public class SearchCTTest {
 			modifiedJournalArticle2 = JournalTestUtil.updateArticle(
 				modifiedJournalArticle1, "testModifyJournalArticle");
 
-			addedLayout = LayoutTestUtil.addLayout(_group);
+			addedLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
 			deletedLayout = _layoutLocalService.deleteLayout(deletedLayout);
 
@@ -290,15 +290,15 @@ public class SearchCTTest {
 	public void testPublishAndUndoLayout() throws Exception {
 		Layout addedLayout = null;
 
-		Layout deletedLayout = LayoutTestUtil.addLayout(_group);
-		Layout modifiedLayout = LayoutTestUtil.addLayout(_group);
-		Layout unmodifiedLayout = LayoutTestUtil.addLayout(_group);
+		Layout deletedLayout = LayoutTestUtil.addTypePortletLayout(_group);
+		Layout modifiedLayout = LayoutTestUtil.addTypePortletLayout(_group);
+		Layout unmodifiedLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection1.getCtCollectionId())) {
 
-			addedLayout = LayoutTestUtil.addLayout(_group);
+			addedLayout = LayoutTestUtil.addTypePortletLayout(_group);
 			deletedLayout = _layoutLocalService.deleteLayout(deletedLayout);
 
 			modifiedLayout.setFriendlyURL("/testModifyLayout");

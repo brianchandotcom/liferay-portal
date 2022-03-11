@@ -491,8 +491,8 @@ public class DefaultExportImportContentProcessorTest {
 
 		Group group = user.getGroup();
 
-		Layout privateLayout = LayoutTestUtil.addLayout(group, true);
-		Layout publicLayout = LayoutTestUtil.addLayout(group, false);
+		Layout privateLayout = LayoutTestUtil.addTypePortletLayout(group, true);
+		Layout publicLayout = LayoutTestUtil.addTypePortletLayout(group, false);
 
 		PortletDataContext portletDataContextExport =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
@@ -647,8 +647,8 @@ public class DefaultExportImportContentProcessorTest {
 
 	@Test
 	public void testImportLinksToLayoutsIdsReplacement() throws Exception {
-		LayoutTestUtil.addLayout(_liveGroup, true);
-		LayoutTestUtil.addLayout(_liveGroup, false);
+		LayoutTestUtil.addTypePortletLayout(_liveGroup, true);
+		LayoutTestUtil.addTypePortletLayout(_liveGroup, false);
 
 		_exportImportLayouts(true);
 		_exportImportLayouts(false);
@@ -692,7 +692,7 @@ public class DefaultExportImportContentProcessorTest {
 	public void testImportLinksToLayoutsInLayoutSetPrototype()
 		throws Exception {
 
-		LayoutTestUtil.addLayout(_liveGroup, true);
+		LayoutTestUtil.addTypePortletLayout(_liveGroup, true);
 
 		_exportImportLayouts(true);
 
@@ -798,7 +798,7 @@ public class DefaultExportImportContentProcessorTest {
 			friendlyURLMap.put(locale, friendlyURL);
 		}
 
-		return LayoutTestUtil.addLayout(
+		return LayoutTestUtil.addTypePortletLayout(
 			group.getGroupId(), privateLayout, nameMap, friendlyURLMap);
 	}
 

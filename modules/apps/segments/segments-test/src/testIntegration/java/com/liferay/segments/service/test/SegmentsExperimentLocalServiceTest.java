@@ -435,7 +435,7 @@ public class SegmentsExperimentLocalServiceTest {
 		long classNameId = _classNameLocalService.getClassNameId(
 			Layout.class.getName());
 
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
@@ -482,7 +482,7 @@ public class SegmentsExperimentLocalServiceTest {
 	public void testGetSegmentsExperiments() throws Exception {
 		long classNameId = _classNameLocalService.getClassNameId(
 			Layout.class.getName());
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		SegmentsExperiment segmentsExperimentDefault =
 			SegmentsTestUtil.addSegmentsExperiment(

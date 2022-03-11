@@ -57,7 +57,7 @@ public class AssetListEntryUsageTableReferenceDefinitionTest
 
 		_assetListEntry = AssetListTestUtil.addAssetListEntry(
 			group.getGroupId());
-		_layout = LayoutTestUtil.addLayout(group.getGroupId());
+		_layout = LayoutTestUtil.addTypePortletLayout(group.getGroupId());
 	}
 
 	@Override

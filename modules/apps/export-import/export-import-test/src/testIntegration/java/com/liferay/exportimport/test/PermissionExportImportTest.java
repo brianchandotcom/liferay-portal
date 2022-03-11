@@ -87,7 +87,8 @@ public class PermissionExportImportTest {
 
 		Group exportGroup = exportLayoutSetPrototype.getGroup();
 
-		Layout exportLayout = LayoutTestUtil.addLayout(exportGroup, true);
+		Layout exportLayout = LayoutTestUtil.addTypePortletLayout(
+			exportGroup, true);
 
 		String exportResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
 			exportLayout.getPlid(), _PORTLET_ID);
@@ -107,7 +108,8 @@ public class PermissionExportImportTest {
 
 		Group importGroup = importLayoutSetPrototype.getGroup();
 
-		Layout importLayout = LayoutTestUtil.addLayout(importGroup, true);
+		Layout importLayout = LayoutTestUtil.addTypePortletLayout(
+			importGroup, true);
 
 		String importResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
 			importLayout.getPlid(), _PORTLET_ID);

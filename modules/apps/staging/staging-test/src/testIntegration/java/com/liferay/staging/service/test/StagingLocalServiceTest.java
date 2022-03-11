@@ -79,7 +79,7 @@ public class StagingLocalServiceTest {
 	public void testBranchingLayoutLayoutUpdate() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		LayoutTestUtil.addLayout(group);
+		LayoutTestUtil.addTypePortletLayout(group);
 
 		Map<Locale, String> nameMap = HashMapBuilder.put(
 			LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
@@ -136,7 +136,7 @@ public class StagingLocalServiceTest {
 	public void testBranchingLayoutPortletRemoval() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		Layout layout = LayoutTestUtil.addLayout(group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(group);
 
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
@@ -200,7 +200,7 @@ public class StagingLocalServiceTest {
 
 		Group group = GroupTestUtil.addGroup();
 
-		Layout layout = LayoutTestUtil.addLayout(group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(group);
 
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();
@@ -274,7 +274,7 @@ public class StagingLocalServiceTest {
 
 		Group group = GroupTestUtil.addGroup();
 
-		Layout layout = LayoutTestUtil.addLayout(group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(group);
 
 		UnicodeProperties unicodeProperties =
 			layout.getTypeSettingsProperties();

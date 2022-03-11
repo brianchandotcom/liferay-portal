@@ -101,7 +101,7 @@ public class ConvertLayoutMVCActionCommandTest {
 
 	@Test
 	public void testConvertWidgetLayoutToContentLayout() throws Exception {
-		Layout originalLayout = LayoutTestUtil.addLayout(
+		Layout originalLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(),
 			UnicodePropertiesBuilder.put(
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column"
@@ -118,7 +118,7 @@ public class ConvertLayoutMVCActionCommandTest {
 	public void testConvertWidgetLayoutToContentLayoutWithExistingStructure()
 		throws Exception {
 
-		Layout originalLayout = LayoutTestUtil.addLayout(
+		Layout originalLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(),
 			UnicodePropertiesBuilder.put(
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column"

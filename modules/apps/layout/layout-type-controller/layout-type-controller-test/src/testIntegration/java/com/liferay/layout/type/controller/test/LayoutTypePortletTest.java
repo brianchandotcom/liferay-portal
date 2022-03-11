@@ -65,7 +65,7 @@ public class LayoutTypePortletTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		Layout layout = LayoutTestUtil.addLayout(_group, false);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group, false);
 
 		_layoutTypePortlet = (LayoutTypePortlet)layout.getLayoutType();
 	}

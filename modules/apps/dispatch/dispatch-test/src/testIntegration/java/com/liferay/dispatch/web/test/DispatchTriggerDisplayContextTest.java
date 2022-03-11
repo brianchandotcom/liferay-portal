@@ -87,7 +87,7 @@ public class DispatchTriggerDisplayContextTest {
 		Object dispatchTriggerDisplayContext =
 			_getDispatchTriggerDisplayContext(
 				_getMockHttpServletRequest(
-					company, LayoutTestUtil.addLayout(group), user));
+					company, LayoutTestUtil.addTypePortletLayout(group), user));
 
 		Assert.assertNotNull(dispatchTriggerDisplayContext);
 

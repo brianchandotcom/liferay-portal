@@ -63,7 +63,7 @@ public class PortletURLImplTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		themeDisplay.setLayout(layout);
 		themeDisplay.setPlid(layout.getPlid());

@@ -35,7 +35,7 @@ public class PortletInstanceSettingsLocatorTest
 
 	@Before
 	public void setUp() throws Exception {
-		_layout = LayoutTestUtil.addLayout(groupId);
+		_layout = LayoutTestUtil.addTypePortletLayout(groupId);
 
 		_portletInstanceKey =
 			portletId + "_INSTANCE_" + RandomTestUtil.randomString();

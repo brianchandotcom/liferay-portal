@@ -88,7 +88,7 @@ public class ExportImportDateUtilTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_layout = LayoutTestUtil.addLayout(_group);
+		_layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		_layoutSet = _layout.getLayoutSet();
 

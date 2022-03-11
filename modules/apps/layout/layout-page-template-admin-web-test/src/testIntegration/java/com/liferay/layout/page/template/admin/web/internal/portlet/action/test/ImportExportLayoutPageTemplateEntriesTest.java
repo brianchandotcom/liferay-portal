@@ -256,7 +256,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryContainerLinkMappedToLayoutWithFriendlyURL()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(_group1.getGroupId());
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group1.getGroupId());
 
 		Map<String, String> stringValuesMap = HashMapBuilder.put(
 			"FRIENDLY_URL", layout.getFriendlyURL()
@@ -278,7 +279,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryContainerLinkMappedToLayoutWithFriendlyURLSiteKeyDifferentGroup()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(_group1.getGroupId());
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group1.getGroupId());
 
 		Map<String, String> stringValuesMap = HashMapBuilder.put(
 			"FRIENDLY_URL", layout.getFriendlyURL()
@@ -302,7 +304,8 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	public void testImportExportLayoutPageTemplateEntryContainerLinkMappedToLayoutWithPlid()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(_group1.getGroupId());
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group1.getGroupId());
 
 		Map<String, String> stringValuesMap = HashMapBuilder.put(
 			"FRIENDLY_URL", layout.getFriendlyURL()

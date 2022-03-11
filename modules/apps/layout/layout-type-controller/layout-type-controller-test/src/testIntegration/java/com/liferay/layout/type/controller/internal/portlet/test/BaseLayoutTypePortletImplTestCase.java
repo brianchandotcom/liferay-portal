@@ -42,7 +42,7 @@ public abstract class BaseLayoutTypePortletImplTestCase {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		layout = LayoutTestUtil.addLayout(_group, false);
+		layout = LayoutTestUtil.addTypePortletLayout(_group, false);
 
 		layoutTypePortlet = (LayoutTypePortlet)layout.getLayoutType();
 	}

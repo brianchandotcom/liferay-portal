@@ -73,7 +73,7 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 		_themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		_themeDisplay.setLayout(layout);
 		_themeDisplay.setLayoutTypePortlet(

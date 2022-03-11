@@ -40,7 +40,7 @@ public abstract class BasePortletPreferencesTestCase {
 	public void setUp() throws Exception {
 		testGroup = GroupTestUtil.addGroup();
 
-		testLayout = LayoutTestUtil.addLayout(testGroup);
+		testLayout = LayoutTestUtil.addTypePortletLayout(testGroup);
 
 		testPortlet = portletLocalService.getPortletById(
 			testLayout.getCompanyId(), getPortletId());

@@ -78,7 +78,7 @@ public class LayoutReportsProductNavigationControlMenuEntryTest {
 		_group = GroupTestUtil.addGroup(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), 0);
 
-		_layout = LayoutTestUtil.addLayout(_group);
+		_layout = LayoutTestUtil.addTypePortletLayout(_group);
 	}
 
 	@Test

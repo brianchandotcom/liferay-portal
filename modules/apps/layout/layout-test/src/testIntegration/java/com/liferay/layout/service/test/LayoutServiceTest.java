@@ -72,7 +72,7 @@ public class LayoutServiceTest {
 
 	@Test
 	public void testFetchLayout() throws Exception {
-		Layout newLayout = LayoutTestUtil.addLayout(_group);
+		Layout newLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		Layout layout = _layoutService.fetchLayout(
 			0L, newLayout.isPrivateLayout(), newLayout.getLayoutId());
@@ -101,7 +101,7 @@ public class LayoutServiceTest {
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	public void testFetchLayoutWithoutPermissions() throws Exception {
-		Layout newLayout = LayoutTestUtil.addLayout(_group, true);
+		Layout newLayout = LayoutTestUtil.addTypePortletLayout(_group, true);
 
 		PermissionChecker originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -127,7 +127,7 @@ public class LayoutServiceTest {
 
 	@Test
 	public void testUpdateFriendlyURLMap() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		long userId = layout.getUserId();
 
@@ -156,7 +156,7 @@ public class LayoutServiceTest {
 
 	@Test
 	public void testUpdateLookAndFeel() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		layout = LayoutLocalServiceUtil.updateLookAndFeel(
 			_group.getGroupId(), false, layout.getLayoutId(),

@@ -97,10 +97,10 @@ public class LayoutCopyHelperTest {
 
 	@Test
 	public void testCopyAssetCategoryIdsAndAssetTagNames() throws Exception {
-		Layout sourceLayout = LayoutTestUtil.addLayout(
+		Layout sourceLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), StringPool.BLANK);
 
-		Layout targetLayout = LayoutTestUtil.addLayout(
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), StringPool.BLANK);
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
@@ -195,7 +195,7 @@ public class LayoutCopyHelperTest {
 
 	@Test
 	public void testCopyLayoutIcon() throws Exception {
-		Layout sourceLayout = LayoutTestUtil.addLayout(
+		Layout sourceLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), StringPool.BLANK);
 
 		BufferedImage bufferedImage = new BufferedImage(
@@ -211,7 +211,7 @@ public class LayoutCopyHelperTest {
 		sourceLayout = LayoutLocalServiceUtil.updateIconImage(
 			sourceLayout.getPlid(), byteArrayOutputStream.toByteArray());
 
-		Layout targetLayout = LayoutTestUtil.addLayout(
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), StringPool.BLANK);
 
 		Assert.assertTrue(sourceLayout.isIconImage());
@@ -237,7 +237,7 @@ public class LayoutCopyHelperTest {
 
 	@Test
 	public void testCopyLayoutLookAndFeel() throws Exception {
-		Layout sourceLayout = LayoutTestUtil.addLayout(
+		Layout sourceLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), StringPool.BLANK);
 
 		sourceLayout.setThemeId("l1-theme");
@@ -245,7 +245,7 @@ public class LayoutCopyHelperTest {
 
 		LayoutLocalServiceUtil.updateLayout(sourceLayout);
 
-		Layout targetLayout = LayoutTestUtil.addLayout(
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), StringPool.BLANK);
 
 		Assert.assertNotEquals(
@@ -265,7 +265,7 @@ public class LayoutCopyHelperTest {
 	public void testCopyLayoutPortletPreferences() throws Exception {
 		String portletId = LayoutPortletKeys.LAYOUT_TEST_PORTLET;
 
-		Layout sourceLayout = LayoutTestUtil.addLayout(
+		Layout sourceLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), "column-1=" + portletId);
 
 		PortletPreferences sourcePortletPreferences =
@@ -274,7 +274,7 @@ public class LayoutCopyHelperTest {
 				"<portlet-preferences><preference><name>layout</name><value>1" +
 					"</value></preference></portlet-preferences>");
 
-		Layout targetLayout = LayoutTestUtil.addLayout(
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), StringPool.BLANK);
 
 		PortletPreferences targetPortletPreferences =
@@ -300,7 +300,7 @@ public class LayoutCopyHelperTest {
 
 	@Test
 	public void testCopyTypeSettings() throws Exception {
-		Layout sourceLayout = LayoutTestUtil.addLayout(
+		Layout sourceLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(),
 			UnicodePropertiesBuilder.put(
 				"lfr-theme:regular:show-footer", Boolean.TRUE.toString()
@@ -308,7 +308,7 @@ public class LayoutCopyHelperTest {
 				"lfr-theme:regular:show-header", Boolean.TRUE.toString()
 			).buildString());
 
-		Layout targetLayout = LayoutTestUtil.addLayout(
+		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), StringPool.BLANK);
 
 		UnicodeProperties targetUnicodeProperties =

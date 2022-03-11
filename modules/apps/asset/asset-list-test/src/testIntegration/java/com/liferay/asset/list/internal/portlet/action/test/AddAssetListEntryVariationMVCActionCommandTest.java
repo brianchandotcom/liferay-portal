@@ -137,7 +137,7 @@ public class AddAssetListEntryVariationMVCActionCommandTest {
 
 		themeDisplay.setCompany(_company);
 
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());

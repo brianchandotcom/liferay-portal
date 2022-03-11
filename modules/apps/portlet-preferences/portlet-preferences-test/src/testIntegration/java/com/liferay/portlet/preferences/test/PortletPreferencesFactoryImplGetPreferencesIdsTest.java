@@ -76,7 +76,7 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		_layout = LayoutTestUtil.addLayout(_group, true);
+		_layout = LayoutTestUtil.addTypePortletLayout(_group, true);
 	}
 
 	@After
@@ -202,7 +202,7 @@ public class PortletPreferencesFactoryImplGetPreferencesIdsTest {
 
 		_registerCompanyWidePortlet();
 
-		_layout = LayoutTestUtil.addLayout(_group, false);
+		_layout = LayoutTestUtil.addTypePortletLayout(_group, false);
 
 		PortletPreferencesFactoryUtil.getPortletPreferencesIds(
 			_layout.getGroupId(), TestPropsValues.getUserId(), _layout,

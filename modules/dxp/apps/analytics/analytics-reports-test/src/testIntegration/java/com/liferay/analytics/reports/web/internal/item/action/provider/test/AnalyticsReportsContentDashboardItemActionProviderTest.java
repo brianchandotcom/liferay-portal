@@ -64,7 +64,7 @@ public class AnalyticsReportsContentDashboardItemActionProviderTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_layout = LayoutTestUtil.addLayout(_group.getGroupId());
+		_layout = LayoutTestUtil.addTypePortletLayout(_group.getGroupId());
 	}
 
 	@Test

@@ -113,7 +113,7 @@ public class UpdateLanguageActionTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_layout = LayoutTestUtil.addLayout(
+		_layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			HashMapBuilder.put(
 				_defaultLocale, "Page in Default Locale"

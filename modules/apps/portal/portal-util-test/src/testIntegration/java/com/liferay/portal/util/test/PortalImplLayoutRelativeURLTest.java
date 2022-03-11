@@ -98,7 +98,7 @@ public class PortalImplLayoutRelativeURLTest extends BasePortalImplURLTestCase {
 			layoutRelativeURL,
 			portal.getLayoutRelativeURL(layout, themeDisplay));
 
-		Layout childLayout = LayoutTestUtil.addLayout(group);
+		Layout childLayout = LayoutTestUtil.addTypePortletLayout(group);
 
 		themeDisplay.setRefererPlid(childLayout.getPlid());
 

@@ -97,7 +97,7 @@ public class FriendlyURLServletTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		_layout = LayoutTestUtil.addLayout(_group);
+		_layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		List<Locale> availableLocales = Arrays.asList(
 			LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.HUNGARY);
@@ -198,7 +198,7 @@ public class FriendlyURLServletTest {
 
 		Group userGroup = _user.getGroup();
 
-		_layout = LayoutTestUtil.addLayout(userGroup);
+		_layout = LayoutTestUtil.addTypePortletLayout(userGroup);
 
 		testGetRedirect(
 			mockHttpServletRequest, getPath(userGroup, _layout),
@@ -223,7 +223,7 @@ public class FriendlyURLServletTest {
 			locale, "/careers"
 		).build();
 
-		Layout careerLayout = LayoutTestUtil.addLayout(
+		Layout careerLayout = LayoutTestUtil.addTypePortletLayout(
 			groupId, false, nameMap, friendlyURLMap);
 
 		nameMap.put(locale, "friendly");
@@ -275,7 +275,7 @@ public class FriendlyURLServletTest {
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
-		Layout homeLayout = LayoutTestUtil.addLayout(
+		Layout homeLayout = LayoutTestUtil.addTypePortletLayout(
 			group.getGroupId(), false,
 			HashMapBuilder.put(
 				locale, "home"
@@ -331,7 +331,7 @@ public class FriendlyURLServletTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		Layout redirectLayout = LayoutTestUtil.addLayout(_group);
+		Layout redirectLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		redirectLayout.setType(LayoutConstants.TYPE_URL);
 
@@ -368,7 +368,7 @@ public class FriendlyURLServletTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		Layout redirectLayout = LayoutTestUtil.addLayout(_group);
+		Layout redirectLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		redirectLayout.setType(LayoutConstants.TYPE_URL);
 

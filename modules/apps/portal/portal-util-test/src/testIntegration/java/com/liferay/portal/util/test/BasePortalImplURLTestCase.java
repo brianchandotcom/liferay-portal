@@ -49,8 +49,8 @@ public abstract class BasePortalImplURLTestCase {
 
 		group = GroupTestUtil.addGroup();
 
-		privateLayout = LayoutTestUtil.addLayout(group, true);
-		publicLayout = LayoutTestUtil.addLayout(group);
+		privateLayout = LayoutTestUtil.addTypePortletLayout(group, true);
+		publicLayout = LayoutTestUtil.addTypePortletLayout(group);
 	}
 
 	protected ThemeDisplay initThemeDisplay(

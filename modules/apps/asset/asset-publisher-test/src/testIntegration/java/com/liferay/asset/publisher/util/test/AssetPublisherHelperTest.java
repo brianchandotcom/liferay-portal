@@ -316,7 +316,7 @@ public class AssetPublisherHelperTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setLayout(LayoutTestUtil.addLayout(_group1));
+		themeDisplay.setLayout(LayoutTestUtil.addTypePortletLayout(_group1));
 		themeDisplay.setScopeGroupId(_group1.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
@@ -537,7 +537,8 @@ public class AssetPublisherHelperTest {
 			_group1.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
 
-		Layout layout = LayoutTestUtil.addLayout(_group2.getGroupId());
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group2.getGroupId());
 
 		String assetTagName2 = RandomTestUtil.randomString();
 

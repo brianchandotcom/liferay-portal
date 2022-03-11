@@ -185,7 +185,7 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 
 		long classNameId = _classNameLocalService.getClassNameId(
 			Layout.class.getName());
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		return SegmentsTestUtil.addSegmentsExperience(
 			segmentsEntry.getSegmentsEntryId(), classNameId, layout.getPlid(),

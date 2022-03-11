@@ -158,8 +158,8 @@ public class PortletLayoutFinderTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		_blogLayout = LayoutTestUtil.addLayout(_group);
-		_assetLayout = LayoutTestUtil.addLayout(_group);
+		_blogLayout = LayoutTestUtil.addTypePortletLayout(_group);
+		_assetLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		if (portletExists) {
 			String portletId = PortletProviderUtil.getPortletId(

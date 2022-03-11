@@ -73,9 +73,9 @@ public class ServicePreActionTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		LayoutTestUtil.addLayout(_group);
+		LayoutTestUtil.addTypePortletLayout(_group);
 
-		LayoutTestUtil.addLayout(
+		LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), "Page not visible", false, null, false, true);
 
 		_request.setRequestURI(_portal.getPathMain() + "/portal/login");

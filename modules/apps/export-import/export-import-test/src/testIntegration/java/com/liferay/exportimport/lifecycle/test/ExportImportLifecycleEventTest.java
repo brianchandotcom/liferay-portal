@@ -324,7 +324,7 @@ public class ExportImportLifecycleEventTest {
 
 	@Test
 	public void testSuccessfulLayoutLocalPublishing() throws Exception {
-		LayoutTestUtil.addLayout(_group, false);
+		LayoutTestUtil.addTypePortletLayout(_group, false);
 
 		JournalTestUtil.addArticle(
 			_group.getGroupId(),

@@ -98,7 +98,7 @@ public class LayoutReportsDataMVCResourceCommandTest {
 			withLayoutReportsGooglePageSpeedGroupConfiguration(
 				RandomTestUtil.randomString(), true, _group.getGroupId(),
 				() -> {
-					Layout layout = LayoutTestUtil.addLayout(
+					Layout layout = LayoutTestUtil.addTypePortletLayout(
 						_group.getGroupId());
 
 					GroupTestUtil.updateDisplaySettings(
@@ -161,7 +161,7 @@ public class LayoutReportsDataMVCResourceCommandTest {
 			withLayoutReportsGooglePageSpeedGroupConfiguration(
 				RandomTestUtil.randomString(), true, _group.getGroupId(),
 				() -> {
-					Layout layout = LayoutTestUtil.addLayout(
+					Layout layout = LayoutTestUtil.addTypePortletLayout(
 						_group.getGroupId());
 
 					JSONObject jsonObject = _serveResource(layout);
@@ -190,7 +190,8 @@ public class LayoutReportsDataMVCResourceCommandTest {
 								new HashMapDictionary<>());
 
 					try {
-						Layout layout = LayoutTestUtil.addLayout(_group);
+						Layout layout = LayoutTestUtil.addTypePortletLayout(
+							_group);
 
 						layout.setType(LayoutConstants.TYPE_ASSET_DISPLAY);
 
@@ -282,7 +283,7 @@ public class LayoutReportsDataMVCResourceCommandTest {
 						Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN),
 						LocaleUtil.US);
 
-					Layout layout = LayoutTestUtil.addLayout(
+					Layout layout = LayoutTestUtil.addTypePortletLayout(
 						_group.getGroupId());
 
 					_layoutSEOEntryLocalService.updateLayoutSEOEntry(
@@ -320,7 +321,7 @@ public class LayoutReportsDataMVCResourceCommandTest {
 			withLayoutReportsGooglePageSpeedGroupConfiguration(
 				StringPool.BLANK, true, _group.getGroupId(),
 				() -> {
-					Layout layout = LayoutTestUtil.addLayout(
+					Layout layout = LayoutTestUtil.addTypePortletLayout(
 						_group.getGroupId());
 
 					JSONObject jsonObject = _serveResource(layout);
@@ -336,7 +337,7 @@ public class LayoutReportsDataMVCResourceCommandTest {
 			withLayoutReportsGooglePageSpeedGroupConfiguration(
 				RandomTestUtil.randomString(), true, _group.getGroupId(),
 				() -> {
-					Layout layout = LayoutTestUtil.addLayout(
+					Layout layout = LayoutTestUtil.addTypePortletLayout(
 						_group.getGroupId());
 
 					GroupTestUtil.updateDisplaySettings(

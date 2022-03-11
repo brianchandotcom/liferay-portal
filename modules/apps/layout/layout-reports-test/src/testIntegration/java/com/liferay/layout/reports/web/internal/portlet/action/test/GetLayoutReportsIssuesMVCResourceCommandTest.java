@@ -84,7 +84,7 @@ public class GetLayoutReportsIssuesMVCResourceCommandTest {
 						portalCache.put(key, JSONUtil.put("test", "test"));
 
 						JSONObject jsonObject = _serveResource(
-							LayoutTestUtil.addLayout(
+							LayoutTestUtil.addTypePortletLayout(
 								TestPropsValues.getGroupId()),
 							false, url);
 
@@ -114,7 +114,7 @@ public class GetLayoutReportsIssuesMVCResourceCommandTest {
 								LoggerTestUtil.ERROR)) {
 
 						JSONObject jsonObject = _serveResource(
-							LayoutTestUtil.addLayout(
+							LayoutTestUtil.addTypePortletLayout(
 								TestPropsValues.getGroupId()),
 							true, "http://localhost:8080/test");
 

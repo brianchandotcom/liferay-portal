@@ -129,7 +129,7 @@ public class LayoutWorkflowHandlerTest {
 
 	@Test
 	public void testWorkflowHandlerWidgetLayout() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), StringPool.BLANK);
 
 		WorkflowHandler<?> workflowHandler =

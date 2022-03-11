@@ -738,9 +738,9 @@ public class ExportImportHelperUtilTest {
 
 	@Test
 	public void testGetSelectedLayoutsJSONSelectAllLayouts() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(_stagingGroup);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_stagingGroup);
 
-		Layout childLayout = LayoutTestUtil.addLayout(
+		Layout childLayout = LayoutTestUtil.addTypePortletLayout(
 			_stagingGroup, layout.getPlid());
 
 		String selectedLayoutsJSON =
@@ -764,9 +764,9 @@ public class ExportImportHelperUtilTest {
 
 	@Test
 	public void testGetSelectedLayoutsJSONSelectChildLayout() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(_stagingGroup);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_stagingGroup);
 
-		Layout childLayout = LayoutTestUtil.addLayout(
+		Layout childLayout = LayoutTestUtil.addTypePortletLayout(
 			_stagingGroup, layout.getPlid());
 
 		String selectedLayoutsJSON =
@@ -788,9 +788,9 @@ public class ExportImportHelperUtilTest {
 
 	@Test
 	public void testGetSelectedLayoutsJSONSelectNoLayouts() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(_stagingGroup);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_stagingGroup);
 
-		LayoutTestUtil.addLayout(_stagingGroup, layout.getPlid());
+		LayoutTestUtil.addTypePortletLayout(_stagingGroup, layout.getPlid());
 
 		String selectedLayoutsJSON =
 			ExportImportHelperUtil.getSelectedLayoutsJSON(
@@ -807,9 +807,9 @@ public class ExportImportHelperUtilTest {
 	public void testGetSelectedLayoutsJSONSelectParentLayout()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(_stagingGroup);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_stagingGroup);
 
-		LayoutTestUtil.addLayout(
+		LayoutTestUtil.addTypePortletLayout(
 			_stagingGroup.getGroupId(), "Child Layout", layout.getPlid());
 
 		String selectedLayoutsJSON =

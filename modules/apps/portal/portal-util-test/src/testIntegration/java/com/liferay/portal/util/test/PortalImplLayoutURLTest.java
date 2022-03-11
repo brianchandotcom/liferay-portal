@@ -88,7 +88,7 @@ public class PortalImplLayoutURLTest extends BasePortalImplURLTestCase {
 
 		themeDisplay.setDoAsUserId("impersonated");
 
-		Layout layout = LayoutTestUtil.addLayout(group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(group);
 
 		layout.setType(LayoutConstants.TYPE_URL);
 

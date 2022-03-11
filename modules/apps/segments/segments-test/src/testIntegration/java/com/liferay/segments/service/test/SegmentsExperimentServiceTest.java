@@ -172,7 +172,7 @@ public class SegmentsExperimentServiceTest {
 	public void testGetSegmentsExperimentsWithoutViewPermission()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		SegmentsExperiment segmentsExperiment1 = _addSegmentsExperiment(layout);
 		SegmentsExperiment segmentsExperiment2 = _addSegmentsExperiment(layout);
@@ -216,7 +216,7 @@ public class SegmentsExperimentServiceTest {
 	public void testGetSegmentsExperimentsWithViewPermission()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		SegmentsExperiment segmentsExperiment1 = _addSegmentsExperiment(layout);
 		SegmentsExperiment segmentsExperiment2 = _addSegmentsExperiment(layout);
@@ -321,7 +321,7 @@ public class SegmentsExperimentServiceTest {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		return _addSegmentsExperiment(layout, serviceContext);
 	}

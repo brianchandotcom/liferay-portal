@@ -73,7 +73,7 @@ public class PageEditorCommentMentionsStrategyTest {
 
 		_addUserWithRole(_group.getGroupId(), role.getName(), "example");
 
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		RoleTestUtil.addResourcePermission(
 			role, "com.liferay.portal.kernel.model.Layout",
@@ -95,7 +95,7 @@ public class PageEditorCommentMentionsStrategyTest {
 
 		_addUserWithRole(_group.getGroupId(), role.getName(), "example");
 
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		RoleTestUtil.addResourcePermission(
 			role, "com.liferay.portal.kernel.model.Layout",
@@ -118,7 +118,7 @@ public class PageEditorCommentMentionsStrategyTest {
 		_addUserWithRole(
 			_group.getGroupId(), RoleConstants.SITE_ADMINISTRATOR, "example");
 
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		List<User> users = _mentionsStrategy.getUsers(
 			_group.getCompanyId(), TestPropsValues.getUserId(), "exa",
@@ -137,7 +137,7 @@ public class PageEditorCommentMentionsStrategyTest {
 			_group.getGroupId(), RoleConstants.SITE_CONTENT_REVIEWER,
 			"example1");
 
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		List<User> users = _mentionsStrategy.getUsers(
 			_group.getCompanyId(), TestPropsValues.getUserId(), "exa",

@@ -147,7 +147,7 @@ public class PortalImplTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		Layout layout = LayoutTestUtil.addLayout(_group);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());

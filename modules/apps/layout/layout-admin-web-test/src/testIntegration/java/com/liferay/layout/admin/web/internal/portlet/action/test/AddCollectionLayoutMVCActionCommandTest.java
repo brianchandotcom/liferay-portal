@@ -112,7 +112,7 @@ public class AddCollectionLayoutMVCActionCommandTest {
 
 	@Test
 	public void testAddChildCollectionLayout() throws Exception {
-		Layout parentLayout = LayoutTestUtil.addLayout(_group);
+		Layout parentLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		Layout layout = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_addCollectionLayout",
@@ -216,7 +216,7 @@ public class AddCollectionLayoutMVCActionCommandTest {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
-		themeDisplay.setLayout(LayoutTestUtil.addLayout(_group));
+		themeDisplay.setLayout(LayoutTestUtil.addTypePortletLayout(_group));
 
 		LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 			_group.getGroupId(), false);

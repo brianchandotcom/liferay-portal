@@ -92,14 +92,14 @@ public class LayoutLocalServiceTest {
 
 		String friendlyURL1 = "/friendly-url-1";
 
-		Layout layout1 = LayoutTestUtil.addLayout(
+		Layout layout1 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), true,
 			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL1));
 
 		String friendlyURL2 = "/friendly-url-2";
 
-		Layout layout2 = LayoutTestUtil.addLayout(
+		Layout layout2 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), true,
 			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL2));
@@ -126,7 +126,7 @@ public class LayoutLocalServiceTest {
 
 		String friendlyURL1 = "/friendly-url-1";
 
-		Layout layout1 = LayoutTestUtil.addLayout(
+		Layout layout1 = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			Collections.singletonMap(LocaleUtil.getDefault(), "friendly url 1"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL1));
@@ -237,7 +237,7 @@ public class LayoutLocalServiceTest {
 	public void testKeepsAHistoryOfOldFriendlyURLs() throws Exception {
 		String friendlyURL = "/friendly-url";
 
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));
@@ -270,7 +270,7 @@ public class LayoutLocalServiceTest {
 
 		friendlyURL = HttpUtil.decodeURL(friendlyURL);
 
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			Collections.singletonMap(LocaleUtil.getDefault(), name),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));
@@ -289,7 +289,7 @@ public class LayoutLocalServiceTest {
 
 		String friendlyURL = HttpUtil.decodeURL(StringPool.SLASH + name);
 
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			Collections.singletonMap(LocaleUtil.getDefault(), name),
 			Collections.singletonMap(LocaleUtil.getDefault(), null));
@@ -306,14 +306,14 @@ public class LayoutLocalServiceTest {
 
 		String friendlyURL = "/friendly-url";
 
-		Layout layout = LayoutTestUtil.addLayout(
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), true,
 			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));
 
 		_layoutLocalService.deleteLayout(layout);
 
-		layout = LayoutTestUtil.addLayout(
+		layout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), true,
 			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));
@@ -334,12 +334,12 @@ public class LayoutLocalServiceTest {
 
 		String friendlyURL = "/friendly-url";
 
-		Layout privateLayout = LayoutTestUtil.addLayout(
+		Layout privateLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), true,
 			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));
 
-		Layout publicLayout = LayoutTestUtil.addLayout(
+		Layout publicLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), false,
 			Collections.singletonMap(LocaleUtil.getDefault(), "name"),
 			Collections.singletonMap(LocaleUtil.getDefault(), friendlyURL));

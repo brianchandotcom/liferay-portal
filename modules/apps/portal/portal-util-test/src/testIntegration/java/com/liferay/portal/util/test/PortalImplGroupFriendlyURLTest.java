@@ -89,7 +89,7 @@ public class PortalImplGroupFriendlyURLTest {
 			_groupLocalService.updateGroup(_group);
 		}
 
-		LayoutTestUtil.addLayout(_group, true);
+		LayoutTestUtil.addTypePortletLayout(_group, true);
 	}
 
 	@AfterClass
@@ -160,7 +160,8 @@ public class PortalImplGroupFriendlyURLTest {
 		Group group = GroupTestUtil.addGroup(
 			_company.getCompanyId(), user.getUserId(), 0);
 
-		Layout nondefaultSiteLayout = LayoutTestUtil.addLayout(group);
+		Layout nondefaultSiteLayout = LayoutTestUtil.addTypePortletLayout(
+			group);
 
 		_testGroupFriendlyURL(
 			_company.getVirtualHostname(),
@@ -216,7 +217,8 @@ public class PortalImplGroupFriendlyURLTest {
 			Group group = GroupTestUtil.addGroup(
 				_company.getCompanyId(), user.getUserId(), 0);
 
-			Layout nondefaultSiteLayout = LayoutTestUtil.addLayout(group);
+			Layout nondefaultSiteLayout = LayoutTestUtil.addTypePortletLayout(
+				group);
 
 			_testGroupFriendlyURL(
 				_company.getVirtualHostname(),

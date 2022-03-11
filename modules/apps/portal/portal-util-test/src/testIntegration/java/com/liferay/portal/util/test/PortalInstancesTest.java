@@ -77,7 +77,7 @@ public class PortalInstancesTest {
 			_company.getCompanyId(), TestPropsValues.getUserId(),
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		LayoutTestUtil.addLayout(nondefaultGroup, false);
+		LayoutTestUtil.addTypePortletLayout(nondefaultGroup, false);
 
 		_nondefaultGroupPublicLayout = _layoutLocalService.fetchDefaultLayout(
 			nondefaultGroup.getGroupId(), false);

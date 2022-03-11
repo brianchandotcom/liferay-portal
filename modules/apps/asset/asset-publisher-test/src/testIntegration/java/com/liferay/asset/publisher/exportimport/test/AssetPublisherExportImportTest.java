@@ -501,7 +501,7 @@ public class AssetPublisherExportImportTest
 
 		groups.add(layoutGroup1);
 
-		Layout layout2 = LayoutTestUtil.addLayout(group);
+		Layout layout2 = LayoutTestUtil.addTypePortletLayout(group);
 
 		Group layoutGroup2 = GroupTestUtil.addGroup(
 			TestPropsValues.getUserId(), layout2);
@@ -814,7 +814,7 @@ public class AssetPublisherExportImportTest
 		Company company = _companyLocalService.getCompany(
 			layout.getCompanyId());
 
-		Layout secondLayout = LayoutTestUtil.addLayout(group);
+		Layout secondLayout = LayoutTestUtil.addTypePortletLayout(group);
 
 		GroupTestUtil.addGroup(TestPropsValues.getUserId(), secondLayout);
 
@@ -855,7 +855,7 @@ public class AssetPublisherExportImportTest
 
 	@Test
 	public void testSeveralLegacyLayoutScopeIds() throws Exception {
-		Layout secondLayout = LayoutTestUtil.addLayout(group);
+		Layout secondLayout = LayoutTestUtil.addTypePortletLayout(group);
 
 		GroupTestUtil.addGroup(TestPropsValues.getUserId(), secondLayout);
 

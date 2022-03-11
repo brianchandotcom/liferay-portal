@@ -126,7 +126,7 @@ public class EditServerMVCActionCommandTest {
 	private LayoutRevision _getLayoutRevision() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		Layout layout = LayoutTestUtil.addLayout(_group, false);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group, false);
 
 		LayoutSetBranch layoutSetBranch =
 			_layoutSetBranchLocalService.addLayoutSetBranch(

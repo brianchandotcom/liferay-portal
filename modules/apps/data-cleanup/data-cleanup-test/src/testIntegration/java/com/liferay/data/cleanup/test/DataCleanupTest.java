@@ -187,7 +187,8 @@ public class DataCleanupTest {
 		}
 
 		if (portletPreferencePortletId != null) {
-			_layout = LayoutTestUtil.addLayout(TestPropsValues.getGroupId());
+			_layout = LayoutTestUtil.addTypePortletLayout(
+				TestPropsValues.getGroupId());
 
 			UnicodeProperties unicodeProperties =
 				_layout.getTypeSettingsProperties();

@@ -123,7 +123,7 @@ public class StagingDataPortletPreferencesTest {
 
 		stagingGroup = liveGroup.getStagingGroup();
 
-		stagingLayout = LayoutTestUtil.addLayout(stagingGroup);
+		stagingLayout = LayoutTestUtil.addTypePortletLayout(stagingGroup);
 	}
 
 	@Test

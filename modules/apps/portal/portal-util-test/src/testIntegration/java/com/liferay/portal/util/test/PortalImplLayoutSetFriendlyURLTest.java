@@ -62,7 +62,7 @@ public class PortalImplLayoutSetFriendlyURLTest
 		try {
 			field.set(null, defaultGroup.getName());
 
-			Layout layout = LayoutTestUtil.addLayout(defaultGroup);
+			Layout layout = LayoutTestUtil.addTypePortletLayout(defaultGroup);
 
 			String friendlyURL = portal.getLayoutSetFriendlyURL(
 				layout.getLayoutSet(),

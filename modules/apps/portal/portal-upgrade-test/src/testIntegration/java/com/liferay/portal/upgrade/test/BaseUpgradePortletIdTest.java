@@ -171,7 +171,7 @@ public class BaseUpgradePortletIdTest extends BasePortletIdUpgradeProcess {
 	protected Layout addLayout() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		return LayoutTestUtil.addLayout(group, false);
+		return LayoutTestUtil.addTypePortletLayout(group, false);
 	}
 
 	protected void addPortletPreferences(Layout layout, String portletId)

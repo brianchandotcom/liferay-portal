@@ -105,7 +105,7 @@ public class JournalArticleStagedModelDataHandlerTest
 			stagingGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		Layout layout = LayoutTestUtil.addLayout(stagingGroup);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(stagingGroup);
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, journalArticle);

@@ -61,7 +61,7 @@ definition {
 			var portletName = "LanguagePortlet";
 		}
 
-		if (IsTextNotEqual(key_portletName = "${portletName}", locator1 = "Language#DROPDOWN_LANGUAGE", value1 = "${locale}")) {
+		if (IsElementNotPresent(key_locale = "${locale}", key_portletName = "${portletName}", locator1 = "Language#DROPDOWN_CURRENT_LANGUAGE")) {
 			Click(
 				key_portletName = "${portletName}",
 				locator1 = "Language#DROPDOWN");

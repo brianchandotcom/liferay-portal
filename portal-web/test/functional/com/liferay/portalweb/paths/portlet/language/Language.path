@@ -18,12 +18,7 @@
 </tr>
 <tr>
 	<td>DROPDOWN_CURRENT_LANGUAGE</td>
-	<td>//button[contains(@id,'LanguagePortlet') and contains(@id,'_menu')]//span[contains(@class,'btn-section') and contains(.,'${key_locale}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DROPDOWN_LANGUAGE</td>
-	<td>//button[contains(@id,'${key_portletName}') and contains(@id,'_menu')]//span[contains(@class,'btn-section')]</td>
+	<td>//button[contains(@id,'${key_portletName}') and contains(@id,'_menu')]//span[contains(@class,'btn-section') and contains(.,'${key_locale}')]</td>
 	<td></td>
 </tr>
 <tr>

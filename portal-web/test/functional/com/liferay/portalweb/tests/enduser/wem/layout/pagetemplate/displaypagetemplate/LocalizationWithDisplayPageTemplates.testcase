@@ -85,10 +85,7 @@ definition {
 		}
 
 		task ("View the displayed content in display page template") {
-			AssertTextEquals.assertPartialText(
-				key_portletName = "LanguagePortlet",
-				locator1 = "Language#DROPDOWN_LANGUAGE",
-				value1 = "es-ES");
+			LanguagePortlet.viewCurrentLanguage(locale = "es-ES");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",
@@ -103,10 +100,7 @@ definition {
 		}
 
 		task ("View the displayed content in display page template") {
-			AssertTextEquals.assertPartialText(
-				key_portletName = "LanguagePortlet",
-				locator1 = "Language#DROPDOWN_LANGUAGE",
-				value1 = "en-US");
+			LanguagePortlet.viewCurrentLanguage(locale = "en-US");
 
 			ContentPages.viewFragmentText(
 				fragmentName = "heading",

@@ -13,98 +13,122 @@
  */
 
 import ClayChart from '@clayui/charts';
+import ClayIcon from '@clayui/icon';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import ProgressBar from '../../../components/ProgressBar';
+import useTotalTestCases from '../../../data/useTotalTestCases';
 import {getTestrayBuilds} from '../../../graphql/queries';
 import i18n from '../../../i18n';
-import {DATA_COLORS} from '../../../util/constants';
-import {getRandomMaximumValue} from '../../../util/mock';
 
-const Routine = () => (
-	<Container title={i18n.translate('build-history')}>
-		<ClayChart
-			axis={{
-				y: {
-					label: {
-						position: 'outer-middle',
-						text: i18n.translate('tests').toUpperCase(),
-					},
-				},
-			}}
-			data={{
-				colors: {
-					blocked: DATA_COLORS['metrics.blocked'],
-					failed: DATA_COLORS['metrics.failed'],
-					incomplete: DATA_COLORS['metrics.incomplete'],
-					passed: DATA_COLORS['metrics.passed'],
-					test_fix: DATA_COLORS['metrics.test-fix'],
-				},
-				columns: [
-					['passed', ...getRandomMaximumValue(20, 1500)],
-					['failed', ...getRandomMaximumValue(20, 100)],
-					['blocked', ...getRandomMaximumValue(20, 100)],
-					['incomplete', ...getRandomMaximumValue(20, 100)],
-					['test_fix', ...getRandomMaximumValue(20, 100)],
-				],
-				stack: {
-					normalize: true,
-				},
-				type: 'area',
-			}}
-			legend={{position: 'top-right'}}
-		/>
+const Routine = () => {
+	const {barChart, colors} = useTotalTestCases();
 
-		<ListView
-			query={getTestrayBuilds}
-			tableProps={{
-				columns: [
-					{key: 'dateCreated', size: 'sm', value: 'Create Date'},
-					{key: 'gitHash', value: 'Git Hash'},
-					{
-						key: 'product_version',
-						render: (_, {testrayProductVersion}) =>
-							testrayProductVersion?.name,
-						value: 'Product Version',
+	return (
+		<Container title={i18n.translate('build-history')}>
+			<ClayChart
+				axis={{
+					y: {
+						label: {
+							position: 'outer-middle',
+							text: i18n.translate('tests').toUpperCase(),
+						},
 					},
-					{
-						key: 'dateCreated',
-						size: 'sm',
-						value: i18n.translate('create-date'),
+				}}
+				data={{
+					colors,
+					columns: barChart.columns,
+					stack: {
+						normalize: true,
 					},
-					{key: 'gitHash', value: i18n.translate('git-hash')},
-					{
-						clickable: true,
-						key: 'name',
-						size: 'md',
-						value: i18n.translate('build'),
+					type: 'area',
+				}}
+				legend={{position: 'top-right'}}
+			/>
+
+			<ListView
+				initialContext={{
+					filters: {
+						columns: {
+							in_progress: false,
+							passed: false,
+							total: false,
+							untested: false,
+						},
 					},
-					{key: 'failed', value: i18n.translate('failed')},
-					{key: 'blocked', value: i18n.translate('blocked')},
-					{key: 'test_fix', value: i18n.translate('test-fix')},
-					{
-						key: 'metrics',
-						render: () => (
-							<ProgressBar
-								items={{
-									blocked: 0,
-									failed: 2,
-									incomplete: 0,
-									passed: 30,
-									test_fix: 0,
-								}}
-							/>
-						),
-						size: 'md',
-						value: i18n.translate('metrics'),
-					},
-				],
-				navigateTo: ({testrayBuildId}) => `build/${testrayBuildId}`,
-			}}
-			transformData={(data) => data?.testrayBuilds || {}}
-		/>
-	</Container>
-);
+				}}
+				query={getTestrayBuilds}
+				tableProps={{
+					columns: [
+						{
+							key: 'status',
+							render: (_, {promoted}) => {
+								return (
+									<>
+										{promoted && (
+											<ClayIcon
+												className="mr-3"
+												symbol="star"
+											/>
+										)}
+
+										<ClayIcon
+											color="darkblue"
+											symbol="circle"
+										/>
+									</>
+								);
+							},
+							value: i18n.translate('status'),
+						},
+						{key: 'dateCreated', size: 'sm', value: 'Create Date'},
+						{key: 'gitHash', value: 'Git Hash'},
+						{
+							key: 'product_version',
+							render: (_, {testrayProductVersion}) =>
+								testrayProductVersion?.name,
+							value: 'Product Version',
+						},
+						{
+							clickable: true,
+							key: 'name',
+							size: 'lg',
+							value: i18n.translate('build'),
+						},
+						{key: 'failed', value: i18n.translate('failed')},
+						{key: 'blocked', value: i18n.translate('blocked')},
+						{key: 'untested', value: i18n.translate('untested')},
+						{
+							key: 'in_progress',
+							value: i18n.translate('in-progress'),
+						},
+						{key: 'passed', value: i18n.translate('passed')},
+						{key: 'test_fix', value: i18n.translate('test-fix')},
+						{key: 'total', value: i18n.translate('total')},
+						{
+							key: 'metrics',
+							render: () => (
+								<ProgressBar
+									items={{
+										blocked: 0,
+										failed: 2,
+										incomplete: 0,
+										passed: 30,
+										test_fix: 0,
+									}}
+								/>
+							),
+							size: 'md',
+							value: i18n.translate('metrics'),
+						},
+					],
+					navigateTo: ({testrayBuildId}) => `build/${testrayBuildId}`,
+				}}
+				transformData={(data) => data?.testrayBuilds}
+			/>
+		</Container>
+	);
+};
 
 export default Routine;

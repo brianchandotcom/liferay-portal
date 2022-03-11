@@ -48,8 +48,17 @@ const Requirements = () => (
 						),
 						value: 'Link',
 					},
-					{key: 'team', value: i18n.translate('team')},
-					{key: 'component', value: i18n.translate('component')},
+					{
+						key: 'testrayTeam',
+						render: (_, {testrayComponent}) =>
+							testrayComponent?.testrayTeam?.name,
+						value: i18n.translate('team'),
+					},
+					{
+						key: 'testrayComponent',
+						render: (testrayComponent) => testrayComponent?.name,
+						value: i18n.translate('component'),
+					},
 					{
 						key: 'components',
 						value: i18n.translate('jira-components'),
@@ -62,7 +71,7 @@ const Requirements = () => (
 				],
 				navigateTo: ({id}) => id?.toString(),
 			}}
-			transformData={(data) => data?.c?.testrayRequirements}
+			transformData={(data) => data?.testrayRequirements}
 		/>
 	</Container>
 );

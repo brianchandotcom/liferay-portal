@@ -11,6 +11,7 @@
 
 const SLA_TYPES = {
 	gold: 'Gold',
+	limited: 'Limited',
 	platinum: 'Platinum',
 };
 

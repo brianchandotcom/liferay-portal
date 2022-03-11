@@ -975,12 +975,12 @@ definition {
 	macro toggleHiddenFromNavigationMenuWidget {
 		if ("${toggleValue}" == "enable") {
 			Check.checkToggleSwitch(
-				key_toggleSwitchLabel = "Hidden from Navigation Menu Widget",
+				key_toggleSwitchLabel = "Hidden from Menu Display",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 		else if ("${toggleValue}" == "disable") {
 			Uncheck.uncheckToggleSwitch(
-				key_toggleSwitchLabel = "Hidden from Navigation Menu Widget",
+				key_toggleSwitchLabel = "Hidden from Menu Display",
 				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
 		else {

@@ -19,6 +19,7 @@ export * from './testrayFactorCategory';
 export * from './testrayFactorOptions';
 export * from './testrayProject';
 export * from './testrayRequirement';
+export * from './testrayProductVersion';
 export * from './testrayRoutine';
 export * from './testraySubTask';
 export * from './testraySuite';

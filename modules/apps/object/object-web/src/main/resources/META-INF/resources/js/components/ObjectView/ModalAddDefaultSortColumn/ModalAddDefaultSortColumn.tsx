@@ -86,8 +86,8 @@ export function ModalAddDefaultSortColumn({
 	const [query, setQuery] = useState<string>('');
 
 	const filtredObjectSortColumn = useMemo(() => {
-		return availableViewColumns.filter(({label}) => {
-			return label.toLowerCase().includes(query.toLowerCase());
+		return availableViewColumns.filter(({fieldLabel}) => {
+			return fieldLabel.toLowerCase().includes(query.toLowerCase());
 		});
 	}, [availableViewColumns, query]);
 
@@ -139,11 +139,11 @@ export function ModalAddDefaultSortColumn({
 							}}
 							query={query}
 							required
-							value={selectedObjectSortColumn?.label}
+							value={selectedObjectSortColumn?.fieldLabel}
 						>
-							{({label}) => (
+							{({fieldLabel}) => (
 								<div className="d-flex justify-content-between">
-									<div>{label}</div>
+									<div>{fieldLabel}</div>
 								</div>
 							)}
 						</AutoComplete>

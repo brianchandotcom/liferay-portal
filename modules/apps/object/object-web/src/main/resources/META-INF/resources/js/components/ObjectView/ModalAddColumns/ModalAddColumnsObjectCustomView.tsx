@@ -109,7 +109,7 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 				newFiltredItems.map((filteredItem, index) => {
 					return {
 						isDefaultSort: false,
-						label: filteredItem.label[defaultLanguageId],
+						fieldLabel: filteredItem.label[defaultLanguageId],
 						objectFieldName: filteredItem.name,
 						priority: index,
 					};
@@ -136,7 +136,7 @@ const ModalAddColumnsObjectCustomView: React.FC<IProps> = ({
 						...checkedItems,
 						{
 							isDefaultSort: false,
-							label: field.label[defaultLanguageId],
+							fieldLabel: field.label[defaultLanguageId],
 							objectFieldName: field.name,
 							priority: index,
 						},

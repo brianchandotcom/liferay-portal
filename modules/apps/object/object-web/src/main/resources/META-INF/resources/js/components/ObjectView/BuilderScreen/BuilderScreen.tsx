@@ -59,7 +59,7 @@ export function BuilderScreen({
 
 	const newFilteredItems = filteredItems.filter(
 		(objectColumns: TObjectViewSortColumn) =>
-			objectColumns.label.toLowerCase().includes(query.toLowerCase())
+			objectColumns.fieldLabel.toLowerCase().includes(query.toLowerCase())
 	);
 
 	return (
@@ -127,7 +127,7 @@ export function BuilderScreen({
 
 											<ClayList.ItemField expand>
 												<ClayList.ItemTitle>
-													{viewColumn.label}
+													{viewColumn.fieldLabel}
 												</ClayList.ItemTitle>
 											</ClayList.ItemField>
 
@@ -198,7 +198,7 @@ export function BuilderScreen({
 											<BuilderListItem
 												index={index}
 												isDefaultSort={isDefaultSort}
-												label={viewColumn.label}
+												label={viewColumn.fieldLabel}
 												objectFieldName={
 													viewColumn.objectFieldName
 												}

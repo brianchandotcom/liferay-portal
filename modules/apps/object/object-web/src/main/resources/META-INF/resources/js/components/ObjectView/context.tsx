@@ -206,7 +206,7 @@ const viewReducer = (state: TState, action: TAction) => {
 			const [label] = labels;
 
 			const newSortColumnItem: TObjectViewSortColumn = {
-				label: label[defaultLanguageId],
+				fieldLabel: label[defaultLanguageId],
 				objectFieldName,
 				sortOrder: selectedObjetSort.value,
 			};
@@ -302,7 +302,7 @@ const viewReducer = (state: TState, action: TAction) => {
 						newObjectViewColumns.push({
 							...viewColumn,
 							isDefaultSort: false,
-							label: objectField.label[defaultLanguageId],
+							fieldLabel: objectField.label[defaultLanguageId],
 						});
 					}
 				});
@@ -319,7 +319,7 @@ const viewReducer = (state: TState, action: TAction) => {
 							) {
 								newObjectViewSortColumns.push({
 									...sortColumn,
-									label: objectField.label[defaultLanguageId],
+									fieldLabel: objectField.label[defaultLanguageId],
 								});
 							}
 						});

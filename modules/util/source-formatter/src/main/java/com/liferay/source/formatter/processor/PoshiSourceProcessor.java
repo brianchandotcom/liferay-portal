@@ -65,7 +65,8 @@ public class PoshiSourceProcessor extends BaseSourceProcessor {
 					 fileName.contains("/portal-web/")) &&
 					(fileName.contains("/test/") ||
 					 fileName.contains("/tests/")) &&
-					fileName.contains("/dependencies/")) {
+					fileName.contains("/dependencies/") &&
+					!fileName.contains("/testIntegration/")) {
 
 					processMessage(
 						fileName,

@@ -10,7 +10,9 @@
  */
 
 import ClayCard from '@clayui/card';
+import {ButtonWithIcon} from '@clayui/core';
 import classNames from 'classnames';
+import {ButtonDropDown} from '../../../../../common/components';
 import {STATUS_TAG_TYPE_NAMES} from '../../../utils/constants';
 import StatusTag from '../../StatusTag';
 
@@ -20,6 +22,7 @@ const ActivationStatusLayout = ({
 	iconPath,
 	project,
 	subscriptionGroupActivationStatus,
+	userAccount,
 }) => {
 	return (
 		<div className="mb-5">
@@ -75,9 +78,32 @@ const ActivationStatusLayout = ({
 									title={null}
 									truncate={false}
 								>
-									<StatusTag
-										currentStatus={activationStatus.id}
-									/>
+									<div className="align-items-center d-flex">
+										<StatusTag
+											currentStatus={activationStatus.id}
+										/>
+
+										{userAccount.isStaff && (
+											<ButtonDropDown
+												customDropDownButton={
+													<ButtonWithIcon
+														displayType="null"
+														small
+														symbol="caret-bottom"
+													/>
+												}
+												items={[
+													{
+														label: 'Set to Active',
+													},
+												]}
+												menuElementAttrs={{
+													className:
+														'p-0 cp-activation-key-icon rounded-xs',
+												}}
+											/>
+										)}
+									</div>
 								</ClayCard.Description>
 							</div>
 						</div>

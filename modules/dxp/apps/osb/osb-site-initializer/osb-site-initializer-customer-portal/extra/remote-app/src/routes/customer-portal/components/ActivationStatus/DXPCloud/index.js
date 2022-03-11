@@ -224,6 +224,7 @@ const ActivationStatusDXPCloud = ({
 				subscriptionGroupActivationStatus={
 					subscriptionGroupActivationStatus
 				}
+				userAccount={userAccount}
 			/>
 		</>
 	);

@@ -33,3 +33,19 @@
 .cp-spinner {
 	border-right-color: transparent;
 }
+
+.dropdown button:focus {
+	box-shadow: none;
+}
+
+.cp-activation-key-icon {
+	box-shadow: none;
+	border: 1px solid var(--color-neutral-2);
+	left: 641px;
+	min-width: fit-content;
+	top: 276px;
+	ul li span {
+		padding: 0.75rem;
+		padding-right: 68px !important;
+	}
+}

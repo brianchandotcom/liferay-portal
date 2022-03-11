@@ -68,6 +68,7 @@ const DrilldownMenuItems = ({
 								{
 									child,
 									className,
+									disabled,
 									onClick,
 									symbol,
 									title,
@@ -93,6 +94,7 @@ const DrilldownMenuItems = ({
 												'dropdown-item',
 												className
 											)}
+											disabled={disabled}
 											displayType="unstyled"
 											onClick={(event) => {
 												if (onClick) {

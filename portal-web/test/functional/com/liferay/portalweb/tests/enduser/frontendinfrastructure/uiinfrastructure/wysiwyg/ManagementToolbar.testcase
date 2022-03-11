@@ -71,6 +71,32 @@ definition {
 		}
 	}
 
+	@description = "LPS-147832. Assert the more actions button can display quick actions"
+	@priority = "5"
+	test MoreActionsButtonRenderQuickActions {
+		task ("Navigate to Management Toolbars tab") {
+			Navigator.gotoNavTab(navTab = "Management Toolbars");
+		}
+
+		task ("Click on 'more actions' button") {
+			Click(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Assert quick actions are displayed") {
+			AssertElementPresent(
+				key_action = "Edit",
+				locator1 = "ManagementBar#QUICK_ACTION_DROPDOWN_ITEM");
+
+			AssertElementPresent(
+				key_action = "Download",
+				locator1 = "ManagementBar#QUICK_ACTION_DROPDOWN_ITEM");
+
+			AssertElementPresent(
+				key_action = "Delete",
+				locator1 = "ManagementBar#QUICK_ACTION_DROPDOWN_ITEM");
+		}
+	}
+
 	@description = "LPS-147864. Assert the New button is displayed as a text button"
 	@priority = "5"
 	test NewButtonRender {

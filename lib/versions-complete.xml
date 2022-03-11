@@ -6702,18 +6702,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/commons-exec.jar</file-name>
-				<version>1.3</version>
-				<project-name>Commons Exec</project-name>
-				<project-url>http://commons.apache.org/proper/commons-exec</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/commons-fileupload.jar</file-name>
 				<version>1.3.3</version>
 				<project-name>Commons FileUpload</project-name>

@@ -21,7 +21,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.account.util.CommerceAccountHelper;
-import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.frontend.internal.account.CommerceAccountResource;
@@ -40,7 +39,6 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -175,20 +173,16 @@ public class CommerceSearchResource {
 	}
 
 	private SearchItemModel _getSearchItemModel(
-			CPCatalogEntry cpCatalogEntry, ThemeDisplay themeDisplay)
+			CPCatalogEntry cpCatalogEntry, ThemeDisplay themeDisplay,
+			long commerceAccountId)
 		throws PortalException {
 
 		SearchItemModel searchItemModel = new SearchItemModel(
 			"item", HtmlUtil.escape(cpCatalogEntry.getName()));
 
-		HttpServletRequest httpServletRequest = themeDisplay.getRequest();
-
 		searchItemModel.setImage(
 			_cpDefinitionHelper.getDefaultImageFileURL(
-				CommerceUtil.getCommerceAccountId(
-					(CommerceContext)httpServletRequest.getAttribute(
-						CommerceWebKeys.COMMERCE_CONTEXT)),
-				cpCatalogEntry.getCPDefinitionId()));
+				commerceAccountId, cpCatalogEntry.getCPDefinitionId()));
 
 		String subtitle = cpCatalogEntry.getShortDescription();
 
@@ -341,20 +335,20 @@ public class CommerceSearchResource {
 				"commerceChannelGroupId", commerceChannel.getGroupId());
 		}
 
+		long commerceAccountId = 0;
+
 		CommerceAccount commerceAccount =
 			_commerceAccountHelper.getCurrentCommerceAccount(
 				commerceChannel.getGroupId(), themeDisplay.getRequest());
 
-		long[] commerceAccountGroupIds = null;
-
 		if (commerceAccount != null) {
-			commerceAccountGroupIds =
-				_commerceAccountHelper.getCommerceAccountGroupIds(
-					commerceAccount.getCommerceAccountId());
-		}
+			commerceAccountId = commerceAccount.getCommerceAccountId();
 
-		searchContext.setAttribute(
-			"commerceAccountGroupIds", commerceAccountGroupIds);
+			attributes.put(
+				"commerceAccountGroupIds",
+				_commerceAccountHelper.getCommerceAccountGroupIds(
+					commerceAccountId));
+		}
 
 		searchContext.setAttributes(attributes);
 
@@ -382,7 +376,8 @@ public class CommerceSearchResource {
 				cpDataSourceResult.getCPCatalogEntries()) {
 
 			searchItemModels.add(
-				_getSearchItemModel(cpCatalogEntry, themeDisplay));
+				_getSearchItemModel(
+					cpCatalogEntry, themeDisplay, commerceAccountId));
 		}
 
 		String url = _commerceSearchUtil.getCatalogFriendlyURL(themeDisplay);

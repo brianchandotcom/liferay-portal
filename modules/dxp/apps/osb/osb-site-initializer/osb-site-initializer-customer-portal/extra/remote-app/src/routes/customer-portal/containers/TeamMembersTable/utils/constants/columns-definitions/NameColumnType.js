@@ -10,6 +10,7 @@
  * distribution rights of the Software.
  */
 
+import {memo} from 'react';
 import {useApplicationProvider} from '../../../../../../../common/context/AppPropertiesProvider';
 import {Liferay} from '../../../../../../../common/services/liferay';
 import {getMd5Hash} from '../../../../../utils/getMd5Hash';
@@ -31,7 +32,7 @@ const Avatar = ({emailAddress}) => {
 	);
 };
 
-const NameColumnType = ({userAccount}) => {
+const NameColumnType = memo(({userAccount}) => {
 	const currentLoggedUserId = +Liferay.ThemeDisplay.getUserId();
 
 	return (
@@ -45,6 +46,6 @@ const NameColumnType = ({userAccount}) => {
 			)}
 		</div>
 	);
-};
+});
 
 export {NameColumnType};

@@ -9,10 +9,11 @@
  * distribution rights of the Software.
  */
 
+import {memo} from 'react';
 import StatusTag from '../../../../../components/StatusTag';
 import {STATUS_TAG_TYPES} from '../../../../../utils/constants';
 
-const StatusColumnType = ({hasLoggedBefore}) => {
+const StatusColumnType = memo(({hasLoggedBefore}) => {
 	return (
 		<StatusTag
 			currentStatus={
@@ -22,6 +23,6 @@ const StatusColumnType = ({hasLoggedBefore}) => {
 			}
 		/>
 	);
-};
+});
 
 export {StatusColumnType};

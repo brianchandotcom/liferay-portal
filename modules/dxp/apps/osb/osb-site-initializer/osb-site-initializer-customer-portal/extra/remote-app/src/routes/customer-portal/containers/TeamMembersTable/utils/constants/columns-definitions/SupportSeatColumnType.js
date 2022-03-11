@@ -10,9 +10,10 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {memo} from 'react';
 import {ROLE_TYPES} from '../../../../../../../common/utils/constants';
 
-const SupportSeatColumnType = ({roles}) => {
+const SupportSeatColumnType = memo(({roles}) => {
 	const hasAdministratorAccess = !!roles?.find(
 		(role) =>
 			role === ROLE_TYPES.admin.key || role === ROLE_TYPES.requester.key
@@ -28,6 +29,6 @@ const SupportSeatColumnType = ({roles}) => {
 			)}
 		</>
 	);
-};
+});
 
 export {SupportSeatColumnType};

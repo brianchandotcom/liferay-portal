@@ -78,6 +78,44 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 	}
 
 	@Test
+	public void testBuildTemplateFormFieldNpm() throws Exception {
+		String name = "foobar";
+		String template = "form-field";
+
+		File gradleWorkspaceDir = buildWorkspace(
+			temporaryFolder, "gradle", "gradleWS", _liferayVersion,
+			mavenExecutor);
+
+		writeGradlePropertiesInWorkspace(
+			gradleWorkspaceDir, "liferay.workspace.node.package.manager=npm");
+
+		File gradleProjectDir = buildTemplateWithGradle(
+			new File(gradleWorkspaceDir, "modules"), template, name,
+			"--liferay-version", _liferayVersion);
+
+		testContains(
+			gradleProjectDir, "package.json",
+			"--soyDeps \\\"./node_modules/clay-*/src/**/*.soy\\\"",
+			"\\\"./node_modules" +
+				"/com.liferay.dynamic.data.mapping.form.field.type/META-INF/");
+
+		if (isBuildProjects()) {
+			executeGradle(
+				gradleWorkspaceDir, _gradleDistribution,
+				":modules:" + name + GRADLE_TASK_PATH_BUILD);
+
+			File gradleOutputDir = new File(gradleProjectDir, "build/libs");
+
+			Path gradleOutputPath = FileTestUtil.getFile(
+				gradleOutputDir.toPath(), OUTPUT_FILE_NAME_GLOB_REGEX, 1);
+
+			Assert.assertNotNull(gradleOutputPath);
+
+			Assert.assertTrue(Files.exists(gradleOutputPath));
+		}
+	}
+
+	@Test
 	public void testBuildTemplateFormFieldPortlet() throws Exception {
 		String name = "foobar";
 		String template = "form-field";
@@ -194,45 +232,7 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 	}
 
 	@Test
-	public void testBuildTemplateFormFieldUseNpm() throws Exception {
-		String name = "foobar";
-		String template = "form-field";
-
-		File gradleWorkspaceDir = buildWorkspace(
-			temporaryFolder, "gradle", "gradleWS", _liferayVersion,
-			mavenExecutor);
-
-		writeGradlePropertiesInWorkspace(
-			gradleWorkspaceDir, "liferay.workspace.node.package.manager=npm");
-
-		File gradleProjectDir = buildTemplateWithGradle(
-			new File(gradleWorkspaceDir, "modules"), template, name,
-			"--liferay-version", _liferayVersion);
-
-		testContains(
-			gradleProjectDir, "package.json",
-			"--soyDeps \\\"./node_modules/clay-*/src/**/*.soy\\\"",
-			"\\\"./node_modules" +
-				"/com.liferay.dynamic.data.mapping.form.field.type/META-INF/");
-
-		if (isBuildProjects()) {
-			executeGradle(
-				gradleWorkspaceDir, _gradleDistribution,
-				":modules:" + name + GRADLE_TASK_PATH_BUILD);
-
-			File gradleOutputDir = new File(gradleProjectDir, "build/libs");
-
-			Path gradleOutputPath = FileTestUtil.getFile(
-				gradleOutputDir.toPath(), OUTPUT_FILE_NAME_GLOB_REGEX, 1);
-
-			Assert.assertNotNull(gradleOutputPath);
-
-			Assert.assertTrue(Files.exists(gradleOutputPath));
-		}
-	}
-
-	@Test
-	public void testBuildTemplateFormFieldUseYarn() throws Exception {
+	public void testBuildTemplateFormFieldYarn() throws Exception {
 		String name = "foobar";
 		String template = "form-field";
 
@@ -267,9 +267,7 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 	}
 
 	@Test
-	public void testBuildTemplateFormFieldUseYarnCustomModules()
-		throws Exception {
-
+	public void testBuildTemplateFormFieldYarnCustomModules() throws Exception {
 		String name = "foobar";
 		String template = "form-field";
 
@@ -304,7 +302,7 @@ public class ProjectTemplatesFormFieldWorkspaceTest
 	}
 
 	@Test
-	public void testBuildTemplateFormFieldUseYarnNoModulesSet()
+	public void testBuildTemplateFormFieldYarnUnsetModulesDir()
 		throws Exception {
 
 		String name = "foobar";

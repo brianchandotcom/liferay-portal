@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Vulcan API
 Bundle-SymbolicName: com.liferay.portal.vulcan.api
-Bundle-Version: 9.6.2
+Bundle-Version: 10.0.0
 Export-Package:\
 	com.liferay.portal.vulcan.accept.language,\
 	com.liferay.portal.vulcan.aggregation,\

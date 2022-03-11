@@ -1404,8 +1404,7 @@ definition {
 	@description = "This is a use case for LPS-138504. Assert display page is still selected after adding a web content without adding required category."
 	@priority = "4"
 	test ViewDisplayPageAfterAddingWebContentWithoutAddingRequiredCategory {
-		property portal.release = "false";
-		property testray.component.names = "Asset Publisher,Bookmarks";
+		property testray.component.names = "Asset Publisher,Web Content Administration";
 
 		task ("Add a widget page and add Asset Publisher in it") {
 			JSONLayout.addPublicLayout(
@@ -1460,7 +1459,7 @@ definition {
 		}
 
 		task ("View publishing fails and no error in console") {
-			AssertTextPresent(
+			AssertElementPresent(
 				locator1 = "Message#ERROR",
 				value1 = "Your request failed to complete.");
 		}

@@ -82,12 +82,12 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"uuid_", Types.VARCHAR}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"creatorUserId", Types.BIGINT},
-		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
-		{"parentGroupId", Types.BIGINT}, {"liveGroupId", Types.BIGINT},
-		{"treePath", Types.VARCHAR}, {"groupKey", Types.VARCHAR},
-		{"name", Types.VARCHAR}, {"description", Types.VARCHAR},
-		{"type_", Types.INTEGER}, {"typeSettings", Types.CLOB},
-		{"manualMembership", Types.BOOLEAN},
+		{"modifiedDate", Types.TIMESTAMP}, {"classNameId", Types.BIGINT},
+		{"classPK", Types.BIGINT}, {"parentGroupId", Types.BIGINT},
+		{"liveGroupId", Types.BIGINT}, {"treePath", Types.VARCHAR},
+		{"groupKey", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"description", Types.VARCHAR}, {"type_", Types.INTEGER},
+		{"typeSettings", Types.CLOB}, {"manualMembership", Types.BOOLEAN},
 		{"membershipRestriction", Types.INTEGER},
 		{"friendlyURL", Types.VARCHAR}, {"site", Types.BOOLEAN},
 		{"remoteStagingGroupCount", Types.INTEGER},
@@ -104,6 +104,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("creatorUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentGroupId", Types.BIGINT);
@@ -124,7 +125,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Group_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,groupId LONG not null,companyId LONG,creatorUserId LONG,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath STRING null,groupKey VARCHAR(150) null,name STRING null,description STRING null,type_ INTEGER,typeSettings TEXT null,manualMembership BOOLEAN,membershipRestriction INTEGER,friendlyURL VARCHAR(255) null,site BOOLEAN,remoteStagingGroupCount INTEGER,inheritContent BOOLEAN,active_ BOOLEAN,primary key (groupId, ctCollectionId))";
+		"create table Group_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,groupId LONG not null,companyId LONG,creatorUserId LONG,modifiedDate DATE null,classNameId LONG,classPK LONG,parentGroupId LONG,liveGroupId LONG,treePath STRING null,groupKey VARCHAR(150) null,name STRING null,description STRING null,type_ INTEGER,typeSettings TEXT null,manualMembership BOOLEAN,membershipRestriction INTEGER,friendlyURL VARCHAR(255) null,site BOOLEAN,remoteStagingGroupCount INTEGER,inheritContent BOOLEAN,active_ BOOLEAN,primary key (groupId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Group_";
 
@@ -453,6 +454,9 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		attributeGetterFunctions.put("creatorUserId", Group::getCreatorUserId);
 		attributeSetterBiConsumers.put(
 			"creatorUserId", (BiConsumer<Group, Long>)Group::setCreatorUserId);
+		attributeGetterFunctions.put("modifiedDate", Group::getModifiedDate);
+		attributeSetterBiConsumers.put(
+			"modifiedDate", (BiConsumer<Group, Date>)Group::setModifiedDate);
 		attributeGetterFunctions.put("classNameId", Group::getClassNameId);
 		attributeSetterBiConsumers.put(
 			"classNameId", (BiConsumer<Group, Long>)Group::setClassNameId);
@@ -656,6 +660,27 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 	@Override
 	public void setCreatorUserUuid(String creatorUserUuid) {
+	}
+
+	@JSON
+	@Override
+	public Date getModifiedDate() {
+		return _modifiedDate;
+	}
+
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_modifiedDate = modifiedDate;
 	}
 
 	@Override
@@ -1431,6 +1456,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		groupImpl.setGroupId(getGroupId());
 		groupImpl.setCompanyId(getCompanyId());
 		groupImpl.setCreatorUserId(getCreatorUserId());
+		groupImpl.setModifiedDate(getModifiedDate());
 		groupImpl.setClassNameId(getClassNameId());
 		groupImpl.setClassPK(getClassPK());
 		groupImpl.setParentGroupId(getParentGroupId());
@@ -1467,6 +1493,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		groupImpl.setCompanyId(this.<Long>getColumnOriginalValue("companyId"));
 		groupImpl.setCreatorUserId(
 			this.<Long>getColumnOriginalValue("creatorUserId"));
+		groupImpl.setModifiedDate(
+			this.<Date>getColumnOriginalValue("modifiedDate"));
 		groupImpl.setClassNameId(
 			this.<Long>getColumnOriginalValue("classNameId"));
 		groupImpl.setClassPK(this.<Long>getColumnOriginalValue("classPK"));
@@ -1560,6 +1588,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	public void resetOriginalValues() {
 		_columnOriginalValues = Collections.emptyMap();
 
+		_setModifiedDate = false;
+
 		_columnBitmask = 0;
 	}
 
@@ -1584,6 +1614,15 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		groupCacheModel.companyId = getCompanyId();
 
 		groupCacheModel.creatorUserId = getCreatorUserId();
+
+		Date modifiedDate = getModifiedDate();
+
+		if (modifiedDate != null) {
+			groupCacheModel.modifiedDate = modifiedDate.getTime();
+		}
+		else {
+			groupCacheModel.modifiedDate = Long.MIN_VALUE;
+		}
 
 		groupCacheModel.classNameId = getClassNameId();
 
@@ -1749,6 +1788,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 	private long _groupId;
 	private long _companyId;
 	private long _creatorUserId;
+	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _classPK;
 	private long _parentGroupId;
@@ -1804,6 +1845,7 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("creatorUserId", _creatorUserId);
+		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
 		_columnOriginalValues.put("parentGroupId", _parentGroupId);
@@ -1860,39 +1902,41 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 
 		columnBitmasks.put("creatorUserId", 32L);
 
-		columnBitmasks.put("classNameId", 64L);
+		columnBitmasks.put("modifiedDate", 64L);
 
-		columnBitmasks.put("classPK", 128L);
+		columnBitmasks.put("classNameId", 128L);
 
-		columnBitmasks.put("parentGroupId", 256L);
+		columnBitmasks.put("classPK", 256L);
 
-		columnBitmasks.put("liveGroupId", 512L);
+		columnBitmasks.put("parentGroupId", 512L);
 
-		columnBitmasks.put("treePath", 1024L);
+		columnBitmasks.put("liveGroupId", 1024L);
 
-		columnBitmasks.put("groupKey", 2048L);
+		columnBitmasks.put("treePath", 2048L);
 
-		columnBitmasks.put("name", 4096L);
+		columnBitmasks.put("groupKey", 4096L);
 
-		columnBitmasks.put("description", 8192L);
+		columnBitmasks.put("name", 8192L);
 
-		columnBitmasks.put("type_", 16384L);
+		columnBitmasks.put("description", 16384L);
 
-		columnBitmasks.put("typeSettings", 32768L);
+		columnBitmasks.put("type_", 32768L);
 
-		columnBitmasks.put("manualMembership", 65536L);
+		columnBitmasks.put("typeSettings", 65536L);
 
-		columnBitmasks.put("membershipRestriction", 131072L);
+		columnBitmasks.put("manualMembership", 131072L);
 
-		columnBitmasks.put("friendlyURL", 262144L);
+		columnBitmasks.put("membershipRestriction", 262144L);
 
-		columnBitmasks.put("site", 524288L);
+		columnBitmasks.put("friendlyURL", 524288L);
 
-		columnBitmasks.put("remoteStagingGroupCount", 1048576L);
+		columnBitmasks.put("site", 1048576L);
 
-		columnBitmasks.put("inheritContent", 2097152L);
+		columnBitmasks.put("remoteStagingGroupCount", 2097152L);
 
-		columnBitmasks.put("active_", 4194304L);
+		columnBitmasks.put("inheritContent", 4194304L);
+
+		columnBitmasks.put("active_", 8388608L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

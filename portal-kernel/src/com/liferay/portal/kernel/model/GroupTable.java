@@ -20,6 +20,8 @@ import com.liferay.petra.sql.dsl.base.BaseTable;
 import java.sql.Clob;
 import java.sql.Types;
 
+import java.util.Date;
+
 /**
  * The table class for the &quot;Group_&quot; database table.
  *
@@ -43,6 +45,8 @@ public class GroupTable extends BaseTable<GroupTable> {
 		"companyId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<GroupTable, Long> creatorUserId = createColumn(
 		"creatorUserId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<GroupTable, Date> modifiedDate = createColumn(
+		"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<GroupTable, Long> classNameId = createColumn(
 		"classNameId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<GroupTable, Long> classPK = createColumn(

@@ -684,6 +684,7 @@
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="creatorUserId" type="long" />
+		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="parentGroupId" type="long" />

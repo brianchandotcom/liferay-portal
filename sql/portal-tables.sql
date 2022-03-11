@@ -561,6 +561,7 @@ create table Group_ (
 	groupId LONG not null,
 	companyId LONG,
 	creatorUserId LONG,
+	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
 	parentGroupId LONG,

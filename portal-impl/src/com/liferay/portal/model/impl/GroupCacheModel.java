@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import java.util.Date;
+
 /**
  * The cache model class for representing Group in entity cache.
  *
@@ -74,7 +76,7 @@ public class GroupCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -88,6 +90,8 @@ public class GroupCacheModel
 		sb.append(companyId);
 		sb.append(", creatorUserId=");
 		sb.append(creatorUserId);
+		sb.append(", modifiedDate=");
+		sb.append(modifiedDate);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -144,6 +148,14 @@ public class GroupCacheModel
 		groupImpl.setGroupId(groupId);
 		groupImpl.setCompanyId(companyId);
 		groupImpl.setCreatorUserId(creatorUserId);
+
+		if (modifiedDate == Long.MIN_VALUE) {
+			groupImpl.setModifiedDate(null);
+		}
+		else {
+			groupImpl.setModifiedDate(new Date(modifiedDate));
+		}
+
 		groupImpl.setClassNameId(classNameId);
 		groupImpl.setClassPK(classPK);
 		groupImpl.setParentGroupId(parentGroupId);
@@ -220,6 +232,7 @@ public class GroupCacheModel
 		companyId = objectInput.readLong();
 
 		creatorUserId = objectInput.readLong();
+		modifiedDate = objectInput.readLong();
 
 		classNameId = objectInput.readLong();
 
@@ -268,6 +281,7 @@ public class GroupCacheModel
 		objectOutput.writeLong(companyId);
 
 		objectOutput.writeLong(creatorUserId);
+		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(classNameId);
 
@@ -340,6 +354,7 @@ public class GroupCacheModel
 	public long groupId;
 	public long companyId;
 	public long creatorUserId;
+	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
 	public long parentGroupId;

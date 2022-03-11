@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.saml.persistence.internal.upgrade.v3_0_0.util;
+package com.liferay.saml.persistence.internal.upgrade.v2_4_0.util;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 

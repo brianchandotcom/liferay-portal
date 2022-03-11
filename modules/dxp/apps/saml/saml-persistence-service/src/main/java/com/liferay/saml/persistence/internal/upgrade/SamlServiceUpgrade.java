@@ -22,7 +22,7 @@ import com.liferay.portal.upgrade.step.util.UpgradeStepFactory;
 import com.liferay.saml.persistence.internal.upgrade.v1_1_0.SamlSpAuthRequestUpgradeProcess;
 import com.liferay.saml.persistence.internal.upgrade.v1_1_0.SamlSpMessageUpgradeProcess;
 import com.liferay.saml.persistence.internal.upgrade.v2_1_0.SamlIdpSpConnectionUpgradeProcess;
-import com.liferay.saml.persistence.internal.upgrade.v3_0_0.util.SamlPeerBindingTable;
+import com.liferay.saml.persistence.internal.upgrade.v2_4_0.util.SamlPeerBindingTable;
 
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;

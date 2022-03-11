@@ -206,7 +206,8 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 			const hasAdminRoles = currentUser?.roles?.some(
 				(role) =>
 					role === ROLE_TYPES.admin.key ||
-					role === ROLE_TYPES.requester.key
+					role === ROLE_TYPES.requester.key ||
+					role === ROLE_TYPES.partnerManager.key
 			);
 
 			return hasAdminRoles;

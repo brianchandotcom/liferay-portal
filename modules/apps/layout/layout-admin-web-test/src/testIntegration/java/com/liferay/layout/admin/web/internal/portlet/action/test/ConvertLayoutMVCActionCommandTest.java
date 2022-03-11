@@ -29,6 +29,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -304,7 +305,8 @@ public class ConvertLayoutMVCActionCommandTest {
 		Assert.assertEquals(
 			originalLayout.getRobotsMap(),
 			persistedPublishedLayout.getRobotsMap());
-		Assert.assertEquals("content", persistedPublishedLayout.getType());
+		Assert.assertEquals(
+			LayoutConstants.TYPE_CONTENT, persistedPublishedLayout.getType());
 		Assert.assertEquals(
 			originalLayout.getTypeSettings(),
 			persistedPublishedLayout.getTypeSettings());

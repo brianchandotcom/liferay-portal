@@ -77,7 +77,7 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 				(String)parameters.get("scopeKey"), objectEntry);
 		}
 
-		contextBatchStrategy.apply(objectEntries, unsafeConsumer);
+		contextBatchUnsafeConsumer.accept(objectEntries, unsafeConsumer);
 	}
 
 	@Override

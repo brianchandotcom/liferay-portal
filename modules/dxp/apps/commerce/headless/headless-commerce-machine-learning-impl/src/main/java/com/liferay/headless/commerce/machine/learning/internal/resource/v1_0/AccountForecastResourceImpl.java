@@ -90,7 +90,7 @@ public class AccountForecastResourceImpl
 						commerceAccountCommerceMLForecast);
 			};
 
-		contextBatchStrategy.apply(accountForecasts, unsafeConsumer);
+		contextBatchUnsafeConsumer.accept(accountForecasts, unsafeConsumer);
 	}
 
 	@Override

@@ -368,8 +368,8 @@ public abstract class Base${schemaName}ResourceImpl
 					}
 				</#if>
 
-				if (contextBatchStrategy != null) {
-					contextBatchStrategy.accept(${schemaVarNames}, ${schemaVarName}UnsafeConsumer);
+				if (contextBatchUnsafeConsumer != null) {
+					contextBatchUnsafeConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeConsumer);
 				}
 				else {
 					for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
@@ -556,8 +556,8 @@ public abstract class Base${schemaName}ResourceImpl
 	}
 
 	<#if generateBatch>
-		public void setContextBatchStrategy(UnsafeBiConsumer<java.util.Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchStrategy) {
-			this.contextBatchStrategy = contextBatchStrategy;
+		public void setContextBatchUnsafeConsumer(UnsafeBiConsumer<java.util.Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchUnsafeConsumer) {
+			this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
 		}
 	</#if>
 
@@ -664,7 +664,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	<#if generateBatch>
-		protected UnsafeBiConsumer<java.util.Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchStrategy;
+		protected UnsafeBiConsumer<java.util.Collection<${javaDataType}>, UnsafeConsumer<${javaDataType}, Exception>, Exception> contextBatchUnsafeConsumer;
 	</#if>
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;

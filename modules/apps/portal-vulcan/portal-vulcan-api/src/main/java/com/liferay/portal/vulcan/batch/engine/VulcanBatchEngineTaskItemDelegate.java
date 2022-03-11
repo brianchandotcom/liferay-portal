@@ -51,9 +51,9 @@ public interface VulcanBatchEngineTaskItemDelegate<T> {
 			Map<String, Serializable> parameters, String search)
 		throws Exception;
 
-	public void setContextBatchStrategy(
+	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer<Collection<T>, UnsafeConsumer<T, Exception>, Exception>
-			contextBatchStrategy);
+			contextBatchUnsafeConsumer);
 
 	public void setContextCompany(Company contextCompany);
 

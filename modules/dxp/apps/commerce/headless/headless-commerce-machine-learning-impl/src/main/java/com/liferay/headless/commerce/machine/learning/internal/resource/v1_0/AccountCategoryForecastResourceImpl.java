@@ -93,7 +93,8 @@ public class AccountCategoryForecastResourceImpl
 						assetCategoryCommerceMLForecast);
 			};
 
-		contextBatchStrategy.apply(accountCategoryForecasts, unsafeConsumer);
+		contextBatchUnsafeConsumer.accept(
+			accountCategoryForecasts, unsafeConsumer);
 	}
 
 	@Override

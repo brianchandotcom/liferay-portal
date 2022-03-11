@@ -450,6 +450,19 @@ definition {
 			locator1 = "Ratings#THUMB");
 	}
 
+	macro viewCannotEditWC {
+		if (IsElementPresent(key_webContentTitle = "${webContentTitle}", locator1 = "WCD#ARTICLE_ELLIPSIS_ICON")) {
+			WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = "${webContentTitle}");
+
+			MenuItem.viewNotPresent(menuItem = "Edit Web Content");
+		}
+		else {
+			AssertElementNotPresent(
+				key_webContentTitle = "${webContentTitle}",
+				locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
+		}
+	}
+
 	macro viewConfigureScope {
 		AssertElementPresent(
 			key_portletName = "Web Content Display (${scopeSelection})",
@@ -596,19 +609,6 @@ definition {
 			Alert.viewInfoMessageSpecific(infoMessage = "This application is not visible to users yet");
 
 			Alert.viewInfoMessageSpecific(infoMessage = "Select web content to make it visible");
-		}
-	}
-
-	macro viewCannotEditWC {
-		if (IsElementPresent(key_webContentTitle = "${webContentTitle}", locator1 = "WCD#ARTICLE_ELLIPSIS_ICON")) {
-			WebContentDisplayPortletNavigator.gotoArticleEllipsisMenu(webContentTitle = "${webContentTitle}");
-
-			MenuItem.viewNotPresent(menuItem = "Edit Web Content");
-		}
-		else {
-			AssertElementNotPresent(
-				key_webContentTitle = "${webContentTitle}",
-				locator1 = "WCD#ARTICLE_ELLIPSIS_ICON");
 		}
 	}
 

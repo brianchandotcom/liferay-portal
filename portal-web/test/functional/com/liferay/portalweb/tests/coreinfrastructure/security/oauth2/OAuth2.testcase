@@ -290,8 +290,8 @@ definition {
 		task ("Add a new user") {
 			JSONUser.addUser(
 				userEmailAddress = "test1@liferay.com",
-				userFirstName = "test",
-				userLastName = "one",
+				userFirstName = "Test",
+				userLastName = "One",
 				userScreenName = "test1");
 
 			JSONUser.setFirstPassword(

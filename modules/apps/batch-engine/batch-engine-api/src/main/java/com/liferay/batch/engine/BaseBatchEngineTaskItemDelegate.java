@@ -14,7 +14,7 @@
 
 package com.liferay.batch.engine;
 
-import com.liferay.batch.engine.strategy.ImportStrategy;
+import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -71,7 +71,8 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 	}
 
 	@Override
-	public void setContextImportStrategy(ImportStrategy contextImportStrategy) {
+	public void setContextImportStrategy(
+		BatchEngineImportStrategy contextImportStrategy) {
 		this.contextImportStrategy = contextImportStrategy;
 	}
 
@@ -100,7 +101,7 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 	}
 
 	protected Company contextCompany;
-	protected ImportStrategy contextImportStrategy;
+	protected BatchEngineImportStrategy contextImportStrategy;
 	protected User contextUser;
 	protected String languageId;
 

@@ -16,26 +16,26 @@ package com.liferay.batch.engine.internal.strategy;
 
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
-import com.liferay.batch.engine.strategy.ImportStrategy;
+import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
 
 /**
  * @author Matija Petanjek
  */
-public class ImportStrategyFactory {
+public class BatchEngineImportStrategyFactory {
 
-	public ImportStrategy create(BatchEngineImportTask batchEngineImportTask) {
+	public BatchEngineImportStrategy create(BatchEngineImportTask batchEngineImportTask) {
 		if (batchEngineImportTask.getImportStrategy() ==
 				BatchEngineImportTaskConstants.
 					IMPORT_STRATEGY_ON_ERROR_CONTINUE) {
 
-			return new OnErrorContinueImportStrategy(
+			return new OnErrorContinueBatchEngineImportStrategy(
 				batchEngineImportTask.getBatchEngineImportTaskId(),
 				batchEngineImportTask.getCompanyId(),
 				batchEngineImportTask.getProcessedItemsCount(),
 				batchEngineImportTask.getUserId());
 		}
 
-		return new OnErrorFailImportStrategy(
+		return new OnErrorFailBatchEngineImportStrategy(
 			batchEngineImportTask.getBatchEngineImportTaskId(),
 			batchEngineImportTask.getCompanyId(),
 			batchEngineImportTask.getProcessedItemsCount(),

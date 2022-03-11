@@ -21,7 +21,7 @@ import java.util.Collection;
 /**
  * @author Matija Petanjek
  */
-public interface ImportStrategy {
+public interface BatchEngineImportStrategy {
 
 	public <T> void apply(
 			Collection<T> collection,

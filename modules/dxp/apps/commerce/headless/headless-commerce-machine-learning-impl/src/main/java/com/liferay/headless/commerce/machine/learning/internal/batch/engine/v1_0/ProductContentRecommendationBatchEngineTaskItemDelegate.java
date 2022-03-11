@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.headless.commerce.machine.learning.internal.batch.v1_0;
+package com.liferay.headless.commerce.machine.learning.internal.batch.engine.v1_0;
 
 import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;

@@ -12,7 +12,7 @@
  *
  */
 
-package com.liferay.headless.commerce.machine.learning.internal.batch.v1_0;
+package com.liferay.headless.commerce.machine.learning.internal.batch.engine.v1_0;
 
 import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
@@ -36,11 +36,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "batch.engine.task.item.delegate.name=sku-monthly-quantity-forecast",
+	property = "batch.engine.task.item.delegate.name=" + SkuForecastBatchEngineTaskItemDelegate.KEY,
 	service = BatchEngineTaskItemDelegate.class
 )
 public class SkuForecastBatchEngineTaskItemDelegate
 	extends BaseBatchEngineTaskItemDelegate<SkuForecast> {
+
+	public static final String KEY = "sku-monthly-quantity-forecast";
 
 	@Override
 	public void createItem(

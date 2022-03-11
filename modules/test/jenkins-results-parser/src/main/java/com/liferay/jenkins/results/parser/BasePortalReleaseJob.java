@@ -78,7 +78,7 @@ public abstract class BasePortalReleaseJob
 	public List<String> getJobPropertyOptions() {
 		List<String> jobPropertyOptions = super.getJobPropertyOptions();
 
-		jobPropertyOptions.add(_portalUpstreamBranchName);
+		jobPropertyOptions.add(_upstreamBranchName);
 
 		jobPropertyOptions.removeAll(Collections.singleton(null));
 
@@ -93,9 +93,8 @@ public abstract class BasePortalReleaseJob
 
 		jsonObject = super.getJSONObject();
 
-		jsonObject.put(
-			"portal_upstream_branch_name", _portalUpstreamBranchName);
 		jsonObject.put("test_suite_name", _testSuiteName);
+		jsonObject.put("upstream_branch_name", _upstreamBranchName);
 
 		return jsonObject;
 	}
@@ -113,12 +112,12 @@ public abstract class BasePortalReleaseJob
 	protected BasePortalReleaseJob(
 		BuildProfile buildProfile, String jobName,
 		PortalGitWorkingDirectory portalGitWorkingDirectory,
-		String portalUpstreamBranchName, String testSuiteName) {
+		String testSuiteName, String upstreamBranchName) {
 
 		super(buildProfile, jobName);
 
-		_portalUpstreamBranchName = portalUpstreamBranchName;
 		_testSuiteName = testSuiteName;
+		_upstreamBranchName = upstreamBranchName;
 
 		_initialize(portalGitWorkingDirectory);
 	}
@@ -126,9 +125,8 @@ public abstract class BasePortalReleaseJob
 	protected BasePortalReleaseJob(JSONObject jsonObject) {
 		super(jsonObject);
 
-		_portalUpstreamBranchName = jsonObject.getString(
-			"portal_upstream_branch_name");
 		_testSuiteName = jsonObject.getString("test_suite_name");
+		_upstreamBranchName = jsonObject.getString("upstream_branch_name");
 
 		_initialize(null);
 	}
@@ -160,7 +158,7 @@ public abstract class BasePortalReleaseJob
 		else {
 			_portalGitWorkingDirectory =
 				GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-					_portalUpstreamBranchName);
+					_upstreamBranchName);
 		}
 
 		jobPropertiesFiles.add(
@@ -170,7 +168,7 @@ public abstract class BasePortalReleaseJob
 	}
 
 	private PortalGitWorkingDirectory _portalGitWorkingDirectory;
-	private final String _portalUpstreamBranchName;
 	private final String _testSuiteName;
+	private final String _upstreamBranchName;
 
 }

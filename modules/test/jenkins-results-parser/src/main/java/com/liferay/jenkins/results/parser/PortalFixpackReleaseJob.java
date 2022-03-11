@@ -24,11 +24,11 @@ public class PortalFixpackReleaseJob extends BasePortalReleaseJob {
 	protected PortalFixpackReleaseJob(
 		BuildProfile buildProfile, String jobName,
 		PortalGitWorkingDirectory portalGitWorkingDirectory,
-		String portalUpstreamBranchName, String testSuiteName) {
+		String testSuiteName, String upstreamBranchName) {
 
 		super(
-			buildProfile, jobName, portalGitWorkingDirectory,
-			portalUpstreamBranchName, testSuiteName);
+			buildProfile, jobName, portalGitWorkingDirectory, testSuiteName,
+			upstreamBranchName);
 	}
 
 	protected PortalFixpackReleaseJob(JSONObject jsonObject) {

@@ -29,7 +29,7 @@ export const COLUMNS = [
 		header: {
 			name: 'Email',
 			styles:
-				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-smaller',
+				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-small',
 		},
 		truncate: true,
 	},
@@ -57,7 +57,7 @@ export const COLUMNS = [
 		header: {
 			name: 'Role',
 			styles:
-				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-small',
+				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-smaller',
 		},
 		truncate: true,
 	},
@@ -67,11 +67,12 @@ export const COLUMNS = [
 		header: {
 			name: 'Status',
 			styles:
-				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-smaller',
+				'bg-transparent text-neutral-10 font-weight-bold table-cell-expand-smallest',
 		},
 	},
 	{
 		accessor: 'options',
+		align: 'right',
 		bodyClass: 'border-0',
 		header: {
 			name: '',

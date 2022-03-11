@@ -131,20 +131,22 @@ const InviteTeamMembersPage = ({
 			);
 			const remainingAdmins = availableAdministratorAssets - totalAdmins;
 
-			if (remainingAdmins < 1) {
-				setAccountRolesOptions((previousAccountRoles) =>
-					previousAccountRoles.map((previousAccountRole) => ({
+			setAccountRolesOptions((previousAccountRoles) =>
+				previousAccountRoles.map((previousAccountRole) => {
+					const isAdministratorOrRequestorRole =
+						previousAccountRole.label ===
+							ROLE_TYPES.requester.name ||
+						previousAccountRole.label === ROLE_TYPES.admin.name;
+
+					return {
 						...previousAccountRole,
 						disabled:
-							previousAccountRole.label ===
-								ROLE_TYPES.requester.name ||
-							previousAccountRole.label === ROLE_TYPES.admin.name,
-					}))
-				);
-				setAvailableAdminsRoles(0);
+							isAdministratorOrRequestorRole &&
+							remainingAdmins === 0,
+					};
+				})
+			);
 
-				return;
-			}
 			setAvailableAdminsRoles(remainingAdmins);
 		}
 	}, [values, project, accountRoles, availableAdministratorAssets]);
@@ -233,17 +235,6 @@ const InviteTeamMembersPage = ({
 
 		return hasEmptyEmails;
 	};
-
-	useEffect(() => {
-		if (availableAdminsRoles > 0) {
-			setAccountRolesOptions((previousAccountRoles) =>
-				previousAccountRoles.map((previousAccountRoles) => ({
-					...previousAccountRoles,
-					disabled: false,
-				}))
-			);
-		}
-	}, [availableAdminsRoles]);
 
 	return (
 		<Layout

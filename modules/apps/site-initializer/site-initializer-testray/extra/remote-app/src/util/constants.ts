@@ -54,17 +54,17 @@ const getStatusLabel = (status: number): string =>
 	(TEST_STATUS_LABEL as any)[status];
 
 export enum SUB_TASK_STATUS {
-	'OPEN' = 0,
+	'ABANDONED' = 2,
+	'COMPLETE' = 3,
 	'IN_ANALYSIS' = 1,
-	'COMPLETE' = 2,
-	'MERGED' = 3,
+	'OPEN' = 4,
 }
 
-export const SUBTASK_STATUS: any = {
-	0: {color: 'label-inverse-light', label: 'OPEN'},
-	1: {color: 'label-inverse-warning', label: 'IN ANALYSIS'},
-	2: {color: 'label-inverse-primary', label: 'COMPLETE'},
-	3: {color: 'label-inverse-light', label: 'MERGED'},
+export const SUBTASK_STATUS = {
+	1: {color: 'label-warning', label: 'IN ANALYSIS'},
+	2: {color: 'label-secondary', label: 'ABANDONED'},
+	3: {color: 'label-primary', label: 'COMPLETE'},
+	4: {color: 'label-secondary', label: 'OPEN'},
 };
 
 export {getStatusLabel};

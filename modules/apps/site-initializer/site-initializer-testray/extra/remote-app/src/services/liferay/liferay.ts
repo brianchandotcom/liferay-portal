@@ -13,6 +13,7 @@
  */
 
 interface IThemeDisplay {
+	getBCP47LanguageId(): () => string;
 	getCompanyGroupId: () => number;
 	getLanguageId: () => string;
 	getPathThemeImages: () => string;
@@ -39,6 +40,7 @@ declare global {
 
 export const Liferay = window.Liferay || {
 	ThemeDisplay: {
+		getBCP47LanguageId: () => 'en-US',
 		getCompanyGroupId: () => 0,
 		getLanguageId: () => 'en_US',
 		getPathThemeImages: () => '',

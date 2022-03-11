@@ -305,11 +305,3 @@ export const runs = [
 		test_fix: 0,
 	},
 ];
-
-export const TotalTestCases = [
-	['PASSED', 30529],
-	['FAILED', 5374],
-	['BLOCKED', 0],
-	['TEST FIX', 0],
-	['INCOMPLETE', 21],
-];

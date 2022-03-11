@@ -12,23 +12,11 @@
  * details.
  */
 
-export type ActionMap<M extends {[index: string]: any}> = {
-	[Key in keyof M]: M[Key] extends undefined
-		? {
-				type: Key;
-		  }
-		: {
-				payload: M[Key];
-				type: Key;
-		  };
-};
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
-export enum DescriptionType {
-	MARKDOWN = 'markdown',
-	PLAINTEXT = 'plaintext',
-}
+dayjs.extend(relativeTime);
 
-export enum SortOption {
-	ASC = 'asc',
-	DESC = 'desc',
+export function getTimeFromNow(date: string): string {
+	return dayjs(date).fromNow();
 }

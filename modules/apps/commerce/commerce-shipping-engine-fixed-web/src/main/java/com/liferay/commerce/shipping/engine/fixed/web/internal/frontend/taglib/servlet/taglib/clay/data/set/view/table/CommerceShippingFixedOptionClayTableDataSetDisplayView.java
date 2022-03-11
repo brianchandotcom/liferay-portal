@@ -19,6 +19,7 @@ import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
+import com.liferay.commerce.shipping.engine.fixed.util.comparator.CommerceShippingFixedOptionPriorityComparator;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.model.ShippingFixedOption;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -92,6 +94,12 @@ public class CommerceShippingFixedOptionClayTableDataSetDisplayView
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"description", "description");
+
+		ClayTableSchemaField priorityField =
+			clayTableSchemaBuilder.addClayTableSchemaField(
+				"priority", "priority");
+
+		priorityField.setSortable(true);
 
 		return clayTableSchemaBuilder.build();
 	}
@@ -151,6 +159,11 @@ public class CommerceShippingFixedOptionClayTableDataSetDisplayView
 
 		List<ShippingFixedOption> shippingFixedOptions = new ArrayList<>();
 
+		commerceShippingFixedOptions = ListUtil.sort(
+			commerceShippingFixedOptions,
+			new CommerceShippingFixedOptionPriorityComparator(
+				sort.isReverse()));
+
 		for (CommerceShippingFixedOption commerceShippingFixedOption :
 				commerceShippingFixedOptions) {
 
@@ -162,6 +175,7 @@ public class CommerceShippingFixedOptionClayTableDataSetDisplayView
 					HtmlUtil.escape(
 						commerceShippingFixedOption.getName(
 							themeDisplay.getLocale())),
+					commerceShippingFixedOption.getPriority(),
 					commerceShippingFixedOption.
 						getCommerceShippingFixedOptionId()));
 		}

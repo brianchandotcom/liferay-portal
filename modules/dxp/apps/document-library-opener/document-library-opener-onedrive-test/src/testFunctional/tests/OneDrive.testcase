@@ -15,42 +15,7 @@ definition {
 
 		User.firstLoginPG();
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "OneDrive",
-			configurationScope = "Virtual Instance Scope");
-
-		var oneDriveClientId = PropsUtil.get("onedrive.client.id");
-
-		Type(
-			key_text = "clientId",
-			locator1 = "TextArea#ANY",
-			value1 = "${oneDriveClientId}");
-
-		var oneDriveClientSecret = PropsUtil.get("onedrive.client.secret");
-
-		Type(
-			key_text = "clientSecret",
-			locator1 = "TextArea#ANY",
-			value1 = "${oneDriveClientSecret}");
-
-		var oneDriveTenant = PropsUtil.get("onedrive.tenant");
-
-		Type(
-			key_text = "tenant",
-			locator1 = "TextArea#ANY",
-			value1 = "${oneDriveTenant}");
-
-		ScrollWebElementIntoView(locator1 = "Button#CANCEL");
-
-		if (IsElementPresent(locator1 = "Button#UPDATE")) {
-			PortletEntry.update();
-		}
-		else if (IsElementPresent(locator1 = "Button#SAVE")) {
-			PortletEntry.save();
-		}
+		OneDrive.enableOneDrive();
 
 		JSONLayout.addPublicLayout(
 			groupName = "Guest",

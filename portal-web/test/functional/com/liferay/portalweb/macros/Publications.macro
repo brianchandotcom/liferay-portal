@@ -162,10 +162,6 @@ definition {
 
 		LexiconEntry.changeDisplayStyle(displayStyle = "list");
 
-		// Workaround LPS-115320
-
-		Refresh();
-
 		var key_publicationName = "${publicationName}";
 
 		AssertTextEquals(

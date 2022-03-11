@@ -26,6 +26,7 @@ export default function updateCollectionDisplayCollection({
 				collection,
 				listItemStyle: null,
 				listStyle,
+				paginationType: 'numeric',
 				showAllItems: false,
 				templateKey: null,
 			},

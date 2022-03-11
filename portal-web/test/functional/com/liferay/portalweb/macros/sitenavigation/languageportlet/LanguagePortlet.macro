@@ -147,18 +147,16 @@ definition {
 			locator1 = "Language#DROPDOWN");
 	}
 
-	macro viewLanguagesPresent {
-		Click(
-			key_portletName = "LanguagePortlet",
-			locator1 = "Language#DROPDOWN");
+	macro viewLanguagesSettings {
+		Panel.expandPanel(panel = "Languages");
 
-		for (var currentLocale : list "${currentLocales}") {
-			MenuItem.viewPresent(menuItem = "${currentLocale}");
+		for (var currentLanguage : list "${currentLanguageList}") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
+				value1 = "${currentLanguage}");
 		}
 
-		Click(
-			key_portletName = "LanguagePortlet",
-			locator1 = "Language#DROPDOWN");
+		SelectFrame(value1 = "relative=top");
 	}
 
 }

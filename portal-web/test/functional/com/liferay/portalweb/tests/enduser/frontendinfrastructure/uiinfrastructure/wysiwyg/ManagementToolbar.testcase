@@ -47,6 +47,30 @@ definition {
 		}
 	}
 
+	@description = "LPS-147404. Assert the more actions button is displayed"
+	@priority = "5"
+	test MoreActionsButtonCanRender {
+		task ("Navigate to Management Toolbars tab") {
+			Navigator.gotoNavTab(navTab = "Management Toolbars");
+		}
+
+		task ("Assert the 'more actions' button is displayed") {
+			AssertElementPresent(locator1 = "ManagementBar#MORE_ACTIONS_ELLIPSIS");
+		}
+
+		task ("Assert all the actions are displayed as icon and text buttons") {
+			AssertElementPresent(
+				key_action = "Download",
+				key_icon = "download",
+				locator1 = "ManagementBar#ICON_AND_TEXT_ACTION_BUTTON");
+
+			AssertElementPresent(
+				key_action = "Delete",
+				key_icon = "trash",
+				locator1 = "ManagementBar#ICON_AND_TEXT_ACTION_BUTTON");
+		}
+	}
+
 	@description = "LPS-147864. Assert the New button is displayed as a text button"
 	@priority = "5"
 	test NewButtonRender {

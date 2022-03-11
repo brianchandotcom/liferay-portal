@@ -66,6 +66,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 					.dataset;
 
 				Liferay.Util.openModal({
+					iframeBodyCssClass: '',
 					disableAutoClose: true,
 					height: '60vh',
 					id: '<portlet:namespace />addSiteDialog',

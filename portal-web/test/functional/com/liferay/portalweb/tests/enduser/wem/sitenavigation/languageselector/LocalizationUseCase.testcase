@@ -42,163 +42,212 @@ definition {
 		}
 	}
 
+	@description = "The user can choose which languages will be available to site via Language Selector widget."
 	@priority = "4"
-	test MoveCurrentLanguagesToAvailable {
-		property test.name.skip.portal.instance = "LocalizationUsecase#MoveCurrentLanguagesToAvailable";
-		property testray.component.names = "Localization";
+	test ChooseCurrentLanguagesViaLanguageSelector {
+		property test.name.skip.portal.instance = "LocalizationUsecase#ChooseCurrentLanguagesViaLanguageSelector";
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Language Selector");
+		task ("Define English, German and Spanish as current languages via Language Selector") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			Portlet.gotoPortletOptions(
+				portletName = "Language Selector",
+				portletOption = "Configuration");
 
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
+			IFrame.selectConfigurationFrame();
 
-		LanguagePortlet.moveLanguagesToAvailable();
+			LanguagePortlet.configureLanguages(currentLanguageList = "English (United States),German (Germany),Spanish (Spain)");
 
-		LanguagePortlet.moveLanguagesToCurrent(currentLanguages = "English (United States),German (Germany),Spanish (Spain)");
+			IFrame.closeFrame();
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("View English is shown as current language in Language Selector") {
+			LanguagePortlet.viewCurrentLanguage(locale = "en-US");
+		}
 
-		LanguagePortlet.viewLanguageCurrent(locale = "en-US");
-
-		LanguagePortlet.viewLanguagesAbsent(missingLocales = "français-France,magyar-Magyarország,日本語-日本,português-Brasil,中文-中国,עברית-ישראל,suomi-Suomi,català-Espanya,nederlands-Nederland");
-
-		LanguagePortlet.viewLanguagesPresent(currentLocales = "deutsch-Deutschland,español-España");
+		task ("View German and Spanish are shown as available languages") {
+			LanguagePortlet.viewLanguages(
+				availableLanguageList = "deutsch-Deutschland,español-España",
+				displayTemplate = "Icon Menu",
+				unavailableLanguageList = "français-France,magyar-Magyarország,日本語-日本,português-Brasil,中文-中国,العربية-السعودية,suomi-Suomi,català-Espanya,nederlands-Nederland,svenska-Sverige");
+		}
 	}
 
+	@description = "Display Language Selector templates."
 	@priority = "4"
-	test ViewDisplayOptionsViaLanguagePortlet {
+	test DisplayTemplatesViaLanguageSelector {
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "LocalizationUsecase#ViewDisplayOptionsViaLanguagePortlet";
-		property testray.component.names = "Localization";
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Language Selector");
+		task ("View available languages are shwon with Icon Menu template") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			LanguagePortlet.viewCurrentLanguage(locale = "en-US");
 
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
+			LanguagePortlet.viewLanguages(
+				availableLanguageList = "العربية-السعودية,català-Espanya,中文-中国,nederlands-Nederland,suomi-Suomi,français-France,deutsch-Deutschland,magyar-Magyarország,日本語-日本,português-Brasil,español-España,svenska-Sverige",
+				displayTemplate = "Icon Menu");
+		}
 
-		LanguagePortlet.toggleDisplayTemplate(displayStyle = "Icon Menu");
+		task ("Define Icon as display template in Language Selector") {
+			Portlet.gotoPortletOptions(
+				portletName = "Language Selector",
+				portletOption = "Configuration");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			IFrame.selectConfigurationFrame();
 
-		LanguagePortlet.viewLanguageCurrent(locale = "en-US");
+			LanguagePortlet.configureDisplaySettings(
+				displayCurrentLocale = "true",
+				displayTemplate = "Icon");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			IFrame.closeFrame();
+		}
 
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
+		task ("View available languages are shwon with Icon template") {
+			LanguagePortlet.viewLanguages(
+				availableIconList = "en-us,ar-sa,ca-es,zh-cn,nl-nl,fi-fi,fr-fr,de-de,hu-hu,ja-jp,pt-br,es-es,sv-se",
+				displayTemplate = "Icon");
+		}
 
-		LanguagePortlet.toggleDisplayTemplate(displayStyle = "Long Text");
+		task ("Define Long Text as display template in Language Selector") {
+			Portlet.gotoPortletOptions(
+				portletName = "Language Selector",
+				portletOption = "Configuration");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			IFrame.selectConfigurationFrame();
 
-		LanguagePortlet.viewDisplayTemplateLongText(language = "suomi");
+			LanguagePortlet.configureDisplaySettings(
+				displayCurrentLocale = "true",
+				displayTemplate = "Long Text");
 
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
+			IFrame.closeFrame();
+		}
 
-		LanguagePortlet.toggleDisplayTemplate(displayStyle = "Select Box");
+		task ("View available languages are shwon with Long Text template") {
+			LanguagePortlet.viewLanguages(
+				availableLanguageList = "english,العربية,català,中文,nederlands,suomi,français,deutsch,magyar,日本語,português,español,svenska",
+				displayTemplate = "Long Text");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("Define Select Box as display template in Language Selector") {
+			Portlet.gotoPortletOptions(
+				portletName = "Language Selector",
+				portletOption = "Configuration");
 
-		LanguagePortlet.viewDisplayTemplateSelectBox(language = "English");
+			IFrame.selectConfigurationFrame();
 
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
+			LanguagePortlet.configureDisplaySettings(
+				displayCurrentLocale = "true",
+				displayTemplate = "Select Box");
 
-		LanguagePortlet.toggleDisplayTemplate(displayStyle = "Short Text");
+			IFrame.closeFrame();
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+		task ("View available languages are shwon with Select Box template") {
+			LanguagePortlet.viewLanguages(
+				availableLanguageList = "english,العربية,català,中文,nederlands,suomi,français,deutsch,magyar,日本語,português,español,svenska",
+				displayTemplate = "Select Box");
+		}
 
-		LanguagePortlet.viewDisplayTemplateShortText(languageKey = "hu");
+		task ("Define Short Text as display template in Language Selector") {
+			Portlet.gotoPortletOptions(
+				portletName = "Language Selector",
+				portletOption = "Configuration");
+
+			IFrame.selectConfigurationFrame();
+
+			LanguagePortlet.configureDisplaySettings(
+				displayCurrentLocale = "true",
+				displayTemplate = "Short Text");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View available languages are shwon with Short Text template") {
+			LanguagePortlet.viewLanguages(
+				availableLanguageList = "en,ar,ca,中文,nl,fi,fr,de,hu,日本語,pt,es,sv",
+				displayTemplate = "Short Text");
+		}
 	}
 
+	@description = "View current languages via Language Selector after being removed in the portal settings."
 	@priority = "4"
-	test ViewRemovedCurrentPortalLanguagesViaLanguagePortlet {
-		property test.name.skip.portal.instance = "LocalizationUsecase#ViewRemovedCurrentPortalLanguagesViaLanguagePortlet";
+	test ViewRemovedCurrentPortalLanguagesViaLanguageSelector {
+		property test.name.skip.portal.instance = "LocalizationUsecase#ViewRemovedCurrentPortalLanguagesViaLanguageSelector";
 		property testray.component.names = "Localization";
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Language Selector");
+		task ("Define English, Chinese and French as current languages in portal settings") {
+			PortalSettings.gotoConfiguration(
+				configurationCategory = "Localization",
+				configurationName = "Language",
+				configurationScope = "Virtual Instance Scope");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			PortalSettings.configureCurrentLanguagesCP(currentPortalLanguages = "English (United States),Chinese (China),French (France)");
+		}
 
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Localization",
-			configurationName = "Language",
-			configurationScope = "Virtual Instance Scope");
+		task ("View available languages are shwon in Language Selector") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		PortalSettings.configureCurrentLanguagesCP(currentPortalLanguages = "Chinese (China),English (United States),French (France)");
+			LanguagePortlet.viewCurrentLanguage(locale = "en-US");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			LanguagePortlet.viewLanguages(
+				availableLanguageList = "français-France,中文-中国",
+				displayTemplate = "Icon Menu",
+				unavailableLanguageList = "العربية-السعودية,català-Espanya,nederlands-Nederland,suomi-Suomi,deutsch-Deutschland,magyar-Magyarország,日本語-日本,português-Brasil,español-España,svenska-Sverige");
+		}
 
-		LanguagePortlet.viewLanguageCurrent(locale = "en-US");
+		task ("View Chinese, French and English are show as current language in Language Selector") {
+			Portlet.gotoPortletOptions(
+				portletName = "Language Selector",
+				portletOption = "Configuration");
 
-		LanguagePortlet.viewLanguagesAbsent(missingLocales = "magyar-Magyarország,日本語-日本,português-Brasil,עברית-ישראל,suomi-Suomi,català-Espanya,nederlands-Nederland,deutsch-Deutschland,español-España");
+			IFrame.selectConfigurationFrame();
 
-		LanguagePortlet.viewLanguagesPresent(currentLocales = "français-France,中文-中国");
-
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-		LanguagePortlet.configureViewCurrentLanguages(currentLanguages = "Chinese (China),French (France),English (United States)");
+			LanguagePortlet.viewLanguagesSettings(currentLanguageList = "Chinese (China),French (France),English (United States)");
+		}
 	}
 
+	@description = "View current languages via Language Selector after being removed in the site settings."
 	@priority = "4"
-	test ViewRemovedCurrentSiteLanguagesViaLanguagePortlet {
-		property test.name.skip.portal.instance = "LocalizationUsecase#ViewRemovedCurrentSiteLanguageViaLanguagePortlet";
-		property testray.component.names = "Localization";
+	test ViewRemovedCurrentSiteLanguagesViaLanguageSelector {
+		property test.name.skip.portal.instance = "LocalizationUsecase#ViewRemovedCurrentSiteLanguagesViaLanguageSelector";
 
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Test Page Name",
-			widgetName = "Language Selector");
+		task ("Define English, German and Spanish as current languages in site settings") {
+			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
 
-		Site.openSiteSettingsAdmin(siteURLKey = "test-site-name");
+			Site.configureCurrentLanguagesCP(
+				currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",
+				defaultSiteLanguage = "English (United States)",
+				displaySettings = "Display Settings");
+		}
 
-		Site.configureCurrentLanguagesCP(
-			currentSiteLanguages = "English (United States),German (Germany),Spanish (Spain)",
-			defaultSiteLanguage = "English (United States)",
-			displaySettings = "Display Settings");
+		task ("View available languages are shwon in Language Selector") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Test Page Name",
-			siteName = "Test Site Name");
+			LanguagePortlet.viewCurrentLanguage(locale = "en-US");
 
-		LanguagePortlet.viewLanguageCurrent(locale = "en-US");
+			LanguagePortlet.viewLanguages(
+				availableLanguageList = "deutsch-Deutschland,español-España",
+				displayTemplate = "Icon Menu",
+				unavailableLanguageList = "العربية-السعودية,català-Espanya,nederlands-Nederland,suomi-Suomi,magyar-Magyarország,日本語-日本,português-Brasil,français-France,中文-中国,svenska-Sverige");
+		}
 
-		LanguagePortlet.viewLanguagesAbsent(missingLocales = "français-France,magyar-Magyarország,日本語-日本,português-Brasil,中文-中国,עברית-ישראל,suomi-Suomi,català-Espanya,nederlands-Nederland");
+		task ("View English, German and Spanish are show as current language in Language Selector") {
+			Portlet.gotoPortletOptions(
+				portletName = "Language Selector",
+				portletOption = "Configuration");
 
-		LanguagePortlet.viewLanguagesPresent(currentLocales = "deutsch-Deutschland,español-España");
+			IFrame.selectConfigurationFrame();
 
-		Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-		LanguagePortlet.configureViewCurrentLanguages(currentLanguages = "English (United States),German (Germany),Spanish (Spain)");
+			LanguagePortlet.viewLanguagesSettings(currentLanguageList = "English (United States),German (Germany),Spanish (Spain)");
+		}
 	}
 
 }

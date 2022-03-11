@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import {useCallback} from 'react';
+import {useCallback, useEffect, useRef} from 'react';
 import {Outlet, useLocation} from 'react-router-dom';
 import ProjectSupport from '../../components/ProjectSupport';
 import GenerateNewDXPKey from '../../containers/GenerateNewDXPKey';
@@ -34,11 +34,19 @@ const PAGE_SKELETON_LAYOUT = {
 
 const Layout = () => {
 	const location = useLocation();
-	const [, ...currentPath] = location.pathname?.split('/')?.filter(Boolean);
-
+	const [accountKey, ...currentPath] = location.pathname
+		?.split('/')
+		?.filter(Boolean);
 	const [
 		{project, sessionId, subscriptionGroups, userAccount},
 	] = useCustomerPortal();
+	const firstAccountKeyAccessedRef = useRef(accountKey);
+
+	useEffect(() => {
+		if (accountKey !== firstAccountKeyAccessedRef.current) {
+			window.location.reload();
+		}
+	}, [accountKey]);
 
 	const getCurrentPage = useCallback(() => {
 		return currentPath.length

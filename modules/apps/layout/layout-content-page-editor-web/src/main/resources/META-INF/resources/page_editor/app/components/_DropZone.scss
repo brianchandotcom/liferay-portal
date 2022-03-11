@@ -1,25 +1,13 @@
 @import 'cadmin-variables';
 
 html#{$cadmin-selector} {
-	.cadmin.page-editor__drop-zone {
-		align-items: center;
-		background: $gray-100;
-		border: 1px solid $cadmin-secondary-l2;
-		color: $secondary;
-		display: flex;
-		flex-direction: column;
-		font-family: $cadmin-font-family-base;
-		justify-content: center;
-		min-height: 400px;
+	.cadmin {
+		.page-editor__drop-zone {
+			border: 1px solid $cadmin-secondary-l2;
+			min-height: 400px;
 
-		p {
-			font-size: 14px;
-			max-width: 300px;
-			text-align: center;
-
-			&:first-child {
-				font-weight: bold;
-				margin-bottom: 0.5em;
+			p {
+				max-width: 300px;
 			}
 		}
 	}

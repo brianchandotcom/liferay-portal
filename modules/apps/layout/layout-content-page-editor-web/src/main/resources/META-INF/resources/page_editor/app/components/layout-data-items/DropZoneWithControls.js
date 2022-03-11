@@ -21,16 +21,23 @@ import Topper from '../topper/Topper';
 
 const DropZone = React.forwardRef(({item}, ref) => {
 	return (
-		<div className="cadmin page-editor__drop-zone" ref={ref}>
-			<p>{Liferay.Language.get('drop-zone')}</p>
+		<div className="cadmin">
+			<div
+				className="align-items-center bg-lighter d-flex flex-column justify-content-center page-editor__drop-zone text-3 text-center text-secondary"
+				ref={ref}
+			>
+				<p className="font-weight-bold mb-1">
+					{Liferay.Language.get('drop-zone')}
+				</p>
 
-			<p>
-				{Liferay.Language.get(
-					'fragments-and-widgets-for-pages-based-on-this-master-will-be-placed-here'
-				)}
-			</p>
+				<p>
+					{Liferay.Language.get(
+						'fragments-and-widgets-for-pages-based-on-this-master-will-be-placed-here'
+					)}
+				</p>
 
-			<ManageAllowedFragmentButton item={item} />
+				<ManageAllowedFragmentButton item={item} />
+			</div>
 		</div>
 	);
 });

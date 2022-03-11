@@ -266,14 +266,35 @@ public interface BatchPlannerLogLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
+		long companyId, boolean export, int start, int end,
+		OrderByComparator<BatchPlannerLog> orderByComparator,
+		String searchByField, String searchByKeyword);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
 		long companyId, int start, int end,
 		OrderByComparator<BatchPlannerLog> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
+		long companyId, int start, int end,
+		OrderByComparator<BatchPlannerLog> orderByComparator,
+		String searchByField, String searchByKeyword);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyBatchPlannerLogsCount(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyBatchPlannerLogsCount(long companyId, boolean export);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyBatchPlannerLogsCount(
+		long companyId, boolean export, String searchByField,
+		String searchByKeyword);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCompanyBatchPlannerLogsCount(
+		long companyId, String searchByField, String searchByKeyword);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

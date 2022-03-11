@@ -350,6 +350,20 @@ public class BatchPlannerLogLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.batch.planner.model.BatchPlannerLog>
 		getCompanyBatchPlannerLogs(
+			long companyId, boolean export, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.batch.planner.model.BatchPlannerLog>
+					orderByComparator,
+			String searchByField, String searchByKeyword) {
+
+		return _batchPlannerLogLocalService.getCompanyBatchPlannerLogs(
+			companyId, export, start, end, orderByComparator, searchByField,
+			searchByKeyword);
+	}
+
+	@Override
+	public java.util.List<com.liferay.batch.planner.model.BatchPlannerLog>
+		getCompanyBatchPlannerLogs(
 			long companyId, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.batch.planner.model.BatchPlannerLog>
@@ -357,6 +371,20 @@ public class BatchPlannerLogLocalServiceWrapper
 
 		return _batchPlannerLogLocalService.getCompanyBatchPlannerLogs(
 			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.batch.planner.model.BatchPlannerLog>
+		getCompanyBatchPlannerLogs(
+			long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.batch.planner.model.BatchPlannerLog>
+					orderByComparator,
+			String searchByField, String searchByKeyword) {
+
+		return _batchPlannerLogLocalService.getCompanyBatchPlannerLogs(
+			companyId, start, end, orderByComparator, searchByField,
+			searchByKeyword);
 	}
 
 	@Override
@@ -369,6 +397,23 @@ public class BatchPlannerLogLocalServiceWrapper
 	public int getCompanyBatchPlannerLogsCount(long companyId, boolean export) {
 		return _batchPlannerLogLocalService.getCompanyBatchPlannerLogsCount(
 			companyId, export);
+	}
+
+	@Override
+	public int getCompanyBatchPlannerLogsCount(
+		long companyId, boolean export, String searchByField,
+		String searchByKeyword) {
+
+		return _batchPlannerLogLocalService.getCompanyBatchPlannerLogsCount(
+			companyId, export, searchByField, searchByKeyword);
+	}
+
+	@Override
+	public int getCompanyBatchPlannerLogsCount(
+		long companyId, String searchByField, String searchByKeyword) {
+
+		return _batchPlannerLogLocalService.getCompanyBatchPlannerLogsCount(
+			companyId, searchByField, searchByKeyword);
 	}
 
 	@Override

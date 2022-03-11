@@ -78,9 +78,15 @@ public class CommerceAccountRoleHelperImpl
 				Collections.emptyMap());
 
 			role = accountRole.getRole();
+
+			_setRolePermissions(role, serviceContext);
 		}
 
-		_setRolePermissions(role, serviceContext);
+		if (CommerceAccountConstants.ROLE_NAME_ACCOUNT_ADMINISTRATOR.equals(
+				name)) {
+
+			_setRolePermissions(role, serviceContext);
+		}
 	}
 
 	private void _setRolePermissions(

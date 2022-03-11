@@ -49,49 +49,79 @@ public class PortletJSONUtil {
 			Portlet portlet, JSONObject jsonObject)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		boolean portletOnLayout = false;
 
-		LayoutTypePortlet layoutTypePortlet =
-			themeDisplay.getLayoutTypePortlet();
+		if (portlet.isInstanceable()) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-		populatePortletJSONObject(
-			httpServletRequest, portletHTML, portlet,
-			layoutTypePortlet.getAllPortlets(), jsonObject);
+			LayoutTypePortlet layoutTypePortlet =
+				themeDisplay.getLayoutTypePortlet();
+
+			String rootPortletId = _getRootPortletId(portlet);
+			String portletId = portlet.getPortletId();
+
+			for (Portlet layoutPortlet : layoutTypePortlet.getAllPortlets()) {
+
+				// Check to see if an instance of this portlet is already in the
+				// layout, but ignore the portlet that was just added
+
+				String layoutPortletRootPortletId = _getRootPortletId(
+					layoutPortlet);
+
+				if (rootPortletId.equals(layoutPortletRootPortletId) &&
+					!portletId.equals(layoutPortlet.getPortletId())) {
+
+					portletOnLayout = true;
+
+					break;
+				}
+			}
+		}
+
+		_populatePortletJSONObject(
+			httpServletRequest, portletHTML, portlet, portletOnLayout,
+			jsonObject);
 	}
 
-	public static void populatePortletJSONObject(
+	public static void writeFooterPaths(
+			HttpServletResponse httpServletResponse, JSONObject jsonObject)
+		throws IOException {
+
+		_writePaths(
+			httpServletResponse, jsonObject.getJSONArray("footerCssPaths"),
+			jsonObject.getJSONArray("footerJavaScriptPaths"));
+	}
+
+	public static void writeHeaderPaths(
+			HttpServletResponse httpServletResponse, JSONObject jsonObject)
+		throws IOException {
+
+		_writePaths(
+			httpServletResponse, jsonObject.getJSONArray("headerCssPaths"),
+			jsonObject.getJSONArray("headerJavaScriptPaths"));
+	}
+
+	private static String _getRootPortletId(Portlet portlet) {
+
+		// Workaround for portlet#getRootPortletId because that does not return
+		// the proper root portlet ID for OpenSocial and WSRP portlets
+
+		Portlet rootPortlet = portlet.getRootPortlet();
+
+		return rootPortlet.getPortletId();
+	}
+
+	private static void _populatePortletJSONObject(
 			HttpServletRequest httpServletRequest, String portletHTML,
-			Portlet portlet, List<Portlet> allPortlets, JSONObject jsonObject)
+			Portlet portlet, boolean portletOnLayout, JSONObject jsonObject)
 		throws Exception {
 
 		Set<String> footerCssSet = new LinkedHashSet<>();
 		Set<String> footerJavaScriptSet = new LinkedHashSet<>();
 		Set<String> headerCssSet = new LinkedHashSet<>();
 		Set<String> headerJavaScriptSet = new LinkedHashSet<>();
-
-		boolean portletOnLayout = false;
-
-		String rootPortletId = _getRootPortletId(portlet);
-		String portletId = portlet.getPortletId();
-
-		for (Portlet layoutPortlet : allPortlets) {
-
-			// Check to see if an instance of this portlet is already in the
-			// layout, but ignore the portlet that was just added
-
-			String layoutPortletRootPortletId = _getRootPortletId(
-				layoutPortlet);
-
-			if (rootPortletId.equals(layoutPortletRootPortletId) &&
-				!portletId.equals(layoutPortlet.getPortletId())) {
-
-				portletOnLayout = true;
-
-				break;
-			}
-		}
 
 		if (!portletOnLayout && portlet.isAjaxable()) {
 			Portlet rootPortlet = portlet.getRootPortlet();
@@ -236,34 +266,6 @@ public class PortletJSONUtil {
 				"markupHeadElements",
 				StringUtil.merge(markupHeadElements, StringPool.BLANK));
 		}
-	}
-
-	public static void writeFooterPaths(
-			HttpServletResponse httpServletResponse, JSONObject jsonObject)
-		throws IOException {
-
-		_writePaths(
-			httpServletResponse, jsonObject.getJSONArray("footerCssPaths"),
-			jsonObject.getJSONArray("footerJavaScriptPaths"));
-	}
-
-	public static void writeHeaderPaths(
-			HttpServletResponse httpServletResponse, JSONObject jsonObject)
-		throws IOException {
-
-		_writePaths(
-			httpServletResponse, jsonObject.getJSONArray("headerCssPaths"),
-			jsonObject.getJSONArray("headerJavaScriptPaths"));
-	}
-
-	private static String _getRootPortletId(Portlet portlet) {
-
-		// Workaround for portlet#getRootPortletId because that does not return
-		// the proper root portlet ID for OpenSocial and WSRP portlets
-
-		Portlet rootPortlet = portlet.getRootPortlet();
-
-		return rootPortlet.getPortletId();
 	}
 
 	private static void _writePaths(

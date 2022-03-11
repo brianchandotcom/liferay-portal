@@ -94,7 +94,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
-import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -205,8 +204,8 @@ public class BundleSiteInitializerTest {
 			_assertSiteNavigationMenu(group);
 			_assertStyleBookEntry(group);
 			_assertUserRoles(group);
-			_assertWorkflowDefinitions(group, serviceContext);
 			_assertWidgetTemplates(group);
+			_assertWorkflowDefinitions(group, serviceContext);
 		}
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
@@ -1119,6 +1118,20 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("Test Role 3", role.getName());
 	}
 
+	private void _assertWidgetTemplates(Group group) {
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
+			group.getGroupId(),
+			_portal.getClassNameId("com.liferay.portal.kernel.theme.NavItem"),
+			"TEST-WIDGET-TEMPLATE-1");
+
+		Assert.assertNotNull(ddmTemplate);
+
+		Assert.assertEquals(
+			"TEST WIDGET TEMPLATE 1",
+			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
+		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
+	}
+
 	private void _assertWorkflowDefinitions(
 			Group group, ServiceContext serviceContext)
 		throws Exception {
@@ -1176,18 +1189,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(
 			"Test Workflow Definition 2",
 			workflowDefinitionLink2.getWorkflowDefinitionName());
-	private void _assertWidgetTemplates(Group group) {
-		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchTemplate(
-			group.getGroupId(),
-			_portal.getClassNameId("com.liferay.portal.kernel.theme.NavItem"),
-			"TEST-WIDGET-TEMPLATE-1");
-
-		Assert.assertNotNull(ddmTemplate);
-
-		Assert.assertEquals(
-			"TEST WIDGET TEMPLATE 1",
-			ddmTemplate.getName(LocaleUtil.getSiteDefault()));
-		Assert.assertEquals("${aField.getData()}", ddmTemplate.getScript());
 	}
 
 	private Bundle _installBundle(BundleContext bundleContext, String location)

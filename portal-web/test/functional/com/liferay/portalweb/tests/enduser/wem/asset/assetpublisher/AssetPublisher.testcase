@@ -276,45 +276,43 @@ definition {
 	@description = "Configure the Select More Than One asset types."
 	@priority = "4"
 	test ConfigureSelectMoreThanOneAssetTypes {
-		property portal.release = "false";
-		property testray.component.names = "Asset Publisher,Bookmarks";
+		property testray.component.names = "Asset Publisher";
 
-		task ("Add a bookmarks entry") {
-			JSONBookmarks.addBookmarks(
-				description = "Test Bookmark Description",
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
 				groupName = "Test Site Name",
-				name = "Test Bookmark Name",
-				url = "https://www.liferay.com");
+				title = "Web Content Title");
 		}
 
-		task ("Remove Bookmarks Entry from Asset Type") {
+		task ("Remove Web Content Article from Asset Type") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssetPublisherPortlet.configureAPSelectMoreThanOnePG(selectContent = "Bookmarks Entry");
+			AssetPublisherPortlet.configureAPSelectMoreThanOnePG(selectContent = "Web Content Article");
 		}
 
-		task ("View the bookmarks entry not shown in Asset Publisher") {
+		task ("View the web content not shown in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssetPublisherPortlet.viewConfigureAPMoveToAvailablePG(assetTitle = "Test Bookmark Name");
+			AssetPublisherPortlet.viewConfigureAPMoveToAvailablePG(assetTitle = "Web Content Title");
 		}
 
-		task ("Add Bookmarks Entry back to Asset Type") {
+		task ("Add Web Content Article back to Asset Type") {
 			AssetPublisherPortlet.configureAPSelectMoreThanOnePG(
 				moveSelected = "true",
-				selectContent = "Bookmarks Entry");
+				selectContent = "Web Content Article");
 		}
 
-		task ("View the bookmarks entry shown in Asset Publisher") {
+		task ("View the web content shown in Asset Publisher") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
 
-			AssetPublisherPortlet.viewConfigureAPMoveToSelectedPG(assetTitle = "Test Bookmark Name");
+			AssetPublisherPortlet.viewConfigureAPMoveToSelectedPG(assetTitle = "Web Content Title");
 		}
 	}
 

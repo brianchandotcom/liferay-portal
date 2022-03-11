@@ -376,6 +376,7 @@ export const getAccountUserAccountsByExternalReferenceCode = gql`
 					name
 					externalReferenceCode
 					roleBriefs {
+						id
 						name
 					}
 				}
@@ -423,5 +424,19 @@ export const updateAccountSubscriptionGroups = gql`
 				name
 			}
 		}
+	}
+`;
+
+export const deleteAccountUserRoles = gql`
+	mutation deleteAccountUserRoles(
+		$accountRoleId: Long!
+		$emailAddress: String!
+		$accountKey: String!
+	) {
+		deleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress(
+			accountRoleId: $accountRoleId
+			emailAddress: $emailAddress
+			externalReferenceCode: $accountKey
+		)
 	}
 `;

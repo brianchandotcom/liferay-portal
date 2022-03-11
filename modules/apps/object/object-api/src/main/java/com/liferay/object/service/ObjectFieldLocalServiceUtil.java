@@ -143,6 +143,13 @@ public class ObjectFieldLocalServiceUtil {
 		return getService().deleteObjectField(objectField);
 	}
 
+	public static void deleteObjectFieldByObjectDefinitionId(
+			Long objectDefinitionId)
+		throws PortalException {
+
+		getService().deleteObjectFieldByObjectDefinitionId(objectDefinitionId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */

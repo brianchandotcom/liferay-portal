@@ -1124,16 +1124,16 @@ public interface BaseProjectTemplatesTestCase {
 	}
 
 	public default void modifyElementText(
-		Document document, String xPathExpression, String newText) {
+		Document document, String expression, String newText) {
 
 		XPathFactory xPathFactory = XPathFactory.newInstance();
 
 		XPath xPath = xPathFactory.newXPath();
 
 		try {
-			XPathExpression expression = xPath.compile(xPathExpression);
+			XPathExpression xPathExpression = xPath.compile(expression);
 
-			NodeList nodeList = (NodeList)expression.evaluate(
+			NodeList nodeList = (NodeList)xPathExpression.evaluate(
 				document, XPathConstants.NODESET);
 
 			for (int i = 0; i < nodeList.getLength(); i++) {

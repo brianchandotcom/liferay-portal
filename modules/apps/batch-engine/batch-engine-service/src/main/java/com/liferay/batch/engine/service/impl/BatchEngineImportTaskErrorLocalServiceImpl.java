@@ -61,4 +61,12 @@ public class BatchEngineImportTaskErrorLocalServiceImpl
 			findByBatchEngineImportTaskId(batchEngineImportTaskId);
 	}
 
+	@Override
+	public int getBatchEngineImportTaskErrorsCount(
+		long batchEngineImportTaskId) {
+
+		return batchEngineImportTaskErrorPersistence.
+			countByBatchEngineImportTaskId(batchEngineImportTaskId);
+	}
+
 }

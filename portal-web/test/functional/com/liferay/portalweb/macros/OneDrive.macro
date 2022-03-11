@@ -68,9 +68,7 @@ definition {
 
 			Click(locator1 = "OneDrive#DELETE_CONFIRMATION");
 
-			Pause(locator1 = "3000");
-
-			Refresh();
+			AssertElementPresent.pauseAssertVisible(locator1 = "OneDrive#DELETE_MESSAGE");
 		}
 	}
 

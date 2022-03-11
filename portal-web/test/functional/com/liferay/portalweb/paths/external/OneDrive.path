@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_MESSAGE</td>
+	<td>//div[contains(@class,'ProgressIndicator-itemDescription')]//div[contains(.,'Done')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILES_CHECKBOX</td>
 	<td>//div[contains(@aria-label,'${key_documentTitle}')]</td>
 	<td></td>

@@ -17,11 +17,11 @@ import {useOutletContext} from 'react-router-dom';
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import QATable from '../../../components/Table/QATable';
-import {getTestrayCases} from '../../../graphql/queries/testrayCase';
+import {TestrayCase, getTestrayCaseResults} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 
 const Case = () => {
-	const {testrayCase}: any = useOutletContext();
+	const {testrayCase}: {testrayCase: TestrayCase} = useOutletContext();
 
 	return (
 		<>
@@ -30,8 +30,7 @@ const Case = () => {
 					items={[
 						{
 							title: i18n.translate('type'),
-							value:
-								testrayCase.type || 'Automated Functional Test',
+							value: testrayCase.testrayCaseType?.name,
 						},
 						{
 							title: i18n.translate('priority'),
@@ -39,7 +38,7 @@ const Case = () => {
 						},
 						{
 							title: i18n.translate('main-component'),
-							value: testrayCase.component || 'A/B Test',
+							value: testrayCase.testrayComponent?.name,
 						},
 						{
 							title: i18n.translate('description'),
@@ -55,11 +54,11 @@ const Case = () => {
 						},
 						{
 							title: i18n.translate('date-created'),
-							value: 'dez 13, 2021 12:00 PM',
+							value: testrayCase.dateCreated,
 						},
 						{
 							title: i18n.translate('date-modified'),
-							value: 'dez 13, 2021 12:00 PM',
+							value: testrayCase.dateModified,
 						},
 						{
 							title: i18n.translate('all-issues-found'),
@@ -71,21 +70,36 @@ const Case = () => {
 
 			<Container className="mt-3" title={i18n.translate('test-history')}>
 				<ListView
-					query={getTestrayCases}
+					query={getTestrayCaseResults}
 					tableProps={{
 						columns: [
 							{
-								key: 'priority',
-								value: i18n.translate('priority'),
+								key: 'dateCreated',
+								value: i18n.translate('create-date'),
 							},
-							{key: 'name', value: i18n.translate('case-name')},
 							{
-								key: 'component',
-								value: i18n.translate('component'),
+								key: 'git-hash',
+								value: i18n.translate('git-hash'),
 							},
+							{
+								key: 'product-version',
+								value: i18n.translate('product-version'),
+							},
+							{
+								key: 'environment',
+								value: i18n.translate('environment'),
+							},
+							{key: 'routine', value: i18n.translate('routine')},
+							{key: 'status', value: i18n.translate('status')},
+							{
+								key: 'warnings',
+								value: i18n.translate('warnings'),
+							},
+							{key: 'issues', value: i18n.translate('issues')},
+							{key: 'errors', value: i18n.translate('errors')},
 						],
 					}}
-					transformData={(data) => data?.c?.testrayCases}
+					transformData={(data) => data?.testrayCaseResults}
 				/>
 			</Container>
 		</>

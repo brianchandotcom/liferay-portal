@@ -34,6 +34,7 @@ import {
 } from '../../../graphql/queries';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../services/liferay/liferay';
+import {DescriptionType} from '../../../types';
 
 type CaseFormData = {
 	caseTypeId: number;
@@ -52,19 +53,12 @@ const priorities = [...new Array(5)].map((_, index) => ({
 	value: index + 1,
 }));
 
-const descriptionTypes = [
-	{
-		label: 'Markdown',
-		value: 'markdown',
-	},
-	{
-		label: 'Plain Text',
-		value: 'plaintext',
-	},
-];
+const descriptionTypes = Object.values(
+	DescriptionType
+).map((descriptionType) => ({label: descriptionType, value: descriptionType}));
 
 const emptyOption = {
-	label: 'Choose an Option',
+	label: i18n.translate('choose-an-option'),
 	value: '',
 };
 
@@ -122,7 +116,7 @@ const CaseForm: React.FC<CaseFormProps> = ({
 									'font-weight-normal mx-0 text-paragraph'
 								)}
 							>
-								{i18n.translate('Priority')}
+								{i18n.translate('priority')}
 							</label>
 
 							<ClaySelectWithOption
@@ -302,8 +296,7 @@ const CaseModal: React.FC<CaseModalProps> = ({observer, onClose, visible}) => {
 			});
 
 			Liferay.Util.openToast({message: 'TestrayCase Registered'});
-		}
-		catch (error) {
+		} catch (error) {
 			Liferay.Util.openToast({
 				message: (error as any).message,
 				type: 'danger',

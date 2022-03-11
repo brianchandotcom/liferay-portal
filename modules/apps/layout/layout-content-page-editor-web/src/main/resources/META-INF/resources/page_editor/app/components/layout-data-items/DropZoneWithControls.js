@@ -21,7 +21,7 @@ import Topper from '../topper/Topper';
 
 const DropZone = React.forwardRef(({item}, ref) => {
 	return (
-		<div className="page-editor__drop-zone" ref={ref}>
+		<div className="cadmin page-editor__drop-zone" ref={ref}>
 			<p>{Liferay.Language.get('drop-zone')}</p>
 
 			<p>

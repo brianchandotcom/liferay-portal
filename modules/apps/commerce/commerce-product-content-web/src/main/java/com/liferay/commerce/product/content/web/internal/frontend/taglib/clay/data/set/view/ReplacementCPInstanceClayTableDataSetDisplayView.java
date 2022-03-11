@@ -50,7 +50,11 @@ public class ReplacementCPInstanceClayTableDataSetDisplayView
 
 		clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
-		clayTableSchemaBuilder.addClayTableSchemaField("price", "price");
+		clayTableSchemaField = clayTableSchemaBuilder.addClayTableSchemaField(
+			"priceModel", "price");
+
+		clayTableSchemaField.setContentRendererModuleURL(
+			"commerce-frontend-js/components/data_renderers/PriceRenderer");
 
 		return clayTableSchemaBuilder.build();
 	}

@@ -19,14 +19,15 @@ import InvitesModal from '../InvitesModal';
 import PopoverIconButton from '../PopoverIconButton';
 
 const TeamMembersTableHeader = ({
+	administratorsAvailable,
 	hasAdminAccess,
 	project,
 	sessionId,
+	setAdministratorsAvailable,
 	setUserAccounts,
 	userAccounts,
 }) => {
 	const [visible, setVisible] = useState(false);
-	const [administratorsAvailable, setAdministratorsAvailable] = useState();
 
 	useEffect(() => {
 		const currentAdministrators = userAccounts?.filter((userAccount) =>
@@ -40,7 +41,7 @@ const TeamMembersTableHeader = ({
 		setAdministratorsAvailable(
 			project.maxRequestors - currentAdministrators
 		);
-	}, [project.maxRequestors, userAccounts]);
+	}, [project.maxRequestors, setAdministratorsAvailable, userAccounts]);
 
 	const handleOnUserInvite = (invitedUsers) => {
 		setVisible(false);

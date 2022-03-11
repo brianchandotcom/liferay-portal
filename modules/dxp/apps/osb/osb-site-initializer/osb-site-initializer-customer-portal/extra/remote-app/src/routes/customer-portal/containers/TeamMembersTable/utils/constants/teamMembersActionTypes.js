@@ -9,5 +9,10 @@
  * distribution rights of the Software.
  */
 
-export * from './columns';
-export * from './teamMembersActionTypes';
+const TEAM_MEMBERS_ACTION_TYPES = {
+	close: 'Close',
+	edit: 'Edit User',
+	remove: 'Remove User',
+};
+
+export {TEAM_MEMBERS_ACTION_TYPES};

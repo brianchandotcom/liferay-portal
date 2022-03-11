@@ -9,16 +9,70 @@
  * distribution rights of the Software.
  */
 
+import {TEAM_MEMBERS_ACTION_TYPES} from '..';
 import {ButtonWithIcon} from '@clayui/core';
-import {ButtonDropDown} from '../../../../../../../common/components';
+import {Button, ButtonDropDown} from '../../../../../../../common/components';
+import {getIsEditingUser} from '../../getIsEditingUser';
 
-const OptionsColumnType = () => {
-	return (
+const MenuUserActions = ({cancelChanges, confirmChanges, userAccount}) => (
+	<div className="align-items-center d-flex">
+		<Button
+			className="mr-2"
+			displayType="secondary"
+			onClick={cancelChanges}
+			small
+		>
+			Cancel
+		</Button>
+
+		<Button onClick={() => confirmChanges(userAccount)} small>
+			{' '}
+			Save
+		</Button>
+	</div>
+);
+
+const OptionsColumnType = ({
+	confirmChanges,
+	setSelectedRole,
+	setUserAction,
+	userAccount,
+	userAction,
+}) => {
+	const userOptions = [
+		{
+			label: 'Edit',
+			onClick: () =>
+				setUserAction({
+					type: TEAM_MEMBERS_ACTION_TYPES.edit,
+					userId: userAccount?.id,
+				}),
+		},
+		{
+			customOptionStyle: 'cp-remove-member-option',
+			label: 'Remove',
+		},
+	];
+
+	const handleOnCancelChanges = () => {
+		setSelectedRole();
+		setUserAction(TEAM_MEMBERS_ACTION_TYPES.close);
+	};
+
+	const isEditingUser = getIsEditingUser(userAction, userAccount?.id);
+
+	return isEditingUser ? (
+		<MenuUserActions
+			cancelChanges={handleOnCancelChanges}
+			confirmChanges={confirmChanges}
+			userAccount={userAccount}
+		/>
+	) : (
 		<ButtonDropDown
 			customDropDownButton={
 				<ButtonWithIcon displayType="null" small symbol="ellipsis-v" />
 			}
-			items={[{label: 'Edit'}, {label: 'Remove'}]}
+			items={userOptions}
 			menuElementAttrs={{
 				className: 'p-0',
 			}}

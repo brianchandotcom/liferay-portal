@@ -36,7 +36,7 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception {
 
-		contextImportStrategy.apply(
+		batchEngineImportStrategy.apply(
 			items, item -> createItem(item, parameters));
 	}
 
@@ -71,9 +71,9 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 	}
 
 	@Override
-	public void setContextImportStrategy(
-		BatchEngineImportStrategy contextImportStrategy) {
-		this.contextImportStrategy = contextImportStrategy;
+	public void setBatchEngineImportStrategy(
+		BatchEngineImportStrategy batchEngineImportStrategy) {
+		this.batchEngineImportStrategy = batchEngineImportStrategy;
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 	}
 
 	protected Company contextCompany;
-	protected BatchEngineImportStrategy contextImportStrategy;
+	protected BatchEngineImportStrategy batchEngineImportStrategy;
 	protected User contextUser;
 	protected String languageId;
 

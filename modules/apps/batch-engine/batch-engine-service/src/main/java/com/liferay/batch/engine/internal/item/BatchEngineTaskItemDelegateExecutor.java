@@ -87,7 +87,7 @@ public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 
 		_setContextFields(_batchEngineTaskItemDelegate);
 
-		_batchEngineTaskItemDelegate.setContextImportStrategy(
+		_batchEngineTaskItemDelegate.setBatchEngineImportStrategy(
 			batchEngineImportStrategy);
 
 		if (batchEngineTaskOperation == BatchEngineTaskOperation.CREATE) {

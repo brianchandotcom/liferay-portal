@@ -56,7 +56,7 @@ public interface BatchEngineTaskItemDelegate<T> {
 
 	public void setContextCompany(Company contextCompany);
 
-	public void setContextImportStrategy(
+	public void setBatchEngineImportStrategy(
 		BatchEngineImportStrategy batchEngineImportStrategy);
 
 	public void setContextUser(User contextUser);

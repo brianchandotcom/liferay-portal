@@ -41,7 +41,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-translations"));
 		<h5><liferay-ui:message key="import-file" /></h5>
 
 		<div class="sheet-text">
-			<liferay-ui:message arguments='<%= ".properties" %>' key="support-file-format" />
+			<liferay-ui:message arguments=".properties" key="support-file-format" />
 		</div>
 
 		<aui:select label="language" name="languageId">

@@ -81,6 +81,7 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -89,6 +90,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -481,6 +483,23 @@ public class SXPBlueprintSearchResultTest {
 				).build()
 			},
 			new String[] {"Paste Any Elasticsearch Query"});
+
+		try {
+			_assertSearchIgnoreRelevance("[Coca Cola, liferay]");
+		}
+		catch (RuntimeException runtimeException) {
+			Throwable[] suppressed = runtimeException.getSuppressed();
+
+			for (int i = 0; i < 3; i++) {
+				suppressed = suppressed[0].getSuppressed();
+			}
+
+			Assert.assertEquals(
+				"[com.liferay.search.experiences.blueprint.exception." +
+					"UnresolvedTemplateVariableException: Unresolved template" +
+						" variables: [myparam]]",
+				Arrays.toString(suppressed));
+		}
 
 		_assertSearch(
 			"[liferay]",

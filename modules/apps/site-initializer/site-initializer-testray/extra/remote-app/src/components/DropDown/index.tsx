@@ -72,6 +72,8 @@ const DropDown: React.FC<DropDownProps> = ({
 													return;
 												}
 
+												setActive(false);
+
 												navigate(path);
 											}}
 										>

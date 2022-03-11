@@ -16,6 +16,10 @@ body {
 	cursor: pointer;
 }
 
+.dropdown-menu {
+	z-index: 9999;
+}
+
 .portlet {
 	margin-bottom: 0;
 }

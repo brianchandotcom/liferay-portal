@@ -14,16 +14,18 @@
 
 package com.liferay.commerce.product.content.web.internal.model;
 
+import com.liferay.commerce.frontend.model.PriceModel;
+
 /**
  * @author Alessio Antonio Rendina
  */
 public class ReplacementSku {
 
 	public ReplacementSku(
-		String name, String price, long replacementSkuId, String sku) {
+		String name, PriceModel priceModel, long replacementSkuId, String sku) {
 
 		_name = name;
-		_price = price;
+		_priceModel = priceModel;
 		_replacementSkuId = replacementSkuId;
 		_sku = sku;
 	}
@@ -32,8 +34,8 @@ public class ReplacementSku {
 		return _name;
 	}
 
-	public String getPrice() {
-		return _price;
+	public PriceModel getPriceModel() {
+		return _priceModel;
 	}
 
 	public long getReplacementSkuId() {
@@ -45,7 +47,7 @@ public class ReplacementSku {
 	}
 
 	private final String _name;
-	private final String _price;
+	private final PriceModel _priceModel;
 	private final long _replacementSkuId;
 	private final String _sku;
 

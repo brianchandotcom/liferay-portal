@@ -9,7 +9,10 @@
  * distribution rights of the Software.
  */
 
-export * from './columns';
-export * from './teamMembersActionTypes';
-export * from './statusActionTypes';
-export * from './statusNameTypes';
+const STATUS_NAME_TYPES = {
+	onEditSuccess: 'onEditSuccess',
+	onRemoveFailure: 'onRemoveFailure',
+	onRemoveSuccess: 'onRemoveSuccess',
+};
+
+export {STATUS_NAME_TYPES};

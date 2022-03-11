@@ -9,6 +9,7 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import {useEffect, useMemo, useState} from 'react';
 import client from '../../../../apolloClient';
 import {Table} from '../../../../common/components';
@@ -26,7 +27,11 @@ import {ROLE_TYPES} from '../../../../common/utils/constants';
 import TeamMembersTableHeader from './components/Header';
 import RemoveUserModal from './components/RemoveUserModal';
 import useAccountUser from './hooks/useAccountUser';
-import {TEAM_MEMBERS_ACTION_TYPES} from './utils/constants';
+import {
+	STATUS_ACTION_TYPES,
+	STATUS_NAME_TYPES,
+	TEAM_MEMBERS_ACTION_TYPES,
+} from './utils/constants';
 import {
 	NameColumnType,
 	OptionsColumnType,
@@ -34,11 +39,12 @@ import {
 	StatusColumnType,
 	SupportSeatColumnType,
 } from './utils/constants/columns-definitions';
-import {deleteAllPreviousUserRoles} from './utils/constants/deleteAllPreviousUserRoles';
+import {deleteAllPreviousUserRoles} from './utils/deleteAllPreviousUserRoles';
 import {getColumnsByUserAccess} from './utils/getColumnsByUserAccess';
 
 const MAX_PAGE_SIZE = 9999;
 const ROLE_FILTER_NAME = 'contactRoleNames';
+const ALERT_TIMEOUT = 3000;
 
 const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 	const {
@@ -51,6 +57,7 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 	const [isLoadingUserAccounts, setIsLoadingUserAccounts] = useState(false);
 	const [userAction, setUserAction] = useState();
 	const [selectedRole, setSelectedRole] = useState();
+	const [userActionStatus, setUserActionStatus] = useState();
 
 	useEffect(() => {
 		setIsLoadingUserAccounts(true);
@@ -137,6 +144,7 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 
 				return newUserAcconts;
 			});
+			setUserActionStatus(STATUS_NAME_TYPES.onEditSuccess);
 			setSelectedRole();
 		}
 		setUserAction(TEAM_MEMBERS_ACTION_TYPES.close);
@@ -164,8 +172,8 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 
 					return `${rolesAccumulator}${
 						index > 0
-							? `&${ROLE_FILTER_NAME}=${raysourceRole.raysourceName}`
-							: `${ROLE_FILTER_NAME}=${raysourceRole.raysourceName}`
+							? `&${ROLE_FILTER_NAME}=${raysourceRole?.raysourceName}`
+							: `${ROLE_FILTER_NAME}=${raysourceRole?.raysourceName}`
 					}`;
 				},
 				''
@@ -184,6 +192,8 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 					(userAccount) => userAccount.id !== userAction.userId
 				)
 			);
+
+			setUserActionStatus(STATUS_NAME_TYPES.onRemoveSuccess);
 		}
 	};
 
@@ -262,6 +272,21 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 					),
 				}))}
 			/>
+
+			{userActionStatus && (
+				<ClayAlert.ToastContainer>
+					<ClayAlert
+						autoClose={ALERT_TIMEOUT}
+						className="cp-activation-key-download-alert px-4 py-3 text-paragraph"
+						displayType={
+							STATUS_ACTION_TYPES[userActionStatus]?.type
+						}
+						onClose={() => setUserActionStatus('')}
+					>
+						{STATUS_ACTION_TYPES[userActionStatus]?.message}
+					</ClayAlert>
+				</ClayAlert.ToastContainer>
+			)}
 		</div>
 	);
 };

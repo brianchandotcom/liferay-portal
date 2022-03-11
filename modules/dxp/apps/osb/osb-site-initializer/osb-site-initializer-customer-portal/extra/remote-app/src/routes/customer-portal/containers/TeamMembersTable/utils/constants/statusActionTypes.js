@@ -9,7 +9,19 @@
  * distribution rights of the Software.
  */
 
-export * from './columns';
-export * from './teamMembersActionTypes';
-export * from './statusActionTypes';
-export * from './statusNameTypes';
+const STATUS_ACTION_TYPES = {
+	onEditSuccess: {
+		message: 'User was modified successfully.',
+		type: 'success',
+	},
+	onRemoveFailure: {
+		message: 'Error while removing user, try again later.',
+		type: 'danger',
+	},
+	onRemoveSuccess: {
+		message: 'User was removed successfully.',
+		type: 'success',
+	},
+};
+
+export {STATUS_ACTION_TYPES};

@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.jaas.PortalPrincipal;
-import com.liferay.portal.kernel.security.jaas.PortalRole;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -40,13 +38,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
-import java.security.Principal;
-
 import java.util.Date;
-import java.util.Iterator;
-import java.util.Set;
 
-import javax.security.auth.Subject;
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.NameCallback;
@@ -170,16 +163,6 @@ public class JAASTest {
 	}
 
 	@Test
-	public void testLoginEmailAddressWithEmailAddress() throws Exception {
-		_testLogin(_user.getEmailAddress(), "emailAddress");
-	}
-
-	@Test
-	public void testLoginEmailAddressWithLogin() throws Exception {
-		_testLogin(_user.getEmailAddress(), "login");
-	}
-
-	@Test
 	public void testLoginEmailAddressWithScreenName() throws Exception {
 		_testLoginFail(_user.getEmailAddress(), "screenName");
 	}
@@ -200,11 +183,6 @@ public class JAASTest {
 	}
 
 	@Test
-	public void testLoginScreenNameWithScreenName() throws Exception {
-		_testLogin(_user.getScreenName(), "screenName");
-	}
-
-	@Test
 	public void testLoginScreenNameWithUserId() throws Exception {
 		_testLoginFail(_user.getScreenName(), "userId");
 	}
@@ -222,11 +200,6 @@ public class JAASTest {
 	@Test
 	public void testLoginUserIdWithScreenName() throws Exception {
 		_testLoginFail(String.valueOf(_user.getUserId()), "screenName");
-	}
-
-	@Test
-	public void testLoginUserIdWithUserId() throws Exception {
-		_testLogin(String.valueOf(_user.getUserId()), "userId");
 	}
 
 	@Test
@@ -291,17 +264,6 @@ public class JAASTest {
 			"PortalRealm", new JAASCallbackHandler(name, password));
 	}
 
-	private void _testLogin(String name, String authType) throws Exception {
-		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", authType);
-
-		LoginContext loginContext = _getLoginContext(name, _user.getPassword());
-
-		loginContext.login();
-
-		_validateSubject(loginContext.getSubject(), name);
-	}
-
 	private void _testLoginFail(String name, String authType) throws Exception {
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "PORTAL_JAAS_AUTH_TYPE", authType);
@@ -314,33 +276,6 @@ public class JAASTest {
 			Assert.fail();
 		}
 		catch (Exception exception) {
-		}
-	}
-
-	private void _validateSubject(Subject subject, String userIdString) {
-		Assert.assertNotNull(subject);
-
-		Set<Principal> userPrincipals = subject.getPrincipals();
-
-		Assert.assertNotNull(userPrincipals);
-
-		Iterator<Principal> iterator = userPrincipals.iterator();
-
-		Assert.assertTrue(iterator.hasNext());
-
-		while (iterator.hasNext()) {
-			Principal principal = iterator.next();
-
-			if (principal instanceof PortalRole) {
-				PortalRole portalRole = (PortalRole)principal;
-
-				Assert.assertEquals("users", portalRole.getName());
-			}
-			else {
-				PortalPrincipal portalPrincipal = (PortalPrincipal)principal;
-
-				Assert.assertEquals(userIdString, portalPrincipal.getName());
-			}
 		}
 	}
 

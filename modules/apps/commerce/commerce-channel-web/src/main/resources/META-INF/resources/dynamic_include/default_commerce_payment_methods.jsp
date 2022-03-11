@@ -67,7 +67,7 @@ CommercePaymentMethodRegistry commercePaymentMethodRegistry = (CommercePaymentMe
 					cssClass="modify-link"
 					label="<%= true %>"
 					linkCssClass="btn btn-secondary btn-sm"
-					message='<%= Validator.isNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) ? "set-default-payment-method" : "change" %>'
+					message='<%= Validator.isNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) ? "set-default-commerce-payment-method" : "change" %>'
 					method="get"
 					url="javascript:;"
 				/>

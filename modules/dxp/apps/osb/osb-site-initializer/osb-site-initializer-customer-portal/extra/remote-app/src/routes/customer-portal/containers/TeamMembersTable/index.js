@@ -15,10 +15,12 @@ import {Table} from '../../../../common/components';
 import {Liferay} from '../../../../common/services/liferay';
 import {
 	associateUserAccountWithAccountAndAccountRole,
+	deleteAccountUserAccount,
 	getAccountUserAccountsByExternalReferenceCode,
 } from '../../../../common/services/liferay/graphql/queries';
 import {ROLE_TYPES} from '../../../../common/utils/constants';
 import TeamMembersTableHeader from './components/Header';
+import RemoveUserModal from './components/RemoveUserModal';
 import useAccountUser from './hooks/useAccountUser';
 import {TEAM_MEMBERS_ACTION_TYPES} from './utils/constants';
 import {
@@ -127,6 +129,28 @@ const TeamMembersTable = ({project, sessionId}) => {
 		setUserAction(TEAM_MEMBERS_ACTION_TYPES.close);
 	};
 
+	const handleRemoveUser = async () => {
+		const userToBeRemoved = userAccounts.find(
+			(userAccount) => userAccount.id === userAction?.userId
+		);
+
+		if (userToBeRemoved) {
+			await client.mutate({
+				mutation: deleteAccountUserAccount,
+				variables: {
+					accountKey: project.accountKey,
+					emailAddress: userToBeRemoved?.emailAddress,
+				},
+			});
+
+			setUserAccounts((previousUserAccounts) =>
+				previousUserAccounts.filter(
+					(userAccount) => userAccount.id !== userAction.userId
+				)
+			);
+		}
+	};
+
 	const hasAdminAccess = useMemo(() => {
 		const currentUser = userAccounts?.find(
 			({id}) => id === +Liferay.ThemeDisplay.getUserId()
@@ -147,6 +171,12 @@ const TeamMembersTable = ({project, sessionId}) => {
 
 	return (
 		<div className="pt-2">
+			<RemoveUserModal
+				onRemoveTeamMember={handleRemoveUser}
+				setUserAction={setUserAction}
+				userAction={userAction}
+			/>
+
 			<TeamMembersTableHeader
 				administratorsAvailable={administratorsAvailable}
 				hasAdminAccess={hasAdminAccess}

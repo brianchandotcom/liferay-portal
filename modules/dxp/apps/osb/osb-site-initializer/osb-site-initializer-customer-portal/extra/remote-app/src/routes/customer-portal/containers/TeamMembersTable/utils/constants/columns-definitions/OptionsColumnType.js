@@ -51,6 +51,11 @@ const OptionsColumnType = ({
 		{
 			customOptionStyle: 'cp-remove-member-option',
 			label: 'Remove',
+			onClick: () =>
+				setUserAction({
+					type: TEAM_MEMBERS_ACTION_TYPES.remove,
+					userId: userAccount?.id,
+				}),
 		},
 	];
 

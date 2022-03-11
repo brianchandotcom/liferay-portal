@@ -440,3 +440,15 @@ export const deleteAccountUserRoles = gql`
 		)
 	}
 `;
+
+export const deleteAccountUserAccount = gql`
+	mutation deleteAccountUserAccountByExternalReferenceCodeByEmailAddress(
+		$emailAddress: String!
+		$accountKey: String!
+	) {
+		deleteAccountUserAccountByExternalReferenceCodeByEmailAddress(
+			emailAddress: $emailAddress
+			externalReferenceCode: $accountKey
+		)
+	}
+`;

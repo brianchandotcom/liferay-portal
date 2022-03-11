@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.html.parser.internal;
+package com.liferay.portal.html.parser.internal;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 

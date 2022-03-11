@@ -23,41 +23,45 @@ AddGroupDisplayContext addGroupDisplayContext = (AddGroupDisplayContext)request.
 <clay:container-fluid>
 	<liferay-frontend:edit-form
 		action="<%= addGroupDisplayContext.getAddGroupURL() %>"
+		cssClass="add-group-form"
 		method="post"
 		name="fm"
 		onSubmit="event.preventDefault();"
 		validateOnBlur="<%= false %>"
 	>
-		<liferay-frontend:edit-form-body>
-			<aui:input autoFocus="<%= true %>" label="name" name="name" required="<%= true %>" />
+		<div class="add-group-content">
+			<liferay-frontend:edit-form-body>
+				<aui:input autoFocus="<%= true %>" label="name" name="name" required="<%= true %>" />
 
-			<c:if test="<%= addGroupDisplayContext.isShowLayoutSetVisibilityPrivateCheckbox() %>">
-				<aui:input label="create-default-pages-as-private-available-only-to-members-if-unchecked-they-will-be-public-available-to-anyone" name="layoutSetVisibilityPrivate" type="checkbox" />
-			</c:if>
+				<c:if test="<%= addGroupDisplayContext.isShowLayoutSetVisibilityPrivateCheckbox() %>">
+					<aui:input label="create-default-pages-as-private-available-only-to-members-if-unchecked-they-will-be-public-available-to-anyone" name="layoutSetVisibilityPrivate" type="checkbox" />
+				</c:if>
 
-			<c:if test="<%= addGroupDisplayContext.hasRequiredVocabularies() %>">
-				<aui:fieldset cssClass="mb-4">
-					<div class="h3 sheet-subtitle"><liferay-ui:message key="categorization" /></div>
+				<c:if test="<%= addGroupDisplayContext.hasRequiredVocabularies() %>">
+					<aui:fieldset cssClass="mb-4">
+						<div class="h3 sheet-subtitle"><liferay-ui:message key="categorization" /></div>
 
-					<c:choose>
-						<c:when test="<%= addGroupDisplayContext.isShowCategorization() %>">
-							<liferay-asset:asset-categories-selector
-								className="<%= Group.class.getName() %>"
-								classPK="<%= 0 %>"
-								groupIds="<%= addGroupDisplayContext.getGroupIds() %>"
-								showOnlyRequiredVocabularies="<%= true %>"
-								visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
-							/>
-						</c:when>
-						<c:otherwise>
-							<div class="alert alert-warning text-justify">
-								<liferay-ui:message key="sites-have-required-vocabularies.-you-need-to-create-at-least-one-category-in-all-required-vocabularies-in-order-to-create-a-site" />
-							</div>
-						</c:otherwise>
-					</c:choose>
-				</aui:fieldset>
-			</c:if>
-		</liferay-frontend:edit-form-body>
+						<c:choose>
+							<c:when test="<%= addGroupDisplayContext.isShowCategorization() %>">
+								<liferay-asset:asset-categories-selector
+									className="<%= Group.class.getName() %>"
+									classPK="<%= 0 %>"
+									groupIds="<%= addGroupDisplayContext.getGroupIds() %>"
+									showOnlyRequiredVocabularies="<%= true %>"
+									visibilityTypes="<%= AssetVocabularyConstants.VISIBILITY_TYPES %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<div class="alert alert-warning text-justify">
+									<liferay-ui:message key="sites-have-required-vocabularies.-you-need-to-create-at-least-one-category-in-all-required-vocabularies-in-order-to-create-a-site" />
+								</div>
+							</c:otherwise>
+						</c:choose>
+					</aui:fieldset>
+				</c:if>
+			</liferay-frontend:edit-form-body>
+		</div>
+
 
 		<liferay-frontend:edit-form-footer>
 			<clay:button

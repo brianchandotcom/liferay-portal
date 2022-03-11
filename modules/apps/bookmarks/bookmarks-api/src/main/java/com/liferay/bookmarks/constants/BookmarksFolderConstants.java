@@ -29,12 +29,6 @@ public class BookmarksFolderConstants {
 		StringPool.DOUBLE_SLASH + StringPool.SPACE +
 			StringPool.DOUBLE_BACK_SLASH;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String NAME_LABEL = "folder-name";
-
 	public static final String NAME_RESERVED_WORDS = StringPool.NULL;
 
 }

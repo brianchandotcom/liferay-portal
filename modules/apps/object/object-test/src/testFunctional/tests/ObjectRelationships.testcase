@@ -29,16 +29,16 @@ definition {
 		property portal.upstream = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 288",
+			objectName = "CustomObject288",
+			pluralLabelName = "Custom Objects 288");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject288");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -58,22 +58,22 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
 			objectName_1 = "User",
-			objectName_2 = "CustomObject",
+			objectName_2 = "CustomObject288",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject288");
 
 		for (var fieldEntry : list "A,B") {
 			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 				fieldName = "customObjectField",
-				objectName = "CustomObject",
+				objectName = "CustomObject288",
 				value = "Entry ${fieldEntry}");
 		}
 
 		for (var fieldEntry : list "A,B") {
-			ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+			ObjectAdmin.goToCustomObject(objectName = "CustomObject288");
 
 			ObjectPortlet.viewEntryDetails(entry = "Entry ${fieldEntry}");
 
@@ -91,16 +91,16 @@ definition {
 		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 289",
+			objectName = "CustomObject289",
+			pluralLabelName = "Custom Objects 289");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject289");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -120,14 +120,14 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
 			objectName_1 = "User",
-			objectName_2 = "CustomObject",
+			objectName_2 = "CustomObject289",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject289");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject289");
 
 		LexiconEntry.gotoAdd();
 
@@ -144,9 +144,9 @@ definition {
 		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 290",
+			objectName = "CustomObject290",
+			pluralLabelName = "Custom Objects 290");
 
 		ObjectAdmin.openObjectAdmin();
 
@@ -156,7 +156,7 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
-			object = "CustomObject",
+			object = "CustomObject290",
 			type = "One to Many");
 
 		AssertElementPresent(
@@ -169,7 +169,7 @@ definition {
 	test CannotLeaveRelationshipLabelBlank {
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 147736",
-			objectName = "CustomObject",
+			objectName = "CustomObject147736",
 			pluralLabelName = "Custom Objects 147736");
 
 		ObjectAdmin.openObjectAdmin();
@@ -181,7 +181,7 @@ definition {
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "",
 			name = "relationship",
-			object = "CustomObject",
+			object = "CustomObject147736",
 			type = "One to Many");
 
 		AssertElementPresent(locator1 = "ObjectAdmin#LABEL_OBJECT_RELATIONSHIP_REQUIRED");
@@ -222,10 +222,10 @@ definition {
 	@priority = "4"
 	test CanRelateOneToManyNativeObjectWithCustomSiteScoped {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
+			labelName = "Custom Object 291",
+			objectName = "CustomObject291",
 			panelCategoryKey = "site_administration.content",
-			pluralLabelName = "Custom Objects",
+			pluralLabelName = "Custom Objects 291",
 			scope = "site");
 
 		JSONUser.addUser(
@@ -246,14 +246,14 @@ definition {
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
 			objectName_1 = "User",
-			objectName_2 = "CustomObject",
+			objectName_2 = "CustomObject291",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject291");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject291");
 
 		LexiconEntry.gotoAdd();
 
@@ -286,9 +286,9 @@ definition {
 	@priority = "4"
 	test CanViewAndAddObjectEntriesAfterCreateRelationship {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 292",
+			objectName = "CustomObject292",
+			pluralLabelName = "Custom Objects 292");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -296,29 +296,29 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject292");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject292");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject292",
 			value = "Entry Test");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 292");
 
 		ObjectAdmin.gotoRelationshipsTab();
 
 		ObjectAdmin.addObjectRelationshipViaUI(
 			label = "Relationship",
-			object = "CustomObject",
+			object = "CustomObject292",
 			type = "One to Many");
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject292");
 
 		ObjectPortlet.viewEntry(entry = "Entry Test");
 	}

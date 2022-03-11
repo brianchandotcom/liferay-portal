@@ -29,13 +29,13 @@ definition {
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 207",
+			objectName = "CustomObject207",
+			pluralLabelName = "Custom Objects 207");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 207");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -46,7 +46,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject207");
 
 		FormsAdmin.addForm();
 
@@ -54,7 +54,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 207");
 
 		Form.gotoAddField(fieldType = "Select from List");
 
@@ -73,9 +73,9 @@ definition {
 	@priority = "4"
 	test CanDeleteFormMappedToObject {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 208",
+			objectName = "CustomObject208",
+			pluralLabelName = "Custom Objects 208");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -83,9 +83,9 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject208");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject208");
 
 		FormsAdmin.addForm();
 
@@ -95,7 +95,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 208");
 
 		Form.gotoAddField(fieldType = "Text");
 
@@ -126,9 +126,9 @@ definition {
 	@priority = "4"
 	test CanMapClobTypeAndViewEntriesMultipleLines {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 209",
+			objectName = "CustomObject209",
+			pluralLabelName = "Custom Objects 209");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "LongText",
@@ -136,9 +136,9 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "Clob",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject209");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject209");
 
 		FormsAdmin.addForm();
 
@@ -148,7 +148,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 209");
 
 		Form.gotoAddField(fieldType = "Text");
 
@@ -166,7 +166,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject209");
 
 		ObjectPortlet.viewEntry(entry = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
 	}
@@ -175,9 +175,9 @@ definition {
 	@priority = "4"
 	test CanMapClobTypeAndViewEntriesSingleLine {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 210",
+			objectName = "CustomObject210",
+			pluralLabelName = "Custom Objects 210");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "LongText",
@@ -185,9 +185,9 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "Clob",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject210");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject210");
 
 		FormsAdmin.addForm();
 
@@ -197,7 +197,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 210");
 
 		Form.gotoAddField(fieldType = "Text");
 
@@ -215,7 +215,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject210");
 
 		ObjectPortlet.viewEntry(entry = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
 	}
@@ -242,13 +242,13 @@ definition {
 		Picklist.addPicklistViaAPI(picklistName = "Picklist Test");
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 211",
+			objectName = "CustomObject211",
+			pluralLabelName = "Custom Objects 211");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 211");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -259,7 +259,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject211");
 
 		FormsAdmin.addForm();
 
@@ -267,7 +267,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 211");
 
 		Form.gotoAddField(fieldType = "Select from List");
 
@@ -284,9 +284,9 @@ definition {
 	@priority = "4"
 	test CannotSelectUnpublishedObject {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 212",
+			objectName = "CustomObject212",
+			pluralLabelName = "Custom Objects 212");
 
 		FormsAdmin.addForm();
 
@@ -294,7 +294,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.viewDisplaySelectOptionNotPresent(label = "Custom Object");
+		PopulateObjectFormsConfiguration.viewDisplaySelectOptionNotPresent(label = "Custom Object 212");
 	}
 
 	@description = "LPS-135429 - It is possible to retrieve objects data from Data Providers and use in a Select from List field in Forms"
@@ -303,9 +303,9 @@ definition {
 		property test.name.skip.portal.instance = "ObjectForms#CanRetrieveDataProvidersOnSelectFromListField";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 213",
+			objectName = "CustomObject213",
+			pluralLabelName = "Custom Objects 213");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -313,13 +313,13 @@ definition {
 			fieldName = "customField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject213");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject213");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customField",
-			objectName = "CustomObject",
+			objectName = "CustomObject213",
 			value = "Entry Test");
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
@@ -337,7 +337,7 @@ definition {
 			outputParameterPath = "$.items..customField",
 			outputParameterType = "List",
 			password = "test",
-			url = "http://localhost:8080/o/c/customobjects",
+			url = "http://localhost:8080/o/c/customobject213s",
 			username = "test@liferay.com");
 
 		Button.clickSave();
@@ -379,9 +379,9 @@ definition {
 		property test.name.skip.portal.instance = "ObjectForms#CanRetrieveDataProvidersOnTextField";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 214",
+			objectName = "CustomObject214",
+			pluralLabelName = "Custom Objects 214");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -389,13 +389,13 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject214");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject214");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject214",
 			value = "Entry Test");
 
 		FormsAdminNavigator.enableLocalNetworkDataProvider();
@@ -413,7 +413,7 @@ definition {
 			outputParameterPath = "$.items..customField",
 			outputParameterType = "List",
 			password = "test",
-			url = "http://localhost:8080/o/c/customobjects",
+			url = "http://localhost:8080/o/c/customobject214s",
 			username = "test@liferay.com");
 
 		Button.clickSave();

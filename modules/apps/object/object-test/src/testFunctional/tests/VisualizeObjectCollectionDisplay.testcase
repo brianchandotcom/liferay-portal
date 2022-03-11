@@ -29,9 +29,9 @@ definition {
 		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 299",
+			objectName = "CustomObject299",
+			pluralLabelName = "Custom Objects 299");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -39,22 +39,22 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject299");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject299");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject299",
 			value = "Test Text 1");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject299",
 			value = "Test Text 2");
 
 		VisualizeObjectDisplayPage.createObjectPageTemplate(
-			contentType = "Custom Object",
+			contentType = "Custom Object 299",
 			pageTemplateName = "Blank Display Page");
 
 		PageEditor.addFragment(
@@ -63,7 +63,7 @@ definition {
 
 		PageEditor.editCollectionDisplay(
 			fragmentName = "Collection Display",
-			infoListProviderName = "Custom Objects");
+			infoListProviderName = "Custom Objects 299");
 
 		DoubleClick(
 			collectionName = "Collection Display",
@@ -89,9 +89,9 @@ definition {
 		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 300",
+			objectName = "CustomObject300",
+			pluralLabelName = "Custom Objects 300");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Integer",
@@ -99,7 +99,7 @@ definition {
 			fieldName = "integer",
 			fieldType = "Integer",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject300");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -107,12 +107,12 @@ definition {
 			fieldName = "text",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject300");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject300");
 
 		VisualizeObjectDisplayPage.createObjectPageTemplate(
-			contentType = "Custom Object",
+			contentType = "Custom Object 300",
 			pageTemplateName = "Blank Display Page");
 
 		PageEditor.addFragment(
@@ -138,9 +138,9 @@ definition {
 		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 301",
+			objectName = "CustomObject301",
+			pluralLabelName = "Custom Objects 301");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -148,13 +148,13 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject301");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject301");
 
 		VisualizeObjectCollectionDisplay.openObjectCollectionProvider();
 
-		VisualizeObjectCollectionDisplay.viewObjectCollectionProvider(labelName = "Custom Object");
+		VisualizeObjectCollectionDisplay.viewObjectCollectionProvider(labelName = "Custom Objects 301");
 	}
 
 	@description = "LPS-133865 - Verify if the Object entries are rendered inside the Collection Display fragment"
@@ -163,9 +163,9 @@ definition {
 		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 302",
+			objectName = "CustomObject302",
+			pluralLabelName = "Custom Objects 302");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -173,22 +173,22 @@ definition {
 			fieldName = "text",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject302");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject302");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "text",
-			objectName = "CustomObject",
+			objectName = "CustomObject302",
 			value = "Test Text 1");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "text",
-			objectName = "CustomObject",
+			objectName = "CustomObject302",
 			value = "Test Text 2");
 
 		VisualizeObjectDisplayPage.createObjectPageTemplate(
-			contentType = "Custom Object",
+			contentType = "Custom Object 302",
 			pageTemplateName = "Blank Display Page");
 
 		PageEditor.addFragment(
@@ -197,7 +197,7 @@ definition {
 
 		PageEditor.editCollectionDisplay(
 			fragmentName = "Collection Display",
-			infoListProviderName = "Custom Objects");
+			infoListProviderName = "Custom Objects 302");
 
 		PageEditor.gotoTab(tabName = "Fragments and Widgets");
 

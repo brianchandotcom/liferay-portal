@@ -27,9 +27,9 @@ definition {
 	@priority = "4"
 	test CannotSaveAnotherLayoutAsDefault {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 200",
+			objectName = "CustomObject200",
+			pluralLabelName = "Custom Objects 200");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -37,17 +37,17 @@ definition {
 			fieldName = "customField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject200");
 
 		for (var letter : list "A,B") {
 			ObjectAdmin.addObjectLayoutViaAPI(
 				layoutName = "Layout ${letter}",
-				objectName = "CustomObject");
+				objectName = "CustomObject200");
 		}
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 200");
 
 		ObjectAdmin.goToLayoutsTab();
 
@@ -94,9 +94,9 @@ definition {
 	@priority = "4"
 	test CanViewDateEntry {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 200",
+			objectName = "CustomObject200",
+			pluralLabelName = "Custom Objects 200");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Date",
@@ -104,20 +104,20 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "Date",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject200");
 
 		ObjectAdmin.addObjectLayoutViaAPI(
 			layoutName = "Layout Name",
-			objectName = "CustomObject");
+			objectName = "CustomObject200");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject200");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject200",
 			value = "2022-01-01");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject200");
 
 		ObjectPortlet.viewEntryDetails(entry = "Jan 1, 2022");
 

@@ -80,13 +80,13 @@ definition {
 	@priority = "4"
 	test CanDisplayWidgetButton {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 293",
+			objectName = "CustomObject293",
+			pluralLabelName = "Custom Objects 293");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 293");
 
 		ObjectPortlet.viewWidgetButton();
 	}
@@ -95,18 +95,18 @@ definition {
 	@priority = "4"
 	test CannotAddObjectPortletWhenWidgetDisabled {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 294",
+			objectName = "CustomObject294",
+			pluralLabelName = "Custom Objects 294");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject294");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject294");
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",
@@ -118,16 +118,16 @@ definition {
 
 		Navigator.gotoPage(pageName = "Object Page");
 
-		Portlet.viewCannotAddPG(portletName = "Custom Objects");
+		Portlet.viewCannotAddPG(portletName = "Custom Objects 294");
 	}
 
 	@description = "LPS-143122 - Verify that when widget button is disabled the Object portlet widget disappears from the page"
 	@priority = "4"
 	test ObjectPortletWidgetDisappearsWhenWidgetDisabled {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 295",
+			objectName = "CustomObject295",
+			pluralLabelName = "Custom Objects 295");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -135,13 +135,13 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject295");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject295");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 295");
 
 		Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
 
@@ -161,11 +161,11 @@ definition {
 
 		Portlet.addPG(
 			pageName = "Object Page",
-			portletName = "Custom Objects");
+			portletName = "Custom Objects 295");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 295");
 
 		Uncheck.uncheckToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
 

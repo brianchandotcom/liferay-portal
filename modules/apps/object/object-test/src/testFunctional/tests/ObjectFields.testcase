@@ -27,15 +27,15 @@ definition {
 	@priority = "4"
 	test CanCreateClobField {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 206",
+			objectName = "CustomObject206",
+			pluralLabelName = "Custom Objects 206");
 
 		Navigator.openURL();
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 206");
 
 		ObjectAdmin.goToFieldsTab();
 

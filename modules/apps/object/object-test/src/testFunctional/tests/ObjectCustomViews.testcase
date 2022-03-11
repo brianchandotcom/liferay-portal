@@ -581,13 +581,13 @@ definition {
 	@priority = "3"
 	test EmptyStateViewTab {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 201",
+			objectName = "CustomObject201",
+			pluralLabelName = "Custom Objects 201");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 201");
 
 		ObjectCustomViews.goToViewsTab();
 
@@ -629,19 +629,19 @@ definition {
 	@priority = "3"
 	test NoResultMessageView {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 202",
+			objectName = "CustomObject202",
+			pluralLabelName = "Custom Objects 202");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 202");
 
 		ObjectCustomViews.goToViewsTab();
 
 		ObjectCustomViews.addObjectViewViaUI(labelName = "Custom View");
 
-		Search.searchCP(searchTerm = "ObjectTest");
+		Search.searchCP(searchTerm = "ObjectTest202");
 
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",

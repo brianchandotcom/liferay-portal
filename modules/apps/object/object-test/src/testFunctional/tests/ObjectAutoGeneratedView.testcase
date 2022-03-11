@@ -27,9 +27,9 @@ definition {
 	@priority = "4"
 	test CanAddClobLongText {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 195",
+			objectName = "CustomObject195",
+			pluralLabelName = "Custom Objects 195");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "LongText",
@@ -37,16 +37,16 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "Clob",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject195");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject195");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject195",
 			value = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject195");
 
 		ObjectPortlet.viewEntry(entry = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
 	}
@@ -90,9 +90,9 @@ definition {
 		property portal.upstream = "quarantine";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 196",
+			objectName = "CustomObject196",
+			pluralLabelName = "Custom Objects 196");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "LongText",
@@ -100,16 +100,16 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "Clob",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject196");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject196");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject196",
 			value = "We make it possible for people to reach their full potential to serve others.");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject196");
 
 		ObjectPortlet.viewEntry(entry = "We make it possible for people to reach their full potential to serve others.");
 
@@ -117,7 +117,7 @@ definition {
 
 		ObjectAdmin.editClobEntryName(clobEntry = "All people are inherently valuable; who we are is as important as what we can do.");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject196");
 
 		ObjectPortlet.viewEntry(entry = "All people are inherently valuable; who we are is as important as what we can do.");
 	}
@@ -126,9 +126,9 @@ definition {
 	@priority = "4"
 	test ClobDisplayed {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 197",
+			objectName = "CustomObject197",
+			pluralLabelName = "Custom Objects 197");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "LongText",
@@ -136,16 +136,16 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "Clob",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject197");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject197");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject197",
 			value = "We make it possible for people to reach their full potential to serve others.");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject197");
 
 		ObjectPortlet.viewEntry(entry = "We make it possible for people to reach their full potential to serve others.");
 	}
@@ -154,9 +154,9 @@ definition {
 	@priority = "4"
 	test ClobLongTextWillTruncate {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 198",
+			objectName = "CustomObject198",
+			pluralLabelName = "Custom Objects 198");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "LongText",
@@ -164,16 +164,16 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "Clob",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject198");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject198");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject198",
 			value = "We make it possible for people to reach their full potential to serve others.");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject198");
 
 		AssertElementPresent(
 			key_entry = "We make it possible for people to reach their full potential to serve others.",
@@ -191,13 +191,13 @@ definition {
 			picklistName = "Picklist Test");
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 199",
+			objectName = "CustomObject199",
+			pluralLabelName = "Custom Objects 199");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 199");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -208,13 +208,13 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject199");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject199");
 
 		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Entry Test");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject199");
 
 		ObjectPortlet.viewEntry(entry = "Entry Test");
 	}

@@ -27,9 +27,9 @@ definition {
 	@priority = "4"
 	test CanMapAndViewEntriesForFieldGroup {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 214",
+			objectName = "CustomObject214",
+			pluralLabelName = "Custom Objects 214");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Integer",
@@ -37,7 +37,7 @@ definition {
 			fieldName = "integer",
 			fieldType = "Integer",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject214");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -45,9 +45,9 @@ definition {
 			fieldName = "text",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject214");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject214");
 
 		PopulateObjectFormsConfiguration.openForm();
 
@@ -59,7 +59,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 214");
 
 		Form.gotoAddField(fieldType = "Numeric");
 
@@ -95,7 +95,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject214");
 
 		ObjectPortlet.viewEntry(entry = "1234567");
 
@@ -106,9 +106,9 @@ definition {
 	@priority = "4"
 	test CanMapBigDecimalTypeAndViewEntries {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 215",
+			objectName = "CustomObject215",
+			pluralLabelName = "Custom Objects 215");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "PrecisionDecimal",
@@ -116,9 +116,9 @@ definition {
 			fieldName = "bigDecimal",
 			fieldType = "BigDecimal",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject215");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject215");
 
 		PopulateObjectFormsConfiguration.openForm();
 
@@ -130,7 +130,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 215");
 
 		Form.gotoAddField(fieldType = "Numeric");
 
@@ -154,7 +154,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject215");
 
 		ObjectPortlet.viewEntry(entry = "123.123456");
 	}
@@ -163,9 +163,9 @@ definition {
 	@priority = "4"
 	test CanMapBooleanTypeAndViewEntries {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 216",
+			objectName = "CustomObject216",
+			pluralLabelName = "Custom Objects 216");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Boolean",
@@ -173,9 +173,9 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "Boolean",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject216");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject216");
 
 		PopulateObjectFormsConfiguration.openForm();
 
@@ -187,7 +187,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 216");
 
 		Form.gotoAddField(fieldType = "Boolean");
 
@@ -207,7 +207,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject216");
 
 		ObjectPortlet.viewEntry(entry = "Yes");
 	}
@@ -216,9 +216,9 @@ definition {
 	@priority = "4"
 	test CanMapDateTypeAndViewEntries {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 217",
+			objectName = "CustomObject217",
+			pluralLabelName = "Custom Objects217");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Date",
@@ -226,9 +226,9 @@ definition {
 			fieldName = "date",
 			fieldType = "Date",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject217");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject217");
 
 		PopulateObjectFormsConfiguration.openForm();
 
@@ -240,7 +240,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 217");
 
 		Form.gotoAddField(fieldType = "Date");
 
@@ -260,7 +260,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject217");
 
 		ObjectPortlet.viewEntry(entry = "Jan 1, 2001");
 	}
@@ -269,9 +269,9 @@ definition {
 	@priority = "4"
 	test CanMapDoubleTypeAndViewEntries {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 218",
+			objectName = "CustomObject218",
+			pluralLabelName = "Custom Objects 218");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Decimal",
@@ -279,9 +279,9 @@ definition {
 			fieldName = "double",
 			fieldType = "Double",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject218");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject218");
 
 		PopulateObjectFormsConfiguration.openForm();
 
@@ -293,7 +293,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 218");
 
 		Form.gotoAddField(fieldType = "Numeric");
 
@@ -317,7 +317,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject218");
 
 		ObjectPortlet.viewEntry(entry = "1.54");
 	}
@@ -326,9 +326,9 @@ definition {
 	@priority = "4"
 	test CanMapIntegerTypeAndViewEntries {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 219",
+			objectName = "CustomObject219",
+			pluralLabelName = "Custom Objects 219");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Integer",
@@ -336,9 +336,9 @@ definition {
 			fieldName = "integer",
 			fieldType = "Integer",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject219");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject219");
 
 		PopulateObjectFormsConfiguration.openForm();
 
@@ -350,7 +350,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 219");
 
 		Form.gotoAddField(fieldType = "Numeric");
 
@@ -370,7 +370,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject219");
 
 		ObjectPortlet.viewEntry(entry = "123456789");
 	}
@@ -379,9 +379,9 @@ definition {
 	@priority = "4"
 	test CanMapLongTypeAndViewEntries {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 220",
+			objectName = "CustomObject220",
+			pluralLabelName = "Custom Objects 220");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "LongInteger",
@@ -389,9 +389,9 @@ definition {
 			fieldName = "long",
 			fieldType = "Long",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject220");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject220");
 
 		PopulateObjectFormsConfiguration.openForm();
 
@@ -403,7 +403,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 220");
 
 		Form.gotoAddField(fieldType = "Numeric");
 
@@ -423,7 +423,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject220");
 
 		ObjectPortlet.viewEntry(entry = "12345678912345678");
 	}
@@ -441,13 +441,13 @@ definition {
 		}
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 221",
+			objectName = "CustomObject221",
+			pluralLabelName = "Custom Objects221");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 221");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -458,7 +458,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject221");
 
 		PopulateObjectFormsConfiguration.openForm();
 
@@ -470,7 +470,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 221");
 
 		Form.gotoAddField(fieldType = "Select from List");
 
@@ -490,7 +490,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject221");
 
 		ObjectPortlet.viewEntry(entry = "Item Test 1");
 	}
@@ -501,9 +501,9 @@ definition {
 		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 222",
+			objectName = "CustomObject222",
+			pluralLabelName = "Custom Objects 222");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -511,9 +511,9 @@ definition {
 			fieldName = "text",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject222");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject222");
 
 		PopulateObjectFormsConfiguration.openForm();
 
@@ -525,7 +525,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 222");
 
 		Form.gotoAddField(fieldType = "Text");
 
@@ -545,7 +545,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject222");
 
 		ObjectPortlet.viewEntry(entry = "Test Text Test Text Test Text Test Text Test Text Test Text Test Text  Test");
 	}
@@ -554,9 +554,9 @@ definition {
 	@priority = "4"
 	test CanSubmitEntryWithDoubleFieldBlank {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 223",
+			objectName = "CustomObject223",
+			pluralLabelName = "Custom Objects 223");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -564,7 +564,7 @@ definition {
 			fieldName = "stringField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject223");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Decimal",
@@ -572,9 +572,9 @@ definition {
 			fieldName = "doubleField",
 			fieldType = "Double",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject223");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject223");
 
 		PopulateObjectFormsConfiguration.openForm();
 
@@ -586,7 +586,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 223");
 
 		Form.gotoAddField(fieldType = "Text");
 
@@ -620,7 +620,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject223");
 
 		ObjectPortlet.viewEntry(entry = "String text");
 	}
@@ -629,9 +629,9 @@ definition {
 	@priority = "4"
 	test EntriesAreNotDeletedWhenFormIsDeleted {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 224",
+			objectName = "CustomObject224",
+			pluralLabelName = "Custom Objects 224");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -639,9 +639,9 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject224");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject224");
 
 		PopulateObjectFormsConfiguration.openForm();
 
@@ -653,7 +653,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 224");
 
 		Form.gotoAddField(fieldType = "Text");
 
@@ -677,7 +677,7 @@ definition {
 
 		FormsAdmin.deleteForm(formName = "Form 1");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject224");
 
 		ObjectPortlet.viewEntry(entry = "Test text");
 	}
@@ -686,9 +686,9 @@ definition {
 	@priority = "4"
 	test FieldWithCapitalizedLetters {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 225",
+			objectName = "CustomObject225",
+			pluralLabelName = "Custom Objects 225");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Date",
@@ -696,9 +696,9 @@ definition {
 			fieldName = "dueDate",
 			fieldType = "Date",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject225");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject225");
 
 		PopulateObjectFormsConfiguration.openForm();
 
@@ -710,7 +710,7 @@ definition {
 
 		PopulateObjectFormsConfiguration.selectObject(label = "Object");
 
-		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object");
+		PopulateObjectFormsConfiguration.selectCustomObject(label = "Custom Object 225");
 
 		Form.gotoAddField(fieldType = "Date");
 
@@ -730,7 +730,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject225");
 
 		ObjectPortlet.viewEntry(entry = "Jan 1, 2001");
 	}

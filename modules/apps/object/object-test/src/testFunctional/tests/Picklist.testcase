@@ -566,13 +566,13 @@ definition {
 		Navigator.openURL();
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 298",
+			objectName = "CustomObject298",
+			pluralLabelName = "Custom Objects 298");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 298");
 
 		ObjectAdmin.goToFieldsTab();
 
@@ -583,9 +583,9 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject298");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject298");
 
 		ObjectAdmin.addObjectPicklistFieldEntryViaUI(picklistOption = "Entry Test");
 
@@ -597,7 +597,7 @@ definition {
 
 		Navigator.openURL();
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject298");
 
 		ObjectPortlet.viewEntry(entry = "Teste de entrada");
 

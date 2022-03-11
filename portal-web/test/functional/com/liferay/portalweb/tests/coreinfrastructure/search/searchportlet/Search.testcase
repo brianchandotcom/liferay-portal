@@ -1244,9 +1244,9 @@ definition {
 	@priority = "4"
 	test SearchCompanyScopedObject {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects",
+			labelName = "Custom Object 500",
+			objectName = "CustomObject500",
+			pluralLabelName = "Custom Objects 500",
 			scope = "company");
 
 		ObjectAdmin.addObjectFieldViaAPI(
@@ -1255,13 +1255,13 @@ definition {
 			fieldName = "title",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject500");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject500");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "title",
-			objectName = "CustomObject",
+			objectName = "CustomObject500",
 			value = "apple");
 
 		Search.openSearchPage();
@@ -1273,11 +1273,11 @@ definition {
 		var objectEntryId = JSONObject.getObjectEntryId(
 			entryValue = "apple",
 			fieldName = "title",
-			objectName = "CustomObject");
+			objectName = "CustomObject500");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "${objectEntryId}",
-			searchAssetType = "Custom Object");
+			searchAssetType = "Custom Object 500");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Type Facet",
@@ -1286,16 +1286,16 @@ definition {
 		SelectFrame(locator1 = "IFrame#CONFIGURATION");
 
 		AssertElementPresent(
-			assetType = "Custom Object",
+			assetType = "Custom Object 500",
 			locator1 = "Search#TYPE_FACET_CURRENT_ASSET_TYPE");
 
 		IFrame.closeFrame();
 
-		SearchFacetPortlet.checkFacet(facetValueName = "Custom Object");
+		SearchFacetPortlet.checkFacet(facetValueName = "Custom Object 500");
 
 		SearchResultPortlet.viewSearchResults(
 			searchAssetTitle = "${objectEntryId}",
-			searchAssetType = "Custom Object");
+			searchAssetType = "Custom Object 500");
 	}
 
 	@priority = "4"

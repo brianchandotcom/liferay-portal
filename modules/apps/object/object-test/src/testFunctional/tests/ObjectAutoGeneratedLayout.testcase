@@ -64,9 +64,9 @@ definition {
 	@priority = "4"
 	test CanViewClobEntryOnLayout {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 193",
+			objectName = "CustomObject193",
+			pluralLabelName = "Custom Objects 193");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "LongText",
@@ -74,16 +74,16 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "Clob",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject193");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject193");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject193",
 			value = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject193");
 
 		ObjectPortlet.viewClobEntryDetails(clobEntry = "By building a vibrant business, making technology useful, and investing in communities, we make it possible for people to reach their full potential to serve others.");
 
@@ -94,9 +94,9 @@ definition {
 	@priority = "4"
 	test CanViewObjectEntryTitleClobOnRelationshipField {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 194",
+			objectName = "CustomObject194",
+			pluralLabelName = "Custom Objects 194");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "LongText",
@@ -104,20 +104,20 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "Clob",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject194");
 
 		ObjectAdmin.addObjectRelationshipViaAPI(
-			objectName_1 = "CustomObject",
-			objectName_2 = "CustomObject",
+			objectName_1 = "CustomObject194",
+			objectName_2 = "CustomObject194",
 			relationshipLabel = "Relationship",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject194");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 194");
 
 		CreateObject.selectTitleField(fieldLabel = "Custom Field");
 
@@ -127,10 +127,10 @@ definition {
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject194",
 			value = "Entry A");
 
-		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject194");
 
 		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "Entry A");
 	}

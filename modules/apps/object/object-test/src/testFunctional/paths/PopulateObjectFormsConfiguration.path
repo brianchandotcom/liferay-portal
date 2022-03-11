@@ -12,7 +12,7 @@
 <tbody>
 	<tr>
 		<td>ALERT_ICON_MESSAGE</td>
-		<td>//span[contains(text(),'This form was created using an inactive object as storage type. Activate "Custom Object" object to make it available for editing.')]</td>
+		<td>//span[contains(text(),'This form was created using an inactive object as storage type. Activate "Custom Object 59" object to make it available for editing.')]</td>
 		<td></td>
 	</tr>
 	<tr>

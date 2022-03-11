@@ -29,9 +29,9 @@ definition {
 		property portal.acceptance = "true";
 
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 296",
+			objectName = "CustomObject296",
+			pluralLabelName = "Custom Objects 296");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -39,23 +39,23 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject296");
 
 		ObjectAdmin.addObjectLayoutViaAPI(
 			layoutName = "Layout Name",
-			objectName = "CustomObject");
+			objectName = "CustomObject296");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject296");
 
 		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Custom Object");
+			workflowResourceValue = "Custom Object 296");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject296",
 			value = "Entry Test");
 
 		ObjectAdmin.openMyWorkflowTasks();
@@ -77,9 +77,9 @@ definition {
 	@priority = "4"
 	test CanViewEntryInformationThroughViewButtonMyWorkflowTasks {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 297",
+			objectName = "CustomObject297",
+			pluralLabelName = "Custom Objects 297");
 
 		ObjectAdmin.addObjectFieldViaAPI(
 			fieldBusinessType = "Text",
@@ -87,23 +87,23 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "String",
 			isRequired = "false",
-			objectName = "CustomObject");
+			objectName = "CustomObject297");
 
 		ObjectAdmin.addObjectLayoutViaAPI(
 			layoutName = "Layout Name",
-			objectName = "CustomObject");
+			objectName = "CustomObject297");
 
-		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject297");
 
 		ObjectAdmin.openWorkflowProcessBuilderConfiguration();
 
 		Workflow.configureWorkflow(
 			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Custom Object");
+			workflowResourceValue = "Custom Object 297");
 
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
-			objectName = "CustomObject",
+			objectName = "CustomObject297",
 			value = "Entry Test");
 
 		ObjectAdmin.openMyWorkflowTasks();

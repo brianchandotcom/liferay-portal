@@ -27,9 +27,9 @@ definition {
 	@priority = "4"
 	test CannotSelectUnpublishedObjectForPageTemplate {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 205",
+			objectName = "CustomObject205",
+			pluralLabelName = "Custom Objects 205");
 
 		DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "guest");
 
@@ -40,9 +40,9 @@ definition {
 		Click(locator1 = "VisualizeObjectDisplayPage#OBJECT_CONTENT_TYPE");
 
 		AssertElementNotPresent(
-			key_type = "Custom Object",
+			key_type = "Custom Object 205",
 			locator1 = "VisualizeObjectDisplayPage#CONTENT_TYPE_OPTION",
-			value1 = "Custom Object");
+			value1 = "Custom Object 205");
 	}
 
 }

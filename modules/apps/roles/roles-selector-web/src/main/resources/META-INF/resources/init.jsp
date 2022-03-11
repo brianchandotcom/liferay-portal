@@ -29,7 +29,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.petra.portlet.url.builder.PortletURLBuilder" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchRoleException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -43,19 +42,15 @@ page import="com.liferay.portal.kernel.service.OrganizationLocalServiceUtil" %><
 page import="com.liferay.portal.kernel.service.RoleLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserGroupServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.service.persistence.constants.UserGroupFinderConstants" %><%@
-page import="com.liferay.portlet.rolesadmin.search.RoleSearch" %><%@
-page import="com.liferay.portlet.rolesadmin.search.RoleSearchTerms" %><%@
 page import="com.liferay.portlet.sites.search.UserGroupGroupRoleUserGroupChecker" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
-page import="com.liferay.roles.selector.web.internal.display.context.EditRolesUsersDisplayContext" %><%@
-page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
+page import="com.liferay.roles.selector.web.internal.display.context.EditRolesDisplayContext" %><%@
+page import="com.liferay.roles.selector.web.internal.display.context.EditRolesUsersDisplayContext" %>
 
-<%@ page import="java.util.LinkedHashMap" %><%@
-page import="java.util.List" %>
+<%@ page import="java.util.LinkedHashMap" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

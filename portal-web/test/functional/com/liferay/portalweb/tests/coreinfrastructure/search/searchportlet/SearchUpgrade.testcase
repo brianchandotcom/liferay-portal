@@ -125,6 +125,7 @@ definition {
 		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-classic-search-portlet";
 		property database.types = "mariadb,mysql,postgresql";
+		property portal.release = "quarantine";
 		property portal.version = "7.2.1";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";
@@ -137,6 +138,7 @@ definition {
 		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-classic-search-portlet";
 		property database.types = "mariadb,mysql,postgresql";
+		property portal.release = "quarantine";
 		property portal.version = "7.3.0";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";
@@ -148,6 +150,7 @@ definition {
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade7110 {
 		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-classic-search-portlet";
+		property portal.release = "quarantine";
 		property portal.version = "7.1.10";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";
@@ -159,6 +162,7 @@ definition {
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade7210 {
 		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-classic-search-portlet";
+		property portal.release = "quarantine";
 		property portal.version = "7.2.10";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";
@@ -171,6 +175,7 @@ definition {
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade70106 {
 		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-classic-search-portlet";
+		property portal.release = "quarantine";
 		property portal.version = "7.0.10.6";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";
@@ -196,6 +201,7 @@ definition {
 	test ViewClassicSearchPortletConfigurationArchiveAutoUpgrade72101 {
 		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-classic-search-portlet";
+		property portal.release = "quarantine";
 		property portal.version = "7.2.10.1";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";
@@ -283,6 +289,7 @@ definition {
 		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-search-portlets";
 		property database.types = "mariadb,mysql,postgresql";
+		property portal.release = "quarantine";
 		property portal.version = "7.2.1";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";
@@ -295,6 +302,7 @@ definition {
 		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-search-portlets";
 		property database.types = "mariadb,mysql,postgresql";
+		property portal.release = "quarantine";
 		property portal.version = "7.3.0";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";
@@ -306,6 +314,7 @@ definition {
 	test ViewSearchPortletsConfigurationArchiveAutoUpgrade7110 {
 		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-search-portlets";
+		property portal.release = "quarantine";
 		property portal.version = "7.1.10";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";
@@ -317,6 +326,7 @@ definition {
 	test ViewSearchPortletsConfigurationArchiveAutoUpgrade7210 {
 		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-search-portlets";
+		property portal.release = "quarantine";
 		property portal.version = "7.2.10";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";
@@ -329,6 +339,7 @@ definition {
 	test ViewSearchPortletsConfigurationArchiveAutoUpgrade72101 {
 		property custom.properties = "upgrade.database.auto.run=true";
 		property data.archive.type = "data-archive-search-portlets";
+		property portal.release = "quarantine";
 		property portal.version = "7.2.10.1";
 		property skip.upgrade-legacy-database = "true";
 		property test.assert.warning.exceptions = "true";

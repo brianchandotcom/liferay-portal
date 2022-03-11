@@ -406,6 +406,11 @@ public class JSONObjectImpl implements JSONObject {
 	}
 
 	@Override
+	public Map<String, Object> toMap() {
+		return _jsonObject.toMap();
+	}
+
+	@Override
 	public String toString() {
 		return _jsonObject.toString();
 	}

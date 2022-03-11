@@ -596,6 +596,21 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 		AssetEntry assetEntry, AssetRenderer<?> assetRenderer, String className,
 		long classPK) {
 
+		try {
+			String url = assetRenderer.getURLViewInContext(
+				_portal.getLiferayPortletRequest(_renderRequest),
+				_portal.getLiferayPortletResponse(_renderResponse), null);
+
+			if (url != null) {
+				return url;
+			}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
 		String currentURL = _portal.getCurrentURL(_renderRequest);
 
 		if (_similarResultsRoute == null) {

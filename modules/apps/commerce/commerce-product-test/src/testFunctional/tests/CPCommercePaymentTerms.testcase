@@ -45,6 +45,36 @@ definition {
 
 	}
 
+	@description = "This is a test for COMMERCE-8283. Payment Term Name needs to be unique"
+	@priority = "4"
+	test AssertPaymentTermNameIsUnique {
+		property portal.acceptance = "false";
+
+		task ("Given a new entry into the "Terms and Conditions" with a specific name, and the Type is set to "Payment Terms".") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
+
+			CommercePaymentTerms.addTermsAndCondition(
+				termsAndConditionName = "Terms and Condition Entry 1",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = "");
+
+			Click(locator1 = "Button#BACK");
+		}
+
+		task ("When the Sales Manager tries to create another new entry with the same name, and the Type is set as "Delivery Terms".") {
+			CommercePaymentTerms.addTermsAndCondition(
+				termsAndConditionName = "Terms and Condition Entry 1",
+				termsAndConditionType = "Delivery Terms",
+				valuePosition = "");
+		}
+
+		task ("Then the Sales Manager receives an error.") {
+			Alert.viewErrorMessage(errorMessage = "Error:Please enter a valid name.");
+		}
+	}
+
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -55,14 +85,34 @@ definition {
 
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "This is a test for COMMERCE-8296. Payment Term Priority needs to be unique"
 	@priority = "4"
 	test AssertPaymentTermPriorityIsUnique {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8296 AssertPaymentTermPriorityIsUnique pending implementation
+		task ("Given a new entry "Test" into the "Terms and Conditions".") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
 
+			CommercePaymentTerms.addTermsAndCondition(
+				termsAndConditionName = "Test",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = "1");
+
+			Click(locator1 = "Button#BACK");
+		}
+
+		task ("When the Sales Manager create a new entry with a different name from "Test".") {
+			CommercePaymentTerms.addTermsAndCondition(
+				termsAndConditionName = "Terms and Condition Entry 1",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = "1");
+		}
+
+		task ("Then the Sales Manager receives an error because the priority is not unique.") {
+			Alert.viewErrorMessage(errorMessage = "Error:Please enter a valid priority.");
+		}
 	}
 
 	@description = "[Please Update]"
@@ -128,16 +178,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8282 EditAPaymentTerm pending implementation
-
-	}
-
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test PaymentTermNameIsUnique {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-8283 PaymentTermNameIsUnique pending implementation
 
 	}
 

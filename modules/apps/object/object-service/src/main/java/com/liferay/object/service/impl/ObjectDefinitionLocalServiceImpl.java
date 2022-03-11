@@ -290,7 +290,7 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 		}
 
-		_objectFieldPersistence.removeByObjectDefinitionId(
+		_objectFieldLocalService.deleteObjectFieldByObjectDefinitionId(
 			objectDefinition.getObjectDefinitionId());
 
 		// TODO Deleting an object definition should delete related object

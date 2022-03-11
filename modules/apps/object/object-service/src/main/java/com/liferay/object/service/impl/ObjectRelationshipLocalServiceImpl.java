@@ -267,13 +267,6 @@ public class ObjectRelationshipLocalServiceImpl
 			objectRelationship.getType());
 	}
 
-	public List<ObjectRelationship>
-	getObjectRelationshipsByObjectDefinitionId2(long objectDefinitionId2) {
-
-		return objectRelationshipPersistence.findByObjectDefinitionId2(
-			objectDefinitionId2);
-	}
-
 	@Override
 	public List<ObjectRelationship> getObjectRelationships(
 		long objectDefinitionId1) {
@@ -288,6 +281,13 @@ public class ObjectRelationshipLocalServiceImpl
 
 		return objectRelationshipPersistence.findByObjectDefinitionId1(
 			objectDefinitionId1, start, end);
+	}
+
+	public List<ObjectRelationship> getObjectRelationshipsByObjectDefinitionId2(
+		long objectDefinitionId2) {
+
+		return objectRelationshipPersistence.findByObjectDefinitionId2(
+			objectDefinitionId2);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

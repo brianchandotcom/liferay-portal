@@ -167,6 +167,22 @@ public class ObjectFieldLocalServiceImpl
 		return _deleteObjectField(objectField);
 	}
 
+	@Override
+	public void deleteObjectFieldByObjectDefinitionId(Long objectDefinitionId)
+		throws PortalException {
+
+		for (ObjectField objectField :
+				objectFieldLocalService.getObjectFields(objectDefinitionId)) {
+
+			if (Validator.isNull(objectField.getRelationshipType())) {
+				objectFieldPersistence.remove(objectField);
+
+				_objectFieldSettingPersistence.removeByObjectFieldId(
+					objectField.getObjectFieldId());
+			}
+		}
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ObjectField deleteRelationshipTypeObjectField(long objectFieldId)

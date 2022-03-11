@@ -39,7 +39,7 @@ type UseFormModal = {
 const useFormModal = ({
 	isVisible = false,
 	onSave: onSaveModal = () => {},
-}: UseFormModal): FormModal => {
+}: UseFormModal = {}): FormModal => {
 	const [modalState, setModalState] = useState();
 	const [visible, setVisible] = useState(isVisible);
 	const {observer, onClose} = useModal({

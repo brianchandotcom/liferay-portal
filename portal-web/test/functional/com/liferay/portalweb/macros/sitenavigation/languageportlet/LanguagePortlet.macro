@@ -1,25 +1,32 @@
 definition {
 
-	macro configureViewCurrentLanguages {
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
+	macro configureDisplaySettings {
+		Panel.expandPanel(panel = "Display Settings");
 
-		Panel.expandPanel(panel = "Languages");
+		if (isSet(displayTemplate)) {
+			Select(
+				key_selectFieldLabel = "Display Template",
+				locator1 = "Select#ANY",
+				value1 = "${displayTemplate}");
 
-		for (var currentLanguage : list "${currentLanguages}") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "LanguageConfiguration#LANGUAGES_CURRENT",
-				value1 = "${currentLanguage}");
+			AssertSelectedLabel(
+				key_selectFieldLabel = "Display Template",
+				locator1 = "Select#ANY",
+				value1 = "${displayTemplate}");
 		}
 
-		SelectFrame(value1 = "relative=top");
-	}
-
-	macro moveAllLanguagesToAvailable {
-		while (IsElementPresent(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT")) {
-			Click(locator1 = "LanguageConfiguration#LANGUAGES_CURRENT_SELECT");
-
-			Click(locator1 = "Button#MOVE_CURRENT_TO_AVAILABLE");
+		if ("${displayCurrentLocale}" == "true") {
+			Check.checkToggleSwitch(
+				key_toggleSwitchLabel = "Display Current Locale",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
 		}
+		else {
+			Uncheck.uncheckToggleSwitch(
+				key_toggleSwitchLabel = "Display Current Locale",
+				locator1 = "ToggleSwitch#ANY_TOGGLE_SWITCH");
+		}
+
+		PortletEntry.save();
 	}
 
 	macro moveLanguagesToAvailable {

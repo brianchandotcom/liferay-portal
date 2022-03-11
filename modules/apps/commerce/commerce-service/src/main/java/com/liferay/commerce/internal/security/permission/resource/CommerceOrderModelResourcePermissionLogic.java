@@ -95,18 +95,8 @@ public class CommerceOrderModelResourcePermissionLogic
 				permissionChecker, commerceOrder);
 		}
 
-		if (actionId.equals(
-				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES)) {
-
-			return _containsManageNotes(
-				permissionChecker, commerceOrder, false);
-		}
-
-		if (actionId.equals(
-				CommerceOrderActionKeys.
-					MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES)) {
-
-			return _containsManageNotes(permissionChecker, commerceOrder, true);
+		if (actionId.equals(ActionKeys.DELETE)) {
+			return _containsDeletePermission(permissionChecker, commerceOrder);
 		}
 
 		if (actionId.equals(
@@ -114,6 +104,13 @@ public class CommerceOrderModelResourcePermissionLogic
 
 			return _containsManageDeliveryTerms(
 				permissionChecker, commerceOrder);
+		}
+
+		if (actionId.equals(
+				CommerceOrderActionKeys.MANAGE_COMMERCE_ORDER_NOTES)) {
+
+			return _containsManageNotes(
+				permissionChecker, commerceOrder, false);
 		}
 
 		if (actionId.equals(
@@ -133,19 +130,17 @@ public class CommerceOrderModelResourcePermissionLogic
 
 		if (actionId.equals(
 				CommerceOrderActionKeys.
+					MANAGE_COMMERCE_ORDER_RESTRICTED_NOTES)) {
+
+			return _containsManageNotes(permissionChecker, commerceOrder, true);
+		}
+
+		if (actionId.equals(
+				CommerceOrderActionKeys.
 					MANAGE_COMMERCE_ORDER_SHIPPING_OPTIONS)) {
 
 			return _containsManageShippingOptions(
 				permissionChecker, commerceOrder);
-		}
-
-		if (actionId.equals(CommerceOrderActionKeys.VIEW_BILLING_ADDRESS)) {
-			return _containsViewBillingAddress(
-				permissionChecker, commerceOrder);
-		}
-
-		if (actionId.equals(ActionKeys.DELETE)) {
-			return _containsDeletePermission(permissionChecker, commerceOrder);
 		}
 
 		if (actionId.equals(ActionKeys.UPDATE)) {
@@ -154,6 +149,11 @@ public class CommerceOrderModelResourcePermissionLogic
 
 		if (actionId.equals(ActionKeys.VIEW)) {
 			return _containsViewPermission(permissionChecker, commerceOrder);
+		}
+
+		if (actionId.equals(CommerceOrderActionKeys.VIEW_BILLING_ADDRESS)) {
+			return _containsViewBillingAddress(
+				permissionChecker, commerceOrder);
 		}
 
 		return false;
@@ -369,10 +369,6 @@ public class CommerceOrderModelResourcePermissionLogic
 	private boolean _containsViewBillingAddress(
 			PermissionChecker permissionChecker, CommerceOrder commerceOrder)
 		throws PortalException {
-
-		if (!commerceOrder.isOpen()) {
-			return false;
-		}
 
 		User user = permissionChecker.getUser();
 

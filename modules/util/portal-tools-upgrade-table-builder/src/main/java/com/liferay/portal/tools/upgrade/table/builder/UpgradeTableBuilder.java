@@ -272,7 +272,7 @@ public class UpgradeTableBuilder {
 			String packagePath, String className, String content, String author)
 		throws IOException {
 
-		StringBundler sb = new StringBundler(36);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append(_getCopyright());
 
@@ -280,30 +280,31 @@ public class UpgradeTableBuilder {
 		sb.append(packagePath);
 		sb.append(";\n\n");
 
-		sb.append("package " + packagePath + ";");
+		sb.append(
+			"import com.liferay.portal.kernel.upgrade.UpgradeProcess;\n\n");
+		sb.append("/**\n");
+		sb.append(" * @author ");
+		sb.append(author);
 		sb.append("\n");
-		sb.append("import com.liferay.portal.kernel.upgrade.UpgradeProcess;");
+		sb.append(" * @generated\n");
+		sb.append(" * @see ");
+		sb.append(UpgradeTableBuilder.class.getName());
 		sb.append("\n");
-		sb.append("/**");
-		sb.append(" * @author " + author);
-		sb.append(" * @generated");
-		sb.append(" * @see " + UpgradeTableBuilder.class.getName());
-		sb.append(" */");
-		sb.append("public class " + className + " {");
-		sb.append("\n");
-		sb.append("public static UpgradeProcess create() {");
-		sb.append("return new UpgradeProcess() {");
-		sb.append("\n");
-		sb.append("@Override");
-		sb.append("protected void doUpgrade() throws Exception {");
-		sb.append("if (!hasTable(_TABLE_NAME)) {");
-		sb.append("runSQL(_TABLE_SQL_CREATE);");
-		sb.append("}");
-		sb.append("}");
-		sb.append("};");
-		sb.append("}");
-		sb.append("\n");
-		sb.append("private static final String _TABLE_NAME =");
+		sb.append(" */\n");
+		sb.append("public class ");
+		sb.append(className);
+		sb.append(" {\n\n");
+		sb.append("\tpublic static UpgradeProcess create() {\n");
+		sb.append("\t\treturn new UpgradeProcess() {\n\n");
+		sb.append("\t\t\t@Override\n");
+		sb.append("\t\t\tprotected void doUpgrade() throws Exception {\n");
+		sb.append("\t\t\t\tif (!hasTable(_TABLE_NAME)) {\n");
+		sb.append("\t\t\t\t\trunSQL(_TABLE_SQL_CREATE);\n");
+		sb.append("\t\t\t\t}\n");
+		sb.append("\t\t\t}\n");
+		sb.append("\t\t};\n");
+		sb.append("\t}\n\n");
+		sb.append("\tprivate static final String _TABLE_NAME =");
 
 		int x = content.indexOf("public static final String TABLE_NAME =");
 
@@ -315,9 +316,8 @@ public class UpgradeTableBuilder {
 			content.substring(
 				content.indexOf("=", x) + 1, content.indexOf(";", x)));
 
-		sb.append(";");
-		sb.append("\n");
-		sb.append("private static final String _TABLE_SQL_CREATE =");
+		sb.append(";\n\n");
+		sb.append("\tprivate static final String _TABLE_SQL_CREATE =");
 
 		int y = content.indexOf(
 			"public static final String TABLE_SQL_CREATE =");
@@ -330,9 +330,8 @@ public class UpgradeTableBuilder {
 			content.substring(
 				content.indexOf("=", y) + 1, content.indexOf(";", y)));
 
-		sb.append(";");
+		sb.append(";\n\n");
 
-		sb.append("\n");
 		sb.append("}");
 
 		return sb.toString();

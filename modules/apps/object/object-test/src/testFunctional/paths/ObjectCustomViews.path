@@ -90,6 +90,11 @@
 		<td>//input[contains(@class,'custom-control-input')]</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>VIEW_COLUMN_ENTRIES</td>
+		<td>//div[${key_position}][contains(text(),'${key_columnName}')]</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

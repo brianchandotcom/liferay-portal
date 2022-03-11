@@ -542,13 +542,79 @@ definition {
 	}
 
 	@description = "LPS-144902 - Verify if the Columns on the custom view are presented following the predefined order during visualization"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ColumnsAreOrdered {
 		property portal.acceptance = "true";
 
-		// TODO LPS-147772 ColumnsAreOrdered pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147772",
+			objectName = "CustomObject147772",
+			pluralLabelName = "Custom Objects 147772");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject147772");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147772");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		for (var columnOption : list "Author,Creation Date,ID") {
+			Click.clickAtNotVisible(
+				key_columnOption = "${columnOption}",
+				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+		}
+
+		ObjectCustomViews.saveColumnsModal();
+
+		DragAndDrop.javaScriptDragAndDropToUp(
+			key_position = "1",
+			key_colunmName1 = "Author",
+			key_columnName = "Creation Date",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT",
+			locator2 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION",
+			value1 = "");
+		
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject147772");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject147772",
+			value = "Entry Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject147772");
+
+		ObjectCustomViews.viewColumnsOrder(
+			position = "1",
+			colunmName = "Created Date");
+
+		ObjectCustomViews.viewColumnsOrder(
+			position = "2",
+			colunmName = "Author");
+
+		ObjectCustomViews.viewColumnsOrder(
+			position = "3",
+			colunmName = "ID");		
 	}
 
 	@description = "LPS-135394 - Verify the empty state for the View Builder tab"

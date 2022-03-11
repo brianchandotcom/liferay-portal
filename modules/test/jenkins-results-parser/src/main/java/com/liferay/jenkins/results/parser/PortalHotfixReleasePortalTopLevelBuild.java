@@ -35,6 +35,12 @@ public class PortalHotfixReleasePortalTopLevelBuild
 
 	@Override
 	public String getBaseGitRepositoryName() {
+		String branchName = getBranchName();
+
+		if (branchName.equals("master")) {
+			return "liferay-portal";
+		}
+
 		return "liferay-portal-ee";
 	}
 
@@ -55,9 +61,15 @@ public class PortalHotfixReleasePortalTopLevelBuild
 				"Please set a valid 'TEST_BUILD_HOTFIX_ZIP_URL'");
 		}
 
+		String majorVersion = matcher.group("majorVersion");
+		String minorVersion = matcher.group("minorVersion");
+
+		if (majorVersion.equals("7") && minorVersion.equals("4")) {
+			return "master";
+		}
+
 		String branchName = JenkinsResultsParserUtil.combine(
-			matcher.group("majorVersion"), ".", matcher.group("minorVersion"),
-			".x");
+			majorVersion, ".", minorVersion, ".x");
 
 		if (branchName.startsWith("6")) {
 			return "ee-" + branchName;

@@ -412,7 +412,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewRequiredField(
 			requiredField = "nodeId",
 			save = "true");
-
 	}
 
 	@description = "LPS-139388 - Verify that, when all the parallel reviews are complete, the Join node will allow the instance to progress to the next step"

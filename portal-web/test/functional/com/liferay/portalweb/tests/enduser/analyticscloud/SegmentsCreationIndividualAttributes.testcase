@@ -480,8 +480,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8569 | Test Summary: Add segment with custom field for individuals"
 	@priority = "4"
 	test CanAddSegmentWithCustomFieldsForIndividuals {
-		property portal.upstream = "quarantine";
-
 		task ("Add a user custom field") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",

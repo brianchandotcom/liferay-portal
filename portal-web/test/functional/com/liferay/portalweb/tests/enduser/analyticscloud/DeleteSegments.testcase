@@ -360,8 +360,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8592 | Test Summary: Deleting a custom field that is used by a segment should reset the data"
 	@priority = "4"
 	test DeleteCustomFieldUsedSegmentResetData {
-		property portal.upstream = "quarantine";
-
 		task ("Connect DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}

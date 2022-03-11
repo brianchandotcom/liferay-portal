@@ -96,6 +96,26 @@ public class AddFormInstanceRecordMVCCommandHelperTest extends PowerMockito {
 	}
 
 	@Test
+	public void testDisabledField() throws Exception {
+		_updateNonevaluableDDMFormFields(
+			false, "readOnly", true, RandomTestUtil.randomBoolean(),
+			new UnlocalizedValue(_STRING_VALUE));
+
+		_assertDDMFormFields(false, new UnlocalizedValue(StringPool.BLANK));
+	}
+
+	@Test
+	public void testEnabledField() throws Exception {
+		boolean required = RandomTestUtil.randomBoolean();
+
+		_updateNonevaluableDDMFormFields(
+			false, "readOnly", false, required,
+			new UnlocalizedValue(_STRING_VALUE));
+
+		_assertDDMFormFields(required, new UnlocalizedValue(_STRING_VALUE));
+	}
+
+	@Test
 	public void testInvisibleAndLocalizableField() throws Exception {
 		_updateNonevaluableDDMFormFields(
 			true, "visible", false, RandomTestUtil.randomBoolean(),

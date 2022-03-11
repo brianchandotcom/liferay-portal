@@ -20,20 +20,6 @@
 				}
 			}
 
-			.framework-icon {
-				.sticker-overlay {
-					background-color: $lightBackground;
-				}
-
-				.sticker-img {
-					width: 60%;
-				}
-			}
-
-			.framework-text {
-				justify-content: center;
-			}
-
 			.panel-collapse.show:not(.collapsing):not(.collapse) {
 				height: 100% !important; // Fixes panel body height when adding or removing asset types
 			}

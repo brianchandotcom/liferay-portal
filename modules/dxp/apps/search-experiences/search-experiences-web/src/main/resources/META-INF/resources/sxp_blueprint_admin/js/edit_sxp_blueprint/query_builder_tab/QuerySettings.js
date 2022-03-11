@@ -15,7 +15,6 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import ClaySticker from '@clayui/sticker';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
 import SelectTypes from './SelectTypes';
@@ -136,23 +135,18 @@ function QuerySettings({
 									)}
 								</span>
 
-								<ClayTooltipProvider>
-									<ClaySticker
-										borderless
-										displayType="secondary"
-										monospaced
-										onClick={(event) => {
-											event.stopPropagation();
-											onChangeIndexerClausesVisibility();
-										}}
-										size="md"
-										title={Liferay.Language.get(
-											'search-framework-indexer-clauses-help'
-										)}
-									>
-										<ClayIcon symbol="question-circle" />
-									</ClaySticker>
-								</ClayTooltipProvider>
+								<ClaySticker
+									borderless
+									displayType="secondary"
+									monospaced
+									onClick={(event) => {
+										event.stopPropagation();
+										onChangeIndexerClausesVisibility();
+									}}
+									size="md"
+								>
+									<ClayIcon symbol="question-circle" />
+								</ClaySticker>
 							</ClayPanel.Title>
 						}
 						displayType="unstyled"
@@ -197,18 +191,6 @@ function QuerySettings({
 										'search-framework-query-contributors'
 									)}
 								</span>
-
-								<ClayTooltipProvider>
-									<ClaySticker
-										displayType="secondary"
-										size="md"
-										title={Liferay.Language.get(
-											'search-framework-query-contributors-help'
-										)}
-									>
-										<ClayIcon symbol="question-circle" />
-									</ClaySticker>
-								</ClayTooltipProvider>
 							</ClayPanel.Title>
 						}
 						displayType="unstyled"

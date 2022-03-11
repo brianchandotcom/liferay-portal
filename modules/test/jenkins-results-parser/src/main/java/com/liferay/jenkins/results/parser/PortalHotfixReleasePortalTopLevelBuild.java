@@ -179,6 +179,30 @@ public class PortalHotfixReleasePortalTopLevelBuild
 
 				return _portalRelease;
 			}
+
+			Matcher patcherPortalVersion74Matcher =
+				_patcherPortalVersion74Pattern.matcher(patcherPortalVersion);
+
+			if (patcherPortalVersion74Matcher.find()) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append(patcherPortalVersion74Matcher.group("majorVersion"));
+				sb.append(".");
+				sb.append(patcherPortalVersion74Matcher.group("minorVersion"));
+				sb.append(".");
+				sb.append(patcherPortalVersion74Matcher.group("fixVersion"));
+
+				String updateVersion = patcherPortalVersion74Matcher.group(
+					"updateVersion");
+
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(updateVersion)) {
+					sb.append(updateVersion);
+				}
+
+				_portalRelease = new PortalRelease(sb.toString());
+
+				return _portalRelease;
+			}
 		}
 
 		Matcher hotfixZipURLMatcher = _hotfixZipURLPattern.matcher(
@@ -266,8 +290,12 @@ public class PortalHotfixReleasePortalTopLevelBuild
 			"(?<fixVersion>\\d{2})\\.(lpkg|zip)");
 	private static final Pattern _patcherPortalVersion62Pattern =
 		Pattern.compile(
-			"(?<majorVersion>\\d)\\.(?<minorVersion>\\d)\\." +
+			"(?<majorVersion>6)\\.(?<minorVersion>2)\\." +
 				"(?<fixVersion>\\d{2})( SP(?<servicePackVersion>\\d+))?");
+	private static final Pattern _patcherPortalVersion74Pattern =
+		Pattern.compile(
+			"(?<majorVersion>7)\\.(?<minorVersion>4)\\." +
+				"(?<fixVersion>\\d{2})(?<updateVersion>-(ep|u)\\d+)?");
 	private static final Pattern _patcherPortalVersionDXPPattern =
 		Pattern.compile(
 			"fix-pack-(?<fixpackType>de|dxp)-(?<fixpackVersion>\\d+)-" +

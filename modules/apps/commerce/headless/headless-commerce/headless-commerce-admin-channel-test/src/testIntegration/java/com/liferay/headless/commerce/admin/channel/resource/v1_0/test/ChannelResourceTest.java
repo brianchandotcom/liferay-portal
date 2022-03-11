@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalServiceUtil;
 import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.Channel;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -182,9 +181,9 @@ public class ChannelResourceTest extends BaseChannelResourceTestCase {
 	private Channel _addChannel(Channel channel) throws Exception {
 		CommerceChannel commerceChannel =
 			CommerceChannelLocalServiceUtil.addCommerceChannel(
-				StringPool.BLANK, channel.getSiteGroupId(), channel.getName(),
-				channel.getType(), null, channel.getCurrencyCode(),
-				_serviceContext);
+				channel.getExternalReferenceCode(), channel.getSiteGroupId(),
+				channel.getName(), channel.getType(), null,
+				channel.getCurrencyCode(), _serviceContext);
 
 		_commerceChannels.add(commerceChannel);
 

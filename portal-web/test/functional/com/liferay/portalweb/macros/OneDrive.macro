@@ -59,16 +59,43 @@ definition {
 	}
 
 	macro deleteDocument {
-		var key_documentTitle = "${dmDocumentTitle}";
+		if (isSet(dmDocumentTitle)) {
+			var key_documentTitle = "${dmDocumentTitle}";
 
-		while (IsElementPresent(locator1 = "OneDrive#FILES_TITLE")) {
-			Click.mouseOverClick(locator1 = "OneDrive#FILES_CHECKBOX");
+			while (IsElementPresent(locator1 = "OneDrive#FILES_TITLE")) {
+				Click.mouseOverClick(locator1 = "OneDrive#FILES_CHECKBOX");
 
-			Click(locator1 = "OneDrive#DELETE");
+				Click(locator1 = "OneDrive#DELETE");
 
-			Click(locator1 = "OneDrive#DELETE_CONFIRMATION");
+				Click(locator1 = "OneDrive#DELETE_CONFIRMATION");
 
-			AssertElementPresent.pauseAssertVisible(locator1 = "OneDrive#DELETE_MESSAGE");
+				AssertElementPresent.pauseAssertVisible(locator1 = "OneDrive#DELETE_MESSAGE");
+			}
+		}
+		else {
+			var key_documentTitle = "hours ago";
+
+			while (IsElementPresent(locator1 = "OneDrive#FILES_CHECKBOX")) {
+				Click.mouseOverClick(locator1 = "OneDrive#FILES_CHECKBOX");
+
+				Click(locator1 = "OneDrive#DELETE");
+
+				Click(locator1 = "OneDrive#DELETE_CONFIRMATION");
+
+				AssertElementPresent.pauseAssertVisible(locator1 = "OneDrive#DELETE_MESSAGE");
+			}
+
+			var key_documentTitle = "Yesterday";
+
+			while (IsElementPresent(locator1 = "OneDrive#FILES_CHECKBOX")) {
+				Click.mouseOverClick(locator1 = "OneDrive#FILES_CHECKBOX");
+
+				Click(locator1 = "OneDrive#DELETE");
+
+				Click(locator1 = "OneDrive#DELETE_CONFIRMATION");
+
+				AssertElementPresent.pauseAssertVisible(locator1 = "OneDrive#DELETE_MESSAGE");
+			}
 		}
 	}
 

@@ -456,7 +456,7 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectEntryValuesException.IntegerSizeExceeded
+		catch (ObjectEntryValuesException.ExceedsIntegerSize
 					objectEntryValuesException) {
 
 			_assertObjectEntryValuesExceptionMessage(
@@ -476,7 +476,7 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectEntryValuesException.IntegerSizeExceeded
+		catch (ObjectEntryValuesException.ExceedsIntegerSize
 					objectEntryValuesException) {
 
 			_assertObjectEntryValuesExceptionMessage(
@@ -496,7 +496,7 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectEntryValuesException.LongSizeExceeded
+		catch (ObjectEntryValuesException.ExceedsLongSize
 					objectEntryValuesException) {
 
 			_assertObjectEntryValuesExceptionMessage(
@@ -516,7 +516,7 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectEntryValuesException.LongSizeExceeded
+		catch (ObjectEntryValuesException.ExceedsLongSize
 					objectEntryValuesException) {
 
 			_assertObjectEntryValuesExceptionMessage(
@@ -536,7 +536,7 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectEntryValuesException.LongMaxSizeExceeded
+		catch (ObjectEntryValuesException.ExceedsLongMaxSize
 					objectEntryValuesException) {
 
 			_assertObjectEntryValuesExceptionMessage(
@@ -1472,7 +1472,7 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectEntryValuesException.IntegerSizeExceeded
+		catch (ObjectEntryValuesException.ExceedsIntegerSize
 					objectEntryValuesException) {
 
 			_assertObjectEntryValuesExceptionMessage(
@@ -1490,7 +1490,7 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectEntryValuesException.IntegerSizeExceeded
+		catch (ObjectEntryValuesException.ExceedsIntegerSize
 					objectEntryValuesException) {
 
 			_assertObjectEntryValuesExceptionMessage(
@@ -1508,7 +1508,7 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectEntryValuesException.LongSizeExceeded
+		catch (ObjectEntryValuesException.ExceedsLongSize
 					objectEntryValuesException) {
 
 			_assertObjectEntryValuesExceptionMessage(
@@ -1526,7 +1526,7 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectEntryValuesException.LongSizeExceeded
+		catch (ObjectEntryValuesException.ExceedsLongSize
 					objectEntryValuesException) {
 
 			_assertObjectEntryValuesExceptionMessage(
@@ -1544,7 +1544,7 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectEntryValuesException.LongMaxSizeExceeded
+		catch (ObjectEntryValuesException.ExceedsLongMaxSize
 					objectEntryValuesException) {
 
 			_assertObjectEntryValuesExceptionMessage(
@@ -1562,7 +1562,7 @@ public class ObjectEntryLocalServiceTest {
 
 			Assert.fail();
 		}
-		catch (ObjectEntryValuesException.LongMinSizeExceeded
+		catch (ObjectEntryValuesException.ExceedsLongMinSize
 					objectEntryValuesException) {
 
 			_assertObjectEntryValuesExceptionMessage(

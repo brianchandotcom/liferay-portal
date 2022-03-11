@@ -1648,7 +1648,7 @@ public class ObjectEntryLocalServiceImpl
 			int value = GetterUtil.getInteger(entryValue);
 
 			if (!StringUtil.equals(String.valueOf(value), entryValueString)) {
-				throw new ObjectEntryValuesException.IntegerSizeExceeded();
+				throw new ObjectEntryValuesException.ExceedsIntegerSize();
 			}
 		}
 	}
@@ -1667,13 +1667,13 @@ public class ObjectEntryLocalServiceImpl
 			if (!StringUtil.equals(
 					String.valueOf(value), entryValue.toString())) {
 
-				throw new ObjectEntryValuesException.LongSizeExceeded();
+				throw new ObjectEntryValuesException.ExceedsLongSize();
 			}
 			else if (value > _MAX_SAFE_LONG) {
-				throw new ObjectEntryValuesException.LongMaxSizeExceeded();
+				throw new ObjectEntryValuesException.ExceedsLongMaxSize();
 			}
 			else if (value < _MIN_SAFE_LONG) {
-				throw new ObjectEntryValuesException.LongMinSizeExceeded();
+				throw new ObjectEntryValuesException.ExceedsLongMinSize();
 			}
 		}
 	}

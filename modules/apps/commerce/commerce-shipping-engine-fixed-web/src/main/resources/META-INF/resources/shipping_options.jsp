@@ -38,5 +38,7 @@ CommerceShippingFixedOptionsDisplayContext commerceShippingFixedOptionsDisplayCo
 		portletURL="<%= commerceShippingFixedOptionsDisplayContext.getPortletURL() %>"
 		selectedItemsKey="shippingFixedOptionId"
 		showManagementBar="<%= true %>"
+		sortItemList="<%= commerceShippingFixedOptionsDisplayContext.getSortItemList() %>"
+		style="fluid"
 	/>
 </commerce-ui:panel>

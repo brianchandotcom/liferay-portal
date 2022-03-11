@@ -26,6 +26,9 @@ import com.liferay.commerce.shipping.engine.fixed.web.internal.FixedCommerceShip
 import com.liferay.commerce.shipping.engine.fixed.web.internal.frontend.taglib.servlet.taglib.CommerceShippingMethodFixedOptionsScreenNavigationCategory;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItemBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItemList;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.SortItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -137,6 +140,16 @@ public class CommerceShippingFixedOptionsDisplayContext
 	public String getScreenNavigationCategoryKey() {
 		return CommerceShippingMethodFixedOptionsScreenNavigationCategory.
 			CATEGORY_KEY;
+	}
+
+	public SortItemList getSortItemList() {
+		return SortItemListBuilder.add(
+			SortItemBuilder.setDirection(
+				"desc"
+			).setKey(
+				"priority"
+			).build()
+		).build();
 	}
 
 	public boolean isFixed() throws PortalException {

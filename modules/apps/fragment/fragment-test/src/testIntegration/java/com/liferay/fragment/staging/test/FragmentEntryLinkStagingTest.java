@@ -25,29 +25,21 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.FragmentEntryTestUtil;
 import com.liferay.fragment.util.FragmentStagingTestUtil;
 import com.liferay.fragment.util.FragmentTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -75,22 +67,7 @@ public class FragmentEntryLinkStagingTest {
 
 		_liveGroup = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_liveGroup.getGroupId(), TestPropsValues.getUserId());
-
-		Map<Locale, String> nameMap = Collections.singletonMap(
-			LocaleUtil.getDefault(), RandomTestUtil.randomString());
-
-		_layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _liveGroup.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0, nameMap, nameMap,
-			Collections.emptyMap(), Collections.emptyMap(),
-			Collections.emptyMap(), LayoutConstants.TYPE_CONTENT,
-			UnicodePropertiesBuilder.put(
-				"published", "true"
-			).buildString(),
-			false, false, Collections.emptyMap(), 0, serviceContext);
+		_layout = LayoutTestUtil.addTypeContentLayout(_liveGroup);
 	}
 
 	@Test

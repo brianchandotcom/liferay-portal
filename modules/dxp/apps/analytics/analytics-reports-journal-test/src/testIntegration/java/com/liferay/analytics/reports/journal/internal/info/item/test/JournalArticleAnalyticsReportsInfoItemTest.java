@@ -26,10 +26,10 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -196,12 +196,7 @@ public class JournalArticleAnalyticsReportsInfoItemTest {
 				_companyLocalService.fetchCompany(
 					TestPropsValues.getCompanyId()));
 
-			Layout layout = _layoutLocalService.addLayout(
-				user.getUserId(), _group.getGroupId(), false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
-				StringPool.BLANK, serviceContext);
+			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 			themeDisplay.setLayoutSet(layout.getLayoutSet());
 

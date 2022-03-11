@@ -23,11 +23,11 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -81,7 +81,7 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
-		_layout = _addLayout();
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 	}
 
 	@Test
@@ -194,19 +194,6 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "addFragmentEntryLink",
 			new Class<?>[] {ActionRequest.class}, actionRequest);
-	}
-
-	private Layout _addLayout() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-
-		return _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
-			StringPool.BLANK, serviceContext);
 	}
 
 	private FragmentEntry _getFragmentEntry(long groupId) throws Exception {

@@ -24,6 +24,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.responsive.ViewportSize;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.CommonStylesUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -36,7 +37,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -97,12 +97,7 @@ public class ResponsiveLayoutStructureUtilTest {
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		_layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
-			StringPool.BLANK, serviceContext);
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(

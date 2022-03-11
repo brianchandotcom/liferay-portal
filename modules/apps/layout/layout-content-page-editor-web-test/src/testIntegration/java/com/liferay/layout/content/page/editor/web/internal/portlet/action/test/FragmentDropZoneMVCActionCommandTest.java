@@ -24,6 +24,7 @@ import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
@@ -35,7 +36,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -102,7 +102,7 @@ public class FragmentDropZoneMVCActionCommandTest {
 
 		_fragmentEntry = _addFragmentEntry();
 
-		_layout = _addLayout();
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			LayoutPageTemplateStructureLocalServiceUtil.
@@ -392,19 +392,6 @@ public class FragmentDropZoneMVCActionCommandTest {
 			_readFileToString("drop_zone_fragment_entry_configuration.json"),
 			null, 0, FragmentConstants.TYPE_COMPONENT,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
-	}
-
-	private Layout _addLayout() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-
-		return _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
-			StringPool.BLANK, serviceContext);
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest()

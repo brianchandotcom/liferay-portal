@@ -23,16 +23,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -151,30 +145,10 @@ public class JournalContentCompatibilityConverterTest {
 
 	@Test
 	public void testLinkToPageFieldCompatibilityLayer() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		Layout layout1 = LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "layout1",
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			LayoutConstants.TYPE_CONTENT, false, "/layout1", serviceContext);
-		Layout layout2 = LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "layout2",
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			LayoutConstants.TYPE_CONTENT, false, "/layout2", serviceContext);
-		Layout layout3 = LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "layout3",
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			LayoutConstants.TYPE_CONTENT, false, "/layout3", serviceContext);
-		Layout layout4 = LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "layout4",
-			RandomTestUtil.randomString(), StringPool.BLANK,
-			LayoutConstants.TYPE_CONTENT, false, "/layout4", serviceContext);
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group, "layout1");
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group, "layout2");
+		Layout layout3 = LayoutTestUtil.addTypeContentLayout(_group, "layout3");
+		Layout layout4 = LayoutTestUtil.addTypeContentLayout(_group, "layout4");
 
 		String content = StringUtil.replace(
 			read("test-journal-content-link-to-page-field-compatibility.xml"),

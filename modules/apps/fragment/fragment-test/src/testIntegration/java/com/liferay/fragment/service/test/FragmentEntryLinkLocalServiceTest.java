@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -749,11 +748,7 @@ public class FragmentEntryLinkLocalServiceTest {
 	}
 
 	private FragmentEntryLink _addFragmentEntryLinkToLayout() throws Exception {
-		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			LayoutConstants.TYPE_CONTENT, false, null, _serviceContext);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			TestPropsValues.getUserId(), _group.getGroupId(), 0,

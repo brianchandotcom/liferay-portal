@@ -15,12 +15,11 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringPool;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -80,7 +78,7 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
-		_layout = _addLayout();
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
 	}
@@ -124,19 +122,6 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 			segmentsExperience.getSegmentsEntryId());
 		Assert.assertEquals(
 			segmentsExperienceId, segmentsExperience.getSegmentsExperienceId());
-	}
-
-	private Layout _addLayout() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-
-		return _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
-			StringPool.BLANK, serviceContext);
 	}
 
 	private JSONObject _addSegmentsExperience(String name, long segmentsEntryId)

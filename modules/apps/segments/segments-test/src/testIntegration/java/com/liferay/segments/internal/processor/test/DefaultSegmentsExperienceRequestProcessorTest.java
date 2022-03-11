@@ -15,19 +15,16 @@
 package com.liferay.segments.internal.processor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringPool;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -73,7 +70,7 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 		long classNameId = _classNameLocalService.getClassNameId(
 			Layout.class.getName());
 
-		Layout layout = _addLayout();
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
@@ -100,7 +97,7 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 	public void testGetSegmentsExperienceIdsWithoutSegmentsExperienceIds()
 		throws Exception {
 
-		Layout layout = _addLayout();
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		long[] segmentsExperienceIds =
 			_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
@@ -118,7 +115,7 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 	public void testGetSegmentsExperienceIdsWithoutSegmentsExperienceIdsAndWithoutSegmentEntryIds()
 		throws Exception {
 
-		Layout layout = _addLayout();
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		long[] segmentsExperienceIds =
 			_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
@@ -142,7 +139,7 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 		long classNameId = _classNameLocalService.getClassNameId(
 			Layout.class.getName());
 
-		Layout layout = _addLayout();
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
@@ -163,19 +160,6 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 		Assert.assertEquals(
 			segmentsExperience.getSegmentsExperienceId(),
 			segmentsExperienceIds[0]);
-	}
-
-	private Layout _addLayout() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-
-		return _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
-			StringPool.BLANK, serviceContext);
 	}
 
 	@Inject

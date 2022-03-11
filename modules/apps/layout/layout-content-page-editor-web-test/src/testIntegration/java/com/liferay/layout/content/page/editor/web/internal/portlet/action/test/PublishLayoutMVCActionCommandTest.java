@@ -17,13 +17,12 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.DeletedLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -32,16 +31,12 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -80,14 +75,7 @@ public class PublishLayoutMVCActionCommandTest {
 	public void testDeletedItemsAreRemovedWhenLayoutIsPublished()
 		throws Exception {
 
-		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false, 0, 0, 0,
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
-			LayoutConstants.TYPE_CONTENT, StringPool.BLANK, false, false,
-			new HashMap<>(), 0, _serviceContext);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 

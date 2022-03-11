@@ -43,7 +43,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 import org.junit.After;
@@ -165,17 +164,9 @@ public class LayoutLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		_layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			LayoutConstants.TYPE_CONTENT, false, false, null, serviceContext);
+		LayoutTestUtil.addTypeContentLayout(_group);
 
-		Layout publishedLayout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			LayoutConstants.TYPE_CONTENT, false, false, null, serviceContext);
+		Layout publishedLayout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		Layout draftLayout = publishedLayout.fetchDraftLayout();
 
@@ -366,14 +357,7 @@ public class LayoutLocalServiceTest {
 	public void testUpdateDraftLayoutAfterOriginalLayoutUpdatesWithNewFriendlyURL()
 		throws Exception {
 
-		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false, 0, 0, 0,
-			HashMapBuilder.put(
-				LocaleUtil.US, "name"
-			).build(),
-			new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
-			LayoutConstants.TYPE_CONTENT, StringPool.BLANK, false, false,
-			new HashMap<>(), 0, new ServiceContext());
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		layout = _layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
@@ -408,14 +392,7 @@ public class LayoutLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
 
-		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false, 0, 0, 0,
-			HashMapBuilder.put(
-				LocaleUtil.US, "home"
-			).build(),
-			new HashMap<>(), new HashMap<>(), new HashMap<>(), new HashMap<>(),
-			LayoutConstants.TYPE_CONTENT, StringPool.BLANK, false, false,
-			new HashMap<>(), 0, serviceContext);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		layout = _layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
@@ -435,20 +412,8 @@ public class LayoutLocalServiceTest {
 	}
 
 	private void _testDeleteLayouts(boolean system) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		_layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			LayoutConstants.TYPE_CONTENT, false, system, null, serviceContext);
-		_layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			LayoutConstants.TYPE_CONTENT, false, system, null, serviceContext);
+		LayoutTestUtil.addTypeContentLayout(_group, false, system);
+		LayoutTestUtil.addTypeContentLayout(_group, true, system);
 
 		_layoutLocalService.deleteLayouts(
 			_group.getGroupId(), true, new ServiceContext());

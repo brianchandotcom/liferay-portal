@@ -19,7 +19,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -89,13 +88,7 @@ public class SegmentsExperimentLocalServiceTest {
 
 		_group = GroupTestUtil.addGroup();
 
-		_layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
-			StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
 	}

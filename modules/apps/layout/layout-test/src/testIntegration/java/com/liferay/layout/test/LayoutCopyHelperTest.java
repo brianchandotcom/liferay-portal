@@ -33,7 +33,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -43,9 +42,7 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -131,7 +128,7 @@ public class LayoutCopyHelperTest {
 
 	@Test
 	public void testCopyContentLayoutStructure() throws Exception {
-		Layout sourceLayout = _addContentLayout();
+		Layout sourceLayout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		LayoutStructure layoutStructure = new LayoutStructure();
 
@@ -168,7 +165,7 @@ public class LayoutCopyHelperTest {
 				SegmentsExperienceConstants.ID_DEFAULT,
 				layoutStructure.toString());
 
-		Layout targetLayout = _addContentLayout();
+		Layout targetLayout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		Assert.assertTrue(
 			ListUtil.isNotEmpty(
@@ -337,21 +334,6 @@ public class LayoutCopyHelperTest {
 			Boolean.TRUE.toString(),
 			targetUnicodeProperties.getProperty(
 				"lfr-theme:regular:show-header"));
-	}
-
-	private Layout _addContentLayout() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		return _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
-			StringPool.BLANK, serviceContext);
 	}
 
 	@Inject

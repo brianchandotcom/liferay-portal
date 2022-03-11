@@ -31,6 +31,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
@@ -39,11 +40,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -58,7 +57,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -104,7 +102,7 @@ public class AddFragmentCompositionMVCActionCommandTest {
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
-		_layout = _addLayout();
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
@@ -225,7 +223,7 @@ public class AddFragmentCompositionMVCActionCommandTest {
 	public void testAddFragmentCompositionSaveMappingConfigurationEditableLink()
 		throws Exception {
 
-		_layout = _addLayout();
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
@@ -457,23 +455,6 @@ public class AddFragmentCompositionMVCActionCommandTest {
 				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
 			LocaleUtil.getSiteDefault(), false, true, _serviceContext);
-	}
-
-	private Layout _addLayout() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-
-		String randomString = FriendlyURLNormalizerUtil.normalize(
-			RandomTestUtil.randomString());
-
-		String friendlyURL = StringPool.SLASH + randomString;
-
-		return LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
-			LayoutConstants.TYPE_CONTENT, false, friendlyURL, serviceContext);
 	}
 
 	private MockLiferayPortletActionRequest

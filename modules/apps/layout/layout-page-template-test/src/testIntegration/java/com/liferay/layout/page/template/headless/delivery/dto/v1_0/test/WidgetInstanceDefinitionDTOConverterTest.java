@@ -21,11 +21,11 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.headless.delivery.dto.v1_0.WidgetInstance;
 import com.liferay.headless.delivery.dto.v1_0.WidgetPermission;
 import com.liferay.layout.page.template.importer.PortletPreferencesPortletConfigurationImporter;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -133,12 +133,7 @@ public class WidgetInstanceDefinitionDTOConverterTest {
 			"portletId", _testPortletName
 		);
 
-		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
-			StringPool.BLANK, _serviceContext);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(

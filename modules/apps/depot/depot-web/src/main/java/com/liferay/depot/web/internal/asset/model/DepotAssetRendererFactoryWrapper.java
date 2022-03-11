@@ -106,11 +106,6 @@ public class DepotAssetRendererFactoryWrapper<T>
 	}
 
 	@Override
-	public String getClassSimpleName() {
-		return _assetRendererFactory.getClassSimpleName();
-	}
-
-	@Override
 	public ClassTypeReader getClassTypeReader() {
 		if (isSelectable()) {
 			return new DepotClassTypeReader(

@@ -60,16 +60,6 @@ public interface AssetRendererFactory<T> {
 
 	public long getClassNameId();
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public default String getClassSimpleName() {
-		Class<?> clazz = getClass();
-
-		return clazz.getSimpleName();
-	}
-
 	public ClassTypeReader getClassTypeReader();
 
 	public String getIconCssClass();

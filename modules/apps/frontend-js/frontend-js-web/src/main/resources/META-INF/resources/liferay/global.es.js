@@ -166,15 +166,6 @@ Liferay.Util.openAlertModal = (...args) => {
 	);
 };
 
-Liferay.Util.confirm = (...args) => {
-	Liferay.Loader.require(
-		'frontend-js-web/liferay/modal/Modal',
-		(commands) => {
-			commands.confirm(...args);
-		}
-	);
-};
-
 /**
  * @deprecated As of Athanasius (7.3.x), with no direct replacement
  */
@@ -261,6 +252,16 @@ Liferay.Util.toCharCode = toCharCode;
  * @deprecated As of Athanasius (7.3.x), replaced by `import {toggleDisabled} from 'frontend-js-web'`
  */
 Liferay.Util.toggleDisabled = toggleDisabled;
+
+
+Liferay.Util.openConfirmModal = (...args) => {
+	Liferay.Loader.require(
+		'frontend-js-web/liferay/modal/Modal',
+		(commands) => {
+			commands.openConfirmModal(...args);
+		}
+	);
+};
 
 Liferay.Util.openModal = (...args) => {
 	Liferay.Loader.require(

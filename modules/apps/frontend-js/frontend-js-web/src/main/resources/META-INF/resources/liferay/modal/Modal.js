@@ -286,7 +286,7 @@ const Modal = ({
 	);
 };
 
-const confirm = ({message, onConfirm}) => {
+const openConfirmModal = ({message, onConfirm}) => {
 	openModal({
 		bodyHTML: message,
 		buttons: [
@@ -721,9 +721,9 @@ Modal.propTypes = {
 };
 
 export {
-	confirm,
 	Modal,
 	openAlertModal,
+	openConfirmModal,
 	openModal,
 	openPortletModal,
 	openPortletWindow,

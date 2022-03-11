@@ -16,14 +16,18 @@ package com.liferay.batch.planner.service.impl;
 
 import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.model.BatchPlannerLogTable;
+import com.liferay.batch.planner.model.BatchPlannerPlan;
 import com.liferay.batch.planner.model.BatchPlannerPlanTable;
 import com.liferay.batch.planner.service.base.BatchPlannerLogServiceBaseImpl;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -98,12 +102,40 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 
 	@Override
 	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
+			long companyId, boolean export, int start, int end,
+			OrderByComparator<BatchPlannerLog> orderByComparator,
+			String searchByField, String searchByKeyword)
+		throws PortalException {
+
+		checkPermission(companyId, ActionKeys.VIEW);
+
+		return batchPlannerLogLocalService.getCompanyBatchPlannerLogs(
+			companyId, export, start, end, orderByComparator, searchByField,
+			searchByKeyword);
+	}
+
+	@Override
+	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
 			long companyId, int start, int end,
 			OrderByComparator<BatchPlannerLog> orderByComparator)
 		throws PortalException {
 
 		return batchPlannerLogPersistence.filterFindByCompanyId(
 			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
+			long companyId, int start, int end,
+			OrderByComparator<BatchPlannerLog> orderByComparator,
+			String searchByField, String searchByKeyword)
+		throws PortalException {
+
+		checkPermission(companyId, ActionKeys.VIEW);
+
+		return batchPlannerLogLocalService.getCompanyBatchPlannerLogs(
+			companyId, start, end, orderByComparator, searchByField,
+			searchByKeyword);
 	}
 
 	@Override
@@ -128,6 +160,43 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 			).where(
 				_getPredicate(companyId, export)
 			));
+	}
+
+	@Override
+	public int getCompanyBatchPlannerLogsCount(
+			long companyId, boolean export, String searchByField,
+			String searchByKeyword)
+		throws PortalException {
+
+		checkPermission(companyId, ActionKeys.VIEW);
+
+		return batchPlannerLogLocalService.getCompanyBatchPlannerLogsCount(
+			companyId, export, searchByField, searchByKeyword);
+	}
+
+	@Override
+	public int getCompanyBatchPlannerLogsCount(
+			long companyId, String searchByField, String searchByKeyword)
+		throws PortalException {
+
+		checkPermission(companyId, ActionKeys.VIEW);
+
+		return batchPlannerLogLocalService.getCompanyBatchPlannerLogsCount(
+			companyId, searchByField, searchByKeyword);
+	}
+
+	protected void checkPermission(long companyId, String actionKey)
+		throws PortalException {
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		if (!permissionChecker.hasPermission(
+				GroupConstants.DEFAULT_LIVE_GROUP_ID,
+				BatchPlannerPlan.class.getName(), companyId, actionKey)) {
+
+			throw new PrincipalException.MustHavePermission(
+				getUserId(), actionKey);
+		}
 	}
 
 	private Predicate _getPredicate(long companyId, boolean export) {

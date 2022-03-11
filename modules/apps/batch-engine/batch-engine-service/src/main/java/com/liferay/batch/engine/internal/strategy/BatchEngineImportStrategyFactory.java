@@ -23,7 +23,9 @@ import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
  */
 public class BatchEngineImportStrategyFactory {
 
-	public BatchEngineImportStrategy create(BatchEngineImportTask batchEngineImportTask) {
+	public BatchEngineImportStrategy create(
+		BatchEngineImportTask batchEngineImportTask) {
+
 		if (batchEngineImportTask.getImportStrategy() ==
 				BatchEngineImportTaskConstants.
 					IMPORT_STRATEGY_ON_ERROR_CONTINUE) {

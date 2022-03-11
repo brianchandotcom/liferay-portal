@@ -23,8 +23,8 @@ import java.util.Collection;
 /**
  * @author Matija Petanjek
  */
-public class OnErrorContinueBatchEngineImportStrategy implements
-	BatchEngineImportStrategy {
+public class OnErrorContinueBatchEngineImportStrategy
+	implements BatchEngineImportStrategy {
 
 	public OnErrorContinueBatchEngineImportStrategy(
 		long batchEngineImportTaskId, long companyId, int processedItemsCount,

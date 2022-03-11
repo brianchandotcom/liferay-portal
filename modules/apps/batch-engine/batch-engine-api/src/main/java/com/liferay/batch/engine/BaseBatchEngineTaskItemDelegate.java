@@ -66,14 +66,15 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 	}
 
 	@Override
-	public void setContextCompany(Company contextCompany) {
-		this.contextCompany = contextCompany;
+	public void setBatchEngineImportStrategy(
+		BatchEngineImportStrategy batchEngineImportStrategy) {
+
+		this.batchEngineImportStrategy = batchEngineImportStrategy;
 	}
 
 	@Override
-	public void setBatchEngineImportStrategy(
-		BatchEngineImportStrategy batchEngineImportStrategy) {
-		this.batchEngineImportStrategy = batchEngineImportStrategy;
+	public void setContextCompany(Company contextCompany) {
+		this.contextCompany = contextCompany;
 	}
 
 	@Override
@@ -100,8 +101,8 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 		throws Exception {
 	}
 
-	protected Company contextCompany;
 	protected BatchEngineImportStrategy batchEngineImportStrategy;
+	protected Company contextCompany;
 	protected User contextUser;
 	protected String languageId;
 

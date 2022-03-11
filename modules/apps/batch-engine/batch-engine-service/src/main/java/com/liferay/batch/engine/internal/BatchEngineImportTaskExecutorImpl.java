@@ -147,7 +147,8 @@ public class BatchEngineImportTaskExecutorImpl
 			new BatchEngineTaskItemDelegateExecutorFactory(
 				_batchEngineTaskMethodRegistry, null, null, null);
 
-		_batchEngineImportStrategyFactory = new BatchEngineImportStrategyFactory();
+		_batchEngineImportStrategyFactory =
+			new BatchEngineImportStrategyFactory();
 
 		setUserNotificationEventLocalService(
 			_userNotificationEventLocalService);
@@ -182,7 +183,8 @@ public class BatchEngineImportTaskExecutorImpl
 				batchEngineTaskItemDelegateExecutor.saveItems(
 					BatchEngineTaskOperation.valueOf(
 						batchEngineImportTask.getOperation()),
-					_batchEngineImportStrategyFactory.create(batchEngineImportTask),
+					_batchEngineImportStrategyFactory.create(
+						batchEngineImportTask),
 					items);
 
 				batchEngineImportTask.setProcessedItemsCount(
@@ -287,6 +289,8 @@ public class BatchEngineImportTaskExecutorImpl
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
+	private BatchEngineImportStrategyFactory _batchEngineImportStrategyFactory;
+
 	@Reference
 	private BatchEngineImportTaskErrorLocalService
 		_batchEngineImportTaskErrorLocalService;
@@ -308,8 +312,6 @@ public class BatchEngineImportTaskExecutorImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	private BatchEngineImportStrategyFactory _batchEngineImportStrategyFactory;
 
 	@Reference
 	private UserLocalService _userLocalService;

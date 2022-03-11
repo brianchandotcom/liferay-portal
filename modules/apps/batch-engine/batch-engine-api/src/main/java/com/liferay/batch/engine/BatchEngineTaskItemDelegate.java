@@ -54,10 +54,10 @@ public interface BatchEngineTaskItemDelegate<T> {
 			Map<String, Serializable> parameters, String search)
 		throws Exception;
 
-	public void setContextCompany(Company contextCompany);
-
 	public void setBatchEngineImportStrategy(
 		BatchEngineImportStrategy batchEngineImportStrategy);
+
+	public void setContextCompany(Company contextCompany);
 
 	public void setContextUser(User contextUser);
 

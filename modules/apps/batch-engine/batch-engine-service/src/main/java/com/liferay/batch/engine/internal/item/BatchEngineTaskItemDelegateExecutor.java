@@ -81,8 +81,9 @@ public class BatchEngineTaskItemDelegateExecutor implements Closeable {
 	}
 
 	public void saveItems(
-		BatchEngineTaskOperation batchEngineTaskOperation,
-		BatchEngineImportStrategy batchEngineImportStrategy, Collection<Object> items)
+			BatchEngineTaskOperation batchEngineTaskOperation,
+			BatchEngineImportStrategy batchEngineImportStrategy,
+			Collection<Object> items)
 		throws Exception {
 
 		_setContextFields(_batchEngineTaskItemDelegate);

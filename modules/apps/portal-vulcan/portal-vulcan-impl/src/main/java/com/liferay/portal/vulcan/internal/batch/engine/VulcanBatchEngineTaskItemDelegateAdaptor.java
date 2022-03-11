@@ -116,16 +116,17 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 	}
 
 	@Override
-	public void setContextCompany(Company contextCompany) {
-		_company = contextCompany;
-		_vulcanBatchEngineTaskItemDelegate.setContextCompany(contextCompany);
+	public void setBatchEngineImportStrategy(
+		BatchEngineImportStrategy batchEngineImportStrategy) {
+
+		_vulcanBatchEngineTaskItemDelegate.setContextBatchUnsafeConsumer(
+			batchEngineImportStrategy::apply);
 	}
 
 	@Override
-	public void setBatchEngineImportStrategy(
-		BatchEngineImportStrategy batchEngineImportStrategy) {
-		_vulcanBatchEngineTaskItemDelegate.setContextBatchUnsafeConsumer(
-			batchEngineImportStrategy::apply);
+	public void setContextCompany(Company contextCompany) {
+		_company = contextCompany;
+		_vulcanBatchEngineTaskItemDelegate.setContextCompany(contextCompany);
 	}
 
 	@Override

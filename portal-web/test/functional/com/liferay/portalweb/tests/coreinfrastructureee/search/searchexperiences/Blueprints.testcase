@@ -2099,13 +2099,13 @@ definition {
 		PortletEntry.save();
 
 		AssertTextEquals(
-			cellPosition = "1",
+			cellPosition = "2",
 			entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Test Blueprint");
 
 		AssertTextEquals(
-			cellPosition = "2",
+			cellPosition = "3",
 			entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Test Description");
@@ -2113,13 +2113,13 @@ definition {
 		var blueprintId = Blueprints.getBlueprintID(title = "Test Blueprint");
 
 		AssertTextEquals(
-			cellPosition = "3",
+			cellPosition = "4",
 			entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "${blueprintId}");
 
 		AssertTextEquals(
-			cellPosition = "4",
+			cellPosition = "5",
 			entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Test Test");
@@ -2127,13 +2127,13 @@ definition {
 		var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
 
 		AssertTextEquals.assertPartialText(
-			cellPosition = "5",
+			cellPosition = "6",
 			entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "${currentDate}");
 
 		AssertTextEquals.assertPartialText(
-			cellPosition = "6",
+			cellPosition = "7",
 			entryTitle = "Test Blueprint",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "${currentDate}");
@@ -2714,13 +2714,13 @@ definition {
 		PortletEntry.save();
 
 		AssertTextEquals(
-			cellPosition = "1",
+			cellPosition = "2",
 			entryTitle = "Test Element",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Test Element");
 
 		AssertTextEquals(
-			cellPosition = "2",
+			cellPosition = "3",
 			entryTitle = "Test Element",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Test Element Description");
@@ -2728,13 +2728,13 @@ definition {
 		var elementId = Blueprints.getElementID(title = "Test Element");
 
 		AssertTextEquals(
-			cellPosition = "3",
+			cellPosition = "4",
 			entryTitle = "Test Element",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "${elementId}");
 
 		AssertTextEquals(
-			cellPosition = "4",
+			cellPosition = "5",
 			entryTitle = "Test Element",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "Test Test");
@@ -2742,13 +2742,13 @@ definition {
 		var currentDate = DateUtil.getFormattedCurrentDate("MMM d, yyyy");
 
 		AssertTextEquals.assertPartialText(
-			cellPosition = "5",
+			cellPosition = "6",
 			entryTitle = "Test Element",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "${currentDate}");
 
 		AssertTextEquals.assertPartialText(
-			cellPosition = "6",
+			cellPosition = "7",
 			entryTitle = "Test Element",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CELL",
 			value1 = "${currentDate}");

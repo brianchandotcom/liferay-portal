@@ -102,7 +102,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION</td>
-	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${entryTitle}']]//div[contains(@class,'dnd-td')][2]</td>
+	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${entryTitle}']]//div[contains(@class,'dnd-td')][3]</td>
 	<td></td>
 </tr>
 <tr>

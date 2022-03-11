@@ -75,9 +75,15 @@
 	<td>//nav[contains(@class,'subnav-tbar')]//span[@class='text-truncate']</td>
 	<td></td>
 </tr>
+<!--FEATURE FLAG CONFIGURATIONS-->
 <tr>
-	<td>VIEW_BUTTON</td>
-	<td>//nav[contains(@class,'management-bar')]//*[(@title="Show View Options")][*[name()='svg'][contains(@class,'icon-${key_text}')]]</td>
+	<td>ICON_AND_TEXT_ACTION_BUTTON</td>
+	<td>//nav[contains(@class,'management-bar')]//*[*[name()='svg'][contains(@class,'icon-${key_icon}')]]//following-sibling::span[text()='${key_action}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MORE_ACTIONS_ELLIPSIS</td>
+	<td>//nav[contains(@class,'management-bar')]//button[contains(@class, 'dropdown-toggle')][*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -88,6 +94,11 @@
 <tr>
 	<td>NEW_BUTTON_MOBILE</td>
 	<td>//nav[contains(@class,'management-bar')]//button[contains(@aria-label, 'New')]//*[contains(@class,'icon-plus')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIEW_BUTTON</td>
+	<td>//nav[contains(@class,'management-bar')]//*[(@title="Show View Options")][*[name()='svg'][contains(@class,'icon-${key_text}')]]</td>
 	<td></td>
 </tr>
 </tbody>

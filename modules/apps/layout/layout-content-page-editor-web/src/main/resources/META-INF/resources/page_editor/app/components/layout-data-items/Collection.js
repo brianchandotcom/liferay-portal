@@ -397,7 +397,7 @@ const Collection = React.memo(
 				)}
 
 				{collectionIsMapped(collectionConfig) &&
-					collectionConfig.paginationType && (
+					collectionConfig.paginationType !== 'none' && (
 						<CollectionPagination
 							activePage={activePage}
 							collectionConfig={collectionConfig}
@@ -420,7 +420,7 @@ const Collection = React.memo(
 Collection.displayName = 'Collection';
 
 function getNumberOfItems(collection, collectionConfig) {
-	if (collectionConfig.paginationType) {
+	if (collectionConfig.paginationType !== 'none') {
 		const itemsPerPage = Math.min(
 			collectionConfig.numberOfItemsPerPage,
 			config.searchContainerPageMaxDelta

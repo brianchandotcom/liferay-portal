@@ -59,7 +59,7 @@ const LAYOUT_OPTIONS = [
 ];
 
 const PAGINATION_TYPE_OPTIONS = [
-	{label: Liferay.Language.get('none'), value: ''},
+	{label: Liferay.Language.get('none'), value: 'none'},
 	{label: Liferay.Language.get('numeric'), value: 'numeric'},
 	{label: Liferay.Language.get('simple'), value: 'simple'},
 ];
@@ -398,11 +398,11 @@ export function CollectionGeneralPanel({item}) {
 										})
 									}
 									options={PAGINATION_TYPE_OPTIONS}
-									value={paginationType || ''}
+									value={paginationType || 'none'}
 								/>
 							</ClayForm.Group>
 
-							{paginationType ? (
+							{paginationType !== 'none' ? (
 								<PaginationOptions
 									displayAllPages={displayAllPages}
 									handleConfigurationChanged={

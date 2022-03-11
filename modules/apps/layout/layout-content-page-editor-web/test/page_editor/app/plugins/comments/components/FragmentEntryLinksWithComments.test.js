@@ -186,6 +186,4 @@ describe('FragmentEntryLinksWithComments', () => {
 		expect(sandroFragment).toHaveTextContent('Sandro Fragment');
 		expect(selectItem).toHaveBeenCalledWith('sandro-item');
 	});
-
-	test.todo('shows the number of comments on each list item');
 });

@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Shared Dependencies PDFBox
+Bundle-SymbolicName: com.liferay.shared.dependencies.pdfbox
+Bundle-Version: 1.0.0
+Import-Package:\
+	!org.bouncycastle.*,\
+	\
+	*
+-exportcontents:\
+	org.apache.fontbox.afm,\
+	org.apache.fontbox.ttf,\
+	org.apache.jempbox.xmp,\
+	org.apache.jempbox.xmp.pdfa,\
+	org.apache.pdfbox.*;-noimport:=true

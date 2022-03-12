@@ -603,7 +603,6 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the connectors label"
-	@ignore = "true"
 	@priority = "4"
 	test ConnectorsLabelCanBeEdited {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ConnectorsLabelCanBeEdited";

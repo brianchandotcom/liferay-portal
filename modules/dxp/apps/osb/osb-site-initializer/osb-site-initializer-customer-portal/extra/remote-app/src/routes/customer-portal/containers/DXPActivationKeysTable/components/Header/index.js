@@ -15,6 +15,7 @@ import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
 import {DOWNLOADABLE_LICENSE_KEYS} from '../../utils/constants/downlodableLicenseKeys';
 import ActionButton from '../ActionButton';
+import BadgeFilter from '../BadgeFilter';
 import DeactivateButton from '../Deactivate';
 import DownloadAlert from '../DownloadAlert';
 import Filter from '../Filter';
@@ -34,7 +35,7 @@ const DXPActivationKeysTableHeader = ({
 		download: '',
 	});
 
-	const [, setFilters] = useFilters(setFilterTerm);
+	const [filters, setFilters] = useFilters(setFilterTerm);
 
 	const filterCheckedActivationKeys = useMemo(
 		() =>
@@ -132,6 +133,11 @@ const DXPActivationKeysTableHeader = ({
 							setStatus={setStatus}
 						/>
 					</div>
+
+					<BadgeFilter
+						activationKeysLength={activationKeys.length}
+						filtersState={[filters, setFilters]}
+					/>
 				</div>
 			</div>
 

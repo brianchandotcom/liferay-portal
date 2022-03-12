@@ -17,51 +17,47 @@ import {
 import {getGroupButtons} from '../utils/getGroupButtons';
 
 export default function useStatusCountNavigation(activationKeys) {
-	const [statusCountNavigation, setStatusCountNavigation] = useState({
-		activatedTotalCount: 0,
-		allTotalCount: 0,
-		expiredTotalCount: 0,
-		notActiveTotalCount: 0,
-	});
+	const [statusCountNavigation, setStatusCountNavigation] = useState();
 	const [statusFilter, setStatusFilter] = useState(ACTIVATION_STATUS.all.id);
 
 	useEffect(() => {
 		if (activationKeys.length) {
-			setStatusCountNavigation((previousStatusCountNavigation) => {
-				const statusCount = activationKeys?.reduce(
-					(statusCountAccumulator, activationKey) => {
-						const isActivate = FILTER_TYPES.activated(
-							activationKey
-						);
-						if (isActivate) {
-							statusCountAccumulator.activatedTotalCount = ++statusCountAccumulator.activatedTotalCount;
+			const statusCount = activationKeys?.reduce(
+				(statusCountAccumulator, activationKey) => {
+					const isActivate = FILTER_TYPES.activated(activationKey);
+					if (isActivate) {
+						statusCountAccumulator.activatedTotalCount = ++statusCountAccumulator.activatedTotalCount;
 
-							return statusCountAccumulator;
-						}
+						return statusCountAccumulator;
+					}
 
-						const isExpired = FILTER_TYPES.expired(activationKey);
-						if (isExpired) {
-							statusCountAccumulator.expiredTotalCount = ++statusCountAccumulator.expiredTotalCount;
+					const isExpired = FILTER_TYPES.expired(activationKey);
+					if (isExpired) {
+						statusCountAccumulator.expiredTotalCount = ++statusCountAccumulator.expiredTotalCount;
 
-							return statusCountAccumulator;
-						}
+						return statusCountAccumulator;
+					}
 
-						const isNotActivate = FILTER_TYPES.notActivated(
-							activationKey
-						);
-						if (isNotActivate) {
-							statusCountAccumulator.notActiveTotalCount = ++statusCountAccumulator.notActiveTotalCount;
+					const isNotActivate = FILTER_TYPES.notActivated(
+						activationKey
+					);
+					if (isNotActivate) {
+						statusCountAccumulator.notActiveTotalCount = ++statusCountAccumulator.notActiveTotalCount;
 
-							return statusCountAccumulator;
-						}
-					},
-					previousStatusCountNavigation
-				);
+						return statusCountAccumulator;
+					}
+				},
+				{
+					activatedTotalCount: 0,
+					allTotalCount: 0,
+					expiredTotalCount: 0,
+					notActiveTotalCount: 0,
+				}
+			);
 
-				statusCount.allTotalCount = activationKeys.length;
+			statusCount.allTotalCount = activationKeys.length;
 
-				return statusCount;
-			});
+			setStatusCountNavigation(statusCount);
 		}
 	}, [activationKeys]);
 

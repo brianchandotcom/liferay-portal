@@ -10,33 +10,33 @@
  */
 import ClayButton from '@clayui/button';
 import ClayDatePicker from '@clayui/date-picker';
-import {useState} from 'react';
-import {useActivationKeys} from '../../../../context';
-import {actionTypes} from '../../../../context/reducer';
-const StartDateFilter = () => {
-	const [{toSearchAndFilterKeys}, dispatch] = useActivationKeys();
+import {useEffect, useState} from 'react';
+
+const DateFilter = ({
+	children,
+	onOrAfterDisabled,
+	onOrBeforeDisabled,
+	updateFilters,
+}) => {
 	const [expandedOnOrAfter, setExpandedOnOrAfter] = useState(false);
 	const [expandedOnOrBefore, setExpandedOnOrBefore] = useState(false);
-	const [onOrAfter, setOnOrAfter] = useState('');
-	const [onOrBefore, setOnOrBefore] = useState('');
 
-	function filterStartDate(onOrAfter, onOrBefore) {
-		const updatedToSearchAndFilterKeys = {
-			...toSearchAndFilterKeys,
-			startDate: [onOrAfter, onOrBefore],
-		};
+	const [onOrAfterValue, setOnOrAfterValue] = useState('');
+	const [onOrBeforeValue, setOnOrBeforeValue] = useState('');
 
-		dispatch({
-			payload: updatedToSearchAndFilterKeys,
-			type: actionTypes.UPDATE_TO_SERACH_AND_FILTER_KEYS,
-		});
-
-		dispatch({
-			payload: onOrAfter || onOrBefore ? true : false,
-			type: actionTypes.UPDATE_WAS_FILTERED,
-		});
-	}
 	const now = new Date();
+
+	useEffect(() => {
+		if (onOrAfterDisabled) {
+			setOnOrAfterValue('');
+		}
+	}, [onOrAfterDisabled]);
+
+	useEffect(() => {
+		if (onOrBeforeDisabled) {
+			setOnOrBeforeValue('');
+		}
+	}, [onOrBeforeDisabled]);
 
 	return (
 		<div>
@@ -44,16 +44,18 @@ const StartDateFilter = () => {
 				On or after
 				<ClayDatePicker
 					dateFormat="MM/dd/yyyy"
+					disabled={onOrAfterDisabled}
 					expanded={expandedOnOrAfter}
 					onExpandedChange={setExpandedOnOrAfter}
-					onValueChange={(val, type) => {
-						setOnOrAfter(val);
-						if (type === 'click') {
+					onValueChange={(value, eventType) => {
+						setOnOrAfterValue(value);
+
+						if (eventType === 'click') {
 							setExpandedOnOrAfter(false);
 						}
 					}}
 					placeholder="MM/DD/YYYY"
-					value={onOrAfter}
+					value={onOrAfterValue}
 					years={{
 						end: now.getFullYear() + 5,
 						start: now.getFullYear() - 5,
@@ -65,26 +67,41 @@ const StartDateFilter = () => {
 				On or before
 				<ClayDatePicker
 					dateFormat="MM/dd/yyyy"
+					disabled={onOrBeforeDisabled}
 					expanded={expandedOnOrBefore}
 					onExpandedChange={setExpandedOnOrBefore}
-					onValueChange={(vals, type) => {
-						setOnOrBefore(vals);
-						if (type === 'click') {
+					onValueChange={(value, eventType) => {
+						setOnOrBeforeValue(value);
+
+						if (eventType === 'click') {
 							setExpandedOnOrBefore(false);
 						}
 					}}
 					placeholder="MM/DD/YYYY"
-					value={onOrBefore}
+					value={onOrBeforeValue}
+					years={{
+						end: now.getFullYear() + 5,
+						start: now.getFullYear() - 5,
+					}}
 				/>
 			</div>
+
+			{children}
 
 			<div>
 				<ClayButton
 					className="w-100"
 					onClick={() => {
-						filterStartDate(
-							onOrAfter ? new Date(onOrAfter) : '',
-							onOrBefore ? new Date(onOrBefore) : ''
+						const onOrAfter = new Date(onOrAfterValue);
+						const onOrBefore = new Date(onOrBeforeValue);
+
+						updateFilters(
+							onOrAfter instanceof Date &&
+								!isNaN(onOrAfter.valueOf()) &&
+								onOrAfter.toISOString(),
+							onOrBefore instanceof Date &&
+								!isNaN(onOrBefore.valueOf()) &&
+								onOrBefore.toISOString()
 						);
 					}}
 					required
@@ -96,4 +113,4 @@ const StartDateFilter = () => {
 		</div>
 	);
 };
-export default StartDateFilter;
+export default DateFilter;

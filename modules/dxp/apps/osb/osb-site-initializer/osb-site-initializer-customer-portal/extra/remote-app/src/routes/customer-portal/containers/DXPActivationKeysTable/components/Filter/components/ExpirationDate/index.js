@@ -8,148 +8,53 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-import ClayButton from '@clayui/button';
-import ClayDatePicker from '@clayui/date-picker';
+
 import {ClayCheckbox} from '@clayui/form';
-import {useEffect, useState} from 'react';
-import {useActivationKeys} from '../../../../context';
-import {actionTypes} from '../../../../context/reducer';
-import {getsDoesNotExpire} from '../../../../utils';
-const ExpirationDateFilter = () => {
-	const [
-		{activationKeys, toSearchAndFilterKeys},
-		dispatch,
-	] = useActivationKeys();
-	const [expandedOnOrAfter, setExpandedOnOrAfter] = useState(false);
-	const [expandedOnOrBefore, setExpandedOnOrBefore] = useState(false);
-	const [onOrAfter, setOnOrAfter] = useState('');
-	const [onOrBefore, setOnOrBefore] = useState('');
-	const [availableDoesNotExpire, setAvailableDoesNotExpire] = useState([]);
+import {useCallback, useState} from 'react';
+import DateFilter from '../DateFilter';
 
-	const [selectedStatus, setSelectedStatus] = useState([]);
+export default function ExpirationDate({hasDNE, setFilters}) {
+	const [dneChecked, setDNEChecked] = useState(false);
 
-	useEffect(() => {
-		setAvailableDoesNotExpire(
-			activationKeys
-				.reduce((accumulatorDoesNotExpire, activationKey) => {
-					const formatedDoesNotExpire = getsDoesNotExpire(
-						activationKey.expirationDate
-					);
+	const getOnOrAfterValue = useCallback(
+		(currentValue) => {
+			if (dneChecked) {
+				const today = new Date();
+				today.setFullYear(today.getFullYear() + 100);
 
-					if (
-						accumulatorDoesNotExpire.includes(formatedDoesNotExpire)
-					) {
-						return accumulatorDoesNotExpire;
-					}
+				return today.toISOString();
+			}
 
-					return [...accumulatorDoesNotExpire, formatedDoesNotExpire];
-				}, [])
-				.sort((previewNumber, nextNumber) =>
-					previewNumber < nextNumber ? 1 : -1
-				)
-		);
-	}, [activationKeys]);
-
-	function handleSelectedDne(dne) {
-		const formatedInstanceSizing = `${dne}`;
-		if (selectedStatus.includes(formatedInstanceSizing)) {
-			return setSelectedStatus(
-				selectedStatus.filter((dne) => dne !== formatedInstanceSizing)
-			);
-		}
-		setSelectedStatus([...selectedStatus, formatedInstanceSizing]);
-	}
-
-	function filterExpirationDate(onOrAfter, onOrBefore, dne) {
-		const updatedToSearchAndFilterKeys = {
-			...toSearchAndFilterKeys,
-			dne,
-			expirationDate: [onOrAfter, onOrBefore],
-		};
-
-		dispatch({
-			payload: updatedToSearchAndFilterKeys,
-			type: actionTypes.UPDATE_TO_SERACH_AND_FILTER_KEYS,
-		});
-
-		dispatch({
-			payload: onOrAfter || onOrBefore ? true : false,
-			type: actionTypes.UPDATE_WAS_FILTERED,
-		});
-	}
-	const now = new Date();
+			return currentValue;
+		},
+		[dneChecked]
+	);
 
 	return (
-		<div>
-			<div className="w-100">
-				On or after
-				<ClayDatePicker
-					dateFormat="MM/dd/yyyy"
-					expanded={expandedOnOrAfter}
-					onExpandedChange={setExpandedOnOrAfter}
-					onValueChange={(val, type) => {
-						setOnOrAfter(val);
-						if (type === 'click') {
-							setExpandedOnOrAfter(false);
-						}
-					}}
-					placeholder="MM/DD/YYYY"
-					value={onOrAfter}
-					years={{
-						end: now.getFullYear() + 5,
-						start: now.getFullYear() - 5,
-					}}
-				/>
-			</div>
-
-			<div className="w-100">
-				On or before
-				<ClayDatePicker
-					dateFormat="MM/dd/yyyy"
-					expanded={expandedOnOrBefore}
-					onExpandedChange={setExpandedOnOrBefore}
-					onValueChange={(vals, type) => {
-						setOnOrBefore(vals);
-						if (type === 'click') {
-							setExpandedOnOrBefore(false);
-						}
-					}}
-					placeholder="MM/DD/YYYY"
-					value={onOrBefore}
-				/>
-			</div>
-
-			<div className="w-100">
-				{availableDoesNotExpire.map(
-					(dne) =>
-						dne && (
-							<ClayCheckbox
-								checked={selectedStatus.includes(`${dne}`)}
-								key={dne}
-								label={dne}
-								onChange={() => handleSelectedDne(dne)}
-							/>
+		<DateFilter
+			onOrAfterDisabled={dneChecked}
+			onOrBeforeDisabled={dneChecked}
+			updateFilters={(onOrAfter, onOrBefore) =>
+				setFilters((previousFilters) => ({
+					...previousFilters,
+					expirationDates: {
+						onOrAfter: getOnOrAfterValue(onOrAfter),
+						onOrBefore,
+					},
+				}))
+			}
+		>
+			{hasDNE && (
+				<ClayCheckbox
+					checked={dneChecked}
+					label="Does Not Expire"
+					onChange={() =>
+						setDNEChecked(
+							(previousDNEChecked) => !previousDNEChecked
 						)
-				)}
-			</div>
-
-			<div>
-				<ClayButton
-					className="w-100"
-					onClick={() => {
-						filterExpirationDate(
-							onOrAfter ? new Date(onOrAfter) : '',
-							onOrBefore ? new Date(onOrBefore) : '',
-							selectedStatus
-						);
-					}}
-					required
-					small={true}
-				>
-					Apply
-				</ClayButton>
-			</div>
-		</div>
+					}
+				/>
+			)}
+		</DateFilter>
 	);
-};
-export default ExpirationDateFilter;
+}

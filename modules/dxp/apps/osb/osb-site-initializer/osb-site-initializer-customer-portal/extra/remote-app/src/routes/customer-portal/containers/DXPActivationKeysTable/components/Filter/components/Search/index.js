@@ -12,30 +12,17 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import {useState} from 'react';
-import {useActivationKeys} from '../../../../context';
-import {actionTypes} from '../../../../context/reducer';
 
-const Search = () => {
-	const [
-		{activationKeysFilteredByConditions, toSearchAndFilterKeys},
-		dispatch,
-	] = useActivationKeys();
+const Search = ({setFilters}) => {
+	const [searchTerm, setSearchTerm] = useState('');
+	const [isSearchButton, setIsSearchButton] = useState(true);
 
-	const [typeTerm, setTypeTerm] = useState('');
-	const [searchOrTimes, setSearchOrTimes] = useState(true);
-
-	function searchActivationKeys(searchTerm) {
-		toSearchAndFilterKeys.toSearchTerm = searchTerm.toLowerCase();
-		dispatch({
-			payload: toSearchAndFilterKeys,
-			type: actionTypes.UPDATE_TO_SERACH_AND_FILTER_KEYS,
-		});
-
-		dispatch({
-			payload: searchTerm ? true : false,
-			type: actionTypes.UPDATE_WAS_SEARCHED,
-		});
-	}
+	const updateSearchTermFilter = (searchTerm) => {
+		setFilters((previousFilters) => ({
+			...previousFilters,
+			searchTerm,
+		}));
+	};
 
 	return (
 		<div>
@@ -46,23 +33,21 @@ const Search = () => {
 							aria-label="Search"
 							className="form-control input-group-inset input-group-inset-after"
 							onChange={(event) => {
-								setTypeTerm(event.target.value);
-								setSearchOrTimes(true);
+								setSearchTerm(event.target.value);
+								setIsSearchButton(true);
 							}}
 							placeholder="Search"
 							type="text"
-							value={typeTerm}
+							value={searchTerm}
 						/>
 
 						<ClayInput.GroupInsetItem after tag="span">
-							{searchOrTimes ? (
+							{isSearchButton ? (
 								<ClayButtonWithIcon
 									displayType="unstyled"
 									onClick={() => {
-										if (typeTerm) {
-											searchActivationKeys(typeTerm);
-											setSearchOrTimes(false);
-										}
+										setIsSearchButton(false);
+										updateSearchTermFilter(searchTerm);
 									}}
 									symbol="search"
 									type="submit"
@@ -72,9 +57,9 @@ const Search = () => {
 									className="navbar-breakpoint-d-none"
 									displayType="unstyled"
 									onClick={() => {
-										setTypeTerm('');
-										searchActivationKeys('');
-										setSearchOrTimes(true);
+										setSearchTerm('');
+										updateSearchTermFilter('');
+										setIsSearchButton(true);
 									}}
 									symbol="times"
 								/>
@@ -83,20 +68,6 @@ const Search = () => {
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
 			</div>
-
-			{!searchOrTimes && activationKeysFilteredByConditions.length > 0 && (
-				<p>
-					<b>{`${activationKeysFilteredByConditions.length}`}</b>
-
-					<b>
-						{activationKeysFilteredByConditions.length === 1
-							? ' result'
-							: ' results'}
-					</b>
-
-					<b>{` for "${typeTerm}"`}</b>
-				</p>
-			)}
 		</div>
 	);
 };

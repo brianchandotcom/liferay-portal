@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -10,206 +9,290 @@
  * distribution rights of the Software.
  */
 
-import {useEffect} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {Button} from '../../../../../../common/components';
 import DropDownWithDrillDown from '../../../../components/DropDownWithDrillDown';
-import {useActivationKeys} from '../../context';
-import {actionTypes} from '../../context/reducer';
 import {
+	getDoesNotExpire,
 	getEnvironmentType,
 	getInstanceSize,
 	getProductDescription,
 	getStatusActivationTag,
-	getsDoesNotExpire,
+	hasVirtualCluster,
 } from '../../utils';
-import {getKeyType} from '../../utils/getKeyType';
-import EnvironmentTypeFilter from './components/EnvironmentType';
-import ExpirationDateFilter from './components/ExpirationDate';
-import InstanceSizeFilter from './components/InstanceSize';
+import {ACTIVATION_STATUS} from '../../utils/constants';
+import CheckboxFilter from './components/CheckboxFilter';
+import DateFilter from './components/DateFilter';
+import ExpirationDate from './components/ExpirationDate';
 import KeyTypeFilter from './components/KeyType';
-import ProductVersionFilter from './components/ProductVersion';
 import Search from './components/Search';
-import StartDateFilter from './components/StartDate';
-import StatusFilter from './components/Status';
+import getAvailableFieldsCheckboxs from './components/utils/getAvailableFieldsCheckboxs';
 
-const Filter = () => {
-	const [
-		{activationKeys, toSearchAndFilterKeys},
-		dispatch,
-	] = useActivationKeys();
-	console.log(
-		'🚀 ~ file: index.js ~ line 268 ~ Filter ~ toSearchAndFilterKeys',
-		toSearchAndFilterKeys
-	);
+const DEFAULT_FILTER = 'active eq true';
+const COMPLIMENTARY = 'Complimentary';
+const SUBSCRIPTION = 'Subscription';
+
+const Filter = ({activationKeys, setFilterTerm}) => {
+	const countFetchActivationKeysRef = useRef(0);
+
+	const [filters, setFilters] = useState({
+		environmentTypes: [],
+		expirationDates: {
+			onOrAfter: undefined,
+			onOrBefore: undefined,
+		},
+		instanceSizes: [],
+		keyType: {
+			hasOnPremise: undefined,
+			hasVirtualCluster: undefined,
+			maxNodes: '',
+			minNodes: '',
+		},
+		productVersions: [],
+		searchTerm: '',
+		startDates: {
+			onOrAfter: undefined,
+			onOrBefore: undefined,
+		},
+		status: [],
+	});
+
+	const [availableFields, setAvailableFields] = useState({
+		environmentTypes: [],
+		hasDNE: false,
+		hasVirtualCluster: false,
+		instanceSizes: [],
+		productVersions: [],
+		status: [],
+	});
 
 	useEffect(() => {
-		const searchedActivationKeysByConditions = activationKeys.filter(
-			(activationKey) =>
-				activationKey.name
-					.toLowerCase()
-					.includes(toSearchAndFilterKeys.toSearchTerm) ||
-				activationKey.description
-					.toLowerCase()
-					.includes(toSearchAndFilterKeys.toSearchTerm) ||
-				activationKey.macAddresses
-					.toLowerCase()
-					.includes(toSearchAndFilterKeys.toSearchTerm) ||
-				activationKey.ipAddresses
-					.toLowerCase()
-					.includes(toSearchAndFilterKeys.toSearchTerm) ||
-				activationKey.hostName
-					.toLowerCase()
-					.includes(toSearchAndFilterKeys.toSearchTerm)
-		);
+		if (activationKeys) {
+			countFetchActivationKeysRef.current = ++countFetchActivationKeysRef.current;
+		}
+	}, [activationKeys]);
 
-		const filteredActivationKeysBySizing = toSearchAndFilterKeys.sizing[0]
-			? searchedActivationKeysByConditions.filter((activationKey) =>
-					toSearchAndFilterKeys.sizing.includes(
-						getInstanceSize(activationKey.sizing)
-					)
-			  )
-			: searchedActivationKeysByConditions;
-
-		const filteredActivationKeysByProductVersion = toSearchAndFilterKeys
-			.productVersion[0]
-			? filteredActivationKeysBySizing.filter((activationKey) =>
-					toSearchAndFilterKeys.productVersion.includes(
-						activationKey.productVersion
-					)
-			  )
-			: filteredActivationKeysBySizing;
-
-		const filteredActivationKeysByStatus = toSearchAndFilterKeys.status[0]
-			? filteredActivationKeysByProductVersion.filter((activationKey) =>
-					toSearchAndFilterKeys.status.includes(
+	useEffect(() => {
+		if (countFetchActivationKeysRef?.current < 3) {
+			setAvailableFields(() => ({
+				environmentTypes: [
+					...getAvailableFieldsCheckboxs(
+						activationKeys,
+						({productName}) => getEnvironmentType(productName)
+					),
+					...getAvailableFieldsCheckboxs(
+						activationKeys,
+						({complimentary}) =>
+							getProductDescription(complimentary)
+					),
+				],
+				hasDNE: activationKeys?.some(({expirationDate}) =>
+					getDoesNotExpire(expirationDate)
+				),
+				hasVirtualCluster: activationKeys?.some(({licenseEntryType}) =>
+					hasVirtualCluster(licenseEntryType)
+				),
+				instanceSizes: getAvailableFieldsCheckboxs(
+					activationKeys,
+					({sizing}) => +getInstanceSize(sizing)
+				),
+				productVersions: getAvailableFieldsCheckboxs(
+					activationKeys,
+					({productVersion}) => productVersion
+				),
+				status: getAvailableFieldsCheckboxs(
+					activationKeys,
+					(activationKey) =>
 						getStatusActivationTag(activationKey)?.title
-					)
-			  )
-			: filteredActivationKeysByProductVersion;
+				),
+			}));
+		}
+	}, [activationKeys]);
 
-		const filteredActivationKeysByComplimentary = toSearchAndFilterKeys
-			.complimentary[0]
-			? filteredActivationKeysByStatus.filter((activationKey) =>
-					toSearchAndFilterKeys.complimentary.includes(
-						getProductDescription(activationKey.complimentary)
-					)
-			  )
-			: filteredActivationKeysByStatus;
+	useEffect(() => {
+		let initialFilter = DEFAULT_FILTER;
 
-		const filteredActivationKeysByEnvironmentType = toSearchAndFilterKeys
-			.productName[0]
-			? filteredActivationKeysByComplimentary.filter((activationKey) =>
-					toSearchAndFilterKeys.productName.includes(
-						getEnvironmentType(activationKey.productName)
-					)
-			  )
-			: filteredActivationKeysByComplimentary;
+		if (filters.searchTerm) {
+			const searchTermFilter = `(contains(name, '${filters.searchTerm}') or contains(description, '${filters.searchTerm}') or contains(hostName, '${filters.searchTerm}'))`;
 
-		const filteredActivationKeysByStartDateOnorAfter = isValidDate(
-			toSearchAndFilterKeys.startDate[0]
-		)
-			? filteredActivationKeysByEnvironmentType.filter(
-					(activationKey) =>
-						new Date(activationKey.startDate) >=
-						toSearchAndFilterKeys.startDate[0]
-			  )
-			: filteredActivationKeysByEnvironmentType;
+			initialFilter = initialFilter.concat(` and ${searchTermFilter}`);
+		}
 
-		const filteredActivationKeysByStartDateOnorBefore = isValidDate(
-			toSearchAndFilterKeys.startDate[1]
-		)
-			? filteredActivationKeysByStartDateOnorAfter.filter(
-					(activationKey) =>
-						new Date(activationKey.startDate) <=
-						toSearchAndFilterKeys.startDate[1]
-			  )
-			: filteredActivationKeysByStartDateOnorAfter;
+		if (filters.instanceSizes.length) {
+			const instanceSizesFilter = `(${filters.instanceSizes.reduce(
+				(accumulatorInstanceSizesFilter, instanceSize, index) => {
+					return `${accumulatorInstanceSizesFilter}${
+						index > 0 ? ' or ' : ''
+					}instanceSize eq 'Sizing ${instanceSize}'`;
+				},
+				''
+			)})`;
 
-		const filteredActivationKeysByExpirationDateOnorAfter = isValidDate(
-			toSearchAndFilterKeys.expirationDate[0]
-		)
-			? filteredActivationKeysByStartDateOnorBefore.filter(
-					(activationKey) =>
-						new Date(activationKey.expirationDate) >=
-						toSearchAndFilterKeys.expirationDate[0]
-			  )
-			: filteredActivationKeysByStartDateOnorBefore;
+			initialFilter = initialFilter.concat(` and ${instanceSizesFilter}`);
+		}
 
-		const filteredActivationKeysByExpirationDateOnorBefore = isValidDate(
-			toSearchAndFilterKeys.expirationDate[1]
-		)
-			? filteredActivationKeysByExpirationDateOnorAfter.filter(
-					(activationKey) =>
-						new Date(activationKey.expirationDate) <=
-						toSearchAndFilterKeys.expirationDate[1]
-			  )
-			: filteredActivationKeysByExpirationDateOnorAfter;
+		if (filters.productVersions.length) {
+			const productVersionsFilter = `(${filters.productVersions.reduce(
+				(accumulatorProductVersionsFilter, productVersion, index) => {
+					return `${accumulatorProductVersionsFilter}${
+						index > 0 ? ' or ' : ''
+					}productVersion eq '${productVersion}'`;
+				},
+				''
+			)})`;
 
-		const filteredActivationKeysByDoesNotExpire = toSearchAndFilterKeys
-			.dne[0]
-			? filteredActivationKeysByExpirationDateOnorBefore.filter(
-					(activationKey) =>
-						toSearchAndFilterKeys.dne.includes(
-							getsDoesNotExpire(activationKey.expirationDate)
-						)
-			  )
-			: filteredActivationKeysByExpirationDateOnorBefore;
+			initialFilter = initialFilter.concat(
+				` and ${productVersionsFilter}`
+			);
+		}
 
-		const filteredActivationKeysByOnPremise = toSearchAndFilterKeys
-			.licenseEntryType[0]
-			? filteredActivationKeysByDoesNotExpire.filter((activationKey) =>
-					toSearchAndFilterKeys.licenseEntryType.includes(
-						getKeyType(activationKey.licenseEntryType)
-					)
-			  )
-			: filteredActivationKeysByDoesNotExpire;
+		if (filters.status.length) {
+			const now = new Date().toISOString();
+			const statusFilter = filters.status.reduce(
+				(accumulatorStatusFilter, status, index) => {
+					let filter = '';
+					if (status === ACTIVATION_STATUS.activated.title) {
+						filter = `(startDate le ${now} and expirationDate gt ${now})`;
+					}
 
-		const filteredActivationKeysByVirtualClusterAndMinNodes = toSearchAndFilterKeys
-			.maxClusterNodes[0]
-			? filteredActivationKeysByOnPremise.filter(
-					(activationKey) =>
-						activationKey.maxClusterNodes >=
-						toSearchAndFilterKeys.maxClusterNodes[0]
-			  )
-			: filteredActivationKeysByOnPremise;
+					if (status === ACTIVATION_STATUS.expired.title) {
+						filter = `expirationDate lt ${now}`;
+					}
 
-		const filteredActivationKeysByVirtualClusterAndMaxNodes = toSearchAndFilterKeys
-			.maxClusterNodes[1]
-			? filteredActivationKeysByVirtualClusterAndMinNodes.filter(
-					(activationKey) =>
-						activationKey.maxClusterNodes <=
-						toSearchAndFilterKeys.maxClusterNodes[1]
-			  )
-			: filteredActivationKeysByVirtualClusterAndMinNodes;
+					if (status === ACTIVATION_STATUS.notActivated.title) {
+						filter = `startDate gt ${now}`;
+					}
 
-		dispatch({
-			payload: filteredActivationKeysByVirtualClusterAndMaxNodes,
-			type: actionTypes.UPDATE_ACTIVATION_KEYS_FILTERED_BY_CONDITIONS,
-		});
+					return `${accumulatorStatusFilter}${
+						index > 0 ? ' or ' : ''
+					}${filter}`;
+				},
+				''
+			);
 
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+			initialFilter = initialFilter.concat(` and ${statusFilter}`);
+		}
+
+		if (filters.environmentTypes.length) {
+			const environmentTypesFilter = filters.environmentTypes.reduce(
+				(accumulatorEnvironmentTypesFilter, environmentType, index) => {
+					if (environmentType === COMPLIMENTARY) {
+						return `${accumulatorEnvironmentTypesFilter}${
+							index > 0 ? ' or ' : ''
+						}complimentary eq true`;
+					}
+
+					if (environmentType === SUBSCRIPTION) {
+						return `${accumulatorEnvironmentTypesFilter}${
+							index > 0 ? ' or ' : ''
+						}complimentary eq false`;
+					}
+
+					return `${accumulatorEnvironmentTypesFilter}${
+						index > 0 ? ' or ' : ''
+					}contains(productName, '${environmentType}')`;
+				},
+				''
+			);
+
+			initialFilter = initialFilter.concat(
+				` and (${environmentTypesFilter})`
+			);
+		}
+
+		if (Object.values(filters.expirationDates).some((date) => !!date)) {
+			const filterDates = [];
+
+			if (filters.expirationDates.onOrAfter) {
+				filterDates.push(
+					`expirationDate ge ${filters.expirationDates.onOrAfter}`
+				);
+			}
+
+			if (filters.expirationDates.onOrBefore) {
+				filterDates.push(
+					`expirationDate lt ${filters.expirationDates.onOrBefore}`
+				);
+			}
+
+			initialFilter = initialFilter.concat(
+				` and (${filterDates.join(' and ')})`
+			);
+		}
+
+		if (Object.values(filters.startDates).some((date) => !!date)) {
+			const filterDates = [];
+
+			if (filters.startDates.onOrAfter) {
+				filterDates.push(
+					`startDate ge ${filters.startDates.onOrAfter}`
+				);
+			}
+
+			if (filters.startDates.onOrBefore) {
+				filterDates.push(
+					`startDate lt ${filters.startDates.onOrBefore}`
+				);
+			}
+
+			initialFilter = initialFilter.concat(
+				` and (${filterDates.join(' and ')})`
+			);
+		}
+
+		if (Object.values(filters.keyType).every((value) => !isNaN(value))) {
+			const filtersKeyType = [];
+
+			if (
+				!isNaN(filters.keyType.hasOnPremise) &&
+				filters.keyType.hasOnPremise
+			) {
+				filtersKeyType.push("licenseEntryType ne 'virtual-cluster'");
+			}
+
+			if (
+				!isNaN(filters.keyType.hasVirtualCluster) &&
+				filters.keyType.hasVirtualCluster
+			) {
+				filtersKeyType.push("licenseEntryType eq 'virtual-cluster'");
+			}
+
+			if (filters.keyType.maxNodes) {
+				filtersKeyType.push(
+					`maxClusterNodes le ${filters.keyType.maxNodes}`
+				);
+			}
+
+			if (filters.keyType.minNodes) {
+				filtersKeyType.push(
+					`maxClusterNodes ge ${filters.keyType.minNodes}`
+				);
+			}
+
+			if (filtersKeyType.length) {
+				initialFilter = initialFilter.concat(
+					` and (${filtersKeyType.join(' and ')})`
+				);
+			}
+		}
+
+		setFilterTerm(`${initialFilter}`);
 	}, [
-		toSearchAndFilterKeys.toSearchTerm,
-		toSearchAndFilterKeys.sizing,
-		toSearchAndFilterKeys.productVersion,
-		toSearchAndFilterKeys.status,
-		toSearchAndFilterKeys.complimentary,
-		toSearchAndFilterKeys.productName,
-		toSearchAndFilterKeys.startDate,
-		toSearchAndFilterKeys.expirationDate,
-		toSearchAndFilterKeys.dne,
-		toSearchAndFilterKeys.licenseEntryType,
-		toSearchAndFilterKeys.maxClusterNodes,
+		filters.environmentTypes,
+		filters.expirationDates,
+		filters.instanceSizes,
+		filters.keyType,
+		filters.productVersions,
+		filters.searchTerm,
+		filters.startDates,
+		filters.status,
+		setFilterTerm,
 	]);
-
-	function isValidDate(date) {
-		return date instanceof Date && !isNaN(date);
-	}
 
 	return (
 		<div className="d-flex flex-column">
 			<div className="d-flex">
-				<Search />
+				<Search setFilters={setFilters} />
 
 				<DropDownWithDrillDown
 					initialActiveMenu="x0a0"
@@ -218,41 +301,134 @@ const Filter = () => {
 							{child: 'x0a1', title: 'Key Type'},
 							{child: 'x0a2', title: 'Environment Type'},
 							{child: 'x0a4', title: 'Start Date'},
-							{child: 'x0a5', title: 'Expiration Date'},
+							{
+								child: 'x0a5',
+								title: 'Expiration Date',
+							},
 							{child: 'x0a6', title: 'Status'},
 							{child: 'x0a7', title: 'Product Version'},
-							{child: 'x0a8', title: 'Instance Size'},
+							{
+								child: 'x0a8',
+								title: 'Instance Size',
+							},
 						],
-
-						x0a1: [{child: <KeyTypeFilter />, type: 'component'}],
+						x0a1: [
+							{
+								child: (
+									<KeyTypeFilter
+										hasVirtualCluster={
+											availableFields.hasVirtualCluster
+										}
+										setFilters={setFilters}
+									/>
+								),
+								type: 'component',
+							},
+						],
 						x0a2: [
 							{
-								child: <EnvironmentTypeFilter />,
+								child: (
+									<CheckboxFilter
+										availableItems={
+											availableFields.environmentTypes
+										}
+										setFilters={setFilters}
+										updateFilters={(checkedItems) =>
+											setFilters((previousFilters) => ({
+												...previousFilters,
+												environmentTypes: checkedItems,
+											}))
+										}
+									/>
+								),
 								type: 'component',
 							},
 						],
 
-						x0a4: [{child: <StartDateFilter />, type: 'component'}],
+						x0a4: [
+							{
+								child: (
+									<DateFilter
+										updateFilters={(
+											onOrAfter,
+											onOrBefore
+										) =>
+											setFilters((previousFilters) => ({
+												...previousFilters,
+												startDates: {
+													onOrAfter,
+													onOrBefore,
+												},
+											}))
+										}
+									/>
+								),
+								type: 'component',
+							},
+						],
 						x0a5: [
 							{
-								child: <ExpirationDateFilter />,
+								child: (
+									<ExpirationDate
+										hasDNE={availableFields.hasDNE}
+										setFilters={setFilters}
+									/>
+								),
 								type: 'component',
 							},
 						],
 						x0a6: [
 							{
-								child: <StatusFilter />,
+								child: (
+									<CheckboxFilter
+										availableItems={availableFields.status}
+										updateFilters={(checkedItems) =>
+											setFilters((previousFilters) => ({
+												...previousFilters,
+												status: checkedItems,
+											}))
+										}
+									/>
+								),
 								type: 'component',
 							},
 						],
 						x0a7: [
 							{
-								child: <ProductVersionFilter />,
+								child: (
+									<CheckboxFilter
+										availableItems={
+											availableFields.productVersions
+										}
+										updateFilters={(checkedItems) =>
+											setFilters((previousFilters) => ({
+												...previousFilters,
+												productVersions: checkedItems,
+											}))
+										}
+									/>
+								),
 								type: 'component',
 							},
 						],
 						x0a8: [
-							{child: <InstanceSizeFilter />, type: 'component'},
+							{
+								child: (
+									<CheckboxFilter
+										availableItems={
+											availableFields.instanceSizes
+										}
+										setFilters={setFilters}
+										updateFilters={(checkedItems) =>
+											setFilters((previousFilters) => ({
+												...previousFilters,
+												instanceSizes: checkedItems,
+											}))
+										}
+									/>
+								),
+								type: 'component',
+							},
 						],
 					}}
 					trigger={

@@ -72,6 +72,27 @@ public class ImportResults {
 		_documentBuilder = _documentBuilderFactory.newDocumentBuilder();
 	}
 
+	private long _fetchEntityIdByName(String objectName, String entityName)
+		throws Exception {
+
+		Map<String, String> parametersMap = new HashMap<>();
+
+		parametersMap.put("filter", "name eq '" + entityName + "'");
+
+		JSONObject responseJSONObject = HttpUtil.invoke(
+			null, objectName, null, parametersMap, HttpInvoker.HttpMethod.GET);
+
+		JSONArray jsonArray = responseJSONObject.getJSONArray("items");
+
+		if (!jsonArray.isEmpty()) {
+			JSONObject buildJSONObject = jsonArray.getJSONObject(0);
+
+			return buildJSONObject.getLong("id");
+		}
+
+		return 0l;
+	}
+
 	public void addTestrayBuild(long projectId, Document document)
 		throws Exception  {
 		String runName = null;

@@ -714,13 +714,13 @@ public class PoshiContext {
 			FileSystem fileSystem, String[] includes, String baseDirName)
 		throws IOException {
 
-		File file = new File(baseDirName);
-
-		baseDirName = file.getCanonicalPath();
-
 		Set<URL> urls = new HashSet<>();
 
 		if (fileSystem == null) {
+			File file = new File(baseDirName);
+
+			baseDirName = file.getCanonicalPath();
+
 			urls.addAll(
 				FileUtil.getIncludedResourceURLs(includes, baseDirName));
 		}

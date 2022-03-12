@@ -530,8 +530,6 @@ definition {
 	@description = "This is a test for LRQA-69568. Verify that the Front Page content doesn't change on reject."
 	@priority = "4"
 	test WikiFrontPageContentDoesntChangeOnReject {
-		
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Wiki");
@@ -578,8 +576,6 @@ definition {
 	@description = "This is a test for LRQA-69560. Verify that the Front Page status changes after edit."
 	@priority = "2"
 	test WikiFrontPageStatusChangesOnEdit {
-		
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Wiki");
@@ -606,8 +602,6 @@ definition {
 	@description = "This is a test for LRQA-69557. Verify that the Front Page status are displayed correctly on approve. "
 	@priority = "2"
 	test WikiPageApprovedStatus {
-		
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Wiki");
@@ -694,8 +688,6 @@ definition {
 	@description = "This is a test for LRQA-69558. Verify that the Front Page status are displayed correctly on reject process."
 	@priority = "2"
 	test WikiPageRejectStatus {
-		
-
 		ProductMenu.gotoPortlet(
 			category = "Content & Data",
 			portlet = "Wiki");

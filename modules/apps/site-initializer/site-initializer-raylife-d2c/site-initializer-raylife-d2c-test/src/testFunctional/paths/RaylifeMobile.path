@@ -70,6 +70,16 @@
 	<td>//span[contains(text(),'Select Payment Method')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CONGRATS_PAGE_MOBILE</td>
+	<td>//h1[contains(text(),'You did it!')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENSSAGE_SCREEN_CONGRATS_MOBILE</td>
+	<td>//h3[contains(text(), ' sign via DocuSign')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

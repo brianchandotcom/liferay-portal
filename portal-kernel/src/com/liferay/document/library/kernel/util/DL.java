@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -69,26 +68,6 @@ public interface DL {
 	public String getDeprecatedDDMStructureKey(long fileEntryTypeId);
 
 	public String getDividedPath(long id);
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getFileEntryControlPanelLink(
-	 *             PortletRequest, long)}
-	 */
-	@Deprecated
-	public String getDLFileEntryControlPanelLink(
-			PortletRequest portletRequest, long fileEntryId)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getFolderControlPanelLink(
-	 *             PortletRequest, long)}
-	 */
-	@Deprecated
-	public String getDLFolderControlPanelLink(
-			PortletRequest portletRequest, long folderId)
-		throws PortalException;
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
@@ -197,27 +176,6 @@ public interface DL {
 
 	public String getTempFileId(long id, String version, String languageId);
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getThumbnailSrc(
-	 *             FileEntry, FileVersion, ThemeDisplay)}
-	 */
-	@Deprecated
-	public String getThumbnailSrc(
-			FileEntry fileEntry, FileVersion fileVersion,
-			ThemeDisplay themeDisplay)
-		throws Exception;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getThumbnailSrc(
-	 *             FileEntry, ThemeDisplay)}
-	 */
-	@Deprecated
-	public String getThumbnailSrc(
-			FileEntry fileEntry, ThemeDisplay themeDisplay)
-		throws Exception;
-
 	public String getThumbnailStyle();
 
 	public String getThumbnailStyle(boolean max, int margin);
@@ -229,51 +187,11 @@ public interface DL {
 
 	public String getTitleWithExtension(String title, String extension);
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #getUniqueFileName(long, long, String, boolean)}
-	 */
-	@Deprecated
-	public String getUniqueFileName(
-		long groupId, long folderId, String fileName);
-
 	public String getUniqueFileName(
 		long groupId, long folderId, String fileName,
 		boolean ignoreDuplicateTitle);
 
 	public String getUniqueTitle(long groupId, long folderId, String title);
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getWebDavURL(
-	 *             ThemeDisplay, Folder, FileEntry)}
-	 */
-	@Deprecated
-	public String getWebDavURL(
-			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getWebDavURL(
-	 *             ThemeDisplay, Folder, FileEntry, boolean)}
-	 */
-	@Deprecated
-	public String getWebDavURL(
-			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry,
-			boolean manualCheckInRequired)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             com.liferay.document.library.util.DLURLHelper#getWebDavURL(
-	 *             ThemeDisplay, Folder, FileEntry, boolean, boolean)}
-	 */
-	@Deprecated
-	public String getWebDavURL(
-			ThemeDisplay themeDisplay, Folder folder, FileEntry fileEntry,
-			boolean manualCheckInRequired, boolean officeExtensionRequired)
-		throws PortalException;
 
 	public boolean hasWorkflowDefinitionLink(
 		long companyId, long groupId, long folderId, long fileEntryTypeId);

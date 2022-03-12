@@ -72,6 +72,18 @@ public class ImportResults {
 		_documentBuilder = _documentBuilderFactory.newDocumentBuilder();
 	}
 
+	private long _addEntity(Map<String, String> bodyMap, String objectName)
+		throws Exception {
+
+		JSONObject responseJSONObject = HttpUtil.invoke(
+			new JSONObject(
+				bodyMap
+			).toString(),
+			objectName, null, null, HttpInvoker.HttpMethod.POST);
+
+		return responseJSONObject.getLong("id");
+	}
+
 	private long _fetchEntityIdByName(String objectName, String entityName)
 		throws Exception {
 

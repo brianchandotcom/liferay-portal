@@ -60,48 +60,51 @@ public class LayoutInfoItemLanguagesProviderTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
-		_layout = LayoutTestUtil.addTypePortletLayout(_group);
 	}
 
 	@Test
 	public void testGetAvailableLanguages() throws Exception {
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
+
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemLanguagesProvider.class, Layout.class.getName());
 
 		Assert.assertArrayEquals(
-			infoItemLanguagesProvider.getAvailableLanguageIds(_layout),
-			_layout.getAvailableLanguageIds());
+			infoItemLanguagesProvider.getAvailableLanguageIds(layout),
+			layout.getAvailableLanguageIds());
 	}
 
 	@Test
 	public void testGetAvailableLanguagesContentLayout() throws Exception {
-		_layout.setType(LayoutConstants.TYPE_CONTENT);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
-		_layout = _layoutLocalService.updateLayout(_layout);
+		layout.setType(LayoutConstants.TYPE_CONTENT);
+
+		layout = _layoutLocalService.updateLayout(layout);
 
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(
 				InfoItemLanguagesProvider.class, Layout.class.getName());
 
 		Assert.assertArrayEquals(
-			_getAvailableLocalesLayoutTranslatedLanguages(),
-			infoItemLanguagesProvider.getAvailableLanguageIds(_layout));
+			_getAvailableLocalesLayoutTranslatedLanguages(layout),
+			infoItemLanguagesProvider.getAvailableLanguageIds(layout));
 	}
 
-	private String[] _getAvailableLocalesLayoutTranslatedLanguages()
+	private String[] _getAvailableLocalesLayoutTranslatedLanguages(
+			Layout layout)
 		throws Exception {
 
-		if (!_layout.isTypeContent()) {
-			return _layout.getAvailableLanguageIds();
+		if (!layout.isTypeContent()) {
+			return layout.getAvailableLanguageIds();
 		}
 
 		Set<String> availableLocales = new HashSet<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				_group.getGroupId(), _layout.getPlid());
+				_group.getGroupId(), layout.getPlid());
 
 		Set<Locale> siteAvailableLocales = _language.getAvailableLocales(
 			_group.getGroupId());
@@ -119,7 +122,7 @@ public class LayoutInfoItemLanguagesProviderTest {
 			}
 		}
 
-		availableLocales.add(_layout.getDefaultLanguageId());
+		availableLocales.add(layout.getDefaultLanguageId());
 
 		return availableLocales.toArray(new String[0]);
 	}
@@ -187,8 +190,6 @@ public class LayoutInfoItemLanguagesProviderTest {
 
 	@Inject
 	private Language _language;
-
-	private Layout _layout;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

@@ -24,9 +24,9 @@ import java.util.List;
 /**
  * @author Michael Hashimoto
  */
-public class JSUnitModulesSegmentTestClassGroup extends SegmentTestClassGroup {
+public class ModulesSegmentTestClassGroup extends SegmentTestClassGroup {
 
-	public JSUnitModulesSegmentTestClassGroup(
+	public ModulesSegmentTestClassGroup(
 		BatchTestClassGroup parentBatchTestClassGroup) {
 
 		super(parentBatchTestClassGroup);
@@ -35,6 +35,8 @@ public class JSUnitModulesSegmentTestClassGroup extends SegmentTestClassGroup {
 	@Override
 	public String getTestCasePropertiesContent() {
 		StringBuilder sb = new StringBuilder();
+
+		sb.append(super.getTestCasePropertiesContent());
 
 		List<String> axisIndexes = new ArrayList<>();
 

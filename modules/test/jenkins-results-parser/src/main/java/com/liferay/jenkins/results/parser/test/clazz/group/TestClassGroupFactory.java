@@ -232,10 +232,15 @@ public class TestClassGroupFactory {
 
 			return new JUnitSegmentTestClassGroup(batchTestClassGroup);
 		}
-		else if (batchTestClassGroup instanceof
-					JSUnitModulesBatchTestClassGroup) {
+		else if (batchTestClassGroup instanceof ModulesBatchTestClassGroup) {
+			if (batchTestClassGroup instanceof
+					ServiceBuilderModulesBatchTestClassGroup) {
 
-			return new JSUnitModulesSegmentTestClassGroup(batchTestClassGroup);
+				return new ServiceBuilderModulesSegmentTestClassGroup(
+					batchTestClassGroup);
+			}
+
+			return new ModulesSegmentTestClassGroup(batchTestClassGroup);
 		}
 		else if (batchTestClassGroup instanceof PluginsBatchTestClassGroup) {
 			return new PluginsSegmentTestClassGroup(

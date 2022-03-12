@@ -12,6 +12,8 @@ import ClayAlert from '@clayui/alert';
 import ClayModal from '@clayui/modal';
 import React, {useState} from 'react';
 import Button from '../../../../../../common/components/Button';
+import {useApplicationProvider} from '../../../../../../common/context/AppPropertiesProvider';
+import {useCustomerPortal} from '../../../../context';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
 import {AUTO_CLOSE_ALERT_TIME} from '../../../../utils/constants/autoCloseAlertTime';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
@@ -19,14 +21,15 @@ import {downloadActivationLicenseKey} from '../../utils/downloadActivationLicens
 import TableKeyDetails from '../TableKeyDetails';
 
 const ModalKeyDetails = ({
-	assetsPath,
 	currentActivationKey,
-	licenseKeyDownloadURL,
 	observer,
 	onClose,
 	project,
 	sessionId,
 }) => {
+	const [{assetsPath}] = useCustomerPortal();
+	const {licenseKeyDownloadURL} = useApplicationProvider();
+
 	const [valueToCopyToClipboard, setValueToCopyToClipboard] = useState('');
 
 	const [

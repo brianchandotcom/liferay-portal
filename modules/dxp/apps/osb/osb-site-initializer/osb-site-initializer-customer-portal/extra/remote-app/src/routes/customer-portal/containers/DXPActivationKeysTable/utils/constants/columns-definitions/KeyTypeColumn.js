@@ -9,9 +9,12 @@
  * distribution rights of the Software.
  */
 
+import {useCustomerPortal} from '../../../../../context';
 import {hasVirtualCluster} from '../../index';
 
-const KeyTypeColumn = ({activationKey, assetsPath}) => {
+const KeyTypeColumn = ({activationKey}) => {
+	const [{assetsPath}] = useCustomerPortal();
+
 	const hasVirtualClusterForActivationKeys = hasVirtualCluster(
 		activationKey?.licenseEntryType
 	);

@@ -13,79 +13,88 @@ import ClayAlert from '@clayui/alert';
 import {useMemo, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Button, ButtonDropDown} from '../../../../../../common/components';
-import {AUTO_CLOSE_ALERT_TIME, PAGE_TYPES} from '../../../../utils/constants';
+import {useApplicationProvider} from '../../../../../../common/context/AppPropertiesProvider';
+import {PAGE_TYPES} from '../../../../utils/constants';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
-import {useActivationKeys} from '../../context';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
 import {DOWNLOADABLE_LICENSE_KEYS} from '../../utils/constants/downlodableLicenseKeys';
 import {getActivationKeyDownload} from '../../utils/getActivationKeyDownload';
 import {getActivationKeysActionsItems} from '../../utils/getActivationKeysActionsItems';
 import {getActivationKeysDownloadItems} from '../../utils/getActivationKeysDownloadItems';
 import DeactivateButton from '../Deactivate';
+import DownloadAlert from '../DownloadAlert';
 
 import Filter from '../Filter';
 
 const dxpNewRedirectLink = PAGE_TYPES.dxpNew.split('_')[1];
 
 const DXPActivationKeysTableHeader = ({
-	accountKey,
-	licenseKeyDownloadURL,
+	activationKeys,
+	activationKeysFilteredState,
+	activationKeysIdChecked,
 	project,
-	selectedKeys,
 	sessionId,
+	setFilterTerm,
 }) => {
 	const navigate = useNavigate();
-	const [{activationKeys}] = useActivationKeys();
+	const {licenseKeyDownloadURL} = useApplicationProvider();
+	const [activationKeysFiltered] = activationKeysFilteredState;
 
-	const [
-		activationKeysDownloadStatus,
-		setActivationKeysDownloadStatus,
-	] = useState('');
+	const [status, setStatus] = useState({
+		deactivate: '',
+		download: '',
+	});
 
-	const [deactivateKeysStatus, setDeactivateKeysStatus] = useState('');
+	const selectedActivationKeysIDs = useMemo(
+		() =>
+			activationKeysIdChecked.reduce(
+				(selectedKeysIDAccumulator, activationKeyIdChecked, index) =>
+					`${selectedKeysIDAccumulator}${
+						index > 0 ? '&' : ''
+					}licenseKeyIds=${activationKeyIdChecked}`,
+				''
+			),
+		[activationKeysIdChecked]
+	);
 
-	const selectedKeysIDs = selectedKeys
-		.map((selectedKey) => `licenseKeyIds=${selectedKey}`)
-		.join('&');
+	const activationKeysChecked = useMemo(
+		() =>
+			activationKeysFiltered.filter(({id}) =>
+				activationKeysIdChecked.includes(id)
+			),
+		[activationKeysFiltered, activationKeysIdChecked]
+	);
 
 	const isAbleToDownloadAggregateKeys = useMemo(() => {
 		const [
-			firstSelectedKey,
-			...restSelectedKeys
-		] = selectedKeys.map((key) =>
-			activationKeys.find((activationKey) => activationKey.id === key)
-		);
+			firstActivationKeyChecked,
+			...restActivationKeysChecked
+		] = activationKeysChecked;
 
-		const keyCanBeDownloaded = restSelectedKeys.every(
+		return restActivationKeysChecked.every(
 			(selectedKey) =>
 				DOWNLOADABLE_LICENSE_KEYS.above71DXPVersion(
-					firstSelectedKey,
+					firstActivationKeyChecked,
 					selectedKey
 				) ||
 				DOWNLOADABLE_LICENSE_KEYS.below71DXPVersion(
-					firstSelectedKey,
+					firstActivationKeyChecked,
 					selectedKey
 				)
 		);
+	}, [activationKeysChecked]);
 
-		return keyCanBeDownloaded;
-	}, [activationKeys, selectedKeys]);
-
-	const selectedKeysObjects = activationKeys.filter((key) => {
-		return selectedKeys.includes(key.id);
-	});
-
-	const handleAlertStatus = (hasSuccessfullyDownloadedKeys) => {
-		setActivationKeysDownloadStatus(
-			hasSuccessfullyDownloadedKeys
+	const handleAlertStatus = (hasSuccessfullyDownloadedKeys) =>
+		setStatus((previousStatus) => ({
+			...previousStatus,
+			download: hasSuccessfullyDownloadedKeys
 				? ALERT_DOWNLOAD_TYPE.success
-				: ALERT_DOWNLOAD_TYPE.danger
-		);
-	};
+				: ALERT_DOWNLOAD_TYPE.danger,
+		}));
 
 	const handleRedirectPage = () => navigate(dxpNewRedirectLink);
 	const activationKeysActionsItems = getActivationKeysActionsItems(
-		accountKey,
+		project?.accountKey,
 		licenseKeyDownloadURL,
 		sessionId,
 		handleAlertStatus,
@@ -94,16 +103,16 @@ const DXPActivationKeysTableHeader = ({
 
 	const activationKeysDownloadItems = getActivationKeysDownloadItems(
 		isAbleToDownloadAggregateKeys,
-		selectedKeysIDs,
+		selectedActivationKeysIDs,
 		licenseKeyDownloadURL,
 		sessionId,
 		handleAlertStatus,
-		selectedKeysObjects,
+		activationKeysChecked,
 		project.name
 	);
 
 	const getCurrentButton = () => {
-		if (selectedKeys.length > 1) {
+		if (activationKeysIdChecked?.length > 1) {
 			return (
 				<ButtonDropDown
 					items={activationKeysDownloadItems}
@@ -115,18 +124,17 @@ const DXPActivationKeysTableHeader = ({
 			);
 		}
 
-		if (selectedKeys.length) {
+		if (activationKeysIdChecked.length) {
 			return (
 				<Button
 					className="btn btn-primary"
 					onClick={async () =>
 						getActivationKeyDownload(
-							selectedKeys,
+							activationKeysIdChecked,
 							licenseKeyDownloadURL,
 							sessionId,
 							handleAlertStatus,
-							selectedKeysObjects[0]?.productName,
-							selectedKeysObjects[0]?.productVersion,
+							activationKeysChecked[0],
 							project.name
 						)
 					}
@@ -150,21 +158,27 @@ const DXPActivationKeysTableHeader = ({
 	return (
 		<div>
 			<div className="align-items-center bg-neutral-1 d-flex mb-2 p-3 rounded">
-				<Filter />
+				<Filter
+					activationKeys={activationKeys}
+					setFilterTerm={setFilterTerm}
+				/>
 
 				<div className="align-items-center d-flex ml-auto">
-					{!!selectedKeys.length && (
+					{!!activationKeysIdChecked.length && (
 						<>
 							<p className="font-weight-semi-bold m-0 ml-auto text-neutral-10">
-								{`${selectedKeys.length} Keys Selected`}
+								{`${activationKeysIdChecked.length} Keys Selected`}
 							</p>
 
 							<DeactivateButton
-								deactivateKeysStatus={deactivateKeysStatus}
-								selectedKeys={selectedKeys}
+								deactivateKeysStatus={status.deactivate}
+								selectedKeys={activationKeysIdChecked}
 								sessionId={sessionId}
-								setDeactivateKeysStatus={
-									setDeactivateKeysStatus
+								setDeactivateKeysStatus={(value) =>
+									setStatus((previousStatus) => ({
+										...previousStatus,
+										deactivate: value,
+									}))
 								}
 							/>
 						</>
@@ -174,46 +188,42 @@ const DXPActivationKeysTableHeader = ({
 				</div>
 			</div>
 
-			{activationKeysDownloadStatus && (
-				<ClayAlert.ToastContainer>
-					<ClayAlert
-						autoClose={
-							AUTO_CLOSE_ALERT_TIME[activationKeysDownloadStatus]
-						}
-						className="cp-activation-key-download-alert"
-						displayType={
-							ALERT_DOWNLOAD_TYPE[activationKeysDownloadStatus]
-						}
-						onClose={() => setActivationKeysDownloadStatus('')}
-					>
-						{
-							ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT[
-								activationKeysDownloadStatus
-							]
-						}
-					</ClayAlert>
-				</ClayAlert.ToastContainer>
+			{status.download && (
+				<DownloadAlert
+					downloadStatus={status.download}
+					message={
+						ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT[
+							status.download
+						]
+					}
+					setDownloadStatus={(value) =>
+						setStatus((previousStatus) => ({
+							...previousStatus,
+							download: value,
+						}))
+					}
+				/>
 			)}
 
-			{deactivateKeysStatus === ALERT_DOWNLOAD_TYPE.success && (
-				<ClayAlert.ToastContainer>
-					<ClayAlert
-						autoClose={AUTO_CLOSE_ALERT_TIME.success}
-						className="cp-activation-key-download-alert px-4 py-3 text-paragraph"
-						displayType={ALERT_DOWNLOAD_TYPE[deactivateKeysStatus]}
-						onClose={() => setDeactivateKeysStatus('')}
-					>
-						Activation Key(s) were deactivated successfully.
-					</ClayAlert>
-				</ClayAlert.ToastContainer>
+			{status.deactivate === ALERT_DOWNLOAD_TYPE.success && (
+				<DownloadAlert
+					downloadStatus="success"
+					message="Activation Key(s) were deactivated successfully."
+					setDownloadStatus={(value) =>
+						setStatus((previousStatus) => ({
+							...previousStatus,
+							deactivate: value,
+						}))
+					}
+				/>
 			)}
 
 			{!isAbleToDownloadAggregateKeys && (
 				<ClayAlert displayType="info">
 					To download an aggregate key, select keys with identical
-					<b>{' Type, Start Date, End Date, '}</b>
+					<b>Type, Start Date, End Date,</b>
 					and
-					<b>{' Instance Size'} </b>
+					<b>Instance Size</b>
 				</ClayAlert>
 			)}
 		</div>

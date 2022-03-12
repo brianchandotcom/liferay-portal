@@ -14,8 +14,8 @@ const PRODUCTION_ENVIRONMENT = 'production';
 
 export const DOWNLOADABLE_LICENSE_KEYS = {
 	above71DXPVersion: (firstSelectedKey, selectedKey) =>
-		Number(selectedKey?.productVersion) >= PRODUCTION_VERSION &&
-		Number(firstSelectedKey?.productVersion) >= PRODUCTION_VERSION,
+		+selectedKey?.productVersion >= PRODUCTION_VERSION &&
+		+firstSelectedKey?.productVersion >= PRODUCTION_VERSION,
 	below71DXPVersion: (firstSelectedKey, selectedKey) =>
 		firstSelectedKey?.licenseEntryType === PRODUCTION_ENVIRONMENT &&
 		firstSelectedKey?.sizing === selectedKey?.sizing &&

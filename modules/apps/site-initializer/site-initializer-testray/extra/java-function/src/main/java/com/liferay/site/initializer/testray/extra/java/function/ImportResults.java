@@ -106,6 +106,23 @@ public class ImportResults {
 		return 0l;
 	}
 
+	private long _fetchOrAddTestrayProject(String testrayProjectName)
+		throws Exception {
+
+		long testrayProjectId = _fetchEntityIdByName(
+			"projects", testrayProjectName);
+
+		if (testrayProjectId > 0) {
+			return testrayProjectId;
+		}
+
+		Map<String, String> bodyMap = new HashMap<>();
+
+		bodyMap.put("name", testrayProjectName);
+
+		return _addEntity(bodyMap, "projects");
+	}
+
 	private String _getAttributeValue(Node node, String attributeName) {
 		NamedNodeMap namedNodeMap = node.getAttributes();
 
@@ -148,6 +165,16 @@ public class ImportResults {
 		}
 
 		return map;
+	}
+
+	private void _processResults(Document document) throws Exception {
+		Element element = document.getDocumentElement();
+
+		Map<String, String> propertiesMap = _getProperties(element);
+
+		String testrayProjectName = propertiesMap.get("testray.project.name");
+
+		_fetchOrAddTestrayProject(testrayProjectName);
 	}
 
 	public void addTestrayBuild(long projectId, Document document)
@@ -425,75 +452,6 @@ public class ImportResults {
 	   	return responseJSONObject.getLong("id");
 	}
 
-
-	public long addTestrayProject(Document document) throws Exception {
-		Map<String, String> bodyMap = new HashMap<>();
-
-		Element element = document.getDocumentElement();
-
-		element.normalize();
-
-		NodeList nodeList = document.getElementsByTagName("property");
-
-		String projectName = null;
-
-		for (int i = 0; i < nodeList.getLength(); i++) {
-			Node node = nodeList.item(i);
-
-			if ((node.getNodeType() == Node.ELEMENT_NODE) &&
-				!node.getNodeName(
-				).equals(
-					"#text"
-				) &&
-				(node.getAttributes(
-				).getLength() > 0)) {
-
-				String name = node.getAttributes(
-				).getNamedItem(
-					"name"
-				).getTextContent();
-
-				if (name.equals("testray.project.name")) {
-					String value = node.getAttributes(
-					).getNamedItem(
-						"value"
-					).getTextContent();
-
-					projectName = value;
-
-					bodyMap.put("description", name);
-					bodyMap.put("name", value);
-
-					break;
-				}
-			}
-		}
-
-		Map<String, String> parametersMap = new HashMap<>();
-
-		parametersMap.put("filter", "name eq '" + projectName + "'");
-
-		JSONObject responseJSONObject = HttpUtil.invoke(
-			null, "testrayprojects", null, parametersMap,
-			HttpInvoker.HttpMethod.GET);
-
-		JSONArray projectsJSONArray = responseJSONObject.getJSONArray("items");
-
-		if (!projectsJSONArray.isEmpty()) {
-			JSONObject projectJSONObject = projectsJSONArray.getJSONObject(0);
-
-			return projectJSONObject.getLong("id");
-		}
-
-		responseJSONObject = HttpUtil.invoke(
-			new JSONObject(
-				bodyMap
-			).toString(),
-			"testrayprojects", null, null, HttpInvoker.HttpMethod.POST);
-
-		return responseJSONObject.getLong("id");
-	}
-
 	public Storage getStorage() throws Exception {
 		InputStream inputStream = PropsUtil.class.getResourceAsStream(
 			PropsValues.TESTRAY_URL_API_KEY);
@@ -612,10 +570,7 @@ public class ImportResults {
 		for (File file : files) {
 			Document document = _documentBuilder.parse(file);
 
-			long projectId = addTestrayProject(document);
-
-			addTestrayBuild(projectId, document);
-			addTestrayCase(projectId, document);
+			_processResults(document);
 		}
 	}
 

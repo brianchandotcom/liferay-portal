@@ -7,4 +7,7 @@
 		<suppress checks="PersistenceCallCheck" files="document-library-test/src/testIntegration/java/com/liferay/document/library/service/test/DLFolderFinderTest\.java" />
 		<suppress checks="TestClassCheck" files="document-library-test/src/testIntegration/java/com/liferay/document/library/webdav/test/BaseWebDAVTestCase\.java" />
 	</checkstyle>
+	<source-check>
+		<suppress checks="BNDDefinitionKeysCheck" files="document-library-preview-pdf/bnd\.bnd" />
+	</source-check>
 </suppressions>

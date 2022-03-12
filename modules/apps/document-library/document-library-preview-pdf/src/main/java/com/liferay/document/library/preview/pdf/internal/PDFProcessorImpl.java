@@ -12,25 +12,25 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.document.library.preview.pdf.internal;
 
 import com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLProcessorConstants;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLPreviewableProcessor;
+import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.kernel.util.PDFProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessChannel;
-import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessException;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.image.GhostscriptUtil;
+import com.liferay.portal.kernel.image.Ghostscript;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -44,13 +44,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemEnv;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.log.Log4jLogFactoryImpl;
-import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -60,7 +57,6 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -71,13 +67,17 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import org.apache.commons.lang.time.StopWatch;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageTree;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
@@ -86,6 +86,10 @@ import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
  * @author Sergio González
  * @author Ivica Cardic
  */
+@Component(
+	property = "type=" + DLProcessorConstants.PDF_PROCESSOR,
+	service = {DLProcessor.class, PDFProcessor.class}
+)
 public class PDFProcessorImpl
 	extends DLPreviewableProcessor implements PDFProcessor {
 
@@ -221,6 +225,11 @@ public class PDFProcessorImpl
 		_queueGeneration(sourceFileVersion, destinationFileVersion);
 	}
 
+	@Activate
+	protected void activate() {
+		afterPropertiesSet();
+	}
+
 	@Override
 	protected void copyPreviews(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
@@ -251,6 +260,11 @@ public class PDFProcessorImpl
 		catch (Exception exception) {
 			_log.error(exception);
 		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		destroy();
 	}
 
 	@Override
@@ -386,7 +400,7 @@ public class PDFProcessorImpl
 	private void _generateImages(FileVersion fileVersion, File file)
 		throws Exception {
 
-		if (GhostscriptUtil.isEnabled()) {
+		if (_ghostscript.isEnabled()) {
 			_generateImagesGS(fileVersion, file);
 		}
 		else {
@@ -458,7 +472,7 @@ public class PDFProcessorImpl
 			FileVersion fileVersion, InputStream inputStream)
 		throws Exception {
 
-		if (GhostscriptUtil.isEnabled()) {
+		if (_ghostscript.isEnabled()) {
 			_generateImagesGS(fileVersion, inputStream);
 		}
 		else {
@@ -470,9 +484,7 @@ public class PDFProcessorImpl
 		throws Exception {
 
 		if (_isGeneratePreview(fileVersion)) {
-			StopWatch stopWatch = new StopWatch();
-
-			stopWatch.start();
+			long start = System.currentTimeMillis();
 
 			_generateImagesGS(fileVersion, file, false);
 
@@ -481,15 +493,13 @@ public class PDFProcessorImpl
 					StringBundler.concat(
 						"Ghostscript generated ",
 						getPreviewFileCount(fileVersion), " preview pages for ",
-						fileVersion.getTitle(), " in ", stopWatch.getTime(),
-						" ms"));
+						fileVersion.getTitle(), " in ",
+						System.currentTimeMillis() - start, " ms"));
 			}
 		}
 
 		if (_isGenerateThumbnail(fileVersion)) {
-			StopWatch stopWatch = new StopWatch();
-
-			stopWatch.start();
+			long start = System.currentTimeMillis();
 
 			_generateImagesGS(fileVersion, file, true);
 
@@ -497,8 +507,8 @@ public class PDFProcessorImpl
 				_log.info(
 					StringBundler.concat(
 						"Ghostscript generated a thumbnail for ",
-						fileVersion.getTitle(), " in ", stopWatch.getTime(),
-						" ms"));
+						fileVersion.getTitle(), " in ",
+						System.currentTimeMillis() - start, " ms"));
 			}
 		}
 	}
@@ -508,7 +518,7 @@ public class PDFProcessorImpl
 		throws Exception {
 
 		if (!_ghostscriptInitialized) {
-			GhostscriptUtil.reset();
+			_ghostscript.reset();
 
 			_ghostscriptInitialized = true;
 		}
@@ -542,7 +552,7 @@ public class PDFProcessorImpl
 
 		arguments.add(file.getPath());
 
-		Future<?> future = GhostscriptUtil.execute(arguments);
+		Future<?> future = _ghostscript.execute(arguments);
 
 		String processIdentity = String.valueOf(fileVersion.getFileVersionId());
 
@@ -654,7 +664,7 @@ public class PDFProcessorImpl
 		File[] previewFiles = null;
 		File thumbnailFile = null;
 
-		StopWatch stopWatch = new StopWatch();
+		long start = 0;
 
 		boolean generatePreview = _isGeneratePreview(fileVersion);
 		boolean generateThumbnail = _isGenerateThumbnail(fileVersion);
@@ -682,7 +692,7 @@ public class PDFProcessorImpl
 				previewFiles[i] = getPreviewTempFile(tempFileId, i);
 			}
 
-			stopWatch.start();
+			start = System.currentTimeMillis();
 
 			try {
 				if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
@@ -717,7 +727,8 @@ public class PDFProcessorImpl
 
 					ProcessChannel<String> processChannel =
 						_processExecutor.execute(
-							_pdfProcessConfig, processCallable);
+							ProcessConfigUtil.getProcessConfig(),
+							processCallable);
 
 					Future<String> future =
 						processChannel.getProcessNoticeableFuture();
@@ -867,7 +878,7 @@ public class PDFProcessorImpl
 
 		long fileVersionId = fileVersion.getFileVersionId();
 		int previewFileCount = getPreviewFileCount(fileVersion);
-		long time = stopWatch.getTime();
+		long time = System.currentTimeMillis() - start;
 
 		if (generateThumbnail && generatePreview) {
 			_log.info(
@@ -1042,67 +1053,21 @@ public class PDFProcessorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		PDFProcessorImpl.class);
 
-	private static volatile FileVersionPreviewEventListener
-		_fileVersionPreviewEventListener =
-			ServiceProxyFactory.newServiceTrackedInstance(
-				FileVersionPreviewEventListener.class, PDFProcessorImpl.class,
-				"_fileVersionPreviewEventListener", false, false);
-	private static final ProcessConfig _pdfProcessConfig;
-	private static volatile ProcessExecutor _processExecutor =
-		ServiceProxyFactory.newServiceTrackedInstance(
-			ProcessExecutor.class, PDFProcessorImpl.class, "_processExecutor",
-			true);
-
-	static {
-		ProcessConfig pdfProcessConfig =
-			PortalClassPathUtil.getPortalProcessConfig();
-
-		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
-			String jvmOptions = StringUtil.trim(
-				PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_JVM_OPTIONS);
-
-			if (!jvmOptions.isEmpty()) {
-				ProcessConfig.Builder pdfProcessBuilder =
-					new ProcessConfig.Builder(pdfProcessConfig);
-
-				Collections.addAll(
-					pdfProcessBuilder.getArguments(),
-					StringUtil.split(jvmOptions));
-
-				pdfProcessConfig = pdfProcessBuilder.build();
-			}
-		}
-
-		_pdfProcessConfig = pdfProcessConfig;
-	}
-
 	private final List<Long> _fileVersionIds = new Vector<>();
+
+	@Reference
+	private FileVersionPreviewEventListener _fileVersionPreviewEventListener;
+
+	@Reference
+	private Ghostscript _ghostscript;
+
 	private boolean _ghostscriptInitialized;
+
+	@Reference
+	private ProcessExecutor _processExecutor;
 
 	private static class LiferayPDFBoxProcessCallable
 		implements ProcessCallable<String> {
-
-		public LiferayPDFBoxProcessCallable(
-			String serverId, String liferayHome,
-			Map<String, String> customLogSettings, File inputFile,
-			File thumbnailFile, File[] previewFiles, String extension,
-			String thumbnailExtension, int dpi, int height, int width,
-			boolean generatePreview, boolean generateThumbnail) {
-
-			_serverId = serverId;
-			_liferayHome = liferayHome;
-			_customLogSettings = customLogSettings;
-			_inputFile = inputFile;
-			_thumbnailFile = thumbnailFile;
-			_previewFiles = previewFiles;
-			_extension = extension;
-			_thumbnailExtension = thumbnailExtension;
-			_dpi = dpi;
-			_height = height;
-			_width = width;
-			_generatePreview = generatePreview;
-			_generateThumbnail = generateThumbnail;
-		}
 
 		@Override
 		public String call() throws ProcessException {
@@ -1127,6 +1092,28 @@ public class PDFProcessorImpl
 			}
 
 			return StringPool.BLANK;
+		}
+
+		private LiferayPDFBoxProcessCallable(
+			String serverId, String liferayHome,
+			Map<String, String> customLogSettings, File inputFile,
+			File thumbnailFile, File[] previewFiles, String extension,
+			String thumbnailExtension, int dpi, int height, int width,
+			boolean generatePreview, boolean generateThumbnail) {
+
+			_serverId = serverId;
+			_liferayHome = liferayHome;
+			_customLogSettings = customLogSettings;
+			_inputFile = inputFile;
+			_thumbnailFile = thumbnailFile;
+			_previewFiles = previewFiles;
+			_extension = extension;
+			_thumbnailExtension = thumbnailExtension;
+			_dpi = dpi;
+			_height = height;
+			_width = width;
+			_generatePreview = generatePreview;
+			_generateThumbnail = generateThumbnail;
 		}
 
 		private static final long serialVersionUID = 1L;

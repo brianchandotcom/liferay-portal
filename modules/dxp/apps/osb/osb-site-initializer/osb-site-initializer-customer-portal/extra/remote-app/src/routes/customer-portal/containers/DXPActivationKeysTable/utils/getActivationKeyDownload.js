@@ -16,16 +16,15 @@ export async function getActivationKeyDownload(
 	licenseKeyDownloadURL,
 	sessionId,
 	handleAlertStatus,
-	activationKeyName,
-	activationKeyVersion,
+	activationKey,
 	projectName
 ) {
 	const downloadedKey = await downloadActivationLicenseKey(
 		selectedKeys,
 		licenseKeyDownloadURL,
 		sessionId,
-		activationKeyName,
-		activationKeyVersion,
+		activationKey?.productName,
+		activationKey?.productVersion,
 		projectName
 	);
 

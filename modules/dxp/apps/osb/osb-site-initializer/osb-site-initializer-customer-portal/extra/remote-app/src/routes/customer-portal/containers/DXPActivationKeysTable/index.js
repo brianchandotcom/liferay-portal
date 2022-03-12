@@ -8,29 +8,25 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-import ClayAlert from '@clayui/alert';
 import {ButtonWithIcon} from '@clayui/core';
 import {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import Table from '../../../../common/components/Table';
 import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
-import {getActivationLicenseKey} from '../../../../common/services/liferay/rest/raysource/LicenseKeys';
-import {useCustomerPortal} from '../../context';
 import {ALERT_DOWNLOAD_TYPE} from '../../utils/constants/alertDownloadType';
-import {AUTO_CLOSE_ALERT_TIME} from '../../utils/constants/autoCloseAlertTime';
-import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../DXPActivationKeysTable/utils/constants/alertAggregateKeysDownloadText';
 import {getActivationKeyDownload} from '../DXPActivationKeysTable/utils/getActivationKeyDownload';
+import DownloadAlert from './components/DownloadAlert';
 import DXPActivationKeysTableHeader from './components/Header';
 import ModalKeyDetails from './components/ModalKeyDetails';
-import {useActivationKeys} from './context';
-import {actionTypes} from './context/reducer';
+import useGetActivationKeysData from './hooks/useGetActivationKeysData';
+import useStatusCountNavigation from './hooks/useStatusCountNavigation';
 import {
-	ACTIVATION_KEYS_LICENSE_FILTER_TYPES,
-	ACTIVATION_STATUS,
+	ACTIVATION_KEYS_LICENSE_FILTER_TYPES as FILTER_TYPES,
 	COLUMNS,
 } from './utils/constants';
+import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from './utils/constants/alertAggregateKeysDownloadText';
 import {
 	EnvironmentTypeColumn,
 	ExpirationDateColumn,
@@ -38,220 +34,146 @@ import {
 	StatusColumn,
 } from './utils/constants/columns-definitions';
 import {downloadActivationLicenseKey} from './utils/downloadActivationLicenseKey';
-import {getGroupButtons} from './utils/getGroupButtons';
 import {getTooltipContentRenderer} from './utils/getTooltipContentRenderer';
 
-const MAX_ITEMS = 9999;
-const PAGE = 1;
-
 const DXPActivationKeysTable = ({project, sessionId}) => {
-	const [{assetsPath}] = useCustomerPortal();
-	const {licenseKeyDownloadURL} = useApplicationProvider();
-	const [
-		{
-			activationKeys,
-			activationKeysFilteredByConditions,
-			wasFiltered,
-			wasSearched,
-		},
-		dispatch,
-	] = useActivationKeys();
-
-	const [statusBar, setStatusBar] = useState({});
-
-	const [activationKeysFiltered, setActivationKeysFiltered] = useState([]);
-	const [totalCount, setTotalCount] = useState(0);
-	const [activationKeysChecked, setActivationKeysChecked] = useState([]);
-
-	const [filterStatusBar, setFilterStatusBar] = useState('all');
+	const [downloadStatus, setDownloadStatus] = useState('');
 
 	const [activePage, setActivePage] = useState(1);
 	const [itemsPerPage, setItemsPerPage] = useState(5);
-	const [isLoadingActivationKeys, setIsLoadingActivationKeys] = useState(
-		false
-	);
+	const [currentTotalCount, setCurrentTotalCount] = useState(0);
+
+	const [selectedActivationKey, setSelectedActivationKey] = useState();
+	const [activationKeysIdChecked, setActivationKeysIdChecked] = useState([]);
+	const [activationKeysFiltered, setActivationKeysFiltered] = useState([]);
 
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
-	const [currentActivationKey, setCurrentActivationKey] = useState();
+
+	const {licenseKeyDownloadURL} = useApplicationProvider();
+	const {activationKeys, loading, setFilterTerm} = useGetActivationKeysData(
+		project,
+		sessionId
+	);
+	const {
+		navigationGroupButtons,
+		statusfilterByTitle: [statusFilter, setStatusFilter],
+	} = useStatusCountNavigation(activationKeys);
+
 	const {observer, onClose} = useModal({
 		onClose: () => setIsVisibleModal(false),
 	});
-	const [
-		activationKeysDownloadStatus,
-		setActivationKeysDownloadStatus,
-	] = useState('');
 
 	useEffect(() => {
-		if (activationKeysFiltered.length) {
-			setActivationKeysChecked([]);
+		if (activationKeysFiltered?.length) {
+			setActivationKeysIdChecked([]);
 		}
 	}, [activationKeysFiltered]);
 
 	useEffect(() => {
-		if (filterStatusBar) {
+		if (statusFilter) {
 			setActivePage(1);
 		}
-	}, [filterStatusBar]);
+	}, [statusFilter]);
 
 	useEffect(() => {
-		setIsLoadingActivationKeys(true);
-		const fetchActivationKeysData = async () => {
-			const {items} = await getActivationLicenseKey(
-				'KOR-3809080',
-				licenseKeyDownloadURL,
-				encodeURI('active eq true'),
-				PAGE,
-				MAX_ITEMS,
-				sessionId
+		const activationKeysFiltered = activationKeys?.filter((activationKey) =>
+			FILTER_TYPES[statusFilter](activationKey)
+		);
+
+		if (activationKeysFiltered) {
+			setCurrentTotalCount(activationKeysFiltered.length);
+
+			const activationKeysFilteredPerPage = activationKeysFiltered.slice(
+				itemsPerPage * activePage - itemsPerPage,
+				itemsPerPage * activePage
 			);
 
-			items[0].startDate = '2023-11-05T00:00:00Z';
-			items[0].expirationDate = '2024-11-05T00:00:00Z';
-			items[0].licenseEntryType = 'virtual-cluster';
-			items[0].complimentary = true;
-			items[0].productName = 'DXP Developer';
-			items[0].maxClusterNodes = 2;
-			items[1].startDate = '2023-11-05T00:00:00Z';
-			items[1].licenseEntryType = 'virtual-cluster';
-			items[1].maxClusterNodes = 48;
-			items[1].complimentary = true;
-			items[1].expirationDate = '2024-11-05T00:00:00Z';
-			items[1].sizing = 'Sizing 4';
-			items[2].licenseEntryType = 'virtual-cluster';
-			items[2].maxClusterNodes = 14;
-			items[2].complimentary = true;
-			items[2].startDate = '2019-11-05T00:00:00Z';
-			items[2].expirationDate = '2020-11-05T00:00:00Z';
-			items[3].licenseEntryType = 'virtual-cluster';
-			items[3].maxClusterNodes = 5;
-			items[3].startDate = '2018-11-05T00:00:00Z';
-			items[3].complimentary = true;
-			items[3].expirationDate = '2021-11-05T00:00:00Z';
-			items[4].sizing = 'Sizing 3';
-			items[5].sizing = 'Sizing 3';
-			items[6].sizing = 'Sizing 3';
-			items[7].sizing = 'Sizing 3';
-			items[8].sizing = 'Sizing 4';
-			items[9].sizing = 'Sizing 4';
-			items[10].sizing = 'Sizing 4';
-
-			if (items) {
-				dispatch({
-					payload: items,
-					type: actionTypes.UPDATE_ACTIVATION_KEYS,
-				});
-				dispatch({
-					payload: items,
-					type:
-						actionTypes.UPDATE_ACTIVATION_KEYS_FILTERED_BY_CONDITIONS,
-				});
-			}
-
-			setIsLoadingActivationKeys(false);
-		};
-
-		fetchActivationKeysData();
-	}, [dispatch, licenseKeyDownloadURL, project, sessionId]);
-
-	useEffect(() => {
-		if (activationKeys.length) {
-			setStatusBar({
-				activatedTotalCount: activationKeys.filter((activationKey) =>
-					ACTIVATION_KEYS_LICENSE_FILTER_TYPES.activated(
-						activationKey
-					)
-				).length,
-				allTotalCount: activationKeys.length,
-				expiredTotalCount: activationKeys.filter((activationKey) =>
-					ACTIVATION_KEYS_LICENSE_FILTER_TYPES.expired(activationKey)
-				).length,
-				notActiveTotalCount: activationKeys.filter((activationKey) =>
-					ACTIVATION_KEYS_LICENSE_FILTER_TYPES.notActivated(
-						activationKey
-					)
-				).length,
-			});
+			setActivationKeysFiltered(
+				activationKeysFilteredPerPage?.length
+					? activationKeysFilteredPerPage
+					: activationKeysFiltered
+			);
 		}
-	}, [activationKeys]);
+	}, [activationKeys, activePage, itemsPerPage, statusFilter]);
 
-	useEffect(() => {
-		const activationKeysFilterData = activationKeysFilteredByConditions.filter(
-			(activationKey) =>
-				ACTIVATION_KEYS_LICENSE_FILTER_TYPES[filterStatusBar]
-					? ACTIVATION_KEYS_LICENSE_FILTER_TYPES[filterStatusBar](
-							activationKey
-					  )
-					: Boolean
-		);
-
-		setTotalCount(activationKeysFilterData?.length || 0);
-
-		const activationKeysFilterByPage = activationKeysFilterData?.slice(
-			itemsPerPage * activePage - itemsPerPage,
-			itemsPerPage * activePage
-		);
-
-		setActivationKeysFiltered(
-			activationKeysFilterByPage?.length
-				? activationKeysFilterByPage
-				: activationKeysFilterData
-		);
-	}, [
-		activationKeys,
-		activationKeysFilteredByConditions,
-		activePage,
-		filterStatusBar,
-		itemsPerPage,
-	]);
-
-	const groupButtons = [
-		getGroupButtons(ACTIVATION_STATUS.all, statusBar?.allTotalCount),
-		getGroupButtons(
-			ACTIVATION_STATUS.activated,
-			statusBar?.activatedTotalCount
-		),
-		getGroupButtons(
-			ACTIVATION_STATUS.notActivated,
-			statusBar?.notActiveTotalCount
-		),
-		getGroupButtons(
-			ACTIVATION_STATUS.expired,
-			statusBar?.expiredTotalCount
-		),
-	];
-
-	const paginationConfig = {
-		activePage,
-		itemsPerPage,
-		labels: {
-			paginationResults: 'Showing {0} to {1} of {2}',
-			perPageItems: 'Show {0} Items',
-			selectPerPageItems: '{0} Items',
-		},
-		listItemsPerPage: [{label: 5}, {label: 10}, {label: 20}, {label: 50}],
-		setActivePage,
-		setItemsPerPage,
-		showDeltasDropDown: true,
-		totalCount,
-	};
+	const paginationConfig = useMemo(
+		() => ({
+			activePage,
+			itemsPerPage,
+			labels: {
+				paginationResults: 'Showing {0} to {1} of {2}',
+				perPageItems: 'Show {0} Items',
+				selectPerPageItems: '{0} Items',
+			},
+			listItemsPerPage: [
+				{label: 5},
+				{label: 10},
+				{label: 20},
+				{label: 50},
+			],
+			setActivePage,
+			setItemsPerPage,
+			showDeltasDropDown: true,
+			totalCount: currentTotalCount,
+		}),
+		[activePage, currentTotalCount, itemsPerPage]
+	);
 
 	const handleAlertStatus = (hasSuccessfullyDownloadedKeys) => {
-		setActivationKeysDownloadStatus(
+		setDownloadStatus(
 			hasSuccessfullyDownloadedKeys
 				? ALERT_DOWNLOAD_TYPE.success
 				: ALERT_DOWNLOAD_TYPE.danger
 		);
 	};
 
+	const getActivationKeysRows = (activationKey) => ({
+		customClickOnRow: () => {
+			setSelectedActivationKey(activationKey);
+			setIsVisibleModal(true);
+		},
+		download: (
+			<ButtonWithIcon
+				displayType="null"
+				onClick={() =>
+					getActivationKeyDownload(
+						activationKey.id,
+						licenseKeyDownloadURL,
+						sessionId,
+						handleAlertStatus,
+						activationKey,
+						project.name
+					)
+				}
+				small
+				symbol="download"
+			/>
+		),
+		envName: (
+			<div title={[activationKey.name, activationKey.description]}>
+				<p className="font-weight-bold m-0 text-neutral-10 text-truncate">
+					{activationKey.name}
+				</p>
+
+				<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm text-truncate">
+					{activationKey.description}
+				</p>
+			</div>
+		),
+		envType: <EnvironmentTypeColumn activationKey={activationKey} />,
+		expirationDate: <ExpirationDateColumn activationKey={activationKey} />,
+		id: activationKey.id,
+		keyType: <KeyTypeColumn activationKey={activationKey} />,
+		status: <StatusColumn activationKey={activationKey} />,
+	});
+
 	return (
 		<>
 			{isVisibleModal && (
 				<ModalKeyDetails
-					assetsPath={assetsPath}
-					currentActivationKey={currentActivationKey}
+					currentActivationKey={selectedActivationKey}
 					downloadActivationLicenseKey={downloadActivationLicenseKey}
 					isVisibleModal={isVisibleModal}
-					licenseKeyDownloadURL={licenseKeyDownloadURL}
 					observer={observer}
 					onClose={onClose}
 					project={project}
@@ -267,132 +189,52 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 						<h3 className="m-0">Activation Keys</h3>
 
 						<RoundedGroupButtons
-							groupButtons={groupButtons}
-							handleOnChange={(value) =>
-								setFilterStatusBar(value)
-							}
+							groupButtons={navigationGroupButtons}
+							handleOnChange={(value) => setStatusFilter(value)}
 						/>
 					</div>
 
 					<div className="mt-4 py-2">
 						<DXPActivationKeysTableHeader
-							accountKey={project.accountKey}
-							activationKeys={activationKeysFiltered}
-							allActivationsKeys={activationKeys}
-							licenseKeyDownloadURL={licenseKeyDownloadURL}
+							activationKeys={activationKeys}
+							activationKeysFilteredState={[
+								activationKeysFiltered,
+								setActivationKeysFiltered,
+							]}
+							activationKeysIdChecked={activationKeysIdChecked}
 							project={project}
-							selectedKeys={activationKeysChecked}
 							sessionId={sessionId}
-							setActivationKeysFiltered={
-								setActivationKeysFiltered
-							}
+							setFilterTerm={setFilterTerm}
 						/>
 					</div>
 
-					{!activationKeysFilteredByConditions.length &
-					(wasFiltered || wasSearched) ? (
-						<p>
-							No activation keys found with this search criteria
-						</p>
-					) : (
-						<Table
-							checkboxConfig={{
-								checkboxesChecked: activationKeysChecked,
-								setCheckboxesChecked: setActivationKeysChecked,
-							}}
-							className="border-0 cp-dxp-activation-key-table"
-							columns={COLUMNS}
-							hasCheckbox
-							hasPagination
-							isLoading={isLoadingActivationKeys}
-							paginationConfig={paginationConfig}
-							rows={activationKeysFiltered.map(
-								(activationKey) => ({
-									customClickOnRow: () => {
-										setCurrentActivationKey(activationKey);
-										setIsVisibleModal(true);
-									},
-									download: (
-										<ButtonWithIcon
-											displayType="null"
-											onClick={() =>
-												getActivationKeyDownload(
-													activationKey.id,
-													licenseKeyDownloadURL,
-													sessionId,
-													handleAlertStatus,
-													activationKey.productName,
-													activationKey.productVersion,
-													project.name
-												)
-											}
-											small
-											symbol="download"
-										/>
-									),
-									envName: (
-										<div
-											title={[
-												activationKey.name,
-												activationKey.description,
-											]}
-										>
-											<p className="font-weight-bold m-0 text-neutral-10 text-truncate">
-												{activationKey.name}
-											</p>
-
-											<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm text-truncate">
-												{activationKey.description}
-											</p>
-										</div>
-									),
-									envType: (
-										<EnvironmentTypeColumn
-											activationKey={activationKey}
-										/>
-									),
-									expirationDate: (
-										<ExpirationDateColumn
-											activationKey={activationKey}
-										/>
-									),
-									id: activationKey.id,
-									keyType: (
-										<KeyTypeColumn
-											activationKey={activationKey}
-											assetsPath={assetsPath}
-										/>
-									),
-									status: (
-										<StatusColumn
-											activationKey={activationKey}
-										/>
-									),
-								})
-							)}
-						/>
-					)}
+					<Table
+						checkboxConfig={{
+							checkboxesChecked: activationKeysIdChecked,
+							setCheckboxesChecked: setActivationKeysIdChecked,
+						}}
+						className="border-0 cp-dxp-activation-key-table"
+						columns={COLUMNS}
+						hasCheckbox
+						hasPagination
+						isLoading={loading}
+						paginationConfig={paginationConfig}
+						rows={activationKeysFiltered.map((activationKey) =>
+							getActivationKeysRows(activationKey)
+						)}
+					/>
 				</div>
 			</ClayTooltipProvider>
-			{activationKeysDownloadStatus && (
-				<ClayAlert.ToastContainer>
-					<ClayAlert
-						autoClose={
-							AUTO_CLOSE_ALERT_TIME[activationKeysDownloadStatus]
-						}
-						className="cp-activation-key-download-alert"
-						displayType={
-							ALERT_DOWNLOAD_TYPE[activationKeysDownloadStatus]
-						}
-						onClose={() => setActivationKeysDownloadStatus('')}
-					>
-						{
-							ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT[
-								activationKeysDownloadStatus
-							]
-						}
-					</ClayAlert>
-				</ClayAlert.ToastContainer>
+			{!!downloadStatus && (
+				<DownloadAlert
+					downloadStatus={downloadStatus}
+					message={
+						ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT[
+							downloadStatus
+						]
+					}
+					setDownloadStatus={setDownloadStatus}
+				/>
 			)}
 		</>
 	);

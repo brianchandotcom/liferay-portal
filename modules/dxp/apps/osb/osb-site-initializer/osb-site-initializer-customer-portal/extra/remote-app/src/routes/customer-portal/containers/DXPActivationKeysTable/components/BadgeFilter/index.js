@@ -124,7 +124,14 @@ const BadgeFilter = ({
 				})}
 			</div>
 
-			<Button onClick={() => setFilters(INITIAL_FILTER)}>
+			<Button
+				onClick={() =>
+					setFilters({
+						...INITIAL_FILTER,
+						searchTerm: filters.searchTerm,
+					})
+				}
+			>
 				Clear All Filters
 			</Button>
 		</div>

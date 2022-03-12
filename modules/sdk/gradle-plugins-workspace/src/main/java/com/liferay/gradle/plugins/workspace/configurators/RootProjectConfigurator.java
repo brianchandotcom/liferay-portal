@@ -48,6 +48,7 @@ import de.undercouch.gradle.tasks.download.Verify;
 import groovy.lang.Closure;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -69,6 +70,7 @@ import java.util.concurrent.Callable;
 import org.apache.commons.io.FilenameUtils;
 
 import org.gradle.api.Action;
+import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -129,9 +131,15 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	public static final String CREATE_TOKEN_TASK_NAME = "createToken";
 
+	public static final String DIST_BUNDLE_TAR_ALL_TASK_NAME =
+		"distBundleTarAll";
+
 	public static final String DIST_BUNDLE_TAR_TASK_NAME = "distBundleTar";
 
 	public static final String DIST_BUNDLE_TASK_NAME = "distBundle";
+
+	public static final String DIST_BUNDLE_ZIP_ALL_TASK_NAME =
+		"distBundleZipAll";
 
 	public static final String DIST_BUNDLE_ZIP_TASK_NAME = "distBundleZip";
 
@@ -230,20 +238,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, downloadBundleTask, workspaceExtension,
 			providedModulesConfiguration);
 
-		Tar distBundleTarTask = _addTaskDistBundle(
-			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, distBundleTask,
-			workspaceExtension);
-
-		Property<String> archiveExtensionProperty =
-			distBundleTarTask.getArchiveExtension();
-
-		archiveExtensionProperty.set("tar.gz");
-
-		distBundleTarTask.setCompression(Compression.GZIP);
-
-		_addTaskDistBundle(
-			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, distBundleTask,
-			workspaceExtension);
+		_addTasksDistBundleArchive(project, distBundleTask, workspaceExtension);
 
 		_addTaskInitBundle(
 			project, verifyProductTask, downloadBundleTask, verifyBundleTask,
@@ -426,20 +421,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		Copy copy = GradleUtil.addTask(project, taskName, Copy.class);
 
 		_configureTaskCopyBundleFromConfig(
-			copy,
-			new Callable<File>() {
-
-				@Override
-				public File call() throws Exception {
-					return new File(
-						workspaceExtension.getConfigsDir(),
-						workspaceExtension.getEnvironment());
-				}
-
-			});
-
-		_configureTaskCopyBundleFromConfig(
-			copy,
+			project, copy,
 			new Callable<File>() {
 
 				@Override
@@ -754,8 +736,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	@SuppressWarnings("serial")
 	private <T extends AbstractArchiveTask> T _addTaskDistBundle(
-		Project project, String taskName, Class<T> clazz,
-		final Copy distBundleTask,
+		Project project, String taskName, Class<T> clazz, String environment,
+		long buildTime, final Copy distBundleTask,
 		final WorkspaceExtension workspaceExtension) {
 
 		T task = GradleUtil.addTask(project, taskName, clazz);
@@ -783,35 +765,91 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {
 					copySpec.from(distBundleTask);
+
+					if (environment != null) {
+						_configureTaskCopyBundleFromConfig(
+							project, copySpec,
+							new Callable<File>() {
+
+								@Override
+								public File call() throws Exception {
+									return new File(
+										workspaceExtension.getConfigsDir(),
+										environment);
+								}
+
+							});
+					}
+					else {
+						_configureTaskCopyBundleFromConfig(
+							project, copySpec,
+							new Callable<File>() {
+
+								@Override
+								public File call() throws Exception {
+									return new File(
+										workspaceExtension.getConfigsDir(),
+										workspaceExtension.getEnvironment());
+								}
+
+							});
+					}
 				}
 
 			});
 
 		Property<String> archiveBaseNameProperty = task.getArchiveBaseName();
 
-		archiveBaseNameProperty.set(
-			project.provider(
-				new Callable<String>() {
+		if (environment != null) {
+			archiveBaseNameProperty.set(
+				project.provider(
+					new Callable<String>() {
 
-					@Override
-					public String call() throws Exception {
-						StringBuilder sb = new StringBuilder();
+						@Override
+						public String call() throws Exception {
+							StringBuilder sb = new StringBuilder();
 
-						sb.append(project.getName());
+							sb.append(project.getName());
 
-						if (workspaceExtension.isBundleDistIncludeMetadata()) {
-							sb.append("-");
-							sb.append(workspaceExtension.getEnvironment());
-							sb.append("-");
-							sb.append(System.currentTimeMillis());
+							if (workspaceExtension.
+									isBundleDistIncludeMetadata()) {
+
+								sb.append("-");
+								sb.append(environment);
+								sb.append("-");
+								sb.append(buildTime);
+							}
+
+							return sb.toString();
 						}
 
-						return sb.toString();
-					}
+					}));
+		}
+		else {
+			archiveBaseNameProperty.set(
+				project.provider(
+					new Callable<String>() {
 
-				}));
+						@Override
+						public String call() throws Exception {
+							StringBuilder sb = new StringBuilder();
 
-		task.setDescription("Assembles the Liferay bundle and zips it up.");
+							sb.append(project.getName());
+
+							if (workspaceExtension.
+									isBundleDistIncludeMetadata()) {
+
+								sb.append("-");
+								sb.append(workspaceExtension.getEnvironment());
+								sb.append("-");
+								sb.append(buildTime);
+							}
+
+							return sb.toString();
+						}
+
+					}));
+		}
 
 		DirectoryProperty destinationDirectoryProperty =
 			task.getDestinationDirectory();
@@ -1205,6 +1243,119 @@ public class RootProjectConfigurator implements Plugin<Project> {
 		return dockerRemoveContainer;
 	}
 
+	private void _addTasksDistBundleArchive(
+		Project project, Copy distBundleTask,
+		WorkspaceExtension workspaceExtension) {
+
+		long buildTime = System.currentTimeMillis();
+
+		Task distBundleTar = _addTaskDistBundle(
+			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, null, buildTime,
+			distBundleTask, workspaceExtension);
+
+		distBundleTar.setDescription(
+			"Assembles a Liferay bundle(tar.gz) for the current environment.");
+		distBundleTar.setGroup(BUNDLE_GROUP);
+
+		Task distBundleTarAll = GradleUtil.addTask(
+			project, DIST_BUNDLE_TAR_ALL_TASK_NAME, DefaultTask.class);
+
+		distBundleTarAll.setDescription(
+			"Assembles a Liferay bundle(tar.gz) for each environment.");
+		distBundleTarAll.setGroup(BUNDLE_GROUP);
+
+		Task distBundleZipAll = GradleUtil.addTask(
+			project, DIST_BUNDLE_ZIP_ALL_TASK_NAME, DefaultTask.class);
+
+		distBundleZipAll.setDescription(
+			"Assembles a Liferay bundle(zip) for each environment.");
+		distBundleZipAll.setGroup(BUNDLE_GROUP);
+
+		Task distBundleZip = _addTaskDistBundle(
+			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, null, buildTime,
+			distBundleTask, workspaceExtension);
+
+		distBundleZip.setDescription(
+			"Assembles a Liferay bundle(zip) for the current environment.");
+		distBundleZip.setGroup(BUNDLE_GROUP);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					File configsDir = workspaceExtension.getConfigsDir();
+
+					String[] environments = configsDir.list(
+						new FilenameFilter() {
+
+							@Override
+							public boolean accept(File file, String name) {
+								if (file.isDirectory() &&
+									!name.equals("common") &&
+									!name.equals("docker")) {
+
+									return true;
+								}
+
+								return false;
+							}
+
+						});
+
+					if ((environments == null) || (environments.length == 0)) {
+						distBundleTarAll.dependsOn(distBundleTar);
+						distBundleZipAll.dependsOn(distBundleZip);
+					}
+					else {
+						_addTasksDistBundleEnvironments(
+							project, environments, distBundleTask,
+							distBundleTarAll, distBundleZipAll,
+							workspaceExtension);
+					}
+				}
+
+			});
+	}
+
+	private void _addTasksDistBundleEnvironments(
+		Project project, String[] environments, Copy distBundleTask,
+		Task distBundleTarAll, Task distBundleZipAll,
+		WorkspaceExtension workspaceExtension) {
+
+		long buildTime = System.currentTimeMillis();
+
+		for (String environment : environments) {
+			Tar distBundleTarTask = _addTaskDistBundle(
+				project,
+				DIST_BUNDLE_TAR_TASK_NAME + StringUtil.capitalize(environment),
+				Tar.class, environment, buildTime, distBundleTask,
+				workspaceExtension);
+
+			Property<String> archiveExtensionProperty =
+				distBundleTarTask.getArchiveExtension();
+
+			archiveExtensionProperty.set("tar.gz");
+
+			distBundleTarTask.setCompression(Compression.GZIP);
+			distBundleTarTask.setDescription(
+				"Assembles a Liferay bundle(tar.gz) for " + environment + ".");
+
+			distBundleTarAll.dependsOn(distBundleTarTask);
+
+			Zip distBundleZipTask = _addTaskDistBundle(
+				project,
+				DIST_BUNDLE_ZIP_TASK_NAME + StringUtil.capitalize(environment),
+				Zip.class, environment, buildTime, distBundleTask,
+				workspaceExtension);
+
+			distBundleZipTask.setDescription(
+				"Assembles a Liferay bundle(zip) for " + environment + ".");
+
+			distBundleZipAll.dependsOn(distBundleZipTask);
+		}
+	}
+
 	private DockerStartContainer _addTaskStartDockerContainer(
 		Project project, DockerCreateContainer dockerCreateContainer) {
 
@@ -1412,11 +1563,11 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	@SuppressWarnings("serial")
 	private void _configureTaskCopyBundleFromConfig(
-		Copy copy, Callable<File> dir) {
+		Project project, CopySpec copy, Callable<File> dir) {
 
 		copy.from(
 			dir,
-			new Closure<Void>(copy.getProject()) {
+			new Closure<Void>(project) {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {

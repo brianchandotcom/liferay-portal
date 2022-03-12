@@ -39,17 +39,6 @@ public class ExpandoBridgeFactoryUtil {
 		return _expandoBridgeFactory;
 	}
 
-	/**
-	 * @param      expandoBridgeFactory
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public void setExpandoBridgeFactory(
-		ExpandoBridgeFactory expandoBridgeFactory) {
-
-		_expandoBridgeFactory = expandoBridgeFactory;
-	}
-
 	private static volatile ExpandoBridgeFactory _expandoBridgeFactory =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			ExpandoBridgeFactory.class, ExpandoBridgeFactoryUtil.class,

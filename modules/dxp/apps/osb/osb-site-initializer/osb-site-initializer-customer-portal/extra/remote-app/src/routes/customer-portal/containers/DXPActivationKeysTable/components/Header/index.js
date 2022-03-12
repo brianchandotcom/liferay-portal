@@ -14,11 +14,10 @@ import {useCallback, useMemo, useState} from 'react';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
 import {DOWNLOADABLE_LICENSE_KEYS} from '../../utils/constants/downlodableLicenseKeys';
+import ActionButton from '../ActionButton';
 import DeactivateButton from '../Deactivate';
 import DownloadAlert from '../DownloadAlert';
-
 import Filter from '../Filter';
-import ActionButton from './components/ActionButton';
 import useFilters from './hooks/useFilters';
 
 const DXPActivationKeysTableHeader = ({
@@ -88,49 +87,51 @@ const DXPActivationKeysTableHeader = ({
 	return (
 		<>
 			<div className="align-items-center bg-neutral-1 d-flex mb-2 p-3 rounded">
-				<Filter
-					activationKeys={activationKeys}
-					setFilters={setFilters}
-				/>
-
-				<div className="align-items-center d-flex ml-auto">
-					{!!activationKeysByStatusPaginatedChecked.length && (
-						<>
-							<p className="font-weight-semi-bold m-0 ml-auto text-neutral-10">
-								{`${activationKeysByStatusPaginatedChecked.length} Keys Selected`}
-							</p>
-
-							<DeactivateButton
-								deactivateKeysStatus={status.deactivate}
-								filterCheckedActivationKeys={
-									filterCheckedActivationKeys
-								}
-								handleDeactivate={handleDeactivate}
-								sessionId={sessionId}
-								setDeactivateKeysStatus={(value) =>
-									setStatus((previousStatus) => ({
-										...previousStatus,
-										deactivate: value,
-									}))
-								}
-							/>
-						</>
-					)}
-
-					<ActionButton
-						activationKeysByStatusPaginatedChecked={
-							activationKeysByStatusPaginatedChecked
-						}
-						filterCheckedActivationKeys={
-							filterCheckedActivationKeys
-						}
-						isAbleToDownloadAggregateKeys={
-							isAbleToDownloadAggregateKeys
-						}
-						project={project}
-						sessionId={sessionId}
-						setStatus={setStatus}
+				<div>
+					<Filter
+						activationKeys={activationKeys}
+						setFilters={setFilters}
 					/>
+
+					<div className="align-items-center d-flex ml-auto">
+						{!!activationKeysByStatusPaginatedChecked.length && (
+							<>
+								<p className="font-weight-semi-bold m-0 ml-auto text-neutral-10">
+									{`${activationKeysByStatusPaginatedChecked.length} Keys Selected`}
+								</p>
+
+								<DeactivateButton
+									deactivateKeysStatus={status.deactivate}
+									filterCheckedActivationKeys={
+										filterCheckedActivationKeys
+									}
+									handleDeactivate={handleDeactivate}
+									sessionId={sessionId}
+									setDeactivateKeysStatus={(value) =>
+										setStatus((previousStatus) => ({
+											...previousStatus,
+											deactivate: value,
+										}))
+									}
+								/>
+							</>
+						)}
+
+						<ActionButton
+							activationKeysByStatusPaginatedChecked={
+								activationKeysByStatusPaginatedChecked
+							}
+							filterCheckedActivationKeys={
+								filterCheckedActivationKeys
+							}
+							isAbleToDownloadAggregateKeys={
+								isAbleToDownloadAggregateKeys
+							}
+							project={project}
+							sessionId={sessionId}
+							setStatus={setStatus}
+						/>
+					</div>
 				</div>
 			</div>
 

@@ -789,7 +789,27 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		Property<String> archiveBaseNameProperty = task.getArchiveBaseName();
 
-		archiveBaseNameProperty.set(project.getName());
+		archiveBaseNameProperty.set(
+			project.provider(
+				new Callable<String>() {
+
+					@Override
+					public String call() throws Exception {
+						StringBuilder sb = new StringBuilder();
+
+						sb.append(project.getName());
+
+						if (workspaceExtension.isBundleDistIncludeMetadata()) {
+							sb.append("-");
+							sb.append(workspaceExtension.getEnvironment());
+							sb.append("-");
+							sb.append(System.currentTimeMillis());
+						}
+
+						return sb.toString();
+					}
+
+				}));
 
 		task.setDescription("Assembles the Liferay bundle and zips it up.");
 

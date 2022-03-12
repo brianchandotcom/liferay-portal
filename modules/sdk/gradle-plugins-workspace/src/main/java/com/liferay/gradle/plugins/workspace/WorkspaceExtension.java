@@ -82,6 +82,9 @@ public class WorkspaceExtension {
 			settings, "bundle.cache.dir", _BUNDLE_CACHE_DIR);
 		_bundleChecksumMD5 = _getProperty(
 			settings, "bundle.checksum.md5", getDefaultBundleChecksumMD5());
+		_bundleDistIncludeMetadata = _getProperty(
+			settings, "bundle.dist.include.metadata",
+			_BUNDLE_DIST_INCLUDE_METADATA);
 		_bundleDistRootDirName = _getProperty(
 			settings, "bundle.dist.root.dir", _BUNDLE_DIST_ROOT_DIR_NAME);
 		_bundleTokenDownload = _getProperty(
@@ -304,6 +307,10 @@ public class WorkspaceExtension {
 		return GradleUtil.toString(_targetPlatformVersion);
 	}
 
+	public boolean isBundleDistIncludeMetadata() {
+		return GradleUtil.toBoolean(_bundleDistIncludeMetadata);
+	}
+
 	public boolean isBundleTokenDownload() {
 		return GradleUtil.toBoolean(_bundleTokenDownload);
 	}
@@ -328,6 +335,10 @@ public class WorkspaceExtension {
 
 	public void setBundleChecksumMD5(Object bundleChecksumMD5) {
 		_bundleChecksumMD5 = bundleChecksumMD5;
+	}
+
+	public void setBundleDistIncludeMetadata(Object bundleDistIncludeMetadata) {
+		_bundleDistIncludeMetadata = bundleDistIncludeMetadata;
 	}
 
 	public void setBundleDistRootDirName(Object bundleDistRootDirName) {
@@ -572,6 +583,8 @@ public class WorkspaceExtension {
 		System.getProperty("user.home"),
 		BundleSupportConstants.DEFAULT_BUNDLE_CACHE_DIR_NAME);
 
+	private static final boolean _BUNDLE_DIST_INCLUDE_METADATA = false;
+
 	private static final String _BUNDLE_DIST_ROOT_DIR_NAME = null;
 
 	private static final boolean _BUNDLE_TOKEN_DOWNLOAD = false;
@@ -598,6 +611,7 @@ public class WorkspaceExtension {
 	private final Object _appServerTomcatVersion;
 	private Object _bundleCacheDir;
 	private Object _bundleChecksumMD5;
+	private Object _bundleDistIncludeMetadata;
 	private Object _bundleDistRootDirName;
 	private Object _bundleTokenDownload;
 	private Object _bundleTokenEmailAddress;

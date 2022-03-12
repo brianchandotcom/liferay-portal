@@ -4280,6 +4280,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.portal.tika.jar!commons-math3.jar</file-name>
+				<version>3.6.1</version>
+				<project-name>Apache Commons Math</project-name>
+				<project-url>http://commons.apache.org/proper/commons-math/</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.portal.tika.jar!java-libpst.jar</file-name>
 				<version>0.8.1</version>
 				<project-name>java-libpst</project-name>

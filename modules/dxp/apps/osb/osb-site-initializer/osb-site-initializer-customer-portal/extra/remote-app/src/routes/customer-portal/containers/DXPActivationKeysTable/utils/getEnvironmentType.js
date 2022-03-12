@@ -10,24 +10,6 @@
  * distribution rights of the Software.
  */
 
-const PRODUCTION = 'Production';
-const NONPRODUCTION = 'Non-Production';
-const DEVELOPER = 'Developer';
-const BACKUP = 'Backup';
-
 export function getEnvironmentType(productName) {
-	if (productName.toLowerCase().includes(NONPRODUCTION.toLowerCase())) {
-		return NONPRODUCTION;
-	}
-
-	if (productName.toLowerCase().includes(PRODUCTION.toLowerCase())) {
-		return PRODUCTION;
-	}
-
-	if (productName.toLowerCase().includes(DEVELOPER.toLowerCase())) {
-		return DEVELOPER;
-	}
-	if (productName.toLowerCase().includes(BACKUP.toLowerCase())) {
-		return BACKUP;
-	}
+	return productName?.replace('DXP ', '');
 }

@@ -205,7 +205,7 @@ const TableKeyDetails = ({
 
 					<div className="col-3">
 						<p className="bg-neutral-1 cp-key-details-paragraph px-3 py-2 rounded">
-							{getCurrentEndDate(currentActivationKey.createDate)}
+							{getCurrentEndDate(currentActivationKey.startDate)}
 						</p>
 					</div>
 				</div>

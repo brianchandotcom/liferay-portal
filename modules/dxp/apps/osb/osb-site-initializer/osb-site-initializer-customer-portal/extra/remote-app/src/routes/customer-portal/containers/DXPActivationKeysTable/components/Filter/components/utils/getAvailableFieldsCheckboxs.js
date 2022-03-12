@@ -9,9 +9,16 @@
  * distribution rights of the Software.
  */
 
-export function getDoesNotExpire(date) {
-	const today = new Date();
-	today.setFullYear(today.getFullYear() + 100);
+export default function getAvailableFieldsCheckboxs(activationKeys, getItem) {
+	return activationKeys
+		?.reduce((accumulatorItems, activationKey) => {
+			const item = getItem(activationKey);
 
-	return new Date(date) >= today;
+			if (accumulatorItems.includes(item)) {
+				return accumulatorItems;
+			}
+
+			return [...accumulatorItems, item];
+		}, [])
+		.sort((previousItem, nextItem) => previousItem - nextItem);
 }

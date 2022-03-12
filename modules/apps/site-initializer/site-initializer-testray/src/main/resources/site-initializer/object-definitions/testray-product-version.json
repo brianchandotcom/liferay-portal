@@ -2,19 +2,10 @@
 	"label": {
 		"en_US": "Testray Product Version"
 	},
-	"name": "TestrayProductVersion",
+	"name": "ProductVersion",
 	"objectFields": [
 		{
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Testray Project Id"
-			},
-			"name": "testrayProjectId",
-			"required": false,
-			"type": "Long"
-		},
-		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {

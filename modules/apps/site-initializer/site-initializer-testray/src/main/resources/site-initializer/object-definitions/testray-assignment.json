@@ -2,9 +2,10 @@
 	"label": {
 		"en_US": "Testray Assignment"
 	},
-	"name": "TestrayAssignment",
+	"name": "Assignment",
 	"objectFields": [
 		{
+			"DBType": "Long",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -15,6 +16,7 @@
 			"type": "Long"
 		},
 		{
+			"DBType": "Long",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -25,6 +27,7 @@
 			"type": "Long"
 		},
 		{
+			"DBType": "Long",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {

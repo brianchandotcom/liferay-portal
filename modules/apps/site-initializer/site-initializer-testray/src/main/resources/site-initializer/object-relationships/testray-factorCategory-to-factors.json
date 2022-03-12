@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "One Factor Category to Many Factors"
+	},
+	"name": "factorCategoryToFactors",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:FactorCategory$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Factor$]",
+	"objectDefinitionName2": "Factor",
+	"type": "oneToMany"
+}

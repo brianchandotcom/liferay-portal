@@ -2,9 +2,10 @@
 	"label": {
 		"en_US": "Testray Issue"
 	},
-	"name": "TestrayIssue",
+	"name": "Issue",
 	"objectFields": [
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {

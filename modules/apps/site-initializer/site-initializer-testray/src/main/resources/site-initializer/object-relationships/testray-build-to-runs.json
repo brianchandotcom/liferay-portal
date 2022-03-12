@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "One Build to Many Runs"
+	},
+	"name": "buildToRuns",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Build$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Run$]",
+	"objectDefinitionName2": "Run",
+	"type": "oneToMany"
+}

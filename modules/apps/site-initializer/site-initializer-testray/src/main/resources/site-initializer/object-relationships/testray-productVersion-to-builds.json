@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "One Product Version to Many Builds"
+	},
+	"name": "productVersionToBuilds",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:ProductVersion$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Build$]",
+	"objectDefinitionName2": "Build",
+	"type": "oneToMany"
+}

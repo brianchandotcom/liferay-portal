@@ -2,9 +2,10 @@
 	"label": {
 		"en_US": "Testray Project"
 	},
-	"name": "TestrayProject",
+	"name": "Project",
 	"objectFields": [
 		{
+			"DBType": "String",
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"indexedLanguageId": "",
@@ -16,6 +17,7 @@
 			"type": "String"
 		},
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {

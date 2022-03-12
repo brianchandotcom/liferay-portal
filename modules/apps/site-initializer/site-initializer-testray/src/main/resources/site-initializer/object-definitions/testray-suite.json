@@ -2,9 +2,10 @@
 	"label": {
 		"en_US": "Testray Suite"
 	},
-	"name": "TestraySuite",
+	"name": "Suite",
 	"objectFields": [
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -15,6 +16,7 @@
 			"type": "String"
 		},
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -22,9 +24,10 @@
 			},
 			"name": "description",
 			"required": false,
-			"type": "Clob"
+			"type": "String"
 		},
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -32,7 +35,18 @@
 			},
 			"name": "caseParameters",
 			"required": false,
-			"type": "Clob"
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Type"
+			},
+			"name": "type",
+			"required": false,
+			"type": "String"
 		}
 	],
 	"pluralLabel": {

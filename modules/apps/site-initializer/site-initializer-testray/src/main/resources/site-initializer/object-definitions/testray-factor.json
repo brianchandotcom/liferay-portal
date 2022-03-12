@@ -2,9 +2,10 @@
 	"label": {
 		"en_US": "Testray Factor"
 	},
-	"name": "TestrayFactor",
+	"name": "Factor",
 	"objectFields": [
 		{
+			"DBType": "Long",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -15,6 +16,7 @@
 			"type": "Long"
 		},
 		{
+			"DBType": "Long",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -25,42 +27,24 @@
 			"type": "Long"
 		},
 		{
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Testray Factor Category Id"
-			},
-			"name": "testrayFactorCategoryId",
-			"required": false,
-			"type": "Long"
-		},
-		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Testray Factor Category Name"
 			},
-			"name": "testrayFactorCategoryName",
+			"name": "factorCategoryName",
 			"required": false,
 			"type": "String"
 		},
 		{
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Testray Factor Option Id"
-			},
-			"name": "testrayFactorOptionId",
-			"required": false,
-			"type": "Long"
-		},
-		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Testray Factor Option Name"
 			},
-			"name": "testrayFactorOptionName",
+			"name": "factorOptionName",
 			"required": false,
 			"type": "String"
 		}

@@ -1,0 +1,23 @@
+{
+	"label": {
+		"en_US": "Testray Cases Components"
+	},
+	"name": "CasesComponents",
+	"objectFields": [
+		{
+			"DBType": "String",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"pluralLabel": {
+		"en_US": "Testray Cases Components"
+	},
+	"scope": "company"
+}

@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "One Case Result to Many Attachments"
+	},
+	"name": "caseResultToAttachments",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:CaseResult$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Attachment$]",
+	"objectDefinitionName2": "Attachment",
+	"type": "oneToMany"
+}

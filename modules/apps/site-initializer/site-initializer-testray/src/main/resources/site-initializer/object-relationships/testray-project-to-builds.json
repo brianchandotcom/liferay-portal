@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "One Project to Many Builds"
+	},
+	"name": "projectToBuilds",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Project$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Build$]",
+	"objectDefinitionName2": "Build",
+	"type": "oneToMany"
+}

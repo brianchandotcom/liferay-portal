@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "One Component to Many Case Results"
+	},
+	"name": "componentToCaseResult",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Component$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:CaseResult$]",
+	"objectDefinitionName2": "CaseResult",
+	"type": "oneToMany"
+}

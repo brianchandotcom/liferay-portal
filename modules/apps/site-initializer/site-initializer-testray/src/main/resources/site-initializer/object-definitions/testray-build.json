@@ -2,10 +2,22 @@
 	"label": {
 		"en_US": "Testray Build"
 	},
-	"name": "TestrayBuild",
+	"name": "Build",
 	"objectFields": [
 		{
+			"DBType": "Long",
 			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Template Testray Build Id"
+			},
+			"name": "templateTestrayBuildId",
+			"required": false,
+			"type": "Long"
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Name"
@@ -15,6 +27,7 @@
 			"type": "String"
 		},
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -25,6 +38,7 @@
 			"type": "String"
 		},
 		{
+			"DBType": "Boolean",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -35,6 +49,7 @@
 			"type": "Boolean"
 		},
 		{
+			"DBType": "Date",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -45,6 +60,7 @@
 			"type": "Date"
 		},
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -55,6 +71,7 @@
 			"type": "String"
 		},
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -65,6 +82,7 @@
 			"type": "String"
 		},
 		{
+			"DBType": "Boolean",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -75,6 +93,7 @@
 			"type": "Boolean"
 		},
 		{
+			"DBType": "Integer",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {

@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "One Routine to Many Projects"
+	},
+	"name": "routineToProjects",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Project$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Routine$]",
+	"objectDefinitionName2": "Routine",
+	"type": "oneToMany"
+}

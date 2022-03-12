@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "One Issue to Many Testray Subtasks Issues"
+	},
+	"name": "issueToSubtasksIssues",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Issue$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:SubtaskIssue$]",
+	"objectDefinitionName2": "SubtaskIssue",
+	"type": "oneToMany"
+}

@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "One CaseResult to Many SubtasksCasesResults"
+	},
+	"name": "caseResultToSubtasksCasesResults",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:CaseResult$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:SubtasksCasesResults$]",
+	"objectDefinitionName2": "SubtasksCasesResults",
+	"type": "oneToMany"
+}

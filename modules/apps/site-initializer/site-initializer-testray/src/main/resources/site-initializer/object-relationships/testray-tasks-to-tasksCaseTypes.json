@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "One Tasks to Many Tasks Cases Types"
+	},
+	"name": "taskToTasksCaseTypes",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Task$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:TasksCaseTypes$]",
+	"objectDefinitionName2": "TasksCaseTypes",
+	"type": "oneToMany"
+}

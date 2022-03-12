@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "One Build to many Case Results"
+	},
+	"name": "buildToCaseResult",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Build$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:CaseResult$]",
+	"objectDefinitionName2": "CaseResult",
+	"type": "oneToMany"
+}

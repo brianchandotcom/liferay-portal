@@ -2,9 +2,10 @@
 	"label": {
 		"en_US": "Testray Component"
 	},
-	"name": "TestrayComponent",
+	"name": "Component",
 	"objectFields": [
 		{
+			"DBType": "String",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -15,6 +16,7 @@
 			"type": "String"
 		},
 		{
+			"DBType": "Long",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {

@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "One Team to Many Cases"
+	},
+	"name": "teamToCases",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Team$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Case$]",
+	"objectDefinitionName2": "Case",
+	"type": "oneToMany"
+}

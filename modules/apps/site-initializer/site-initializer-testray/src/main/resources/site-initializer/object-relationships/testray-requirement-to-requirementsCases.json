@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "One Requirement to Many Requirements Cases"
+	},
+	"name": "requiremenToRequirementsCases",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Requirement$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:RequirementsCases$]",
+	"objectDefinitionName2": "RequirementsCases",
+	"type": "oneToMany"
+}

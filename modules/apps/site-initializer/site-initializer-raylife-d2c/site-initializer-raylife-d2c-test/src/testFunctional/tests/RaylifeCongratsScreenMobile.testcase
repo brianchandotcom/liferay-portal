@@ -26,6 +26,40 @@ definition {
 		}
 	}
 
+	@description = "LPS-148203 - Verify if the title of the page corresponds to 'You did it!'"
+	@priority = "4"
+	test CanViewTitleCongratsPhone {
+		RaylifePaymentMethod.enablePayPalPayment();
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		SetWindowSize(value1 = "360,720");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeMobile.formsFlowPhone();
+
+		Click(
+			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+			policy = "standard");
+
+		RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		RaylifePaymentMethod.payPalFlow();
+
+		AssertElementPresent(locator1 = "RaylifeMobile#CONGRATS_PAGE_MOBILE");
+	}
+
 	@description = "LPS-148206 - Verify if the title of the page corresponds to 'Congrats'"
 	@priority = "4"
 	test CanViewTitleCongratsTablet {
@@ -71,10 +105,48 @@ definition {
 
 		RaylifePaymentMethod.payPalFlow();
 
-        AssertElementPresent(locator1 = "RaylifePolicyDeclaration#CONGRATS_PAGE_POLICY_DECLARATION");
+		AssertElementPresent(locator1 = "RaylifePolicyDeclaration#CONGRATS_PAGE_POLICY_DECLARATION");
 	}
 
-    @description = "LPS-148207 - Verify if the policy number is generated"
+	@description = "LPS-148205 - Check if there is no page description corresponding to 'We will e-mail you the policy contract for signing via DocuSign'"
+	@priority = "4"
+	test IfDocusignMessageNotAppearPhone {
+		RaylifePaymentMethod.enablePayPalPayment();
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		SetWindowSize(value1 = "360,720");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeMobile.formsFlowPhone();
+
+		Click(
+			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+			policy = "standard");
+
+		RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
+
+		Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
+
+		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
+
+		AssertNotVisible(locator1 = "RaylifeMobile#MENSSAGE_SCREEN_CONGRATS_MOBILE");
+	}
+
+	@description = "LPS-148207 - Verify if the policy number is generated"
 	@priority = "4"
 	test IfPolicyNumberGeneratedTablet {
 		RaylifePaymentMethod.enablePayPalPayment();
@@ -119,12 +191,48 @@ definition {
 
 		RaylifePaymentMethod.payPalFlow();
 
-        AssertElementPresent(
+		AssertElementPresent(
 			locator1 = "RaylifePolicyDeclaration#POLICY_NUMBER",
 			policy = "Policy");
 	}
 
-    @description = "LPS-148208 - Check that the quote price is the same as on the Quote Comparison page"
+	@description = "LPS-148204 - Verify if the product corresponds to the one you selected at the beginning of the flow"
+	@priority = "4"
+	test IfProductEqualsInTitlePhone {
+		RaylifePaymentMethod.enablePayPalPayment();
+
+		ApplicationsMenu.gotoSite(site = "Raylife");
+
+		SetWindowSize(value1 = "360,720");
+
+		RaylifeHomePage.startFlow();
+
+		RaylifeMobile.formsFlowPhone();
+
+		Click(
+			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
+			policy = "standard");
+
+		RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		RaylifePaymentMethod.payPalFlow();
+
+		AssertTextEquals(
+			locator1 = "RaylifePolicyDeclaration#POLICY_DECLARATION_PRODUCT",
+			value1 = "Business Owners Policy");
+	}
+
+	@description = "LPS-148208 - Check that the quote price is the same as on the Quote Comparison page"
 	@priority = "4"
 	test IfQuoteValueEqualsTablet {
 		RaylifePaymentMethod.enablePayPalPayment();
@@ -169,118 +277,9 @@ definition {
 
 		RaylifePaymentMethod.payPalFlow();
 
-        AssertTextEquals(
+		AssertTextEquals(
 			locator1 = "RaylifePolicyDeclaration#POLICY_DECLARATION_PRODUCT",
 			value1 = "Business Owners Policy");
 	}
-
-	@description = "LPS-148203 - Verify if the title of the page corresponds to 'You did it!'"
-	@priority = "4"
-	test CanViewTitleCongratsPhone {
-		RaylifePaymentMethod.enablePayPalPayment();
-
-		ApplicationsMenu.gotoSite(site = "Raylife");
-
-		SetWindowSize(value1 = "360,720");
-
-		RaylifeHomePage.startFlow();
-
-		RaylifeMobile.formsFlowPhone();
-
-		Click(
-			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
-			policy = "standard");
-
-		RaylifeCreateAccount.createAccount();
-
-		RaylifeUploadDocuments.uploadDocuments(
-			dmDocumentFileList = "Document_1.pdf",
-			title = "Business");
-
-		RaylifeUploadDocuments.uploadDocuments(
-			dmDocumentFileList = "Document_1.jpg",
-			title = "Build");
-
-		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
-
-		RaylifePaymentMethod.payPalFlow();
-
-        AssertElementPresent(locator1 = "RaylifeMobile#CONGRATS_PAGE_MOBILE");
-	}
-
-    @description = "LPS-148204 - Verify if the product corresponds to the one you selected at the beginning of the flow"
-	@priority = "4"
-	test IfProductEqualsInTitlePhone {
-		RaylifePaymentMethod.enablePayPalPayment();
-
-		ApplicationsMenu.gotoSite(site = "Raylife");
-
-		SetWindowSize(value1 = "360,720");
-
-		RaylifeHomePage.startFlow();
-
-		RaylifeMobile.formsFlowPhone();
-
-		Click(
-			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
-			policy = "standard");
-
-		RaylifeCreateAccount.createAccount();
-
-		RaylifeUploadDocuments.uploadDocuments(
-			dmDocumentFileList = "Document_1.pdf",
-			title = "Business");
-
-		RaylifeUploadDocuments.uploadDocuments(
-			dmDocumentFileList = "Document_1.jpg",
-			title = "Build");
-
-		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
-
-		RaylifePaymentMethod.payPalFlow();
-
-        AssertTextEquals(
-			locator1 = "RaylifePolicyDeclaration#POLICY_DECLARATION_PRODUCT",
-			value1 = "Business Owners Policy");
-	}
-
-    @description = "LPS-148205 - Check if there is no page description corresponding to 'We will e-mail you the policy contract for signing via DocuSign'"
-	@priority = "4"
-	test IfDocusignMessageNotAppearPhone	 {
-		RaylifePaymentMethod.enablePayPalPayment();
-
-		ApplicationsMenu.gotoSite(site = "Raylife");
-
-		SetWindowSize(value1 = "360,720");
-
-		RaylifeHomePage.startFlow();
-
-		RaylifeMobile.formsFlowPhone();
-
-		Click(
-			locator1 = "RaylifeQuoteComparison#BUTTON_PURCHASE_THIS_POLICY",
-			policy = "standard");
-
-		RaylifeCreateAccount.createAccount();
-
-		RaylifeUploadDocuments.uploadDocuments(
-			dmDocumentFileList = "Document_1.pdf",
-			title = "Business");
-
-		RaylifeUploadDocuments.uploadDocuments(
-			dmDocumentFileList = "Document_1.jpg",
-			title = "Build");
-
-		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
-
-		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
-
-		Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
-
-		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
-
-        AssertNotVisible(locator1 = "RaylifeMobile#MENSSAGE_SCREEN_CONGRATS_MOBILE");
-
-    }
 
 }

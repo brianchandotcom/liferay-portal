@@ -98,10 +98,10 @@ const DateFilter = ({
 						updateFilters(
 							onOrAfter instanceof Date &&
 								!isNaN(onOrAfter.valueOf()) &&
-								onOrAfter.toISOString(),
+								onOrAfter,
 							onOrBefore instanceof Date &&
 								!isNaN(onOrBefore.valueOf()) &&
-								onOrBefore.toISOString()
+								onOrBefore
 						);
 					}}
 					required

@@ -146,7 +146,10 @@ const Filter = ({activationKeys, setFilters}) => {
 										updateFilters={(checkedItems) =>
 											setFilters((previousFilters) => ({
 												...previousFilters,
-												environmentTypes: checkedItems,
+												environmentTypes: {
+													...previousFilters.environmentTypes,
+													value: checkedItems,
+												},
 											}))
 										}
 									/>
@@ -166,8 +169,11 @@ const Filter = ({activationKeys, setFilters}) => {
 											setFilters((previousFilters) => ({
 												...previousFilters,
 												startDate: {
-													onOrAfter,
-													onOrBefore,
+													...previousFilters.startDate,
+													value: {
+														onOrAfter,
+														onOrBefore,
+													},
 												},
 											}))
 										}
@@ -195,7 +201,10 @@ const Filter = ({activationKeys, setFilters}) => {
 										updateFilters={(checkedItems) =>
 											setFilters((previousFilters) => ({
 												...previousFilters,
-												status: checkedItems,
+												status: {
+													...previousFilters.status,
+													value: checkedItems,
+												},
 											}))
 										}
 									/>
@@ -213,7 +222,10 @@ const Filter = ({activationKeys, setFilters}) => {
 										updateFilters={(checkedItems) =>
 											setFilters((previousFilters) => ({
 												...previousFilters,
-												productVersions: checkedItems,
+												productVersions: {
+													...previousFilters.productVersions,
+													value: checkedItems,
+												},
 											}))
 										}
 									/>
@@ -231,7 +243,10 @@ const Filter = ({activationKeys, setFilters}) => {
 										updateFilters={(checkedItems) =>
 											setFilters((previousFilters) => ({
 												...previousFilters,
-												instanceSizes: checkedItems,
+												instanceSizes: {
+													...previousFilters.instanceSizes,
+													value: checkedItems,
+												},
 											}))
 										}
 									/>

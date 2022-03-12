@@ -22,7 +22,7 @@ export default function ExpirationDate({hasDNE, setFilters}) {
 				const today = new Date();
 				today.setFullYear(today.getFullYear() + 100);
 
-				return today.toISOString();
+				return today;
 			}
 
 			return currentValue;
@@ -37,9 +37,12 @@ export default function ExpirationDate({hasDNE, setFilters}) {
 			updateFilters={(onOrAfter, onOrBefore) =>
 				setFilters((previousFilters) => ({
 					...previousFilters,
-					expirationDates: {
-						onOrAfter: getOnOrAfterValue(onOrAfter),
-						onOrBefore,
+					expirationDate: {
+						...previousFilters.expirationDate,
+						value: {
+							onOrAfter: getOnOrAfterValue(onOrAfter),
+							onOrBefore,
+						},
 					},
 				}))
 			}

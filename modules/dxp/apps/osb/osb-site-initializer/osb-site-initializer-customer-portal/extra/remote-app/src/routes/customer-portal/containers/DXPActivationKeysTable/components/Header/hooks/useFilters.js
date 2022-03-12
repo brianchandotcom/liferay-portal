@@ -11,33 +11,14 @@
 
 import {useEffect, useState} from 'react';
 import {ACTIVATION_STATUS} from '../../../utils/constants/activationStatus';
+import {INITIAL_FILTER} from '../../../utils/constants/initialFilter';
 
 export default function useFilters(setFilterTerm) {
 	const DEFAULT_FILTER = 'active eq true';
 	const COMPLIMENTARY = 'Complimentary';
 	const SUBSCRIPTION = 'Subscription';
 
-	const [filters, setFilters] = useState({
-		environmentTypes: [],
-		expirationDate: {
-			onOrAfter: undefined,
-			onOrBefore: undefined,
-		},
-		instanceSizes: [],
-		keyType: {
-			hasOnPremise: undefined,
-			hasVirtualCluster: undefined,
-			maxNodes: '',
-			minNodes: '',
-		},
-		productVersions: [],
-		searchTerm: '',
-		startDate: {
-			onOrAfter: undefined,
-			onOrBefore: undefined,
-		},
-		status: [],
-	});
+	const [filters, setFilters] = useState(INITIAL_FILTER);
 
 	useEffect(() => {
 		let initialFilter = DEFAULT_FILTER;
@@ -48,8 +29,8 @@ export default function useFilters(setFilterTerm) {
 			initialFilter = initialFilter.concat(` and ${searchTermFilter}`);
 		}
 
-		if (filters.instanceSizes.length) {
-			const instanceSizesFilter = `(${filters.instanceSizes.reduce(
+		if (filters.instanceSizes.value.length) {
+			const instanceSizesFilter = `(${filters.instanceSizes.value.reduce(
 				(accumulatorInstanceSizesFilter, instanceSize, index) => {
 					return `${accumulatorInstanceSizesFilter}${
 						index > 0 ? ' or ' : ''
@@ -61,8 +42,8 @@ export default function useFilters(setFilterTerm) {
 			initialFilter = initialFilter.concat(` and ${instanceSizesFilter}`);
 		}
 
-		if (filters.productVersions.length) {
-			const productVersionsFilter = `(${filters.productVersions.reduce(
+		if (filters.productVersions.value.length) {
+			const productVersionsFilter = `(${filters.productVersions.value.reduce(
 				(accumulatorProductVersionsFilter, productVersion, index) => {
 					return `${accumulatorProductVersionsFilter}${
 						index > 0 ? ' or ' : ''
@@ -76,9 +57,9 @@ export default function useFilters(setFilterTerm) {
 			);
 		}
 
-		if (filters.status.length) {
+		if (filters.status.value.length) {
 			const now = new Date().toISOString();
-			const statusFilter = filters.status.reduce(
+			const statusFilter = filters.status.value.reduce(
 				(accumulatorStatusFilter, status, index) => {
 					let filter = '';
 					if (status === ACTIVATION_STATUS.activated.title) {
@@ -103,8 +84,8 @@ export default function useFilters(setFilterTerm) {
 			initialFilter = initialFilter.concat(` and ${statusFilter}`);
 		}
 
-		if (filters.environmentTypes.length) {
-			const environmentTypesFilter = filters.environmentTypes.reduce(
+		if (filters.environmentTypes.value.length) {
+			const environmentTypesFilter = filters.environmentTypes.value.reduce(
 				(accumulatorEnvironmentTypesFilter, environmentType, index) => {
 					if (environmentType === COMPLIMENTARY) {
 						return `${accumulatorEnvironmentTypesFilter}${
@@ -130,18 +111,20 @@ export default function useFilters(setFilterTerm) {
 			);
 		}
 
-		if (Object.values(filters.expirationDate).some((date) => !!date)) {
+		if (
+			Object.values(filters.expirationDate.value).some((date) => !!date)
+		) {
 			const filterDates = [];
 
-			if (filters.expirationDate.onOrAfter) {
+			if (filters.expirationDate.value.onOrAfter) {
 				filterDates.push(
-					`expirationDate ge ${filters.expirationDate.onOrAfter}`
+					`expirationDate ge ${filters.expirationDate.value.onOrAfter.toISOString()}`
 				);
 			}
 
-			if (filters.expirationDate.onOrBefore) {
+			if (filters.expirationDate.value.onOrBefore) {
 				filterDates.push(
-					`expirationDate lt ${filters.expirationDate.onOrBefore}`
+					`expirationDate lt ${filters.expirationDate.value.onOrBefore.toISOString()}`
 				);
 			}
 
@@ -150,16 +133,18 @@ export default function useFilters(setFilterTerm) {
 			);
 		}
 
-		if (Object.values(filters.startDate).some((date) => !!date)) {
+		if (Object.values(filters.startDate.value).some((date) => !!date)) {
 			const filterDates = [];
 
-			if (filters.startDate.onOrAfter) {
-				filterDates.push(`startDate ge ${filters.startDate.onOrAfter}`);
+			if (filters.startDate.value.onOrAfter) {
+				filterDates.push(
+					`startDate ge ${filters.startDate.value.onOrAfter.toISOString()}`
+				);
 			}
 
-			if (filters.startDate.onOrBefore) {
+			if (filters.startDate.value.onOrBefore) {
 				filterDates.push(
-					`startDate lt ${filters.startDate.onOrBefore}`
+					`startDate lt ${filters.startDate.value.onOrBefore.toISOString()}`
 				);
 			}
 
@@ -168,32 +153,34 @@ export default function useFilters(setFilterTerm) {
 			);
 		}
 
-		if (Object.values(filters.keyType).every((value) => !isNaN(value))) {
+		if (
+			Object.values(filters.keyType.value).every((value) => !isNaN(value))
+		) {
 			const filtersKeyType = [];
 
 			if (
-				!isNaN(filters.keyType.hasOnPremise) &&
-				filters.keyType.hasOnPremise
+				!isNaN(filters.keyType.value.hasOnPremise) &&
+				filters.keyType.value.hasOnPremise
 			) {
 				filtersKeyType.push("licenseEntryType ne 'virtual-cluster'");
 			}
 
 			if (
-				!isNaN(filters.keyType.hasVirtualCluster) &&
-				filters.keyType.hasVirtualCluster
+				!isNaN(filters.keyType.value.hasVirtualCluster) &&
+				filters.keyType.value.hasVirtualCluster
 			) {
 				filtersKeyType.push("licenseEntryType eq 'virtual-cluster'");
 			}
 
-			if (filters.keyType.maxNodes) {
+			if (filters.keyType.value.maxNodes) {
 				filtersKeyType.push(
-					`maxClusterNodes le ${filters.keyType.maxNodes}`
+					`maxClusterNodes le ${filters.keyType.value.maxNodes}`
 				);
 			}
 
-			if (filters.keyType.minNodes) {
+			if (filters.keyType.value.minNodes) {
 				filtersKeyType.push(
-					`maxClusterNodes ge ${filters.keyType.minNodes}`
+					`maxClusterNodes ge ${filters.keyType.value.minNodes}`
 				);
 			}
 
@@ -206,14 +193,14 @@ export default function useFilters(setFilterTerm) {
 
 		setFilterTerm(`${initialFilter}`);
 	}, [
-		filters.environmentTypes,
-		filters.expirationDate,
-		filters.instanceSizes,
-		filters.keyType,
-		filters.productVersions,
+		filters.environmentTypes.value,
+		filters.expirationDate.value,
+		filters.instanceSizes.value,
+		filters.keyType.value,
+		filters.productVersions.value,
 		filters.searchTerm,
-		filters.startDate,
-		filters.status,
+		filters.startDate.value,
+		filters.status.value,
 		setFilterTerm,
 	]);
 

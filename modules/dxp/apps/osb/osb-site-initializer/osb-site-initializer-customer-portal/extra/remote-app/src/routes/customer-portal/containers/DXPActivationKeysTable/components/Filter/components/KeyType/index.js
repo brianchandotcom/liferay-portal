@@ -95,10 +95,13 @@ const KeyTypeFilter = ({hasVirtualCluster, setFilters}) => {
 						setFilters((previousFilters) => ({
 							...previousFilters,
 							keyType: {
-								hasOnPremise: onPromiseChecked,
-								hasVirtualCluster: virtualClusterChecked,
-								maxNodes: maxNodesValue,
-								minNodes: minNodesValue,
+								...previousFilters.keyType,
+								value: {
+									hasOnPremise: onPromiseChecked,
+									hasVirtualCluster: virtualClusterChecked,
+									maxNodes: maxNodesValue,
+									minNodes: minNodesValue,
+								},
 							},
 						}));
 					}}

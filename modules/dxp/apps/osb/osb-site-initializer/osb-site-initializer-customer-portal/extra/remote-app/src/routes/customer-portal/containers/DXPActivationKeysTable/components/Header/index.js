@@ -10,172 +10,103 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import {useMemo, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {Button, ButtonDropDown} from '../../../../../../common/components';
-import {useApplicationProvider} from '../../../../../../common/context/AppPropertiesProvider';
-import {PAGE_TYPES} from '../../../../utils/constants';
+import {useCallback, useMemo, useState} from 'react';
 import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants/alertDownloadType';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from '../../utils/constants/alertAggregateKeysDownloadText';
 import {DOWNLOADABLE_LICENSE_KEYS} from '../../utils/constants/downlodableLicenseKeys';
-import {getActivationKeyDownload} from '../../utils/getActivationKeyDownload';
-import {getActivationKeysActionsItems} from '../../utils/getActivationKeysActionsItems';
-import {getActivationKeysDownloadItems} from '../../utils/getActivationKeysDownloadItems';
 import DeactivateButton from '../Deactivate';
 import DownloadAlert from '../DownloadAlert';
 
 import Filter from '../Filter';
-
-const dxpNewRedirectLink = PAGE_TYPES.dxpNew.split('_')[1];
+import ActionButton from './components/ActionButton';
+import useFilters from './hooks/useFilters';
 
 const DXPActivationKeysTableHeader = ({
-	activationKeys,
-	activationKeysFilteredState,
-	activationKeysIdChecked,
+	activationKeysByStatusPaginatedChecked,
+	activationKeysState,
 	project,
 	sessionId,
-	setActivationKeys,
 	setFilterTerm,
 }) => {
-	const navigate = useNavigate();
-	const {licenseKeyDownloadURL} = useApplicationProvider();
-	const [activationKeysFiltered] = activationKeysFilteredState;
+	const [activationKeys, setActivationKeys] = activationKeysState;
 
 	const [status, setStatus] = useState({
 		deactivate: '',
 		download: '',
 	});
 
-	const selectedActivationKeysIDs = useMemo(
+	const [, setFilters] = useFilters(setFilterTerm);
+
+	const filterCheckedActivationKeys = useMemo(
 		() =>
-			activationKeysIdChecked.reduce(
-				(selectedKeysIDAccumulator, activationKeyIdChecked, index) =>
-					`${selectedKeysIDAccumulator}${
+			activationKeysByStatusPaginatedChecked.reduce(
+				(
+					filterCheckedActivationKeysAccumulator,
+					activationKeyChecked,
+					index
+				) =>
+					`${filterCheckedActivationKeysAccumulator}${
 						index > 0 ? '&' : ''
-					}licenseKeyIds=${activationKeyIdChecked}`,
+					}licenseKeyIds=${activationKeyChecked.id}`,
 				''
 			),
-		[activationKeysIdChecked]
-	);
-
-	const activationKeysChecked = useMemo(
-		() =>
-			activationKeysFiltered.filter(({id}) =>
-				activationKeysIdChecked.includes(id)
-			),
-		[activationKeysFiltered, activationKeysIdChecked]
+		[activationKeysByStatusPaginatedChecked]
 	);
 
 	const isAbleToDownloadAggregateKeys = useMemo(() => {
 		const [
 			firstActivationKeyChecked,
 			...restActivationKeysChecked
-		] = activationKeysChecked;
+		] = activationKeysByStatusPaginatedChecked;
 
 		return restActivationKeysChecked.every(
-			(selectedKey) =>
+			(activationKeyChecked) =>
 				DOWNLOADABLE_LICENSE_KEYS.above71DXPVersion(
 					firstActivationKeyChecked,
-					selectedKey
+					activationKeyChecked
 				) ||
 				DOWNLOADABLE_LICENSE_KEYS.below71DXPVersion(
 					firstActivationKeyChecked,
-					selectedKey
+					activationKeyChecked
 				)
 		);
-	}, [activationKeysChecked]);
+	}, [activationKeysByStatusPaginatedChecked]);
 
-	const handleAlertStatus = (hasSuccessfullyDownloadedKeys) =>
-		setStatus((previousStatus) => ({
-			...previousStatus,
-			download: hasSuccessfullyDownloadedKeys
-				? ALERT_DOWNLOAD_TYPE.success
-				: ALERT_DOWNLOAD_TYPE.danger,
-		}));
-
-	const handleRedirectPage = () => navigate(dxpNewRedirectLink);
-	const activationKeysActionsItems = getActivationKeysActionsItems(
-		project?.accountKey,
-		licenseKeyDownloadURL,
-		sessionId,
-		handleAlertStatus,
-		handleRedirectPage
-	);
-
-	const activationKeysDownloadItems = getActivationKeysDownloadItems(
-		isAbleToDownloadAggregateKeys,
-		selectedActivationKeysIDs,
-		licenseKeyDownloadURL,
-		sessionId,
-		handleAlertStatus,
-		activationKeysChecked,
-		project.name
-	);
-
-	const getCurrentButton = () => {
-		if (activationKeysIdChecked?.length > 1) {
-			return (
-				<ButtonDropDown
-					items={activationKeysDownloadItems}
-					label="Download"
-					menuElementAttrs={{
-						className: 'p-0',
-					}}
-				/>
-			);
-		}
-
-		if (activationKeysIdChecked.length) {
-			return (
-				<Button
-					className="btn btn-primary"
-					onClick={async () =>
-						getActivationKeyDownload(
-							activationKeysIdChecked,
-							licenseKeyDownloadURL,
-							sessionId,
-							handleAlertStatus,
-							activationKeysChecked[0],
-							project.name
+	const handleDeactivate = useCallback(
+		() =>
+			setActivationKeys((previousActivationKeys) =>
+				previousActivationKeys.filter(
+					(activationKey) =>
+						!activationKeysByStatusPaginatedChecked.find(
+							({id}) => activationKey.id === id
 						)
-					}
-				>
-					Download
-				</Button>
-			);
-		}
-
-		return (
-			<ButtonDropDown
-				items={activationKeysActionsItems}
-				label="Actions"
-				menuElementAttrs={{
-					className: 'p-0',
-				}}
-			/>
-		);
-	};
+				)
+			),
+		[activationKeysByStatusPaginatedChecked, setActivationKeys]
+	);
 
 	return (
-		<div>
+		<>
 			<div className="align-items-center bg-neutral-1 d-flex mb-2 p-3 rounded">
 				<Filter
 					activationKeys={activationKeys}
-					setFilterTerm={setFilterTerm}
+					setFilters={setFilters}
 				/>
 
 				<div className="align-items-center d-flex ml-auto">
-					{!!activationKeysIdChecked.length && (
+					{!!activationKeysByStatusPaginatedChecked.length && (
 						<>
 							<p className="font-weight-semi-bold m-0 ml-auto text-neutral-10">
-								{`${activationKeysIdChecked.length} Keys Selected`}
+								{`${activationKeysByStatusPaginatedChecked.length} Keys Selected`}
 							</p>
 
 							<DeactivateButton
 								deactivateKeysStatus={status.deactivate}
-								selectedKeys={activationKeysIdChecked}
+								filterCheckedActivationKeys={
+									filterCheckedActivationKeys
+								}
+								handleDeactivate={handleDeactivate}
 								sessionId={sessionId}
-								setActivationKeys={setActivationKeys}
 								setDeactivateKeysStatus={(value) =>
 									setStatus((previousStatus) => ({
 										...previousStatus,
@@ -186,7 +117,20 @@ const DXPActivationKeysTableHeader = ({
 						</>
 					)}
 
-					{getCurrentButton()}
+					<ActionButton
+						activationKeysByStatusPaginatedChecked={
+							activationKeysByStatusPaginatedChecked
+						}
+						filterCheckedActivationKeys={
+							filterCheckedActivationKeys
+						}
+						isAbleToDownloadAggregateKeys={
+							isAbleToDownloadAggregateKeys
+						}
+						project={project}
+						sessionId={sessionId}
+						setStatus={setStatus}
+					/>
 				</div>
 			</div>
 
@@ -228,7 +172,7 @@ const DXPActivationKeysTableHeader = ({
 					<b>Instance Size</b>
 				</ClayAlert>
 			)}
-		</div>
+		</>
 	);
 };
 

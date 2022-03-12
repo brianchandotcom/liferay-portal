@@ -46,9 +46,8 @@ export default function useGetActivationKeysData(project, sessionId) {
 	}, [filterTerm, licenseKeyDownloadURL, project?.accountKey, sessionId]);
 
 	return {
-		activationKeys,
+		activationKeysState: [activationKeys, setActivationKeys],
 		loading,
-		setActivationKeys,
 		setFilterTerm,
 	};
 }

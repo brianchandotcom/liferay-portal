@@ -19,9 +19,9 @@ import DeactivateKeysModal from './Modal';
 
 const DeactivateButton = ({
 	deactivateKeysStatus,
-	selectedKeys,
+	filterCheckedActivationKeys,
+	handleDeactivate,
 	sessionId,
-	setActivationKeys,
 	setDeactivateKeysStatus,
 }) => {
 	const {licenseKeyDownloadURL} = useApplicationProvider();
@@ -36,25 +36,17 @@ const DeactivateButton = ({
 
 	const deactivateKeysConfirm = async () => {
 		setIsDeactivating(true);
-		const licenseKeyIds = selectedKeys
-			.map((selectedKey) => `licenseKeyIds=${selectedKey}`)
-			.join('&');
 
 		const response = await putDeactivateKeys(
 			licenseKeyDownloadURL,
-			licenseKeyIds,
+			filterCheckedActivationKeys,
 			sessionId
 		);
 
 		if (response.status === STATUS_CODE.successNoContent) {
 			setIsDeactivating(false);
 			setIsVisibleModal(false);
-
-			setActivationKeys((previousActivationKeys) =>
-				previousActivationKeys.filter(
-					(activationKey) => !selectedKeys.includes(activationKey.id)
-				)
-			);
+			handleDeactivate();
 
 			return setDeactivateKeysStatus(ALERT_DOWNLOAD_TYPE.success);
 		}

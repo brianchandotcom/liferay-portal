@@ -11,7 +11,7 @@
 import {ButtonWithIcon} from '@clayui/core';
 import {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
-import {useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import Table from '../../../../common/components/Table';
 import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
@@ -21,11 +21,9 @@ import DownloadAlert from './components/DownloadAlert';
 import DXPActivationKeysTableHeader from './components/Header';
 import ModalKeyDetails from './components/ModalKeyDetails';
 import useGetActivationKeysData from './hooks/useGetActivationKeysData';
+import usePagination from './hooks/usePagination';
 import useStatusCountNavigation from './hooks/useStatusCountNavigation';
-import {
-	ACTIVATION_KEYS_LICENSE_FILTER_TYPES as FILTER_TYPES,
-	COLUMNS,
-} from './utils/constants';
+import {COLUMNS} from './utils/constants';
 import {ALERT_ACTIVATION_AGGREGATED_KEYS_DOWNLOAD_TEXT} from './utils/constants/alertAggregateKeysDownloadText';
 import {
 	EnvironmentTypeColumn,
@@ -37,23 +35,13 @@ import {downloadActivationLicenseKey} from './utils/downloadActivationLicenseKey
 import {getTooltipContentRenderer} from './utils/getTooltipContentRenderer';
 
 const DXPActivationKeysTable = ({project, sessionId}) => {
+	const {licenseKeyDownloadURL} = useApplicationProvider();
+	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [downloadStatus, setDownloadStatus] = useState('');
 
-	const [activePage, setActivePage] = useState(1);
-	const [itemsPerPage, setItemsPerPage] = useState(5);
-	const [currentTotalCount, setCurrentTotalCount] = useState(0);
-
-	const [selectedActivationKey, setSelectedActivationKey] = useState();
-	const [activationKeysIdChecked, setActivationKeysIdChecked] = useState([]);
-	const [activationKeysFiltered, setActivationKeysFiltered] = useState([]);
-
-	const [isVisibleModal, setIsVisibleModal] = useState(false);
-
-	const {licenseKeyDownloadURL} = useApplicationProvider();
 	const {
-		activationKeys,
+		activationKeysState: [activationKeys, setActivationKeys],
 		loading,
-		setActivationKeys,
 		setFilterTerm,
 	} = useGetActivationKeysData(project, sessionId);
 	const {
@@ -61,119 +49,89 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 		statusfilterByTitle: [statusFilter, setStatusFilter],
 	} = useStatusCountNavigation(activationKeys);
 
+	const {activationKeysByStatusPaginated, paginationConfig} = usePagination(
+		activationKeys,
+		statusFilter
+	);
+
+	const [currentActivationKey, setCurrentActivationKey] = useState();
+	const [activationKeysIdChecked, setActivationKeysIdChecked] = useState([]);
+
 	const {observer, onClose} = useModal({
 		onClose: () => setIsVisibleModal(false),
 	});
 
-	useEffect(() => {
-		if (activationKeysFiltered?.length) {
-			setActivationKeysIdChecked([]);
-		}
-	}, [activationKeysFiltered]);
-
-	useEffect(() => {
-		if (statusFilter) {
-			setActivePage(1);
-		}
-	}, [statusFilter]);
-
-	useEffect(() => {
-		const activationKeysFiltered = activationKeys?.filter((activationKey) =>
-			FILTER_TYPES[statusFilter](activationKey)
-		);
-
-		if (activationKeysFiltered) {
-			setCurrentTotalCount(activationKeysFiltered.length);
-
-			const activationKeysFilteredPerPage = activationKeysFiltered.slice(
-				itemsPerPage * activePage - itemsPerPage,
-				itemsPerPage * activePage
-			);
-
-			setActivationKeysFiltered(
-				activationKeysFilteredPerPage?.length
-					? activationKeysFilteredPerPage
-					: activationKeysFiltered
-			);
-		}
-	}, [activationKeys, activePage, itemsPerPage, statusFilter]);
-
-	const paginationConfig = useMemo(
-		() => ({
-			activePage,
-			itemsPerPage,
-			labels: {
-				paginationResults: 'Showing {0} to {1} of {2}',
-				perPageItems: 'Show {0} Items',
-				selectPerPageItems: '{0} Items',
-			},
-			listItemsPerPage: [
-				{label: 5},
-				{label: 10},
-				{label: 20},
-				{label: 50},
-			],
-			setActivePage,
-			setItemsPerPage,
-			showDeltasDropDown: true,
-			totalCount: currentTotalCount,
-		}),
-		[activePage, currentTotalCount, itemsPerPage]
+	const activationKeysByStatusPaginatedChecked = useMemo(
+		() =>
+			activationKeysByStatusPaginated.filter(({id}) =>
+				activationKeysIdChecked.includes(id)
+			) || [],
+		[activationKeysByStatusPaginated, activationKeysIdChecked]
 	);
 
-	const handleAlertStatus = (hasSuccessfullyDownloadedKeys) => {
+	useEffect(() => {
+		if (activationKeysByStatusPaginated.length) {
+			setActivationKeysIdChecked([]);
+		}
+	}, [activationKeysByStatusPaginated]);
+
+	const handleAlertStatus = useCallback((hasSuccessfullyDownloadedKeys) => {
 		setDownloadStatus(
 			hasSuccessfullyDownloadedKeys
 				? ALERT_DOWNLOAD_TYPE.success
 				: ALERT_DOWNLOAD_TYPE.danger
 		);
-	};
+	}, []);
 
-	const getActivationKeysRows = (activationKey) => ({
-		customClickOnRow: () => {
-			setSelectedActivationKey(activationKey);
-			setIsVisibleModal(true);
-		},
-		download: (
-			<ButtonWithIcon
-				displayType="null"
-				onClick={() =>
-					getActivationKeyDownload(
-						activationKey.id,
-						licenseKeyDownloadURL,
-						sessionId,
-						handleAlertStatus,
-						activationKey,
-						project.name
-					)
-				}
-				small
-				symbol="download"
-			/>
-		),
-		envName: (
-			<div title={[activationKey.name, activationKey.description]}>
-				<p className="font-weight-bold m-0 text-neutral-10 text-truncate">
-					{activationKey.name}
-				</p>
+	const getActivationKeysRows = useCallback(
+		(activationKey) => ({
+			customClickOnRow: () => {
+				setCurrentActivationKey(activationKey);
+				setIsVisibleModal(true);
+			},
+			download: (
+				<ButtonWithIcon
+					displayType="null"
+					onClick={() =>
+						getActivationKeyDownload(
+							licenseKeyDownloadURL,
+							sessionId,
+							handleAlertStatus,
+							activationKey,
+							project.name
+						)
+					}
+					small
+					symbol="download"
+				/>
+			),
+			envName: (
+				<div title={[activationKey.name, activationKey.description]}>
+					<p className="font-weight-bold m-0 text-neutral-10 text-truncate">
+						{activationKey.name}
+					</p>
 
-				<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm text-truncate">
-					{activationKey.description}
-				</p>
-			</div>
-		),
-		envType: <EnvironmentTypeColumn activationKey={activationKey} />,
-		expirationDate: <ExpirationDateColumn activationKey={activationKey} />,
-		id: activationKey.id,
-		keyType: <KeyTypeColumn activationKey={activationKey} />,
-		status: <StatusColumn activationKey={activationKey} />,
-	});
+					<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm text-truncate">
+						{activationKey.description}
+					</p>
+				</div>
+			),
+			envType: <EnvironmentTypeColumn activationKey={activationKey} />,
+			expirationDate: (
+				<ExpirationDateColumn activationKey={activationKey} />
+			),
+			id: activationKey.id,
+			keyType: <KeyTypeColumn activationKey={activationKey} />,
+			status: <StatusColumn activationKey={activationKey} />,
+		}),
+		[handleAlertStatus, licenseKeyDownloadURL, project.name, sessionId]
+	);
 
 	return (
 		<>
 			{isVisibleModal && (
 				<ModalKeyDetails
-					currentActivationKey={selectedActivationKey}
+					currentActivationKey={currentActivationKey}
 					downloadActivationLicenseKey={downloadActivationLicenseKey}
 					isVisibleModal={isVisibleModal}
 					observer={observer}
@@ -198,15 +156,15 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 
 					<div className="mt-4 py-2">
 						<DXPActivationKeysTableHeader
-							activationKeys={activationKeys}
-							activationKeysFilteredState={[
-								activationKeysFiltered,
-								setActivationKeysFiltered,
+							activationKeysByStatusPaginatedChecked={
+								activationKeysByStatusPaginatedChecked
+							}
+							activationKeysState={[
+								activationKeys,
+								setActivationKeys,
 							]}
-							activationKeysIdChecked={activationKeysIdChecked}
 							project={project}
 							sessionId={sessionId}
-							setActivationKeys={setActivationKeys}
 							setFilterTerm={setFilterTerm}
 						/>
 					</div>
@@ -222,12 +180,14 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 						hasPagination
 						isLoading={loading}
 						paginationConfig={paginationConfig}
-						rows={activationKeysFiltered.map((activationKey) =>
-							getActivationKeysRows(activationKey)
+						rows={activationKeysByStatusPaginated.map(
+							(activationKey) =>
+								getActivationKeysRows(activationKey)
 						)}
 					/>
 				</div>
 			</ClayTooltipProvider>
+
 			{!!downloadStatus && (
 				<DownloadAlert
 					downloadStatus={downloadStatus}

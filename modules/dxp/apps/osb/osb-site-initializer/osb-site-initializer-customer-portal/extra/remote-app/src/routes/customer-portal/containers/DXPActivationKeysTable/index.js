@@ -50,10 +50,12 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 
 	const {licenseKeyDownloadURL} = useApplicationProvider();
-	const {activationKeys, loading, setFilterTerm} = useGetActivationKeysData(
-		project,
-		sessionId
-	);
+	const {
+		activationKeys,
+		loading,
+		setActivationKeys,
+		setFilterTerm,
+	} = useGetActivationKeysData(project, sessionId);
 	const {
 		navigationGroupButtons,
 		statusfilterByTitle: [statusFilter, setStatusFilter],
@@ -204,6 +206,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 							activationKeysIdChecked={activationKeysIdChecked}
 							project={project}
 							sessionId={sessionId}
+							setActivationKeys={setActivationKeys}
 							setFilterTerm={setFilterTerm}
 						/>
 					</div>

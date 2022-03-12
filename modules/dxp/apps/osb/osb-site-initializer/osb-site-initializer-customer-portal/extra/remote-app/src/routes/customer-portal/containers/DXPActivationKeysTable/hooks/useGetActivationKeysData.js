@@ -48,6 +48,7 @@ export default function useGetActivationKeysData(project, sessionId) {
 	return {
 		activationKeys,
 		loading,
+		setActivationKeys,
 		setFilterTerm,
 	};
 }

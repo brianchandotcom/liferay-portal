@@ -34,6 +34,7 @@ const DXPActivationKeysTableHeader = ({
 	activationKeysIdChecked,
 	project,
 	sessionId,
+	setActivationKeys,
 	setFilterTerm,
 }) => {
 	const navigate = useNavigate();
@@ -174,6 +175,7 @@ const DXPActivationKeysTableHeader = ({
 								deactivateKeysStatus={status.deactivate}
 								selectedKeys={activationKeysIdChecked}
 								sessionId={sessionId}
+								setActivationKeys={setActivationKeys}
 								setDeactivateKeysStatus={(value) =>
 									setStatus((previousStatus) => ({
 										...previousStatus,

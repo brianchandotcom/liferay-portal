@@ -91,10 +91,6 @@ public class LayoutInfoItemLanguagesProviderTest {
 			Layout layout)
 		throws Exception {
 
-		if (!layout.isTypeContent()) {
-			return layout.getAvailableLanguageIds();
-		}
-
 		Set<String> availableLocales = new HashSet<>();
 
 		List<FragmentEntryLink> fragmentEntryLinks =

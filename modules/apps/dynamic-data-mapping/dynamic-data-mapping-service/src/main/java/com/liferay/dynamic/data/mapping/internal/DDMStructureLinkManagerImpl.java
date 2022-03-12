@@ -57,25 +57,6 @@ public class DDMStructureLinkManagerImpl implements DDMStructureLinkManager {
 			classNameId, classPK);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public List<DDMStructureLink> getClassNameStructureLinks(long classNameId) {
-		List<DDMStructureLink> ddmStructureLinks = new ArrayList<>();
-
-		for (com.liferay.dynamic.data.mapping.model.DDMStructureLink
-				structureLink :
-					_ddmStructureLinkLocalService.getClassNameStructureLinks(
-						classNameId)) {
-
-			ddmStructureLinks.add(new DDMStructureLinkImpl(structureLink));
-		}
-
-		return ddmStructureLinks;
-	}
-
 	@Override
 	public List<DDMStructureLink> getStructureLinks(long structureId) {
 		List<DDMStructureLink> ddmStructureLinks = new ArrayList<>();

@@ -21,8 +21,8 @@ export default function useStatusCountNavigation(activationKeys) {
 	const [statusFilter, setStatusFilter] = useState(ACTIVATION_STATUS.all.id);
 
 	useEffect(() => {
-		if (activationKeys.length) {
-			const statusCount = activationKeys?.reduce(
+		if (activationKeys) {
+			const statusCount = activationKeys.reduce(
 				(statusCountAccumulator, activationKey) => {
 					const isActivate = FILTER_TYPES.activated(activationKey);
 					if (isActivate) {

@@ -52,6 +52,7 @@ public class JobFactory {
 		Job.BuildProfile buildProfile = null;
 		String portalUpstreamBranchName = null;
 		String repositoryName = null;
+		String upstreamBranchName = null;
 
 		if (buildData instanceof PortalBuildData) {
 			PortalBuildData portalBuildData = (PortalBuildData)buildData;
@@ -60,11 +61,13 @@ public class JobFactory {
 			portalUpstreamBranchName =
 				portalBuildData.getPortalUpstreamBranchName();
 			repositoryName = portalBuildData.getPortalGitHubRepositoryName();
+			upstreamBranchName = portalBuildData.getPortalUpstreamBranchName();
 		}
 
 		return _newJob(
 			buildProfile, buildData.getJobName(), null, null,
-			portalUpstreamBranchName, null, repositoryName, null, null);
+			portalUpstreamBranchName, null, repositoryName, null,
+			upstreamBranchName);
 	}
 
 	public static Job newJob(

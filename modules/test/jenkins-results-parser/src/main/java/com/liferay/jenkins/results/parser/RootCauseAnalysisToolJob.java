@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import org.json.JSONObject;
@@ -44,8 +45,7 @@ public class RootCauseAnalysisToolJob
 
 		jsonObject = super.getJSONObject();
 
-		jsonObject.put(
-			"portal_upstream_branch_name", _portalUpstreamBranchName);
+		jsonObject.put("upstream_branch_name", _upstreamBranchName);
 
 		return jsonObject;
 	}
@@ -61,12 +61,11 @@ public class RootCauseAnalysisToolJob
 	}
 
 	protected RootCauseAnalysisToolJob(
-		BuildProfile buildProfile, String jobName,
-		String portalUpstreamBranchName) {
+		BuildProfile buildProfile, String jobName, String upstreamBranchName) {
 
 		super(buildProfile, jobName);
 
-		_portalUpstreamBranchName = portalUpstreamBranchName;
+		_upstreamBranchName = upstreamBranchName;
 
 		_initialize();
 	}
@@ -74,10 +73,14 @@ public class RootCauseAnalysisToolJob
 	protected RootCauseAnalysisToolJob(JSONObject jsonObject) {
 		super(jsonObject);
 
-		_portalUpstreamBranchName = jsonObject.getString(
-			"portal_upstream_branch_name");
+		_upstreamBranchName = jsonObject.getString("upstream_branch_name");
 
 		_initialize();
+	}
+
+	@Override
+	protected Set<String> getRawBatchNames() {
+		return new HashSet<>();
 	}
 
 	private void _initialize() {
@@ -86,7 +89,7 @@ public class RootCauseAnalysisToolJob
 
 		_portalGitWorkingDirectory =
 			GitWorkingDirectoryFactory.newPortalGitWorkingDirectory(
-				_portalUpstreamBranchName);
+				_upstreamBranchName);
 
 		jobPropertiesFiles.add(
 			new File(
@@ -106,6 +109,6 @@ public class RootCauseAnalysisToolJob
 
 	private GitWorkingDirectory _jenkinsGitWorkingDirectory;
 	private PortalGitWorkingDirectory _portalGitWorkingDirectory;
-	private final String _portalUpstreamBranchName;
+	private final String _upstreamBranchName;
 
 }

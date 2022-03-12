@@ -24,10 +24,9 @@ import org.json.JSONObject;
 public class RootCauseAnalysisToolBatchJob extends RootCauseAnalysisToolJob {
 
 	protected RootCauseAnalysisToolBatchJob(
-		BuildProfile buildProfile, String jobName,
-		String portalUpstreamBranchName) {
+		BuildProfile buildProfile, String jobName, String upstreamBranchName) {
 
-		super(buildProfile, jobName, portalUpstreamBranchName);
+		super(buildProfile, jobName, upstreamBranchName);
 
 		_initialize();
 	}

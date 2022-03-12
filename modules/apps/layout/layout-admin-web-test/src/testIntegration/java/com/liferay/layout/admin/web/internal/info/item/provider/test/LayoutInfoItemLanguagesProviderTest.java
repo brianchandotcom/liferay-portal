@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -77,11 +76,7 @@ public class LayoutInfoItemLanguagesProviderTest {
 
 	@Test
 	public void testGetAvailableLanguagesContentLayout() throws Exception {
-		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
-
-		layout.setType(LayoutConstants.TYPE_CONTENT);
-
-		layout = _layoutLocalService.updateLayout(layout);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		InfoItemLanguagesProvider<Object> infoItemLanguagesProvider =
 			_infoItemServiceTracker.getFirstInfoItemService(

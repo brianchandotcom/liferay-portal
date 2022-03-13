@@ -6825,18 +6825,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/fontbox.jar</file-name>
-				<version>2.0.24</version>
-				<project-name>PDFBox</project-name>
-				<project-url>http://pdfbox.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/hibernate-core.jar</file-name>
 				<version>3.6.10.LIFERAY-PATCHED-6</version>
 				<project-name>Hibernate</project-name>
@@ -6931,30 +6919,6 @@
 					<license>
 						<license-name>Apache License 2.0</license-name>
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jai-imageio-core.jar</file-name>
-				<version>1.4.0</version>
-				<project-name>Java Advanced Imaging Image I/O Tools API Core (standalone)</project-name>
-				<project-url>https://github.com/jai-imageio/jai-imageio-core</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jai-imageio-jpeg2000.jar</file-name>
-				<version>1.3.0</version>
-				<project-name>JPEG2000 support for Java Advanced Imaging Image I/O Tools API</project-name>
-				<project-url>https://github.com/jai-imageio/jai-imageio-jpeg2000</project-url>
-				<licenses>
-					<license>
-						<license-name>BSD Style License</license-name>
-						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -7056,18 +7020,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jbig2-imageio.jar</file-name>
-				<version>3.0.3</version>
-				<project-name>PDFBox JBIG2 ImageIO Plugin</project-name>
-				<project-url>http://pdfbox.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/jcl-over-slf4j.jar</file-name>
 				<version>1.7.2</version>
 				<project-name>SLF4J</project-name>
@@ -7091,18 +7043,6 @@
 						<license-name>BSD Style License</license-name>
 						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
 						<copyright-notice>Copyright (c) 2000-2012 Jason Hunter &amp; Brett McLaughlin. All rights reserved.</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/jempbox.jar</file-name>
-				<version>1.8.16</version>
-				<project-name>PDFBox</project-name>
-				<project-url>http://pdfbox.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -7248,18 +7188,6 @@
 					<license>
 						<license-name>CDDL 1.1</license-name>
 						<license-url>https://glassfish.java.net/public/CDDL+GPL_1_1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/pdfbox.jar</file-name>
-				<version>2.0.24</version>
-				<project-name>PDFBox</project-name>
-				<project-url>http://pdfbox.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>

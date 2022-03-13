@@ -16,19 +16,9 @@ package com.liferay.document.library.preview.pdf.internal.util;
 
 import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.AggregateClassLoader;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalClassPathUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.io.File;
-
-import java.net.URL;
-
-import java.security.CodeSource;
-import java.security.ProtectionDomain;
 
 import java.util.Collections;
 
@@ -41,47 +31,30 @@ public class ProcessConfigUtil {
 		return _processConfig;
 	}
 
-	private static String _getSelfJarPath() {
-		ProtectionDomain protectionDomain =
-			ProcessConfigUtil.class.getProtectionDomain();
-
-		CodeSource codeSource = protectionDomain.getCodeSource();
-
-		URL url = codeSource.getLocation();
-
-		return url.getFile();
-	}
-
 	private static final ProcessConfig _processConfig;
 
 	static {
-		ProcessConfig portalProcessConfig =
-			PortalClassPathUtil.getPortalProcessConfig();
-
-		ProcessConfig.Builder builder = new ProcessConfig.Builder(
-			portalProcessConfig);
+		ProcessConfig processConfig =
+			PortalClassPathUtil.createBundleProcessConfig(
+				ProcessConfigUtil.class);
 
 		if (PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_ENABLED) {
 			String jvmOptions = StringUtil.trim(
 				PropsValues.DL_FILE_ENTRY_PREVIEW_FORK_PROCESS_JVM_OPTIONS);
 
 			if (!jvmOptions.isEmpty()) {
+				ProcessConfig.Builder builder = new ProcessConfig.Builder(
+					processConfig);
+
 				Collections.addAll(
 					builder.getArguments(),
 					StringUtil.split(jvmOptions, CharPool.SPACE));
+
+				processConfig = builder.build();
 			}
 		}
 
-		builder.setReactClassLoader(
-			AggregateClassLoader.getAggregateClassLoader(
-				PortalClassLoaderUtil.getClassLoader(),
-				ProcessConfigUtil.class.getClassLoader()));
-		builder.setRuntimeClassPath(
-			StringBundler.concat(
-				_getSelfJarPath(), File.pathSeparator,
-				portalProcessConfig.getRuntimeClassPath()));
-
-		_processConfig = builder.build();
+		_processConfig = processConfig;
 	}
 
 }

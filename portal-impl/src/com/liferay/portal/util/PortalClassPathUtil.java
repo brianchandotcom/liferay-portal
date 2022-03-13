@@ -21,6 +21,8 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -37,8 +39,12 @@ import java.net.URLConnection;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
@@ -47,10 +53,32 @@ import java.util.jar.Manifest;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.wiring.BundleRevision;
+import org.osgi.framework.wiring.BundleWire;
+import org.osgi.framework.wiring.BundleWiring;
+
 /**
  * @author Shuyang Zhou
  */
 public class PortalClassPathUtil {
+
+	public static ProcessConfig createBundleProcessConfig(Class<?> seedClass) {
+		ProcessConfig.Builder builder = new ProcessConfig.Builder(
+			_portalProcessConfig);
+
+		builder.setRuntimeClassPath(
+			_buildRuntimeClasspath(
+				seedClass, _portalProcessConfig.getRuntimeClassPath()));
+
+		builder.setReactClassLoader(
+			AggregateClassLoader.getAggregateClassLoader(
+				PortalClassLoaderUtil.getClassLoader(),
+				seedClass.getClassLoader()));
+
+		return builder.build();
+	}
 
 	public static ProcessConfig createProcessConfig(Class<?>... classes) {
 		ProcessConfig.Builder builder = new ProcessConfig.Builder();
@@ -177,6 +205,84 @@ public class PortalClassPathUtil {
 		builder.setRuntimeClassPath(runtimeClassPathSB.toString());
 
 		_portalProcessConfig = builder.build();
+	}
+
+	private static String _buildRuntimeClasspath(
+		Class<?> clazz, String portalRuntiemClasspath) {
+
+		Set<Bundle> bundles = new LinkedHashSet<>();
+
+		Bundle currentBundle = FrameworkUtil.getBundle(clazz);
+
+		bundles.add(currentBundle);
+
+		BundleWiring bundleWiring = currentBundle.adapt(BundleWiring.class);
+
+		List<BundleWire> requiredBundleWires = bundleWiring.getRequiredWires(
+			null);
+
+		if (requiredBundleWires != null) {
+			for (BundleWire bundleWire : requiredBundleWires) {
+				BundleRevision bundleRevision = bundleWire.getProvider();
+
+				Bundle requiredBundle = bundleRevision.getBundle();
+
+				if (requiredBundle.getBundleId() != 0) {
+					bundles.add(requiredBundle);
+				}
+			}
+		}
+
+		StringBundler sb = new StringBundler();
+
+		for (Bundle bundle : bundles) {
+			File bundleDataDir = bundle.getDataFile(null);
+
+			File bundleDir = bundleDataDir.getParentFile();
+
+			File[] files = bundleDir.listFiles(
+				file -> file.isDirectory() && !file.equals(bundleDataDir));
+
+			if ((files != null) && (files.length > 0)) {
+				Arrays.sort(
+					files,
+					Comparator.comparing(
+						file -> GetterUtil.getInteger(file.getName(), -1),
+						Comparator.reverseOrder()));
+
+				File bundleRevisionDir = files[0];
+
+				File bundleFile = new File(bundleRevisionDir, "bundleFile");
+
+				sb.append(bundleFile.getAbsolutePath());
+
+				sb.append(File.pathSeparator);
+
+				File cpLibDir = new File(bundleRevisionDir, ".cp");
+
+				if (cpLibDir.exists()) {
+					Queue<File> queue = new LinkedList<>();
+
+					queue.add(cpLibDir);
+
+					File currentFile = null;
+
+					while ((currentFile = queue.poll()) != null) {
+						if (currentFile.isDirectory()) {
+							Collections.addAll(queue, currentFile.listFiles());
+						}
+						else {
+							sb.append(currentFile.getAbsolutePath());
+							sb.append(File.pathSeparator);
+						}
+					}
+				}
+			}
+		}
+
+		sb.append(portalRuntiemClasspath);
+
+		return sb.toString();
 	}
 
 	private static boolean _isPetraJar(File file) {

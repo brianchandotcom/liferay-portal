@@ -21,6 +21,7 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
 import com.liferay.petra.http.invoker.HttpInvoker;
+import com.liferay.petra.string.StringPool;
 import com.liferay.site.initializer.testray.extra.java.function.http.HttpUtil;
 import com.liferay.site.initializer.testray.extra.java.function.util.PropsUtil;
 import com.liferay.site.initializer.testray.extra.java.function.util.PropsValues;
@@ -85,6 +86,41 @@ public class ImportResults {
 		return responseJSONObject.getLong("id");
 	}
 
+	private String _buildTestrayBuildDescription(
+		Map<String, String> propertiesMap) {
+
+		StringBuilder sb = new StringBuilder(15);
+
+		if (propertiesMap.get("liferay.portal.git.id") != null) {
+			sb.append("Portal hash: ");
+			sb.append(propertiesMap.get("liferay.portal.git.id"));
+			sb.append(StringPool.SEMICOLON);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (propertiesMap.get("liferay.plugins.git.id") != null) {
+			sb.append("Plugins hash: ");
+			sb.append(propertiesMap.get("liferay.plugins.git.id"));
+			sb.append(StringPool.SEMICOLON);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (propertiesMap.get("liferay.portal.branch") != null) {
+			sb.append("Portal branch: ");
+			sb.append(propertiesMap.get("liferay.portal.branch"));
+			sb.append(StringPool.SEMICOLON);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (propertiesMap.get("liferay.portal.bundle") != null) {
+			sb.append("Bundle: ");
+			sb.append(propertiesMap.get("liferay.portal.bundle"));
+			sb.append(StringPool.SEMICOLON);
+		}
+
+		return sb.toString();
+	}
+
 	private long _fetchEntityIdByName(String objectName, String entityName)
 		throws Exception {
 
@@ -106,6 +142,68 @@ public class ImportResults {
 		return 0l;
 	}
 
+	private long _fetchOrAddTestrayBuild(
+			long testrayProjectId, Map<String, String> propertiesMap)
+		throws Exception {
+
+		String testrayBuildName = propertiesMap.get("testray.build.name");
+
+		long testrayBuildId = _fetchEntityIdByName("builds", testrayBuildName);
+
+		if (testrayBuildId > 0) {
+			return testrayBuildId;
+		}
+
+		Map<String, String> bodyMap = new HashMap<>();
+
+		bodyMap.put(
+			"description", _buildTestrayBuildDescription(propertiesMap));
+		bodyMap.put("dueDate", propertiesMap.get("testray.build.time"));
+		bodyMap.put("gitHash", propertiesMap.get("git.id"));
+		bodyMap.put(
+			"githubCompareURLs", propertiesMap.get("liferay.compare.urls"));
+		bodyMap.put("name", testrayBuildName);
+		bodyMap.put(
+			"r_projectToBuilds_c_projectId", String.valueOf(testrayProjectId));
+
+		long testrayProductVersionId = _fetchOrAddTestrayProductVersion(
+			testrayProjectId, propertiesMap.get("testray.product.version"));
+
+		bodyMap.put(
+			"r_productVersionToBuilds_c_productVersionId",
+			String.valueOf(testrayProductVersionId));
+
+		long testrayRoutineId = _fetchOrAddTestrayRoutine(
+			testrayProjectId, propertiesMap.get("testray.build.type"));
+
+		bodyMap.put(
+			"r_routineToBuilds_c_routineId", String.valueOf(testrayRoutineId));
+
+		return _addEntity(bodyMap, "builds");
+	}
+
+	private long _fetchOrAddTestrayProductVersion(
+			long testrayProjectId, String testrayProductVersion)
+		throws Exception {
+
+		long testrayProductVersionId = _fetchEntityIdByName(
+			"productversions", testrayProductVersion);
+
+		if (testrayProductVersionId > 0) {
+			return testrayProductVersionId;
+		}
+
+		Map<String, String> bodyMap = new HashMap<>();
+
+		bodyMap.put("name", testrayProductVersion);
+		bodyMap.put(
+			"r_projectToProductVersions_c_projectId",
+			String.valueOf(testrayProjectId)
+		);
+		
+		return _addEntity(bodyMap, "productversions");
+	}
+
 	private long _fetchOrAddTestrayProject(String testrayProjectName)
 		throws Exception {
 
@@ -121,6 +219,26 @@ public class ImportResults {
 		bodyMap.put("name", testrayProjectName);
 
 		return _addEntity(bodyMap, "projects");
+	}
+
+	private long _fetchOrAddTestrayRoutine(
+			long testrayProjectId, String routineName)
+		throws Exception {
+
+		long testrayRoutineId = _fetchEntityIdByName("routines", routineName);
+
+		if (testrayRoutineId > 0) {
+			return testrayRoutineId;
+		}
+
+		Map<String, String> bodyMap = new HashMap<>();
+
+		bodyMap.put("name", routineName);
+		bodyMap.put(
+			"r_routineToProjects_c_projectId",
+			String.valueOf(testrayProjectId));
+
+		return _addEntity(bodyMap, "routines");
 	}
 
 	private String _getAttributeValue(Node node, String attributeName) {
@@ -174,98 +292,10 @@ public class ImportResults {
 
 		String testrayProjectName = propertiesMap.get("testray.project.name");
 
-		_fetchOrAddTestrayProject(testrayProjectName);
-	}
+		long testrayProjectId = _fetchOrAddTestrayProject(testrayProjectName);
 
-	public void addTestrayBuild(long projectId, Document document)
-		throws Exception  {
-		String runName = null;
-		
-		Map<String, String> map = new HashMap<>();
-
-		map.put("testrayProjectId", String.valueOf(projectId));
-
-		NodeList propertiesNodeList = document.getElementsByTagName(
-			"properties");
-
-		for (int i = 0; i < propertiesNodeList.getLength(); i++) {
-			Node propertiesNode = propertiesNodeList.item(i);
-
-			Element element = (Element)propertiesNode;
-
-			NodeList propertyNodeList = element.getElementsByTagName(
-				"property");
-
-			for (int j = 0; j < propertyNodeList.getLength(); j++) {
-				Node propertyNode = propertyNodeList.item(j);
-
-				if ((propertyNode.getNodeType() == Node.ELEMENT_NODE) &&
-					!propertyNode.getNodeName(
-					).equals(
-						"#text"
-					) &&
-					(propertyNode.getAttributes(
-					).getLength() > 0)) {
-
-					String name = propertyNode.getAttributes(
-					).getNamedItem(
-						"name"
-					).getTextContent();
-
-					String value = null;
-
-					if (name.equals("testray.build.name")) {
-						value = propertyNode.getAttributes(
-						).getNamedItem(
-							"value"
-						).getTextContent();
-
-						map.put("name", value);
-
-					}
-					else if (name.equals("testray.build.time")) {
-						value = propertyNode.getAttributes(
-						).getNamedItem(
-							"value"
-						).getTextContent();
-
-						map.put("dueDate", value);
-
-					}
-					else if (name.equals("testray.build.type")) {
-						value = propertyNode.getAttributes(
-						).getNamedItem(
-							"value"
-						).getTextContent();
-
-						long routineId = fetchOrAddTestrayRoutine(projectId, value);
-
-						map.put("testrayRoutineId", String.valueOf(routineId));
-
-					}
-					else if (name.equals("testray.run.id")) {
-						runName = propertyNode.getAttributes(
-						).getNamedItem(
-							"value"
-						).getTextContent();
-					}
-				}
-			}
-		}
-
-		JSONObject responseJSONObject = HttpUtil.invoke(
-				new JSONObject(
-					map
-				).toString(),
-				"testraybuilds", null, null, HttpInvoker.HttpMethod.POST);
-
-		long buildId = responseJSONObject.getLong("id");
-
-		if (runName != null){
-			long runId = fetchOrAddTestrayRun(buildId,runName);
-
-			System.out.println(runId);
-		}
+		long testrayBuildId = _fetchOrAddTestrayBuild(
+			testrayProjectId, propertiesMap);
 	}
 
 	public void addTestrayCase(long projectId, Document document)

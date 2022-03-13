@@ -598,7 +598,7 @@
 		<exception>ObjectRelationshipName</exception>
 		<exception>ObjectRelationshipReverse</exception>
 		<exception>ObjectRelationshipType</exception>
-		<exception>ObjectValidation</exception>
+		<exception>ObjectValidationRule</exception>
 		<exception>ObjectViewSortColumn</exception>
 		<exception>RequiredObjectDefinition</exception>
 		<exception>RequiredObjectField</exception>

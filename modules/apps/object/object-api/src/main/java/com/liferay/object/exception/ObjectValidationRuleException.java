@@ -19,20 +19,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Marco Leo
  */
-public class ObjectValidationException extends PortalException {
+public class ObjectValidationRuleException extends PortalException {
 
-	public ObjectValidationException() {
+	public ObjectValidationRuleException() {
 	}
 
-	public ObjectValidationException(String msg) {
+	public ObjectValidationRuleException(String msg) {
 		super(msg);
 	}
 
-	public ObjectValidationException(String msg, Throwable throwable) {
+	public ObjectValidationRuleException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public ObjectValidationException(Throwable throwable) {
+	public ObjectValidationRuleException(Throwable throwable) {
 		super(throwable);
 	}
 

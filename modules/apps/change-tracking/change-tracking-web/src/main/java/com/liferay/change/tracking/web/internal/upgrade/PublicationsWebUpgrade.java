@@ -42,7 +42,7 @@ public class PublicationsWebUpgrade implements UpgradeStepRegistrator {
 		registry.register("0.0.0", "1.0.2", new DummyUpgradeStep());
 
 		registry.register(
-			"1.0.0", "1.0.1",
+			"0.0.1", "1.0.1",
 			new BasePortletIdUpgradeProcess() {
 
 				@Override

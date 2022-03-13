@@ -54,6 +54,7 @@ public class UpgradeModules
 	}
 
 	private static final String[] _BUNDLE_SYMBOLIC_NAMES = {
+		"com.liferay.change.tracking.web",
 		"com.liferay.document.library.asset.auto.tagger.tensorflow",
 		"com.liferay.portal.bundle.blacklist.impl",
 		"com.liferay.portal.component.blacklist.impl",

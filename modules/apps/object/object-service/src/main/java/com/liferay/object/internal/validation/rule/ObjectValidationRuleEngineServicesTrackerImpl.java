@@ -42,41 +42,44 @@ public class ObjectValidationRuleEngineServicesTrackerImpl
 	public ObjectValidationRuleEngine getObjectValidationRuleEngine(
 		String key) {
 
-		return _serviceTrackerMap.getService(key);
+		return objectValidationRuleEngineServiceTrackerMap.getService(key);
 	}
 
 	@Override
 	public List<ObjectValidationRuleEngine> getObjectValidationRuleEngines() {
-		return new ArrayList(_serviceTrackerMap.values());
+		return new ArrayList(
+			objectValidationRuleEngineServiceTrackerMap.values());
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, ObjectValidationRuleEngine.class, null,
-			new ServiceReferenceMapper<String, ObjectValidationRuleEngine>() {
+		objectValidationRuleEngineServiceTrackerMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, ObjectValidationRuleEngine.class, null,
+				new ServiceReferenceMapper
+					<String, ObjectValidationRuleEngine>() {
 
-				@Override
-				public void map(
-					ServiceReference<ObjectValidationRuleEngine>
-						serviceReference,
-					Emitter<String> emitter) {
+					@Override
+					public void map(
+						ServiceReference<ObjectValidationRuleEngine>
+							serviceReference,
+						Emitter<String> emitter) {
 
-					ObjectValidationRuleEngine objectValidationRuleEngine =
-						bundleContext.getService(serviceReference);
+						ObjectValidationRuleEngine objectValidationRuleEngine =
+							bundleContext.getService(serviceReference);
 
-					emitter.emit(objectValidationRuleEngine.getName());
-				}
+						emitter.emit(objectValidationRuleEngine.getName());
+					}
 
-			});
+				});
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceTrackerMap.close();
+		objectValidationRuleEngineServiceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, ObjectValidationRuleEngine>
-		_serviceTrackerMap;
+	protected ServiceTrackerMap<String, ObjectValidationRuleEngine>
+		objectValidationRuleEngineServiceTrackerMap;
 
 }

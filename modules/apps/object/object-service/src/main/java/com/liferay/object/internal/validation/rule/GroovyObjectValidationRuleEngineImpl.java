@@ -14,6 +14,7 @@
 
 package com.liferay.object.internal.validation.rule;
 
+import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.validation.rule.ObjectValidationRuleEngine;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,7 +47,25 @@ public class GroovyObjectValidationRuleEngineImpl
 
 	@Override
 	public String getName() {
-		return "groovy";
+		return ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY;
+	}
+
+	@Override
+	public boolean isValidScript(String script) {
+		try {
+			_scripting.eval(
+				null, Collections.emptyMap(), new HashSet<>(),
+				ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY, script);
+		}
+		catch (ScriptingException scriptingException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(scriptingException);
+			}
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _evaluate(Map<String, Object> inputObjects, String script)
@@ -64,7 +83,8 @@ public class GroovyObjectValidationRuleEngineImpl
 			currentThread.setContextClassLoader(classLoader);
 
 			_scripting.eval(
-				null, inputObjects, new HashSet<>(), "groovy", script);
+				null, inputObjects, new HashSet<>(),
+				ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY, script);
 		}
 		finally {
 			currentThread.setContextClassLoader(contextClassLoader);

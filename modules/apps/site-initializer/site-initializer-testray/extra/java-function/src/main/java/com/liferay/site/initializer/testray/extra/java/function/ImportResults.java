@@ -34,6 +34,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -628,6 +631,30 @@ public class ImportResults {
 		return _addEntity(bodyMap, "routines");
 	}
 
+	private void _fetchOrAddTestrayTask(
+		long testrayBuildId, String testrayTaskName)
+		throws Exception {
+
+		long testrayTaskId =
+			_fetchEntityIdByName("tasks", testrayTaskName);
+
+		if (testrayTaskId == 0) {
+			Map<String, String> bodyMap = new HashMap<>();
+
+			bodyMap.put(
+				"dueStatus",
+				String.valueOf(
+					TestrayConstants.TESTRAY_CASE_RESULT_STATUS_IN_PROGRESS));
+			bodyMap.put("name", testrayTaskName);
+			bodyMap.put("r_buildToTasks_c_buildId",
+				String.valueOf(testrayBuildId));
+			bodyMap.put("statusUpdateDate",
+				LocalDateTime.now(ZoneOffset.UTC).toString());
+
+			_addEntity(bodyMap, "tasks");
+		}
+	}
+
 	private long _fetchOrAddTestrayTeam(
 			long testrayProjectId, String testrayTeamName)
 		throws Exception {
@@ -809,6 +836,9 @@ public class ImportResults {
 		
 		_addTestrayCases(
 			element, testrayBuildId, testrayProjectId, testrayRunId);
+
+		_fetchOrAddTestrayTask(
+			testrayBuildId, propertiesMap.get("testray.build.name"));
 	}
 
 	private Storage _getStorage() throws Exception {

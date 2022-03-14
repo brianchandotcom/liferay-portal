@@ -889,7 +889,8 @@ public class LayoutStructure {
 
 	private static final int[][][] _MODULE_SIZES = {
 		{{12}}, {{12}}, {{12}, {6, 6}}, {{12}, {6, 6, 4, 4, 4}},
-		{{12}, {6, 6}, {4, 4, 4}}
+		{{12}, {6, 6}, {4, 4, 4}}, {}, {}, {}, {}, {},
+		{{12}, {6, 6}, {4, 4, 4}, {}, {}, {2, 2, 2, 2, 2, 2}}
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

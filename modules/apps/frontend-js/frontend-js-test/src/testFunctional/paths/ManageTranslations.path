@@ -22,6 +22,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_FIELD</td>
+	<td>//div[contains(@class,'modal-dialog')]//input[contains(@placeholder,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TABLE_BODY_ROW_INDEX</td>
 	<td>//tbody//tr[${key_index}]</td>
 	<td></td>

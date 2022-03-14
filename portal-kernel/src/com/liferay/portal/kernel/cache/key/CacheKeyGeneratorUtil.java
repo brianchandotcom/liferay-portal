@@ -27,14 +27,6 @@ import java.util.Map;
  */
 public class CacheKeyGeneratorUtil {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public static CacheKeyGenerator getCacheKeyGenerator() {
-		return getCacheKeyGenerator(null);
-	}
-
 	public static CacheKeyGenerator getCacheKeyGenerator(String cacheName) {
 		ThreadLocalCache<CacheKeyGenerator> threadLocalCacheKeyGenerators =
 			ThreadLocalCacheManager.getThreadLocalCache(

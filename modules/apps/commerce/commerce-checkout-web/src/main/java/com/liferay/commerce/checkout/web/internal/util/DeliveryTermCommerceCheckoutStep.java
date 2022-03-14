@@ -58,7 +58,7 @@ import org.osgi.service.component.annotations.Reference;
 	enabled = false, immediate = true,
 	property = {
 		"commerce.checkout.step.name=" + DeliveryTermCommerceCheckoutStep.NAME,
-		"commerce.checkout.step.order:Integer=50"
+		"commerce.checkout.step.order:Integer=25"
 	},
 	service = CommerceCheckoutStep.class
 )

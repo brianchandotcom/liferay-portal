@@ -192,7 +192,9 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			return false;
 		}
 
-		if (commerceOrder.isOpen()) {
+		if (commerceOrder.isOpen() &&
+			(commerceOrder.getDeliveryCommerceTermEntryId() < 1)) {
+
 			CommerceAccount commerceAccount =
 				commerceContext.getCommerceAccount();
 
@@ -381,7 +383,9 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			return false;
 		}
 
-		if (commerceOrder.isOpen()) {
+		if (commerceOrder.isOpen() &&
+			(commerceOrder.getPaymentCommerceTermEntryId() < 1)) {
+
 			CommerceAccount commerceAccount =
 				commerceOrder.getCommerceAccount();
 

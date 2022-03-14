@@ -4,7 +4,7 @@ import com.liferay.gradle.util.StringUtil
 task cleanSidecar
 task deploySidecar(type: Copy)
 
-String elasticsearchClientVersion = "7.17.0"
+String elasticsearchClientVersion = "7.17.1"
 String luceneVersion = "8.11.1"
 String sidecarElasticsearchServerVersion = file('src/main/resources/META-INF/sidecar.version').text
 

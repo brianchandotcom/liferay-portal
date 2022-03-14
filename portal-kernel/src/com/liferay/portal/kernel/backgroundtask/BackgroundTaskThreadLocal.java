@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.backgroundtask;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.lang.SafeCloseable;
 
 /**
@@ -35,33 +34,6 @@ public class BackgroundTaskThreadLocal {
 		}
 
 		return false;
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #setBackgroundTaskIdWithSafeClosable(long)}
-	 */
-	@Deprecated
-	public static void setBackgroundTaskId(long backgroundTaskId) {
-		if (backgroundTaskId > 0) {
-			_backgroundTaskId.set(backgroundTaskId);
-		}
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #setBackgroundTaskIdWithSafeCloseable(long)}
-	 */
-	@Deprecated
-	public static SafeClosable setBackgroundTaskIdWithSafeClosable(
-		long backgroundTaskId) {
-
-		if (backgroundTaskId > 0) {
-			return _backgroundTaskId.setWithSafeClosable(backgroundTaskId);
-		}
-
-		return () -> {
-		};
 	}
 
 	public static SafeCloseable setBackgroundTaskIdWithSafeCloseable(

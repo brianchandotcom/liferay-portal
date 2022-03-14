@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.check.util.SourceUtil;
 
 import java.io.IOException;
 
@@ -36,7 +37,7 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws IOException {
 
-		Matcher matcher = _sqlPattern.matcher(content);
+		Matcher matcher = _sqlPattern1.matcher(content);
 
 		while (matcher.find()) {
 			String originalSqlClause = matcher.group(1);
@@ -89,6 +90,8 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 
 			sqlClause = _checkIndentation(sqlClause);
 
+			sqlClause = _sort(sqlClause);
+
 			sqlClause = "\\\n" + sqlClause;
 
 			if (!sqlClause.equals(originalSqlClause)) {
@@ -129,6 +132,16 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 		return sb.toString();
 	}
 
+	private int _compareTo(String sqlClause, String nextSQLClause) {
+		if (sqlClause.endsWith("\")") && nextSQLClause.endsWith("\")")) {
+			sqlClause = sqlClause.substring(0, sqlClause.length() - 2);
+			nextSQLClause = nextSQLClause.substring(
+				0, nextSQLClause.length() - 2);
+		}
+
+		return sqlClause.compareTo(nextSQLClause);
+	}
+
 	private String _fixIndentation(String line, int level) {
 		String trimmedLine = StringUtil.trim(line);
 
@@ -149,6 +162,16 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 		sb.append(trimmedLine);
 
 		return sb.toString();
+	}
+
+	private String _getSQLClause(String line) {
+		Matcher matcher = _sqlPattern2.matcher(line);
+
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+
+		return null;
 	}
 
 	private String _removeRedundantParenthesis(String sqlClause) {
@@ -194,8 +217,43 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 		return sqlClause;
 	}
 
-	private static final Pattern _sqlPattern = Pattern.compile(
+	private String _sort(String sqlClauses) {
+		Matcher matcher = _sqlPattern2.matcher(sqlClauses);
+
+		while (matcher.find()) {
+			int lineNumber = getLineNumber(sqlClauses, matcher.start());
+
+			if (Validator.isNull(matcher.group(4))) {
+				continue;
+			}
+
+			String nextSQLClause = _getSQLClause(
+				SourceUtil.getLine(sqlClauses, lineNumber + 1));
+
+			if (nextSQLClause == null) {
+				continue;
+			}
+
+			String sqlClause = matcher.group(1);
+
+			if (_compareTo(sqlClause, nextSQLClause) > 0) {
+				sqlClauses = StringUtil.replaceFirst(
+					sqlClauses, nextSQLClause, sqlClause,
+					getLineStartPos(sqlClauses, lineNumber + 1));
+
+				return StringUtil.replaceFirst(
+					sqlClauses, sqlClause, nextSQLClause,
+					getLineStartPos(sqlClauses, lineNumber));
+			}
+		}
+
+		return sqlClauses;
+	}
+
+	private static final Pattern _sqlPattern1 = Pattern.compile(
 		"(?<=\\A|\n) +test\\.batch\\.run\\.property\\.query.+]=([\\s\\S]*?" +
 			"[^\\\\])(?=(\\Z|\n))");
+	private static final Pattern _sqlPattern2 = Pattern.compile(
+		"\\s(\\(.* ([!=]=|~) .+\\))( (AND|OR) )?(\\\\)?");
 
 }

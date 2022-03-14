@@ -117,6 +117,11 @@ declare module Liferay {
 			elementName: string
 		): Element | NodeList | null;
 
+		export function getLexiconIcon(
+			icon: string,
+			cssClass?: string
+		): HTMLElement;
+
 		export function getOpener(): any;
 
 		/**

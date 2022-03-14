@@ -22,7 +22,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Raymond Augé
  */
 @ExtendedObjectClassDefinition(
-	category = "segments", factoryInstanceLabelAttribute = "entityField",  scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "segments", factoryInstanceLabelAttribute = "entityField",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
 	description = "segments-context-vocabulary-configuration-description",

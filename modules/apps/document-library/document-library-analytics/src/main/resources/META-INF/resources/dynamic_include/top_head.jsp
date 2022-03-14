@@ -31,6 +31,11 @@
 			(anchor.parentElement &&
 				anchor.parentElement.dataset.analyticsFileEntryId);
 
+		var title =
+			anchor.dataset.analyticsFileEntryTitle ||
+			(anchor.parentElement &&
+				anchor.parentElement.dataset.analyticsFileEntryTitle);
+
 		var getParameterValue = (parameterName) => {
 			var result = null;
 
@@ -55,7 +60,7 @@
 				groupId: match[1],
 				fileEntryId,
 				preview: !!window.<%= DocumentLibraryAnalyticsConstants.JS_PREFIX %>isViewFileEntry,
-				title: decodeURIComponent(match[3].replace(/\+/gi, ' ')),
+				title: title || decodeURIComponent(match[3].replace(/\+/gi, ' ')),
 				version: getParameterValue('version'),
 			});
 		}
@@ -63,7 +68,16 @@
 
 	function handleDownloadClick(event) {
 		if (window.Analytics) {
-			if (
+			if (event.target.nodeName.toLowerCase() === 'a') {
+				sendAnalyticsEvent(event.target);
+			}
+			else if (
+				event.target.parentNode &&
+				event.target.parentNode.nodeName.toLowerCase() === 'a'
+			) {
+				sendAnalyticsEvent(event.target.parentNode);
+			}
+			else if (
 				event.target.dataset.action === 'download' ||
 				event.target.querySelector('.lexicon-icon-download') ||
 				event.target.classList.contains('lexicon-icon-download') ||
@@ -83,15 +97,6 @@
 
 					sendAnalyticsEvent(selectedFile);
 				});
-			}
-			else if (event.target.nodeName.toLowerCase() === 'a') {
-				sendAnalyticsEvent(event.target);
-			}
-			else if (
-				event.target.parentNode &&
-				event.target.parentNode.nodeName.toLowerCase() === 'a'
-			) {
-				sendAnalyticsEvent(event.target.parentNode);
 			}
 		}
 	}

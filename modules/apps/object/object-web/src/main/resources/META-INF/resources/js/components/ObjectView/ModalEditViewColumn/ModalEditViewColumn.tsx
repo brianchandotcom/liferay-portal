@@ -65,10 +65,6 @@ export function ModalEditViewColumn({
 
 	const [translations, setTranslations] = useState(editingColumn.label);
 
-	console.log(editingColumn);
-	console.log(selectedLocale);
-	console.log(translations);
-
 	return (
 		<ClayModal observer={observer}>
 			<ClayForm>

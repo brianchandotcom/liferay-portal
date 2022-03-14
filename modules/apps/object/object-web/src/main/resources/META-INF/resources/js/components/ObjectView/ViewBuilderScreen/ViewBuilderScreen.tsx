@@ -23,6 +23,7 @@ import ViewContext from '../context';
 const ViewBuilderScreen: React.FC<{}> = () => {
 	const [
 		{
+			isFFObjectViewColumnAliasEnabled,
 			objectView: {objectViewColumns},
 		},
 	] = useContext(ViewContext);
@@ -39,8 +40,6 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 				: setVisibleModal(false),
 	});
 
-	const ff = true;
-
 	return (
 		<>
 			<BuilderScreen
@@ -56,7 +55,9 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 				onVisibleEditModal={setVisibleEditModal}
 				onVisibleModal={setVisibleModal}
 				secondColumnHeader={
-					ff ? Liferay.Language.get('column-label') : ''
+					isFFObjectViewColumnAliasEnabled
+						? Liferay.Language.get('column-label')
+						: ''
 				}
 				title={Liferay.Language.get('columns')}
 			/>

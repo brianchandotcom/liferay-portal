@@ -16,12 +16,13 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayList from '@clayui/list';
 import ClayManagementToolbar from '@clayui/management-toolbar';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import Card from '../../Card/Card';
 import {ManagementToolbarSearch} from '../ManagementToolbarSearch/ManagementToolbarSearch';
+import ViewContext from '../context';
 import {TObjectViewSortColumn} from '../types';
 import BuilderListItem from './BuilderListItem';
 
@@ -56,6 +57,8 @@ export function BuilderScreen({
 	secondColumnHeader,
 	title,
 }: IProps) {
+	const [{isFFObjectViewColumnAliasEnabled}] = useContext(ViewContext);
+
 	const [query, setQuery] = useState('');
 	const [filteredItems, setFilteredItems] = useState(objectColumns);
 
@@ -67,8 +70,6 @@ export function BuilderScreen({
 		(objectColumns: TObjectViewSortColumn) =>
 			objectColumns.fieldLabel.toLowerCase().includes(query.toLowerCase())
 	);
-
-	const ff = true;
 
 	return (
 		<Card>
@@ -219,7 +220,7 @@ export function BuilderScreen({
 															: Liferay.Language.get(
 																	'descending'
 															  )
-														: ff
+														: isFFObjectViewColumnAliasEnabled
 														? viewColumn.label[
 																defaultLanguageId
 														  ]

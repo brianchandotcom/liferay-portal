@@ -550,6 +550,7 @@ const viewReducer = (state: TState, action: TAction) => {
 
 interface IViewContextProviderProps extends React.HTMLAttributes<HTMLElement> {
 	value: {
+		isFFObjectViewColumnAliasEnabled: boolean;
 		isFFObjectViewSortColumnConfigurationEnabled: boolean;
 		isViewOnly: boolean;
 		objectViewId: string;

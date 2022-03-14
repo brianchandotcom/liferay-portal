@@ -37,6 +37,7 @@ export declare enum TYPES {
 declare const initialState: TState;
 interface IViewContextProviderProps extends React.HTMLAttributes<HTMLElement> {
 	value: {
+		isFFObjectViewColumnAliasEnabled: boolean;
 		isFFObjectViewSortColumnConfigurationEnabled: boolean;
 		isViewOnly: boolean;
 		objectViewId: string;

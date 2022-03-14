@@ -57,7 +57,10 @@ const BuilderListItem: React.FC<Iprops> = ({
 }) => {
 	const [active, setActive] = useState<boolean>(false);
 	const [
-		{isFFObjectViewSortColumnConfigurationEnabled},
+		{
+			isFFObjectViewColumnAliasEnabled,
+			isFFObjectViewSortColumnConfigurationEnabled,
+		},
 		dispatch,
 	] = useContext(ViewContext);
 
@@ -186,16 +189,35 @@ const BuilderListItem: React.FC<Iprops> = ({
 				}
 			>
 				<ClayDropDown.ItemList>
-					<ClayDropDown.Item
-						onClick={() => handleEnableEditModal(objectFieldName)}
-					>
-						<ClayIcon
-							className="lfr-object__object-custom-view-builder-item-icon"
-							symbol="pencil"
-						/>
+					{isFFObjectViewColumnAliasEnabled ? (
+						<ClayDropDown.Item
+							onClick={() =>
+								handleEnableEditModal(objectFieldName)
+							}
+						>
+							<ClayIcon
+								className="lfr-object__object-custom-view-builder-item-icon"
+								symbol="pencil"
+							/>
 
-						{Liferay.Language.get('edit')}
-					</ClayDropDown.Item>
+							{Liferay.Language.get('edit')}
+						</ClayDropDown.Item>
+					) : (
+						isDefaultSort && (
+							<ClayDropDown.Item
+								onClick={() =>
+									handleEnableEditModal(objectFieldName)
+								}
+							>
+								<ClayIcon
+									className="lfr-object__object-custom-view-builder-item-icon"
+									symbol="pencil"
+								/>
+
+								{Liferay.Language.get('edit')}
+							</ClayDropDown.Item>
+						)
+					)}
 
 					<ClayDropDown.Item
 						onClick={() =>

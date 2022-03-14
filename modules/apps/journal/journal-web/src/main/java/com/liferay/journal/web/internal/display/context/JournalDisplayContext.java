@@ -91,7 +91,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -299,11 +298,7 @@ public class JournalDisplayContext {
 		}
 
 		articleTranslationsSearchContainer.setResultsAndTotal(
-			() -> ListUtil.subList(
-				articleTranslations,
-				articleTranslationsSearchContainer.getStart(),
-				articleTranslationsSearchContainer.getEnd()),
-			articleTranslations.size());
+			articleTranslations);
 		articleTranslationsSearchContainer.setRowChecker(
 			new JournalArticleTranslationRowChecker(_liferayPortletResponse));
 

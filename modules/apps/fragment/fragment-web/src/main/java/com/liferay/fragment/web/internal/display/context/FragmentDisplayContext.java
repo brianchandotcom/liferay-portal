@@ -217,11 +217,7 @@ public class FragmentDisplayContext {
 			new FragmentCompositionFragmentEntryNameComparator(true));
 
 		contributedEntriesSearchContainer.setResultsAndTotal(
-			() -> ListUtil.subList(
-				contributedEntries,
-				contributedEntriesSearchContainer.getStart(),
-				contributedEntriesSearchContainer.getEnd()),
-			contributedEntries.size());
+			contributedEntries);
 
 		contributedEntriesSearchContainer.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));

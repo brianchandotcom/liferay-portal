@@ -67,16 +67,12 @@ public class SitesThatIAdministerItemSelectorViewDisplayContext
 		GroupSearchTerms groupSearchTerms =
 			(GroupSearchTerms)groupSearch.getSearchTerms();
 
-		List<Group> groups = GroupLocalServiceUtil.search(
-			themeDisplay.getCompanyId(), _CLASS_NAME_IDS,
-			groupSearchTerms.getKeywords(), _getGroupParams(),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			groupSearch.getOrderByComparator());
-
 		groupSearch.setResultsAndTotal(
-			() -> groups.subList(
-				groupSearch.getStart(), groupSearch.getResultEnd()),
-			groups.size());
+			GroupLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), _CLASS_NAME_IDS,
+				groupSearchTerms.getKeywords(), _getGroupParams(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				groupSearch.getOrderByComparator()));
 
 		return groupSearch;
 	}

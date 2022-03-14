@@ -82,14 +82,7 @@ public class SelectLayoutCollectionDisplayContext {
 				LanguageUtil.get(
 					_httpServletRequest, "there-are-no-collection-providers"));
 
-		List<InfoCollectionProvider<?>> infoCollectionProviders =
-			_getInfoCollectionProviders();
-
-		searchContainer.setResultsAndTotal(
-			() -> ListUtil.subList(
-				infoCollectionProviders, searchContainer.getStart(),
-				searchContainer.getEnd()),
-			infoCollectionProviders.size());
+		searchContainer.setResultsAndTotal(_getInfoCollectionProviders());
 
 		return searchContainer;
 	}

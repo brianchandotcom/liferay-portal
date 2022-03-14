@@ -102,15 +102,11 @@ public class FragmentCollectionContributorItemSelectorViewDescriptor
 		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
 
 		if (Validator.isNull(keywords)) {
-			searchContainer.setResultsAndTotal(
-				() -> ListUtil.subList(
-					fragmentCollectionContributors, searchContainer.getStart(),
-					searchContainer.getEnd()),
-				fragmentCollectionContributors.size());
+			searchContainer.setResultsAndTotal(fragmentCollectionContributors);
 		}
 		else {
-			List<FragmentCollectionContributor>
-				filteredFragmentCollectionContributors = ListUtil.filter(
+			searchContainer.setResultsAndTotal(
+				ListUtil.filter(
 					fragmentCollectionContributors,
 					fragmentCollectionContributor -> {
 						String lowerCaseName = StringUtil.toLowerCase(
@@ -118,13 +114,7 @@ public class FragmentCollectionContributorItemSelectorViewDescriptor
 
 						return lowerCaseName.contains(
 							StringUtil.toLowerCase(keywords));
-					});
-
-			searchContainer.setResultsAndTotal(
-				() -> ListUtil.subList(
-					filteredFragmentCollectionContributors,
-					searchContainer.getStart(), searchContainer.getEnd()),
-				filteredFragmentCollectionContributors.size());
+					}));
 		}
 
 		return searchContainer;

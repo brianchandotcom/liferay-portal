@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -100,17 +98,12 @@ public class AppManagerSearchResultsManagementToolbarDisplayContext
 
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByType(getOrderByType());
-
-		List<Object> results = ListUtil.sort(
-			MarketplaceAppManagerSearchUtil.getResults(
-				BundleManagerUtil.getBundles(), getKeywords(),
-				httpServletRequest.getLocale()),
-			new MarketplaceAppManagerComparator(getOrderByType()));
-
 		searchContainer.setResultsAndTotal(
-			() -> results.subList(
-				searchContainer.getStart(), searchContainer.getResultEnd()),
-			results.size());
+			ListUtil.sort(
+				MarketplaceAppManagerSearchUtil.getResults(
+					BundleManagerUtil.getBundles(), getKeywords(),
+					httpServletRequest.getLocale()),
+				new MarketplaceAppManagerComparator(getOrderByType())));
 
 		_searchContainer = searchContainer;
 

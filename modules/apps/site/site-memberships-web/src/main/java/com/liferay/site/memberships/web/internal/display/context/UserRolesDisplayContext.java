@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -145,13 +144,7 @@ public class UserRolesDisplayContext {
 				themeDisplay.getPermissionChecker(), _getGroupId(), roles);
 		}
 
-		List<Role> filteredRoles = roles;
-
-		roleSearch.setResultsAndTotal(
-			() -> ListUtil.subList(
-				filteredRoles, roleSearch.getStart(), roleSearch.getEnd()),
-			filteredRoles.size());
-
+		roleSearch.setResultsAndTotal(roles);
 		roleSearch.setRowChecker(
 			new UserGroupRoleRoleChecker(
 				_renderResponse,

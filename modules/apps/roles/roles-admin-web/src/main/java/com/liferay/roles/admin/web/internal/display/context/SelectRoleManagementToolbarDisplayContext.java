@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -165,13 +164,7 @@ public class SelectRoleManagementToolbarDisplayContext {
 					themeDisplay.getPermissionChecker(), groupId, results);
 			}
 
-			List<Role> filteredResults = results;
-
-			roleSearch.setResultsAndTotal(
-				() -> ListUtil.subList(
-					filteredResults, roleSearch.getStart(),
-					roleSearch.getEnd()),
-				filteredResults.size());
+			roleSearch.setResultsAndTotal(results);
 		}
 		else {
 			roleSearch.setResultsAndTotal(

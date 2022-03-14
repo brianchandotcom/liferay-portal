@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -135,11 +134,7 @@ public class BlogsAggregatorDisplayContext {
 					WorkflowConstants.STATUS_APPROVED, getMax()));
 		}
 
-		_searchContainer.setResultsAndTotal(
-			() -> ListUtil.subList(
-				blogEntries, _searchContainer.getStart(),
-				_searchContainer.getEnd()),
-			blogEntries.size());
+		_searchContainer.setResultsAndTotal(blogEntries);
 
 		return _searchContainer;
 	}

@@ -181,15 +181,9 @@ public class DepotAdminSelectRoleDisplayContext {
 
 			groupSearch.setEmptyResultsMessage("no-asset-libraries-were-found");
 
-			GroupSearchTerms groupSearchTerms =
-				(GroupSearchTerms)groupSearch.getSearchTerms();
-
-			List<Group> groups = _getDepotGroups(groupSearchTerms);
-
 			groupSearch.setResultsAndTotal(
-				() -> ListUtil.subList(
-					groups, groupSearch.getStart(), groupSearch.getEnd()),
-				groups.size());
+				_getDepotGroups(
+					(GroupSearchTerms)groupSearch.getSearchTerms()));
 
 			_groupSearch = groupSearch;
 
@@ -339,12 +333,7 @@ public class DepotAdminSelectRoleDisplayContext {
 				roles = _filterGroupRoles(roles);
 			}
 
-			List<Role> filteredRoles = roles;
-
-			roleSearch.setResultsAndTotal(
-				() -> ListUtil.subList(
-					filteredRoles, roleSearch.getStart(), roleSearch.getEnd()),
-				filteredRoles.size());
+			roleSearch.setResultsAndTotal(roles);
 
 			_roleSearch = roleSearch;
 

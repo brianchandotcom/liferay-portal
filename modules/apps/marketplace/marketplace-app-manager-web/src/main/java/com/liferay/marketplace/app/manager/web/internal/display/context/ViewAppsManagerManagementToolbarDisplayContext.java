@@ -19,7 +19,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuil
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.marketplace.app.manager.web.internal.constants.BundleStateConstants;
-import com.liferay.marketplace.app.manager.web.internal.util.AppDisplay;
 import com.liferay.marketplace.app.manager.web.internal.util.AppDisplayFactoryUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.BundleManagerUtil;
 import com.liferay.marketplace.app.manager.web.internal.util.comparator.AppDisplayComparator;
@@ -181,19 +180,14 @@ public class ViewAppsManagerManagementToolbarDisplayContext
 			category = StringPool.BLANK;
 		}
 
-		List<AppDisplay> appDisplays = ListUtil.sort(
-			AppDisplayFactoryUtil.getAppDisplays(
-				BundleManagerUtil.getBundles(), category,
-				BundleStateConstants.getState(getState()),
-				liferayPortletRequest.getLocale()),
-			new AppDisplayComparator(getOrderByType()));
-
 		searchContainer.setResultsAndTotal(
-			() -> new ArrayList<>(
-				appDisplays.subList(
-					searchContainer.getStart(),
-					searchContainer.getResultEnd())),
-			appDisplays.size());
+			new ArrayList<>(
+				ListUtil.sort(
+					AppDisplayFactoryUtil.getAppDisplays(
+						BundleManagerUtil.getBundles(), category,
+						BundleStateConstants.getState(getState()),
+						liferayPortletRequest.getLocale()),
+					new AppDisplayComparator(getOrderByType()))));
 
 		return searchContainer;
 	}

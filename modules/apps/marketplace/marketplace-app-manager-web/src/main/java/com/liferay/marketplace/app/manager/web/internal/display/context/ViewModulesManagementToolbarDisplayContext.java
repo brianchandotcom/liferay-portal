@@ -142,13 +142,10 @@ public class ViewModulesManagementToolbarDisplayContext
 		BundleUtil.filterBundles(
 			bundles, BundleStateConstants.getState(getState()));
 
-		List<Object> results = new ArrayList<>(
-			ListUtil.sort(bundles, new BundleComparator(getOrderByType())));
-
 		searchContainer.setResultsAndTotal(
-			() -> results.subList(
-				searchContainer.getStart(), searchContainer.getResultEnd()),
-			bundles.size());
+			new ArrayList<>(
+				ListUtil.sort(
+					bundles, new BundleComparator(getOrderByType()))));
 
 		_searchContainer = searchContainer;
 

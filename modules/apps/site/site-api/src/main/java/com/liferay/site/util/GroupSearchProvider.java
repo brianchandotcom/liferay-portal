@@ -70,14 +70,10 @@ public class GroupSearchProvider {
 		if (!searchTerms.hasSearchTerms() &&
 			isFilterManageableGroups(portletRequest) && (parentGroupId <= 0)) {
 
-			List<Group> groups = ListUtil.sort(
-				getAllGroups(portletRequest),
-				groupSearch.getOrderByComparator());
-
 			groupSearch.setResultsAndTotal(
-				() -> ListUtil.subList(
-					groups, groupSearch.getStart(), groupSearch.getEnd()),
-				groups.size());
+				ListUtil.sort(
+					getAllGroups(portletRequest),
+					groupSearch.getOrderByComparator()));
 		}
 		else if (searchTerms.hasSearchTerms()) {
 			groupSearch.setResultsAndTotal(

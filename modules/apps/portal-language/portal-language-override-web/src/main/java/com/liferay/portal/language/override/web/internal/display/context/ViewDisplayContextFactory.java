@@ -151,10 +151,7 @@ public class ViewDisplayContextFactory {
 		_sortLanguageItemDisplays(
 			languageItemDisplays, searchContainer.getOrderByType());
 
-		searchContainer.setResultsAndTotal(
-			() -> languageItemDisplays.subList(
-				searchContainer.getStart(), searchContainer.getResultEnd()),
-			languageItemDisplays.size());
+		searchContainer.setResultsAndTotal(languageItemDisplays);
 
 		return searchContainer;
 	}

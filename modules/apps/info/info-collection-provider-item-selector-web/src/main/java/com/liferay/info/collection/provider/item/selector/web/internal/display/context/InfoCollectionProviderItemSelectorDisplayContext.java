@@ -186,14 +186,7 @@ public class InfoCollectionProviderItemSelectorDisplayContext {
 				});
 		}
 
-		List<InfoCollectionProvider<?>> filteredInfoCollectionProviders =
-			infoCollectionProviders;
-
-		searchContainer.setResultsAndTotal(
-			() -> ListUtil.subList(
-				filteredInfoCollectionProviders, searchContainer.getStart(),
-				searchContainer.getEnd()),
-			filteredInfoCollectionProviders.size());
+		searchContainer.setResultsAndTotal(infoCollectionProviders);
 
 		return searchContainer;
 	}

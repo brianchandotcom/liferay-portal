@@ -21,13 +21,10 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.rolesadmin.search.RoleSearch;
 import com.liferay.portlet.rolesadmin.search.RoleSearchTerms;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
-
-import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -74,21 +71,17 @@ public class EditRolesDisplayContext {
 		RoleSearchTerms searchTerms =
 			(RoleSearchTerms)_roleSearch.getSearchTerms();
 
-		List<Role> roles = UsersAdminUtil.filterGroupRoles(
-			_themeDisplay.getPermissionChecker(), getGroupId(),
-			RoleLocalServiceUtil.search(
-				_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-				new Integer[] {
-					(Integer)_httpServletRequest.getAttribute(
-						"edit_roles.jsp-roleType")
-				},
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				_roleSearch.getOrderByComparator()));
-
 		_roleSearch.setResultsAndTotal(
-			() -> ListUtil.subList(
-				roles, _roleSearch.getStart(), _roleSearch.getEnd()),
-			roles.size());
+			UsersAdminUtil.filterGroupRoles(
+				_themeDisplay.getPermissionChecker(), getGroupId(),
+				RoleLocalServiceUtil.search(
+					_themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+					new Integer[] {
+						(Integer)_httpServletRequest.getAttribute(
+							"edit_roles.jsp-roleType")
+					},
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					_roleSearch.getOrderByComparator())));
 
 		return _roleSearch;
 	}

@@ -131,11 +131,8 @@ public class LayoutPortletsDisplayContext {
 		searchContainer.setOrderByCol(getOrderByCol());
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setResultsAndTotal(
-			() -> ListUtil.subList(
-				ListUtil.sort(
-					_layoutPortlets, searchContainer.getOrderByComparator()),
-				searchContainer.getStart(), searchContainer.getEnd()),
-			_layoutPortlets.size());
+			ListUtil.sort(
+				_layoutPortlets, searchContainer.getOrderByComparator()));
 
 		return searchContainer;
 	}

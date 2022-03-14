@@ -115,18 +115,12 @@ public class PortletConfigurationTemplatesDisplayContext {
 		Portlet selPortlet = PortletLocalServiceUtil.getPortletById(
 			themeDisplay.getCompanyId(), getPortletResource());
 
-		List<ArchivedSettings> archivedSettingsList =
-			SettingsFactoryUtil.getPortletInstanceArchivedSettingsList(
-				themeDisplay.getScopeGroupId(), selPortlet.getRootPortletId());
-
 		archivedSettingsSearch.setResultsAndTotal(
-			() -> ListUtil.subList(
-				ListUtil.sort(
-					archivedSettingsList,
-					archivedSettingsSearch.getOrderByComparator()),
-				archivedSettingsSearch.getStart(),
-				archivedSettingsSearch.getEnd()),
-			archivedSettingsList.size());
+			ListUtil.sort(
+				SettingsFactoryUtil.getPortletInstanceArchivedSettingsList(
+					themeDisplay.getScopeGroupId(),
+					selPortlet.getRootPortletId()),
+				archivedSettingsSearch.getOrderByComparator()));
 
 		archivedSettingsSearch.setRowChecker(
 			new EmptyOnClickRowChecker(_renderResponse));

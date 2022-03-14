@@ -193,15 +193,7 @@ public class RelatedInfoItemCollectionProviderItemSelectorDisplayContext {
 				});
 		}
 
-		List<RelatedInfoItemCollectionProvider<?, ?>>
-			filteredRelatedInfoItemCollectionProviders =
-				relatedInfoItemCollectionProviders;
-
-		searchContainer.setResultsAndTotal(
-			() -> ListUtil.subList(
-				filteredRelatedInfoItemCollectionProviders,
-				searchContainer.getStart(), searchContainer.getEnd()),
-			filteredRelatedInfoItemCollectionProviders.size());
+		searchContainer.setResultsAndTotal(relatedInfoItemCollectionProviders);
 
 		return searchContainer;
 	}

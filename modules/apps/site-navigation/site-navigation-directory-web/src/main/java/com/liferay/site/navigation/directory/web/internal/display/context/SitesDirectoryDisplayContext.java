@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
@@ -164,11 +163,7 @@ public class SitesDirectoryDisplayContext {
 			}
 		}
 
-		_searchContainer.setResultsAndTotal(
-			() -> ListUtil.subList(
-				new ArrayList<>(visibleGroups), _searchContainer.getStart(),
-				_searchContainer.getEnd()),
-			visibleGroups.size());
+		_searchContainer.setResultsAndTotal(new ArrayList<>(visibleGroups));
 
 		return _searchContainer;
 	}

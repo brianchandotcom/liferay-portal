@@ -379,33 +379,18 @@ public class DefaultWikiListPagesDisplayContext
 					page.getNodeId(), page.getTitle()));
 		}
 		else if (navigation.equals("incoming-links")) {
-			List<WikiPage> links = WikiPageLocalServiceUtil.getIncomingLinks(
-				page.getNodeId(), page.getTitle());
-
 			searchContainer.setResultsAndTotal(
-				() -> ListUtil.subList(
-					links, searchContainer.getStart(),
-					searchContainer.getEnd()),
-				links.size());
+				WikiPageLocalServiceUtil.getIncomingLinks(
+					page.getNodeId(), page.getTitle()));
 		}
 		else if (navigation.equals("orphan-pages")) {
-			List<WikiPage> orphans = WikiPageServiceUtil.getOrphans(_wikiNode);
-
 			searchContainer.setResultsAndTotal(
-				() -> ListUtil.subList(
-					orphans, searchContainer.getStart(),
-					searchContainer.getEnd()),
-				orphans.size());
+				WikiPageServiceUtil.getOrphans(_wikiNode));
 		}
 		else if (navigation.equals("outgoing-links")) {
-			List<WikiPage> links = WikiPageLocalServiceUtil.getOutgoingLinks(
-				page.getNodeId(), page.getTitle());
-
 			searchContainer.setResultsAndTotal(
-				() -> ListUtil.subList(
-					links, searchContainer.getStart(),
-					searchContainer.getEnd()),
-				links.size());
+				WikiPageLocalServiceUtil.getOutgoingLinks(
+					page.getNodeId(), page.getTitle()));
 		}
 		else if (navigation.equals("recent-changes")) {
 			searchContainer.setResultsAndTotal(

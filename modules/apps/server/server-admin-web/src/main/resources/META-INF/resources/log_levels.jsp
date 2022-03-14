@@ -52,9 +52,7 @@ for (Map.Entry<String, String> entry : priorities.entrySet()) {
 	}
 }
 
-List<Map.Entry<String, String>> currentPrioritiesList = ListUtil.fromCollection(currentPriorities.entrySet());
-
-loggerSearchContainer.setResultsAndTotal(() -> currentPrioritiesList.subList(loggerSearchContainer.getStart(), loggerSearchContainer.getResultEnd()), currentPrioritiesList.size());
+loggerSearchContainer.setResultsAndTotal(ListUtil.fromCollection(currentPriorities.entrySet()));
 
 PortletURL addLogCategoryURL = PortletURLBuilder.createRenderURL(
 	renderResponse

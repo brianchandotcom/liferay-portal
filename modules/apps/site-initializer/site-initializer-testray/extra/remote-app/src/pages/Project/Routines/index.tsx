@@ -12,123 +12,53 @@
  * details.
  */
 
-import ClayChart from '@clayui/charts';
-import ClayIcon from '@clayui/icon';
-
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import ProgressBar from '../../../components/ProgressBar';
-import useTotalTestCases from '../../../data/useTotalTestCases';
-import {getTestrayBuilds} from '../../../graphql/queries';
+import {getTestrayRoutines} from '../../../graphql/queries';
 import i18n from '../../../i18n';
+import {progress} from '../../../util/mock';
+import RoutineModal from './RoutineModal';
+import useRoutineActions from './useRoutineActions';
 
-const Routine = () => {
-	const {barChart, colors} = useTotalTestCases();
+const Routines = () => {
+	const {actions, formModal} = useRoutineActions();
 
 	return (
-		<Container title={i18n.translate('build-history')}>
-			<ClayChart
-				axis={{
-					y: {
-						label: {
-							position: 'outer-middle',
-							text: i18n.translate('tests').toUpperCase(),
-						},
-					},
-				}}
-				data={{
-					colors,
-					columns: barChart.columns,
-					stack: {
-						normalize: true,
-					},
-					type: 'area',
-				}}
-				legend={{position: 'top-right'}}
-			/>
-
+		<Container title={i18n.translate('routines')}>
 			<ListView
-				initialContext={{
-					filters: {
-						columns: {
-							in_progress: false,
-							passed: false,
-							total: false,
-							untested: false,
-						},
-					},
-				}}
-				query={getTestrayBuilds}
+				forceRefetch={formModal.forceRefetch}
+				managementToolbarProps={{addButton: formModal.modal.open}}
+				query={getTestrayRoutines}
 				tableProps={{
+					actions,
 					columns: [
-						{
-							key: 'status',
-							render: (_, {promoted}) => {
-								return (
-									<>
-										{promoted && (
-											<ClayIcon
-												className="mr-3"
-												symbol="star"
-											/>
-										)}
-
-										<ClayIcon
-											color="darkblue"
-											symbol="circle"
-										/>
-									</>
-								);
-							},
-							value: i18n.translate('status'),
-						},
-						{key: 'dateCreated', size: 'sm', value: 'Create Date'},
-						{key: 'gitHash', value: 'Git Hash'},
-						{
-							key: 'product_version',
-							render: (_, {testrayProductVersion}) =>
-								testrayProductVersion?.name,
-							value: 'Product Version',
-						},
 						{
 							clickable: true,
 							key: 'name',
-							size: 'lg',
-							value: i18n.translate('build'),
+							value: i18n.translate('routine'),
+						},
+						{
+							key: 'execution_date',
+							value: i18n.translate('execution-date'),
 						},
 						{key: 'failed', value: i18n.translate('failed')},
 						{key: 'blocked', value: i18n.translate('blocked')},
-						{key: 'untested', value: i18n.translate('untested')},
-						{
-							key: 'in_progress',
-							value: i18n.translate('in-progress'),
-						},
-						{key: 'passed', value: i18n.translate('passed')},
 						{key: 'test_fix', value: i18n.translate('test-fix')},
-						{key: 'total', value: i18n.translate('total')},
 						{
 							key: 'metrics',
-							render: () => (
-								<ProgressBar
-									items={{
-										blocked: 0,
-										failed: 2,
-										incomplete: 0,
-										passed: 30,
-										test_fix: 0,
-									}}
-								/>
-							),
-							size: 'md',
+							render: () => <ProgressBar items={progress[0]} />,
 							value: i18n.translate('metrics'),
 						},
 					],
-					navigateTo: ({testrayBuildId}) => `build/${testrayBuildId}`,
+					navigateTo: ({id}) => id?.toString(),
 				}}
-				transformData={(data) => data?.testrayBuilds}
+				transformData={(data) => data?.c?.testrayRoutines}
 			/>
+
+			<RoutineModal modal={formModal.modal} />
 		</Container>
 	);
 };
 
-export default Routine;
+export default Routines;

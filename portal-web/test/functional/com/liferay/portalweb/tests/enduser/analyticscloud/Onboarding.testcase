@@ -61,9 +61,7 @@ definition {
 			}
 
 			task ("Check skip button") {
-				AssertElementPresent(
-					key_buttonName = "Skip",
-					locator1 = "ACUtils#GENERIC_BUTTON");
+				ACUtils.viewGenericButton(buttonName = "Skip");
 			}
 		}
 
@@ -121,15 +119,11 @@ definition {
 			}
 
 			task ("Check cancel button") {
-				AssertElementPresent(
-					key_buttonName = "Cancel",
-					locator1 = "ACUtils#GENERIC_BUTTON");
+				ACUtils.viewGenericButton(buttonName = "Cancel");
 			}
 
 			task ("Check skip button is not present") {
-				AssertElementNotPresent(
-					key_buttonName = "Skip",
-					locator1 = "ACUtils#GENERIC_BUTTON");
+				ACUtils.viewGenericButton(buttonName = "Skip");
 			}
 		}
 

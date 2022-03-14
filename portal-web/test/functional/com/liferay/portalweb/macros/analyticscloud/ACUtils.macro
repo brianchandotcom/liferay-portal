@@ -1002,4 +1002,9 @@ definition {
 		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
 	}
 
+	macro viewGenericButton {
+		var key_buttonName = "${buttonName}";
+
+		AssertElementPresent(locator1 = "ACUtils#GENERIC_BUTTON");
+	}
 }

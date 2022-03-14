@@ -19,6 +19,7 @@ import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.planner.constants.BatchPlannerLogConstants;
 import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.service.BatchPlannerLogLocalService;
+import com.liferay.batch.planner.service.BatchPlannerPlanLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,6 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Matija Petanjek
+ * @author Igor Beslic
  */
 @Component(immediate = true, service = ModelListener.class)
 public class BatchEngineExportTaskModelListener
@@ -40,6 +42,23 @@ public class BatchEngineExportTaskModelListener
 		throws ModelListenerException {
 
 		_updateStatus(batchEngineExportTask);
+	}
+
+	@Override
+	public void onAfterRemove(BatchEngineExportTask batchEngineExportTask)
+		throws ModelListenerException {
+
+		try {
+			_batchPlannerPlanLocalService.
+				updateBatchPlannerLogBatchPlannerPlanActive(
+					false,
+					String.valueOf(
+						batchEngineExportTask.getBatchEngineExportTaskId()),
+					true);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
 	@Override
@@ -82,5 +101,8 @@ public class BatchEngineExportTaskModelListener
 
 	@Reference
 	private BatchPlannerLogLocalService _batchPlannerLogLocalService;
+
+	@Reference
+	private BatchPlannerPlanLocalService _batchPlannerPlanLocalService;
 
 }

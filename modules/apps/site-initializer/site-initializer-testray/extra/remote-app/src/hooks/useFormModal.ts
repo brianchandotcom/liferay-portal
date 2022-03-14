@@ -16,10 +16,14 @@ import {useModal} from '@clayui/modal';
 import {Observer} from '@clayui/modal/src/types';
 import {Dispatch, useState} from 'react';
 
+import i18n from '../i18n';
+import {Liferay} from '../services/liferay/liferay';
+
 export type FormModalOptions = {
 	modalState: any;
 	observer: Observer;
 	onClose: () => void;
+	onError: () => void;
 	onSave: (param?: any) => void;
 	open: () => void;
 	setVisible: Dispatch<boolean>;
@@ -54,11 +58,27 @@ const useFormModal = ({
 			modalState,
 			observer,
 			onClose,
+			onError: () => {
+				Liferay.Util.openToast({
+					message: i18n.translate('an-unexpected-error-occurred'),
+					type: 'danger',
+				});
+			},
 			onSave: (state?: any) => {
+				Liferay.Util.openToast({
+					message: i18n.translate(
+						'your-request-completed-successfully'
+					),
+					type: 'success',
+				});
+
 				onClose();
 				setForceRefetch(new Date().getTime());
-				setModalState(state);
-				onSaveModal(state);
+
+				if (state) {
+					setModalState(state);
+					onSaveModal(state);
+				}
 			},
 			open: () => setVisible(true),
 			setVisible,

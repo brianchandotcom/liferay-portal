@@ -49,19 +49,19 @@ runGradleTest {
 
 			// Bundle
 
-			String bundleFileName = downloadBundle.src.toString();
+			String bundleFileName = downloadBundle.src.toString()
 
-			bundleFileName = bundleFileName.substring(bundleFileName.lastIndexOf('/') + 1);
+			bundleFileName = bundleFileName.substring(bundleFileName.lastIndexOf('/') + 1)
 
-			File bundleFile = new File(downloadBundle.dest, bundleFileName);
+			File bundleFile = new File(downloadBundle.dest, bundleFileName)
 
 			FileTree bundleFileTree
 
 			if (bundleFileName.endsWith(".tar.gz")) {
-				bundleFileTree = tarTree(bundleFile);
+				bundleFileTree = tarTree(bundleFile)
 			}
 			else {
-				bundleFileTree = zipTree(bundleFile);
+				bundleFileTree = zipTree(bundleFile)
 			}
 
 			bundleFileTree.visit {

@@ -43,17 +43,17 @@ runGradleTest {
 
 			String shortFileName = zipName.substring(pos + 1)
 
-			List<String> configTypes = new ArrayList<>();
+			List<String> configTypes = new ArrayList<>()
 
-			configTypes.add("common/common.txt");
+			configTypes.add("common/common.txt")
 
-			if (shortFileName.contains("-uat-")){
-				configTypes.add("uat/uat.txt");
-				configTypes.add("uat/license/copyright-uat.txt");
+			if (shortFileName.contains("-uat-")) {
+				configTypes.add("uat/uat.txt")
+				configTypes.add("uat/license/copyright-uat.txt")
 			}
-			else if (shortFileName.contains("-local-")){
-				configTypes.add("local/local.txt");
-				configTypes.add("local/license/copyright-local.txt");
+			else if (shortFileName.contains("-local-")) {
+				configTypes.add("local/local.txt")
+				configTypes.add("local/license/copyright-local.txt")
 			}
 
 			zipFile.withCloseable {

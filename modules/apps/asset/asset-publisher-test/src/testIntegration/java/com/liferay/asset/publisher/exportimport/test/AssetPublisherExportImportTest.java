@@ -86,6 +86,7 @@ import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletRequest;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -1081,7 +1082,7 @@ public class AssetPublisherExportImportTest
 
 		SearchContainer<AssetEntry> searchContainer = new SearchContainer<>();
 
-		searchContainer.setTotal(10);
+		searchContainer.setResultsAndTotal(Collections::emptyList, 10);
 
 		List<AssetEntryResult> actualAssetEntryResults =
 			_assetPublisherHelper.getAssetEntryResults(

@@ -137,8 +137,15 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 		Layout draftLayout = _getOrCreateDraftLayout(layout, serviceContext);
 
-		LayoutConversionResult layoutConversionResult =
-			_getLayoutConversionResult(draftLayout, locale);
+		LayoutConverter layoutConverter = _getLayoutConversionResult(layout);
+
+		if (!layoutConverter.isConvertible(layout)) {
+			throw new LayoutConvertException(
+				"Layout with PLID " + layout.getPlid() + " is not convertible");
+		}
+
+		LayoutConversionResult layoutConversionResult = layoutConverter.convert(
+			draftLayout, locale);
 
 		_addOrUpdateLayoutPageTemplateStructure(
 			draftLayout, layoutConversionResult.getLayoutData(),
@@ -257,8 +264,17 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 			_updatePortletDecorator(layout);
 
+			LayoutConverter layoutConverter = _getLayoutConversionResult(
+				layout);
+
+			if (!layoutConverter.isConvertible(layout)) {
+				throw new LayoutConvertException(
+					"Layout with PLID " + layout.getPlid() +
+						" is not convertible");
+			}
+
 			LayoutConversionResult layoutConversionResult =
-				_getLayoutConversionResult(layout, LocaleUtil.getSiteDefault());
+				layoutConverter.convert(layout, LocaleUtil.getSiteDefault());
 
 			_addOrUpdateLayoutPageTemplateStructure(
 				layout, layoutConversionResult.getLayoutData(), serviceContext);
@@ -304,8 +320,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 		return defaultPortletDecorator.getPortletDecoratorId();
 	}
 
-	private LayoutConversionResult _getLayoutConversionResult(
-			Layout layout, Locale locale)
+	private LayoutConverter _getLayoutConversionResult(Layout layout)
 		throws LayoutConvertException {
 
 		UnicodeProperties typeSettingsUnicodeProperties =
@@ -319,15 +334,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 				"Layout template ID cannot be null");
 		}
 
-		LayoutConverter layoutConverter =
-			_layoutConverterRegistry.getLayoutConverter(layoutTemplateId);
-
-		if (!layoutConverter.isConvertible(layout)) {
-			throw new LayoutConvertException(
-				"Layout with PLID " + layout.getPlid() + " is not convertible");
-		}
-
-		return layoutConverter.convert(layout, locale);
+		return _layoutConverterRegistry.getLayoutConverter(layoutTemplateId);
 	}
 
 	private Layout _getOrCreateDraftLayout(

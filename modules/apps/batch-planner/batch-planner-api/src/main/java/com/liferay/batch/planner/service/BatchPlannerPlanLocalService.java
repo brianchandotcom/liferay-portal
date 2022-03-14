@@ -266,6 +266,10 @@ public interface BatchPlannerPlanLocalService
 			long batchPlannerPlanId, boolean active)
 		throws PortalException;
 
+	public BatchPlannerPlan updateBatchPlannerLogBatchPlannerPlanActive(
+			boolean active, String batchEngineTaskERC, boolean export)
+		throws PortalException;
+
 	/**
 	 * Updates the batch planner plan in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

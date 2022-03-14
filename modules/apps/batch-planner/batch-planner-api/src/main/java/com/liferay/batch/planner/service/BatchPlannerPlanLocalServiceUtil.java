@@ -306,6 +306,14 @@ public class BatchPlannerPlanLocalServiceUtil {
 		return getService().updateActive(batchPlannerPlanId, active);
 	}
 
+	public static BatchPlannerPlan updateBatchPlannerLogBatchPlannerPlanActive(
+			boolean active, String batchEngineTaskERC, boolean export)
+		throws PortalException {
+
+		return getService().updateBatchPlannerLogBatchPlannerPlanActive(
+			active, batchEngineTaskERC, export);
+	}
+
 	/**
 	 * Updates the batch planner plan in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

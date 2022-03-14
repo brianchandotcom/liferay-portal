@@ -344,6 +344,17 @@ public class BatchPlannerPlanLocalServiceWrapper
 			batchPlannerPlanId, active);
 	}
 
+	@Override
+	public com.liferay.batch.planner.model.BatchPlannerPlan
+			updateBatchPlannerLogBatchPlannerPlanActive(
+				boolean active, String batchEngineTaskERC, boolean export)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _batchPlannerPlanLocalService.
+			updateBatchPlannerLogBatchPlannerPlanActive(
+				active, batchEngineTaskERC, export);
+	}
+
 	/**
 	 * Updates the batch planner plan in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

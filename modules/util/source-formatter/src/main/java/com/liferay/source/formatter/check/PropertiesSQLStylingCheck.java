@@ -52,7 +52,6 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 			}
 
 			int y = x;
-
 			String s = StringPool.BLANK;
 
 			while (true) {

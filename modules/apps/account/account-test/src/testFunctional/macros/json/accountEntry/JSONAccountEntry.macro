@@ -26,6 +26,12 @@ definition {
 			accountEntryType = "${accountEntryType}",
 			creatorEmailAddress = "${creatorEmailAddress}",
 			creatorPassword = "${creatorPassword}");
+
+		if (isSet(externalReferenceCode)) {
+			JSONAccountEntryAPI._setAccountExternalReferenceCode(
+				accountEntryName = "${accountEntryName}",
+				externalReferenceCode = "${externalReferenceCode}");
+		}
 	}
 
 }

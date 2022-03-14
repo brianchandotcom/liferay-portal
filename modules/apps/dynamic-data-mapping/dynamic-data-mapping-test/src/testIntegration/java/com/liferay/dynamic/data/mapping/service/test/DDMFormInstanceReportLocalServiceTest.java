@@ -127,9 +127,7 @@ public class DDMFormInstanceReportLocalServiceTest
 
 		Assert.assertNotNull(ddmFormInstanceReport);
 
-		_ddmFormInstance =
-			DDMFormInstanceLocalServiceUtil.deleteDDMFormInstance(
-				_ddmFormInstance);
+		DDMFormInstanceTestUtil.deleteDDMFormInstance(_ddmFormInstance);
 
 		_ddmFormInstanceReportLocalService.
 			getFormInstanceReportByFormInstanceId(
@@ -168,7 +166,7 @@ public class DDMFormInstanceReportLocalServiceTest
 		DDMFormInstanceRecord ddmFormInstanceRecord =
 			createDDMFormInstanceRecord();
 
-		_ddmFormInstanceRecordLocalService.deleteDDMFormInstanceRecord(
+		_ddmFormInstanceRecordLocalService.deleteFormInstanceRecord(
 			ddmFormInstanceRecord);
 
 		DDMFormInstanceReport ddmFormInstanceReport =

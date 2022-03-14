@@ -169,11 +169,11 @@ public class DDMFormValuesExportImportContentProcessorTest {
 		_journalArticleLocalService.deleteArticles(_liveGroup.getGroupId());
 
 		if (_ddmTemplate != null) {
-			_ddmTemplateLocalService.deleteDDMTemplate(_ddmTemplate);
+			_ddmTemplateLocalService.deleteTemplate(_ddmTemplate);
 		}
 
 		if (_ddmStructure != null) {
-			_ddmStructureLocalService.deleteDDMStructure(_ddmStructure);
+			_ddmStructureLocalService.deleteStructure(_ddmStructure);
 		}
 	}
 
@@ -229,7 +229,7 @@ public class DDMFormValuesExportImportContentProcessorTest {
 
 		newDLFileEntry.setUuid(_fileEntry.getUuid());
 
-		_dlFileEntryLocalService.deleteDLFileEntry(fileEntryId);
+		_dlFileEntryLocalService.deleteFileEntry(fileEntryId);
 
 		_dlFileEntryLocalService.updateDLFileEntry(newDLFileEntry);
 
@@ -250,7 +250,7 @@ public class DDMFormValuesExportImportContentProcessorTest {
 
 		long newDLFileEntryId = newDLFileEntry.getFileEntryId();
 
-		_dlFileEntryLocalService.deleteDLFileEntry(newDLFileEntry);
+		_dlFileEntryLocalService.deleteFileEntry(newDLFileEntry);
 
 		Assert.assertEquals(newDLFileEntryId, jsonObject2.getLong("classPK"));
 	}

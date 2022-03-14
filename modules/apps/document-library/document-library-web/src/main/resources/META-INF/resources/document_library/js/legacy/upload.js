@@ -511,7 +511,7 @@ AUI.add(
 
 					searchContainer
 						.one('.searchcontainer-content')
-						.prepend(entriesContainer);
+						.append(entriesContainer);
 
 					return entriesContainer;
 				},
@@ -539,6 +539,14 @@ AUI.add(
 						if (displayStyle === CSS_ICON) {
 							entriesContainerSelector =
 								'dl.card-page:last-of-type';
+
+							if (
+								entriesContainer
+									.one(entriesContainerSelector)
+									?.one('.card-type-directory')
+							) {
+								entriesContainerSelector = null;
+							}
 						}
 
 						entriesContainer =

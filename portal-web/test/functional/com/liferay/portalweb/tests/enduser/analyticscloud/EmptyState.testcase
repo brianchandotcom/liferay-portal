@@ -31,6 +31,8 @@ definition {
 	@description = "Feature ID: LRAC-10403 | Automation ID: LRAC-10740 | Test Summary: Empty state of pages without data source and with property"
 	@priority = "2"
 	test CheckAllMessageWhenHasPropertyNoDataSource {
+		property test.name.skip.portal.instance = "EmptyState#CheckAllMessageWhenHasPropertyNoDataSource";
+
         task ("Close the onboarding modal") {
 			ACUtils.closeModal();
 		}

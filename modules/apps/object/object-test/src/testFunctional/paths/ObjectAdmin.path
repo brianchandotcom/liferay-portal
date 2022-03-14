@@ -82,7 +82,7 @@
 	</tr>
 	<tr>
 		<td>DROPDOWN_LANGUAGEM</td>
-		<td>//button[contains(@class,'input-localized-trigger') and contains(@id,'labelMenu')]</td>
+		<td>//button[contains(@class,'input-localized-trigger') and contains(@id,'labelMenu')] | //button[contains(@class,'dropdown-toggle btn btn-monospaced btn-secondary')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -222,7 +222,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_SEARCHABLE_SECTION_DISABLED</td>
-		<td>//label[contains(@class,'simple-toggle-switch toggle-switch disabled')]//span[contains(text(),'Searchable')]</td>
+		<td>//div//h2[text()='Searchable']/..//label[contains(@class,'toggle-switch simple-toggle-switch disabled')]</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -277,7 +277,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_FIELDS_NAME_INPUT</td>
-		<td>//input[contains(@id,'objectFieldName')]</td>
+		<td>//input[contains(@class,'form-control') and @name='name']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -377,7 +377,7 @@
 	</tr>
 	<tr>
 		<td>SELECT_LANGUAGE</td>
-		<td>//span[contains(text(),'${key_newLanguage}')]</td>
+		<td>//span[contains(text(),'${key_newLanguage}')] | //button[contains(@class,'dropdown-item')]//div[text()='${key_newLanguage}']</td>
 		<td></td>
 	</tr>
 	<tr>

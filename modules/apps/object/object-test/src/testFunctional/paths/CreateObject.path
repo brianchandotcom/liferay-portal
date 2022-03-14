@@ -22,7 +22,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_LABEL</td>
-		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_label']</td>
+		<td>//input[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_label'] | //div[@class='input-group-item']//input[@class='form-control']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -47,7 +47,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_OBJECT_FIELD_NAME</td>
-		<td>//input[contains(@id,'objectFieldName') and contains(@value,'${key_fieldName}')]</td>
+		<td>//input[@class='form-control' and @name='name' and @value='${key_fieldName}']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -57,7 +57,12 @@
 	</tr>
 	<tr>
 		<td>FIELD_TYPE</td>
-		<td>//select[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_type']</td>
+		<td>//select[@id='_com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet_type'] | //input[@placeholder='Choose an Option']</td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>FIELD_TYPE_OPTION</td>
+		<td>//button[@class='dropdown-item']//div[text()='${fieldType}']</td>
 		<td></td>
 	</tr>
 	<tr>
@@ -177,7 +182,7 @@
 	</tr>
 	<tr>
 		<td>FIELD_VALUE</td>
-		<td>//input[contains(@class,'${key_fieldType}') and @value='${fieldLabel}']</td>
+		<td>//input[@value='${fieldLabel}']</td>
 		<td></td>
 	</tr>
 	<tr>

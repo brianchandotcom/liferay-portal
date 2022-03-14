@@ -425,11 +425,11 @@ definition {
 	}
 
 	macro assertKeywordAndTextNotPresent {
-		AssertNotVisible(
+		AssertElementNotPresent(
 			key_radioOption = "Keyword",
 			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
 
-		AssertNotVisible(
+		AssertElementNotPresent(
 			key_radioOption = "Text",
 			locator1 = "ObjectAdmin#FIELDS_RADIO_OPTION");
 	}
@@ -1018,7 +1018,7 @@ definition {
 
 	macro viewFieldErrorMessage {
 		AssertTextEquals(
-			locator1 = "Message#ERROR",
+			locator1 = "ObjectAdmin#OBJECT_FIELDS_REQUIRED_ERROR_MESSAGE",
 			value1 = "${message}");
 	}
 

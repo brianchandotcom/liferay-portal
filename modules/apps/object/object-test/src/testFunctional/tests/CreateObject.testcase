@@ -1788,7 +1788,7 @@ definition {
 			fieldName = " ",
 			fieldType = "Text");
 
-		ObjectAdmin.viewFieldErrorMessage(message = "Name is required.");
+		ObjectAdmin.viewFieldErrorMessage(message = "Required");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to leave the Label field blank"
@@ -3053,7 +3053,7 @@ definition {
 
 		ObjectAdmin.goToFieldsDetails(label = "Custom Field");
 
-		ObjectAdmin.changeLabelLanguage(newLanguage = "pt-BR");
+		ObjectAdmin.changeLabelLanguage(newLanguage = "pt_BR");
 
 		CreateObject.editLabel(labelName = "Campo Customizado");
 
@@ -3508,7 +3508,7 @@ definition {
 
 		CreateObject.editType(fieldType = "Date");
 
-		CreateObject.saveObject();
+		Button.clickSave();
 
 		Refresh();
 

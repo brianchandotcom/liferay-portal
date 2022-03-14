@@ -129,7 +129,7 @@ definition {
 	}
 
 	macro assertFieldType {
-		AssertSelectedLabel(
+		AssertElementPresent(
 			locator1 = "CreateObject#FIELD_TYPE",
 			value1 = "${fieldType}");
 	}
@@ -372,8 +372,10 @@ definition {
 	}
 
 	macro editType {
-		Select(
-			locator1 = "CreateObject#FIELD_TYPE",
+		Click(locator1 = "CreateObject#FIELD_TYPE");
+
+		Click(
+			locator1 = "CreateObject#FIELD_TYPE_OPTION",
 			value1 = "${fieldType}");
 	}
 

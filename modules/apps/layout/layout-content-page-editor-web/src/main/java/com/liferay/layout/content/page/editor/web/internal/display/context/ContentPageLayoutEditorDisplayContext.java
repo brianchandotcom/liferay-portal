@@ -150,9 +150,6 @@ public class ContentPageLayoutEditorDisplayContext
 		configContext.put(
 			"defaultSegmentsEntryId", SegmentsEntryConstants.ID_DEFAULT);
 		configContext.put(
-			"defaultSegmentsExperienceId",
-			String.valueOf(SegmentsExperienceConstants.ID_DEFAULT));
-		configContext.put(
 			"deleteSegmentsExperienceURL",
 			getFragmentEntryActionURL(
 				"/layout_content_page_editor/delete_segments_experience"));
@@ -179,8 +176,6 @@ public class ContentPageLayoutEditorDisplayContext
 			SegmentsExperienceUtil.getAvailableSegmentsExperiences(
 				httpServletRequest));
 		stateContext.put("layoutDataList", _getLayoutDataList());
-		stateContext.put(
-			"segmentsExperienceId", String.valueOf(getSegmentsExperienceId()));
 		stateContext.put(
 			"segmentsExperimentStatus",
 			SegmentsExperienceUtil.getSegmentsExperimentStatus(

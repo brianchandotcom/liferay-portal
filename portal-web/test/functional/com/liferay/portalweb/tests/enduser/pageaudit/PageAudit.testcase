@@ -1060,7 +1060,9 @@ definition {
 		task ("Open Content Performance panel") {
 			PageAudit.openPanelBeforeConfiguration();
 
-			AssertElementPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
+			AssertElementPresent(
+				key_text = "Configure",
+				locator1 = "Button#ANY");
 		}
 
 		task ("Logout and login") {

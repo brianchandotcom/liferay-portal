@@ -25,7 +25,9 @@ definition {
 	}
 
 	macro connectToGooglePageAudit {
-		ClickNoError(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
+		ClickNoError(
+			key_text = "Configure",
+			locator1 = "Button#ANY");
 	}
 
 	macro disableGooglePageSpeed {

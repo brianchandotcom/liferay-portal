@@ -27,6 +27,8 @@ definition {
 	@description = "Verify users can exclude fields from being imported"
 	@priority = "3"
 	test CanExcludeFieldsFromImport {
+		property portal.acceptance = "true";
+
 		task ("Given the user is importing CSV file with account data") {
 			ImportExport.openImportExportAdmin();
 
@@ -86,6 +88,8 @@ definition {
 	@description = "Verify users can export entity data via CSV files"
 	@priority = "3"
 	test CanExportCSVFiles {
+		property portal.acceptance = "true";
+
 		task ("Given several accounts") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryDescription = "Test Business Account Description",
@@ -151,6 +155,8 @@ definition {
 	@description = "Verify users can export entity data via JSON files"
 	@priority = "3"
 	test CanExportJSONFiles {
+		property portal.acceptance = "true";
+
 		task ("Given several accounts") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryDescription = "Test Business Account Description",
@@ -216,6 +222,8 @@ definition {
 	@description = "Verify users can export entity data via JSONL files"
 	@priority = "3"
 	test CanExportJSONLFiles {
+		property portal.acceptance = "true";
+
 		task ("Given several accounts") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryDescription = "Test Business Account Description",
@@ -281,6 +289,8 @@ definition {
 	@description = "Verify users can import entities via CSV files"
 	@priority = "3"
 	test CanImportCSVFiles {
+		property portal.acceptance = "true";
+
 		task ("Given a CSV file with data on multiple accounts") {
 			ImportExport.openImportExportAdmin();
 
@@ -340,6 +350,8 @@ definition {
 	@description = "Verify users can import entities via a CSV file without headers"
 	@priority = "3"
 	test CanImportCSVFileWithoutHeaders {
+		property portal.acceptance = "true";
+
 		task ("Given a CSV file without headers and account data") {
 			ImportExport.openImportExportAdmin();
 
@@ -407,6 +419,8 @@ definition {
 	@description = "Verify users can import entities via JSON files"
 	@priority = "3"
 	test CanImportJSONFiles {
+		property portal.acceptance = "true";
+
 		task ("Given a JSON file with data on multiple accounts") {
 			ImportExport.openImportExportAdmin();
 
@@ -466,6 +480,8 @@ definition {
 	@description = "Verify users can import entities via JSONL files"
 	@priority = "3"
 	test CanImportJSONLFiles {
+		property portal.acceptance = "true";
+
 		task ("Given a JSONL file with data on multiple accounts") {
 			ImportExport.openImportExportAdmin();
 

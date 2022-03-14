@@ -14,9 +14,12 @@
 
 export default {
 	'add-case': 'Add Case',
+	'add-routine': 'Add Routine',
 	'add-suite': 'Add Suite',
 	'all-issues-found': 'All Issues Found',
+	'an-unexpected-error-occurred': 'An unexpected error ocurred',
 	'analyse': 'Analyse',
+	'archive': 'Archive',
 	'archived': 'Archived',
 	'assign': 'Assign',
 	'assign-to-me': 'Assign to Me',
@@ -26,6 +29,7 @@ export default {
 	'assigned-users': 'Assigned Users',
 	'assignee': 'Assignee',
 	'attachments': 'Attachments',
+	'autoanalyze': 'Autoanalyze',
 	'automated-functional-test': 'Automate Funcional Test',
 	'available-case-types': 'Available Case Types',
 	'available-main-components': 'Available Main Components',
@@ -69,6 +73,7 @@ export default {
 	'date-last-modified': 'Date Last Modified',
 	'date-modified': 'Date Modified',
 	'dates': 'Dates',
+	'delete': 'Delete',
 	'delete-project': 'Delete Project',
 	'description': 'Description',
 	'details': 'Details',
@@ -93,6 +98,7 @@ export default {
 	'issues': 'Issues',
 	'jira-components': 'Jira Components',
 	'last-name': 'Last Name',
+	'link-requirements': 'Link Requirements',
 	'loading': 'Loading',
 	'main-component': 'Main Component',
 	'manage': 'Manage',
@@ -110,6 +116,7 @@ export default {
 	'name': 'Name',
 	'new-case': 'New Case',
 	'new-project': 'New Project',
+	'new-routine': 'New Routine',
 	'new-suite': 'New Suite',
 	'new-task': 'New Task',
 	'options': 'Options',
@@ -123,6 +130,7 @@ export default {
 	'project-directory': 'Project Directory',
 	'project-name': 'Project Name',
 	'projects': 'Projects',
+	'promote': 'Promote',
 	'remaining-estimated': 'Remaining Estimated',
 	'reopen-test': 'Reopen Test',
 	'reports': 'Reports',
@@ -140,6 +148,7 @@ export default {
 	'search': 'Search',
 	'select-case-parameters': 'Select Case Parameters',
 	'select-cases': 'Select Cases',
+	'select-default-environment-factors': 'Select Default Environment Factors',
 	'showing-x-to-x-of-x': 'Showing {0} to {1} of {2}',
 	'sign-out': 'Sign Out',
 	'smart': 'Smart',
@@ -193,4 +202,6 @@ export default {
 	'x-results-for-x': '{0} Results for {1}',
 	'you-must-have-at-least-one-column-selected':
 		'You must have at least one column selected',
+	'your-request-completed-successfully':
+		'Your request completed successfully',
 };

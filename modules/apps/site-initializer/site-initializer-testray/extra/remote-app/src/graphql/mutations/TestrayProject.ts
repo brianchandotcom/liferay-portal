@@ -27,3 +27,11 @@ export const CreateTestrayProject = gql`
 		}
 	}
 `;
+
+export const DeleteTestrayProject = gql`
+	mutation deleteTestrayProject($testrayProjectId: Long) {
+		c {
+			deleteTestrayProject(testrayProjectId: $testrayProjectId)
+		}
+	}
+`;

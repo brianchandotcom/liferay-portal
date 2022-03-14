@@ -12,3 +12,4 @@ application:
 author: "${author}"
 clientDir: "../${artifactId}-client/src/main/java"
 testDir: "../${artifactId}-test/src/testIntegration/java"
+generateLatestFeatures: true

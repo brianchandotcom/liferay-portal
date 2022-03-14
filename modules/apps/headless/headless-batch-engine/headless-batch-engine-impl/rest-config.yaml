@@ -9,3 +9,4 @@ clientDir: "../headless-batch-engine-client/src/main/java"
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false
+generateLatestFeatures: true

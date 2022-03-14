@@ -8,4 +8,5 @@ author: "Alejandro Tardín"
 clientDir: "../bulk-rest-client/src/main/java"
 forcePredictableOperationId: true
 generateBatch: false
+generateLatestFeatures: true
 testDir: "../bulk-rest-test/src/testIntegration/java"

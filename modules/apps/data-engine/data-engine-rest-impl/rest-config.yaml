@@ -7,4 +7,5 @@ application:
 author: "Jeyvison Nascimento"
 clientDir: "../data-engine-rest-client/src/main/java"
 forcePredictableOperationId: true
+generateLatestFeatures: true
 testDir: "../data-engine-rest-test/src/testIntegration/java"

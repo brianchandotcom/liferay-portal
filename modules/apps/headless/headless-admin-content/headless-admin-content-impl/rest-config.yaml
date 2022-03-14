@@ -8,5 +8,6 @@ author: "Javier Gamarra"
 clientDir: "../headless-admin-content-client/src/main/java"
 forcePredictableOperationId: true
 generateBatch: false
+generateLatestFeatures: true
 graphQLNamespace: "admin"
 testDir: "../headless-admin-content-test/src/testIntegration/java"

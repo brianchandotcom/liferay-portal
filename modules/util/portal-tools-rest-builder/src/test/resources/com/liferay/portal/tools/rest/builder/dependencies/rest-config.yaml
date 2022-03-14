@@ -7,4 +7,5 @@ application:
     name: "sample-application"
 author: "John Doe"
 forcePredictableOperationId: true
+generateLatestFeatures: true
 implDir: "../sample-impl/src/main/java"

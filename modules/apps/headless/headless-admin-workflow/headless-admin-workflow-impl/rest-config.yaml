@@ -7,4 +7,5 @@ application:
 author: "Javier Gamarra"
 clientDir: "../headless-admin-workflow-client/src/main/java"
 generateBatch: false
+generateLatestFeatures: true
 testDir: "../headless-admin-workflow-test/src/testIntegration/java"

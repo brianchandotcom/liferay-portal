@@ -9,3 +9,4 @@ clientDir: "../headless-portal-instances-client/src/main/java"
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false
+generateLatestFeatures: true

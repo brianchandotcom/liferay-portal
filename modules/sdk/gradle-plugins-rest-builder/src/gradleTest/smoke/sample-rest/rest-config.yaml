@@ -5,3 +5,4 @@ application:
     className: "SampleApplication"
     name: "sample-application"
 author: "John Doe"
+generateLatestFeatures: true

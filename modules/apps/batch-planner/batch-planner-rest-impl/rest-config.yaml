@@ -9,4 +9,5 @@ clientDir: "../batch-planner-rest-client/src/main/java"
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false
+generateLatestFeatures: true
 testDir: "../batch-planner-rest-test/src/testIntegration/java"

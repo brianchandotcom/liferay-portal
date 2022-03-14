@@ -8,5 +8,6 @@ author: "Andrea Sbarra"
 clientDir: "../headless-commerce-admin-channel-client/src/main/java"
 forcePredictableOperationId: false
 forcePredictableSchemaPropertyName: false
+generateLatestFeatures: true
 liferayEnterpriseApp: true
 testDir: "../headless-commerce-admin-channel-test/src/testIntegration/java"

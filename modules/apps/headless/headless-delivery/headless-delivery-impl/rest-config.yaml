@@ -7,4 +7,5 @@ application:
 author: "Javier Gamarra"
 clientDir: "../headless-delivery-client/src/main/java"
 forcePredictableOperationId: true
+generateLatestFeatures: true
 testDir: "../headless-delivery-test/src/testIntegration/java"

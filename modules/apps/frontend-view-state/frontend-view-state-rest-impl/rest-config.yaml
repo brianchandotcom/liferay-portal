@@ -9,4 +9,5 @@ clientDir: "../frontend-view-state-rest-client/src/main/java"
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false
+generateLatestFeatures: true
 testDir: "../frontend-view-state-rest-test/src/testIntegration/java"

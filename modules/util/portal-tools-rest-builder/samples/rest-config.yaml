@@ -9,3 +9,4 @@ application:
         guestAllowed: true
         oAuth2: true
 author: "John Doe"
+generateLatestFeatures: true

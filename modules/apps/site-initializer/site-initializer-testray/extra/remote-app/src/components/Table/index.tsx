@@ -16,6 +16,8 @@ import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {useNavigate} from 'react-router-dom';
 
+import DropDown from '../DropDown/DropDown';
+
 const {Body, Cell, Head, Row} = ClayTable;
 
 type Column<T = any> = {
@@ -79,7 +81,15 @@ const Table: React.FC<TableProps> = ({actions, columns, items, navigateTo}) => {
 							</Cell>
 						))}
 
-						{actions && <Cell>Dropdown</Cell>}
+						{actions && (
+							<Cell align="right">
+								<DropDown
+									actions={actions}
+									item={item}
+									noActionsMessage="Bla"
+								/>
+							</Cell>
+						)}
 					</Row>
 				))}
 			</Body>

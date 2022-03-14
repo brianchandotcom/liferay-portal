@@ -15,4 +15,5 @@
 export * from './TestrayCase';
 export * from './TestrayProject';
 export * from './TestrayRequirement';
+export * from './TestrayRoutine';
 export * from './testraySuite';

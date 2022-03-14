@@ -12,12 +12,13 @@
  * details.
  */
 
-import {Container} from '@clayui/layout';
-
+import Container from '../../components/Layout/Container';
 import ListView from '../../components/ListView/ListView';
 import {getLiferayUserAccounts} from '../../graphql/queries/liferayUser';
+import useFormModal from '../../hooks/useFormModal';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
+import UserModal from './UserModal';
 
 const UserList: React.FC = () => {
 	useHeader({
@@ -29,41 +30,51 @@ const UserList: React.FC = () => {
 		],
 	});
 
+	const {forceRefetch, modal} = useFormModal({isVisible: false});
+
 	return (
-		<Container fluid title={i18n.translate('cases')}>
-			<ListView
-				query={getLiferayUserAccounts}
-				tableProps={{
-					columns: [
-						{
-							clickable: true,
-							key: 'givenName',
-							render: (value, {familyName}) => {
-								return `${value} ${familyName}`;
+		<>
+			<Container title={i18n.translate('users')}>
+				<ListView
+					forceRefetch={forceRefetch}
+					managementToolbarProps={{
+						addButton: modal.open,
+						visible: true,
+					}}
+					query={getLiferayUserAccounts}
+					tableProps={{
+						columns: [
+							{
+								clickable: true,
+								key: 'givenName',
+								render: (value, {familyName}) => {
+									return `${value} ${familyName}`;
+								},
+								sorteable: true,
+								value: i18n.translate('name'),
 							},
-							sorteable: true,
-							value: i18n.translate('name'),
-						},
-						{
-							clickable: true,
-							key: 'alternateName',
+							{
+								clickable: true,
+								key: 'alternateName',
 
-							sorteable: true,
-							value: i18n.translate('screen-name'),
-						},
-						{
-							clickable: true,
-							key: 'emailAddress',
+								sorteable: true,
+								value: i18n.translate('screen-name'),
+							},
+							{
+								clickable: true,
+								key: 'emailAddress',
 
-							sorteable: true,
-							value: i18n.translate('email-address'),
-						},
-					],
-					navigateTo: () => '/manage/adduser',
-				}}
-				transformData={(data) => data?.userAccounts}
-			/>
-		</Container>
+								sorteable: true,
+								value: i18n.translate('email-address'),
+							},
+						],
+						navigateTo: () => '/manage/adduser',
+					}}
+					transformData={(data) => data?.userAccounts}
+				/>
+			</Container>
+			<UserModal modal={modal} />
+		</>
 	);
 };
 export default UserList;

@@ -18,7 +18,7 @@ const IncidentReportInput = ({activation, id}) => {
 	const bannedDomains = useBannedDomains(activation.email);
 
 	return (
-		<ClayForm.Group>
+		<ClayForm>
 			<Input
 				groupStyle="pb-1"
 				helper="This user will be the recepient of any high priority communications."
@@ -29,7 +29,7 @@ const IncidentReportInput = ({activation, id}) => {
 				type="email"
 				validations={[(value) => isValidEmail(value, bannedDomains)]}
 			/>
-		</ClayForm.Group>
+		</ClayForm>
 	);
 };
 

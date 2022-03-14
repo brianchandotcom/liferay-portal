@@ -41,19 +41,15 @@ const isLowercaseAndNumbers = (value) => {
 	}
 };
 
-const isStartingWithSlash = (value) => {
+const isValidFriendlyURL = (value) => {
 	if (value[0] !== '/') {
 		return 'The Workspace URL should start with "/".';
 	}
-};
 
-const hasNoEmptySpace = (value) => {
 	if (value.indexOf(' ') > 0) {
 		return 'The Workspace URL most not have spaces.';
 	}
-};
 
-const hasFriendlyURL = (value) => {
 	if (!FRIENDLY_URL_REGEX.test(value)) {
 		return 'Lowercase letters, numbers and dashes only.';
 	}
@@ -78,9 +74,7 @@ const validate = (validations, value) => {
 export {
 	isLowercaseAndNumbers,
 	isValidEmail,
-	isStartingWithSlash,
-	hasNoEmptySpace,
-	hasFriendlyURL,
+	isValidFriendlyURL,
 	maxLength,
 	required,
 	validate,

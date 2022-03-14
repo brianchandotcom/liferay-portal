@@ -63,7 +63,7 @@ public class ImportResults {
 		try {
 			ImportResults importResults = new ImportResults();
 
-			importResults.readFiles("");
+			importResults._readFiles("");
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
@@ -71,7 +71,7 @@ public class ImportResults {
 	}
 
 	public ImportResults() throws Exception {
-		_storage = getStorage();
+		_storage = _getStorage();
 
 		_documentBuilderFactory = DocumentBuilderFactory.newInstance();
 
@@ -811,7 +811,7 @@ public class ImportResults {
 			element, testrayBuildId, testrayProjectId, testrayRunId);
 	}
 
-	public Storage getStorage() throws Exception {
+	private Storage _getStorage() throws Exception {
 		InputStream inputStream = PropsUtil.class.getResourceAsStream(
 			PropsValues.TESTRAY_URL_API_KEY);
 
@@ -827,7 +827,7 @@ public class ImportResults {
 		).getService();
 	}
 
-	public void readFiles(String folderName) throws Exception {
+	private void _readFiles(String folderName) throws Exception {
 		Page<Blob> page;
 
 		if (folderName == null) {
@@ -873,7 +873,7 @@ public class ImportResults {
 				);
 
 				if (!folderName.equals("")) {
-					readFiles(folderName);
+					_readFiles(folderName);
 				}
 			}
 		}

@@ -1,0 +1,16 @@
+@default = "assertNotSelectedLabel"
+definition {
+
+	function assertNotSelectedLabel {
+		WaitForSPARefresh();
+
+		selenium.waitForVisible();
+
+		selenium.assertNotSelectedLabel();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
+}

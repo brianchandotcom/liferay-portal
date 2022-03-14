@@ -49,6 +49,15 @@ definition {
 			fieldType = "LongText");
 	}
 
+	@description = "LPS-147944 - Verify it is possible to view more than 20 picklists for the picklist drop-down"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewMoreThan20Picklists {
+
+		// TODO LPS-149248 CanViewMoreThan20Picklists pending implementation
+
+	}
+
 	@description = "LPS-144902 - Verify there is a description of each Field Type"
 	@priority = "4"
 	test DescriptionForEachFieldType {

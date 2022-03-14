@@ -427,6 +427,15 @@ definition {
 		ObjectCustomViews.assertObjectView(viewLabel = "New Custom Views");
 	}
 
+	@description = "LPS-148955 - Verify it is possible to view the values of 2 or more relationship fields for a same object"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanView2RelationshipFieldValues {
+
+		// TODO LPS-149238 CanView2RelationshipFieldValues pending implementation
+
+	}
+
 	@description = "LPS-144902 - Verify if the entries from an object in a table view defined as default are presented correctly"
 	@priority = "5"
 	test CanViewEntries {
@@ -481,6 +490,16 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject147770");
 
 		ObjectPortlet.viewEntry(entry = "Entry Test");
+	}
+
+	@description = "LPS-143190 - Verify that the metadata values are correctly displayed on a Custom View"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanViewMetadataValues {
+		property portal.acceptance = "true";
+
+		// TODO LPS-149239 CanViewMetadataValues pending implementation
+
 	}
 
 	@description = "LPS-144902 - Verify if selected Columns on custom view are presented correctly during visualization"

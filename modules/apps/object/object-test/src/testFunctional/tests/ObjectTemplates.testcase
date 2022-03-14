@@ -1,0 +1,99 @@
+@component-name = "portal-object"
+definition {
+
+	property portal.acceptance = "true";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Object";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			ObjectAdmin.deleteAllCustomObjectsViaAPI();
+		}
+	}
+
+	@description = "LPS-148544 - Verify it's possible to create a template with an object as an item type"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanCreateTemplateWithObject {
+		property portal.acceptance = "true";
+
+		// TODO LPS-149237 CanCreateTemplateWithObject pending implementation
+
+	}
+
+	@description = "LPS-148544 - Verify it's possible to map a boolean field for a template on the content page and view the entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapAndViewBooleanField {
+
+		// TODO LPS-149241 CanMapAndViewBooleanField pending implementation
+
+	}
+
+	@description = "LPS-148544 - Verify it's possible to map a Date field for a template on the content page and view the entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapAndViewDateField {
+
+		// TODO LPS-149245 CanMapAndViewDateField pending implementation
+
+	}
+
+	@description = "LPS-148544 - Verify it's possible to map a Decimal field for a template on the content page and view the entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapAndViewDecimalField {
+
+		// TODO LPS-149246 CanMapAndViewDecimalField pending implementation
+
+	}
+
+	@description = "LPS-148544 - Verify it's possible to map an integer field for a template on the content page and view the entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapAndViewIntegerField {
+
+		// TODO LPS-149242 CanMapAndViewIntegerField pending implementation
+
+	}
+
+	@description = "LPS-148544 - Verify it's possible to map a Long text field for a template on the content page and view the entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapAndViewLongField {
+
+		// TODO LPS-149244 CanMapAndViewLongField pending implementation
+
+	}
+
+	@description = "LPS-148544 - Verify it's possible to map a picklist field for a template on the content page and view the entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapAndViewPicklistField {
+
+		// TODO LPS-149243 CanMapAndViewPicklistField pending implementation
+
+	}
+
+	@description = "LPS-148544 - Verify it's possible to map a text field for a template on the content page and view the entries"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanMapAndViewTextField {
+
+		// TODO LPS-149240 CanMapAndViewTextField pending implementation
+
+	}
+
+}

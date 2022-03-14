@@ -163,6 +163,15 @@ definition {
 			locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
 	}
 
+	@description = "LPS-147906 - Verify it is possible to do a nested relation in a One-to-Many relationship"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDoNestedRelation {
+
+		// TODO LPS-149249 CanDoNestedRelation pending implementation
+
+	}
+
 	@description = "LPS-135400 - Verify it is not possible to leave the Relationship Label blank"
 	@priority = "4"
 	test CannotLeaveRelationshipLabelBlank {

@@ -2486,7 +2486,7 @@ definition {
 			mimeType = "image/jpeg",
 			sourceFileName = "Document_2.jpg");
 
-		DepotNavigator.openDepotDocumentsAndMediaAdminStaging(depotName = "Test Depot Name");
+		DepotNavigator.openDepotSettingsStaging(depotName = "Test Depot Name");
 
 		DepotNavigator.switchStagingStatus(stagingItem = "Publish to Live");
 

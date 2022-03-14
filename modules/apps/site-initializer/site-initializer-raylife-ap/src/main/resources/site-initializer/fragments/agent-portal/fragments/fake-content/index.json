@@ -1,0 +1,30 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "fake content",
+					"description": "container-text",
+					"label": "Fake content ID",
+					"name": "fakeContentId",
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "Insert the name of Container"
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "200px",
+					"description": "container-text",
+					"label": "Height",
+					"name": "height",
+					"type": "text",
+					"typeOptions": {
+						"placeholder": "Insert the height of fragment"
+					}
+				}
+			]
+		}
+	]
+}

@@ -1,6 +1,6 @@
 .sidebar-container {
 	height: 100vh;
-	transition: width 0.8s ease-out;
+	transition: width 0.9s ease;
 	width: 64px;
 }
 
@@ -17,13 +17,15 @@
 .sidebar-container .footer-bar .avatar-container p,
 .sidebar-container .top-bar .logo-name,
 .sidebar-container .middle-bar .menu-item-name {
+	color: #ffffff;
 	opacity: 0;
-	transition: opacity 0.5s ease-in;
+	transition: opacity 0.4s ease-in, color 0.3s ease-in;
 }
 
 .sidebar-container:hover .footer-bar .avatar-container p,
 .sidebar-container:hover .top-bar .logo-name,
 .sidebar-container:hover .middle-bar .menu-item-name {
+	color: #afafb1 !important;
 	opacity: 10;
 }
 
@@ -43,6 +45,7 @@
 	flex-shrink: 0;
 	height: 24px;
 	margin-right: 4px;
+	transition: background-color 0.3s ease-in;
 	width: 24px;
 }
 

@@ -4,13 +4,13 @@
 			"fields": [
 				{
 					"dataType": "string",
-					"defaultValue": "Dashboard",
+					"defaultValue": "primary",
 					"description": "container-text",
-					"label": "Layout name",
-					"name": "layoutName",
+					"label": "Section ID",
+					"name": "sectionId",
 					"type": "text",
 					"typeOptions": {
-						"placeholder": "Insert the name of Layout"
+						"placeholder": "Insert the name of Container"
 					}
 				}
 			]

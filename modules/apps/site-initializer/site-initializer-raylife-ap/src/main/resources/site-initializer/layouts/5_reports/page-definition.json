@@ -3,8 +3,12 @@
 		"pageElements": [
 			{
 				"definition": {
+					"fragmentStyle": {
+						"borderWidth": "0"
+					},
 					"layout": {
 						"borderWidth": 0,
+						"htmlTag": "Div",
 						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
@@ -23,25 +27,13 @@
 								"key": "layout"
 							},
 							"fragmentConfig": {
+								"layoutName": "Reports"
 							},
 							"fragmentFields": [
 							]
 						},
 						"pageElements": [
 							{
-								"pageElements": [
-									{
-										"definition": {
-											"widgetInstance": {
-												"widgetConfig": {
-													"properties": "route:reports"
-												},
-												"widgetName": "[$REMOTE_APP_ENTRY_ID:RAYLIFEAGENTPORTAL$]"
-											}
-										},
-										"type": "Widget"
-									}
-								],
 								"type": "FragmentDropZone"
 							}
 						],

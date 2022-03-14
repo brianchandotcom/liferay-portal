@@ -21,7 +21,13 @@ const btnReports = fragmentElement.querySelector('.reports-menu');
 const btnLogo = fragmentElement.querySelector('.top-bar');
 
 const redirectUrl = (routeName) => {
-	window.location.href = `${origin}/web/agent-portal/${routeName}`;
+	const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
+	const urlPaths = pathname.split('/').filter(Boolean);
+	const siteName = `/${urlPaths
+		.slice(0, urlPaths.length > 2 ? urlPaths.length - 1 : urlPaths.length)
+		.join('/')}`;
+
+	window.location.href = `${origin}${siteName}/${routeName}`;
 };
 
 btnDashboard.onclick = () => redirectUrl('dashboard');
@@ -29,4 +35,15 @@ btnApplications.onclick = () => redirectUrl('applications');
 btnPolicies.onclick = () => redirectUrl('policies');
 btnClaims.onclick = () => redirectUrl('claims');
 btnReports.onclick = () => redirectUrl('reports');
-btnLogo.onclick = () => redirectUrl('');
+btnLogo.onclick = () => redirectUrl('dashboard');
+
+const layoutName = configuration.layoutName;
+const headerTitleElement = fragmentElement.querySelector(
+	'.page-header-container p'
+);
+const dashBoardTitle = `<span class="font-weight-bolder h3">Hi, Hugo.</span> You're	on track this month!`;
+
+headerTitleElement.innerHTML =
+	layoutName === 'Dashboard'
+		? dashBoardTitle
+		: `<span class="font-weight-bolder h3">${layoutName}</span>`;

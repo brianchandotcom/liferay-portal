@@ -688,6 +688,7 @@ definition {
 		Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
 	}
 
+	@description = "This ensures that users can view subcategory subscription Via My Subscriptions, also covers LPS-127707."
 	@priority = "4"
 	@refactordone
 	test CanViewSubcategorySubscriptionViaMySubscriptionsPage {

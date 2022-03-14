@@ -35,7 +35,7 @@ definition {
 		}
 	}
 
-	@description = "This ensures that the user can customize OG tags."
+	@description = "This ensures that the user can customize OG tags, also covers LPS-134658."
 	@priority = "5"
 	@refactordone
 	test CanCustomizeMetaTags {

@@ -2475,7 +2475,7 @@ definition {
 			dmDocumentTitle = "DM Document Title");
 	}
 
-	@description = "This ensures that a depot image can be displayed in the Blog's item selector after scoped everywhere filter when enabling local staging."
+	@description = "This ensures that a depot image can be displayed in the Blog's item selector after scoped everywhere filter when enabling local staging, also covers LPS-122243."
 	@priority = "5"
 	@refactordone
 	test CanViewImageAfterScopedFilter {

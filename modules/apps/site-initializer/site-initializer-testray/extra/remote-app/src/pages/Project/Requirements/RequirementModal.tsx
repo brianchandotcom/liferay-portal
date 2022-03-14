@@ -31,7 +31,6 @@ import {
 } from '../../../graphql/queries';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
-import {Liferay} from '../../../services/liferay/liferay';
 
 type RequirementsForm = {
 	components: string;
@@ -176,7 +175,7 @@ type RequirementsModalProps = {
 };
 
 const RequirementsModal: React.FC<RequirementsModalProps> = ({
-	modal: {observer, onClose, onSave, visible},
+	modal: {observer, onClose, onError, onSave, visible},
 }) => {
 	const [form, setForm] = useState<RequirementsForm>({
 		components: '',
@@ -225,14 +224,9 @@ const RequirementsModal: React.FC<RequirementsModalProps> = ({
 				},
 			});
 
-			Liferay.Util.openToast({message: 'TestrayRequiriments Registered'});
-
 			onSave();
 		} catch (error) {
-			Liferay.Util.openToast({
-				message: (error as any).message,
-				type: 'danger',
-			});
+			onError();
 		}
 	};
 

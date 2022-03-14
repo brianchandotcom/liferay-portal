@@ -17,24 +17,25 @@ import ClayIcon from '@clayui/icon';
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import {getTestrayRequirements} from '../../../graphql/queries';
-import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import RequirementsModal from './RequirementModal';
+import useRequirementActions from './useRequirementActions';
 
 const Requirements = () => {
-	const {forceRefetch, modal} = useFormModal({isVisible: false});
+	const {actions, formModal} = useRequirementActions();
 
 	return (
 		<>
 			<Container title={i18n.translate('requirements')}>
 				<ListView
-					forceRefetch={forceRefetch}
+					forceRefetch={formModal.forceRefetch}
 					managementToolbarProps={{
-						addButton: modal.open,
+						addButton: formModal.modal.open,
 						visible: true,
 					}}
 					query={getTestrayRequirements}
 					tableProps={{
+						actions,
 						columns: [
 							{
 								clickable: true,
@@ -84,13 +85,12 @@ const Requirements = () => {
 								value: i18n.translate('summary'),
 							},
 						],
-						navigateTo: ({testrayRequirementId}) =>
-							testrayRequirementId?.toString(),
+						navigateTo: ({id}) => id?.toString(),
 					}}
 					transformData={(data) => data?.testrayRequirements}
 				/>
 			</Container>
-			<RequirementsModal modal={modal} />
+			<RequirementsModal modal={formModal.modal} />
 		</>
 	);
 };

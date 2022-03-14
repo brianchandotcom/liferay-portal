@@ -531,16 +531,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-144902 - Verify that custom view title is presented correctly"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanViewTitle {
-		property portal.acceptance = "true";
-
-		// TODO LPS-147773 CanViewTitle pending implementation
-
-	}
-
 	@description = "LPS-144902 - Verify if the Columns on the custom view are presented following the predefined order during visualization"
 	@priority = "5"
 	test ColumnsAreOrdered {
@@ -584,13 +574,13 @@ definition {
 		ObjectCustomViews.saveColumnsModal();
 
 		DragAndDrop.javaScriptDragAndDropToUp(
-			key_position = "1",
-			key_colunmName1 = "Author",
 			key_columnName = "Creation Date",
+			key_colunmName1 = "Author",
+			key_position = "1",
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_RESULT",
 			locator2 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION",
 			value1 = "");
-		
+
 		Button.clickSave();
 
 		Navigator.openURL();
@@ -605,16 +595,16 @@ definition {
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject147772");
 
 		ObjectCustomViews.viewColumnsOrder(
-			position = "1",
-			colunmName = "Created Date");
+			colunmName = "Created Date",
+			position = "1");
 
 		ObjectCustomViews.viewColumnsOrder(
-			position = "2",
-			colunmName = "Author");
+			colunmName = "Author",
+			position = "2");
 
 		ObjectCustomViews.viewColumnsOrder(
-			position = "3",
-			colunmName = "ID");		
+			colunmName = "ID",
+			position = "3");
 	}
 
 	@description = "LPS-135394 - Verify the empty state for the View Builder tab"

@@ -134,18 +134,18 @@ definition {
 			value1 = "${colunmName}");
 	}
 
+	macro viewColumnsOrder {
+		AssertElementPresent(
+			key_columnName = "${colunmName}",
+			key_position = "${position}",
+			locator1 = "ObjectCustomViews#VIEW_COLUMN_ENTRIES");
+	}
+
 	macro viewOrdersOfTheColumns {
 		AssertVisible(
 			key_colunmName1 = "${colunmName}",
 			key_position = "${position}",
 			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION");
-	}
-
-	macro viewColumnsOrder {
-		AssertElementPresent(
-			key_position = "${position}",
-			key_columnName = "${colunmName}",
-			locator1 = "ObjectCustomViews#VIEW_COLUMN_ENTRIES");
 	}
 
 }

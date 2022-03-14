@@ -128,7 +128,7 @@ definition {
 
 		task ("View available languages are shwon with Long Text template") {
 			LanguagePortlet.viewLanguages(
-				availableLanguageList = "english,العربية,català,中文,nederlands,suomi,français,deutsch,magyar,日本語,português,español,svenska",
+				availableLanguageList = "العربية,català,中文,nederlands,suomi,français,deutsch,magyar,日本語,português,español,svenska",
 				displayTemplate = "Long Text");
 		}
 
@@ -168,7 +168,7 @@ definition {
 
 		task ("View available languages are shwon with Short Text template") {
 			LanguagePortlet.viewLanguages(
-				availableLanguageList = "en,ar,ca,中文,nl,fi,fr,de,hu,日本語,pt,es,sv",
+				availableLanguageList = "ar,ca,中文,nl,fi,fr,de,hu,日本語,pt,es,sv",
 				displayTemplate = "Short Text");
 		}
 	}

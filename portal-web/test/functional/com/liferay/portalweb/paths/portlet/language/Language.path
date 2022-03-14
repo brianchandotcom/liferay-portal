@@ -28,12 +28,12 @@
 </tr>
 <tr>
 	<td>LONG_TEXT_LINK</td>
-	<td>//div[contains(@class,'portlet-language')]//div[contains(@class,'portlet-body')]//*[contains(@class,'long-text') and contains(.,'${key_language}')]</td>
+	<td>//a[contains(@class,'long-text') and contains(.,'${key_language}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SHORT_TEXT_LINK</td>
-	<td>//div[contains(@class,'portlet-language')]//div[contains(@class,'portlet-body')]//*[contains(@class,'short-text') and contains(.,'${key_language}')]</td>
+	<td>//a[contains(@class,'short-text') and contains(.,'${key_language}')]</td>
 	<td></td>
 </tr>
 <!--EXPORT_TRANSLATION-->

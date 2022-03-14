@@ -1613,82 +1613,6 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
-	private void _validateListTypeEntriesValues(
-			Map<String, Serializable> values,
-			Map.Entry<String, Serializable> entry, ObjectField objectField)
-		throws ObjectEntryValuesException {
-
-		List<ListTypeEntry> listTypeEntries =
-			_listTypeEntryLocalService.getListTypeEntries(
-				objectField.getListTypeDefinitionId());
-
-		Stream<ListTypeEntry> stream = listTypeEntries.stream();
-
-		String value = _getValue(String.valueOf(values.get(entry.getKey())));
-
-		if ((!value.isEmpty() || objectField.isRequired()) &&
-			!stream.anyMatch(
-				listTypeEntry -> Objects.equals(
-					listTypeEntry.getKey(), value))) {
-
-			throw new ObjectEntryValuesException.ObjectFieldNotMapped(
-				entry.getKey());
-		}
-	}
-
-	private void _validateObjectFieldIntegerTypeSize(
-			Map.Entry<String, Serializable> entry)
-		throws ObjectEntryValuesException {
-
-		Serializable entryValue = entry.getValue();
-
-		String entryValueString = entryValue.toString();
-
-		if (!entryValueString.isEmpty()) {
-			int value = GetterUtil.getInteger(entryValue);
-
-			if (!StringUtil.equals(String.valueOf(value), entryValueString)) {
-				throw new ObjectEntryValuesException.ExceedsIntegerSize();
-			}
-		}
-	}
-
-	private void _validateObjectFieldLongType(
-			Map.Entry<String, Serializable> entry)
-		throws ObjectEntryValuesException {
-
-		Serializable entryValue = entry.getValue();
-
-		String entryValueString = entryValue.toString();
-
-		if (!entryValueString.isEmpty()) {
-			long value = GetterUtil.getLong(entryValue);
-
-			if (!StringUtil.equals(
-					String.valueOf(value), entryValue.toString())) {
-
-				throw new ObjectEntryValuesException.ExceedsLongSize();
-			}
-			else if (value > _MAX_SAFE_LONG) {
-				throw new ObjectEntryValuesException.ExceedsLongMaxSize();
-			}
-			else if (value < _MIN_SAFE_LONG) {
-				throw new ObjectEntryValuesException.ExceedsLongMinSize();
-			}
-		}
-	}
-
-	private void _validateObjectFieldStringTypeLength(
-			Map.Entry<String, Serializable> entry)
-		throws ObjectEntryValuesException {
-
-		String value = (String)entry.getValue();
-
-		if ((value != null) && (value.length() > 280)) {
-			throw new ObjectEntryValuesException.Exceeds280Characters();
-		}
-	}
-
 	private void _validateOneToOneInsert(
 			String dbColumnName, long dbColumnValue,
 			DynamicObjectDefinitionTable dynamicObjectDefinitionTable)
@@ -1769,34 +1693,92 @@ public class ObjectEntryLocalServiceImpl
 		throws PortalException {
 
 		for (Map.Entry<String, Serializable> entry : values.entrySet()) {
-			ObjectField objectField = null;
+			_validateValues(entry, objectDefinitionId, values);
+		}
+	}
 
-			try {
-				objectField = _objectFieldLocalService.getObjectField(
-					objectDefinitionId, entry.getKey());
+	private void _validateValues(
+			Map.Entry<String, Serializable> entry, long objectDefinitionId,
+			Map<String, Serializable> values)
+		throws PortalException {
+
+		ObjectField objectField = null;
+
+		try {
+			objectField = _objectFieldLocalService.getObjectField(
+				objectDefinitionId, entry.getKey());
+		}
+		catch (NoSuchObjectFieldException noSuchObjectFieldException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchObjectFieldException);
 			}
-			catch (NoSuchObjectFieldException noSuchObjectFieldException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchObjectFieldException);
+
+			return;
+		}
+
+		String dbType = objectField.getDBType();
+
+		if (StringUtil.equals(dbType, "Integer")) {
+			Serializable entryValue = entry.getValue();
+
+			String entryValueString = entryValue.toString();
+
+			if (!entryValueString.isEmpty()) {
+				int value = GetterUtil.getInteger(entryValue);
+
+				if (!StringUtil.equals(
+						String.valueOf(value), entryValueString)) {
+
+					throw new ObjectEntryValuesException.ExceedsIntegerSize();
 				}
-
-				continue;
 			}
+		}
+		else if (StringUtil.equals(dbType, "Long")) {
+			Serializable entryValue = entry.getValue();
 
-			String dbType = objectField.getDBType();
+			String entryValueString = entryValue.toString();
 
-			if (StringUtil.equals(dbType, "Integer")) {
-				_validateObjectFieldIntegerTypeSize(entry);
-			}
-			else if (StringUtil.equals(dbType, "Long")) {
-				_validateObjectFieldLongType(entry);
-			}
-			else if (StringUtil.equals(dbType, "String")) {
-				_validateObjectFieldStringTypeLength(entry);
-			}
+			if (!entryValueString.isEmpty()) {
+				long value = GetterUtil.getLong(entryValue);
 
-			if (objectField.getListTypeDefinitionId() != 0) {
-				_validateListTypeEntriesValues(values, entry, objectField);
+				if (!StringUtil.equals(
+						String.valueOf(value), entryValue.toString())) {
+
+					throw new ObjectEntryValuesException.ExceedsLongSize();
+				}
+				else if (value > _MAX_SAFE_LONG) {
+					throw new ObjectEntryValuesException.ExceedsLongMaxSize();
+				}
+				else if (value < _MIN_SAFE_LONG) {
+					throw new ObjectEntryValuesException.ExceedsLongMinSize();
+				}
+			}
+		}
+		else if (StringUtil.equals(dbType, "String")) {
+			String value = (String)entry.getValue();
+
+			if ((value != null) && (value.length() > 280)) {
+				throw new ObjectEntryValuesException.Exceeds280Characters();
+			}
+		}
+
+		if (objectField.getListTypeDefinitionId() != 0) {
+			List<ListTypeEntry> listTypeEntries =
+				_listTypeEntryLocalService.getListTypeEntries(
+					objectField.getListTypeDefinitionId());
+
+			Stream<ListTypeEntry> stream = listTypeEntries.stream();
+
+			String value = _getValue(
+				String.valueOf(values.get(entry.getKey())));
+
+			if ((!value.isEmpty() || objectField.isRequired()) &&
+				!stream.anyMatch(
+					listTypeEntry -> Objects.equals(
+						listTypeEntry.getKey(), value))) {
+
+				throw new ObjectEntryValuesException.ObjectFieldNotMapped(
+					entry.getKey());
 			}
 		}
 	}

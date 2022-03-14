@@ -79,7 +79,7 @@ public class ObjectEntryValuesException extends PortalException {
 		extends ObjectEntryValuesException {
 
 		public OneToOneConstraintViolation(
-			String tableName, String columnName, long columnValue) {
+			String columnName, long columnValue, String tableName) {
 
 			super(
 				String.format(

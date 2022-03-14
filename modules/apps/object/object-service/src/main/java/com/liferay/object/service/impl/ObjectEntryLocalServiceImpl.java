@@ -1644,8 +1644,8 @@ public class ObjectEntryLocalServiceImpl
 
 		if (count > 0) {
 			throw new ObjectEntryValuesException.OneToOneConstraintViolation(
-				dynamicObjectDefinitionTable.getTableName(), dbColumnName,
-				dbColumnValue);
+				dbColumnName, dbColumnValue,
+				dynamicObjectDefinitionTable.getTableName());
 		}
 	}
 
@@ -1683,8 +1683,8 @@ public class ObjectEntryLocalServiceImpl
 
 		if (count > 0) {
 			throw new ObjectEntryValuesException.OneToOneConstraintViolation(
-				dynamicObjectDefinitionTable.getTableName(), dbColumnName,
-				dbColumnValue);
+				dbColumnName, dbColumnValue,
+				dynamicObjectDefinitionTable.getTableName());
 		}
 	}
 

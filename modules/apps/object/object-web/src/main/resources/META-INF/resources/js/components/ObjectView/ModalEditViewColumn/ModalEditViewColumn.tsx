@@ -15,11 +15,11 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import React, {useContext, useState} from 'react';
+import React, {FormEvent, useContext, useState} from 'react';
 
 import Input from '../../Form/Input';
 import InputLocalized from '../../Form/InputLocalized/InputLocalized';
-import ViewContext from '../context';
+import ViewContext, {TYPES} from '../context';
 
 interface IProps {
 	editingObjectFieldName: string;
@@ -36,7 +36,7 @@ const availableLocales: TLocale[] = Object.keys(Liferay.Language.available).map(
 		const formattedLocales = language.replace('_', '-');
 
 		return {
-			label: formattedLocales,
+			label: language,
 			symbol: formattedLocales.toLowerCase(),
 		};
 	}
@@ -53,21 +53,40 @@ export function ModalEditViewColumn({
 		{
 			objectView: {objectViewColumns},
 		},
+		dispatch,
 	] = useContext(ViewContext);
 
 	const [editingColumn] = objectViewColumns.filter(
 		(viewColumn) => viewColumn.objectFieldName === editingObjectFieldName
 	);
+	const {label} = editingColumn;
 
 	const [selectedLocale, setSelectedLocale] = useState<TLocale>(
 		availableLocales[0]
 	);
 
-	const [translations, setTranslations] = useState(editingColumn.label);
+	const [translations, setTranslations] = useState(label);
+
+	const onSubmit = (event: FormEvent) => {
+		event.preventDefault();
+
+		Object.entries(translations).forEach(([key, value]) => {
+			if (value === '' && key !== defaultLanguageId) {
+				delete translations[key];
+			}
+		});
+
+		dispatch({
+			payload: {editingObjectFieldName, translations},
+			type: TYPES.EDIT_OBJECT_VIEW_COLUMN_LABEL,
+		});
+
+		onClose();
+	};
 
 	return (
 		<ClayModal observer={observer}>
-			<ClayForm>
+			<ClayForm onSubmit={(event) => onSubmit(event)}>
 				<ClayModal.Header>
 					{Liferay.Language.get('rename-column-label')}
 				</ClayModal.Header>

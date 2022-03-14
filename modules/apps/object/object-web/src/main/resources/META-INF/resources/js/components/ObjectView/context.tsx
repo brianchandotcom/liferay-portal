@@ -116,6 +116,7 @@ export enum TYPES {
 	DELETE_OBJECT_VIEW_COLUMN = 'DELETE_OBJECT_VIEW_COLUMN',
 	DELETE_OBJECT_VIEW_SORT_COLUMN = 'DELETE_OBJECT_VIEW_SORT_COLUMN',
 	DELETE_OBJECT_CUSTOM_VIEW_FIELD = 'DELETE_OBJECT_CUSTOM_VIEW_FIELD',
+	EDIT_OBJECT_VIEW_COLUMN_LABEL = 'EDIT_OBJECT_VIEW_COLUMN_LABEL',
 	EDIT_OBJECT_VIEW_SORT_COLUMN_SORT_ORDER = 'EDIT_OBJECT_VIEW_SORT_COLUMN_SORT_ORDER',
 	SET_OBJECT_VIEW_AS_DEFAULT = 'SET_OBJECT_VIEW_AS_DEFAULT',
 }
@@ -492,6 +493,32 @@ const viewReducer = (state: TState, action: TAction) => {
 				...state.objectView,
 				objectViewColumns,
 				objectViewSortColumns: newSortColumn,
+			};
+
+			return {
+				...state,
+				objectView: newObjectView,
+			};
+		}
+		case TYPES.EDIT_OBJECT_VIEW_COLUMN_LABEL: {
+			const {editingObjectFieldName, translations} = action.payload;
+
+			const {objectViewColumns} = state.objectView;
+
+			const newObjectViewColumns = objectViewColumns.map((viewColumn) => {
+				if (viewColumn.objectFieldName === editingObjectFieldName) {
+					return {
+						...viewColumn,
+						label: translations,
+					};
+				}
+
+				return viewColumn;
+			});
+
+			const newObjectView = {
+				...state.objectView,
+				objectViewColumns: newObjectViewColumns,
 			};
 
 			return {

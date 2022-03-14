@@ -376,7 +376,6 @@ definition {
 	@description = "LPS-135394 - Verify it is possible to search for a View"
 	@priority = "4"
 	test CanSearchView {
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object",
 			objectName = "CustomObject",
@@ -395,10 +394,8 @@ definition {
 		Search.searchCP(searchTerm = "View A");
 
 		ObjectCustomViews.assertObjectView(viewLabel = "View A");
-		
+
 		ObjectCustomViews.assertObjectViewNotPresent(viewLabel = "View B");
-
-
 	}
 
 	@description = "LPS-135394 - Verify it is possible to update a View"

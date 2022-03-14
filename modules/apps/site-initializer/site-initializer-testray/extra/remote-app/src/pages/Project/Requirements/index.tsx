@@ -17,63 +17,82 @@ import ClayIcon from '@clayui/icon';
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import {getTestrayRequirements} from '../../../graphql/queries';
+import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
+import RequirementsModal from './RequirementModal';
 
-const Requirements = () => (
-	<Container title={i18n.translate('requirements')}>
-		<ListView
-			query={getTestrayRequirements}
-			tableProps={{
-				columns: [
-					{
-						clickable: true,
-						key: 'key',
-						value: 'Key',
-					},
-					{
-						key: 'linkTitle',
-						render: (
-							linkTitle: string,
-							{linkURL}: {linkURL: string}
-						) => (
-							<a
-								href={linkURL}
-								rel="noopener noreferrer"
-								target="_blank"
-							>
-								{linkTitle}
+const Requirements = () => {
+	const {forceRefetch, modal} = useFormModal({isVisible: false});
 
-								<ClayIcon className="ml-2" symbol="shortcut" />
-							</a>
-						),
-						value: 'Link',
-					},
-					{
-						key: 'testrayTeam',
-						render: (_, {testrayComponent}) =>
-							testrayComponent?.testrayTeam?.name,
-						value: i18n.translate('team'),
-					},
-					{
-						key: 'testrayComponent',
-						render: (testrayComponent) => testrayComponent?.name,
-						value: i18n.translate('component'),
-					},
-					{
-						key: 'components',
-						value: i18n.translate('jira-components'),
-					},
-					{
-						key: 'summary',
-						size: 'md',
-						value: i18n.translate('summary'),
-					},
-				],
-				navigateTo: ({id}) => id?.toString(),
-			}}
-			transformData={(data) => data?.testrayRequirements}
-		/>
-	</Container>
-);
+	return (
+		<>
+			<Container title={i18n.translate('requirements')}>
+				<ListView
+					forceRefetch={forceRefetch}
+					managementToolbarProps={{
+						addButton: modal.open,
+						visible: true,
+					}}
+					query={getTestrayRequirements}
+					tableProps={{
+						columns: [
+							{
+								clickable: true,
+								key: 'key',
+								value: 'Key',
+							},
+							{
+								key: 'linkTitle',
+								render: (
+									linkTitle: string,
+									{linkURL}: {linkURL: string}
+								) => (
+									<a
+										href={linkURL}
+										rel="noopener noreferrer"
+										target="_blank"
+									>
+										{linkTitle}
+
+										<ClayIcon
+											className="ml-2"
+											symbol="shortcut"
+										/>
+									</a>
+								),
+								value: 'Link',
+							},
+							{
+								key: 'testrayTeam',
+								render: (_, {testrayComponent}) =>
+									testrayComponent?.testrayTeam?.name,
+								value: i18n.translate('team'),
+							},
+							{
+								key: 'testrayComponent',
+								render: (testrayComponent) =>
+									testrayComponent?.name,
+								value: i18n.translate('component'),
+							},
+							{
+								key: 'components',
+								value: i18n.translate('jira-components'),
+							},
+							{
+								key: 'summary',
+								size: 'md',
+								value: i18n.translate('summary'),
+							},
+						],
+						navigateTo: ({testrayRequirementId}) =>
+							testrayRequirementId?.toString(),
+					}}
+					transformData={(data) => data?.testrayRequirements}
+				/>
+			</Container>
+			<RequirementsModal modal={modal} />
+		</>
+	);
+};
 
 export default Requirements;

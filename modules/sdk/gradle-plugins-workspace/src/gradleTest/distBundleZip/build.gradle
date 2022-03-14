@@ -10,6 +10,10 @@ gradle.liferayWorkspace {
 	product = "portal-7.4-ga8"
 }
 
+node {
+	nodeVersion = "14.19.0"
+}
+
 runGradleTest {
 	dependsOn distBundleZip
 

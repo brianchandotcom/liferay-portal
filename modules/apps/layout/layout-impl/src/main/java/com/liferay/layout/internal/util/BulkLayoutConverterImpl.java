@@ -146,10 +146,6 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 		draftLayout = _layoutLocalService.fetchLayout(draftLayout.getPlid());
 
-		draftLayout.setType(LayoutConstants.TYPE_CONTENT);
-
-		draftLayout = _layoutLocalService.updateLayout(draftLayout);
-
 		_updatePortletDecorator(draftLayout);
 
 		return LayoutConversionResult.of(

@@ -98,6 +98,11 @@ public class BillingAddressCommerceCheckoutStep
 			return false;
 		}
 
+		boolean activeBillingAddressCommerceCheckoutStep =
+			_commerceCheckoutStepHttpHelper.
+				isActiveBillingAddressCommerceCheckoutStep(
+					httpServletRequest, commerceOrder);
+
 		CommerceAccount commerceAccount = commerceOrder.getCommerceAccount();
 
 		if (!commerceOrder.isGuestOrder() &&
@@ -144,15 +149,13 @@ public class BillingAddressCommerceCheckoutStep
 			if (_hasViewBillingAddressPermission(
 					httpServletRequest, commerceAccount)) {
 
-				return true;
+				return activeBillingAddressCommerceCheckoutStep;
 			}
 
 			return false;
 		}
 
-		return _commerceCheckoutStepHttpHelper.
-			isActiveBillingAddressCommerceCheckoutStep(
-				httpServletRequest, commerceOrder);
+		return activeBillingAddressCommerceCheckoutStep;
 	}
 
 	@Override

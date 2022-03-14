@@ -42,7 +42,7 @@ const ModalDXPCActivationStatus = ({observer, onClose, projectID}) => {
 						customer&apos;s DXP Cloud environments.
 					</p>
 
-					<div className="ml-4 mr-4">
+					<div className="mx-4">
 						<ClayInput
 							id="basicInputText"
 							placeholder={projectID}
@@ -69,4 +69,5 @@ const ModalDXPCActivationStatus = ({observer, onClose, projectID}) => {
 		</>
 	);
 };
+
 export default ModalDXPCActivationStatus;

@@ -10,29 +10,16 @@
  */
 
 import ClayCard from '@clayui/card';
-import {ButtonWithIcon, useModal} from '@clayui/core';
 import classNames from 'classnames';
-import {useState} from 'react';
-import {ButtonDropDown} from '../../../../../common/components';
 import {STATUS_TAG_TYPE_NAMES} from '../../../utils/constants';
-import ModalDXPCActivationStatus from '../../ModalDXPCActivationStatus';
 import StatusTag from '../../StatusTag';
-
 const ActivationStatusLayout = ({
 	activationStatus,
 	activationStatusDate,
-	dxpCloudEnvironment,
 	iconPath,
 	project,
 	subscriptionGroupActivationStatus,
-	userAccount,
 }) => {
-	const [isVisible, setIsVisible] = useState(false);
-	const {observer, onClose} = useModal({
-		onClose: () => setIsVisible(false),
-	});
-	const projectID = dxpCloudEnvironment?.projectId;
-
 	return (
 		<div className="mb-5">
 			<h2>{activationStatus.title}</h2>
@@ -87,41 +74,12 @@ const ActivationStatusLayout = ({
 									title={null}
 									truncate={false}
 								>
-									{isVisible && (
-										<ModalDXPCActivationStatus
-											observer={observer}
-											onClose={onClose}
-											projectID={projectID}
-										/>
-									)}
-
 									<div className="align-items-center d-flex">
 										<StatusTag
 											currentStatus={activationStatus.id}
 										/>
 
-										{userAccount.isStaff && (
-											<ButtonDropDown
-												customDropDownButton={
-													<ButtonWithIcon
-														displayType="null"
-														small
-														symbol="caret-bottom"
-													/>
-												}
-												items={[
-													{
-														label: 'Set to Active',
-														onClick: () =>
-															setIsVisible(true),
-													},
-												]}
-												menuElementAttrs={{
-													className:
-														'p-0 cp-activation-key-icon rounded-xs',
-												}}
-											/>
-										)}
+										{activationStatus.dropdownIcon}
 									</div>
 								</ClayCard.Description>
 							</div>

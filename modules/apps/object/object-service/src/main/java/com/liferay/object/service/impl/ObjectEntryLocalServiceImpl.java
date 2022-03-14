@@ -1783,17 +1783,15 @@ public class ObjectEntryLocalServiceImpl
 				continue;
 			}
 
-			String objectFieldDBType = objectField.getDBType();
+			String dbType = objectField.getDBType();
 
-			if (StringUtil.equals(objectFieldDBType, "Integer")) {
+			if (StringUtil.equals(dbType, "Integer")) {
 				_validateObjectFieldIntegerTypeSize(entry);
 			}
-
-			if (StringUtil.equals(objectFieldDBType, "Long")) {
+			else if (StringUtil.equals(dbType, "Long")) {
 				_validateObjectFieldLongType(entry);
 			}
-
-			if (StringUtil.equals(objectFieldDBType, "String")) {
+			else if (StringUtil.equals(dbType, "String")) {
 				_validateObjectFieldStringTypeLength(entry);
 			}
 

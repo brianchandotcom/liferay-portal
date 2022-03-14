@@ -24,12 +24,12 @@ export type TestrayCase = {
 	description: string;
 	descriptionType: string;
 	estimatedDuration: number;
+	id: number;
 	name: string;
 	originationKey: string;
 	priority: number;
 	steps: string;
 	stepsType: string;
-	testrayCaseId: number;
 	testrayCaseResult: number;
 	testrayCaseType?: TestrayCaseType;
 	testrayComponent?: TestrayComponent;
@@ -58,7 +58,7 @@ export const getTestrayCases = gql`
 				priority
 				steps
 				stepsType
-				id: testrayCaseId
+				id
 				testrayCaseResult
 				testrayCaseType: r_caseCaseType_c_testrayCaseType {
 					name
@@ -96,7 +96,7 @@ export const getTestrayCase = gql`
 			priority
 			steps
 			stepsType
-			id: testrayCaseId
+			id
 			testrayCaseResult
 			testrayCaseType: r_caseCaseType_c_testrayCaseType {
 				name

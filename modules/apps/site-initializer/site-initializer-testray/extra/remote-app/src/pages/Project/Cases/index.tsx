@@ -12,25 +12,21 @@
  * details.
  */
 
-import {useModal} from '@clayui/modal';
-import {useState} from 'react';
-
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import {getTestrayCases} from '../../../graphql/queries/testrayCase';
 import i18n from '../../../i18n';
 import CaseModal from './CaseModal';
+import useCaseActions from './useCaseActions';
 
 const Cases = () => {
-	const [visible, setVisible] = useState(false);
-	const {observer, onClose} = useModal({
-		onClose: () => setVisible(false),
-	});
+	const {actions, formModal} = useCaseActions();
 
 	return (
 		<>
 			<Container title={i18n.translate('cases')}>
 				<ListView
+					forceRefetch={formModal.forceRefetch}
 					initialContext={{
 						filters: {
 							columns: {
@@ -43,11 +39,12 @@ const Cases = () => {
 						},
 					}}
 					managementToolbarProps={{
-						addButton: () => setVisible(true),
+						addButton: formModal.modal.open,
 						visible: true,
 					}}
 					query={getTestrayCases}
 					tableProps={{
+						actions,
 						columns: [
 							{
 								key: 'dateCreated',
@@ -95,12 +92,7 @@ const Cases = () => {
 				/>
 			</Container>
 
-			<CaseModal
-				observer={observer}
-				onClose={onClose}
-				setVisible={setVisible}
-				visible={visible}
-			/>
+			<CaseModal modal={formModal.modal} />
 		</>
 	);
 };

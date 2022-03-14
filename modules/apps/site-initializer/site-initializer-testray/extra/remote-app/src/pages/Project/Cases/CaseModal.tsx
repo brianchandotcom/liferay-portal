@@ -16,9 +16,8 @@ import {useMutation, useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import {Observer} from '@clayui/modal/src/types';
 import classNames from 'classnames';
-import {Dispatch, useState} from 'react';
+import {useState} from 'react';
 
 import Input from '../../../components/Input';
 import Container from '../../../components/Layout/Container';
@@ -32,6 +31,7 @@ import {
 	getTestrayCaseTypes,
 	getTestrayComponents,
 } from '../../../graphql/queries';
+import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../services/liferay/liferay';
 import {DescriptionType} from '../../../types';
@@ -233,13 +233,12 @@ const CaseForm: React.FC<CaseFormProps> = ({
 };
 
 type CaseModalProps = {
-	observer: Observer;
-	onClose: () => void;
-	setVisible: Dispatch<boolean>;
-	visible: boolean;
+	modal: FormModalOptions;
 };
 
-const CaseModal: React.FC<CaseModalProps> = ({observer, onClose, visible}) => {
+const CaseModal: React.FC<CaseModalProps> = ({
+	modal: {observer, onClose, visible},
+}) => {
 	const [form, setForm] = useState<CaseFormData>({
 		caseTypeId: 0,
 		componentId: 0,
@@ -296,8 +295,7 @@ const CaseModal: React.FC<CaseModalProps> = ({observer, onClose, visible}) => {
 			});
 
 			Liferay.Util.openToast({message: 'TestrayCase Registered'});
-		}
-		catch (error) {
+		} catch (error) {
 			Liferay.Util.openToast({
 				message: (error as any).message,
 				type: 'danger',

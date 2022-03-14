@@ -18,8 +18,11 @@ import {initialState} from '../../context/HeaderContext';
 import {getTestrayProjects} from '../../graphql/queries';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
+import useProjectActions from './useProjectActions';
 
 const Home = () => {
+	const actions = useProjectActions();
+
 	useHeader({useHeading: initialState.heading});
 
 	return (
@@ -27,6 +30,7 @@ const Home = () => {
 			<ListView
 				query={getTestrayProjects}
 				tableProps={{
+					actions,
 					columns: [
 						{
 							clickable: true,

@@ -86,7 +86,7 @@ const Build = () => (
 						value: i18n.translate('errors'),
 					},
 				],
-				navigateTo: (item) => `case-result/${item.testrayCaseId}`,
+				navigateTo: ({id}) => `case-result/${id}`,
 			}}
 			transformData={(data) => data?.c?.testrayCases}
 		/>

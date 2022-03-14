@@ -1,0 +1,88 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Launch AC") {
+			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+			Open(locator1 = "${analyticsCloudURL}");
+
+			ACLogin.loginAs(emailAddress = "test@liferay.com");
+
+			TestCase.setUpPortalInstance();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Bug: LRAC-10001 | Automation ID: LRAC-10738 | Test Summary: Make sure the AC user account name is correct after creation in the admin part of the AC"
+	@priority = "3"
+	test CheckUserAccountNameWithSpecialChars {
+		var userFirstName = "acção";
+		var userLastName = "acé";
+		var userScreenName = "ac.ac";
+		var userEmailAddress = "ac@liferay.com";
+
+		task ("Get the URL link") {
+			var currentURL = Navigator.getCurrentURL();
+		}
+
+		task ("Navigate to the AC Admin page") {
+			Navigator.openSpecificURL(url = "${currentURL}admin");
+		}
+
+		task ("Navigate to users page") {
+			ProductMenuHelper.expandCategory(category = "Users");
+
+			ProductMenuHelper.gotoPortlet(portlet = "Users and Organizations");
+		}
+
+		task ("Create a new user with special chars") {
+			LexiconEntry.gotoAdd();
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_SCREEN_NAME_FIELD",
+				value1 = "${userScreenName}");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_EMAIL_ADDRESS_FIELD",
+				value1 = "${userEmailAddress}");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_FIRST_NAME_FIELD",
+				value1 = "${userFirstName}");
+
+			Type(
+				locator1 = "UsersAndOrganizationsEditUser#DETAILS_LAST_NAME_FIELD",
+				value1 = "${userLastName}");
+
+			AssertClick(
+				locator1 = "Button#SUBMIT",
+				value1 = "Save");
+		}
+
+		task ("Go to user data page") {
+			UserNavigator.gotoUser(userScreenName = "${userScreenName}");
+		}
+
+		task ("Check that the page title is correct with the username with special chars") {
+			AssertTextEquals(
+				locator1 = "ControlMenu#HEADING",
+				value1 = "Edit User ${userFirstName} ${userLastName}");
+		}
+	}
+
+}

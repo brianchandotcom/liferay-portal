@@ -214,25 +214,9 @@ definition {
 		}
 
 		task ("Assign new user the role of 'Account Administrator'") {
-			Navigator.gotoNavTab(navTab = "Users");
-
-			Accounts.goToEntryMenuItem(
-				menuItem = "Assign Roles",
-				rowEntry = "user1 user1");
-
-			SelectFrame(
-				key_title = "Assign Roles",
-				locator1 = "IFrame#MODAL_ANY");
-
-			Check(
-				key_tableEntry = "Account Administrator",
-				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
-
-			SelectFrameTop();
-
-			Button.click(button = "Done");
-
-			Alert.viewSuccessMessage();
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Account Administrator",
+				accountUserName = "user1 user1");
 		}
 
 		task ("Assert that the new user has 'Account Administator' listed in their role") {
@@ -681,6 +665,45 @@ definition {
 		Accounts.viewNoAssignee(
 			accountName = "Account Name",
 			assigneeType = "Organizations");
+	}
+
+	@description = "This test asserts that an Account Admin can unassign roles to users."
+	@priority = "5"
+	test AccountAdminCanUnassignRolesToUsers {
+		task ("Given an Account User is given a role by the Account Administrator") {
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
+				userEmailAddress = "user1@liferay.com",
+				userFirstName = "user1",
+				userLastName = "user1",
+				userScreenName = "user1");
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.addAssigneeToRoleViaUsersTab(
+				accountRoleTitle = "Buyer",
+				accountUserName = "user1 user1");
+
+			AssertTextEquals(
+				key_columnName = "lfr-account-roles-column",
+				key_rowEntry = "user1 user1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+				value1 = "Buyer");
+		}
+
+		task ("When the Account Administrator unassigns that role") {
+			Accounts.unassignUserRole(
+				accountRoleTitle = "Buyer",
+				accountUserName = "user1 user1");
+		}
+
+		task ("Then that user should no longer have that role associated with them") {
+			AssertTextNotEquals(
+				key_columnName = "lfr-account-roles-column",
+				key_rowEntry = "user1 user1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
+				value1 = "Buyer");
+		}
 	}
 
 	@description = "This test asserts that account users can be ordered by First Name, Last Name, Email."

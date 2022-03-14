@@ -83,6 +83,71 @@ definition {
 		}
 	}
 
+	@description = "Verify users can export entity data via JSON files"
+	@priority = "3"
+	test CanExportJSONFiles {
+		task ("Given several accounts") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryDescription = "Test Business Account Description",
+				accountEntryName = "Test Business Account",
+				accountEntryType = "Business",
+				externalReferenceCode = "101");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryDescription = "Test Guest Account Description",
+				accountEntryName = "Test Guest Account",
+				accountEntryType = "Guest",
+				externalReferenceCode = "102");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryDescription = "Test Person Account Description",
+				accountEntryName = "Test Person Account",
+				accountEntryType = "Person",
+				externalReferenceCode = "103");
+		}
+
+		task ("When the user selects JSON as Export File Format and exports the accounts") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+
+			ImportExport.selectEntity(
+				entityType = "Account",
+				headlessEndpoint = "/headless-admin-user");
+
+			Select(
+				key_selectFieldLabel = "Export File Format",
+				locator1 = "ImportExport#SELECT",
+				value1 = "JSON");
+
+			ImportExport.mapExport(exportFields = "name,type,description,externalReferenceCode");
+
+			Button.click(button = "Export");
+		}
+
+		task ("Then a JSON file should be generated for download which contains account data") {
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+
+			Button.click(button = "Download");
+
+			DownloadTempFile();
+
+			DMDocument.assertFileNameFromTempFolder(fileName = "Export.zip");
+
+			AntCommand(
+				locator1 = "build-test.xml",
+				value1 = "unzip-temp-file -DfileName=Export.zip");
+
+			var exportFileContent = TestCase.getTempFileContent(fileName = "export.json");
+
+			var expectedFileContent = TestCase.getFileContent(fileName = "json_account_export.txt");
+
+			if ("${exportFileContent}" != "${expectedFileContent}") {
+				fail("The exported file content does not match the expected file content.");
+			}
+		}
+	}
+
 	@description = "Verify users can import entities via CSV files"
 	@priority = "3"
 	test CanImportCSVFiles {

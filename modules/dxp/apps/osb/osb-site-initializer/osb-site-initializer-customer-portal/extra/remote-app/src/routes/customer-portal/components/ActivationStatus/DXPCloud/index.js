@@ -219,6 +219,7 @@ const ActivationStatusDXPCloud = ({
 			<ActivationStatusLayout
 				activationStatus={activationStatus}
 				activationStatusDate={activationStatusDate}
+				dxpCloudEnvironment={dxpCloudEnvironment}
 				iconPath={`${assetsPath}/assets/navigation-menu/dxp_icon.svg`}
 				project={project}
 				subscriptionGroupActivationStatus={

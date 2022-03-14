@@ -14,7 +14,6 @@
  */
 --%>
 
-
 <liferay-util:html-top>
 	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/form_navigator.css") %>" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

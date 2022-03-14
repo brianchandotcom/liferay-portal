@@ -71,6 +71,7 @@ FileVersion fileVersion = dlViewFileEntryDisplayContext.getFileVersion();
 					<li class="d-none d-sm-flex tbar-item">
 						<clay:link
 							data-analytics-file-entry-id="<%= fileEntry.getFileEntryId() %>"
+							data-analytics-file-entry-title="<%= fileEntry.getTitle() %>"
 							displayType="primary"
 							href="<%= DLURLHelperUtil.getDownloadURL(fileEntry, fileVersion, themeDisplay, StringPool.BLANK, false, true) %>"
 							icon="download"

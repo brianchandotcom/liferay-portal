@@ -13,8 +13,8 @@
 		}
 	}
 
-	&__object-custom-view-builder-item-action-menu {
-		display: contents;
+	&__object-custom-view-builder-item-icon {
+		margin-right: 10px;
 	}
 
 	&__object-builder-list-item-sort-order {
@@ -22,4 +22,8 @@
 		position: absolute;
 		top: 23px;
 	}
+}
+
+.dropdown-menu {
+	width: 192px !important;
 }

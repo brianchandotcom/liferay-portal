@@ -13,10 +13,11 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
-import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
-import React, {useContext, useRef} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 
 import ViewContext, {TYPES} from '../context';
@@ -54,6 +55,7 @@ const BuilderListItem: React.FC<Iprops> = ({
 	onVisibleModal,
 	secondColumntext,
 }) => {
+	const [active, setActive] = useState<boolean>(false);
 	const [
 		{isFFObjectViewSortColumnConfigurationEnabled},
 		dispatch,
@@ -173,31 +175,46 @@ const BuilderListItem: React.FC<Iprops> = ({
 				<ClayList.ItemText>{secondColumntext}</ClayList.ItemText>
 			</ClayList.ItemField>
 
-			<ClayList.ItemField className="lfr-object__object-custom-view-builder-item-action-menu">
-				{isDefaultSort && (
-					<ClayTooltipProvider>
-						<ClayList.QuickActionMenu.Item
-							data-tooltip-align="bottom"
+			<ClayDropDown
+				active={active}
+				onActiveChange={setActive}
+				trigger={
+					<ClayButtonWithIcon
+						displayType="unstyled"
+						symbol="ellipsis-v"
+					/>
+				}
+			>
+				<ClayDropDown.ItemList>
+					{isDefaultSort && (
+						<ClayDropDown.Item
 							onClick={() =>
 								handleEnableEditModal(objectFieldName)
 							}
-							symbol="pencil"
-							title={Liferay.Language.get('Edit')}
-						/>
-					</ClayTooltipProvider>
-				)}
+						>
+							<ClayIcon
+								className="lfr-object__object-custom-view-builder-item-icon"
+								symbol="pencil"
+							/>
 
-				<ClayTooltipProvider>
-					<ClayList.QuickActionMenu.Item
-						data-tooltip-align="bottom"
+							{Liferay.Language.get('edit')}
+						</ClayDropDown.Item>
+					)}
+
+					<ClayDropDown.Item
 						onClick={() =>
 							handleDeleteColumn(objectFieldName, isDefaultSort)
 						}
-						symbol="times"
-						title={Liferay.Language.get('Delete')}
-					/>
-				</ClayTooltipProvider>
-			</ClayList.ItemField>
+					>
+						<ClayIcon
+							className="lfr-object__object-custom-view-builder-item-icon"
+							symbol="trash"
+						/>
+
+						{Liferay.Language.get('delete')}
+					</ClayDropDown.Item>
+				</ClayDropDown.ItemList>
+			</ClayDropDown>
 		</ClayList.Item>
 	);
 };

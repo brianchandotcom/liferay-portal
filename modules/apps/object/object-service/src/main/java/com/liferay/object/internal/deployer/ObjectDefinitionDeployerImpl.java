@@ -17,7 +17,6 @@ package com.liferay.object.internal.deployer;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
-import com.liferay.object.internal.configuration.activator.FFSearchAndSortMetadataColumnsConfigurationActivator;
 import com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider;
 import com.liferay.object.internal.language.ObjectResourceBundle;
 import com.liferay.object.internal.related.models.ObjectEntry1to1ObjectRelatedModelsProviderImpl;
@@ -79,8 +78,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		BundleContext bundleContext,
 		DynamicQueryBatchIndexingActionableFactory
 			dynamicQueryBatchIndexingActionableFactory,
-		FFSearchAndSortMetadataColumnsConfigurationActivator
-			ffSearchAndSortMetadataColumnsConfigurationActivator,
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ModelSearchRegistrarHelper modelSearchRegistrarHelper,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
@@ -96,8 +93,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_bundleContext = bundleContext;
 		_dynamicQueryBatchIndexingActionableFactory =
 			dynamicQueryBatchIndexingActionableFactory;
-		_ffSearchAndSortMetadataColumnsConfigurationActivator =
-			ffSearchAndSortMetadataColumnsConfigurationActivator;
 		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_modelSearchRegistrarHelper = modelSearchRegistrarHelper;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
@@ -153,7 +148,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				KeywordQueryContributor.class,
 				new ObjectEntryKeywordQueryContributor(
-					_ffSearchAndSortMetadataColumnsConfigurationActivator,
 					_objectFieldLocalService, _objectViewLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"indexer.class.name", objectDefinition.getClassName()
@@ -162,7 +156,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				ModelDocumentContributor.class,
 				new ObjectEntryModelDocumentContributor(
 					objectDefinition.getClassName(),
-					_ffSearchAndSortMetadataColumnsConfigurationActivator,
 					_objectDefinitionLocalService, _objectEntryLocalService,
 					_objectFieldLocalService,
 					_persistedModelLocalServiceRegistry),
@@ -284,8 +277,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final BundleContext _bundleContext;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
-	private final FFSearchAndSortMetadataColumnsConfigurationActivator
-		_ffSearchAndSortMetadataColumnsConfigurationActivator;
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final ModelSearchRegistrarHelper _modelSearchRegistrarHelper;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;

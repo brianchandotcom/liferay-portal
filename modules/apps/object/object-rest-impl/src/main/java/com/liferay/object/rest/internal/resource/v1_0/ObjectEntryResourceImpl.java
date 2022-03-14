@@ -16,7 +16,6 @@ package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
-import com.liferay.object.rest.internal.configuration.activator.FFSearchAndSortMetadataColumnsConfigurationActivator;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
@@ -128,7 +127,6 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		if (_entityModel == null) {
 			_entityModel = new ObjectEntryEntityModel(
-				_ffSearchAndSortMetadataColumnsConfigurationActivator,
 				_objectFieldLocalService.getObjectFields(
 					_objectDefinition.getObjectDefinitionId()));
 		}
@@ -307,10 +305,6 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 	}
 
 	private EntityModel _entityModel;
-
-	@Reference
-	private FFSearchAndSortMetadataColumnsConfigurationActivator
-		_ffSearchAndSortMetadataColumnsConfigurationActivator;
 
 	@Context
 	private ObjectDefinition _objectDefinition;

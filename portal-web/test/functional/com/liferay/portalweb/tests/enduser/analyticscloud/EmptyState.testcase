@@ -1,0 +1,163 @@
+@component-name = "portal-analytics-cloud"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property property.group = "analytics.cloud.profile";
+	property testray.main.component.name = "Analytics Cloud";
+
+	setUp {
+		task ("Create a new workspace") {
+			ACUtils.launchAC(
+				emailList = "acworkspace@liferay.com",
+				workspaceName = "New AC Workspace");
+		}
+
+		task ("Set up instance") {
+			TestCase.setUpPortalInstance();
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+
+		ACUtils.tearDownAC();
+	}
+
+	@description = "Feature ID: LRAC-10403 | Automation ID: LRAC-10740 | Test Summary: Empty state of pages without data source and with property"
+	@priority = "2"
+	test CheckAllMessageWhenHasPropertyNoDataSource {
+        task ("Close the onboarding modal") {
+			ACUtils.closeModal();
+		}
+
+        task ("Navigate to properties") {
+			ACNavigation.goToSettings();
+
+		    ACSettings.goToProperties();
+		}
+
+		task ("Create a new property and navigate to AC pages") {
+			ACProperties.addNewProperty(propertyName = "AC Test Property");
+
+            ACNavigation.exitSettings();
+		}
+
+        for (var pageName : list "sites,assets,individuals,tests") {
+            task ("Navigate to AC pages") {
+			    ACNavigation.goToSidebarOption(sidebarOption = "${pageName}");
+		    }
+
+            task ("Check page empty state message and the connect button") {
+			    ACUtils.viewGenericText(textValueList = "No Sites Synced from Data Sources,Connect a data source with sites data.,Access our documentation to learn more.");
+
+                ACUtils.viewGenericButton(buttonName = "Connect Data Source");
+		    }
+        }
+
+        task ("Navigate to sites page") {
+			ACNavigation.goToSidebarOption(sidebarOption = "sites");
+		}
+
+        for (var tabName : list "Pages,Interests") {
+            task ("Switch to the another tab") {
+			    ACNavigation.switchTab(tabName = "${tabName}");
+		    }
+
+            task ("Check page empty state message and the connect button") {
+			    ACUtils.viewGenericText(textValueList = "No Sites Synced from Data Sources,Connect a data source with sites data.,Access our documentation to learn more.");
+
+                ACUtils.viewGenericButton(buttonName = "Connect Data Source");
+		    }
+        }
+
+        task ("Navigate to assets page") {
+			ACNavigation.goToSidebarOption(sidebarOption = "assets");
+		}
+
+        for (var tabName : list "Documents and Media,Forms,Web Content,Custom") {
+            task ("Switch to the another tab") {
+			    ACNavigation.switchTab(tabName = "${tabName}");
+		    }
+
+            task ("Check page empty state message and the connect button") {
+			    ACUtils.viewGenericText(textValueList = "No Sites Synced from Data Sources,Connect a data source with sites data.,Access our documentation to learn more.");
+
+                ACUtils.viewGenericButton(buttonName = "Connect Data Source");
+		    }
+        }
+
+        task ("Navigate to accounts page") {
+			ACNavigation.goToSidebarOption(sidebarOption = "accounts");
+		}
+
+        task ("Check page empty state message and the connect button") {
+			ACUtils.viewGenericText(textValueList = "No Accounts Synced from Data Sources,Connect a data source to get started.,Access our documentation to learn more.");
+
+            ACUtils.viewGenericButton(buttonName = "Connect Data Source");
+		}
+
+        for (var pageName : list "event-analysis,segments") {
+            task ("Navigate to AC pages") {
+			    ACNavigation.goToSidebarOption(sidebarOption = "${pageName}");
+		    }
+
+            task ("Check page empty state message and the connect button") {
+			    ACUtils.viewGenericText(textValueList = "No Data Sources Connected,Connect a data source to get started.,Access our documentation to learn more.");
+
+                ACUtils.viewGenericButton(buttonName = "Connect Data Source");
+		    }
+
+            task ("Check that the button is disabled") {
+                if ("${pageName}" == "event-analysis"){
+                    AssertElementPresent(locator1 = "ACEventAnalysis#DISABLED_ADD_EVENT_BUTTON");
+                }
+
+                if ("${pageName}" == "segments"){
+                    AssertElementPresent(locator1 = "Button#DISABLED_BUTTON");
+                }
+		    }
+        }
+
+        task ("Navigate to individuals page") {
+			ACNavigation.goToSidebarOption(sidebarOption = "individuals");
+		}
+
+        for (var tabName : list "Known Individuals,Distribution") {
+            task ("Switch to the another tab") {
+			    ACNavigation.switchTab(tabName = "${tabName}");
+		    }
+
+            task ("Check page empty state message and the connect button") {
+			    ACUtils.viewGenericText(textValueList = "No Data Sources Connected,Connect a data source to get started.,Access our documentation to learn more.");
+
+                ACUtils.viewGenericButton(buttonName = "Connect Data Source");
+		    }
+        }
+
+        task ("Switch to the interests tab") {
+			ACNavigation.switchTab(tabName = "Interests");
+		}
+
+        task ("Check page empty state message and the connect button") {
+			ACUtils.viewGenericText(textValueList = "No Sites Synced from Data Sources,Connect a data source with sites data.");
+
+            ACUtils.viewGenericButton(buttonName = "Connect Data Source");
+		}
+
+        task ("Check the hyperlink taking user to the documentation") {
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
+
+			task ("Switch to the documentation tab") {
+				SelectWindow(locator1 = "title=Connecting Data Sources — Liferay Learn");
+			}
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Connecting Data Sources");
+		}
+	}
+
+}

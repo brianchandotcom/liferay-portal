@@ -24,6 +24,7 @@ import com.liferay.commerce.initializer.util.CommerceInventoryWarehousesImporter
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.notification.service.CommerceNotificationTemplateLocalService;
+import com.liferay.commerce.product.constants.CPConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -32,6 +33,7 @@ import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
+import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Option;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
@@ -51,6 +53,8 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
@@ -240,6 +244,11 @@ public class CommerceSiteInitializer {
 
 		channel = channelResource.postChannel(channel);
 
+		_addDefaultCPDisplayLayout(
+			channel,
+			StringUtil.replaceLast(
+				resourcePath, ".json", ".default-cp-display-layout.json"),
+			serviceContext, servletContext);
 		_addModelResourcePermissions(
 			CommerceChannel.class.getName(), String.valueOf(channel.getId()),
 			StringUtil.replaceLast(
@@ -566,6 +575,50 @@ public class CommerceSiteInitializer {
 			commerceCatalogGroup.getGroupId(), serviceContext.getUserId());
 	}
 
+	private void _addDefaultCPDisplayLayout(
+			Channel channel, String resourcePath, ServiceContext serviceContext,
+			ServletContext servletContext)
+		throws Exception {
+
+		String json = SiteInitializerUtil.read(resourcePath, servletContext);
+
+		if (json == null) {
+			return;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+
+		Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+			serviceContext.getScopeGroupId(),
+			jsonObject.getBoolean("privateLayout"),
+			jsonObject.getString("friendlyURL"));
+
+		if (layout == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to create a default product commerce product " +
+						"display page from JSON: " + json);
+			}
+
+			return;
+		}
+
+		CommerceChannel commerceChannel =
+			_commerceChannelService.getCommerceChannel(channel.getId());
+
+		Settings settings = _settingsFactory.getSettings(
+			new GroupServiceSettingsLocator(
+				commerceChannel.getGroupId(),
+				CPConstants.RESOURCE_NAME_CP_DISPLAY_LAYOUT));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.setValue("productLayoutUuid", layout.getUuid());
+
+		modifiableSettings.store();
+	}
+
 	private void _addModelResourcePermissions(
 			String className, String primKey, String resourcePath,
 			ServiceContext serviceContext, ServletContext servletContext)
@@ -670,6 +723,9 @@ public class CommerceSiteInitializer {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
+	private CommerceChannelService _commerceChannelService;
+
+	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
@@ -700,6 +756,9 @@ public class CommerceSiteInitializer {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private OptionResource.Factory _optionResourceFactory;

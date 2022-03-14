@@ -181,6 +181,10 @@ definition {
 	@description = "Feature ID: LRAC-4266 | Automation ID: LRAC-10307 | Test Summary: Total Chart, Unique Chart and Average Chart data shown"
 	@priority = "5"
 	test CheckTotalAndUniqueAndAverageChartDataIsShown {
+		property portal.upstream = "quarantine";
+
+		// AC Refactor: It is not possible to assert the chart because the data takes some time to appear.
+
 		var attributeName = "pageTitle";
 		var layoutNameList = "Custom 1,Custom 2";
 		var dataSource = StringUtil.extractFirst("${assignedPropertyName}", " ");

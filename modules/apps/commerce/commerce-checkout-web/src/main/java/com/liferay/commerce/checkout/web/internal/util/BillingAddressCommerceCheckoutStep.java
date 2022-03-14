@@ -103,11 +103,9 @@ public class BillingAddressCommerceCheckoutStep
 		if (!commerceOrder.isGuestOrder() &&
 			!commerceAccount.isPersonalAccount()) {
 
-			long defaultBillingAddressId =
-				commerceAccount.getDefaultBillingAddressId();
-			long billingAddressId = commerceOrder.getBillingAddressId();
+			if ((commerceAccount.getDefaultBillingAddressId() <= 0) &&
+				(commerceOrder.getBillingAddressId() <= 0)) {
 
-			if ((defaultBillingAddressId <= 0) && (billingAddressId <= 0)) {
 				if (_hasViewBillingAddressPermission(
 						httpServletRequest, commerceAccount)) {
 
@@ -134,12 +132,13 @@ public class BillingAddressCommerceCheckoutStep
 				return false;
 			}
 
-			if ((defaultBillingAddressId > 0) &&
-				(defaultBillingAddressId != billingAddressId)) {
+			if ((commerceAccount.getDefaultBillingAddressId() > 0) &&
+				(commerceAccount.getDefaultBillingAddressId() !=
+					commerceOrder.getBillingAddressId())) {
 
 				commerceOrderService.updateBillingAddress(
 					commerceOrder.getCommerceOrderId(),
-					defaultBillingAddressId);
+					commerceAccount.getDefaultBillingAddressId());
 			}
 
 			if (_hasViewBillingAddressPermission(
@@ -215,7 +214,9 @@ public class BillingAddressCommerceCheckoutStep
 				commerceAccount.getCompanyId(), AccountEntry.class.getName(),
 				commerceAccount.getCommerceAccountId());
 
-		if ((commerceAccount.getDefaultBillingAddressId() <= 0) &&
+		if (!commerceOrder.isGuestOrder() &&
+			!commerceAccount.isPersonalAccount() &&
+			(commerceAccount.getDefaultBillingAddressId() <= 0) &&
 			(commerceOrder.getBillingAddressId() <= 0) &&
 			!_hasViewBillingAddressPermission(
 				httpServletRequest, commerceAccount) &&
@@ -274,7 +275,9 @@ public class BillingAddressCommerceCheckoutStep
 					AccountEntry.class.getName(),
 					commerceAccount.getCommerceAccountId());
 
-			if ((commerceAccount.getDefaultBillingAddressId() <= 0) &&
+			if (!commerceOrder.isGuestOrder() &&
+				!commerceAccount.isPersonalAccount() &&
+				(commerceAccount.getDefaultBillingAddressId() <= 0) &&
 				(commerceOrder.getBillingAddressId() <= 0) &&
 				!_hasViewBillingAddressPermission(
 					httpServletRequest, commerceAccount) &&

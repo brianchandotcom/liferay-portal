@@ -237,7 +237,7 @@ type CaseModalProps = {
 };
 
 const CaseModal: React.FC<CaseModalProps> = ({
-	modal: {observer, onClose, visible},
+	modal: {observer, onClose, onSave, visible},
 }) => {
 	const [form, setForm] = useState<CaseFormData>({
 		caseTypeId: 0,
@@ -293,7 +293,7 @@ const CaseModal: React.FC<CaseModalProps> = ({
 					TestrayCase: newForm,
 				},
 			});
-
+			onSave();
 			Liferay.Util.openToast({message: 'TestrayCase Registered'});
 		} catch (error) {
 			Liferay.Util.openToast({

@@ -271,6 +271,8 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 			_updatePortletDecorator(layout);
 
+			_getOrCreateDraftLayout(layout, serviceContext);
+
 			LayoutConversionResult layoutConversionResult =
 				layoutConverter.convert(layout, LocaleUtil.getSiteDefault());
 
@@ -279,8 +281,6 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 
 			layout = _layoutLocalService.updateType(
 				plid, LayoutConstants.TYPE_CONTENT);
-
-			_getOrCreateDraftLayout(layout, serviceContext);
 
 			return _layoutLocalService.updateLayout(
 				layout.getGroupId(), layout.isPrivateLayout(),

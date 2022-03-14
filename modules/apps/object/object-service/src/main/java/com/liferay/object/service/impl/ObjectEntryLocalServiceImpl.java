@@ -1746,10 +1746,10 @@ public class ObjectEntryLocalServiceImpl
 
 					throw new ObjectEntryValuesException.ExceedsLongSize();
 				}
-				else if (value > _MAX_SAFE_LONG) {
+				else if (value > 9007199254740991L) {
 					throw new ObjectEntryValuesException.ExceedsLongMaxSize();
 				}
-				else if (value < _MIN_SAFE_LONG) {
+				else if (value < -9007199254740991L) {
 					throw new ObjectEntryValuesException.ExceedsLongMinSize();
 				}
 			}
@@ -1782,10 +1782,6 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 	}
-
-	private static final long _MAX_SAFE_LONG = 9007199254740991L;
-
-	private static final long _MIN_SAFE_LONG = -9007199254740991L;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryLocalServiceImpl.class);

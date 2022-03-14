@@ -17,6 +17,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISABLED_ADD_EVENT_BUTTON</td>
+	<td>//*[contains(@class,'link-disabled')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_ATTRIBUTE_BUTTON</td>
 	<td>//div[contains(@class,'attribute-${key_sectionType}-section-root')]//button[contains(@class,'add-attribute')]</td>
 	<td></td>

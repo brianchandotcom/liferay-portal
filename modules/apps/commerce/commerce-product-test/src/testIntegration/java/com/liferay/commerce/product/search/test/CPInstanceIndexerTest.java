@@ -99,8 +99,7 @@ public class CPInstanceIndexerTest {
 		_assertSearch("open", cpInstance.getCPDefinitionId(), cpInstance);
 		_assertSearch("open4life", cpInstance.getCPDefinitionId(), cpInstance);
 		_assertSearch("OPE", cpInstance.getCPDefinitionId(), cpInstance);
-
-		_assertSearch("4lif", cpInstance.getCPDefinitionId());
+		_assertSearch("4lif", cpInstance.getCPDefinitionId(), cpInstance);
 	}
 
 	protected Hits search(String keywords, long commerceOrderId)

@@ -14,6 +14,18 @@ definition {
 		MenuItem.click(menuItem = "Import File");
 	}
 
+	macro mapExport {
+		Click.clickAtNotVisible(
+			key_checkboxOption = "Attribute Code",
+			locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+
+		for (var exportField : list "${exportFields}") {
+			Click.clickAtNotVisible(
+				key_checkboxOption = "${exportField}",
+				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+		}
+	}
+
 	macro mapImport {
 		for (var fieldMapping : list "${fieldMappings}") {
 			var destinationField = StringUtil.extractFirst("${fieldMapping}", ":");

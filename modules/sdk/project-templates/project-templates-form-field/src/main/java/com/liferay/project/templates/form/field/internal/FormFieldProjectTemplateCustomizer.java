@@ -101,9 +101,9 @@ public class FormFieldProjectTemplateCustomizer
 
 			File workspaceDir = WorkspaceUtil.getWorkspaceDir(destinationDir);
 
-			Path workspacPath = workspaceDir.toPath();
+			Path workspacePath = workspaceDir.toPath();
 
-			Path gradlePropertiesPath = workspacPath.resolve(
+			Path gradlePropertiesPath = workspacePath.resolve(
 				"gradle.properties");
 
 			if (Files.notExists(gradlePropertiesPath) ||
@@ -125,22 +125,21 @@ public class FormFieldProjectTemplateCustomizer
 				if (Validator.isNull(nodeManager) ||
 					nodeManager.equals("yarn")) {
 
-					Path projectRelativizePath = workspacPath.relativize(
+					Path projectRelativizePath = workspacePath.relativize(
 						projectPath);
 
-					StringBuilder nodeModulePath = new StringBuilder("../");
+					StringBuilder sb = new StringBuilder("../");
 
 					for (int i = 0;
 						 i < (projectRelativizePath.getNameCount() - 1); i++) {
 
-						nodeModulePath.append("../");
+						sb.append("../");
 					}
 
-					_updateNodeModulePath(
-						projectPath, nodeModulePath.toString());
+					_updateNodeModulesPath(projectPath, sb.toString());
 				}
 				else if (nodeManager.equals("npm")) {
-					_updateNodeModulePath(projectPath, "./");
+					_updateNodeModulesPath(projectPath, "./");
 				}
 			}
 		}
@@ -186,7 +185,8 @@ public class FormFieldProjectTemplateCustomizer
 		return jsFramework.equals("react");
 	}
 
-	private void _updateNodeModulePath(Path projectPath, String nodeUpdatePath)
+	private void _updateNodeModulesPath(
+			Path projectPath, String nodeModulesPath)
 		throws IOException {
 
 		Path packageJsonPath = projectPath.resolve("package.json");
@@ -197,12 +197,10 @@ public class FormFieldProjectTemplateCustomizer
 			String packageJsonContent = FileUtils.readFileToString(
 				packageJsonFile);
 
-			String replaceWithYarnModulesPathContent =
-				packageJsonContent.replaceAll(
-					"../../node_modules/", nodeUpdatePath + "node_modules/");
+			String newContent = packageJsonContent.replaceAll(
+				"../../node_modules/", nodeModulesPath + "node_modules/");
 
-			FileUtils.writeStringToFile(
-				packageJsonFile, replaceWithYarnModulesPathContent, "UTF-8");
+			FileUtils.writeStringToFile(packageJsonFile, newContent, "UTF-8");
 		}
 	}
 

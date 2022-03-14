@@ -54,6 +54,7 @@ const Input: React.FC<InputProps> = ({
 		)}
 
 		<ClayInput
+			className="rounded-xs"
 			component={type === 'textarea' ? 'textarea' : 'input'}
 			id={id}
 			name={name}

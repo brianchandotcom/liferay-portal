@@ -1,0 +1,76 @@
+import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
+
+List<String> outputPaths = new ArrayList<>();
+
+task runGradleTest
+
+gradle.liferayWorkspace {
+	product = "portal-7.4-ga8"
+}
+
+gradle.taskGraph.afterTask {
+	Task task, TaskState taskState ->
+
+	if ((task.name.contains("distBundleZip")) && !task.name.contains("All")) {
+		outputPaths.add(task.archivePath)
+	}
+}
+
+runGradleTest {
+	dependsOn distBundleZipAll
+
+	doLast {
+		String zipEntryRootName = gradle.liferayWorkspace.bundleDistRootDirName
+
+		if (zipEntryRootName) {
+			zipEntryRootName += "/"
+		}
+		else {
+			zipEntryRootName = ""
+		}
+
+		outputPaths.each{
+			File distBundleFile = file(it)
+
+			assert distBundleFile.exists()
+
+			ZipFile zipFile = new ZipFile(distBundleFile)
+
+			String zipName = zipFile.name
+
+			int pos = zipName.lastIndexOf(File.separator)
+
+			String shortFileName = zipName.substring(pos + 1)
+
+			List<String> configTypes = new ArrayList<>();
+
+			configTypes.add("common/common.txt");
+
+			if (shortFileName.contains("-uat-")){
+				configTypes.add("uat/uat.txt");
+				configTypes.add("uat/license/copyright-uat.txt");
+			}
+			else if (shortFileName.contains("-local-")){
+				configTypes.add("local/local.txt");
+				configTypes.add("local/license/copyright-local.txt");
+			}
+
+			zipFile.withCloseable {
+				for (String fileName in configTypes) {
+					File expectedFile = file("configs/" + fileName)
+
+					String zipEntryName = zipEntryRootName + fileName.substring(fileName.indexOf('/') + 1)
+
+					ZipEntry zipEntry = zipFile.getEntry(zipEntryName)
+
+					assert zipEntry != null : zipEntryName
+
+					InputStream inputStream = zipFile.getInputStream(zipEntry)
+
+					assert expectedFile.text.normalize() == inputStream.text.normalize()
+				}
+			}
+		}
+	}
+}

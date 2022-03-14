@@ -1,0 +1,54 @@
+import java.util.zip.ZipEntry
+import java.util.zip.ZipFile
+
+task runGradleTest
+
+gradle.liferayWorkspace {
+	environment = "uat"
+	product = "portal-7.4-ga8"
+	bundleDistIncludeMetadata = true
+}
+
+runGradleTest {
+	dependsOn distBundleZip
+
+	doLast {
+		ZipFile zipFile = new ZipFile(distBundleZip.archivePath)
+
+		String zipName = zipFile.name
+
+		int pos = zipName.lastIndexOf(File.separator)
+
+		String shortFileName = zipName.substring(pos + 1)
+
+		assert shortFileName.contains("-uat-")
+
+		String zipEntryRootName = gradle.liferayWorkspace.bundleDistRootDirName
+
+		if (zipEntryRootName) {
+			zipEntryRootName += "/"
+		}
+		else {
+			zipEntryRootName = ""
+		}
+
+		zipFile.withCloseable {
+
+			// Configs
+
+			for (String fileName in ["common/common.txt", "uat/uat.txt", "uat/license/copyright-uat.txt"]) {
+				File expectedFile = file("configs/" + fileName)
+
+				String zipEntryName = zipEntryRootName + fileName.substring(fileName.indexOf('/') + 1)
+
+				ZipEntry zipEntry = zipFile.getEntry(zipEntryName)
+
+				assert zipEntry != null : zipEntryName
+
+				InputStream inputStream = zipFile.getInputStream(zipEntry)
+
+				assert expectedFile.text.normalize() == inputStream.text.normalize()
+			}
+		}
+	}
+}

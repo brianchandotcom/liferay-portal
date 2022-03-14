@@ -77,9 +77,7 @@ public class RangeAggregationTranslatorImpl
 				RangeAggregator.Range range = new RangeAggregator.Range(
 					rangeAggregationRange.getKey(),
 					rangeAggregationRange.getFrom(),
-					rangeAggregationRange.getFrom(),
 					rangeAggregationRange.getFromAsString(),
-					rangeAggregationRange.getTo(),
 					rangeAggregationRange.getTo(),
 					rangeAggregationRange.getToAsString());
 

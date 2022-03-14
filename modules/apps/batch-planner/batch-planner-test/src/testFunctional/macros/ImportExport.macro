@@ -8,6 +8,12 @@ definition {
 			locator1 = "ImportExport#EXECUTION_ENTRY");
 	}
 
+	macro gotoExport {
+		Click(locator1 = "Button#PLUS");
+
+		MenuItem.click(menuItem = "Export File");
+	}
+
 	macro gotoImport {
 		Click(locator1 = "Button#PLUS");
 

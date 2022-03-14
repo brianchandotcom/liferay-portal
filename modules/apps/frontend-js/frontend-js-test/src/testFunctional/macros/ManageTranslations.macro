@@ -8,7 +8,7 @@ definition {
 
 	macro searchLanguage {
 		Type.type(
-			locator1 = "TranslationManager#MANAGE_TRANSLATIONS_DIALOG_SEARCH_FIELD",
+			locator1 = "ManageTranslations#SEARCH_FIELD",
 			value1 = "${key_language}");
 	}
 

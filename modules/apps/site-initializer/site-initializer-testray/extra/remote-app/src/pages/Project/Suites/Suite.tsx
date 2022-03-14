@@ -130,8 +130,7 @@ const Suite = () => {
 								value: i18n.translate('case-name'),
 							},
 						],
-						navigateTo: ({testrayCaseId}) =>
-							testrayCaseId?.toString(),
+						navigateTo: ({id}) => id?.toString(),
 					}}
 					transformData={(data) => data?.c?.testrayCases}
 				/>

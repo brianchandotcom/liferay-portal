@@ -20,6 +20,7 @@ export type TestraySuite = {
 	dateCreated: string;
 	dateModified: string;
 	description: string;
+	id: number;
 	name: string;
 	testraySuiteId: number;
 	type: string;

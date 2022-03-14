@@ -27,3 +27,11 @@ export const CreateTestraySuite = gql`
 		}
 	}
 `;
+
+export const DeleteTestraySuite = gql`
+	mutation deleteTestraySuite($testraySuiteId: Long) {
+		c {
+			deleteTestraySuite(testraySuiteId: $testraySuiteId)
+		}
+	}
+`;

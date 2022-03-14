@@ -37,6 +37,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKBOX_SELECTABLE_IMAGE_CARD</td>
+	<td>//h4[contains(text(), '${key_header}')]//following::div[contains(@id,'image-card-icon-block')]//input[contains(@type,'checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CARD_ACTIVE</td>
+	<td>//h4[contains(text(), '${key_header}')]//following::div[contains(@class,'active file-card')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KEBAB_DROPDOWN_CARD_OPTION</td>
+	<td>//h4[contains(text(), '${key_header}')]//following::div[contains(@id,'image-card-icon-block')]//button[contains(@class, 'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_CARD</td>
+	<td>//h4[contains(text(), '${key_header}')]//following::a[contains(text(),'${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECTOR</td>
 	<td>//label[normalize-space(text())='${key_label}']/following-sibling::select</td>
 	<td></td>

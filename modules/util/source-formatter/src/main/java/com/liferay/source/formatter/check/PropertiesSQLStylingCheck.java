@@ -39,7 +39,7 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 		Matcher matcher = _sqlPattern.matcher(content);
 
 		while (matcher.find()) {
-			String originalSqlClause = matcher.group(3);
+			String originalSqlClause = matcher.group(1);
 
 			String sqlClause = originalSqlClause.replaceAll("\\\\\n *", "");
 
@@ -94,7 +94,7 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 
 			if (!sqlClause.equals(originalSqlClause)) {
 				return StringUtil.replaceFirst(
-					content, originalSqlClause, sqlClause, matcher.start(3));
+					content, originalSqlClause, sqlClause, matcher.start(1));
 			}
 		}
 
@@ -196,7 +196,7 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _sqlPattern = Pattern.compile(
-		"(?<=\\A|\n)( +)(test\\.batch\\.run\\.property\\.query.+]=)" +
+		"(?<=\\A|\n) +test\\.batch\\.run\\.property\\.query.+]=" +
 			"([\\s\\S]*?[^\\\\])(?=(\\Z|\n))");
 
 }

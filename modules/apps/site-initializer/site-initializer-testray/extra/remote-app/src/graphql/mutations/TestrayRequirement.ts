@@ -29,3 +29,29 @@ export const CreateTestrayRequirement = gql`
 		}
 	}
 `;
+
+export const DeleteTestrayRequirement = gql`
+	mutation deleteTestrayRequirement($testrayRequirementId: Long) {
+		c {
+			deleteTestrayRequirement(
+				testrayRequirementId: $testrayRequirementId
+			)
+		}
+	}
+`;
+
+export const UpdateTestrayRequirements = gql`
+	mutation updateTestrayRequirement(
+		$testrayRequirementId: Long
+		$TestrayRequirement: InputC_TestrayRequirement!
+	) {
+		c {
+			updateTestrayRequirement(
+				testrayRequirementId: $testrayRequirementId
+				TestrayRequirement: $TestrayRequirement
+			) {
+				...TestrayRequirementFragment
+			}
+		}
+	}
+`;

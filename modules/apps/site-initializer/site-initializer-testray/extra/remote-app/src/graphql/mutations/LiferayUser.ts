@@ -14,15 +14,14 @@
 
 import {gql} from '@apollo/client';
 
-export const liferayUserAccountFragment = gql`
-	fragment LiferayUserAccountFragment on UserAccount {
-		additionalName
-		alternateName
-		emailAddress
-		familyName
-		givenName
-		id
-		image
-		password
+import {liferayUserAccountFragment} from '../fragments';
+
+export const createUserAccount = gql`
+	${liferayUserAccountFragment}
+
+	mutation createUserAccount($userAccount: InputUserAccount) {
+		createUserAccount(userAccount: $userAccount) {
+			...LiferayUserAccountFragment
+		}
 	}
 `;

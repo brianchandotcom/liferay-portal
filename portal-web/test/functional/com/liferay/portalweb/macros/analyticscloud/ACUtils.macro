@@ -858,9 +858,7 @@ definition {
 				TestUtils.hardRefresh();
 			}
 
-			AssertTextEquals(
-				locator1 = "ACUtils#GENERIC_TEXT",
-				value1 = "${textValue}");
+			AssertElementPresent(locator1 = "ACUtils#GENERIC_TEXT");
 		}
 	}
 

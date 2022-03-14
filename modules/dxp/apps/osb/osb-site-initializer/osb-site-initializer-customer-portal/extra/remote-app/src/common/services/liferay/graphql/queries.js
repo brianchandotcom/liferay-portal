@@ -540,3 +540,19 @@ export const deleteAccountUserAccount = gql`
 		)
 	}
 `;
+
+export const updateAnalyticsCloudWorkspace = gql`
+	mutation putAnalyticsCloudWorkspace(
+		$analyticsCloudWorkspaceId: Long!
+		$analyticsCloudWorkspace: InputC_AnalyticsCloudWorkspace!
+	) {
+		c {
+			updateAnalyticsCloudWorkspace(
+				analyticsCloudWorkspaceId: $analyticsCloudWorkspaceId
+				AnalyticsCloudWorkspace: $analyticsCloudWorkspace
+			) {
+				analyticsCloudWorkspaceId
+			}
+		}
+	}
+`;

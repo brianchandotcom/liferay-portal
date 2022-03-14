@@ -1,0 +1,4 @@
+type,name,externalReferenceCode,description
+business,Test Business Account,101,Test Business Account Description
+guest,Test Guest Account,102,Test Guest Account Description
+person,Test Person Account,103,Test Person Account Description

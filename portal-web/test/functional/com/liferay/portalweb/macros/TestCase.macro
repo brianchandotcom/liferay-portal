@@ -102,6 +102,23 @@ definition {
 		}
 	}
 
+	macro getTempFileContent {
+		var tempDir = PropsUtil.get("output.dir.name");
+		var tempFile = "${tempDir}/${fileName}";
+		var tempFileExists = FileUtil.exists("${tempFile}");
+
+		if ("${tempFileExists}" == "true") {
+			echo("Fetching ${fileName} content.");
+		}
+		else {
+			fail("Temp file not found at ${tempFile}");
+		}
+
+		var fileContent = FileUtil.read("${tempFile}");
+
+		return "${fileContent}";
+	}
+
 	macro getTestName {
 		var testName = PropsUtil.get("test.name");
 		var testName = RegexUtil.replace("${testName}", "[^\.]*\.(.*)", "1");

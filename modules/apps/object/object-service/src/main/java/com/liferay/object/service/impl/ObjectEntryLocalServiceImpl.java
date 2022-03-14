@@ -1119,7 +1119,7 @@ public class ObjectEntryLocalServiceImpl
 
 			if (value == null) {
 				if (objectField.isRequired()) {
-					throw new ObjectEntryValuesException.RequiredValue(
+					throw new ObjectEntryValuesException.Required(
 						objectField.getName());
 				}
 
@@ -1777,7 +1777,7 @@ public class ObjectEntryLocalServiceImpl
 					listTypeEntry -> Objects.equals(
 						listTypeEntry.getKey(), value))) {
 
-				throw new ObjectEntryValuesException.ObjectFieldNotMapped(
+				throw new ObjectEntryValuesException.ListTypeEntry(
 					entry.getKey());
 			}
 		}

@@ -62,10 +62,9 @@ public class ObjectEntryValuesException extends PortalException {
 
 	}
 
-	public static class ObjectFieldNotMapped
-		extends ObjectEntryValuesException {
+	public static class ListTypeEntry extends ObjectEntryValuesException {
 
-		public ObjectFieldNotMapped(String objectFieldName) {
+		public ListTypeEntry(String objectFieldName) {
 			super(
 				String.format(
 					"Object field name \"%s\" is not mapped to a valid list " +
@@ -89,9 +88,9 @@ public class ObjectEntryValuesException extends PortalException {
 
 	}
 
-	public static class RequiredValue extends ObjectEntryValuesException {
+	public static class Required extends ObjectEntryValuesException {
 
-		public RequiredValue(String objectFieldName) {
+		public Required(String objectFieldName) {
 			super(
 				String.format(
 					"No value was provided for required object field \"%s\"",

@@ -910,34 +910,6 @@
 				"store": true,
 				"type": "keyword"
 			},
-			"sku": {
-				"analyzer": "keyword_lowercase",
-				"fields": {
-					"1_10_ngram": {
-						"analyzer": "1_10_ngram",
-						"type": "text"
-					},
-					"reverse": {
-						"analyzer": "reverse_keyword_lowercase",
-						"type": "text"
-					}
-				},
-				"type": "text"
-			},
-			"skus": {
-				"analyzer": "keyword_lowercase",
-				"fields": {
-					"1_10_ngram": {
-						"analyzer": "1_10_ngram",
-						"type": "text"
-					},
-					"reverse": {
-						"analyzer": "reverse_keyword_lowercase",
-						"type": "text"
-					}
-				},
-				"type": "text"
-			},
 			"status": {
 				"store": true,
 				"type": "keyword"

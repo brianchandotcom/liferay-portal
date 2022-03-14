@@ -68,4 +68,21 @@ definition {
 		}
 	}
 
+	macro _setAccountExternalReferenceCode {
+		Variables.assertDefined(parameterList = "${accountEntryName},${externalReferenceCode}");
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var accountEntryId = JSONAccountEntryAPI._getAccountEntryId(accountEntryName = "${accountEntryName}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/account.accountentry/update-external-reference-code \
+				-u test@liferay.com:test \
+  				-d accountEntryId=${accountEntryId} \
+  				-d externalReferenceCode=${externalReferenceCode}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
 }

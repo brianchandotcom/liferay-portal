@@ -196,7 +196,7 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _sqlPattern = Pattern.compile(
-		"(?<=\\A|\n) +test\\.batch\\.run\\.property\\.query.+]=" +
-			"([\\s\\S]*?[^\\\\])(?=(\\Z|\n))");
+		"(?<=\\A|\n) +test\\.batch\\.run\\.property\\.query.+]=([\\s\\S]*?" +
+			"[^\\\\])(?=(\\Z|\n))");
 
 }

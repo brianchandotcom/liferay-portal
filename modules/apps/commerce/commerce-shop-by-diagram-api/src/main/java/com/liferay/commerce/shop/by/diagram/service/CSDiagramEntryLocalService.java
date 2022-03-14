@@ -100,7 +100,8 @@ public interface CSDiagramEntryLocalService
 	public PersistedModel createPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public void deleteCSDiagramEntries(long cpDefinitionId);
+	public void deleteCSDiagramEntries(long cpDefinitionId)
+		throws PortalException;
 
 	/**
 	 * Deletes the cs diagram entry from the database. Also notifies the appropriate model listeners.
@@ -111,10 +112,12 @@ public interface CSDiagramEntryLocalService
 	 *
 	 * @param csDiagramEntry the cs diagram entry
 	 * @return the cs diagram entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public CSDiagramEntry deleteCSDiagramEntry(CSDiagramEntry csDiagramEntry);
+	public CSDiagramEntry deleteCSDiagramEntry(CSDiagramEntry csDiagramEntry)
+		throws PortalException;
 
 	/**
 	 * Deletes the cs diagram entry with the primary key from the database. Also notifies the appropriate model listeners.

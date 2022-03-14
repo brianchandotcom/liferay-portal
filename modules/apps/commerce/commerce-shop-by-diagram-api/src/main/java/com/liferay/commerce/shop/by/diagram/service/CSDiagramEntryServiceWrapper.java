@@ -57,10 +57,12 @@ public class CSDiagramEntryServiceWrapper
 	}
 
 	@Override
-	public void deleteCSDiagramEntry(long csDiagramEntryId)
+	public void deleteCSDiagramEntry(
+			com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry
+				csDiagramEntry)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_csDiagramEntryService.deleteCSDiagramEntry(csDiagramEntryId);
+		_csDiagramEntryService.deleteCSDiagramEntry(csDiagramEntry);
 	}
 
 	@Override

@@ -135,10 +135,13 @@ public abstract class CSDiagramEntryLocalServiceBaseImpl
 	 *
 	 * @param csDiagramEntry the cs diagram entry
 	 * @return the cs diagram entry that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CSDiagramEntry deleteCSDiagramEntry(CSDiagramEntry csDiagramEntry) {
+	public CSDiagramEntry deleteCSDiagramEntry(CSDiagramEntry csDiagramEntry)
+		throws PortalException {
+
 		return csDiagramEntryPersistence.remove(csDiagramEntry);
 	}
 

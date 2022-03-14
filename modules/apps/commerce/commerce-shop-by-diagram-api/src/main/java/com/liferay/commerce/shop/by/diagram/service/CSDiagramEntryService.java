@@ -61,7 +61,7 @@ public interface CSDiagramEntryService extends BaseService {
 	public void deleteCSDiagramEntries(long cpDefinitionId)
 		throws PortalException;
 
-	public void deleteCSDiagramEntry(long csDiagramEntryId)
+	public void deleteCSDiagramEntry(CSDiagramEntry csDiagramEntry)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

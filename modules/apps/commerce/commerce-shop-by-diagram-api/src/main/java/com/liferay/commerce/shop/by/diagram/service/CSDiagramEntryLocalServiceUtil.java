@@ -93,7 +93,9 @@ public class CSDiagramEntryLocalServiceUtil {
 		return getService().createPersistedModel(primaryKeyObj);
 	}
 
-	public static void deleteCSDiagramEntries(long cpDefinitionId) {
+	public static void deleteCSDiagramEntries(long cpDefinitionId)
+		throws PortalException {
+
 		getService().deleteCSDiagramEntries(cpDefinitionId);
 	}
 
@@ -106,9 +108,11 @@ public class CSDiagramEntryLocalServiceUtil {
 	 *
 	 * @param csDiagramEntry the cs diagram entry
 	 * @return the cs diagram entry that was removed
+	 * @throws PortalException
 	 */
 	public static CSDiagramEntry deleteCSDiagramEntry(
-		CSDiagramEntry csDiagramEntry) {
+			CSDiagramEntry csDiagramEntry)
+		throws PortalException {
 
 		return getService().deleteCSDiagramEntry(csDiagramEntry);
 	}

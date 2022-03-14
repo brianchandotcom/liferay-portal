@@ -55,10 +55,10 @@ public class CSDiagramEntryServiceUtil {
 		getService().deleteCSDiagramEntries(cpDefinitionId);
 	}
 
-	public static void deleteCSDiagramEntry(long csDiagramEntryId)
+	public static void deleteCSDiagramEntry(CSDiagramEntry csDiagramEntry)
 		throws PortalException {
 
-		getService().deleteCSDiagramEntry(csDiagramEntryId);
+		getService().deleteCSDiagramEntry(csDiagramEntry);
 	}
 
 	public static CSDiagramEntry fetchCSDiagramEntry(

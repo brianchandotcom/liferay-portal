@@ -96,7 +96,9 @@ public class CSDiagramEntryLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCSDiagramEntries(long cpDefinitionId) {
+	public void deleteCSDiagramEntries(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
 		_csDiagramEntryLocalService.deleteCSDiagramEntries(cpDefinitionId);
 	}
 
@@ -109,12 +111,14 @@ public class CSDiagramEntryLocalServiceWrapper
 	 *
 	 * @param csDiagramEntry the cs diagram entry
 	 * @return the cs diagram entry that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry
-		deleteCSDiagramEntry(
-			com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry
-				csDiagramEntry) {
+			deleteCSDiagramEntry(
+				com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry
+					csDiagramEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _csDiagramEntryLocalService.deleteCSDiagramEntry(csDiagramEntry);
 	}

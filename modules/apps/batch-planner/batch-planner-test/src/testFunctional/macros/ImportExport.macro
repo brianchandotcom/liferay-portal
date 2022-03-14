@@ -42,7 +42,11 @@ definition {
 			locator1 = "ImportExport#SELECT",
 			value1 = "${headlessEndpoint}");
 
-		if (IsElementPresent(key_selectFieldLabel = "Entity Type", locator1 = "Select#ANY")) {
+		WaitForElementPresent(
+			key_selectFieldLabel = "Entity",
+			locator1 = "ImportExport#SELECT");
+
+		if (IsElementPresent(key_selectFieldLabel = "Entity Type", locator1 = "ImportExport#SELECT")) {
 			Select(
 				key_selectFieldLabel = "Entity Type",
 				locator1 = "ImportExport#SELECT",

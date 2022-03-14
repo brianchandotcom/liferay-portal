@@ -199,6 +199,7 @@ export const getAnalyticsCloudWorkspace = gql`
 		c {
 			analyticsCloudWorkspaces(filter: $filter, scopeKey: $scopeKey) {
 				items {
+					analyticsCloudWorkspaceId
 					workspaceGroupId
 				}
 			}
@@ -471,5 +472,21 @@ export const deleteAccountUserAccount = gql`
 			emailAddress: $emailAddress
 			externalReferenceCode: $accountKey
 		)
+	}
+`;
+
+export const updateAnalyticsCloudWorkspace = gql`
+	mutation putAnalyticsCloudWorkspace(
+		$analyticsCloudWorkspaceId: Long!
+		$analyticsCloudWorkspace: InputC_AnalyticsCloudWorkspace!
+	) {
+		c {
+			updateAnalyticsCloudWorkspace(
+				analyticsCloudWorkspaceId: $analyticsCloudWorkspaceId
+				AnalyticsCloudWorkspace: $analyticsCloudWorkspace
+			) {
+				analyticsCloudWorkspaceId
+			}
+		}
 	}
 `;

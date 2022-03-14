@@ -691,6 +691,8 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanViewSubcategorySubscriptionViaMySubscriptionsPage {
+		property database.types = "oracle";
+
 		JSONMBMessage.addCategory(
 			categoryDescription = "MB Category Description",
 			categoryName = "MB Category Name",

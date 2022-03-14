@@ -46,10 +46,12 @@ public class CSDiagramPinServiceWrapper
 	}
 
 	@Override
-	public void deleteCSDiagramPin(long csDiagramPinId)
+	public void deleteCSDiagramPin(
+			com.liferay.commerce.shop.by.diagram.model.CSDiagramPin
+				csDiagramPin)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_csDiagramPinService.deleteCSDiagramPin(csDiagramPinId);
+		_csDiagramPinService.deleteCSDiagramPin(csDiagramPin);
 	}
 
 	@Override

@@ -47,10 +47,10 @@ public class CSDiagramPinServiceUtil {
 			cpDefinitionId, positionX, positionY, sequence);
 	}
 
-	public static void deleteCSDiagramPin(long csDiagramPinId)
+	public static void deleteCSDiagramPin(CSDiagramPin csDiagramPin)
 		throws PortalException {
 
-		getService().deleteCSDiagramPin(csDiagramPinId);
+		getService().deleteCSDiagramPin(csDiagramPin);
 	}
 
 	public static void deleteCSDiagramPins(long cpDefinitionId)

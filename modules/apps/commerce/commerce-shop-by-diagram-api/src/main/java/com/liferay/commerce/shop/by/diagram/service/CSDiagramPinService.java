@@ -56,7 +56,8 @@ public interface CSDiagramPinService extends BaseService {
 			String sequence)
 		throws PortalException;
 
-	public void deleteCSDiagramPin(long csDiagramPinId) throws PortalException;
+	public void deleteCSDiagramPin(CSDiagramPin csDiagramPin)
+		throws PortalException;
 
 	public void deleteCSDiagramPins(long cpDefinitionId) throws PortalException;
 

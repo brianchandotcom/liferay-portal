@@ -1,13 +1,13 @@
 .portlet-site-admin {
-	.dialog-footer {
-		position: fixed;
-	}
-
 	.add-group-form .add-group-loading {
 		margin-top: 30vh;
 
 		p {
 			max-width: 270px;
 		}
+	}
+
+	.dialog-footer {
+		position: fixed;
 	}
 }

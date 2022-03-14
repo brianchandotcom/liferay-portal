@@ -62,4 +62,13 @@ definition {
 			value1 = "${termsAndConditionActiveStatus}");
 	}
 
+	macro viewTermsAndConditionEntrySortByPriority {
+		AssertTextPresent(
+			key_rowNumber = "${rowNumber}",
+			key_termsAndConditionName = "${termsAndConditionName}",
+			key_valuePosition = "${valuePosition}",
+			locator1 = "CommercePaymentTerms#ENTRY_LIST_BY_SORT",
+			value1 = "${valuePosition}");
+	}
+
 }

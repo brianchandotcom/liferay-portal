@@ -503,6 +503,12 @@ public class SearchContainer<R> {
 			baseModelSearchResult.getLength());
 	}
 
+	public void setResultsAndTotal(List<R> rawResults) {
+		_setTotal(rawResults.size());
+
+		_setResults(rawResults.subList(_start, _resultEnd));
+	}
+
 	public <E extends Throwable> void setResultsAndTotal(
 			UnsafeSupplier<List<R>, E> setResultsSupplier, int total)
 		throws E {

@@ -66,9 +66,7 @@ definition {
 		}
 
 		task ("Click on 'click here' and check if a new tab with connection documentation appears") {
-			Click(
-				key_textValue = "Click here",
-				locator1 = "ACUtils#GENERIC_TEXT");
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Click here");
 
 			SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud — Liferay Learn");
 
@@ -128,9 +126,7 @@ definition {
 		}
 
 		task ("Click on 'click here' and check if a new tab with connection documentation appears") {
-			Click(
-				key_textValue = "Click here",
-				locator1 = "ACUtils#GENERIC_TEXT");
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Click here");
 
 			SelectWindow(locator1 = "title=Connecting Liferay DXP to Analytics Cloud — Liferay Learn");
 

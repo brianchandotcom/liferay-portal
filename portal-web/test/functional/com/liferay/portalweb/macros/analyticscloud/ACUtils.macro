@@ -1007,4 +1007,10 @@ definition {
 
 		AssertElementPresent(locator1 = "ACUtils#GENERIC_BUTTON");
 	}
+
+	macro clickGenericHyperlink {
+		var key_textValue = "${hyperlinkText}";
+
+		Click(locator1 = "ACUtils#GENERIC_TEXT");
+	}
 }

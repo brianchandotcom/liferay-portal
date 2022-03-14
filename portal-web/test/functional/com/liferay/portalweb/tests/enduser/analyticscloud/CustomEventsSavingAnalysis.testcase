@@ -882,9 +882,7 @@ definition {
 		task ("Check that the empty page message and check the hyperlink taking user to event analysis document") {
 			ACUtils.viewNoResultsMessage(noResultMessage = "No analysis found");
 
-			Click(
-				key_textValue = "documentation",
-				locator1 = "ACUtils#GENERIC_TEXT");
+			ACUtils.clickGenericHyperlink(hyperlinkText = "documentation");
 
 			task ("Switch to the documentation tab") {
 				SelectWindow(locator1 = "title=Events Analysis — Liferay Learn");

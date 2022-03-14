@@ -399,6 +399,12 @@ definition {
 			locator1 = "ACUtils#GENERIC_BUTTON");
 	}
 
+	macro clickGenericHyperlink {
+		var key_textValue = "${hyperlinkText}";
+
+		Click(locator1 = "ACUtils#GENERIC_TEXT");
+	}
+
 	macro clickKebab {
 		Click(locator1 = "ACSegments#SEGMENT_ELLIPSIS");
 	}
@@ -848,6 +854,12 @@ definition {
 			value1 = "${infoMessage}");
 	}
 
+	macro viewGenericButton {
+		var key_buttonName = "${buttonName}";
+
+		AssertElementPresent(locator1 = "ACUtils#GENERIC_BUTTON");
+	}
+
 	macro viewGenericText {
 		for (var textValue : list "${textValueList}") {
 			var key_textValue = "${textValue}";
@@ -1002,15 +1014,4 @@ definition {
 		WaitForElementNotPresent(locator1 = "ACUtils#LOADING_ANIMATION");
 	}
 
-	macro viewGenericButton {
-		var key_buttonName = "${buttonName}";
-
-		AssertElementPresent(locator1 = "ACUtils#GENERIC_BUTTON");
-	}
-
-	macro clickGenericHyperlink {
-		var key_textValue = "${hyperlinkText}";
-
-		Click(locator1 = "ACUtils#GENERIC_TEXT");
-	}
 }

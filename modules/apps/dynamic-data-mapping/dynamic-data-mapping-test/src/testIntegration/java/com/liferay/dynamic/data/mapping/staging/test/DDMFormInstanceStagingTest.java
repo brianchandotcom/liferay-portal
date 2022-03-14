@@ -80,7 +80,7 @@ public class DDMFormInstanceStagingTest {
 			DDMFormInstanceLocalServiceUtil.getFormInstancesCount(
 				_stagingGroup.getGroupId()));
 
-		DDMFormInstanceTestUtil.deleteDDMFormInstance(ddmFormInstance);
+		DDMFormInstanceTestUtil.deleteFormInstance(ddmFormInstance);
 	}
 
 	@Test
@@ -124,7 +124,7 @@ public class DDMFormInstanceStagingTest {
 			DDMFormInstanceLocalServiceUtil.getFormInstancesCount(
 				_remoteLiveGroup.getGroupId()));
 
-		DDMFormInstanceTestUtil.deleteDDMFormInstance(ddmFormInstance);
+		DDMFormInstanceTestUtil.deleteFormInstance(ddmFormInstance);
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)

@@ -144,7 +144,7 @@ public class DDMFormInstanceTestUtil {
 		return ddmFormValues;
 	}
 
-	public static void deleteDDMFormInstance(DDMFormInstance ddmFormInstance)
+	public static void deleteFormInstance(DDMFormInstance ddmFormInstance)
 		throws PortalException {
 
 		DDMFormInstanceLocalServiceUtil.deleteFormInstance(ddmFormInstance);

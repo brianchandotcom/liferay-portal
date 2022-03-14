@@ -454,16 +454,6 @@
 			}
 		},
 
-		getLexiconIcon(icon, cssClass) {
-			var instance = this;
-
-			const tempElement = document.createElement('div');
-
-			tempElement.innerHTML = instance.getLexiconIconTpl(icon, cssClass);
-
-			return tempElement.firstChild;
-		},
-
 		getLexiconIconTpl(icon, cssClass) {
 			return Liferay.Util.sub(TPL_LEXICON_ICON, icon, cssClass || '');
 		},

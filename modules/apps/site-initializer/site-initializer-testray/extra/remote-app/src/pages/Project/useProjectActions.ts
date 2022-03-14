@@ -15,22 +15,31 @@
 import {useMutation} from '@apollo/client';
 
 import {DeleteTestrayProject} from '../../graphql/mutations';
+import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 
 const useProjectActions = () => {
 	const [onDeleteTestrayProject] = useMutation(DeleteTestrayProject);
 
-	return [
-		{
-			action: () => alert('Edit'),
-			name: i18n.translate('edit'),
-		},
-		{
-			action: ({id: testrayProjectId}: any) =>
-				onDeleteTestrayProject({variables: {testrayProjectId}}),
-			name: i18n.translate('delete'),
-		},
-	];
+	const formModal = useFormModal();
+	const modal = formModal.modal;
+
+	return {
+		actions: [
+			{
+				action: modal.open,
+				name: i18n.translate('edit'),
+			},
+			{
+				action: ({id: testrayProjectId}: any) =>
+					onDeleteTestrayProject({variables: {testrayProjectId}})
+						.then(() => modal.onSave())
+						.catch(modal.onError),
+				name: i18n.translate('delete'),
+			},
+		],
+		formModal,
+	};
 };
 
 export default useProjectActions;

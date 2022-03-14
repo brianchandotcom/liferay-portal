@@ -16,28 +16,27 @@ import Container from '../../components/Layout/Container';
 import ListView from '../../components/ListView/ListView';
 import {initialState} from '../../context/HeaderContext';
 import {getTestrayProjects} from '../../graphql/queries';
-import useFormModal from '../../hooks/useFormModal';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
 import ProjectModal from './ProjectModal';
-
-// import useProjectActions from './useProjectActions';
+import useProjectActions from './useProjectActions';
 
 const Home = () => {
-	useHeader({useHeading: initialState.heading});
+	const {actions, formModal} = useProjectActions();
 
-	const {forceRefetch, modal} = useFormModal({isVisible: false});
+	useHeader({useHeading: initialState.heading});
 
 	return (
 		<>
 			<Container title={i18n.translate('projects')}>
 				<ListView
-					forceRefetch={forceRefetch}
+					forceRefetch={formModal.forceRefetch}
 					managementToolbarProps={{
-						addButton: modal.open,
+						addButton: formModal.modal.open,
 					}}
 					query={getTestrayProjects}
 					tableProps={{
+						actions,
 						columns: [
 							{
 								clickable: true,
@@ -56,7 +55,7 @@ const Home = () => {
 				/>
 			</Container>
 
-			<ProjectModal modal={modal} />
+			<ProjectModal modal={formModal.modal} />
 		</>
 	);
 };

@@ -129,6 +129,13 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 				"Layout with PLID " + layout.getPlid() + " is not convertible");
 		}
 
+		LayoutConverter layoutConverter = _getLayoutConversionResult(layout);
+
+		if (!layoutConverter.isConvertible(layout)) {
+			throw new LayoutConvertException(
+				"Layout with PLID " + layout.getPlid() + " is not convertible");
+		}
+
 		ServiceContext serviceContext = Optional.ofNullable(
 			ServiceContextThreadLocal.getServiceContext()
 		).orElse(
@@ -136,13 +143,6 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 		);
 
 		Layout draftLayout = _getOrCreateDraftLayout(layout, serviceContext);
-
-		LayoutConverter layoutConverter = _getLayoutConversionResult(layout);
-
-		if (!layoutConverter.isConvertible(layout)) {
-			throw new LayoutConvertException(
-				"Layout with PLID " + layout.getPlid() + " is not convertible");
-		}
 
 		LayoutConversionResult layoutConversionResult = layoutConverter.convert(
 			draftLayout, locale);
@@ -245,6 +245,13 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 				"Layout with PLID " + layout.getPlid() + " is not convertible");
 		}
 
+		LayoutConverter layoutConverter = _getLayoutConversionResult(layout);
+
+		if (!layoutConverter.isConvertible(layout)) {
+			throw new LayoutConvertException(
+				"Layout with PLID " + layout.getPlid() + " is not convertible");
+		}
+
 		ServiceContext serviceContext = Optional.ofNullable(
 			ServiceContextThreadLocal.getServiceContext()
 		).orElse(
@@ -263,15 +270,6 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 			_updatePortletDecorator(layout);
-
-			LayoutConverter layoutConverter = _getLayoutConversionResult(
-				layout);
-
-			if (!layoutConverter.isConvertible(layout)) {
-				throw new LayoutConvertException(
-					"Layout with PLID " + layout.getPlid() +
-						" is not convertible");
-			}
 
 			LayoutConversionResult layoutConversionResult =
 				layoutConverter.convert(layout, LocaleUtil.getSiteDefault());

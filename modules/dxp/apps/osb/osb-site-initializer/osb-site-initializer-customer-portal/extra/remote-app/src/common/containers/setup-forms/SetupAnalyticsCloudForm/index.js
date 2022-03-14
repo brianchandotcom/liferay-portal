@@ -11,17 +11,25 @@
 
 import {useQuery} from '@apollo/client';
 import ClayForm from '@clayui/form';
+import {useModal} from '@clayui/modal';
 import {FieldArray, Formik} from 'formik';
-import {useEffect, useMemo} from 'react';
-import {getDXPCloudPageInfo} from '../../../../common/services/liferay/graphql/queries';
+import {useEffect, useMemo, useState} from 'react';
+import client from '../../../../apolloClient';
+import {
+	getAnalyticsCloudWorkspace,
+	getDXPCloudPageInfo,
+	updateAccountSubscriptionGroups,
+} from '../../../../common/services/liferay/graphql/queries';
 import {
 	isLowercaseAndNumbers,
 	isValidFriendlyURL,
 	maxLength,
 } from '../../../../common/utils/validations.form';
+import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/constants';
 import {Button, Input, Select} from '../../../components';
 import getInitialAnalyticsInvite from '../../../utils/getInitialAnalyticsInvite';
 import Layout from '../Layout';
+import ConfirmationMessageModal from './ConfirmationMessageModal';
 import IncidentReportInput from './IncidentReportInput';
 
 const INITIAL_SETUP_ADMIN_COUNT = 1;
@@ -31,12 +39,20 @@ const SetupAnalyticsCloudPage = ({
 	leftButton,
 	project,
 	setFieldValue,
+	setFormAlreadySubmitted,
+	subscriptionGroupId,
 	values,
 }) => {
 	const {data} = useQuery(getDXPCloudPageInfo, {
 		variables: {
 			accountSubscriptionsFilter: `(accountKey eq '${project?.dXPCDataCenterRegions}') and (hasDisasterDataCenterRegion eq true)`,
 		},
+	});
+
+	const [isVisibleModal, setIsVisibleModal] = useState(false);
+
+	const {observer, onClose} = useModal({
+		onClose: () => setIsVisibleModal(false),
 	});
 
 	const analyticsDataCenterRegions = useMemo(
@@ -67,6 +83,87 @@ const SetupAnalyticsCloudPage = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [analyticsDataCenterRegions, hasDisasterRecovery]);
 
+	const sendEmail = async () => {
+		const analyticsCloud = values?.activations;
+
+		const getAnalyticsCloudActivationSubmitedStatus = async (
+			accountKey
+		) => {
+			const {data} = await client.query({
+				query: getAnalyticsCloudWorkspace,
+				variables: {
+					filter: `accountKey eq '${accountKey}'`,
+					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
+				},
+			});
+
+			if (data) {
+				const status = !!data.c?.analyticsCloudWorkspaces?.items
+					?.length;
+
+				return status;
+			}
+
+			return false;
+		};
+
+		const alreadySubmited = await getAnalyticsCloudActivationSubmitedStatus(
+			project.accountKey
+		);
+		if (alreadySubmited) {
+			setFormAlreadySubmitted(true);
+		}
+
+		if (!alreadySubmited && analyticsCloud) {
+			const {data} = await client.mutate({
+				mutation: addAnalyticsCloudEnvironment,
+				variables: {
+					AnalyticsCloudWorkspace: {
+						accountKey: project.accountKey,
+						allowedEmailDomains: analyticsCloud.allowedEmailDomains,
+						dataCenterLocation: analyticsCloud.dataCenterLocation,
+						ownerEmail: analyticsCloud.ownerEmail,
+						timeZone: analyticsCloud.timeZone,
+						workspaceName: analyticsCloud.workspaceName,
+						workspaceURL: analyticsCloud.workspaceURL,
+					},
+					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
+				},
+			});
+
+			if (data) {
+				const analyticsCloudEnvironmentId =
+					data.c?.createDXPCloudEnvironment?.dxpCloudEnvironmentId;
+				await Promise.all(
+					analyticsCloud.incidentReportContact.map(({email}) =>
+						client.mutate({
+							mutation: addIncidentReportContact,
+							variables: {
+								AdminDXPCloud: {
+									analyticsCloudEnvironmentId,
+									emailAddress: email,
+								},
+								scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
+							},
+						})
+					)
+				);
+
+				await client.mutate({
+					mutation: updateAccountSubscriptionGroups,
+					variables: {
+						accountSubscriptionGroup: {
+							activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
+						},
+						id: subscriptionGroupId,
+					},
+				});
+
+				setIsVisibleModal(true);
+			}
+		}
+	};
+
 	return (
 		<Layout
 			className="pt-1 px-3"
@@ -80,7 +177,11 @@ const SetupAnalyticsCloudPage = ({
 						{leftButton}
 					</Button>
 				),
-				middleButton: <Button displayType="primary">Submit</Button>,
+				middleButton: (
+					<Button displayType="primary" onClick={sendEmail()}>
+						Submit
+					</Button>
+				),
 			}}
 			headerProps={{
 				helper:
@@ -92,6 +193,14 @@ const SetupAnalyticsCloudPage = ({
 				name="activations.incidentReportContact"
 				render={({pop, push}) => (
 					<>
+						{isVisibleModal && (
+							<ConfirmationMessageModal
+								handlePage={handlePage}
+								observer={observer}
+								onClose={onClose}
+							/>
+						)}
+
 						<ClayForm.Group className="mb-0">
 							<ClayForm.Group className="mb-0">
 								<Input
@@ -169,7 +278,7 @@ const SetupAnalyticsCloudPage = ({
 								)
 							)}
 						</ClayForm.Group>
-						{values?.activations?.incidentReportContact.length >
+						{values?.activations?.incidentReportContact?.length >
 							INITIAL_SETUP_ADMIN_COUNT && (
 							<Button
 								className="ml-3 my-2 text-brandy-secondary"

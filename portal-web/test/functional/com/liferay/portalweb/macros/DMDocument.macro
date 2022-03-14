@@ -2395,7 +2395,7 @@ definition {
 	}
 
 	macro updateMaximumFileSize {
-		DMNavigator.openToConfigInSystemSettings(portlet = "Service");
+		DMNavigator.openToConfigInSystemSettings(portlet = "Documents and Media Size Limits");
 
 		Type(
 			key_fieldLabel = "Maximum File Size",

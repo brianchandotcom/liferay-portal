@@ -351,6 +351,10 @@ definition {
 			var portletId = "com.liferay.translation.translator.azure.internal.configuration.AzureTranslatorConfiguration";
 		}
 
+		if ("${portlet}" == "Documents and Media Size Limits") {
+			var portletId = "com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration";
+		}
+
 		if ("${portlet}" == "File Entries") {
 			var portletId = "com.liferay.document.library.configuration.DLFileEntryConfiguration";
 		}

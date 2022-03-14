@@ -96,7 +96,8 @@ const RoutineModal: React.FC<RoutineModalProps> = ({
 			});
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError();
 		}
 	};

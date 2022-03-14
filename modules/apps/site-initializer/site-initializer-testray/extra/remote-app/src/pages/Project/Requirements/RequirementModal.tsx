@@ -225,7 +225,8 @@ const RequirementsModal: React.FC<RequirementsModalProps> = ({
 			});
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError();
 		}
 	};

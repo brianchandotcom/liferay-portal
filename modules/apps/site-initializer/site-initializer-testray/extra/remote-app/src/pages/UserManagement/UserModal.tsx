@@ -220,7 +220,8 @@ const CreateUser: React.FC<CreateUserProps> = ({
 			Liferay.Util.openToast({message: 'TestrayCase Registered'});
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			Liferay.Util.openToast({
 				message: (error as any).message,
 				type: 'danger',

@@ -295,7 +295,8 @@ const CaseModal: React.FC<CaseModalProps> = ({
 			});
 			onSave();
 			Liferay.Util.openToast({message: 'TestrayCase Registered'});
-		} catch (error) {
+		}
+		catch (error) {
 			Liferay.Util.openToast({
 				message: (error as any).message,
 				type: 'danger',

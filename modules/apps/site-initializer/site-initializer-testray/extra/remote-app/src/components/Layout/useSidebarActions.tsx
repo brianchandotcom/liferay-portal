@@ -18,7 +18,6 @@ import {Size} from '@clayui/modal/lib/types';
 import {ReactElement, useContext} from 'react';
 
 import i18n from '../../i18n';
-import NewProject from '../../pages/Project/NewProject';
 import {LIFERAY_URLS} from '../../services/liferay/liferay';
 import CaseTypeModal from '../Modal/CaseTypeModal';
 import CategoryModal from '../Modal/CategoryModal';
@@ -61,11 +60,7 @@ const useSidebarActions = () => {
 					icon: 'plus',
 					label: i18n.translate('new-project'),
 					onClick: () =>
-						onOpenModal(
-							i18n.translate('new-project'),
-							<NewProject onClose={() => state.onClose()} />,
-							'lg'
-						),
+						onOpenModal(i18n.translate('new-project'), <></>, 'lg'),
 					path: '/',
 				},
 				{

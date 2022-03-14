@@ -100,7 +100,8 @@ const ProjectModal: React.FC<NewProjectProps> = ({
 			Liferay.Util.openToast({message: 'TestrayProject Registered'});
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			Liferay.Util.openToast({
 				message: (error as any).message,
 				type: 'danger',

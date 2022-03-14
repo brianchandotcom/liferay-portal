@@ -31,7 +31,7 @@ accountEntryCommercePaymentMethodDisplaySearchContainer.setRowChecker(null);
 		searchContainer="<%= accountEntryCommercePaymentMethodDisplaySearchContainer %>"
 	>
 		<liferay-ui:search-container-row
-			className="com.liferay.commerce.channel.web.internal.display.CommercePaymentMethodDisplay"
+			className="com.liferay.commerce.payment.web.internal.display.CommercePaymentMethodDisplay"
 			keyProperty="commercePaymentMethodKey"
 			modelVar="commercePaymentMethodDisplay"
 		>

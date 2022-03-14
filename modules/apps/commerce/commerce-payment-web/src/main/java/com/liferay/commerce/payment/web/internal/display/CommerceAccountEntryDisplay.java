@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.channel.web.internal.display;
+package com.liferay.commerce.payment.web.internal.display;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;

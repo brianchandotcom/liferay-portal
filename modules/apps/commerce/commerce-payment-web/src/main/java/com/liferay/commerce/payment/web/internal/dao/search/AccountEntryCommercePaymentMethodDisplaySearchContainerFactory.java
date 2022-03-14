@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.commerce.channel.web.internal.dao.search;
+package com.liferay.commerce.payment.web.internal.dao.search;
 
 import com.liferay.account.constants.AccountPortletKeys;
-import com.liferay.commerce.channel.web.internal.display.CommercePaymentMethodDisplay;
 import com.liferay.commerce.payment.method.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.CommercePaymentMethodRegistry;
+import com.liferay.commerce.payment.web.internal.display.CommercePaymentMethodDisplay;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -73,7 +73,7 @@ CommercePaymentMethodRegistry commercePaymentMethodRegistry = (CommercePaymentMe
 				/>
 
 				<c:if test="<%= Validator.isNotNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) %>">
-					<portlet:actionURL name="/commerce_channel/edit_account_entry_default_commerce_payment_method" var="removeDefaultCommercePaymentMethodURL">
+					<portlet:actionURL name="/commerce_payment/edit_account_entry_default_commerce_payment_method" var="removeDefaultCommercePaymentMethodURL">
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="accountEntryId" value="<%= String.valueOf(commerceAccountEntryDisplay.getAccountEntryId()) %>" />
 						<portlet:param name="commercePaymentMethodKey" value="" />
@@ -94,12 +94,12 @@ CommercePaymentMethodRegistry commercePaymentMethodRegistry = (CommercePaymentMe
 </clay:sheet-section>
 
 <portlet:renderURL var="selectDefaultCommercePaymentMethodURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcRenderCommandName" value="/commerce_channel/edit_account_entry_default_commerce_payment_method" />
+	<portlet:param name="mvcRenderCommandName" value="/commerce_payment/edit_account_entry_default_commerce_payment_method" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="accountEntryId" value="<%= String.valueOf(commerceAccountEntryDisplay.getAccountEntryId()) %>" />
 </portlet:renderURL>
 
-<portlet:actionURL name="/commerce_channel/edit_account_entry_default_commerce_payment_method" var="updateAccountEntryDefaultCommercePaymentMethodURL">
+<portlet:actionURL name="/commerce_payment/edit_account_entry_default_commerce_payment_method" var="updateAccountEntryDefaultCommercePaymentMethodURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 	<portlet:param name="accountEntryId" value="<%= String.valueOf(commerceAccountEntryDisplay.getAccountEntryId()) %>" />
 </portlet:actionURL>

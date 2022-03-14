@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.channel.web.internal.portlet.action;
+package com.liferay.commerce.payment.web.internal.portlet.action;
 
 import com.liferay.account.constants.AccountPortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 		"javax.portlet.name=" + AccountPortletKeys.ACCOUNT_ENTRIES_MANAGEMENT,
-		"mvc.command.name=/commerce_channel/edit_account_entry_default_commerce_payment_method"
+		"mvc.command.name=/commerce_payment/edit_account_entry_default_commerce_payment_method"
 	},
 	service = MVCRenderCommand.class
 )

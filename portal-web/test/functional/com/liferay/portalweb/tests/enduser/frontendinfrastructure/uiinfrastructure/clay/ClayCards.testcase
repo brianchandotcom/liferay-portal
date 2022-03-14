@@ -1,0 +1,110 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property osgi.modules.includes = "frontend-taglib-clay-sample-web";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.component.names = "Clay";
+	property testray.main.component.name = "User Interface";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Clay Sample Test Page");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Clay Sample Test Page",
+			layoutTemplate = "1 Column");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Clay Sample Test Page",
+			widgetName = "Clay Sample");
+
+		Navigator.gotoPage(pageName = "Clay Sample Test Page");
+
+		task ("Change for Card tab") {
+			Navigator.gotoNavTab(navTab = "Cards");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Clay Sample Test Page");
+		}
+	}
+
+	@description = "LRQA-66243: Assert active state of Selectable Image Card when checkbox was clicked"
+	@priority = "3"
+	test ActiveStateSelectableImageCard {
+		task ("Click at checkbok for active Card") {
+			Check.checkNotVisible(
+				key_header = "Selectable Image Card",
+				locator1 = "ClaySamplePortlet#CHECKBOX_SELECTABLE_IMAGE_CARD");
+		}
+
+		task ("Check default state of Selectable Image Card") {
+			AssertChecked.assertCheckedNotVisible(
+				key_header = "Selectable Image Card",
+				locator1 = "ClaySamplePortlet#CHECKBOX_SELECTABLE_IMAGE_CARD");
+
+			AssertElementPresent(
+				key_header = "Selectable Image Card",
+				locator1 = "ClaySamplePortlet#CARD_ACTIVE");
+		}
+	}
+
+	@description = "LRQA-66243: Assert that appends the href value to current URL: #image-card-href when click on Card Title"
+	@priority = "5"
+	test ChangingURLWhenClickCardTitle {
+		task ("Click on card title") {
+			ClickNoError(
+				key_header = "Selectable Image Card",
+				key_title = "Beetle",
+				locator1 = "ClaySamplePortlet#TITLE_CARD");
+		}
+
+		task ("Assert that appends the href value to current URL: #image-card-href") {
+			AssertLocation.assertPartialLocation(value1 = "#image-card-href");
+		}
+	}
+
+	@description = "LRQA-66243: Assert that appends the href value to current URL: #1 when add on Group 1 - Option 1"
+	@priority = "5"
+	test ChangingURLWhenSelectCardGroup {
+		task ("Select the Group 1 - Option 1") {
+			Click(
+				key_header = "Selectable Image Card",
+				locator1 = "ClaySamplePortlet#KEBAB_DROPDOWN_CARD_OPTION");
+
+			MenuItem.clickNoError(menuItem = "Group 1 - Option 1");
+		}
+
+		task ("Assert that appends the href value to current URL: #1") {
+			AssertLocation.assertPartialLocation(value1 = "#1");
+		}
+	}
+
+	@description = "LRQA-66243: Assert default state (not checked) of Selectable Image Card"
+	@priority = "3"
+	test CheckDefaultStateSelectableImageCard {
+		task ("Check default state of Selectable Image Card") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_header = "Selectable Image Card",
+				locator1 = "ClaySamplePortlet#CHECKBOX_SELECTABLE_IMAGE_CARD");
+		}
+	}
+
+}

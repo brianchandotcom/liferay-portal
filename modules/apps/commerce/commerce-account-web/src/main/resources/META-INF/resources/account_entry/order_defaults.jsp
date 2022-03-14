@@ -33,9 +33,11 @@ renderResponse.setTitle((accountEntryDisplay.getAccountEntryId() == 0) ? Languag
 		</h2>
 
 		<liferay-frontend:fieldset-group>
-			<liferay-util:dynamic-include key="com.liferay.account.admin.web#/account_entries_admin/account_entry/details.jsp#terms" />
+			<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/order_defaults.jsp#terms" />
 
-			<liferay-util:dynamic-include key="com.liferay.account.admin.web#/account_entries_admin/account_entry/details.jsp#payment_methods" />
+			<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/order_defaults.jsp#payment_methods" />
+
+			<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/order_defaults.jsp#shipping_options" />
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>

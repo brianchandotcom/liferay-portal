@@ -60,28 +60,6 @@ public class BeanPropertiesImpl implements BeanProperties {
 		}
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void copyProperties(
-		Object source, Object target, Class<?> editable) {
-
-		copyProperties(source, target);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void copyProperties(
-		Object source, Object target, String[] ignoreProperties) {
-
-		copyProperties(source, target);
-	}
-
 	@Override
 	public <T> T deepCopyProperties(Object source) throws Exception {
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =

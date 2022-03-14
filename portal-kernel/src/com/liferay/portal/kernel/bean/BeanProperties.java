@@ -26,19 +26,6 @@ public interface BeanProperties {
 
 	public void copyProperties(Object source, Object target);
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public void copyProperties(Object source, Object target, Class<?> editable);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public void copyProperties(
-		Object source, Object target, String[] ignoreProperties);
-
 	public <T> T deepCopyProperties(Object source) throws Exception;
 
 	public boolean getBoolean(Object bean, String param);

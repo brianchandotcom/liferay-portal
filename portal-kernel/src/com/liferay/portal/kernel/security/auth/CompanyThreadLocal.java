@@ -113,30 +113,6 @@ public class CompanyThreadLocal {
 			initializingPortalInstance);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #setWithSafeCloseable(Long)}
-	 */
-	@Deprecated
-	public static SafeClosable setWithSafeClosable(Long companyId) {
-		long currentCompanyId = _companyId.get();
-		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();
-		TimeZone defaultTimeZone = TimeZoneThreadLocal.getDefaultTimeZone();
-
-		_setCompanyId(companyId);
-
-		SafeClosable ctCollectionSafeClosable =
-			CTCollectionThreadLocal.setCTCollectionId(0);
-
-		return () -> {
-			_companyId.set(currentCompanyId);
-			LocaleThreadLocal.setDefaultLocale(defaultLocale);
-			TimeZoneThreadLocal.setDefaultTimeZone(defaultTimeZone);
-
-			ctCollectionSafeClosable.close();
-		};
-	}
-
 	public static SafeCloseable setWithSafeCloseable(Long companyId) {
 		long currentCompanyId = _companyId.get();
 		Locale defaultLocale = LocaleThreadLocal.getDefaultLocale();

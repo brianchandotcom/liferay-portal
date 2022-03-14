@@ -253,10 +253,10 @@ public class JavaUpgradeVersionCheck extends BaseJavaTermCheck {
 
 			if ((parameterList.size() != 3) ||
 				!Objects.equals(parameterList.get(0), "\"0.0.0\"") ||
-				!Objects.equals(
+				!(Objects.equals(
 					parameterList.get(2), "new DummyUpgradeStep()") ||
-				!Objects.equals(
-					parameterList.get(2), "new DummyUpgradeProcess()")) {
+				  Objects.equals(
+					  parameterList.get(2), "new DummyUpgradeProcess()"))) {
 
 				return content;
 			}

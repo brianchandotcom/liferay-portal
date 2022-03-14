@@ -1382,21 +1382,7 @@ definition {
 		property test.name.skip.portal.instance = "DMLocalStaging#StagingDemoDocumentsAndMedia";
 		property testray.component.names = "Training";
 
-		SystemSettings.openSystemSettingsAdmin();
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Documents and Media",
-			configurationName = "Service",
-			configurationScope = "System Scope");
-
-		Type(
-			key_fieldLabel = "Maximum File Size",
-			locator1 = "TextInput#GENERIC_TEXT_INPUT",
-			value1 = "30000000");
-
-		ScrollWebElementIntoView(locator1 = "Button#SAVE");
-
-		PortletEntry.save();
+		DMDocument.updateMaximumFileSize(fieldValue = "30000000");
 
 		Navigator.gotoStagedSitePage(
 			pageName = "Staging DM Page",

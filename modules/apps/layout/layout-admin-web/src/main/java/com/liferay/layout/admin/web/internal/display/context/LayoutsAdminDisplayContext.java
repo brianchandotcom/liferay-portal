@@ -329,18 +329,6 @@ public class LayoutsAdminDisplayContext {
 		).buildString();
 	}
 
-	public String getConvertLayoutURL(Layout layout) {
-		return PortletURLBuilder.createActionURL(
-			_liferayPortletResponse
-		).setActionName(
-			"/layout_admin/convert_layout"
-		).setRedirect(
-			themeDisplay.getURLCurrent()
-		).setParameter(
-			"selPlid", layout.getPlid()
-		).buildString();
-	}
-
 	public String getCopyLayoutRenderURL(Layout layout) throws Exception {
 		return PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse

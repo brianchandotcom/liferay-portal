@@ -12,17 +12,16 @@
  * details.
  */
 
-import React from 'react';
-import './BuilderListItem.scss';
-interface Iprops {
-	index: number;
-	isDefaultSort?: boolean;
-	label?: string;
-	objectFieldName: string;
-	onEditing?: (boolean: boolean) => void;
-	onEditingObjectFieldName?: (objectFieldName: string) => void;
-	onVisibleEditModal?: (boolean: boolean) => void;
-	secondColumntext?: string;
+/// <reference types="react" />
+
+interface IProps {
+	editingObjectFieldName: string;
+	observer: any;
+	onClose: () => void;
 }
-declare const BuilderListItem: React.FC<Iprops>;
-export default BuilderListItem;
+export declare function ModalEditViewColumn({
+	editingObjectFieldName,
+	observer,
+	onClose,
+}: IProps): JSX.Element;
+export {};

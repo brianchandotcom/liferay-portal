@@ -35,8 +35,9 @@ interface IProps {
 	};
 	isDefaultSort?: boolean;
 	objectColumns: TObjectViewSortColumn[];
+	onEditing?: (boolean: boolean) => void;
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
-	onEditingSort?: (boolean: boolean) => void;
+	onVisibleEditModal: (boolean: boolean) => void;
 	onVisibleModal: (boolean: boolean) => void;
 	secondColumnHeader: string;
 	title: string;
@@ -48,8 +49,9 @@ export function BuilderScreen({
 	emptyState,
 	isDefaultSort,
 	objectColumns,
+	onEditing,
 	onEditingObjectFieldName,
-	onEditingSort,
+	onVisibleEditModal,
 	onVisibleModal,
 	secondColumnHeader,
 	title,
@@ -65,6 +67,8 @@ export function BuilderScreen({
 		(objectColumns: TObjectViewSortColumn) =>
 			objectColumns.fieldLabel.toLowerCase().includes(query.toLowerCase())
 	);
+
+	const ff = true;
 
 	return (
 		<Card>
@@ -198,11 +202,13 @@ export function BuilderScreen({
 												objectFieldName={
 													viewColumn.objectFieldName
 												}
+												onEditing={onEditing}
 												onEditingObjectFieldName={
 													onEditingObjectFieldName
 												}
-												onEditingSort={onEditingSort}
-												onVisibleModal={onVisibleModal}
+												onVisibleEditModal={
+													onVisibleEditModal
+												}
 												secondColumntext={
 													isDefaultSort
 														? viewColumn.sortOrder ===
@@ -213,9 +219,11 @@ export function BuilderScreen({
 															: Liferay.Language.get(
 																	'descending'
 															  )
-														: viewColumn.label[
+														: ff
+														? viewColumn.label[
 																defaultLanguageId
 														  ]
+														: ''
 												}
 											/>
 										</DndProvider>

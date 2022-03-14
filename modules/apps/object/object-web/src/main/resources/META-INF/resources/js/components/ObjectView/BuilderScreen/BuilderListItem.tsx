@@ -29,9 +29,9 @@ interface Iprops {
 	isDefaultSort?: boolean;
 	label?: string;
 	objectFieldName: string;
+	onEditing?: (boolean: boolean) => void;
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
-	onEditingSort?: (boolean: boolean) => void;
-	onVisibleModal?: (boolean: boolean) => void;
+	onVisibleEditModal?: (boolean: boolean) => void;
 	secondColumntext?: string;
 }
 
@@ -50,9 +50,9 @@ const BuilderListItem: React.FC<Iprops> = ({
 	isDefaultSort,
 	label,
 	objectFieldName,
+	onEditing,
 	onEditingObjectFieldName,
-	onEditingSort,
-	onVisibleModal,
+	onVisibleEditModal,
 	secondColumntext,
 }) => {
 	const [active, setActive] = useState<boolean>(false);
@@ -145,8 +145,8 @@ const BuilderListItem: React.FC<Iprops> = ({
 
 	const handleEnableEditModal = (objectFieldName: string) => {
 		onEditingObjectFieldName && onEditingObjectFieldName(objectFieldName);
-		onEditingSort && onEditingSort(true);
-		onVisibleModal && onVisibleModal(true);
+		onEditing && onEditing(true);
+		onVisibleEditModal && onVisibleEditModal(true);
 	};
 
 	return (
@@ -186,20 +186,16 @@ const BuilderListItem: React.FC<Iprops> = ({
 				}
 			>
 				<ClayDropDown.ItemList>
-					{isDefaultSort && (
-						<ClayDropDown.Item
-							onClick={() =>
-								handleEnableEditModal(objectFieldName)
-							}
-						>
-							<ClayIcon
-								className="lfr-object__object-custom-view-builder-item-icon"
-								symbol="pencil"
-							/>
+					<ClayDropDown.Item
+						onClick={() => handleEnableEditModal(objectFieldName)}
+					>
+						<ClayIcon
+							className="lfr-object__object-custom-view-builder-item-icon"
+							symbol="pencil"
+						/>
 
-							{Liferay.Language.get('edit')}
-						</ClayDropDown.Item>
-					)}
+						{Liferay.Language.get('edit')}
+					</ClayDropDown.Item>
 
 					<ClayDropDown.Item
 						onClick={() =>

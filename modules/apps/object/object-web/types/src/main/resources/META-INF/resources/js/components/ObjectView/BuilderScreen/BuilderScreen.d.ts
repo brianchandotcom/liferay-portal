@@ -24,8 +24,9 @@ interface IProps {
 	};
 	isDefaultSort?: boolean;
 	objectColumns: TObjectViewSortColumn[];
+	onEditing?: (boolean: boolean) => void;
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
-	onEditingSort?: (boolean: boolean) => void;
+	onVisibleEditModal: (boolean: boolean) => void;
 	onVisibleModal: (boolean: boolean) => void;
 	secondColumnHeader: string;
 	title: string;
@@ -34,8 +35,9 @@ export declare function BuilderScreen({
 	emptyState,
 	isDefaultSort,
 	objectColumns,
+	onEditing,
 	onEditingObjectFieldName,
-	onEditingSort,
+	onVisibleEditModal,
 	onVisibleModal,
 	secondColumnHeader,
 	title,

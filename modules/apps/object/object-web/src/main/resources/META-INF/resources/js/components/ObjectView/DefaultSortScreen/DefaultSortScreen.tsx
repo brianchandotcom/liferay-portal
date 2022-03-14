@@ -62,8 +62,9 @@ export function DefaultSortScreen() {
 				}}
 				isDefaultSort
 				objectColumns={objectViewSortColumns ?? []}
+				onEditing={setIsEditingSort}
 				onEditingObjectFieldName={setEditingObjectFieldName}
-				onEditingSort={setIsEditingSort}
+				onVisibleEditModal={setVisibleModal}
 				onVisibleModal={setVisibleModal}
 				secondColumnHeader={Liferay.Language.get('sorting')}
 				title={Liferay.Language.get('default-sort')}

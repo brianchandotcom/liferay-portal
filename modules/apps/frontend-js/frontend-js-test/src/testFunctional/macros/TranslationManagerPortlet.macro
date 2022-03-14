@@ -7,10 +7,6 @@ definition {
 			locator1 = "TranslationManager#SELECT_TRANSLATION_LANGUAGE_MENU");
 	}
 
-	macro deleteLanguage {
-		Click(locator1 = "TranslationManager#MANAGE_TRANSLATIONS_DIALOG_LANGUAGE_DELETE");
-	}
-
 	macro goToManageTranslationsModal {
 		TranslationManagerPortlet.clickSelectTranslation(
 			key_currentLocale = "${key_currentLocale}",

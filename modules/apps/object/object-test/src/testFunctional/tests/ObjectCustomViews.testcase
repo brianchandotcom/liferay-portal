@@ -374,11 +374,30 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to search for a View"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchView {
 
-		// TODO LPS-147753 CanSearchView pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "View A");
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "View B");
+
+		Search.searchCP(searchTerm = "View A");
+
+		ObjectCustomViews.assertObjectView(viewLabel = "View A");
+		
+		ObjectCustomViews.assertObjectViewNotPresent(viewLabel = "View B");
+
 
 	}
 

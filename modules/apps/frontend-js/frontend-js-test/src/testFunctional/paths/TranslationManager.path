@@ -31,26 +31,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MANAGE_TRANSLATIONS_DIALOG_SEARCH_FIELD</td>
-	<td>//div[contains(@class,'modal-dialog')]//input[contains(@placeholder,'Search')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MANAGE_TRANSLATIONS_DIALOG_SEARCH_RESULTS_TITLE</td>
-	<td>//th[contains(text(),'${key_text}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MANAGE_TRANSLATIONS_DIALOG_LANGUAGE_LIST</td>
-	<td>//tr[${key_index}]//*[name()='svg'][contains(@class,'lexicon-icon-${key_locale}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>MANAGE_TRANSLATIONS_DIALOG_LANGUAGE_DELETE</td>
-	<td>//tr[${key_index}]//*[name()='svg'][contains(@class,'lexicon-icon-trash')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>AUI_TAG_INPUT_TEXT_FIELD</td>
 	<td>//div[contains(@class,'col') and h3='${key_title}']//input[contains(@class,'language-value field')]</td>
 	<td></td>

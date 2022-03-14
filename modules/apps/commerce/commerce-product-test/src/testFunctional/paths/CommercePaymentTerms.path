@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ENTRY_LIST_BY_SORT</td>
+	<td>//div[@class='table-list-title']/../../../*[${key_rowNumber}][contains(.,'${key_termsAndConditionName}') and div[4][contains(text(), 'key_valuePosition')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORDER_DETAILS_TERMS_AND_CONDITIONS_ACTIVE_STATUS</td>
 	<td>//div[@class='dnd-td' and contains(.,'${key_termsAndConditionActiveStatus}')]</td>
 	<td></td>

@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -198,30 +197,16 @@ public class AddItemMVCActionCommandTest {
 	public void testAddItemToLayoutDataItemTypeRowMobileLandscapeConfig()
 		throws Exception {
 
-		Boolean featureFlagLps119551Enabled = GetterUtil.getBoolean(
-			PropsUtil.get("feature.flag.LPS-119551"));
-
-		try {
-			com.liferay.portal.util.PropsUtil.addProperties(
-				UnicodePropertiesBuilder.setProperty(
-					"feature.flag.LPS-119551", "false"
-				).build());
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper("feature.flag.LPS-119551", "false")) {
 
 			_assertMobileLandscapeConfig(null, null);
+		}
 
-			com.liferay.portal.util.PropsUtil.addProperties(
-				UnicodePropertiesBuilder.setProperty(
-					"feature.flag.LPS-119551", "true"
-				).build());
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper("feature.flag.LPS-119551", "true")) {
 
 			_assertMobileLandscapeConfig(1, 12);
-		}
-		finally {
-			com.liferay.portal.util.PropsUtil.addProperties(
-				UnicodePropertiesBuilder.setProperty(
-					"feature.flag.LPS-119551",
-					featureFlagLps119551Enabled.toString()
-				).build());
 		}
 	}
 

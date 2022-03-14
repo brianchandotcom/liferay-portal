@@ -175,6 +175,8 @@ public class SegmentsExperienceStagedModelDataHandler
 				existingSegmentsExperience.getMvccVersion());
 			importedSegmentsExperience.setSegmentsExperienceId(
 				existingSegmentsExperience.getSegmentsExperienceId());
+			importedSegmentsExperience.setSegmentsExperienceKey(
+				existingSegmentsExperience.getSegmentsExperienceKey());
 
 			importedSegmentsExperience =
 				_stagedModelRepository.updateStagedModel(

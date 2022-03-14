@@ -9,24 +9,32 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
+import {ButtonWithIcon} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
-import {Button} from '../../../../../common/components';
+import {Button, ButtonDropDown} from '../../../../../common/components';
 import {
 	getAccountSubscriptionGroups,
 	getAccountSubscriptionsTerms,
+	getAnalyticsCloudWorkspace,
+	updateAccountSubscriptionGroups,
+	updateAnalyticsCloudWorkspace,
 } from '../../../../../common/services/liferay/graphql/queries';
 import getActivationStatusDateRange from '../../../../../common/utils/getActivationStatusDateRange';
 import AnalyticsCloudModal from '../../../components/AnalyticsCloudModal';
+import {ALERT_UPDATE_ANALYTICS_CLOUD_STATUS} from '../../../containers/DXPActivationKeysTable/utils/constants/alertUpdateAnalyticsCloudStatus';
 import {useCustomerPortal} from '../../../context';
 import {actionTypes} from '../../../context/reducer';
 import {
+	AUTO_CLOSE_ALERT_TIME,
 	STATUS_TAG_TYPES,
 	STATUS_TAG_TYPE_NAMES,
 } from '../../../utils/constants';
 import ActivationStatusLayout from '../Layout';
+import AnalyticsCloudStatusModal from './AnalyticsCloudStatusModal';
 
 const ActivationStatusAnalyticsCloud = ({
 	analyticsCloudWorkspace,
@@ -35,10 +43,18 @@ const ActivationStatusAnalyticsCloud = ({
 	userAccount,
 }) => {
 	const [{assetsPath}, dispatch] = useCustomerPortal();
+	const [groupIdValue, setGroupIdValue] = useState();
 	const [activationStatusDate, setActivationStatusDate] = useState('');
 	const [isVisible, setIsVisible] = useState(false);
+	const [visible, setVisible] = useState(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setIsVisible(false),
+	});
+	const {
+		observer: observerModalStatus,
+		onClose: onCloseModalStatus,
+	} = useModal({
+		onClose: () => setVisible(false),
 	});
 
 	const [
@@ -77,6 +93,8 @@ const ActivationStatusAnalyticsCloud = ({
 		}
 	};
 
+	const [hasFinishedUpdate, setHasFinishedUpdate] = useState(false);
+
 	const currentActivationStatus = {
 		[STATUS_TAG_TYPE_NAMES.active]: {
 			buttonLink: (
@@ -96,6 +114,26 @@ const ActivationStatusAnalyticsCloud = ({
 			title: 'Analytics Cloud Activation',
 		},
 		[STATUS_TAG_TYPE_NAMES.inProgress]: {
+			dropdownIcon: userAccount.isStaff && (
+				<ButtonDropDown
+					customDropDownButton={
+						<ButtonWithIcon
+							displayType="null"
+							small
+							symbol="caret-bottom"
+						/>
+					}
+					items={[
+						{
+							label: 'Set to Active',
+							onClick: () => setVisible(true),
+						},
+					]}
+					menuElementAttrs={{
+						className: 'p-0 cp-activation-key-icon rounded-xs',
+					}}
+				/>
+			),
 			id: STATUS_TAG_TYPES.inProgress,
 			subtitle:
 				'Your Analytics Cloud workspace is being set up and will be available soon',
@@ -146,6 +184,51 @@ const ActivationStatusAnalyticsCloud = ({
 		getSubscriptionTerms();
 	}, [project]);
 
+	const updateAnalyticsCloudWorkspaceId = async () => {
+		const {data} = await client.query({
+			query: getAnalyticsCloudWorkspace,
+			variables: {
+				filter: `accountKey eq '${project.accountKey}'`,
+				scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
+			},
+		});
+
+		const analyticsCloudWorkspace =
+			data.c?.analyticsCloudWorkspaces?.items[0];
+
+		if (analyticsCloudWorkspace) {
+			await client.mutate({
+				mutation: updateAnalyticsCloudWorkspace,
+				variables: {
+					analyticsCloudWorkspace: {
+						workspaceGroupId: groupIdValue,
+					},
+					analyticsCloudWorkspaceId:
+						analyticsCloudWorkspace.analyticsCloudWorkspaceId,
+				},
+			});
+		}
+	};
+
+	const updateGroupId = async () => {
+		await Promise.all([
+			await client.mutate({
+				mutation: updateAccountSubscriptionGroups,
+				variables: {
+					accountSubscriptionGroup: {
+						activationStatus: STATUS_TAG_TYPE_NAMES.active,
+					},
+					id:
+						subscriptionGroupAnalyticsCloud?.accountSubscriptionGroupId,
+				},
+			}),
+			await updateAnalyticsCloudWorkspaceId(),
+		]);
+		setSubscriptionGroupActivationStatus(STATUS_TAG_TYPE_NAMES.active);
+		setVisible(false);
+		setHasFinishedUpdate(true);
+	};
+
 	return (
 		<>
 			{isVisible && (
@@ -167,6 +250,27 @@ const ActivationStatusAnalyticsCloud = ({
 					subscriptionGroupActivationStatus
 				}
 			/>
+			{visible && (
+				<AnalyticsCloudStatusModal
+					groupIdValue={groupIdValue}
+					observer={observerModalStatus}
+					onClose={onCloseModalStatus}
+					project={project}
+					setGroupIdValue={setGroupIdValue}
+					updateCardStatus={updateGroupId}
+				/>
+			)}
+			{hasFinishedUpdate && (
+				<ClayAlert.ToastContainer>
+					<ClayAlert
+						autoClose={AUTO_CLOSE_ALERT_TIME.success}
+						displayType="success"
+						onClose={() => setHasFinishedUpdate(false)}
+					>
+						{ALERT_UPDATE_ANALYTICS_CLOUD_STATUS.success}
+					</ClayAlert>
+				</ClayAlert.ToastContainer>
+			)}
 		</>
 	);
 };

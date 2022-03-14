@@ -60,7 +60,10 @@ public class SegmentsContextVocabularyConfigurationModelListener
 				properties);
 		}
 
-		if (_isDefined(pid, entityField)) {
+		if (_isDefined(
+				String.valueOf(properties.get("assetVocabulary")), entityField,
+				String.valueOf(properties.get("companyId")))) {
+
 			throw new DuplicatedSegmentsContextVocabularyConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
 					_getResourceBundle(),
@@ -82,12 +85,17 @@ public class SegmentsContextVocabularyConfigurationModelListener
 	}
 
 	private boolean _isDefined(
-		Configuration configuration, String entityField, String pid) {
+		String assetVocabulary, Configuration configuration, String entityField,
+		String companyId) {
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
-		if (Objects.equals(entityField, properties.get("entityField")) &&
-			!Objects.equals(pid, configuration.getPid())) {
+		if ((Objects.equals(entityField, properties.get("entityField")) &&
+			 Objects.equals(
+				 assetVocabulary, properties.get("assetVocabulary"))) ||
+			(Objects.equals(entityField, properties.get("entityField")) &&
+			 Objects.equals(
+				 companyId, String.valueOf(properties.get("companyId"))))) {
 
 			return true;
 		}
@@ -95,7 +103,8 @@ public class SegmentsContextVocabularyConfigurationModelListener
 		return false;
 	}
 
-	private boolean _isDefined(String pid, String entityField)
+	private boolean _isDefined(
+			String assetVocabulary, String entityField, String companyId)
 		throws ConfigurationModelListenerException {
 
 		try {
@@ -111,7 +120,8 @@ public class SegmentsContextVocabularyConfigurationModelListener
 					new Configuration[0]
 				)
 			).filter(
-				configuration -> _isDefined(configuration, entityField, pid)
+				configuration -> _isDefined(
+					assetVocabulary, configuration, entityField, companyId)
 			).findFirst(
 			).isPresent();
 		}

@@ -31,10 +31,11 @@ const ResultsBar = ({
 					<span className="component-text text-truncate-inline">
 						<span className="text-truncate">
 							{Liferay.Util.sub(
-								Liferay.Language.get('x-results-for-x'),
-								itemsTotal,
-								searchValue || ''
+								Liferay.Language.get('x-results-for'),
+								itemsTotal
 							)}
+
+							<strong>{` "${searchValue}"`}</strong>
 						</span>
 					</span>
 				</ClayResultsBar.Item>

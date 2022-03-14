@@ -54,7 +54,7 @@ definition {
 				ACNavigation.goToSidebarOption(sidebarOption = "${pageName}");
 			}
 
-			task ("Check page empty state message and the connect button") {
+			task ("Check the empty page status message and the connect button") {
 				ACUtils.viewGenericText(textValueList = "No Sites Synced from Data Sources,Connect a data source with sites data.,Access our documentation to learn more.");
 
 				ACUtils.viewGenericButton(buttonName = "Connect Data Source");
@@ -66,11 +66,11 @@ definition {
 		}
 
 		for (var tabName : list "Pages,Interests") {
-			task ("Switch to the another tab") {
+			task ("Switch to the other tab") {
 				ACNavigation.switchTab(tabName = "${tabName}");
 			}
 
-			task ("Check page empty state message and the connect button") {
+			task ("Check the empty page status message and the connect button") {
 				ACUtils.viewGenericText(textValueList = "No Sites Synced from Data Sources,Connect a data source with sites data.,Access our documentation to learn more.");
 
 				ACUtils.viewGenericButton(buttonName = "Connect Data Source");
@@ -82,11 +82,11 @@ definition {
 		}
 
 		for (var tabName : list "Documents and Media,Forms,Web Content,Custom") {
-			task ("Switch to the another tab") {
+			task ("Switch to the other tab") {
 				ACNavigation.switchTab(tabName = "${tabName}");
 			}
 
-			task ("Check page empty state message and the connect button") {
+			task ("Check the empty page status message and the connect button") {
 				ACUtils.viewGenericText(textValueList = "No Sites Synced from Data Sources,Connect a data source with sites data.,Access our documentation to learn more.");
 
 				ACUtils.viewGenericButton(buttonName = "Connect Data Source");
@@ -97,7 +97,7 @@ definition {
 			ACNavigation.goToSidebarOption(sidebarOption = "accounts");
 		}
 
-		task ("Check page empty state message and the connect button") {
+		task ("Check the empty page status message and the connect button") {
 			ACUtils.viewGenericText(textValueList = "No Accounts Synced from Data Sources,Connect a data source to get started.,Access our documentation to learn more.");
 
 			ACUtils.viewGenericButton(buttonName = "Connect Data Source");
@@ -108,7 +108,7 @@ definition {
 				ACNavigation.goToSidebarOption(sidebarOption = "${pageName}");
 			}
 
-			task ("Check page empty state message and the connect button") {
+			task ("Check the empty page status message and the connect button") {
 				ACUtils.viewGenericText(textValueList = "No Data Sources Connected,Connect a data source to get started.,Access our documentation to learn more.");
 
 				ACUtils.viewGenericButton(buttonName = "Connect Data Source");
@@ -130,11 +130,11 @@ definition {
 		}
 
 		for (var tabName : list "Known Individuals,Distribution") {
-			task ("Switch to the another tab") {
+			task ("Switch to the other tab") {
 				ACNavigation.switchTab(tabName = "${tabName}");
 			}
 
-			task ("Check page empty state message and the connect button") {
+			task ("Check the empty page status message and the connect button") {
 				ACUtils.viewGenericText(textValueList = "No Data Sources Connected,Connect a data source to get started.,Access our documentation to learn more.");
 
 				ACUtils.viewGenericButton(buttonName = "Connect Data Source");
@@ -145,13 +145,13 @@ definition {
 			ACNavigation.switchTab(tabName = "Interests");
 		}
 
-		task ("Check page empty state message and the connect button") {
+		task ("Check the empty page status message and the connect button") {
 			ACUtils.viewGenericText(textValueList = "No Sites Synced from Data Sources,Connect a data source with sites data.");
 
 			ACUtils.viewGenericButton(buttonName = "Connect Data Source");
 		}
 
-		task ("Check the hyperlink taking user to the documentation") {
+		task ("Check if the hyperlink is taking the user to the documentation") {
 			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
 
 			task ("Switch to the documentation tab") {

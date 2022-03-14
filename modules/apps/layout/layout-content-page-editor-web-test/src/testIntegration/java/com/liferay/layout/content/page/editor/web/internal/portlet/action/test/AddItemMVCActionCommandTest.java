@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -51,7 +52,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 
@@ -366,5 +369,39 @@ public class AddItemMVCActionCommandTest {
 
 	@Inject(filter = "mvc.command.name=/layout_content_page_editor/add_item")
 	private MVCActionCommand _mvcActionCommand;
+
+	private static class PropsTemporarySwapper implements AutoCloseable {
+
+		public PropsTemporarySwapper(
+			String firstKey, Object firstValue, Object... keysAndValues) {
+
+			_setTemporaryValue(firstKey, String.valueOf(firstValue));
+
+			for (int i = 0; i < keysAndValues.length; i += 2) {
+				String key = String.valueOf(keysAndValues[i]);
+				String value = String.valueOf(keysAndValues[i + 1]);
+
+				_setTemporaryValue(key, value);
+			}
+		}
+
+		@Override
+		public void close() {
+			com.liferay.portal.util.PropsUtil.addProperties(
+				new UnicodeProperties(_oldValues, false));
+		}
+
+		private void _setTemporaryValue(String key, String value) {
+			_oldValues.put(key, PropsUtil.get(key));
+
+			com.liferay.portal.util.PropsUtil.addProperties(
+				UnicodePropertiesBuilder.setProperty(
+					key, value
+				).build());
+		}
+
+		private final Map<String, String> _oldValues = new HashMap<>();
+
+	}
 
 }

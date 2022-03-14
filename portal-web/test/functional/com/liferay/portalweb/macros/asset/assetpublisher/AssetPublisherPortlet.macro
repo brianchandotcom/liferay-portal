@@ -406,6 +406,18 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
+	macro configureDynamicAssetSelectionPG {
+		AssetPublisherPortlet.gotoConfigurationPG(portletName = "${portletName}");
+
+		Navigator.gotoNavTab(navTab = "Asset Selection");
+
+		Click(locator1 = "APConfiguration#ASSET_SELECTION_DYNAMIC");
+
+		Alert.viewSuccessMessage();
+
+		IFrame.closeFrame();
+	}
+
 	macro configureFilterByFieldPG {
 		AssetPublisherPortlet.gotoConfigurationPG();
 

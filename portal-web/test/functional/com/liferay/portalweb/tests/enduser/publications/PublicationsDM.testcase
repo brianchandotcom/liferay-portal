@@ -306,12 +306,14 @@ definition {
 			changeType = "Added",
 			changeUser = "Test Test");
 
-		PublicationsChanges.viewChanges(
+		// Workaround LPS-149071
+
+		/*PublicationsChanges.viewChanges(
 			changeCategory = "Shortcut",
 			changeSite = "Guest",
 			changeTitle = "Document_1.jpg",
 			changeType = "Added",
-			changeUser = "Test Test");
+			changeUser = "Test Test");*/
 
 		JSONPublications.publishPublication(publicationName = "Publication Name");
 

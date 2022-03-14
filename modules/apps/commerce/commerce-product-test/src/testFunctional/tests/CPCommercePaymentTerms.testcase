@@ -35,14 +35,39 @@ definition {
 
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "This is a test for COMMERCE-8295. Assert Payment terms are automatically sorted by Priority by default"
 	@priority = "4"
 	test AssertPaymentTermIsSortedByPriority {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8295 AssertPaymentTermIsSortedByPriority pending implementation
+		task ("Given a new entry with "Priority" set to 2 into the "Terms and Conditions".") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
 
+			CommercePaymentTerms.addTermsAndCondition(
+				termsAndConditionName = "Terms and Condition Entry 1",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = "2");
+
+			Click(locator1 = "Button#BACK");
+		}
+
+		task ("When the Sales Manager create a new entry with "Priority" set to 1.") {
+			CommercePaymentTerms.addTermsAndCondition(
+				termsAndConditionName = "Terms and Condition Entry 2",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = "1");
+
+			Click(locator1 = "Button#BACK");
+		}
+
+		task ("Then after the redirect if the Sales Manager return on the dashboard the second entry that we created it's the first.") {
+			CommercePaymentTerms.viewTermsAndConditionEntrySortByPriority(
+				rowNumber = "1",
+				termsAndConditionName = "Terms and Condition Entry 2",
+				valuePosition = "1");
+		}
 	}
 
 	@description = "This is a test for COMMERCE-8283. Payment Term Name needs to be unique"

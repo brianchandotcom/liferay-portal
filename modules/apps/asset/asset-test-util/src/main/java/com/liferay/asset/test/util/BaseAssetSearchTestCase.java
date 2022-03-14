@@ -1348,7 +1348,7 @@ public abstract class BaseAssetSearchTestCase {
 		BaseModel<?>[] baseModels = new BaseModel[titles.length];
 
 		for (int i = 0; i < titles.length; i++) {
-			long delta = 1000 - (System.currentTimeMillis() - createDate);
+			long delta = 2000 - (System.currentTimeMillis() - createDate);
 
 			if (delta > 0) {
 				Thread.sleep(delta);

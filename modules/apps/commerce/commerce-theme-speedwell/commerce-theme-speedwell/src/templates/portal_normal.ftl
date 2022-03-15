@@ -14,7 +14,7 @@
 	<body class="speedwell ${css_class}" id="content">
 		<@liferay.control_menu />
 
-		<div id="wrapper" class="position-relative">
+		<div class="position-relative" id="wrapper">
 			<div class="liferay-top">
 				<@liferay_ui["quick-access"] contentId="#main-content" />
 				<@liferay_util["include"] page=body_top_include />

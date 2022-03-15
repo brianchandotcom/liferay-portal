@@ -34,7 +34,7 @@
 
 	<@liferay.control_menu />
 
-	<div id="wrapper" class="position-relative">
+	<div class="position-relative" id="wrapper">
 		<div class="liferay-top">
 			<@liferay_util["include"] page=body_top_include />
 		</div>

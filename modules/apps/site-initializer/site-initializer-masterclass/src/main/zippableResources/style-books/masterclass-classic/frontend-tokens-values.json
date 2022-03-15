@@ -193,7 +193,7 @@
 	},
 	"fontFamilySansSerif": {
 		"cssVariableMapping": "font-family-sans-serif",
-		"value": "'Montserrat', sans-serif"
+		"value": "'Source Serif Pro', serif"
 	},
 	"fontSizeBase": {
 		"cssVariableMapping": "font-size-base",
@@ -213,7 +213,7 @@
 	},
 	"fontWeightBolder": {
 		"cssVariableMapping": "font-weight-bolder",
-		"value": "700"
+		"value": "600"
 	},
 	"grayDarkColor": {
 		"cssVariableMapping": "gray-dark",

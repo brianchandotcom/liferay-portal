@@ -1,12 +1,14 @@
 /*----- TYPOGRAPHY -----*/
 
-/*Montserrat*/
-
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap');
-
 /*Source Serif*/
 
-@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital@0;1&display=swap');
+@font-face {
+	font-display: swap;
+	font-family: 'Source Serif Pro';
+	font-style: normal;
+	font-weight: 400;
+	src: url([$DOCUMENT_URL:/site-initializer/documents/group/fonts/SourceSerifPro-Regular.ttf$]);
+}
 
 h1,
 h2,

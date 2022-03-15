@@ -185,7 +185,7 @@
 	},
 	"fontFamilyBase": {
 		"cssVariableMapping": "font-family-base",
-		"value": "'Montserrat', sans-serif"
+		"value": "'Source Serif Pro', serif"
 	},
 	"fontFamilyMonospace": {
 		"cssVariableMapping": "font-family-monospace",
@@ -213,7 +213,7 @@
 	},
 	"fontWeightBolder": {
 		"cssVariableMapping": "font-weight-bolder",
-		"value": "700"
+		"value": "600"
 	},
 	"grayDarkColor": {
 		"cssVariableMapping": "gray-dark",

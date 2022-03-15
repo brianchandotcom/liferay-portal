@@ -211,7 +211,7 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 		return ArrayUtil.toLongArray(convertibleLayoutPlids);
 	}
 
-	private LayoutPageTemplateStructure _addOrUpdateLayoutPageTemplateStructure(
+	private void _addOrUpdateLayoutPageTemplateStructure(
 			Layout layout, LayoutData layoutData, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -223,14 +223,14 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 					layout.getGroupId(), layout.getPlid());
 
 		if (layoutPageTemplateStructure == null) {
-			return _layoutPageTemplateStructureLocalService.
+			_layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
 					serviceContext.getUserId(), layout.getGroupId(),
 					layout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT,
 					layoutDataJSONObject.toString(), serviceContext);
 		}
 
-		return _layoutPageTemplateStructureLocalService.
+		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				layout.getGroupId(), layout.getPlid(),
 				SegmentsExperienceConstants.ID_DEFAULT,

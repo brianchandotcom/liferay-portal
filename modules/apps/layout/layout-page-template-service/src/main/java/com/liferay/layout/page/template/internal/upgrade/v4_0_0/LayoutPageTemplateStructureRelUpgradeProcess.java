@@ -19,7 +19,11 @@ import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 
 import java.sql.PreparedStatement;
@@ -45,7 +49,37 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 		_upgradeLayoutPageTemplateStructureRel();
 	}
 
+	private JSONObject _getItemsJSONObject(String data) {
+		try {
+			JSONObject layoutStructureJSONObject =
+				JSONFactoryUtil.createJSONObject(data);
+
+			return layoutStructureJSONObject.getJSONObject("items");
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+		}
+
+		return JSONFactoryUtil.createJSONObject();
+	}
+
+	private String _getPaginatiopnType(
+		CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem,
+		JSONObject itemsJSONObject) {
+
+		JSONObject itemJSONObject = itemsJSONObject.getJSONObject(
+			collectionStyledLayoutStructureItem.getItemId());
+
+		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
+
+		return configJSONObject.getString("paginationType");
+	}
+
 	private String _upgradeLayoutData(String data) {
+		JSONObject itemsJSONObject = _getItemsJSONObject(data);
+
 		LayoutStructure layoutStructure = LayoutStructure.of(data);
 
 		List<LayoutStructureItem> layoutStructureItems =
@@ -62,9 +96,11 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 
 				collectionStyledLayoutStructureItem.setDisplayAllItems(false);
 
+				String paginationType = _getPaginatiopnType(
+					collectionStyledLayoutStructureItem, itemsJSONObject);
+
 				if (_collectionPaginationHelper.isPaginationEnabled(
-						collectionStyledLayoutStructureItem.
-							getPaginationType())) {
+						paginationType)) {
 
 					collectionStyledLayoutStructureItem.setDisplayAllPages(
 						collectionStyledLayoutStructureItem.isShowAllItems());
@@ -83,6 +119,13 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 								numberOfItems / (double)numberOfItemsPerPage));
 					}
 				}
+				else {
+					paginationType =
+						CollectionPaginationHelper.PAGINATION_TYPE_NONE;
+				}
+
+				collectionStyledLayoutStructureItem.setPaginationType(
+					paginationType);
 			}
 		}
 
@@ -118,6 +161,9 @@ public class LayoutPageTemplateStructureRelUpgradeProcess
 			preparedStatement.executeBatch();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutPageTemplateStructureRelUpgradeProcess.class);
 
 	private final CollectionPaginationHelper _collectionPaginationHelper;
 

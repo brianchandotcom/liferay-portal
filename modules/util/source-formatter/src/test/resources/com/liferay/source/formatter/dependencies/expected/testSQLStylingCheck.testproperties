@@ -19,9 +19,7 @@
             (portal.acceptance != quarantine) AND \
             (portal.upstream != quarantine)\
         ) AND \
-        (\
-            (testray.main.component.name == "Team Extranet")\
-        )
+        (testray.main.component.name == "Team Extranet")
 
     test.batch.run.property.query[functional-tomcat*-mysql*-jdk8][relevant]=\
         (\

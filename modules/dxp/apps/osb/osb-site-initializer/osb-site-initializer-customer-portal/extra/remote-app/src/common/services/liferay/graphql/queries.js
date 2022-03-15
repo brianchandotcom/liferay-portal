@@ -216,7 +216,29 @@ export const getAnalyticsCloudWorkspace = gql`
 		c {
 			analyticsCloudWorkspaces(filter: $filter, scopeKey: $scopeKey) {
 				items {
+					analyticsCloudWorkspaceId
 					workspaceGroupId
+				}
+			}
+		}
+	}
+`;
+
+export const getAnalyticsCloudPageInfo = gql`
+	query getAnalyticsCloudPageInfo($accountSubscriptionsFilter: String) {
+		c {
+			accountSubscriptions(filter: $accountSubscriptionsFilter) {
+				items {
+					accountKey
+					hasDisasterDataCenterRegion
+					name
+				}
+			}
+			analyticsCloudDataCenterLocations {
+				items {
+					analyticsCloudDataCenterLocationId
+					name
+					value
 				}
 			}
 		}

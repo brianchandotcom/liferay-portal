@@ -35,6 +35,12 @@ const isValidEmail = (value, bannedEmailDomains) => {
 	}
 };
 
+const isValidEmailDomain = (value, bannedEmailDomains) => {
+	if (bannedEmailDomains.includes(value.split('@')[1])) {
+		return 'Domain not allowed.';
+	}
+};
+
 const isLowercaseAndNumbers = (value) => {
 	if (!LOWCASE_NUMBERS_REGEX.test(value)) {
 		return 'Lowercase letters and numbers only.';
@@ -75,6 +81,7 @@ export {
 	isLowercaseAndNumbers,
 	isValidEmail,
 	isValidFriendlyURL,
+	isValidEmailDomain,
 	maxLength,
 	required,
 	validate,

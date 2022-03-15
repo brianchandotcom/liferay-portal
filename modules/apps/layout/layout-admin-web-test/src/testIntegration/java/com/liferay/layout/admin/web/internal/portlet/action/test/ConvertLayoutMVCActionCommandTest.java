@@ -148,7 +148,7 @@ public class ConvertLayoutMVCActionCommandTest {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 
 		mockLiferayPortletActionRequest.addParameter(
-			"selPlid", String.valueOf(plid));
+			"rowIds", new String[] {String.valueOf(plid)});
 
 		return mockLiferayPortletActionRequest;
 	}

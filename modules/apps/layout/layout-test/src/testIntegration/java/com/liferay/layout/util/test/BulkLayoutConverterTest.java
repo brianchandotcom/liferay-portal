@@ -15,10 +15,10 @@
 package com.liferay.layout.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.layout.exception.LayoutConvertException;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.BulkLayoutConverter;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -85,7 +85,7 @@ public class BulkLayoutConverterTest {
 		_publicLayout = null;
 	}
 
-	@Test(expected = LayoutConvertException.class)
+	@Test(expected = PortalException.class)
 	public void testConvertCorruptedLayout() throws Exception {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 

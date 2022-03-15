@@ -186,29 +186,9 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test ChangeTheStatus {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-8280 ChangeTheStatus pending implementation
-
-	}
-
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test EditAPaymentTerm {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-8282 EditAPaymentTerm pending implementation
-
-	}
-
 	@description = "COMMERCE-8291. The Sales Manager can use the search bar to search a specific entry."
 	@priority = "4"
-	test UseFilterAndSearch {
+	test CanSearchForSpecificEntry {
 		property portal.acceptance = "false";
 
 		task ("Add some new entrys into the Terms and Conditions with the status to Active") {
@@ -242,6 +222,26 @@ definition {
 				locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_NAME",
 				value1 = "Terms2");
 		}
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ChangeTheStatus {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8280 ChangeTheStatus pending implementation
+
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test EditAPaymentTerm {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8282 EditAPaymentTerm pending implementation
+
 	}
 
 	@description = "[Please Update]"

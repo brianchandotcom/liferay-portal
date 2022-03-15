@@ -629,6 +629,8 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject147772");
 
+		WaitForPageLoad();
+
 		ObjectCustomViews.viewColumnsOrder(
 			colunmName = "Created Date",
 			position = "1");

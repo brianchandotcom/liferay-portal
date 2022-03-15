@@ -75,6 +75,7 @@ function SegmentsExperiments({
 			<ClayTabs justified={true}>
 				<ClayTabs.Item
 					active={activeTab === TABS_STATES.ACTIVE}
+					className="c-pt-1"
 					onClick={() => setActiveTab(TABS_STATES.ACTIVE)}
 				>
 					{Liferay.Language.get('active-test')}
@@ -82,6 +83,7 @@ function SegmentsExperiments({
 
 				<ClayTabs.Item
 					active={activeTab === TABS_STATES.HISTORY}
+					className="c-pt-1"
 					onClick={() => setActiveTab(TABS_STATES.HISTORY)}
 				>
 					{Liferay.Language.get('history[record]')}

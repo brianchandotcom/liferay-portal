@@ -91,12 +91,28 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to cancel the creation of a View"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCancelViewCreation {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Object 147754",
+			objectName = "Object147754",
+			pluralLabelName = "Objects 147754");
 
-		// TODO LPS-147754 CanCancelViewCreation pending implementation
+		ObjectAdmin.openObjectAdmin();
 
+		ObjectPortlet.selectCustomObject(label = "Object 147754");
+
+		ObjectCustomViews.goToViewsTab();
+
+		LexiconEntry.gotoAdd();
+
+		Button.clickCancel();
+
+		AssertElementNotPresent(locator1 = "Portlet#MODAL_TITLE");
+
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No Items were found.");
 	}
 
 	@description = "LPS-135394 - Verify it is possible to create a View"

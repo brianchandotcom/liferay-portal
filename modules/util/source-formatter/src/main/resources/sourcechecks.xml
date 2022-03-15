@@ -1274,6 +1274,7 @@
 		<check name="PropertiesSQLStylingCheck">
 			<category name="Styling" />
 			<description name="Applies rules to enforce consisteny in code style." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="PropertiesStylingCheck">
 			<category name="Styling" />

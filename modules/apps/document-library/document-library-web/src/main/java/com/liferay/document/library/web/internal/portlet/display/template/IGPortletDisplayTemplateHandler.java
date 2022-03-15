@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.web.internal.template;
+package com.liferay.document.library.web.internal.portlet.display.template;
 
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.constants.DLPortletKeys;

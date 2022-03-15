@@ -23,7 +23,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.naming.NamingException;
 
@@ -44,16 +43,6 @@ public interface DB {
 	public void addIndexes(
 			Connection connection, List<IndexMetadata> indexMetadatas)
 		throws IOException, SQLException;
-
-	/**
-	 *   @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *          #addIndexes(Connection, List)}
-	 */
-	@Deprecated
-	public void addIndexes(
-			Connection connection, String indexesSQL,
-			Set<String> validIndexNames)
-		throws IOException;
 
 	public void alterColumnName(
 			Connection connection, String tableName, String oldColumnName,
@@ -98,15 +87,6 @@ public interface DB {
 	public String getPopulateSQL(String databaseName, String sqlContent);
 
 	public String[] getPrimaryKeyColumnNames(
-			Connection connection, String tableName)
-		throws SQLException;
-
-	/**
-	 *   @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *          #getPrimaryKeyColumnNames(Connection, String)}
-	 */
-	@Deprecated
-	public ResultSet getPrimaryKeysResultSet(
 			Connection connection, String tableName)
 		throws SQLException;
 

@@ -129,56 +129,6 @@ public abstract class BaseDB implements DB {
 		}
 	}
 
-	/**
-	 *   @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *          #addIndexes(Connection, List)}
-	 */
-	@Deprecated
-	public void addIndexes(
-			Connection connection, String indexesSQL,
-			Set<String> validIndexNames)
-		throws IOException {
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Adding indexes");
-		}
-
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(indexesSQL))) {
-
-			String sql = null;
-
-			while ((sql = unsyncBufferedReader.readLine()) != null) {
-				if (Validator.isNull(sql)) {
-					continue;
-				}
-
-				int y = sql.indexOf(" on ");
-
-				int x = sql.lastIndexOf(" ", y - 1);
-
-				String indexName = sql.substring(x + 1, y);
-
-				if (validIndexNames.contains(indexName)) {
-					continue;
-				}
-
-				if (_log.isInfoEnabled()) {
-					_log.info(sql);
-				}
-
-				try {
-					runSQL(connection, sql);
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(exception.getMessage() + ": " + sql);
-					}
-				}
-			}
-		}
-	}
-
 	public void alterColumnName(
 			Connection connection, String tableName, String oldColumnName,
 			String newColumnDefinition)
@@ -332,24 +282,6 @@ public abstract class BaseDB implements DB {
 		}
 
 		return columnNames;
-	}
-
-	/**
-	 *   @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *          #getPrimaryKeyColumnNames(Connection, String)}
-	 */
-	@Deprecated
-	@Override
-	public ResultSet getPrimaryKeysResultSet(
-			Connection connection, String tableName)
-		throws SQLException {
-
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-		DBInspector dbInspector = new DBInspector(connection);
-
-		return databaseMetaData.getPrimaryKeys(
-			dbInspector.getCatalog(), dbInspector.getSchema(), tableName);
 	}
 
 	@Override
@@ -688,7 +620,7 @@ public abstract class BaseDB implements DB {
 					}
 				}
 
-				addIndexes(
+				_addIndexes(
 					connection,
 					_applyMaxStringIndexLengthLimitation(indexesSQL),
 					validIndexNames);
@@ -1060,6 +992,51 @@ public abstract class BaseDB implements DB {
 
 	protected static final Pattern columnTypePattern = Pattern.compile(
 		"(^\\w+)", Pattern.CASE_INSENSITIVE);
+
+	private void _addIndexes(
+			Connection connection, String indexesSQL,
+			Set<String> validIndexNames)
+		throws IOException {
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Adding indexes");
+		}
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(indexesSQL))) {
+
+			String sql = null;
+
+			while ((sql = unsyncBufferedReader.readLine()) != null) {
+				if (Validator.isNull(sql)) {
+					continue;
+				}
+
+				int y = sql.indexOf(" on ");
+
+				int x = sql.lastIndexOf(" ", y - 1);
+
+				String indexName = sql.substring(x + 1, y);
+
+				if (validIndexNames.contains(indexName)) {
+					continue;
+				}
+
+				if (_log.isInfoEnabled()) {
+					_log.info(sql);
+				}
+
+				try {
+					runSQL(connection, sql);
+				}
+				catch (Exception exception) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(exception.getMessage() + ": " + sql);
+					}
+				}
+			}
+		}
+	}
 
 	private String _applyMaxStringIndexLengthLimitation(String template) {
 		if (!template.contains("[$COLUMN_LENGTH:")) {

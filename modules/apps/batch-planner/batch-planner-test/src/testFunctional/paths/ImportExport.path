@@ -11,6 +11,11 @@
 
 <tbody>
 <tr>
+	<td>ENTITY_TYPE</td>
+	<td>//div[not(contains(@class,'hide'))]/div[label[contains(.,'Entity Type')]]/select[not(@disabled)] | //div[not(contains(@class,'hide'))]/div[label[contains(.,'Entity Name')]]/select[not(@disabled)]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXECUTION_ENTRY</td>
 	<td>//table[contains(@class,'table-list')]//td[contains(@class,'lfr-title-column')]/a[contains(text(),'${key_entityType} Plan Execution')]/following::td[contains(@class,'action-column') and contains(text(),'${key_executionAction}')]/following-sibling::td[contains(@class,'type-column') and contains(text(),'${key_entityType}')]/following-sibling::td[contains(@class,'status-column')]//h6[contains(text(),'${key_executionStatus}')]</td>
 	<td></td>

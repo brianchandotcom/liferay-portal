@@ -43,8 +43,9 @@ public class SXPBlueprintEntityModel implements EntityModel {
 			new IntegerEntityField("status", locale -> Field.STATUS),
 			new StringEntityField(
 				"description",
-				locale -> LocalizationUtil.getLocalizedName(
-					Field.DESCRIPTION, LocaleUtil.toLanguageId(locale))),
+				locale -> Field.getSortableFieldName(
+					LocalizationUtil.getLocalizedName(
+						Field.DESCRIPTION, LocaleUtil.toLanguageId(locale)))),
 			new StringEntityField(
 				"title",
 				locale -> Field.getSortableFieldName(

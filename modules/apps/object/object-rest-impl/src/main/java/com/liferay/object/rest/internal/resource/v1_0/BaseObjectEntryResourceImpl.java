@@ -14,7 +14,9 @@
 
 package com.liferay.object.rest.internal.resource.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.Creator;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -44,7 +46,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -680,6 +684,41 @@ public abstract class BaseObjectEntryResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("company", "scopeKey");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return ObjectEntry.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "creator", true, false, Creator.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dateCreated", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dateModified", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "externalReferenceCode", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "properties", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "scopeKey", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "status", true, false, Status.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -692,6 +731,16 @@ public abstract class BaseObjectEntryResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("company", "scopeKey");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

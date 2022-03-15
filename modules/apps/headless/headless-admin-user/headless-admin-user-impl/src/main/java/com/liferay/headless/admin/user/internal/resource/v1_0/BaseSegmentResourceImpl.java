@@ -44,7 +44,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -167,6 +169,48 @@ public abstract class BaseSegmentResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return Segment.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A flag that indicates whether the segment is active.",
+				"active", true, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The segment's criteria.", "criteria", true, true, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The segment's criteria in JSON.", "criteriaValue", true, false,
+				Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The segment's creation date.", "dateCreated", true, false,
+				Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The segment's most recent modification date.", "dateModified",
+				true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The segment's ID.", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The segment's name.", "name", true, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the segment's site.", "siteId", true, false,
+				Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The segment's source.", "source", true, false, String.class,
+				false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -179,6 +223,16 @@ public abstract class BaseSegmentResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("site", "site,userAccount");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.channel.internal.resource.v1_0;
 
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.OrderType;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingFixedOptionOrderType;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingFixedOptionOrderTypeResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
@@ -44,6 +45,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -280,6 +282,39 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return ShippingFixedOptionOrderType.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "orderType", true, false, OrderType.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "orderTypeExternalReferenceCode", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "orderTypeId", false, true, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priority", false, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingFixedOptionId", false, true, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingFixedOptionOrderTypeId", true, false, Long.class,
+				false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -292,6 +327,16 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

@@ -39,13 +39,16 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Task;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.TaskBulkSelection;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.TaskResource;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -396,6 +399,63 @@ public abstract class BaseTaskResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("process");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return Task.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "assetTitle", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "assetTitle_i18n", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "assetType", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "assetType_i18n", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "assignee", false, false, Assignee.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "className", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "classPK", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "completed", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "completionUserId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dateCompletion", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dateCreated", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dateModified", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "duration", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "instanceId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "label", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "name", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "nodeId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "processId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "processVersion", false, false, String.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -408,6 +468,16 @@ public abstract class BaseTaskResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("process");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

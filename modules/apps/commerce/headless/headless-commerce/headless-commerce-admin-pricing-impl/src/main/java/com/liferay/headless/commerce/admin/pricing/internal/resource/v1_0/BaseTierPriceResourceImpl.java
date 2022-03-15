@@ -44,6 +44,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -530,6 +533,40 @@ public abstract class BaseTierPriceResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("priceEntryExternalReferenceCode", "priceEntry");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return TierPrice.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "customFields", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "externalReferenceCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "minimumQuantity", false, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "price", false, false, BigDecimal.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceEntryExternalReferenceCode", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceEntryId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "promoPrice", false, false, BigDecimal.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -542,6 +579,16 @@ public abstract class BaseTierPriceResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("priceEntryExternalReferenceCode", "priceEntry");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

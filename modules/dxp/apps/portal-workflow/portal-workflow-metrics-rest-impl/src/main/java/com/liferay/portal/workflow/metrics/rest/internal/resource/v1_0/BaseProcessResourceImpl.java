@@ -45,6 +45,8 @@ import com.liferay.portal.workflow.metrics.rest.resource.v1_0.ProcessResource;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -368,6 +370,41 @@ public abstract class BaseProcessResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return Process.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "active", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dateCreated", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dateModified", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "description", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "name", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "title", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "title_i18n", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "version", false, false, String.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -380,6 +417,16 @@ public abstract class BaseProcessResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

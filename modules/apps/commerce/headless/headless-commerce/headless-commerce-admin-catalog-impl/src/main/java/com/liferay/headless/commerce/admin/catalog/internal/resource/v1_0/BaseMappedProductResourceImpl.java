@@ -14,7 +14,9 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.CustomField;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct.Type;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.MappedProductResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -44,6 +46,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -463,6 +466,49 @@ public abstract class BaseMappedProductResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("productExternalReferenceCode", "product");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return MappedProduct.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "customFields", false, false, CustomField[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productExternalReferenceCode", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productName", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "quantity", false, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "sequence", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "sku", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "skuExternalReferenceCode", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "skuId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "type", false, false, Type.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -475,6 +521,16 @@ public abstract class BaseMappedProductResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("productExternalReferenceCode", "product");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

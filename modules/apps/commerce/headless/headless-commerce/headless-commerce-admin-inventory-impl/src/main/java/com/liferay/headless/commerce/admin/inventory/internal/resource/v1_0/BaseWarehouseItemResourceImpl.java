@@ -44,7 +44,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -556,10 +558,10 @@ public abstract class BaseWarehouseItemResourceImpl
 	public Page<WarehouseItem> getWarehouseItemsUpdatedPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("end")
-			java.util.Date end,
+			Date end,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("start")
-			java.util.Date start,
+			Date start,
 			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
@@ -586,6 +588,40 @@ public abstract class BaseWarehouseItemResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("", "warehouseExternalReferenceCode", "warehouse");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return WarehouseItem.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "externalReferenceCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "modifiedDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "quantity", false, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "reservedQuantity", false, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "sku", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "warehouseExternalReferenceCode", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "warehouseId", false, false, Long.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -598,6 +634,17 @@ public abstract class BaseWarehouseItemResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList(
+			"warehouseExternalReferenceCode", "warehouse", "company");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

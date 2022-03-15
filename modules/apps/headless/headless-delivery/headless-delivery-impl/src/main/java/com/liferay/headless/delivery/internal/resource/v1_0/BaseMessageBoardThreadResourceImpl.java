@@ -14,8 +14,16 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.AggregateRating;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
+import com.liferay.headless.delivery.dto.v1_0.CreatorStatistics;
+import com.liferay.headless.delivery.dto.v1_0.CustomField;
+import com.liferay.headless.delivery.dto.v1_0.Field;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
+import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread.ViewableBy;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
+import com.liferay.headless.delivery.dto.v1_0.RelatedContent;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -53,7 +61,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -285,10 +295,10 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	public Page<MessageBoardThread> getMessageBoardThreadsRankedPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("dateCreated")
-			java.util.Date dateCreated,
+			Date dateCreated,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("dateModified")
-			java.util.Date dateModified,
+			Date dateModified,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("messageBoardSectionId")
 			Long messageBoardSectionId,
@@ -1351,6 +1361,112 @@ public abstract class BaseMessageBoardThreadResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("messageBoardSection", "site");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return MessageBoardThread.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Block of actions allowed by the user making the request.",
+				"actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The thread's average rating.", "aggregateRating", true, false,
+				AggregateRating.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The thread's main body content (the message written as the thread's description).",
+				"articleBody", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The thread's creator.", "creator", true, false, Creator.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The thread's creator statistics (rank, join date, number of posts, ...)",
+				"creatorStatistics", false, false, CreatorStatistics.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of the custom fields associated with the thread.",
+				"customFields", false, false, CustomField[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The date the thread was created.", "dateCreated", true, false,
+				Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The last time any field of the thread changed.",
+				"dateModified", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The media format of the thread's content (e.g., HTML, BBCode, etc.).",
+				"encodingFormat", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "friendlyUrlPath", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A flag that indicates whether this thread has a message considered as valid",
+				"hasValidAnswer", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The thread's main title.", "headline", false, true,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The thread's ID.", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of keywords describing the thread.", "keywords", false,
+				false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A flag that indicates whether this thread is locked.",
+				"locked", true, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the Message Board Section to which this message is scoped.",
+				"messageBoardSectionId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of the thread's attachments.",
+				"numberOfMessageBoardAttachments", true, false, Integer.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of the thread's messages.",
+				"numberOfMessageBoardMessages", true, false, Integer.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of related contents to this thread.", "relatedContents",
+				true, false, RelatedContent[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A flag that indicates whether this thread has been seen.",
+				"seen", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A flag that indicates whether this thread was posted as a question that can receive approved answers.",
+				"showAsQuestion", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the site to which this thread is scoped.", "siteId",
+				true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The thread's status.", "status", true, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A flag that indicates whether the user making the requests is subscribed to this thread.",
+				"subscribed", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The categories associated with this thread.",
+				"taxonomyCategoryBriefs", true, false,
+				TaxonomyCategoryBrief[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only field that adds `TaxonomyCategory` instances to the thread.",
+				"taxonomyCategoryIds", false, false, Long[].class, true),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The thread's type.", "threadType", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of views of this thread.", "viewCount", true, false,
+				Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only property that specifies the thread's default permissions.",
+				"viewableBy", false, false, ViewableBy.class, true));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -1363,6 +1479,16 @@ public abstract class BaseMessageBoardThreadResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("messageBoardSection", "company", "site");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

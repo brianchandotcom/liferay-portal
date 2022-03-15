@@ -14,8 +14,17 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.AggregateRating;
+import com.liferay.headless.delivery.dto.v1_0.ContentField;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
+import com.liferay.headless.delivery.dto.v1_0.CustomField;
+import com.liferay.headless.delivery.dto.v1_0.Field;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
+import com.liferay.headless.delivery.dto.v1_0.RelatedContent;
+import com.liferay.headless.delivery.dto.v1_0.RenderedContent;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
+import com.liferay.headless.delivery.dto.v1_0.StructuredContent.ViewableBy;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -54,7 +63,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1919,6 +1930,118 @@ public abstract class BaseStructuredContentResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("assetLibrary", "site", "structuredContentFolder");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return StructuredContent.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Block of actions allowed by the user making the request.",
+				"actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The structured content's average rating.", "aggregateRating",
+				true, false, AggregateRating.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The key of the asset library to which the structure content is scoped.",
+				"assetLibraryKey", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The list of languages the structured content has a translation for.",
+				"availableLanguages", true, false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The list of fields that store the structured content's information.",
+				"contentFields", false, false, ContentField[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the `ContentStructure`.", "contentStructureId",
+				false, true, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The structured content's creator.", "creator", true, false,
+				Creator.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of the custom fields associated with the structured content.",
+				"customFields", false, false, CustomField[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The structured content's creation date.", "dateCreated", true,
+				false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The last time any field of the structured content was changed.",
+				"dateModified", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The structured content's most recent publication date.",
+				"datePublished", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The structured content's description.", "description", false,
+				false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The localized structured content's descriptions.",
+				"description_i18n", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The structured content's external reference code.",
+				"externalReferenceCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A relative URL to the structured content's rendered content.",
+				"friendlyUrlPath", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The localized relative URLs to the structured content's rendered content.",
+				"friendlyUrlPath_i18n", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The structured content's ID.", "id", true, false, Long.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"An identifier, independent of the database, that can be used to reference the structured content.",
+				"key", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of keywords describing the structured content.",
+				"keywords", false, false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of comments the structured content has received.",
+				"numberOfComments", true, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The structured content's priority.", "priority", false, false,
+				Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of related contents to this structured content.",
+				"relatedContents", true, false, RelatedContent[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of rendered content, which results from using a template to process the content and return HTML.",
+				"renderedContents", true, false, RenderedContent[].class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the site to which this structured content is scoped.",
+				"siteId", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A flag that indicates whether the user making the requests is subscribed to this structured content.",
+				"subscribed", true, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The categories associated with this structured content.",
+				"taxonomyCategoryBriefs", true, false,
+				TaxonomyCategoryBrief[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only field that adds `TaxonomyCategory` instances to the structured content.",
+				"taxonomyCategoryIds", false, false, Long[].class, true),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The structured content's main title.", "title", false, true,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The localized structured content's main titles.", "title_i18n",
+				false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A valid external identifier to reference this structured content.",
+				"uuid", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only property that specifies the structured content's default permissions.",
+				"viewableBy", false, false, ViewableBy.class, true));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -1931,6 +2054,18 @@ public abstract class BaseStructuredContentResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList(
+			"assetLibrary", "contentStructure", "site",
+			"structuredContentFolder");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

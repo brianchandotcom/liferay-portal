@@ -14,7 +14,10 @@
 
 package com.liferay.data.engine.rest.internal.resource.v2_0;
 
+import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinitionFieldLink;
+import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
+import com.liferay.data.engine.rest.dto.v2_0.DataListView;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionFieldLinkResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -44,6 +47,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -130,6 +134,31 @@ public abstract class BaseDataDefinitionFieldLinkResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return DataDefinitionFieldLink.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dataDefinition", false, false, DataDefinition.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dataLayouts", false, false, DataLayout[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dataListViews", false, false, DataListView[].class,
+				false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -142,6 +171,16 @@ public abstract class BaseDataDefinitionFieldLinkResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("dataDefinition");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v2.0";
 	}
 
 	@Override

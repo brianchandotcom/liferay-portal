@@ -14,7 +14,13 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
+import com.liferay.headless.admin.user.dto.v1_0.CustomField;
+import com.liferay.headless.admin.user.dto.v1_0.OrganizationBrief;
+import com.liferay.headless.admin.user.dto.v1_0.RoleBrief;
+import com.liferay.headless.admin.user.dto.v1_0.SiteBrief;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.dto.v1_0.UserAccountContactInformation;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -44,7 +50,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1405,6 +1413,103 @@ public abstract class BaseUserAccountResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList(
+			"accountExternalReferenceCode", "account", "company");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return UserAccount.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of the user's account.", "accountBriefs", true, false,
+				AccountBrief[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The user's additional name (e.g., middle name).",
+				"additionalName", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The user's alias or screen name.", "alternateName", false,
+				false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The user's date of birth, in ISO 8601 format.", "birthDate",
+				false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "customFields", false, false, CustomField[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A relative URL to the user's dashboard.", "dashboardURL", true,
+				false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The creation date of the user's account.", "dateCreated", true,
+				false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The last time any field of the user's account was changed.",
+				"dateModified", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The user's main email address.", "emailAddress", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The optional external key of this user account.",
+				"externalReferenceCode", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The user's surname (last name).", "familyName", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The user's first name.", "givenName", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The user's title (e.g., Dr., Mr., Mrs, Ms., etc.).",
+				"honorificPrefix", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The user's suffix (e.g., II, Jr., PhD, etc.).",
+				"honorificSuffix", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The user's ID.", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A relative URL to the user's profile image.", "image", true,
+				false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The user's job title.", "jobTitle", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of keywords describing the user.", "keywords", true,
+				false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The last time the user logged in.", "lastLoginDate", true,
+				false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The user's full name.", "name", true, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of the user's organizations.", "organizationBriefs",
+				true, false, OrganizationBrief[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The user's password.", "password", false, false, String.class,
+				true),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A relative URL to the user's profile.", "profileURL", true,
+				false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of the user's roles.", "roleBriefs", true, false,
+				RoleBrief[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of the user's sites.", "siteBriefs", true, false,
+				SiteBrief[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The user's contact information.",
+				"userAccountContactInformation", false, false,
+				UserAccountContactInformation.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -1417,6 +1522,18 @@ public abstract class BaseUserAccountResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList(
+			"accountExternalReferenceCode", "account", "organization", "site",
+			"company");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountProduct;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Product;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.DiscountProductResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -44,6 +45,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -388,6 +390,39 @@ public abstract class BaseDiscountProductResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("discountExternalReferenceCode", "discount");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return DiscountProduct.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "discountExternalReferenceCode", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "discountId", false, true, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "discountProductId", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "product", true, false, Product.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productExternalReferenceCode", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productId", false, true, Long.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -400,6 +435,16 @@ public abstract class BaseDiscountProductResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("discountExternalReferenceCode", "discount");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v2.0";
 	}
 
 	@Override

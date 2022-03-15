@@ -15,6 +15,9 @@
 package com.liferay.headless.commerce.admin.account.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.account.dto.v1_0.Account;
+import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountAddress;
+import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountMember;
+import com.liferay.headless.commerce.admin.account.dto.v1_0.AccountOrganization;
 import com.liferay.headless.commerce.admin.account.dto.v1_0.User;
 import com.liferay.headless.commerce.admin.account.resource.v1_0.AccountResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
@@ -46,7 +49,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -605,6 +610,66 @@ public abstract class BaseAccountResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return Account.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "accountAddresses", false, false, AccountAddress[].class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "accountMembers", false, false, AccountMember[].class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "accountOrganizations", false, false,
+				AccountOrganization[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "active", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "customFields", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The account's creation date.", "dateCreated", true, false,
+				Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The account's most recent modification date.", "dateModified",
+				true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "defaultBillingAccountAddressId", false, false, Long.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "defaultShippingAccountAddressId", false, false, Long.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "emailAddresses", false, false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "externalReferenceCode", false, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "logoId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "logoURL", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "name", false, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "root", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "taxId", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "type", false, false, Integer.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -617,6 +682,16 @@ public abstract class BaseAccountResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

@@ -39,11 +39,15 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Histogram;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.HistogramMetric;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.HistogramMetric.Unit;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.HistogramMetricResource;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -108,10 +112,10 @@ public abstract class BaseHistogramMetricResourceImpl
 			Long processId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("dateEnd")
-			java.util.Date dateEnd,
+			Date dateEnd,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("dateStart")
-			java.util.Date dateStart,
+			Date dateStart,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.QueryParam("unit")
@@ -137,6 +141,29 @@ public abstract class BaseHistogramMetricResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return HistogramMetric.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "histograms", false, false, Histogram[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "unit", false, false, Unit.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "value", false, false, Double.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -149,6 +176,16 @@ public abstract class BaseHistogramMetricResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

@@ -44,6 +44,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -394,6 +395,33 @@ public abstract class BaseCartCommentResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("cart");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return CartComment.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "author", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "content", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "orderId", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "restricted", false, false, Boolean.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -406,6 +434,16 @@ public abstract class BaseCartCommentResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("cart");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

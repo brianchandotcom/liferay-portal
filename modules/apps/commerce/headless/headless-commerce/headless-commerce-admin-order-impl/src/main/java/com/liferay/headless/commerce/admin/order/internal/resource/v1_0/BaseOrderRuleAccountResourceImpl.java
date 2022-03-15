@@ -14,6 +14,7 @@
 
 package com.liferay.headless.commerce.admin.order.internal.resource.v1_0;
 
+import com.liferay.headless.commerce.admin.order.dto.v1_0.Account;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderRuleAccount;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderRuleAccountResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
@@ -44,6 +45,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -381,6 +383,39 @@ public abstract class BaseOrderRuleAccountResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("orderRuleExternalReferenceCode", "orderRule");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return OrderRuleAccount.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "account", true, false, Account.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "accountExternalReferenceCode", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "accountId", false, true, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "orderRuleAccountId", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "orderRuleExternalReferenceCode", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "orderRuleId", false, true, Long.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -393,6 +428,16 @@ public abstract class BaseOrderRuleAccountResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("orderRuleExternalReferenceCode", "orderRule");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

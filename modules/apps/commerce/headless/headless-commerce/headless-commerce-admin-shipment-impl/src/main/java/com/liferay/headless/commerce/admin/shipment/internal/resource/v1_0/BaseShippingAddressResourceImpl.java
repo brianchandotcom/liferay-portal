@@ -44,6 +44,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -219,6 +220,51 @@ public abstract class BaseShippingAddressResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return ShippingAddress.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "city", false, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "countryISOCode", false, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "description", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "externalReferenceCode", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "latitude", false, false, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "longitude", false, false, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "name", false, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "phoneNumber", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "regionISOCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "street1", false, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "street2", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "street3", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "zip", false, false, String.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -231,6 +277,16 @@ public abstract class BaseShippingAddressResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

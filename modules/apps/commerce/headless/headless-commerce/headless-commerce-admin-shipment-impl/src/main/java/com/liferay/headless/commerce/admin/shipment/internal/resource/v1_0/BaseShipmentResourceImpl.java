@@ -15,6 +15,9 @@
 package com.liferay.headless.commerce.admin.shipment.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Shipment;
+import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShipmentItem;
+import com.liferay.headless.commerce.admin.shipment.dto.v1_0.ShippingAddress;
+import com.liferay.headless.commerce.admin.shipment.dto.v1_0.Status;
 import com.liferay.headless.commerce.admin.shipment.resource.v1_0.ShipmentResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -44,7 +47,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -730,6 +735,60 @@ public abstract class BaseShipmentResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return Shipment.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "accountId", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "carrier", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "createDate", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "expectedDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "externalReferenceCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "modifiedDate", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "orderId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shipmentItems", false, false, ShipmentItem[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingAddress", false, false, ShippingAddress.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingAddressId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingMethodId", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingOptionName", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "status", true, false, Status.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "trackingNumber", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "userName", true, false, String.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -742,6 +801,16 @@ public abstract class BaseShipmentResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

@@ -14,6 +14,8 @@
 
 package com.liferay.headless.form.internal.resource.v1_0;
 
+import com.liferay.headless.form.dto.v1_0.Creator;
+import com.liferay.headless.form.dto.v1_0.FormFieldValue;
 import com.liferay.headless.form.dto.v1_0.FormRecord;
 import com.liferay.headless.form.resource.v1_0.FormRecordResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
@@ -44,7 +46,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -368,6 +372,40 @@ public abstract class BaseFormRecordResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("form");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return FormRecord.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "creator", false, false, Creator.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dateCreated", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dateModified", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "datePublished", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "draft", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "formFieldValues", false, false, FormFieldValue[].class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "formId", false, false, Long.class, true),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", true, false, Long.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -380,6 +418,16 @@ public abstract class BaseFormRecordResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("form");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

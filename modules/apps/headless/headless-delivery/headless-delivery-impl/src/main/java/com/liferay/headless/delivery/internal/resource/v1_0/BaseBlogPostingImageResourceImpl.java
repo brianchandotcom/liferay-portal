@@ -15,6 +15,8 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage;
+import com.liferay.headless.delivery.dto.v1_0.BlogPostingImage.ViewableBy;
+import com.liferay.headless.delivery.dto.v1_0.Field;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingImageResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -45,6 +47,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -380,6 +383,46 @@ public abstract class BaseBlogPostingImageResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return BlogPostingImage.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The image's relative URL.", "contentUrl", true, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"optional field with the content of the image in Base64, can be embedded with nestedFields",
+				"contentValue", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The image's content type (e.g., `application/png`, etc.).",
+				"encodingFormat", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The image's file extension.", "fileExtension", true, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The image's ID.", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The image's size in bytes.", "sizeInBytes", true, false,
+				Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The image's title text.", "title", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only property that specifies the default permissions.",
+				"viewableBy", false, false, ViewableBy.class, true));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -392,6 +435,16 @@ public abstract class BaseBlogPostingImageResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("site");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

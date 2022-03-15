@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceModifierProductGroup;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.ProductGroup;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceModifierProductGroupResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -44,6 +45,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -415,6 +417,41 @@ public abstract class BasePriceModifierProductGroupResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList(
+			"priceModifierExternalReferenceCode", "priceModifier");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return PriceModifierProductGroup.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceModifierExternalReferenceCode", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceModifierId", false, true, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceModifierProductGroupId", true, false, Long.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productGroup", true, false, ProductGroup.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productGroupExternalReferenceCode", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productGroupId", false, true, Long.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -427,6 +464,17 @@ public abstract class BasePriceModifierProductGroupResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList(
+			"priceModifierExternalReferenceCode", "priceModifier");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v2.0";
 	}
 
 	@Override

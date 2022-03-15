@@ -14,6 +14,7 @@
 
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
+import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.headless.admin.user.dto.v1_0.Role;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
@@ -44,7 +45,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -436,6 +439,52 @@ public abstract class BaseRoleResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return Role.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Block of actions that the user can perform with the roles.",
+				"actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of languages for which the role has a translation.",
+				"availableLanguages", true, false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The role's creator.", "creator", true, false, Creator.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The role's creation date.", "dateCreated", true, false,
+				Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The last time any of the role's fields were changed.",
+				"dateModified", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The role's description.", "description", true, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "description_i18n", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The role's ID.", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The role's name.", "name", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "name_i18n", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The role's type.", "roleType", true, false, String.class,
+				false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -448,6 +497,16 @@ public abstract class BaseRoleResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

@@ -15,6 +15,8 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.Account;
+import com.liferay.headless.admin.user.dto.v1_0.Account.Type;
+import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -44,6 +46,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -929,6 +932,52 @@ public abstract class BaseAccountResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return Account.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The users linked to the account", "accountUserAccounts", false,
+				false, UserAccount[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Block of actions allowed by the user making the request.",
+				"actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "description", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The account's email domains. Users assigned to this account generally will have email addresses under one of these domains.",
+				"domains", false, false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The optional external key of this account.",
+				"externalReferenceCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "name", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of this account's associated users.",
+				"numberOfUsers", true, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "organizationIds", false, false, Long[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "parentAccountId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "status", false, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "type", false, false, Type.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -941,6 +990,16 @@ public abstract class BaseAccountResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("company", "organization");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

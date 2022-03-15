@@ -14,7 +14,25 @@
 
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Attachment;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Catalog;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Category;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.CustomField;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Diagram;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.MappedProduct;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Pin;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductAccountGroup;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductChannel;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductConfiguration;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductOption;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductShippingConfiguration;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSpecification;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductSubscriptionConfiguration;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.ProductTaxConfiguration;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.RelatedProduct;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Status;
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -44,7 +62,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -532,6 +552,131 @@ public abstract class BaseProductResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return Product.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "active", false, true, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "attachments", false, false, Attachment[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "catalog", true, false, Catalog.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "catalogId", false, true, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "categories", false, false, Category[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "configuration", false, false, ProductConfiguration.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "createDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "customFields", false, false, CustomField[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "defaultSku", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "description", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "diagram", false, false, Diagram.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "displayDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "expando", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "expirationDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "externalReferenceCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "images", false, false, Attachment[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "mappedProducts", false, false, MappedProduct[].class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "metaDescription", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "metaKeyword", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "metaTitle", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "modifiedDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "name", false, true, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "neverExpire", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "pins", false, false, Pin[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productAccountGroupFilter", false, false, Boolean.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productAccountGroups", false, false,
+				ProductAccountGroup[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productChannelFilter", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productChannels", false, false, ProductChannel[].class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productConfiguration", false, false,
+				ProductConfiguration.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productId", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productOptions", false, false, ProductOption[].class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productSpecifications", false, false,
+				ProductSpecification[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productStatus", true, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productType", false, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "productTypeI18n", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "relatedProducts", false, false, RelatedProduct[].class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingConfiguration", false, false,
+				ProductShippingConfiguration.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shortDescription", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "skuFormatted", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "skus", false, false, Sku[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "subscriptionConfiguration", false, false,
+				ProductSubscriptionConfiguration.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "tags", false, false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "taxConfiguration", false, false,
+				ProductTaxConfiguration.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "thumbnail", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "urls", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "workflowStatusInfo", true, false, Status.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -544,6 +689,16 @@ public abstract class BaseProductResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

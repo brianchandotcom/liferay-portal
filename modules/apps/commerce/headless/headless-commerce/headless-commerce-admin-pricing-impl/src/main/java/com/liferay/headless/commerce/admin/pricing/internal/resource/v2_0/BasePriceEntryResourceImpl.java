@@ -15,6 +15,9 @@
 package com.liferay.headless.commerce.admin.pricing.internal.resource.v2_0;
 
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceEntry;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Product;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Sku;
+import com.liferay.headless.commerce.admin.pricing.dto.v2_0.TierPrice;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.PriceEntryResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -44,7 +47,11 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -531,6 +538,76 @@ public abstract class BasePriceEntryResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("priceListExternalReferenceCode", "priceList");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return PriceEntry.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "active", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "bulkPricing", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "customFields", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "discountDiscovery", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "discountLevel1", false, false, BigDecimal.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "discountLevel2", false, false, BigDecimal.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "discountLevel3", false, false, BigDecimal.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "discountLevel4", false, false, BigDecimal.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "discountLevelsFormatted", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "displayDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "expirationDate", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "externalReferenceCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "hasTierPrice", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "neverExpire", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "price", false, true, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceEntryId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceFormatted", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceListExternalReferenceCode", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "priceListId", false, true, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "product", true, false, Product.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "sku", true, false, Sku.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "skuExternalReferenceCode", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "skuId", false, true, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "tierPrices", false, false, TierPrice[].class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -543,6 +620,16 @@ public abstract class BasePriceEntryResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("priceListExternalReferenceCode", "priceList");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v2.0";
 	}
 
 	@Override

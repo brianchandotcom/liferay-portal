@@ -14,7 +14,17 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.AggregateRating;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
+import com.liferay.headless.delivery.dto.v1_0.CustomField;
+import com.liferay.headless.delivery.dto.v1_0.Experience;
+import com.liferay.headless.delivery.dto.v1_0.Field;
+import com.liferay.headless.delivery.dto.v1_0.PageDefinition;
+import com.liferay.headless.delivery.dto.v1_0.PageSettings;
+import com.liferay.headless.delivery.dto.v1_0.RenderedPage;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
+import com.liferay.headless.delivery.dto.v1_0.SitePage.ViewableBy;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -45,7 +55,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -375,6 +387,91 @@ public abstract class BaseSitePageResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return SitePage.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Block of actions allowed by the user making the request.",
+				"actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The page's average rating.", "aggregateRating", true, false,
+				AggregateRating.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The list of languages the page has a translation for.",
+				"availableLanguages", true, false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The page's creator.", "creator", true, false, Creator.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Custom fields associated with the page.", "customFields",
+				false, false, CustomField[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The page's creation date.", "dateCreated", true, false,
+				Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The last time any field of the page was changed.",
+				"dateModified", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The page's most recent publication date.", "datePublished",
+				false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Experience of the page that it's being retrieved.",
+				"experience", false, false, Experience.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A relative URL to the page's rendered content.",
+				"friendlyUrlPath", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The localized relative URLs to the page's rendered content.",
+				"friendlyUrlPath_i18n", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of keywords describing the page.", "keywords", false,
+				false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Optional field with the structure of all the elements of the page. Can be embedded with nestedFields when retrieving the collection of site pages. When retrieving a single site page, it will automatically be included.",
+				"pageDefinition", false, false, PageDefinition.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Settings of the page, such as SEO or OpenGraph.",
+				"pageSettings", false, false, PageSettings.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The type of the page.", "pageType", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Metadata of the page such as it's master page and template.",
+				"renderedPage", false, false, RenderedPage.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the site to which this page is scoped.", "siteId",
+				true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The categories associated with this page.",
+				"taxonomyCategoryBriefs", true, false,
+				TaxonomyCategoryBrief[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only field that adds `TaxonomyCategory` instances to the page.",
+				"taxonomyCategoryIds", false, false, Long[].class, true),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The page's title.", "title", false, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The localized page's titles.", "title_i18n", false, false,
+				Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A valid external identifier to reference this page.", "uuid",
+				true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "viewableBy", false, false, ViewableBy.class, true));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -387,6 +484,16 @@ public abstract class BaseSitePageResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("site", "site,friendlyUrlPath");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

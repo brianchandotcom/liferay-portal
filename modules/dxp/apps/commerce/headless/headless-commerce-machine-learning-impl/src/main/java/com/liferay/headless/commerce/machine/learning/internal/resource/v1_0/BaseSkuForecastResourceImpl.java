@@ -44,7 +44,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -117,7 +119,7 @@ public abstract class BaseSkuForecastResourceImpl
 			Integer forecastLength,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("forecastStartDate")
-			java.util.Date forecastStartDate,
+			Date forecastStartDate,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("historyLength")
 			Integer historyLength,
@@ -146,6 +148,37 @@ public abstract class BaseSkuForecastResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return SkuForecast.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actual", false, false, Float.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "forecast", false, false, Float.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "forecastLowerBound", false, false, Float.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "forecastUpperBound", false, false, Float.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "sku", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "timestamp", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "unit", false, false, String.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -158,6 +191,16 @@ public abstract class BaseSkuForecastResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

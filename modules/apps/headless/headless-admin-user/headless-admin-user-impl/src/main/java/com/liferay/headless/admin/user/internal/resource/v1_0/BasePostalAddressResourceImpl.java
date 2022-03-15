@@ -44,6 +44,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -189,6 +190,54 @@ public abstract class BasePostalAddressResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return PostalAddress.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The address's country (e.g., USA).", "addressCountry", false,
+				false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "addressCountry_i18n", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The address's locality (e.g., city).", "addressLocality",
+				false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The address's region (e.g., state).", "addressRegion", false,
+				false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The address's type.", "addressType", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The address's ID.", "id", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The address's postal code (e.g., zip code).", "postalCode",
+				false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A flag that identifies whether this is the main address of the user/organization.",
+				"primary", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The street address's first line (e.g., 1600 Amphitheatre Pkwy.).",
+				"streetAddressLine1", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The street address's second line.", "streetAddressLine2",
+				false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The street address's third line.", "streetAddressLine3", false,
+				false, String.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -201,6 +250,16 @@ public abstract class BasePostalAddressResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("organization", "userAccount");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

@@ -39,12 +39,19 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Assignee;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Creator;
 import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Instance.SLAStatus;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.SLAResult;
+import com.liferay.portal.workflow.metrics.rest.dto.v1_0.Transition;
 import com.liferay.portal.workflow.metrics.rest.resource.v1_0.InstanceResource;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -142,10 +149,10 @@ public abstract class BaseInstanceResourceImpl
 			Long[] classPKs,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("dateEnd")
-			java.util.Date dateEnd,
+			Date dateEnd,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("dateStart")
-			java.util.Date dateStart,
+			Date dateStart,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("slaStatuses")
 			String[] slaStatuses,
@@ -426,6 +433,65 @@ public abstract class BaseInstanceResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("process");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return Instance.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "active", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "assetTitle", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "assetTitle_i18n", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "assetType", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "assetType_i18n", false, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "assignees", true, false, Assignee[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "className", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "classPK", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "completed", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "creator", false, false, Creator.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dateCompletion", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dateCreated", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "dateModified", false, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "duration", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "id", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "processId", false, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "processVersion", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "slaResults", true, false, SLAResult[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "slaStatus", true, false, SLAStatus.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "taskNames", true, false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "transitions", false, false, Transition[].class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -441,6 +507,16 @@ public abstract class BaseInstanceResourceImpl
 	}
 
 	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("process");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
+	}
+
+	@Override
 	public Page<Instance> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
@@ -450,8 +526,8 @@ public abstract class BaseInstanceResourceImpl
 			Long.parseLong((String)parameters.get("processId")),
 			(Long[])parameters.get("assigneeIds"),
 			(Long[])parameters.get("classPKs"),
-			new java.util.Date((String)parameters.get("dateEnd")),
-			new java.util.Date((String)parameters.get("dateStart")),
+			new Date((String)parameters.get("dateEnd")),
+			new Date((String)parameters.get("dateStart")),
 			(String[])parameters.get("slaStatuses"),
 			(String[])parameters.get("statuses"),
 			(String[])parameters.get("taskNames"), pagination, sorts);

@@ -15,6 +15,7 @@
 package com.liferay.headless.commerce.admin.channel.internal.resource.v1_0;
 
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.PaymentMethodGroupRelTerm;
+import com.liferay.headless.commerce.admin.channel.dto.v1_0.Term;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.PaymentMethodGroupRelTermResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -44,6 +45,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -278,6 +280,37 @@ public abstract class BasePaymentMethodGroupRelTermResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return PaymentMethodGroupRelTerm.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "paymentMethodGroupRelId", false, true, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "paymentMethodGroupRelTermId", true, false, Long.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "term", true, false, Term.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "termExternalReferenceCode", false, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "termId", false, true, Long.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -290,6 +323,16 @@ public abstract class BasePaymentMethodGroupRelTermResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

@@ -14,7 +14,11 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.Creator;
+import com.liferay.headless.delivery.dto.v1_0.CustomField;
+import com.liferay.headless.delivery.dto.v1_0.Field;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder;
+import com.liferay.headless.delivery.dto.v1_0.StructuredContentFolder.ViewableBy;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -52,7 +56,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1358,6 +1364,69 @@ public abstract class BaseStructuredContentFolderResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("assetLibrary", "site", "structuredContentFolder");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return StructuredContentFolder.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Block of actions allowed by the user making the request.",
+				"actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The key of the asset library to which the folder is scoped.",
+				"assetLibraryKey", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The folder's creator.", "creator", true, false, Creator.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of the custom fields associated with the folder.",
+				"customFields", false, false, CustomField[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The date the folder was created.", "dateCreated", true, false,
+				Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The last time any of the folder's fields changed.",
+				"dateModified", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The folder's description.", "description", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The folder's ID.", "id", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The folder's name.", "name", false, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of structured content folders inside this folder.",
+				"numberOfStructuredContentFolders", true, false, Integer.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of structured content objects inside this folder.",
+				"numberOfStructuredContents", true, false, Integer.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the folder's parent, if it exists.",
+				"parentStructuredContentFolderId", false, false, Long.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the site to which this folder is scoped.", "siteId",
+				true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A flag that indicates whether the user making the requests is subscribed to this folder.",
+				"subscribed", true, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only property that specifies the folder's default permissions.",
+				"viewableBy", false, false, ViewableBy.class, true));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -1370,6 +1439,16 @@ public abstract class BaseStructuredContentFolderResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("assetLibrary", "site", "structuredContentFolder");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

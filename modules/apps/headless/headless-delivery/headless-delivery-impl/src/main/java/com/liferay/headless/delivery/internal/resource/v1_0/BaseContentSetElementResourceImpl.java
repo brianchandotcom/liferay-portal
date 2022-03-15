@@ -15,6 +15,7 @@
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
 import com.liferay.headless.delivery.dto.v1_0.ContentSetElement;
+import com.liferay.headless.delivery.dto.v1_0.Field;
 import com.liferay.headless.delivery.resource.v1_0.ContentSetElementResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -44,6 +45,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -340,6 +342,38 @@ public abstract class BaseContentSetElementResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return ContentSetElement.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The content's fields.", "content", true, false, Object.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The content set element's type.", "contentType", true, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The content set element's ID.", "id", true, false, Long.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The content's title.", "title", true, false, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The localized content's titles.", "title_i18n", true, false,
+				Map.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -352,6 +386,18 @@ public abstract class BaseContentSetElementResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList(
+			"assetLibrary,key", "assetLibrary,uuid", "contentSet", "site,key",
+			"site,uuid");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.content.internal.resource.v1_0;
 
 import com.liferay.headless.admin.content.resource.v1_0.StructuredContentResource;
+import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -102,24 +103,22 @@ public abstract class BaseStructuredContentResourceImpl
 	@javax.ws.rs.Path("/sites/{siteId}/structured-contents")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<com.liferay.headless.delivery.dto.v1_0.StructuredContent>
-			getSiteStructuredContentsPage(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("siteId")
-				Long siteId,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.ws.rs.QueryParam("flatten")
-				Boolean flatten,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.ws.rs.QueryParam("search")
-				String search,
-				@javax.ws.rs.core.Context
-					com.liferay.portal.vulcan.aggregation.Aggregation
-						aggregation,
-				@javax.ws.rs.core.Context Filter filter,
-				@javax.ws.rs.core.Context Pagination pagination,
-				@javax.ws.rs.core.Context Sort[] sorts)
+	public Page<StructuredContent> getSiteStructuredContentsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("siteId")
+			Long siteId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("flatten")
+			Boolean flatten,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("search")
+			String search,
+			@javax.ws.rs.core.Context
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			@javax.ws.rs.core.Context Filter filter,
+			@javax.ws.rs.core.Context Pagination pagination,
+			@javax.ws.rs.core.Context Sort[] sorts)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -151,17 +150,15 @@ public abstract class BaseStructuredContentResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public com.liferay.headless.delivery.dto.v1_0.StructuredContent
-			postSiteStructuredContentDraft(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("siteId")
-				Long siteId,
-				com.liferay.headless.delivery.dto.v1_0.StructuredContent
-					structuredContent)
+	public StructuredContent postSiteStructuredContentDraft(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("siteId")
+			Long siteId,
+			StructuredContent structuredContent)
 		throws Exception {
 
-		return new com.liferay.headless.delivery.dto.v1_0.StructuredContent();
+		return new StructuredContent();
 	}
 
 	/**
@@ -238,19 +235,18 @@ public abstract class BaseStructuredContentResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public com.liferay.headless.delivery.dto.v1_0.StructuredContent
-			getStructuredContentByVersion(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("structuredContentId")
-				Long structuredContentId,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("version")
-				Double version)
+	public StructuredContent getStructuredContentByVersion(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("structuredContentId")
+			Long structuredContentId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("version")
+			Double version)
 		throws Exception {
 
-		return new com.liferay.headless.delivery.dto.v1_0.StructuredContent();
+		return new StructuredContent();
 	}
 
 	/**
@@ -278,12 +274,11 @@ public abstract class BaseStructuredContentResourceImpl
 	@javax.ws.rs.Path("/structured-contents/{structuredContentId}/versions")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<com.liferay.headless.delivery.dto.v1_0.StructuredContent>
-			getStructuredContentsVersionsPage(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@javax.validation.constraints.NotNull
-				@javax.ws.rs.PathParam("structuredContentId")
-				Long structuredContentId)
+	public Page<StructuredContent> getStructuredContentsVersionsPage(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("structuredContentId")
+			Long structuredContentId)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

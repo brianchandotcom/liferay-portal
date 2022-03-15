@@ -14,6 +14,9 @@
 
 package com.liferay.headless.commerce.punchout.internal.resource.v1_0;
 
+import com.liferay.headless.commerce.punchout.dto.v1_0.Cart;
+import com.liferay.headless.commerce.punchout.dto.v1_0.Group;
+import com.liferay.headless.commerce.punchout.dto.v1_0.Organization;
 import com.liferay.headless.commerce.punchout.dto.v1_0.PunchOutSession;
 import com.liferay.headless.commerce.punchout.dto.v1_0.User;
 import com.liferay.headless.commerce.punchout.resource.v1_0.PunchOutSessionResource;
@@ -45,6 +48,7 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -109,6 +113,41 @@ public abstract class BasePunchOutSessionResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("company");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return PunchOutSession.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "buyerAccountReferenceCode", false, true, String.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "buyerGroup", false, true, Group.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "buyerOrganization", false, false, Organization.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "buyerUser", false, true, User.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "cart", false, true, Cart.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "punchOutReturnURL", false, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "punchOutSessionType", false, true, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "punchOutStartURL", false, false, String.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -121,6 +160,16 @@ public abstract class BasePunchOutSessionResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

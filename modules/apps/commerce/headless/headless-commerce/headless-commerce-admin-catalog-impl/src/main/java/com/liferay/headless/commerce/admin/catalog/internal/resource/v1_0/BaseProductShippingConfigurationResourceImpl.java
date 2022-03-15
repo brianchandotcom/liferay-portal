@@ -44,6 +44,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.math.BigDecimal;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -233,6 +236,40 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return ProductShippingConfiguration.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "depth", false, false, BigDecimal.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "freeShipping", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "height", false, false, BigDecimal.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippable", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingExtraPrice", false, false, BigDecimal.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "shippingSeparately", false, false, Boolean.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "weight", false, false, BigDecimal.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "width", false, false, BigDecimal.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -245,6 +282,16 @@ public abstract class BaseProductShippingConfigurationResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

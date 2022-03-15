@@ -14,8 +14,17 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.delivery.dto.v1_0.AggregateRating;
 import com.liferay.headless.delivery.dto.v1_0.BlogPosting;
+import com.liferay.headless.delivery.dto.v1_0.BlogPosting.ViewableBy;
+import com.liferay.headless.delivery.dto.v1_0.Creator;
+import com.liferay.headless.delivery.dto.v1_0.CustomField;
+import com.liferay.headless.delivery.dto.v1_0.Field;
+import com.liferay.headless.delivery.dto.v1_0.Image;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
+import com.liferay.headless.delivery.dto.v1_0.RelatedContent;
+import com.liferay.headless.delivery.dto.v1_0.RenderedContent;
+import com.liferay.headless.delivery.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.delivery.resource.v1_0.BlogPostingResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -54,7 +63,9 @@ import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1156,6 +1167,97 @@ public abstract class BaseBlogPostingResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("site");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return BlogPosting.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"Block of actions allowed by the user making the request.",
+				"actions", true, false, Map.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The blog post's average rating.", "aggregateRating", true,
+				false, AggregateRating.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The blog post's subtitle.", "alternativeHeadline", false,
+				false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The blog post's body (content).", "articleBody", false, true,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The blog post's author.", "creator", true, false,
+				Creator.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of the custom fields associated with the blog post.",
+				"customFields", false, false, CustomField[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The blog post's creation date.", "dateCreated", true, false,
+				Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The blog post's most recent modification date.",
+				"dateModified", true, false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The blog post's publication date.", "datePublished", false,
+				false, Date.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The blog post's description.", "description", false, false,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The blog post's media format (e.g., HTML, BBCode, etc.).",
+				"encodingFormat", true, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The blog post's external reference code.",
+				"externalReferenceCode", false, false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The blog post's relative URL.", "friendlyUrlPath", false,
+				false, String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The blog post's main title.", "headline", false, true,
+				String.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The blog post's identifier.", "id", true, false, Long.class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The blog post's cover image.", "image", false, false,
+				Image.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of keywords describing the blog post.", "keywords",
+				false, false, String[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The number of comments this blog post has received.",
+				"numberOfComments", true, false, Integer.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of related contents to this blog post.",
+				"relatedContents", true, false, RelatedContent[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A list of rendered blogs posts, which results from using a display page to process the blogs post and return HTML.",
+				"renderedContents", true, false, RenderedContent[].class,
+				false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The ID of the site to which this blog post is scoped.",
+				"siteId", true, false, Long.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"The categories associated with this blog post.",
+				"taxonomyCategoryBriefs", true, false,
+				TaxonomyCategoryBrief[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only field that adds `TaxonomyCategory` instances to the blog post.",
+				"taxonomyCategoryIds", false, false, Long[].class, true),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"A write-only property that specifies the default permissions.",
+				"viewableBy", false, false, ViewableBy.class, true));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -1168,6 +1270,16 @@ public abstract class BaseBlogPostingResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList("site");
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

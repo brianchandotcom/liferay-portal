@@ -40,10 +40,12 @@ import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 import com.liferay.segments.asah.rest.dto.v1_0.ExperimentRun;
+import com.liferay.segments.asah.rest.dto.v1_0.ExperimentVariant;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentRunResource;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -117,6 +119,30 @@ public abstract class BaseExperimentRunResourceImpl
 	}
 
 	@Override
+	public List<String> getCreateEntityScopes() {
+		return Arrays.asList("experiment");
+	}
+
+	@Override
+	public String getEntityClassName() {
+		return ExperimentRun.class.getName();
+	}
+
+	@Override
+	public List<com.liferay.portal.vulcan.batch.engine.Field>
+		getEntityFields() {
+
+		return Arrays.asList(
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "confidenceLevel", false, true, Double.class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "experimentVariants", false, true,
+				ExperimentVariant[].class, false),
+			com.liferay.portal.vulcan.batch.engine.Field.of(
+				"", "status", true, false, String.class, false));
+	}
+
+	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception {
 
@@ -129,6 +155,16 @@ public abstract class BaseExperimentRunResourceImpl
 		throws Exception {
 
 		return null;
+	}
+
+	@Override
+	public List<String> getReadEntityScopes() {
+		return Arrays.asList();
+	}
+
+	@Override
+	public String getVersion() {
+		return "v1.0";
 	}
 
 	@Override

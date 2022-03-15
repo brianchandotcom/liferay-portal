@@ -120,7 +120,7 @@ public class ProgressBarTag extends BaseContainerTag {
 
 			iconTag.doTag(pageContext);
 
-			jspWriter.write("</div");
+			jspWriter.write("</div>");
 		}
 		else {
 			jspWriter.write(String.valueOf(_value));

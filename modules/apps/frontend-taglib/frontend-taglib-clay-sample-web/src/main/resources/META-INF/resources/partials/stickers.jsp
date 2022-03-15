@@ -96,8 +96,8 @@
 				label="PDF"
 				position="bottom-left"
 			/>
-		</clay:col>
-	</div>
+		</div>
+	</clay:col>
 
 	<clay:col
 		md="2"

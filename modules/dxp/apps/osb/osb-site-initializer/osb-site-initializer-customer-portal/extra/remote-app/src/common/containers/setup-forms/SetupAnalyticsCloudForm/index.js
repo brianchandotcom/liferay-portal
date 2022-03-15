@@ -8,30 +8,92 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-
-import {useQuery} from '@apollo/client';
+import {useLazyQuery, useQuery} from '@apollo/client';
 import ClayForm from '@clayui/form';
 import {FieldArray, Formik} from 'formik';
-import {useEffect, useMemo} from 'react';
-import {getAnalyticsCloudPageInfo} from '../../../../common/services/liferay/graphql/queries';
+import {useEffect, useMemo, useState} from 'react';
+import client from '../../../../apolloClient';
+import {
+	addAnalyticsCloudWorkspace,
+	getAnalyticsCloudPageInfo,
+} from '../../../../common/services/liferay/graphql/queries';
 import {
 	isLowercaseAndNumbers,
+	isValidEmail,
+	isValidEmailDomain,
 	isValidFriendlyURL,
 	maxLength,
 } from '../../../../common/utils/validations.form';
 import {Button, Input, Select} from '../../../components';
+import useDebounce from '../../../hooks/useDebounce';
+import {getBannedEmailDomains} from '../../../services/liferay/graphql/queries';
 import getInitialAnalyticsInvite from '../../../utils/getInitialAnalyticsInvite';
 import Layout from '../Layout';
 
 import IncidentReportInput from './IncidentReportInput';
 
 const SetupAnalyticsCloudPage = ({
+	errors,
 	handlePage,
 	leftButton,
 	project,
 	setFieldValue,
+	touched,
 	values,
 }) => {
+	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
+
+	const debouncedOwnerEmail = useDebounce(
+		values?.activations?.ownerEmailAddress,
+		500
+	);
+	const [bannedOwnerEmailDomain, setBannedOwnerEmailDomain] = useState(
+		debouncedOwnerEmail
+	);
+	const [fetchBannedDomain, {data: dataBannedDomains}] = useLazyQuery(
+		getBannedEmailDomains
+	);
+	const debouncedAllowedDomains = useDebounce(
+		values?.activations?.allowedEmailDomains,
+		500
+	);
+	const [bannedAllowedDomains, setBannedAllowedDomains] = useState(
+		debouncedAllowedDomains
+	);
+
+	const bannedDomainsItems = dataBannedDomains?.c?.bannedEmailDomains?.items;
+
+	useEffect(() => {
+		const [, emailDomain] = debouncedOwnerEmail.split('@');
+		const [, bannedEmailDomain] = debouncedAllowedDomains.split('@');
+
+		if (emailDomain) {
+			fetchBannedDomain({
+				variables: {
+					filter: `domain eq '${emailDomain}'`,
+				},
+			});
+
+			if (bannedDomainsItems?.length) {
+				setBannedOwnerEmailDomain(bannedDomainsItems[0].domain);
+			}
+		}
+
+		if (bannedEmailDomain) {
+			fetchBannedDomain({
+				variables: {
+					filter: `domain eq '${bannedEmailDomain}'`,
+				},
+			});
+
+			if (bannedDomainsItems?.length) {
+				setBannedAllowedDomains(bannedDomainsItems[0].domain);
+			}
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [bannedDomainsItems, debouncedAllowedDomains, debouncedOwnerEmail]);
+
 	const {data} = useQuery(getAnalyticsCloudPageInfo, {
 		variables: {
 			accountSubscriptionsFilter: `(accountKey eq '${project?.accountKey}') and (hasDisasterDataCenterRegion eq true)`,
@@ -67,6 +129,33 @@ const SetupAnalyticsCloudPage = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [analyticsDataCenterLocations, hasDisasterRecovery]);
 
+	useEffect(() => {
+		const hasTouched = !Object.keys(touched).length;
+		const hasError = Object.keys(errors).length;
+
+		setBaseButtonDisabled(hasTouched || hasError);
+	}, [touched, errors]);
+
+	const sendEmail = async () => {
+		const analyticsCloud = values?.activations;
+
+		await client.mutate({
+			mutation: addAnalyticsCloudWorkspace,
+			variables: {
+				analyticsCloudWorkspace: {
+					accountKey: project.accountKey,
+					dataCenterLocation: analyticsCloud.dataCenterLocation,
+					incidentReportContact: analyticsCloud.incidentReportContact,
+					ownerEmailAddress: analyticsCloud.ownerEmailAddress,
+					workspaceName: analyticsCloud.workspaceName,
+				},
+				scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
+			},
+		});
+
+		handlePage();
+	};
+
 	return (
 		<Layout
 			className="pt-1 px-3"
@@ -80,7 +169,15 @@ const SetupAnalyticsCloudPage = ({
 						{leftButton}
 					</Button>
 				),
-				middleButton: <Button displayType="primary">Submit</Button>,
+				middleButton: (
+					<Button
+						disabled={baseButtonDisabled}
+						displayType="primary"
+						onClick={sendEmail}
+					>
+						Submit
+					</Button>
+				),
 			}}
 			headerProps={{
 				helper:
@@ -96,10 +193,14 @@ const SetupAnalyticsCloudPage = ({
 							groupStyle="pb-1"
 							helper="This user will create and manage the Analytics Cloud Workspace and must have a liferay.com account. The owner Email can be updated vis Support ticket if needed."
 							label="Owner Email"
-							name="activations.ownerEmail"
+							name="activations.ownerEmailAddress"
 							placeholder="user@company.com"
 							required
 							type="email"
+							validations={[
+								(value) =>
+									isValidEmail(value, bannedOwnerEmailDomain),
+							]}
 						/>
 
 						<Input
@@ -153,6 +254,13 @@ const SetupAnalyticsCloudPage = ({
 							name="activations.allowedEmailDomains"
 							placeholder="@mycompany.com"
 							type="email"
+							validations={[
+								(value) =>
+									isValidEmailDomain(
+										value,
+										bannedAllowedDomains
+									),
+							]}
 						/>
 
 						<Input
@@ -181,6 +289,8 @@ const SetupAnalyticsCloudPage = ({
 
 			<Button
 				className="btn-outline-primary ml-3 my-2 rounded-xs"
+				disabled={baseButtonDisabled}
+				onClick={() => setBaseButtonDisabled(true)}
 				prependIcon="plus"
 				small
 			>
@@ -199,7 +309,7 @@ const SetupAnalyticsCloudForm = (props) => {
 					dataCenterLocation: '',
 					disasterDataCenterLocation: '',
 					incidentReportContact: [getInitialAnalyticsInvite()],
-					ownerEmail: '',
+					ownerEmailAddress: '',
 					timeZone: '',
 					workspaceName: '',
 					workspaceURL: '',

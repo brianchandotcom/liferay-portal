@@ -156,6 +156,7 @@ definition {
 	@priority = "4"
 	test EnabledOpenIDConnectOnSystemLevel {
 		property dummy.socket.proxy.disabled = "true";
+		property portal.ssl.enabled = "true";
 		property test.name.skip.portal.instance = "OpenIDConnect#EnabledOpenIDConnectOnSystemLevel";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.2");

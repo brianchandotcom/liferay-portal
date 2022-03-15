@@ -407,7 +407,16 @@ definition {
 	}
 
 	macro configureDynamicAssetSelectionPG {
-		AssetPublisherPortlet.gotoConfigurationPG(portletName = "${portletName}");
+		if (IsElementPresent(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST_LINK")) {
+			AssertClick(
+				locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST_LINK",
+				value1 = "Select a collection to make it visible.");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		}
+		else {
+			AssetPublisherPortlet.gotoConfigurationPG(portletName = "${portletName}");
+		}
 
 		Navigator.gotoNavTab(navTab = "Asset Selection");
 

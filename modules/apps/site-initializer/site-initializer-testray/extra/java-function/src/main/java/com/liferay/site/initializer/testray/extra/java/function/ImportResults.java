@@ -417,6 +417,7 @@ public class ImportResults {
 
 		Map<String, String> parametersMap = new HashMap<>();
 
+		parametersMap.put("fields", "id");
 		parametersMap.put("filter", "name eq '" + entityName + "'");
 
 		JSONObject responseJSONObject = HttpUtil.invoke(

@@ -134,16 +134,17 @@ definition {
 		}
 		else if ("${displayTemplate}" == "Select Box") {
 			for (var availableLanguage : list "${availableLanguageList}") {
-				AssertTextEquals(
-					key_language = "${availableLanguage}",
-					locator1 = "Language#LANGUAGE_MENU_SELECT",
-					value1 = "${availableLanguage}");
+				AssertElementPresent(
+					locator1 = "Select#SELECT_VALUE_ID",
+					option = "${availableLanguage}",
+					selectFieldId = "LanguagePortlet");
 			}
 
 			for (var unavailableLanguage : list "${unavailableLanguageList}") {
 				AssertElementNotPresent(
-					key_language = "${unavailableLanguage}",
-					locator1 = "Language#LANGUAGE_MENU_SELECT");
+					locator1 = "Select#SELECT_VALUE_ID",
+					option = "${unavailableLanguage}",
+					selectFieldId = "LanguagePortlet");
 			}
 		}
 		else if ("${displayTemplate}" == "Short Text") {

@@ -45,6 +45,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.InputStream;
 
@@ -149,6 +150,12 @@ public class UpdateItemConfigMVCActionCommandTest {
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 
 		mockActionRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		mockActionRequest.setParameter(
+			"segmentsExperienceId",
+			String.valueOf(
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid())));
 
 		return mockActionRequest;
 	}
@@ -266,5 +273,8 @@ public class UpdateItemConfigMVCActionCommandTest {
 	private MVCActionCommand _mvcActionCommand;
 
 	private ObjectMapper _objectMapper;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

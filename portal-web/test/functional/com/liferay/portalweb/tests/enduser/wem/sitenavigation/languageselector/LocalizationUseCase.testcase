@@ -80,7 +80,7 @@ definition {
 	test DisplayTemplatesViaLanguageSelector {
 		property portal.upstream = "true";
 
-		task ("View available languages are shwon with Icon Menu template") {
+		task ("View available languages are shown with Icon Menu template") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -106,7 +106,7 @@ definition {
 			IFrame.closeFrame();
 		}
 
-		task ("View available languages are shwon with Icon template") {
+		task ("View available languages are shown with Icon template") {
 			LanguagePortlet.viewLanguages(
 				availableIconList = "en-us,ar-sa,ca-es,zh-cn,nl-nl,fi-fi,fr-fr,de-de,hu-hu,ja-jp,pt-br,es-es,sv-se",
 				displayTemplate = "Icon");
@@ -126,7 +126,7 @@ definition {
 			IFrame.closeFrame();
 		}
 
-		task ("View available languages are shwon with Long Text template") {
+		task ("View available languages are shown with Long Text template") {
 			LanguagePortlet.viewLanguages(
 				availableLanguageList = "العربية,català,中文,nederlands,suomi,français,deutsch,magyar,日本語,português,español,svenska",
 				displayTemplate = "Long Text");
@@ -146,7 +146,7 @@ definition {
 			IFrame.closeFrame();
 		}
 
-		task ("View available languages are shwon with Select Box template") {
+		task ("View available languages are shown with Select Box template") {
 			LanguagePortlet.viewLanguages(
 				availableLanguageList = "english,العربية,català,中文,nederlands,suomi,français,deutsch,magyar,日本語,português,español,svenska",
 				displayTemplate = "Select Box");
@@ -166,7 +166,7 @@ definition {
 			IFrame.closeFrame();
 		}
 
-		task ("View available languages are shwon with Short Text template") {
+		task ("View available languages are shown with Short Text template") {
 			LanguagePortlet.viewLanguages(
 				availableLanguageList = "ar,ca,中文,nl,fi,fr,de,hu,日本語,pt,es,sv",
 				displayTemplate = "Short Text");
@@ -188,7 +188,7 @@ definition {
 			PortalSettings.configureCurrentLanguagesCP(currentPortalLanguages = "English (United States),Chinese (China),French (France)");
 		}
 
-		task ("View available languages are shwon in Language Selector") {
+		task ("View available languages are shown in Language Selector") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -201,7 +201,7 @@ definition {
 				unavailableLanguageList = "العربية-السعودية,català-Espanya,nederlands-Nederland,suomi-Suomi,deutsch-Deutschland,magyar-Magyarország,日本語-日本,português-Brasil,español-España,svenska-Sverige");
 		}
 
-		task ("View Chinese, French and English are show as current language in Language Selector") {
+		task ("View Chinese, French and English are shown as current language in Language Selector") {
 			Portlet.gotoPortletOptions(
 				portletName = "Language Selector",
 				portletOption = "Configuration");
@@ -226,7 +226,7 @@ definition {
 				displaySettings = "Display Settings");
 		}
 
-		task ("View available languages are shwon in Language Selector") {
+		task ("View available languages are shown in Language Selector") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
 				siteName = "Test Site Name");
@@ -239,7 +239,7 @@ definition {
 				unavailableLanguageList = "العربية-السعودية,català-Espanya,nederlands-Nederland,suomi-Suomi,magyar-Magyarország,日本語-日本,português-Brasil,français-France,中文-中国,svenska-Sverige");
 		}
 
-		task ("View English, German and Spanish are show as current language in Language Selector") {
+		task ("View English, German and Spanish are shown as current language in Language Selector") {
 			Portlet.gotoPortletOptions(
 				portletName = "Language Selector",
 				portletOption = "Configuration");

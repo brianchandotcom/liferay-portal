@@ -59,12 +59,12 @@ public class CommerceOrderStatusMessageListener extends BaseMessageListener {
 
 		int orderStatus = jsonObject.getInt("orderStatus");
 
-		User currentUser = _userService.getCurrentUser();
-
 		for (CommerceOrderItem commerceOrderItem :
 				commerceOrder.getCommerceOrderItems()) {
 
 			if (CommerceOrderConstants.ORDER_STATUS_CANCELLED == orderStatus) {
+				User currentUser = _userService.getCurrentUser();
+
 				_commerceInventoryBookedQuantityLocalService.
 					restockCommerceInventoryBookedQuantity(
 						currentUser.getUserId(),

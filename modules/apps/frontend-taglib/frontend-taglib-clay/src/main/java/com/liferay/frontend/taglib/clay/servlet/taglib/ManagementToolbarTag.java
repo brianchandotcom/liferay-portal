@@ -23,7 +23,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.ViewTypeItem;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -1255,9 +1254,11 @@ public class ManagementToolbarTag extends BaseContainerTag {
 					new Object[] {getItemsTotal()}));
 
 			jspWriter.write("<strong>");
-			jspWriter.write(
-				HtmlUtil.escape(
-					StringBundler.concat(" ", '"', searchValue, '"')));
+			jspWriter.write(HtmlUtil.escape(StringPool.SPACE));
+			jspWriter.write(HtmlUtil.escape(StringPool.QUOTE));
+			jspWriter.write(HtmlUtil.escape(searchValue));
+			jspWriter.write(HtmlUtil.escape(StringPool.QUOTE));
+
 			jspWriter.write("</strong>");
 
 			jspWriter.write("</span></span></div></li>");

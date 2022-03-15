@@ -206,6 +206,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_VALUE_ID</td>
+	<td>//select[contains(@id,'${selectFieldId}')]/option[normalize-space(text())='${option}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT</td>
 	<td>//select</td>
 	<td></td>

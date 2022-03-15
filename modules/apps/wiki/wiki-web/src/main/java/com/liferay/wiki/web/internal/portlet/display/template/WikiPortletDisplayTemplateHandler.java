@@ -105,7 +105,7 @@ public class WikiPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return "com/liferay/wiki/web/portlet/template/dependencies" +
+		return "com/liferay/wiki/web/portlet/display/template/dependencies" +
 			"/portlet-display-templates.xml";
 	}
 

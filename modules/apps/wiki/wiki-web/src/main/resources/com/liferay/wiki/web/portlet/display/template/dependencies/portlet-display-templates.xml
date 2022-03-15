@@ -6,7 +6,7 @@
 		<name>portlet-display-template-name-social</name>
 		<description>portlet-display-template-description-social</description>
 		<language>ftl</language>
-		<script-file>com/liferay/wiki/web/portlet/template/dependencies/portlet_display_template_social.ftl</script-file>
+		<script-file>com/liferay/wiki/web/portlet/display/template/dependencies/portlet_display_template_social.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 </root>

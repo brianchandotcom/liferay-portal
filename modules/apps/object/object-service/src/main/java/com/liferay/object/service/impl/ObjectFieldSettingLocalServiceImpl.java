@@ -14,7 +14,6 @@
 
 package com.liferay.object.service.impl;
 
-import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.base.ObjectFieldSettingLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
@@ -22,7 +21,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -41,13 +39,10 @@ public class ObjectFieldSettingLocalServiceImpl
 
 	@Override
 	public ObjectFieldSetting addObjectFieldSetting(
-			long userId, long objectFieldId, String name, boolean required,
-			String value)
+			long userId, long objectFieldId, String name, String value)
 		throws PortalException {
 
 		_objectFieldPersistence.findByPrimaryKey(objectFieldId);
-
-		_validate(required, value);
 
 		ObjectFieldSetting objectFieldSetting =
 			objectFieldSettingPersistence.create(
@@ -61,7 +56,6 @@ public class ObjectFieldSettingLocalServiceImpl
 
 		objectFieldSetting.setObjectFieldId(objectFieldId);
 		objectFieldSetting.setName(name);
-		objectFieldSetting.setRequired(required);
 		objectFieldSetting.setValue(value);
 
 		return objectFieldSettingPersistence.update(objectFieldSetting);
@@ -88,19 +82,9 @@ public class ObjectFieldSettingLocalServiceImpl
 			objectFieldSettingPersistence.fetchByPrimaryKey(
 				objectFieldSettingId);
 
-		_validate(objectFieldSetting.isRequired(), value);
-
 		objectFieldSetting.setValue(value);
 
 		return objectFieldSettingPersistence.update(objectFieldSetting);
-	}
-
-	private void _validate(boolean required, String value)
-		throws PortalException {
-
-		if (required && Validator.isNull(value)) {
-			throw new ObjectFieldSettingValueException();
-		}
 	}
 
 	@Reference

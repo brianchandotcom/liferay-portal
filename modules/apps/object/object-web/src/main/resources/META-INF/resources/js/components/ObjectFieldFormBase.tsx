@@ -87,17 +87,14 @@ export default function ObjectFieldFormBase({
 				? [
 						{
 							name: 'acceptedFileExtensions',
-							required: true,
 							value: 'jpeg, jpg, pdf, png',
 						},
 						{
 							name: 'fileSource',
-							required: true,
 							value: 'userComputer',
 						},
 						{
 							name: 'maximumFileSize',
-							required: true,
 							value: 100,
 						},
 				  ]

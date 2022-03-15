@@ -338,7 +338,14 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			for (Element element : document.select("lfr-editable")) {
 				element.removeAttr("id");
 				element.removeAttr("type");
-				element.tagName("div");
+
+				String tagName = element.attr("view-tag-name");
+
+				if (Validator.isNull(tagName)) {
+					tagName = "div";
+				}
+
+				element.tagName(tagName);
 			}
 		}
 

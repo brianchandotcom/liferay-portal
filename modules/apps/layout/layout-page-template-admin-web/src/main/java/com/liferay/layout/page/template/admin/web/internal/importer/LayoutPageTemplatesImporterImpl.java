@@ -53,6 +53,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.validator.DisplayPageTemplateValidator;
 import com.liferay.layout.page.template.validator.MasterPageValidator;
 import com.liferay.layout.page.template.validator.PageDefinitionValidator;
+import com.liferay.layout.page.template.validator.PageTemplateCollectionValidator;
 import com.liferay.layout.page.template.validator.PageTemplateValidator;
 import com.liferay.layout.util.LayoutCopyHelper;
 import com.liferay.layout.util.constants.LayoutStructureConstants;
@@ -589,6 +590,9 @@ public class LayoutPageTemplatesImporterImpl
 			}
 
 			String content = StringUtil.read(zipFile.getInputStream(zipEntry));
+
+			PageTemplateCollectionValidator.validatePageTemplateCollection(
+				content);
 
 			PageTemplateCollection pageTemplateCollection =
 				_objectMapper.readValue(content, PageTemplateCollection.class);

@@ -252,6 +252,10 @@ public interface BatchEngineImportTaskErrorLocalService
 	public int getBatchEngineImportTaskErrorsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBatchEngineImportTaskErrorsCount(
+		long batchEngineImportTaskId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**

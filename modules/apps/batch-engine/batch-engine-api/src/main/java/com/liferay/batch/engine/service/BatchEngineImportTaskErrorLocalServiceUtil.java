@@ -286,6 +286,13 @@ public class BatchEngineImportTaskErrorLocalServiceUtil {
 		return getService().getBatchEngineImportTaskErrorsCount();
 	}
 
+	public static int getBatchEngineImportTaskErrorsCount(
+		long batchEngineImportTaskId) {
+
+		return getService().getBatchEngineImportTaskErrorsCount(
+			batchEngineImportTaskId);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

@@ -327,6 +327,14 @@ public class BatchEngineImportTaskErrorLocalServiceWrapper
 	}
 
 	@Override
+	public int getBatchEngineImportTaskErrorsCount(
+		long batchEngineImportTaskId) {
+
+		return _batchEngineImportTaskErrorLocalService.
+			getBatchEngineImportTaskErrorsCount(batchEngineImportTaskId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

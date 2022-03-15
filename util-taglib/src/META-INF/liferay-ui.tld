@@ -2903,6 +2903,13 @@
 		<tei-class>com.liferay.taglib.ui.SearchContainerResultsTei</tei-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>Whether to slice results according to searchContainer start and end. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>calculateStartAndEnd</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<description>A list of objects to display in the search container.</description>
 			<name>results</name>
 			<required>false</required>

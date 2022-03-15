@@ -23,6 +23,11 @@ public class JavaUpgradeVersionSourceProcessorTest
 	extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testDummyUpgradeStepVersion() throws Exception {
+		test("DummyUpgradeStepVersion.testjava");
+	}
+
+	@Test
 	public void testMajorUpgradeByAlterColumnName() throws Exception {
 		test("MajorUpgradeByAlterColumnName.testjava", "2.0.0", 30);
 	}

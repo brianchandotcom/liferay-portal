@@ -123,7 +123,7 @@
 			"type": "text"
 		},
 		"skus": {
-			"analyzer": "keyword_lowercase",
+			"analyzer": "text_whitespace_lowercase",
 			"fields": {
 				"1_10_ngram": {
 					"analyzer": "1_10_ngram",

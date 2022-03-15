@@ -39,6 +39,10 @@
 				],
 				"tokenizer": "keyword",
 				"type": "custom"
+			},
+			"text_whitespace_lowercase": {
+				"filter": "lowercase",
+				"tokenizer": "whitespace"
 			}
 		},
 		"filter": {

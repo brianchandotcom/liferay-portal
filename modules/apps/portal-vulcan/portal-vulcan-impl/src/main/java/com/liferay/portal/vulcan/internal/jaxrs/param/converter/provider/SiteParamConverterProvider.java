@@ -24,12 +24,16 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.ParamConverter;
 import javax.ws.rs.ext.ParamConverterProvider;
 import javax.ws.rs.ext.Provider;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.cxf.jaxrs.utils.AnnotationUtils;
 
 /**
  * @author Javier Gamarra
@@ -120,12 +124,10 @@ public class SiteParamConverterProvider
 
 	private boolean _hasSiteIdAnnotation(Annotation[] annotations) {
 		for (Annotation annotation : annotations) {
-			String annotationString = annotation.toString();
-
-			if (annotationString.equals(
-					"@javax.ws.rs.PathParam(value=assetLibraryId)") ||
-				annotationString.equals(
-					"@javax.ws.rs.PathParam(value=siteId)")) {
+			if ((annotation.annotationType() == PathParam.class) &&
+				StringUtils.equalsAny(
+					AnnotationUtils.getAnnotationValue(annotation),
+					"assetLibraryId", "siteId")) {
 
 				return true;
 			}

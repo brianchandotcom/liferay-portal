@@ -80,6 +80,11 @@ SimilarResultsPortletPreferences similarResultsPortletPreferences = new SimilarR
 					<aui:option label="everything" />
 				</aui:select>
 
+				<aui:select label="link-behavior" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_LINK_BEHAVIOR) %>" value="<%= similarResultsPortletPreferences.getLinkBehavior() %>">
+					<aui:option label="show-content" />
+					<aui:option label="view-in-context" />
+				</aui:select>
+
 				<aui:input helpMessage="fields-help" label="fields" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_FIELDS) %>" type="text" value="<%= similarResultsPortletPreferences.getFields() %>" />
 
 				<aui:input helpMessage="max-query-terms-help" label="max-query-terms" name="<%= PortletPreferencesJspUtil.getInputName(similarResultsPortletPreferences.PREFERENCE_KEY_MAX_QUERY_TERMS) %>" type="number" value="<%= similarResultsPortletPreferences.getMaxQueryTerms() %>">

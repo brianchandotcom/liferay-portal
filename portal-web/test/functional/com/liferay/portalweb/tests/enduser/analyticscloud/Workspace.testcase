@@ -75,10 +75,10 @@ definition {
 			ACSettings.goToWorkspace();
 		}
 
-		task ("Change the timezone to Los Angeles of United States") {
+		task ("Change the timezone to Hong Kong of China") {
 			ACWorkspace.configureWorkspaceSettings(
-				timezone = "United States",
-				timezoneId = "UTC-08:00 Pacific Time (America/Los Angeles)");
+				timezone = "China",
+				timezoneId = "UTC+08:00 Hong Kong Time (Asia/Hong Kong)");
 
 			ACUtils.waitForLoading();
 		}
@@ -88,7 +88,7 @@ definition {
 		}
 
 		task ("View the information banner") {
-			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC-08:00 Pacific Time");
+			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC+08:00 Hong Kong Time");
 		}
 
 		task ("Dismiss the information banner") {
@@ -287,10 +287,10 @@ definition {
 			ACSettings.goToWorkspace();
 		}
 
-		task ("Change the timezone to Los Angeles of United States") {
+		task ("Change the timezone to Tokyo of Japan") {
 			ACWorkspace.configureWorkspaceSettings(
-				timezone = "United States",
-				timezoneId = "UTC-08:00 Pacific Time (America/Los Angeles)");
+				timezone = "Japan",
+				timezoneId = "UTC+09:00 Japan Time (Asia/Tokyo)");
 
 			ACUtils.waitForLoading();
 		}
@@ -300,7 +300,7 @@ definition {
 		}
 
 		task ("View the information banner") {
-			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC-08:00 Pacific Time");
+			ACUtils.viewAlertInfo(infoMessage = "Workspace timezone has changed to UTC+09:00 Japan Time");
 		}
 
 		task ("Change the timezone to Shanghai of China") {

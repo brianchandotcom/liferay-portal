@@ -2,10 +2,10 @@
 
 <root available-locales="en_US" default-locale="en_US">
 	<dynamic-element index-type="keyword" instance-id="xieebayf" name="ActionTitle" type="text">
-		<dynamic-content language-id="en_US"><![CDATA[Latest Fix Packs]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Latest Updates]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="kchgqfdb" name="ActionText" type="text">
-		<dynamic-content language-id="en_US"><![CDATA[Install the latest fix pack to maintain your Liferay DXP instances up to date.]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Install the latest update to maintain your Liferay DXP instances up to date.]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="iatlbelj" name="ActionUrl" type="text">
 		<dynamic-content language-id="en_US"><![CDATA[https://customer.liferay.com/downloads?p_p_id=com_liferay_osb_customer_downloads_display_web_DownloadsDisplayPortlet&_com_liferay_osb_customer_downloads_display_web_DownloadsDisplayPortlet_productAssetCategoryId=121096180&_com_liferay_osb_customer_downloads_display_web_DownloadsDisplayPortlet_fileTypeAssetCategoryId=121096186]]></dynamic-content>

@@ -2,12 +2,12 @@
 
 <root available-locales="en_US" default-locale="en_US">
 	<dynamic-element index-type="keyword" instance-id="xieebayf" name="ActionTitle" type="text">
-		<dynamic-content language-id="en_US"><![CDATA[Environment Details]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Submit a Ticket]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="kchgqfdb" name="ActionText" type="text">
-		<dynamic-content language-id="en_US"><![CDATA[Describe your deployment environments to speed up support ticket progress.]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[Let us know if you can't find a solution to your issue. Ticket support is available to project members with Administrator or Requester roles.]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="iatlbelj" name="ActionUrl" type="text">
-		<dynamic-content language-id="en_US"><![CDATA[https://customer.liferay.com/en/project-details?p_p_id=com_liferay_osb_customer_account_entry_details_web_AccountEntryDetailsPortlet&p_p_lifecycle=0&p_p_state=normal&p_p_mode=view&_com_liferay_osb_customer_account_entry_details_web_AccountEntryDetailsPortlet_mvcRenderCommandName=%2Fview_account_entry&_com_liferay_osb_customer_account_entry_details_web_AccountEntryDetailsPortlet_koroneikiAccountKey={{accountKey}}]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[https://help.liferay.com/hc/en-us/requests/new]]></dynamic-content>
 	</dynamic-element>
 </root>

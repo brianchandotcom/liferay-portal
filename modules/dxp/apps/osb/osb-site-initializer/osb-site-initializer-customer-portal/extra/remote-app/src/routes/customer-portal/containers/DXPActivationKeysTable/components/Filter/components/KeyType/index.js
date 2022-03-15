@@ -14,7 +14,7 @@ import ClayButton from '@clayui/button';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import {useEffect, useState} from 'react';
 
-const KeyTypeFilter = ({hasVirtualCluster, setFilters}) => {
+const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 	const [minNodesValue, setMinNodesValue] = useState('');
 	const [maxNodesValue, setMaxNodesValue] = useState('');
 
@@ -27,6 +27,15 @@ const KeyTypeFilter = ({hasVirtualCluster, setFilters}) => {
 			setMaxNodesValue('');
 		}
 	}, [virtualClusterChecked]);
+
+	useEffect(() => {
+		if (clearInputs) {
+			setMinNodesValue('');
+			setMaxNodesValue('');
+			setVirtualClusterChecked(false);
+			setOnPromiseChecked(false);
+		}
+	}, [clearInputs]);
 
 	return (
 		<div>

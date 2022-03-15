@@ -14,6 +14,7 @@ import {useEffect, useState} from 'react';
 
 const DateFilter = ({
 	children,
+	clearInputs,
 	onOrAfterDisabled,
 	onOrBeforeDisabled,
 	updateFilters,
@@ -37,6 +38,13 @@ const DateFilter = ({
 			setOnOrBeforeValue('');
 		}
 	}, [onOrBeforeDisabled]);
+
+	useEffect(() => {
+		if (clearInputs) {
+			setOnOrAfterValue('');
+			setOnOrBeforeValue('');
+		}
+	}, [clearInputs]);
 
 	return (
 		<div>

@@ -29,7 +29,7 @@ import getAvailableFieldsCheckboxs from './components/utils/getAvailableFieldsCh
 
 const MAX_UPDATE = 3;
 
-const Filter = ({activationKeys, setFilters}) => {
+const Filter = ({activationKeys, filtersState: [filters, setFilters]}) => {
 	const countFetchActivationKeysRef = useRef(0);
 
 	const [availableFields, setAvailableFields] = useState({
@@ -48,7 +48,10 @@ const Filter = ({activationKeys, setFilters}) => {
 	}, [activationKeys]);
 
 	useEffect(() => {
-		if (countFetchActivationKeysRef?.current < MAX_UPDATE) {
+		if (
+			activationKeys &&
+			countFetchActivationKeysRef?.current < MAX_UPDATE
+		) {
 			setAvailableFields(() => ({
 				environmentTypes: [
 					...getAvailableFieldsCheckboxs(
@@ -126,6 +129,9 @@ const Filter = ({activationKeys, setFilters}) => {
 							{
 								child: (
 									<KeyTypeFilter
+										clearInputs={Object.values(
+											filters.keyType.value
+										).every((value) => !value)}
 										hasVirtualCluster={
 											availableFields.hasVirtualCluster
 										}
@@ -141,6 +147,10 @@ const Filter = ({activationKeys, setFilters}) => {
 									<CheckboxFilter
 										availableItems={
 											availableFields.environmentTypes
+										}
+										clearCheckboxes={
+											!filters.environmentTypes.value
+												?.length
 										}
 										setFilters={setFilters}
 										updateFilters={(checkedItems) =>
@@ -162,6 +172,11 @@ const Filter = ({activationKeys, setFilters}) => {
 							{
 								child: (
 									<DateFilter
+										clearInputs={
+											!filters.startDate.value
+												?.onOrAfter &&
+											!filters.startDate.value?.onOrBefore
+										}
 										updateFilters={(
 											onOrAfter,
 											onOrBefore
@@ -186,6 +201,12 @@ const Filter = ({activationKeys, setFilters}) => {
 							{
 								child: (
 									<ExpirationDate
+										clearInputs={
+											!filters.expirationDate.value
+												?.onOrAfter &&
+											!filters.expirationDate.value
+												?.onOrBefore
+										}
 										hasDNE={availableFields.hasDNE}
 										setFilters={setFilters}
 									/>
@@ -198,6 +219,9 @@ const Filter = ({activationKeys, setFilters}) => {
 								child: (
 									<CheckboxFilter
 										availableItems={availableFields.status}
+										clearCheckboxes={
+											!filters.status.value?.length
+										}
 										updateFilters={(checkedItems) =>
 											setFilters((previousFilters) => ({
 												...previousFilters,
@@ -219,6 +243,10 @@ const Filter = ({activationKeys, setFilters}) => {
 										availableItems={
 											availableFields.productVersions
 										}
+										clearCheckboxes={
+											filters.productVersions.value
+												?.length
+										}
 										updateFilters={(checkedItems) =>
 											setFilters((previousFilters) => ({
 												...previousFilters,
@@ -239,6 +267,9 @@ const Filter = ({activationKeys, setFilters}) => {
 									<CheckboxFilter
 										availableItems={
 											availableFields.instanceSizes
+										}
+										clearCheckboxes={
+											!filters.instanceSizes.value?.length
 										}
 										updateFilters={(checkedItems) =>
 											setFilters((previousFilters) => ({

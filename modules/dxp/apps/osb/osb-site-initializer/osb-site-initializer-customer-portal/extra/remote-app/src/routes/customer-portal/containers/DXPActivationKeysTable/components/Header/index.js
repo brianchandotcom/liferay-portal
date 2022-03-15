@@ -91,7 +91,7 @@ const DXPActivationKeysTableHeader = ({
 				<div>
 					<Filter
 						activationKeys={activationKeys}
-						setFilters={setFilters}
+						filtersState={[filters, setFilters]}
 					/>
 
 					<div className="align-items-center d-flex ml-auto">
@@ -135,7 +135,7 @@ const DXPActivationKeysTableHeader = ({
 					</div>
 
 					<BadgeFilter
-						activationKeysLength={activationKeys.length}
+						activationKeysLength={activationKeys?.length}
 						filtersState={[filters, setFilters]}
 					/>
 				</div>

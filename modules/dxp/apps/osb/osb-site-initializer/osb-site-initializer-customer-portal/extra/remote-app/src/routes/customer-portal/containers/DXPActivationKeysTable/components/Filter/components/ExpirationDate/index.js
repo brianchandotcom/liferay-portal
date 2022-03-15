@@ -10,10 +10,10 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import DateFilter from '../DateFilter';
 
-export default function ExpirationDate({hasDNE, setFilters}) {
+export default function ExpirationDate({clearInputs, hasDNE, setFilters}) {
 	const [dneChecked, setDNEChecked] = useState(false);
 
 	const getOnOrAfterValue = useCallback(
@@ -30,8 +30,15 @@ export default function ExpirationDate({hasDNE, setFilters}) {
 		[dneChecked]
 	);
 
+	useEffect(() => {
+		if (clearInputs) {
+			setDNEChecked(false);
+		}
+	}, [clearInputs]);
+
 	return (
 		<DateFilter
+			clearInputs={clearInputs}
 			onOrAfterDisabled={dneChecked}
 			onOrBeforeDisabled={dneChecked}
 			updateFilters={(onOrAfter, onOrBefore) =>

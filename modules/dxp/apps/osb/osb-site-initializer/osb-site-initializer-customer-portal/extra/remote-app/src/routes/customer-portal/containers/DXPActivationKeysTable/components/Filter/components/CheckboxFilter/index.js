@@ -11,9 +11,9 @@
 
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
-const CheckboxFilter = ({availableItems, updateFilters}) => {
+const CheckboxFilter = ({availableItems, clearCheckboxes, updateFilters}) => {
 	const [checkedItems, setCheckedItems] = useState([]);
 
 	const handleSelectedCheckbox = (checkedItem) => {
@@ -25,6 +25,12 @@ const CheckboxFilter = ({availableItems, updateFilters}) => {
 
 		setCheckedItems([...checkedItems, checkedItem]);
 	};
+
+	useEffect(() => {
+		if (clearCheckboxes) {
+			setCheckedItems([]);
+		}
+	}, [clearCheckboxes]);
 
 	return (
 		<div>

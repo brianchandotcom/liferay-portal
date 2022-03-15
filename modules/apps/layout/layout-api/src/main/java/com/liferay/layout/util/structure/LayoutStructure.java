@@ -850,6 +850,19 @@ public class LayoutStructure {
 				continue;
 			}
 
+			if (columnViewportConfigurationJSONObject.has("size") &&
+				!updateEmpty &&
+				GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-119551")) &&
+				Objects.equals(
+					ViewportSize.PORTRAIT_MOBILE.getViewportSizeId(),
+					viewportSizeId)) {
+
+				columnViewportConfigurationJSONObject.remove("size");
+
+				continue;
+			}
+
 			columnViewportConfigurationJSONObject.put("size", columnSize);
 		}
 	}
@@ -898,8 +911,18 @@ public class LayoutStructure {
 			viewportConfigurationJSONObject.put("modulesPerRow", 1);
 		}
 		else if (viewportConfigurationJSONObject.has("modulesPerRow")) {
-			viewportConfigurationJSONObject.put(
-				"modulesPerRow", numberOfColumns);
+			if (GetterUtil.getBoolean(
+					PropsUtil.get("feature.flag.LPS-119551")) &&
+				Objects.equals(
+					ViewportSize.PORTRAIT_MOBILE.getViewportSizeId(),
+					viewportSizeId)) {
+
+				viewportConfigurationJSONObject.remove("modulesPerRow");
+			}
+			else {
+				viewportConfigurationJSONObject.put(
+					"modulesPerRow", numberOfColumns);
+			}
 		}
 
 		_updateColumnSizes(

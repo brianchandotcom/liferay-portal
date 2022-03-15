@@ -2288,6 +2288,137 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-147390. The user could view the prefilter results in Prefilter Collection modal."
+	@priority = "5"
+	test ViewPrefilterResults {
+		property test.name.skip.portal.instance = "CollectionDisplayWithCollectionProviders#ViewPrefilterResults";
+
+		task ("Enable Basic Web Content flag in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:enable com.liferay.journal.web.internal.info.collection.provider.BasicWebContentSingleFormVariationInfoCollectionProvider");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+
+		task ("Add the first web content with the first tag") {
+			JSONWebcontent.addWebContent(
+				assetTagNames = "nba teams",
+				content = "Warriors",
+				groupName = "Test Site Name",
+				title = "Warriors");
+		}
+
+		task ("Add the second and third web contents with second tag") {
+			for (var text : list "Chris Paul,Lebron James") {
+				JSONWebcontent.addWebContent(
+					assetTagNames = "nba players",
+					content = "${text}",
+					groupName = "Test Site Name",
+					title = "${text}");
+			}
+		}
+
+		task ("Add a Collection Display fragment to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the Basic Web Content collection provider in Collection Display") {
+			PageEditor.editCollectionDisplay(
+				fragmentName = "Collection Display",
+				infoListProviderName = "Basic Web Content");
+		}
+
+		task ("View all web contents are shown in Collection Display") {
+			var n = "1";
+
+			for (var title : list "Lebron James,Chris Paul,Warriors") {
+				AssertVisible(
+					key_colPosition = "1",
+					key_entryTitle = "${title}",
+					key_fragmentName = "Collection Display",
+					key_rowPosition = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_TITLE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("Prefilter collection by the first tag") {
+			PageEditor.gotoConfiguration(fragmentName = "Collection Display");
+
+			PageEditor.gotoEllipsisMenuItemInItemSelector(
+				fieldLabel = "Collection",
+				menuItem = "Prefilter Collection");
+
+			Click(
+				key_text = "Select",
+				locator1 = "Button#ANY");
+
+			Check.checkNotVisible(
+				checkboxName = "nba teams",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		task ("View prefilter results in modal") {
+			AssertTextEquals(
+				locator1 = "Modal#SEARCH_INFO",
+				value1 = "There is 1 result for nba teams.");
+		}
+
+		task ("Prefilter collection by the keywords") {
+			Click(
+				key_text = "Clear",
+				locator1 = "Button#ANY");
+
+			Type(
+				key_text = "Title",
+				locator1 = "TextInput#ANY",
+				value1 = "James");
+
+			Click(locator1 = "Modal#HEADER");
+		}
+
+		task ("View prefilter results in modal") {
+			AssertTextEquals(
+				locator1 = "Modal#SEARCH_INFO",
+				value1 = "There is 1 result for James.");
+		}
+
+		task ("Prefilter collection by the keywords") {
+			Click(
+				key_text = "Clear",
+				locator1 = "Button#ANY");
+
+			Type(
+				key_text = "Title",
+				locator1 = "TextInput#ANY",
+				value1 = "Durant");
+
+			Click(locator1 = "Modal#HEADER");
+		}
+
+		task ("View prefilter results in modal") {
+			AssertTextEquals(
+				locator1 = "Modal#SEARCH_INFO",
+				value1 = "There are 0 results for Durant.");
+		}
+
+		task ("Disable Basic Web Content flag in Gogo Shell") {
+			GogoShell.openGogoShellAdmin();
+
+			GogoShell.executeCommand(commandName = "scr:disable com.liferay.journal.web.internal.info.collection.provider.BasicWebContentSingleFormVariationInfoCollectionProvider");
+
+			GogoShell.viewOutput(outputContent = "true");
+		}
+	}
+
 	@description = "This is a use case for LPS-112360. The asset entries should be ordered by modified time from recent to past in Collection Display when select Recent Content as Collection Provider."
 	@priority = "5"
 	@uitest

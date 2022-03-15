@@ -13232,14 +13232,9 @@ if (ppstate.equals("normal")) {
 	<target name="restart-docker-container">
 		<fail message="Please set the property ${docker.container}." unless="docker.container" />
 
-		<if>
-			<equals arg1="${env.DOCKER_ENABLED}" arg2="true" />
-			<then>
-				<execute>
-					docker restart ${docker.container}
-				</execute>
-			</then>
-		</if>
+		<execute>
+			docker restart ${docker.container}
+		</execute>
 	</target>
 
 	<target name="run-poshi-evaluate-console">

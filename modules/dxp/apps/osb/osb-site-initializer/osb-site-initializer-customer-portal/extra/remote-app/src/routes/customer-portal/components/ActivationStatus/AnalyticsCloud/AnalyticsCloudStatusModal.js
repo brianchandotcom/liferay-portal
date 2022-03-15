@@ -14,10 +14,9 @@ import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
 import {useState} from 'react';
 import {Badge, Button} from '../../../../../common/components';
-
 import {isLowercaseAndNumbers} from '../../../../../common/utils/validations.form';
 
-const AnalyticsCloudTestModal = ({
+const AnalyticsCloudStatusModal = ({
 	groupIdValue,
 	observer,
 	onClose,
@@ -115,4 +114,4 @@ const AnalyticsCloudTestModal = ({
 		</>
 	);
 };
-export default AnalyticsCloudTestModal;
+export default AnalyticsCloudStatusModal;

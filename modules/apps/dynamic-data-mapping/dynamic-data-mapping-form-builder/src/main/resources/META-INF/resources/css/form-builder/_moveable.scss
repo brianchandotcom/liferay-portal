@@ -116,3 +116,17 @@ $c: '.ddm-form-builder';
 		}
 	}
 }
+
+.rtl {
+	#{$c} {
+		.dragging {
+			transform: translate(1700px);
+		}
+
+		.field-type {
+			&.dragging {
+				transform: translate(0);
+			}
+		}
+	}
+}

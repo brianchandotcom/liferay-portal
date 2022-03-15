@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration;
+import com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyCompanyConfiguration;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 
@@ -125,10 +125,11 @@ public class SegmentsContextVocabularySegmentsFieldCustomizer
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		SegmentsContextVocabularyConfiguration
+		SegmentsContextVocabularyCompanyConfiguration
 			segmentsContextVocabularyConfiguration =
 				ConfigurableUtil.createConfigurable(
-					SegmentsContextVocabularyConfiguration.class, properties);
+					SegmentsContextVocabularyCompanyConfiguration.class,
+					properties);
 
 		_entityField = segmentsContextVocabularyConfiguration.entityField();
 

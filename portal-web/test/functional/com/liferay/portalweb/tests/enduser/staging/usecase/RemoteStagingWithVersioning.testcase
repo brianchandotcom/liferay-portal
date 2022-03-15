@@ -83,6 +83,8 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Remote Site");
 
+		AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
+
 		Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
 	}
 

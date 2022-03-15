@@ -1827,6 +1827,8 @@ definition {
 			pageName = "Staging Test Page",
 			siteName = "Remote Site");
 
+		AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
+
 		AssetPublisherPortlet.viewAssetPG(
 			assetContent = "Blogs Entry2 Content",
 			assetTitle = "Blogs Entry2 Title");

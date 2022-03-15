@@ -30,6 +30,11 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -60,7 +65,19 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 			return html;
 		}
 
-		return super.transform(html);
+		Document document = _parseDocument(html);
+
+		for (Element imgElement : document.select("img:not(picture > img)")) {
+			String imgElementString = imgElement.toString();
+
+			String replacement = super.transform(imgElementString);
+
+			imgElement.replaceWith(_parseNode(replacement));
+		}
+
+		Element body = document.body();
+
+		return body.html();
 	}
 
 	@Override
@@ -113,6 +130,27 @@ public class AMBackwardsCompatibilityHtmlContentTransformer
 		}
 
 		return _amImageHTMLTagFactory.create(originalImgTag, fileEntry);
+	}
+
+	private Document _parseDocument(String html) {
+		Document document = Jsoup.parseBodyFragment(html);
+
+		Document.OutputSettings outputSettings = new Document.OutputSettings();
+
+		outputSettings.prettyPrint(false);
+		outputSettings.syntax(Document.OutputSettings.Syntax.xml);
+
+		document.outputSettings(outputSettings);
+
+		return document;
+	}
+
+	private Node _parseNode(String tag) {
+		Document document = _parseDocument(tag);
+
+		Node bodyNode = document.body();
+
+		return bodyNode.childNode(0);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -85,7 +85,7 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 			renderRequest, "navigation", "all");
 
 		String searchByField = ParamUtil.getString(
-			renderRequest, "searchByField", "title");
+			renderRequest, "searchByField", "name");
 
 		String searchByKeyword = ParamUtil.getString(
 			renderRequest, "keywords", "");

@@ -14,6 +14,7 @@
 
 package com.liferay.batch.planner.web.internal.display.context;
 
+import com.liferay.batch.planner.model.BatchPlannerPlanTable;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -138,26 +139,33 @@ public class BatchPlannerLogManagementToolbarDisplayContext
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.setActive(
-					Objects.equals(_getSearchByField(), "title"));
+					Objects.equals(
+						_getSearchByField(),
+						BatchPlannerPlanTable.INSTANCE.name.getName()));
 
 				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "title"));
+					LanguageUtil.get(httpServletRequest, "name"));
 
 				dropdownItem.setHref(
 					PortletURLUtil.clone(currentURLObj, liferayPortletResponse),
-					"searchByField", "title");
+					"searchByField",
+					BatchPlannerPlanTable.INSTANCE.name.getName());
 			}
 		).add(
 			dropdownItem -> {
 				dropdownItem.setActive(
-					Objects.equals(_getSearchByField(), "entity"));
+					Objects.equals(
+						_getSearchByField(),
+						BatchPlannerPlanTable.INSTANCE.internalClassName.
+							getName()));
 
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "entity"));
 
 				dropdownItem.setHref(
 					PortletURLUtil.clone(currentURLObj, liferayPortletResponse),
-					"searchByField", "entity");
+					"searchByField",
+					BatchPlannerPlanTable.INSTANCE.internalClassName.getName());
 			}
 		).build();
 	}
@@ -168,7 +176,8 @@ public class BatchPlannerLogManagementToolbarDisplayContext
 
 	private String _getSearchByField() {
 		return ParamUtil.getString(
-			liferayPortletRequest, "searchByField", "title");
+			liferayPortletRequest, "searchByField",
+			BatchPlannerPlanTable.INSTANCE.name.getName());
 	}
 
 }

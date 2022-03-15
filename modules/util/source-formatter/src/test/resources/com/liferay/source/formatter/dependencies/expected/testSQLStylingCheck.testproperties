@@ -31,3 +31,34 @@
             (testray.main.component.name == "Clustering")\
         ) OR \
         (testray.main.component.name == "Scheduler")
+
+    test.batch.run.property.query[functional-tomcat*-mysql*-jdk8-4][relevant]=\
+        (\
+            (environment.acceptance == true) OR \
+            (portal.acceptance == true) OR \
+            (testray.component.names == "Clay")\
+        ) AND \
+        (\
+            (portal.acceptance == true) AND \
+            (portal.upstream == true) AND \
+            (\
+                (app.server.types == null) OR \
+                (app.server.types ~ "tomcat")\
+            ) AND \
+            (\
+                (database.types == null) OR \
+                (database.types ~ "mysql")\
+            )\
+        ) OR \
+        (testray.main.component.name == "Scheduler")
+
+    test.batch.run.property.query[functional-tomcat*-mysql*-jdk8-5][relevant]=\
+        (\
+            (portal.acceptance == true) AND \
+            (testray.main.component.name == "Staging")\
+        ) OR \
+        (\
+            (license.required != "true") AND \
+            (testray.main.component.name == "Clustering")\
+        ) OR \
+        (testray.main.component.name == "Scheduler")

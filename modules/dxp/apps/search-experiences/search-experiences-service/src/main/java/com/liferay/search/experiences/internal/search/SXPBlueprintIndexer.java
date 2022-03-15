@@ -140,6 +140,11 @@ public class SXPBlueprintIndexer extends BaseIndexer<SXPBlueprint> {
 
 			document.addKeyword(
 				Field.getSortableFieldName(
+					LocalizationUtil.getLocalizedName(
+						Field.DESCRIPTION, languageId)),
+				sxpBlueprint.getDescription(locale), true);
+			document.addKeyword(
+				Field.getSortableFieldName(
 					LocalizationUtil.getLocalizedName(Field.TITLE, languageId)),
 				sxpBlueprint.getTitle(locale), true);
 			document.addText(

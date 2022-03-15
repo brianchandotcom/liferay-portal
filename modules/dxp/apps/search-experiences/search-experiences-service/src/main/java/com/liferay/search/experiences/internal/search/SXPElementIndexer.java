@@ -139,6 +139,11 @@ public class SXPElementIndexer extends BaseIndexer<SXPElement> {
 
 			document.addKeyword(
 				Field.getSortableFieldName(
+					LocalizationUtil.getLocalizedName(
+						Field.DESCRIPTION, languageId)),
+				sxpElement.getDescription(locale), true);
+			document.addKeyword(
+				Field.getSortableFieldName(
 					LocalizationUtil.getLocalizedName(Field.TITLE, languageId)),
 				sxpElement.getTitle(locale), true);
 			document.addText(

@@ -41,16 +41,18 @@ const ActivationStatusAnalyticsCloud = ({
 	userAccount,
 }) => {
 	const [{assetsPath}] = useCustomerPortal();
-	const [groupIdValue, setGroupIdValue] = useState();
+	const [groupIdValue, setGroupIdValue] = useState('');
 	const [activationStatusDate, setActivationStatusDate] = useState('');
 	const [isVisible, setIsVisible] = useState(false);
 	const [visible, setVisible] = useState(false);
-	const {observer, onClose} = useModal({
-		onClose: () => setIsVisible(false),
-	});
+	const {observer: observerSetupModal, onClose: onCloseSetupModal} = useModal(
+		{
+			onClose: () => setIsVisible(false),
+		}
+	);
 	const {
-		observer: observerModalStatus,
-		onClose: onCloseModalStatus,
+		observer: observerStatusModal,
+		onClose: onCloseStatusModal,
 	} = useModal({
 		onClose: () => setVisible(false),
 	});
@@ -199,7 +201,10 @@ const ActivationStatusAnalyticsCloud = ({
 	return (
 		<>
 			{isVisible && (
-				<AnalyticsCloudModal observer={observer} onClose={onClose} />
+				<AnalyticsCloudModal
+					observer={observerSetupModal}
+					onClose={onCloseSetupModal}
+				/>
 			)}
 			<ActivationStatusLayout
 				activationStatus={activationStatus}
@@ -213,8 +218,8 @@ const ActivationStatusAnalyticsCloud = ({
 			{visible && (
 				<AnalyticsCloudStatusModal
 					groupIdValue={groupIdValue}
-					observer={observerModalStatus}
-					onClose={onCloseModalStatus}
+					observer={observerStatusModal}
+					onClose={onCloseStatusModal}
 					project={project}
 					setGroupIdValue={setGroupIdValue}
 					updateCardStatus={updateGroupId}

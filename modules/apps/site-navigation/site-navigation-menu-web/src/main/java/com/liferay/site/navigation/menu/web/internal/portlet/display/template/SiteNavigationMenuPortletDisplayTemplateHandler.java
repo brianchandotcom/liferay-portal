@@ -125,7 +125,7 @@ public class SiteNavigationMenuPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return "com/liferay/site/navigation/menu/web/portlet/template" +
+		return "com/liferay/site/navigation/menu/web/portlet/display/template" +
 			"/dependencies/portlet-display-templates.xml";
 	}
 

@@ -6,7 +6,7 @@
 		<name>portlet-display-template-name-list-menu</name>
 		<description>portlet-display-template-description-list-menu</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_list_menu.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/display/template/dependencies/portlet_display_template_list_menu.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -14,7 +14,7 @@
 		<name>portlet-display-template-name-nav-pills</name>
 		<description>portlet-display-template-description-nav-pills</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_nav_pills.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/display/template/dependencies/portlet_display_template_nav_pills.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -22,7 +22,7 @@
 		<name>portlet-display-template-name-nav-pills-justified</name>
 		<description>portlet-display-template-description-nav-pills-justified</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_nav_pills_justified.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/display/template/dependencies/portlet_display_template_nav_pills_justified.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -30,7 +30,7 @@
 		<name>portlet-display-template-name-nav-pills-stacked</name>
 		<description>portlet-display-template-description-nav-pills-stacked</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_nav_pills_stacked.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/display/template/dependencies/portlet_display_template_nav_pills_stacked.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -38,7 +38,7 @@
 		<name>portlet-display-template-name-nav-tabs</name>
 		<description>portlet-display-template-description-nav-tabs</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_nav_tabs.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/display/template/dependencies/portlet_display_template_nav_tabs.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -46,7 +46,7 @@
 		<name>portlet-display-template-name-nav-tabs-justified</name>
 		<description>portlet-display-template-description-nav-tabs-justified</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_nav_tabs_justified.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/display/template/dependencies/portlet_display_template_nav_tabs_justified.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -54,7 +54,7 @@
 		<name>portlet-display-template-name-navbar-blank</name>
 		<description>portlet-display-template-description-navbar-blank</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_navbar_blank.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/display/template/dependencies/portlet_display_template_navbar_blank.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -62,7 +62,7 @@
 		<name>portlet-display-template-name-navbar-blank-justified</name>
 		<description>portlet-display-template-description-navbar-blank-justified</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_navbar_blank_justified.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/display/template/dependencies/portlet_display_template_navbar_blank_justified.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -70,7 +70,7 @@
 		<name>portlet-display-template-name-navbar-default</name>
 		<description>portlet-display-template-description-navbar-default</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_navbar_default.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/display/template/dependencies/portlet_display_template_navbar_default.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -79,7 +79,7 @@
 		<description>portlet-display-template-description-navigation-menu-macro</description>
 		<language>ftl</language>
 		<type>macro</type>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_navigation_menu_macro.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/display/template/dependencies/portlet_display_template_navigation_menu_macro.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -87,7 +87,7 @@
 		<name>portlet-display-template-name-split-button-dropdowns</name>
 		<description>portlet-display-template-description-split-button-dropdowns</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_split_button_dropdowns.ftl</script-file>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/display/template/dependencies/portlet_display_template_split_button_dropdowns.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 </root>

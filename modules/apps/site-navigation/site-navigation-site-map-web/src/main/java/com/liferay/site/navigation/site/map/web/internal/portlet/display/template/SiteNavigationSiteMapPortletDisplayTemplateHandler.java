@@ -88,8 +88,8 @@ public class SiteNavigationSiteMapPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return "com/liferay/site/navigation/site/map/web/portlet/template" +
-			"/dependencies/portlet-display-templates.xml";
+		return "com/liferay/site/navigation/site/map/web/portlet/display" +
+			"/template/dependencies/portlet-display-templates.xml";
 	}
 
 	@Reference

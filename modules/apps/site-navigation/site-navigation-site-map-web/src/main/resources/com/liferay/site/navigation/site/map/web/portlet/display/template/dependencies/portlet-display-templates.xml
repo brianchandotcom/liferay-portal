@@ -6,7 +6,7 @@
 		<name>portlet-display-template-name-multi-column-layout</name>
 		<description>portlet-display-template-description-multi-column-layout-sitemap</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/site/map/web/portlet/template/dependencies/portlet_display_template_multi_column_layout.ftl</script-file>
+		<script-file>com/liferay/site/navigation/site/map/web/portlet/display/template/dependencies/portlet_display_template_multi_column_layout.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 </root>

@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>SELECT_TRANSLATION_LANGUAGE_AUI_TAG_MENU</td>
-	<td>//div[h3='${key_title}']//button[contains(@id,'aui_2d_${key_number}Menu')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_currentLocale}')]</td>
+	<td>//div[h3='${key_title}']//button[contains(@id,'aui_2d')]//*[name()='svg'][contains(@class,'lexicon-icon-${key_currentLocale}')]</td>
 	<td></td>
 </tr>
 <tr>

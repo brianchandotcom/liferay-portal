@@ -25,6 +25,7 @@ import ViewContext, {TYPES} from '../context';
 import './BuilderListItem.scss';
 
 interface Iprops {
+	aliasColumnText?: string;
 	index: number;
 	isDefaultSort?: boolean;
 	label?: string;
@@ -32,7 +33,6 @@ interface Iprops {
 	onEditing?: (boolean: boolean) => void;
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
 	onVisibleEditModal?: (boolean: boolean) => void;
-	secondColumntext?: string;
 }
 
 type TItemHover = {
@@ -46,6 +46,7 @@ type TDraggedOffset = {
 } | null;
 
 const BuilderListItem: React.FC<Iprops> = ({
+	aliasColumnText,
 	index,
 	isDefaultSort,
 	label,
@@ -53,7 +54,6 @@ const BuilderListItem: React.FC<Iprops> = ({
 	onEditing,
 	onEditingObjectFieldName,
 	onVisibleEditModal,
-	secondColumntext,
 }) => {
 	const [active, setActive] = useState<boolean>(false);
 	const [
@@ -175,7 +175,7 @@ const BuilderListItem: React.FC<Iprops> = ({
 				className="lfr-object__object-builder-list-item-sort-order"
 				expand
 			>
-				<ClayList.ItemText>{secondColumntext}</ClayList.ItemText>
+				<ClayList.ItemText>{aliasColumnText}</ClayList.ItemText>
 			</ClayList.ItemField>
 
 			<ClayDropDown

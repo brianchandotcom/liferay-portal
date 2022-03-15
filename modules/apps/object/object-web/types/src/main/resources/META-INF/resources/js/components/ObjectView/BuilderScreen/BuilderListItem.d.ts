@@ -15,6 +15,7 @@
 import React from 'react';
 import './BuilderListItem.scss';
 interface Iprops {
+	aliasColumnText?: string;
 	index: number;
 	isDefaultSort?: boolean;
 	label?: string;
@@ -22,7 +23,6 @@ interface Iprops {
 	onEditing?: (boolean: boolean) => void;
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
 	onVisibleEditModal?: (boolean: boolean) => void;
-	secondColumntext?: string;
 }
 declare const BuilderListItem: React.FC<Iprops>;
 export default BuilderListItem;

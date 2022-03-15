@@ -43,6 +43,11 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 	return (
 		<>
 			<BuilderScreen
+				aliasColumnHeader={
+					isFFObjectViewColumnAliasEnabled
+						? Liferay.Language.get('column-label')
+						: ''
+				}
 				emptyState={{
 					buttonText: Liferay.Language.get('add-column'),
 					description: Liferay.Language.get(
@@ -54,11 +59,6 @@ const ViewBuilderScreen: React.FC<{}> = () => {
 				onEditingObjectFieldName={setEditingObjectFieldName}
 				onVisibleEditModal={setVisibleEditModal}
 				onVisibleModal={setVisibleModal}
-				secondColumnHeader={
-					isFFObjectViewColumnAliasEnabled
-						? Liferay.Language.get('column-label')
-						: ''
-				}
 				title={Liferay.Language.get('columns')}
 			/>
 

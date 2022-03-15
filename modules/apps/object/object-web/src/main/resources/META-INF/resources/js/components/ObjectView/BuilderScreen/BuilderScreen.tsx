@@ -29,6 +29,7 @@ import BuilderListItem from './BuilderListItem';
 import './BuilderScreen.scss';
 
 interface IProps {
+	aliasColumnHeader: string;
 	emptyState: {
 		buttonText: string;
 		description: string;
@@ -40,13 +41,13 @@ interface IProps {
 	onEditingObjectFieldName?: (objectFieldName: string) => void;
 	onVisibleEditModal: (boolean: boolean) => void;
 	onVisibleModal: (boolean: boolean) => void;
-	secondColumnHeader: string;
 	title: string;
 }
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
 export function BuilderScreen({
+	aliasColumnHeader,
 	emptyState,
 	isDefaultSort,
 	objectColumns,
@@ -54,7 +55,6 @@ export function BuilderScreen({
 	onEditingObjectFieldName,
 	onVisibleEditModal,
 	onVisibleModal,
-	secondColumnHeader,
 	title,
 }: IProps) {
 	const [{isFFObjectViewColumnAliasEnabled}] = useContext(ViewContext);
@@ -116,7 +116,7 @@ export function BuilderScreen({
 													expand
 												>
 													<ClayList.ItemField>
-														{secondColumnHeader}
+														{aliasColumnHeader}
 													</ClayList.ItemField>
 												</ClayList.ItemField>
 											</ClayList.Item>
@@ -189,7 +189,7 @@ export function BuilderScreen({
 													expand
 												>
 													<ClayList.ItemField>
-														{secondColumnHeader}
+														{aliasColumnHeader}
 													</ClayList.ItemField>
 												</ClayList.ItemField>
 											</ClayList.Item>
@@ -197,20 +197,7 @@ export function BuilderScreen({
 
 										<DndProvider backend={HTML5Backend}>
 											<BuilderListItem
-												index={index}
-												isDefaultSort={isDefaultSort}
-												label={viewColumn.fieldLabel}
-												objectFieldName={
-													viewColumn.objectFieldName
-												}
-												onEditing={onEditing}
-												onEditingObjectFieldName={
-													onEditingObjectFieldName
-												}
-												onVisibleEditModal={
-													onVisibleEditModal
-												}
-												secondColumntext={
+												aliasColumnText={
 													isDefaultSort
 														? viewColumn.sortOrder ===
 														  'asc'
@@ -225,6 +212,19 @@ export function BuilderScreen({
 																defaultLanguageId
 														  ]
 														: ''
+												}
+												index={index}
+												isDefaultSort={isDefaultSort}
+												label={viewColumn.fieldLabel}
+												objectFieldName={
+													viewColumn.objectFieldName
+												}
+												onEditing={onEditing}
+												onEditingObjectFieldName={
+													onEditingObjectFieldName
+												}
+												onVisibleEditModal={
+													onVisibleEditModal
 												}
 											/>
 										</DndProvider>

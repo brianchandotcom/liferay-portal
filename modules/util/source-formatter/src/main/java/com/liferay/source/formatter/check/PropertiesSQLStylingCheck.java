@@ -88,6 +88,8 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 			sqlClause = StringUtil.replace(sqlClause, " AND ", " AND \\\n");
 			sqlClause = StringUtil.replace(sqlClause, " OR ", " OR \\\n");
 
+			sqlClause = _addParenthesis(sqlClause);
+
 			sqlClause = _checkIndentation(sqlClause);
 
 			sqlClause = _sort(sqlClause);
@@ -101,6 +103,54 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 		}
 
 		return content;
+	}
+
+	private String _addParenthesis(String sqlClause) throws IOException {
+		StringBundler sb = new StringBundler();
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(sqlClause))) {
+
+			String line = StringPool.BLANK;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.startsWith("(") || line.startsWith(")")) {
+					sb.append(line);
+					sb.append("\n");
+
+					continue;
+				}
+
+				int x = line.indexOf(" AND \\");
+
+				if (x == -1) {
+					x = line.indexOf(" OR \\");
+				}
+
+				if (x == -1) {
+					x = line.lastIndexOf("\\");
+				}
+
+				if (x == -1) {
+					sb.append(line);
+					sb.append("\n");
+
+					continue;
+				}
+
+				sb.append("(");
+				sb.append(line.substring(0, x));
+				sb.append(")");
+				sb.append(line.substring(x));
+				sb.append("\n");
+			}
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	private String _checkIndentation(String sqlClause) throws IOException {

@@ -1,6 +1,53 @@
 #!/bin/bash
 
+ANT_ALL_DURATION_CSV_PATH="tools/ant_all_duration.csv"
+ANT_ALL_RUN_COUNT=0
+CHECK_PERFORMANCE=false
+DURATION_ARRAY=( )
+DURATION_LOG=false
+
 set -e
+
+function check_performance {
+	if [ "${CHECK_PERFORMANCE}" == true ]
+	then
+		local durations_min_lenght=2
+		local lines_count="$(($(cat ${ANT_ALL_DURATION_CSV_PATH} | wc -l) + 1))"
+
+		if [ "${lines_count}" -ge $((${durations_min_lenght} + 1)) ]
+		then
+			remove_oldest_durations ${lines_count}
+
+			local actual_durations="$(tail -n 1 ${ANT_ALL_DURATION_CSV_PATH})"
+			local previous_durations="$(tail -n 2 ${ANT_ALL_DURATION_CSV_PATH} | head -n 1)"
+			local one_minute=60
+
+			for (( i = 2 ; i <= 4; i++ ))
+			do
+				local actual_duration="$(echo ${actual_durations} | cut -d ',' -f ${i})"
+				local previous_duration="$(echo ${previous_durations} | cut -d ',' -f ${i})"
+
+				if [ $(("${actual_duration}" - "${previous_duration}")) -gt "${one_minute}" ]
+				then
+					if [ "${i}" -eq 2 ]
+					then
+						echo "Warning: portal compile with clean repository is taking more than 1 minute than previous compile"
+					fi
+
+					if [ "${i}" -eq 3 ]
+					then
+						echo "Warning: portal compile without Gradle cache is taking more than 1 minute than previous compile"
+					fi
+
+					if [ "${i}" -eq 4 ]
+					then
+						echo "Warning: portal compile with all caches is taking more than 1 minute than previous compile"
+					fi
+				fi
+			done
+		fi
+	fi
+}
 
 function echo_time {
 	local duration=${SECONDS}
@@ -8,7 +55,74 @@ function echo_time {
 	echo "completed in $((${duration} / 60)) minutes and $((${duration} % 60)) seconds."
 }
 
+function enable_optional_settings {
+	for arg in "${@}"
+	do
+		if [ "${arg}" == "--check-performance" ]
+		then
+			CHECK_PERFORMANCE=true
+
+			echo "Performance check enabled"
+		fi
+
+		if [ "${arg}" == "--log" ]
+		then
+			DURATION_LOG=true
+
+			echo "Log to record runs duration enabled"
+		fi
+	done
+}
+
+function log_durations {
+	if [ "${DURATION_LOG}" == true ]
+	then
+		echo "" >> ${ANT_ALL_DURATION_CSV_PATH}
+		echo -n "$(date +%c)," >> ${ANT_ALL_DURATION_CSV_PATH}
+
+		for (( i = 0 ; i < ${#DURATION_ARRAY[@]}; i++ ))
+		do
+			echo -n "${DURATION_ARRAY[${i}]}" >> ${ANT_ALL_DURATION_CSV_PATH}
+
+			if [ "${i}" -lt "$((${#DURATION_ARRAY[@]} - 1))" ]
+			then
+				echo -n "," >> ${ANT_ALL_DURATION_CSV_PATH}
+			fi
+		done
+	fi
+}
+
+function remove_oldest_durations {
+	local durations_max_lenght=30
+
+	if [ "${lines_count}" -eq $((${durations_max_lenght} + 1)) ]
+	then
+		local tmp_csv_path="tools/.tmp_$(date +%s).csv"
+
+		touch ${tmp_csv_path}
+
+		head -n 1 ${ANT_ALL_DURATION_CSV_PATH} > ${tmp_csv_path}
+
+		tail -n 29 ${ANT_ALL_DURATION_CSV_PATH} >> ${tmp_csv_path}
+
+		cat ${tmp_csv_path} > ${ANT_ALL_DURATION_CSV_PATH}
+
+		rm ${tmp_csv_path}
+	fi
+}
+
+function save_duration {
+	if [ "${DURATION_LOG}" == true ]
+	then
+		DURATION_ARRAY[${ANT_ALL_RUN_COUNT}]=${SECONDS}
+
+		let "ANT_ALL_RUN_COUNT=${ANT_ALL_RUN_COUNT} + 1"
+	fi
+}
+
 function main {
+	enable_optional_settings "${@}"
+
 	pushd .. > /dev/null
 
 	local binaries_cache_dir_name=liferay-binaries-cache-2020
@@ -26,7 +140,7 @@ function main {
 
 	popd > /dev/null
 
-	git clean -dfx -e "*.${USER}.*" > /dev/null
+	git clean -dfx -e "*.${USER}.*" -e portal-ext.properties > /dev/null
 
 	rm -fr ~/.liferay
 
@@ -41,15 +155,25 @@ function main {
 
 	echo "Run 1 with a clean repository $(echo_time)"
 
+	save_duration
+
 	rm -fr .gradle/caches
 
 	run_ant_all
 
 	echo "Run 2 without Gradle cache $(echo_time)"
 
+	save_duration
+
 	run_ant_all
 
 	echo "Run 3 with all caches $(echo_time)"
+
+	save_duration
+
+	log_durations
+
+	check_performance
 
 	popd > /dev/null
 }

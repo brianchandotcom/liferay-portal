@@ -44,14 +44,12 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
  * @author Alberto Chaparro
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 

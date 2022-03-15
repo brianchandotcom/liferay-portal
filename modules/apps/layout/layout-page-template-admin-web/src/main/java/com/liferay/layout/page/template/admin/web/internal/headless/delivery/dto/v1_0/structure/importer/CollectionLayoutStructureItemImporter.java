@@ -311,11 +311,8 @@ public class CollectionLayoutStructureItemImporter
 	}
 
 	private String _toPaginationType(String paginationType) {
-		if (Validator.isNull(paginationType)) {
-			return null;
-		}
-
-		if (Objects.equals(
+		if (Validator.isNull(paginationType) ||
+			Objects.equals(
 				paginationType,
 				PageCollectionDefinition.PaginationType.NONE.getValue())) {
 

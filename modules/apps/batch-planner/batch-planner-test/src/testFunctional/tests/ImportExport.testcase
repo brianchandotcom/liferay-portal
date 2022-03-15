@@ -538,6 +538,48 @@ definition {
 		}
 	}
 
+	@description = "Verify users can save export configuration as a template during the export process"
+	@priority = "3"
+	test CanSaveTemplateDuringExport {
+		property portal.acceptance = "true";
+
+		task ("Given the user has configured an export") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+
+			ImportExport.selectEntity(
+				entityType = "Account",
+				headlessEndpoint = "/headless-admin-user");
+
+			Select(
+				key_selectFieldLabel = "Export File Format",
+				locator1 = "ImportExport#SELECT",
+				value1 = "JSON");
+
+			ImportExport.mapExport(exportFields = "name,type,description,externalReferenceCode");
+		}
+
+		task ("When the user saves the configuration as a template") {
+			ImportExport.saveAsTemplate(templateName = "Test Account Export Template");
+		}
+
+		task ("Then the export template should be created successfully") {
+			Button.clickCancel();
+
+			Navigator.gotoNavTab(navTab = "Templates");
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Account Export Template");
+
+			ImportExport.assertExportTemplate(
+				entityType = "Account",
+				exportFields = "name,type,description,externalReferenceCode",
+				exportFileFormat = "JSON",
+				headlessEndpoint = "/headless-admin-user",
+				templateName = "Test Account Export Template");
+		}
+	}
+
 	@description = "Verify users can save import configuration as a template during the import process"
 	@priority = "3"
 	test CanSaveTemplateDuringImport {

@@ -344,7 +344,7 @@ definition {
 	}
 
 	@description = "This is a test for LPS-126009 and LPS-147390. The user is able to filter web contents in Collection Display using Tag."
-	@priority = "4"
+	@priority = "5"
 	test FilterWebContentByTag {
 		property test.name.skip.portal.instance = "CollectionDisplayWithCollectionProviders#FilterWebContentByTag";
 

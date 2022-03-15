@@ -66,10 +66,6 @@ definition {
 	@description = "Search for specific segment"
 	@priority = "5"
 	test CanSearchForSegment {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor ticket: LRAC-9707
-
 		var usernameList = "ac,userea";
 		var emailList = "ac@liferay.com,userea@liferay.com";
 
@@ -380,10 +376,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8461 | Test Summary: Paginate Segment list"
 	@priority = "3"
 	test PaginateSegmentList {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor ticket: LRAC-9707
-
 		task ("Add a new user in DXP") {
 			JSONUser.addUser(
 				userEmailAddress = "userea@liferay.com",

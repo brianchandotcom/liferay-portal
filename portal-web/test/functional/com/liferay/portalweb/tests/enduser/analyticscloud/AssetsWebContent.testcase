@@ -601,8 +601,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8131 | Test Summary: Web content known individuals shows which individuals interact with the web content"
 	@priority = "5"
 	test KnownIndividualsShowsWhichIndividualsInteractWithWebContent {
-		property portal.upstream = "quarantine";
-
 		var nameList = "ac ac,liferay liferay,dxp dxp";
 		var usernameList = "ac,liferay,dxp";
 		var emailList = "ac@liferay.com,liferay@liferay.com,dxp@liferay.com";

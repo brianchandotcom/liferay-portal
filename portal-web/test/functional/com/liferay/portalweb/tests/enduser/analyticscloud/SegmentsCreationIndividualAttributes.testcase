@@ -416,8 +416,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8567 | Test Summary: Add segment using an individual property 'user group'"
 	@priority = "4"
 	test CanAddSegmentUsingIndividualPropertyUserGroup {
-		property portal.upstream = "quarantine";
-
 		task ("Add a new user group and assign to the user") {
 			JSONUserGroup.addUserGroup(
 				userGroupDescription = "UG UserGroup Description",
@@ -573,8 +571,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8570 | Test Summary: Add segment with custom fields for organizations"
 	@priority = "4"
 	test CanAddSegmentWithCustomFieldsForOrganizations {
-		property portal.upstream = "quarantine";
-
 		task ("Add a new organization and assign to the user") {
 			JSONOrganization.addOrganization(organizationName = "Organization Name");
 

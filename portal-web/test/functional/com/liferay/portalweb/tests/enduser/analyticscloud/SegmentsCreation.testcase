@@ -1257,10 +1257,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8472 | Test Summary: Paginate static segment 'Add Members' creation model"
 	@priority = "3"
 	test CanPaginateStaticSegmentAddMembers {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor ticket: LRAC-9707
-
 		var usernameList = "user1,user2,user3,user4,user5";
 		var emailList = "userea@liferay.com,user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com,user5@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5";
@@ -1423,8 +1419,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8473 | Test Summary: Filter the Segment 'Add Members' Modal"
 	@priority = "3"
 	test CanSearchUserInAddMembersModal {
-		property portal.upstream = "quarantine";
-
 		var emailList = "userea@liferay.com,user1@liferay.com";
 
 		task ("Add one more user with a given birth date") {

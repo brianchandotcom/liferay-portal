@@ -38,8 +38,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8504 | Test Summary: Segment Overview distribution filtered by boolean"
 	@priority = "3"
 	test SegmentOverviewDistributionFilteredByBoolean {
-		property portal.upstream = "quarantine";
-
 		var users = "user1,user2";
 		var emailList = "user1@liferay.com,user2@liferay.com";
 		var nameList = "user1 user1,user2 user2";

@@ -72,8 +72,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8523 | Test Summary: Assert segment membership list shows all known individuals"
 	@priority = "4"
 	test AssertSegmentMembershipListShowsAllKnownIndividuals {
-		property portal.upstream = "quarantine";
-
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
@@ -124,8 +122,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8512 | Test Summary: Segment membership list is searchable"
 	@priority = "5"
 	test CanSearchMembershipList {
-		property portal.upstream = "quarantine";
-
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
@@ -180,10 +176,6 @@ definition {
 	@description = "Bug: LRAC-8091 | Automation ID: LRAC-10582 | Test Summary: Dynamic segment is updating membership number"
 	@priority = "4"
 	test CanUpdateNumberOfMembersForDynamicSegment {
-		property portal.upstream = "quarantine";
-
-		// The segment membership list takes a long time to process the events and update the list.
-
 		var nameList1 = "user2 user2,user3 user3";
 		var nameList2 = "user1 user1,user2 user2";
 		var emailList = "user2@liferay.com,user3@liferay.com";
@@ -344,8 +336,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8513 | Test Summary: Order the Segment Profile Membership List"
 	@priority = "3"
 	test OrderSegmentProfileMembershipList {
-		property portal.upstream = "quarantine";
-
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3";
 
@@ -426,8 +416,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8519 | Test Summary: Search a Dynamic Segment's Membership Preview Modal"
 	@priority = "3"
 	test SearchDynamicSegmentsMembershipPreviewModal {
-		property portal.upstream = "quarantine";
-
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3";
 

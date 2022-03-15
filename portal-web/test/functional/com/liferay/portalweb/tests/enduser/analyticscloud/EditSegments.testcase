@@ -558,8 +558,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8598 | Test Summary: Segment List kebab menu contains Edit and Delete buttons"
 	@priority = "3"
 	test SegmentListKebabMenuContainsEditAndDeleteButtons {
-		property portal.upstream = "quarantine";
-
 		task ("Create user and sincronize it") {
 			JSONUser.addUser(
 				userEmailAddress = "ac@liferay.com",
@@ -694,8 +692,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8590 | Test Summary: Undo Adding a Segment Member in the Edit Modal"
 	@priority = "4"
 	test UndoAddingSegmentMemberInTheEditModal {
-		property portal.upstream = "quarantine";
-
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 

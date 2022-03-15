@@ -540,8 +540,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8429 | Test Summary: Form submissions by technology card shows views by expected browser"
 	@priority = "5"
 	test FormsTechnologyCardShowsViewsByExpectedBrowser {
-		property portal.upstream = "quarantine";
-
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Form submit") {
@@ -588,8 +586,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8428 | Test Summary: Form submissions by technology card shows views by expected device"
 	@priority = "5"
 	test FormsTechnologyCardShowsViewsByExpectedDevice {
-		property portal.upstream = "quarantine";
-
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 		task ("Submit the form") {

@@ -314,10 +314,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9033 | Test Summary: Case Insensitive Search"
 	@priority = "5"
 	test CanCaseInsensitiveSearch {
-		property portal.upstream = "quarantine";
-
-		// AC Refactor ticket: LRAC-9707
-
 		var emailList = "randy.smith@liferay.com,maria.rau@liferay.com";
 
 		task ("Get site assigned property name") {
@@ -553,8 +549,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9026 | Test Summary: Search for an Individual in the individual List"
 	@priority = "4"
 	test SearchIndividualList {
-		property portal.upstream = "quarantine";
-
 		var emailList = "randy.smith@liferay.com,maria.rau@liferay.com";
 
 		task ("Get site assigned property name") {
@@ -786,8 +780,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-9029 | Test Summary: Sort Individuals List"
 	@priority = "3"
 	test SortIndividualList {
-		property portal.upstream = "quarantine";
-
 		var usernameList = "user1,user2,user3";
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 

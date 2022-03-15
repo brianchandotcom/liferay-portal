@@ -712,11 +712,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8118 | Test Summary: Document known individuals list shows the individuals who have viewed the documents"
 	@priority = "5"
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedDocuments {
-		property portal.upstream = "quarantine";
-
-		// AC Quarantine reason: The name of the known individuals do not appear in the list
-		// AC Quarantine ticket: LRAC-9807
-
 		var usernameList = "ac,liferay";
 		var emailList = "ac@liferay.com,liferay@liferay.com";
 		var nameList = "ac ac,liferay liferay";

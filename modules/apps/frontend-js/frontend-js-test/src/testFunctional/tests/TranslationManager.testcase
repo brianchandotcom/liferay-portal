@@ -48,7 +48,6 @@ definition {
 				key_currentLocale = "en-us",
 				key_leftTitle = "Default",
 				key_locale = "fr-FR",
-				key_number = "1",
 				key_rightTitle = "Admin",
 				languagefirst = "Welcome to Liferay",
 				languagesecond = "Bienvenue sur Liferay");
@@ -58,28 +57,24 @@ definition {
 			TranslationManagerPortlet.selectLanguageInAuiTagSelector(
 				key_currentLocale = "fr-fr",
 				key_leftTitle = "Default",
-				key_locale = "en-US",
-				key_number = "1");
+				key_locale = "en-US");
 		}
 
 		task ("Then translated language is available to select") {
 			TranslationManagerPortlet.selectLanguageInAuiTagSelector(
 				key_currentLocale = "en-us",
 				key_leftTitle = "Default",
-				key_locale = "fr-FR",
-				key_number = "1");
+				key_locale = "fr-FR");
 		}
 
 		task ("Then assert language selector is changed to the selected language") {
 			AssertElementPresent(
 				key_currentLocale = "fr-fr",
-				key_number = "1",
 				key_title = "Default",
 				locator1 = "TranslationManager#SELECT_TRANSLATION_LANGUAGE_AUI_TAG_MENU");
 
 			AssertElementPresent(
 				key_currentLocale = "fr-fr",
-				key_number = "2",
 				key_title = "Admin",
 				locator1 = "TranslationManager#SELECT_TRANSLATION_LANGUAGE_AUI_TAG_MENU");
 		}

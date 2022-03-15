@@ -136,6 +136,15 @@ const Filter = ({activationKeys, filtersState: [filters, setFilters]}) => {
 											availableFields.hasVirtualCluster
 										}
 										setFilters={setFilters}
+										updateFilters={(checkedItems) =>
+											setFilters((previousFilters) => ({
+												...previousFilters,
+												keyType: {
+													...previousFilters.keyType,
+													value: checkedItems,
+												},
+											}))
+										}
 									/>
 								),
 								type: 'component',

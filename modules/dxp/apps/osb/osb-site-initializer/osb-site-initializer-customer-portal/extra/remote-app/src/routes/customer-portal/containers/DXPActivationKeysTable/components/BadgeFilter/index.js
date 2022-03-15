@@ -105,7 +105,24 @@ const BadgeFilter = ({
 
 			{!!Object.values(filters.keyType.value).some(
 				(value) => !!value
-			) && <>{getKeyTypeDisplay(filters.keyType)}</>}
+			) && (
+				<>
+					{getKeyTypeDisplay(filters.keyType)}{' '}
+					<Button
+						onClick={() =>
+							setFilters((previousFilters) => ({
+								...previousFilters,
+								keyType: {
+									...previousFilters.keyType,
+									value: [],
+								},
+							}))
+						}
+					>
+						LIMPA keyTypes
+					</Button>
+				</>
+			)}
 
 			{!!filters.environmentTypes.value?.length && (
 				<div>

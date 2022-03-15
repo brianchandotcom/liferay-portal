@@ -221,7 +221,7 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="ObjectFieldSetting" remote-service="true" uuid="true">
+	<entity local-service="true" name="ObjectFieldSetting" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
 
@@ -239,7 +239,6 @@
 
 		<column name="objectFieldId" type="long" />
 		<column name="name" type="String" />
-		<column name="required" type="boolean" />
 		<column name="value" type="String" />
 
 		<!-- Finder methods -->

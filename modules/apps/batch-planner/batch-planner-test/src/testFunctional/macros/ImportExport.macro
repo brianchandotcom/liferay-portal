@@ -54,6 +54,22 @@ definition {
 		WaitForVisible(locator1 = "Button#PLUS");
 	}
 
+	macro saveAsTemplate {
+		WaitForElementPresent(
+			key_text = "Save as Template",
+			locator1 = "Button#ANY");
+
+		Button.click(button = "Save as Template");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${templateName}");
+
+		Button.clickSave();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro selectEntity {
 		Select(
 			key_selectFieldLabel = "Headless Endpoint",

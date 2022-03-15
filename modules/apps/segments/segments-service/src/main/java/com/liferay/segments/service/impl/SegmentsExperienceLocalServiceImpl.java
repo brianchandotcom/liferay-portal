@@ -328,6 +328,10 @@ public class SegmentsExperienceLocalServiceImpl
 			layout.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
 			classNameLocalService.getClassNameId(Layout.class), plid);
 
+		if (segmentsExperience == null) {
+			return SegmentsExperienceConstants.ID_DEFAULT;
+		}
+
 		return segmentsExperience.getSegmentsExperienceId();
 	}
 

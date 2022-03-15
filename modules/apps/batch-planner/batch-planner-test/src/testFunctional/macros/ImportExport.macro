@@ -8,6 +8,22 @@ definition {
 			locator1 = "ImportExport#EXECUTION_ENTRY");
 	}
 
+	macro assertImportTemplate {
+		AssertSelectedLabel(
+			key_selectFieldLabel = "Template",
+			locator1 = "ImportExport#SELECT",
+			value1 = "${templateName}");
+
+		AssertSelectedLabel(
+			key_selectFieldLabel = "Headless Endpoint",
+			locator1 = "ImportExport#SELECT",
+			value1 = "${headlessEndpoint}");
+
+		AssertSelectedLabel(
+			locator1 = "ImportExport#ENTITY_TYPE",
+			value1 = "${entityType}");
+	}
+
 	macro gotoExport {
 		Click(locator1 = "Button#PLUS");
 

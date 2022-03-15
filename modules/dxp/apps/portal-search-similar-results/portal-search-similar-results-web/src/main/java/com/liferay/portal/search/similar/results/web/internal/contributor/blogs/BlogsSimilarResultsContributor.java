@@ -74,10 +74,19 @@ public class BlogsSimilarResultsContributor
 		DestinationBuilder destinationBuilder,
 		DestinationHelper destinationHelper) {
 
+		AssetRenderer<?> assetRenderer = destinationHelper.getAssetRenderer();
+
+		if (assetRenderer.getGroupId() !=
+				destinationHelper.getCurrentGroupId()) {
+
+			destinationBuilder.replaceURLString(
+				destinationHelper.getAssetViewURL());
+
+			return;
+		}
+
 		String urlTitle = (String)destinationHelper.getRouteParameter(
 			"urlTitle");
-
-		AssetRenderer<?> assetRenderer = destinationHelper.getAssetRenderer();
 
 		destinationBuilder.replace(
 			_getBlogsURLParameterPattern(urlTitle),

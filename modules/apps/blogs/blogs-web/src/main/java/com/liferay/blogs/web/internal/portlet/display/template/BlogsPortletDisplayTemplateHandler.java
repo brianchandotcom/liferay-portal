@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.template;
+package com.liferay.blogs.web.internal.portlet.display.template;
 
 import com.liferay.blogs.configuration.BlogsConfiguration;
 import com.liferay.blogs.constants.BlogsPortletKeys;

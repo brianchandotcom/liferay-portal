@@ -9,7 +9,10 @@
  * distribution rights of the Software.
  */
 import ClayModal from '@clayui/modal';
+import {useMemo, useState} from 'react';
 import SetupAnalyticsCloud from '../../../../common/containers/setup-forms/SetupAnalyticsCloudForm';
+import ConfirmationMessageModal from '../../../../common/containers/setup-forms/SetupAnalyticsCloudForm/ConfirmationMessageModal';
+import {ANALYTICS_STEPS_TYPES} from '../../utils/constants';
 
 const AnalyticsCloudModal = ({
 	observer,
@@ -17,14 +20,34 @@ const AnalyticsCloudModal = ({
 	project,
 	subscriptionGroupId,
 }) => {
+	const [currentProcess, setCurrentProcess] = useState(
+		ANALYTICS_STEPS_TYPES.setupForm
+	);
+
+	const handleChangeForm = () => {
+		setCurrentProcess(ANALYTICS_STEPS_TYPES.confirmationForm);
+	};
+
+	const currentModalForm = useMemo(
+		() => ({
+			[ANALYTICS_STEPS_TYPES.confirmationForm]: (
+				<ConfirmationMessageModal handlePage={onClose} />
+			),
+			[ANALYTICS_STEPS_TYPES.setupForm]: (
+				<SetupAnalyticsCloud
+					handlePage={handleChangeForm}
+					leftButton="Cancel"
+					project={project}
+					subscriptionGroupId={subscriptionGroupId}
+				/>
+			),
+		}),
+		[onClose, project, subscriptionGroupId]
+	);
+
 	return (
 		<ClayModal center observer={observer}>
-			<SetupAnalyticsCloud
-				handlePage={onClose}
-				leftButton="Cancel"
-				project={project}
-				subscriptionGroupId={subscriptionGroupId}
-			/>
+			{currentModalForm[currentProcess]}
 		</ClayModal>
 	);
 };

@@ -112,7 +112,11 @@ const ActivationStatusAnalyticsCloud = ({
 	return (
 		<>
 			{isVisible && (
-				<AnalyticsCloudModal observer={observer} onClose={onClose} />
+				<AnalyticsCloudModal
+					observer={observer}
+					onClose={onClose}
+					project={project}
+				/>
 			)}
 			<ActivationStatusLayout
 				activationStatus={activationStatus}

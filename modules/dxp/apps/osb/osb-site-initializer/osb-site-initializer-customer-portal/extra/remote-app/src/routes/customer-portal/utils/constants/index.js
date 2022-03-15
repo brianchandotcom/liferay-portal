@@ -23,3 +23,4 @@ export * from './statusCode';
 export * from './statusTag';
 export * from './subscriptionsStatus';
 export * from './webContentDXPVersionTypes';
+export * from './analyticsStepsTypes';

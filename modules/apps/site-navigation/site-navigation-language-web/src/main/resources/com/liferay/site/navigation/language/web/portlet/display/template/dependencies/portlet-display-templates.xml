@@ -6,7 +6,7 @@
 		<name>portlet-display-template-name-icon</name>
 		<description>portlet-display-template-description-icon</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/language/web/portlet/template/dependencies/portlet_display_template_icon.ftl</script-file>
+		<script-file>com/liferay/site/navigation/language/web/portlet/display/template/dependencies/portlet_display_template_icon.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -14,7 +14,7 @@
 		<name>portlet-display-template-name-icon-menu</name>
 		<description>portlet-display-template-description-icon-menu</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/language/web/portlet/template/dependencies/portlet_display_template_icon_menu.ftl</script-file>
+		<script-file>com/liferay/site/navigation/language/web/portlet/display/template/dependencies/portlet_display_template_icon_menu.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -22,7 +22,7 @@
 		<name>portlet-display-template-name-long-text</name>
 		<description>portlet-display-template-description-long-text</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/language/web/portlet/template/dependencies/portlet_display_template_long_text.ftl</script-file>
+		<script-file>com/liferay/site/navigation/language/web/portlet/display/template/dependencies/portlet_display_template_long_text.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -30,7 +30,7 @@
 		<name>portlet-display-template-name-select-box</name>
 		<description>portlet-display-template-description-select-box</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/language/web/portlet/template/dependencies/portlet_display_template_select_box.ftl</script-file>
+		<script-file>com/liferay/site/navigation/language/web/portlet/display/template/dependencies/portlet_display_template_select_box.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -38,7 +38,7 @@
 		<name>portlet-display-template-name-short-text</name>
 		<description>portlet-display-template-description-short-text</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/language/web/portlet/template/dependencies/portlet_display_template_short_text.ftl</script-file>
+		<script-file>com/liferay/site/navigation/language/web/portlet/display/template/dependencies/portlet_display_template_short_text.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 </root>

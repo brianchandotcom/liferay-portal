@@ -44,6 +44,7 @@ import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.web.internal.asset.JournalArticleDDMFormValuesReader;
 import com.liferay.journal.web.internal.info.item.JournalArticleInfoItemFields;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
@@ -174,23 +175,24 @@ public class JournalArticleInfoItemFieldValuesProvider
 				JournalArticle.class.getName(),
 				journalArticle.getResourcePrimKey(), themeDisplay);
 
-		if (Validator.isNull(friendlyURL) &&
-			Validator.isNotNull(journalArticle.getLayoutUuid())) {
-
-			Layout layout = journalArticle.getLayout();
-
-			String groupFriendlyURL = _portal.getGroupFriendlyURL(
-				_layoutSetLocalService.getLayoutSet(
-					journalArticle.getGroupId(), layout.isPrivateLayout()),
-				themeDisplay, false, false);
-
-			friendlyURL = StringBundler.concat(
-				groupFriendlyURL,
-				JournalArticleConstants.CANONICAL_URL_SEPARATOR,
-				journalArticle.getUrlTitle(themeDisplay.getLocale()));
+		if (Validator.isNotNull(friendlyURL)) {
+			return friendlyURL;
 		}
 
-		return friendlyURL;
+		if (Validator.isNull(journalArticle.getLayoutUuid())) {
+			return StringPool.BLANK;
+		}
+
+		Layout layout = journalArticle.getLayout();
+
+		String groupFriendlyURL = _portal.getGroupFriendlyURL(
+			_layoutSetLocalService.getLayoutSet(
+				journalArticle.getGroupId(), layout.isPrivateLayout()),
+			themeDisplay, false, false);
+
+		return StringBundler.concat(
+			groupFriendlyURL, JournalArticleConstants.CANONICAL_URL_SEPARATOR,
+			journalArticle.getUrlTitle(themeDisplay.getLocale()));
 	}
 
 	private String _getInfoItemFormVariationKey(JournalArticle journalArticle) {

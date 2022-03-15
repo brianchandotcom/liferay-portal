@@ -343,7 +343,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-126009. The user is able to filter web contents in Collection Display using Tag."
+	@description = "This is a test for LPS-126009 and LPS-147390. The user is able to filter web contents in Collection Display using Tag."
 	@priority = "4"
 	test FilterWebContentByTag {
 		property test.name.skip.portal.instance = "CollectionDisplayWithCollectionProviders#FilterWebContentByTag";
@@ -421,6 +421,13 @@ definition {
 				tagNameList = "tag1");
 		}
 
+		task ("View the text info shown below the Collection field") {
+			AssertTextEquals(
+				key_text = "info-panel-open",
+				locator1 = "Icon#ANY",
+				value1 = "Collection Prefiltered");
+		}
+
 		task ("View only web contents with tag1 are shown in Collection Display") {
 			var n = "1";
 
@@ -449,6 +456,13 @@ definition {
 				fragmentName = "Collection Display",
 				selectedName = "Basic Web Content",
 				tagNameList = "tag2");
+		}
+
+		task ("View the text info shown below the Collection field") {
+			AssertTextEquals(
+				key_text = "info-panel-open",
+				locator1 = "Icon#ANY",
+				value1 = "Collection Prefiltered");
 		}
 
 		task ("View only web contents with tag2 are shown in Collection Display") {
@@ -481,6 +495,13 @@ definition {
 				tagNameList = "tag3");
 		}
 
+		task ("View the text info shown below the Collection field") {
+			AssertTextEquals(
+				key_text = "info-panel-open",
+				locator1 = "Icon#ANY",
+				value1 = "Collection Prefiltered");
+		}
+
 		task ("View only web contents with tag3 are shown in Collection Display") {
 			var n = "1";
 
@@ -509,6 +530,13 @@ definition {
 				fragmentName = "Collection Display",
 				selectedName = "Basic Web Content",
 				tagNameList = "tag1,tag2,tag3");
+		}
+
+		task ("View the text info shown below the Collection field") {
+			AssertTextEquals(
+				key_text = "info-panel-open",
+				locator1 = "Icon#ANY",
+				value1 = "Collection Prefiltered");
 		}
 
 		task ("View only web contents with tag are shown in Collection Display") {

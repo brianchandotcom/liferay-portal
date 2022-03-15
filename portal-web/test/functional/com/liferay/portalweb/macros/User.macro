@@ -2019,6 +2019,10 @@ definition {
 			SignIn.agreeToTermsOfUse();
 		}
 
+		User.resetPassword(
+			localizedSaveButton = "${localizedSaveButton}",
+			newPassword = "${newPassword}");
+
 		if (isSet(localizedAnswer)) {
 			User.answerPasswordReminderLocalized(
 				localizedAnswer = "${localizedAnswer}",
@@ -2441,9 +2445,14 @@ definition {
 					value1 = "test");
 			}
 
-			Button.clickSubmitButton();
+			if (isSet(localizedSaveButton)) {
+				Button.click(button = "${localizedSaveButton}");
+			}
+			else {
+				Button.clickSubmitButton();
 
-			AssertElementNotPresent(locator1 = "TextInput#ENTER_AGAIN");
+				AssertElementNotPresent(locator1 = "TextInput#ENTER_AGAIN");
+			}
 		}
 	}
 

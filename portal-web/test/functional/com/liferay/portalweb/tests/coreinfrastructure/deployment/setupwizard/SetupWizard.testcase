@@ -192,6 +192,7 @@ definition {
 			localizedAgree = "Acepto",
 			localizedAnswer = "Respuesta",
 			localizedSaveButton = "Guardar",
+			newPassword = "test1",
 			password = "test",
 			userEmailAddress = "user@liferay.com");
 

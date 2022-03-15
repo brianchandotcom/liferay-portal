@@ -159,59 +159,57 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 							<liferay-ui:error exception="<%= FileEntryLockException.MustOwnLock.class %>" message="you-can-only-checkin-documents-you-have-checked-out-yourself" />
 							<liferay-ui:error key="externalServiceFailed" message="you-cannot-access-external-service-because-you-are-not-allowed-to-or-it-is-unavailable" />
 
-							<div class="document-container">
-								<c:choose>
-									<c:when test="<%= dlViewDisplayContext.isSearch() %>">
-										<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />
-									</c:when>
-									<c:otherwise>
-										<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>" />
-									</c:otherwise>
-								</c:choose>
+							<c:choose>
+								<c:when test="<%= dlViewDisplayContext.isSearch() %>">
+									<liferay-util:include page="/document_library/search_resources.jsp" servletContext="<%= application %>" />
+								</c:when>
+								<c:otherwise>
+									<liferay-util:include page="/document_library/view_entries.jsp" servletContext="<%= application %>" />
+								</c:otherwise>
+							</c:choose>
 
-								<div class="d-none" id="<portlet:namespace />appViewEntryTemplates">
+							<div class="d-none" id="<portlet:namespace />appViewEntryTemplates">
 
-									<%
-									String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/default.png";
-									%>
+								<%
+								String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/default.png";
+								%>
 
-									<liferay-frontend:vertical-card
-										cssClass="card-type-asset display-icon entry-display-style file-card form-check form-check-card"
-										imageUrl="<%= thumbnailSrc %>"
-										title="{title}"
-										url="<%= dlViewDisplayContext.getUploadURL() %>"
-									>
-										<liferay-frontend:vertical-card-header>
-											<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
-										</liferay-frontend:vertical-card-header>
-									</liferay-frontend:vertical-card>
+								<liferay-frontend:vertical-card
+									cssClass="card-type-asset display-icon entry-display-style file-card form-check form-check-card"
+									imageUrl="<%= thumbnailSrc %>"
+									title="{title}"
+									url="<%= dlViewDisplayContext.getUploadURL() %>"
+								>
+									<liferay-frontend:vertical-card-header>
+										<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
+									</liferay-frontend:vertical-card-header>
+								</liferay-frontend:vertical-card>
 
-									<dd class="display-descriptive entry-display-style list-group-item list-group-item-flex">
-										<div class="autofit-col"></div>
+								<dd class="display-descriptive entry-display-style list-group-item list-group-item-flex">
+									<div class="autofit-col"></div>
 
-										<div class="autofit-col">
-											<div class="click-selector sticker">
-												<div class="sticker-overlay">
-													<img alt="thumbnail" class="sticker-img" src="<%= thumbnailSrc %>" />
-												</div>
+									<div class="autofit-col">
+										<div class="click-selector sticker">
+											<div class="sticker-overlay">
+												<img alt="thumbnail" class="sticker-img" src="<%= thumbnailSrc %>" />
 											</div>
 										</div>
+									</div>
 
-										<div class="autofit-col autofit-col-expand">
-											<h2 class="h5">
-												<aui:a href="<%= dlViewDisplayContext.getUploadURL() %>">
-													{title}
-												</aui:a>
-											</h2>
+									<div class="autofit-col autofit-col-expand">
+										<h2 class="h5">
+											<aui:a href="<%= dlViewDisplayContext.getUploadURL() %>">
+												{title}
+											</aui:a>
+										</h2>
 
-											<span>
-												<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
-											</span>
-										</div>
+										<span>
+											<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
+										</span>
+									</div>
 
-										<div class="autofit-col"></div>
-									</dd>
-								</div>
+									<div class="autofit-col"></div>
+								</dd>
 							</div>
 						</aui:form>
 					</div>

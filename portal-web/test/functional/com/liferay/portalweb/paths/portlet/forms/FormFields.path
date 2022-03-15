@@ -779,7 +779,7 @@
 </tr>
 <tr>
 	<td>SELECT_FIELD_OPTIONS_LIST</td>
-	<td>//div[contains(@class, 'dropdown-menu') and contains(@class, 'show')]//li[contains(.,'${key_selectOption}')]</td>
+	<td>//div[@class='dropdown-menu ddm-btn-full ddm-select-dropdown show']//li//button[text()='${key_selectOption}']</td>
 	<td></td>
 </tr>
 <tr>

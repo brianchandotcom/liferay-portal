@@ -1220,7 +1220,7 @@ definition {
 
 		FormFields.viewSelectOptionsList(
 			fieldName = "${fieldNameCountries}",
-			selectOption = "Option");
+			selectOption = "Select 1");
 
 		FormFields.editText(
 			fieldName = "${fieldNameTextField}",

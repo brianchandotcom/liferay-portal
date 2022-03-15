@@ -144,6 +144,23 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 
 	getJSDate(date, time) {
 		if (typeof date === 'string') {
+			const split = date.split('-');
+
+			if (split.length === 3) {
+				return new Date(
+					split[0] +
+						'-' +
+						this.pad(split[1]) +
+						'-' +
+						this.pad(split[2]) +
+						'T' +
+						time.hours +
+						':' +
+						time.minutes +
+						':00'
+				);
+			}
+
 			return new Date(
 				date + 'T' + time.hours + ':' + time.minutes + ':00'
 			);
@@ -300,11 +317,17 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 	}
 
 	pad(value) {
-		if (value < 10) {
-			return '0' + value;
+		let number = value;
+
+		if (typeof value === 'string') {
+			number = parseInt(value, 10);
 		}
 
-		return value.toString();
+		if (number < 10) {
+			return '0' + number;
+		}
+
+		return number.toString();
 	}
 }
 

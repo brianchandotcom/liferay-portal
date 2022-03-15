@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.internal.portlet.template;
+package com.liferay.wiki.web.internal.portlet.display.template;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;

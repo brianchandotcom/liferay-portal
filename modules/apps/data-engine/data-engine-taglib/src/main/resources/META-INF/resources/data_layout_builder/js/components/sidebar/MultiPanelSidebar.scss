@@ -143,7 +143,7 @@ $zIndexContent: 0;
 
 .rtl .multi-panel-sidebar {
 	&-content {
-		transform: translateX(-100%);
+		transform: translateX(100%);
 
 		&-open {
 			transform: translateX(0);

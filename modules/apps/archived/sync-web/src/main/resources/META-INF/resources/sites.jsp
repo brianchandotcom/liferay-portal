@@ -142,7 +142,8 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			total="<%= groups.size() %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= ListUtil.subList(groups, searchContainer.getStart(), searchContainer.getEnd()) %>"
+				calculateStartAndEnd="<%= true %>"
+				results="<%= groups %>"
 			/>
 
 			<liferay-ui:search-container-row

@@ -71,7 +71,8 @@ List<Website> websites = WebsiteServiceUtil.getWebsites(className, classPK);
 	total="<%= websites.size() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= websites.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+		calculateStartAndEnd="<%= true %>"
+		results="<%= websites %>"
 	/>
 
 	<liferay-ui:search-container-row

@@ -74,7 +74,8 @@ List<String> domains = accountEntryDisplay.getDomains();
 		total="<%= domains.size() %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= domains.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+			calculateStartAndEnd="<%= true %>"
+			results="<%= domains %>"
 		/>
 
 		<liferay-ui:search-container-row

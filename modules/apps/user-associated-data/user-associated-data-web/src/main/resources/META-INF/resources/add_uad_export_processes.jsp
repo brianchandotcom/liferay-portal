@@ -75,7 +75,8 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 					total="<%= uadApplicationExportDisplayList.size() %>"
 				>
 					<liferay-ui:search-container-results
-						results="<%= ListUtil.subList(uadApplicationExportDisplayList, searchContainer.getStart(), searchContainer.getEnd()) %>"
+						calculateStartAndEnd="<%= true %>"
+						results="<%= uadApplicationExportDisplayList %>"
 					/>
 
 					<liferay-ui:search-container-row

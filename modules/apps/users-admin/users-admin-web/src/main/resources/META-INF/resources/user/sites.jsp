@@ -80,7 +80,8 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 	total="<%= siteGroups.size() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= siteGroups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+		calculateStartAndEnd="<%= true %>"
+		results="<%= siteGroups %>"
 	/>
 
 	<liferay-ui:search-container-row
@@ -290,7 +291,8 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 		total="<%= inheritedSiteGroups.size() %>"
 	>
 		<liferay-ui:search-container-results
-			results="<%= inheritedSiteGroups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+			calculateStartAndEnd="<%= true %>"
+			results="<%= inheritedSiteGroups %>"
 		/>
 
 		<liferay-ui:search-container-row

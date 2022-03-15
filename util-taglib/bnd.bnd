@@ -1,6 +1,6 @@
 Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
-Bundle-Version: 8.4.7
+Bundle-Version: 8.5.0
 Export-Package:\
 	com.liferay.alloy.taglib.*;version="3.0.0",\
 	com.liferay.taglib.*

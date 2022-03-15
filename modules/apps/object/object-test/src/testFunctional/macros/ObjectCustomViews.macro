@@ -88,6 +88,16 @@ definition {
 			value1 = "${name}");
 	}
 
+	macro gotoPermissions {
+		Click(
+			key_objectLabel = "${entryName}",
+			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+		MenuItem.click(menuItem = "Permissions");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+	}
+
 	macro goToViewsBuilderTab {
 		if (IsElementPresent(locator1 = "ObjectCustomViews#VIEW_BUILDER_TAB")) {
 			Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_TAB");
@@ -132,6 +142,14 @@ definition {
 		Type(
 			locator1 = "ObjectCustomViews#VIEW_BUILDER_SEARCH_BAR",
 			value1 = "${colunmName}");
+	}
+
+	macro selectPermissionToRegularRole {
+		for (var permissionsName : list "${permissionsList}") {
+			Click(
+				key_permissionName = "${permissionsName}",
+				locator1 = "ObjectCustomViews#SELECT_PERMISSIONS_TO_REGULAR_ROLE");
+		}
 	}
 
 	macro viewColumnsOrder {

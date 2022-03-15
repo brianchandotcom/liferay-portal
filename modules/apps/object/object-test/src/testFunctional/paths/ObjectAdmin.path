@@ -462,7 +462,7 @@
 	</tr>
 	<tr>
 		<td>OBJECT_KEBAB_MENU</td>
-		<td>//a[contains(text(),'${key_objectLabel}')]/ancestor::div[contains(@class,'dnd-tr')]//*[contains(@class,'lexicon-icon-ellipsis')]</td>
+		<td>//*[contains(text(),'${key_objectLabel}')]/ancestor::div[contains(@class,'dnd-tr')]//*[contains(@class,'lexicon-icon-ellipsis')]</td>
 		<td></td>
 	</tr>
 	<tr>

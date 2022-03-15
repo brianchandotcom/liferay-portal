@@ -196,7 +196,11 @@ definition {
 			password = "test",
 			userEmailAddress = "user@liferay.com");
 
-		Button.click(button = "Finalizado");
+		var testRunEnvironment = PropsUtil.get("test.run.environment");
+
+		if ("${testRunEnvironment}" == "EE") {
+			Button.click(button = "Finalizado");
+		}
 
 		AssertTextEquals(
 			locator1 = "Home#SITE_NAME",

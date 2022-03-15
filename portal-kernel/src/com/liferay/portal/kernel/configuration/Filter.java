@@ -29,41 +29,12 @@ public class Filter {
 		this(new String[] {selector1}, null);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public Filter(String selector1, Map<String, String> variables) {
-		this(new String[] {selector1}, variables);
-	}
-
 	public Filter(String selector1, String selector2) {
 		this(new String[] {selector1, selector2}, null);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public Filter(
-		String selector1, String selector2, Map<String, String> variables) {
-
-		this(new String[] {selector1, selector2}, variables);
-	}
-
 	public Filter(String selector1, String selector2, String selector3) {
 		this(new String[] {selector1, selector2, selector3}, null);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public Filter(
-		String selector1, String selector2, String selector3,
-		Map<String, String> variables) {
-
-		this(new String[] {selector1, selector2, selector3}, variables);
 	}
 
 	/**
@@ -81,14 +52,6 @@ public class Filter {
 
 	public String[] getSelectors() {
 		return _selectors;
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public Map<String, String> getVariables() {
-		return _variables;
 	}
 
 	private final String[] _selectors;

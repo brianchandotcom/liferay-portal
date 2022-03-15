@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.VirtualLayoutConstants;
+import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.capabilities.ThumbnailCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
@@ -1080,9 +1081,11 @@ public class DefaultExportImportContentProcessorTest {
 				"[$WEB_CONTENT_DISPLAY_SERVLET_MAPPING$]", "[$WEB_ID$]"
 			},
 			new String[] {
-				"/b", VirtualLayoutConstants.CANONICAL_URL_SEPARATOR,
+				FriendlyURLResolverConstants.URL_SEPARATOR_X_BLOGS_ENTRY,
+				VirtualLayoutConstants.CANONICAL_URL_SEPARATOR,
 				GroupConstants.CONTROL_PANEL_FRIENDLY_URL,
-				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL, "/d",
+				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL,
+				FriendlyURLResolverConstants.URL_SEPARATOR_X_FILE_ENTRY,
 				_externalGroup.getFriendlyURL(),
 				_externalPrivateLayout.getFriendlyURL(),
 				_externalPublicLayout.getFriendlyURL(),
@@ -1105,7 +1108,9 @@ public class DefaultExportImportContentProcessorTest {
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 				_stagingPrivateLayout.getFriendlyURL(),
 				_stagingPublicLayout.getFriendlyURL(), fileEntry.getTitle(),
-				fileEntry.getUuid(), "/w", company.getWebId()
+				fileEntry.getUuid(),
+				FriendlyURLResolverConstants.URL_SEPARATOR_X_JOURNAL_ARTICLE,
+				company.getWebId()
 			});
 
 		if (!content.contains("[$TIMESTAMP")) {

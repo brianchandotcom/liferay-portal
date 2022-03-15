@@ -150,11 +150,7 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 
 	private String _getFileEntryFriendlyURL(String urlTitle) {
 		return String.format(
-			"%s%s/%s",
-			FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY.substring(
-				0,
-				FriendlyURLResolverConstants.URL_SEPARATOR_FILE_ENTRY.length() -
-					1),
+			"%s%s/%s", FriendlyURLResolverConstants.URL_SEPARATOR_X_FILE_ENTRY,
 			group.getFriendlyURL(), urlTitle);
 	}
 

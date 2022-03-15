@@ -16,6 +16,7 @@ package com.liferay.batch.planner.web.internal.display.context;
 
 import com.liferay.batch.planner.model.BatchPlannerPlanTable;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.List;
@@ -135,38 +135,26 @@ public class BatchPlannerLogManagementToolbarDisplayContext
 		return new String[] {"createDate"};
 	}
 
+	private DropdownItem _getSearchByDropdownItem(
+		String fieldName, String label) {
+
+		return DropdownItemBuilder.setActive(
+			Objects.equals(_getSearchByField(), fieldName)
+		).setHref(
+			getPortletURL(), "searchByField", fieldName
+		).setLabel(
+			LanguageUtil.get(httpServletRequest, label)
+		).build();
+	}
+
 	private List<DropdownItem> _getSearchByDropdownItems() {
 		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setActive(
-					Objects.equals(
-						_getSearchByField(),
-						BatchPlannerPlanTable.INSTANCE.name.getName()));
-
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "name"));
-
-				dropdownItem.setHref(
-					PortletURLUtil.clone(currentURLObj, liferayPortletResponse),
-					"searchByField",
-					BatchPlannerPlanTable.INSTANCE.name.getName());
-			}
+			_getSearchByDropdownItem(
+				BatchPlannerPlanTable.INSTANCE.name.getName(), "name")
 		).add(
-			dropdownItem -> {
-				dropdownItem.setActive(
-					Objects.equals(
-						_getSearchByField(),
-						BatchPlannerPlanTable.INSTANCE.internalClassName.
-							getName()));
-
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "entity"));
-
-				dropdownItem.setHref(
-					PortletURLUtil.clone(currentURLObj, liferayPortletResponse),
-					"searchByField",
-					BatchPlannerPlanTable.INSTANCE.internalClassName.getName());
-			}
+			_getSearchByDropdownItem(
+				BatchPlannerPlanTable.INSTANCE.internalClassName.getName(),
+				"entity")
 		).build();
 	}
 

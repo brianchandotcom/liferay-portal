@@ -26,7 +26,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -152,39 +151,33 @@ public abstract class BaseTestrayServer implements TestrayServer {
 			return;
 		}
 
-		File resultsDir = getResultsDir();
-
-		File resultsTarGzFile = new File(
-			resultsDir.getParentFile(), "results.tar.gz");
-
-		JenkinsResultsParserUtil.tarGzip(resultsDir, resultsTarGzFile);
-
 		StringBuilder sb = new StringBuilder();
-
-		Date date = new Date(topLevelBuild.getStartTime());
-
-		sb.append(
-			JenkinsResultsParserUtil.toDateString(
-				date, "yyyy-MM", "America/Los_Angeles"));
-
-		sb.append("/");
 
 		JenkinsMaster jenkinsMaster = topLevelBuild.getJenkinsMaster();
 
 		sb.append(jenkinsMaster.getName());
 
-		sb.append("/");
-		sb.append(topLevelBuild.getJobName());
-		sb.append("/");
+		sb.append("-");
+
+		String jobName = topLevelBuild.getJobName();
+
+		sb.append(jobName.replaceAll("[\\(\\)]", "_"));
+
+		sb.append("-");
 		sb.append(topLevelBuild.getBuildNumber());
+		sb.append("-results.tar.gz");
+
+		File resultsDir = getResultsDir();
+
+		File resultsTarGzFile = new File(
+			resultsDir.getParentFile(), sb.toString());
+
+		JenkinsResultsParserUtil.tarGzip(resultsDir, resultsTarGzFile);
 
 		TestrayS3Bucket testrayS3Bucket = TestrayS3Bucket.getInstance();
 
 		testrayS3Bucket.createTestrayS3Object(
-			sb + "/results.tar.gz", resultsTarGzFile);
-
-		testrayS3Bucket.createTestrayS3Object(
-			sb + "/.lfr-testray-completed", "");
+			"to-be-done/" + resultsTarGzFile.getName(), resultsTarGzFile);
 	}
 
 	private synchronized void _initTestrayProjects() {

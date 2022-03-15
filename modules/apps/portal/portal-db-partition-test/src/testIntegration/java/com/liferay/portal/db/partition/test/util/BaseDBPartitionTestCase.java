@@ -123,7 +123,7 @@ public abstract class BaseDBPartitionTestCase {
 		}
 	}
 
-	protected static void disableDBPartition() throws SQLException {
+	protected static void disableDBPartition() {
 		DataAccess.cleanUp(connection);
 
 		if (_dbPartitionEnabled) {

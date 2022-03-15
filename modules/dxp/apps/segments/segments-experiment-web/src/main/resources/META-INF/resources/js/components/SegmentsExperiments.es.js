@@ -84,7 +84,7 @@ function SegmentsExperiments({
 					active={activeTab === TABS_STATES.HISTORY}
 					onClick={() => setActiveTab(TABS_STATES.HISTORY)}
 				>
-					{Liferay.Language.get('history')}
+					{Liferay.Language.get('history[record]')}
 
 					{' (' + experimentHistory.length + ')'}
 				</ClayTabs.Item>

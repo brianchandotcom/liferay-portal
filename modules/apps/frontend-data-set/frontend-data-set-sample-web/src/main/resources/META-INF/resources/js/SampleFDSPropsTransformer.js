@@ -25,7 +25,13 @@ export default function propsTransformer({
 		},
 		onActionDropdownItemClick({action, itemData}) {
 			if (action.data.id === 'sampleMessage') {
-				alert(`${greeting} ${itemData.title}!`);
+				if (Liferay.__FF__.enableCustomDialogs) {
+					Liferay.Util.openAlertModal({
+						message: `${greeting} ${itemData.title}!`,
+					});
+				} else {
+					alert(`${greeting} ${itemData.title}!`);
+				}
 			}
 		},
 	};

@@ -24,4 +24,6 @@ public interface DestinationBuilder {
 	public DestinationBuilder replaceParameter(
 		String parameter, String newValue);
 
+	public DestinationBuilder replaceURLString(String urlString);
+
 }

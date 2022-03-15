@@ -182,8 +182,6 @@ definition {
 	@description = "This is a test for LRQA-68737. This test verifies that field reference can not be the same for two Options of fields."
 	@priority = "5"
 	test CanNotBeTheSameForTwoOptionsOfFields {
-		property portal.upstream = "quarantine";
-
 		NavItem.gotoStructures();
 
 		WebContentStructures.addCP(structureName = "WC Structure Title");

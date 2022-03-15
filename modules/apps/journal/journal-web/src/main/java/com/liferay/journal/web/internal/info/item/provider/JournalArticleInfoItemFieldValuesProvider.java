@@ -179,11 +179,11 @@ public class JournalArticleInfoItemFieldValuesProvider
 			return friendlyURL;
 		}
 
-		if (Validator.isNull(journalArticle.getLayoutUuid())) {
+		Layout layout = journalArticle.getLayout();
+
+		if (layout == null) {
 			return StringPool.BLANK;
 		}
-
-		Layout layout = journalArticle.getLayout();
 
 		String groupFriendlyURL = _portal.getGroupFriendlyURL(
 			_layoutSetLocalService.getLayoutSet(

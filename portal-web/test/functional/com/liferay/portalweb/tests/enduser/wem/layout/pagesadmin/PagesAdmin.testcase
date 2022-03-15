@@ -972,9 +972,11 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-76825. A user can search for a page from pages admin."
+	@description = "This is a test for LPS-76825 and LPS-149161. A user can search for a page from pages admin."
 	@priority = "5"
 	test SearchPages {
+		property portal.acceptance = "true";
+
 		task ("Add two pages to root and add one child page") {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 
@@ -995,61 +997,66 @@ definition {
 			PagesAdmin.openPagesAdmin(siteURLKey = "test-site-name");
 		}
 
-		task ("Search for all three pages and assert they all appear") {
-			Search.searchCP(searchTerm = "page");
-
-			for (var n : list "2,3") {
-				AssertTextEquals(
-					locator1 = "//tr[1]/td[${n}]",
-					value1 = "Page One");
-			}
-
-			for (var n : list "2,3") {
-				AssertTextEquals(
-					locator1 = "//tr[2]/td[${n}]",
-					value1 = "Page Two");
-			}
-
-			var n = "2";
-
-			for (var pageName : list "Page Three,Page One Page Three") {
-				AssertTextEquals(
-					locator1 = "//tr[3]/td[${n}]",
-					value1 = "${pageName}");
-
-				var n = ${n} + 1;
-			}
-		}
-
-		task ("Search for one page and assert only that page appears") {
+		task ("Search for page one and assert only that page appears") {
 			Search.searchCP(searchTerm = "one");
 
-			for (var n : list "2,3") {
-				AssertTextEquals(
-					locator1 = "//tr[1]/td[${n}]",
-					value1 = "Page One");
-			}
+			AssertElementPresent(
+				index = "1",
+				key_tableEntry = "Page One",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 
 			for (var pageName : list "Page Two,Page Three") {
-				AssertElementNotPresent(locator1 = "//tr/td[2][contains(.,'${pageName}')]");
+				AssertElementNotPresent(
+					index = "2",
+					key_tableEntry = "${pageName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 			}
 		}
 
 		task ("Search for child page and assert that page appears") {
 			Search.searchCP(searchTerm = "three");
 
-			var n = "2";
-
-			for (var pageName : list "Page Three,Page One Page Three") {
-				AssertTextEquals(
-					locator1 = "//tr[1]/td[${n}]",
-					value1 = "${pageName}");
-
-				var n = ${n} + 1;
-			}
+			AssertElementPresent(
+				index = "1",
+				key_tableEntry = "Page Three",
+				locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
 
 			for (var pageName : list "Page One,Page Two") {
-				AssertElementNotPresent(locator1 = "//tr/td[2][contains(.,'${pageName}')]");
+				AssertElementNotPresent(
+					index = "2",
+					key_tableEntry = "${pageName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
+			}
+		}
+
+		task ("Search for all three pages and order by Create Date") {
+			Search.searchCP(searchTerm = "page");
+
+			ManagementBar.setFilterAndOrder(filterBy = "Create Date");
+
+			var i = "1";
+
+			for (var pageName : list "Page One,Page Two,Page Three") {
+				AssertElementPresent(
+					index = "${i}",
+					key_tableEntry = "${pageName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_TITLE_INDEXED");
+
+				var i = ${i} + 1;
+			}
+		}
+
+		task ("Order by Relevance") {
+			ManagementBar.setFilterAndOrder(filterBy = "Relevance");
+		}
+
+		task ("View redirect to Pages admin after clear search results") {
+			Search.clearSearchResult();
+
+			for (var pageName : list "Page One,Page Two") {
+				PagesAdmin.viewPageItemPresent(
+					pageName = "${pageName}",
+					privacy = "Public Pages");
 			}
 		}
 	}

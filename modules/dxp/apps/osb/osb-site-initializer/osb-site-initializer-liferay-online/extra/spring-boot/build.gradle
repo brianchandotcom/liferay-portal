@@ -1,13 +1,20 @@
-plugins {
-	id 'org.springframework.boot' version '2.6.2'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+buildscript {
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "latest.release"
+	}
+
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "https://repository-cdn.liferay.com/nexus/content/groups/public"
+		}
+	}
 }
 
-sourceCompatibility = '11'
-
-group = 'com.liferay.site.initializer.liferay.online.extra.spring.boot'
-version = '0.0.1-SNAPSHOT'
+apply plugin: "com.liferay.spring.boot.defaults"
+apply plugin: "io.spring.dependency-management"
+apply plugin: "java"
 
 configurations {
 	compileOnly {

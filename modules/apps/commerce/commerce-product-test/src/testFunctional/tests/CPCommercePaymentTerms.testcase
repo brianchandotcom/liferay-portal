@@ -206,7 +206,7 @@ definition {
 
 	}
 
-	@description = "The Sales Manager can use the search bar to search a specific entry or can use the filters."
+	@description = "COMMERCE-8291. The Sales Manager can use the search bar to search a specific entry."
 	@priority = "4"
 	test UseFilterAndSearch {
 		property portal.acceptance = "false";

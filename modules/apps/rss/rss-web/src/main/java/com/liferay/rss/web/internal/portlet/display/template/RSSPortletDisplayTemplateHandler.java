@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.rss.web.internal.portlet.template;
+package com.liferay.rss.web.internal.portlet.display.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;

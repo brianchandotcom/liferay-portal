@@ -41,6 +41,7 @@ dependencies {
 	testIntegrationCompile project(":apps:portal:portal-local-service-tree-test-util")
 	testIntegrationCompile project(":apps:portal:portal-notifications-test-util")
 	testIntegrationCompile project(":apps:ratings:ratings-test-util")
+	testIntegrationCompile project(":apps:segments:segments-api")
 	testIntegrationCompile project(":apps:social:social-activity-test-util")
 	testIntegrationCompile project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationCompile project(":apps:subscription:subscription-test-util")

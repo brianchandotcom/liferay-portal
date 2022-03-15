@@ -26,6 +26,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-page-template-item-selector-api")
 	compileOnly project(":apps:layout:layout-taglib")
 	compileOnly project(":apps:petra:petra-portlet-url-builder")
+	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":apps:site:site-api")
 	compileOnly project(":apps:staging:staging-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")

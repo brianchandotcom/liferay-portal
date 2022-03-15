@@ -11,6 +11,7 @@ dependencies {
 	compileOnly project(":apps:layout:layout-page-template-api")
 	compileOnly project(":apps:layout:layout-page-template-item-selector-api")
 	compileOnly project(":apps:petra:petra-portlet-url-builder")
+	compileOnly project(":apps:segments:segments-api")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")
 	compileOnly project(":core:petra:petra-reflect")

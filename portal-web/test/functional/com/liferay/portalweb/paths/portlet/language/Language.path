@@ -22,11 +22,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LANGUAGE_MENU_SELECT</td>
-	<td>//select[contains(@title,'Language')]//option[normalize-space(text())='${key_language}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LONG_TEXT_LINK</td>
 	<td>//a[contains(@class,'long-text') and contains(.,'${key_language}')]</td>
 	<td></td>

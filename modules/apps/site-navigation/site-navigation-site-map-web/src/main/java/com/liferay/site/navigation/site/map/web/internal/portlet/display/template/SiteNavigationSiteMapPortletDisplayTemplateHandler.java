@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.navigation.site.map.web.internal.portlet.template;
+package com.liferay.site.navigation.site.map.web.internal.portlet.display.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;

@@ -78,8 +78,6 @@ definition {
 	@description = "Display Language Selector templates."
 	@priority = "4"
 	test DisplayTemplatesViaLanguageSelector {
-		property portal.upstream = "true";
-
 		task ("View available languages are shown with Icon Menu template") {
 			Navigator.gotoSitePage(
 				pageName = "Test Page Name",
@@ -177,7 +175,6 @@ definition {
 	@priority = "4"
 	test ViewRemovedCurrentPortalLanguagesViaLanguageSelector {
 		property test.name.skip.portal.instance = "LocalizationUsecase#ViewRemovedCurrentPortalLanguagesViaLanguageSelector";
-		property testray.component.names = "Localization";
 
 		task ("Define English, Chinese and French as current languages in portal settings") {
 			PortalSettings.gotoConfiguration(

@@ -36,6 +36,10 @@ import CollectionPagination from './CollectionPagination';
 
 const COLLECTION_ID_DIVIDER = '$';
 
+function paginationIsEnabled(collectionConfig) {
+	return collectionConfig.paginationType !== 'none';
+}
+
 function collectionIsMapped(collectionConfig) {
 	return collectionConfig.collection;
 }
@@ -397,7 +401,7 @@ const Collection = React.memo(
 				)}
 
 				{collectionIsMapped(collectionConfig) &&
-					collectionConfig.paginationType !== 'none' && (
+					paginationIsEnabled(collectionConfig) && (
 						<CollectionPagination
 							activePage={activePage}
 							collectionConfig={collectionConfig}
@@ -420,7 +424,7 @@ const Collection = React.memo(
 Collection.displayName = 'Collection';
 
 function getNumberOfItems(collection, collectionConfig) {
-	if (collectionConfig.paginationType !== 'none') {
+	if (paginationIsEnabled(collectionConfig)) {
 		const itemsPerPage = Math.min(
 			collectionConfig.numberOfItemsPerPage,
 			config.searchContainerPageMaxDelta

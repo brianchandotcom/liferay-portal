@@ -1,23 +1,34 @@
 {
-	"devDependencies": {
-		"gulp": "^4.0.2",
-		"liferay-theme-deps-7.0": "*",
-		"liferay-theme-tasks": "*"
-	},
+	"name": "baz-theme",
+	"version": "1.0.0",
+	"main": "package.json",
 	"keywords": [
 		"liferay-theme"
 	],
 	"liferayTheme": {
 		"baseTheme": "styled",
-		"rubySass": false,
+		"fontAwesome": true,
 		"screenshot": "",
 		"templateLanguage": "ftl",
-		"version": "7.0"
+		"version": "7.4"
 	},
-	"main": "package.json",
-	"name": "baz-theme",
-	"publishConfig": {
-		"tag": "7_0_x"
+	"devDependencies": {
+		"compass-mixins": "0.12.10",
+		"gulp": "4.0.2",
+		"liferay-frontend-css-common": "6.0.0",
+		"liferay-frontend-theme-styled": "6.0.2",
+		"liferay-frontend-theme-unstyled": "6.0.2",
+		"liferay-theme-tasks": "^11.2.2",
+		"liferay-font-awesome": "3.4.0"
 	},
-	"version": "1.0.0"
+	"scripts": {
+		"init": "gulp init",
+		"build": "gulp build",
+		"deploy": "gulp deploy",
+		"extend": "gulp extend",
+		"kickstart": "gulp kickstart",
+		"status": "gulp status",
+		"upgrade": "gulp upgrade",
+		"watch": "gulp watch"
+	}
 }

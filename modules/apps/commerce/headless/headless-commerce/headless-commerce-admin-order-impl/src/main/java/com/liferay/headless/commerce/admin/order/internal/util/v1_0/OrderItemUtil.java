@@ -259,9 +259,10 @@ public class OrderItemUtil {
 			decimalQuantity = (BigDecimal)GetterUtil.get(
 				orderItem.getDecimalQuantity(), decimalQuantity);
 
+			quantity = GetterUtil.get(orderItem.getQuantity(), quantity);
+
 			if (decimalQuantity == BigDecimal.ZERO) {
-				decimalQuantity = BigDecimal.valueOf(
-					GetterUtil.get(orderItem.getQuantity(), quantity));
+				decimalQuantity = BigDecimal.valueOf(quantity);
 			}
 
 			commerceOrderItem =

@@ -61,6 +61,12 @@ public class SimilarResultsPortletPreferencesImpl
 	}
 
 	@Override
+	public String getLinkBehavior() {
+		return _portletPreferencesHelper.getString(
+			PREFERENCE_KEY_LINK_BEHAVIOR, "show-content");
+	}
+
+	@Override
 	public Integer getMaxDocFrequency() {
 		return _getIntegerNullable(PREFERENCE_KEY_MAX_DOC_FREQUENCY);
 	}

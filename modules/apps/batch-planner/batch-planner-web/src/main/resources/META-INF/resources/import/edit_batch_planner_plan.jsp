@@ -88,6 +88,15 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 									name="headerCheckbox"
 								/>
 							</div>
+
+							<div class="mt-2">
+								<clay:checkbox
+									checked="<%= true %>"
+									id='<%= liferayPortletResponse.getNamespace() + "onErrorFail" %>'
+									label='<%= LanguageUtil.get(request, "stop-the-import-if-there-is-an-error") %>'
+									name='<%= liferayPortletResponse.getNamespace() + "onErrorFail" %>'
+								/>
+							</div>
 						</liferay-frontend:edit-form-body>
 					</div>
 				</div>

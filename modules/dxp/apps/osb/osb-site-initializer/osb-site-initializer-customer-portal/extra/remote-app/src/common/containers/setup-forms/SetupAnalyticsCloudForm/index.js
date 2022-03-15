@@ -15,10 +15,8 @@ import {FieldArray, Formik} from 'formik';
 import {useEffect, useMemo} from 'react';
 import {getDXPCloudPageInfo} from '../../../../common/services/liferay/graphql/queries';
 import {
-	hasFriendlyURL,
-	hasNoEmptySpace,
 	isLowercaseAndNumbers,
-	isStartingWithSlash,
+	isValidFriendlyURL,
 	maxLength,
 } from '../../../../common/utils/validations.form';
 import {Button, Input, Select} from '../../../components';
@@ -138,9 +136,7 @@ const SetupAnalyticsCloudPage = ({
 									placeholder="/myurl"
 									type="text"
 									validations={[
-										(value) => hasFriendlyURL(value),
-										(value) => hasNoEmptySpace(value),
-										(value) => isStartingWithSlash(value),
+										(value) => isValidFriendlyURL(value),
 									]}
 								/>
 

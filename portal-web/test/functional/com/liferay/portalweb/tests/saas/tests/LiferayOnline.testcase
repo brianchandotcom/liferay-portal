@@ -238,6 +238,49 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-148448. Search bar is available in Team Extranet Virtual instance and it works"
+	@priority = "3"
+	test SearchBarWorkingInTeamExtranetVirtualInstanceByAPI {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property test.name.skip.portal.instance = "LiferayOnline#SearchBarWorkingInTeamExtranetVirtualInstanceByAPI";
+
+		task ("Create Virtual Instance by Json") {
+			HeadlessPortalInstanceAPI.addPortalInstanceWithVirtualInstanceInitializer(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				siteInitializerKey = "com.liferay.site.initializer.team.extranet",
+				virtualHost = "www.able.com");
+		}
+
+		task ("Go to the Virtual Instance Created and Assert the Team Extranet Logo") {
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			AssertElementPresent(
+				key_title = "Welcome to the team!",
+				locator1 = "TeamExtranet#FRAGMENT_HEADER");
+		}
+
+		task ("Assert the Search Bar presence") {
+			AssertElementPresent(locator1 = "Search#EMBEDDED_SEARCH_BAR");
+		}
+
+		task ("Search for Careers in Search Bar to get results") {
+			SearchPortlets.searchEmbedded(searchTerm = "careers");
+
+			SearchResultPortlet.viewSearchResults(
+				searchAssetTitle = "Careers",
+				searchAssetType = "Page");
+		}
+
+		task ("Search for texs in Search Bar to not get results") {
+			SearchPortlets.searchEmbedded(searchTerm = "texs");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "No results were found that matched the keywords");
+		}
+	}
+
 	@priority = "5"
 	test Smoke {
 		property liferay.online.smoke = "true";

@@ -21,28 +21,6 @@ import java.util.Date;
  */
 public class BatchPlannerLogDisplay {
 
-	public BatchPlannerLogDisplay(
-		String action, String batchEngineExportTaskERC,
-		String batchEngineImportTaskERC, long batchPlannerLogId,
-		Date createDate, boolean export, String internalClassName,
-		Date modifiedDate, int processedItemsCount, int status, String title,
-		int totalItemsCount, long userId) {
-
-		_action = action;
-		_batchEngineExportTaskERC = batchEngineExportTaskERC;
-		_batchEngineImportTaskERC = batchEngineImportTaskERC;
-		_batchPlannerLogId = batchPlannerLogId;
-		_createDate = createDate;
-		_export = export;
-		_internalClassName = internalClassName;
-		_modifiedDate = modifiedDate;
-		_processedItemsCount = processedItemsCount;
-		_status = status;
-		_title = title;
-		_totalItemsCount = totalItemsCount;
-		_userId = userId;
-	}
-
 	public String getAction() {
 		return _action;
 	}
@@ -61,6 +39,10 @@ public class BatchPlannerLogDisplay {
 
 	public Date getCreateDate() {
 		return _createDate;
+	}
+
+	public int getFailedItemsCount() {
+		return _failedItemsCount;
 	}
 
 	public String getInternalClassName() {
@@ -128,9 +110,9 @@ public class BatchPlannerLogDisplay {
 		public BatchPlannerLogDisplay build() {
 			return new BatchPlannerLogDisplay(
 				_action, _batchEngineExportTaskERC, _batchEngineImportTaskERC,
-				_batchPlannerLogId, _createDate, _export, _internalClassName,
-				_modifiedDate, _processedItemsCount, _status, _title,
-				_totalItemsCount, _userId);
+				_batchPlannerLogId, _createDate, _export, _failedItemsCount,
+				_internalClassName, _modifiedDate, _processedItemsCount,
+				_status, _title, _totalItemsCount, _userId);
 		}
 
 		public Builder createDate(Date createDate) {
@@ -141,6 +123,12 @@ public class BatchPlannerLogDisplay {
 
 		public Builder export(boolean export) {
 			_export = export;
+
+			return this;
+		}
+
+		public Builder failedItemsCount(int failedItemsCount) {
+			_failedItemsCount = failedItemsCount;
 
 			return this;
 		}
@@ -193,6 +181,7 @@ public class BatchPlannerLogDisplay {
 		private long _batchPlannerLogId;
 		private Date _createDate;
 		private boolean _export;
+		private int _failedItemsCount;
 		private String _internalClassName;
 		private Date _modifiedDate;
 		private int _processedItemsCount;
@@ -203,12 +192,36 @@ public class BatchPlannerLogDisplay {
 
 	}
 
+	private BatchPlannerLogDisplay(
+		String action, String batchEngineExportTaskERC,
+		String batchEngineImportTaskERC, long batchPlannerLogId,
+		Date createDate, boolean export, int failedItemsCount,
+		String internalClassName, Date modifiedDate, int processedItemsCount,
+		int status, String title, int totalItemsCount, long userId) {
+
+		_action = action;
+		_batchEngineExportTaskERC = batchEngineExportTaskERC;
+		_batchEngineImportTaskERC = batchEngineImportTaskERC;
+		_batchPlannerLogId = batchPlannerLogId;
+		_createDate = createDate;
+		_export = export;
+		_failedItemsCount = failedItemsCount;
+		_internalClassName = internalClassName;
+		_modifiedDate = modifiedDate;
+		_processedItemsCount = processedItemsCount;
+		_status = status;
+		_title = title;
+		_totalItemsCount = totalItemsCount;
+		_userId = userId;
+	}
+
 	private String _action;
 	private String _batchEngineExportTaskERC;
 	private String _batchEngineImportTaskERC;
 	private long _batchPlannerLogId;
 	private Date _createDate;
 	private boolean _export;
+	private int _failedItemsCount;
 	private String _internalClassName;
 	private Date _modifiedDate;
 	private int _processedItemsCount;

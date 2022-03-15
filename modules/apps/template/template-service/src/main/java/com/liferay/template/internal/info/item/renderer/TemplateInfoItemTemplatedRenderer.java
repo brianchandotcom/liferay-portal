@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.internal.transformer.TemplateDisplayTemplateTransformer;
@@ -184,8 +185,9 @@ public class TemplateInfoItemTemplatedRenderer<T>
 			}
 
 			return _templateEntryLocalService.getTemplateEntries(
-				groupId, infoItemClassName, infoItemFormVariationKey,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				PortalUtil.getCurrentAndAncestorSiteGroupIds(groupId),
+				infoItemClassName, infoItemFormVariationKey, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

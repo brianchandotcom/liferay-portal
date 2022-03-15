@@ -1,0 +1,138 @@
+@component-name = "portal-wcm"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Fragments";
+
+	setUp {
+		task ("Set up instance and sign in") {
+			TestCase.setUpPortalInstance();
+
+			User.firstLoginPG();
+		}
+
+		task ("Add a site") {
+			JSONGroup.addGroup(groupName = "Test Site Name");
+		}
+
+		task ("Add a content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				type = "content");
+		}
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+		}
+	}
+
+	@description = "This is a use case for LPS-149178. The user could navigate through pages in Collection Display with pagination and Display All Collection Items."
+	@priority = "4"
+	test NavigateToPagesInCollectionDisplayWithDisplayAllCollectionItems {
+		property portal.acceptance = "true";
+
+		task ("Add 6 web contents") {
+			for (var i : list "1,2,3,4,5,6") {
+				JSONWebcontent.addWebContent(
+					content = "Web Content Content ${i}",
+					groupName = "Test Site Name",
+					title = "Web Content Title ${i}");
+			}
+		}
+
+		task ("Add a dynamic collection for All Types") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemType = "All Types",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a Collection Display to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+		}
+
+		task ("Select the dynamic collection in Collection Display with Numeric pagination and Display All Collection Items") {
+			PageEditor.editCollectionDisplay(
+				assetListName = "Dynamic Collection",
+				displayAllCollectionItems = "true",
+				fragmentName = "Collection Display",
+				listItemStyle = "Title",
+				listStyle = "Bordered List",
+				pagination = "Numeric");
+		}
+
+		task ("View only 5 web contents shown in page 1 of Collection Display in page editor") {
+			var n = "1";
+
+			for (var i : list "6,5,4,3,2") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='Web Content Title ${i}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View the sixth web content shown in page 2 of Collection Display in page editor") {
+			Click(
+				key_pageNumber = "2",
+				locator1 = "Pagination#ANY_PAGE");
+
+			AssertVisible(
+				key_entryContent = "[normalize-space(text())='Web Content Title 1']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("View only 5 web contents shown in page 1 of Collection Display at view mode") {
+			ContentPagesNavigator.openViewContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			var n = "1";
+
+			for (var i : list "6,5,4,3,2") {
+				AssertVisible(
+					key_entryContent = "[normalize-space(text())='Web Content Title ${i}']",
+					key_fragmentName = "Collection Display",
+					key_position = "${n}",
+					locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+
+				var n = ${n} + 1;
+			}
+		}
+
+		task ("View the sixth web content shown in page 2 of Collection Display at view mode") {
+			Click(
+				key_pageNumber = "2",
+				locator1 = "Pagination#ANY_PAGE");
+
+			AssertVisible(
+				key_entryContent = "[normalize-space(text())='Web Content Title 1']",
+				key_fragmentName = "Collection Display",
+				key_position = "1",
+				locator1 = "PageEditor#COLLECTION_ITEM_CONTENT_IN_BORDERED_LIST_AT_VIEW_MODE");
+		}
+	}
+
+}

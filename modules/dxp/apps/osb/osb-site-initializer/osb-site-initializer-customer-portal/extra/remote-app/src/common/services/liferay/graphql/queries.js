@@ -182,11 +182,28 @@ export const addDXPCloudEnvironment = gql`
 	}
 `;
 
+export const updateDXPCloudEnvironment = gql`
+	mutation putDXPCloudProjectId(
+		$dxpCloudEnvironmentId: Long!
+		$DXPCloudEnvironment: InputC_DXPCloudEnvironment!
+	) {
+		c {
+			updateDXPCloudEnvironment(
+				dxpCloudEnvironmentId: $dxpCloudEnvironmentId
+				DXPCloudEnvironment: $DXPCloudEnvironment
+			) {
+				dxpCloudEnvironmentId
+			}
+		}
+	}
+`;
+
 export const getDXPCloudEnvironment = gql`
 	query getDXPCloudEnvironment($scopeKey: String, $filter: String) {
 		c {
 			dXPCloudEnvironments(filter: $filter, scopeKey: $scopeKey) {
 				items {
+					dxpCloudEnvironmentId
 					projectId
 				}
 			}

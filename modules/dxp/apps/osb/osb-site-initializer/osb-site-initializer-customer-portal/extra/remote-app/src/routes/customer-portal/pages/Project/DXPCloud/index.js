@@ -40,7 +40,7 @@ const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
 		};
 
 		getOnboardingFormData();
-	}, [project]);
+	}, [project, subscriptionGroups]);
 
 	return (
 		<div className="mr-4">

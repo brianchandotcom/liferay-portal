@@ -749,25 +749,32 @@ public interface BaseProjectTemplatesTestCase {
 			editXml(
 				pomXmlFile,
 				document -> {
-					modifyElementText(
-						document, "//id[contains(text(), 'yarn-install')]",
-						"npm-install");
-					modifyElementText(
-						document,
-						"//id[contains(text(), 'install-node-and-yarn')]",
-						"install-node-and-npm");
-					modifyElementText(
-						document, "//id[contains(text(), 'yarn-run-build')]",
-						"npm-run-build");
-					modifyElementText(
-						document,
-						"//goal[contains(text(), 'install-node-and-yarn')]",
-						"install-node-and-npm");
-					modifyElementText(
-						document, "//goal[contains(text(), 'yarn')]", "npm");
+					try {
+						modifyElementText(
+							document,
+							"//goal[contains(text(), 'install-node-and-yarn')]",
+							"install-node-and-npm");
+						modifyElementText(
+							document, "//goal[contains(text(), 'yarn')]",
+							"npm");
+						modifyElementText(
+							document,
+							"//id[contains(text(), 'install-node-and-yarn')]",
+							"install-node-and-npm");
+						modifyElementText(
+							document, "//id[contains(text(), 'yarn-install')]",
+							"npm-install");
+						modifyElementText(
+							document,
+							"//id[contains(text(), 'yarn-run-build')]",
+							"npm-run-build");
 
-					replaceElementByName(
-						document, "yarnVersion", "npmVersion", "8.1.0");
+						replaceElementByName(
+							document, "yarnVersion", "npmVersion", "8.1.0");
+					}
+					catch (XPathExpressionException xPathExpressionException) {
+						throw new RuntimeException(xPathExpressionException);
+					}
 				});
 		}
 
@@ -806,6 +813,7 @@ public interface BaseProjectTemplatesTestCase {
 					argumentsElement.appendChild(text);
 				}
 				catch (XPathExpressionException xPathExpressionException) {
+					throw new RuntimeException(xPathExpressionException);
 				}
 			});
 	}
@@ -1124,61 +1132,55 @@ public interface BaseProjectTemplatesTestCase {
 	}
 
 	public default void modifyElementText(
-		Document document, String expression, String newText) {
+			Document document, String expression, String newText)
+		throws XPathExpressionException {
 
 		XPathFactory xPathFactory = XPathFactory.newInstance();
 
 		XPath xPath = xPathFactory.newXPath();
 
-		try {
-			XPathExpression xPathExpression = xPath.compile(expression);
+		XPathExpression xPathExpression = xPath.compile(expression);
 
-			NodeList nodeList = (NodeList)xPathExpression.evaluate(
-				document, XPathConstants.NODESET);
+		NodeList nodeList = (NodeList)xPathExpression.evaluate(
+			document, XPathConstants.NODESET);
 
-			for (int i = 0; i < nodeList.getLength(); i++) {
-				Node node = nodeList.item(i);
+		for (int i = 0; i < nodeList.getLength(); i++) {
+			Node node = nodeList.item(i);
 
-				node.setTextContent(newText);
-			}
-		}
-		catch (XPathExpressionException xPathExpressionException) {
+			node.setTextContent(newText);
 		}
 	}
 
 	public default void replaceElementByName(
-		Document document, String oldElementName, String newElementName,
-		String textString) {
+			Document document, String oldElementName, String newElementName,
+			String textString)
+		throws XPathExpressionException {
 
 		XPathFactory xPathFactory = XPathFactory.newInstance();
 
 		XPath xPath = xPathFactory.newXPath();
 
-		try {
-			XPathExpression expression = xPath.compile("//" + oldElementName);
+		XPathExpression expression = xPath.compile("//" + oldElementName);
 
-			NodeList nodeList = (NodeList)expression.evaluate(
-				document, XPathConstants.NODESET);
+		NodeList nodeList = (NodeList)expression.evaluate(
+			document, XPathConstants.NODESET);
 
-			if (nodeList.getLength() > 0) {
-				Node node = nodeList.item(0);
+		if (nodeList.getLength() > 0) {
+			Node node = nodeList.item(0);
 
-				Node parentNode = node.getParentNode();
+			Node parentNode = node.getParentNode();
 
-				parentNode.removeChild(node);
+			parentNode.removeChild(node);
 
-				Element newElement = document.createElement(newElementName);
+			Element newElement = document.createElement(newElementName);
 
-				parentNode.appendChild(newElement);
+			parentNode.appendChild(newElement);
 
-				if (textString != null) {
-					Text text = document.createTextNode(textString);
+			if (textString != null) {
+				Text text = document.createTextNode(textString);
 
-					newElement.appendChild(text);
-				}
+				newElement.appendChild(text);
 			}
-		}
-		catch (Exception exception) {
 		}
 	}
 

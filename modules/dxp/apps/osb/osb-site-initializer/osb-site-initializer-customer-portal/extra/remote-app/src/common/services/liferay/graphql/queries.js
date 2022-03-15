@@ -211,6 +211,26 @@ export const getDXPCloudEnvironment = gql`
 	}
 `;
 
+export const addAnalyticsCloudWorkspace = gql`
+	mutation addAnalyticsCloudWorkspace(
+		$scopeKey: String!
+		$analyticsCloudWorkspace: InputC_AnalyticsCloudWorkspace!
+	) {
+		c {
+			createAnalyticsCloudWorkspace(
+				scopeKey: $scopeKey
+				AnalyticsCloudWorkspace: $analyticsCloudWorkspace
+			) {
+				analyticsCloudWorkspaceId
+				accountKey
+				dataCenterLocation
+				ownerEmailAddress
+				workspaceName
+			}
+		}
+	}
+`;
+
 export const getAnalyticsCloudWorkspace = gql`
 	query getAnalyticsCloudWorkspace($scopeKey: String, $filter: String) {
 		c {

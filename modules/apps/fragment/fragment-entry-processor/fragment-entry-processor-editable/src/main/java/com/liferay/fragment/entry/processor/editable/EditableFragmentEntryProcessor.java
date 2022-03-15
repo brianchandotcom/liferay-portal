@@ -346,6 +346,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				}
 
 				element.tagName(tagName);
+
+				element.removeAttr("view-tag-name");
 			}
 		}
 

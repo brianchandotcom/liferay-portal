@@ -94,19 +94,21 @@ public class PortletPreferencesUpgradeProcess extends UpgradeProcess {
 
 		Map<Long, Long> portletPreferencesMap = new HashMap<>();
 
-		long companyControlPanelPlid = _companyControlPanelPlids.get(companyId);
-
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select PortletPreferences.portletPreferencesId, ",
 					"PortletPreferences.plid from PortletPreferences inner ",
 					"join Layout on PortletPreferences.plid = Layout.plid ",
 					"where PortletPreferences.portletId like ",
-					"CONCAT('%_INSTANCE_', '", namespace,
-					"') and (Layout.groupId = ", groupId,
-					" or PortletPreferences.plid = ", companyControlPanelPlid,
-					")"));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+					"CONCAT('%_INSTANCE_', '?') and (Layout.groupId = ? or ",
+					"PortletPreferences.plid = ?)"))) {
+
+			preparedStatement.setString(1, namespace);
+			preparedStatement.setLong(2, groupId);
+			preparedStatement.setLong(
+				3, _companyControlPanelPlids.get(companyId));
+
+			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
 				long portletPreferencesId = resultSet.getLong(

@@ -4,9 +4,4 @@
 	<checkstyle>
 		<suppress checks="GenericTypeCheck" files="analytics-message-sender-impl/src/main/java/com/liferay/analytics/message/sender/internal/messaging/AddAnalyticsMessagesMessageListener\.java" />
 	</checkstyle>
-	<source-check>
-		<suppress checks="JavaIllegalImportsCheck" files="analytics-client-impl/src/main/java/com/liferay/analytics/client/internal/IdentityClientImpl\.java" />
-		<suppress checks="JavaModuleInternalImportsCheck" files="analytics-client-impl/src/main/java/com/liferay/analytics/client/internal/AnalyticsClientImpl\.java" />
-		<suppress checks="JavaModuleInternalImportsCheck" files="analytics-client-impl/src/main/java/com/liferay/analytics/client/internal/IdentityClientImpl\.java" />
-	</source-check>
 </suppressions>

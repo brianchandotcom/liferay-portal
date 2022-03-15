@@ -53,7 +53,8 @@ public class DefaultCommercePaymentMethodsJSPDynamicInclude
 	@Override
 	public void register(DynamicIncludeRegistry dynamicIncludeRegistry) {
 		dynamicIncludeRegistry.register(
-			"com.liferay.commerce.account.web#/account_entry/order_defaults.jsp#payment_methods");
+			"com.liferay.commerce.account.web#/account_entry" +
+				"/order_defaults.jsp#payment_methods");
 	}
 
 	@Override

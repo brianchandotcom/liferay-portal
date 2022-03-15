@@ -41,11 +41,11 @@ public class CommerceCatalogClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameField =
+		ClayTableSchemaField nameClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
-		nameField.setContentRenderer("actionLink");
-		nameField.setExpand(true);
+		nameClayTableSchemaField.setContentRenderer("actionLink");
+		nameClayTableSchemaField.setExpand(true);
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"defaultLanguageId", "default-language");

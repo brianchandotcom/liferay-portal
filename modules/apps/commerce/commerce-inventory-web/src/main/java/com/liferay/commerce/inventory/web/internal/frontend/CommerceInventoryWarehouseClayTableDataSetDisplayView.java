@@ -42,11 +42,11 @@ public class CommerceInventoryWarehouseClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField warehouseField =
+		ClayTableSchemaField warehouseClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"warehouse", "warehouse");
 
-		warehouseField.setContentRenderer("actionLink");
+		warehouseClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("quantity", "on-hand");
 

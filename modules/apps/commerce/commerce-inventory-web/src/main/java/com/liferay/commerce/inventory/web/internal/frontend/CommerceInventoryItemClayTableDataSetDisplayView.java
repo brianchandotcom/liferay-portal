@@ -42,10 +42,10 @@ public class CommerceInventoryItemClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField skuField =
+		ClayTableSchemaField skuClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
 
-		skuField.setContentRenderer("actionLink");
+		skuClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("stock", "on-hand");
 

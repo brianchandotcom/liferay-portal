@@ -538,4 +538,41 @@ definition {
 		}
 	}
 
+	@description = "Verify users can save import configuration as a template during the import process"
+	@priority = "3"
+	test CanSaveTemplateDuringImport {
+		property portal.acceptance = "true";
+
+		task ("Given the user has configured an import") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			UploadDependencyFile.uploadFile(fileName = "csv_account_import.csv");
+
+			ImportExport.selectEntity(
+				entityType = "Account",
+				headlessEndpoint = "/headless-admin-user");
+
+			ImportExport.mapImport(fieldMappings = "name:Account Name,type:Account Type,externalReferenceCode:External Reference Code");
+		}
+
+		task ("When the user saves the configuration as a template") {
+			ImportExport.saveAsTemplate(templateName = "Test Account Import Template");
+		}
+
+		task ("Then the import template should be created successfully") {
+			Button.clickCancel();
+
+			Navigator.gotoNavTab(navTab = "Templates");
+
+			LexiconEntry.gotoEntry(rowEntry = "Test Account Import Template");
+
+			ImportExport.assertImportTemplate(
+				entityType = "Account",
+				headlessEndpoint = "/headless-admin-user",
+				templateName = "Test Account Import Template");
+		}
+	}
+
 }

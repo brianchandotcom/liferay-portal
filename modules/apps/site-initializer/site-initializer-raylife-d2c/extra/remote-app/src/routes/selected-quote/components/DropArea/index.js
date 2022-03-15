@@ -96,13 +96,21 @@ const DropArea = ({
 			);
 
 			if (currentFileExist) {
-				alert(`File ${fileName} already exists!`);
+				if (Liferay.__FF__.enableCustomDialogs) {
+					Liferay.Util.openAlertModal(`File ${fileName} already exists!`);
+				} else {
+					alert(`File ${fileName} already exists!`);
+				}
 
 				continue;
 			}
 
 			if (!validateExtensions(fileType, type)) {
-				alert(`Invalid file ${fileName}!`);
+				if (Liferay.__FF__.enableCustomDialogs) {
+					Liferay.Util.openAlertModal(`Invalid file ${fileName}!`);
+				} else {
+					alert(`Invalid file ${fileName}!`);
+				}
 
 				continue;
 			}

@@ -28,6 +28,46 @@ definition {
 		}
 	}
 
+	@description = "LPS-142122: Clicking on Masterclass logo opens a page with an error"
+	@priority = "3"
+	test ClickMasterclassLogoGoesHomePage {
+		property test.name.skip.portal.instance = "LiferayOnlineCoverBugs#ClickMasterclassLogoGoesHomePage";
+
+		task ("Assert the Virtual Instance created by Json is present") {
+			ApplicationsMenu.gotoPortlet(
+				category = "System",
+				panel = "Control Panel",
+				portlet = "Virtual Instances");
+
+			PortalInstances.viewCP(virtualHost = "www.able.com");
+
+			Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+			AssertElementPresent(
+				key_title = "Welcome to Masterclass",
+				locator1 = "Masterclass#FRAGMENT_HERO_PRE");
+		}
+
+		task ("Go to Sign In Page") {
+			Click(locator1 = "Masterclass#NAV_TAB");
+		}
+
+		task ("Click Mastercard logo") {
+			Click(locator1 = "Masterclass#MASTERCLASS_LOGO");
+		}
+
+		task ("Assert the default Masterclass Moderns is applied to Home page") {
+			AssertCssValue(
+				key_content = "Read More",
+				key_element = "a",
+				key_id = "hero-button",
+				key_type = "link",
+				locator1 = "StyleBookEditor#CONTRIBUTED_FRAGMENT_INLINE_CONTENT",
+				locator2 = "color",
+				value1 = "rgba(255, 255, 255, 1)");
+		}
+	}
+
 	@description = "Verify if a virtual instance is created using the initializer, showing a different site comparing with the default Liferay bundle"
 	@priority = "4"
 	test CreateVirtualInstanceUsingInitializerWithSuccess {

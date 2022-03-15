@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MASTERCLASS_LOGO</td>
+	<td>//img[contains(@src,'masterclass_logo.svg')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAV_ITEM</td>
 	<td>//div[contains(@class,'navbar')]//ul[contains(@class,'dropdown')]//a[contains(text(),'${key_navItem}')]</td>
 	<td></td>

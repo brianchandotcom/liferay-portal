@@ -124,8 +124,8 @@ public class SimilarResultsPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return "com/liferay/search/similar/results/web/portlet/template" +
-			"/dependencies/portlet-display-templates.xml";
+		return "com/liferay/search/similar/results/web/portlet/display" +
+			"/template/dependencies/portlet-display-templates.xml";
 	}
 
 	@Reference

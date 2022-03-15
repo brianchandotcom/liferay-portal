@@ -14,6 +14,11 @@
 
 package com.liferay.portal.search.web.internal.search.insights.display.context;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.io.Serializable;
 
 /**
@@ -26,11 +31,27 @@ public class SearchInsightsDisplayContext implements Serializable {
 	}
 
 	public String getRequestString() {
-		return _requestString;
+		return prettyPrintJSONString(_requestString);
 	}
 
 	public String getResponseString() {
-		return _responseString;
+		return prettyPrintJSONString(_responseString);
+	}
+
+	public String prettyPrintJSONString(String jsonString) {
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				jsonString);
+
+			return jsonObject.toString(4);
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+
+			return jsonString;
+		}
 	}
 
 	public void setHelpMessage(String helpMessage) {
@@ -44,6 +65,9 @@ public class SearchInsightsDisplayContext implements Serializable {
 	public void setResponseString(String responseString) {
 		_responseString = responseString;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SearchInsightsDisplayContext.class);
 
 	private String _helpMessage;
 	private String _requestString;

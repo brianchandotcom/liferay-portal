@@ -18,7 +18,9 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
@@ -60,9 +62,15 @@ SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDispl
 					persistState="<%= true %>"
 					title="request-string"
 				>
-					<code>
-						<%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %>
-					</code>
+					<clay:button
+						displayType="secondary"
+						icon="copy"
+						label="copy-to-clipboard"
+						onClick='<%= liferayPortletResponse.getNamespace() + "copyToClipboard('insightsRequest');" %>'
+						small="<%= true %>"
+					/>
+
+					<textarea readonly id="<portlet:namespace />insightsRequest"><%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %></textarea>
 				</liferay-ui:panel>
 
 				<liferay-ui:panel
@@ -72,11 +80,39 @@ SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDispl
 					persistState="<%= true %>"
 					title="response-string"
 				>
-					<code>
-						<%= HtmlUtil.escape(searchInsightsDisplayContext.getResponseString()) %>
-					</code>
+					<clay:button
+						displayType="secondary"
+						icon="copy"
+						label="copy-to-clipboard"
+						onClick='<%= liferayPortletResponse.getNamespace() + "copyToClipboard('insightsResponse');" %>'
+						small="<%= true %>"
+					/>
+
+					<textarea readonly id="<portlet:namespace />insightsResponse"><%= HtmlUtil.escape(searchInsightsDisplayContext.getResponseString()) %></textarea>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>
 		</div>
 	</c:otherwise>
 </c:choose>
+
+<aui:script>
+	function <portlet:namespace />copyToClipboard(id) {
+		const text = document.getElementById('<portlet:namespace />' + id).value;
+
+		navigator.clipboard.writeText(text).then(
+			() => {
+				Liferay.Util.openToast({
+					message: '<liferay-ui:message key="copied-to-clipboard" />',
+					type: 'success',
+				});
+			},
+			() => {
+				Liferay.Util.openToast({
+					message:
+						'<liferay-ui:message key="an-unexpected-error-occurred" />',
+					type: 'danger',
+				});
+			}
+		);
+	}
+</aui:script>

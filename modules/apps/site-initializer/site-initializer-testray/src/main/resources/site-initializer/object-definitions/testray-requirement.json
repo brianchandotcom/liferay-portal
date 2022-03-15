@@ -60,7 +60,7 @@
 			"type": "String"
 		},
 		{
-			"DBType": "String",
+			"DBType": "Clob",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -68,7 +68,7 @@
 			},
 			"name": "description",
 			"required": false,
-			"type": "String"
+			"type": "Clob"
 		},
 		{
 			"DBType": "String",

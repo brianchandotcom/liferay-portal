@@ -14,6 +14,7 @@
 
 package com.liferay.batch.planner.internal.batch.engine.broker;
 
+import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.planner.batch.engine.broker.BatchEngineBroker;
 import com.liferay.batch.planner.constants.BatchPlannerLogConstants;
 import com.liferay.batch.planner.constants.BatchPlannerPlanConstants;
@@ -136,9 +137,17 @@ public class BatchEngineBrokerImpl implements BatchEngineBroker {
 		throws Exception {
 
 		BatchPlannerPolicy batchPlannerPolicy =
-			batchPlannerPlan.getBatchPlannerPolicy("importStrategy");
+			batchPlannerPlan.getBatchPlannerPolicy("onErrorFail");
 
-		return batchPlannerPolicy.getValue();
+		boolean onErrorFail = Boolean.valueOf(batchPlannerPolicy.getValue());
+
+		if (onErrorFail) {
+			return BatchEngineImportTaskConstants.
+				IMPORT_STRATEGY_STRING_ON_ERROR_FAIL;
+		}
+
+		return BatchEngineImportTaskConstants.
+			IMPORT_STRATEGY_STRING_ON_ERROR_CONTINUE;
 	}
 
 	private UriInfo _getImportTaskUriInfo(BatchPlannerPlan batchPlannerPlan) {

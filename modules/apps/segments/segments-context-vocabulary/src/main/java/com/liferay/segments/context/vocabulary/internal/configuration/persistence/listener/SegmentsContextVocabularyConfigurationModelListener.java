@@ -20,6 +20,7 @@ import com.liferay.portal.configuration.persistence.listener.ConfigurationModelL
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyCompanyConfiguration;
 import com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration;
 
 import java.util.Dictionary;
@@ -39,7 +40,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration",
+	property = {
+		"model.class.name=com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyCompanyConfiguration",
+		"model.class.name=com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration"
+	},
 	service = ConfigurationModelListener.class
 )
 public class SegmentsContextVocabularyConfigurationModelListener
@@ -56,7 +60,7 @@ public class SegmentsContextVocabularyConfigurationModelListener
 				ResourceBundleUtil.getString(
 					_getResourceBundle(),
 					"please-enter-a-valid-session-property-name"),
-				SegmentsContextVocabularyConfiguration.class, getClass(),
+				SegmentsContextVocabularyCompanyConfiguration.class, getClass(),
 				properties);
 		}
 
@@ -68,7 +72,7 @@ public class SegmentsContextVocabularyConfigurationModelListener
 				ResourceBundleUtil.getString(
 					_getResourceBundle(),
 					"this-field-is-already-linked-to-one-vocabulary"),
-				SegmentsContextVocabularyConfiguration.class, getClass(),
+				SegmentsContextVocabularyCompanyConfiguration.class, getClass(),
 				properties);
 		}
 	}
@@ -108,7 +112,7 @@ public class SegmentsContextVocabularyConfigurationModelListener
 		throws ConfigurationModelListenerException {
 
 		try {
-			return Stream.of(
+			Stream<Configuration> configurationStream = Stream.of(
 				Optional.ofNullable(
 					_configurationAdmin.listConfigurations(
 						StringBundler.concat(
@@ -118,7 +122,21 @@ public class SegmentsContextVocabularyConfigurationModelListener
 							")"))
 				).orElse(
 					new Configuration[0]
-				)
+				));
+			Stream<Configuration> companyConfigurationStream = Stream.of(
+				Optional.ofNullable(
+					_configurationAdmin.listConfigurations(
+						StringBundler.concat(
+							"(", ConfigurationAdmin.SERVICE_FACTORYPID, "=",
+							SegmentsContextVocabularyCompanyConfiguration.class.
+								getCanonicalName(),
+							")"))
+				).orElse(
+					new Configuration[0]
+				));
+
+			return Stream.concat(
+				companyConfigurationStream, configurationStream
 			).filter(
 				configuration -> _isDefined(
 					assetVocabulary, configuration, entityField, companyId)
@@ -128,7 +146,8 @@ public class SegmentsContextVocabularyConfigurationModelListener
 		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(
 				exception.getMessage(),
-				SegmentsContextVocabularyConfiguration.class, getClass(), null);
+				SegmentsContextVocabularyCompanyConfiguration.class, getClass(),
+				null);
 		}
 	}
 

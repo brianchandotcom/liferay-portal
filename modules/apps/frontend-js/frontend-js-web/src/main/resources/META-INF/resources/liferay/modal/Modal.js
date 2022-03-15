@@ -30,12 +30,10 @@ const openAlertModal = ({message}) => {
 		bodyHTML: escapeHTML(message),
 		buttons: [
 			{
+				autoFocus: true,
 				label: Liferay.Language.get('ok'),
 				onClick: ({processClose}) => {
 					processClose();
-				},
-				otherProps: {
-					autoFocus: true,
 				},
 			},
 		],
@@ -258,23 +256,41 @@ const Modal = ({
 							className={footerCssClass}
 							last={
 								<ClayButton.Group spaced>
-									{buttons.map((button, index) => (
-										<ClayButton
-											displayType={button.displayType}
-											id={button.id}
-											key={index}
-											onClick={() => {
-												onButtonClick(button);
-											}}
-											type={
-												button.type === 'cancel'
-													? 'button'
-													: button.type
-											}
-										>
-											{button.label}
-										</ClayButton>
-									))}
+									{buttons.map(
+										(
+											{
+												displayType,
+												formId,
+												id,
+												label,
+												onClick,
+												type,
+												...otherProps
+											},
+											index
+										) => (
+											<ClayButton
+												displayType={displayType}
+												id={id}
+												key={index}
+												onClick={() => {
+													onButtonClick({
+														formId,
+														onClick,
+														type,
+													});
+												}}
+												type={
+													type === 'cancel'
+														? 'button'
+														: type
+												}
+												{...otherProps}
+											>
+												{label}
+											</ClayButton>
+										)
+									)}
 								</ClayButton.Group>
 							}
 						/>

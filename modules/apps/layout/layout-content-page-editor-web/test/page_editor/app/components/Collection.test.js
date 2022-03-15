@@ -166,7 +166,7 @@ describe('Collection', () => {
 				},
 				numberOfItems: 2,
 				numberOfPages: 1,
-				paginationType: '',
+				paginationType: 'none',
 			});
 		});
 
@@ -236,7 +236,7 @@ describe('Collection', () => {
 				},
 				numberOfItems: 3,
 				numberOfPages: 1,
-				paginationType: '',
+				paginationType: 'none',
 			});
 		});
 

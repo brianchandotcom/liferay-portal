@@ -55,7 +55,7 @@ jest.mock(
 	() => jest.fn()
 );
 
-const ITEM_CONFIG = {
+const DEFAULT_ITEM_CONFIG = {
 	collection: {
 		classNameId: '22101',
 		classPK: '40724',
@@ -67,22 +67,22 @@ const ITEM_CONFIG = {
 	numberOfItems: 5,
 	numberOfItemsPerPage: 5,
 	numberOfPages: 1,
+	paginationType: 'numeric',
 };
 
 const renderComponent = ({
-	config = ITEM_CONFIG,
-	dispatch = () => {},
+	itemConfig = {},
 	fragmentEntryLinks = {},
 	itemId = '0',
 	layoutData = {},
-}) => {
+} = {}) => {
 	Liferay.Util.sub.mockImplementation((langKey, args) =>
 		[langKey, args].join('-')
 	);
 
 	return render(
 		<StoreAPIContextProvider
-			dispatch={dispatch}
+			dispatch={() => {}}
 			getState={() => ({
 				fragmentEntryLinks,
 				layoutData,
@@ -92,7 +92,7 @@ const renderComponent = ({
 			<CollectionGeneralPanel
 				item={{
 					children: [],
-					config,
+					config: {...DEFAULT_ITEM_CONFIG, ...itemConfig},
 					itemId,
 					parentId: '',
 					type: LAYOUT_DATA_ITEM_TYPES.collection,
@@ -104,19 +104,19 @@ const renderComponent = ({
 
 describe('CollectionGeneralPanel', () => {
 	it('allows changing the Pagination select', async () => {
-		renderComponent({});
+		renderComponent();
 
 		const input = screen.getByLabelText('pagination');
 
 		await act(async () => {
 			fireEvent.change(input, {
-				target: {value: 'numeric'},
+				target: {value: 'none'},
 			});
 		});
 
 		expect(updateItemConfig).toHaveBeenCalledWith({
 			itemConfig: {
-				paginationType: 'numeric',
+				paginationType: 'none',
 			},
 			itemId: '0',
 			segmentsExperienceId: '0',
@@ -124,7 +124,7 @@ describe('CollectionGeneralPanel', () => {
 	});
 
 	it('allows changing the Display All Collection Items checkbox', async () => {
-		renderComponent({});
+		renderComponent({itemConfig: {paginationType: 'none'}});
 
 		const input = screen.getByLabelText('display-all-collection-items');
 
@@ -143,7 +143,10 @@ describe('CollectionGeneralPanel', () => {
 
 	it('shows a message saying that enabling Display All Collection Items could affeect performance', async () => {
 		renderComponent({
-			config: {...ITEM_CONFIG, displayAllItems: true},
+			itemConfig: {
+				displayAllItems: true,
+				paginationType: 'none',
+			},
 		});
 
 		expect(
@@ -154,9 +157,7 @@ describe('CollectionGeneralPanel', () => {
 	});
 
 	it('allows changing the Display All Pages checkbox', async () => {
-		renderComponent({
-			config: {...ITEM_CONFIG, paginationType: 'numeric'},
-		});
+		renderComponent();
 
 		const input = screen.getByLabelText('display-all-pages');
 
@@ -175,7 +176,7 @@ describe('CollectionGeneralPanel', () => {
 
 	describe('Number of Items Input', () => {
 		it('allows changing input value', async () => {
-			renderComponent({});
+			renderComponent({itemConfig: {paginationType: 'none'}});
 
 			const input = screen.getByLabelText(
 				'maximum-number-of-items-to-display'
@@ -202,9 +203,9 @@ describe('CollectionGeneralPanel', () => {
 
 		it('shows a warning message when the number of items is bigger than the total items of the collection', async () => {
 			renderComponent({
-				config: {
-					...ITEM_CONFIG,
+				itemConfig: {
 					numberOfItems: 33,
+					paginationType: 'none',
 				},
 			});
 
@@ -216,7 +217,7 @@ describe('CollectionGeneralPanel', () => {
 		});
 
 		it('shows a message saying that exceeding the default max value could affeect performance', async () => {
-			renderComponent({});
+			renderComponent({itemConfig: {paginationType: 'none'}});
 
 			expect(
 				await screen.findByText(
@@ -228,9 +229,7 @@ describe('CollectionGeneralPanel', () => {
 
 	describe('Number of Pages Input', () => {
 		it('allows changing input value', async () => {
-			renderComponent({
-				config: {...ITEM_CONFIG, paginationType: 'numeric'},
-			});
+			renderComponent();
 
 			const input = screen.getByLabelText(
 				'maximum-number-of-pages-to-display'
@@ -258,9 +257,7 @@ describe('CollectionGeneralPanel', () => {
 
 	describe('Number of Items per Page Input', () => {
 		it('allows changing the input value', async () => {
-			renderComponent({
-				config: {...ITEM_CONFIG, paginationType: 'numeric'},
-			});
+			renderComponent();
 
 			const input = screen.getByLabelText(
 				'maximum-number-of-items-per-page'
@@ -287,9 +284,8 @@ describe('CollectionGeneralPanel', () => {
 
 		it('shows a warning message when the number of items per page is bigger than searchContainerPageMaxDelta', async () => {
 			renderComponent({
-				config: {
-					...ITEM_CONFIG,
-					...{numberOfItemsPerPage: 53, paginationType: 'numeric'},
+				itemConfig: {
+					numberOfItemsPerPage: 53,
 				},
 			});
 

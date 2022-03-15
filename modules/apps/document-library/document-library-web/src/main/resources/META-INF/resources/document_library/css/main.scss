@@ -781,8 +781,13 @@ $productMenuWidth: 320px;
 			.active-area {
 				background-color: transparent !important;
 
-				.card-type-directory .card {
+				.card-type-directory .card,
+				&.list-group-item,
+				td {
 					background-color: $primary-l3 !important;
+				}
+
+				.card-type-directory .card {
 					box-shadow: 0 0 0 2px $primary-l2;
 				}
 			}

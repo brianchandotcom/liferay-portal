@@ -20,53 +20,53 @@ import {TestrayRequirement} from './testrayRequirement';
 import {TestrayTeam} from './testrayTeam';
 
 export type TestraySelectCasesParameter = {
-	testrayCaseTypes: {
+	caseTypes: {
 		items: TestrayCaseType[];
 	};
-	testrayComponents: {
+	components: {
 		items: TestrayComponent[];
 	};
-	testrayRequirements: {
+	requirements: {
 		items: TestrayRequirement[];
 	};
-	testrayTeams: {
+	teams: {
 		items: TestrayTeam[];
 	};
 };
 
-export type TestraySelectCasesParameters = {
+export type SelectCasesParameters = {
 	c: TestraySelectCasesParameter;
 };
 
-export const getTestraySelectCasesParameters = gql`
-	query getTestraySelectCasesParameters($pageSize: Int = 20) {
+export const getSelectCasesParameters = gql`
+	query getSelectCasesParameters($pageSize: Int = 20) {
 		c {
-			testrayCaseTypes(pageSize: $pageSize) {
+			caseTypes(pageSize: $pageSize) {
 				items {
 					name
-					id: testrayCaseTypeId
+					id: caseTypeId
 				}
 			}
 
-			testrayComponents(pageSize: $pageSize) {
+			components(pageSize: $pageSize) {
 				items {
 					name
-					id: testrayComponentId
+					id: componentId
 				}
 			}
 
-			testrayRequirements(pageSize: $pageSize) {
+			requirements(pageSize: $pageSize) {
 				items {
 					key
 					summary
-					id: testrayRequirementId
+					id: requirementId
 				}
 			}
 
-			testrayTeams(pageSize: $pageSize) {
+			teams(pageSize: $pageSize) {
 				items {
 					name
-					id: testrayTeamId
+					id: teamId
 				}
 			}
 		}

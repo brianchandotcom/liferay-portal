@@ -16,13 +16,13 @@ import ClayIcon from '@clayui/icon';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
-import {getTestrayRequirements} from '../../../graphql/queries';
+import {getRequirements} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 
 const CaseRequirement = () => (
 	<Container title={i18n.translate('requirements')}>
 		<ListView
-			query={getTestrayRequirements}
+			query={getRequirements}
 			tableProps={{
 				columns: [
 					{
@@ -57,10 +57,9 @@ const CaseRequirement = () => (
 					{key: 'summary', value: i18n.translate('summary')},
 					{key: 'description', value: i18n.translate('description')},
 				],
-				navigateTo: ({testrayRequirementId}) =>
-					testrayRequirementId?.toString(),
+				navigateTo: ({id}) => id?.toString(),
 			}}
-			transformData={(data) => data?.c?.testrayRequirements}
+			transformData={(data) => data?.c?.requirements}
 		/>
 	</Container>
 );

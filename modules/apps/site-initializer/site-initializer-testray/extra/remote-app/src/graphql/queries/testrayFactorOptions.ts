@@ -19,17 +19,18 @@ import {testrayFactorOptionsFragment} from '../fragments';
 export type TestrayFactorOptions = {
 	dateCreated: string;
 	dateModified: string;
+	id: number;
 	name: string;
 };
 
-export const getTestrayFactorOptions = gql`
+export const getFactorOptions = gql`
 	${testrayFactorOptionsFragment}
 
-	query getTestrayFactorOptions {
+	query getFactorOptions {
 		c {
-			testrayFactorOptions {
+			factorOptions {
 				items {
-					...TestrayFactorOptionsFragment
+					...FactorOptionsFragment
 				}
 				lastPage
 				page
@@ -40,13 +41,13 @@ export const getTestrayFactorOptions = gql`
 	}
 `;
 
-export const getTestrayFactorOption = gql`
+export const getFactorOption = gql`
 	${testrayFactorOptionsFragment}
 
-	query getTestrayFactoroption($testrayFactorOptionId: Long) {
+	query getFactoroption($factorOptionId: Long) {
 		c {
-			testrayFactorOption(testrayFactorOption: $testrayFactorOptionId) {
-				...TestrayFactorOptionsFragment
+			factorOption(factorOption: $factorOptionId) {
+				...FactorOptionsFragment
 			}
 		}
 	}

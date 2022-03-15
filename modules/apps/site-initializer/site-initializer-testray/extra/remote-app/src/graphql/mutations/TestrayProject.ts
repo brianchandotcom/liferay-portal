@@ -16,22 +16,22 @@ import {gql} from '@apollo/client';
 
 import {testrayProjectFragment} from '../fragments';
 
-export const CreateTestrayProject = gql`
+export const CreateProject = gql`
 	${testrayProjectFragment}
 
-	mutation CreateTestrayProject($TestrayProject: InputC_TestrayProject!) {
+	mutation CreateProject($Project: InputC_Project!) {
 		c {
-			createTestrayProject(TestrayProject: $TestrayProject) {
-				...TestrayProjectFragment
+			createProject(Project: $Project) {
+				...ProjectFragment
 			}
 		}
 	}
 `;
 
-export const DeleteTestrayProject = gql`
-	mutation deleteTestrayProject($testrayProjectId: Long) {
+export const DeleteProject = gql`
+	mutation deleteProject($projectId: Long) {
 		c {
-			deleteTestrayProject(testrayProjectId: $testrayProjectId)
+			deleteProject(projectId: $projectId)
 		}
 	}
 `;

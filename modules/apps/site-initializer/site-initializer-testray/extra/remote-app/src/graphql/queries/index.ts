@@ -46,3 +46,4 @@ export * from './testrayRequirement';
 export * from './testrayRoutine';
 export * from './testrayShared';
 export * from './testraySuite';
+export * from './testrayTask';

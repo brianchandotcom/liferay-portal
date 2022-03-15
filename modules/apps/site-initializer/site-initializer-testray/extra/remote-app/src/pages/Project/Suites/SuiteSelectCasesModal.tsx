@@ -19,8 +19,8 @@ import React, {useCallback, useState} from 'react';
 import {BoxItem, Boxes, DualListBox} from '../../../components/Input';
 import Modal from '../../../components/Modal';
 import {
-	TestraySelectCasesParameters,
-	getTestraySelectCasesParameters,
+	SelectCasesParameters,
+	getSelectCasesParameters,
 } from '../../../graphql/queries';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
@@ -43,9 +43,7 @@ type SelectCaseParametersProps = {
 const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 	setState,
 }) => {
-	const {data} = useQuery<TestraySelectCasesParameters>(
-		getTestraySelectCasesParameters
-	);
+	const {data} = useQuery<SelectCasesParameters>(getSelectCasesParameters);
 
 	const getSelectedCaseParameters = useCallback(() => {
 		const queries = data?.c;
@@ -55,10 +53,10 @@ const SelectCaseParameters: React.FC<SelectCaseParametersProps> = ({
 			return;
 		}
 
-		const testrayCaseTypes = queries?.testrayCaseTypes.items || [];
-		const testrayComponents = queries?.testrayComponents.items || [];
-		const testrayRequirements = queries?.testrayRequirements.items || [];
-		const testrayTeams = queries?.testrayTeams.items || [];
+		const testrayCaseTypes = queries?.caseTypes.items || [];
+		const testrayComponents = queries?.components.items || [];
+		const testrayRequirements = queries?.requirements.items || [];
+		const testrayTeams = queries?.teams.items || [];
 
 		return {
 			testrayCaseTypes: [testrayCaseTypes.map(onMapDefault), defaultBox],

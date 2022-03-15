@@ -16,7 +16,7 @@ import {useQuery} from '@apollo/client';
 import {useEffect} from 'react';
 import {Outlet, useLocation, useParams} from 'react-router-dom';
 
-import {getTestrayCase} from '../../../../../../graphql/queries';
+import {getCase} from '../../../../../../graphql/queries';
 import useHeader from '../../../../../../hooks/useHeader';
 import i18n from '../../../../../../i18n';
 
@@ -29,13 +29,13 @@ const CaseResultOutlet = () => {
 		testrayCaseResultId,
 	} = useParams();
 
-	const {data} = useQuery(getTestrayCase, {
+	const {data} = useQuery(getCase, {
 		variables: {
-			testrayCaseId: testrayCaseResultId,
+			caseId: testrayCaseResultId,
 		},
 	});
 
-	const testrayCaseResult = data?.c?.testrayCase;
+	const testrayCaseResult = data?.c?.Case;
 
 	const basePath = `/project/${projectId}/routines/${routineId}/build/${testrayBuildId}/case-result/${testrayCaseResultId}`;
 

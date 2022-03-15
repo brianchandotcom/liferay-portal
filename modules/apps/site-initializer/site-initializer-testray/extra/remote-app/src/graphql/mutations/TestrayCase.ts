@@ -16,22 +16,22 @@ import {gql} from '@apollo/client';
 
 import {testrayCaseFragment} from '../fragments';
 
-export const CreateTestrayCase = gql`
+export const CreateCase = gql`
 	${testrayCaseFragment}
 
-	mutation CreateTestrayCase($TestrayCase: InputC_TestrayCase!) {
+	mutation CreateCase($Case: InputC_Case!) {
 		c {
-			createTestrayCase(TestrayCase: $TestrayCase) {
-				...TestrayCaseFragment
+			createCase(Case: $Case) {
+				...CaseFragment
 			}
 		}
 	}
 `;
 
-export const DeleteTestrayCase = gql`
-	mutation deleteTestrayCase($testrayCaseId: Long) {
+export const DeleteCase = gql`
+	mutation deleteCase($caseId: Long) {
 		c {
-			deleteTestrayCase(testrayCaseId: $testrayCaseId)
+			deleteCase(caseId: $caseId)
 		}
 	}
 `;

@@ -21,22 +21,18 @@ export type TestrayProductVersion = {
 	name: String;
 };
 
-export const getTestrayProductVersions = gql`
+export const getProductVersions = gql`
 	${testrayProductVersionFragment}
 
-	query getTestrayProductVersions(
+	query getProductVersions(
 		$filter: String
 		$page: Int = 1
 		$pageSize: Int = 20
 	) {
 		c {
-			testrayProductVersions(
-				filter: $filter
-				page: $page
-				pageSize: $pageSize
-			) {
+			productVersions(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
-					...TestrayProductVersionFragment
+					...ProductVersionFragment
 				}
 				lastPage
 				page
@@ -47,15 +43,13 @@ export const getTestrayProductVersions = gql`
 	}
 `;
 
-export const getTestrayProductVersion = gql`
+export const getProductVersion = gql`
 	${testrayProductVersionFragment}
 
-	query getTestrayProductVersion($testrayProductVersionId: Long!) {
+	query getProductVersion($productVersionId: Long!) {
 		c {
-			testrayProductVersion(
-				testrayProductVersionId: $testrayProductVersionId
-			) {
-				...TestrayProductVersionFragment
+			productVersion(productVersionId: $productVersionId) {
+				...ProductVersionFragment
 			}
 		}
 	}

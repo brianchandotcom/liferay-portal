@@ -22,18 +22,14 @@ export type TestraySubTask = {
 	score: number;
 };
 
-export const getTestraySubTasks = gql`
+export const getSubTasks = gql`
 	${testraySubTasksFragment}
 
-	query getTestraySubTasks(
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
-	) {
+	query getSubTasks($filter: String, $page: Int = 1, $pageSize: Int = 20) {
 		c {
-			testraySubTasks(filter: $filter, page: $page, pageSize: $pageSize) {
+			subtasks(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
-					...TestraySubTasksFragment
+					...SubTasksFragment
 				}
 				lastPage
 				page

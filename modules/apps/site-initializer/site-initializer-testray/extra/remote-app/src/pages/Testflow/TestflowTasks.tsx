@@ -28,9 +28,9 @@ import QATable from '../../components/Table/QATable';
 import {CTypePagination} from '../../graphql/queries';
 import {
 	TestraySubTask,
-	getTestraySubTasks,
+	getSubTasks,
 } from '../../graphql/queries/testraySubTask';
-import {TestrayTask, getTestrayTask} from '../../graphql/queries/testrayTask';
+import {TestrayTask, getTask} from '../../graphql/queries/testrayTask';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
 import {SUBTASK_STATUS} from '../../util/constants';
@@ -51,21 +51,17 @@ const TestFlowTasks: React.FC = () => {
 
 	const {testrayTaskId} = useParams();
 
-	const {data, loading} = useQuery<{testrayTask: TestrayTask}>(
-		getTestrayTask,
-		{
-			variables: {testrayTaskId},
-		}
-	);
+	const {data, loading} = useQuery<{task: TestrayTask}>(getTask, {
+		variables: {taskId: testrayTaskId},
+	});
 
 	const {data: dataTestraySubTasks} = useQuery<
-		CTypePagination<'testraySubTasks', TestraySubTask>
-	>(getTestraySubTasks);
+		CTypePagination<'subtasks', TestraySubTask>
+	>(getSubTasks);
 
-	const testrayTask = data?.testrayTask;
+	const testrayTask = data?.task;
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	const testraySubTasks =
-		dataTestraySubTasks?.c?.testraySubTasks?.items || [];
+	const testraySubTasks = dataTestraySubTasks?.c?.subtasks?.items || [];
 
 	const {setHeading, setTabs} = useHeader();
 
@@ -170,12 +166,9 @@ const TestFlowTasks: React.FC = () => {
 									value: (
 										<Link
 											className="text-dark"
-											to={`/project/${testrayTask.testrayBuild?.testrayProject?.id}/routines`}
+											to={`/project/${testrayTask.build?.project?.id}/routines`}
 										>
-											{
-												testrayTask.testrayBuild
-													?.testrayProject?.name
-											}
+											{testrayTask.build?.project?.name}
 
 											<ShortcutIcon />
 										</Link>
@@ -186,12 +179,9 @@ const TestFlowTasks: React.FC = () => {
 									value: (
 										<Link
 											className="text-dark"
-											to={`/project/${testrayTask.testrayBuild?.testrayProject?.id}/routines/${testrayTask.testrayBuild?.testrayRoutine?.id}`}
+											to={`/project/${testrayTask.build?.project?.id}/routines/${testrayTask.build?.routine?.id}`}
 										>
-											{
-												testrayTask.testrayBuild
-													?.testrayRoutine?.name
-											}
+											{testrayTask.build?.routine?.name}
 
 											<ShortcutIcon />
 										</Link>
@@ -202,9 +192,9 @@ const TestFlowTasks: React.FC = () => {
 									value: (
 										<Link
 											className="text-dark"
-											to={`/project/${testrayTask.testrayBuild?.testrayProject?.id}/routines/${testrayTask.testrayBuild?.testrayRoutine?.id}/build/${testrayTask.testrayBuild?.id}`}
+											to={`/project/${testrayTask.build?.project?.id}/routines/${testrayTask.build?.routine?.id}/build/${testrayTask.build?.id}`}
 										>
-											{testrayTask.testrayBuild?.name}
+											{testrayTask.build?.name}
 
 											<ShortcutIcon />
 										</Link>
@@ -230,7 +220,7 @@ const TestFlowTasks: React.FC = () => {
 
 			<Container className="mt-3" title={i18n.translate('subtasks')}>
 				<ListView
-					query={getTestraySubTasks}
+					query={getSubTasks}
 					tableProps={{
 						columns: [
 							{
@@ -288,7 +278,7 @@ const TestFlowTasks: React.FC = () => {
 						],
 						navigateTo: () => '/testflow/subtasks',
 					}}
-					transformData={(data) => data?.c?.testraySubTasks}
+					transformData={(data) => data?.c?.subtasks}
 				/>
 			</Container>
 		</>

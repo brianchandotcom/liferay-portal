@@ -20,41 +20,39 @@ export type TestrayFactorCategory = {
 	dateCreated: string;
 	dateModified: string;
 	externalReferenceCode: string;
+	id: number;
 	name: string;
 	status: string;
-	testrayFactorCategoryId: number;
 };
 
-export const getTestrayFactorCategory = gql`
+export const getFactorCategory = gql`
 	${testrayFactorCategoryFragment}
 
-	query getTestrayFactorCategory($testrayFactorCategoryId: Long) {
+	query getFactorCategory($factorCategoryId: Long) {
 		c {
-			testrayFactorCategory(
-				testrayFactorCategoryId: $testrayFactorCategoryId
-			) {
-				...TestrayFactorCategoryFragment
+			factorCategory(factorCategoryId: $factorCategoryId) {
+				...FactorCategoryFragment
 			}
 		}
 	}
 `;
 
-export const getTestrayFactorCategories = gql`
+export const getFactorCategories = gql`
 	${testrayFactorCategoryFragment}
 
-	query getTestrayFactorCategories(
+	query getFactorCategories(
 		$filter: String
 		$page: Int = 1
 		$pageSize: Int = 20
 	) {
 		c {
-			testrayFactorCategories(
+			factorCategories(
 				filter: $filter
 				page: $page
 				pageSize: $pageSize
 			) {
 				items {
-					...TestrayFactorCategoryFragment
+					...FactorCategoryFragment
 				}
 				lastPage
 				page

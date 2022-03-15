@@ -16,7 +16,7 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {useNavigate} from 'react-router-dom';
 
-import {TestrayTask} from '../../../../graphql/queries/testrayTask';
+import {TestrayTask} from '../../../../graphql/queries';
 import i18n from '../../../../i18n';
 import {SUBTASK_STATUS, SUB_TASK_STATUS} from '../../../../util/constants';
 

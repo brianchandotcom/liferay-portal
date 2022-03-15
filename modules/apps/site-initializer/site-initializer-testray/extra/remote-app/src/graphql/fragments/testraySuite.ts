@@ -15,11 +15,11 @@
 import {gql} from '@apollo/client';
 
 export const testraySuiteFragment = gql`
-	fragment TestraySuiteFragment on C_TestraySuite {
+	fragment SuiteFragment on C_Suite {
 		dateCreated
 		dateModified
 		description
-		id: testraySuiteId
+		id: suiteId
 		name
 		type
 	}

@@ -17,37 +17,33 @@ import {gql} from '@apollo/client';
 import {TestrayBuild} from './testrayBuild';
 
 export type TestrayTask = {
+	build?: TestrayBuild;
 	dateCreated: string;
 	dueStatus: number;
 	id: number;
 	name: string;
-	testrayBuild?: TestrayBuild;
 };
 
-export const getTestrayTasks = gql`
-	query getTestrayTasks(
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
-	) {
-		testrayTasks(filter: $filter, page: $page, pageSize: $pageSize)
+export const getTasks = gql`
+	query getTasks($filter: String, $page: Int = 1, $pageSize: Int = 20) {
+		tasks(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
-				type: "C_TestrayTask"
-				path: "testraytasks?page={args.page}&pageSize={args.pageSize}&nestedFields=testrayBuild.testrayProject,testrayBuild.testrayRoutine"
+				type: "C_Task"
+				path: "tasks?page={args.page}&pageSize={args.pageSize}&nestedFields=build.project,build.routine"
 			) {
 			items {
 				dateCreated
 				dueStatus
 				name
-				testrayBuild: r_taskBuild_c_testrayBuild {
-					id
+				build: r_taskBuild_c_Build {
 					dueDate
+					id
 					name
-					testrayProject: r_buildProject_c_testrayProject {
+					project: r_buildProject_c_Project {
 						id
 						name
 					}
-					testrayRoutine: r_buildRoutine_c_testrayRoutine {
+					routine: r_buildRoutine_c_Routine {
 						id
 						name
 					}
@@ -62,25 +58,25 @@ export const getTestrayTasks = gql`
 	}
 `;
 
-export const getTestrayTask = gql`
-	query getTestrayTask($testrayTaskId: Long!) {
-		testrayTask(testrayTaskId: $testrayTaskId)
+export const getTask = gql`
+	query getTask($taskId: Long!) {
+		task(taskId: $taskId)
 			@rest(
-				type: "C_TestrayTask"
-				path: "testraytasks/{args.testrayTaskId}?nestedFields=testrayBuild.testrayProject,testrayBuild.testrayRoutine"
+				type: "C_Task"
+				path: "tasks/{args.taskId}?nestedFields=build.project,build.routine"
 			) {
 			dateCreated
 			dueStatus
 			name
-			testrayBuild: r_taskBuild_c_testrayBuild {
+			build: r_taskBuild_c_Build {
 				id
 				dueDate
 				name
-				testrayProject: r_buildProject_c_testrayProject {
+				project: r_buildProject_c_Project {
 					id
 					name
 				}
-				testrayRoutine: r_buildRoutine_c_testrayRoutine {
+				routine: r_buildRoutine_c_Routine {
 					id
 					name
 				}

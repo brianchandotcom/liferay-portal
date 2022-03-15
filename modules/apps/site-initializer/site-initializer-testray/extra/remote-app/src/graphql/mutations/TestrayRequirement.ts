@@ -16,41 +16,37 @@ import {gql} from '@apollo/client';
 
 import {testrayRequirementFragment} from '../fragments';
 
-export const CreateTestrayRequirement = gql`
+export const CreateRequirement = gql`
 	${testrayRequirementFragment}
 
-	mutation CreateTestrayRequirement(
-		$TestrayRequirement: InputC_TestrayRequirement!
-	) {
+	mutation CreateRequirement($Requirement: InputC_Requirement!) {
 		c {
-			createTestrayRequirement(TestrayRequirement: $TestrayRequirement) {
-				...TestrayRequirementFragment
+			createRequirement(Requirement: $Requirement) {
+				...RequirementFragment
 			}
 		}
 	}
 `;
 
-export const DeleteTestrayRequirement = gql`
-	mutation deleteTestrayRequirement($testrayRequirementId: Long) {
+export const DeleteRequirement = gql`
+	mutation deleteRequirement($requirementId: Long) {
 		c {
-			deleteTestrayRequirement(
-				testrayRequirementId: $testrayRequirementId
-			)
+			deleteRequirement(requirementId: $requirementId)
 		}
 	}
 `;
 
-export const UpdateTestrayRequirements = gql`
-	mutation updateTestrayRequirement(
-		$testrayRequirementId: Long
-		$TestrayRequirement: InputC_TestrayRequirement!
+export const UpdateRequirements = gql`
+	mutation updateRequirement(
+		$requirementId: Long
+		$Requirement: InputC_Requirement!
 	) {
 		c {
-			updateTestrayRequirement(
-				testrayRequirementId: $testrayRequirementId
-				TestrayRequirement: $TestrayRequirement
+			updateRequirement(
+				requirementId: $requirementId
+				Requirement: $Requirement
 			) {
-				...TestrayRequirementFragment
+				...RequirementFragment
 			}
 		}
 	}

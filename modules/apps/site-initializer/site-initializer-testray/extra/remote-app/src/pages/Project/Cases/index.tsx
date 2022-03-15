@@ -14,7 +14,7 @@
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
-import {getTestrayCases} from '../../../graphql/queries/testrayCase';
+import {getCases} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 import CaseModal from './CaseModal';
 import useCaseActions from './useCaseActions';
@@ -30,11 +30,11 @@ const Cases = () => {
 					initialContext={{
 						filters: {
 							columns: {
+								caseType: false,
 								dateCreated: false,
 								dateModified: false,
 								issues: false,
-								testrayCaseType: false,
-								testrayTeam: false,
+								team: false,
 							},
 						},
 					}}
@@ -42,7 +42,7 @@ const Cases = () => {
 						addButton: formModal.modal.open,
 						visible: true,
 					}}
-					query={getTestrayCases}
+					query={getCases}
 					tableProps={{
 						actions,
 						columns: [
@@ -60,9 +60,8 @@ const Cases = () => {
 								value: i18n.translate('priority'),
 							},
 							{
-								key: 'testrayCaseType',
-								render: (testrayCaseType) =>
-									testrayCaseType?.name,
+								key: 'caseType',
+								render: (caseType) => caseType?.name,
 								value: i18n.translate('case-type'),
 							},
 							{
@@ -73,22 +72,21 @@ const Cases = () => {
 								value: i18n.translate('case-name'),
 							},
 							{
-								key: 'testrayTeam',
-								render: (_, {testrayComponent}) =>
-									testrayComponent?.testrayTeam?.name,
+								key: 'team',
+								render: (_, {component}) =>
+									component?.team?.name,
 								value: i18n.translate('team'),
 							},
 							{
-								key: 'testrayComponent',
-								render: (testrayComponent) =>
-									testrayComponent?.name,
+								key: 'component',
+								render: (component) => component?.name,
 								value: i18n.translate('component'),
 							},
 							{key: 'issues', value: i18n.translate('issues')},
 						],
 						navigateTo: ({id}) => id?.toString(),
 					}}
-					transformData={(data) => data?.testrayCases}
+					transformData={(data) => data?.cases}
 				/>
 			</Container>
 

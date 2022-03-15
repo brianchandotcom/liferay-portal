@@ -24,30 +24,26 @@ export type TestrayTeam = {
 	name: string;
 };
 
-export const getTestrayTeam = gql`
+export const getTeam = gql`
 	${testrayTeamFragment}
 
-	query getTestrayTeam($testrayTeamId: Long!) {
+	query getTeam($teamId: Long!) {
 		c {
-			testrayTeam(testrayTeamId: $testrayTeamId) {
-				...TestrayTeamFragment
+			team(teamId: $teamId) {
+				...TeamFragment
 			}
 		}
 	}
 `;
 
-export const getTestrayTeams = gql`
+export const getTeams = gql`
 	${testrayTeamFragment}
 
-	query getTestrayTeams(
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
-	) {
+	query getTeams($filter: String, $page: Int = 1, $pageSize: Int = 20) {
 		c {
-			testrayTeams(filter: $filter, page: $page, pageSize: $pageSize) {
+			teams(filter: $filter, page: $page, pageSize: $pageSize) {
 				items {
-					...TestrayTeamFragment
+					...TeamFragment
 				}
 				lastPage
 				page

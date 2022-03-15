@@ -18,14 +18,14 @@ import Code from '../../../../components/Code';
 import Container from '../../../../components/Layout/Container';
 import ListView from '../../../../components/ListView/ListView';
 import StatusBadge from '../../../../components/StatusBadge';
-import {getTestrayCases} from '../../../../graphql/queries';
+import {getCases} from '../../../../graphql/queries';
 import i18n from '../../../../i18n';
 import {getStatusLabel} from '../../../../util/constants';
 
 const Build = () => (
 	<Container className="mt-4" title={i18n.translate('tests')}>
 		<ListView
-			query={getTestrayCases}
+			query={getCases}
 			tableProps={{
 				columns: [
 					{
@@ -49,8 +49,8 @@ const Build = () => (
 					},
 					{
 						key: 'assignee',
-						render: (_: any, {testrayCaseResult}: any) =>
-							testrayCaseResult?.assignedUserId ? (
+						render: (_: any, {caseResult}: any) =>
+							caseResult?.assignedUserId ? (
 								<Avatar />
 							) : (
 								<AssignToMe />
@@ -59,16 +59,14 @@ const Build = () => (
 					},
 					{
 						key: 'status',
-						render: (_: any, {testrayCaseResult}: any) =>
-							testrayCaseResult?.dueStatus && (
+						render: (_: any, {caseResult}: any) =>
+							caseResult?.dueStatus && (
 								<StatusBadge
 									type={getStatusLabel(
-										testrayCaseResult?.dueStatus
+										caseResult?.dueStatus
 									)?.toLowerCase()}
 								>
-									{getStatusLabel(
-										testrayCaseResult?.dueStatus
-									)}
+									{getStatusLabel(caseResult?.dueStatus)}
 								</StatusBadge>
 							),
 						value: i18n.translate('status'),
@@ -79,16 +77,16 @@ const Build = () => (
 					},
 					{
 						key: 'error',
-						render: (_: any, {testrayCaseResult}: any) =>
-							testrayCaseResult?.errors && (
-								<Code>{testrayCaseResult.errors}</Code>
+						render: (_: any, {caseResult}: any) =>
+							caseResult?.errors && (
+								<Code>{caseResult.errors}</Code>
 							),
 						value: i18n.translate('errors'),
 					},
 				],
 				navigateTo: ({id}) => `case-result/${id}`,
 			}}
-			transformData={(data) => data?.c?.testrayCases}
+			transformData={(data) => data?.c?.cases}
 		/>
 	</Container>
 );

@@ -38,7 +38,7 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 					items={[
 						{
 							title: i18n.translate('product-version'),
-							value: testrayBuild.testrayProductVersion?.name,
+							value: testrayBuild.productVersion?.name,
 						},
 						{
 							title: i18n.translate('description'),

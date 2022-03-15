@@ -15,11 +15,11 @@
 import {gql} from '@apollo/client';
 
 export const testrayTeamFragment = gql`
-	fragment TestrayTeamFragment on C_TestrayTeam {
+	fragment TeamFragment on C_Team {
 		dateCreated
 		dateModified
 		externalReferenceCode
-		id: testrayTeamId
+		id: teamId
 		name
 		status
 	}

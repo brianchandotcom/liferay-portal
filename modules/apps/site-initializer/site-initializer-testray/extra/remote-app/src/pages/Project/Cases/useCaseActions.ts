@@ -14,13 +14,13 @@
 
 import {useMutation} from '@apollo/client';
 
-import {DeleteTestrayCase} from '../../../graphql/mutations';
+import {DeleteCase} from '../../../graphql/mutations';
 import {TestrayCase} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
 const useCaseActions = () => {
-	const [onDeleteTestrayCase] = useMutation(DeleteTestrayCase);
+	const [onDeleteCase] = useMutation(DeleteCase);
 
 	const formModal = useFormModal();
 	const modal = formModal.modal;
@@ -36,8 +36,8 @@ const useCaseActions = () => {
 				name: i18n.translate('link-requirements'),
 			},
 			{
-				action: ({id: testrayCaseId}: TestrayCase) =>
-					onDeleteTestrayCase({variables: {testrayCaseId}})
+				action: ({id: caseId}: TestrayCase) =>
+					onDeleteCase({variables: {caseId}})
 						.then(() => modal.onSave())
 						.catch(modal.onError),
 				name: i18n.translate('delete'),

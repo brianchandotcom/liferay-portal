@@ -23,13 +23,13 @@ import Input from '../../../components/Input';
 import Container from '../../../components/Layout/Container';
 import MarkdownPreview from '../../../components/Markdown';
 import Modal from '../../../components/Modal';
-import {CreateTestrayCase} from '../../../graphql/mutations';
+import {CreateCase} from '../../../graphql/mutations';
 import {
 	CTypePagination,
 	TestrayCaseType,
 	TestrayComponent,
-	getTestrayCaseTypes,
-	getTestrayComponents,
+	getCaseTypes,
+	getComponents,
 } from '../../../graphql/queries';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
@@ -251,21 +251,19 @@ const CaseModal: React.FC<CaseModalProps> = ({
 		stepsType: '',
 	});
 
-	const [onCreateTestrayCase] = useMutation(CreateTestrayCase);
+	const [onCreateCase] = useMutation(CreateCase);
 
 	const {data: testrayComponentsData} = useQuery<
-		CTypePagination<'testrayComponents', TestrayComponent>
-	>(getTestrayComponents);
+		CTypePagination<'components', TestrayComponent>
+	>(getComponents);
 
 	const {data: testrayCaseTypesData} = useQuery<
-		CTypePagination<'testrayCaseTypes', TestrayCaseType>
-	>(getTestrayCaseTypes);
+		CTypePagination<'caseTypes', TestrayCaseType>
+	>(getCaseTypes);
 
-	const testrayComponents =
-		testrayComponentsData?.c.testrayComponents.items || [];
+	const testrayComponents = testrayComponentsData?.c.components.items || [];
 
-	const testrayCaseTypes =
-		testrayCaseTypesData?.c.testrayCaseTypes.items || [];
+	const testrayCaseTypes = testrayCaseTypesData?.c.caseTypes.items || [];
 
 	const onChange = (event: any) => {
 		const {
@@ -288,15 +286,14 @@ const CaseModal: React.FC<CaseModalProps> = ({
 		};
 
 		try {
-			await onCreateTestrayCase({
+			await onCreateCase({
 				variables: {
 					TestrayCase: newForm,
 				},
 			});
 			onSave();
 			Liferay.Util.openToast({message: 'TestrayCase Registered'});
-		}
-		catch (error) {
+		} catch (error) {
 			Liferay.Util.openToast({
 				message: (error as any).message,
 				type: 'danger',

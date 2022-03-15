@@ -14,13 +14,13 @@
 
 import {useMutation} from '@apollo/client';
 
-import {DeleteTestraySuite} from '../../../graphql/mutations';
+import {DeleteSuite} from '../../../graphql/mutations';
 import {TestraySuite} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
 const useSuiteActions = () => {
-	const [onDeleteTestraySuite] = useMutation(DeleteTestraySuite);
+	const [onDeleteSuite] = useMutation(DeleteSuite);
 
 	const formModal = useFormModal();
 	const modal = formModal.modal;
@@ -32,8 +32,8 @@ const useSuiteActions = () => {
 				name: i18n.translate('edit'),
 			},
 			{
-				action: ({id: testraySuiteId}: TestraySuite) =>
-					onDeleteTestraySuite({variables: {testraySuiteId}})
+				action: ({id: suiteId}: TestraySuite) =>
+					onDeleteSuite({variables: {suiteId}})
 						.then(() => modal.onSave())
 						.catch(modal.onError),
 				name: i18n.translate('delete'),

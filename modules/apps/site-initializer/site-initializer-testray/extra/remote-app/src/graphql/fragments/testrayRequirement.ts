@@ -15,11 +15,11 @@
 import {gql} from '@apollo/client';
 
 export const testrayRequirementFragment = gql`
-	fragment TestrayRequirementFragment on C_TestrayRequirement {
+	fragment RequirementFragment on C_Requirement {
 		components
 		description
 		descriptionType
-		id: testrayRequirementId
+		id: requirementId
 		key
 		linkTitle
 		linkURL

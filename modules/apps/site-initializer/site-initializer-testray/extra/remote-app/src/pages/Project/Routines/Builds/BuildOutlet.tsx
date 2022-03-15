@@ -24,12 +24,9 @@ import {
 import {
 	TestrayBuild,
 	TypePagination,
-	getTestrayBuild,
+	getBuild,
 } from '../../../../graphql/queries';
-import {
-	TestrayTask,
-	getTestrayTasks,
-} from '../../../../graphql/queries/testrayTask';
+import {TestrayTask, getTasks} from '../../../../graphql/queries/testrayTask';
 import useHeader from '../../../../hooks/useHeader';
 import i18n from '../../../../i18n';
 import BuildAlertBar from './BuildAlertBar';
@@ -43,21 +40,20 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePath}) => {
 	const {pathname} = useLocation();
 	const {projectId, routineId, testrayBuildId} = useParams();
 	const {testrayProject, testrayRoutine}: any = useOutletContext();
-	const {data} = useQuery<{testrayBuild: TestrayBuild}>(getTestrayBuild, {
+	const {data} = useQuery<{build: TestrayBuild}>(getBuild, {
 		variables: {
-			testrayBuildId,
+			buildId: testrayBuildId,
 		},
 	});
 
 	const {data: testrayTasksData} = useQuery<
-		TypePagination<'testrayTasks', TestrayTask>
-	>(getTestrayTasks);
+		TypePagination<'tasks', TestrayTask>
+	>(getTasks);
 
-	const testrayBuild = data?.testrayBuild;
-	const testrayTasks = testrayTasksData?.testrayTasks.items || [];
+	const testrayBuild = data?.build;
+	const testrayTasks = testrayTasksData?.tasks.items || [];
 	const testrayTask = testrayTasks.find(
-		(testrayTask) =>
-			testrayTask?.testrayBuild?.id === Number(testrayBuildId)
+		(testrayTask) => testrayTask?.build?.id === Number(testrayBuildId)
 	);
 
 	const isCurrentPathIgnored = pathname.includes(ignorePath);

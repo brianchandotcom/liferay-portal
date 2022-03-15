@@ -14,12 +14,12 @@
 
 export * from './liferayUserAccount';
 export * from './testrayCase';
-export * from './TestrayComponent';
+export * from './testrayComponent';
 export * from './testrayFactorCategory';
 export * from './testrayFactorOptions';
+export * from './testrayProductVersion';
 export * from './testrayProject';
 export * from './testrayRequirement';
-export * from './testrayProductVersion';
 export * from './testrayRoutine';
 export * from './testraySubTask';
 export * from './testraySuite';

@@ -12,7 +12,7 @@
  * details.
  */
 
-import {getTestrayCaseTypes} from '../../graphql/queries/testrayCaseType';
+import {getCaseTypes} from '../../graphql/queries';
 import Container from '../Layout/Container';
 import ListView from '../ListView/ListView';
 
@@ -20,7 +20,7 @@ const CaseTypeModal = () => {
 	return (
 		<Container>
 			<ListView
-				query={getTestrayCaseTypes}
+				query={getCaseTypes}
 				tableProps={{
 					columns: [
 						{
@@ -29,7 +29,7 @@ const CaseTypeModal = () => {
 						},
 					],
 				}}
-				transformData={(data) => data?.c?.testrayCaseTypes}
+				transformData={(data) => data?.c?.caseTypes}
 			/>
 		</Container>
 	);

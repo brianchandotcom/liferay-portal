@@ -15,7 +15,7 @@
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import ProgressBar from '../../../components/ProgressBar';
-import {getTestrayRoutines} from '../../../graphql/queries';
+import {getRoutines} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 import {progress} from '../../../util/mock';
 import RoutineModal from './RoutineModal';
@@ -29,7 +29,7 @@ const Routines = () => {
 			<ListView
 				forceRefetch={formModal.forceRefetch}
 				managementToolbarProps={{addButton: formModal.modal.open}}
-				query={getTestrayRoutines}
+				query={getRoutines}
 				tableProps={{
 					actions,
 					columns: [
@@ -53,7 +53,7 @@ const Routines = () => {
 					],
 					navigateTo: ({id}) => id?.toString(),
 				}}
-				transformData={(data) => data?.c?.testrayRoutines}
+				transformData={(data) => data?.c?.routines}
 			/>
 
 			<RoutineModal modal={formModal.modal} />

@@ -19,7 +19,7 @@ import React, {useState} from 'react';
 
 import Input from '../../../components/Input';
 import Modal from '../../../components/Modal';
-import {CreateTestrayRoutine} from '../../../graphql/mutations';
+import {CreateRoutine} from '../../../graphql/mutations';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
@@ -63,7 +63,7 @@ const RoutineForm: React.FC<RoutineFormProps> = ({form, onChange}) => {
 const RoutineModal: React.FC<RoutineModalProps> = ({
 	modal: {observer, onClose, onError, onSave, visible},
 }) => {
-	const [onCreateTestrayRoutine] = useMutation(CreateTestrayRoutine);
+	const [onCreateRoutine] = useMutation(CreateRoutine);
 
 	const [form, setForm] = useState<RoutineFormData>({
 		autoanalyze: false,
@@ -89,15 +89,14 @@ const RoutineModal: React.FC<RoutineModalProps> = ({
 
 	const onSubmit = async () => {
 		try {
-			await onCreateTestrayRoutine({
+			await onCreateRoutine({
 				variables: {
 					TestrayRoutine: form,
 				},
 			});
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError();
 		}
 	};

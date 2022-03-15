@@ -21,7 +21,7 @@ import {
 	useParams,
 } from 'react-router-dom';
 
-import {TestrayCase, getTestrayCase} from '../../../graphql/queries';
+import {TestrayCase, getCase} from '../../../graphql/queries';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
 
@@ -46,13 +46,13 @@ const CaseOutlet = () => {
 		],
 	});
 
-	const {data} = useQuery<{testrayCase: TestrayCase}>(getTestrayCase, {
+	const {data} = useQuery<{case: TestrayCase}>(getCase, {
 		variables: {
-			testrayCaseId,
+			caseId: testrayCaseId,
 		},
 	});
 
-	const testrayCase = data?.testrayCase;
+	const testrayCase = data?.case;
 
 	useEffect(() => {
 		if (testrayCase && testrayProject) {

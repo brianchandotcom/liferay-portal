@@ -19,11 +19,7 @@ import React, {useState} from 'react';
 
 import Input, {AutoComplete} from '../../components/Input';
 import Modal from '../../components/Modal';
-import {
-	getTestrayBuilds,
-	getTestrayProjects,
-	getTestrayRoutines,
-} from '../../graphql/queries';
+import {getBuilds, getProjects, getRoutines} from '../../graphql/queries';
 import {FormModalOptions} from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 
@@ -58,25 +54,25 @@ const TestflowForm = () => {
 	return (
 		<>
 			<AutoComplete
-				gqlQuery={getTestrayProjects}
+				gqlQuery={getProjects}
 				label="Project"
-				objectName="testrayProjects"
+				objectName="projects"
 				onSearch={(keyword) => `contains(name, '${keyword}')`}
 			/>
 
 			<AutoComplete
-				gqlQuery={getTestrayRoutines}
+				gqlQuery={getRoutines}
 				label="Routine"
-				objectName="testrayRoutines"
+				objectName="routines"
 				onSearch={(keyword) => `contains(name, '${keyword}')`}
 			/>
 
 			<AutoComplete
-				gqlQuery={getTestrayBuilds}
+				gqlQuery={getBuilds}
 				label="Build"
-				objectName="testrayBuilds"
+				objectName="builds"
 				onSearch={(keyword) => `contains(name, '${keyword}')`}
-				transformData={(data) => data?.testrayBuilds?.items || []}
+				transformData={(data) => data?.Builds?.items || []}
 			/>
 
 			<Input label="Name" name="name" required />

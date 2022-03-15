@@ -19,7 +19,7 @@ import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
 import ProgressBar from '../../../components/ProgressBar';
 import useTotalTestCases from '../../../data/useTotalTestCases';
-import {getTestrayBuilds} from '../../../graphql/queries';
+import {getBuilds} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 import useRoutineActions from './useRoutineActions';
 
@@ -60,7 +60,7 @@ const Routine = () => {
 						},
 					},
 				}}
-				query={getTestrayBuilds}
+				query={getBuilds}
 				tableProps={{
 					actions: actionsRoutine,
 					columns: [
@@ -126,9 +126,9 @@ const Routine = () => {
 							value: i18n.translate('metrics'),
 						},
 					],
-					navigateTo: ({testrayBuildId}) => `build/${testrayBuildId}`,
+					navigateTo: ({id}) => `build/${id}`,
 				}}
-				transformData={(data) => data?.testrayBuilds}
+				transformData={(data) => data?.builds}
 			/>
 		</Container>
 	);

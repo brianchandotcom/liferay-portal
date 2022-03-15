@@ -20,7 +20,7 @@ import React, {useState} from 'react';
 
 import Input from '../../../components/Input';
 import Modal from '../../../components/Modal';
-import {CreateTestraySuite} from '../../../graphql/mutations';
+import {CreateSuite} from '../../../graphql/mutations';
 import useFormModal, {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../services/liferay/liferay';
@@ -108,7 +108,7 @@ const SuiteForm: React.FC<SuiteFormProps> = ({form, onChange}) => {
 const SuiteModal: React.FC<SuiteModalProps> = ({
 	modal: {observer, onClose, onSave, visible},
 }) => {
-	const [onCreateTestraySuite] = useMutation(CreateTestraySuite);
+	const [onCreateSuite] = useMutation(CreateSuite);
 
 	const [form, setForm] = useState<SuiteFormData>({
 		caseParameters: '',
@@ -143,7 +143,7 @@ const SuiteModal: React.FC<SuiteModalProps> = ({
 
 			delete newForm.smartSuite;
 
-			await onCreateTestraySuite({
+			await onCreateSuite({
 				variables: {
 					TestraySuite: newForm,
 				},
@@ -152,8 +152,7 @@ const SuiteModal: React.FC<SuiteModalProps> = ({
 			onSave();
 
 			Liferay.Util.openToast({message: 'TestraySuite Registered'});
-		}
-		catch (error) {
+		} catch (error) {
 			Liferay.Util.openToast({
 				message: (error as any).message,
 				type: 'danger',

@@ -15,11 +15,11 @@
 import {gql} from '@apollo/client';
 
 export const testrayComponentFragment = gql`
-	fragment TestrayComponentFragment on C_TestrayComponent {
+	fragment ComponentFragment on C_Component {
 		dateCreated
 		dateModified
 		externalReferenceCode
-		id: testrayComponentId
+		id: componentId
 		name
 		originationKey
 		status

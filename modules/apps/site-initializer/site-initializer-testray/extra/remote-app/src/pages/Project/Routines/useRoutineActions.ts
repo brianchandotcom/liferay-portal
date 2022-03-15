@@ -14,12 +14,12 @@
 
 import {useMutation} from '@apollo/client';
 
-import {DeleteTestrayRoutine} from '../../../graphql/mutations';
+import {DeleteRoutine} from '../../../graphql/mutations';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
 const useRoutineActions = () => {
-	const [onDeleteTestrayRoutine] = useMutation(DeleteTestrayRoutine);
+	const [onDeleteRoutine] = useMutation(DeleteRoutine);
 
 	const formModal = useFormModal();
 	const modal = formModal.modal;
@@ -36,7 +36,7 @@ const useRoutineActions = () => {
 			},
 			{
 				action: ({id: testrayRoutineId}: any) =>
-					onDeleteTestrayRoutine({variables: {testrayRoutineId}})
+					onDeleteRoutine({variables: {testrayRoutineId}})
 						.then(() => modal.onSave())
 						.catch(modal.onError),
 				name: i18n.translate('delete'),
@@ -57,7 +57,7 @@ const useRoutineActions = () => {
 			},
 			{
 				action: ({id: testrayRoutineId}: any) =>
-					onDeleteTestrayRoutine({variables: {testrayRoutineId}})
+					onDeleteRoutine({variables: {testrayRoutineId}})
 						.then(() => modal.onSave())
 						.catch(modal.onError),
 				name: i18n.translate('delete'),

@@ -16,9 +16,11 @@ import {useOutletContext} from 'react-router-dom';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
+import StatusBadge from '../../../components/StatusBadge';
 import QATable from '../../../components/Table/QATable';
-import {TestrayCase, getTestrayCaseResults} from '../../../graphql/queries';
+import {TestrayCase, getCaseResults} from '../../../graphql/queries';
 import i18n from '../../../i18n';
+import {getStatusLabel} from '../../../util/constants';
 
 const Case = () => {
 	const {testrayCase}: {testrayCase: TestrayCase} = useOutletContext();
@@ -30,7 +32,7 @@ const Case = () => {
 					items={[
 						{
 							title: i18n.translate('type'),
-							value: testrayCase.testrayCaseType?.name,
+							value: testrayCase.caseType?.name,
 						},
 						{
 							title: i18n.translate('priority'),
@@ -38,7 +40,7 @@ const Case = () => {
 						},
 						{
 							title: i18n.translate('main-component'),
-							value: testrayCase.testrayComponent?.name,
+							value: testrayCase.component?.name,
 						},
 						{
 							title: i18n.translate('description'),
@@ -70,7 +72,7 @@ const Case = () => {
 
 			<Container className="mt-3" title={i18n.translate('test-history')}>
 				<ListView
-					query={getTestrayCaseResults}
+					query={getCaseResults}
 					tableProps={{
 						columns: [
 							{
@@ -78,19 +80,47 @@ const Case = () => {
 								value: i18n.translate('create-date'),
 							},
 							{
-								key: 'git-hash',
+								key: 'build',
+								render: (build) => {
+									return build?.gitHash;
+								},
 								value: i18n.translate('git-hash'),
 							},
 							{
 								key: 'product-version',
+								render: (_, {build}) => {
+									return build?.productVersion?.name;
+								},
 								value: i18n.translate('product-version'),
 							},
 							{
-								key: 'environment',
+								key: 'run',
+								render: (run) => {
+									return run?.externalReferencePK;
+								},
+								size: 'lg',
 								value: i18n.translate('environment'),
 							},
-							{key: 'routine', value: i18n.translate('routine')},
-							{key: 'status', value: i18n.translate('status')},
+							{
+								key: 'routine',
+								render: (_, {build}) => build?.routine?.name,
+								value: i18n.translate('routine'),
+							},
+							{
+								key: 'dueStatus',
+								render: (dueStatus) => {
+									return (
+										<StatusBadge
+											type={getStatusLabel(
+												dueStatus
+											)?.toLowerCase()}
+										>
+											{getStatusLabel(dueStatus)}
+										</StatusBadge>
+									);
+								},
+								value: i18n.translate('status'),
+							},
 							{
 								key: 'warnings',
 								value: i18n.translate('warnings'),
@@ -99,7 +129,7 @@ const Case = () => {
 							{key: 'errors', value: i18n.translate('errors')},
 						],
 					}}
-					transformData={(data) => data?.testrayCaseResults}
+					transformData={(data) => data?.caseResults}
 				/>
 			</Container>
 		</>

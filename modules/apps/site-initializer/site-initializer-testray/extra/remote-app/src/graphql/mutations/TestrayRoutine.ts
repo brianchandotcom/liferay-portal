@@ -16,22 +16,22 @@ import {gql} from '@apollo/client';
 
 import {testrayRoutineFragment} from '../fragments';
 
-export const CreateTestrayRoutine = gql`
+export const CreateRoutine = gql`
 	${testrayRoutineFragment}
 
-	mutation CreateTestrayRoutine($TestrayRoutine: InputC_TestrayRoutine!) {
+	mutation CreateRoutine($Routine: InputC_Routine!) {
 		c {
-			createTestrayRoutine(TestrayRoutine: $TestrayRoutine) {
-				...TestrayRoutineFragment
+			createRoutine(Routine: $Routine) {
+				...RoutineFragment
 			}
 		}
 	}
 `;
 
-export const DeleteTestrayRoutine = gql`
-	mutation deleteTestrayRoutine($testrayRoutineId: Long) {
+export const DeleteRoutine = gql`
+	mutation deleteRoutine($routineId: Long) {
 		c {
-			deleteTestrayRoutine(testrayRoutineId: $testrayRoutineId)
+			deleteRoutine(routineId: $routineId)
 		}
 	}
 `;

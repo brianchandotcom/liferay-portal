@@ -12,7 +12,7 @@
  * details.
  */
 
-import {getTestrayFactorCategories} from '../../graphql/queries';
+import {getFactorCategories} from '../../graphql/queries';
 import i18n from '../../i18n';
 import Container from '../Layout/Container';
 import ListView from '../ListView/ListView';
@@ -21,7 +21,7 @@ const CategoryModal = () => {
 	return (
 		<Container>
 			<ListView
-				query={getTestrayFactorCategories}
+				query={getFactorCategories}
 				tableProps={{
 					columns: [
 						{
@@ -30,7 +30,7 @@ const CategoryModal = () => {
 						},
 					],
 				}}
-				transformData={(data) => data?.c?.testrayFactorCategories}
+				transformData={(data) => data?.c?.factorCategories}
 			/>
 		</Container>
 	);

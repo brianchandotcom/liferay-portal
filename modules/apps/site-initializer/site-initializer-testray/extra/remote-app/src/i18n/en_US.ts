@@ -14,6 +14,7 @@
 
 export default {
 	'add-case': 'Add Case',
+	'add-project': 'Add Project',
 	'add-requirements': 'Add Requirements',
 	'add-routine': 'Add Routine',
 	'add-suite': 'Add Suite',
@@ -183,7 +184,7 @@ export default {
 		'Testers carry permissions to analyze test results by workflowing results or collaborating on tasks',
 	'testflow': 'Testflow',
 	'testflow-archived': 'Testflow Archived',
-	'testray-user': 'Testray User',
+	'testray-user': ' User',
 	'tests': 'Tests',
 	'this-build-has-been-analyzed': 'This build has been analyzed.',
 	'this-build-is-currently-in-analysis':

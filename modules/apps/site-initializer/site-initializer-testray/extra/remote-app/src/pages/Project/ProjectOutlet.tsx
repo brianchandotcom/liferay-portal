@@ -19,8 +19,8 @@ import {Outlet, useLocation, useParams} from 'react-router-dom';
 import {CType, CTypePagination} from '../../graphql/queries';
 import {
 	TestrayProject,
-	getTestrayProject,
-	getTestrayProjects,
+	getProject,
+	getProjects,
 } from '../../graphql/queries/testrayProject';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
@@ -30,25 +30,22 @@ const ProjectOutlet = () => {
 	const {pathname} = useLocation();
 	const {setActions, setDropdown, setHeading, setTabs} = useHeader();
 
-	const {data} = useQuery<CType<'testrayProject', TestrayProject>>(
-		getTestrayProject,
-		{
-			variables: {testrayProjectId: projectId},
-		}
-	);
+	const {data} = useQuery<CType<'project', TestrayProject>>(getProject, {
+		variables: {projectId},
+	});
 
 	const {data: dataTestrayProjects} = useQuery<
-		CTypePagination<'testrayProjects', TestrayProject>
-	>(getTestrayProjects, {
+		CTypePagination<'projects', TestrayProject>
+	>(getProjects, {
 		variables: {
 			pageSize: 100,
 		},
 	});
 
-	const testrayProjects = dataTestrayProjects?.c?.testrayProjects?.items;
+	const testrayProjects = dataTestrayProjects?.c?.projects?.items;
 
 	const hasOtherParams = !!Object.values(otherParams).length;
-	const testrayProject = data?.c.testrayProject;
+	const testrayProject = data?.c.project;
 
 	const getPath = useCallback(
 		(path: string) => {

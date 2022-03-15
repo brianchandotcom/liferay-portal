@@ -15,9 +15,9 @@
 import {gql} from '@apollo/client';
 
 export const testrayTaskFragment = gql`
-	fragment TestrayTaskFragment on C_TestrayTask {
+	fragment TaskFragment on C_Task {
 		dueStatus
+		id: taskId
 		name
-		id: testrayTaskId
 	}
 `;

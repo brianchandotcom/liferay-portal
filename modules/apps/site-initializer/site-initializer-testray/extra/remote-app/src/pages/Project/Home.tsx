@@ -15,7 +15,7 @@
 import Container from '../../components/Layout/Container';
 import ListView from '../../components/ListView/ListView';
 import {initialState} from '../../context/HeaderContext';
-import {getTestrayProjects} from '../../graphql/queries';
+import {getProjects} from '../../graphql/queries';
 import useHeader from '../../hooks/useHeader';
 import i18n from '../../i18n';
 import ProjectModal from './ProjectModal';
@@ -34,7 +34,7 @@ const Home = () => {
 					managementToolbarProps={{
 						addButton: formModal.modal.open,
 					}}
-					query={getTestrayProjects}
+					query={getProjects}
 					tableProps={{
 						actions,
 						columns: [
@@ -51,7 +51,7 @@ const Home = () => {
 						navigateTo: (project) =>
 							`/project/${project.id}/routines`,
 					}}
-					transformData={(data) => data?.c?.testrayProjects}
+					transformData={(data) => data?.c?.projects}
 				/>
 			</Container>
 

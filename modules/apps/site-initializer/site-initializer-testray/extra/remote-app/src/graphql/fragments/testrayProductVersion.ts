@@ -15,8 +15,8 @@
 import {gql} from '@apollo/client';
 
 export const testrayProductVersionFragment = gql`
-	fragment TestrayProductVersionFragment on C_TestrayProductVersion {
-		id: testrayProductVersionId
+	fragment ProductVersionFragment on C_ProductVersion {
+		id: productVersionId
 		name
 	}
 `;

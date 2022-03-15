@@ -21,7 +21,7 @@ import {useState} from 'react';
 import Input from '../../components/Input';
 import Container from '../../components/Layout/Container';
 import Modal from '../../components/Modal';
-import {createUserAccount} from '../../graphql/mutations/LiferayUser';
+import {createUserAccount} from '../../graphql/mutations/liferayUser';
 import {FormModalOptions} from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 import {Liferay} from '../../services/liferay/liferay';
@@ -220,8 +220,7 @@ const CreateUser: React.FC<CreateUserProps> = ({
 			Liferay.Util.openToast({message: 'TestrayCase Registered'});
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			Liferay.Util.openToast({
 				message: (error as any).message,
 				type: 'danger',

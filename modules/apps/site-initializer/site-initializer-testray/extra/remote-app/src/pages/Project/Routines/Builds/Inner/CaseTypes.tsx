@@ -14,13 +14,13 @@
 
 import Container from '../../../../../components/Layout/Container';
 import ListView from '../../../../../components/ListView/ListView';
-import {getTestrayCaseTypes} from '../../../../../graphql/queries/testrayCaseType';
+import {getCaseTypes} from '../../../../../graphql/queries';
 import i18n from '../../../../../i18n';
 
 const CaseTypes = () => (
 	<Container className="mt-4" title={i18n.translate('case-types')}>
 		<ListView
-			query={getTestrayCaseTypes}
+			query={getCaseTypes}
 			tableProps={{
 				columns: [
 					{
@@ -41,7 +41,7 @@ const CaseTypes = () => (
 					},
 				],
 			}}
-			transformData={(data) => data?.c?.testrayCaseTypes}
+			transformData={(data) => data?.c?.caseTypes}
 		/>
 	</Container>
 );

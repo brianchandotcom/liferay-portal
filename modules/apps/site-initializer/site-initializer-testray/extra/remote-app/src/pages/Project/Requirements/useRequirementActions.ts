@@ -14,12 +14,12 @@
 
 import {useMutation} from '@apollo/client';
 
-import {DeleteTestrayRequirement} from '../../../graphql/mutations';
+import {DeleteRequirement} from '../../../graphql/mutations';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
 const useRequirementActions = () => {
-	const [onDeleteTestrayRequirement] = useMutation(DeleteTestrayRequirement);
+	const [onDeleteRequirement] = useMutation(DeleteRequirement);
 
 	const formModal = useFormModal();
 	const modal = formModal.modal;
@@ -32,7 +32,7 @@ const useRequirementActions = () => {
 			},
 			{
 				action: ({id: testrayRequirementId}: any) =>
-					onDeleteTestrayRequirement({
+					onDeleteRequirement({
 						variables: {testrayRequirementId},
 					})
 						.then(() => modal.onSave())

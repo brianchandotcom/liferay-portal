@@ -14,13 +14,13 @@
 
 import Container from '../../../../../components/Layout/Container';
 import ListView from '../../../../../components/ListView/ListView';
-import {getTestrayComponents} from '../../../../../graphql/queries/testrayComponent';
+import {getComponents} from '../../../../../graphql/queries';
 import i18n from '../../../../../i18n';
 
 const Components = () => (
 	<Container className="mt-4" title={i18n.translate('component')}>
 		<ListView
-			query={getTestrayComponents}
+			query={getComponents}
 			tableProps={{
 				columns: [
 					{
@@ -41,7 +41,7 @@ const Components = () => (
 					},
 				],
 			}}
-			transformData={(data) => data?.c?.testrayComponents}
+			transformData={(data) => data?.c?.components}
 		/>
 	</Container>
 );

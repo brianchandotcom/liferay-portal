@@ -15,10 +15,10 @@
 import {gql} from '@apollo/client';
 
 export const testrayFactorOptionsFragment = gql`
-	fragment TestrayFactorOptionsFragment on C_TestrayFactorOptions {
+	fragment FactorOptionsFragment on C_FactorOptions {
 		dateCreated
 		dateModified
-		id: testrayFactorOptionId
+		id: factorOptionId
 		name
 	}
 `;

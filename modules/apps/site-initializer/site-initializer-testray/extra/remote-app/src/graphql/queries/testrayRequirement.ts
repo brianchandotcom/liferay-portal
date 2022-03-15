@@ -18,6 +18,7 @@ import {DescriptionType} from '../../types';
 import {TestrayComponent} from './testrayComponent';
 
 export type TestrayRequirement = {
+	component?: TestrayComponent;
 	components: string;
 	description: string;
 	descriptionType: keyof typeof DescriptionType;
@@ -26,19 +27,18 @@ export type TestrayRequirement = {
 	linkTitle: string;
 	linkURL: string;
 	summary: string;
-	testrayComponent?: TestrayComponent;
 };
 
-export const getTestrayRequirements = gql`
-	query getTestrayRequirements(
+export const getRequirements = gql`
+	query getRequirements(
 		$filter: String
 		$page: Int = 1
 		$pageSize: Int = 20
 	) {
-		testrayRequirements(filter: $filter, page: $page, pageSize: $pageSize)
+		requirements(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
-				type: "C_TestrayRequirement"
-				path: "testrayrequirements?page={args.page}&pageSize={args.pageSize}&nestedFields=testrayComponent,testrayTeam"
+				type: "C_Requirement"
+				path: "requirements?page={args.page}&pageSize={args.pageSize}&nestedFields=Component,Team"
 			) {
 			items {
 				components
@@ -49,9 +49,9 @@ export const getTestrayRequirements = gql`
 				linkTitle
 				linkURL
 				summary
-				testrayComponent: r_requirementComponent_c_testrayComponent {
+				component: r_requirementComponent_c_Component {
 					name
-					testrayTeam: r_componentTeam_c_testrayTeam {
+					team: r_componentTeam_c_Team {
 						name
 					}
 				}
@@ -64,12 +64,12 @@ export const getTestrayRequirements = gql`
 	}
 `;
 
-export const getTestrayRequirement = gql`
-	query getTestrayRequirement($testrayRequirementId: Long!) {
-		testrayRequirement(testrayRequirementId: $testrayRequirementId)
+export const getRequirement = gql`
+	query getRequirement($requirementId: Long!) {
+		requirement(requirementId: $requirementId)
 			@rest(
-				type: "C_TestrayRequirement"
-				path: "testrayrequirements/{args.testrayRequirementId}?nestedFields=testrayComponent,testrayTeam"
+				type: "C_Requirement"
+				path: "requirements/{args.requirementId}?nestedFields=Component,Team"
 			) {
 			components
 			description
@@ -79,9 +79,9 @@ export const getTestrayRequirement = gql`
 			linkTitle
 			linkURL
 			summary
-			testrayComponent: r_requirementComponent_c_testrayComponent {
+			component: r_requirementComponent_c_Component {
 				name
-				testrayTeam: r_componentTeam_c_testrayTeam {
+				team: r_componentTeam_c_Team {
 					name
 				}
 			}

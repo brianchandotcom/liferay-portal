@@ -15,11 +15,11 @@
 import {gql} from '@apollo/client';
 
 export const testrayFactorCategoryFragment = gql`
-	fragment TestrayFactorCategoryFragment on C_TestrayFactorCategory {
+	fragment FactorCategoryFragment on C_FactorCategory {
 		dateCreated
 		dateModified
 		externalReferenceCode
+		id: factorCategoryId
 		name
-		id: testrayFactorCategoryId
 	}
 `;

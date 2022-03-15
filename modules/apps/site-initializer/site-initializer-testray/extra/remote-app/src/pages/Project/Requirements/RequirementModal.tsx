@@ -23,11 +23,11 @@ import Input from '../../../components/Input';
 import Container from '../../../components/Layout/Container';
 import MarkdownPreview from '../../../components/Markdown';
 import Modal from '../../../components/Modal';
-import {CreateTestrayRequirement} from '../../../graphql/mutations/TestrayRequirement';
+import {CreateRequirement} from '../../../graphql/mutations';
 import {
 	CTypePagination,
 	TestrayComponent,
-	getTestrayComponents,
+	getComponents,
 } from '../../../graphql/queries';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
@@ -187,11 +187,11 @@ const RequirementsModal: React.FC<RequirementsModalProps> = ({
 		summary: '',
 	});
 
-	const [onCreateTestrayRequirement] = useMutation(CreateTestrayRequirement);
+	const [onCreateRequirement] = useMutation(CreateRequirement);
 
 	const {data: testrayComponentsData} = useQuery<
-		CTypePagination<'testrayComponents', TestrayComponent>
-	>(getTestrayComponents);
+		CTypePagination<'components', TestrayComponent>
+	>(getComponents);
 
 	function onchange({target}: any): void {
 		const {name, value} = target;
@@ -202,8 +202,7 @@ const RequirementsModal: React.FC<RequirementsModalProps> = ({
 		});
 	}
 
-	const testrayComponents =
-		testrayComponentsData?.c?.testrayComponents.items || [];
+	const testrayComponents = testrayComponentsData?.c?.components.items || [];
 
 	const onSubmit = async () => {
 		const newForm: RequirementsForm = {
@@ -218,15 +217,14 @@ const RequirementsModal: React.FC<RequirementsModalProps> = ({
 		};
 
 		try {
-			await onCreateTestrayRequirement({
+			await onCreateRequirement({
 				variables: {
 					TestrayRequirement: newForm,
 				},
 			});
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError();
 		}
 	};

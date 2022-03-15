@@ -24,8 +24,8 @@ import MarkdownPreview from '../../../components/Markdown';
 import QATable from '../../../components/Table/QATable';
 import {
 	TestrayRequirement,
-	getTestrayCases,
-	getTestrayRequirement,
+	getCases,
+	getRequirement,
 } from '../../../graphql/queries';
 import useHeader from '../../../hooks/useHeader';
 import i18n from '../../../i18n';
@@ -36,8 +36,8 @@ const Requirement = () => {
 
 	const {setHeading, setTabs} = useHeader({shouldUpdate: false});
 
-	const {data, loading} = useQuery<{testrayRequirement: TestrayRequirement}>(
-		getTestrayRequirement,
+	const {data, loading} = useQuery<{requirement: TestrayRequirement}>(
+		getRequirement,
 		{
 			variables: {
 				testrayRequirementId: requirementId,
@@ -45,7 +45,7 @@ const Requirement = () => {
 		}
 	);
 
-	const testrayRequirement = data?.testrayRequirement;
+	const testrayRequirement = data?.requirement;
 
 	useEffect(() => {
 		if (testrayRequirement) {
@@ -95,13 +95,11 @@ const Requirement = () => {
 						},
 						{
 							title: 'team',
-							value:
-								testrayRequirement.testrayComponent?.testrayTeam
-									?.name,
+							value: testrayRequirement.component?.team?.name,
 						},
 						{
 							title: i18n.translate('component'),
-							value: testrayRequirement.testrayComponent?.name,
+							value: testrayRequirement.component?.name,
 						},
 						{
 							title: i18n.translate('jira-components'),
@@ -134,7 +132,7 @@ const Requirement = () => {
 
 			<Container className="mt-3" title="Cases">
 				<ListView
-					query={getTestrayCases}
+					query={getCases}
 					tableProps={{
 						columns: [
 							{
@@ -148,7 +146,7 @@ const Requirement = () => {
 							},
 						],
 					}}
-					transformData={(data) => data?.testrayCases}
+					transformData={(data) => data?.cases}
 				/>
 			</Container>
 		</>

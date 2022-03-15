@@ -26,27 +26,36 @@ export type TestrayCaseResult = {
 	startDate: string;
 };
 
-export const getTestrayCaseResults = gql`
-	query getTestrayCaseResults(
-		$filter: String
-		$page: Int = 1
-		$pageSize: Int = 20
-	) {
-		testrayCaseResults(filter: $filter, page: $page, pageSize: $pageSize)
+export const getCaseResults = gql`
+	query getCaseResults($filter: String, $page: Int = 1, $pageSize: Int = 20) {
+		caseResults(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
-				type: "C_TestrayCaseResult"
-				path: "testraycaseresults?page={args.page}&pageSize={args.pageSize}&nestedFields=testrayComponent.testrayTeam,testrayCaseResultType"
+				type: "C_CaseResult"
+				path: "caseresults?page={args.page}&pageSize={args.pageSize}&nestedFields=component,build.productVersion,build.routine,run"
 			) {
 			items {
 				assignedUserId
 				attachments
+				build: r_buildToCaseResult_c_build {
+					gitHash
+					routine: r_routineToBuilds_c_routine {
+						name
+					}
+					productVersion: r_productVersionToBuilds_c_productVersion {
+						name
+					}
+				}
 				closedDate
 				commentMBMessageId
+				component: r_componentToCaseResult_c_component
 				dateCreated
 				dateModified
 				dueStatus
 				errors
 				startDate
+				run: r_runToCaseResult_c_run {
+					externalReferencePK
+				}
 			}
 			lastPage
 			page

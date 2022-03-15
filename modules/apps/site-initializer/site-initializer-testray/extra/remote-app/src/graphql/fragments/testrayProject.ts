@@ -15,9 +15,9 @@
 import {gql} from '@apollo/client';
 
 export const testrayProjectFragment = gql`
-	fragment TestrayProjectFragment on C_TestrayProject {
+	fragment ProjectFragment on C_Project {
 		description
+		id: projectId
 		name
-		id: testrayProjectId
 	}
 `;

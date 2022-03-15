@@ -19,7 +19,7 @@ import {useState} from 'react';
 
 import Input from '../../components/Input';
 import Modal from '../../components/Modal';
-import {CreateTestrayProject} from '../../graphql/mutations/TestrayProject';
+import {CreateProject} from '../../graphql/mutations/testrayProject';
 import {FormModalOptions} from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 import {Liferay} from '../../services/liferay/liferay';
@@ -79,7 +79,7 @@ const ProjectModal: React.FC<NewProjectProps> = ({
 		});
 	}
 
-	const [onCreateTestrayProject] = useMutation(CreateTestrayProject);
+	const [onCreateProject] = useMutation(CreateProject);
 
 	const onSubmit = async () => {
 		const newForm: NewProjectForm = {
@@ -91,7 +91,7 @@ const ProjectModal: React.FC<NewProjectProps> = ({
 		};
 
 		try {
-			await onCreateTestrayProject({
+			await onCreateProject({
 				variables: {
 					TestrayProject: newForm,
 				},
@@ -100,8 +100,7 @@ const ProjectModal: React.FC<NewProjectProps> = ({
 			Liferay.Util.openToast({message: 'TestrayProject Registered'});
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			Liferay.Util.openToast({
 				message: (error as any).message,
 				type: 'danger',

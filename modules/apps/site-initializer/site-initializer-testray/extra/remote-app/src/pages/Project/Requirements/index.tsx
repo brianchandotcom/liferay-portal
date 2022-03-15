@@ -16,7 +16,7 @@ import ClayIcon from '@clayui/icon';
 
 import Container from '../../../components/Layout/Container';
 import ListView from '../../../components/ListView/ListView';
-import {getTestrayRequirements} from '../../../graphql/queries';
+import {getRequirements} from '../../../graphql/queries';
 import i18n from '../../../i18n';
 import RequirementsModal from './RequirementModal';
 import useRequirementActions from './useRequirementActions';
@@ -33,7 +33,7 @@ const Requirements = () => {
 						addButton: formModal.modal.open,
 						visible: true,
 					}}
-					query={getTestrayRequirements}
+					query={getRequirements}
 					tableProps={{
 						actions,
 						columns: [
@@ -64,15 +64,14 @@ const Requirements = () => {
 								value: 'Link',
 							},
 							{
-								key: 'testrayTeam',
-								render: (_, {testrayComponent}) =>
-									testrayComponent?.testrayTeam?.name,
+								key: 'team',
+								render: (_, {component}) =>
+									component?.team?.name,
 								value: i18n.translate('team'),
 							},
 							{
-								key: 'testrayComponent',
-								render: (testrayComponent) =>
-									testrayComponent?.name,
+								key: 'component',
+								render: (component) => component?.name,
 								value: i18n.translate('component'),
 							},
 							{
@@ -87,7 +86,7 @@ const Requirements = () => {
 						],
 						navigateTo: ({id}) => id?.toString(),
 					}}
-					transformData={(data) => data?.testrayRequirements}
+					transformData={(data) => data?.requirements}
 				/>
 			</Container>
 			<RequirementsModal modal={formModal.modal} />

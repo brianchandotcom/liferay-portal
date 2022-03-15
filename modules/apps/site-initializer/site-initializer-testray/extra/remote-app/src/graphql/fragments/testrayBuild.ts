@@ -15,13 +15,13 @@
 import {gql} from '@apollo/client';
 
 export const testrayBuildFragment = gql`
-	fragment TestrayBuildFragment on C_TestrayBuild {
+	fragment BuildFragment on C_Build {
 		dateCreated
 		description
 		dueStatus
 		gitHash
+		id: buildId
 		name
-		id: testrayBuildId
 		promoted
 	}
 `;

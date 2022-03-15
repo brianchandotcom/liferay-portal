@@ -910,19 +910,18 @@ public class LayoutStructure {
 
 			viewportConfigurationJSONObject.put("modulesPerRow", 1);
 		}
-		else if (viewportConfigurationJSONObject.has("modulesPerRow")) {
-			if (GetterUtil.getBoolean(
+		else if (GetterUtil.getBoolean(
 					PropsUtil.get("feature.flag.LPS-119551")) &&
-				Objects.equals(
-					ViewportSize.PORTRAIT_MOBILE.getViewportSizeId(),
-					viewportSizeId)) {
+				 Objects.equals(
+					 ViewportSize.PORTRAIT_MOBILE.getViewportSizeId(),
+					 viewportSizeId) &&
+				 viewportConfigurationJSONObject.has("modulesPerRow")) {
 
-				viewportConfigurationJSONObject.remove("modulesPerRow");
-			}
-			else {
-				viewportConfigurationJSONObject.put(
-					"modulesPerRow", numberOfColumns);
-			}
+			viewportConfigurationJSONObject.remove("modulesPerRow");
+		}
+		else if (viewportConfigurationJSONObject.has("modulesPerRow")) {
+			viewportConfigurationJSONObject.put(
+				"modulesPerRow", numberOfColumns);
 		}
 
 		_updateColumnSizes(

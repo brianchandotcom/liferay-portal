@@ -43,6 +43,22 @@ definition {
 		}
 	}
 
+	macro assertImportMappings {
+		WaitForElementPresent(
+			key_title = "Import Mappings",
+			locator1 = "Header#H4_TITLE");
+
+		for (var fieldMapping : list "${fieldMappings}") {
+			var destinationField = StringUtil.extractFirst("${fieldMapping}", ":");
+			var sourceField = StringUtil.extractLast("${fieldMapping}", ":");
+
+			AssertSelectedLabel(
+				key_destinationField = "${destinationField}",
+				locator1 = "ImportExport#IMPORT_MAPPING_SELECT",
+				value1 = "${sourceField}");
+		}
+	}
+
 	macro assertImportTemplate {
 		AssertSelectedLabel(
 			key_selectFieldLabel = "Template",

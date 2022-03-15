@@ -54,6 +54,14 @@ public class DestinationBuilderImpl implements DestinationBuilder {
 		return this;
 	}
 
+	@Override
+	public DestinationBuilder replaceURLString(String urlString) {
+		_urlString = StringUtil.replace(
+			URLCodec.decodeURL(urlString), CharPool.PLUS, CharPool.SPACE);
+
+		return this;
+	}
+
 	private final Http _http;
 	private String _urlString;
 

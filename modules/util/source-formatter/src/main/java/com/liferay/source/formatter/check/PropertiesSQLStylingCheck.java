@@ -132,7 +132,9 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 				}
 
 				if (x == -1) {
+					sb.append("(");
 					sb.append(line);
+					sb.append(")");
 					sb.append("\n");
 
 					continue;

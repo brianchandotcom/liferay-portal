@@ -379,7 +379,6 @@
 		<module name="com.liferay.source.formatter.checkstyle.check.ExceptionPrintStackTraceCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Avoid using printStackTrace." />
-			<property name="enabled" value="false" />
 			<message key="method.call.avoid" value="Avoid using method ''printStackTrace''" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ExceptionVariableNameCheck">

@@ -992,6 +992,8 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest();
 
 			purchaseUnitRequest.amountWithBreakdown(amountWithBreakdown);
+			purchaseUnitRequest.referenceId(
+				String.valueOf(commerceOrderItem.getCommerceOrderItemId()));
 
 			purchaseUnitRequests.add(purchaseUnitRequest);
 		}

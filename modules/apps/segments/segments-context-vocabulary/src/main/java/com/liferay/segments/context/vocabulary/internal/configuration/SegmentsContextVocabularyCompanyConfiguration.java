@@ -19,29 +19,30 @@ import aQute.bnd.annotation.metatype.Meta;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author Raymond Augé
+ * @author Yurena Cabrera
  */
 @ExtendedObjectClassDefinition(
-	category = "segments", factoryInstanceLabelAttribute = "entityField"
+	category = "segments", factoryInstanceLabelAttribute = "entityField",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	description = "segments-context-vocabulary-configuration-description",
+	description = "segments-context-vocabulary-company-configuration-description",
 	factory = true,
-	id = "com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration",
+	id = "com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyCompanyConfiguration",
 	localization = "content/Language",
-	name = "segments-context-vocabulary-configuration-name"
+	name = "segments-context-vocabulary-company-configuration-name"
 )
-public interface SegmentsContextVocabularyConfiguration {
+public interface SegmentsContextVocabularyCompanyConfiguration {
 
 	@Meta.AD(
 		description = "segments-context-vocabulary-configuration-entity-field-description",
-		name = "segments-context-vocabulary-configuration-entity-field-name"
+		name = "segments-context-vocabulary-company-configuration-entity-field-name"
 	)
 	public String entityField();
 
 	@Meta.AD(
 		description = "segments-context-vocabulary-configuration-asset-vocabulary-description",
-		name = "segments-context-vocabulary-configuration-asset-vocabulary-name"
+		name = "segments-context-vocabulary-company-configuration-asset-vocabulary-name"
 	)
 	public String assetVocabulary();
 

@@ -60,22 +60,11 @@ definition {
 			locator1 = "ImportExport#SELECT",
 			value1 = "${headlessEndpoint}");
 
-		WaitForElementPresent(
-			key_selectFieldLabel = "Entity",
-			locator1 = "ImportExport#SELECT");
+		WaitForElementPresent(locator1 = "ImportExport#ENTITY_TYPE");
 
-		if (IsElementPresent(key_selectFieldLabel = "Entity Type", locator1 = "ImportExport#SELECT")) {
-			Select(
-				key_selectFieldLabel = "Entity Type",
-				locator1 = "ImportExport#SELECT",
-				value1 = "${entityType}");
-		}
-		else {
-			Select(
-				key_selectFieldLabel = "Entity Name",
-				locator1 = "ImportExport#SELECT",
-				value1 = "${entityType}");
-		}
+		Select(
+			locator1 = "ImportExport#ENTITY_TYPE",
+			value1 = "${entityType}");
 	}
 
 }

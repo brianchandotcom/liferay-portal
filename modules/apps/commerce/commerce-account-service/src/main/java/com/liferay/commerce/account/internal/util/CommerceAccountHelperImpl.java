@@ -162,6 +162,11 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 					commerceAccount.getCommerceAccountId());
 			}
 		}
+		else {
+			setCurrentCommerceAccount(
+				httpServletRequest, commerceChannelGroupId,
+				commerceAccount.getCommerceAccountId());
+		}
 
 		return commerceAccount;
 	}

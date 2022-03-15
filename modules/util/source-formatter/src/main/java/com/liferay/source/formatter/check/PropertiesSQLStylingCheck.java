@@ -40,13 +40,13 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 		Matcher matcher = _sqlPattern1.matcher(content);
 
 		while (matcher.find()) {
-			String originalSqlClause = matcher.group(1);
+			String originalSqlClauses = matcher.group(1);
 
-			String sqlClause = originalSqlClause.replaceAll("\\\\\n *", "");
+			String sqlClauses = originalSqlClauses.replaceAll("\\\\\n *", "");
 
-			sqlClause = _removeRedundantParenthesis(sqlClause);
+			sqlClauses = _removeRedundantParenthesis(sqlClauses);
 
-			int x = sqlClause.indexOf("(");
+			int x = sqlClauses.indexOf("(");
 
 			if (x == -1) {
 				return content;
@@ -56,13 +56,13 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 			String s = StringPool.BLANK;
 
 			while (true) {
-				y = sqlClause.indexOf(")", y + 1);
+				y = sqlClauses.indexOf(")", y + 1);
 
 				if (y == -1) {
 					return content;
 				}
 
-				s = sqlClause.substring(x, y + 1);
+				s = sqlClauses.substring(x, y + 1);
 
 				int level = getLevel(s, "(", ")");
 
@@ -71,12 +71,12 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 				}
 
 				if ((s.indexOf(" AND ") != -1) || (s.indexOf(" OR ") != -1)) {
-					sqlClause = StringUtil.insert(sqlClause, "\\\n", y);
-					sqlClause = StringUtil.insert(sqlClause, "\\\n", x + 1);
+					sqlClauses = StringUtil.insert(sqlClauses, "\\\n", y);
+					sqlClauses = StringUtil.insert(sqlClauses, "\\\n", x + 1);
 				}
 
 				x = x + 1;
-				x = sqlClause.indexOf("(", x);
+				x = sqlClauses.indexOf("(", x);
 
 				if (x == -1) {
 					break;
@@ -85,31 +85,31 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 				y = x;
 			}
 
-			sqlClause = StringUtil.replace(sqlClause, " AND ", " AND \\\n");
-			sqlClause = StringUtil.replace(sqlClause, " OR ", " OR \\\n");
+			sqlClauses = StringUtil.replace(sqlClauses, " AND ", " AND \\\n");
+			sqlClauses = StringUtil.replace(sqlClauses, " OR ", " OR \\\n");
 
-			sqlClause = _addParenthesis(sqlClause);
+			sqlClauses = _addParenthesis(sqlClauses);
 
-			sqlClause = _checkIndentation(sqlClause);
+			sqlClauses = _checkIndentation(sqlClauses);
 
-			sqlClause = _sort(sqlClause);
+			sqlClauses = _sort(sqlClauses);
 
-			sqlClause = "\\\n" + sqlClause;
+			sqlClauses = "\\\n" + sqlClauses;
 
-			if (!sqlClause.equals(originalSqlClause)) {
+			if (!sqlClauses.equals(originalSqlClauses)) {
 				return StringUtil.replaceFirst(
-					content, originalSqlClause, sqlClause, matcher.start(1));
+					content, originalSqlClauses, sqlClauses, matcher.start(1));
 			}
 		}
 
 		return content;
 	}
 
-	private String _addParenthesis(String sqlClause) throws IOException {
+	private String _addParenthesis(String sqlClauses) throws IOException {
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(sqlClause))) {
+				new UnsyncBufferedReader(new UnsyncStringReader(sqlClauses))) {
 
 			String line = StringPool.BLANK;
 
@@ -153,11 +153,11 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 		return sb.toString();
 	}
 
-	private String _checkIndentation(String sqlClause) throws IOException {
+	private String _checkIndentation(String sqlClauses) throws IOException {
 		StringBundler sb = new StringBundler();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(sqlClause))) {
+				new UnsyncBufferedReader(new UnsyncStringReader(sqlClauses))) {
 
 			int level = 2;
 

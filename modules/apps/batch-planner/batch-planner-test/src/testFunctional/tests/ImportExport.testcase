@@ -617,4 +617,28 @@ definition {
 		}
 	}
 
+	@description = "Verify CSV fields are automatically mapped to fields in Liferay when the names are the same"
+	@priority = "3"
+	test CSVFieldsAreAutoMapped {
+		property portal.acceptance = "true";
+
+		task ("Given a CSV file with field names that are the same as fields in Liferay is being imported") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			UploadDependencyFile.uploadFile(fileName = "csv_account_import_defaultHeaders.csv");
+		}
+
+		task ("When I select the entity type") {
+			ImportExport.selectEntity(
+				entityType = "Account",
+				headlessEndpoint = "/headless-admin-user");
+		}
+
+		task ("Then The fields are automatically mapped") {
+			ImportExport.assertImportMappings(fieldMappings = "name:name,type:type,description:description");
+		}
+	}
+
 }

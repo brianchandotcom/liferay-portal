@@ -30,6 +30,8 @@ public interface SimilarResultsPortletPreferences {
 
 	public static final String PREFERENCE_KEY_INDEX_NAME = "indexName";
 
+	public static final String PREFERENCE_KEY_LINK_BEHAVIOR = "linkBehavior";
+
 	public static final String PREFERENCE_KEY_MAX_DOC_FREQUENCY =
 		"maxDocFrequency";
 
@@ -66,6 +68,8 @@ public interface SimilarResultsPortletPreferences {
 	public String getFields();
 
 	public String getIndexName();
+
+	public String getLinkBehavior();
 
 	public Integer getMaxDocFrequency();
 

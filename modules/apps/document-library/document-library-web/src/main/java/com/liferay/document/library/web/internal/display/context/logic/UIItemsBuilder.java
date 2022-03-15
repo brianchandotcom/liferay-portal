@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -79,6 +80,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
@@ -1012,7 +1014,9 @@ public class UIItemsBuilder {
 		T javascriptUIItem, List<? super T> javascriptUIItems, String icon,
 		String key, String label, String onClick) {
 
-		if (Validator.isNotNull(icon)) {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146954")) &&
+			Validator.isNotNull(icon)) {
+
 			javascriptUIItem.setIcon(icon);
 		}
 
@@ -1029,7 +1033,9 @@ public class UIItemsBuilder {
 		T urlUIItem, List<? super T> urlUIItems, String icon, String key,
 		String label, String url) {
 
-		if (Validator.isNotNull(icon)) {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146954")) &&
+			Validator.isNotNull(icon)) {
+
 			urlUIItem.setIcon(icon);
 		}
 

@@ -380,7 +380,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext, siteNavigationMenuItemSettingsBuilder));
 
 			_invoke(() -> _addPortletSettings(serviceContext));
-			_invoke(() -> _updateLayoutSets(serviceContext));
+			_invoke(
+				() -> _updateLayoutSets(
+					documentsStringUtilReplaceValues, serviceContext));
 
 			_invoke(
 				() -> _addDDMTemplates(
@@ -1391,8 +1393,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 						String.valueOf(serviceContext.getScopeGroupId())
 					});
 
-				String css = SiteInitializerUtil.read(
-					FileUtil.getPath(urlPath) + "/css.css", _servletContext);
+				String css = StringUtil.replace(
+					SiteInitializerUtil.read(
+						FileUtil.getPath(urlPath) + "/css.css",
+						_servletContext),
+					"[$", "$]", documentsStringUtilReplaceValues);
 
 				if (Validator.isNotNull(css)) {
 					JSONObject jsonObject = _jsonFactory.createJSONObject(json);
@@ -2960,6 +2965,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _updateLayoutSet(
+			Map<String, String> documentsStringUtilReplaceValues,
 			boolean privateLayout, ServiceContext serviceContext)
 		throws Exception {
 
@@ -2981,9 +2987,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONObject metadataJSONObject = JSONFactoryUtil.createJSONObject(
 			(metadataJSON == null) ? "{}" : metadataJSON);
 
-		String css = GetterUtil.getString(
+		String css = StringUtil.replace(
 			SiteInitializerUtil.read(
-				resourcePath + "/css.css", _servletContext));
+				resourcePath + "/css.css", _servletContext),
+			"[$", "$]", documentsStringUtilReplaceValues);
 
 		_layoutSetLocalService.updateLookAndFeel(
 			serviceContext.getScopeGroupId(), privateLayout,
@@ -3025,11 +3032,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 			unicodeProperties.toString());
 	}
 
-	private void _updateLayoutSets(ServiceContext serviceContext)
+	private void _updateLayoutSets(
+			Map<String, String> documentsStringUtilReplaceValues,
+			ServiceContext serviceContext)
 		throws Exception {
 
-		_updateLayoutSet(false, serviceContext);
-		_updateLayoutSet(true, serviceContext);
+		_updateLayoutSet(
+			documentsStringUtilReplaceValues, false, serviceContext);
+		_updateLayoutSet(
+			documentsStringUtilReplaceValues, true, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

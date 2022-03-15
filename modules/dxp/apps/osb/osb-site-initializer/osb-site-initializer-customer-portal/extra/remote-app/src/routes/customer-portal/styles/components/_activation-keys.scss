@@ -34,16 +34,22 @@
 	border-right-color: transparent;
 }
 
-.dropdown button:focus {
-	box-shadow: none;
-}
-
 .cp-activation-key-icon {
 	border: 1px solid var(--color-neutral-2);
 	box-shadow: none;
+	left: 648px !important;
 	min-width: fit-content;
+	top: 276px !important;
 	ul li button {
 		padding: 0.75rem;
 		padding-right: 68px !important;
 	}
+}
+
+.dropdown button:focus {
+	box-shadow: none;
+}
+
+.cp-activation-status-container .card-body {
+	padding-right: 13px !important;
 }

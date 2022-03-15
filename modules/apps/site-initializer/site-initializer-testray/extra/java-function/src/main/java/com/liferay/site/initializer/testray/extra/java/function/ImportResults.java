@@ -66,7 +66,7 @@ public class ImportResults {
 		try {
 			ImportResults importResults = new ImportResults();
 
-			importResults._readFiles("");
+			importResults._readFiles();
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
@@ -857,55 +857,23 @@ public class ImportResults {
 		).getService();
 	}
 
-	private void _readFiles(String folderName) throws Exception {
-		Page<Blob> page;
-
-		if (folderName == null) {
-			page = _storage.list(
-				PropsValues.TESTRAY_BUCKET_NAME,
-				Storage.BlobListOption.currentDirectory());
-		}
-		else {
-			page = _storage.list(
-				PropsValues.TESTRAY_BUCKET_NAME,
-				Storage.BlobListOption.prefix(folderName),
-				Storage.BlobListOption.currentDirectory());
-		}
-
+	private void _readFiles() throws Exception {
+		Page<Blob> page = _storage.list(
+			PropsValues.TESTRAY_BUCKET_NAME,
+			Storage.BlobListOption.prefix("inbox"));
+		
 		for (Blob blob : page.iterateAll()) {
-			if (blob.getName(
-				).endsWith(
-					"results.tar.gz"
-				)) {
+			String name = blob.getName();
 
-				Blob lfrTestrayCompletedBlod = _storage.get(
-					PropsValues.TESTRAY_BUCKET_NAME,
-					blob.getName(
-					).replace(
-						"results.tar.gz", ".lfr-testray-completed"
-					));
-
-				if (lfrTestrayCompletedBlod != null) {
-					_unTarGzip(blob.getContent());
-				}
-
+			if(name.equals("inbox/")) {
 				continue;
 			}
 
-			if (blob.getName(
-				).endsWith(
-					"/"
-				)) {
-
-				folderName = blob.getName(
-				).replace(
-					folderName, ""
-				);
-
-				if (!folderName.equals("")) {
-					_readFiles(folderName);
-				}
-			}
+			_unTarGzip(blob.getContent());
+			
+			blob.copyTo(PropsValues.TESTRAY_BUCKET_NAME,
+				"done/"+ name.replace("inbox/", ""));
+    		blob.delete();
 		}
 	}
 

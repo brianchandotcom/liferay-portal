@@ -311,13 +311,19 @@ export function CollectionGeneralPanel({item}) {
 						<>
 							<ClayForm.Group small>
 								<label htmlFor={listStyleId}>
-									{Liferay.Language.get('list-style')}
+									{config.featureFlagLps119551
+										? Liferay.Language.get('style-display')
+										: Liferay.Language.get('list-style')}
 								</label>
 
 								<ClaySelectWithOption
-									aria-label={Liferay.Language.get(
-										'list-style'
-									)}
+									aria-label={
+										config.featureFlagLps119551
+											? Liferay.Language.get(
+													'style-display'
+											  )
+											: Liferay.Language.get('list-style')
+									}
 									id={listStyleId}
 									onChange={(event) =>
 										handleConfigurationChanged({

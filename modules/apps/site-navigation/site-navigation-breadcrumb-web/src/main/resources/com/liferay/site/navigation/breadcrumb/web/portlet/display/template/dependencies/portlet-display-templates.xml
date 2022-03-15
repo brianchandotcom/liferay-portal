@@ -6,7 +6,7 @@
 		<name>portlet-display-template-name-arrows</name>
 		<description>portlet-display-template-description-arrows</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/breadcrumb/web/portlet/template/dependencies/portlet_display_template_arrows.ftl</script-file>
+		<script-file>com/liferay/site/navigation/breadcrumb/web/portlet/display/template/dependencies/portlet_display_template_arrows.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -14,7 +14,7 @@
 		<name>portlet-display-template-name-horizontal</name>
 		<description>portlet-display-template-description-horizontal</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/breadcrumb/web/portlet/template/dependencies/portlet_display_template_horizontal.ftl</script-file>
+		<script-file>com/liferay/site/navigation/breadcrumb/web/portlet/display/template/dependencies/portlet_display_template_horizontal.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -22,7 +22,7 @@
 		<name>portlet-display-template-name-vertical</name>
 		<description>portlet-display-template-description-vertical</description>
 		<language>ftl</language>
-		<script-file>com/liferay/site/navigation/breadcrumb/web/portlet/template/dependencies/portlet_display_template_vertical.ftl</script-file>
+		<script-file>com/liferay/site/navigation/breadcrumb/web/portlet/display/template/dependencies/portlet_display_template_vertical.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 </root>

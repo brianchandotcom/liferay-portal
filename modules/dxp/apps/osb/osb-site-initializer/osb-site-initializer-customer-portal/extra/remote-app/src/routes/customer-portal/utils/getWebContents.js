@@ -41,6 +41,24 @@ export function getWebContents({dxpVersion, slaCurrent, subscriptionGroups}) {
 		Object.fromEntries(initialSubscriptions)
 	);
 
+	const hasAccessToActivateAnalyticsCloudContent =
+		!hasSubscriptionGroup.partnership &&
+		!hasSubscriptionGroup.analyticsCloud &&
+		(!hasSubscriptionGroup.portal ||
+			(hasSubscriptionGroup.portal &&
+				(hasSubscriptionGroup.dxp || hasSubscriptionGroup.dxpCloud)));
+
+	const hasAccessToSourceCodeContent =
+		hasSubscriptionGroup.partnership ||
+		hasSubscriptionGroup.dxpCloud ||
+		hasSubscriptionGroup.dxp;
+
+	const hasAccessToEnvironmentDetailContent =
+		hasSubscriptionGroup.dxp ||
+		hasSubscriptionGroup.portal ||
+		hasSubscriptionGroup.commerce ||
+		!(hasSubscriptionGroup.partnership || hasSubscriptionGroup.dxpCloud);
+
 	if (hasProjectSLA) {
 		webContents.push('WEB-CONTENT-ACTION-01');
 	}
@@ -50,11 +68,7 @@ export function getWebContents({dxpVersion, slaCurrent, subscriptionGroups}) {
 	) {
 		webContents.push('WEB-CONTENT-ACTION-02');
 	}
-	if (
-		hasSubscriptionGroup.partnership ||
-		hasSubscriptionGroup.dxpCloud ||
-		hasSubscriptionGroup.dxp
-	) {
+	if (hasAccessToSourceCodeContent) {
 		webContents.push('WEB-CONTENT-ACTION-03');
 	}
 	if (hasSubscriptionGroup.dxp || hasSubscriptionGroup.dxpCloud) {
@@ -64,21 +78,11 @@ export function getWebContents({dxpVersion, slaCurrent, subscriptionGroups}) {
 				: WEB_CONTENT_DXP_VERSION_TYPES['7.4']
 		);
 	}
-	if (
-		!hasSubscriptionGroup.partnership &&
-		!hasSubscriptionGroup.analyticsCloud &&
-		(!hasSubscriptionGroup.portal ||
-			(hasSubscriptionGroup.portal &&
-				(hasSubscriptionGroup.dxp || hasSubscriptionGroup.dxpCloud)))
-	) {
+
+	if (hasAccessToActivateAnalyticsCloudContent) {
 		webContents.push('WEB-CONTENT-ACTION-09');
 	}
-	if (
-		hasSubscriptionGroup.dxp ||
-		hasSubscriptionGroup.portal ||
-		hasSubscriptionGroup.commerce ||
-		!(hasSubscriptionGroup.partnership || hasSubscriptionGroup.dxpCloud)
-	) {
+	if (hasAccessToEnvironmentDetailContent) {
 		webContents.push('WEB-CONTENT-ACTION-10');
 	}
 

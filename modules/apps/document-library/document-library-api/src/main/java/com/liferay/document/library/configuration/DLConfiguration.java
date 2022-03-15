@@ -54,7 +54,7 @@ public interface DLConfiguration {
 	 * default display templates for the Document Library portlet.
 	 */
 	@Meta.AD(
-		deflt = "com/liferay/document/library/web/template/dependencies/portlet-display-templates.xml",
+		deflt = "com/liferay/document/library/web/portlet/display/template/dependencies/portlet-display-templates.xml",
 		name = "display-templates-config", required = false
 	)
 	public String displayTemplatesConfig();

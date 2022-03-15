@@ -33,7 +33,7 @@ public interface BlogsConfiguration {
 	 * default display templates for the Blogs portlet.
 	 */
 	@Meta.AD(
-		deflt = "com/liferay/blogs/web/template/dependencies/portlet-display-templates.xml",
+		deflt = "com/liferay/blogs/web/portlet/display/template/dependencies/portlet-display-templates.xml",
 		name = "display-templates-config", required = false
 	)
 	public String displayTemplatesConfig();

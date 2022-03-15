@@ -45,6 +45,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.legacy.document.DocumentBuilderFactory;
 import com.liferay.portal.search.similar.results.web.internal.display.context.SimilarResultsDocumentDisplayContext;
+import com.liferay.portal.search.similar.results.web.internal.portlet.SimilarResultsPortletPreferences;
+import com.liferay.portal.search.similar.results.web.internal.portlet.SimilarResultsPortletPreferencesImpl;
 import com.liferay.portal.search.similar.results.web.internal.util.SearchStringUtil;
 import com.liferay.portal.search.similar.results.web.spi.contributor.SimilarResultsContributor;
 import com.liferay.portal.search.similar.results.web.spi.contributor.helper.DestinationHelper;
@@ -59,6 +61,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.portlet.RenderRequest;
@@ -596,18 +599,23 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 		AssetEntry assetEntry, AssetRenderer<?> assetRenderer, String className,
 		long classPK) {
 
-		try {
-			String url = assetRenderer.getURLViewInContext(
-				_portal.getLiferayPortletRequest(_renderRequest),
-				_portal.getLiferayPortletResponse(_renderResponse), null);
+		SimilarResultsPortletPreferences similarResultsPortletPreferences =
+			new SimilarResultsPortletPreferencesImpl(
+				Optional.of(_renderRequest.getPreferences()));
 
-			if (url != null) {
-				return url;
+		if (Objects.equals(
+				similarResultsPortletPreferences.getLinkBehavior(),
+				"view-in-context")) {
+
+			try {
+				return assetRenderer.getURLViewInContext(
+					_portal.getLiferayPortletRequest(_renderRequest),
+					_portal.getLiferayPortletResponse(_renderResponse), null);
 			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
 			}
 		}
 
@@ -636,6 +644,22 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 			}
 
 			@Override
+			public String getAssetViewURL() {
+				try {
+					return assetRenderer.getURLView(
+						_portal.getLiferayPortletResponse(_renderResponse),
+						_renderRequest.getWindowState());
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+				}
+
+				return null;
+			}
+
+			@Override
 			public String getClassName() {
 				return className;
 			}
@@ -643,6 +667,11 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 			@Override
 			public long getClassPK() {
 				return classPK;
+			}
+
+			@Override
+			public long getCurrentGroupId() {
+				return _themeDisplay.getScopeGroupId();
 			}
 
 			@Override

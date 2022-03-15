@@ -2246,6 +2246,8 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
+		WaitForPageLoad();
+
 		ObjectPortlet.assertGenericEntryColumnIsDisplayed(fieldLabelName = "ID");
 
 		ObjectPortlet.assertFieldEntryColumnIsDisplayed(fieldLabelName = "Field");

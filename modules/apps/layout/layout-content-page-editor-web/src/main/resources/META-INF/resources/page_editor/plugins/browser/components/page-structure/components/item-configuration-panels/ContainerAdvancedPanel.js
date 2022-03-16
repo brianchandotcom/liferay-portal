@@ -14,6 +14,7 @@
 
 import React from 'react';
 
+import {HideFromSearchField} from '../../../../../../app/components/fragment-configuration-fields/HideFromSearchField';
 import {SelectField} from '../../../../../../app/components/fragment-configuration-fields/SelectField';
 import {
 	useDispatch,
@@ -40,6 +41,8 @@ export default function ContainerAdvancedPanel({item}) {
 
 	return (
 		<>
+			<HideFromSearchField item={item} />
+
 			<SelectField
 				className="mb-1"
 				field={{

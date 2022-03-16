@@ -15,6 +15,7 @@
 import PropTypes from 'prop-types';
 import React, {useCallback} from 'react';
 
+import {HideFromSearchField} from '../../../../../../app/components/fragment-configuration-fields/HideFromSearchField';
 import {FRAGMENT_CONFIGURATION_ROLES} from '../../../../../../app/config/constants/fragmentConfigurationRoles';
 import {config} from '../../../../../../app/config/index';
 import {
@@ -62,20 +63,23 @@ export function FragmentAdvancedPanel({item}) {
 				{Liferay.Language.get('advanced-configuration')}
 			</h1>
 
-			{fieldSets.map((fieldSet, index) => {
-				return (
-					<FieldSet
-						fields={fieldSet.fields}
-						key={index}
-						label={fieldSet.label}
-						languageId={config.defaultLanguageId}
-						onValueSelect={onConfigurationValueSelect}
-						values={getFragmentConfigurationValues(
-							fragmentEntryLink
-						)}
-					/>
-				);
-			})}
+			<HideFromSearchField item={item} />
+
+			{fieldSets?.length > 0 &&
+				fieldSets.map((fieldSet, index) => {
+					return (
+						<FieldSet
+							fields={fieldSet.fields}
+							key={index}
+							label={fieldSet.label}
+							languageId={config.defaultLanguageId}
+							onValueSelect={onConfigurationValueSelect}
+							values={getFragmentConfigurationValues(
+								fragmentEntryLink
+							)}
+						/>
+					);
+				})}
 		</>
 	);
 }

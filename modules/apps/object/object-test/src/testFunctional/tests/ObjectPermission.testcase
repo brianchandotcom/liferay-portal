@@ -163,7 +163,6 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.assertPicklistNotPresent(picklistName = "Custom Picklist 148941");
-
 	}
 
 	@description = "LPS-135390 - Verify it is possible to delete a Picklist with the Delete permission"
@@ -350,7 +349,6 @@ definition {
 		CreateObject.deleteObjectViaUI(objectLabel = "Custom Object 148930");
 
 		CreateObject.assertObjectNotPresent(objectLabel = "Custom Object 148930");
-
 	}
 
 	@description = "LPS-146759 - Verify it is possible to delete a single Picklist with the Delete permission"
@@ -404,7 +402,6 @@ definition {
 			picklistOption = "Delete");
 
 		Picklist.assertPicklistNotPresent(picklistName = "Custom Picklist 148938");
-
 	}
 
 	@description = "LPS-135390 - Verify it is possible to edit its own Object entry with only the Add Object Entry permission"
@@ -1068,7 +1065,6 @@ definition {
 		Refresh();
 
 		CreateObject.assertObjectNotPresent(objectLabel = "Custom Object 148933");
-
 	}
 
 	@description = "LPS-146758 - Verify it is possible to update a single Object with the Update permission"
@@ -1129,8 +1125,6 @@ definition {
 		ObjectAdmin.openObjectAdmin();
 
 		CreateObject.assertCustomObject(labelName = "Update Custom Object");
-
-
 	}
 
 	@description = "LPS-146759 - Verify it is possible to update a single Picklist with the Update permission"
@@ -1188,9 +1182,6 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.assertPicklist(picklistName = "Update Custom Picklist");
-
-
-
 	}
 
 	@description = "LPS-140342 - Verify it is possible view and edit its own Picklist with only the Add Picklist permission"
@@ -1490,8 +1481,6 @@ definition {
 		ObjectAdmin.openObjectAdmin();
 
 		CreateObject.assertCustomObject(labelName = "Custom Object 148932");
-
-
 	}
 
 	@description = "LPS-146759 - Verify it is possible to view a single Picklist with the View permission"
@@ -1541,17 +1530,101 @@ definition {
 		Picklist.gotoPicklists();
 
 		Picklist.assertPicklist(picklistName = "Custom Picklist 148940");
-
 	}
 
 	@description = "LPS-146756 - Verify that a guest user with the resource permission action of "Add Object Entry" activated can add new object entries and view its own entries"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test GuestCanAddObjectEntriesWithAddPermission {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectPermission#GuestCanAddObjectEntriesWithAddPermission";
 
-		// TODO LPS-148947 GuestCanAddObjectEntriesWithAddPermission pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Entry Test");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPublicPage(
+			pageName = "Object Page",
+			sitePageType = "Widget Page");
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Object Page");
+
+		Portlet.addPG(
+			pageName = "Object Page",
+			portletName = "Custom Objects");
+
+		Navigator.openURL();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		for (var resourceActionIndex : list "RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX,RESOURCE_PERMISSIONS_VIEW_CHECKBOX") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			Role.definePermissionCP(
+				permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_${resourceActionIndex}",
+				permissionDefinitionValue = "",
+				permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
+				permissionNavigationValue = "Custom Objects",
+				roleTitle = "Guest",
+				roleType = "Regular");
+		}
+
+		Navigator.openURL();
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Object Page");
+
+		LexiconEntry.gotoAdd();
+
+		Type(
+			locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD",
+			value1 = "Entry Test");
+
+		Button.clickSave();
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Object Page");
+
+		ObjectPortlet.viewEntry(entry = "Entry Test");
 	}
 
 	@description = "LPS-146756 - Verify that a guest user with the resource permission action of "Add Object Entry" unactivated can't add new object entries"
@@ -1627,7 +1700,7 @@ definition {
 			portletName = "Custom Objects");
 
 		Navigator.openURL();
-		
+
 		ApplicationsMenu.gotoPortlet(
 			category = "Users",
 			panel = "Control Panel",
@@ -1646,9 +1719,8 @@ definition {
 		User.logoutPG();
 
 		Navigator.gotoPage(pageName = "Object Page");
-		
-		ObjectPortlet.viewEntry(entry = "Entry Test");
 
+		ObjectPortlet.viewEntry(entry = "Entry Test");
 	}
 
 }

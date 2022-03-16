@@ -133,30 +133,6 @@
 					"required": false,
 					"showLabel": true,
 					"type": "text"
-				},
-				{
-					"autocomplete": false,
-					"dataType": "string",
-					"displayStyle": "singleline",
-					"indexType": "keyword",
-					"label": {
-						"[$LOCALE$]": "Test Field 2"
-					},
-					"localizable": true,
-					"name": "testField2",
-					"options": [
-						{
-							"label": {
-								"[$LOCALE$]": "Option"
-							},
-							"value": "Option"
-						}
-					],
-					"readOnly": false,
-					"repeatable": false,
-					"required": false,
-					"showLabel": true,
-					"type": "text"
 				}
 			]
 		},
@@ -173,16 +149,6 @@
 								{
 									"fieldNames": [
 										"testField1"
-									],
-									"size": 12
-								}
-							]
-						},
-						{
-							"columns": [
-								{
-									"fieldNames": [
-										"testField2"
 									],
 									"size": 12
 								}

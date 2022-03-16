@@ -46,7 +46,15 @@ public class JSONLocalizer {
 		String json, JSONFactory jsonFactory,
 		ResourceBundleLoader resourceBundleLoader, String themeId) {
 
-		_json = json;
+		try {
+			JSONObject jsonObject = jsonFactory.createJSONObject(json);
+
+			_jsonMap = jsonObject.toMap();
+		}
+		catch (JSONException jsonException) {
+			throw new RuntimeException(jsonException);
+		}
+
 		_jsonFactory = jsonFactory;
 		_resourceBundleLoader = resourceBundleLoader;
 		_themeId = themeId;
@@ -59,32 +67,18 @@ public class JSONLocalizer {
 	 */
 	public JSONObject getJSONObject(Locale locale) {
 		if ((_resourceBundleLoader == null) || (locale == null)) {
-			try {
-				return _jsonFactory.createJSONObject(_json);
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
+			return _jsonFactory.createJSONObject(_jsonMap);
 		}
 
 		Map<?, ?> jsonMap = _jsonMaps.computeIfAbsent(
 			locale,
 			key -> {
-				try {
-					JSONObject newJSONObject = _jsonFactory.createJSONObject(
-						_json);
+				JSONObject newJSONObject = _jsonFactory.createJSONObject(
+					_jsonMap);
 
-					_localize(newJSONObject, locale);
+				_localize(newJSONObject, locale);
 
-					return newJSONObject.toMap();
-				}
-				catch (JSONException jsonException) {
-					_log.error(
-						"Unable to parse JSON for theme " + _themeId,
-						jsonException);
-
-					return null;
-				}
+				return newJSONObject.toMap();
 			});
 
 		return _jsonFactory.createJSONObject(jsonMap);
@@ -158,8 +152,8 @@ public class JSONLocalizer {
 	private static final Set<String> _localizableKeys = new HashSet<>(
 		Arrays.asList("label"));
 
-	private final String _json;
 	private final JSONFactory _jsonFactory;
+	private final Map<?, ?> _jsonMap;
 	private final Map<Locale, Map<?, ?>> _jsonMaps = new ConcurrentHashMap<>();
 	private final ResourceBundleLoader _resourceBundleLoader;
 	private final String _themeId;

@@ -132,17 +132,9 @@ definition {
 	}
 
 	macro gotoChildPagePG {
-		var key_pageName = "${pageName}";
-
-		ClickNoError(locator1 = "Home#PAGE");
-
-		MouseOver(locator1 = "Home#SITE_NAME");
-
-		MouseOver(locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
-
-		AssertVisible(
-			key_childPageName = "${childPageName}",
-			locator1 = "Home#PAGE_CHILD_PAGE");
+		MouseOver.javaScriptMouseOver(
+			key_pageName = "${pageName}",
+			locator1 = "NavigationMenusWidget#CHILD_TOGGLE");
 
 		Click(
 			key_childPageName = "${childPageName}",

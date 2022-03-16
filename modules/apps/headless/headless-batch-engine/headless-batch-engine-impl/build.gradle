@@ -21,4 +21,5 @@ dependencies {
 	compileOnly project(":core:petra:petra-executor")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-io")
+	compileOnly project(":core:petra:petra-string")
 }

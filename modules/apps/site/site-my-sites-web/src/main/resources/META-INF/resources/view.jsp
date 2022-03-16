@@ -72,7 +72,7 @@
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-						<h5>
+						<div>
 							<c:choose>
 								<c:when test="<%= Validator.isNotNull(rowURL) %>">
 									<a href="<%= rowURL %>" target="_blank">
@@ -83,29 +83,37 @@
 									<strong><%= HtmlUtil.escape(group.getDescriptiveName(locale)) %></strong>
 								</c:otherwise>
 							</c:choose>
-						</h5>
+						</div>
 
 						<c:if test='<%= !Objects.equals(siteMySitesDisplayContext.getTabs1(), "my-sites") && Validator.isNotNull(group.getDescription(locale)) %>'>
-							<h6 class="text-default">
+							<div class="text-default">
 								<%= HtmlUtil.escape(group.getDescription(locale)) %>
-							</h6>
+							</div>
 						</c:if>
 
-						<h6 class="text-default">
+						<liferay-util:buffer
+							var="assetTagsSummary"
+						>
 							<liferay-asset:asset-tags-summary
 								className="<%= Group.class.getName() %>"
 								classPK="<%= group.getGroupId() %>"
 							/>
-						</h6>
+						</liferay-util:buffer>
+
+						<c:if test="<%= Validator.isNotNull(assetTagsSummary) %>">
+							<div class="text-default">
+								<%= assetTagsSummary %>
+							</div>
+						</c:if>
 
 						<%
 						int usersCount = siteMySitesDisplayContext.getGroupUsersCounts(group.getGroupId());
 						%>
 
 						<c:if test="<%= usersCount > 0 %>">
-							<h6 class="text-default">
+							<div class="text-default">
 								<strong><liferay-ui:message arguments="<%= usersCount %>" key='<%= (usersCount > 1) ? "x-users" : "x-user" %>' /></strong>
-							</h6>
+							</div>
 						</c:if>
 
 						<%
@@ -113,9 +121,9 @@
 						%>
 
 						<c:if test="<%= organizationsCount > 0 %>">
-							<h6 class="text-default">
+							<div class="text-default">
 								<strong><liferay-ui:message arguments="<%= organizationsCount %>" key='<%= (organizationsCount > 1) ? "x-organizations" : "x-organization" %>' /></strong>
-							</h6>
+							</div>
 						</c:if>
 
 						<%
@@ -123,15 +131,15 @@
 						%>
 
 						<c:if test="<%= userGroupsCount > 0 %>">
-							<h6 class="text-default">
+							<div class="text-default">
 								<strong><liferay-ui:message arguments="<%= userGroupsCount %>" key='<%= (userGroupsCount > 1) ? "x-user-groups" : "x-user-group" %>' /></strong>
-							</h6>
+							</div>
 						</c:if>
 
 						<c:if test='<%= Objects.equals(siteMySitesDisplayContext.getTabs1(), "my-sites") && PropsValues.LIVE_USERS_ENABLED %>'>
-							<h6 class="text-default">
+							<div class="text-default">
 								<strong><liferay-ui:message key="online-now" /></strong>: <%= String.valueOf(LiveUsers.getGroupUsersCount(company.getCompanyId(), group.getGroupId())) %>
-							</h6>
+							</div>
 						</c:if>
 					</liferay-ui:search-container-column-text>
 

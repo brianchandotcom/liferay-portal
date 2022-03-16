@@ -520,7 +520,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 				viewFullContentURL.toString());
 
 			if (Validator.isNotNull(viewURL)) {
-				return viewURL;
+				return StringUtil.split(viewURL, "?")[0];
 			}
 		}
 		catch (Exception exception) {
@@ -529,7 +529,7 @@ public class AssetPublisherHelperImpl implements AssetPublisherHelper {
 			}
 		}
 
-		return viewFullContentURL.toString();
+		return StringUtil.split(viewFullContentURL.toString(), "?")[0];
 	}
 
 	@Override

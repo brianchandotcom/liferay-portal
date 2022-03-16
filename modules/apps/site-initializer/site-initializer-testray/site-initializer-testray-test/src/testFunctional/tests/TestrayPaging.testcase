@@ -1,0 +1,50 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Testray 2";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-149446 - Verify if user can change the Component Page by clicking on Page number selector."
+	@priority = "5"
+	test CanChangeComponentPageByClickingOnNumber {
+
+		// TODO LPS-149446 - Verify if user can change the Component Page by clicking on Page number selector.
+
+	}
+
+	@description = "LPS-149446 - Verify if user can change the items per page by clicking on 'Items per Page button'."
+	@priority = "3"
+	test CanChangeItemsShownOnPage {
+
+		// TODO LPS-149446 - Verify if user can change the items per page by clicking on 'Items per Page' button.
+
+	}
+
+	@description = "LPS-149446 - Verify if user can go to the next and previous page by clicking on '>' and '<' buttons."
+	@priority = "3"
+	test CanChangePageOnNextAndPrevioustButton {
+
+		// TODO LPS-149446 - Verify if user can go to the next and previous page by clicking on '>' and '<' buttons.
+
+	}
+
+}

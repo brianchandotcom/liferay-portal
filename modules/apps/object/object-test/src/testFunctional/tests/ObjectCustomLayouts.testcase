@@ -86,7 +86,9 @@ definition {
 
 		Button.clickSave();
 
-		ObjectAdmin.viewFieldErrorMessage(message = "Error:There can only be one default object layout");
+		AssertTextEquals(
+			value1 = "Error:There can only be one default object layout",
+			locator1 = "Message#ERROR");
 	}
 
 	@description = "LPS-146808 - Verify it is possibel to view a Date entry and label"

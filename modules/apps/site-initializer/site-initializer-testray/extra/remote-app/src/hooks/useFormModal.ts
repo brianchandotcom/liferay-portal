@@ -22,10 +22,11 @@ import {Liferay} from '../services/liferay/liferay';
 export type FormModalOptions = {
 	modalState: any;
 	observer: Observer;
+	onChange: (state: any) => (event: any) => void;
 	onClose: () => void;
-	onError: () => void;
+	onError: (error?: any) => void;
 	onSave: (param?: any) => void;
-	open: () => void;
+	open: (state?: any) => void;
 	setVisible: Dispatch<boolean>;
 	visible: boolean;
 };
@@ -57,8 +58,26 @@ const useFormModal = ({
 		modal: {
 			modalState,
 			observer,
+			onChange: ({form, setForm}: any) => (event: any) => {
+				const {
+					target: {checked, name, type, ...target},
+				} = event;
+
+				let {value} = target;
+
+				if (type === 'checkbox') {
+					value = checked;
+				}
+
+				setForm({
+					...form,
+					[name]: value,
+				});
+			},
 			onClose,
-			onError: () => {
+			onError: (error) => {
+				console.error(error);
+
 				Liferay.Util.openToast({
 					message: i18n.translate('an-unexpected-error-occurred'),
 					type: 'danger',
@@ -80,7 +99,11 @@ const useFormModal = ({
 					onSaveModal(state);
 				}
 			},
-			open: () => setVisible(true),
+			open: (state?: any) => {
+				setModalState(state);
+
+				setVisible(true);
+			},
 			setVisible,
 			visible,
 		},

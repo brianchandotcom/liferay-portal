@@ -28,6 +28,26 @@ definition {
 		}
 	}
 
+	macro cancelAddTermsAndCondition {
+		LexiconEntry.gotoAdd();
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Type(
+			locator1 = "TextInput#NAME",
+			value1 = "${termsAndConditionName}");
+
+		Select(
+			locator1 = "Select#TYPE",
+			value1 = "${termsAndConditionType}");
+
+		Type(
+			locator1 = "CommerceEntry#PRIORITY_FIELD",
+			value1 = "${valuePosition}");
+
+		Click(locator1 = "Button#CANCEL_SPECIAL");
+	}
+
 	macro deleteTermsAndCondition {
 		CommerceNavigator.searchEntry(entryName = "${termsAndConditionName}");
 
@@ -38,6 +58,12 @@ definition {
 		MenuItem.clickNoError(menuItem = "Delete");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro viewNoPG {
+		AssertTextEquals(
+			locator1 = "Message#EMPTY_INFO",
+			value1 = "No Items were found.");
 	}
 
 	macro viewTermsAndConditionEntry {

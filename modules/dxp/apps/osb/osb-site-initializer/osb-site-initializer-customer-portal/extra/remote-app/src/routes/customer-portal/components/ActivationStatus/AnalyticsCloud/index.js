@@ -8,9 +8,9 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-
 import ClayAlert from '@clayui/alert';
 import {ButtonWithIcon} from '@clayui/core';
+import {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
@@ -116,6 +116,7 @@ const ActivationStatusAnalyticsCloud = ({
 		[STATUS_TAG_TYPE_NAMES.inProgress]: {
 			dropdownIcon: userAccount.isStaff && (
 				<ButtonDropDown
+					align={Align.BottomRight}
 					customDropDownButton={
 						<ButtonWithIcon
 							displayType="null"
@@ -224,6 +225,7 @@ const ActivationStatusAnalyticsCloud = ({
 			}),
 			await updateAnalyticsCloudWorkspaceId(),
 		]);
+
 		setSubscriptionGroupActivationStatus(STATUS_TAG_TYPE_NAMES.active);
 		setVisible(false);
 		setHasFinishedUpdate(true);

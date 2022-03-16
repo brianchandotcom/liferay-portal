@@ -12,6 +12,7 @@
  * details.
  */
 
+import ClayEmptyState from '@clayui/empty-state';
 import classNames from 'classnames';
 import {
 	EVENT_TYPES as CORE_EVENT_TYPES,
@@ -21,9 +22,9 @@ import {
 } from 'data-engine-js-components-web';
 import React from 'react';
 
+import {sub} from '../../utils/lang.es';
 import {getSearchRegex} from '../../utils/search.es';
 import CollapsablePanel from '../collapsable-panel/CollapsablePanel.es';
-import EmptyState from '../empty-state/EmptyState.es';
 import FieldType from './FieldType.es';
 
 const FieldTypeWrapper = ({
@@ -74,7 +75,6 @@ const FieldTypeWrapper = ({
 const FieldTypeList = ({
 	dataDefinition,
 	deleteLabel,
-	emptyState,
 	keywords,
 	onClick,
 	onDelete,
@@ -97,7 +97,17 @@ const FieldTypeList = ({
 		.sort(({displayOrder: a}, {displayOrder: b}) => a - b);
 
 	if (showEmptyState && !filteredFieldTypes.length) {
-		return <EmptyState emptyState={emptyState} keywords={keywords} small />;
+		return (
+			<ClayEmptyState
+				description={sub(
+					Liferay.Language.get('there-are-no-results-for-x'),
+					[keywords]
+				)}
+				imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+				small
+				title={Liferay.Language.get('no-results-found')}
+			/>
+		);
 	}
 
 	return filteredFieldTypes.map((fieldType, index) => {

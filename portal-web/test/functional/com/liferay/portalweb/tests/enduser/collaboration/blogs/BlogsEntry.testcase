@@ -1072,6 +1072,15 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-49419. It validates that BBCode cannot be injected into a blog comment using Pingback."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotInjectBBCodeIntoCommentUsingPingback {
+
+		// TODO LPS-147822
+
+	}
+
 	@description = "This is a test for LPS-136788. It checks that a user cannot rate a post when it is disabled in the configuration."
 	@priority = "3"
 	test CannotRatePost {

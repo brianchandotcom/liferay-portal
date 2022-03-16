@@ -302,6 +302,15 @@ definition {
 		Notifications.viewBadgeCount(notificationCount = "0");
 	}
 
+	@description = "This test covers LPS-143369. It validates that an email notification can be received after a Blog update is scheduled and the time is reached."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test EmailIsReceivedWhenUpdateReachesScheduledTime {
+
+		// TODO LPS-147824
+
+	}
+
 	@priority = "4"
 	@refactordone
 	test NoWebsiteNotificationAppearsForNewBlogsEntry {

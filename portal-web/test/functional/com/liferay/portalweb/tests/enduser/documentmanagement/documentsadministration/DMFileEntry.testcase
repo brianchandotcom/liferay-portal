@@ -1624,6 +1624,15 @@ definition {
 			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
 	}
 
+	@description = "This test covers LPS-146237. It validates that a PDF can be previewed from the Recycle Bin."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanPreviewPDFFromRecycleBin {
+
+		// TODO LPS-147937
+
+	}
+
 	@description = "This test covers LPS-104957. It ensures that the PNG file can be previewed."
 	@priority = "5"
 	@refactordone

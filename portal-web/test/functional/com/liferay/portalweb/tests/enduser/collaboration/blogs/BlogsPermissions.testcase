@@ -104,6 +104,15 @@ definition {
 		BlogsConfiguration.viewNoPermissionCP();
 	}
 
+	@description = "This test covers LPS-143574. It validates that a user with permissions can view and delete a Blogs image."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanDeleteImageWithRegRole {
+
+		// TODO LPS-147823
+
+	}
+
 	@priority = "5"
 	@refactordone
 	test CannotAddEntryAsGuestByDefault {

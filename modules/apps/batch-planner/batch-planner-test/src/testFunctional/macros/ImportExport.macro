@@ -59,6 +59,22 @@ definition {
 		}
 	}
 
+	macro assertImportPreviews {
+		WaitForElementPresent(
+			key_title = "Import Mappings",
+			locator1 = "Header#H4_TITLE");
+
+		for (var importPreview : list "${importPreviews}") {
+			var destinationField = StringUtil.extractFirst("${importPreview}", ":");
+			var previewField = StringUtil.extractLast("${importPreview}", ":");
+
+			AssertElementPresent(
+				key_destinationField = "${destinationField}",
+				key_previewField = "${previewField}",
+				locator1 = "ImportExport#IMPORT_PREVIEW");
+		}
+	}
+
 	macro assertImportTemplate {
 		AssertSelectedLabel(
 			key_selectFieldLabel = "Template",

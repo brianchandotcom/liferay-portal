@@ -929,12 +929,64 @@ definition {
 	}
 
 	@description = "LPS-146758 - Verify it is possible to update a single Object with the Update permission"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanUpdateSingleObjectWithUpdatePermission {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectPermission#CanUpdateSingleObjectWithUpdatePermission";
 
-		// TODO LPS-148931 CanUpdateSingleObjectWithUpdatePermission pending implementation
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 148931",
+			objectName = "CustomObject148931",
+			pluralLabelName = "Custom Objects 148931");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectCustomViews.gotoPermissions(entryName = "Custom Object 148931");
+
+		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "UPDATE,VIEW");
+
+		Button.clickSave();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 148931");
+
+		CreateObject.editLabel(labelName = "Update Custom Object");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.openObjectAdmin();
+
+		CreateObject.assertCustomObject(labelName = "Update Custom Object");
+
 
 	}
 

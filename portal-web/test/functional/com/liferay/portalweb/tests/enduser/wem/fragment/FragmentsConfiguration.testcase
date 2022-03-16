@@ -390,6 +390,106 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-147393. The user could add advanced options in fragment's configuration and the advanced options are grouped in collapsable section."
+	@priority = "5"
+	test ConfigureFragmentAdvancedSettings {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "fragmentAdvancedOptionsEnabled=&quot;0&quot;";
+
+		task ("Add a fragment with colorPicker configuration") {
+			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
+
+			FragmentsEditor.gotoConfigurationTab();
+
+			var jsonSnippet = '''
+{
+	fieldSets: [
+		{
+			configurationRole: 'advanced',
+			fields: [
+				{
+					dataType: 'string',
+					defaultValue: '1',
+					description: '',
+					label: 'Advanced Config Field',
+					name: 'advancedConfigField',
+					type: 'select',
+					typeOptions: {
+						validValues: [
+							{label: '0', value: '0'},
+							{label: '1', value: '1'},
+						],
+					},
+				},
+			],
+			label: 'Advanced Config Fieldset',
+		}
+	]
+}			''';
+
+			FragmentsEditor.typeConfigurationEditor(content = "${jsonSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.gotoCodeTab();
+
+			var htmlSnippet = '''
+<div class="fragment-name">
+	Fragment Example
+</div>			''';
+
+			FragmentsEditor.typeHtmlEditor(content = "${htmlSnippet}");
+
+			FragmentsEditor.waitForAutoSave();
+
+			FragmentsEditor.publish();
+		}
+
+		task ("Add a new fragment to a content page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Collection Name",
+				fragmentName = "Fragment Name");
+		}
+
+		task ("Change the value of Advanced Config Field to 0") {
+			PageEditor.gotoAdvanced(fragmentName = "Fragment Name");
+
+			Select(
+				key_fieldLabel = "Advanced Config Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "0");
+
+			PageEditor.waitForAutoSave();
+		}
+
+		task ("View the Advanced Config Field grouped in collapsable Advancd Config Fieldset") {
+			Panel.collapsePanel(panel = "Advanced Config Fieldset");
+
+			AssertElementNotPresent(
+				key_fieldLabel = "Advanced Config Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD");
+		}
+
+		task ("View the Advanced Config Field is persisted after publish") {
+			PageEditor.clickPublish();
+
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.gotoAdvanced(fragmentName = "Fragment Name");
+
+			AssertSelectedLabel(
+				key_fieldLabel = "Advanced Config Field",
+				locator1 = "Select#GENERIC_SELECT_FIELD",
+				value1 = "0");
+		}
+	}
+
 	@description = "This is a test for LPS-100963. When a fragment that uses JavaScript has a configuration, there is a JavaScript configuration object available which contains the current values of the fragment configuration."
 	@priority = "4"
 	test ConfigureFragmentWithJavaScript {

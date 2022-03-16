@@ -160,7 +160,8 @@ const RoutineBuildModal: React.FC<RoutineBuildModalProps> = ({
 			});
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError();
 		}
 	};

@@ -135,7 +135,8 @@ const SuiteModal: React.FC<SuiteModalProps> = ({
 			onSave();
 
 			Liferay.Util.openToast({message: 'TestraySuite Registered'});
-		} catch (error) {
+		}
+		catch (error) {
 			Liferay.Util.openToast({
 				message: (error as any).message,
 				type: 'danger',

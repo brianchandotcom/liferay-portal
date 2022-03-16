@@ -265,7 +265,8 @@ const CaseModal: React.FC<CaseModalProps> = ({
 			});
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError();
 		}
 	};

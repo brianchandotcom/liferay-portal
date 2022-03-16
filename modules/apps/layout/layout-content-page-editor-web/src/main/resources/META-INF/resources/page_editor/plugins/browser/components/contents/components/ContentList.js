@@ -12,12 +12,12 @@
  * details.
  */
 
+import ClayEmptyState from '@clayui/empty-state';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import {CONTENT_TYPE_LABELS} from '../../../../../app/config/constants/contentTypeLabels';
 import Collapse from '../../../../../common/components/Collapse';
-import NoPageContents from './NoPageContents';
 import PageContent from './PageContent';
 
 export default function ContentList({contents, selectedType}) {
@@ -36,7 +36,14 @@ export default function ContentList({contents, selectedType}) {
 			))
 		)
 	) : (
-		<NoPageContents />
+		<ClayEmptyState
+			description={Liferay.Language.get(
+				'try-again-with-a-different-search'
+			)}
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+			small
+			title={Liferay.Language.get('no-results-found')}
+		/>
 	);
 }
 

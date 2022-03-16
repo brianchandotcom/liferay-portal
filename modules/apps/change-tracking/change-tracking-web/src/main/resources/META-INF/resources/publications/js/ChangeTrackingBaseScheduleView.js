@@ -13,7 +13,6 @@
  */
 
 import {fetch} from 'frontend-js-web';
-import moment from 'moment';
 import React from 'react';
 
 class ChangeTrackingBaseScheduleView extends React.Component {
@@ -301,11 +300,25 @@ class ChangeTrackingBaseScheduleView extends React.Component {
 
 		date = date.trim();
 
-		if (date.match(datePattern) && moment(date).isValid()) {
-			return true;
+		if (!date.match(datePattern)) {
+			return false;
 		}
 
-		return false;
+		const split = date.split('-');
+
+		if (split.length !== 3) {
+			return false;
+		}
+
+		const jsDate = new Date(
+			split[0] + '-' + this.pad(split[1]) + '-' + this.pad(split[2])
+		);
+
+		if (Number.isNaN(jsDate.getTime())) {
+			return false;
+		}
+
+		return true;
 	}
 
 	isValidTime(time) {

@@ -19,8 +19,6 @@ import ClayLayout from '@clayui/layout';
 import {Treeview} from 'frontend-js-components-web';
 import React, {useMemo, useState} from 'react';
 
-const noop = () => {};
-
 const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 	const [filterQuery, setFilterQuery] = useState('');
 
@@ -75,6 +73,8 @@ const SelectFolder = ({itemSelectorSaveEvent, nodes}) => {
 };
 
 function FolderTree({filterQuery, handleSelectionChange, items: initialItems}) {
+	const [items, setItems] = useState(initialItems);
+
 	const nodeByName = (items, name) => {
 		return items.reduce(function reducer(acc, item) {
 			if (item.name.match(new RegExp(name, 'i'))) {
@@ -91,16 +91,16 @@ function FolderTree({filterQuery, handleSelectionChange, items: initialItems}) {
 
 	const filteredItems = useMemo(() => {
 		if (!filterQuery) {
-			return initialItems;
+			return items;
 		}
 
-		return nodeByName(initialItems, filterQuery);
-	}, [initialItems, filterQuery]);
+		return nodeByName(items, filterQuery);
+	}, [items, filterQuery]);
 
 	return (
 		<ClayTreeView
 			items={filteredItems}
-			onItemsChange={noop}
+			onItemsChange={setItems}
 			showExpanderOnHover={false}
 		>
 			{(item) => (

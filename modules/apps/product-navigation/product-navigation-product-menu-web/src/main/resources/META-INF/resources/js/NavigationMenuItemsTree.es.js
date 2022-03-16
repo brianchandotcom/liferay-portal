@@ -26,13 +26,13 @@ export default function NavigationMenuItemsTree({
 	return (
 		<div className="navigation-menu-items-tree">
 			<ClayTreeView
+				defaultExpandedKeys={selectedKeys}
+				defaultItems={siteNavigationMenuItems}
 				displayType="dark"
-				expandedKeys={selectedKeys}
 				expanderIcons={{
 					close: <ClayIcon symbol="hr" />,
 					open: <ClayIcon symbol="plus" />,
 				}}
-				items={siteNavigationMenuItems}
 				nestedKey="children"
 				showExpanderOnHover={false}
 			>

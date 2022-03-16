@@ -50,8 +50,8 @@ const AssetCategoriesNavigationTreeView = ({
 
 	return (
 		<ClayTreeView
-			items={vocabularies}
-			selectedKeys={
+			defaultItems={vocabularies}
+			defaultSelectedKeys={
 				new Set(selectedCategoryId ? [selectedCategoryId] : [])
 			}
 		>

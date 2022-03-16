@@ -97,8 +97,6 @@ const nodeByName = (items, name) => {
 	}, []);
 };
 
-function noop() {}
-
 const AllowedFragmentSelectorTree = ({dropZoneConfig, onSelectedFragment}) => {
 	const fragments = useSelector((state) => state.fragments);
 
@@ -185,14 +183,14 @@ const AllowedFragmentSelectorTree = ({dropZoneConfig, onSelectedFragment}) => {
 
 				<div className="mb-2 page-editor__allowed-fragment__tree pl-2">
 					<ClayTreeView
-						expandedKeys={expandedKeys}
+						defaultExpandedKeys={expandedKeys}
 						expanderIcons={{
 							close: <ClayIcon symbol="hr" />,
 							open: <ClayIcon symbol="plus" />,
 						}}
 						items={items}
 						nestedKey="children"
-						onItemsChange={noop}
+						onItemsChange={setItems}
 						onSelectionChange={setSelectedKeys}
 						selectedKeys={selectedKeys}
 						selectionMode="multiple-recursive"

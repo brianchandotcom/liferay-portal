@@ -67,7 +67,7 @@ public class JSONLocalizer {
 			}
 		}
 
-		JSONObject jsonObject = _jsonObjects.computeIfAbsent(
+		Map<?, ?> jsonMap = _jsonMaps.computeIfAbsent(
 			locale,
 			key -> {
 				try {
@@ -76,7 +76,7 @@ public class JSONLocalizer {
 
 					_localize(newJSONObject, locale);
 
-					return newJSONObject;
+					return newJSONObject.toMap();
 				}
 				catch (JSONException jsonException) {
 					_log.error(
@@ -87,7 +87,7 @@ public class JSONLocalizer {
 				}
 			});
 
-		return _jsonFactory.createJSONObject(jsonObject.toMap());
+		return _jsonFactory.createJSONObject(jsonMap);
 	}
 
 	private void _localize(JSONObject jsonObject, Locale locale) {
@@ -160,8 +160,7 @@ public class JSONLocalizer {
 
 	private final String _json;
 	private final JSONFactory _jsonFactory;
-	private final Map<Locale, JSONObject> _jsonObjects =
-		new ConcurrentHashMap<>();
+	private final Map<Locale, Map<?, ?>> _jsonMaps = new ConcurrentHashMap<>();
 	private final ResourceBundleLoader _resourceBundleLoader;
 	private final String _themeId;
 

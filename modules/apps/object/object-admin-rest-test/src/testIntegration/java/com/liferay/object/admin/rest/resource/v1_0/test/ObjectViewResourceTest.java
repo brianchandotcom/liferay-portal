@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectViewColumn;
 import com.liferay.object.admin.rest.client.dto.v1_0.ObjectViewSortColumn;
-import com.liferay.object.admin.rest.configuration.activator.FFObjectViewSortColumnConfigurationUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
@@ -99,11 +98,8 @@ public class ObjectViewResourceTest extends BaseObjectViewResourceTestCase {
 			_objectDefinition.getObjectDefinitionId());
 		objectView.setObjectViewColumns(
 			new ObjectViewColumn[] {_randomObjectViewColumn()});
-
-		if (FFObjectViewSortColumnConfigurationUtil.enabled()) {
-			objectView.setObjectViewSortColumns(
-				new ObjectViewSortColumn[] {_randomObjectViewSortColumn()});
-		}
+		objectView.setObjectViewSortColumns(
+			new ObjectViewSortColumn[] {_randomObjectViewSortColumn()});
 
 		return objectView;
 	}

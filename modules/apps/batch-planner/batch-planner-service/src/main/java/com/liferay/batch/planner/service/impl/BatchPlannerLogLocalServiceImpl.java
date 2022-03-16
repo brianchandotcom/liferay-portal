@@ -347,8 +347,8 @@ public class BatchPlannerLogLocalServiceImpl
 		if (column == null) {
 			throw new IllegalArgumentException(
 				StringBundler.concat(
-					"No such column ", searchByField, " in table ",
-					BatchPlannerPlanTable.INSTANCE.getTableName()));
+					"Table ", BatchPlannerPlanTable.INSTANCE.getTableName(),
+					" does not have column ", searchByField));
 		}
 
 		return column.like(

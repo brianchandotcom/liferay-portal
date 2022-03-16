@@ -86,6 +86,7 @@ definition {
 	}
 
 	@description = "Verify users can export entity data via CSV files"
+	@ignore = "true"
 	@priority = "3"
 	test CanExportCSVFiles {
 		property portal.acceptance = "true";

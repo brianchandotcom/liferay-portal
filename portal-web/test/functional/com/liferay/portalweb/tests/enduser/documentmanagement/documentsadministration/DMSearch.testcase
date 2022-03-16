@@ -53,7 +53,7 @@ definition {
 	@priority = "4"
 	test CanSearchForDocumentBySynonyms {
 
-		// TODO LPS-98063 CanSearchForDocumentBySynonyms pending implementation
+		// TODO LPS-149367 CanSearchForDocumentBySynonyms pending implementation
 
 	}
 

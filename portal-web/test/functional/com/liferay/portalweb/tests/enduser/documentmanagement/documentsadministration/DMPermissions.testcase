@@ -341,7 +341,7 @@ definition {
 	@priority = "4"
 	test CanAddShortcutToFolderAsSiteMemberWithPermissions {
 
-		// TODO LPS-90864 CanAddShortcutToFolderAsSiteMemberWithPermissions pending implementation
+		// TODO LPS-149366 CanAddShortcutToFolderAsSiteMemberWithPermissions pending implementation
 
 	}
 

@@ -1269,7 +1269,7 @@ definition {
 	@priority = "4"
 	test LinkToImageInCaptionPersistsAfterBeingAdded {
 
-		// TODO LPS-90966 LinkToImageInCaptionPersistsAfterBeingAdded pending implementation
+		// TODO LPS-149365 LinkToImageInCaptionPersistsAfterBeingAdded pending implementation
 
 	}
 

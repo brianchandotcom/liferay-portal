@@ -295,6 +295,10 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
+		_layout.setDescriptionMap(RandomTestUtil.randomLocaleStringMap());
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(
 				_serviceContext.getRequest(), mockHttpServletResponse,

@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayAlert from '@clayui/alert';
+import ClayEmptyState from '@clayui/empty-state';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -38,11 +38,14 @@ export default function SearchResultsPanel({filteredTabs}) {
 			</div>
 		))
 	) : (
-		<ClayAlert displayType="info" title={Liferay.Language.get('info')}>
-			{Liferay.Language.get(
-				'there-are-no-fragments-or-widgets-on-this-page'
+		<ClayEmptyState
+			description={Liferay.Language.get(
+				'try-again-with-a-different-search'
 			)}
-		</ClayAlert>
+			imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+			small
+			title={Liferay.Language.get('no-results-found')}
+		/>
 	);
 }
 

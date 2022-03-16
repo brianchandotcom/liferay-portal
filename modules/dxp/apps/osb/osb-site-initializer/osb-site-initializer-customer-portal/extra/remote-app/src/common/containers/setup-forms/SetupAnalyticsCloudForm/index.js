@@ -15,6 +15,7 @@ import {useEffect, useMemo, useState} from 'react';
 import client from '../../../../apolloClient';
 import {
 	addAnalyticsCloudWorkspace,
+	addIncidentReportAnalyticsCloud,
 	getAnalyticsCloudPageInfo,
 } from '../../../../common/services/liferay/graphql/queries';
 import {
@@ -36,6 +37,7 @@ const SetupAnalyticsCloudPage = ({
 	errors,
 	handlePage,
 	leftButton,
+	onClose,
 	project,
 	setFieldValue,
 	touched,
@@ -139,13 +141,12 @@ const SetupAnalyticsCloudPage = ({
 	const sendEmail = async () => {
 		const analyticsCloud = values?.activations;
 
-		await client.mutate({
+		const {data} = await client.mutate({
 			mutation: addAnalyticsCloudWorkspace,
 			variables: {
 				analyticsCloudWorkspace: {
 					accountKey: project.accountKey,
 					dataCenterLocation: analyticsCloud.dataCenterLocation,
-					incidentReportContact: analyticsCloud.incidentReportContact,
 					ownerEmailAddress: analyticsCloud.ownerEmailAddress,
 					workspaceName: analyticsCloud.workspaceName,
 				},
@@ -153,8 +154,30 @@ const SetupAnalyticsCloudPage = ({
 			},
 		});
 
+		if (data) {
+			const analyticsCloudWorkspaceId =
+				data?.c?.createAnalyticsCloudWorkspace
+					?.analyticsCloudWorkspaceId;
+			await Promise.all(
+				analyticsCloud?.incidentReportContact.map(({email}) => {
+					return client.mutate({
+						mutation: addIncidentReportAnalyticsCloud,
+						variables: {
+							IncidentReportContactAnalyticsCloud: {
+								analyticsCloudWorkspaceId,
+								emailAddress: email,
+							},
+							scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
+						},
+					});
+				})
+			);
+		}
 		handlePage();
 	};
+
+	// eslint-disable-next-line no-console
+	console.log(values.activations.allowedEmailDomains);
 
 	return (
 		<Layout
@@ -164,7 +187,7 @@ const SetupAnalyticsCloudPage = ({
 					<Button
 						borderless
 						className="text-neutral-10"
-						onClick={() => handlePage()}
+						onClick={() => onClose()}
 					>
 						{leftButton}
 					</Button>

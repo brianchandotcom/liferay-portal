@@ -130,6 +130,10 @@ public class ElasticsearchConfigurationWrapper
 		return _elasticsearchConfiguration.logExceptionsOnly();
 	}
 
+	public String minimumRequiredNodeVersion() {
+		return _elasticsearchConfiguration.minimumRequiredNodeVersion();
+	}
+
 	public String networkBindHost() {
 		return _elasticsearchConfiguration.networkBindHost();
 	}

@@ -306,12 +306,56 @@ definition {
 	}
 
 	@description = "LPS-146759 - Verify it is possible to delete a single Picklist with the Delete permission"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDeleteSinglePicklistWithDeletePermission {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectPermission#CanDeleteSinglePicklistWithDeletePermission";
 
-		// TODO LPS-148938 CanDeleteSinglePicklistWithDeletePermission pending implementation
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		Picklist.addPicklistViaAPI(picklistName = "Custom Picklist 148938");
+
+		Picklist.gotoPicklists();
+
+		ObjectCustomViews.gotoPermissions(entryName = "Custom Picklist 148938");
+
+		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "DELETE,VIEW");
+
+		Button.clickSave();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Picklist.gotoPicklists();
+
+		Picklist.optionsPicklist(
+			picklistName = "Custom Picklist 148938",
+			picklistOption = "Delete");
+
+		Picklist.assertPicklistNotPresent(picklistName = "Custom Picklist 148938");
 
 	}
 

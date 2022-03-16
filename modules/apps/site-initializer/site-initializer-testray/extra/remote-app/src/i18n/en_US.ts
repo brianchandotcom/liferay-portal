@@ -15,6 +15,7 @@
 export default {
 	'add-case': 'Add Case',
 	'add-project': 'Add Project',
+	'add-requirement': 'Add Requirement',
 	'add-requirements': 'Add Requirements',
 	'add-routine': 'Add Routine',
 	'add-suite': 'Add Suite',
@@ -120,6 +121,7 @@ export default {
 	'metrics': 'Metrics',
 	'modified-date': 'Modified Date',
 	'name': 'Name',
+	'new-build': 'New Build',
 	'new-case': 'New Case',
 	'new-project': 'New Project',
 	'new-requirements': 'New Requirements',

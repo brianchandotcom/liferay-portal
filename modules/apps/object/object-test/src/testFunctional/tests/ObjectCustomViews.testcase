@@ -377,25 +377,25 @@ definition {
 	@priority = "4"
 	test CanSearchView {
 		ObjectAdmin.addObjectViaAPI(
-			labelName = "Custom Object",
-			objectName = "CustomObject",
-			pluralLabelName = "Custom Objects");
+			labelName = "Custom Object 147753",
+			objectName = "CustomObject147753",
+			pluralLabelName = "Custom Objects 147753");
 
 		ObjectAdmin.openObjectAdmin();
 
-		ObjectPortlet.selectCustomObject(label = "Custom Object");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147753");
 
 		ObjectCustomViews.goToViewsTab();
 
 		ObjectCustomViews.addObjectViewViaUI(viewName = "View A");
 
-		ObjectCustomViews.addObjectViewViaUI(viewName = "View B");
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom B");
 
 		Search.searchCP(searchTerm = "View A");
 
 		ObjectCustomViews.assertObjectView(viewLabel = "View A");
 
-		ObjectCustomViews.assertObjectViewNotPresent(viewLabel = "View B");
+		ObjectCustomViews.assertObjectViewNotPresent(viewLabel = "Custom B");
 	}
 
 	@description = "LPS-135394 - Verify it is possible to update a View"

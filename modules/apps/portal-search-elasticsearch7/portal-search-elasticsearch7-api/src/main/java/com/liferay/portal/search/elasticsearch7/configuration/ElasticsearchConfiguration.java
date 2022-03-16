@@ -147,6 +147,12 @@ public interface ElasticsearchConfiguration {
 	public boolean logExceptionsOnly();
 
 	@Meta.AD(
+		deflt = "0.0.0", description = "minimum-required-node-version-help",
+		name = "minimum-required-node-version", required = false
+	)
+	public String minimumRequiredNodeVersion();
+
+	@Meta.AD(
 		deflt = "ERROR", description = "rest-client-logger-level-help",
 		name = "rest-client-logger-level", required = false
 	)

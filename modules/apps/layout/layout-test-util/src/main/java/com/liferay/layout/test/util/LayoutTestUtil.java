@@ -182,6 +182,35 @@ public class LayoutTestUtil {
 			StringPool.BLANK, serviceContext);
 	}
 
+	public static Layout addTypeContentPublishedLayout(
+			Group group, int status, String title)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+
+		Layout layout = LayoutLocalServiceUtil.addLayout(
+			TestPropsValues.getUserId(), group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, title, StringPool.BLANK,
+			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
+			StringPool.BLANK, serviceContext);
+
+		serviceContext.setAttribute("published", Boolean.TRUE);
+
+		Layout draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
+			layout.getPlid());
+
+		if (draftLayout != null) {
+			LayoutLocalServiceUtil.updateStatus(
+				draftLayout.getUserId(), draftLayout.getPlid(), status,
+				serviceContext);
+		}
+
+		return LayoutLocalServiceUtil.updateStatus(
+			layout.getUserId(), layout.getPlid(), status, serviceContext);
+	}
+
 	public static Layout addTypeLinkToLayoutLayout(
 			long groupId, long linkedToLayoutId)
 		throws Exception {

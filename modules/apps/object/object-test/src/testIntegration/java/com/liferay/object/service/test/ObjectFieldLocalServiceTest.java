@@ -582,13 +582,13 @@ public class ObjectFieldLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
 			Arrays.asList(
-				_createObjectFieldSetting("helpText", true, "Help Text"),
-				_createObjectFieldSetting("repeatable", false, "True")));
+				_createObjectFieldSetting("helpText", "Help Text"),
+				_createObjectFieldSetting("repeatable", "True")));
 
 		_assertObjectFieldSetting(
-			"helpText", objectField.getObjectFieldId(), true, "Help Text");
+			"helpText", objectField.getObjectFieldId(), "Help Text");
 		_assertObjectFieldSetting(
-			"repeatable", objectField.getObjectFieldId(), false, "True");
+			"repeatable", objectField.getObjectFieldId(), "True");
 
 		objectField = _objectFieldLocalService.updateCustomObjectField(
 			objectField.getObjectFieldId(), 0, "Text", "String", true, false,
@@ -596,15 +596,13 @@ public class ObjectFieldLocalServiceTest {
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			StringUtil.randomId(), false,
 			Arrays.asList(
-				_createObjectFieldSetting("helpText", true, "New Help Text"),
-				_createObjectFieldSetting(
-					"placeholder", false, "Placeholder")));
+				_createObjectFieldSetting("helpText", "New Help Text"),
+				_createObjectFieldSetting("placeholder", "Placeholder")));
 
 		_assertObjectFieldSetting(
-			"helpText", objectField.getObjectFieldId(), true, "New Help Text");
+			"helpText", objectField.getObjectFieldId(), "New Help Text");
 		_assertObjectFieldSetting(
-			"placeholder", objectField.getObjectFieldId(), false,
-			"Placeholder");
+			"placeholder", objectField.getObjectFieldId(), "Placeholder");
 
 		Assert.assertNull(
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
@@ -716,7 +714,7 @@ public class ObjectFieldLocalServiceTest {
 	}
 
 	private void _assertObjectFieldSetting(
-			String name, long objectFieldId, boolean required, String value)
+			String name, long objectFieldId, String value)
 		throws Exception {
 
 		ObjectFieldSetting objectFieldSetting =
@@ -724,18 +722,16 @@ public class ObjectFieldLocalServiceTest {
 				objectFieldId, name);
 
 		Assert.assertEquals(name, objectFieldSetting.getName());
-		Assert.assertEquals(required, objectFieldSetting.isRequired());
 		Assert.assertEquals(value, objectFieldSetting.getValue());
 	}
 
 	private ObjectFieldSetting _createObjectFieldSetting(
-		String name, boolean required, String value) {
+		String name, String value) {
 
 		ObjectFieldSetting objectFieldSetting =
 			_objectFieldSettingLocalService.createObjectFieldSetting(0L);
 
 		objectFieldSetting.setName(name);
-		objectFieldSetting.setRequired(required);
 		objectFieldSetting.setValue(value);
 
 		return objectFieldSetting;

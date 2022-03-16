@@ -23,7 +23,7 @@ import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {useSelector} from '../../contexts/StoreContext';
 
 export function CheckboxField({field, onValueSelect, value}) {
-	const [nextValue, setNextValue] = useControlledState(value);
+	const [nextValue, setNextValue] = useControlledState(value || false);
 
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize

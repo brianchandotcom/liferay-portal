@@ -334,6 +334,8 @@ public interface LiferaySelenium {
 
 	public void javaScriptMouseDown(String locator);
 
+	public void javaScriptMouseOver(String locator);
+
 	public void javaScriptMouseUp(String locator);
 
 	public void keyDown(String locator, String keySequence);

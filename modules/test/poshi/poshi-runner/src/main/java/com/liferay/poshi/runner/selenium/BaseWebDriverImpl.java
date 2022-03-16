@@ -1805,6 +1805,11 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	}
 
 	@Override
+	public void javaScriptMouseOver(String locator) {
+		executeJavaScriptEvent(locator, "MouseEvent", "mouseover");
+	}
+
+	@Override
 	public void javaScriptMouseUp(String locator) {
 		executeJavaScriptEvent(locator, "MouseEvent", "mouseup");
 	}

@@ -208,12 +208,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 		panelsIds = {
 			[PANEL_IDS.fragmentAdvanced]:
 				config.fragmentAdvancedOptionsEnabled &&
-				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
-				fieldSets.some(
-					(fieldSet) =>
-						fieldSet.configurationRole ===
-						FRAGMENT_CONFIGURATION_ROLES.advanced
-				),
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 			[PANEL_IDS.fragmentStyles]: true,
 			[PANEL_IDS.fragmentGeneral]:
 				fragmentEntryKey !== COLLECTION_FILTER_FRAGMENT_ENTRY_KEY &&

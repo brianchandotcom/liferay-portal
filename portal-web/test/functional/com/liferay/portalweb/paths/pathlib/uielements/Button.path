@@ -191,6 +191,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CANCEL_SPECIAL</td>
+	<td>//div[contains(text(),'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE</td>
 	<td>//button[contains(.,'Change')]</td>
 	<td></td>

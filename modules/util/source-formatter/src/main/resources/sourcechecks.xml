@@ -846,10 +846,6 @@
 			<category name="Bug Prevention" />
 			<description name="Validates the value of `javax.portlet.init-param.template-path`." />
 		</check>
-		<check name="JavaModuleServiceProxyFactoryCheck">
-			<category name="Bug Prevention" />
-			<description name="Finds cases of `ServiceProxyFactory.newServiceTrackedInstance`." />
-		</check>
 		<check name="JavaModuleServiceReferenceCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds cases where `@BeanReference` annotation should be used instead of `@ServiceReference` annotation." />

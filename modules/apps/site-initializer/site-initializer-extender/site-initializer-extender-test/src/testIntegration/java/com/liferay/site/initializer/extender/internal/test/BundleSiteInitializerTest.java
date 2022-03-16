@@ -189,7 +189,7 @@ public class BundleSiteInitializerTest {
 			_assertCommerceSpecificationProducts(serviceContext);
 			_assertCPDefinition(group);
 			_assertCPInstanceProperties(group);
-			_assertDDMForms(group);
+			_assertDDMForm(group);
 			_assertDDMStructure(group);
 			_assertDDMTemplate(group);
 			_assertDLFileEntry(group);
@@ -576,7 +576,7 @@ public class BundleSiteInitializerTest {
 			cpDefinitionOptionRels.size());
 	}
 
-	private void _assertDDMForms(Group group) {
+	private void _assertDDMForm(Group group) {
 		List<DDMFormInstance> ddmFormInstances =
 			_ddmFormInstanceLocalService.getFormInstances(group.getGroupId());
 
@@ -587,7 +587,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(ddmFormInstance);
 		Assert.assertEquals(
-			"Test DDMForm 1",
+			"Test DDM Form 1",
 			ddmFormInstance.getName(LocaleUtil.getSiteDefault()));
 	}
 

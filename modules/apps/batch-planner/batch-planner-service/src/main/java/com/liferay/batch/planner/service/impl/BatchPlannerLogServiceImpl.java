@@ -107,7 +107,7 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 			String searchByField, String searchByKeyword)
 		throws PortalException {
 
-		checkPermission(companyId, ActionKeys.VIEW);
+		_checkPermission(companyId, ActionKeys.VIEW);
 
 		return batchPlannerLogLocalService.getCompanyBatchPlannerLogs(
 			companyId, export, start, end, orderByComparator, searchByField,
@@ -131,7 +131,7 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 			String searchByField, String searchByKeyword)
 		throws PortalException {
 
-		checkPermission(companyId, ActionKeys.VIEW);
+		_checkPermission(companyId, ActionKeys.VIEW);
 
 		return batchPlannerLogLocalService.getCompanyBatchPlannerLogs(
 			companyId, start, end, orderByComparator, searchByField,
@@ -168,7 +168,7 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 			String searchByKeyword)
 		throws PortalException {
 
-		checkPermission(companyId, ActionKeys.VIEW);
+		_checkPermission(companyId, ActionKeys.VIEW);
 
 		return batchPlannerLogLocalService.getCompanyBatchPlannerLogsCount(
 			companyId, export, searchByField, searchByKeyword);
@@ -179,23 +179,23 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 			long companyId, String searchByField, String searchByKeyword)
 		throws PortalException {
 
-		checkPermission(companyId, ActionKeys.VIEW);
+		_checkPermission(companyId, ActionKeys.VIEW);
 
 		return batchPlannerLogLocalService.getCompanyBatchPlannerLogsCount(
 			companyId, searchByField, searchByKeyword);
 	}
 
-	protected void checkPermission(long companyId, String actionKey)
+	private void _checkPermission(long companyId, String actionId)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.hasPermission(
 				GroupConstants.DEFAULT_LIVE_GROUP_ID,
-				BatchPlannerPlan.class.getName(), companyId, actionKey)) {
+				BatchPlannerPlan.class.getName(), companyId, actionId)) {
 
 			throw new PrincipalException.MustHavePermission(
-				getUserId(), actionKey);
+				getUserId(), actionId);
 		}
 	}
 

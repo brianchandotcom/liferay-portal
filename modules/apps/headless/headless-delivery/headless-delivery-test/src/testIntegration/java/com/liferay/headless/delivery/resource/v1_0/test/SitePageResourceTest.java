@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsEntry;
@@ -228,7 +229,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			Group group, boolean importPageDefinition, String title)
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(group, title);
+		Layout layout = LayoutTestUtil.addTypeContentPublishedLayout(
+			group, WorkflowConstants.STATUS_APPROVED, title);
 
 		if (importPageDefinition) {
 			String name = PrincipalThreadLocal.getName();

@@ -176,9 +176,6 @@ const SetupAnalyticsCloudPage = ({
 		handlePage();
 	};
 
-	// eslint-disable-next-line no-console
-	console.log(values.activations.allowedEmailDomains);
-
 	return (
 		<Layout
 			className="pt-1 px-3"

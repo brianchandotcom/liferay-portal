@@ -252,7 +252,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	public String getSearchInputName() {
 		if (_searchInputName == null) {
 			if (_managementToolbarDisplayContext != null) {
-				_managementToolbarDisplayContext.getSearchInputName();
+				return _managementToolbarDisplayContext.getSearchInputName();
 			}
 
 			return ManagementToolbarDefaults.getSearchInputName();
@@ -332,7 +332,8 @@ public class ManagementToolbarTag extends BaseContainerTag {
 	public Boolean isSearchInputAutoFocus() {
 		if (_searchInputAutoFocus == null) {
 			if (_managementToolbarDisplayContext != null) {
-				_managementToolbarDisplayContext.isSearchInputAutoFocus();
+				return _managementToolbarDisplayContext.
+					isSearchInputAutoFocus();
 			}
 
 			return ManagementToolbarDefaults.isSearchInputAutoFocus();

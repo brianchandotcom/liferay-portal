@@ -27,17 +27,17 @@ public abstract class BaseCommerceProductOptionValueClayTableDataSetDisplayView
 	protected void addActionLinkFields(
 		ClayTableSchemaBuilder clayTableSchemaBuilder) {
 
-		ClayTableSchemaField nameField =
+		ClayTableSchemaField nameClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
-		nameField.setContentRenderer("actionLink");
+		nameClayTableSchemaField.setContentRenderer("actionLink");
 
-		ClayTableSchemaField preselectedField =
+		ClayTableSchemaField preselectedClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"preselected", "default");
 
-		preselectedField.setActionId("updatePreselected");
-		preselectedField.setContentRenderer("actionLink");
+		preselectedClayTableSchemaField.setActionId("updatePreselected");
+		preselectedClayTableSchemaField.setContentRenderer("actionLink");
 	}
 
 }

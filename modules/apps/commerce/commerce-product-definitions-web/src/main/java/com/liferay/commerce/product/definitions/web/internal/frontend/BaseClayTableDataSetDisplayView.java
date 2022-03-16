@@ -43,10 +43,10 @@ public abstract class BaseClayTableDataSetDisplayView
 	protected void addActionLinkFields(
 		ClayTableSchemaBuilder clayTableSchemaBuilder) {
 
-		ClayTableSchemaField nameField =
+		ClayTableSchemaField nameClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
-		nameField.setContentRenderer("actionLink");
+		nameClayTableSchemaField.setContentRenderer("actionLink");
 	}
 
 	protected abstract void addFields(

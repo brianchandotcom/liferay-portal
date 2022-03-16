@@ -36,10 +36,10 @@ public class CommerceProductDefinitionSpecificationClayTableDataSetDisplayView
 	protected void addActionLinkFields(
 		ClayTableSchemaBuilder clayTableSchemaBuilder) {
 
-		ClayTableSchemaField labelField =
+		ClayTableSchemaField labelClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("label", "label");
 
-		labelField.setContentRenderer("actionLink");
+		labelClayTableSchemaField.setContentRenderer("actionLink");
 	}
 
 	@Override

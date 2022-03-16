@@ -87,11 +87,11 @@ public class CommerceProductDisplayPageClayTable
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameField =
+		ClayTableSchemaField productNameClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"productName", "product-name");
 
-		nameField.setContentRenderer("actionLink");
+		productNameClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("layout", "layout");
 

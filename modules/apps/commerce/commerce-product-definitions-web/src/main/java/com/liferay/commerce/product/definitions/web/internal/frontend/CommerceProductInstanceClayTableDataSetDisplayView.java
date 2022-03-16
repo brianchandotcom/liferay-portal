@@ -36,10 +36,10 @@ public class CommerceProductInstanceClayTableDataSetDisplayView
 	protected void addActionLinkFields(
 		ClayTableSchemaBuilder clayTableSchemaBuilder) {
 
-		ClayTableSchemaField skuField =
+		ClayTableSchemaField skuClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("sku", "sku");
 
-		skuField.setContentRenderer("actionLink");
+		skuClayTableSchemaField.setContentRenderer("actionLink");
 	}
 
 	@Override
@@ -49,10 +49,10 @@ public class CommerceProductInstanceClayTableDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"availableQuantity", "available-quantity");
 
-		ClayTableSchemaField statusField =
+		ClayTableSchemaField statusClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("status", "status");
 
-		statusField.setContentRenderer("label");
+		statusClayTableSchemaField.setContentRenderer("label");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"discontinued", "discontinued");

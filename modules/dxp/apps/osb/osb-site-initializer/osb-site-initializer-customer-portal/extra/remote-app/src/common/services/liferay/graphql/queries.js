@@ -32,27 +32,6 @@ export const getDXPCloudPageInfo = gql`
 	}
 `;
 
-export const getAnalyticsCloudPageInfo = gql`
-	query getAnalyticsCloudPageInfo($accountSubscriptionsFilter: String) {
-		c {
-			accountSubscriptions(filter: $accountSubscriptionsFilter) {
-				items {
-					accountKey
-					hasDisasterDataCenterRegion
-					name
-				}
-			}
-			analyticsCloudDataCenterLocation {
-				items {
-					analyticsCloudDataCenterLocationId
-					name
-					value
-				}
-			}
-		}
-	}
-`;
-
 export const getAccountSubscriptionsTerms = gql`
 	query getAccountSubscriptionsTerms(
 		$filter: String

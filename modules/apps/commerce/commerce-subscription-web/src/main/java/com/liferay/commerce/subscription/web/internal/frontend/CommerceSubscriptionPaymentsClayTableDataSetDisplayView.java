@@ -42,10 +42,10 @@ public class CommerceSubscriptionPaymentsClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField typeField =
+		ClayTableSchemaField typeClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("type", "type");
 
-		typeField.setContentRenderer("label");
+		typeClayTableSchemaField.setContentRenderer("label");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("date", "date");
 

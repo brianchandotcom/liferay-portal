@@ -45,30 +45,30 @@ public class CommerceSubscriptionShipmentsClayTableDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"createDate", "create-date");
 
-		ClayTableSchemaField shipmentIdField =
+		ClayTableSchemaField shipmentIdClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"shipmentId", "shipment-id");
 
-		shipmentIdField.setContentRenderer("link");
+		shipmentIdClayTableSchemaField.setContentRenderer("link");
 
-		ClayTableSchemaField statusField =
+		ClayTableSchemaField statusClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("status", "status");
 
-		statusField.setContentRenderer("label");
+		statusClayTableSchemaField.setContentRenderer("label");
 
-		ClayTableSchemaField orderIdField =
+		ClayTableSchemaField orderIdClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"orderId", "order-id");
 
-		orderIdField.setContentRenderer("link");
+		orderIdClayTableSchemaField.setContentRenderer("link");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("receiver", "sent-to");
 
-		ClayTableSchemaField trackingField =
+		ClayTableSchemaField trackingClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"tracking", "tracking");
 
-		trackingField.setContentRenderer("link");
+		trackingClayTableSchemaField.setContentRenderer("link");
 
 		return clayTableSchemaBuilder.build();
 	}

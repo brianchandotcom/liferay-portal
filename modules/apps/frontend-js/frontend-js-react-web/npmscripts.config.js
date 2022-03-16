@@ -14,20 +14,15 @@
 
 module.exports = {
 	build: {
-		bundler: {
-			exclude: {
-				lodash: false,
-			},
-			ignore: ['**/legacy/config.js'],
-		},
-		exports: {
-			'classnames': 'classnames/index',
-			'formik': 'formik/dist/index',
-			'prop-types': 'prop-types/index',
-			'react': 'react/index',
-			'react-dnd': 'react-dnd/dist/cjs/index',
-			'react-dnd-html5-backend': 'react-dnd-html5-backend/dist/cjs/index',
-			'react-dom': 'react-dom/index',
-		},
+		exports: [
+			{name: 'classnames', symbols: 'auto'},
+			'formik',
+			{name: 'prop-types', symbols: 'auto'},
+			{name: 'react', symbols: 'auto'},
+			'react-dnd',
+			'react-dnd-html5-backend',
+			{name: 'react-dom', symbols: 'auto'},
+		],
+		main: 'src/main/resources/META-INF/resources/js/index.ts',
 	},
 };

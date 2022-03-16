@@ -25,7 +25,6 @@ Main-Class: com.liferay.lang.builder.LangBuilder
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringWriter.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/language/LanguageBuilderUtil.class,\
-	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/language/LanguageConstants.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/language/LanguageValidator.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/language/constants/LanguageConstants.class,\
 	@com.liferay.portal.kernel-*.jar!/com/liferay/portal/kernel/log/*,\

@@ -144,7 +144,7 @@ definition {
 
 			var exportFileContent = TestCase.getTempFileContent(fileName = "export.csv");
 
-			var expectedFileContent = TestCase.getFileContent(fileName = "csv_account_import_defaultHeaders.csv");
+			var expectedFileContent = TestCase.getFileContent(fileName = "csv_account_import_auto_map.csv");
 
 			if ("${exportFileContent}" != "${expectedFileContent}") {
 				fail("The exported file content does not match the expected file content.");
@@ -357,7 +357,7 @@ definition {
 
 			ImportExport.gotoImport();
 
-			UploadDependencyFile.uploadFile(fileName = "csv_account_import_noHeaders.csv");
+			UploadDependencyFile.uploadFile(fileName = "csv_account_import_no_headers.csv");
 		}
 
 		task ("When the user unchecks "Contains Headers" and selects Account as Entity Type") {
@@ -627,7 +627,7 @@ definition {
 
 			ImportExport.gotoImport();
 
-			UploadDependencyFile.uploadFile(fileName = "csv_account_import_defaultHeaders.csv");
+			UploadDependencyFile.uploadFile(fileName = "csv_account_import_auto_map.csv");
 		}
 
 		task ("When I select the entity type") {

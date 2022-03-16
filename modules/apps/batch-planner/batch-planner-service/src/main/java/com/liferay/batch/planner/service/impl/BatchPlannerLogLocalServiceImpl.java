@@ -263,8 +263,7 @@ public class BatchPlannerLogLocalServiceImpl
 		String searchByKeyword) {
 
 		return dslQueryCount(
-			_getCountJoinStep(
-			).where(
+			_getCountJoinStep().where(
 				_getPredicate(
 					companyId, export
 				).and(
@@ -277,8 +276,7 @@ public class BatchPlannerLogLocalServiceImpl
 		long companyId, String searchByField, String searchByKeyword) {
 
 		return dslQueryCount(
-			_getCountJoinStep(
-			).where(
+			_getCountJoinStep().where(
 				_getPredicate(
 					companyId
 				).and(

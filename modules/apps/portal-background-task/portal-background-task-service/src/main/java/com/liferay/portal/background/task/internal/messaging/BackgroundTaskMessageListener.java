@@ -60,7 +60,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = "destination.name=" + DestinationNames.BACKGROUND_TASK,
-	service = {BackgroundTaskMessageListener.class, MessageListener.class}
+	service = MessageListener.class
 )
 public class BackgroundTaskMessageListener extends BaseMessageListener {
 

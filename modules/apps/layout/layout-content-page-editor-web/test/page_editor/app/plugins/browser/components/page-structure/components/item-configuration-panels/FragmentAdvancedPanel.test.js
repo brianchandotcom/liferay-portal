@@ -84,6 +84,9 @@ const renderComponent = ({fragmentEntryLink = {}} = {}) =>
 				fragmentEntryLinks: {
 					[FRAGMENT_ENTRY_LINK_ID]: fragmentEntryLink,
 				},
+				layoutData: {
+					items: [],
+				},
 				selectedViewportSize: VIEWPORT_SIZES.desktop,
 			})}
 		>

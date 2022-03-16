@@ -26,6 +26,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.model.ModelHintsUtil" %><%@
 page import="com.liferay.portal.kernel.settings.LocalizedValuesMap" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
@@ -34,6 +35,7 @@ page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.language.override.model.PLOEntry" %><%@
 page import="com.liferay.portal.language.override.web.internal.display.LanguageItemDisplay" %><%@
 page import="com.liferay.portal.language.override.web.internal.display.context.EditDisplayContext" %><%@
 page import="com.liferay.portal.language.override.web.internal.display.context.ViewDisplayContext" %><%@

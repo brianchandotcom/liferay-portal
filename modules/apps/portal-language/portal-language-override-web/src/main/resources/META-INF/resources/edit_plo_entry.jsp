@@ -68,7 +68,7 @@ renderResponse.setTitle(editDisplayContext.getPageTitle());
 							</c:when>
 							<c:otherwise>
 								<div class="form-group">
-									<aui:input name="key" pattern="[^ ]+" required="<%= true %>" value="<%= editDisplayContext.getKey() %>" wrapperCssClass="mb-0" />
+									<aui:input maxlength='<%= ModelHintsUtil.getMaxLength(PLOEntry.class.getName(), "key") %>' name="key" pattern="[^ ]+" required="<%= true %>" value="<%= editDisplayContext.getKey() %>" wrapperCssClass="mb-0" />
 
 									<div class="form-feedback-group">
 										<div class="form-text">

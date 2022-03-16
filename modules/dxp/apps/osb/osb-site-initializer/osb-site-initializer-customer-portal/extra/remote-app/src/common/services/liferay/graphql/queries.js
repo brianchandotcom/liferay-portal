@@ -285,6 +285,23 @@ export const addAdminDXPCloud = gql`
 	}
 `;
 
+export const addIncidentReportAnalyticsCloud = gql`
+	mutation addIncidentReportAnalyticsCloud(
+		$scopeKey: String!
+		$IncidentReportContactAnalyticsCloud: InputC_IncidentReportContactAnalyticsCloud!
+	) {
+		c {
+			createIncidentReportContactAnalyticsCloud(
+				scopeKey: $scopeKey
+				IncidentReportContactAnalyticsCloud: $IncidentReportContactAnalyticsCloud
+			) {
+				emailAddress
+				analyticsCloudWorkspaceId
+			}
+		}
+	}
+`;
+
 export const addTeamMembersInvitation = gql`
 	mutation addTeamMembersInvitation(
 		$scopeKey: String!

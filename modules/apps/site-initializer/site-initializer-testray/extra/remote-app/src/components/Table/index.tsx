@@ -12,6 +12,7 @@
  * details.
  */
 
+import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {useNavigate} from 'react-router-dom';
@@ -34,15 +35,28 @@ export type TableProps<T = any> = {
 	columns: Column[];
 	items: T[];
 	navigateTo?: (item: T) => string;
+	onSelectRow?: (row: any) => void;
+	rowSelectable?: boolean;
+	selectedRows?: number[];
 };
 
-const Table: React.FC<TableProps> = ({actions, columns, items, navigateTo}) => {
+const Table: React.FC<TableProps> = ({
+	actions,
+	columns,
+	items,
+	navigateTo,
+	onSelectRow,
+	selectedRows = [],
+	rowSelectable = false,
+}) => {
 	const navigate = useNavigate();
 
 	return (
 		<ClayTable borderless className="testray-table" hover>
 			<Head className="testray-table">
 				<Row>
+					{rowSelectable && <Cell />}
+
 					{columns.map((column, index) => (
 						<Cell headingTitle key={index}>
 							{column.value}
@@ -56,6 +70,15 @@ const Table: React.FC<TableProps> = ({actions, columns, items, navigateTo}) => {
 			<Body>
 				{items.map((item, index) => (
 					<Row key={index}>
+						{rowSelectable && onSelectRow && (
+							<Cell>
+								<ClayCheckbox
+									checked={selectedRows.includes(item.id)}
+									onChange={() => onSelectRow(item)}
+								/>
+							</Cell>
+						)}
+
 						{columns.map((column, columnIndex) => (
 							<Cell
 								className={classNames('text-dark', {

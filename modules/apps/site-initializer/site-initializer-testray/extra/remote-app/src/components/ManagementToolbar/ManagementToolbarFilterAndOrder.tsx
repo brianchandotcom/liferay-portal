@@ -17,6 +17,7 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayManagementToolbar from '@clayui/management-toolbar';
+import {useState} from 'react';
 
 import {Sort} from '../../context/ListViewContext';
 import {SortOption} from '../../types';
@@ -46,19 +47,29 @@ export type IItem = {
 
 type ManagementToolbarFilterAndOrderProps = {
 	filterItems: IItem[];
+	onSelectAllRows: () => void;
 	onSort: () => void;
 	sort: Sort;
 };
 
 const ManagementToolbarFilterAndOrder: React.FC<ManagementToolbarFilterAndOrderProps> = ({
 	filterItems,
+	onSelectAllRows,
 	onSort,
 	sort,
 }) => {
+	const [checked, setChecked] = useState(false);
+
 	return (
 		<ClayManagementToolbar.ItemList>
 			<ClayManagementToolbar.Item>
-				<ClayCheckbox checked={false} onChange={() => {}} />
+				<ClayCheckbox
+					checked={checked}
+					onChange={() => {
+						onSelectAllRows();
+						setChecked(!checked);
+					}}
+				/>
 			</ClayManagementToolbar.Item>
 
 			<ClayDropDownWithItems

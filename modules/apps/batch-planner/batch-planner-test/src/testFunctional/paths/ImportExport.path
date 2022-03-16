@@ -36,6 +36,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>IMPORT_PREVIEW</td>
+	<td>//div[contains(@class,'import-mapping-table')]//tr[@class]/td[@class]/label[contains(text(),'${key_destinationField}')]/parent::td//following-sibling::td[2][contains(text(),'${key_previewField}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT</td>
 	<td>//div[not(contains(@class,'hide'))]/div[label[contains(.,'${key_selectFieldLabel}')]]/select[not(@disabled)]</td>
 	<td></td>

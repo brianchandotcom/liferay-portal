@@ -86,11 +86,11 @@ public class CommerceCategoryDisplayPageClayTable
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameField =
+		ClayTableSchemaField categoryNameClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"categoryName", "category-name");
 
-		nameField.setContentRenderer("actionLink");
+		categoryNameClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("layout", "layout");
 

@@ -140,14 +140,31 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "This is a test for COMMERCE-8286. Cancel the creation of a new entry and return to the dashboard view"
 	@priority = "4"
-	test CancelTheCreationOfANewEntry {
+	test CanCancelTheCreationOfANewEntry {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8286 CancelTheCreationOfANewEntry pending implementation
+		task ("Given I am creating a new Terms and Conditions entry") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
+		}
 
+		task ("When I cancel creating the entry") {
+			CommercePaymentTerms.cancelAddTermsAndCondition(
+				termsAndConditionName = "Test Terms and Condition",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = "");
+		}
+
+		task ("Then the entry should not be created") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
+
+			CommercePaymentTerms.viewNoPG();
+		}
 	}
 
 	@description = "Delete a new payment term to Terms and Conditions."
@@ -180,9 +197,7 @@ definition {
 		}
 
 		task ("Then the entry is deleted") {
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_INFO",
-				value1 = "No Items were found.");
+			CommercePaymentTerms.viewNoPG();
 		}
 	}
 

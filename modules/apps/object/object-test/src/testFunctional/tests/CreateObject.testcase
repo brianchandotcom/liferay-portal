@@ -1603,7 +1603,9 @@ definition {
 			fieldName = "customObjectField",
 			fieldType = "Text");
 
-		ObjectAdmin.viewFieldErrorMessage(message = "This name is already in use. Try another one.");
+		AssertTextEquals(
+			locator1 = "Message#ERROR",
+			value1 = "This name is already in use. Try another one.");
 	}
 
 	@description = "LPS-135549 - Verify that it is not possible to create a Object with a duplicated Object Name"

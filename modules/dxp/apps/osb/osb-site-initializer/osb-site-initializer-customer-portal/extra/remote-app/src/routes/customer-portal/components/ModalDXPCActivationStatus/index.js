@@ -40,13 +40,13 @@ const ModalDXPCActivationStatus = ({
 }) => {
 	const [hasError, setHasError] = useState();
 
-	const [, dispatch] = useCustomerPortal();
+	const [{subscriptionGroups}, dispatch] = useCustomerPortal();
 
 	const handleOnConfirm = () => {
-		const errorMessageGroupId = isLowercaseAndNumbers(projectID);
+		const errorMessageProductId = isLowercaseAndNumbers(projectIdValue);
 
-		if (errorMessageGroupId) {
-			setHasError(errorMessageGroupId);
+		if (errorMessageProductId) {
+			setHasError(errorMessageProductId);
 
 			return;
 		}
@@ -56,27 +56,17 @@ const ModalDXPCActivationStatus = ({
 	};
 
 	const updateSubscriptionGroupsStatus = async (accountKey) => {
-		const {data: dataSubscriptionGroups} = await client.query({
-			query: getAccountSubscriptionGroups,
+		const dxpCloudSubscriptionGroups = subscriptionGroups[0];
+
+		await client.mutate({
+			mutation: updateAccountSubscriptionGroups,
 			variables: {
-				filter: `accountKey eq '${accountKey}' and hasActivation eq true`,
+				accountSubscriptionGroup: {
+					activationStatus: STATUS_TAG_TYPE_NAMES.active,
+				},
+				id: dxpCloudSubscriptionGroups?.accountSubscriptionGroupId,
 			},
 		});
-
-		const dxpCloudSubscriptionGroups =
-			dataSubscriptionGroups.c?.accountSubscriptionGroups?.items[0];
-
-		await Promise.all([
-			await client.mutate({
-				mutation: updateAccountSubscriptionGroups,
-				variables: {
-					accountSubscriptionGroup: {
-						activationStatus: STATUS_TAG_TYPE_NAMES.active,
-					},
-					id: dxpCloudSubscriptionGroups?.accountSubscriptionGroupId,
-				},
-			}),
-		]);
 		setSubscriptionGroupActivationStatus(STATUS_TAG_TYPE_NAMES.active);
 		setHasFinishedUpdate(true);
 
@@ -88,10 +78,8 @@ const ModalDXPCActivationStatus = ({
 		});
 
 		if (newDataSubscriptionGroups) {
-			const items =
-				dataSubscriptionGroups?.c?.accountSubscriptionGroups?.items;
 			dispatch({
-				payload: items,
+				payload: subscriptionGroups,
 				type: actionTypes.UPDATE_SUBSCRIPTION_GROUPS,
 			});
 		}
@@ -151,21 +139,23 @@ const ModalDXPCActivationStatus = ({
 						customer&apos;s DXP Cloud environments.
 					</p>
 
-					<div className="mx-4">
+					<div className="mx-2">
 						<ClayForm.Group
 							className={classNames('w-100 mb-1', {
 								'has-error': hasError,
 							})}
 						>
-							<ClayInput
-								id="basicInputText"
-								onChange={({target}) =>
-									setProjectIdValue(target.value)
-								}
-								placeholder={projectID}
-								type="text"
-								value={projectIdValue}
-							/>
+							<label>
+								<ClayInput
+									id="basicInputText"
+									onChange={({target}) =>
+										setProjectIdValue(target.value)
+									}
+									placeholder={projectID}
+									type="text"
+									value={projectIdValue}
+								/>
+							</label>
 						</ClayForm.Group>
 
 						{hasError ? (
@@ -188,7 +178,7 @@ const ModalDXPCActivationStatus = ({
 						</Button>
 
 						<Button
-							disabled={!projectID}
+							disabled={!projectIdValue}
 							displayType="primary ml-3 mt-2"
 							onClick={handleOnConfirm}
 						>

@@ -16,3 +16,4 @@ export * from './alertActivationKeysDownloadText';
 export * from './downlodableLicenseKeys';
 export * from './tooltipContentRendererTypes';
 export * from './tooltipClassnamesTypes';
+export * from './alertUpdateDXPCloudStatus';

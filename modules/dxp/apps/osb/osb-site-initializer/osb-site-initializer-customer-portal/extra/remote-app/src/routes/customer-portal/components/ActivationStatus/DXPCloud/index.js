@@ -11,6 +11,7 @@
 
 import ClayAlert from '@clayui/alert';
 import {ButtonWithIcon} from '@clayui/core';
+import {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
@@ -22,7 +23,7 @@ import {
 	getAccountSubscriptionsTerms,
 } from '../../../../../common/services/liferay/graphql/queries';
 import getActivationStatusDateRange from '../../../../../common/utils/getActivationStatusDateRange';
-import {ALERT_UPDATE_DXP_CLOUD_STATUS} from '../../../containers/DXPActivationKeysTable/utils/constants/alertUpdateDXPCloudStatus';
+import {ALERT_UPDATE_DXP_CLOUD_STATUS} from '../../../containers/DXPActivationKeysTable/utils/constants';
 import {useCustomerPortal} from '../../../context';
 import {actionTypes} from '../../../context/reducer';
 import {
@@ -102,7 +103,7 @@ const ActivationStatusDXPCloud = ({
 	subscriptionGroupDXPCloud,
 	userAccount,
 }) => {
-	const [projectIdValue, setProjectIdValue] = useState();
+	const [projectIdValue, setProjectIdValue] = useState('');
 	const [
 		subscriptionGroupActivationStatus,
 		setSubscriptionGroupActivationStatus,
@@ -174,6 +175,7 @@ const ActivationStatusDXPCloud = ({
 		[STATUS_TAG_TYPE_NAMES.inProgress]: {
 			dropdownIcon: userAccount.isStaff && (
 				<ButtonDropDown
+					align={Align.BottomRight}
 					customDropDownButton={
 						<ButtonWithIcon
 							displayType="null"

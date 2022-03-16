@@ -183,7 +183,7 @@ export const addDXPCloudEnvironment = gql`
 `;
 
 export const updateDXPCloudEnvironment = gql`
-	mutation putDXPCloudProjectId(
+	mutation updateDXPCloudProjectId(
 		$dxpCloudEnvironmentId: Long!
 		$DXPCloudEnvironment: InputC_DXPCloudEnvironment!
 	) {

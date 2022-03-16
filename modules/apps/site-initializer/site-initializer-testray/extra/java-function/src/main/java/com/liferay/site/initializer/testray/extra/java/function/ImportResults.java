@@ -41,6 +41,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -69,7 +71,7 @@ public class ImportResults {
 			importResults._readFiles();
 		}
 		catch (Exception exception) {
-			exception.printStackTrace();
+			_logger.severe(exception.getMessage());
 		}
 	}
 
@@ -931,5 +933,7 @@ public class ImportResults {
 	private final DocumentBuilder _documentBuilder;
 	private final DocumentBuilderFactory _documentBuilderFactory;
 	private final Storage _storage;
+	private static final Logger _logger =
+		Logger.getLogger(ImportResults.class.getName());
 
 }

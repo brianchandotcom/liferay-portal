@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.experiment.web.internal.configuration.SegmentsExperimentConfiguration;
@@ -368,25 +367,6 @@ public class SegmentsExperimentDisplayContext {
 						))
 				));
 		}
-
-		segmentsExperiencesJSONArray.put(
-			JSONUtil.put(
-				"name",
-				SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
-					locale)
-			).put(
-				"segmentsExperienceId",
-				String.valueOf(SegmentsExperienceConstants.ID_DEFAULT)
-			).put(
-				"segmentsExperiment",
-				SegmentsExperimentUtil.toSegmentsExperimentJSONObject(
-					locale,
-					_getActiveSegmentsExperimentOptional(
-						SegmentsExperienceConstants.ID_DEFAULT
-					).orElse(
-						null
-					))
-			));
 
 		return segmentsExperiencesJSONArray;
 	}

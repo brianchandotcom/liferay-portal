@@ -106,8 +106,6 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				sourceLayout.getPlid()),
 			SegmentsExperience.SEGMENTS_EXPERIENCE_ID_ACCESSOR);
 
-		segmentsExperiencesIds.add(0, SegmentsExperienceConstants.ID_DEFAULT);
-
 		return copyLayout(
 			ArrayUtil.toLongArray(segmentsExperiencesIds), sourceLayout,
 			targetLayout);

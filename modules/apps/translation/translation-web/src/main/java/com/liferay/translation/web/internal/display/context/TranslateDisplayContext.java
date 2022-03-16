@@ -48,7 +48,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 import com.liferay.translation.constants.TranslationPortletKeys;
@@ -497,28 +496,9 @@ public class TranslateDisplayContext {
 				_groupId, PortalUtil.getClassNameId(_className), _classPK,
 				true);
 
-		boolean addedDefault = false;
-
-		Map<String, String> defaultExperience = HashMapBuilder.put(
-			"label",
-			SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
-				_themeDisplay.getLocale())
-		).put(
-			"value", String.valueOf(SegmentsExperienceConstants.ID_DEFAULT)
-		).build();
-
 		List<Map<String, String>> options = new ArrayList<>();
 
 		for (SegmentsExperience segmentsExperience : segmentsExperiences) {
-			if ((segmentsExperience.getPriority() <
-					SegmentsExperienceConstants.PRIORITY_DEFAULT) &&
-				!addedDefault) {
-
-				options.add(defaultExperience);
-
-				addedDefault = true;
-			}
-
 			options.add(
 				HashMapBuilder.put(
 					"label",
@@ -527,10 +507,6 @@ public class TranslateDisplayContext {
 					"value",
 					String.valueOf(segmentsExperience.getSegmentsExperienceId())
 				).build());
-		}
-
-		if (!addedDefault) {
-			options.add(defaultExperience);
 		}
 
 		return HashMapBuilder.<String, Object>put(

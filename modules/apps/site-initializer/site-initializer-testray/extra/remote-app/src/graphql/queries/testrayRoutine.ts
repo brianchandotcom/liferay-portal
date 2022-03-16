@@ -18,7 +18,7 @@ import {testrayRoutineFragment} from '../fragments';
 
 export type TestrayRoutine = {
 	id: number;
-	name: String;
+	name: string;
 };
 
 export const getRoutines = gql`

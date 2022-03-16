@@ -42,21 +42,21 @@ const isValidEmailDomain = (value, bannedEmailDomains) => {
 };
 
 const isLowercaseAndNumbers = (value) => {
-	if (!LOWCASE_NUMBERS_REGEX.test(value)) {
+	if (value && !LOWCASE_NUMBERS_REGEX.test(value)) {
 		return 'Lowercase letters and numbers only.';
 	}
 };
 
 const isValidFriendlyURL = (value) => {
-	if (value[0] !== '/') {
+	if (value && value[0] !== '/') {
 		return 'The Workspace URL should start with "/".';
 	}
 
-	if (value.indexOf(' ') > 0) {
+	if (value && value.indexOf(' ') > 0) {
 		return 'The Workspace URL most not have spaces.';
 	}
 
-	if (!FRIENDLY_URL_REGEX.test(value)) {
+	if (value && !FRIENDLY_URL_REGEX.test(value)) {
 		return 'Lowercase letters, numbers and dashes only.';
 	}
 };

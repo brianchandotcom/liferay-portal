@@ -17,7 +17,6 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.NoSuchObjectFieldException;
-import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
@@ -25,7 +24,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -84,26 +82,12 @@ public class ObjectFieldSettingLocalServiceTest {
 		try {
 			_objectFieldSettingLocalService.addObjectFieldSetting(
 				TestPropsValues.getUserId(), RandomTestUtil.randomLong(),
-				StringUtil.randomId(), RandomTestUtil.randomBoolean(),
-				RandomTestUtil.randomString());
+				StringUtil.randomId(), RandomTestUtil.randomString());
 
 			Assert.fail();
 		}
 		catch (NoSuchObjectFieldException noSuchObjectFieldException) {
 			Assert.assertNotNull(noSuchObjectFieldException);
-		}
-
-		try {
-			_objectFieldSettingLocalService.addObjectFieldSetting(
-				TestPropsValues.getUserId(), _objectField.getObjectFieldId(),
-				StringUtil.randomId(), true, StringPool.BLANK);
-
-			Assert.fail();
-		}
-		catch (ObjectFieldSettingValueException
-					objectFieldSettingValueException) {
-
-			Assert.assertNotNull(objectFieldSettingValueException);
 		}
 	}
 
@@ -112,8 +96,7 @@ public class ObjectFieldSettingLocalServiceTest {
 		ObjectFieldSetting objectFieldSetting =
 			_objectFieldSettingLocalService.addObjectFieldSetting(
 				TestPropsValues.getUserId(), _objectField.getObjectFieldId(),
-				"position", RandomTestUtil.randomBoolean(),
-				RandomTestUtil.randomString());
+				"position", RandomTestUtil.randomString());
 
 		Assert.assertNotNull(
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
@@ -132,11 +115,10 @@ public class ObjectFieldSettingLocalServiceTest {
 		ObjectFieldSetting objectFieldSetting =
 			_objectFieldSettingLocalService.addObjectFieldSetting(
 				TestPropsValues.getUserId(), _objectField.getObjectFieldId(),
-				"position", false, "First");
+				"position", "First");
 
 		Assert.assertEquals("position", objectFieldSetting.getName());
 		Assert.assertEquals("First", objectFieldSetting.getValue());
-		Assert.assertFalse(objectFieldSetting.isRequired());
 
 		objectFieldSetting =
 			_objectFieldSettingLocalService.updateObjectFieldSetting(
@@ -144,7 +126,6 @@ public class ObjectFieldSettingLocalServiceTest {
 
 		Assert.assertEquals("position", objectFieldSetting.getName());
 		Assert.assertEquals("Second", objectFieldSetting.getValue());
-		Assert.assertFalse(objectFieldSetting.isRequired());
 	}
 
 	private static ObjectDefinition _objectDefinition;

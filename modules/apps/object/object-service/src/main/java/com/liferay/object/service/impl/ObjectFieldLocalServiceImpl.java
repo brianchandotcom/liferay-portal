@@ -115,8 +115,7 @@ public class ObjectFieldLocalServiceImpl
 		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
 			_objectFieldSettingLocalService.addObjectFieldSetting(
 				userId, objectField.getObjectFieldId(),
-				objectFieldSetting.getName(), objectFieldSetting.isRequired(),
-				objectFieldSetting.getValue());
+				objectFieldSetting.getName(), objectFieldSetting.getValue());
 		}
 
 		return objectField;
@@ -394,7 +393,6 @@ public class ObjectFieldLocalServiceImpl
 			if (oldObjectFieldSetting == null) {
 				_objectFieldSettingLocalService.addObjectFieldSetting(
 					userId, objectFieldId, newObjectFieldSetting.getName(),
-					newObjectFieldSetting.isRequired(),
 					newObjectFieldSetting.getValue());
 			}
 			else {

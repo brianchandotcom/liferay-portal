@@ -198,9 +198,9 @@ public class BatchPlannerLogLocalServiceImpl
 
 	@Override
 	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
-		long companyId, boolean export, int start, int end,
-		OrderByComparator<BatchPlannerLog> orderByComparator,
-		String searchByField, String searchByKeyword) {
+		long companyId, boolean export, String searchByField,
+		String searchByKeyword, int start, int end,
+		OrderByComparator<BatchPlannerLog> orderByComparator) {
 
 		return batchPlannerLogPersistence.dslQuery(
 			_getSelectJoinStep(
@@ -228,9 +228,8 @@ public class BatchPlannerLogLocalServiceImpl
 
 	@Override
 	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
-		long companyId, int start, int end,
-		OrderByComparator<BatchPlannerLog> orderByComparator,
-		String searchByField, String searchByKeyword) {
+		long companyId, String searchByField, String searchByKeyword, int start,
+		int end, OrderByComparator<BatchPlannerLog> orderByComparator) {
 
 		return batchPlannerLogPersistence.dslQuery(
 			_getSelectJoinStep(

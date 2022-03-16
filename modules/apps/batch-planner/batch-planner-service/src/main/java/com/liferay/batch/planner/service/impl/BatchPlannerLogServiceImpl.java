@@ -102,16 +102,16 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 
 	@Override
 	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
-			long companyId, boolean export, int start, int end,
-			OrderByComparator<BatchPlannerLog> orderByComparator,
-			String searchByField, String searchByKeyword)
+			long companyId, boolean export, String searchByField,
+			String searchByKeyword, int start, int end,
+			OrderByComparator<BatchPlannerLog> orderByComparator)
 		throws PortalException {
 
 		_checkPermission(companyId, ActionKeys.VIEW);
 
 		return batchPlannerLogLocalService.getCompanyBatchPlannerLogs(
-			companyId, export, start, end, orderByComparator, searchByField,
-			searchByKeyword);
+			companyId, export, searchByField, searchByKeyword, start, end,
+			orderByComparator);
 	}
 
 	@Override
@@ -126,16 +126,16 @@ public class BatchPlannerLogServiceImpl extends BatchPlannerLogServiceBaseImpl {
 
 	@Override
 	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
-			long companyId, int start, int end,
-			OrderByComparator<BatchPlannerLog> orderByComparator,
-			String searchByField, String searchByKeyword)
+			long companyId, String searchByField, String searchByKeyword,
+			int start, int end,
+			OrderByComparator<BatchPlannerLog> orderByComparator)
 		throws PortalException {
 
 		_checkPermission(companyId, ActionKeys.VIEW);
 
 		return batchPlannerLogLocalService.getCompanyBatchPlannerLogs(
-			companyId, start, end, orderByComparator, searchByField,
-			searchByKeyword);
+			companyId, searchByField, searchByKeyword, start, end,
+			orderByComparator);
 	}
 
 	@Override

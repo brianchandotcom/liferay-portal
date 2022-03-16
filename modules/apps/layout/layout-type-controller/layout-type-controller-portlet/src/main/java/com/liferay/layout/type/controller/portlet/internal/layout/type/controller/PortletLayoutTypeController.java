@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactory;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
-import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
+import com.liferay.portal.kernel.servlet.TransferHeadersHelper;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -66,7 +66,7 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		httpServletRequest.setAttribute(WebKeys.SEL_LAYOUT, layout);
 
 		RequestDispatcher requestDispatcher =
-			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
+			_transferHeadersHelper.getTransferHeadersRequestDispatcher(
 				_directRequestDispatcherFactory.getRequestDispatcher(
 					servletContext, getEditPage()));
 
@@ -87,7 +87,7 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		throws Exception {
 
 		RequestDispatcher requestDispatcher =
-			TransferHeadersHelperUtil.getTransferHeadersRequestDispatcher(
+			_transferHeadersHelper.getTransferHeadersRequestDispatcher(
 				_directRequestDispatcherFactory.getRequestDispatcher(
 					servletContext, getViewPage()));
 
@@ -211,5 +211,8 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Reference
 	private PortletLocalService _portletLocalService;
+
+	@Reference
+	private TransferHeadersHelper _transferHeadersHelper;
 
 }

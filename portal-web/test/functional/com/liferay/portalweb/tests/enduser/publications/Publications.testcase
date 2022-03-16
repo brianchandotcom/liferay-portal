@@ -650,6 +650,7 @@ definition {
 	@priority = "4"
 	test IsBrowserHistoryPreserved {
 		property test.assert.warning.exceptions = "true";
+		property test.name.skip.portal.instance = "Publications#IsBrowserHistoryPreserved";
 
 		JSONPublications.addPublication(publicationName = "Publication Name");
 

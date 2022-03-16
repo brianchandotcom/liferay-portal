@@ -458,6 +458,19 @@ public class CommerceChannelDisplayContext
 		return commerceOrderCheckoutConfiguration.guestCheckoutEnabled();
 	}
 
+	public boolean isHideShippingPriceZero() throws PortalException {
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		CommerceOrderCheckoutConfiguration commerceOrderCheckoutConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderCheckoutConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		return commerceOrderCheckoutConfiguration.hideShippingPriceZero();
+	}
+
 	public boolean isShowPurchaseOrderNumber() throws PortalException {
 		CommerceChannel commerceChannel = getCommerceChannel();
 

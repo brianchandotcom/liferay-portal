@@ -110,20 +110,6 @@ public class FinderCacheImpl
 		clearByEntityCache(clazz.getName());
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * 			#clearCache(Class)}
-	 */
-	@Deprecated
-	@Override
-	public void clearCache(String className) {
-		clearLocalCache();
-
-		PortalCache<?, ?> portalCache = _getPortalCache(className);
-
-		portalCache.removeAll();
-	}
-
 	@Override
 	public void clearDSLQueryCache(String tableName) {
 		String modelImplClassName = _modelImplClassNames.get(tableName);
@@ -414,18 +400,6 @@ public class FinderCacheImpl
 
 		PortalCacheHelperUtil.putWithoutReplicator(
 			portalCache, cacheKey, cacheValue);
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * 			#putResult(FinderPath, Object[], Object)}
-	 */
-	@Deprecated
-	@Override
-	public void putResult(
-		FinderPath finderPath, Object[] args, Object result, boolean quiet) {
-
-		putResult(finderPath, args, result);
 	}
 
 	public void removeByEntityCache(String className, BaseModel<?> baseModel) {

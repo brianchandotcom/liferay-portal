@@ -1,5 +1,7 @@
+@import 'atlas-variables';
+
 .download-template-link {
 	&.disabled {
-		color: #83b1fb;
+		color: $primary-l2;
 	}
 }

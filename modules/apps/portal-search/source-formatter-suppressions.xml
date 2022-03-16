@@ -9,7 +9,4 @@
 		<suppress checks="GenericTypeCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/indexer/IndexerDocumentBuilderImpl\.java" />
 		<suppress checks="MapBuilderCheck" files="portal-search-admin-web/src/main/java/com/liferay/portal/search/admin/web/internal/display/context/builder/FieldMappingsDisplayContextBuilder\.java" />
 	</checkstyle>
-	<source-check>
-		<suppress checks="JavaModuleServiceProxyFactoryCheck" files="portal-search/src/main/java/com/liferay/portal/search/internal/background/task/ReindexSingleIndexerBackgroundTaskExecutor\.java" />
-	</source-check>
 </suppressions>

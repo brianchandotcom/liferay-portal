@@ -62,6 +62,16 @@
 	</tbody>
 </table>
 
+<blockquote>
+	<p>Demonstration of the checkbox with the state of indeterminate in the TreeView component.</p>
+</blockquote>
+
+<div>
+	<react:component
+		module="js/ClaySampleTreeViewWithCheckbox"
+	/>
+</div>
+
 <h3>RADIO</h3>
 
 <blockquote>

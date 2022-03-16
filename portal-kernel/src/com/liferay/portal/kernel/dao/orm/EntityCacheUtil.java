@@ -47,17 +47,6 @@ public class EntityCacheUtil {
 		return _entityCache.getPortalCache(clazz);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getResult(Class, Serializable)}
-	 */
-	@Deprecated
-	public static Serializable getResult(
-		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey) {
-
-		return _entityCache.getResult(entityCacheEnabled, clazz, primaryKey);
-	}
-
 	public static Serializable getResult(
 		Class<?> clazz, Serializable primaryKey) {
 
@@ -66,43 +55,6 @@ public class EntityCacheUtil {
 
 	public static void invalidate() {
 		_entityCache.invalidate();
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static Serializable loadResult(
-		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
-		SessionFactory sessionFactory) {
-
-		return _entityCache.loadResult(
-			entityCacheEnabled, clazz, primaryKey, sessionFactory);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #putResult(Class, Serializable, Serializable)}
-	 */
-	@Deprecated
-	public static void putResult(
-		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
-		Serializable result) {
-
-		_entityCache.putResult(entityCacheEnabled, clazz, primaryKey, result);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #putResult(Class, Serializable, Serializable, boolean)}
-	 */
-	@Deprecated
-	public static void putResult(
-		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
-		Serializable result, boolean quiet) {
-
-		_entityCache.putResult(
-			entityCacheEnabled, clazz, primaryKey, result, quiet);
 	}
 
 	public static void putResult(
@@ -118,31 +70,8 @@ public class EntityCacheUtil {
 		_entityCache.putResult(clazz, primaryKey, result);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #putResult(Class, BaseModel, boolean, boolean)}
-	 */
-	@Deprecated
-	public static void putResult(
-		Class<?> clazz, Serializable primaryKey, Serializable result,
-		boolean quiet) {
-
-		_entityCache.putResult(clazz, primaryKey, result, quiet);
-	}
-
 	public static void removeCache(String className) {
 		_entityCache.removeCache(className);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #removeResult(Class, Serializable)}
-	 */
-	@Deprecated
-	public static void removeResult(
-		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey) {
-
-		_entityCache.removeResult(entityCacheEnabled, clazz, primaryKey);
 	}
 
 	public static void removeResult(Class<?> clazz, BaseModel<?> baseModel) {

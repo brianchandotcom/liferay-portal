@@ -15,7 +15,6 @@
 package com.liferay.portal.cache.internal.dao.orm;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -28,8 +27,6 @@ import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
-import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.dao.orm.SessionFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
@@ -142,18 +139,6 @@ public class EntityCacheImpl
 		return EntityCache.class.getName();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getResult(Class, Serializable)}
-	 */
-	@Deprecated
-	@Override
-	public Serializable getResult(
-		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey) {
-
-		return getResult(clazz, primaryKey);
-	}
-
 	@Override
 	public Serializable getResult(Class<?> clazz, Serializable primaryKey) {
 		if (!_valueObjectEntityCacheEnabled || !CacheRegistryUtil.isActive()) {
@@ -201,95 +186,6 @@ public class EntityCacheImpl
 		clearCache();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Serializable loadResult(
-		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
-		SessionFactory sessionFactory) {
-
-		if (!_valueObjectEntityCacheEnabled || !entityCacheEnabled ||
-			!CacheRegistryUtil.isActive()) {
-
-			Session session = null;
-
-			try {
-				session = sessionFactory.openSession();
-
-				return (Serializable)session.get(clazz, primaryKey);
-			}
-			finally {
-				sessionFactory.closeSession(session);
-			}
-		}
-
-		Serializable result = null;
-
-		Map<Serializable, Serializable> localCache = null;
-
-		Serializable localCacheKey = null;
-
-		if (_isLocalCacheEnabled()) {
-			localCache = _localCache.get();
-
-			localCacheKey = new LocalCacheKey(clazz.getName(), primaryKey);
-
-			result = localCache.get(localCacheKey);
-		}
-
-		Serializable loadResult = null;
-
-		if (result == null) {
-			PortalCache<Serializable, Serializable> portalCache =
-				getPortalCache(clazz);
-
-			result = portalCache.get(primaryKey);
-
-			if (result == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						StringBundler.concat(
-							"Load ", clazz, " ", primaryKey, " from session"));
-				}
-
-				Session session = null;
-
-				try {
-					session = sessionFactory.openSession();
-
-					loadResult = (Serializable)session.get(clazz, primaryKey);
-				}
-				finally {
-					sessionFactory.closeSession(session);
-				}
-
-				if (loadResult == null) {
-					result = StringPool.BLANK;
-				}
-				else {
-					BaseModel<?> baseModel = (BaseModel<?>)loadResult;
-
-					result = baseModel.toCacheModel();
-
-					PortalCacheHelperUtil.putWithoutReplicator(
-						portalCache, primaryKey, result);
-				}
-			}
-
-			if (localCache != null) {
-				localCache.put(localCacheKey, result);
-			}
-		}
-
-		if (loadResult != null) {
-			return loadResult;
-		}
-
-		return _toEntityModel(result);
-	}
-
 	@Override
 	public void notifyPortalCacheAdded(String portalCacheName) {
 	}
@@ -305,32 +201,6 @@ public class EntityCacheImpl
 		_notifyFinderCache(cacheName, null, true);
 
 		_portalCaches.remove(cacheName);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #putResult(Class, Serializable, Serializable)}
-	 */
-	@Deprecated
-	@Override
-	public void putResult(
-		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
-		Serializable result) {
-
-		putResult(clazz, primaryKey, result);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #putResult(Class, Serializable, Serializable, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public void putResult(
-		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
-		Serializable result, boolean quiet) {
-
-		putResult(clazz, primaryKey, result, quiet);
 	}
 
 	@Override
@@ -350,19 +220,6 @@ public class EntityCacheImpl
 		_putResult(clazz, primaryKey, (BaseModel<?>)result, true, false);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #putResult(Class, BaseModel, boolean, boolean)}
-	 */
-	@Deprecated
-	@Override
-	public void putResult(
-		Class<?> clazz, Serializable primaryKey, Serializable result,
-		boolean quiet) {
-
-		putResult(clazz, (BaseModel<?>)result, quiet, true);
-	}
-
 	@Override
 	public void removeCache(String className) {
 		_notifyFinderCache(className, null, true);
@@ -372,18 +229,6 @@ public class EntityCacheImpl
 		String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
 		_multiVMPool.removePortalCache(groupKey);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #removeResult(Class, Serializable)}
-	 */
-	@Deprecated
-	@Override
-	public void removeResult(
-		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey) {
-
-		removeResult(clazz, primaryKey);
 	}
 
 	@Override

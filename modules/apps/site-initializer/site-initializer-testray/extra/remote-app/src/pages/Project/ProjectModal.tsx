@@ -15,17 +15,20 @@
 import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import Input from '../../components/Input';
 import Modal from '../../components/Modal';
-import {CreateProject} from '../../graphql/mutations/testrayProject';
+import {
+	CreateProject,
+	UpdateProject,
+} from '../../graphql/mutations/testrayProject';
 import {FormModalOptions} from '../../hooks/useFormModal';
 import i18n from '../../i18n';
-import {Liferay} from '../../services/liferay/liferay';
 
 type NewProjectForm = {
 	description: string;
+	id?: number;
 	name: string;
 };
 
@@ -36,13 +39,20 @@ type NewProjectFormProps = {
 };
 
 const FormNewProject: React.FC<NewProjectFormProps> = ({
+	form,
 	onChange,
 	onSubmit,
 }) => {
 	return (
 		<ClayForm onSubmit={onSubmit}>
 			<ClayForm.Group>
-				<Input label="Name" name="name" onChange={onChange} required />
+				<Input
+					label="Name"
+					name="name"
+					onChange={onChange}
+					required
+					value={form.name}
+				/>
 			</ClayForm.Group>
 
 			<ClayForm.Group>
@@ -52,6 +62,7 @@ const FormNewProject: React.FC<NewProjectFormProps> = ({
 					onChange={onChange}
 					required
 					type="textarea"
+					value={form.description}
 				/>
 			</ClayForm.Group>
 		</ClayForm>
@@ -62,49 +73,42 @@ type NewProjectProps = {
 	modal: FormModalOptions;
 };
 const ProjectModal: React.FC<NewProjectProps> = ({
-	modal: {observer, onClose, onSave, visible},
+	modal: {modalState, observer, onChange, onClose, onError, onSave, visible},
 }) => {
 	const [form, setForm] = useState<NewProjectForm>({
 		description: '',
-
 		name: '',
 	});
 
-	function onChange({target}: any): void {
-		const {name, value} = target;
-
-		setForm({
-			...form,
-			[name]: value,
-		});
-	}
-
 	const [onCreateProject] = useMutation(CreateProject);
+	const [onUpdateProject] = useMutation(UpdateProject);
+
+	useEffect(() => {
+		if (visible && modalState) {
+			setForm(modalState);
+		}
+	}, [visible, modalState]);
 
 	const onSubmit = async () => {
-		const newForm: NewProjectForm = {
-			...form,
-
-			description: form.description,
-
-			name: form.name,
+		const variables: any = {
+			Project: {
+				description: form.description,
+				name: form.name,
+			},
 		};
 
 		try {
-			await onCreateProject({
-				variables: {
-					TestrayProject: newForm,
-				},
-			});
+			if (form.id) {
+				variables.projectId = form.id;
 
-			Liferay.Util.openToast({message: 'TestrayProject Registered'});
+				onUpdateProject({variables});
+			} else {
+				await onCreateProject({variables});
+			}
 
 			onSave();
 		} catch (error) {
-			Liferay.Util.openToast({
-				message: (error as any).message,
-				type: 'danger',
-			});
+			onError(error);
 		}
 	};
 
@@ -117,18 +121,18 @@ const ProjectModal: React.FC<NewProjectProps> = ({
 					</ClayButton>
 
 					<ClayButton displayType="primary" onClick={onSubmit}>
-						{i18n.translate('add-project')}
+						{i18n.translate('save')}
 					</ClayButton>
 				</ClayButton.Group>
 			}
 			observer={observer}
 			size="lg"
-			title={i18n.translate('new-project')}
+			title={i18n.translate(form.id ? 'edit-project' : 'new-project')}
 			visible={visible}
 		>
 			<FormNewProject
 				form={form}
-				onChange={onChange}
+				onChange={onChange({form, setForm})}
 				onSubmit={onSubmit}
 			/>
 		</Modal>

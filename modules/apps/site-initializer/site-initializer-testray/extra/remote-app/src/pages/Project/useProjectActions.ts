@@ -15,6 +15,7 @@
 import {useMutation} from '@apollo/client';
 
 import {DeleteProject} from '../../graphql/mutations';
+import {TestrayProject} from '../../graphql/queries';
 import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 
@@ -27,12 +28,12 @@ const useProjectActions = () => {
 	return {
 		actions: [
 			{
-				action: modal.open,
+				action: (item: TestrayProject) => modal.open(item),
 				name: i18n.translate('edit'),
 			},
 			{
-				action: ({id: testrayProjectId}: any) =>
-					onDeleteProject({variables: {testrayProjectId}})
+				action: ({id: projectId}: TestrayProject) =>
+					onDeleteProject({variables: {projectId}})
 						.then(() => modal.onSave())
 						.catch(modal.onError),
 				name: i18n.translate('delete'),

@@ -35,3 +35,15 @@ export const DeleteProject = gql`
 		}
 	}
 `;
+
+export const UpdateProject = gql`
+	${testrayProjectFragment}
+
+	mutation updateProject($projectId: Long, $Project: InputC_Project!) {
+		c {
+			updateProject(projectId: $projectId, Project: $Project) {
+				...ProjectFragment
+			}
+		}
+	}
+`;

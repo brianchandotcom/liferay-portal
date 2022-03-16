@@ -12400,14 +12400,48 @@ database.partition.enabled=true</echo>
 				<get-database-property property.name="database.password" />
 				<get-database-property property.name="database.schema" />
 				<get-database-property property.name="database.username" />
+				<get-database-property property.name="database.version" />
 
 				<property location="import-database.sh" name="import.database.sh.file.path" />
 
 				<if>
-					<equals arg1="${database.type}" arg2="db2" />
+					<and>
+						<equals arg1="${database.type}" arg2="db2" />
+						<equals arg1="${database.version}" arg2="11.5.6" />
+					</and>
 					<then>
 						<echo file="${import.database.sh.file.path}">
 							<![CDATA[
+								#!/bin/bash
+
+								echo "db2 restore database lportal user ${database.username} using ${database.password} from /sqllib/bin/db2 replace existing"
+
+								output=$(db2 restore database lportal user ${database.username} using ${database.password} from /sqllib/bin/db2 replace existing)
+
+								exit_code=$?
+
+								if [[ (${exit_code} != "0") && ($output == *"SQL2555I"*) ]]
+								then
+									echo "$output"
+
+									exit 0
+								else
+									echo "$output"
+
+									exit ${exit_code}
+								fi
+							]]>
+						</echo>
+
+						<property name="docker.database.dest.path" value="/sqllib/bin/db2" />
+						<property name="import.database.src.path" value="${liferay.home}/." />
+					</then>
+					//
+					<elseif>
+						<equals arg1="${database.type}" arg2="db2" />
+						<then>
+							<echo file="${import.database.sh.file.path}">
+								<![CDATA[
 								#!/bin/bash
 
 								echo "db2 restore database lportal user ${database.username} using ${database.password} from /opt/ibm/db2 replace existing"
@@ -12427,11 +12461,12 @@ database.partition.enabled=true</echo>
 									exit ${exit_code}
 								fi
 							]]>
-						</echo>
+							</echo>
 
-						<property name="docker.database.dest.path" value="/opt/ibm/db2" />
-						<property name="import.database.src.path" value="${liferay.home}/." />
-					</then>
+							<property name="docker.database.dest.path" value="/opt/ibm/db2" />
+							<property name="import.database.src.path" value="${liferay.home}/." />
+						</then>
+					</elseif>
 					<elseif>
 						<equals arg1="${database.type}" arg2="mariadb" />
 						<then>

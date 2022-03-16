@@ -1447,12 +1447,52 @@ definition {
 	}
 
 	@description = "LPS-146759 - Verify it is possible to view a single Picklist with the View permission"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewSinglePicklistWithViewPermission {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectPermission#CanViewSinglePicklistWithViewPermission";
 
-		// TODO LPS-148940 CanViewSinglePicklistWithViewPermission pending implementation
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		Picklist.addPicklistViaAPI(picklistName = "Custom Picklist 148940");
+
+		Picklist.gotoPicklists();
+
+		ObjectCustomViews.gotoPermissions(entryName = "Custom Picklist 148940");
+
+		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "PERMISSIONS,VIEW");
+
+		Button.clickSave();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Picklist.gotoPicklists();
+
+		Picklist.assertPicklist(picklistName = "Custom Picklist 148940");
 
 	}
 

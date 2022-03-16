@@ -2033,7 +2033,9 @@ definition {
 
 		ObjectAdmin.saveCustomObject();
 
-		ObjectAdmin.viewFieldErrorMessage(message = "The first character of a name must be an upper case letter.");
+		AssertTextEquals(
+			value1 = "The first character of a name must be an upper case letter.",
+			locator1 = "Message#ERROR");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Field Name"

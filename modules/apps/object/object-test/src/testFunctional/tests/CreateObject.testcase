@@ -2057,7 +2057,9 @@ definition {
 			fieldName = "customField#$%",
 			fieldType = "Long Integer");
 
-		ObjectAdmin.viewFieldErrorMessage(message = "Name must only contain letters and digits.");
+		AssertTextEquals(
+			value1 = "Name must only contain letters and digits.",
+			locator1 = "Message#ERROR");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with the first character of the Field Name in upper case"

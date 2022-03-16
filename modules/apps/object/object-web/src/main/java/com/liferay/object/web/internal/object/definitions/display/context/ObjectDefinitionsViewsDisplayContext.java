@@ -17,7 +17,6 @@ package com.liferay.object.web.internal.object.definitions.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.web.internal.configuration.activator.FFObjectViewSortColumnConfigurationUtil;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -124,10 +123,6 @@ public class ObjectDefinitionsViewsDisplayContext {
 		return _objectDefinitionModelResourcePermission.contains(
 			_objectRequestHelper.getPermissionChecker(),
 			getObjectDefinitionId(), ActionKeys.UPDATE);
-	}
-
-	public boolean isFFObjectViewSortColumnConfigurationEnabled() {
-		return FFObjectViewSortColumnConfigurationUtil.enabled();
 	}
 
 	private final ModelResourcePermission<ObjectDefinition>

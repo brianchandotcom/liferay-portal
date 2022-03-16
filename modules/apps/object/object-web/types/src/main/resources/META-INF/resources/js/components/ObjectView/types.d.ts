@@ -51,7 +51,6 @@ export declare type TObjectView = {
 };
 export declare type TState = {
 	isFFObjectViewColumnAliasEnabled: boolean;
-	isFFObjectViewSortColumnConfigurationEnabled: boolean;
 	isViewOnly: boolean;
 	objectFields: TObjectField[];
 	objectView: TObjectView;

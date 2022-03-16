@@ -30,8 +30,6 @@ ObjectView objectView = (ObjectView)request.getAttribute(ObjectWebKeys.OBJECT_VI
 			HashMapBuilder.<String, Object>put(
 				"isFFObjectViewColumnAliasEnabled", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-119551"))
 			).put(
-				"isFFObjectViewSortColumnConfigurationEnabled", objectDefinitionsViewsDisplayContext.isFFObjectViewSortColumnConfigurationEnabled()
-			).put(
 				"isViewOnly", !objectDefinitionsViewsDisplayContext.hasUpdateObjectDefinitionPermission()
 			).put(
 				"objectViewId", objectView.getObjectViewId()

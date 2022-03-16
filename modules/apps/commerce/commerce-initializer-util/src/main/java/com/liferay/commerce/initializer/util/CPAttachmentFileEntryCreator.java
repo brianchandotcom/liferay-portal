@@ -127,10 +127,10 @@ public class CPAttachmentFileEntryCreator {
 			file = FileUtil.createTempFile(inputStream);
 
 			fileEntry = _dlAppService.addFileEntry(
-				repository.getRepositoryId(),
+				null, repository.getRepositoryId(),
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
-				_mimeTypes.getContentType(file), fileName, null, null, file,
-				serviceContext);
+				_mimeTypes.getContentType(file), fileName, null, null, null,
+				file, null, null, serviceContext);
 		}
 		finally {
 			if (file != null) {

@@ -176,9 +176,9 @@ public class DLOpenerGoogleDriveDLAppServiceWrapper
 
 			updateFileEntry(
 				fileEntry.getFileEntryId(), sourceFileName,
-				fileEntry.getMimeType(), title, fileEntry.getDescription(),
-				StringPool.BLANK, DLVersionNumberIncrease.NONE, file,
-				serviceContext);
+				fileEntry.getMimeType(), title, StringPool.BLANK,
+				fileEntry.getDescription(), StringPool.BLANK,
+				DLVersionNumberIncrease.NONE, file, null, null, serviceContext);
 		}
 		finally {
 			if ((file != null) && !file.delete()) {

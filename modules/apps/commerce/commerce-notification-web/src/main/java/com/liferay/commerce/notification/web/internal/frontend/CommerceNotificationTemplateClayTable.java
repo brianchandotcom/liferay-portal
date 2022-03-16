@@ -87,17 +87,17 @@ public class CommerceNotificationTemplateClayTable
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField nameField =
+		ClayTableSchemaField nameClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("name", "name");
 
-		nameField.setContentRenderer("actionLink");
+		nameClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("type", "type");
 
-		ClayTableSchemaField enabledField =
+		ClayTableSchemaField enabledClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("enabled", "status");
 
-		enabledField.setContentRenderer("label");
+		enabledClayTableSchemaField.setContentRenderer("label");
 
 		return clayTableSchemaBuilder.build();
 	}

@@ -90,10 +90,10 @@ public class CommerceNotificationEntryClayTable
 
 		clayTableSchemaBuilder.addClayTableSchemaField("type", "type");
 
-		ClayTableSchemaField enabledField =
+		ClayTableSchemaField sentClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("sent", "status");
 
-		enabledField.setContentRenderer("label");
+		sentClayTableSchemaField.setContentRenderer("label");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("priority", "priority");
 

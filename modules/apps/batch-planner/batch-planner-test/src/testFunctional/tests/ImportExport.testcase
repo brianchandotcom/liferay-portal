@@ -641,4 +641,30 @@ definition {
 		}
 	}
 
+	@description = "Verify users are shown a preview for the first row being imported in a CSV file."
+	@priority = "3"
+	test ViewCSVImportPreview {
+		property portal.acceptance = "true";
+
+		task ("Given the user is importing a CSV file") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			UploadDependencyFile.uploadFile(fileName = "csv_account_import.csv");
+
+			ImportExport.selectEntity(
+				entityType = "Account",
+				headlessEndpoint = "/headless-admin-user");
+		}
+
+		task ("When the user maps the import fields") {
+			ImportExport.mapImport(fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code");
+		}
+
+		task ("Then a preview of the first row being imported should be shown.") {
+			ImportExport.assertImportPreviews(importPreviews = "name:Test Business Account,type:business,description:Test Business Account Description,externalReferenceCode:101");
+		}
+	}
+
 }

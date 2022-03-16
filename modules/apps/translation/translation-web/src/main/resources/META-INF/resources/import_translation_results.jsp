@@ -185,9 +185,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 						<ul class="list-group list-group-no-bordered">
 
 							<%
-							Map<String, String> failureMessages = importTranslationResultsDisplayContext.getFailureMessages();
-
-							for (Map.Entry<String, String> entry : failureMessages.entrySet()) {
+							for (Map<String, String> failureMessage : importTranslationResultsDisplayContext.getFailureMessages()) {
 							%>
 
 								<li class="list-group-item">
@@ -198,22 +196,24 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 											cssClass="lfr-portal-tooltip list-group-title mt-0"
 											expand="<%= true %>"
 										>
-											<div class="text-truncate" data-title="<%= entry.getKey() %>">
-												<%= entry.getKey() %>
+											<div class="text-truncate" data-title="<%= failureMessage.get("fileName") %>">
+												<%= failureMessage.get("fileName") %>
 											</div>
 										</clay:content-col>
 
-										<clay:content-col
-											cssClass="lfr-portal-tooltip ml-2 text-right"
-											expand="<%= true %>"
-										>
-											<div class="text-truncate" data-title="<%= importTranslationResultsDisplayContext.getFileName() %>">
-												<%= importTranslationResultsDisplayContext.getFileName() %>
-											</div>
-										</clay:content-col>
+										<c:if test='<%= Validator.isNotNull(failureMessage.get("container")) %>'>
+											<clay:content-col
+												cssClass="lfr-portal-tooltip ml-2 text-right"
+												expand="<%= true %>"
+											>
+												<div class="text-truncate" data-title="<%= failureMessage.get("container") %>">
+													<%= failureMessage.get("container") %>
+												</div>
+											</clay:content-col>
+										</c:if>
 									</clay:content-row>
 
-									<div class="text-danger"><%= entry.getValue() %></div>
+									<div class="text-danger"><%= failureMessage.get("errorMessage") %></div>
 								</li>
 
 							<%

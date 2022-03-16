@@ -87,8 +87,8 @@ definition {
 		Button.clickSave();
 
 		AssertTextEquals(
-			value1 = "Error:There can only be one default object layout",
-			locator1 = "Message#ERROR");
+			locator1 = "Message#ERROR",
+			value1 = "Error:There can only be one default object layout");
 	}
 
 	@description = "LPS-146808 - Verify it is possibel to view a Date entry and label"

@@ -151,6 +151,43 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-149293. The site creation process continues even though the user close the modal after submitting form."
+	@priority = "5"
+	test ViewSiteCreatedEvenThoughCloseModalAfterSubmitForm {
+		property portal.release = "false";
+
+		task ("Navigate to the Sites admin") {
+			Site.openSitesAdmin();
+		}
+
+		task ("Add a new site based on Minium") {
+			LexiconEntry.gotoAdd();
+
+			LexiconCard.clickCard(card = "Minium");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.inputName(name = "Test Site Name");
+
+			Button.clickAdd();
+		}
+
+		task ("Close the modal") {
+			IFrame.closeFrame();
+		}
+
+		task ("View the new site created") {
+
+			// Temp solution until LPS-146278 finished
+
+			Pause(locator1 = "10000");
+
+			Site.openSitesAdmin();
+
+			LexiconTable.viewTableEntryTitle(tableEntry = "Test Site Name");
+		}
+	}
+
 	@description = "This is a test for LPS-149293. The user could view a message in modal when create a new site."
 	@priority = "5"
 	@uitest

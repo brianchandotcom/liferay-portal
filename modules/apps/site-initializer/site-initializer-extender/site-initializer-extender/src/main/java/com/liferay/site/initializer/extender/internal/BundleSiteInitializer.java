@@ -23,12 +23,12 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.commerce.initializer.util.DDMFormImporter;
 import com.liferay.commerce.initializer.util.PortletSettingsImporter;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.commerce.initializer.util.DDMFormImporter;
 import com.liferay.dynamic.data.mapping.constants.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
@@ -664,7 +664,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		Map<String, String> ddmFormStringUtilReplaceValues = new HashMap<>();
 
 		for (String resourcePath : resourcePaths) {
-			String json = _read(resourcePath);
+			String json = SiteInitializerUtil.read(
+				resourcePath, _servletContext);
 
 			json = StringUtil.replace(
 				json, "[$", "$]", objectDefinitionsIdsStringUtilReplaceValues);

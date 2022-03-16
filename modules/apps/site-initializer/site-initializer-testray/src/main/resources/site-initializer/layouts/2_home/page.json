@@ -3,7 +3,7 @@
 	"name_i18n": {
 		"en_US": "Home"
 	},
-	"private": false,
+	"private": true,
 	"system": false,
 	"type": "Content",
 	"typeSettings": [

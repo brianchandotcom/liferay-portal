@@ -30,7 +30,7 @@ const ActivationStatusLayout = ({
 
 			<div>
 				<ClayCard className="border border-light cp-activation-status-container m-0 rounded shadow-none">
-					<ClayCard.Body className="px-4 py-3">
+					<ClayCard.Body className="pl-4 pr-2 py-3">
 						<div className="align-items-center d-flex position-relative">
 							<img
 								className={classNames(

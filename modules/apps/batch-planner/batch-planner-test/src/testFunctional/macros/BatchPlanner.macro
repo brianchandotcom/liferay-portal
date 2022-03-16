@@ -4,6 +4,8 @@ definition {
 		JSONBatchPlannerLogAPI._deleteBatchPlannerLogs();
 
 		JSONBatchPlannerPlansAPI._deleteBatchPlannerPlans();
+
+		Notifications.deleteAllNotifications();
 	}
 
 }

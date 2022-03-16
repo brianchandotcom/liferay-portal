@@ -273,7 +273,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		try {
 			List<CommerceCheckoutStep> commerceCheckoutSteps =
 				_commerceCheckoutStepServicesTracker.getCommerceCheckoutSteps(
-					httpServletRequest, themeDisplay.getResponse());
+					true, httpServletRequest, themeDisplay.getResponse());
 
 			if ((commerceCheckoutSteps != null) &&
 				!commerceCheckoutSteps.isEmpty()) {

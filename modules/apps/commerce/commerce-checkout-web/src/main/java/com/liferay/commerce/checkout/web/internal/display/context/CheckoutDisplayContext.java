@@ -70,7 +70,7 @@ public class CheckoutDisplayContext {
 		if ((commerceCheckoutStep == null) && (_commerceOrder != null)) {
 			List<CommerceCheckoutStep> commerceCheckoutSteps =
 				_commerceCheckoutStepServicesTracker.getCommerceCheckoutSteps(
-					_httpServletRequest, _httpServletResponse);
+					true, _httpServletRequest, _httpServletResponse);
 
 			commerceCheckoutStep = commerceCheckoutSteps.get(0);
 		}
@@ -82,7 +82,7 @@ public class CheckoutDisplayContext {
 		throws Exception {
 
 		return _commerceCheckoutStepServicesTracker.getCommerceCheckoutSteps(
-			_httpServletRequest, _httpServletResponse);
+			true, _httpServletRequest, _httpServletResponse);
 	}
 
 	public String getCommerceOrderUuid() {

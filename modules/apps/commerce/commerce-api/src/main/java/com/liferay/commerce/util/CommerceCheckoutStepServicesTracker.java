@@ -28,7 +28,7 @@ public interface CommerceCheckoutStepServicesTracker {
 		String commerceCheckoutStepName);
 
 	public List<CommerceCheckoutStep> getCommerceCheckoutSteps(
-			HttpServletRequest httpServletRequest,
+			boolean onlyActive, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception;
 

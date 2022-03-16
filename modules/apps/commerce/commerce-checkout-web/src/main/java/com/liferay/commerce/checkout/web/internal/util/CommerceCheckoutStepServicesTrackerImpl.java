@@ -77,7 +77,7 @@ public class CommerceCheckoutStepServicesTrackerImpl
 
 	@Override
 	public List<CommerceCheckoutStep> getCommerceCheckoutSteps(
-			HttpServletRequest httpServletRequest,
+			boolean onlyActive, HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
@@ -98,7 +98,12 @@ public class CommerceCheckoutStepServicesTrackerImpl
 			CommerceCheckoutStep commerceCheckoutStep =
 				commerceCheckoutStepServiceWrapper.getService();
 
-			if (commerceCheckoutStep.isActive(
+			if (!onlyActive) {
+				commerceCheckoutSteps.add(commerceCheckoutStep);
+			}
+
+			if (onlyActive &&
+				commerceCheckoutStep.isActive(
 					httpServletRequest, httpServletResponse)) {
 
 				commerceCheckoutSteps.add(commerceCheckoutStep);
@@ -120,15 +125,30 @@ public class CommerceCheckoutStepServicesTrackerImpl
 		}
 
 		List<CommerceCheckoutStep> commerceCheckoutSteps =
-			getCommerceCheckoutSteps(httpServletRequest, httpServletResponse);
+			getCommerceCheckoutSteps(
+				false, httpServletRequest, httpServletResponse);
 
-		int commerceCheckoutStepIndex = commerceCheckoutSteps.indexOf(
-			getCommerceCheckoutStep(commerceCheckoutStepName));
+		CommerceCheckoutStep currentCommerceCheckoutStep =
+			getCommerceCheckoutStep(commerceCheckoutStepName);
 
-		if ((commerceCheckoutStepIndex >= 0) &&
-			(commerceCheckoutStepIndex < (commerceCheckoutSteps.size() - 1))) {
+		for (int commerceCheckoutStepIndex = commerceCheckoutSteps.indexOf(
+				currentCommerceCheckoutStep);
+			 commerceCheckoutStepIndex < commerceCheckoutSteps.size();
+			 commerceCheckoutStepIndex++) {
 
-			return commerceCheckoutSteps.get(commerceCheckoutStepIndex + 1);
+			if ((commerceCheckoutStepIndex >= 0) &&
+				(commerceCheckoutStepIndex <
+					(commerceCheckoutSteps.size() - 1))) {
+
+				CommerceCheckoutStep commerceCheckoutStep =
+					commerceCheckoutSteps.get(commerceCheckoutStepIndex + 1);
+
+				if (commerceCheckoutStep.isActive(
+						httpServletRequest, httpServletResponse)) {
+
+					return commerceCheckoutStep;
+				}
+			}
 		}
 
 		return null;
@@ -146,7 +166,8 @@ public class CommerceCheckoutStepServicesTrackerImpl
 		}
 
 		List<CommerceCheckoutStep> commerceCheckoutSteps =
-			getCommerceCheckoutSteps(httpServletRequest, httpServletResponse);
+			getCommerceCheckoutSteps(
+				true, httpServletRequest, httpServletResponse);
 
 		int commerceCheckoutStepIndex = commerceCheckoutSteps.indexOf(
 			getCommerceCheckoutStep(commerceCheckoutStepName));

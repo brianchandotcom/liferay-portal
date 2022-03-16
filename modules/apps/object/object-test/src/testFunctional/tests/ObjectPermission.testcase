@@ -919,12 +919,63 @@ definition {
 	}
 
 	@description = "LPS-146758 - Verify it is possible to update a single Object permissions with the Permissions permission"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanUpdateSingleObjectPermissionsWithPermissionsPermission {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectPermission#CanUpdateSingleObjectPermissionsWithPermissionsPermission";
 
-		// TODO LPS-148933 CanUpdateSingleObjectPermissionsWithPermissionsPermission pending implementation
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 148933",
+			objectName = "CustomObject148933",
+			pluralLabelName = "Custom Objects 148933");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectCustomViews.gotoPermissions(entryName = "Custom Object 148933");
+
+		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "PERMISSIONS,VIEW");
+
+		Button.clickSave();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectCustomViews.gotoPermissions(entryName = "Custom Object 148933");
+
+		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "VIEW");
+
+		Button.clickSave();
+
+		Refresh();
+
+		CreateObject.assertObjectNotPresent(objectLabel = "Custom Object 148933");
 
 	}
 

@@ -29,7 +29,7 @@
 			Date displayDate = entry.getDisplayDate();
 
 			if (displayDate.after(new Date())) {
-				searchContainer.setTotal(searchContainer.getTotal() - 1);
+				searchContainer.setResultsAndTotal(searchContainer::getResults, searchContainer.getTotal() - 1);
 
 				continue;
 			}

@@ -20,13 +20,11 @@
 >
 
 	<%
+	long companyId = themeDisplay.getCompanyId();
 	String keywords = calendarDisplayContext.getKeywords();
+	SearchContainer<User> userSearchContainer = searchContainer;
 
-	total = UserLocalServiceUtil.searchCount(themeDisplay.getCompanyId(), keywords, WorkflowConstants.STATUS_ANY, null);
-
-	searchContainer.setTotal(total);
-
-	searchContainer.setResults(UserLocalServiceUtil.search(themeDisplay.getCompanyId(), keywords, WorkflowConstants.STATUS_ANY, null, searchContainer.getStart(), searchContainer.getEnd(), new UserScreenNameComparator()));
+	searchContainer.setResultsAndTotal(() -> UserLocalServiceUtil.search(companyId, keywords, WorkflowConstants.STATUS_ANY, null, userSearchContainer.getStart(), userSearchContainer.getEnd(), new UserScreenNameComparator()), UserLocalServiceUtil.searchCount(companyId, keywords, WorkflowConstants.STATUS_ANY, null));
 	%>
 
 	<liferay-ui:search-container-row

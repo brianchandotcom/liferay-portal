@@ -35,30 +35,30 @@
 	<liferay-ui:search-container-results>
 
 		<%
+		long mbGroupThreadsUserId = groupThreadsUserId;
+		long mbThreadScopeGroupId = scopeGroupId;
+		SearchContainer<MBThread> mbThreadSearchContainer = searchContainer;
+
 		if (mvcRenderCommandName.equals("/message_boards/view_my_subscriptions")) {
-			total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true);
-
-			searchContainer.setTotal(total);
-
-			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true, searchContainer.getStart(), searchContainer.getEnd());
+			searchContainer.setResultsAndTotal(() -> MBThreadServiceUtil.getGroupThreads(mbThreadScopeGroupId, mbGroupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true, mbThreadSearchContainer.getStart(), mbThreadSearchContainer.getEnd()), MBThreadServiceUtil.getGroupThreadsCount(mbThreadScopeGroupId, mbGroupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true));
 		}
 		else if (useAssetEntryQuery) {
-			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(MBMessage.class.getName(), searchContainer);
+			SearchContainer<AssetEntry> assetEntrySearchContainer = searchContainer;
+
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(MBMessage.class.getName(), assetEntrySearchContainer);
 
 			assetEntryQuery.setEnablePermissions(true);
 			assetEntryQuery.setExcludeZeroViewCount(false);
 
-			total = AssetEntryServiceUtil.getEntriesCount(assetEntryQuery);
+			searchContainer.setResultsAndTotal(
+				() -> {
+					assetEntryQuery.setEnd(assetEntrySearchContainer.getEnd());
+					assetEntryQuery.setStart(assetEntrySearchContainer.getStart());
 
-			searchContainer.setTotal(total);
-
-			assetEntryQuery.setEnd(searchContainer.getEnd());
-			assetEntryQuery.setStart(searchContainer.getStart());
-
-			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+					return AssetEntryServiceUtil.getEntries(assetEntryQuery);
+				},
+				AssetEntryServiceUtil.getEntriesCount(assetEntryQuery));
 		}
-
-		searchContainer.setResults(results);
 		%>
 
 	</liferay-ui:search-container-results>

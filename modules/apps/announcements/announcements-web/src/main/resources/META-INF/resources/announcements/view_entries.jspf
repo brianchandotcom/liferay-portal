@@ -23,15 +23,12 @@
 
 	LinkedHashMap<Long, long[]> scopes = announcementsDisplayContext.getAnnouncementScopes();
 
-	int entriesCount = AnnouncementsEntryLocalServiceUtil.getEntriesCount(user.getUserId(), scopes, portletName.equals(AnnouncementsPortletKeys.ALERTS), flag);
+	boolean alertsPortlet = portletName.equals(AnnouncementsPortletKeys.ALERTS);
+	long userId = user.getUserId();
 
-	searchContainer.setTotal(entriesCount);
+	searchContainer.setResultsAndTotal(() -> AnnouncementsEntryLocalServiceUtil.getEntries(userId, scopes, alertsPortlet, flag, searchContainer.getStart(), searchContainer.getEnd()), AnnouncementsEntryLocalServiceUtil.getEntriesCount(userId, scopes, alertsPortlet, flag));
 
-	List<AnnouncementsEntry> entries = AnnouncementsEntryLocalServiceUtil.getEntries(user.getUserId(), scopes, portletName.equals(AnnouncementsPortletKeys.ALERTS), flag, searchContainer.getStart(), searchContainer.getEnd());
-
-	searchContainer.setResults(entries);
-
-	for (AnnouncementsEntry entry : entries) {
+	for (AnnouncementsEntry entry : searchContainer.getResults()) {
 		request.setAttribute(AnnouncementsWebKeys.ANNOUNCEMENTS_ENTRY, entry);
 		request.setAttribute(AnnouncementsWebKeys.VIEW_ENTRY_FLAG_VALUE, flag);
 	%>
@@ -52,7 +49,7 @@
 />
 
 <%
-if ((entriesCount == 0) && portletName.equals(AnnouncementsPortletKeys.ALERTS) && !AnnouncementsEntryPermission.contains(permissionChecker, layout, AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN, ActionKeys.VIEW)) {
+if ((searchContainer.getTotal() == 0) && portletName.equals(AnnouncementsPortletKeys.ALERTS) && !AnnouncementsEntryPermission.contains(permissionChecker, layout, AnnouncementsPortletKeys.ANNOUNCEMENTS_ADMIN, ActionKeys.VIEW)) {
 	renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 }
 %>

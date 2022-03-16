@@ -20,15 +20,13 @@
 >
 
 	<%
+	long companyId = themeDisplay.getCompanyId();
 	String keywords = calendarDisplayContext.getKeywords();
 
 	String[] params = {"site:true:boolean"};
+	SearchContainer<Group> groupSearchContainer = searchContainer;
 
-	total = GroupServiceUtil.searchCount(themeDisplay.getCompanyId(), displayTerms.getKeywords(), displayTerms.getKeywords(), params);
-
-	searchContainer.setTotal(total);
-
-	searchContainer.setResults(GroupServiceUtil.search(themeDisplay.getCompanyId(), keywords, keywords, params, searchContainer.getStart(), searchContainer.getEnd()));
+	searchContainer.setResultsAndTotal(() -> GroupServiceUtil.search(companyId, keywords, keywords, params, groupSearchContainer.getStart(), groupSearchContainer.getEnd()), GroupServiceUtil.searchCount(companyId, displayTerms.getKeywords(), displayTerms.getKeywords(), params));
 	%>
 
 	<liferay-ui:search-container-row

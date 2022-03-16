@@ -305,13 +305,13 @@ public class BatchPlannerLogLocalServiceUtil {
 	}
 
 	public static List<BatchPlannerLog> getCompanyBatchPlannerLogs(
-		long companyId, boolean export, int start, int end,
-		OrderByComparator<BatchPlannerLog> orderByComparator,
-		String searchByField, String searchByKeyword) {
+		long companyId, boolean export, String searchByField,
+		String searchByKeyword, int start, int end,
+		OrderByComparator<BatchPlannerLog> orderByComparator) {
 
 		return getService().getCompanyBatchPlannerLogs(
-			companyId, export, start, end, orderByComparator, searchByField,
-			searchByKeyword);
+			companyId, export, searchByField, searchByKeyword, start, end,
+			orderByComparator);
 	}
 
 	public static List<BatchPlannerLog> getCompanyBatchPlannerLogs(
@@ -323,13 +323,12 @@ public class BatchPlannerLogLocalServiceUtil {
 	}
 
 	public static List<BatchPlannerLog> getCompanyBatchPlannerLogs(
-		long companyId, int start, int end,
-		OrderByComparator<BatchPlannerLog> orderByComparator,
-		String searchByField, String searchByKeyword) {
+		long companyId, String searchByField, String searchByKeyword, int start,
+		int end, OrderByComparator<BatchPlannerLog> orderByComparator) {
 
 		return getService().getCompanyBatchPlannerLogs(
-			companyId, start, end, orderByComparator, searchByField,
-			searchByKeyword);
+			companyId, searchByField, searchByKeyword, start, end,
+			orderByComparator);
 	}
 
 	public static int getCompanyBatchPlannerLogsCount(long companyId) {

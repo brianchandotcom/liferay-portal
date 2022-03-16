@@ -266,9 +266,9 @@ public interface BatchPlannerLogLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
-		long companyId, boolean export, int start, int end,
-		OrderByComparator<BatchPlannerLog> orderByComparator,
-		String searchByField, String searchByKeyword);
+		long companyId, boolean export, String searchByField,
+		String searchByKeyword, int start, int end,
+		OrderByComparator<BatchPlannerLog> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
@@ -277,9 +277,8 @@ public interface BatchPlannerLogLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchPlannerLog> getCompanyBatchPlannerLogs(
-		long companyId, int start, int end,
-		OrderByComparator<BatchPlannerLog> orderByComparator,
-		String searchByField, String searchByKeyword);
+		long companyId, String searchByField, String searchByKeyword, int start,
+		int end, OrderByComparator<BatchPlannerLog> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCompanyBatchPlannerLogsCount(long companyId);

@@ -69,16 +69,16 @@ public class BatchPlannerLogServiceWrapper
 	@Override
 	public java.util.List<com.liferay.batch.planner.model.BatchPlannerLog>
 			getCompanyBatchPlannerLogs(
-				long companyId, boolean export, int start, int end,
+				long companyId, boolean export, String searchByField,
+				String searchByKeyword, int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.batch.planner.model.BatchPlannerLog>
-						orderByComparator,
-				String searchByField, String searchByKeyword)
+						orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchPlannerLogService.getCompanyBatchPlannerLogs(
-			companyId, export, start, end, orderByComparator, searchByField,
-			searchByKeyword);
+			companyId, export, searchByField, searchByKeyword, start, end,
+			orderByComparator);
 	}
 
 	@Override
@@ -97,16 +97,16 @@ public class BatchPlannerLogServiceWrapper
 	@Override
 	public java.util.List<com.liferay.batch.planner.model.BatchPlannerLog>
 			getCompanyBatchPlannerLogs(
-				long companyId, int start, int end,
+				long companyId, String searchByField, String searchByKeyword,
+				int start, int end,
 				com.liferay.portal.kernel.util.OrderByComparator
 					<com.liferay.batch.planner.model.BatchPlannerLog>
-						orderByComparator,
-				String searchByField, String searchByKeyword)
+						orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _batchPlannerLogService.getCompanyBatchPlannerLogs(
-			companyId, start, end, orderByComparator, searchByField,
-			searchByKeyword);
+			companyId, searchByField, searchByKeyword, start, end,
+			orderByComparator);
 	}
 
 	@Override

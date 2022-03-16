@@ -21,6 +21,7 @@ import {
 import {
 	isLowercaseAndNumbers,
 	isValidEmail,
+	isValidEmailDomain,
 	isValidFriendlyURL,
 	maxLength,
 } from '../../../../common/utils/validations.form';
@@ -51,6 +52,14 @@ const SetupAnalyticsCloudPage = ({
 	const [bannedOwnerEmailDomain, setBannedOwnerEmailDomain] = useState(
 		debouncedOwnerEmail
 	);
+
+	const debouncedAllowedDomains = useDebounce(
+		values?.activations?.allowedEmailDomains,
+		500
+	);
+	const [bannedAllowedDomains, setBannedAllowedDomains] = useState(
+		debouncedAllowedDomains
+	);
 	const [fetchBannedDomain, {data: dataBannedDomains}] = useLazyQuery(
 		getBannedEmailDomains
 	);
@@ -59,6 +68,7 @@ const SetupAnalyticsCloudPage = ({
 
 	useEffect(() => {
 		const [, emailDomain] = debouncedOwnerEmail.split('@');
+		const [, bannedEmailDomain] = debouncedAllowedDomains.split('@');
 
 		if (emailDomain) {
 			fetchBannedDomain({
@@ -72,8 +82,19 @@ const SetupAnalyticsCloudPage = ({
 			}
 		}
 
+		if (bannedEmailDomain) {
+			fetchBannedDomain({
+				variables: {
+					filter: `domain eq '${bannedEmailDomain}'`,
+				},
+			});
+			if (bannedDomainsItems?.length) {
+				setBannedAllowedDomains(bannedDomainsItems[0].domain);
+			}
+		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [bannedDomainsItems, debouncedOwnerEmail]);
+	}, [bannedDomainsItems, debouncedAllowedDomains, debouncedOwnerEmail]);
 
 	const {data} = useQuery(getAnalyticsCloudPageInfo, {
 		variables: {
@@ -248,6 +269,22 @@ const SetupAnalyticsCloudPage = ({
 
 						<Input
 							groupStyle="pb-1"
+							helper="Anyone with an email address at the provided domains can request access to your Workspace. If multiple, separate domains by commas."
+							label="Allowed Email Domains"
+							name="activations.allowedEmailDomains"
+							placeholder="@mycompany.com"
+							type="email"
+							validations={[
+								(value) =>
+									isValidEmailDomain(
+										value,
+										bannedAllowedDomains
+									),
+							]}
+						/>
+
+						<Input
+							groupStyle="pb-1"
 							helper="Enter the timezone to be used for all data reporting in your Workspace."
 							label="Time Zone"
 							name="activations.timeZone"
@@ -288,6 +325,7 @@ const SetupAnalyticsCloudForm = (props) => {
 		<Formik
 			initialValues={{
 				activations: {
+					allowedEmailDomains: [],
 					dataCenterLocation: '',
 					disasterDataCenterLocation: '',
 					incidentReportContact: [getInitialAnalyticsInvite()],

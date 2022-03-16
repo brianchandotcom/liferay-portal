@@ -588,7 +588,7 @@
 		<exception>ObjectFieldLabel</exception>
 		<exception>ObjectFieldName</exception>
 		<exception>ObjectFieldRelationshipType</exception>
-		<exception>ObjectFieldSettingValue</exception>
+		<exception>ObjectFieldSettingsValidation</exception>
 		<exception>ObjectLayoutColumnSize</exception>
 		<exception>ObjectRelationshipName</exception>
 		<exception>ObjectRelationshipReverse</exception>

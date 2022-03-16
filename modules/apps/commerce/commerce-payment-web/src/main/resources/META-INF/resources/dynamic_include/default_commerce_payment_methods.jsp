@@ -67,12 +67,12 @@ CommercePaymentMethodRegistry commercePaymentMethodRegistry = (CommercePaymentMe
 					cssClass="modify-link"
 					label="<%= true %>"
 					linkCssClass="btn btn-secondary btn-sm"
-					message='<%= Validator.isNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) ? "set-default-commerce-payment-method" : "change" %>'
+					message='<%= (Validator.isNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) || (commercePaymentMethodRegistry.getCommercePaymentMethod(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) == null)) ? "set-default-commerce-payment-method" : "change" %>'
 					method="get"
 					url="javascript:;"
 				/>
 
-				<c:if test="<%= Validator.isNotNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) %>">
+				<c:if test="<%= Validator.isNotNull(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) && (commercePaymentMethodRegistry.getCommercePaymentMethod(commerceAccountEntryDisplay.getDefaultCommercePaymentMethodKey()) != null) %>">
 					<portlet:actionURL name="/commerce_payment/edit_account_entry_default_commerce_payment_method" var="removeDefaultCommercePaymentMethodURL">
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="accountEntryId" value="<%= String.valueOf(commerceAccountEntryDisplay.getAccountEntryId()) %>" />

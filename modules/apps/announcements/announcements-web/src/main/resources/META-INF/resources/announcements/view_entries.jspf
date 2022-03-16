@@ -17,20 +17,11 @@
 <div class="entries">
 
 	<%
-	int flag = announcementsDisplayContext.isShowReadEntries() ? AnnouncementsFlagConstants.HIDDEN : AnnouncementsFlagConstants.NOT_HIDDEN;
-
-	SearchContainer<AnnouncementsEntry> searchContainer = new SearchContainer(renderRequest, null, null, "cur1", announcementsDisplayContext.getPageDelta(), portletURL, null, "no-entries-were-found");
-
-	LinkedHashMap<Long, long[]> scopes = announcementsDisplayContext.getAnnouncementScopes();
-
-	boolean alertsPortlet = portletName.equals(AnnouncementsPortletKeys.ALERTS);
-	long userId = user.getUserId();
-
-	searchContainer.setResultsAndTotal(() -> AnnouncementsEntryLocalServiceUtil.getEntries(userId, scopes, alertsPortlet, flag, searchContainer.getStart(), searchContainer.getEnd()), AnnouncementsEntryLocalServiceUtil.getEntriesCount(userId, scopes, alertsPortlet, flag));
+	SearchContainer<AnnouncementsEntry> searchContainer = announcementsDisplayContext.getSearchContainer();
 
 	for (AnnouncementsEntry entry : searchContainer.getResults()) {
 		request.setAttribute(AnnouncementsWebKeys.ANNOUNCEMENTS_ENTRY, entry);
-		request.setAttribute(AnnouncementsWebKeys.VIEW_ENTRY_FLAG_VALUE, flag);
+		request.setAttribute(AnnouncementsWebKeys.VIEW_ENTRY_FLAG_VALUE, announcementsDisplayContext.isShowReadEntries() ? AnnouncementsFlagConstants.HIDDEN : AnnouncementsFlagConstants.NOT_HIDDEN);
 	%>
 
 		<liferay-util:include page="/announcements/view_entry.jsp" servletContext="<%= application %>" />

@@ -15,18 +15,8 @@
 --%>
 
 <liferay-ui:search-container
-	id="users"
-	searchContainer='<%= new CalendarResourceSearch(renderRequest, CalendarResourceSearch.DEFAULT_CUR_PARAM + "Users", iteratorURL) %>'
+	searchContainer="<%= calendarDisplayContext.getUserSearchContainer() %>"
 >
-
-	<%
-	long companyId = themeDisplay.getCompanyId();
-	String keywords = calendarDisplayContext.getKeywords();
-	SearchContainer<User> userSearchContainer = searchContainer;
-
-	searchContainer.setResultsAndTotal(() -> UserLocalServiceUtil.search(companyId, keywords, WorkflowConstants.STATUS_ANY, null, userSearchContainer.getStart(), userSearchContainer.getEnd(), new UserScreenNameComparator()), UserLocalServiceUtil.searchCount(companyId, keywords, WorkflowConstants.STATUS_ANY, null));
-	%>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.User"
 		keyProperty="userId"

@@ -14,55 +14,13 @@
  */
 --%>
 
+<%
+MBThreadsDisplayContext mbThreadsDisplayContext = new MBThreadsDisplayContext(request, portletURL, renderRequest);
+%>
+
 <liferay-ui:search-container
-	headerNames="thread,started-by,posts,views,last-post"
-	iteratorURL="<%= portletURL %>"
+	searchContainer="<%= mbThreadsDisplayContext.getSearchContainer() %>"
 >
-
-	<%
-	String emptyResultsMessage = null;
-
-	if (mvcRenderCommandName.equals("/message_boards/view_my_subscriptions")) {
-		emptyResultsMessage = "you-are-not-subscribed-to-any-threads";
-	}
-	else {
-		emptyResultsMessage = "there-are-no-threads-in-this-category";
-	}
-
-	searchContainer.setEmptyResultsMessage(emptyResultsMessage);
-	%>
-
-	<liferay-ui:search-container-results>
-
-		<%
-		long mbGroupThreadsUserId = groupThreadsUserId;
-		long mbThreadScopeGroupId = scopeGroupId;
-		SearchContainer<MBThread> mbThreadSearchContainer = searchContainer;
-
-		if (mvcRenderCommandName.equals("/message_boards/view_my_subscriptions")) {
-			searchContainer.setResultsAndTotal(() -> MBThreadServiceUtil.getGroupThreads(mbThreadScopeGroupId, mbGroupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true, mbThreadSearchContainer.getStart(), mbThreadSearchContainer.getEnd()), MBThreadServiceUtil.getGroupThreadsCount(mbThreadScopeGroupId, mbGroupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true));
-		}
-		else if (useAssetEntryQuery) {
-			SearchContainer<AssetEntry> assetEntrySearchContainer = searchContainer;
-
-			AssetEntryQuery assetEntryQuery = new AssetEntryQuery(MBMessage.class.getName(), assetEntrySearchContainer);
-
-			assetEntryQuery.setEnablePermissions(true);
-			assetEntryQuery.setExcludeZeroViewCount(false);
-
-			searchContainer.setResultsAndTotal(
-				() -> {
-					assetEntryQuery.setEnd(assetEntrySearchContainer.getEnd());
-					assetEntryQuery.setStart(assetEntrySearchContainer.getStart());
-
-					return AssetEntryServiceUtil.getEntries(assetEntryQuery);
-				},
-				AssetEntryServiceUtil.getEntriesCount(assetEntryQuery));
-		}
-		%>
-
-	</liferay-ui:search-container-results>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.BaseModel"
 		keyProperty="primaryKeyObj"

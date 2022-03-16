@@ -15,20 +15,8 @@
 --%>
 
 <liferay-ui:search-container
-	id="sites"
-	searchContainer='<%= new CalendarResourceSearch(renderRequest, CalendarResourceSearch.DEFAULT_CUR_PARAM + "Groups", iteratorURL) %>'
+	searchContainer="<%= calendarDisplayContext.getGroupSearchContainer() %>"
 >
-
-	<%
-	long companyId = themeDisplay.getCompanyId();
-	String keywords = calendarDisplayContext.getKeywords();
-
-	String[] params = {"site:true:boolean"};
-	SearchContainer<Group> groupSearchContainer = searchContainer;
-
-	searchContainer.setResultsAndTotal(() -> GroupServiceUtil.search(companyId, keywords, keywords, params, groupSearchContainer.getStart(), groupSearchContainer.getEnd()), GroupServiceUtil.searchCount(companyId, displayTerms.getKeywords(), displayTerms.getKeywords(), params));
-	%>
-
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.model.Group"
 		escapedModel="<%= true %>"

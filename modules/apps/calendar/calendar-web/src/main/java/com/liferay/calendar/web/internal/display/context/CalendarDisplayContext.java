@@ -28,6 +28,7 @@ import com.liferay.calendar.service.CalendarService;
 import com.liferay.calendar.util.RecurrenceUtil;
 import com.liferay.calendar.web.internal.search.CalendarResourceDisplayTerms;
 import com.liferay.calendar.web.internal.search.CalendarResourceSearch;
+import com.liferay.calendar.web.internal.search.CalendarSearchContainer;
 import com.liferay.calendar.web.internal.security.permission.resource.CalendarPermission;
 import com.liferay.calendar.web.internal.security.permission.resource.CalendarPortletPermission;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -51,12 +52,16 @@ import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.comparator.UserScreenNameComparator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -229,8 +234,39 @@ public class CalendarDisplayContext {
 		).build();
 	}
 
+	public SearchContainer<Group> getGroupSearchContainer()
+		throws PortalException {
+
+		if (_groupSearchContainer != null) {
+			return _groupSearchContainer;
+		}
+
+		_groupSearchContainer = new CalendarSearchContainer(
+			_renderRequest, CalendarResourceSearch.DEFAULT_CUR_PARAM + "Groups",
+			_getIteratorURL());
+
+		_groupSearchContainer.setId("sites");
+		_groupSearchContainer.setResultsAndTotal(
+			() -> GroupServiceUtil.search(
+				_themeDisplay.getCompanyId(), getKeywords(), getKeywords(),
+				new String[] {"site:true:boolean"},
+				_groupSearchContainer.getStart(),
+				_groupSearchContainer.getEnd()),
+			GroupServiceUtil.searchCount(
+				_themeDisplay.getCompanyId(), getKeywords(), getKeywords(),
+				new String[] {"site:true:boolean"}));
+
+		return _groupSearchContainer;
+	}
+
 	public String getKeywords() {
-		return ParamUtil.getString(_renderRequest, "keywords");
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_renderRequest, "keywords");
+
+		return _keywords;
 	}
 
 	public Recurrence getLastRecurrence(CalendarBooking calendarBooking)
@@ -416,6 +452,31 @@ public class CalendarDisplayContext {
 		return searchContainer.getTotal();
 	}
 
+	public SearchContainer<User> getUserSearchContainer()
+		throws PortalException {
+
+		if (_userSearchContainer != null) {
+			return _userSearchContainer;
+		}
+
+		_userSearchContainer = new CalendarSearchContainer(
+			_renderRequest, CalendarResourceSearch.DEFAULT_CUR_PARAM + "Users",
+			_getIteratorURL());
+
+		_userSearchContainer.setId("users");
+		_userSearchContainer.setResultsAndTotal(
+			() -> UserLocalServiceUtil.search(
+				_themeDisplay.getCompanyId(), getKeywords(),
+				WorkflowConstants.STATUS_ANY, null,
+				_userSearchContainer.getStart(), _userSearchContainer.getEnd(),
+				new UserScreenNameComparator()),
+			UserLocalServiceUtil.searchCount(
+				_themeDisplay.getCompanyId(), getKeywords(),
+				WorkflowConstants.STATUS_ANY, null));
+
+		return _userSearchContainer;
+	}
+
 	public boolean isDisabledManagementBar() {
 		if (_hasResults() || _isSearch()) {
 			return false;
@@ -443,6 +504,22 @@ public class CalendarDisplayContext {
 					LanguageUtil.get(_themeDisplay.getRequest(), "no"));
 			}
 		).build();
+	}
+
+	private PortletURL _getIteratorURL() {
+		if (_iteratorURL != null) {
+			return _iteratorURL;
+		}
+
+		_iteratorURL = PortletURLBuilder.createRenderURL(
+			_renderResponse
+		).setMVCPath(
+			"/blogs_aggregator/view"
+		).setTabs1(
+			"resources"
+		).buildPortletURL();
+
+		return _iteratorURL;
 	}
 
 	private List<DropdownItem> _getScopeDropdownItems() {
@@ -503,8 +580,12 @@ public class CalendarDisplayContext {
 	private final CalendarResourceLocalService _calendarResourceLocalService;
 	private final CalendarService _calendarService;
 	private final GroupLocalService _groupLocalService;
+	private SearchContainer<Group> _groupSearchContainer;
+	private PortletURL _iteratorURL;
+	private String _keywords;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
+	private SearchContainer<User> _userSearchContainer;
 
 }

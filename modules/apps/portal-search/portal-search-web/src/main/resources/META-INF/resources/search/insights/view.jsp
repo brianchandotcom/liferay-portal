@@ -20,9 +20,11 @@
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.search.web.internal.search.insights.display.context.SearchInsightsDisplayContext" %>
@@ -71,6 +73,15 @@ SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDispl
 					/>
 
 					<textarea readonly id="<portlet:namespace />insightsRequest"><%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %></textarea>
+
+					<liferay-frontend:component
+						context='<%=
+							HashMapBuilder.<String, Object>put(
+								"id", liferayPortletResponse.getNamespace() + "insightsRequest"
+							).build()
+						%>'
+						module="js/CodeMirrorTextArea"
+					/>
 				</liferay-ui:panel>
 
 				<liferay-ui:panel
@@ -89,6 +100,15 @@ SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDispl
 					/>
 
 					<textarea readonly id="<portlet:namespace />insightsResponse"><%= HtmlUtil.escape(searchInsightsDisplayContext.getResponseString()) %></textarea>
+
+					<liferay-frontend:component
+						context='<%=
+							HashMapBuilder.<String, Object>put(
+								"id", liferayPortletResponse.getNamespace() + "insightsResponse"
+							).build()
+						%>'
+						module="js/CodeMirrorTextArea"
+					/>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>
 		</div>

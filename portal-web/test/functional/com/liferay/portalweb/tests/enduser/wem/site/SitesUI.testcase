@@ -106,6 +106,32 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-149293. The user could cancel the site creation."
+	@priority = "4"
+	test CancelSiteCreation {
+		task ("Navigate to the Sites admin") {
+			Site.openSitesAdmin();
+		}
+
+		task ("Cancel site creation after typing name") {
+			LexiconEntry.gotoAdd();
+
+			LexiconCard.clickCard(card = "Blank");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.inputName(name = "Test Site Name");
+
+			Button.clickCancel();
+		}
+
+		task ("View the new site is not created") {
+			Site.openSitesAdmin();
+
+			LexiconTable.viewTableEntryNotPresent(tableEntry = "Test Site Name");
+		}
+	}
+
 	@description = "Able to delete site."
 	@priority = "5"
 	@uitest

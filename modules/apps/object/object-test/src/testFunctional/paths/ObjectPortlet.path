@@ -87,7 +87,7 @@
 	</tr>
 	<tr>
 		<td>GENERIC_ENTRY_COLUMN</td>
-		<td>//div[contains(@class,'dnd-th')][contains(text(),'${key_fieldLabelName}')]</td>
+		<td>//div[contains(@class,'dnd-th')]//button[contains(text(),'${key_fieldLabelName}')]</td>
 		<td></td>
 	</tr>
 	<tr>

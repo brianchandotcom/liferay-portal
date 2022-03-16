@@ -92,7 +92,7 @@
 	</tr>
 	<tr>
 		<td>VIEW_COLUMN_ENTRIES</td>
-		<td>//div[${key_position}][contains(text(),'${key_columnName}')]</td>
+		<td>//div[${key_position}]//button[contains(text(),'${key_columnName}')]</td>
 		<td></td>
 	</tr>
 	<tr>

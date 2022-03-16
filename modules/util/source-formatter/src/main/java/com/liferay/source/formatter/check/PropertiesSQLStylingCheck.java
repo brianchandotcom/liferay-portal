@@ -40,7 +40,7 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 		Matcher matcher = _sqlPattern1.matcher(content);
 
 		while (matcher.find()) {
-			String originalSqlClauses = matcher.group(1);
+			String originalSqlClauses = matcher.group(2);
 
 			String sqlClauses = originalSqlClauses.replaceAll("\\\\\n *", "");
 
@@ -49,7 +49,7 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 			int x = sqlClauses.indexOf("(");
 
 			if (x == -1) {
-				return content;
+				continue;
 			}
 
 			int y = x;
@@ -59,7 +59,7 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 				y = sqlClauses.indexOf(")", y + 1);
 
 				if (y == -1) {
-					return content;
+					continue;
 				}
 
 				s = sqlClauses.substring(x, y + 1);
@@ -96,9 +96,13 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 
 			sqlClauses = "\\\n" + sqlClauses;
 
+			if (originalSqlClauses.endsWith("\\\n")) {
+				sqlClauses = sqlClauses + "\n";
+			}
+
 			if (!sqlClauses.equals(originalSqlClauses)) {
 				return StringUtil.replaceFirst(
-					content, originalSqlClauses, sqlClauses, matcher.start(1));
+					content, originalSqlClauses, sqlClauses, matcher.start(2));
 			}
 		}
 
@@ -303,8 +307,8 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 	}
 
 	private static final Pattern _sqlPattern1 = Pattern.compile(
-		"(?<=\\A|\n) +test\\.batch\\.run\\.property\\.query.+]=([\\s\\S]*?" +
-			"[^\\\\])(?=(\\Z|\n))");
+		"(?<=\\A|\n) +test\\.batch\\.run\\.property(\\.global)?\\.query.+]=" +
+			"([\\s\\S]*?[^\\\\])(?=(\\Z|\n))");
 	private static final Pattern _sqlPattern2 = Pattern.compile(
 		"\\s(\\(.* ([!=]=|~) .+\\))( (AND|OR) )?(\\\\)?");
 

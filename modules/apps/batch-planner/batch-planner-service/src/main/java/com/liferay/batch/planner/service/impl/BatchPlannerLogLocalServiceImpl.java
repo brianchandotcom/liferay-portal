@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -322,8 +323,7 @@ public class BatchPlannerLogLocalServiceImpl
 	}
 
 	private String _getLikeWildcard(String value) {
-		return StringBundler.concat(
-			StringPool.PERCENT, value, StringPool.PERCENT);
+		return StringUtil.quote(value, StringPool.PERCENT);
 	}
 
 	private Predicate _getPredicate(long companyId) {

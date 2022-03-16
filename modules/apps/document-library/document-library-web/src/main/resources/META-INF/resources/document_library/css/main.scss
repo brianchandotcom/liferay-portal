@@ -776,7 +776,7 @@ $productMenuWidth: 320px;
 	.upload-drop-active & {
 		.document-container {
 			border-radius: 2px;
-			box-shadow: 0 0 0 2px $primary-l2 !important;
+			box-shadow: 0 0 0 2px $primary-l2;
 
 			.active-area {
 				background-color: transparent !important;

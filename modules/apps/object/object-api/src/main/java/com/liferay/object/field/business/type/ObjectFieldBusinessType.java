@@ -58,7 +58,8 @@ public interface ObjectFieldBusinessType {
 		throws PortalException {
 
 		if (MapUtil.isNotEmpty(objectFieldSettings)) {
-			throw new ObjectFieldSettingsValidationException();
+			throw new ObjectFieldSettingsValidationException.NotAllowedSettings(
+				objectFieldName, objectFieldSettings.keySet());
 		}
 	}
 

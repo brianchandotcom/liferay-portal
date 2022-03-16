@@ -14,7 +14,11 @@
 
 package com.liferay.object.exception;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.util.Set;
 
 /**
  * @author Marco Leo
@@ -36,6 +40,59 @@ public class ObjectFieldSettingsValidationException extends PortalException {
 
 	public ObjectFieldSettingsValidationException(Throwable throwable) {
 		super(throwable);
+	}
+
+	public static class MustSetValidValue
+		extends ObjectFieldSettingsValidationException {
+
+		public MustSetValidValue(
+			String objectFieldName, String setting, String value) {
+
+			super(
+				String.format(
+					"The value %s of setting %s is not valid for field %s",
+					value, setting, objectFieldName));
+		}
+
+		public MustSetValidValue(
+			String objectFieldName, String setting, Throwable throwable,
+			String value) {
+
+			super(
+				String.format(
+					"The value %s of setting %s is not valid for field %s",
+					value, setting, objectFieldName),
+				throwable);
+		}
+
+	}
+
+	public static class NotAllowedSettings
+		extends ObjectFieldSettingsValidationException {
+
+		public NotAllowedSettings(
+			String objectFieldName, Set<String> settings) {
+
+			super(
+				String.format(
+					"The following settings are not allowed for field %s: %s",
+					objectFieldName,
+					StringUtil.merge(settings, StringPool.COMMA_AND_SPACE)));
+		}
+
+	}
+
+	public static class RequiredSettings
+		extends ObjectFieldSettingsValidationException {
+
+		public RequiredSettings(String objectFieldName, Set<String> settings) {
+			super(
+				String.format(
+					"The following settings are required for field %s: %s",
+					objectFieldName,
+					StringUtil.merge(settings, StringPool.COMMA_AND_SPACE)));
+		}
+
 	}
 
 }

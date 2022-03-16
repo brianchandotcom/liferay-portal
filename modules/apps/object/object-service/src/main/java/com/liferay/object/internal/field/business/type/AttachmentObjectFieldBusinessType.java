@@ -17,8 +17,10 @@ package com.liferay.object.internal.field.business.type;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
+import com.liferay.object.exception.ObjectFieldSettingsValidationException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
+import com.liferay.object.internal.field.business.type.util.ObjectFieldSettingsValidationUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
@@ -34,11 +36,16 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.math.BigDecimal;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -129,6 +136,42 @@ public class AttachmentObjectFieldBusinessType
 		return properties;
 	}
 
+	@Override
+	public void validateObjectFieldSettings(
+			String objectFieldName, Map<String, String> objectFieldSettings)
+		throws PortalException {
+
+		ObjectFieldSettingsValidationUtil.validate(
+			_allowedSettings, objectFieldName, objectFieldSettings,
+			_allowedSettings);
+
+		String fileSource = objectFieldSettings.get("fileSource");
+
+		if (!Objects.equals(fileSource, "documentsAndMedia") &&
+			!Objects.equals(fileSource, "userComputer")) {
+
+			throw new ObjectFieldSettingsValidationException.MustSetValidValue(
+				objectFieldName, "fileSource", fileSource);
+		}
+
+		String maximumFileSize = objectFieldSettings.get("maximumFileSize");
+
+		try {
+			BigDecimal bigDecimal = new BigDecimal(maximumFileSize);
+
+			if (bigDecimal.signum() == -1) {
+				throw new ObjectFieldSettingsValidationException.
+					MustSetValidValue(
+						objectFieldName, "maximumFileSize", maximumFileSize);
+			}
+		}
+		catch (NumberFormatException numberFormatException) {
+			throw new ObjectFieldSettingsValidationException.MustSetValidValue(
+				objectFieldName, "maximumFileSize", numberFormatException,
+				maximumFileSize);
+		}
+	}
+
 	private Folder _addFolder(
 		long userId, long repositoryId, HttpServletRequest httpServletRequest) {
 
@@ -209,6 +252,9 @@ public class AttachmentObjectFieldBusinessType
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AttachmentObjectFieldBusinessType.class);
+
+	private static final Set<String> _allowedSettings = SetUtil.fromArray(
+		"acceptedFileExtensions", "fileSource", "maximumFileSize");
 
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;

@@ -349,24 +349,6 @@ public class SegmentsEntryLocalServiceImpl
 				_portal.getAncestorSiteGroupIds(groupId), groupId));
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #searchSegmentsEntries(long, long, String, boolean,
-	 *             LinkedHashMap, int, int, Sort)}
-	 */
-	@Deprecated
-	@Override
-	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
-			long companyId, long groupId, String keywords,
-			boolean includeAncestorSegmentsEntries, int start, int end,
-			Sort sort)
-		throws PortalException {
-
-		return searchSegmentsEntries(
-			companyId, groupId, keywords, includeAncestorSegmentsEntries,
-			new LinkedHashMap<>(), start, end, sort);
-	}
-
 	@Override
 	public BaseModelSearchResult<SegmentsEntry> searchSegmentsEntries(
 			long companyId, long groupId, String keywords,

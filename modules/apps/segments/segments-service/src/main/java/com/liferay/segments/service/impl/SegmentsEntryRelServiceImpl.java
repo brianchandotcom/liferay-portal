@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.segments.constants.SegmentsActionKeys;
 import com.liferay.segments.constants.SegmentsConstants;
@@ -44,64 +43,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SegmentsEntryRelServiceImpl
 	extends SegmentsEntryRelServiceBaseImpl {
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             com.liferay.segments.service.SegmentsEntryService#addSegmentsEntryClassPKs(
-	 *             long, long[], ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public SegmentsEntryRel addSegmentsEntryRel(
-			long segmentsEntryId, long classNameId, long classPK,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		_segmentsEntryResourcePermission.check(
-			getPermissionChecker(), segmentsEntryId, ActionKeys.UPDATE);
-
-		return segmentsEntryRelLocalService.addSegmentsEntryRel(
-			segmentsEntryId, classNameId, classPK, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             com.liferay.segments.service.SegmentsEntryService#deleteSegmentsEntryClassPKs(
-	 *             long, long[])}
-	 */
-	@Deprecated
-	@Override
-	public void deleteSegmentsEntryRel(long segmentsEntryRelId)
-		throws PortalException {
-
-		SegmentsEntryRel segmentsEntryRel =
-			segmentsEntryRelLocalService.getSegmentsEntryRel(
-				segmentsEntryRelId);
-
-		_segmentsEntryResourcePermission.check(
-			getPermissionChecker(), segmentsEntryRel.getSegmentsEntryId(),
-			ActionKeys.UPDATE);
-
-		segmentsEntryRelLocalService.deleteSegmentsEntryRel(segmentsEntryRel);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             com.liferay.segments.service.SegmentsEntryService#deleteSegmentsEntryClassPKs(
-	 *             long, long[])}
-	 */
-	@Deprecated
-	@Override
-	public void deleteSegmentsEntryRel(
-			long segmentsEntryId, long classNameId, long classPK)
-		throws PortalException {
-
-		_segmentsEntryResourcePermission.check(
-			getPermissionChecker(), segmentsEntryId, ActionKeys.UPDATE);
-
-		segmentsEntryRelLocalService.deleteSegmentsEntryRel(
-			segmentsEntryId, classNameId, classPK);
-	}
 
 	@Override
 	public List<SegmentsEntryRel> getSegmentsEntryRels(long segmentsEntryId)

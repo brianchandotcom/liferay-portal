@@ -27,12 +27,6 @@ public class SegmentsExperienceConstants {
 
 	public static final long ID_DEFAULT = 0;
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String ID_PREFIX = "segments-experience-id-";
-
 	public static final String KEY_DEFAULT = "DEFAULT";
 
 	public static final int PRIORITY_DEFAULT = -1;

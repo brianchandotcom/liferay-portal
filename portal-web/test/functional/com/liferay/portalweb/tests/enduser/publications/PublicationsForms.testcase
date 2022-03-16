@@ -58,6 +58,7 @@ definition {
 			outputParameterPath = "nameCurrentValue",
 			outputParameterType = "List",
 			password = "test",
+			timeout = "10000",
 			url = "${portalURL}/api/jsonws/country/get-countries",
 			username = "test@liferay.com");
 

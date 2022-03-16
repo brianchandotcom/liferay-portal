@@ -52,7 +52,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSearchForDocumentBySynonyms {
-		property portal.acceptance = "false";
 
 		// TODO LPS-98063 CanSearchForDocumentBySynonyms pending implementation
 

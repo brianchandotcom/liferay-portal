@@ -155,7 +155,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotExecuteXSSWithCardDisplayTemplate {
-		property portal.acceptance = "false";
 
 		// TODO LPS-99922 CannotExecuteXSSWithCardDisplayTemplate pending implementation
 

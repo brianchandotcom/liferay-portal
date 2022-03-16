@@ -264,7 +264,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test ALMemberCanViewDashboard {
-		property portal.acceptance = "false";
 
 		// TODO LPS-119994 ALMemberCanViewDashboard pending implementation
 

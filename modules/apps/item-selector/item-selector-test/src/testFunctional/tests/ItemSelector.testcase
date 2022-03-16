@@ -160,7 +160,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDisplaySitePaginationCorrectly {
-		property portal.acceptance = "false";
 
 		// TODO LPS-107014 CanDisplaySitePaginationCorrectly pending implementation
 

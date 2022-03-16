@@ -340,7 +340,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddShortcutToFolderAsSiteMemberWithPermissions {
-		property portal.acceptance = "false";
 
 		// TODO LPS-90864 CanAddShortcutToFolderAsSiteMemberWithPermissions pending implementation
 

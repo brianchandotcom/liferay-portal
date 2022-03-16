@@ -1268,7 +1268,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test LinkToImageInCaptionPersistsAfterBeingAdded {
-		property portal.acceptance = "false";
 
 		// TODO LPS-90966 LinkToImageInCaptionPersistsAfterBeingAdded pending implementation
 

@@ -119,46 +119,48 @@ export function CollectionAppliedFiltersGeneralPanel({item}) {
 		return <ClayLoadingIndicator className="my-0" small />;
 	}
 
-	if (isEmptyObject(filterableCollections)) {
-		return (
-			<p className="alert alert-info text-center" role="alert">
-				{Liferay.Language.get(
-					'display-a-collection-on-the-page-that-support-at-least-one-type-of-filter'
-				)}
-			</p>
-		);
-	}
-
 	return (
 		<>
-			<p className="alert alert-info text-center" role="alert">
-				{Liferay.Language.get(
-					'you-will-see-this-fragment-on-the-page-only-after-applying-a-filter'
-				)}
-			</p>
-			<div className="mb-3">
-				<Collapse
-					label={Liferay.Language.get('applied-filter-options')}
-					open
-				>
-					<TargetCollectionsField
-						filterableCollections={filterableCollections}
-						onValueSelect={onValueSelect}
-						value={configurationValues.targetCollections}
-					/>
+			{isEmptyObject(filterableCollections) ? (
+				<p className="alert alert-info text-center" role="alert">
+					{Liferay.Language.get(
+						'display-a-collection-on-the-page-that-support-at-least-one-type-of-filter'
+					)}
+				</p>
+			) : (
+				<>
+					<p className="alert alert-info text-center" role="alert">
+						{Liferay.Language.get(
+							'you-will-see-this-fragment-on-the-page-only-after-applying-a-filter'
+						)}
+					</p>
+					<div className="mb-3">
+						<Collapse
+							label={Liferay.Language.get(
+								'applied-filter-options'
+							)}
+							open
+						>
+							<TargetCollectionsField
+								filterableCollections={filterableCollections}
+								onValueSelect={onValueSelect}
+								value={configurationValues.targetCollections}
+							/>
 
-					<CheckboxField
-						field={{
-							label: Liferay.Language.get(
-								'include-clear-filters-option'
-							),
-							name: 'showClearFilters',
-						}}
-						onValueSelect={onValueSelect}
-						value={configurationValues.showClearFilters}
-					/>
-				</Collapse>
-			</div>
+							<CheckboxField
+								field={{
+									label: Liferay.Language.get(
+										'include-clear-filters-option'
+									),
+									name: 'showClearFilters',
+								}}
+								onValueSelect={onValueSelect}
+								value={configurationValues.showClearFilters}
+							/>
+						</Collapse>
+					</div>
+				</>
+			)}
 
 			<CommonStyles
 				commonStylesValues={itemConfig.styles}

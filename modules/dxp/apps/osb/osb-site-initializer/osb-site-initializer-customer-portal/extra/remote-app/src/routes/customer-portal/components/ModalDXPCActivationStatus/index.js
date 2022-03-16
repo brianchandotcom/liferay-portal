@@ -16,7 +16,6 @@ import {useState} from 'react';
 import client from '../../../../apolloClient';
 import {Badge, Button} from '../../../../common/components';
 import {
-	getAccountSubscriptionGroups,
 	getDXPCloudEnvironment,
 	updateAccountSubscriptionGroups,
 	updateDXPCloudEnvironment,
@@ -26,7 +25,7 @@ import {useCustomerPortal} from '../../context';
 
 import {actionTypes} from '../../context/reducer';
 
-import {STATUS_TAG_TYPE_NAMES} from '../../utils/constants';
+import {PRODUCT_TYPES, STATUS_TAG_TYPE_NAMES} from '../../utils/constants';
 
 const ModalDXPCActivationStatus = ({
 	accountKey,
@@ -50,13 +49,15 @@ const ModalDXPCActivationStatus = ({
 
 			return;
 		}
-		updateSubscriptionGroupsStatus(accountKey);
+		updateSubscriptionGroupsStatus();
 		updateProjectId(accountKey);
 		onClose();
 	};
 
-	const updateSubscriptionGroupsStatus = async (accountKey) => {
-		const dxpCloudSubscriptionGroups = subscriptionGroups[0];
+	const updateSubscriptionGroupsStatus = async () => {
+		const dxpCloudSubscriptionGroup = subscriptionGroups.find(
+			(subscription) => subscription.name === PRODUCT_TYPES.dxpCloud
+		);
 
 		await client.mutate({
 			mutation: updateAccountSubscriptionGroups,
@@ -64,25 +65,31 @@ const ModalDXPCActivationStatus = ({
 				accountSubscriptionGroup: {
 					activationStatus: STATUS_TAG_TYPE_NAMES.active,
 				},
-				id: dxpCloudSubscriptionGroups?.accountSubscriptionGroupId,
+				id: dxpCloudSubscriptionGroup?.accountSubscriptionGroupId,
 			},
 		});
+
 		setSubscriptionGroupActivationStatus(STATUS_TAG_TYPE_NAMES.active);
 		setHasFinishedUpdate(true);
 
-		const {data: newDataSubscriptionGroups} = await client.query({
-			query: getAccountSubscriptionGroups,
-			variables: {
-				filter: `accountKey eq '${accountKey}' and hasActivation eq true`,
-			},
+		const newSubscriptionGroups = subscriptionGroups.map((subscription) => {
+			if (
+				subscription.accountSubscriptionGroupId ===
+				dxpCloudSubscriptionGroup?.accountSubscriptionGroupId
+			) {
+				return {
+					...subscription,
+					activationStatus: STATUS_TAG_TYPE_NAMES.active,
+				};
+			}
+
+			return subscription;
 		});
 
-		if (newDataSubscriptionGroups) {
-			dispatch({
-				payload: subscriptionGroups,
-				type: actionTypes.UPDATE_SUBSCRIPTION_GROUPS,
-			});
-		}
+		dispatch({
+			payload: newSubscriptionGroups,
+			type: actionTypes.UPDATE_SUBSCRIPTION_GROUPS,
+		});
 	};
 
 	const updateProjectId = async (accountKey) => {

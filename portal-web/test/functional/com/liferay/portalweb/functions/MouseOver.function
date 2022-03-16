@@ -2,6 +2,16 @@
 @summary = "Mouse over '${locator1}'"
 definition {
 
+	function javaScriptMouseOver {
+		WaitForSPARefresh();
+
+		selenium.javaScriptMouseOver();
+
+		selenium.assertJavaScriptErrors();
+
+		selenium.assertLiferayErrors();
+	}
+
 	function mouseOver {
 		WaitForSPARefresh();
 

@@ -247,14 +247,6 @@ public class JSONUtil {
 		return jsonArray;
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #putAll(Object...)}
-	 */
-	@Deprecated
-	public static JSONArray put(Object... values) {
-		return putAll(values);
-	}
-
 	public static JSONObject put(String key, Object value) {
 		JSONObject jsonObject = _createJSONObject();
 

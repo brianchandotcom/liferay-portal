@@ -65,6 +65,16 @@
 			"required": false
 		},
 		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Name"
+			},
+			"name": "name",
+			"required": false
+		},
+		{
 			"DBType": "Boolean",
 			"indexed": true,
 			"indexedAsKeyword": false,

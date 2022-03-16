@@ -15,26 +15,6 @@
 			"required": true
 		},
 		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Activation Status"
-			},
-			"name": "activationStatus",
-			"required": false
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en-US": "Manage Contacts URL"
-			},
-			"name": "manageContactsURL",
-			"required": false
-		},
-		{
 			"DBType": "Boolean",
 			"indexed": true,
 			"indexedAsKeyword": false,
@@ -49,9 +29,49 @@
 			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
+				"en-US": "Activation Status"
+			},
+			"name": "activationStatus",
+			"required": false
+		},
+		{
+			"DBType": "Integer",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Menu Order"
+			},
+			"name": "menuOrder",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Manage Contacts URL"
+			},
+			"name": "manageContactsURL",
+			"required": false
+		},
+		{
+			"DBType": "String",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
 				"en-US": "Name"
 			},
 			"name": "name",
+			"required": false
+		},
+		{
+			"DBType": "Integer",
+			"indexed": true,
+			"indexedAsKeyword": false,
+			"label": {
+				"en-US": "Tab Order"
+			},
+			"name": "tabOrder",
 			"required": false
 		}
 	],

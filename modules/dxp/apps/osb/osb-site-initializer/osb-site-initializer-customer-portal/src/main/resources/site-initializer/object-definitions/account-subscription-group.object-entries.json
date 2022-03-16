@@ -2,66 +2,91 @@
 	{
 		"accountKey": "ERC-001",
 		"hasActivation": true,
-		"name": "DXP Cloud"
+		"menuOrder": 2,
+		"name": "DXP Cloud",
+		"tabOrder": 1
 	},
 	{
 		"accountKey": "ERC-001",
 		"hasActivation": true,
-		"name": "Portal"
+		"menuOrder": 7,
+		"name": "Portal",
+		"tabOrder": 8
 	},
 	{
 		"accountKey": "ERC-002",
 		"hasActivation": true,
-		"name": "DXP"
+		"menuOrder": 3,
+		"name": "DXP",
+		"tabOrder": 4
 	},
 	{
 		"accountKey": "ERC-002",
 		"hasActivation": true,
-		"name": "Partnership"
+		"name": "Partnership",
+		"tabOrder": 1
 	},
 	{
 		"accountKey": "ERC-003",
 		"hasActivation": true,
-		"name": "Analytics Cloud"
+		"menuOrder": 4,
+		"name": "Analytics Cloud",
+		"tabOrder": 5
 	},
 	{
 		"accountKey": "ERC-004",
 		"hasActivation": true,
-		"name": "Portal"
+		"menuOrder": 7,
+		"name": "Portal",
+		"tabOrder": 8
 	},
 	{
 		"accountKey": "ERC-004",
 		"hasActivation": true,
-		"name": "Commerce"
+		"menuOrder": 5,
+		"name": "Commerce",
+		"tabOrder": 6
 	},
 	{
 		"accountKey": "ERC-005",
 		"hasActivation": true,
-		"name": "Portal"
+		"menuOrder": 7,
+		"name": "Portal",
+		"tabOrder": 8
 	},
 	{
 		"accountKey": "ERC-005",
 		"hasActivation": true,
-		"name": "DXP"
+		"menuOrder": 3,
+		"name": "DXP",
+		"tabOrder": 4
 	},
 	{
 		"accountKey": "ERC-006",
 		"hasActivation": true,
-		"name": "DXP Cloud"
+		"menuOrder": 2,
+		"name": "DXP Cloud",
+		"tabOrder": 1
 	},
 	{
 		"accountKey": "ERC-006",
 		"hasActivation": true,
-		"name": "Enterprise Search"
+		"menuOrder": 6,
+		"name": "Enterprise Search",
+		"tabOrder": 7
 	},
 	{
 		"accountKey": "ERC-006",
 		"hasActivation": true,
-		"name": "Commerce"
+		"menuOrder": 5,
+		"name": "Commerce",
+		"tabOrder": 6
 	},
 	{
 		"accountKey": "ERC-007",
 		"hasActivation": true,
-		"name": "DXP"
+		"menuOrder": 3,
+		"name": "DXP",
+		"tabOrder": 4
 	}
 ]

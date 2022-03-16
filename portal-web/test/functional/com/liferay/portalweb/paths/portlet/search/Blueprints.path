@@ -301,6 +301,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ELEMENTS_EDIT_PAGE_PREDEFINED_VARIABLES_SIDEBAR_ITEM</td>
+	<td>//dl[contains(@class,'sidebar-dl')]//button[contains(.,'${item}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ELEMENTS_EDIT_PAGE_READ_ONLY_INDICATOR</td>
 	<td>//div[contains(@class,'alert') and contains(.,'Read Only')]</td>
 	<td></td>

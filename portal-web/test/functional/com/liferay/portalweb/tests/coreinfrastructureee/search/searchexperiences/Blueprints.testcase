@@ -2477,6 +2477,43 @@ definition {
 		AssertTextPresent(value1 = "aggs");
 	}
 
+	test ViewCustomElementLocalizedPredefinedVariables {
+		Blueprints.openBlueprintsAdmin();
+
+		Blueprints.createElement(title = "Test Element");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Language Selector Page");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Language Selector Page",
+			widgetName = "Language Selector");
+
+		Navigator.openSitePage(
+			pageName = "Language Selector Page",
+			siteName = "Guest");
+
+		LanguagePortlet.selectLanguagePG(
+			locale = "pt_BR",
+			textIcon = "português-Brasil");
+
+		Blueprints.openBlueprintsAdmin();
+
+		Navigator.gotoNavItem(navItem = "Elementos");
+
+		Blueprints.editEntry(title = "Test Element");
+
+		Click(
+			item = "context",
+			locator1 = "Blueprints#ELEMENTS_EDIT_PAGE_PREDEFINED_VARIABLES_SIDEBAR_ITEM");
+
+		AssertElementPresent(
+			item = "Id da Empresa",
+			locator1 = "Blueprints#ELEMENTS_EDIT_PAGE_PREDEFINED_VARIABLES_SIDEBAR_ITEM");
+	}
+
 	test ViewCustomElementsJSONValidation {
 		Blueprints.openBlueprintsAdmin();
 

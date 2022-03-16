@@ -151,4 +151,53 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-149293. The user could view a message in modal when create a new site."
+	@priority = "5"
+	@uitest
+	test ViewSiteCreationMessage {
+		property portal.release = "false";
+
+		task ("Navigate to the Sites admin") {
+			Site.openSitesAdmin();
+		}
+
+		task ("Add a new site based on Raylife D2C") {
+			LexiconEntry.gotoAdd();
+
+			LexiconCard.clickCard(card = "Raylife D2C");
+
+			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+			PortletEntry.inputName(name = "Test Site Name");
+
+			Button.clickAdd();
+		}
+
+		task ("View the Add and Cancel buttons are not shown") {
+			for (var button : list "Add,Cancel") {
+				AssertNotVisible(
+					key_text = "${button}",
+					locator1 = "Button#ANY");
+			}
+		}
+
+		task ("View the name field is not shown") {
+			AssertNotVisible(locator1 = "TextInput#NAME");
+		}
+
+		task ("View site creation message") {
+			AssertTextEquals(
+				locator1 = "Message#SUBTITLE",
+				value1 = "The creation of the site may take some minutes. Closing the window will not cancel the creation process.");
+		}
+
+		task ("View the new site is created") {
+			SelectFrameTop();
+
+			Alert.viewSuccessMessage();
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Site Settings");
+		}
+	}
+
 }

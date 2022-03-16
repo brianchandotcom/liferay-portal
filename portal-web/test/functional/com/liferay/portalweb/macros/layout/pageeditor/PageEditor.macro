@@ -2982,6 +2982,18 @@ definition {
 		return "${width}";
 	}
 
+	macro gotoAdvanced {
+		PageEditor.clickConfigurableField(
+			fragmentName = "${fragmentName}",
+			index = "${index}");
+
+		AssertVisible(
+			key_sidebarButton = "Browser",
+			locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+		Navigator.gotoNavTab(navTab = "Advanced");
+	}
+
 	macro gotoCommentList {
 		Click.pauseClickAt(locator1 = "PageEditor#FRAGMENT_SIDEBAR_BACK");
 

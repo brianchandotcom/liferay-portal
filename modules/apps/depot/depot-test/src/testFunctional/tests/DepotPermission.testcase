@@ -260,6 +260,16 @@ definition {
 		AssertElementNotPresent(locator1 = "Button#PLUS");
 	}
 
+	@description = "This is a test for LPS-119994. It checks that asset library member can view dashboard with permission."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ALMemberCanViewDashboard {
+		property portal.acceptance = "false";
+
+		// TODO LPS-119994 ALMemberCanViewDashboard pending implementation
+
+	}
+
 	@description = "This ensures that assets can be added to the asset library folder Via DM widget on a connected site."
 	@priority = "5"
 	test CanAddFileInDMWidget {

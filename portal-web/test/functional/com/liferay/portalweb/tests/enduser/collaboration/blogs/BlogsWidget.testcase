@@ -151,6 +151,16 @@ definition {
 			entryContent = "Blogs Entry Content Edited");
 	}
 
+	@description = "This is a test for LPS-99922. It checks that XSS will not be executed when adding a blog entry with the card display template."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotExecuteXSSWithCardDisplayTemplate {
+		property portal.acceptance = "false";
+
+		// TODO LPS-99922 CannotExecuteXSSWithCardDisplayTemplate pending implementation
+
+	}
+
 	@description = "This checks that a guest cannot view a blog entry in the AP when permissions are removed."
 	@priority = "4"
 	@refactordone

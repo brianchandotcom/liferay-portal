@@ -48,6 +48,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-98063. It checks that a user can search for document by synonyms."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSearchForDocumentBySynonyms {
+		property portal.acceptance = "false";
+
+		// TODO LPS-98063 CanSearchForDocumentBySynonyms pending implementation
+
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanSearchForDocumentInFolder {

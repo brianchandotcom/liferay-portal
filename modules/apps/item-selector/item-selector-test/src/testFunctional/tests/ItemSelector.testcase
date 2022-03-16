@@ -156,6 +156,16 @@ definition {
 			webContentTitle = "Web Content From Depot");
 	}
 
+	@description = "This is a test for LPS-107014. It checks that the site pagination can be displayed correctly in item selector."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanDisplaySitePaginationCorrectly {
+		property portal.acceptance = "false";
+
+		// TODO LPS-107014 CanDisplaySitePaginationCorrectly pending implementation
+
+	}
+
 	@description = "This test ensures that documents can filter by the current site in the item selector."
 	@priority = "5"
 	@refactordone

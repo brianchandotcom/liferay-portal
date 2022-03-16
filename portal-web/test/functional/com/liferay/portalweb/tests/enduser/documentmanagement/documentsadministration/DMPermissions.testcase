@@ -336,6 +336,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-90864. It checks that a site member can add shortcut to folder with permissions."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddShortcutToFolderAsSiteMemberWithPermissions {
+		property portal.acceptance = "false";
+
+		// TODO LPS-90864 CanAddShortcutToFolderAsSiteMemberWithPermissions pending implementation
+
+	}
+
 	@priority = "5"
 	@refactorneeded
 	test CannotViewFolderAsSiteMember {

@@ -1264,6 +1264,16 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This is a test for LPS-90966. It checks that the caption link will keep persisting."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test LinkToImageInCaptionPersistsAfterBeingAdded {
+		property portal.acceptance = "false";
+
+		// TODO LPS-90966 LinkToImageInCaptionPersistsAfterBeingAdded pending implementation
+
+	}
+
 	@description = "This is a use case for LPS-69240. It checks that when blog entries are duplicated their custom URL's are unique."
 	@priority = "4"
 	@refactordone

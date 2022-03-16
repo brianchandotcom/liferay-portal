@@ -118,6 +118,8 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 			String line = StringPool.BLANK;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
+				line = StringUtil.trimLeading(line);
+
 				if (line.startsWith("(") || line.startsWith(")")) {
 					sb.append(line);
 					sb.append("\n");

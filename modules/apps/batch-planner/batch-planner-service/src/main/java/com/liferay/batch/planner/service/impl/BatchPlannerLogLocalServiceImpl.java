@@ -334,8 +334,10 @@ public class BatchPlannerLogLocalServiceImpl
 		);
 	}
 
-	private Predicate _getPredicate(String searchByField, String keyword) {
-		if (Validator.isNull(keyword)) {
+	private Predicate _getPredicate(
+		String searchByField, String searchByKeyword) {
+
+		if (Validator.isNull(searchByKeyword)) {
 			return null;
 		}
 
@@ -349,7 +351,8 @@ public class BatchPlannerLogLocalServiceImpl
 					BatchPlannerPlanTable.INSTANCE.getTableName()));
 		}
 
-		return column.like(StringUtil.quote(keyword, StringPool.PERCENT));
+		return column.like(
+			StringUtil.quote(searchByKeyword, StringPool.PERCENT));
 	}
 
 	private JoinStep _getSelectJoinStep() {

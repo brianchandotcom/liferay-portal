@@ -27,15 +27,6 @@ public abstract class BaseStrutsRequestHelper extends BaseRequestHelper {
 		super(httpServletRequest);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getMVCRenderCommandName()}
-	 */
-	@Deprecated
-	public String getMVCrenderCommandName() {
-		return getMVCRenderCommandName();
-	}
-
 	public String getMVCRenderCommandName() {
 		if (_mvcRenderCommandName == null) {
 			_mvcRenderCommandName = ParamUtil.getString(

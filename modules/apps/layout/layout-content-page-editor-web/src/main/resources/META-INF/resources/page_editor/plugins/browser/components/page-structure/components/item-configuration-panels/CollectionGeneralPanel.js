@@ -49,14 +49,57 @@ import useControlledState from '../../../../../../core/hooks/useControlledState'
 import CollectionFilterConfigurationModal from '../CollectionFilterConfigurationModal';
 import {CommonStyles} from './CommonStyles';
 
-const LAYOUT_OPTIONS = [
-	{label: Liferay.Language.get('full-width'), value: '1'},
-	{label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 2), value: '2'},
-	{label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 3), value: '3'},
-	{label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 4), value: '4'},
-	{label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 5), value: '5'},
-	{label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 6), value: '6'},
-];
+const LAYOUT_OPTIONS = config.featureFlagLps119551
+	? [
+			{label: Liferay.Language.get('full-width'), value: '1'},
+			{
+				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 2),
+				value: '2',
+			},
+			{
+				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 3),
+				value: '3',
+			},
+			{
+				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 4),
+				value: '4',
+			},
+			{
+				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 5),
+				value: '5',
+			},
+			{
+				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 6),
+				value: '6',
+			},
+			{
+				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 12),
+				value: '12',
+			},
+	  ]
+	: [
+			{label: Liferay.Language.get('full-width'), value: '1'},
+			{
+				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 2),
+				value: '2',
+			},
+			{
+				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 3),
+				value: '3',
+			},
+			{
+				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 4),
+				value: '4',
+			},
+			{
+				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 5),
+				value: '5',
+			},
+			{
+				label: Liferay.Util.sub(Liferay.Language.get('x-columns'), 6),
+				value: '6',
+			},
+	  ];
 
 const PAGINATION_TYPE_OPTIONS = [
 	{label: Liferay.Language.get('none'), value: 'none'},

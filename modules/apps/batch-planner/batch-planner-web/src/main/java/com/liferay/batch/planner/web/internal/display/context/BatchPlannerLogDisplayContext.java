@@ -94,13 +94,12 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 			_searchContainer.setResultsAndTotal(
 				() -> TransformUtil.transform(
 					BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogs(
-						companyId, _searchContainer.getStart(),
-						_searchContainer.getEnd(),
+						companyId, searchByField, searchByKeyword,
+						_searchContainer.getStart(), _searchContainer.getEnd(),
 						OrderByComparatorFactoryUtil.create(
 							"BatchPlannerLog", _searchContainer.getOrderByCol(),
 							Objects.equals(
-								_searchContainer.getOrderByType(), "asc")),
-						searchByField, searchByKeyword),
+								_searchContainer.getOrderByType(), "asc"))),
 					this::_toBatchPlannerLogDisplay),
 				BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogsCount(
 					companyId, searchByField, searchByKeyword));
@@ -109,13 +108,13 @@ public class BatchPlannerLogDisplayContext extends BaseDisplayContext {
 			_searchContainer.setResultsAndTotal(
 				() -> TransformUtil.transform(
 					BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogs(
-						companyId, isExport(navigation),
-						_searchContainer.getStart(), _searchContainer.getEnd(),
+						companyId, isExport(navigation), searchByField,
+						searchByKeyword, _searchContainer.getStart(),
+						_searchContainer.getEnd(),
 						OrderByComparatorFactoryUtil.create(
 							"BatchPlannerLog", _searchContainer.getOrderByCol(),
 							Objects.equals(
-								_searchContainer.getOrderByType(), "asc")),
-						searchByField, searchByKeyword),
+								_searchContainer.getOrderByType(), "asc"))),
 					this::_toBatchPlannerLogDisplay),
 				BatchPlannerLogServiceUtil.getCompanyBatchPlannerLogsCount(
 					companyId, isExport(navigation), searchByField,

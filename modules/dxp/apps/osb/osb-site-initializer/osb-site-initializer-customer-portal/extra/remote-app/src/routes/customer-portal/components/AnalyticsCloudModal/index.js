@@ -37,6 +37,7 @@ const AnalyticsCloudModal = ({
 				<SetupAnalyticsCloud
 					handlePage={handleChangeForm}
 					leftButton="Cancel"
+					onClose={onClose}
 					project={project}
 					subscriptionGroupId={subscriptionGroupId}
 				/>

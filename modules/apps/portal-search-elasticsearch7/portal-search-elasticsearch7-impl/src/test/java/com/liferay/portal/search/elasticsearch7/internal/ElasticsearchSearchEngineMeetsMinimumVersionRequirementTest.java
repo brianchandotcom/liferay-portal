@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal;
 
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -24,7 +25,7 @@ import org.junit.Test;
 /**
  * @author Bryan Engler
  */
-public class MinimumVersionRequirementCheckerTest {
+public class ElasticsearchSearchEngineMeetsMinimumVersionRequirementTest {
 
 	@ClassRule
 	@Rule
@@ -51,12 +52,13 @@ public class MinimumVersionRequirementCheckerTest {
 	private void _testMeetsRequirement(
 		String minimumVersion, String version, boolean meetsRequirement) {
 
-		MinimumVersionRequirementChecker minimumVersionRequirementChecker =
-			new MinimumVersionRequirementChecker(minimumVersion);
+		ElasticsearchSearchEngine elasticsearchSearchEngine =
+			new ElasticsearchSearchEngine();
 
 		Assert.assertEquals(
 			minimumVersion + " -> " + version, meetsRequirement,
-			minimumVersionRequirementChecker.meetsRequirement(version));
+			elasticsearchSearchEngine.meetsMinimumVersionRequirement(
+				Version.parseVersion(minimumVersion), version));
 	}
 
 }

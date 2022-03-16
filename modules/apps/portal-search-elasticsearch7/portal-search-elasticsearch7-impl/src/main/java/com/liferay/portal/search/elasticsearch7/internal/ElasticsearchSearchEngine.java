@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.search.ccr.CrossClusterReplicationHelper;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionManager;
@@ -284,6 +285,16 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		_searchEngineAdapter.execute(createSnapshotRepositoryRequest);
 	}
 
+	protected boolean meetsMinimumVersionRequirement(
+		Version minimumVersion, String version) {
+
+		if (minimumVersion.compareTo(Version.parseVersion(version)) <= 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policyOption = ReferencePolicyOption.GREEDY
@@ -333,19 +344,18 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	}
 
 	private void _checkNodeVersions() {
-		String minimumVersion =
+		String minimumVersionString =
 			_elasticsearchConfigurationWrapper.minimumRequiredNodeVersion();
 
-		if (minimumVersion.equals("0.0.0")) {
+		if (minimumVersionString.equals("0.0.0")) {
 			String clientVersion =
 				_searchEngineInformation.getClientVersionString();
 
-			minimumVersion = clientVersion.substring(
+			minimumVersionString = clientVersion.substring(
 				0, clientVersion.lastIndexOf("."));
 		}
 
-		MinimumVersionRequirementChecker minimumVersionRequirementChecker =
-			new MinimumVersionRequirementChecker(minimumVersion);
+		Version minimumVersion = Version.parseVersion(minimumVersionString);
 
 		List<ConnectionInformation> connectionInformationList =
 			_searchEngineInformation.getConnectionInformationList();
@@ -357,14 +367,14 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 				connectionInformation.getNodeInformationList();
 
 			for (NodeInformation nodeInformation : nodeInformationList) {
-				if (!minimumVersionRequirementChecker.meetsRequirement(
-						nodeInformation.getVersion())) {
+				if (!meetsMinimumVersionRequirement(
+						minimumVersion, nodeInformation.getVersion())) {
 
 					_log.error(
 						StringBundler.concat(
 							"Elasticsearch node ", nodeInformation.getName(),
 							" does not meet the minimum version requirement ",
-							"of ", minimumVersion));
+							"of ", minimumVersionString));
 
 					System.exit(1);
 				}

@@ -199,12 +199,8 @@ const MillerColumnsItem = ({
 	const [dropZone, setDropZone] = useState();
 
 	const [dropdownActionsActive, setDropdownActionsActive] = useState(false);
-	const [dropdownActionsEnabled, setDropdownActionsEnabled] = useState(false);
-	const dropdownActionsTriggerRef = useRef();
 
 	const [layoutActionsActive, setLayoutActionsActive] = useState(false);
-	const [layoutActionsEnabled, setLayoutActionsEnabled] = useState(false);
-	const layoutActionsTriggerRef = useRef();
 
 	const dropdownActions = useMemo(() => {
 		const dropdownActions = actions.map((action) => {
@@ -344,18 +340,6 @@ const MillerColumnsItem = ({
 		}
 	}, [active, dropZone, isOver, itemId, onItemStayHover]);
 
-	useEffect(() => {
-		if (dropdownActionsTriggerRef.current) {
-			dropdownActionsTriggerRef.current.focus();
-		}
-	}, [dropdownActionsEnabled]);
-
-	useEffect(() => {
-		if (layoutActionsTriggerRef.current) {
-			layoutActionsTriggerRef.current.focus();
-		}
-	}, [layoutActionsEnabled]);
-
 	return (
 		<ClayLayout.ContentRow
 			className={classNames('list-group-item-flex miller-columns-item', {
@@ -422,52 +406,34 @@ const MillerColumnsItem = ({
 
 			{layoutActions.length > 0 && (
 				<ClayLayout.ContentCol className="miller-columns-item-actions">
-					{layoutActionsEnabled ? (
-						<ClayDropDown
-							active={layoutActionsActive}
-							onActiveChange={setLayoutActionsActive}
-							trigger={
-								<ClayButtonWithIcon
-									borderless
-									displayType="secondary"
-									ref={(element) => {
-										layoutActionsTriggerRef.current = element;
-									}}
-									small
-									symbol="plus"
-									title={Liferay.Language.get(
-										'add-child-page'
-									)}
-								/>
-							}
-						>
-							<ClayDropDown.ItemList>
-								{layoutActions.map((action) => (
-									<ClayDropDown.Item
-										disabled={!action.url}
-										href={action.url}
-										id={action.id}
-										key={action.id}
-										onClick={action.handler}
-									>
-										{action.label}
-									</ClayDropDown.Item>
-								))}
-							</ClayDropDown.ItemList>
-						</ClayDropDown>
-					) : (
-						<ClayButtonWithIcon
-							borderless
-							displayType="secondary"
-							onClick={() => {
-								setLayoutActionsEnabled(true);
-								setLayoutActionsActive(true);
-							}}
-							small
-							symbol="plus"
-							title={Liferay.Language.get('add-child-page')}
-						/>
-					)}
+					<ClayDropDown
+						active={layoutActionsActive}
+						onActiveChange={setLayoutActionsActive}
+						renderMenuOnClick
+						trigger={
+							<ClayButtonWithIcon
+								borderless
+								displayType="secondary"
+								small
+								symbol="plus"
+								title={Liferay.Language.get('add-child-page')}
+							/>
+						}
+					>
+						<ClayDropDown.ItemList>
+							{layoutActions.map((action) => (
+								<ClayDropDown.Item
+									disabled={!action.url}
+									href={action.url}
+									id={action.id}
+									key={action.id}
+									onClick={action.handler}
+								>
+									{action.label}
+								</ClayDropDown.Item>
+							))}
+						</ClayDropDown.ItemList>
+					</ClayDropDown>
 				</ClayLayout.ContentCol>
 			)}
 
@@ -490,41 +456,23 @@ const MillerColumnsItem = ({
 
 			{dropdownActions.length > 0 && (
 				<ClayLayout.ContentCol className="miller-columns-item-actions">
-					{dropdownActionsEnabled ? (
-						<ClayDropDownWithItems
-							active={dropdownActionsActive}
-							items={dropdownActions}
-							onActiveChange={setDropdownActionsActive}
-							trigger={
-								<ClayButtonWithIcon
-									borderless
-									displayType="secondary"
-									ref={(element) => {
-										dropdownActionsTriggerRef.current = element;
-									}}
-									small
-									symbol="ellipsis-v"
-									title={Liferay.Language.get(
-										'open-page-options-menu'
-									)}
-								/>
-							}
-						/>
-					) : (
-						<ClayButtonWithIcon
-							borderless
-							displayType="secondary"
-							onClick={() => {
-								setDropdownActionsEnabled(true);
-								setDropdownActionsActive(true);
-							}}
-							small
-							symbol="ellipsis-v"
-							title={Liferay.Language.get(
-								'open-page-options-menu'
-							)}
-						/>
-					)}
+					<ClayDropDownWithItems
+						active={dropdownActionsActive}
+						items={dropdownActions}
+						onActiveChange={setDropdownActionsActive}
+						renderMenuOnClick
+						trigger={
+							<ClayButtonWithIcon
+								borderless
+								displayType="secondary"
+								small
+								symbol="ellipsis-v"
+								title={Liferay.Language.get(
+									'open-page-options-menu'
+								)}
+							/>
+						}
+					/>
 				</ClayLayout.ContentCol>
 			)}
 

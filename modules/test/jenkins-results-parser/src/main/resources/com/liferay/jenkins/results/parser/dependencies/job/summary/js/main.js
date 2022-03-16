@@ -61,8 +61,6 @@ function createInfoItemElement(name, value, properties) {
 function getAxisElement(axis) {
 	let detailsElement = createDetailsElement();
 
-	detailsElement.setAttribute("open", "true");
-
 	let summaryElement = detailsElement.childNodes[0];
 
 	summaryElement.innerHTML = axis.axis_name;
@@ -85,33 +83,10 @@ function getAxisElement(axis) {
 	return detailsElement;
 }
 
-function getBatchAxesElement(batch) {
-	let detailsElement = createDetailsElement();
-
-	let summaryElement = detailsElement.childNodes[0];
-
-	summaryElement.innerHTML = "Axis Summaries";
-	summaryElement.setAttribute("class", "level-3");
-
-	let divElement = detailsElement.childNodes[1];
-
-	let ulElement = document.createElement("ul");
-
-	divElement.appendChild(ulElement);
-
-	for (var i = 0; i < batch.axes.length; i++) {
-		let liElement = document.createElement("li");
-
-		ulElement.appendChild(liElement);
-
-		liElement.appendChild(getAxisElement(batch.axes[i]));
-	}
-
-	return detailsElement;
-}
-
 function getBatchSummaryElement(batch) {
 	let detailsElement = createDetailsElement();
+
+	detailsElement.setAttribute("open", "true");
 
 	let summaryElement = detailsElement.childNodes[0];
 
@@ -161,11 +136,13 @@ function getBatchElement(batch) {
 
 	batchSummaryLiElement.appendChild(getBatchSummaryElement(batch));
 
-	let batchAxesLiElement = document.createElement("li");
+	let batchSegmentsLiElement = document.createElement("li");
 
-	ulElement.appendChild(batchAxesLiElement);
+	ulElement.appendChild(batchSegmentsLiElement);
 
-	batchAxesLiElement.append(getBatchAxesElement(batch));
+	for (var i = 0; i < batch.segments.length; i++) {
+	    batchSegmentsLiElement.append(getSegmentElement(batch.segments[i]));
+	}
 
 	return detailsElement;
 }
@@ -273,6 +250,31 @@ function getPQLQueryLines(pql_query, balance) {
 	return lines;
 }
 
+function getSegmentElement(segment) {
+	let detailsElement = createDetailsElement();
+
+	let summaryElement = detailsElement.childNodes[0];
+
+	summaryElement.innerHTML = segment.segment_name;
+	summaryElement.setAttribute("class", "level-3");
+
+	let divElement = detailsElement.childNodes[1];
+
+	let ulElement = document.createElement("ul");
+
+	divElement.appendChild(ulElement);
+
+    for (var i = 0; i < segment.axes.length; i++) {
+        let liElement = document.createElement("li");
+
+        ulElement.appendChild(liElement);
+
+        liElement.appendChild(getAxisElement(segment.axes[i]));
+    }
+
+	return detailsElement;
+}
+
 function getTestClassElement(test_class) {
 	let detailsElement = createDetailsElement();
 
@@ -290,7 +292,7 @@ function getTestClassElement(test_class) {
 	for (var i = 0; i < test_class.methods.length; i++) {
 		let liElement = document.createElement("li");
 
-		liElement.innerHTML = test_class.methods[i];
+		liElement.innerHTML = test_class.methods[i].name;
 
 		ulElement.appendChild(liElement);
 	}

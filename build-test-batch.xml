@@ -1645,13 +1645,7 @@ app.server.type=@{app.server.type}]]></echo>
 			<property name="functional.test.type" value="@{functional.test.type}" />
 
 			<condition else="0" property="functional.batch.retry.count" value="1">
-				<and>
-					<matches pattern="^[\w\.]+#[\w]+$" string="${test.class}" />
-					<or>
-						<contains string="${env.TOP_LEVEL_JOB_NAME}" substring="test-portal-acceptance" />
-						<contains string="${env.TOP_LEVEL_JOB_NAME}" substring="test-portal-testsuite-upstream" />
-					</or>
-				</and>
+				<matches pattern="^[\w\.]+#[\w]+$" string="${test.class}" />
 			</condition>
 
 			<retry retrycount="${functional.batch.retry.count}">

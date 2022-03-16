@@ -14,8 +14,8 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayManagementToolbar from '@clayui/management-toolbar';
 import classNames from 'classnames';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useContext, useState} from 'react';
 
 import DropDown, {CheckboxGroup, ItemsGroup, RadioGroup} from './DropDown';
@@ -172,8 +172,8 @@ export default function ManagementToolbarFilterAndOrder({
 	return (
 		<>
 			{dropDownItems.length > 0 && (
-				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item>
+				<ManagementToolbar.ItemList>
+					<ManagementToolbar.Item>
 						<DropDown
 							active={isDropDownActive}
 							footerContent={
@@ -218,9 +218,9 @@ export default function ManagementToolbarFilterAndOrder({
 								<div key={index}>{item}</div>
 							))}
 						</DropDown>
-					</ClayManagementToolbar.Item>
+					</ManagementToolbar.Item>
 
-					<ClayManagementToolbar.Item>
+					<ManagementToolbar.Item>
 						<ClayButtonWithIcon
 							className={classNames(
 								'nav-link',
@@ -238,8 +238,8 @@ export default function ManagementToolbarFilterAndOrder({
 								'reverse-sort-direction'
 							)}
 						/>
-					</ClayManagementToolbar.Item>
-				</ClayManagementToolbar.ItemList>
+					</ManagementToolbar.Item>
+				</ManagementToolbar.ItemList>
 			)}
 		</>
 	);

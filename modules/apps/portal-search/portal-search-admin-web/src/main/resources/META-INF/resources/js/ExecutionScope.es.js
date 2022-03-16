@@ -17,11 +17,11 @@ import {ClayCheckbox, ClayInput, ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayList from '@clayui/list';
-import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClaySticker from '@clayui/sticker';
 import ClayToolbar from '@clayui/toolbar';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 const DEFAULT_DELTA = 10;
@@ -102,18 +102,18 @@ function InstanceSelector({selected, setSelected, virtualInstances}) {
 
 	return (
 		<>
-			<ClayManagementToolbar>
-				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item>
+			<ManagementToolbar.Container>
+				<ManagementToolbar.ItemList>
+					<ManagementToolbar.Item>
 						<ClayCheckbox
 							aria-label={Liferay.Language.get('toggle')}
 							checked={_isSelectAllChecked()}
 							onChange={_handleToggleSelectAll}
 						/>
-					</ClayManagementToolbar.Item>
-				</ClayManagementToolbar.ItemList>
+					</ManagementToolbar.Item>
+				</ManagementToolbar.ItemList>
 
-				<ClayManagementToolbar.Search>
+				<ManagementToolbar.Search>
 					<ClayInput.Group>
 						<ClayInput.GroupItem>
 							<ClayInput
@@ -154,8 +154,8 @@ function InstanceSelector({selected, setSelected, virtualInstances}) {
 							</ClayInput.GroupInsetItem>
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
-				</ClayManagementToolbar.Search>
-			</ClayManagementToolbar>
+				</ManagementToolbar.Search>
+			</ManagementToolbar.Container>
 
 			{selected.length > 0 && (
 				<ClayToolbar subnav={{displayType: 'primary'}}>

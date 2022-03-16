@@ -13,9 +13,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayManagementToolbar, {
-	ClayResultsBar,
-} from '@clayui/management-toolbar';
+import {ManagementToolbar as FrontendManagementToolbar, ResultsBar} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 import {sub} from '../../../sxp_blueprint_admin/js/utils/language';
@@ -34,8 +32,8 @@ const ManagementToolbar = ({
 
 	return (
 		<>
-			<ClayManagementToolbar>
-				<ClayManagementToolbar.ItemList>
+			<FrontendManagementToolbar.Container>
+				<FrontendManagementToolbar.ItemList>
 					<ClayDropDownWithItems
 						items={filterItems}
 						trigger={
@@ -64,7 +62,7 @@ const ManagementToolbar = ({
 						}
 					/>
 
-					<ClayManagementToolbar.Item>
+					<FrontendManagementToolbar.Item>
 						<ClayButton
 							className="nav-link nav-link-monospaced"
 							disabled={loading}
@@ -77,10 +75,10 @@ const ManagementToolbar = ({
 								<ClayIcon symbol="order-list-down" />
 							)}
 						</ClayButton>
-					</ClayManagementToolbar.Item>
-				</ClayManagementToolbar.ItemList>
+					</FrontendManagementToolbar.Item>
+				</FrontendManagementToolbar.ItemList>
 
-				<ClayManagementToolbar.Search showMobile={searchMobile}>
+				<FrontendManagementToolbar.Search showMobile={searchMobile}>
 					<ClayInput.Group>
 						<ClayInput.GroupItem>
 							<ClayInput
@@ -119,10 +117,10 @@ const ManagementToolbar = ({
 							</ClayInput.GroupInsetItem>
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
-				</ClayManagementToolbar.Search>
+				</FrontendManagementToolbar.Search>
 
-				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
+				<FrontendManagementToolbar.ItemList>
+					<FrontendManagementToolbar.Item className="navbar-breakpoint-d-none">
 						<ClayButton
 							className="nav-link nav-link-monospaced"
 							displayType="unstyled"
@@ -130,13 +128,13 @@ const ManagementToolbar = ({
 						>
 							<ClayIcon symbol="search" />
 						</ClayButton>
-					</ClayManagementToolbar.Item>
-				</ClayManagementToolbar.ItemList>
-			</ClayManagementToolbar>
+					</FrontendManagementToolbar.Item>
+				</FrontendManagementToolbar.ItemList>
+			</FrontendManagementToolbar.Container>
 
 			{!!searchValue && !loading && (
-				<ClayResultsBar>
-					<ClayResultsBar.Item>
+				<ResultsBar>
+					<ResultsBar.Item>
 						<span className="component-text text-truncate-inline">
 							<span className="text-truncate">
 								{sub(
@@ -149,9 +147,9 @@ const ManagementToolbar = ({
 								)}
 							</span>
 						</span>
-					</ClayResultsBar.Item>
+					</ResultsBar.Item>
 
-					<ClayResultsBar.Item>
+					<ResultsBar.Item>
 						<ClayButton
 							className="component-link tbar-link"
 							displayType="unstyled"
@@ -162,8 +160,8 @@ const ManagementToolbar = ({
 						>
 							{Liferay.Language.get('clear')}
 						</ClayButton>
-					</ClayResultsBar.Item>
-				</ClayResultsBar>
+					</ResultsBar.Item>
+				</ResultsBar>
 			)}
 		</>
 	);

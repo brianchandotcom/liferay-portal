@@ -22,6 +22,27 @@ export function ResultsBar(
 	children: React.ReactElement | Array<React.ReactElement>
 ): ReactElement;
 
+export interface ManagementToolbar {
+	Container: (
+		active?: boolean,
+		children?: React.ReactElement | Array<React.ReactElement>,
+		className?: string
+	) => ReactElement;
+	Item: (
+		children?: React.ReactElement | Array<React.ReactElement>,
+		className?: string
+	) => ReactElement;
+	ItemList: (
+		expand?: boolean,
+		children?: React.ReactElement | Array<React.ReactElement>
+	) => ReactElement;
+	Search: (
+		children?: React.ReactElement | Array<React.ReactElement>,
+		onlySearch?: boolean,
+		showMobile?: boolean
+	) => ReactElement;
+}
+
 export function Treeview(
 	NodeComponent: () => void,
 	filter: string | (() => void),

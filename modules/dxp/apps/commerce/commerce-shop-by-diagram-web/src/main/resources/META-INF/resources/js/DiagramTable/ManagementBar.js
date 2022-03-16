@@ -11,7 +11,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import ClayManagementToolbar from '@clayui/management-toolbar';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import {debounce} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
@@ -26,8 +26,8 @@ function ManagementBar({updateQuery}) {
 	}
 
 	return (
-		<ClayManagementToolbar className="border-bottom">
-			<ClayManagementToolbar.Search
+		<ManagementToolbar.Container className="border-bottom">
+			<ManagementToolbar.Search
 				onSubmit={(event) => event.preventDefault()}
 			>
 				<ClayInput.Group>
@@ -49,8 +49,8 @@ function ManagementBar({updateQuery}) {
 						</ClayInput.GroupInsetItem>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
-			</ClayManagementToolbar.Search>
-		</ClayManagementToolbar>
+			</ManagementToolbar.Search>
+		</ManagementToolbar.Container>
 	);
 }
 

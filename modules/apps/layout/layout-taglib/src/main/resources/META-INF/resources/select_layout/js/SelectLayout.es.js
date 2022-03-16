@@ -15,8 +15,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
-import ClayManagementToolbar from '@clayui/management-toolbar';
-import {Treeview} from 'frontend-js-components-web';
+import {ManagementToolbar, Treeview} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -119,8 +118,8 @@ const SelectLayout = ({
 
 	return (
 		<div className="select-layout">
-			<ClayManagementToolbar>
-				<ClayManagementToolbar.Search
+			<ManagementToolbar.Container>
+				<ManagementToolbar.Search
 					onSubmit={(event) => {
 						event.preventDefault();
 					}}
@@ -155,8 +154,8 @@ const SelectLayout = ({
 							</ClayInput.GroupInsetItem>
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
-				</ClayManagementToolbar.Search>
-			</ClayManagementToolbar>
+				</ManagementToolbar.Search>
+			</ManagementToolbar.Container>
 
 			<ClayLayout.ContainerFluid
 				className="layouts-selector"

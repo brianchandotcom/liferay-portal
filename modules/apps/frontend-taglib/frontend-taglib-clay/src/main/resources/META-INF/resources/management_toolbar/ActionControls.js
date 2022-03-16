@@ -15,8 +15,8 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import ClayManagementToolbar from '@clayui/management-toolbar';
 import classNames from 'classnames';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useContext, useMemo} from 'react';
 
 import normalizeDropdownItems from '../normalize_dropdown_items';
@@ -72,7 +72,7 @@ const ActionControls = ({
 						)
 						.filter((item) => item.quickAction && item.icon)
 						.map((item, index) => (
-							<ClayManagementToolbar.Item
+							<ManagementToolbar.Item
 								className="d-md-flex d-none"
 								key={index}
 							>
@@ -113,10 +113,10 @@ const ActionControls = ({
 										<span>{item.label}</span>
 									</LinkOrButton>
 								)}
-							</ClayManagementToolbar.Item>
+							</ManagementToolbar.Item>
 						))}
 
-					<ClayManagementToolbar.Item>
+					<ManagementToolbar.Item>
 						<ClayDropDownWithItems
 							items={items}
 							trigger={
@@ -128,7 +128,7 @@ const ActionControls = ({
 								/>
 							}
 						/>
-					</ClayManagementToolbar.Item>
+					</ManagementToolbar.Item>
 				</>
 			)}
 		</>

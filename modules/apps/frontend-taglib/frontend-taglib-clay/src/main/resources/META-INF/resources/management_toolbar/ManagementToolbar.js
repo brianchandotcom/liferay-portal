@@ -15,8 +15,8 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import ClayManagementToolbar from '@clayui/management-toolbar';
 import {LinkOrButton} from '@clayui/shared';
+import {ManagementToolbar as FrontendManagementToolbar} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
@@ -91,8 +91,8 @@ function ManagementToolbar({
 		<FeatureFlagContext.Provider
 			value={{showDesignImprovements: showDesignImprovementsFF}}
 		>
-			<ClayManagementToolbar active={active}>
-				<ClayManagementToolbar.ItemList>
+			<FrontendManagementToolbar.Container active={active}>
+				<FrontendManagementToolbar.ItemList>
 					{selectable && (
 						<SelectionControls
 							actionDropdownItems={actionDropdownItems}
@@ -135,7 +135,7 @@ function ManagementToolbar({
 							sortingURL={sortingURL}
 						/>
 					)}
-				</ClayManagementToolbar.ItemList>
+				</FrontendManagementToolbar.ItemList>
 
 				{!active && showSearch && (
 					<SearchControls
@@ -152,7 +152,7 @@ function ManagementToolbar({
 					/>
 				)}
 
-				<ClayManagementToolbar.ItemList>
+				<FrontendManagementToolbar.ItemList>
 					{!active && showSearch && (
 						<SearchControls.ShowMobileButton
 							disabled={disabled}
@@ -178,7 +178,7 @@ function ManagementToolbar({
 					) : (
 						<>
 							{viewTypeItems && (
-								<ClayManagementToolbar.Item>
+								<FrontendManagementToolbar.Item>
 									<ClayDropDownWithItems
 										items={viewTypeItems}
 										trigger={
@@ -212,11 +212,11 @@ function ManagementToolbar({
 											)
 										}
 									/>
-								</ClayManagementToolbar.Item>
+								</FrontendManagementToolbar.Item>
 							)}
 
 							{showCreationMenu && (
-								<ClayManagementToolbar.Item>
+								<FrontendManagementToolbar.Item>
 									{creationMenu ? (
 										<CreationMenu
 											{...creationMenu}
@@ -248,7 +248,7 @@ function ManagementToolbar({
 											symbol="plus"
 										/>
 									)}
-								</ClayManagementToolbar.Item>
+								</FrontendManagementToolbar.Item>
 							)}
 						</>
 					)}
@@ -260,8 +260,8 @@ function ManagementToolbar({
 							separator={active}
 						/>
 					)}
-				</ClayManagementToolbar.ItemList>
-			</ClayManagementToolbar>
+				</FrontendManagementToolbar.ItemList>
+			</FrontendManagementToolbar.Container>
 
 			{showResultsBar && (
 				<ResultsBar

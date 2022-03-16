@@ -10,8 +10,8 @@
  */
 
 import ClayLayout from '@clayui/layout';
-import ClayManagementToolbar from '@clayui/management-toolbar';
 import {usePrevious} from '@liferay/frontend-js-react-web';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useCallback, useContext, useEffect, useMemo} from 'react';
 
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
@@ -198,18 +198,18 @@ export default function Header({
 				totalCount={totalCount}
 			>
 				{toolbarActive ? (
-					<ClayManagementToolbar.Item className="navbar-nav-last">
+					<ManagementToolbar.Item className="navbar-nav-last">
 						<ClayLayout.ContentCol>
 							<QuickActionKebab items={kebabItems} />
 						</ClayLayout.ContentCol>
-					</ClayManagementToolbar.Item>
+					</ManagementToolbar.Item>
 				) : (
 					<>
-						<ClayManagementToolbar.Item>
+						<ManagementToolbar.Item>
 							<strong className="ml-0 mr-0 navbar-text">
 								{Liferay.Language.get('filter-by')}
 							</strong>
-						</ClayManagementToolbar.Item>
+						</ManagementToolbar.Item>
 
 						<SLAStatusFilter
 							options={{

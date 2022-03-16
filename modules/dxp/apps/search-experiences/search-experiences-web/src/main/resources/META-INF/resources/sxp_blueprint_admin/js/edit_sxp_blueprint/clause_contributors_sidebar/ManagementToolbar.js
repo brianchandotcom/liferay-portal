@@ -14,11 +14,12 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
-import ClayManagementToolbar, {
-	ClayResultsBar,
-} from '@clayui/management-toolbar';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
+import {
+	ManagementToolbar as FrontendManagementToolbar,
+	ResultsBar,
+} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 import {ALL, ASCENDING} from '../../utils/constants';
@@ -43,13 +44,13 @@ function ManagementToolbar({
 
 	return (
 		<>
-			<ClayManagementToolbar
+			<FrontendManagementToolbar.Container
 				className={getCN('clause-contributors-management-bar', {
 					'management-bar-primary': selected.length > 0,
 				})}
 			>
-				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item>
+				<FrontendManagementToolbar.ItemList>
+					<FrontendManagementToolbar.Item>
 						<ClayCheckbox
 							aria-label={Liferay.Language.get('checkbox')}
 							checked={
@@ -68,15 +69,15 @@ function ManagementToolbar({
 								)
 							}
 						/>
-					</ClayManagementToolbar.Item>
-				</ClayManagementToolbar.ItemList>
+					</FrontendManagementToolbar.Item>
+				</FrontendManagementToolbar.ItemList>
 
 				{selected.length > 0 ? (
 					<>
-						<ClayManagementToolbar.ItemList expand>
+						<FrontendManagementToolbar.ItemList expand>
 							{allItems.length > 0 &&
 							selected.length === allItems.length ? (
-								<ClayManagementToolbar.Item className="navbar-form">
+								<FrontendManagementToolbar.Item className="navbar-form">
 									<span className="component-text text-truncate-inline">
 										<span className="text-truncate">
 											{Liferay.Language.get(
@@ -84,10 +85,10 @@ function ManagementToolbar({
 											)}
 										</span>
 									</span>
-								</ClayManagementToolbar.Item>
+								</FrontendManagementToolbar.Item>
 							) : (
 								<>
-									<ClayManagementToolbar.Item className="navbar-form">
+									<FrontendManagementToolbar.Item className="navbar-form">
 										<span className="component-text text-truncate-inline">
 											<span className="text-truncate">
 												{sub(
@@ -101,9 +102,9 @@ function ManagementToolbar({
 												)}
 											</span>
 										</span>
-									</ClayManagementToolbar.Item>
+									</FrontendManagementToolbar.Item>
 
-									<ClayManagementToolbar.Item>
+									<FrontendManagementToolbar.Item>
 										<ClayButton
 											displayType="link"
 											onClick={() =>
@@ -113,13 +114,13 @@ function ManagementToolbar({
 										>
 											{Liferay.Language.get('select-all')}
 										</ClayButton>
-									</ClayManagementToolbar.Item>
+									</FrontendManagementToolbar.Item>
 								</>
 							)}
-						</ClayManagementToolbar.ItemList>
+						</FrontendManagementToolbar.ItemList>
 
-						<ClayManagementToolbar.ItemList>
-							<ClayManagementToolbar.Item>
+						<FrontendManagementToolbar.ItemList>
+							<FrontendManagementToolbar.Item>
 								<ClayButton.Group spaced>
 									<ClayButton
 										displayType="secondary"
@@ -137,13 +138,13 @@ function ManagementToolbar({
 										{Liferay.Language.get('turn-off')}
 									</ClayButton>
 								</ClayButton.Group>
-							</ClayManagementToolbar.Item>
-						</ClayManagementToolbar.ItemList>
+							</FrontendManagementToolbar.Item>
+						</FrontendManagementToolbar.ItemList>
 					</>
 				) : (
 					<>
-						<ClayManagementToolbar.ItemList>
-							<ClayManagementToolbar.Item>
+						<FrontendManagementToolbar.ItemList>
+							<FrontendManagementToolbar.Item>
 								<ClayDropDownWithItems
 									items={filterItems}
 									trigger={
@@ -184,11 +185,11 @@ function ManagementToolbar({
 										/>
 									</ClayButton>
 								</ClayTooltipProvider>
-							</ClayManagementToolbar.Item>
-						</ClayManagementToolbar.ItemList>
+							</FrontendManagementToolbar.Item>
+						</FrontendManagementToolbar.ItemList>
 
-						<ClayManagementToolbar.ItemList expand>
-							<ClayManagementToolbar.Item className="search">
+						<FrontendManagementToolbar.ItemList expand>
+							<FrontendManagementToolbar.Item className="search">
 								<ClayInput.Group>
 									<ClayInput.GroupItem>
 										<ClayInput
@@ -230,15 +231,15 @@ function ManagementToolbar({
 										</ClayInput.GroupInsetItem>
 									</ClayInput.GroupItem>
 								</ClayInput.Group>
-							</ClayManagementToolbar.Item>
-						</ClayManagementToolbar.ItemList>
+							</FrontendManagementToolbar.Item>
+						</FrontendManagementToolbar.ItemList>
 					</>
 				)}
-			</ClayManagementToolbar>
+			</FrontendManagementToolbar.Container>
 
 			{(!!keyword || status !== ALL || category !== ALL) && (
-				<ClayResultsBar>
-					<ClayResultsBar.Item>
+				<ResultsBar>
+					<ResultsBar.Item>
 						<span className="component-text text-truncate-inline">
 							<span className="text-truncate">
 								{sub(Liferay.Language.get('x-results-for-x'), [
@@ -247,9 +248,9 @@ function ManagementToolbar({
 								])}
 							</span>
 						</span>
-					</ClayResultsBar.Item>
+					</ResultsBar.Item>
 
-					<ClayResultsBar.Item expand>
+					<ResultsBar.Item expand>
 						{status !== ALL && (
 							<ClayLabel
 								className="component-label tbar-label"
@@ -273,9 +274,9 @@ function ManagementToolbar({
 								{category}
 							</ClayLabel>
 						)}
-					</ClayResultsBar.Item>
+					</ResultsBar.Item>
 
-					<ClayResultsBar.Item>
+					<ResultsBar.Item>
 						<ClayButton
 							className="component-link tbar-link"
 							displayType="unstyled"
@@ -288,8 +289,8 @@ function ManagementToolbar({
 						>
 							{Liferay.Language.get('clear')}
 						</ClayButton>
-					</ClayResultsBar.Item>
-				</ClayResultsBar>
+					</ResultsBar.Item>
+				</ResultsBar>
 			)}
 		</>
 	);

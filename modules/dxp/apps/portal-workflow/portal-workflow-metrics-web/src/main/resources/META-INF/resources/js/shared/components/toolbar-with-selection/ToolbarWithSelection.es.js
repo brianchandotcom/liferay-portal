@@ -11,7 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
-import ClayManagementToolbar from '@clayui/management-toolbar';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React from 'react';
 
 import {sub} from '../../util/lang.es';
@@ -29,22 +29,22 @@ const ToolbarWithSelection = ({
 	totalCount,
 }) => {
 	return (
-		<ClayManagementToolbar
+		<ManagementToolbar.Container
 			active={active}
 			className="mb-0 show-quick-actions-on-hover"
 		>
-			<ClayManagementToolbar.ItemList expand>
-				<ClayManagementToolbar.Item className="ml-2">
+			<ManagementToolbar.ItemList expand>
+				<ManagementToolbar.Item className="ml-2">
 					<ClayCheckbox
 						checked={checked}
 						indeterminate={indeterminate}
 						onChange={handleCheck}
 					/>
-				</ClayManagementToolbar.Item>
+				</ManagementToolbar.Item>
 
 				{active && (
 					<>
-						<ClayManagementToolbar.Item>
+						<ManagementToolbar.Item>
 							<span className="ml-0 mr-0 navbar-text">
 								{selectAll
 									? Liferay.Language.get('all-selected')
@@ -55,9 +55,9 @@ const ToolbarWithSelection = ({
 											[selectedCount, totalCount]
 									  )}
 							</span>
-						</ClayManagementToolbar.Item>
+						</ManagementToolbar.Item>
 
-						<ClayManagementToolbar.Item>
+						<ManagementToolbar.Item>
 							<ClayButton
 								className="font-weight-bold nav-link"
 								displayType="unstyled"
@@ -66,10 +66,10 @@ const ToolbarWithSelection = ({
 							>
 								{Liferay.Language.get('clear')}
 							</ClayButton>
-						</ClayManagementToolbar.Item>
+						</ManagementToolbar.Item>
 
 						{!selectAll && checked && (
-							<ClayManagementToolbar.Item>
+							<ManagementToolbar.Item>
 								<ClayButton
 									className="font-weight-bold nav-link"
 									displayType="unstyled"
@@ -78,14 +78,14 @@ const ToolbarWithSelection = ({
 								>
 									{Liferay.Language.get('select-all')}
 								</ClayButton>
-							</ClayManagementToolbar.Item>
+							</ManagementToolbar.Item>
 						)}
 					</>
 				)}
 
 				{children}
-			</ClayManagementToolbar.ItemList>
-		</ClayManagementToolbar>
+			</ManagementToolbar.ItemList>
+		</ManagementToolbar.Container>
 	);
 };
 

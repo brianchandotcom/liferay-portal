@@ -12,8 +12,8 @@
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayManagementToolbar from '@clayui/management-toolbar';
 import getCN from 'classnames';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import {PropTypes} from 'prop-types';
 import React, {Component} from 'react';
 
@@ -133,10 +133,10 @@ class SearchBar extends Component {
 
 		return (
 			<div className="search-bar-root">
-				<ClayManagementToolbar className={classManagementBar}>
+				<ManagementToolbar.Container className={classManagementBar}>
 					<div className={classNavBarForm}>
-						<ClayManagementToolbar.ItemList>
-							<ClayManagementToolbar.Item>
+						<ManagementToolbar.ItemList>
+							<ManagementToolbar.Item>
 								<ClayCheckbox
 									aria-label={Liferay.Language.get(
 										'select-all'
@@ -149,13 +149,13 @@ class SearchBar extends Component {
 									}
 									onChange={this._handleAllCheckbox}
 								/>
-							</ClayManagementToolbar.Item>
-						</ClayManagementToolbar.ItemList>
+							</ManagementToolbar.Item>
+						</ManagementToolbar.ItemList>
 
 						{this._hasSelectedIds() && (
 							<>
-								<ClayManagementToolbar.ItemList expand>
-									<ClayManagementToolbar.Item>
+								<ManagementToolbar.ItemList expand>
+									<ManagementToolbar.Item>
 										<span className="navbar-text">
 											{getPluralMessage(
 												Liferay.Language.get(
@@ -167,11 +167,11 @@ class SearchBar extends Component {
 												selectedIds.length
 											)}
 										</span>
-									</ClayManagementToolbar.Item>
-								</ClayManagementToolbar.ItemList>
+									</ManagementToolbar.Item>
+								</ManagementToolbar.ItemList>
 
-								<ClayManagementToolbar.ItemList>
-									<ClayManagementToolbar.Item>
+								<ManagementToolbar.ItemList>
+									<ManagementToolbar.Item>
 										<div className="nav-link nav-link-monospaced">
 											<ClayButton
 												className="btn-outline-borderless component-action"
@@ -196,9 +196,9 @@ class SearchBar extends Component {
 												/>
 											</ClayButton>
 										</div>
-									</ClayManagementToolbar.Item>
+									</ManagementToolbar.Item>
 
-									<ClayManagementToolbar.Item>
+									<ManagementToolbar.Item>
 										<div className="nav-link nav-link-monospaced">
 											<ClayButton
 												className="btn-outline-borderless component-action"
@@ -227,9 +227,9 @@ class SearchBar extends Component {
 												)}
 											</ClayButton>
 										</div>
-									</ClayManagementToolbar.Item>
+									</ManagementToolbar.Item>
 
-									<ClayManagementToolbar.Item>
+									<ManagementToolbar.Item>
 										<div className="nav-link nav-link-monospaced">
 											<ItemDropdown
 												hidden={this._isAnyHidden()}
@@ -243,28 +243,28 @@ class SearchBar extends Component {
 												pinned={!this._isAnyUnpinned()}
 											/>
 										</div>
-									</ClayManagementToolbar.Item>
-								</ClayManagementToolbar.ItemList>
+									</ManagementToolbar.Item>
+								</ManagementToolbar.ItemList>
 							</>
 						)}
 
 						{!this._hasSelectedIds() && (
 							<>
-								<ClayManagementToolbar.ItemList expand>
+								<ManagementToolbar.ItemList expand>
 									{!!resultIds.length && (
-										<ClayManagementToolbar.Item>
+										<ManagementToolbar.Item>
 											<span className="component-text navbar-text">
 												{Liferay.Language.get(
 													'select-items'
 												)}
 											</span>
-										</ClayManagementToolbar.Item>
+										</ManagementToolbar.Item>
 									)}
-								</ClayManagementToolbar.ItemList>
+								</ManagementToolbar.ItemList>
 
 								{onAddResultSubmit && (
-									<ClayManagementToolbar.ItemList>
-										<ClayManagementToolbar.Item>
+									<ManagementToolbar.ItemList>
+										<ManagementToolbar.Item>
 											<AddResult
 												fetchDocumentsSearchUrl={
 													fetchDocumentsSearchUrl
@@ -273,13 +273,13 @@ class SearchBar extends Component {
 													onAddResultSubmit
 												}
 											/>
-										</ClayManagementToolbar.Item>
-									</ClayManagementToolbar.ItemList>
+										</ManagementToolbar.Item>
+									</ManagementToolbar.ItemList>
 								)}
 							</>
 						)}
 					</div>
-				</ClayManagementToolbar>
+				</ManagementToolbar.Container>
 			</div>
 		);
 	}

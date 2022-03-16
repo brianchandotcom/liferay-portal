@@ -20,15 +20,13 @@ import {ClayCheckbox, ClayInput, ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLink from '@clayui/link';
-import ClayManagementToolbar, {
-	ClayResultsBar,
-} from '@clayui/management-toolbar';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
 import ClayToolbar from '@clayui/toolbar';
 import classNames from 'classnames';
+import {ManagementToolbar, ResultsBar} from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {CSSTransition} from 'react-transition-group';
 
@@ -1883,8 +1881,8 @@ export default function ChangeTrackingChangesView({
 		}
 
 		return (
-			<ClayManagementToolbar.ItemList>
-				<ClayManagementToolbar.Item>
+			<ManagementToolbar.ItemList>
+				<ManagementToolbar.Item>
 					<ClayDropDown
 						active={dropdownActive}
 						menuElementAttrs={{
@@ -1989,8 +1987,8 @@ export default function ChangeTrackingChangesView({
 							</div>
 						</form>
 					</ClayDropDown>
-				</ClayManagementToolbar.Item>
-			</ClayManagementToolbar.ItemList>
+				</ManagementToolbar.Item>
+			</ManagementToolbar.ItemList>
 		);
 	};
 
@@ -2006,13 +2004,13 @@ export default function ChangeTrackingChangesView({
 						className="publications-header-td"
 						colSpan={5}
 					>
-						<ClayManagementToolbar>
+						<ManagementToolbar.Container>
 							{renderFilterDropdown()}
 
 							{renderState.id > 0 ? (
-								<ClayManagementToolbar.ItemList expand />
+								<ManagementToolbar.ItemList expand />
 							) : (
-								<ClayManagementToolbar.Search
+								<ManagementToolbar.Search
 									onSubmit={(event) => {
 										event.preventDefault();
 
@@ -2072,12 +2070,12 @@ export default function ChangeTrackingChangesView({
 											</ClayInput.GroupInsetItem>
 										</ClayInput.GroupItem>
 									</ClayInput.Group>
-								</ClayManagementToolbar.Search>
+								</ManagementToolbar.Search>
 							)}
 
-							<ClayManagementToolbar.ItemList>
+							<ManagementToolbar.ItemList>
 								{renderState.id === 0 && (
-									<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
+									<ManagementToolbar.Item className="navbar-breakpoint-d-none">
 										<ClayButton
 											className="nav-link nav-link-monospaced"
 											disabled={changes.length === 0}
@@ -2091,10 +2089,10 @@ export default function ChangeTrackingChangesView({
 												symbol="search"
 											/>
 										</ClayButton>
-									</ClayManagementToolbar.Item>
+									</ManagementToolbar.Item>
 								)}
 
-								<ClayManagementToolbar.Item className="simple-toggle-switch-reverse">
+								<ManagementToolbar.Item className="simple-toggle-switch-reverse">
 									<ClayToggle
 										disabled={changes.length === 0}
 										label={Liferay.Language.get(
@@ -2107,9 +2105,9 @@ export default function ChangeTrackingChangesView({
 										}
 										toggled={renderState.showHideable}
 									/>
-								</ClayManagementToolbar.Item>
-							</ClayManagementToolbar.ItemList>
-						</ClayManagementToolbar>
+								</ManagementToolbar.Item>
+							</ManagementToolbar.ItemList>
+						</ManagementToolbar.Container>
 					</ClayTable.Cell>
 				</ClayTable.Row>
 			</ClayTable.Head>
@@ -2358,7 +2356,7 @@ export default function ChangeTrackingChangesView({
 		const items = [];
 
 		items.push(
-			<ClayResultsBar.Item>
+			<ResultsBar.Item>
 				<span className="component-text text-truncate-inline">
 					<span className="text-truncate">
 						{Liferay.Util.sub(
@@ -2372,12 +2370,12 @@ export default function ChangeTrackingChangesView({
 						)}
 					</span>
 				</span>
-			</ClayResultsBar.Item>
+			</ResultsBar.Item>
 		);
 
 		if (resultsKeywords) {
 			items.push(
-				<ClayResultsBar.Item>
+				<ResultsBar.Item>
 					<ClayLabel
 						className="component-label tbar-label"
 						closeButtonProps={{
@@ -2393,13 +2391,13 @@ export default function ChangeTrackingChangesView({
 							': ' +
 							resultsKeywords}
 					</ClayLabel>
-				</ClayResultsBar.Item>
+				</ResultsBar.Item>
 			);
 		}
 
 		for (let i = 0; i < labels.length; i++) {
 			items.push(
-				<ClayResultsBar.Item>
+				<ResultsBar.Item>
 					<ClayLabel
 						className="component-label tbar-label"
 						closeButtonProps={{
@@ -2410,13 +2408,13 @@ export default function ChangeTrackingChangesView({
 					>
 						{labels[i].label}
 					</ClayLabel>
-				</ClayResultsBar.Item>
+				</ResultsBar.Item>
 			);
 		}
 
-		items.push(<ClayResultsBar.Item expand />);
+		items.push(<ResultsBar.Item expand />);
 		items.push(
-			<ClayResultsBar.Item>
+			<ResultsBar.Item>
 				<ClayButton
 					className="component-link tbar-link"
 					displayType="unstyled"
@@ -2430,10 +2428,10 @@ export default function ChangeTrackingChangesView({
 				>
 					{Liferay.Language.get('clear')}
 				</ClayButton>
-			</ClayResultsBar.Item>
+			</ResultsBar.Item>
 		);
 
-		return <ClayResultsBar>{items}</ClayResultsBar>;
+		return <ResultsBar>{items}</ResultsBar>;
 	};
 
 	const renderTableBody = () => {

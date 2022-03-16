@@ -12,7 +12,7 @@
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayManagementToolbar from '@clayui/management-toolbar';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import {PropTypes} from 'prop-types';
 import React, {Component} from 'react';
 
@@ -43,7 +43,7 @@ class FilterInput extends Component {
 		const {disableSearch, onSubmit, searchBarTerm} = this.props;
 
 		return (
-			<ClayManagementToolbar.Search>
+			<ManagementToolbar.Search>
 				<ClayInput.Group>
 					<ClayInput.GroupItem>
 						<ClayInput
@@ -68,7 +68,7 @@ class FilterInput extends Component {
 						</ClayInput.GroupInsetItem>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>
-			</ClayManagementToolbar.Search>
+			</ManagementToolbar.Search>
 		);
 	}
 }

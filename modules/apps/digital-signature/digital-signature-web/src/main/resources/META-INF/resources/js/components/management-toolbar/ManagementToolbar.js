@@ -12,7 +12,7 @@
  * details.
  */
 
-import ClayManagementToolbar from '@clayui/management-toolbar';
+import {ManagementToolbar as FrontendManagementToolbar} from 'frontend-js-components-web';
 import React, {useContext, useState} from 'react';
 
 import ManagementToolbarFilterAndOrder from './ManagementToolbarFilterAndOrder';
@@ -30,7 +30,7 @@ export default function ManagementToolbar({
 	const [showMobile, setShowMobile] = useState(false);
 
 	return (
-		<ClayManagementToolbar>
+		<FrontendManagementToolbar.Container>
 			<ManagementToolbarFilterAndOrder
 				columns={columns}
 				disabled={disabled}
@@ -51,6 +51,6 @@ export default function ManagementToolbar({
 				addButton={addButton}
 				setShowMobile={setShowMobile}
 			/>
-		</ClayManagementToolbar>
+		</FrontendManagementToolbar.Container>
 	);
 }

@@ -13,9 +13,9 @@ import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayTable from '@clayui/table';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useContext, useState} from 'react';
 
 import ThemeContext from '../../shared/ThemeContext';
@@ -127,15 +127,15 @@ function SelectTypes({
 
 					{searchableTypes.length > 0 ? (
 						<>
-							<ClayManagementToolbar
+							<ManagementToolbar.Container
 								className={
 									modalSelectedTypes.length > 0 &&
 									'management-bar-primary'
 								}
 							>
 								<div className="navbar-form navbar-form-autofit navbar-overlay">
-									<ClayManagementToolbar.ItemList>
-										<ClayManagementToolbar.Item>
+									<ManagementToolbar.ItemList>
+										<ManagementToolbar.Item>
 											<ClayCheckbox
 												checked={
 													modalSelectedTypes.length >
@@ -156,9 +156,9 @@ function SelectTypes({
 													)
 												}
 											/>
-										</ClayManagementToolbar.Item>
+										</ManagementToolbar.Item>
 
-										<ClayManagementToolbar.Item>
+										<ManagementToolbar.Item>
 											{modalSelectedTypes.length > 0 ? (
 												<>
 													<span className="component-text">
@@ -198,10 +198,10 @@ function SelectTypes({
 													)}
 												</span>
 											)}
-										</ClayManagementToolbar.Item>
-									</ClayManagementToolbar.ItemList>
+										</ManagementToolbar.Item>
+									</ManagementToolbar.ItemList>
 								</div>
-							</ClayManagementToolbar>
+							</ManagementToolbar.Container>
 
 							<ClayModal.Body scrollable>
 								<ClayTable>

@@ -9,8 +9,8 @@
  * distribution rights of the Software.
  */
 
-import ClayManagementToolbar from '@clayui/management-toolbar';
 import {usePrevious} from '@liferay/frontend-js-react-web';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useContext, useEffect} from 'react';
 
 import ResultsBar from '../../../../../shared/components/results-bar/ResultsBar.es';
@@ -137,11 +137,11 @@ function Header({items = [], instanceIds, totalCount, withoutUnassigned}) {
 			>
 				{!toolbarActive && (
 					<>
-						<ClayManagementToolbar.Item>
+						<ManagementToolbar.Item>
 							<strong className="ml-0 mr-0 navbar-text">
 								{Liferay.Language.get('filter-by')}
 							</strong>
-						</ClayManagementToolbar.Item>
+						</ManagementToolbar.Item>
 
 						<ProcessStepFilter
 							options={stepFilterOptions}

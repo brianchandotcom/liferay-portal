@@ -18,13 +18,11 @@ import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
-import ClayManagementToolbar, {
-	ClayResultsBar,
-} from '@clayui/management-toolbar';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
+import {ManagementToolbar, ResultsBar} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -345,9 +343,9 @@ const PublicationsSearchContainer = ({
 		const activeViewTypeItem = viewTypeItems.find((type) => type.active);
 
 		return (
-			<ClayManagementToolbar>
-				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item>
+			<ManagementToolbar.Container>
+				<ManagementToolbar.ItemList>
+					<ManagementToolbar.Item>
 						<ClayDropDownWithItems
 							items={[
 								{
@@ -386,9 +384,9 @@ const PublicationsSearchContainer = ({
 								</ClayButton>
 							}
 						/>
-					</ClayManagementToolbar.Item>
+					</ManagementToolbar.Item>
 
-					<ClayManagementToolbar.Item
+					<ManagementToolbar.Item
 						data-tooltip-align="top"
 						title={Liferay.Language.get('reverse-sort-direction')}
 					>
@@ -407,10 +405,10 @@ const PublicationsSearchContainer = ({
 								}
 							/>
 						</ClayButton>
-					</ClayManagementToolbar.Item>
-				</ClayManagementToolbar.ItemList>
+					</ManagementToolbar.Item>
+				</ManagementToolbar.ItemList>
 
-				<ClayManagementToolbar.Search
+				<ManagementToolbar.Search
 					onSubmit={(event) => {
 						event.preventDefault();
 
@@ -451,10 +449,10 @@ const PublicationsSearchContainer = ({
 							</ClayInput.GroupInsetItem>
 						</ClayInput.GroupItem>
 					</ClayInput.Group>
-				</ClayManagementToolbar.Search>
+				</ManagementToolbar.Search>
 
-				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
+				<ManagementToolbar.ItemList>
+					<ManagementToolbar.Item className="navbar-breakpoint-d-none">
 						<ClayButton
 							className="nav-link nav-link-monospaced"
 							disabled={searchDisabled}
@@ -463,12 +461,12 @@ const PublicationsSearchContainer = ({
 						>
 							<ClayIcon symbol="search" />
 						</ClayButton>
-					</ClayManagementToolbar.Item>
-				</ClayManagementToolbar.ItemList>
+					</ManagementToolbar.Item>
+				</ManagementToolbar.ItemList>
 
 				{viewTypeItems.length > 1 && (
-					<ClayManagementToolbar.ItemList>
-						<ClayManagementToolbar.Item
+					<ManagementToolbar.ItemList>
+						<ManagementToolbar.Item
 							data-tooltip-align="top"
 							title={Liferay.Language.get('display-style')}
 						>
@@ -491,10 +489,10 @@ const PublicationsSearchContainer = ({
 									</ClayButton>
 								}
 							/>
-						</ClayManagementToolbar.Item>
-					</ClayManagementToolbar.ItemList>
+						</ManagementToolbar.Item>
+					</ManagementToolbar.ItemList>
 				)}
-			</ClayManagementToolbar>
+			</ManagementToolbar.Container>
 		);
 	};
 
@@ -536,8 +534,8 @@ const PublicationsSearchContainer = ({
 
 		return (
 			<div className="results-bar">
-				<ClayResultsBar>
-					<ClayResultsBar.Item expand>
+				<ResultsBar>
+					<ResultsBar.Item expand>
 						<span className="component-text text-truncate-inline">
 							<span className="text-truncate">
 								{format(key, [count]) + ' '}
@@ -545,9 +543,9 @@ const PublicationsSearchContainer = ({
 								<strong>{resultsKeywords}</strong>
 							</span>
 						</span>
-					</ClayResultsBar.Item>
+					</ResultsBar.Item>
 
-					<ClayResultsBar.Item>
+					<ResultsBar.Item>
 						<ClayButton
 							className="component-link tbar-link"
 							displayType="unstyled"
@@ -558,8 +556,8 @@ const PublicationsSearchContainer = ({
 						>
 							{Liferay.Language.get('clear')}
 						</ClayButton>
-					</ClayResultsBar.Item>
-				</ClayResultsBar>
+					</ResultsBar.Item>
+				</ResultsBar>
 			</div>
 		);
 	};

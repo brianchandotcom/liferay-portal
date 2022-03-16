@@ -10,16 +10,16 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import ClayManagementToolbar from '@clayui/management-toolbar';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React from 'react';
 
 import ChildLink from '../../../shared/components/router/ChildLink.es';
 
 export default function Header({processId}) {
 	return (
-		<ClayManagementToolbar>
-			<ClayManagementToolbar.ItemList expand>
-				<ClayManagementToolbar.Item className="autofit-col-expand autofit-float-end">
+		<ManagementToolbar.Container>
+			<ManagementToolbar.ItemList expand>
+				<ManagementToolbar.Item className="autofit-col-expand autofit-float-end">
 					<span
 						data-tooltip-align="bottom"
 						title={Liferay.Language.get('new-sla')}
@@ -31,8 +31,8 @@ export default function Header({processId}) {
 							<ClayIcon symbol="plus" />
 						</ChildLink>
 					</span>
-				</ClayManagementToolbar.Item>
-			</ClayManagementToolbar.ItemList>
-		</ClayManagementToolbar>
+				</ManagementToolbar.Item>
+			</ManagementToolbar.ItemList>
+		</ManagementToolbar.Container>
 	);
 }

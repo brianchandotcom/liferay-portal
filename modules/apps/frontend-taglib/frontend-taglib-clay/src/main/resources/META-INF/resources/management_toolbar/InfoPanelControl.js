@@ -13,8 +13,8 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import ClayManagementToolbar from '@clayui/management-toolbar';
 import classNames from 'classnames';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useContext, useEffect, useRef} from 'react';
 
 import FeatureFlagContext from './FeatureFlagContext';
@@ -46,7 +46,7 @@ const InfoPanelControl = ({infoPanelId, onInfoButtonClick, separator}) => {
 	}, [infoButtonRef, infoPanelId]);
 
 	return (
-		<ClayManagementToolbar.Item
+		<ManagementToolbar.Item
 			className={
 				showDesignImprovements &&
 				classNames('d-none d-md-flex', {
@@ -62,7 +62,7 @@ const InfoPanelControl = ({infoPanelId, onInfoButtonClick, separator}) => {
 				ref={infoButtonRef}
 				symbol="info-circle-open"
 			/>
-		</ClayManagementToolbar.Item>
+		</ManagementToolbar.Item>
 	);
 };
 

@@ -14,13 +14,13 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayManagementToolbar from '@clayui/management-toolbar';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React from 'react';
 
 export default function ManagementToolbarRight({addButton, setShowMobile}) {
 	return (
-		<ClayManagementToolbar.ItemList>
-			<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
+		<ManagementToolbar.ItemList>
+			<ManagementToolbar.Item className="navbar-breakpoint-d-none">
 				<ClayButton
 					className="nav-link nav-link-monospaced"
 					displayType="unstyled"
@@ -28,13 +28,13 @@ export default function ManagementToolbarRight({addButton, setShowMobile}) {
 				>
 					<ClayIcon symbol="search" />
 				</ClayButton>
-			</ClayManagementToolbar.Item>
+			</ManagementToolbar.Item>
 
 			{addButton && (
-				<ClayManagementToolbar.Item>
+				<ManagementToolbar.Item>
 					{addButton()}
-				</ClayManagementToolbar.Item>
+				</ManagementToolbar.Item>
 			)}
-		</ClayManagementToolbar.ItemList>
+		</ManagementToolbar.ItemList>
 	);
 }

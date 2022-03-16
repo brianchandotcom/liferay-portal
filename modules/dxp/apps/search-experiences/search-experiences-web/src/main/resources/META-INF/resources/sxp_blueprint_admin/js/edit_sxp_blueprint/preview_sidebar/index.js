@@ -16,11 +16,11 @@ import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayList from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import ClayManagementToolbar from '@clayui/management-toolbar';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import ClayPaginationBar from '@clayui/pagination-bar';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -140,9 +140,9 @@ function PreviewSidebar({
 	);
 
 	const _renderResultsManagementBar = () => (
-		<ClayManagementToolbar>
-			<ClayManagementToolbar.ItemList>
-				<ClayManagementToolbar.Item>
+		<ManagementToolbar.Container>
+			<ManagementToolbar.ItemList>
+				<ManagementToolbar.Item>
 					<span className="text-truncate-inline total-hits-label">
 						<span className="text-truncate">
 							{sub(Liferay.Language.get('x-results'), [
@@ -152,9 +152,9 @@ function PreviewSidebar({
 							])}
 						</span>
 					</span>
-				</ClayManagementToolbar.Item>
+				</ManagementToolbar.Item>
 
-				<ClayManagementToolbar.Item>
+				<ManagementToolbar.Item>
 					<ClayButton
 						aria-label={Liferay.Language.get('refresh')}
 						disabled={loading}
@@ -164,11 +164,11 @@ function PreviewSidebar({
 					>
 						{Liferay.Language.get('refresh')}
 					</ClayButton>
-				</ClayManagementToolbar.Item>
-			</ClayManagementToolbar.ItemList>
+				</ManagementToolbar.Item>
+			</ManagementToolbar.ItemList>
 
-			<ClayManagementToolbar.ItemList>
-				<ClayManagementToolbar.Item>
+			<ManagementToolbar.ItemList>
+				<ManagementToolbar.Item>
 					<PreviewModalWithCopyDownload
 						fileName="raw_response.json"
 						folded
@@ -187,9 +187,9 @@ function PreviewSidebar({
 							{Liferay.Language.get('view-raw-response')}
 						</ClayButton>
 					</PreviewModalWithCopyDownload>
-				</ClayManagementToolbar.Item>
-			</ClayManagementToolbar.ItemList>
-		</ClayManagementToolbar>
+				</ManagementToolbar.Item>
+			</ManagementToolbar.ItemList>
+		</ManagementToolbar.Container>
 	);
 
 	return (

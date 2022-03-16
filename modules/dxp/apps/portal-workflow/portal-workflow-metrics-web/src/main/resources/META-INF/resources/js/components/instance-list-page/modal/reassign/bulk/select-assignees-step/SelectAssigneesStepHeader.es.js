@@ -11,7 +11,7 @@
 
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayManagementToolbar from '@clayui/management-toolbar';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {Autocomplete} from '../../../../../../shared/components/autocomplete/Autocomplete.es';
@@ -79,9 +79,9 @@ export default function Header({data}) {
 
 	return (
 		<PromisesResolver.Resolved>
-			<ClayManagementToolbar className="border-bottom mb-0 px-3">
-				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item className="pt-2">
+			<ManagementToolbar.Container className="border-bottom mb-0 px-3">
+				<ManagementToolbar.ItemList>
+					<ManagementToolbar.Item className="pt-2">
 						<ClayCheckbox
 							checked={useSameAssignee}
 							disabled={disableBulk}
@@ -90,10 +90,10 @@ export default function Header({data}) {
 							)}
 							onChange={handleCheck}
 						/>
-					</ClayManagementToolbar.Item>
-				</ClayManagementToolbar.ItemList>
+					</ManagementToolbar.Item>
+				</ManagementToolbar.ItemList>
 
-				<ClayManagementToolbar.Search onSubmit={handleSubmit}>
+				<ManagementToolbar.Search onSubmit={handleSubmit}>
 					<Autocomplete
 						defaultValue={selectedAssignee?.name || ''}
 						disabled={disableBulk || !useSameAssignee}
@@ -107,8 +107,8 @@ export default function Header({data}) {
 							<ClayIcon className="m-2" symbol="search" />
 						</ClayInput.GroupInsetItem>
 					</Autocomplete>
-				</ClayManagementToolbar.Search>
-			</ClayManagementToolbar>
+				</ManagementToolbar.Search>
+			</ManagementToolbar.Container>
 		</PromisesResolver.Resolved>
 	);
 }

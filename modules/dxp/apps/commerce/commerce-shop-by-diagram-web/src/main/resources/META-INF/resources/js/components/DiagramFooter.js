@@ -12,7 +12,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayManagementToolbar from '@clayui/management-toolbar';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useMemo} from 'react';
 
 import {ZOOM_STEP, ZOOM_VALUES} from '../utilities/constants';
@@ -37,10 +37,10 @@ function DiagramFooter({
 	}, [currentZoom]);
 
 	return (
-		<ClayManagementToolbar className="py-2">
+		<ManagementToolbar.Container className="py-2">
 			<div className="d-flex flex-grow-1 justify-content-end">
-				<ClayManagementToolbar.ItemList>
-					<ClayManagementToolbar.Item>
+				<ManagementToolbar.ItemList>
+					<ManagementToolbar.Item>
 						<ClayButton
 							className="ml-1"
 							displayType="secondary"
@@ -56,9 +56,9 @@ function DiagramFooter({
 								? Liferay.Language.get('compress')
 								: Liferay.Language.get('expand')}
 						</ClayButton>
-					</ClayManagementToolbar.Item>
+					</ManagementToolbar.Item>
 
-					<ClayManagementToolbar.Item>
+					<ManagementToolbar.Item>
 						<ClayButtonWithIcon
 							className="ml-1"
 							disabled={currentZoom <= ZOOM_VALUES[0]}
@@ -78,9 +78,9 @@ function DiagramFooter({
 							}}
 							symbol="hr"
 						/>
-					</ClayManagementToolbar.Item>
+					</ManagementToolbar.Item>
 
-					<ClayManagementToolbar.Item>
+					<ManagementToolbar.Item>
 						<ClaySelect
 							className="ml-1"
 							onChange={(event) => {
@@ -96,9 +96,9 @@ function DiagramFooter({
 								/>
 							))}
 						</ClaySelect>
-					</ClayManagementToolbar.Item>
+					</ManagementToolbar.Item>
 
-					<ClayManagementToolbar.Item>
+					<ManagementToolbar.Item>
 						<ClayButtonWithIcon
 							className="ml-1"
 							disabled={
@@ -121,10 +121,10 @@ function DiagramFooter({
 							}}
 							symbol="plus"
 						/>
-					</ClayManagementToolbar.Item>
-				</ClayManagementToolbar.ItemList>
+					</ManagementToolbar.Item>
+				</ManagementToolbar.ItemList>
 			</div>
-		</ClayManagementToolbar>
+		</ManagementToolbar.Container>
 	);
 }
 

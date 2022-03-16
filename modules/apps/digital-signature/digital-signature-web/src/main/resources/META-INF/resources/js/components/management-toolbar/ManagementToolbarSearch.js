@@ -14,7 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import ClayManagementToolbar from '@clayui/management-toolbar';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 export default function ManagementToolbarSearch({
@@ -32,7 +32,7 @@ export default function ManagementToolbarSearch({
 	}, [searchText]);
 
 	return (
-		<ClayManagementToolbar.Search
+		<ManagementToolbar.Search
 			onSubmit={(event) => {
 				event.preventDefault();
 				onSubmit(value.trim());
@@ -70,6 +70,6 @@ export default function ManagementToolbarSearch({
 					</ClayInput.GroupInsetItem>
 				</ClayInput.GroupItem>
 			</ClayInput.Group>
-		</ClayManagementToolbar.Search>
+		</ManagementToolbar.Search>
 	);
 }

@@ -14,7 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayManagementToolbar from '@clayui/management-toolbar';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useContext, useState} from 'react';
 
@@ -32,31 +32,31 @@ function NavBar({creationMenu, showSearch}) {
 	const [showMobile, setShowMobile] = useState(false);
 
 	return (
-		<ClayManagementToolbar className="c-mb-0 justify-content-space-between">
-			<ClayManagementToolbar.ItemList>
+		<ManagementToolbar.Container className="c-mb-0 justify-content-space-between">
+			<ManagementToolbar.ItemList>
 				{!!filters.length && (
-					<ClayManagementToolbar.Item>
+					<ManagementToolbar.Item>
 						<FiltersDropdown />
-					</ClayManagementToolbar.Item>
+					</ManagementToolbar.Item>
 				)}
-			</ClayManagementToolbar.ItemList>
+			</ManagementToolbar.ItemList>
 
 			{showSearch && (
 				<>
-					<ClayManagementToolbar.Search
+					<ManagementToolbar.Search
 						onSubmit={(event) => {
 							event.preventDefault();
 						}}
 						showMobile={showMobile}
 					>
 						<MainSearch setShowMobile={setShowMobile} />
-					</ClayManagementToolbar.Search>
+					</ManagementToolbar.Search>
 				</>
 			)}
 
-			<ClayManagementToolbar.ItemList>
+			<ManagementToolbar.ItemList>
 				{showSearch && (
-					<ClayManagementToolbar.Item className="navbar-breakpoint-d-none">
+					<ManagementToolbar.Item className="navbar-breakpoint-d-none">
 						<ClayButton
 							className="nav-link nav-link-monospaced"
 							displayType="unstyled"
@@ -64,28 +64,28 @@ function NavBar({creationMenu, showSearch}) {
 						>
 							<ClayIcon symbol="search" />
 						</ClayButton>
-					</ClayManagementToolbar.Item>
+					</ManagementToolbar.Item>
 				)}
 
 				{views?.length > 1 && (
-					<ClayManagementToolbar.Item>
+					<ManagementToolbar.Item>
 						<ActiveViewSelector views={views} />
-					</ClayManagementToolbar.Item>
+					</ManagementToolbar.Item>
 				)}
 
 				{customViewsEnabled && (
-					<ClayManagementToolbar.Item>
+					<ManagementToolbar.Item>
 						<CustomViewDropdown />
-					</ClayManagementToolbar.Item>
+					</ManagementToolbar.Item>
 				)}
 
 				{creationMenu && (
-					<ClayManagementToolbar.Item>
+					<ManagementToolbar.Item>
 						<CreationMenu {...creationMenu} />
-					</ClayManagementToolbar.Item>
+					</ManagementToolbar.Item>
 				)}
-			</ClayManagementToolbar.ItemList>
-		</ClayManagementToolbar>
+			</ManagementToolbar.ItemList>
+		</ManagementToolbar.Container>
 	);
 }
 

@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import ClayManagementToolbar from '@clayui/management-toolbar';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useMemo} from 'react';
 
 import HeaderKebab from '../../shared/components/header/HeaderKebab.es';
@@ -24,9 +24,9 @@ import Body from './ProcessListPageBody.es';
 const Header = ({page, pageSize, search, sort, totalCount}) => {
 	return (
 		<>
-			<ClayManagementToolbar className="mb-0">
+			<ManagementToolbar.Container className="mb-0">
 				<SearchField disabled={!search && totalCount === 0} />
-			</ClayManagementToolbar>
+			</ManagementToolbar.Container>
 
 			{search && (
 				<ResultsBar>

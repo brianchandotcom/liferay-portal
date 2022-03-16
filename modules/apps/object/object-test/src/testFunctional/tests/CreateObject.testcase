@@ -2079,7 +2079,9 @@ definition {
 			fieldName = "CustomField",
 			fieldType = "Text");
 
-		ObjectAdmin.viewFieldErrorMessage(message = "The first character of a name must be an lower case letter.");
+		AssertTextEquals(
+			value1 = "The first character of a name must be an lower case letter.",
+			locator1 = "Message#ERROR");
 	}
 
 	@description = "LPS-135549 - Verify it is not possible to save with special characters for the Object Name"

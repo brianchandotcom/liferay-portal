@@ -322,10 +322,6 @@ public class BatchPlannerLogLocalServiceImpl
 		);
 	}
 
-	private String _getLikeWildcard(String value) {
-		return StringUtil.quote(value, StringPool.PERCENT);
-	}
-
 	private Predicate _getPredicate(long companyId) {
 		return BatchPlannerLogTable.INSTANCE.companyId.eq(companyId);
 	}
@@ -353,7 +349,7 @@ public class BatchPlannerLogLocalServiceImpl
 					BatchPlannerPlanTable.INSTANCE.getTableName()));
 		}
 
-		return column.like(_getLikeWildcard(keyword));
+		return column.like(StringUtil.quote(keyword, StringPool.PERCENT));
 	}
 
 	private JoinStep _getSelectJoinStep() {

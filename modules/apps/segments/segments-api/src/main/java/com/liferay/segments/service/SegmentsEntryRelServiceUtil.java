@@ -41,47 +41,6 @@ public class SegmentsEntryRelServiceUtil {
 	 */
 
 	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 SegmentsEntryService#addSegmentsEntryClassPKs(
-	 long, long[], ServiceContext)}
-	 */
-	@Deprecated
-	public static SegmentsEntryRel addSegmentsEntryRel(
-			long segmentsEntryId, long classNameId, long classPK,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addSegmentsEntryRel(
-			segmentsEntryId, classNameId, classPK, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 SegmentsEntryService#deleteSegmentsEntryClassPKs(
-	 long, long[])}
-	 */
-	@Deprecated
-	public static void deleteSegmentsEntryRel(long segmentsEntryRelId)
-		throws PortalException {
-
-		getService().deleteSegmentsEntryRel(segmentsEntryRelId);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 SegmentsEntryService#deleteSegmentsEntryClassPKs(
-	 long, long[])}
-	 */
-	@Deprecated
-	public static void deleteSegmentsEntryRel(
-			long segmentsEntryId, long classNameId, long classPK)
-		throws PortalException {
-
-		getService().deleteSegmentsEntryRel(
-			segmentsEntryId, classNameId, classPK);
-	}
-
-	/**
 	 * Returns the OSGi service identifier.
 	 *
 	 * @return the OSGi service identifier

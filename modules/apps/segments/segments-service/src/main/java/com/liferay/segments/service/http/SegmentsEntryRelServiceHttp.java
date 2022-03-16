@@ -50,123 +50,6 @@ import com.liferay.segments.service.SegmentsEntryRelServiceUtil;
  */
 public class SegmentsEntryRelServiceHttp {
 
-	public static com.liferay.segments.model.SegmentsEntryRel
-			addSegmentsEntryRel(
-				HttpPrincipal httpPrincipal, long segmentsEntryId,
-				long classNameId, long classPK,
-				com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				SegmentsEntryRelServiceUtil.class, "addSegmentsEntryRel",
-				_addSegmentsEntryRelParameterTypes0);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsEntryId, classNameId, classPK,
-				serviceContext);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return (com.liferay.segments.model.SegmentsEntryRel)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static void deleteSegmentsEntryRel(
-			HttpPrincipal httpPrincipal, long segmentsEntryRelId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				SegmentsEntryRelServiceUtil.class, "deleteSegmentsEntryRel",
-				_deleteSegmentsEntryRelParameterTypes1);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsEntryRelId);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static void deleteSegmentsEntryRel(
-			HttpPrincipal httpPrincipal, long segmentsEntryId, long classNameId,
-			long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				SegmentsEntryRelServiceUtil.class, "deleteSegmentsEntryRel",
-				_deleteSegmentsEntryRelParameterTypes2);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, segmentsEntryId, classNameId, classPK);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
 	public static java.util.List<com.liferay.segments.model.SegmentsEntryRel>
 			getSegmentsEntryRels(
 				HttpPrincipal httpPrincipal, long segmentsEntryId)
@@ -175,7 +58,7 @@ public class SegmentsEntryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryRelServiceUtil.class, "getSegmentsEntryRels",
-				_getSegmentsEntryRelsParameterTypes3);
+				_getSegmentsEntryRelsParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsEntryId);
@@ -221,7 +104,7 @@ public class SegmentsEntryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryRelServiceUtil.class, "getSegmentsEntryRels",
-				_getSegmentsEntryRelsParameterTypes4);
+				_getSegmentsEntryRelsParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsEntryId, start, end, orderByComparator);
@@ -264,7 +147,7 @@ public class SegmentsEntryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryRelServiceUtil.class, "getSegmentsEntryRels",
-				_getSegmentsEntryRelsParameterTypes5);
+				_getSegmentsEntryRelsParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, classNameId, classPK);
@@ -305,7 +188,7 @@ public class SegmentsEntryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryRelServiceUtil.class, "getSegmentsEntryRelsCount",
-				_getSegmentsEntryRelsCountParameterTypes6);
+				_getSegmentsEntryRelsCountParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsEntryId);
@@ -346,7 +229,7 @@ public class SegmentsEntryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryRelServiceUtil.class, "getSegmentsEntryRelsCount",
-				_getSegmentsEntryRelsCountParameterTypes7);
+				_getSegmentsEntryRelsCountParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, classNameId, classPK);
@@ -386,7 +269,7 @@ public class SegmentsEntryRelServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				SegmentsEntryRelServiceUtil.class, "hasSegmentsEntryRel",
-				_hasSegmentsEntryRelParameterTypes8);
+				_hasSegmentsEntryRelParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, segmentsEntryId, classNameId, classPK);
@@ -415,29 +298,20 @@ public class SegmentsEntryRelServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(
 		SegmentsEntryRelServiceHttp.class);
 
-	private static final Class<?>[] _addSegmentsEntryRelParameterTypes0 =
-		new Class[] {
-			long.class, long.class, long.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
-	private static final Class<?>[] _deleteSegmentsEntryRelParameterTypes1 =
+	private static final Class<?>[] _getSegmentsEntryRelsParameterTypes0 =
 		new Class[] {long.class};
-	private static final Class<?>[] _deleteSegmentsEntryRelParameterTypes2 =
-		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _getSegmentsEntryRelsParameterTypes3 =
-		new Class[] {long.class};
-	private static final Class<?>[] _getSegmentsEntryRelsParameterTypes4 =
+	private static final Class<?>[] _getSegmentsEntryRelsParameterTypes1 =
 		new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getSegmentsEntryRelsParameterTypes5 =
+	private static final Class<?>[] _getSegmentsEntryRelsParameterTypes2 =
 		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _getSegmentsEntryRelsCountParameterTypes6 =
+	private static final Class<?>[] _getSegmentsEntryRelsCountParameterTypes3 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getSegmentsEntryRelsCountParameterTypes7 =
+	private static final Class<?>[] _getSegmentsEntryRelsCountParameterTypes4 =
 		new Class[] {long.class, long.class, long.class};
-	private static final Class<?>[] _hasSegmentsEntryRelParameterTypes8 =
+	private static final Class<?>[] _hasSegmentsEntryRelParameterTypes5 =
 		new Class[] {long.class, long.class, long.class};
 
 }

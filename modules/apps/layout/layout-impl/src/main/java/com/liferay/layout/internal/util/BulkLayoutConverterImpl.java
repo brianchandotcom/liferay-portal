@@ -141,22 +141,39 @@ public class BulkLayoutConverterImpl implements BulkLayoutConverter {
 			new ServiceContext()
 		);
 
-		Layout draftLayout = _getOrCreateDraftLayout(layout, serviceContext);
+		serviceContext.setScopeGroupId(layout.getGroupId());
 
-		LayoutConversionResult layoutConversionResult = layoutConverter.convert(
-			draftLayout, locale);
+		User user = _userLocalService.fetchUser(layout.getUserId());
 
-		_addOrUpdateLayoutPageTemplateStructure(
-			draftLayout, layoutConversionResult.getLayoutData(),
-			serviceContext);
+		if (user != null) {
+			serviceContext.setUserId(user.getUserId());
+		}
 
-		draftLayout = _layoutLocalService.fetchLayout(draftLayout.getPlid());
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
-		_updatePortletDecorator(draftLayout);
+			Layout draftLayout = _getOrCreateDraftLayout(
+				layout, serviceContext);
 
-		return LayoutConversionResult.of(
-			null, layoutConversionResult.getConversionWarningMessages(),
-			draftLayout);
+			LayoutConversionResult layoutConversionResult =
+				layoutConverter.convert(draftLayout, locale);
+
+			_addOrUpdateLayoutPageTemplateStructure(
+				draftLayout, layoutConversionResult.getLayoutData(),
+				serviceContext);
+
+			draftLayout = _layoutLocalService.fetchLayout(
+				draftLayout.getPlid());
+
+			_updatePortletDecorator(draftLayout);
+
+			return LayoutConversionResult.of(
+				null, layoutConversionResult.getConversionWarningMessages(),
+				draftLayout);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Override

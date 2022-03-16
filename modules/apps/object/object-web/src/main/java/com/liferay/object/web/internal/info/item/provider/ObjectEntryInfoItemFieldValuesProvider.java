@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.TransformUtil;
@@ -218,7 +219,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 
 	private Object _getValue(
 			ObjectField objectField, Map<String, Serializable> values)
-		throws PortalException {
+		throws Exception {
 
 		Object value = values.get(objectField.getName());
 
@@ -264,7 +265,12 @@ public class ObjectEntryInfoItemFieldValuesProvider
 			Format dateFormat = FastDateFormatFactoryUtil.getDate(
 				serviceContext.getLocale());
 
-			return dateFormat.format((Date)values.get(objectField.getName()));
+			Serializable dateValue = values.get(objectField.getName());
+
+			Date date = DateUtil.parseDate(
+				"yyyy-MM-dd", dateValue.toString(), serviceContext.getLocale());
+
+			return dateFormat.format(date);
 		}
 
 		return values.get(objectField.getName());

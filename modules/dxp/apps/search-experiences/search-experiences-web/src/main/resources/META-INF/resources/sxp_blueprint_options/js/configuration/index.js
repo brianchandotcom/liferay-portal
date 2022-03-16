@@ -18,10 +18,7 @@ import ClaySticker from '@clayui/sticker';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
-import {
-	getLocalizedLearnMessageObject,
-	sub,
-} from '../../../sxp_blueprint_admin/js/utils/language';
+import {getLocalizedLearnMessageObject} from '../../../sxp_blueprint_admin/js/utils/language';
 import SelectSXPBlueprintModal from './SelectSXPBlueprintModal';
 
 const Configuration = ({
@@ -122,23 +119,15 @@ const Configuration = ({
 
 				{learnMessageObject.url && (
 					<div className="form-text">
-						{sub(
-							Liferay.Language.get(
-								'x-to-setup-blueprint-options'
-							),
-							[
-								<ClayLink
-									className="learn-message"
-									href={learnMessageObject.url}
-									key="learn-how"
-									rel="noopener noreferrer"
-									target="_blank"
-								>
-									{learnMessageObject.message}
-								</ClayLink>,
-							],
-							false
-						)}
+						<ClayLink
+							className="learn-message"
+							href={learnMessageObject.url}
+							key="learn-how"
+							rel="noopener noreferrer"
+							target="_blank"
+						>
+							{learnMessageObject.message}
+						</ClayLink>
 					</div>
 				)}
 			</ClayForm.Group>

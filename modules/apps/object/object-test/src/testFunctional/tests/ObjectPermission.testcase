@@ -109,12 +109,60 @@ definition {
 	}
 
 	@description = "LPS-146759 - Verify it is possible to update a single Picklist permissions with the Permissions permission"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDefineSinglePicklistPermissionsWithPermissionsPermission {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectPermission#CanDefineSinglePicklistPermissionsWithPermissionsPermission";
 
-		// TODO LPS-148941 CanDefineSinglePicklistPermissionsWithPermissionsPermission pending implementation
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		Picklist.addPicklistViaAPI(picklistName = "Custom Picklist 148941");
+
+		Picklist.gotoPicklists();
+
+		ObjectCustomViews.gotoPermissions(entryName = "Custom Picklist 148941");
+
+		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "PERMISSIONS,VIEW");
+
+		Button.clickSave();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Picklist.gotoPicklists();
+
+		ObjectCustomViews.gotoPermissions(entryName = "Custom Picklist 148941");
+
+		ObjectCustomViews.selectPermissionToRegularRole(permissionsList = "VIEW");
+
+		Button.clickSave();
+
+		Picklist.gotoPicklists();
+
+		Picklist.assertPicklistNotPresent(picklistName = "Custom Picklist 148941");
 
 	}
 

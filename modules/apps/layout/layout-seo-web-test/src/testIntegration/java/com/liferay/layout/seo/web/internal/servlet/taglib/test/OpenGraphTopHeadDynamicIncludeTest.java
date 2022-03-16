@@ -142,6 +142,10 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		_layout.setDescriptionMap(RandomTestUtil.randomLocaleStringMap());
+
+		_layout = _layoutLocalService.updateLayout(_layout);
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
 
@@ -294,10 +298,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	public void testIncludeDefaultTitleAndDescription() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
-
-		_layout.setDescriptionMap(RandomTestUtil.randomLocaleStringMap());
-
-		_layout = _layoutLocalService.updateLayout(_layout);
 
 		_testWithLayoutSEOCompanyConfiguration(
 			() -> _dynamicInclude.include(

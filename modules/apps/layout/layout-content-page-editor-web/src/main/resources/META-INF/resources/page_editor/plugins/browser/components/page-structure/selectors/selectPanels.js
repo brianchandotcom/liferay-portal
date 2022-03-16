@@ -35,6 +35,7 @@ import {FragmentGeneralPanel} from '../components/item-configuration-panels/Frag
 import {FragmentStylesPanel} from '../components/item-configuration-panels/FragmentStylesPanel';
 import ImageSourcePanel from '../components/item-configuration-panels/ImageSourcePanel';
 import {MappingPanel} from '../components/item-configuration-panels/MappingPanel';
+import {RowAdvancedPanel} from '../components/item-configuration-panels/RowAdvancedPanel';
 import {RowGeneralPanel} from '../components/item-configuration-panels/RowGeneralPanel';
 import {RowStylesPanel} from '../components/item-configuration-panels/RowStylesPanel';
 
@@ -51,6 +52,7 @@ export const PANEL_IDS = {
 	fragmentGeneral: 'fragmentGeneral',
 	fragmentStyles: 'fragmentStyles',
 	imageSource: 'imageSource',
+	rowAdvanced: 'rowAdvanced',
 	rowGeneral: 'rowGeneral',
 	rowStyles: 'rowStyles',
 };
@@ -116,15 +118,20 @@ export const PANELS = {
 		label: Liferay.Language.get('image-source'),
 		priority: 3,
 	},
+	[PANEL_IDS.rowAdvanced]: {
+		component: RowAdvancedPanel,
+		label: Liferay.Language.get('advanced'),
+		priority: 0,
+	},
 	[PANEL_IDS.rowGeneral]: {
 		component: RowGeneralPanel,
 		label: Liferay.Language.get('general'),
-		priority: 1,
+		priority: 2,
 	},
 	[PANEL_IDS.rowStyles]: {
 		component: RowStylesPanel,
 		label: Liferay.Language.get('styles'),
-		priority: 0,
+		priority: 1,
 	},
 };
 
@@ -231,6 +238,9 @@ export function selectPanels(activeItemId, activeItemType, state) {
 		panelsIds = {
 			[PANEL_IDS.rowStyles]: true,
 			[PANEL_IDS.rowGeneral]: true,
+			[PANEL_IDS.rowAdvanced]:
+				state.selectedViewportSize === VIEWPORT_SIZES.desktop &&
+				config.fragmentAdvancedOptionsEnabled,
 		};
 	}
 

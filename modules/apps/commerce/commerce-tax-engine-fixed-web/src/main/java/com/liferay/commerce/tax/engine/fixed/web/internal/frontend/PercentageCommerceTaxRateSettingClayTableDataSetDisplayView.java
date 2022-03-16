@@ -41,11 +41,11 @@ public class PercentageCommerceTaxRateSettingClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField taxRateField =
+		ClayTableSchemaField taxRateClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"taxRate", "tax-rate");
 
-		taxRateField.setContentRenderer("actionLink");
+		taxRateClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("country", "country");
 

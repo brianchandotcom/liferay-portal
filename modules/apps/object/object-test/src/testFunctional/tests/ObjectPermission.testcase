@@ -1575,12 +1575,79 @@ definition {
 	}
 
 	@description = "LPS-146756 - Verify that a guest user with the resource permission action of "View" activated can vizualize object entries"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test GuestCanViewObjectEntriesWithViewPermission {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectPermission#GuestCanViewObjectEntriesWithViewPermission";
 
-		// TODO LPS-148946 GuestCanViewObjectEntriesWithViewPermission pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject",
+			value = "Entry Test");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object");
+
+		Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPublicPage(
+			pageName = "Object Page",
+			sitePageType = "Widget Page");
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Object Page");
+
+		Portlet.addPG(
+			pageName = "Object Page",
+			portletName = "Custom Objects");
+
+		Navigator.openURL();
+		
+		ApplicationsMenu.gotoPortlet(
+			category = "Users",
+			panel = "Control Panel",
+			portlet = "Roles");
+
+		Role.definePermissionCP(
+			permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_RESOURCE_PERMISSIONS_VIEW_CHECKBOX",
+			permissionDefinitionValue = "",
+			permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
+			permissionNavigationValue = "Custom Objects",
+			roleTitle = "Guest",
+			roleType = "Regular");
+
+		Navigator.openURL();
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Object Page");
+		
+		ObjectPortlet.viewEntry(entry = "Entry Test");
 
 	}
 

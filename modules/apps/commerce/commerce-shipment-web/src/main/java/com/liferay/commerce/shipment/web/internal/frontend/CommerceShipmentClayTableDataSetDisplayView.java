@@ -42,11 +42,11 @@ public class CommerceShipmentClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField shipmentIdField =
+		ClayTableSchemaField shipmentIdClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"shipmentId", "shipment-id");
 
-		shipmentIdField.setContentRenderer("actionLink");
+		shipmentIdClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"accountName", "account");
@@ -69,10 +69,10 @@ public class CommerceShipmentClayTableDataSetDisplayView
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"expectedDeliveryDateString", "estimated-delivery-date");
 
-		ClayTableSchemaField statusField =
+		ClayTableSchemaField statusClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("status", "status");
 
-		statusField.setContentRenderer("label");
+		statusClayTableSchemaField.setContentRenderer("label");
 
 		return clayTableSchemaBuilder.build();
 	}

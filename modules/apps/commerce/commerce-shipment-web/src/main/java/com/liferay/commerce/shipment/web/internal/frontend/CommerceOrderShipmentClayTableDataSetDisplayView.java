@@ -42,21 +42,21 @@ public class CommerceOrderShipmentClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField shipmentIdField =
+		ClayTableSchemaField shipmentIdClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"shipmentId", "shipment-id");
 
-		shipmentIdField.setContentRenderer("actionLink");
+		shipmentIdClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("address", "address");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"createDate", "create-date");
 
-		ClayTableSchemaField statusField =
+		ClayTableSchemaField statusClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("status", "status");
 
-		statusField.setContentRenderer("label");
+		statusClayTableSchemaField.setContentRenderer("label");
 
 		clayTableSchemaBuilder.addClayTableSchemaField("tracking", "tracking");
 

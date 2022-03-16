@@ -89,11 +89,11 @@ public class CommerceShippingFixedOptionSettingClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField shippingOptionField =
+		ClayTableSchemaField shippingOptionClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"shippingOption", "shipping-option");
 
-		shippingOptionField.setContentRenderer("actionLink");
+		shippingOptionClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"shippingMethod", "shipping-method");

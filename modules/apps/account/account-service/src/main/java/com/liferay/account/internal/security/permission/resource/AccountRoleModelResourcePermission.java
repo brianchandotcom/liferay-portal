@@ -14,6 +14,7 @@
 
 package com.liferay.account.internal.security.permission.resource;
 
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
@@ -23,9 +24,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.permission.RolePermission;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -83,6 +88,8 @@ public class AccountRoleModelResourcePermission
 			String actionId)
 		throws PortalException {
 
+		Group group = null;
+
 		AccountRole accountRole = _accountRoleLocalService.fetchAccountRole(
 			accountRoleId);
 
@@ -96,17 +103,27 @@ public class AccountRoleModelResourcePermission
 
 				return true;
 			}
-		}
 
-		Group group = null;
+			long accountEntryId = accountRole.getAccountEntryId();
 
-		long accountEntryId = accountRole.getAccountEntryId();
+			if (Objects.equals(actionId, ActionKeys.VIEW)) {
+				if (((accountEntryId > 0) &&
+					 _accountEntryModelResourcePermission.contains(
+						 permissionChecker, accountEntryId,
+						 AccountActionKeys.VIEW_ACCOUNT_ROLES)) ||
+					_rolePermission.contains(
+						permissionChecker, role.getRoleId(), ActionKeys.VIEW)) {
 
-		if (accountEntryId > 0) {
-			AccountEntry accountEntry =
-				_accountEntryLocalService.getAccountEntry(accountEntryId);
+					return true;
+				}
+			}
 
-			group = accountEntry.getAccountEntryGroup();
+			if (accountEntryId > 0) {
+				AccountEntry accountEntry =
+					_accountEntryLocalService.getAccountEntry(accountEntryId);
+
+				group = accountEntry.getAccountEntryGroup();
+			}
 		}
 
 		return permissionChecker.hasPermission(
@@ -126,6 +143,12 @@ public class AccountRoleModelResourcePermission
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.account.model.AccountEntry)"
+	)
+	private ModelResourcePermission<AccountEntry>
+		_accountEntryModelResourcePermission;
+
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
 
@@ -133,5 +156,8 @@ public class AccountRoleModelResourcePermission
 		target = "(resource.name=" + AccountConstants.RESOURCE_NAME + ")"
 	)
 	private PortletResourcePermission _portletResourcePermission;
+
+	@Reference
+	private RolePermission _rolePermission;
 
 }

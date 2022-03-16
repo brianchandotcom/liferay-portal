@@ -13,10 +13,10 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {ReactDOMServer} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import Proptypes from 'prop-types';
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
 
 import {getDataRendererById} from '../utils/dataRenderers';
 import {getSchemaString} from '../utils/index';

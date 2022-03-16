@@ -14,6 +14,8 @@
 
 import process from 'process';
 
+export {default as ReactDOMServer} from 'react-dom/server';
+
 export {default as render} from './render';
 export {default as ReactPortal} from './ReactPortal';
 export {default as useEventListener} from './hooks/useEventListener';

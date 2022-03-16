@@ -25,9 +25,11 @@ import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTaskError;
+import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.headless.batch.engine.dto.v1_0.FailedItem;
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.internal.resource.v1_0.report.ImportTaskFailedItemsCSVReport;
 import com.liferay.headless.batch.engine.internal.resource.v1_0.util.ParametersUtil;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
 import com.liferay.petra.executor.PortalExecutorManager;
@@ -36,6 +38,7 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.File;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,6 +48,7 @@ import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.InputStream;
 
 import java.util.AbstractMap;
@@ -62,6 +66,8 @@ import java.util.zip.ZipOutputStream;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -111,6 +117,36 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return _toImportTask(
 			_batchEngineImportTaskLocalService.getBatchEngineImportTask(
 				importTaskId));
+	}
+
+	@Override
+	public Response getImportTaskFailedItemReport(Long importTaskId)
+		throws Exception {
+
+		java.io.File file = null;
+
+		try {
+			file = _importTaskFailedItemsCSVReport.create(
+				_batchEngineImportTaskErrorLocalService.
+					getBatchEngineImportTaskErrors(importTaskId));
+
+			FileInputStream fileInputStream = new FileInputStream(file);
+
+			StreamingOutput streamingOutput =
+				outputStream -> StreamUtil.transfer(
+					fileInputStream, outputStream);
+
+			return Response.ok(
+				streamingOutput
+			).header(
+				"Content-Disposition", "attachment; filename=" + file.getName()
+			).build();
+		}
+		finally {
+			if (file != null) {
+				FileUtil.delete(file);
+			}
+		}
 	}
 
 	@Override
@@ -419,6 +455,10 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		Arrays.asList("callbackURL", "fieldNameMapping"));
 
 	@Reference
+	private BatchEngineImportTaskErrorLocalService
+		_batchEngineImportTaskErrorLocalService;
+
+	@Reference
 	private BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
 
 	@Reference
@@ -429,6 +469,9 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 
 	@Reference
 	private File _file;
+
+	@Reference
+	private ImportTaskFailedItemsCSVReport _importTaskFailedItemsCSVReport;
 
 	private final Map<String, Integer> _itemClassBatchSizeMap = new HashMap<>();
 

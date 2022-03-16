@@ -62,29 +62,17 @@ EditBatchPlannerPlanDisplayContext editBatchPlannerPlanDisplayContext = (EditBat
 								/>
 							</div>
 
-							<div class="alert alert-autofit-stacked alert-indicator-start alert-info alert-inline">
-								<div class="alert-autofit-row autofit-row">
-									<div class="autofit-col autofit-col-expand">
-										<div class="autofit-section">
-											<clay:icon
-												symbol="info-circle"
-											/>
-
-											<strong class="lead"><%= LanguageUtil.get(request, "download-a-sample-file-for-this-entity") %></strong>
-										</div>
-									</div>
-
-									<div class="autofit-col">
-										<div class="autofit-section">
-											<div class="btn-group">
-												<div class="btn-group-item">
-													<a class="download-template-link link-primary single-link" href="#"><%= LanguageUtil.get(request, "download-template") %></a>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							<clay:alert
+								displayType="info"
+								title="download-a-sample-file-for-this-entity"
+							>
+								<clay:link
+									cssClass="link-primary single-link"
+									disabled="<%= true %>"
+									href="#"
+									label="download"
+								/>
+							</clay:alert>
 
 							<div class="mt-2">
 								<clay:checkbox

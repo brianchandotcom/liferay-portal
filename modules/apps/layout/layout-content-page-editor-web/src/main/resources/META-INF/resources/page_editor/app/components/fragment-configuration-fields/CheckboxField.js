@@ -22,7 +22,7 @@ import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {useSelector} from '../../contexts/StoreContext';
 
-export function CheckboxField({field, onValueSelect, value}) {
+export function CheckboxField({disabled, field, onValueSelect, value}) {
 	const [nextValue, setNextValue] = useControlledState(value || false);
 
 	const selectedViewportSize = useSelector(
@@ -42,6 +42,7 @@ export function CheckboxField({field, onValueSelect, value}) {
 							: nextValue
 					}
 					containerProps={{className: 'mb-0'}}
+					disabled={disabled}
 					label={field.label}
 					onChange={(event) => {
 						let eventValue = event.target.checked;
@@ -76,6 +77,7 @@ export function CheckboxField({field, onValueSelect, value}) {
 }
 
 CheckboxField.propTypes = {
+	disabled: PropTypes.bool,
 	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
 	onValueSelect: PropTypes.func.isRequired,
 	value: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),

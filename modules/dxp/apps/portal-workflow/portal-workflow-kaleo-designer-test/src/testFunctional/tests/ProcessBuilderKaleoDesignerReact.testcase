@@ -152,6 +152,15 @@ definition {
 
 	}
 
+	@description = "Verify that the user can create a Template for Notification"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanCreateNotificationTemplate {
+
+		// TODO LRQA-73837 CanCreateNotificationTemplate pending implementation
+
+	}
+
 	@description = "LPS-140056 - Verify that only one transition in the same direction from one node to the other can be created"
 	@ignore = "Test Stub"
 	@priority = "4"
@@ -243,6 +252,33 @@ definition {
 			nodeType = "task");
 	}
 
+	@description = "Verify that the user can edit the Description of the Notification"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanEditNotificationDescription {
+
+		// TODO LRQA-73836 CanEditNotificationDescription pending implementation
+
+	}
+
+	@description = "Verify that the user can edit the Name of the Notification"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanEditNotificationName {
+
+		// TODO LRQA-73835 CanEditNotificationName pending implementation
+
+	}
+
+	@description = "Verify that the user can edit a Template for Notification"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanEditNotificationTemplate {
+
+		// TODO LRQA-73838 CanEditNotificationTemplate pending implementation
+
+	}
+
 	@description = "LPS-139387 - Verify that the user is able to view and edit the nodes ID in the sidebar"
 	@priority = "4"
 	test CanEditStepID {
@@ -295,6 +331,33 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewSpecificNodeLabel(
 			nodeLabel = "QA Test 2022",
 			nodeType = "task");
+	}
+
+	@description = "Verify that the user can edit the Template Language of the Notification to FreeMarker"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanEditTemplateLanguageToFreeMarker {
+
+		// TODO LRQA-73839 CanEditTemplateLanguageToFreeMarker pending implementation
+
+	}
+
+	@description = "Verify that the user can edit the Template Language of the Notification to Text"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanEditTemplateLanguageToText {
+
+		// TODO LRQA-73840 CanEditTemplateLanguageToText pending implementation
+
+	}
+
+	@description = "Verify that the user can edit the Template Language of the Notification to Velocity"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanEditTemplateLanguageToVelocity {
+
+		// TODO LRQA-73841 CanEditTemplateLanguageToVelocity pending implementation
+
 	}
 
 	@description = "LPS-139387 - Verify that the user can hide/show the information area"
@@ -457,6 +520,24 @@ definition {
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
 	}
 
+	@description = "Verify that the is able to select who receives the notification: Asset Creator"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanSelectAssetCreatorAsNotificationRecipientType {
+
+		// TODO LRQA-73848 CanSelectAssetCreatorAsNotificationRecipientType pending implementation
+
+	}
+
+	@description = "Verify that the user can select Email as Notification type"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanSelectEmailAsNotificationType {
+
+		// TODO LRQA-73842 CanSelectEmailAsNotificationType pending implementation
+
+	}
+
 	@description = "Verify that the user can select each node in Diagram"
 	@priority = "4"
 	test CanSelectNodeOnDiagram {
@@ -482,6 +563,78 @@ definition {
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedNode(nodeType = "task");
+	}
+
+	@description = "Verify that the user can select On Assignment as the time when the notification will be sent in a task"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSelectOnAssignmentAsExecutionTypeAtTaskNotifications {
+
+		// TODO LRQA-73845 CanSelectOnAssignmentAsExecutionTypeAtTaskNotifications pending implementation
+
+	}
+
+	@description = "Verify that the user can select On Entry as the time when the notification will be sent"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSelectOnEntryAsExecutionTypeAtNodeNotifications {
+
+		// TODO LRQA-73846 CanSelectOnEntryAsExecutionTypeAtNodeNotifications pending implementation
+
+	}
+
+	@description = "Verify that the user can select On Exit as the time when the notification will be sent"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanSelectOnExitAsExecutionTypeAtNodeNotifications {
+
+		// TODO LRQA-73847 CanSelectOnExitAsExecutionTypeAtNodeNotifications pending implementation
+
+	}
+
+	@description = "Verify that the is able to select who receives the notification: Role"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanSelectRoleAsNotificationRecipientType {
+
+		// TODO LRQA-73849 CanSelectRoleAsNotificationRecipientType pending implementation
+
+	}
+
+	@description = "Verify that the is able to select who receives the notification: Scripted Recipient"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanSelectScriptedRecipientAsNotificationRecipientType {
+
+		// TODO LRQA-73850 CanSelectScriptedRecipientAsNotificationRecipientType pending implementation
+
+	}
+
+	@description = "Verify that the is able to select who receives the notification: Task Assignees"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanSelectTaskAssigneesAsNotificationRecipientTypeAtTaskNode {
+
+		// TODO LRQA-73851 CanSelectTaskAssigneesAsNotificationRecipientTypeAtTaskNode pending implementation
+
+	}
+
+	@description = "Verify that the user can select Email and User Notification as Notification type"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanSelectUserNotificationAndEmailAsNotificationType {
+
+		// TODO LRQA-73844 CanSelectUserNotificationAndEmailAsNotificationType pending implementation
+
+	}
+
+	@description = "Verify that the user can select User Notification as Notification type"
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanSelectUserNotificationAsNotificationType {
+
+		// TODO LRQA-73843 CanSelectUserNotificationAsNotificationType pending implementation
+
 	}
 
 	@description = "Verify that the user can set transition Default"
@@ -628,6 +781,15 @@ definition {
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
 
 		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "EDITEDCONNECTOR");
+	}
+
+	@description = "Verify that default label and ID for nodes are provided"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test DefaultLabelAndIDAreProvided {
+
+		// TODO LRQA-73834 DefaultLabelAndIDAreProvided pending implementation
+
 	}
 
 	@description = "Verify that default names for nodes are provided"
@@ -1095,7 +1257,6 @@ definition {
 
 	}
 
-
 	@description = "Verify that a message warning is displayed when the user adds another transition and selects it as default"
 	@ignore = "Test Stub"
 	@priority = "3"
@@ -1111,168 +1272,6 @@ definition {
 	test WarningIsNotDisplayedWhenNewTransitionNotDefault {
 
 		// TODO LRQA-73833 WarningIsNotDisplayedWhenNewTransitionNotDefault pending implementation
-
-	}
-
-	@description = "Verify that default label and ID for nodes are provided"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test DefaultLabelAndIDAreProvided {
-
-		// TODO LRQA-73834 DefaultLabelAndIDAreProvided pending implementation
-
-	}
-
-	@description = "Verify that the user can edit the Name of the Notification"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanEditNotificationName {
-
-		// TODO LRQA-73835 CanEditNotificationName pending implementation
-
-	}
-
-	@description = "Verify that the user can edit the Description of the Notification"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanEditNotificationDescription {
-
-		// TODO LRQA-73836 CanEditNotificationDescription pending implementation
-
-	}
-
-	@description = "Verify that the user can create a Template for Notification"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanCreateNotificationTemplate {
-
-		// TODO LRQA-73837 CanCreateNotificationTemplate pending implementation
-
-	}
-
-	@description = "Verify that the user can edit a Template for Notification"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanEditNotificationTemplate {
-
-		// TODO LRQA-73838 CanEditNotificationTemplate pending implementation
-
-	}
-
-	@description = "Verify that the user can edit the Template Language of the Notification to FreeMarker"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanEditTemplateLanguageToFreeMarker {
-
-		// TODO LRQA-73839 CanEditTemplateLanguageToFreeMarker pending implementation
-
-	}
-
-	@description = "Verify that the user can edit the Template Language of the Notification to Text"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanEditTemplateLanguageToText {
-
-		// TODO LRQA-73840 CanEditTemplateLanguageToText pending implementation
-
-	}
-
-	@description = "Verify that the user can edit the Template Language of the Notification to Velocity"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanEditTemplateLanguageToVelocity {
-
-		// TODO LRQA-73841 CanEditTemplateLanguageToVelocity pending implementation
-
-	}
-
-	@description = "Verify that the user can select Email as Notification type"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanSelectEmailAsNotificationType {
-
-		// TODO LRQA-73842 CanSelectEmailAsNotificationType pending implementation
-
-	}
-
-	@description = "Verify that the user can select User Notification as Notification type"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanSelectUserNotificationAsNotificationType {
-
-		// TODO LRQA-73843 CanSelectUserNotificationAsNotificationType pending implementation
-
-	}
-
-	@description = "Verify that the user can select Email and User Notification as Notification type"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanSelectUserNotificationAndEmailAsNotificationType {
-
-		// TODO LRQA-73844 CanSelectUserNotificationAndEmailAsNotificationType pending implementation
-
-	}
-
-	@description = "Verify that the user can select On Assignment as the time when the notification will be sent in a task"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanSelectOnAssignmentAsExecutionTypeAtTaskNotifications {
-
-		// TODO LRQA-73845 CanSelectOnAssignmentAsExecutionTypeAtTaskNotifications pending implementation
-
-	}
-
-	@description = "Verify that the user can select On Entry as the time when the notification will be sent"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanSelectOnEntryAsExecutionTypeAtNodeNotifications {
-
-		// TODO LRQA-73846 CanSelectOnEntryAsExecutionTypeAtNodeNotifications pending implementation
-
-	}
-
-	@description = "Verify that the user can select On Exit as the time when the notification will be sent"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanSelectOnExitAsExecutionTypeAtNodeNotifications {
-
-		// TODO LRQA-73847 CanSelectOnExitAsExecutionTypeAtNodeNotifications pending implementation
-
-	}
-
-	@description = "Verify that the is able to select who receives the notification: Asset Creator"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanSelectAssetCreatorAsNotificationRecipientType {
-
-		// TODO LRQA-73848 CanSelectAssetCreatorAsNotificationRecipientType pending implementation
-
-	}
-
-	@description = "Verify that the is able to select who receives the notification: Role"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanSelectRoleAsNotificationRecipientType {
-
-		// TODO LRQA-73849 CanSelectRoleAsNotificationRecipientType pending implementation
-
-	}
-
-	@description = "Verify that the is able to select who receives the notification: Scripted Recipient"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanSelectScriptedRecipientAsNotificationRecipientType {
-
-		// TODO LRQA-73850 CanSelectScriptedRecipientAsNotificationRecipientType pending implementation
-
-	}
-
-	@description = "Verify that the is able to select who receives the notification: Task Assignees"
-	@ignore = "Test Stub"
-	@priority = "5"
-	test CanSelectTaskAssigneesAsNotificationRecipientTypeAtTaskNode {
-
-		// TODO LRQA-73851 CanSelectTaskAssigneesAsNotificationRecipientTypeAtTaskNode pending implementation
 
 	}
 

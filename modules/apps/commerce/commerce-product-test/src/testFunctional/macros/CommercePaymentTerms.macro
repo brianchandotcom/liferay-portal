@@ -60,6 +60,14 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro gotoEntryMenuItem {
+		Click(
+			key_value = "${termsAndConditionName}",
+			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "${menuItem}");
+	}
+
 	macro viewNoPG {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",

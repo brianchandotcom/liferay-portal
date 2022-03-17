@@ -167,7 +167,7 @@ definition {
 		}
 	}
 
-	@description = "Delete a new payment term to Terms and Conditions."
+	@description = "COMMERCE-8281. Delete a new payment term to Terms and Conditions."
 	@priority = "3"
 	test CanDeleteAPaymentTerm {
 		property portal.acceptance = "false";
@@ -193,7 +193,9 @@ definition {
 		}
 
 		task ("When I delete the terms and conditions") {
-			CommercePaymentTerms.deleteTermsAndCondition(termsAndConditionName = "Test Terms and Condition");
+			CommercePaymentTerms.gotoEntryMenuItem(
+				menuItem = "Delete",
+				termsAndConditionName = "Test Terms and Condition");
 		}
 
 		task ("Then the entry is deleted") {

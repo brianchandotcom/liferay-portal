@@ -175,6 +175,8 @@ public class EditableValuesLayoutMappingExportImportContentProcessor
 			"layoutId", layout.getLayoutId()
 		).put(
 			"layoutUuid", layout.getUuid()
+		).put(
+			"privateLayout", layout.isPrivateLayout()
 		);
 	}
 

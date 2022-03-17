@@ -100,6 +100,11 @@
 		<td>//input[@id='regular-role_ACTION_${key_permissionName}']</td>
 		<td></td>
 	</tr>
+	 <tr>
+        <td>CUSTOM_VIEW_FIELD_REQUIRED</td>
+        <td>//input[@id='listObjectCustomViewName']/following-sibling::div//span[contains(text(),'Required')]</td>
+        <td></td>
+    </tr>
 </tbody>
 </table>
 </body>

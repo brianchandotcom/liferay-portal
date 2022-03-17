@@ -267,11 +267,25 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify the Name is required when creating a View"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotLeaveNameFieldEmpty {
 
-		// TODO LPS-147755 CannotLeaveNameFieldEmpty pending implementation
+		ObjectAdmin.addObjectViaAPI(
+            labelName = "Custom Object 147755",
+            objectName = "CustomObject147755",
+            pluralLabelName = "Custom Objects 147755");
+
+        ObjectAdmin.openObjectAdmin();
+
+        ObjectPortlet.selectCustomObject(label = "Custom Object 147755");
+
+        ObjectCustomViews.goToViewsTab();
+
+        LexiconEntry.gotoAdd();
+
+        Button.clickSave();
+
+        AssertElementPresent(locator1 = "ObjectCustomViews#CUSTOM_VIEW_FIELD_REQUIRED");
 
 	}
 

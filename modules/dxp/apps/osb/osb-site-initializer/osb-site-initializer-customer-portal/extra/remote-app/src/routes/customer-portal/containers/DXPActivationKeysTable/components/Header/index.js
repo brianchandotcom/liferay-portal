@@ -171,11 +171,11 @@ const DXPActivationKeysTableHeader = ({
 			)}
 
 			{!isAbleToDownloadAggregateKeys && (
-				<ClayAlert displayType="info">
+				<ClayAlert className="my-2" displayType="info">
 					To download an aggregate key, select keys with identical
-					<b>Type, Start Date, End Date,</b>
+					<b> Type, Start Date, End Date,</b>
 					and
-					<b>Instance Size</b>
+					<b> Instance Size</b>
 				</ClayAlert>
 			)}
 		</>

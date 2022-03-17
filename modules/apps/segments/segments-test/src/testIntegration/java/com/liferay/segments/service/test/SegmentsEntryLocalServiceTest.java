@@ -56,6 +56,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -384,7 +385,8 @@ public class SegmentsEntryLocalServiceTest {
 		BaseModelSearchResult<SegmentsEntry> baseModelSearchResult =
 			_segmentsEntryLocalService.searchSegmentsEntries(
 				segmentsEntry.getCompanyId(), segmentsEntry.getGroupId(),
-				segmentsEntry.getNameCurrentValue(), true, 0, 1, null);
+				segmentsEntry.getNameCurrentValue(), true,
+				new LinkedHashMap<>(), 0, 1, null);
 
 		List<SegmentsEntry> segmentsEntries =
 			baseModelSearchResult.getBaseModels();

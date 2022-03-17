@@ -275,8 +275,48 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_PANEL_AUTHOR</td>
+	<td>//span[contains(@class,'text-secondary') and contains (.,'${assetAuthor}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_AVATAR</td>
+	<td>//*[contains(@class,'sidebar-section')]//*[contains(@class,'lexicon-icon-user')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_TYPE_OF_DATE</td>
+	<td>//*[contains(@class,'font-weight-semi-bold') and contains (text(),'${typeOfDate}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_VOCABULARY_NAME</td>
+	<td>//*[contains(@class,'font-weight-semi-bold') and contains (text(),'${vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_TAGS_TITLE</td>
+	<td>//*[contains(@class,'font-weight-semi-bold') and contains (text(),'Tags')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_ID</td>
+	<td>//*[contains(@class,'font-weight-semi-bold') and contains (text(),'ID')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_STATUS</td>
+	<td>//span[contains(@class,'label-item') and contains (.,'${assetStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_PANEL_TITLE</td>
 	<td>//section[contains(@class,'sidebar-header')]/descendant-or-self::p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_PANEL_VERSION</td>
+	<td>//span[contains(@class,'label-item') and contains (.,'${assetVersion}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -352,6 +392,11 @@
 <tr>
 	<td>SWAP_VOCABULARIES_BUTTON</td>
 	<td>//*[contains(@class,'btn-sm btn-outline-secondary') and contains(@type,'submit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_LABEL_INFO_PANEL</td>
+	<td>//*[contains(@class, 'sidebar-light')]//span[contains(@class,'label-secondary') and contains (.,'${tagName}')]</td>
 	<td></td>
 </tr>
 <tr>

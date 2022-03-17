@@ -168,7 +168,7 @@ public class LayoutTestUtil {
 			serviceContext);
 	}
 
-	public static Layout addTypeContentLayout(Group group, String title)
+	public static Layout addTypeContentLayout(Group group, String name)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -177,7 +177,7 @@ public class LayoutTestUtil {
 
 		return LayoutLocalServiceUtil.addLayout(
 			TestPropsValues.getUserId(), group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, title, StringPool.BLANK,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, name, StringPool.BLANK,
 			StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
 			StringPool.BLANK, serviceContext);
 	}

@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.jsonwebservice;
+package com.liferay.portal.jsonwebservice;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Method;

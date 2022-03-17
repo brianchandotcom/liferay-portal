@@ -54,12 +54,15 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 
 			int y = x;
 			String s = StringPool.BLANK;
+			boolean errorSqlFlag = false;
 
 			while (true) {
 				y = sqlClauses.indexOf(")", y + 1);
 
 				if (y == -1) {
-					continue;
+					errorSqlFlag = true;
+
+					break;
 				}
 
 				s = sqlClauses.substring(x, y + 1);
@@ -83,6 +86,10 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 				}
 
 				y = x;
+			}
+
+			if (errorSqlFlag) {
+				continue;
 			}
 
 			sqlClauses = StringUtil.replace(sqlClauses, " AND ", " AND \\\n");

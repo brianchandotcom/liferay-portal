@@ -1,4 +1,5 @@
 apiDir: "../analytics-dxp-entities-exporter-api/src/main/java"
 apiPackagePath: "com.liferay.analytics.dxp.entities.exporter"
 author: "Riccardo Ferrari, Rachael Koestartyo, Marcos Martins"
+forcePredictableOperationId: true
 liferayEnterpriseApp: true

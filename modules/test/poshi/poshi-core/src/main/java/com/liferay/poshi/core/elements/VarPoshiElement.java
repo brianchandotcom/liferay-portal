@@ -532,7 +532,7 @@ public class VarPoshiElement extends PoshiElement {
 	private static final Pattern _mathUtilMethodCallPattern = Pattern.compile(
 		"MathUtil\\.(\\w+)\\('(.+)', '(.+)'\\)");
 	private static final Pattern _nestedCDATAPattern = Pattern.compile(
-		"(?<cdata1><.+]])(?<cdata2>>.+>)");
+		"(?<cdata1><.+]])(?<cdata2>>.*>?)");
 	private static final Pattern _statementPattern;
 	private static final Pattern _varValueMathExpressionPattern;
 

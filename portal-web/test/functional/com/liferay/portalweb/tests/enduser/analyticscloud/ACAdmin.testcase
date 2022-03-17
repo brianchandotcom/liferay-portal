@@ -45,6 +45,8 @@ definition {
 		}
 
 		task ("Navigate to users page") {
+			ProductMenuHelper.expandPanel(panel = "control panel");
+
 			ProductMenuHelper.expandCategory(category = "Users");
 
 			ProductMenuHelper.gotoPortlet(portlet = "Users and Organizations");

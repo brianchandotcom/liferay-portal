@@ -51,14 +51,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import org.powermock.api.mockito.PowerMockito;
-
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Sergio González
  */
-public class AMJournalEditorConfigContributorTest extends PowerMockito {
+public class AMJournalEditorConfigContributorTest {
 
 	@ClassRule
 	@Rule
@@ -77,15 +75,15 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 	public void testAdaptiveMediaFileEntryAttributeNameIsAdded()
 		throws Exception {
 
-		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
+		PortletURL itemSelectorPortletURL = Mockito.mock(PortletURL.class);
 
-		when(
+		Mockito.when(
 			itemSelectorPortletURL.toString()
 		).thenReturn(
 			"itemSelectorPortletURL"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
@@ -93,13 +91,13 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 			itemSelectorPortletURL
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectedEventName(Mockito.anyString())
 		).thenReturn(
 			"selectedEventName"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
 				"journalItemSelectorCriterionFileEntryItemSelectorReturnType")
 		).thenReturn(
@@ -130,15 +128,15 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 
 	@Test
 	public void testAdaptiveMediaIsAddedToExtraPlugins() throws Exception {
-		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
+		PortletURL itemSelectorPortletURL = Mockito.mock(PortletURL.class);
 
-		when(
+		Mockito.when(
 			itemSelectorPortletURL.toString()
 		).thenReturn(
 			"itemSelectorPortletURL"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
@@ -146,13 +144,13 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 			itemSelectorPortletURL
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectedEventName(Mockito.anyString())
 		).thenReturn(
 			"selectedEventName"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
 				"journalItemSelectorCriterionFileEntryItemSelectorReturnType")
 		).thenReturn(
@@ -182,15 +180,15 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 
 	@Test
 	public void testAdaptiveMediaIsExtraPlugins() throws Exception {
-		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
+		PortletURL itemSelectorPortletURL = Mockito.mock(PortletURL.class);
 
-		when(
+		Mockito.when(
 			itemSelectorPortletURL.toString()
 		).thenReturn(
 			"itemSelectorPortletURL"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
@@ -198,13 +196,13 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 			itemSelectorPortletURL
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectedEventName(Mockito.anyString())
 		).thenReturn(
 			"selectedEventName"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
 				"journalItemSelectorCriterionFileEntryItemSelectorReturnType")
 		).thenReturn(
@@ -372,7 +370,7 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 	public void testItemSelectorURLWithAudioItemSelectorCriterion()
 		throws Exception {
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
 				"audioItemSelectorCriterionFileEntryItemSelectorReturnType")
 		).thenReturn(
@@ -414,15 +412,15 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 	public void testItemSelectorURLWithBlogsItemSelectorCriterion()
 		throws Exception {
 
-		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
+		PortletURL itemSelectorPortletURL = Mockito.mock(PortletURL.class);
 
-		when(
+		Mockito.when(
 			itemSelectorPortletURL.toString()
 		).thenReturn(
 			"itemSelectorPortletURL"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
@@ -430,13 +428,13 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 			itemSelectorPortletURL
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectedEventName(Mockito.anyString())
 		).thenReturn(
 			"selectedEventName"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
 				"journalItemSelectorCriterionFileEntryItemSelectorReturnType")
 		).thenReturn(
@@ -472,15 +470,15 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 	public void testItemSelectorURLWithFileItemSelectorCriterion()
 		throws Exception {
 
-		PortletURL itemSelectorPortletURL = mock(PortletURL.class);
+		PortletURL itemSelectorPortletURL = Mockito.mock(PortletURL.class);
 
-		when(
+		Mockito.when(
 			itemSelectorPortletURL.toString()
 		).thenReturn(
 			"itemSelectorPortletURL"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class))
@@ -488,13 +486,13 @@ public class AMJournalEditorConfigContributorTest extends PowerMockito {
 			itemSelectorPortletURL
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectedEventName(Mockito.anyString())
 		).thenReturn(
 			"selectedEventName"
 		);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorCriteria(
 				"fileItemSelectorCriterionFileEntryItemSelectorReturnType")
 		).thenReturn(

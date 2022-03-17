@@ -77,6 +77,16 @@
 </tr>
 <!--FEATURE FLAG CONFIGURATIONS-->
 <tr>
+	<td>ACTIVE_DROPDOWN_ITEM</td>
+	<td>//div[contains(@class,'dropdown-menu show')]//li//*[contains(@class,'dropdown-item') and contains(.,'${key_item}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_OR_ORDER</td>
+	<td>//nav[contains(@class,'management-bar')]//*[*[contains(@title,'${key_filter}')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ICON_AND_TEXT_ACTION_BUTTON</td>
 	<td>//nav[contains(@class,'management-bar')]//*[*[name()='svg'][contains(@class,'icon-${key_icon}')]]//following-sibling::span[text()='${key_action}']</td>
 	<td></td>
@@ -94,11 +104,6 @@
 <tr>
 	<td>NEW_BUTTON_MOBILE</td>
 	<td>//nav[contains(@class,'management-bar')]//button[contains(@aria-label, 'New')]//*[contains(@class,'icon-plus')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>QUICK_ACTION_DROPDOWN_ITEM</td>
-	<td>//div[contains(@class,'dropdown-menu show')]//li//*[contains(@class,'dropdown-item') and contains(., '${key_action}')]</td>
 	<td></td>
 </tr>
 <tr>

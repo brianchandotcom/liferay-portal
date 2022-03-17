@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.mail.template.internal;
+package com.liferay.mail.template.internal;
 
 import com.liferay.mail.kernel.template.MailTemplateContext;
 import com.liferay.mail.kernel.template.MailTemplateContextBuilder;

@@ -121,6 +121,37 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 	}
 
 	@Override
+	public Response getImportTaskContent(Long importTaskId) throws Exception {
+		BatchEngineImportTask batchEngineImportTask =
+			_batchEngineImportTaskLocalService.getBatchEngineImportTask(
+				importTaskId);
+
+		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus =
+			BatchEngineTaskExecuteStatus.valueOf(
+				batchEngineImportTask.getExecuteStatus());
+
+		if (batchEngineTaskExecuteStatus ==
+				BatchEngineTaskExecuteStatus.COMPLETED) {
+
+			StreamingOutput streamingOutput =
+				outputStream -> StreamUtil.transfer(
+					_batchEngineImportTaskLocalService.openContentInputStream(
+						importTaskId),
+					outputStream);
+
+			return Response.ok(
+				streamingOutput
+			).header(
+				"content-disposition", "attachment; filename=import.zip"
+			).build();
+		}
+
+		return Response.status(
+			Response.Status.NOT_FOUND
+		).build();
+	}
+
+	@Override
 	public Response getImportTaskFailedItemReport(Long importTaskId)
 		throws Exception {
 

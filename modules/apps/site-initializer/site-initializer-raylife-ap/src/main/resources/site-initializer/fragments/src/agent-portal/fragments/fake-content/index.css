@@ -1,0 +1,9 @@
+.fake-content-container {
+	padding: 18px 16px;
+}
+
+.fake-content-container .fake-content-body {
+	border: 2px dashed #8aafff;
+	color: #afafb1;
+	height: 100%;
+}

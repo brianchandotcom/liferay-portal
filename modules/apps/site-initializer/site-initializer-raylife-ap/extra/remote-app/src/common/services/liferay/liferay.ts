@@ -23,6 +23,8 @@ interface IThemeDisplay {
 interface ILiferay {
 	ThemeDisplay: IThemeDisplay;
 	authToken: string;
+	detach: (eventName: string, options?: any) => void;
+	on: (eventName: string, options?: any) => void;
 }
 
 declare global {

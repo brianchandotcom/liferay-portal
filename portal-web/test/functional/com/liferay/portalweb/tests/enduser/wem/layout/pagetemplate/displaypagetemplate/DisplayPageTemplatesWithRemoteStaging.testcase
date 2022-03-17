@@ -41,6 +41,7 @@ definition {
 	@priority = "4"
 	test PublishDisplayPageTemplateWithAssetPublisherToLive {
 		property app.server.bundles.size = "1";
+		property custom.properties = "tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelAuthVerifier.hosts.allowed=${line.separator}configuration.override.com.liferay.asset.publisher.web.internal.configuration.AssetPublisherSelectionStyleConfiguration_defaultSelectionStyle=&quot;dynamic&quot;";
 		property databases.size = "1";
 		property test.name.skip.portal.instance = "DisplayPageTemplatesWithRemoteStaging#PublishDisplayPageTemplateWithAssetPublisherToLive";
 

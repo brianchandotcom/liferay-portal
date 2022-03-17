@@ -14,12 +14,16 @@
 
 package com.liferay.search.experiences.internal.upgrade;
 
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.search.experiences.internal.model.listener.CompanyModelListener;
 import com.liferay.search.experiences.internal.upgrade.v1_0_0.SXPElementUpgradeProcess;
+import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -39,11 +43,26 @@ public class SXPUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				_sxpElementLocalService));
 	}
 
+	@Activate
+	protected void activate() {
+		if (_indexerRegistry.getIndexer(SXPElement.class) == null) {
+			_indexerRegistry.register(_indexer);
+		}
+	}
+
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private CompanyModelListener _companyModelListener;
+
+	@Reference(
+		target = "(indexer.class.name=com.liferay.search.experiences.model.SXPElement)"
+	)
+	private Indexer<SXPElement> _indexer;
+
+	@Reference
+	private IndexerRegistry _indexerRegistry;
 
 	@Reference
 	private SXPElementLocalService _sxpElementLocalService;

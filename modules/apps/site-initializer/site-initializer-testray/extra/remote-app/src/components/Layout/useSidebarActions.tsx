@@ -18,8 +18,8 @@ import {Size} from '@clayui/modal/lib/types';
 import {ReactElement, useContext} from 'react';
 
 import i18n from '../../i18n';
+import CaseTypeModal from '../../pages/Standalone/CaseType/CaseTypeModal';
 import {LIFERAY_URLS} from '../../services/liferay/liferay';
-import CaseTypeModal from '../Modal/CaseTypeModal';
 import CategoryModal from '../Modal/CategoryModal';
 import OptionsModal from '../Modal/OptionsModal';
 

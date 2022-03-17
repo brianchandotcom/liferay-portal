@@ -12,16 +12,22 @@
  * details.
  */
 
-import {getCaseTypes} from '../../graphql/queries';
-import Container from '../Layout/Container';
-import ListView from '../ListView/ListView';
+import ListView from '../../../components/ListView/ListView';
+import {getCaseTypes} from '../../../graphql/queries';
+import CaseTypeFormModal from './CaseTypeFormModal';
+import useCaseTypeActions from './useCaseTypeActions';
 
 const CaseTypeModal = () => {
+	const {actions, formModal} = useCaseTypeActions();
+
 	return (
-		<Container>
+		<>
 			<ListView
+				forceRefetch={formModal.forceRefetch}
+				managementToolbarProps={{addButton: formModal.modal.open}}
 				query={getCaseTypes}
 				tableProps={{
+					actions,
 					columns: [
 						{
 							key: 'name',
@@ -31,7 +37,9 @@ const CaseTypeModal = () => {
 				}}
 				transformData={(data) => data?.c?.caseTypes}
 			/>
-		</Container>
+
+			<CaseTypeFormModal modal={formModal.modal} />
+		</>
 	);
 };
 

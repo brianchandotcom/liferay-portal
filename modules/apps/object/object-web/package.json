@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"frontend-js-components-web": "*",
 		"text-mask-core": "^5.1.2"
 	},
 	"name": "@liferay/object-web",

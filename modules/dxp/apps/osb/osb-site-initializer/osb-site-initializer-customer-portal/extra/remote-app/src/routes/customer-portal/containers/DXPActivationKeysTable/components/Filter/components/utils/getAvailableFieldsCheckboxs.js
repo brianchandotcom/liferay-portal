@@ -9,10 +9,10 @@
  * distribution rights of the Software.
  */
 
-export default function getAvailableFieldsCheckboxs(activationKeys, getItem) {
-	return activationKeys
-		?.reduce((accumulatorItems, activationKey) => {
-			const item = getItem(activationKey);
+export default function getAvailableFieldsCheckboxs(items, getItem) {
+	return items
+		?.reduce((accumulatorItems, currentItem) => {
+			const item = getItem(currentItem);
 
 			if (accumulatorItems.includes(item)) {
 				return accumulatorItems;

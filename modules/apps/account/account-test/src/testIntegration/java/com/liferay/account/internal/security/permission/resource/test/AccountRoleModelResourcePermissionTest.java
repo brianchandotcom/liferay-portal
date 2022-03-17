@@ -25,11 +25,13 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -87,6 +89,48 @@ public class AccountRoleModelResourcePermissionTest {
 			permissionChecker, accountRole, AccountActionKeys.ASSIGN_USERS);
 		_assertContains(permissionChecker, accountRole, ActionKeys.DELETE);
 		_assertContains(permissionChecker, accountRole, ActionKeys.UPDATE);
+	}
+
+	@Test
+	public void testViewPermissions() throws Exception {
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+
+		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
+			RandomTestUtil.randomString(), null, null);
+
+		RoleTestUtil.addResourcePermission(
+			accountRole.getRole(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			AccountActionKeys.VIEW_ACCOUNT_ROLES);
+
+		User userA = UserTestUtil.addUser();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), userA.getUserId());
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			userA.getUserId(), accountEntry.getAccountEntryGroupId(),
+			accountRole.getRoleId());
+
+		_assertContains(
+			PermissionCheckerFactoryUtil.create(userA), accountRole,
+			ActionKeys.VIEW);
+
+		User userB = UserTestUtil.addUser();
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		RoleTestUtil.addResourcePermission(
+			role, Role.class.getName(), ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), ActionKeys.VIEW);
+
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), userB.getUserId());
+
+		_assertContains(
+			PermissionCheckerFactoryUtil.create(userB), accountRole,
+			ActionKeys.VIEW);
 	}
 
 	private void _addResourcePermission(

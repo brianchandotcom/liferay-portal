@@ -432,6 +432,26 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ImportTask"
             tags: ["ImportTask"]
+    /import-task/{importTaskId}/content:
+        get:
+            description:
+                Retrieves the exported content.
+            operationId: getImportTaskContent
+            parameters:
+                - in: path
+                  name: importTaskId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/octet-stream:
+                            schema:
+                                format: binary
+                                type: string
+            tags: ["ImportTask"]
     /import-task/{importTaskId}/failed-items/report:
         get:
             operationId: getImportTaskFailedItemReport

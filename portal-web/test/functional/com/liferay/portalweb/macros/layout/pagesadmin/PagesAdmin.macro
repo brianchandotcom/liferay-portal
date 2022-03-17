@@ -622,6 +622,18 @@ definition {
 		PortletEntry.save();
 	}
 
+	macro convertToContentPageByIcon {
+		for (var pageName : list "${pageNameList}") {
+			PagesAdmin.selectPageItem(pageName = "${pageName}");
+		}
+
+		ClickNoError(
+			key_text = "change",
+			locator1 = "ManagementBar#ANY_ICON");
+
+		AssertConfirm(value1 = "Are you sure you want to convert the selected pages?");
+	}
+
 	macro deleteFriendlyURL {
 		Navigator.gotoNavTab(navTab = "General");
 

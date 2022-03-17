@@ -213,7 +213,7 @@ definition {
 	macro addAssigneeToRoleViaUsersTab {
 		Navigator.gotoNavTab(navTab = "Users");
 
-		LexiconEntry.gotoEntryMenuItemNoError(
+		Accounts.goToEntryMenuItem(
 			menuItem = "Assign Roles",
 			rowEntry = "${accountUserName}");
 
@@ -1253,6 +1253,28 @@ definition {
 			locator1 = "Icon#ANY");
 
 		AssertConfirm.waitForConfirmation(value1 = "Are you sure you want to remove the selected organizations?");
+
+		Alert.viewSuccessMessage();
+	}
+
+	macro unassignUserRole {
+		Navigator.gotoNavTab(navTab = "Users");
+
+		Accounts.goToEntryMenuItem(
+			menuItem = "Assign Roles",
+			rowEntry = "${accountUserName}");
+
+		SelectFrame(
+			key_title = "Assign Roles",
+			locator1 = "IFrame#MODAL_ANY");
+
+		Uncheck(
+			key_tableEntry = "${accountRoleTitle}",
+			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+		SelectFrameTop();
+
+		Button.click(button = "Done");
 
 		Alert.viewSuccessMessage();
 	}

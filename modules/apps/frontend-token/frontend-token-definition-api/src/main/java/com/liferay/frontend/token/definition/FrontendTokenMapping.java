@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.token.definition;
 
+import com.liferay.portal.kernel.json.JSONObject;
+
 import java.util.Locale;
 
 /**
@@ -25,7 +27,7 @@ public interface FrontendTokenMapping {
 
 	public FrontendToken getFrontendToken();
 
-	public String getJSON(Locale locale);
+	public JSONObject getJSONObject(Locale locale);
 
 	public String getType();
 

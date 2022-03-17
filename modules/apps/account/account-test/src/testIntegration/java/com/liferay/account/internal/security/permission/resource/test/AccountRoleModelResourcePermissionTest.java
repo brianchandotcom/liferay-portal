@@ -68,8 +68,8 @@ public class AccountRoleModelResourcePermissionTest {
 		_addResourcePermission(
 			accountRole.getRole(), AccountRole.class.getName(),
 			new String[] {
-				AccountActionKeys.ASSIGN_USERS, ActionKeys.DELETE,
-				ActionKeys.UPDATE
+				AccountActionKeys.ASSIGN_USERS, ActionKeys.DEFINE_PERMISSIONS,
+				ActionKeys.DELETE, ActionKeys.UPDATE, ActionKeys.VIEW
 			});
 
 		User user = UserTestUtil.addUser();

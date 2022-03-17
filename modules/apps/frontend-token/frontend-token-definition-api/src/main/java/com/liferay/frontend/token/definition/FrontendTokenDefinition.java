@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.token.definition;
 
+import com.liferay.portal.kernel.json.JSONObject;
+
 import java.util.Collection;
 import java.util.Locale;
 
@@ -33,6 +35,6 @@ public interface FrontendTokenDefinition {
 
 	public Collection<FrontendTokenSet> getFrontendTokenSets();
 
-	public String getJSON(Locale locale);
+	public JSONObject getJSONObject(Locale locale);
 
 }

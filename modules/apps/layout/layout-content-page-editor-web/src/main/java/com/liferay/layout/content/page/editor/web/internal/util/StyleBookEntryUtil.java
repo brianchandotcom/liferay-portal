@@ -48,8 +48,7 @@ public class StyleBookEntryUtil {
 			_getFrontendTokenValuesJSONObject(styleBookEntry);
 
 		JSONObject frontendTokenDefinitionJSONObject =
-			JSONFactoryUtil.createJSONObject(
-				frontendTokenDefinition.getJSON(locale));
+			frontendTokenDefinition.getJSONObject(locale);
 
 		JSONArray frontendTokenCategoriesJSONArray =
 			frontendTokenDefinitionJSONObject.getJSONArray(

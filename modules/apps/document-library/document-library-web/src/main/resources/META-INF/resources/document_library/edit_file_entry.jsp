@@ -727,6 +727,11 @@ renderResponse.setTitle(headerTitle);
 
 	function <portlet:namespace />updateFileNameAndTitle() {
 		var titleElement = document.getElementById('<portlet:namespace />title');
+
+		var urlTitleElement = document.getElementById(
+			'<portlet:namespace />urlTitle'
+		);
+
 		var fileNameElement = document.getElementById(
 			'<portlet:namespace />fileName'
 		);
@@ -741,6 +746,10 @@ renderResponse.setTitle(headerTitle);
 
 			if (fileNameElement && !fileNameElement.value) {
 				fileNameElement.value = fileFileName;
+			}
+
+			if (urlTitleElement && !urlTitleElement.value) {
+				urlTitleElement.value = fileFileName.replace(/\.[^.]*$/, '');
 			}
 		}
 

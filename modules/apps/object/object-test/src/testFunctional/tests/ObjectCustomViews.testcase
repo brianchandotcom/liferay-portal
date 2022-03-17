@@ -269,24 +269,22 @@ definition {
 	@description = "LPS-135394 - Verify the Name is required when creating a View"
 	@priority = "4"
 	test CannotLeaveNameFieldEmpty {
-
 		ObjectAdmin.addObjectViaAPI(
-            labelName = "Custom Object 147755",
-            objectName = "CustomObject147755",
-            pluralLabelName = "Custom Objects 147755");
+			labelName = "Custom Object 147755",
+			objectName = "CustomObject147755",
+			pluralLabelName = "Custom Objects 147755");
 
-        ObjectAdmin.openObjectAdmin();
+		ObjectAdmin.openObjectAdmin();
 
-        ObjectPortlet.selectCustomObject(label = "Custom Object 147755");
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147755");
 
-        ObjectCustomViews.goToViewsTab();
+		ObjectCustomViews.goToViewsTab();
 
-        LexiconEntry.gotoAdd();
+		LexiconEntry.gotoAdd();
 
-        Button.clickSave();
+		Button.clickSave();
 
-        AssertElementPresent(locator1 = "ObjectCustomViews#CUSTOM_VIEW_FIELD_REQUIRED");
-
+		AssertElementPresent(locator1 = "ObjectCustomViews#CUSTOM_VIEW_FIELD_REQUIRED");
 	}
 
 	@description = "LPS-135394 - Verify that it is not possible to save another View as default"

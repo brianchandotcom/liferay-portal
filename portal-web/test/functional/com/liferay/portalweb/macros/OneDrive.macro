@@ -69,6 +69,10 @@ definition {
 
 				Click(locator1 = "OneDrive#DELETE_CONFIRMATION");
 
+				if (IsElementPresent(locator1 = "OneDrive#DELETE_CONFIRM_MESSAGE")) {
+					Click(locator1 = "OneDrive#DELETE_ANYWAY");
+				}
+
 				AssertElementPresent.pauseAssertVisible(locator1 = "OneDrive#DELETE_MESSAGE");
 			}
 		}

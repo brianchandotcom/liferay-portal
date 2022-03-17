@@ -16,6 +16,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_ANYWAY</td>
+	<td>//div[contains(@class,'header')]//button[@name='Delete']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DELETE_CONFIRMATION</td>
 	<td>//button[@data-automationid='confirmbutton']</td>
 	<td></td>
@@ -23,6 +28,11 @@
 <tr>
 	<td>DELETE_MESSAGE</td>
 	<td>//div[contains(@class,'ProgressIndicator-itemDescription')]//div[contains(.,'Done')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_CONFIRM_MESSAGE</td>
+	<td>//div[contains(@class,'ProgressIndicator-itemDescription')]//div[contains(.,'Delete anyway')]</td>
 	<td></td>
 </tr>
 <tr>

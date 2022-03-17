@@ -57,7 +57,7 @@ public class JSONLocalizer {
 	 * @param locale the target locale or null to get the default JSONObject
 	 * @return the JSONObject that created with the translated JSON
 	 */
-	public JSONObject getJSON(Locale locale) {
+	public JSONObject getJSONObject(Locale locale) {
 		if ((_resourceBundleLoader == null) || (locale == null)) {
 			try {
 				return _jsonFactory.createJSONObject(_json);

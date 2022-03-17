@@ -15,6 +15,7 @@
 package com.liferay.portal.messaging.internal.jmx;
 
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.management.ManagementFactory;
 
@@ -23,21 +24,22 @@ import javax.management.ObjectName;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mock;
-
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Michael C. Han
  * @author Miguel Pastor
  */
-@PowerMockIgnore("javax.management.*")
-@RunWith(PowerMockRunner.class)
 public class MessageBusManagerTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {

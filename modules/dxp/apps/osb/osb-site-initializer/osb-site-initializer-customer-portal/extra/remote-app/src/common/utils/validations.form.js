@@ -30,13 +30,13 @@ const isValidEmail = (value, bannedEmailDomains) => {
 		return 'Please insert a valid e-mail.';
 	}
 
-	if (bannedEmailDomains.includes(value.split('@')[1])) {
+	if (bannedEmailDomains.length) {
 		return 'E-mail domain not allowed.';
 	}
 };
 
-const isValidEmailDomain = (value, bannedEmailDomains) => {
-	if (bannedEmailDomains.includes(value.split('@')[1])) {
+const isValidEmailDomain = (bannedEmailDomains) => {
+	if (bannedEmailDomains.length) {
 		return 'Domain not allowed.';
 	}
 };

@@ -17,7 +17,7 @@ export default function getLexiconIcon(icon, cssClass = '') {
 		throw new TypeError('Parameter icon must be provided');
 	}
 
-	function getLexiconIconTemplate(iconName, cssClass) {
+	function getLexiconIconHTML(iconName, cssClass) {
 		return `<svg
 				aria-hidden="true"
 				class="lexicon-icon lexicon-icon-${iconName} ${cssClass}"
@@ -28,7 +28,7 @@ export default function getLexiconIcon(icon, cssClass = '') {
 			</svg>`;
 	}
 
-	const lexiconIconTemplate = getLexiconIconTemplate(icon, cssClass);
+	const lexiconIconTemplate = getLexiconIconHTML(icon, cssClass);
 	const tempElement = document.createElement('div');
 
 	tempElement.innerHTML = lexiconIconTemplate;

@@ -2451,6 +2451,11 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.UPGRADE_DATABASE_AUTO_RUN));
 
+	public static final long UPGRADE_DATABASE_LOCK_REFRESH_TIME =
+		GetterUtil.getLong(
+			PropsUtil.get(PropsKeys.UPGRADE_DATABASE_LOCK_REFRESH_TIME)) *
+				Time.SECOND;
+
 	public static final boolean UPGRADE_DATABASE_TRANSACTIONS_DISABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.UPGRADE_DATABASE_TRANSACTIONS_DISABLED));

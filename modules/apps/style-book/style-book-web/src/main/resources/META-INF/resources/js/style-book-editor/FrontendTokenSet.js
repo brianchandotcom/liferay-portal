@@ -54,7 +54,7 @@ const getColorFrontendTokens = (
 	return tokens;
 };
 
-export default function FrontendTokenSet({frontendTokens, label}) {
+export default function FrontendTokenSet({frontendTokens, label, open}) {
 	const {frontendTokensValues = {}, setFrontendTokensValues} = useContext(
 		StyleBookContext
 	);
@@ -84,7 +84,7 @@ export default function FrontendTokenSet({frontendTokens, label}) {
 	};
 
 	return (
-		<Collapse label={label} open>
+		<Collapse label={label} open={open}>
 			{frontendTokens.map((frontendToken) => {
 				const FrontendTokenComponent = getFrontendTokenComponent(
 					frontendToken

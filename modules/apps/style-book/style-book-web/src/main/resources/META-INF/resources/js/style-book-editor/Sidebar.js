@@ -134,12 +134,12 @@ function FrontendTokenCategories() {
 			)}
 
 			{selectedCategory?.frontendTokenSets.map(
-				({frontendTokens, label, name}) => (
+				({frontendTokens, label, name}, index) => (
 					<FrontendTokenSet
 						frontendTokens={frontendTokens}
 						key={name}
 						label={label}
-						name={name}
+						open={index === 0}
 					/>
 				)
 			)}

@@ -17,11 +17,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_SELECTION_ASSET_LIST_LINK</td>
-	<td>//a[contains(.,'Select a collection to make it visible')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ASSET_SELECTION_DYNAMIC</td>
 	<td>//input[contains(@id,'selectionStyleDynamic')]</td>
 	<td></td>

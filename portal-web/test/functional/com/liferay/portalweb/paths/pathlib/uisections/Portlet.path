@@ -116,6 +116,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_SELECTOR</td>
+	<td>//section[contains(.,'${key_portletName}')]//div[@class='portlet-body']//a[contains(@onclick,'portletSelector')][normalize-space(text())='${key_text}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PORTLET_TITLE_INSIDE_NESTED_APPLICATION_COLUMN</td>
 	<td>//section[contains(@id,'NestedPortlets')]//div[contains(@id,'column-${key_nestedColumnNumber}')]//h2[contains(@class,'portlet-title') and contains(.,'${key_portletName}')]</td>
 	<td></td>

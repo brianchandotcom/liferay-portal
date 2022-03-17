@@ -354,22 +354,10 @@
 					});
 				</c:when>
 				<c:otherwise>
-					Liferay.Loader.require(
-					[
-						A.config.groups.components.mainModule,
-						A.config.groups.state.mainModule,
-					],
-					(frontendJsComponentsWebModule, frontendJsStateWebModule) => {
-
-						Liferay.InputLocalized.register(
-							'<%= namespace + id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>',
-							{
-								frontendJsComponentsWebModule,
-								frontendJsStateWebModule,
-								...inputLocalizedProps
-							}
-						);
-					});
+					Liferay.InputLocalized.register(
+						'<%= namespace + id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>',
+						inputLocalizedProps
+					);
 				</c:otherwise>
 			</c:choose>
 

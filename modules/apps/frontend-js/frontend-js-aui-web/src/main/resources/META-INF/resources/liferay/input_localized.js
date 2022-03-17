@@ -446,25 +446,12 @@ AUI.add(
 				_onSelectFlag(event) {
 					var instance = this;
 
-					var languageId = event.item.getAttribute('data-value');
-
-					instance._State.writeAtom(
-						instance._selectedLanguageIdAtom,
-						languageId
-					);
-
 					if (!event.domEvent) {
 						Liferay.fire('inputLocalized:localeChanged', {
 							item: event.item,
 							source: instance,
 						});
 					}
-				},
-
-				_onSelectedLanguageIdChange(languageId) {
-					var instance = this;
-
-					instance.selectFlag(languageId);
 				},
 
 				_onSubmit(event, input) {
@@ -554,10 +541,6 @@ AUI.add(
 						instance._bindManageTranslationsButton();
 					}
 				},
-
-				_selectedLanguageIdAtom: null,
-
-				_selectedLanguageIdSubscription: null,
 
 				_updateHelpMessage(languageId) {
 					var instance = this;
@@ -693,10 +676,6 @@ AUI.add(
 					if (instance._availableLanguagesSubscription) {
 						instance._availableLanguagesSubscription.dispose();
 					}
-
-					if (instance._selectedLanguageIdSubscription) {
-						instance._selectedLanguageIdSubscription.dispose();
-					}
 				},
 
 				getSelectedLanguageId() {
@@ -777,22 +756,6 @@ AUI.add(
 					);
 					instance._flags = boundingBox.one('.palette-container');
 
-					instance._State = instance.get(
-						'frontendJsStateWebModule'
-					).State;
-
-					instance._selectedLanguageIdAtom = instance.get(
-						'frontendJsComponentsWebModule'
-					).selectedLanguageIdAtom;
-
-					var selectedLanguageIdAtom =
-						instance._selectedLanguageIdAtom;
-
-					instance._selectedLanguageIdSubscription = instance._State.subscribe(
-						selectedLanguageIdAtom,
-						A.bind('_onSelectedLanguageIdChange', instance)
-					);
-
 					var activeLanguageIds = instance.get('activeLanguageIds');
 
 					if (activeLanguageIds) {
@@ -800,23 +763,28 @@ AUI.add(
 							'frontendJsComponentsWebModule'
 						).activeLanguageIdsAtom;
 
+						instance._State = instance.get(
+							'frontendJsStateWebModule'
+						).State;
+
 						instance._flagsInitialContent = instance._flags.cloneNode(
 							true
 						);
 
 						instance._renderActiveLanguageIds();
 
+						var State = instance._State;
 						var activeLanguageIdsAtom =
 							instance._activeLanguageIdsAtom;
 
 						if (instance.get('adminMode')) {
-							instance._State.writeAtom(
+							State.writeAtom(
 								activeLanguageIdsAtom,
 								activeLanguageIds
 							);
 						}
 
-						instance._availableLanguagesSubscription = instance._State.subscribe(
+						instance._availableLanguagesSubscription = State.subscribe(
 							activeLanguageIdsAtom,
 							A.bind('_onActiveLanguageIdsChange', instance)
 						);

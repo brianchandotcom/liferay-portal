@@ -30,6 +30,51 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-149232. The user can convert a widget page to a content page via management toolbar in Pages admin."
+	@priority = "4"
+	test BulkConvertWidgetPageToContentPageByIcon {
+		task ("Add a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+		}
+
+		task ("Add an Asset Publisher to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("View current page type before conversion") {
+			PagesAdmin.openPagesAdmin(siteURLKey = "Test Site Name");
+
+			PagesAdmin.viewPageType(
+				pageName = "Test Page Name",
+				pageType = "Widget Page");
+		}
+
+		task ("Bulk convert widget page to content page by icon") {
+			PagesAdmin.convertToContentPageByIcon(pageNameList = "Test Page Name");
+		}
+
+		task ("View current page type after conversion") {
+			PagesAdmin.viewPageType(
+				pageName = "Test Page Name",
+				pageType = "Content Page");
+		}
+
+		task ("View Asset Publisher is rendered at edit mode after conversion") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.viewElementInsideModule(
+				elementName = "Asset Publisher",
+				moduleNumber = "1");
+		}
+	}
+
 	@description = "This is a test for LPS-98303 and LPS-98327. Assert convert a widget page with Asset Publisher to content page and the content page keeps the same plid identifier before conversion."
 	@priority = "5"
 	test ConvertBasicWidgetPageToContentPage {

@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Riccardo Ferrari, Rachael Koestartyo, Marcos Martins
+ * @author Marcos Martins, Rachael Koestartyo, Riccardo Ferrari
  * @generated
  */
 @Component(
@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 @Generated("")
 @OpenAPIDefinition(
-	info = @Info(description = "Liferay Analytics Cloud DXP Entities Exporter", license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "Liferay Analytics DXP Entities Exporter", version = "v1.0")
+	info = @Info(license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "Liferay Analytics DXP Entities Exporter", version = "v1.0")
 )
 public class OpenAPIResourceImpl {
 

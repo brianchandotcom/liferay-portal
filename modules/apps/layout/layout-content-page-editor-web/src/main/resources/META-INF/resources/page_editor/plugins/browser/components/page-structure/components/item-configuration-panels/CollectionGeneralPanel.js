@@ -379,26 +379,46 @@ export function CollectionGeneralPanel({item}) {
 							</ClayForm.Group>
 
 							{listStyle === LIST_STYLE_GRID && (
-								<ClayForm.Group small>
-									<label htmlFor={collectionLayoutId}>
-										{Liferay.Language.get('layout')}
-									</label>
+								<>
+									<ClayForm.Group small>
+										<label htmlFor={collectionLayoutId}>
+											{Liferay.Language.get('layout')}
+										</label>
 
-									<ClaySelectWithOption
-										aria-label={Liferay.Language.get(
-											'layout'
-										)}
-										id={collectionLayoutId}
-										onChange={(event) =>
-											handleConfigurationChanged({
-												numberOfColumns:
-													event.target.value,
-											})
-										}
-										options={LAYOUT_OPTIONS}
-										value={numberOfColumns}
-									/>
-								</ClayForm.Group>
+										<ClaySelectWithOption
+											aria-label={Liferay.Language.get(
+												'layout'
+											)}
+											id={collectionLayoutId}
+											onChange={(event) =>
+												handleConfigurationChanged({
+													numberOfColumns:
+														event.target.value,
+												})
+											}
+											options={LAYOUT_OPTIONS}
+											value={numberOfColumns}
+										/>
+									</ClayForm.Group>
+
+									{config.featureFlagLps119551 && (
+										<ClayForm.Group small>
+											<ClayCheckbox
+												checked={item.config.gutters}
+												label={Liferay.Language.get(
+													'show-gutter'
+												)}
+												onChange={({
+													target: {checked},
+												}) =>
+													handleConfigurationChanged({
+														gutters: checked,
+													})
+												}
+											/>
+										</ClayForm.Group>
+									)}
+								</>
 							)}
 
 							{listStyle !== LIST_STYLE_GRID &&

@@ -133,7 +133,14 @@ const Grid = ({
 	return (
 		<>
 			{Array.from({length: numberOfRows}).map((_, i) => (
-				<ClayLayout.Row key={`row-${i}`}>
+				<ClayLayout.Row
+					className={classNames('', {
+						'no-gutters':
+							config.featureFlagLps119551 &&
+							!collectionConfig.gutters,
+					})}
+					key={`row-${i}`}
+				>
 					{Array.from({length: collectionConfig.numberOfColumns}).map(
 						(_, j) => {
 							const key = `col-${i}-${j}`;

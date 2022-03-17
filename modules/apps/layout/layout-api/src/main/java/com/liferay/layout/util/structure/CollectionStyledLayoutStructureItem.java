@@ -55,6 +55,8 @@ public class CollectionStyledLayoutStructureItem
 				_displayAllPages,
 				collectionStyledLayoutStructureItem._displayAllPages) ||
 			!Objects.equals(
+				_gutters, collectionStyledLayoutStructureItem._gutters) ||
+			!Objects.equals(
 				_listStyle, collectionStyledLayoutStructureItem._listStyle) ||
 			!Objects.equals(
 				_numberOfColumns,
@@ -95,6 +97,8 @@ public class CollectionStyledLayoutStructureItem
 			"displayAllItems", _displayAllItems
 		).put(
 			"displayAllPages", _displayAllPages
+		).put(
+			"gutters", _gutters
 		).put(
 			"listItemStyle", _listItemStyle
 		).put(
@@ -166,6 +170,10 @@ public class CollectionStyledLayoutStructureItem
 		return _displayAllPages;
 	}
 
+	public boolean isGutters() {
+		return _gutters;
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
 	 *             #isDisplayAllItems()}
@@ -195,6 +203,10 @@ public class CollectionStyledLayoutStructureItem
 		else {
 			_displayAllPages = displayAllPages;
 		}
+	}
+
+	public void setGutters(boolean gutters) {
+		_gutters = gutters;
 	}
 
 	public void setListItemStyle(String listItemStyle) {
@@ -262,6 +274,10 @@ public class CollectionStyledLayoutStructureItem
 				itemConfigJSONObject.getBoolean("displayAllPages"));
 		}
 
+		if (itemConfigJSONObject.has("gutters")) {
+			setGutters(itemConfigJSONObject.getBoolean("gutters"));
+		}
+
 		if (itemConfigJSONObject.has("showAllItems")) {
 			setShowAllItems(itemConfigJSONObject.getBoolean("showAllItems"));
 		}
@@ -303,6 +319,7 @@ public class CollectionStyledLayoutStructureItem
 	private JSONObject _collectionJSONObject;
 	private boolean _displayAllItems;
 	private boolean _displayAllPages = true;
+	private boolean _gutters = true;
 	private String _listItemStyle;
 	private String _listStyle;
 	private int _numberOfColumns = 1;

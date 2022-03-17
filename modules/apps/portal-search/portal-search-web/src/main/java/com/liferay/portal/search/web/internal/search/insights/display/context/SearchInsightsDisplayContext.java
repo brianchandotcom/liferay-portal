@@ -31,14 +31,26 @@ public class SearchInsightsDisplayContext implements Serializable {
 	}
 
 	public String getRequestString() {
-		return prettyPrintJSONString(_requestString);
+		return _getPrettyPrintedJSONString(_requestString);
 	}
 
 	public String getResponseString() {
-		return prettyPrintJSONString(_responseString);
+		return _getPrettyPrintedJSONString(_responseString);
 	}
 
-	public String prettyPrintJSONString(String jsonString) {
+	public void setHelpMessage(String helpMessage) {
+		_helpMessage = helpMessage;
+	}
+
+	public void setRequestString(String queryString) {
+		_requestString = queryString;
+	}
+
+	public void setResponseString(String responseString) {
+		_responseString = responseString;
+	}
+
+	private String _getPrettyPrintedJSONString(String jsonString) {
 		try {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 				jsonString);
@@ -52,18 +64,6 @@ public class SearchInsightsDisplayContext implements Serializable {
 
 			return jsonString;
 		}
-	}
-
-	public void setHelpMessage(String helpMessage) {
-		_helpMessage = helpMessage;
-	}
-
-	public void setRequestString(String queryString) {
-		_requestString = queryString;
-	}
-
-	public void setResponseString(String responseString) {
-		_responseString = responseString;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

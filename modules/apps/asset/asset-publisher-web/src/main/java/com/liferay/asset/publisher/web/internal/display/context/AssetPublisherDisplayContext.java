@@ -31,7 +31,6 @@ import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider;
-import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryServiceUtil;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
@@ -1567,16 +1566,7 @@ public class AssetPublisherDisplayContext {
 		return false;
 	}
 
-	public boolean isSelectionStyleManual() throws PortalException {
-		AssetListEntry assetListEntry = fetchAssetListEntry();
-
-		if (isSelectionStyleAssetList() && (assetListEntry != null) &&
-			(assetListEntry.getType() ==
-				AssetListEntryTypeConstants.TYPE_MANUAL)) {
-
-			return true;
-		}
-
+	public boolean isSelectionStyleManual() {
 		if (Objects.equals(
 				getSelectionStyle(),
 				AssetPublisherSelectionStyleConstants.TYPE_MANUAL)) {

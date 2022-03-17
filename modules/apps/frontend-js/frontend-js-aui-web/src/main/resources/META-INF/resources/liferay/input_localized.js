@@ -446,19 +446,21 @@ AUI.add(
 				_onSelectFlag(event) {
 					var instance = this;
 
-					var languageId = event.item.getAttribute('data-value');
-
-					instance._State.writeAtom(
-						instance._selectedLanguageIdAtom,
-						languageId
-					);
-
 					if (!event.domEvent) {
 						Liferay.fire('inputLocalized:localeChanged', {
 							item: event.item,
 							source: instance,
 						});
 					}
+
+					var State = instance._State;
+
+					var languageId = event.item.getAttribute('data-value');
+
+					State.writeAtom(
+						instance._selectedLanguageIdAtom,
+						languageId
+					);
 				},
 
 				_onSelectedLanguageIdChange(languageId) {

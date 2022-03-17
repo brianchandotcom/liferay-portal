@@ -73,13 +73,10 @@ long cpDefinitionId = cpCatalogEntry.getCPDefinitionId();
 					<aui:button cssClass="btn btn-primary btn-sm my-2" href="<%= cpContentHelper.getReplacementCommerceProductFriendlyURL(cpSku, themeDisplay) %>" value="replacement-product" />
 				</c:if>
 
-				<%
-				Date discontinuedDate = cpSku.getDiscontinuedDate();
-				%>
-
-				<c:if test="<%= discontinuedDate != null %>">
+				<c:if test="<%= (cpSku != null) && (cpSku.getDiscontinuedDate() != null) %>">
 
 					<%
+					Date discontinuedDate = cpSku.getDiscontinuedDate();
 					Format format = FastDateFormatFactoryUtil.getSimpleDateFormat("MMMMM dd, yyyy", locale, timeZone);
 					%>
 

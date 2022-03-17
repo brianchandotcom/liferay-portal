@@ -304,7 +304,9 @@
 
 		<var name="testCDATA"><![CDATA['alert(0)'"alert(0)"><img src=x onerror=alert(0)><script>alert(0)</script>]]></var>
 
-		<var name="testNestedCDATA"><![CDATA[<root available-locales="en_US" default-locale="en_US">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09<![CDATA[${content}]]]]><![CDATA[>%0A%09%09</dynamic-content>%0A</root>]]></var>
+		<var name="testNestedCDATA1"><![CDATA[<root available-locales="en_US" default-locale="en_US">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09<![CDATA[${content}]]]]><![CDATA[>%0A%09%09</dynamic-content>%0A</root>]]></var>
+
+		<var name="testNestedCDATA2"><![CDATA[<![CDATA[Test Script]]]]><![CDATA[>]]></var>
 
 		<var name="wikiPageContent"><![CDATA[<p id='demo'>PASS</p>
 

@@ -221,7 +221,9 @@ definition {
 
 		var testCDATA = ''''alert(0)'"alert(0)"><img src=x onerror=alert(0)><script>alert(0)</script>''';
 
-		var testNestedCDATA = '''<root available-locales="en_US" default-locale="en_US">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09<![CDATA[${content}]]>%0A%09%09</dynamic-content>%0A</root>''';
+		var testNestedCDATA1 = '''<root available-locales="en_US" default-locale="en_US">%0A%09%09<dynamic-content language-id="en_US">%0A%09%09%09<![CDATA[${content}]]>%0A%09%09</dynamic-content>%0A</root>''';
+
+		var testNestedCDATA2 = '''<![CDATA[Test Script]]>''';
 
 		var wikiPageContent = '''<p id='demo'>PASS</p>
 

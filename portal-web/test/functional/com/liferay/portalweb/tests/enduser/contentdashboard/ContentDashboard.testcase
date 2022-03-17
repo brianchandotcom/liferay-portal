@@ -142,43 +142,43 @@ definition {
 	@description = "LPS-132510 Given The Content Dashboard
 	When the info panel of a blog is open
 	Then the blog author's avatar and name are shown"
-    @priority = "3"
-    test BlogAuthorInInfoPanel {
-        property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-        property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+	@priority = "3"
+	test BlogAuthorInInfoPanel {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
+		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 
-        task ("Create a blog") {
-            JSONBlog.addEntry(
-                entryContent = "Blogs Entry Content",
-                entryTitle = "Blogs Entry Title",
+		task ("Create a blog") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
 				groupName = "Test Site Name");
-        }
+		}
 
-        task ("Go to Content Dashboard and check the title in the Info panel") {
-            ApplicationsMenu.gotoPortlet(
-                category = "Content",
-                panel = "Applications",
-                portlet = "Content Dashboard");
-        }
+		task ("Go to Content Dashboard and check the title in the Info panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
 
-        task ("Go to Content Dashboard and check the author's avatar and name in the Info panel") {
-            ContentDashboard.openInfoPanelByDropdownMenu();
+		task ("Go to Content Dashboard and check the author's avatar and name in the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
 
 			AssertElementPresent(
 				assetAuthor = "Test Test",
 				locator1 = "ContentDashboard#INFO_PANEL_AUTHOR");
 
 			AssertElementPresent(locator1 = "ContentDashboard#INFO_PANEL_AVATAR");
-        }
-    }
+		}
+	}
 
 	@description = "LPS-132510 Given The Content Dashboard
 	When the info panel of a blog is open
 	Then the list of categories assigned to the content will be divided between public and internal vocabularies"
-    @priority = "3"
-    test BlogCategoriesInInfoPanel {
-        property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-        property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+	@priority = "3"
+	test BlogCategoriesInInfoPanel {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
+		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 
 		task ("Add an internal vocabulary for Test Site Name") {
 			JSONCategory.addVocabulary(
@@ -207,298 +207,298 @@ definition {
 				vocabularyName = "Vocabulary Public");
 		}
 
-        task ("Create a blog") {
-            JSONBlog.addEntry(
+		task ("Create a blog") {
+			JSONBlog.addEntry(
 				assetCategoryIds = "${categoryId1},${categoryId2}",
-                entryContent = "Blogs Entry Content",
-                entryTitle = "Blogs Entry Title",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
 				groupName = "Test Site Name");
-        }
+		}
 
-        task ("Go to Content Dashboard and check the title in the Info panel") {
-            ApplicationsMenu.gotoPortlet(
-                category = "Content",
-                panel = "Applications",
-                portlet = "Content Dashboard");
-        }
+		task ("Go to Content Dashboard and check the title in the Info panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
 
-        task ("Go to Content Dashboard and check the vocabularies, public and internal, and their categories are shown in the Info panel") {
-            ContentDashboard.openInfoPanelByDropdownMenu();
+		task ("Go to Content Dashboard and check the vocabularies, public and internal, and their categories are shown in the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_VOCABULARY_NAME",
 				vocabularyName = "Vocabulary Public");
-			
+
 			AssertElementPresent(
-				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL",
-				categoryName = "CategoryPublic");
+				categoryName = "CategoryPublic",
+				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL");
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_VOCABULARY_NAME",
 				vocabularyName = "Vocabulary Internal");
-			
+
 			AssertElementPresent(
-				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL",
-				categoryName = "CategoryInternal");
-        }
-    }
+				categoryName = "CategoryInternal",
+				locator1 = "ContentDashboard#CATEGORY_LABEL_INFO_PANEL");
+		}
+	}
 
 	@description = "LPS-132510 Given The Content Dashboard
 	When the info panel of a blog is open
 	Then the Creation date of the blog is shown in the Details section"
-    @priority = "3"
-    test BlogCreationDateInInfoPanel {
-        property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-        property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+	@priority = "3"
+	test BlogCreationDateInInfoPanel {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
+		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 
-        task ("Create a blog") {
-            JSONBlog.addEntry(
-                entryContent = "Blogs Entry Content",
-                entryTitle = "Blogs Entry Title",
+		task ("Create a blog") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
 				groupName = "Test Site Name");
-        }
+		}
 
-        task ("Go to Content Dashboard and check the title in the Info panel") {
-            ApplicationsMenu.gotoPortlet(
-                category = "Content",
-                panel = "Applications",
-                portlet = "Content Dashboard");
-        }
+		task ("Go to Content Dashboard and check the title in the Info panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
 
-        task ("Go to Content Dashboard and check the Creation date in the Info panel") {
-            ContentDashboard.openInfoPanelByDropdownMenu();
+		task ("Go to Content Dashboard and check the Creation date in the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
 
 			Panel.expandPanel(panel = "Details");
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_TYPE_OF_DATE",
-				typeOfDate ="Creation Date");
-        }
-    }
+				typeOfDate = "Creation Date");
+		}
+	}
 
 	@description = "LPS-132510 Given The Content Dashboard
 	When the info panel of a blog is open
 	Then the Display date of the blog is shown in the Details section"
-    @priority = "3"
-    test BlogDisplayDateInInfoPanel {
-        property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-        property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+	@priority = "3"
+	test BlogDisplayDateInInfoPanel {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
+		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 
-        task ("Create a blog") {
-            JSONBlog.addEntry(
-                entryContent = "Blogs Entry Content",
-                entryTitle = "Blogs Entry Title",
+		task ("Create a blog") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
 				groupName = "Test Site Name");
-        }
+		}
 
-        task ("Go to Content Dashboard and check the title in the Info panel") {
-            ApplicationsMenu.gotoPortlet(
-                category = "Content",
-                panel = "Applications",
-                portlet = "Content Dashboard");
-        }
+		task ("Go to Content Dashboard and check the title in the Info panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
 
-        task ("Go to Content Dashboard and check the Display date in the Info panel") {
-            ContentDashboard.openInfoPanelByDropdownMenu();
+		task ("Go to Content Dashboard and check the Display date in the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
 
 			Panel.expandPanel(panel = "Details");
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_TYPE_OF_DATE",
-				typeOfDate ="Display Date");
-        }
-    }
+				typeOfDate = "Display Date");
+		}
+	}
 
 	@description = "LPS-132510 Given The Content Dashboard
 	When the info panel of a blog is open
 	Then the ID of the blog is shown in the Details section"
-    @priority = "3"
-    test BlogIDDateInInfoPanel {
-        property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-        property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+	@priority = "3"
+	test BlogIDDateInInfoPanel {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
+		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 
-        task ("Create a blog") {
-            JSONBlog.addEntry(
-                entryContent = "Blogs Entry Content",
-                entryTitle = "Blogs Entry Title",
+		task ("Create a blog") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
 				groupName = "Test Site Name");
-        }
+		}
 
-        task ("Go to Content Dashboard and check the title in the Info panel") {
-            ApplicationsMenu.gotoPortlet(
-                category = "Content",
-                panel = "Applications",
-                portlet = "Content Dashboard");
-        }
+		task ("Go to Content Dashboard and check the title in the Info panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
 
-        task ("Go to Content Dashboard and check the ID in the Info panel") {
-            ContentDashboard.openInfoPanelByDropdownMenu();
+		task ("Go to Content Dashboard and check the ID in the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
 
 			Panel.expandPanel(panel = "Details");
 
 			AssertElementPresent(locator1 = "ContentDashboard#INFO_PANEL_ID");
-        }
-    }
+		}
+	}
 
 	@description = "LPS-132510 Given The Content Dashboard
 	When the info panel of a blog is open
 	Then the Modification date of the blog is shown in the Details section"
-    @priority = "3"
-    test BlogModificationDateInInfoPanel {
-        property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-        property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+	@priority = "3"
+	test BlogModificationDateInInfoPanel {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
+		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 
-        task ("Create a blog") {
-            JSONBlog.addEntry(
-                entryContent = "Blogs Entry Content",
-                entryTitle = "Blogs Entry Title",
+		task ("Create a blog") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
 				groupName = "Test Site Name");
-        }
+		}
 
-        task ("Go to Content Dashboard and check the title in the Info panel") {
-            ApplicationsMenu.gotoPortlet(
-                category = "Content",
-                panel = "Applications",
-                portlet = "Content Dashboard");
-        }
+		task ("Go to Content Dashboard and check the title in the Info panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
 
-        task ("Go to Content Dashboard and check the Modified date in the Info panel") {
-            ContentDashboard.openInfoPanelByDropdownMenu();
+		task ("Go to Content Dashboard and check the Modified date in the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
 
 			Panel.expandPanel(panel = "Details");
 
 			AssertElementPresent(
 				locator1 = "ContentDashboard#INFO_PANEL_TYPE_OF_DATE",
-				typeOfDate ="Modified Date");
-        }
-    }
+				typeOfDate = "Modified Date");
+		}
+	}
 
 	@description = "LPS-132510 Given The Content Dashboard
 	When the info panel of a blog is open
 	Then the blog status label is shown"
-    @priority = "3"
-    test BlogStatusInInfoPanel {
-        property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-        property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+	@priority = "3"
+	test BlogStatusInInfoPanel {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
+		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 
-        task ("Create a blog") {
-            JSONBlog.addEntry(
-                entryContent = "Blogs Entry Content",
-                entryTitle = "Blogs Entry Title",
+		task ("Create a blog") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
 				groupName = "Test Site Name");
-        }
+		}
 
-        task ("Go to Content Dashboard and check the title in the Info panel") {
-            ApplicationsMenu.gotoPortlet(
-                category = "Content",
-                panel = "Applications",
-                portlet = "Content Dashboard");
-        }
+		task ("Go to Content Dashboard and check the title in the Info panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
 
-        task ("Go to Content Dashboard and check the status in the Info panel") {
-            ContentDashboard.openInfoPanelByDropdownMenu();
+		task ("Go to Content Dashboard and check the status in the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
 
 			AssertElementPresent(
 				assetStatus = "Approved",
 				locator1 = "ContentDashboard#INFO_PANEL_STATUS");
-        }
-    }
+		}
+	}
 
 	@description = "LPS-132510 Given The Content Dashboard
 	When the info panel of a blog is open
 	Then all the tags assigned to the blog appear as labels in the Tags section"
-    @priority = "3"
-    test BlogTagsInInfoPanel {
-        property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-        property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+	@priority = "3"
+	test BlogTagsInInfoPanel {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
+		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 
-        task ("Create a blog with the tag") {
-            JSONBlog.addEntry(
+		task ("Create a blog with the tag") {
+			JSONBlog.addEntry(
 				assetTagNames = "tagname",
-                entryContent = "Blogs Entry Content",
-                entryTitle = "Blogs Entry Title",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
 				groupName = "Test Site Name");
-        }
+		}
 
-        task ("Go to Content Dashboard and check the title in the Info panel") {
-            ApplicationsMenu.gotoPortlet(
-                category = "Content",
-                panel = "Applications",
-                portlet = "Content Dashboard");
-        }
+		task ("Go to Content Dashboard and check the title in the Info panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
 
-        task ("Go to Content Dashboard and check the tags are shown in the Info panel") {
-            ContentDashboard.openInfoPanelByDropdownMenu();
+		task ("Go to Content Dashboard and check the tags are shown in the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
 
 			AssertElementPresent(locator1 = "ContentDashboard#INFO_PANEL_TAGS_TITLE");
-			
+
 			AssertElementPresent(
 				locator1 = "ContentDashboard#TAG_LABEL_INFO_PANEL",
 				tagName = "tagname");
-        }
-    }
+		}
+	}
 
 	@description = "LPS-132510 Given The Content Dashboard
     When the info panel of a blog is open
     Then the title of the blog is shown"
-    @priority = "3"
-    test BlogTitleInInfoPanel {
-        property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-        property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+	@priority = "3"
+	test BlogTitleInInfoPanel {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
+		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 
-        task ("Create a blog") {
-            JSONBlog.addEntry(
-                entryContent = "Blogs Entry Content",
-                entryTitle = "Blogs Entry Title",
+		task ("Create a blog") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
 				groupName = "Test Site Name");
-        }
+		}
 
-        task ("Go to Content Dashboard and check the title in the Info panel") {
-            ApplicationsMenu.gotoPortlet(
-                category = "Content",
-                panel = "Applications",
-                portlet = "Content Dashboard");
-        }
+		task ("Go to Content Dashboard and check the title in the Info panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
 
-        task ("Go to Content Dashboard and check the title in the Info panel") {
-            ContentDashboard.openInfoPanelByDropdownMenu();
+		task ("Go to Content Dashboard and check the title in the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
 
-            AssertTextPresent(
-                locator1 = "ContentDashboard#INFO_PANEL_TITLE",
-                value1 = "Blogs Entry Title");
-        }
-    }
+			AssertTextPresent(
+				locator1 = "ContentDashboard#INFO_PANEL_TITLE",
+				value1 = "Blogs Entry Title");
+		}
+	}
 
 	@description = "LPS-132510 Given The Content Dashboard
 	When the info panel of a blog is open
 	Then the blog version labels are shown"
-    @priority = "3"
-    test BlogVersionInInfoPanel {
-        property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-        property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+	@priority = "3"
+	test BlogVersionInInfoPanel {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
+		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 
-        task ("Create a blog") {
-            JSONBlog.addEntry(
-                entryContent = "Blogs Entry Content",
-                entryTitle = "Blogs Entry Title",
+		task ("Create a blog") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
 				groupName = "Test Site Name");
-        }
+		}
 
-        task ("Go to Content Dashboard and check the title in the Info panel") {
-            ApplicationsMenu.gotoPortlet(
-                category = "Content",
-                panel = "Applications",
-                portlet = "Content Dashboard");
-        }
+		task ("Go to Content Dashboard and check the title in the Info panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
 
-        task ("Go to Content Dashboard and check the version in the Info panel") {
-            ContentDashboard.openInfoPanelByDropdownMenu();
+		task ("Go to Content Dashboard and check the version in the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
 
 			AssertElementPresent(
 				assetVersion = "Version",
 				locator1 = "ContentDashboard#INFO_PANEL_VERSION");
-        }
-    }
+		}
+	}
 
 	@description = "LPS-114911 When the user selects vocabularies from the selection panel, vocabularies selected show in the table as headers and categories assigned to contents will show "
 	@priority = "5"

@@ -35,9 +35,6 @@ import com.liferay.portal.util.PropsValues;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Igor Spasic
  */
@@ -151,10 +148,6 @@ public class DefaultJSONWebServiceRegistrator
 		}
 	}
 
-	public void setWireViaUtil(boolean wireViaUtil) {
-		_wireViaUtil = wireViaUtil;
-	}
-
 	protected Class<?> getTargetClass(Object service) {
 		while (ProxyUtil.isProxyClass(service.getClass())) {
 			InvocationHandler invocationHandler =
@@ -192,32 +185,6 @@ public class DefaultJSONWebServiceRegistrator
 		}
 
 		return service.getClass();
-	}
-
-	protected Class<?> loadUtilClass(Class<?> implementationClass)
-		throws ClassNotFoundException {
-
-		if (_utilClasses == null) {
-			_utilClasses = new HashMap<>();
-		}
-
-		Class<?> utilClass = _utilClasses.get(implementationClass);
-
-		if (utilClass != null) {
-			return utilClass;
-		}
-
-		String utilClassName =
-			_jsonWebServiceNaming.convertServiceImplClassToUtilClassName(
-				implementationClass);
-
-		ClassLoader classLoader = implementationClass.getClassLoader();
-
-		utilClass = classLoader.loadClass(utilClassName);
-
-		_utilClasses.put(implementationClass, utilClass);
-
-		return utilClass;
 	}
 
 	protected void onJSONWebServiceBean(
@@ -267,22 +234,6 @@ public class DefaultJSONWebServiceRegistrator
 
 			Class<?> serviceBeanClass = methodDescriptor.getDeclaringClass();
 
-			if (_wireViaUtil) {
-				Class<?> utilClass = loadUtilClass(serviceBeanClass);
-
-				try {
-					method = utilClass.getMethod(
-						method.getName(), method.getParameterTypes());
-				}
-				catch (NoSuchMethodException noSuchMethodException) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(noSuchMethodException);
-					}
-
-					continue;
-				}
-			}
-
 			String path = _jsonWebServiceMappingResolver.resolvePath(
 				serviceBeanClass, method);
 
@@ -291,19 +242,9 @@ public class DefaultJSONWebServiceRegistrator
 			}
 
 			if (_jsonWebServiceNaming.isIncludedMethod(method)) {
-				if (_wireViaUtil) {
-					JSONWebServiceActionsManagerUtil.
-						registerJSONWebServiceAction(
-							contextName, contextPath,
-							method.getDeclaringClass(), method, path,
-							httpMethod);
-				}
-				else {
-					JSONWebServiceActionsManagerUtil.
-						registerJSONWebServiceAction(
-							contextName, contextPath, serviceBean,
-							serviceBeanClass, method, path, httpMethod);
-				}
+				JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
+					contextName, contextPath, serviceBean, serviceBeanClass,
+					method, path, httpMethod);
 			}
 		}
 	}
@@ -314,7 +255,5 @@ public class DefaultJSONWebServiceRegistrator
 	private final JSONWebServiceMappingResolver _jsonWebServiceMappingResolver;
 	private final JSONWebServiceNaming _jsonWebServiceNaming;
 	private final JSONWebServiceScannerStrategy _jsonWebServiceScannerStrategy;
-	private Map<Class<?>, Class<?>> _utilClasses;
-	private boolean _wireViaUtil;
 
 }

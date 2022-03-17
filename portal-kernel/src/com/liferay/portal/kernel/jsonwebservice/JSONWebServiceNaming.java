@@ -88,17 +88,6 @@ public class JSONWebServiceNaming {
 		return className;
 	}
 
-	public String convertServiceImplClassToUtilClassName(Class<?> clazz) {
-		String className = clazz.getName();
-
-		if (className.endsWith("Impl")) {
-			className = className.substring(0, className.length() - 4);
-		}
-
-		return StringUtil.replace(
-			className + "Util", ".impl.", StringPool.PERIOD);
-	}
-
 	public boolean isIncludedMethod(Method method) {
 		if ((excludedMethodNames != null) &&
 			excludedMethodNames.contains(method.getName())) {

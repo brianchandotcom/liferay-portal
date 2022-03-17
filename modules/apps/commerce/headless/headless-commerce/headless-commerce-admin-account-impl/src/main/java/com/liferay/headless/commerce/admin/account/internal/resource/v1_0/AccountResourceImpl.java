@@ -215,6 +215,11 @@ public class AccountResourceImpl
 				public void accept(Object object) throws Exception {
 					SearchContext searchContext = (SearchContext)object;
 
+					searchContext.setAttribute(
+						"organizationIds",
+						_organizationLocalService.getUserOrganizationIds(
+							contextUser.getUserId(), true));
+
 					searchContext.setCompanyId(contextCompany.getCompanyId());
 				}
 

@@ -781,6 +781,8 @@ AUI.add(
 						'frontendJsStateWebModule'
 					).State;
 
+					var State = instance._State;
+
 					instance._selectedLanguageIdAtom = instance.get(
 						'frontendJsComponentsWebModule'
 					).selectedLanguageIdAtom;
@@ -788,7 +790,7 @@ AUI.add(
 					var selectedLanguageIdAtom =
 						instance._selectedLanguageIdAtom;
 
-					instance._selectedLanguageIdSubscription = instance._State.subscribe(
+					instance._selectedLanguageIdSubscription = State.subscribe(
 						selectedLanguageIdAtom,
 						A.bind('_onSelectedLanguageIdChange', instance)
 					);
@@ -810,13 +812,13 @@ AUI.add(
 							instance._activeLanguageIdsAtom;
 
 						if (instance.get('adminMode')) {
-							instance._State.writeAtom(
+							State.writeAtom(
 								activeLanguageIdsAtom,
 								activeLanguageIds
 							);
 						}
 
-						instance._availableLanguagesSubscription = instance._State.subscribe(
+						instance._availableLanguagesSubscription = State.subscribe(
 							activeLanguageIdsAtom,
 							A.bind('_onActiveLanguageIdsChange', instance)
 						);

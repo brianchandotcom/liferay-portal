@@ -130,24 +130,23 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			BatchEngineTaskExecuteStatus.valueOf(
 				batchEngineImportTask.getExecuteStatus());
 
-		if (batchEngineTaskExecuteStatus ==
+		if (batchEngineTaskExecuteStatus !=
 				BatchEngineTaskExecuteStatus.COMPLETED) {
 
-			StreamingOutput streamingOutput =
-				outputStream -> StreamUtil.transfer(
-					_batchEngineImportTaskLocalService.openContentInputStream(
-						importTaskId),
-					outputStream);
-
-			return Response.ok(
-				streamingOutput
-			).header(
-				"content-disposition", "attachment; filename=import.zip"
+			return Response.status(
+				Response.Status.NOT_FOUND
 			).build();
 		}
 
-		return Response.status(
-			Response.Status.NOT_FOUND
+		StreamingOutput streamingOutput = outputStream -> StreamUtil.transfer(
+			_batchEngineImportTaskLocalService.openContentInputStream(
+				importTaskId),
+			outputStream);
+
+		return Response.ok(
+			streamingOutput
+		).header(
+			"content-disposition", "attachment; filename=import.zip"
 		).build();
 	}
 

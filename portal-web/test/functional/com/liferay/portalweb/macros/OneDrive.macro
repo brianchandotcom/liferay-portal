@@ -82,7 +82,7 @@ definition {
 
 				Click(locator1 = "OneDrive#DELETE_CONFIRMATION");
 
-				AssertElementPresent.pauseAssertVisible(locator1 = "OneDrive#DELETE_MESSAGE");
+				VerifyElementPresent(locator1 = "OneDrive#DELETE_MESSAGE");
 			}
 
 			var key_documentTitle = "Yesterday";
@@ -94,7 +94,7 @@ definition {
 
 				Click(locator1 = "OneDrive#DELETE_CONFIRMATION");
 
-				AssertElementPresent.pauseAssertVisible(locator1 = "OneDrive#DELETE_MESSAGE");
+				VerifyElementPresent(locator1 = "OneDrive#DELETE_MESSAGE");
 			}
 		}
 	}

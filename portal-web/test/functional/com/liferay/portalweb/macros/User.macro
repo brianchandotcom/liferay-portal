@@ -2019,9 +2019,11 @@ definition {
 			SignIn.agreeToTermsOfUse();
 		}
 
-		User.resetPassword(
-			localizedSaveButton = "${localizedSaveButton}",
-			newPassword = "${newPassword}");
+		if (IsElementPresent(locator1 = "TextInput#PASSWORD_2")) {
+			User.resetPassword(
+				localizedSaveButton = "${localizedSaveButton}",
+				newPassword = "${newPassword}");
+		}
 
 		if (isSet(localizedAnswer)) {
 			User.answerPasswordReminderLocalized(

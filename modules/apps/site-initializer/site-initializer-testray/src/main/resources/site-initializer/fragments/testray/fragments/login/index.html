@@ -1,20 +1,21 @@
 [#if themeDisplay.isSignedIn() && !themeDisplay.getLayout().isSystem()]
-	<script>
-		window.location.replace("${themeDisplay.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL()}");
-	</script>
+<script>
+	window.location.replace(
+		'${themeDisplay.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL()}'
+	);
+</script>
 
-	[@liferay_aui.script]
-		window.location.replace("${themeDisplay.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL()}");
-	[/@]
-[/#if]
+[@liferay_aui.script]
+window.location.replace("${themeDisplay.getPathFriendlyURLPrivateGroup() +
+themeDisplay.getScopeGroup().getFriendlyURL()}"); [/@] [/#if]
 
 <div class="container-fluid d-flex flex-column testray-login-page">
-    <div class="logo mb-3">
-        <img alt="" class="img" data-lfr-editable-id="testray-logo" data-lfr-editable-type="image" src="[resources:testray-logo.svg]" />
+	<div class="logo mb-3">
+		<img class="img" data-lfr-editable-id="testray-logo" data-lfr-editable-type="image" src="[resources:testray-logo.svg]" />
 	</div>
-    <div class="d-flex flex-column justify-content-center mb-3 rounded-xs">
+
+	<div class="d-flex flex-column justify-content-center mb-3 rounded-xs">
 		[@liferay_portlet.runtime
-		portletName="com_liferay_login_web_portlet_LoginPortlet"
-		/]
+		portletName="com_liferay_login_web_portlet_LoginPortlet" /]
 	</div>
 </div>

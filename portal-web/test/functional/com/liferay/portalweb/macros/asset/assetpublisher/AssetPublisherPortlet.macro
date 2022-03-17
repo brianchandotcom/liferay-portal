@@ -932,6 +932,21 @@ definition {
 		MenuItem.click(menuItem = "Edit");
 	}
 
+	macro gotoSelectCollection {
+		if (!(isSet(portletName))) {
+			var portletName = "Asset Publisher";
+		}
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
+
+		Click(
+			key_portletName = "${portletName}",
+			key_text = "Select a collection to make it visible.",
+			locator1 = "Portlet#PORTLET_SELECTOR");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+	}
+
 	macro gotoViewInContext {
 		AssertClick(
 			locator1 = "Link#VIEW_IN_CONTEXT",

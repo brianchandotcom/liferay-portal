@@ -1147,6 +1147,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			uploadPortletRequest, "fileName",
 			uploadPortletRequest.getFileName("file"));
 		String title = ParamUtil.getString(uploadPortletRequest, "title");
+		String urlTitle = StringPool.BLANK;
 		String description = ParamUtil.getString(
 			uploadPortletRequest, "description");
 		String changeLog = ParamUtil.getString(
@@ -1243,7 +1244,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				fileEntry = _dlAppService.addFileEntry(
 					null, repositoryId, folderId, sourceFileName, contentType,
-					title, title, description, changeLog, inputStream, size,
+					title, urlTitle, description, changeLog, inputStream, size,
 					expirationDate, reviewDate, serviceContext);
 			}
 			else if (cmd.equals(Constants.ADD_DYNAMIC)) {
@@ -1280,20 +1281,20 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					// Update file entry and checkin
 
 					fileEntry = _dlAppService.updateFileEntryAndCheckIn(
-						fileEntryId, sourceFileName, contentType, title, title,
-						description, changeLog, dlVersionNumberIncrease,
-						inputStream, size, expirationDate, reviewDate,
-						serviceContext);
+						fileEntryId, sourceFileName, contentType, title,
+						urlTitle, description, changeLog,
+						dlVersionNumberIncrease, inputStream, size,
+						expirationDate, reviewDate, serviceContext);
 				}
 				else {
 
 					// Update file entry
 
 					fileEntry = _dlAppService.updateFileEntry(
-						fileEntryId, sourceFileName, contentType, title, title,
-						description, changeLog, dlVersionNumberIncrease,
-						inputStream, size, expirationDate, reviewDate,
-						serviceContext);
+						fileEntryId, sourceFileName, contentType, title,
+						urlTitle, description, changeLog,
+						dlVersionNumberIncrease, inputStream, size,
+						expirationDate, reviewDate, serviceContext);
 				}
 			}
 

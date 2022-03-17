@@ -550,7 +550,7 @@ definition {
 		ObjectAdmin.addObjectRelationshipViaAPI(
 			objectName_1 = "CustomObject10",
 			objectName_2 = "CustomObject10",
-			relationshipLabel = "Relationship",
+			relationshipLabel = "Relationship Label",
 			relationshipName = "relationship",
 			relationshipType = "oneToMany");
 
@@ -586,11 +586,11 @@ definition {
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
 			columnsNumber = "1",
-			fieldList = "Custom Field,Custom Object 10",
+			fieldList = "Custom Field,Relationship Label",
 			tabName = "Field Tab");
 
 		ObjectAdmin.addTabRelationshipsOnLayout(
-			relationshipsLabelName = "Relationship",
+			relationshipsLabelName = "Relationship Label",
 			tabName = "Relationship Tab");
 
 		Button.clickSave();
@@ -7749,7 +7749,7 @@ definition {
 		ObjectAdmin.gotoRelationshipsTab();
 
 		ObjectAdmin.addObjectRelationshipViaUI(
-			label = "Relationship",
+			label = "Relationship Label",
 			object = "CustomObjectB168",
 			type = "One to Many");
 
@@ -7760,7 +7760,7 @@ definition {
 		ObjectAdmin.goToFieldsTab();
 
 		ObjectAdmin.assertObjectField(
-			fieldLabel = "Custom Object A 168",
+			fieldLabel = "Relationship Label",
 			fieldType = "Relationship");
 	}
 
@@ -8036,8 +8036,8 @@ definition {
 		ObjectAdmin.addObjectRelationshipViaAPI(
 			objectName_1 = "CustomObjectA172",
 			objectName_2 = "CustomObjectB172",
-			relationshipLabel = "Relationship",
-			relationshipName = "relationship",
+			relationshipLabel = "Relationship Label",
+			relationshipName = "relationshipLabel",
 			relationshipType = "oneToMany");
 
 		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObjectA172");
@@ -8073,7 +8073,7 @@ definition {
 		LexiconEntry.gotoAdd();
 
 		AssertElementPresent(
-			key_fieldLabelName = "Custom Object A 172",
+			key_fieldLabelName = "Relationship Label",
 			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			value1 = "Custom Object A 172");
 
@@ -8082,7 +8082,7 @@ definition {
 		ObjectPortlet.viewEntryDetails(entry = "Entry 1");
 
 		AssertElementPresent(
-			key_fieldLabelName = "Custom Object A 172",
+			key_fieldLabelName = "Relationship Label",
 			locator1 = "ObjectPortlet#FIELD_LABEL_NAME",
 			value1 = "Custom Object A 172");
 	}

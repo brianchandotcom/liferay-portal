@@ -54,13 +54,13 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 
 			int y = x;
 			String s = StringPool.BLANK;
-			boolean errorSqlFlag = false;
+			boolean unmatchedParenthesis = false;
 
 			while (true) {
 				y = sqlClauses.indexOf(")", y + 1);
 
 				if (y == -1) {
-					errorSqlFlag = true;
+					unmatchedParenthesis = true;
 
 					break;
 				}
@@ -88,7 +88,7 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 				y = x;
 			}
 
-			if (errorSqlFlag) {
+			if (unmatchedParenthesis) {
 				continue;
 			}
 

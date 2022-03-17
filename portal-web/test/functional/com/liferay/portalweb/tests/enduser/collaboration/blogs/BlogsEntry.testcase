@@ -1240,7 +1240,7 @@ definition {
 	@priority = "5"
 	test CanSearchForDraftEntry {
 
-		// TODO LPS-80502 CanSearchForDraftEntry pending implementation
+		// TODO LPS-149388 CanSearchForDraftEntry pending implementation
 
 	}
 

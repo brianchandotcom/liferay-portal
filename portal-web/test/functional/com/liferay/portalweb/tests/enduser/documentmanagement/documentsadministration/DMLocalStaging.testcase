@@ -258,7 +258,7 @@ definition {
 	@priority = "5"
 	test CanPublishOldVerion {
 
-		// TODO LPS-91043 CanPublishOldVerion pending implementation
+		// TODO LPS-149384 CanPublishOldVerion pending implementation
 
 	}
 

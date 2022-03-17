@@ -52,7 +52,7 @@ definition {
 	@priority = "5"
 	test CanEditDocumentWithHardLinksEnabled {
 
-		// TODO LPS-89025| CanEditDocumentWithHardLinksEnabled pending implementation
+		// TODO LPS-149385 CanEditDocumentWithHardLinksEnabled pending implementation
 
 	}
 

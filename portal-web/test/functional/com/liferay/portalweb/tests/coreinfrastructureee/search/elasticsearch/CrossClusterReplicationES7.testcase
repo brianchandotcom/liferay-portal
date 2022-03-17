@@ -3,6 +3,7 @@ definition {
 
 	property elasticsearch.ccr.enabled = "true";
 	property elasticsearch.multiple.connections = "true";
+	property environment.acceptance = "false";
 	property minimum.slave.ram = "24";
 	property portal.release = "true";
 	property portal.suite.search.engine = "elasticsearch7";

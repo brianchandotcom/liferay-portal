@@ -40,7 +40,7 @@ public class DXPEntityRetrieverTrackerImpl
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, DXPEntityRetriever.class,
-			"analytics.dxp.entity.retriever.class.name");
+			"dxp.entity.retriever.class.name");
 	}
 
 	@Deactivate

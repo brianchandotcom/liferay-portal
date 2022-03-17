@@ -48,10 +48,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "analytics.dxp.entity.retriever.class.name=com.liferay.expando.kernel.model.ExpandoColumn",
+	property = "dxp.entity.retriever.class.name=com.liferay.expando.kernel.model.ExpandoColumn",
 	service = DXPEntityRetriever.class
 )
-public class ExpandoColumnRetriever implements DXPEntityRetriever {
+public class ExpandoColumnDXPEntityRetriever implements DXPEntityRetriever {
 
 	@Override
 	public Page<DXPEntity> getDXPEntitiesPage(

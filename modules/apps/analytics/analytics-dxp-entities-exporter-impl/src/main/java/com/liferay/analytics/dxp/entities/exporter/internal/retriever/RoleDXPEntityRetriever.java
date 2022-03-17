@@ -18,13 +18,14 @@ import com.liferay.analytics.dxp.entities.exporter.dto.v1_0.DXPEntity;
 import com.liferay.analytics.dxp.entities.exporter.retriever.DXPEntityRetriever;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.UserGroup;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.service.UserGroupLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,10 +35,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "analytics.dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.UserGroup",
+	property = "dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.Role",
 	service = DXPEntityRetriever.class
 )
-public class UserGroupRetriever implements DXPEntityRetriever {
+public class RoleDXPEntityRetriever implements DXPEntityRetriever {
 
 	@Override
 	public Page<DXPEntity> getDXPEntitiesPage(
@@ -46,18 +47,21 @@ public class UserGroupRetriever implements DXPEntityRetriever {
 				transformUnsafeFunction)
 		throws Exception {
 
-		return SearchUtil.search(
-			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), null,
-			UserGroup.class.getName(), null, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> searchContext.setCompanyId(companyId), null,
-			document -> transformUnsafeFunction.apply(
-				_userGroupLocalService.getUserGroup(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+		List<DXPEntity> dxpEntities = new ArrayList<>();
+
+		List<Role> roles = _roleLocalService.search(
+			companyId, null, new Integer[] {RoleConstants.TYPE_REGULAR},
+			pagination.getStartPosition(), pagination.getEndPosition(), null);
+
+		for (Role role : roles) {
+			dxpEntities.add(transformUnsafeFunction.apply(role));
+		}
+
+		return Page.of(
+			dxpEntities, pagination, _roleLocalService.getRolesCount());
 	}
 
 	@Reference
-	private UserGroupLocalService _userGroupLocalService;
+	private RoleLocalService _roleLocalService;
 
 }

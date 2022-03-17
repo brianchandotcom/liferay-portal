@@ -341,7 +341,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanRenderImageAfterChangingScreenResolution {
-		property portal.acceptance = "false";
 
 		// TODO LPS-148675 CanRenderImageAfterChangingScreenResolution pending implementation
 

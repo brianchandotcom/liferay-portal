@@ -613,7 +613,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewEntryUsingDisplayPageTemplate {
-		property portal.acceptance = "false";
 
 		// TODO LPS-148504 CanViewEntryUsingDisplayPageTemplate pending implementation
 

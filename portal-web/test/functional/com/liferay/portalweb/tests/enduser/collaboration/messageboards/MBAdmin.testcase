@@ -314,7 +314,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewCountsFromRootCategory {
-		property portal.acceptance = "false";
 
 		// TODO LPS-148587 CanViewCountsFromRootCategory pending implementation
 

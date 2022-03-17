@@ -30,7 +30,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDeleteNotificationAfterDeletingPendingFile {
-		property portal.acceptance = "false";
 
 		// TODO LPS-148586 CanDeleteNotificationAfterDeletingPendingFile pending implementation
 

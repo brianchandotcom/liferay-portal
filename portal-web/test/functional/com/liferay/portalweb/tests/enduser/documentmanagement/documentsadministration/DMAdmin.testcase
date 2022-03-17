@@ -41,7 +41,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDeleteAllDocumentsOnDifferentPagesAtOnce {
-		property portal.acceptance = "false";
 
 		// TODO LPS-148508 CanDeleteAllDocumentsOnDifferentPagesAtOnce pending implementation
 
@@ -51,7 +50,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanResetCountsInManagementToolbar {
-		property portal.acceptance = "false";
 
 		// TODO LPS-148592 CanResetCountsInManagementToolbar pending implementation
 

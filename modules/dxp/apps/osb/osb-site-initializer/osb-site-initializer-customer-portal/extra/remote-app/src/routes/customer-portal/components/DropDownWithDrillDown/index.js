@@ -42,7 +42,10 @@ const DropDownWithDrillDown = ({
 			hasRightSymbols
 			menuElementAttrs={{
 				...menuElementAttrs,
-				className: classNames(menuElementAttrs?.className, 'drilldown'),
+				className: classNames(
+					menuElementAttrs?.className,
+					'drilldown drop-down-menu-items'
+				),
 			}}
 			menuHeight={menuHeight}
 			menuWidth={menuWidth}
@@ -50,7 +53,7 @@ const DropDownWithDrillDown = ({
 			onActiveChange={setActive}
 			trigger={trigger}
 		>
-			<div className="drilldown-inner">
+			<div>
 				{menuIds.map((menuKey) => {
 					return (
 						<DrilldownMenuItems

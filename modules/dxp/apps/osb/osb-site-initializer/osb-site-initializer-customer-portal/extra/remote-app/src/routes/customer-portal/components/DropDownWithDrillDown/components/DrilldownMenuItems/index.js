@@ -45,19 +45,20 @@ const DrilldownMenuItems = ({
 			<div className="drilldown-item-inner">
 				{header && (
 					<>
-						<div className="dropdown-header" onClick={onBack}>
+						<div
+							className="dropdown-header text-neutral-8"
+							onClick={onBack}
+						>
 							<ClayButtonWithIcon
-								className="component-action dropdown-item-indicator-start"
+								className="component-action dropdown-item-indicator-start text-neutral-2"
 								onClick={onBack}
-								symbol="angle-left"
+								symbol="angle-left-small"
 							/>
 
-							<span className="dropdown-item-indicator-text-start">
+							<span className="dropdown-item-indicator-text-start pl-3 text-capitalize text-neutral-8">
 								{header}
 							</span>
 						</div>
-
-						<div className="dropdown-divider" />
 					</>
 				)}
 

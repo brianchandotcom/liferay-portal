@@ -618,6 +618,72 @@ definition {
 		}
 	}
 
+	@description = "Verify users receive a notification when an import is triggered."
+	@priority = "3"
+	test CanViewImportNotifications {
+		property portal.acceptance = "true";
+
+		task ("Given a failed import") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			UploadDependencyFile.uploadFile(fileName = "csv_account_import.csv");
+
+			ImportExport.selectEntity(
+				entityType = "Account",
+				headlessEndpoint = "/headless-admin-user");
+
+			ImportExport.mapImport(fieldMappings = "name:Account Name,type:Account Description");
+
+			Button.click(button = "Import");
+
+			WaitForElementPresent(locator1 = "Message#ERROR_FORM_FIELD_REQUIRED");
+		}
+
+		task ("And given a succesful import") {
+			Button.clickCancel();
+
+			ImportExport.mapImport(fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code");
+
+			Button.click(button = "Import");
+
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		}
+
+		task ("When the imports are finished") {
+			Button.clickDone();
+
+			Button.clickCancel();
+
+			ImportExport.assertExecutionEntry(
+				entityType = "Account",
+				executionAction = "Import",
+				executionStatus = "Failed");
+
+			ImportExport.assertExecutionEntry(
+				entityType = "Account",
+				executionAction = "Import",
+				executionStatus = "Completed");
+		}
+
+		task ("Then the the user should receive a notification for the failed and successful imports") {
+			Notifications.viewBadgeCount(notificationCount = "2");
+
+			Notifications.gotoNotifications();
+
+			ImportExport.assertExecutionNotification(
+				entityType = "Account",
+				executionAction = "Import",
+				executionStatus = "Completed");
+
+			ImportExport.assertExecutionNotification(
+				entityType = "Account",
+				executionAction = "Import",
+				executionStatus = "Failed");
+		}
+	}
+
 	@description = "Verify CSV fields are automatically mapped to fields in Liferay when the names are the same"
 	@priority = "3"
 	test CSVFieldsAreAutoMapped {

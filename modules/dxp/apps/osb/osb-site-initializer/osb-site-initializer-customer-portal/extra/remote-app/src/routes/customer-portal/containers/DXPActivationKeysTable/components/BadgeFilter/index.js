@@ -116,7 +116,7 @@ const BadgeFilter = ({
 		<>
 			<div className="d-flex">
 				{!!filters.searchTerm && !loading && (
-					<p className="m-0 mt-3">
+					<p className="font-weight-semi-bold m-0 mt-3 text-paragraph-sm">
 						{activationKeysLength} {}
 						result
 						{activationKeysLength > 1 ? 's ' : ' '}

@@ -308,9 +308,11 @@ definition {
 
 		Panel.expandPanel(panel = "Asset Selection");
 
-		Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
+		if (IsNotChecked(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST")) {
+			Check(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
-		Alert.viewSuccessMessage();
+			Alert.viewSuccessMessage();
+		}
 
 		Panel.expandPanel(panel = "Select Collection");
 
@@ -1009,9 +1011,11 @@ definition {
 
 		Panel.expandPanel(panel = "Asset Selection");
 
-		Click(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
+		if (IsNotChecked(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST")) {
+			Check(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST");
 
-		Alert.viewSuccessMessage();
+			Alert.viewSuccessMessage();
+		}
 
 		Panel.expandPanel(panel = "Select Collection");
 

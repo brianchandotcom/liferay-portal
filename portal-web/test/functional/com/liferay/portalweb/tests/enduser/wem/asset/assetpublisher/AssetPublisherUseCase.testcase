@@ -462,6 +462,45 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-132428. The default selection style of Asset Publisher is Collection."
+	@priority = "5"
+	test DisplayCollectionInAssetPublisher {
+		property asset.publisher.selection.style = "asset-list";
+
+		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
+			JSONAssetlist.addDynamicAssetListEntryWithItemType(
+				groupName = "Test Site Name",
+				itemSubtype = "Basic Web Content",
+				itemType = "Web Content Article",
+				title = "Dynamic Collection");
+		}
+
+		task ("Add a web content") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title");
+		}
+
+		task ("Select the dynamic collection in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.gotoSelectCollection();
+
+			AssetPublisherPortlet.selectAssetList(assetListName = "Dynamic Collection");
+
+			IFrame.closeFrame();
+		}
+
+		task ("View the web content shown in Asset Publisher") {
+			AssetPublisherPortlet.viewAssetPG(
+				assetContent = "Web Content Content",
+				assetTitle = "Web Content Title");
+		}
+	}
+
 	@description = "Edit the global web content via Asset Publisher."
 	@priority = "4"
 	test EditGlobalWebContentViaAssetPublisher {

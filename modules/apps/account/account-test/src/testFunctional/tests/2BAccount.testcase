@@ -49,7 +49,7 @@ definition {
 
 		AccountUsers.setUserPassword(
 			accountUser = "userfn",
-			accountUserPassword = "pass");
+			accountUserPassword = "test");
 
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",

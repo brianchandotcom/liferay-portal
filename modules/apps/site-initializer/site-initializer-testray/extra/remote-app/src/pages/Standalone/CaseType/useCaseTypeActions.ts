@@ -14,13 +14,13 @@
 
 import {useMutation} from '@apollo/client';
 
-import {DeleteProject} from '../../graphql/mutations';
-import {TestrayProject} from '../../graphql/queries';
-import useFormModal from '../../hooks/useFormModal';
-import i18n from '../../i18n';
+import {DeleteCaseType} from '../../../graphql/mutations';
+import {TestrayCaseType} from '../../../graphql/queries';
+import useFormModal from '../../../hooks/useFormModal';
+import i18n from '../../../i18n';
 
-const useProjectActions = () => {
-	const [onDeleteProject] = useMutation(DeleteProject);
+const useCaseTypeActions = () => {
+	const [onDeleteCaseType] = useMutation(DeleteCaseType);
 
 	const formModal = useFormModal();
 	const modal = formModal.modal;
@@ -28,12 +28,12 @@ const useProjectActions = () => {
 	return {
 		actions: [
 			{
-				action: (item: TestrayProject) => modal.open(item),
+				action: () => modal.open(),
 				name: i18n.translate('edit'),
 			},
 			{
-				action: ({id: projectId}: TestrayProject) =>
-					onDeleteProject({variables: {projectId}})
+				action: ({id: caseTypeId}: TestrayCaseType) =>
+					onDeleteCaseType({variables: {caseTypeId}})
 						.then(() => modal.onSave())
 						.catch(modal.onError),
 				name: i18n.translate('delete'),
@@ -43,4 +43,4 @@ const useProjectActions = () => {
 	};
 };
 
-export default useProjectActions;
+export default useCaseTypeActions;

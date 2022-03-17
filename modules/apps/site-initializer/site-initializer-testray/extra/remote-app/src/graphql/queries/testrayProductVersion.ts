@@ -17,8 +17,8 @@ import {gql} from '@apollo/client';
 import {testrayProductVersionFragment} from '../fragments';
 
 export type TestrayProductVersion = {
-	id: String;
-	name: String;
+	id: number;
+	name: string;
 };
 
 export const getProductVersions = gql`

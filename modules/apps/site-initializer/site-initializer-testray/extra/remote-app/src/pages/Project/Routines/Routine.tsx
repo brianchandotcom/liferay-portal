@@ -21,10 +21,11 @@ import ProgressBar from '../../../components/ProgressBar';
 import useTotalTestCases from '../../../data/useTotalTestCases';
 import {getBuilds} from '../../../graphql/queries';
 import i18n from '../../../i18n';
+import RoutineBuildModal from './RoutineBuildModal';
 import useRoutineActions from './useRoutineActions';
 
 const Routine = () => {
-	const {actionsRoutine} = useRoutineActions();
+	const {actionsRoutine, formModal} = useRoutineActions();
 	const {barChart, colors} = useTotalTestCases();
 
 	return (
@@ -50,6 +51,7 @@ const Routine = () => {
 			/>
 
 			<ListView
+				forceRefetch={formModal.forceRefetch}
 				initialContext={{
 					filters: {
 						columns: {
@@ -60,6 +62,7 @@ const Routine = () => {
 						},
 					},
 				}}
+				managementToolbarProps={{addButton: formModal.modal.open}}
 				query={getBuilds}
 				tableProps={{
 					actions: actionsRoutine,
@@ -130,6 +133,8 @@ const Routine = () => {
 				}}
 				transformData={(data) => data?.builds}
 			/>
+
+			<RoutineBuildModal modal={formModal.modal} />
 		</Container>
 	);
 };

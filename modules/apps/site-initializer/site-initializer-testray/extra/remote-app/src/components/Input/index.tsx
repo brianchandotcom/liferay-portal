@@ -15,7 +15,7 @@
 import {TypedDocumentNode, useLazyQuery} from '@apollo/client';
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
-import {ClayDualListBox, ClayInput} from '@clayui/form';
+import ClayForm, {ClayDualListBox, ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import {InputHTMLAttributes, useEffect, useMemo, useState} from 'react';
 
@@ -37,10 +37,11 @@ const Input: React.FC<InputProps> = ({
 	name,
 	id = name,
 	type,
+	value,
 	required = false,
 	...otherProps
 }) => (
-	<>
+	<ClayForm.Group>
 		{label && (
 			<label
 				className={classNames(
@@ -59,11 +60,12 @@ const Input: React.FC<InputProps> = ({
 			id={id}
 			name={name}
 			type={type}
+			value={value || ''}
 			{...otherProps}
 		/>
 
 		{error && <InputWarning>{error}</InputWarning>}
-	</>
+	</ClayForm.Group>
 );
 
 export type BoxItem = {

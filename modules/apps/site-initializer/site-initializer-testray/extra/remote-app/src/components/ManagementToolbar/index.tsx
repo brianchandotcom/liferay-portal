@@ -28,12 +28,14 @@ import ManagementToolbarSearch from './ManagementToolbarSearch';
 
 export type ManagementToolbarProps = {
 	addButton?: () => void;
+	onSelectAllRows: () => void;
 	tableProps: Omit<TableProps, 'items'>;
 	totalItems: number;
 };
 
 const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 	addButton,
+	onSelectAllRows,
 	tableProps,
 	totalItems,
 }) => {
@@ -130,6 +132,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 			<ClayManagementToolbar>
 				<ManagementToolbarFilterAndOrder
 					filterItems={filterItems}
+					onSelectAllRows={onSelectAllRows}
 					onSort={() =>
 						dispatch({
 							payload: {

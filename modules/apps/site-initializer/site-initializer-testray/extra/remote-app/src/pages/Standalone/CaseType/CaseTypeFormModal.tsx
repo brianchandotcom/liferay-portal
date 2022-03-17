@@ -14,91 +14,85 @@
 
 import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
-import {ClayCheckbox} from '@clayui/form';
-import React, {useState} from 'react';
+import ClayForm from '@clayui/form';
+import {useEffect, useState} from 'react';
 
 import Input from '../../../components/Input';
 import Modal from '../../../components/Modal';
-import {CreateRoutine} from '../../../graphql/mutations';
+import {
+	CreateProject,
+	UpdateProject,
+} from '../../../graphql/mutations/testrayProject';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
-type RoutineModalProps = {
-	modal: FormModalOptions;
-};
-
-type RoutineFormData = {
-	autoanalyze: boolean;
+type CaseTypeForm = {
+	id?: number;
 	name: string;
 };
 
-type RoutineFormProps = {
-	form: RoutineFormData;
+type CaseTypeFormProps = {
+	form: CaseTypeForm;
 	onChange: (event: any) => void;
+	onSubmit: (event: any) => void;
 };
 
-const RoutineForm: React.FC<RoutineFormProps> = ({form, onChange}) => {
+const FormCaseType: React.FC<CaseTypeFormProps> = ({
+	form,
+	onChange,
+	onSubmit,
+}) => {
 	return (
-		<div>
+		<ClayForm onSubmit={onSubmit}>
 			<Input
-				label={i18n.translate('name')}
+				label="Name"
 				name="name"
 				onChange={onChange}
 				required
 				value={form.name}
 			/>
-
-			<div className="mt-2">
-				<ClayCheckbox
-					checked={form.autoanalyze}
-					label={i18n.translate('autoanalyze')}
-					name="autoanalyze"
-					onChange={onChange}
-				/>
-			</div>
-		</div>
+		</ClayForm>
 	);
 };
 
-const RoutineModal: React.FC<RoutineModalProps> = ({
-	modal: {observer, onClose, onError, onSave, visible},
+type CaseTypeProps = {
+	modal: FormModalOptions;
+};
+const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
+	modal: {modalState, observer, onChange, onClose, onError, onSave, visible},
 }) => {
-	const [onCreateRoutine] = useMutation(CreateRoutine);
-
-	const [form, setForm] = useState<RoutineFormData>({
-		autoanalyze: false,
+	const [form, setForm] = useState<CaseTypeForm>({
 		name: '',
 	});
 
-	const onChange = (event: any) => {
-		const {
-			target: {checked, name, type, ...target},
-		} = event;
+	const [onCreateProject] = useMutation(CreateProject);
+	const [onUpdateProject] = useMutation(UpdateProject);
 
-		let {value} = target;
-
-		if (type === 'checkbox') {
-			value = checked;
+	useEffect(() => {
+		if (visible && modalState) {
+			setForm(modalState);
 		}
-
-		setForm({
-			...form,
-			[name]: value,
-		});
-	};
+	}, [visible, modalState]);
 
 	const onSubmit = async () => {
+		const variables: any = {
+			Project: {
+				name: form.name,
+			},
+		};
+
 		try {
-			await onCreateRoutine({
-				variables: {
-					TestrayRoutine: form,
-				},
-			});
+			if (form.id) {
+				variables.projectId = form.id;
+
+				onUpdateProject({variables});
+			} else {
+				await onCreateProject({variables});
+			}
 
 			onSave();
-		}
-		catch (error) {
-			onError();
+		} catch (error) {
+			onError(error);
 		}
 	};
 
@@ -111,18 +105,22 @@ const RoutineModal: React.FC<RoutineModalProps> = ({
 					</ClayButton>
 
 					<ClayButton displayType="primary" onClick={onSubmit}>
-						{i18n.translate('add-routine')}
+						{i18n.translate('save')}
 					</ClayButton>
 				</ClayButton.Group>
 			}
 			observer={observer}
 			size="lg"
-			title={i18n.translate('new-routine')}
+			title={i18n.translate(form.id ? 'edit-case-type' : 'new-case-type')}
 			visible={visible}
 		>
-			<RoutineForm form={form} onChange={onChange} />
+			<FormCaseType
+				form={form}
+				onChange={onChange({form, setForm})}
+				onSubmit={onSubmit}
+			/>
 		</Modal>
 	);
 };
 
-export default RoutineModal;
+export default CaseTypeFormModal;

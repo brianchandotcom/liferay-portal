@@ -14,7 +14,7 @@
 
 export * from './liferayUser';
 export * from './testrayCase';
-export * from './testrayCase';
+export * from './testrayCaseType';
 export * from './testrayProject';
 export * from './testrayRequirement';
 export * from './testrayRoutine';

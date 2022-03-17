@@ -14,39 +14,24 @@
 
 import {gql} from '@apollo/client';
 
-import {testrayRoutineFragment} from '../fragments';
+import {testrayCaseTypeFragment} from '../fragments';
 
-export type TestrayRoutine = {
-	id: number;
-	name: string;
-};
+export const CreateCaseType = gql`
+	${testrayCaseTypeFragment}
 
-export const getRoutines = gql`
-	${testrayRoutineFragment}
-
-	query getRoutines($filter: String, $page: Int = 1, $pageSize: Int = 20) {
+	mutation CreateCaseType($CaseType: InputC_CaseType!) {
 		c {
-			routines(filter: $filter, page: $page, pageSize: $pageSize) {
-				items {
-					...RoutineFragment
-				}
-				lastPage
-				page
-				pageSize
-				totalCount
+			createCaseType(CaseType: $CaseType) {
+				...CaseTypeFragment
 			}
 		}
 	}
 `;
 
-export const getRoutine = gql`
-	${testrayRoutineFragment}
-
-	query getRoutine($routineId: Long!) {
+export const DeleteCaseType = gql`
+	mutation deleteCaseType($caseTypeId: Long) {
 		c {
-			routine(routineId: $routineId) {
-				...RoutineFragment
-			}
+			deleteCaseType(caseTypeId: $caseTypeId)
 		}
 	}
 `;

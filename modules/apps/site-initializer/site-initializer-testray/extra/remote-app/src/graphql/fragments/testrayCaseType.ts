@@ -12,27 +12,14 @@
  * details.
  */
 
-import {getCaseTypes} from '../../graphql/queries';
-import Container from '../Layout/Container';
-import ListView from '../ListView/ListView';
+import {gql} from '@apollo/client';
 
-const CaseTypeModal = () => {
-	return (
-		<Container>
-			<ListView
-				query={getCaseTypes}
-				tableProps={{
-					columns: [
-						{
-							key: 'name',
-							value: 'Name',
-						},
-					],
-				}}
-				transformData={(data) => data?.c?.caseTypes}
-			/>
-		</Container>
-	);
-};
-
-export default CaseTypeModal;
+export const testrayCaseTypeFragment = gql`
+	fragment CaseTypeFragment on C_CaseType {
+		dateCreated
+		dateModified
+		externalReferenceCode
+		id: caseTypeId
+		name
+	}
+`;

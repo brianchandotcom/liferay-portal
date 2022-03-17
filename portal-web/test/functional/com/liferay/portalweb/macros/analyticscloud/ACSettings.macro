@@ -764,7 +764,7 @@ definition {
 			title = "${propertyName}");
 
 		var propertyId = selenium.getText("ACSettings#HEADER_DESCRIPTION");
-		var propertyId = StringUtil.extractDigits("${propertyId}");
+		var propertyId = StringUtil.extractLast("${propertyId}", " ");
 
 		return "${propertyId}";
 	}

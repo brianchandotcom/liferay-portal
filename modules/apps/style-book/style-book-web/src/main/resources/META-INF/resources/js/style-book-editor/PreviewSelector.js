@@ -27,6 +27,10 @@ import openItemSelector from './openItemSelector';
 
 const LAYOUT_TYPES_OPTIONS = [
 	{
+		label: Liferay.Language.get('display-page-templates'),
+		type: LAYOUT_TYPES.displayPageTemplate,
+	},
+	{
 		label: Liferay.Language.get('fragments'),
 		type: LAYOUT_TYPES.fragmentCollection,
 	},
@@ -41,10 +45,6 @@ const LAYOUT_TYPES_OPTIONS = [
 	{
 		label: Liferay.Language.get('page-templates'),
 		type: LAYOUT_TYPES.pageTemplate,
-	},
-	{
-		label: Liferay.Language.get('display-page-templates'),
-		type: LAYOUT_TYPES.displayPageTemplate,
 	},
 ];
 

@@ -52,8 +52,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import org.powermock.api.mockito.PowerMockito;
-
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletConfig;
@@ -63,7 +61,7 @@ import org.springframework.mock.web.MockServletContext;
  * @author Carlos Sierra Andrés
  * @author Raymond Augé
  */
-public class ComboServletTest extends PowerMockito {
+public class ComboServletTest {
 
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
@@ -279,7 +277,7 @@ public class ComboServletTest extends PowerMockito {
 	}
 
 	protected void setUpPluginServletContext() {
-		_pluginServletContext = spy(new MockServletContext());
+		_pluginServletContext = Mockito.spy(new MockServletContext());
 	}
 
 	protected void setUpPortalPortlet() {
@@ -313,7 +311,7 @@ public class ComboServletTest extends PowerMockito {
 	}
 
 	protected void setUpPortalServletContext() {
-		_portalServletContext = spy(new MockServletContext());
+		_portalServletContext = Mockito.spy(new MockServletContext());
 
 		_portalServletContext.setContextPath("portal");
 	}

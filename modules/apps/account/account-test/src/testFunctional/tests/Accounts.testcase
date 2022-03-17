@@ -2767,23 +2767,9 @@ definition {
 			locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER_TD",
 			value1 = "Account Administrator");
 
-		LexiconEntry.gotoEntryMenuItemNoError(
-			menuItem = "Assign Roles",
-			rowEntry = "userfn userln");
-
-		SelectFrame(
-			key_title = "Assign Roles",
-			locator1 = "IFrame#MODAL_ANY");
-
-		Uncheck(
-			key_tableEntry = "Account Administrator",
-			locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
-
-		SelectFrameTop();
-
-		Button.click(button = "Done");
-
-		Alert.viewSuccessMessage();
+		Accounts.unassignUserRole(
+			accountRoleTitle = "Account Administrator",
+			accountUserName = "userfn userln");
 
 		Accounts.openAccountsAdmin();
 

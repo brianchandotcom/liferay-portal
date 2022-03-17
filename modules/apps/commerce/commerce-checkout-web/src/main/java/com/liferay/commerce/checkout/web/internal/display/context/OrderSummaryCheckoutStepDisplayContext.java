@@ -14,9 +14,12 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.commerce.account.constants.CommerceAccountConstants;
+import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
@@ -54,6 +57,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.KeyValuePair;
@@ -90,7 +95,8 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		CommerceTermEntryLocalService commerceTermEntryLocalService,
 		CPInstanceHelper cpInstanceHelper,
 		HttpServletRequest httpServletRequest,
-		PercentageFormatter percentageFormatter, Portal portal) {
+		PercentageFormatter percentageFormatter,
+		PortletResourcePermission portletResourcePermission, Portal portal) {
 
 		_commerceChannelLocalService = commerceChannelLocalService;
 		_commerceOrderHttpHelper = commerceOrderHttpHelper;
@@ -104,6 +110,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		_cpInstanceHelper = cpInstanceHelper;
 		_httpServletRequest = httpServletRequest;
 		_percentageFormatter = percentageFormatter;
+		_portletResourcePermission = portletResourcePermission;
 		_portal = portal;
 
 		_commerceContext = (CommerceContext)httpServletRequest.getAttribute(
@@ -279,6 +286,24 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public boolean hasViewBillingAddressPermission(
+			PermissionChecker permissionChecker,
+			CommerceAccount commerceAccount)
+		throws PortalException {
+
+		if ((commerceAccount.getType() ==
+				CommerceAccountConstants.ACCOUNT_TYPE_GUEST) ||
+			commerceAccount.isPersonalAccount() ||
+			_portletResourcePermission.contains(
+				permissionChecker, commerceAccount.getCommerceAccountGroup(),
+				CommerceOrderActionKeys.VIEW_BILLING_ADDRESS)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isCheckoutRequestedDeliveryDateEnabled()
@@ -490,5 +515,6 @@ public class OrderSummaryCheckoutStepDisplayContext {
 	private final HttpServletRequest _httpServletRequest;
 	private final PercentageFormatter _percentageFormatter;
 	private final Portal _portal;
+	private final PortletResourcePermission _portletResourcePermission;
 
 }

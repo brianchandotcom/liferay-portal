@@ -17,6 +17,7 @@
 		<suppress checks="StringMethodsCheck" files="css-builder/.*" />
 		<suppress checks="StringMethodsCheck" files="portal-tools-data-partitioning-sql-builder-postgresql/.*" />
 		<suppress checks="StringMethodsCheck" files="portal-tools-soy-builder/.*" />
+		<suppress checks="StringMethodsCheck" files="sass-compiler-dart/.*" />
 		<suppress checks="StringMethodsCheck" files="sass-compiler-jni/.*" />
 		<suppress checks="XMLServiceFileCheck" files="portal-tools-service-builder-test-service/service\.xml" />
 	</source-check>

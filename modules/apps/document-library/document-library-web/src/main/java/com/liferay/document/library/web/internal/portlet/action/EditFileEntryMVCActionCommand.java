@@ -467,7 +467,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			FileEntry fileEntry = _dlAppService.addFileEntry(
 				null, repositoryId, folderId, uniqueFileName,
-				tempFileEntry.getMimeType(), uniqueFileTitle, uniqueFileTitle,
+				tempFileEntry.getMimeType(), uniqueFileTitle, StringPool.BLANK,
 				description, changeLog, tempFileEntry.getContentStream(),
 				tempFileEntry.getSize(), expirationDate, reviewDate,
 				serviceContext);
@@ -1260,7 +1260,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				fileEntry = _dlAppService.addFileEntry(
 					null, repositoryId, folderId, uniqueFileName, contentType,
-					uniqueFileTitle, uniqueFileTitle, description, changeLog,
+					uniqueFileTitle, StringPool.BLANK, description, changeLog,
 					inputStream, size, expirationDate, reviewDate,
 					serviceContext);
 

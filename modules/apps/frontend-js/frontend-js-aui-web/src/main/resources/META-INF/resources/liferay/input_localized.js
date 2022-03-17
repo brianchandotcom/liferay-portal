@@ -443,6 +443,12 @@ AUI.add(
 						);
 				},
 
+				_onSelectedLanguageIdChange(languageId) {
+					var instance = this;
+
+					instance.selectFlag(languageId);
+				},
+
 				_onSelectFlag(event) {
 					var instance = this;
 
@@ -457,16 +463,7 @@ AUI.add(
 
 					var languageId = event.item.getAttribute('data-value');
 
-					State.writeAtom(
-						instance._selectedLanguageIdAtom,
-						languageId
-					);
-				},
-
-				_onSelectedLanguageIdChange(languageId) {
-					var instance = this;
-
-					instance.selectFlag(languageId);
+					State.writeAtom(instance._selectedLanguageIdAtom, languageId);
 				},
 
 				_onSubmit(event, input) {

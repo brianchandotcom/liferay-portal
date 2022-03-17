@@ -70,15 +70,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 )
 public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public synchronized void addDestination(Destination destination) {
-		_addDestination(destination);
-	}
-
 	@Override
 	public boolean addMessageBusEventListener(
 		MessageBusEventListener messageBusEventListener) {
@@ -166,51 +157,11 @@ public class DefaultMessageBus implements ManagedServiceFactory, MessageBus {
 		return false;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Destination removeDestination(String destinationName) {
-		return removeDestination(destinationName, true);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public synchronized Destination removeDestination(
-		String destinationName, boolean closeOnRemove) {
-
-		return _removeDestination(destinationName);
-	}
-
 	@Override
 	public boolean removeMessageBusEventListener(
 		MessageBusEventListener messageBusEventListener) {
 
 		return _messageBusEventListeners.remove(messageBusEventListener);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void replace(Destination destination) {
-		replace(destination, true);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public synchronized void replace(
-		Destination destination, boolean closeOnRemove) {
-
-		_addDestination(destination);
 	}
 
 	@Override

@@ -1,7 +1,8 @@
 {
 	"element-source": {
 		"en_US": {
-			"message": "Learn more."
+			"message": "Learn more.",
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-elements-reference.html"
 		}
 	},
 	"query-clause-contributors-configuration": {
@@ -12,7 +13,8 @@
 	},
 	"query-elements": {
 		"en_US": {
-			"message": "Learn more."
+			"message": "Learn more.",
+			"url": "https://learn.liferay.com/dxp/latest/en/using-search/liferay-enterprise-search/search-experiences/search-blueprints-elements-reference.html"
 		}
 	},
 	"search-blueprint-configuration": {

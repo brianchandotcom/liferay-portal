@@ -18,9 +18,8 @@ import com.liferay.analytics.dxp.entities.exporter.dto.v1_0.DXPEntity;
 import com.liferay.analytics.dxp.entities.exporter.retriever.DXPEntityRetriever;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -35,10 +34,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "analytics.dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.Group",
+	property = "dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.Team",
 	service = DXPEntityRetriever.class
 )
-public class GroupRetriever implements DXPEntityRetriever {
+public class TeamDXPEntityRetriever implements DXPEntityRetriever {
 
 	@Override
 	public Page<DXPEntity> getDXPEntitiesPage(
@@ -49,25 +48,18 @@ public class GroupRetriever implements DXPEntityRetriever {
 
 		List<DXPEntity> dxpEntities = new ArrayList<>();
 
-		List<Group> groups = _groupLocalService.search(
-			companyId,
-			LinkedHashMapBuilder.<String, Object>put(
-				"active", true
-			).put(
-				"site", true
-			).build(),
+		List<Team> teams = _teamLocalService.getTeams(
 			pagination.getStartPosition(), pagination.getEndPosition());
 
-		for (Group group : groups) {
-			dxpEntities.add(transformUnsafeFunction.apply(group));
+		for (Team team : teams) {
+			dxpEntities.add(transformUnsafeFunction.apply(team));
 		}
 
 		return Page.of(
-			dxpEntities, pagination,
-			_groupLocalService.getActiveGroupsCount(companyId, true));
+			dxpEntities, pagination, _teamLocalService.getTeamsCount());
 	}
 
 	@Reference
-	private GroupLocalService _groupLocalService;
+	private TeamLocalService _teamLocalService;
 
 }

@@ -18,8 +18,9 @@ import com.liferay.analytics.dxp.entities.exporter.dto.v1_0.DXPEntity;
 import com.liferay.analytics.dxp.entities.exporter.retriever.DXPEntityRetriever;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.Team;
-import com.liferay.portal.kernel.service.TeamLocalService;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -34,10 +35,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "analytics.dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.Team",
+	property = "dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.Group",
 	service = DXPEntityRetriever.class
 )
-public class TeamRetriever implements DXPEntityRetriever {
+public class GroupDXPEntityRetriever implements DXPEntityRetriever {
 
 	@Override
 	public Page<DXPEntity> getDXPEntitiesPage(
@@ -48,18 +49,25 @@ public class TeamRetriever implements DXPEntityRetriever {
 
 		List<DXPEntity> dxpEntities = new ArrayList<>();
 
-		List<Team> teams = _teamLocalService.getTeams(
+		List<Group> groups = _groupLocalService.search(
+			companyId,
+			LinkedHashMapBuilder.<String, Object>put(
+				"active", true
+			).put(
+				"site", true
+			).build(),
 			pagination.getStartPosition(), pagination.getEndPosition());
 
-		for (Team team : teams) {
-			dxpEntities.add(transformUnsafeFunction.apply(team));
+		for (Group group : groups) {
+			dxpEntities.add(transformUnsafeFunction.apply(group));
 		}
 
 		return Page.of(
-			dxpEntities, pagination, _teamLocalService.getTeamsCount());
+			dxpEntities, pagination,
+			_groupLocalService.getActiveGroupsCount(companyId, true));
 	}
 
 	@Reference
-	private TeamLocalService _teamLocalService;
+	private GroupLocalService _groupLocalService;
 
 }

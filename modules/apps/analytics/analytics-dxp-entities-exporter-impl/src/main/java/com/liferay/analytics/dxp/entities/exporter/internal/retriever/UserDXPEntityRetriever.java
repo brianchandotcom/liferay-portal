@@ -43,10 +43,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "analytics.dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.User",
+	property = "dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.User",
 	service = DXPEntityRetriever.class
 )
-public class UserRetriever implements DXPEntityRetriever {
+public class UserDXPEntityRetriever implements DXPEntityRetriever {
 
 	@Override
 	public Page<DXPEntity> getDXPEntitiesPage(

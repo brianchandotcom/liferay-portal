@@ -1190,7 +1190,7 @@ definition {
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
 				listStyle = "Inline List",
-				maxNumberOfItems = "6",
+				maxNumberOfItemsToDisplay = "6",
 				selectedName = "Dynamic Collection");
 		}
 
@@ -1500,7 +1500,7 @@ definition {
 		task ("Change Max Number of Items to 6") {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				maxNumberOfItems = "6",
+				maxNumberOfItemsToDisplay = "6",
 				selectedName = "Dynamic Collection");
 		}
 
@@ -1828,7 +1828,7 @@ definition {
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
 				listStyle = "Bordered List",
-				maxNumberOfItems = "6",
+				maxNumberOfItemsToDisplay = "6",
 				selectedName = "Dynamic Collection");
 		}
 
@@ -2081,7 +2081,7 @@ definition {
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
 				listStyle = "Inline List",
-				maxNumberOfItems = "6",
+				maxNumberOfItemsToDisplay = "6",
 				selectedName = "Manual Collection");
 		}
 
@@ -2407,7 +2407,7 @@ definition {
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
 				listStyle = "Bulleted List",
-				maxNumberOfItems = "6",
+				maxNumberOfItemsToDisplay = "6",
 				selectedName = "Manual Collection");
 		}
 
@@ -2735,7 +2735,7 @@ definition {
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
 				listStyle = "Bordered List",
-				maxNumberOfItems = "6",
+				maxNumberOfItemsToDisplay = "6",
 				selectedName = "Manual Collection");
 		}
 
@@ -2981,7 +2981,7 @@ definition {
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
 				listStyle = "Numbered List",
-				maxNumberOfItems = "6",
+				maxNumberOfItemsToDisplay = "6",
 				selectedName = "Manual Collection");
 		}
 

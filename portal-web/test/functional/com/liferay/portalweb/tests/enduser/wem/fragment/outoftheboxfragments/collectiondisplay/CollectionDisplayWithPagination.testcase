@@ -66,14 +66,14 @@ definition {
 				fragmentName = "Collection Display");
 		}
 
-		task ("Select the dynamic collection in Collection Display with Numeric pagination and Display All Collection Items") {
+		task ("Select the dynamic collection in Collection Display with Numeric pagination and Display All Pages") {
 			PageEditor.editCollectionDisplay(
 				assetListName = "Dynamic Collection",
-				displayAllCollectionItems = "true",
+				displayAllPages = "true",
 				fragmentName = "Collection Display",
 				listItemStyle = "Title",
 				listStyle = "Bordered List",
-				pagination = "Numeric");
+				maxNumberOfItemsPerPage = "5");
 		}
 
 		task ("View only 5 web contents shown in page 1 of Collection Display in page editor") {
@@ -222,9 +222,10 @@ definition {
 
 		task ("Select the Numeric in Pagination field, Select the 15 in Maximum Number of Items field and Select the 15 in Maximum Number of Items per Page field") {
 			PageEditor.editCollectionDisplay(
+				displayAllPages = "false",
 				fragmentName = "Collection Display",
-				maxNumberOfItems = "15",
 				maxNumberOfItemsPerPage = "15",
+				maxNumberOfPagesToDisplay = "1",
 				pagination = "Numeric",
 				selectedName = "Dynamic Collection");
 		}
@@ -285,6 +286,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				maxNumberOfItemsPerPage = "5",
+				maxNumberOfPagesToDisplay = "3",
 				selectedName = "Dynamic Collection");
 		}
 
@@ -623,9 +625,10 @@ definition {
 
 		task ("Select the Simple in Pagination field, Select the 15 in Maximum Number of Items field and Select the 15 in Maximum Number of Items per Page field") {
 			PageEditor.editCollectionDisplay(
+				displayAllPages = "false",
 				fragmentName = "Collection Display",
-				maxNumberOfItems = "15",
 				maxNumberOfItemsPerPage = "15",
+				maxNumberOfPagesToDisplay = "1",
 				pagination = "Simple",
 				selectedName = "Dynamic Collection");
 		}
@@ -680,6 +683,7 @@ definition {
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
 				maxNumberOfItemsPerPage = "5",
+				maxNumberOfPagesToDisplay = "3",
 				selectedName = "Dynamic Collection");
 		}
 

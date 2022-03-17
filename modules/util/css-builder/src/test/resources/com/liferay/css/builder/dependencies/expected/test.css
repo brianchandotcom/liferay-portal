@@ -23,18 +23,20 @@
   clear: left;
   direction: ltr;
   float: left;
-  line-height: 1.555556;
+  line-height: 1.555555555;
   margin-left: 0px;
   margin-right: 1px;
   padding-left: 0px;
   padding-right: 1px;
-  text-align: left; }
-  .test .test-quad {
-    -moz-border-radius: 10px 1px 20px 0px;
-    -webkit-border-radius: 10px 1px 20px 0px;
-    border-color: black white green red;
-    border-radius: 10px 1px 20px 0px;
-    border-style: dotted solid double dashed;
-    border-width: 10px 1px 20px 0px;
-    margin: 10px 1px 20px 0px;
-    padding: 10px 1px 20px 0px; }
+  text-align: left;
+}
+.test .test-quad {
+  -moz-border-radius: 10px 1px 20px 0px;
+  -webkit-border-radius: 10px 1px 20px 0px;
+  border-color: black white green red;
+  border-radius: 10px 1px 20px 0px;
+  border-style: dotted solid double dashed;
+  border-width: 10px 1px 20px 0px;
+  margin: 10px 1px 20px 0px;
+  padding: 10px 1px 20px 0px;
+}

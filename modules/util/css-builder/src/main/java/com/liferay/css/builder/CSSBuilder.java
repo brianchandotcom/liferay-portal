@@ -22,9 +22,7 @@ import com.liferay.css.builder.internal.util.FileUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.rtl.css.RTLCSSConverter;
 import com.liferay.sass.compiler.SassCompiler;
-import com.liferay.sass.compiler.jni.internal.JniSassCompiler;
-import com.liferay.sass.compiler.jsass.internal.JSassCompiler;
-import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
+import com.liferay.sass.compiler.dart.internal.DartSassCompiler;
 
 import java.io.File;
 import java.io.IOException;
@@ -292,47 +290,26 @@ public class CSSBuilder implements AutoCloseable {
 
 		if ((sassCompilerClassName == null) ||
 			sassCompilerClassName.isEmpty() ||
-			sassCompilerClassName.equals("jni")) {
+			sassCompilerClassName.equals("dart")) {
 
-			try {
-				_sassCompiler = new JSassCompiler(precision);
-
-				System.out.println("Using native Sass compiler");
-			}
-			catch (Throwable throwable) {
-				System.out.println(
-					"Unable to load native compiler, falling back to Ruby");
-
-				_sassCompiler = new RubySassCompiler(precision);
-			}
+			System.out.println("Using Dart Sass compiler");
 		}
-		else if (sassCompilerClassName.equals("jni32")) {
-			try {
-				System.setProperty("jna.nosys", Boolean.TRUE.toString());
+		else if (sassCompilerClassName.equals("jni") ||
+				 sassCompilerClassName.equals("jni32") ||
+				 sassCompilerClassName.equals("ruby")) {
 
-				_sassCompiler = new JniSassCompiler(precision);
-
-				System.out.println("Using native 32-bit Sass compiler");
-			}
-			catch (Throwable throwable) {
-				System.out.println(
-					"Unable to load native compiler, falling back to Ruby");
-
-				_sassCompiler = new RubySassCompiler(precision);
-			}
+			System.out.println(
+				"Using Dart Sass compiler. Other sass compilers are no " +
+					"longer supported");
 		}
-		else if (sassCompilerClassName.equals("ruby")) {
-			try {
-				_sassCompiler = new RubySassCompiler(precision);
 
-				System.out.println("Using Ruby Sass compiler");
-			}
-			catch (Exception exception) {
-				System.out.println(
-					"Unable to load Ruby compiler, falling back to native");
+		try {
+			_sassCompiler = new DartSassCompiler(precision);
+		}
+		catch (Throwable throwable) {
+			System.out.println("Unable to load sass compiler");
 
-				_sassCompiler = new JSassCompiler(precision);
-			}
+			throw throwable;
 		}
 	}
 

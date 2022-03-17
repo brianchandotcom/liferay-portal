@@ -137,6 +137,40 @@ definition {
 		}
 	}
 
+	@description = "LPS-147835. Assert the action buttons are displayed as icon buttons in responsive mode"
+	@priority = "3"
+	test ResponsiveModeActionsAsIconButtons {
+		task ("Set window size to tablet size") {
+			SetWindowSize(value1 = "800,1024");
+		}
+
+		task ("Navigate to Management Toolbars tab") {
+			Navigator.gotoNavTab(navTab = "Management Toolbars");
+		}
+
+		task ("Assert action buttons are not displayed as icon and text buttons") {
+			AssertNotVisible(
+				key_action = "Download",
+				key_icon = "download",
+				locator1 = "ManagementBar#ICON_AND_TEXT_ACTION_BUTTON");
+
+			AssertNotVisible(
+				key_action = "Delete",
+				key_icon = "trash",
+				locator1 = "ManagementBar#ICON_AND_TEXT_ACTION_BUTTON");
+		}
+
+		task ("Assert action buttons are displayed as icon buttons") {
+			AssertElementPresent(
+				key_text = "download",
+				locator1 = "ManagementBar#ANY_ICON");
+
+			AssertElementPresent(
+				key_text = "trash",
+				locator1 = "ManagementBar#ANY_ICON");
+		}
+	}
+
 	@description = "LPS-147865. Assert the new button is displayed as an icon button in responsive mode"
 	@priority = "5"
 	test ResponsiveModeNewButtonAsIconButton {

@@ -11,7 +11,13 @@
 
 import {useEffect, useRef, useState} from 'react';
 import {Button} from '../../../../../../common/components';
+import CheckboxFilter from '../../../../components/CheckboxFilter';
+import getAvailableFieldsCheckboxs from '../../../../components/CheckboxFilter/utils/getAvailableFieldsCheckboxs';
+import DateFilter from '../../../../components/DateFilter';
 import DropDownWithDrillDown from '../../../../components/DropDownWithDrillDown';
+import ExpirationDate from '../../../../components/ExpirationDate';
+import KeyTypeFilter from '../../../../components/KeyType';
+import Search from '../../../../components/Search';
 import {
 	getDoesNotExpire,
 	getEnvironmentType,
@@ -20,12 +26,6 @@ import {
 	getStatusActivationTag,
 	hasVirtualCluster,
 } from '../../utils';
-import CheckboxFilter from './components/CheckboxFilter';
-import DateFilter from './components/DateFilter';
-import ExpirationDate from './components/ExpirationDate';
-import KeyTypeFilter from './components/KeyType';
-import Search from './components/Search';
-import getAvailableFieldsCheckboxs from './components/utils/getAvailableFieldsCheckboxs';
 
 const MAX_UPDATE = 3;
 

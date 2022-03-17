@@ -8,7 +8,7 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-import {Button} from '../../../../../../../common/components';
+import {Button} from '../../../../common/components';
 
 const BadgePill = ({filterName, filterValue, onClick}) => {
 	return (

@@ -12,8 +12,8 @@
 import {useCallback} from 'react';
 import Button from '../../../../../../common/components/Button';
 import getCurrentEndDate from '../../../../../../common/utils/getCurrentEndDate';
+import BadgePill from '../../../../components/BadgePillFilter';
 import {INITIAL_FILTER} from '../../utils/constants/initialFilter';
-import BadgePill from './components';
 
 const BadgeFilter = ({
 	activationKeysLength,

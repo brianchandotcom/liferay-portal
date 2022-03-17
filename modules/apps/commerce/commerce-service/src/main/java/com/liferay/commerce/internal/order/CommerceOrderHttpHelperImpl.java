@@ -16,6 +16,8 @@ package com.liferay.commerce.internal.order;
 
 import com.liferay.commerce.account.constants.CommerceAccountConstants;
 import com.liferay.commerce.account.model.CommerceAccount;
+import com.liferay.commerce.account.service.CommerceAccountService;
+import com.liferay.commerce.account.util.CommerceAccountHelper;
 import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.constants.CommerceConstants;
@@ -438,6 +440,16 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 			HttpServletRequest httpServletRequest, CommerceOrder commerceOrder)
 		throws PortalException {
 
+		CommerceAccount commerceAccount =
+			_commerceAccountService.fetchCommerceAccount(
+				commerceOrder.getCommerceAccountId());
+
+		if (commerceAccount != null) {
+			_commerceAccountHelper.setCurrentCommerceAccount(
+				httpServletRequest, commerceOrder.getGroupId(),
+				commerceAccount.getCommerceAccountId());
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -767,6 +779,12 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 	private static final ThreadLocal<CommerceOrder> _commerceOrderThreadLocal =
 		new CentralizedThreadLocal<>(
 			CommerceOrderHttpHelperImpl.class.getName());
+
+	@Reference
+	private CommerceAccountHelper _commerceAccountHelper;
+
+	@Reference
+	private CommerceAccountService _commerceAccountService;
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

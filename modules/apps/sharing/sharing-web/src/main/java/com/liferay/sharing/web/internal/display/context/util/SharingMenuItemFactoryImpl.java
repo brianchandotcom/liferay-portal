@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavaScriptToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.sharing.display.context.util.SharingDropdownItemFactory;
 import com.liferay.sharing.display.context.util.SharingJavaScriptFactory;
 import com.liferay.sharing.display.context.util.SharingMenuItemFactory;
@@ -130,6 +132,10 @@ public class SharingMenuItemFactoryImpl
 		throws PortalException {
 
 		JavaScriptMenuItem javaScriptMenuItem = new JavaScriptMenuItem();
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146954"))) {
+			javaScriptMenuItem.setIcon("share");
+		}
 
 		javaScriptMenuItem.setKey("#share");
 		javaScriptMenuItem.setLabel(_getSharingLabel(httpServletRequest));

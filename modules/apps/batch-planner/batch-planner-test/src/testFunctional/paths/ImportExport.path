@@ -21,6 +21,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXECUTION_NOTIFICATION</td>
+	<td>//h4/a/h2[@class = 'title' and contains(text(),'${key_executionAction} batch engine job ${key_jobStatus}')]/parent::a/div[@class = 'body' and contains(text(),'${key_executionAction} batch engine job for') and contains(text(),'${key_entityType} ${key_jobStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXECUTION_SUCCESS</td>
 	<td>//div[contains(@class,'progress-group-feedback')]//*[name()='svg' and contains(@class,'check-circle')]</td>
 	<td></td>

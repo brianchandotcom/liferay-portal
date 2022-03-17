@@ -12,10 +12,26 @@
  * details.
  */
 
-export * from './liferayUser';
-export * from './testrayCase';
-export * from './testrayCaseType';
-export * from './testrayProject';
-export * from './testrayRequirement';
-export * from './testrayRoutine';
-export * from './testraySuite';
+import {gql} from '@apollo/client';
+
+import {testrayCaseTypeFragment} from '../fragments';
+
+export const CreateCaseType = gql`
+	${testrayCaseTypeFragment}
+
+	mutation CreateCaseType($CaseType: InputC_CaseType!) {
+		c {
+			createCaseType(CaseType: $CaseType) {
+				...CaseTypeFragment
+			}
+		}
+	}
+`;
+
+export const DeleteCaseType = gql`
+	mutation deleteCaseType($caseTypeId: Long) {
+		c {
+			deleteCaseType(caseTypeId: $caseTypeId)
+		}
+	}
+`;

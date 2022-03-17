@@ -12,10 +12,14 @@
  * details.
  */
 
-export * from './liferayUser';
-export * from './testrayCase';
-export * from './testrayCaseType';
-export * from './testrayProject';
-export * from './testrayRequirement';
-export * from './testrayRoutine';
-export * from './testraySuite';
+import {gql} from '@apollo/client';
+
+export const testrayCaseTypeFragment = gql`
+	fragment CaseTypeFragment on C_CaseType {
+		dateCreated
+		dateModified
+		externalReferenceCode
+		id: caseTypeId
+		name
+	}
+`;

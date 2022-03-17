@@ -43,15 +43,12 @@ public class CalendarResourceSearch extends SearchContainer<CalendarResource> {
 
 	public static List<String> headerNames = new ArrayList<String>() {
 		{
-			add("code");
 			add("name");
 			add("description");
 			add("active");
 		}
 	};
 	public static Map<String, String> orderableHeaders = HashMapBuilder.put(
-		"code", "code"
-	).put(
 		"name", "name"
 	).build();
 
@@ -70,8 +67,6 @@ public class CalendarResourceSearch extends SearchContainer<CalendarResource> {
 		iteratorURL.setParameter(
 			CalendarResourceDisplayTerms.ACTIVE,
 			String.valueOf(displayTerms.isActive()));
-		iteratorURL.setParameter(
-			CalendarResourceDisplayTerms.CODE, displayTerms.getCode());
 		iteratorURL.setParameter(
 			CalendarResourceDisplayTerms.DESCRIPTION,
 			displayTerms.getDescription());

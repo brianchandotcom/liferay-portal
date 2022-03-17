@@ -43,8 +43,6 @@ public class CalendarSearchContainer<R> extends SearchContainer<R> {
 			CalendarResourceDisplayTerms.ACTIVE,
 			String.valueOf(displayTerms.isActive()));
 		iteratorURL.setParameter(
-			CalendarResourceDisplayTerms.CODE, displayTerms.getCode());
-		iteratorURL.setParameter(
 			CalendarResourceDisplayTerms.DESCRIPTION,
 			displayTerms.getDescription());
 		iteratorURL.setParameter(

@@ -52,7 +52,7 @@ definition {
 		task ("Open Content Performance panel") {
 			ABTest.openABTestPanel();
 
-			AssertElementPresent(
+			AssertVisible(
 				key_title = "Connect to Liferay Analytics Cloud",
 				locator1 = "Header#H4_TITLE");
 		}
@@ -64,7 +64,7 @@ definition {
 		}
 
 		task ("Check if panel is closed") {
-			AssertElementNotPresent(
+			AssertNotVisible(
 				key_title = "Connect to Liferay Analytics Cloud",
 				locator1 = "Header#H4_TITLE");
 		}

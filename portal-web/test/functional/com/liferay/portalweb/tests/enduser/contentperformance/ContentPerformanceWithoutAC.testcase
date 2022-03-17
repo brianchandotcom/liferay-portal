@@ -37,7 +37,7 @@ definition {
 		task ("Open Content Performance panel") {
 			ContentPerformance.openContentPerformance();
 
-			AssertElementPresent(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_START_FREE_TRIAL");
+			AssertVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_START_FREE_TRIAL");
 		}
 
 		task ("Logout and login") {
@@ -47,7 +47,7 @@ definition {
 		}
 
 		task ("Check if panel is closed") {
-			AssertElementNotPresent(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_START_FREE_TRIAL");
+			AssertNotVisible(locator1 = "ContentPerformance#CONTENT_PERFORMANCE_START_FREE_TRIAL");
 		}
 	}
 

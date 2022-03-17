@@ -1060,7 +1060,7 @@ definition {
 		task ("Open Content Performance panel") {
 			PageAudit.openPanelBeforeConfiguration();
 
-			AssertElementPresent(
+			AssertVisible(
 				key_text = "Configure",
 				locator1 = "Button#ANY");
 		}
@@ -1072,7 +1072,7 @@ definition {
 		}
 
 		task ("Check if panel is closed") {
-			AssertElementNotPresent(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
+			AssertNotVisible(locator1 = "PageAudit#CONNECT_TO_GOOGLE_PAGESPEED_BUTTON");
 		}
 	}
 

@@ -167,12 +167,42 @@ definition {
 	}
 
 	@description = "LPS-135394 - Verify it is possible to delete a column for the View through the delete button"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanDeleteColumnThroughDeleteButton {
 		property portal.acceptance = "true";
 
-		// TODO LPS-147767 CanDeleteColumnThroughDeleteButton pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 147767",
+			objectName = "CustomObject147767",
+			pluralLabelName = "Custom Objects 147767");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 147767");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		Click.clickAtNotVisible(
+			key_columnOption = "Author",
+			locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+
+		ObjectCustomViews.saveColumnsModal();
+
+		ObjectCustomViews.deleteSpecificColumn(columnName = "Author");
+
+		ObjectCustomViews.assertColumnNotPresent(colunmName = "Author");
+
+		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No columns added yet.");
 
 	}
 

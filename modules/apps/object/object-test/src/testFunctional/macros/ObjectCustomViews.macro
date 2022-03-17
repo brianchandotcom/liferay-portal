@@ -166,4 +166,11 @@ definition {
 			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION");
 	}
 
+	macro deleteSpecificColumn {
+		Click(
+			key_columnName = "${columnName}",
+			locator1 = "ObjectCustomViews#VIEW_BUILDER_DROPDOWN_SPECIFIC_COLUMN");
+
+		DropdownMenuItem.click(menuItem = "Delete");
+	}
 }

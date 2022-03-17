@@ -56,6 +56,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>VIEW_BUILDER_DROPDOWN_SPECIFIC_COLUMN</td>
+		<td>//p[contains(@class,'list-group-title') and contains(text(),'${key_columnName}')]/../..//div[contains(@class,'dropdown')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>VIEW_BUILDER_EMPTY_STATE_TEXT</td>
 		<td>//div[(@class='c-empty-state-title')]/..//*[contains(text(),'${key_text}')]</td>
 		<td></td>

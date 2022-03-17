@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMappingResolver;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMappingResolverUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNamingUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceRegistrator;
@@ -42,8 +42,6 @@ public class DefaultJSONWebServiceRegistrator
 	implements JSONWebServiceRegistrator {
 
 	public DefaultJSONWebServiceRegistrator() {
-		_jsonWebServiceMappingResolver = new JSONWebServiceMappingResolver();
-
 		_jsonWebServiceScannerStrategy =
 			new SpringJSONWebServiceScannerStrategy();
 	}
@@ -52,8 +50,6 @@ public class DefaultJSONWebServiceRegistrator
 		JSONWebServiceScannerStrategy jsonWebServiceScannerStrategy) {
 
 		_jsonWebServiceScannerStrategy = jsonWebServiceScannerStrategy;
-
-		_jsonWebServiceMappingResolver = new JSONWebServiceMappingResolver();
 	}
 
 	public void processAllBeans(
@@ -211,7 +207,7 @@ public class DefaultJSONWebServiceRegistrator
 			}
 
 			String httpMethod =
-				_jsonWebServiceMappingResolver.resolveHttpMethod(method);
+				JSONWebServiceMappingResolverUtil.resolveHttpMethod(method);
 
 			if (!JSONWebServiceNamingUtil.isValidHttpMethod(httpMethod)) {
 				continue;
@@ -219,7 +215,7 @@ public class DefaultJSONWebServiceRegistrator
 
 			Class<?> serviceBeanClass = methodDescriptor.getDeclaringClass();
 
-			String path = _jsonWebServiceMappingResolver.resolvePath(
+			String path = JSONWebServiceMappingResolverUtil.resolvePath(
 				serviceBeanClass, method);
 
 			if (!JSONWebServiceNamingUtil.isIncludedPath(contextPath, path)) {
@@ -237,7 +233,6 @@ public class DefaultJSONWebServiceRegistrator
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultJSONWebServiceRegistrator.class);
 
-	private final JSONWebServiceMappingResolver _jsonWebServiceMappingResolver;
 	private final JSONWebServiceScannerStrategy _jsonWebServiceScannerStrategy;
 
 }

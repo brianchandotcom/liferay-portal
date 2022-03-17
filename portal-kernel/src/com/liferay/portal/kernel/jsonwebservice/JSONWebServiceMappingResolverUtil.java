@@ -22,9 +22,9 @@ import java.lang.reflect.Method;
 /**
  * @author Igor Spasic
  */
-public class JSONWebServiceMappingResolver {
+public class JSONWebServiceMappingResolverUtil {
 
-	public String resolveHttpMethod(Method method) {
+	public static String resolveHttpMethod(Method method) {
 		JSONWebService annotationJSONWebService = method.getAnnotation(
 			JSONWebService.class);
 
@@ -41,7 +41,7 @@ public class JSONWebServiceMappingResolver {
 		return JSONWebServiceNamingUtil.convertMethodToHttpMethod(method);
 	}
 
-	public String resolvePath(Class<?> clazz, Method method) {
+	public static String resolvePath(Class<?> clazz, Method method) {
 		JSONWebService annotationJSONWebService = method.getAnnotation(
 			JSONWebService.class);
 

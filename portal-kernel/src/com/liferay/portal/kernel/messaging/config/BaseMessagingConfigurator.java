@@ -225,15 +225,6 @@ public abstract class BaseMessagingConfigurator
 		_messageListeners.putAll(messageListeners);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getOperatingClassLoader()}
-	 */
-	@Deprecated
-	protected ClassLoader getOperatingClassloader() {
-		return getOperatingClassLoader();
-	}
-
 	protected abstract ClassLoader getOperatingClassLoader();
 
 	protected void initialize() {

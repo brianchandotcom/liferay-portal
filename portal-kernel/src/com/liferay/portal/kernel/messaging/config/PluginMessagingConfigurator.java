@@ -29,16 +29,6 @@ public class PluginMessagingConfigurator extends BaseMessagingConfigurator {
 		super.afterPropertiesSet();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getOperatingClassLoader()}
-	 */
-	@Deprecated
-	@Override
-	protected ClassLoader getOperatingClassloader() {
-		return getOperatingClassLoader();
-	}
-
 	@Override
 	protected ClassLoader getOperatingClassLoader() {
 		ClassLoader classLoader = ServletContextClassLoaderPool.getClassLoader(

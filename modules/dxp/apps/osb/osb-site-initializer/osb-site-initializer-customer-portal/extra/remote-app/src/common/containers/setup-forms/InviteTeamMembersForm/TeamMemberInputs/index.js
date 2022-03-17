@@ -9,12 +9,9 @@
  * distribution rights of the Software.
  */
 
-import {useLazyQuery} from '@apollo/client';
 import {ClayInput} from '@clayui/form';
-import {useEffect, useState} from 'react';
 import {Input, Select} from '../../../../components';
-import useDebounce from '../../../../hooks/useDebounce';
-import {getBannedEmailDomains} from '../../../../services/liferay/graphql/queries';
+import useBannedDomains from '../../../../hooks/useBannedDomains';
 import {isValidEmail} from '../../../../utils/validations.form';
 
 const TeamMemberInputs = ({
@@ -25,28 +22,7 @@ const TeamMemberInputs = ({
 	placeholderEmail,
 	selectOnChange,
 }) => {
-	const debouncedEmail = useDebounce(invite?.email, 500);
-	const [bannedDomain, setBannedDomain] = useState(debouncedEmail);
-
-	const [fetchBannedDomain, {data}] = useLazyQuery(getBannedEmailDomains);
-	const bannedDomainsItems = data?.c?.bannedEmailDomains?.items;
-
-	useEffect(() => {
-		const emailDomain = debouncedEmail.split('@')[1];
-
-		if (emailDomain) {
-			fetchBannedDomain({
-				variables: {
-					filter: `domain eq '${emailDomain}'`,
-				},
-			});
-
-			if (bannedDomainsItems?.length) {
-				setBannedDomain(bannedDomainsItems[0].domain);
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [bannedDomainsItems, debouncedEmail]);
+	const bannedDomains = useBannedDomains(invite?.email, 500);
 
 	return (
 		<ClayInput.Group className="m-0">
@@ -58,7 +34,9 @@ const TeamMemberInputs = ({
 					name={`invites[${id}].email`}
 					placeholder={placeholderEmail}
 					type="email"
-					validations={[(value) => isValidEmail(value, bannedDomain)]}
+					validations={[
+						(value) => isValidEmail(value, bannedDomains),
+					]}
 				/>
 			</ClayInput.GroupItem>
 

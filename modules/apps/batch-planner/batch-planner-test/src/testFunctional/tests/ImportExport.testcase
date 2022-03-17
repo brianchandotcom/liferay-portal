@@ -668,4 +668,30 @@ definition {
 		}
 	}
 
+	@description = "Verify users are shown a preview for the first row being imported in a JSON file."
+	@priority = "3"
+	test ViewJSONImportPreview {
+		property portal.acceptance = "true";
+
+		task ("Given the user is importing a JSON file") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			UploadDependencyFile.uploadFile(fileName = "json_account_import.json");
+
+			ImportExport.selectEntity(
+				entityType = "Account",
+				headlessEndpoint = "/headless-admin-user");
+		}
+
+		task ("When the user maps the import fields") {
+			ImportExport.mapImport(fieldMappings = "name:name,type:type,description:description,externalReferenceCode:externalReferenceCode");
+		}
+
+		task ("Then a preview of the first row being imported should be shown.") {
+			ImportExport.assertImportPreviews(importPreviews = "name:Test Business Account,type:business,description:Test Business Account Description,externalReferenceCode:101");
+		}
+	}
+
 }

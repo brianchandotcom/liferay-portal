@@ -115,12 +115,10 @@ public class PullRequestPortalTopLevelBuild
 
 	@Override
 	public String getResult() {
-		String result = super.getResult();
-
 		List<Build> downstreamBuildFailures = getFailedDownstreamBuilds();
 
-		if ((result == null) || downstreamBuildFailures.isEmpty()) {
-			return result;
+		if (downstreamBuildFailures.isEmpty()) {
+			return super.getResult();
 		}
 
 		Properties buildProperties;
@@ -138,6 +136,8 @@ public class PullRequestPortalTopLevelBuild
 				buildProperties.getProperty(
 					"pull.request.forward.upstream.failure.comparison." +
 						"enabled"));
+
+		String result = "FAILURE";
 
 		if (!pullRequestForwardUpstreamFailureComparisonEnabled ||
 			!isCompareToUpstream()) {

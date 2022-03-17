@@ -29,9 +29,7 @@ public class DefaultTopLevelBuild extends TopLevelBuild {
 
 	@Override
 	public String getResult() {
-		String result = super.getResult();
-
-		if (!downstreamBuilds.isEmpty() && (result == null)) {
+		if (!downstreamBuilds.isEmpty()) {
 			boolean hasFailure = false;
 
 			for (Build downstreamBuild : downstreamBuilds) {
@@ -48,13 +46,11 @@ public class DefaultTopLevelBuild extends TopLevelBuild {
 				}
 			}
 
-			if (result == null) {
-				if (hasFailure) {
-					return "FAILURE";
-				}
-
-				return "SUCCESS";
+			if (hasFailure) {
+				return "FAILURE";
 			}
+
+			return "SUCCESS";
 		}
 
 		return super.getResult();

@@ -21,6 +21,7 @@ export const INITIAL_FILTER = {
 			onOrBefore: undefined,
 		},
 	},
+	hasValue: false,
 	instanceSizes: {
 		name: 'Instance Size',
 		value: [],

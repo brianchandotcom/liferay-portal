@@ -19,14 +19,14 @@ import BadgeFilter from '../BadgeFilter';
 import DeactivateButton from '../Deactivate';
 import DownloadAlert from '../DownloadAlert';
 import Filter from '../Filter';
-import useFilters from './hooks/useFilters';
 
 const DXPActivationKeysTableHeader = ({
 	activationKeysByStatusPaginatedChecked,
 	activationKeysState,
 	project,
 	sessionId,
-	setFilterTerm,
+	loading,
+	filterState: [filters, setFilters],
 }) => {
 	const [activationKeys, setActivationKeys] = activationKeysState;
 
@@ -34,8 +34,6 @@ const DXPActivationKeysTableHeader = ({
 		deactivate: '',
 		download: '',
 	});
-
-	const [filters, setFilters] = useFilters(setFilterTerm);
 
 	const filterCheckedActivationKeys = useMemo(
 		() =>
@@ -87,8 +85,8 @@ const DXPActivationKeysTableHeader = ({
 
 	return (
 		<>
-			<div className="align-items-center bg-neutral-1 d-flex mb-2 p-3 rounded">
-				<div>
+			<div className="bg-neutral-1 d-flex flex-column pb-1 pt-3 px-3 rounded">
+				<div className="d-flex">
 					<Filter
 						activationKeys={activationKeys}
 						filtersState={[filters, setFilters]}
@@ -133,12 +131,13 @@ const DXPActivationKeysTableHeader = ({
 							setStatus={setStatus}
 						/>
 					</div>
-
-					<BadgeFilter
-						activationKeysLength={activationKeys?.length}
-						filtersState={[filters, setFilters]}
-					/>
 				</div>
+
+				<BadgeFilter
+					activationKeysLength={activationKeys?.length}
+					filtersState={[filters, setFilters]}
+					loading={loading}
+				/>
 			</div>
 
 			{status.download && (

@@ -12,16 +12,16 @@
 import {useEffect, useState} from 'react';
 import {ACTIVATION_STATUS} from '../../../utils/constants/activationStatus';
 import {INITIAL_FILTER} from '../../../utils/constants/initialFilter';
+const DEFAULT_FILTER = 'active eq true';
+const COMPLIMENTARY = 'Complimentary';
+const SUBSCRIPTION = 'Subscription';
 
 export default function useFilters(setFilterTerm) {
-	const DEFAULT_FILTER = 'active eq true';
-	const COMPLIMENTARY = 'Complimentary';
-	const SUBSCRIPTION = 'Subscription';
-
 	const [filters, setFilters] = useState(INITIAL_FILTER);
 
 	useEffect(() => {
 		let initialFilter = DEFAULT_FILTER;
+		let hasFilterPill = false;
 
 		if (filters.searchTerm) {
 			const searchTermFilter = `(contains(name, '${filters.searchTerm}') or contains(description, '${filters.searchTerm}') or contains(hostName, '${filters.searchTerm}'))`;
@@ -30,6 +30,8 @@ export default function useFilters(setFilterTerm) {
 		}
 
 		if (filters.instanceSizes.value.length) {
+			hasFilterPill = true;
+
 			const instanceSizesFilter = `(${filters.instanceSizes.value.reduce(
 				(accumulatorInstanceSizesFilter, instanceSize, index) => {
 					return `${accumulatorInstanceSizesFilter}${
@@ -43,6 +45,8 @@ export default function useFilters(setFilterTerm) {
 		}
 
 		if (filters.productVersions.value.length) {
+			hasFilterPill = true;
+
 			const productVersionsFilter = `(${filters.productVersions.value.reduce(
 				(accumulatorProductVersionsFilter, productVersion, index) => {
 					return `${accumulatorProductVersionsFilter}${
@@ -58,6 +62,8 @@ export default function useFilters(setFilterTerm) {
 		}
 
 		if (filters.status.value.length) {
+			hasFilterPill = true;
+
 			const now = new Date().toISOString();
 			const statusFilter = filters.status.value.reduce(
 				(accumulatorStatusFilter, status, index) => {
@@ -85,6 +91,8 @@ export default function useFilters(setFilterTerm) {
 		}
 
 		if (filters.environmentTypes.value.length) {
+			hasFilterPill = true;
+
 			const environmentTypesFilter = filters.environmentTypes.value.reduce(
 				(accumulatorEnvironmentTypesFilter, environmentType, index) => {
 					if (environmentType === COMPLIMENTARY) {
@@ -115,6 +123,7 @@ export default function useFilters(setFilterTerm) {
 			Object.values(filters.expirationDate.value).some((date) => !!date)
 		) {
 			const filterDates = [];
+			hasFilterPill = true;
 
 			if (filters.expirationDate.value.onOrAfter) {
 				filterDates.push(
@@ -135,6 +144,7 @@ export default function useFilters(setFilterTerm) {
 
 		if (Object.values(filters.startDate.value).some((date) => !!date)) {
 			const filterDates = [];
+			hasFilterPill = true;
 
 			if (filters.startDate.value.onOrAfter) {
 				filterDates.push(
@@ -162,6 +172,7 @@ export default function useFilters(setFilterTerm) {
 				!isNaN(filters.keyType.value.hasOnPremise) &&
 				filters.keyType.value.hasOnPremise
 			) {
+				hasFilterPill = true;
 				filtersKeyType.push("licenseEntryType ne 'virtual-cluster'");
 			}
 
@@ -169,6 +180,7 @@ export default function useFilters(setFilterTerm) {
 				!isNaN(filters.keyType.value.hasVirtualCluster) &&
 				filters.keyType.value.hasVirtualCluster
 			) {
+				hasFilterPill = true;
 				filtersKeyType.push("licenseEntryType eq 'virtual-cluster'");
 			}
 
@@ -190,6 +202,11 @@ export default function useFilters(setFilterTerm) {
 				);
 			}
 		}
+
+		setFilters((previousFilter) => ({
+			...previousFilter,
+			hasValue: hasFilterPill,
+		}));
 
 		setFilterTerm(`${initialFilter}`);
 	}, [

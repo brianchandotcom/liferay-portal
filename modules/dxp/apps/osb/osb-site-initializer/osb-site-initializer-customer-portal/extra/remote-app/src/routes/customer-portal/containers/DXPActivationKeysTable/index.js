@@ -19,6 +19,7 @@ import {ALERT_DOWNLOAD_TYPE} from '../../utils/constants/alertDownloadType';
 import {getActivationKeyDownload} from '../DXPActivationKeysTable/utils/getActivationKeyDownload';
 import DownloadAlert from './components/DownloadAlert';
 import DXPActivationKeysTableHeader from './components/Header';
+import useFilters from './components/Header/hooks/useFilters';
 import ModalKeyDetails from './components/ModalKeyDetails';
 import useGetActivationKeysData from './hooks/useGetActivationKeysData';
 import usePagination from './hooks/usePagination';
@@ -44,6 +45,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 		loading,
 		setFilterTerm,
 	} = useGetActivationKeysData(project, sessionId);
+
 	const {
 		navigationGroupButtons,
 		statusfilterByTitle: [statusFilter, setStatusFilter],
@@ -53,6 +55,8 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 		activationKeys,
 		statusFilter
 	);
+
+	const [filters, setFilters] = useFilters(setFilterTerm);
 
 	const [currentActivationKey, setCurrentActivationKey] = useState();
 	const [activationKeysIdChecked, setActivationKeysIdChecked] = useState([]);
@@ -163,28 +167,39 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 								activationKeys,
 								setActivationKeys,
 							]}
+							filterState={[filters, setFilters]}
+							loading={loading}
 							project={project}
 							sessionId={sessionId}
-							setFilterTerm={setFilterTerm}
 						/>
 					</div>
 
-					<Table
-						checkboxConfig={{
-							checkboxesChecked: activationKeysIdChecked,
-							setCheckboxesChecked: setActivationKeysIdChecked,
-						}}
-						className="border-0 cp-dxp-activation-key-table"
-						columns={COLUMNS}
-						hasCheckbox
-						hasPagination
-						isLoading={loading}
-						paginationConfig={paginationConfig}
-						rows={activationKeysByStatusPaginated.map(
-							(activationKey) =>
-								getActivationKeysRows(activationKey)
+					{!!activationKeysByStatusPaginated.length && (
+						<Table
+							checkboxConfig={{
+								checkboxesChecked: activationKeysIdChecked,
+								setCheckboxesChecked: setActivationKeysIdChecked,
+							}}
+							className="border-0 cp-dxp-activation-key-table"
+							columns={COLUMNS}
+							hasCheckbox
+							hasPagination
+							isLoading={loading}
+							paginationConfig={paginationConfig}
+							rows={activationKeysByStatusPaginated.map(
+								(activationKey) =>
+									getActivationKeysRows(activationKey)
+							)}
+						/>
+					)}
+
+					{!activationKeysByStatusPaginated.length &&
+						(filters.searchTerm || filters.hasValue) && (
+							<div className="d-flex justify-content-center py-4">
+								No activation keys found with this search
+								criteria.
+							</div>
 						)}
-					/>
 				</div>
 			</ClayTooltipProvider>
 

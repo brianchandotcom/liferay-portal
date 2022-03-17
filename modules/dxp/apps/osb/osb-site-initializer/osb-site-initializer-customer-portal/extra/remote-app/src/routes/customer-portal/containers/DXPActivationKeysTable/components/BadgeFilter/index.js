@@ -13,10 +13,11 @@ import {useCallback} from 'react';
 import Button from '../../../../../../common/components/Button';
 import getCurrentEndDate from '../../../../../../common/utils/getCurrentEndDate';
 import {INITIAL_FILTER} from '../../utils/constants/initialFilter';
+import BadgePill from './components';
 
 const BadgeFilter = ({
 	activationKeysLength,
-	className,
+	loading,
 	filtersState: [filters, setFilters],
 }) => {
 	const getDatesDisplay = useCallback((dateFilterState) => {
@@ -44,253 +45,227 @@ const BadgeFilter = ({
 		return dateDisplays.join(' – ');
 	}, []);
 
-	const getKeyTypeDisplay = useCallback((filterKeyType) => {
-		const keyTypesDisplay = [];
+	const getKeyTypeDisplay = useCallback(
+		(filterKeyType) => {
+			const keyTypesDisplay = [];
 
-		if (filterKeyType.value?.hasOnPremise) {
-			keyTypesDisplay.push('On-Premise');
-		}
-
-		if (filterKeyType.value?.hasVirtualCluster) {
-			if (
-				!(
-					filterKeyType.value?.minNodes ||
-					filterKeyType.value?.maxNodes
-				)
-			) {
-				keyTypesDisplay.push(`Virtual Cluster`);
-			} else if (
-				filterKeyType.value?.minNodes === filterKeyType.value?.maxNodes
-			) {
-				keyTypesDisplay.push(
-					`Virtual Cluster (${filterKeyType.value?.minNodes} nodes)`
-				);
-			} else {
-				const nodesDisplay = [];
-
-				if (filterKeyType.value?.minNodes) {
-					nodesDisplay.push(filterKeyType.value?.minNodes);
-				}
-
-				if (filterKeyType.value?.maxNodes) {
-					nodesDisplay.push(filterKeyType.value?.maxNodes);
-				}
-
-				keyTypesDisplay.push(
-					`Virtual Cluster (${nodesDisplay.join('-')} nodes)`
-				);
+			if (filterKeyType.value?.hasOnPremise) {
+				keyTypesDisplay.push('On-Premise');
 			}
-		}
 
-		return (
-			<p>
-				<b>{filterKeyType.name}:</b>
+			if (filterKeyType.value?.hasVirtualCluster) {
+				if (
+					!(
+						filterKeyType.value?.minNodes ||
+						filterKeyType.value?.maxNodes
+					)
+				) {
+					keyTypesDisplay.push(`Virtual Cluster`);
+				} else if (
+					filterKeyType.value?.minNodes ===
+					filterKeyType.value?.maxNodes
+				) {
+					keyTypesDisplay.push(
+						`Virtual Cluster (${filterKeyType.value?.minNodes} nodes)`
+					);
+				} else {
+					const nodesDisplay = [];
 
-				{keyTypesDisplay.join(', ')}
-			</p>
-		);
-	}, []);
+					if (filterKeyType.value?.minNodes) {
+						nodesDisplay.push(filterKeyType.value?.minNodes);
+					}
+
+					if (filterKeyType.value?.maxNodes) {
+						nodesDisplay.push(filterKeyType.value?.maxNodes);
+					}
+
+					keyTypesDisplay.push(
+						`Virtual Cluster (${nodesDisplay.join('-')} nodes)`
+					);
+				}
+			}
+
+			return (
+				<BadgePill
+					filterName={filterKeyType.name}
+					filterValue={keyTypesDisplay.join(', ')}
+					onClick={() =>
+						setFilters((previousFilters) => ({
+							...previousFilters,
+							keyType: {
+								...previousFilters.keyType,
+								value: {
+									hasOnPremise: undefined,
+									hasVirtualCluster: undefined,
+									maxNodes: '',
+									minNodes: '',
+								},
+							},
+						}))
+					}
+				/>
+			);
+		},
+		[setFilters]
+	);
+
+	// eslint-disable-next-line no-console
+	console.log(loading);
 
 	return (
-		<div className={className}>
-			{!!filters.searchTerm && (
-				<p>
-					{activationKeysLength}
-					result
-					{activationKeysLength > 1 ? 's' : ''}
-					for &quot;
-					{filters.searchTerm}&quot;
-				</p>
-			)}
-
-			{!!Object.values(filters.keyType.value).some(
-				(value) => !!value
-			) && (
-				<>
-					{getKeyTypeDisplay(filters.keyType)}{' '}
-					<Button
-						onClick={() =>
-							setFilters((previousFilters) => ({
-								...previousFilters,
-								keyType: {
-									...previousFilters.keyType,
-									value: [],
-								},
-							}))
-						}
-					>
-						LIMPA keyTypes
-					</Button>
-				</>
-			)}
-
-			{!!filters.environmentTypes.value?.length && (
-				<div>
-					<p>
-						<b>{filters.environmentTypes.name}:</b>
-
-						{filters.environmentTypes.value.join(', ')}
+		<>
+			<div className="d-flex">
+				{!!filters.searchTerm && !loading && (
+					<p className="m-0 mt-3">
+						{activationKeysLength} {}
+						result
+						{activationKeysLength > 1 ? 's ' : ' '}
+						for &quot;
+						{filters.searchTerm}&quot;
 					</p>
+				)}
+			</div>
+			<div className="bd-highlight d-flex">
+				<div className="bd-highlight col d-flex pl-0 w-100">
+					{!!Object.values(filters.keyType.value).some(
+						(value) => !!value
+					) && <>{getKeyTypeDisplay(filters.keyType)} </>}
 
-					<Button
-						onClick={() =>
-							setFilters((previousFilters) => ({
-								...previousFilters,
-								environmentTypes: {
-									...previousFilters.environmentTypes,
-									value: [],
-								},
-							}))
-						}
-					>
-						LIMPA environmentTypes
-					</Button>
-				</div>
-			)}
-
-			{!!filters.instanceSizes.value?.length && (
-				<div>
-					<p>
-						<b>{filters.instanceSizes.name}:</b>
-
-						{filters.instanceSizes.value.join(', ')}
-					</p>
-
-					<Button
-						onClick={() =>
-							setFilters((previousFilters) => ({
-								...previousFilters,
-								instanceSizes: {
-									...previousFilters.instanceSizes,
-									value: [],
-								},
-							}))
-						}
-					>
-						LIMPA instanceSizes
-					</Button>
-				</div>
-			)}
-
-			{!!filters.productVersions.value?.length && (
-				<div>
-					<p>
-						<b>{filters.productVersions.name}:</b>
-
-						{filters.productVersions.value.join(', ')}
-					</p>
-
-					<Button
-						onClick={() =>
-							setFilters((previousFilters) => ({
-								...previousFilters,
-								productVersions: {
-									...previousFilters.productVersions,
-									value: [],
-								},
-							}))
-						}
-					>
-						LIMPA productVersions
-					</Button>
-				</div>
-			)}
-
-			{!!filters.status.value?.length && (
-				<div>
-					<p>
-						<b>{filters.status.name}:</b>
-
-						{filters.status.value.join(', ')}
-					</p>
-
-					<Button
-						onClick={() =>
-							setFilters((previousFilters) => ({
-								...previousFilters,
-								status: {
-									...previousFilters.status,
-									value: [],
-								},
-							}))
-						}
-					>
-						LIMPA status
-					</Button>
-				</div>
-			)}
-
-			{!!(
-				filters.expirationDate.value.onOrAfter ||
-				filters.expirationDate.value.onOrBefore
-			) && (
-				<div>
-					<p>
-						<b>{filters.expirationDate.name}:</b>
-
-						{getDatesDisplay(filters.expirationDate)}
-					</p>
-
-					<Button
-						onClick={() =>
-							setFilters((previousFilters) => ({
-								...previousFilters,
-								expirationDate: {
-									...previousFilters.expirationDate,
-									value: {
-										onOrAfter: undefined,
-										onOrBefore: undefined,
+					{!!filters.environmentTypes.value?.length && (
+						<BadgePill
+							filterName={filters.environmentTypes.name}
+							filterValue={filters.environmentTypes.value.join(
+								', '
+							)}
+							onClick={() =>
+								setFilters((previousFilters) => ({
+									...previousFilters,
+									environmentTypes: {
+										...previousFilters.environmentTypes,
+										value: [],
 									},
-								},
-							}))
-						}
-					>
-						LIMPA expirationDate
-					</Button>
-				</div>
-			)}
+								}))
+							}
+						/>
+					)}
 
-			{!!(
-				filters.startDate.value.onOrAfter ||
-				filters.startDate.value.onOrBefore
-			) && (
-				<div>
-					<p>
-						<b>{filters.startDate.name}:</b>
-
-						{getDatesDisplay(filters.startDate)}
-					</p>
-
-					<Button
-						onClick={() =>
-							setFilters((previousFilters) => ({
-								...previousFilters,
-								startDate: {
-									...previousFilters.startDate,
-									value: {
-										onOrAfter: undefined,
-										onOrBefore: undefined,
+					{!!filters.instanceSizes.value?.length && (
+						<BadgePill
+							filterName={filters.instanceSizes.name}
+							filterValue={filters.instanceSizes.value.join(', ')}
+							onClick={() =>
+								setFilters((previousFilters) => ({
+									...previousFilters,
+									instanceSizes: {
+										...previousFilters.instanceSizes,
+										value: [],
 									},
-								},
-							}))
-						}
-					>
-						LIMPA startDate
-					</Button>
-				</div>
-			)}
+								}))
+							}
+						/>
+					)}
 
-			<Button
-				onClick={() =>
-					setFilters({
-						...INITIAL_FILTER,
-						searchTerm: filters.searchTerm,
-					})
-				}
-			>
-				Clear All Filters
-			</Button>
-		</div>
+					{!!filters.productVersions.value?.length && (
+						<BadgePill
+							filterName={filters.productVersions.name}
+							filterValue={filters.productVersions.value.join(
+								', '
+							)}
+							onClick={() =>
+								setFilters((previousFilters) => ({
+									...previousFilters,
+									productVersions: {
+										...previousFilters.productVersions,
+										value: [],
+									},
+								}))
+							}
+						/>
+					)}
+
+					{!!filters.status.value?.length && (
+						<BadgePill
+							filterName={filters.status.name}
+							filterValue={filters.status.value.join(', ')}
+							onClick={() =>
+								setFilters((previousFilters) => ({
+									...previousFilters,
+									status: {
+										...previousFilters.status,
+										value: [],
+									},
+								}))
+							}
+						/>
+					)}
+
+					{!!(
+						filters.expirationDate.value.onOrAfter ||
+						filters.expirationDate.value.onOrBefore
+					) && (
+						<BadgePill
+							filterName={filters.expirationDate.name}
+							filterValue={getDatesDisplay(
+								filters.expirationDate
+							)}
+							onClick={() =>
+								setFilters((previousFilters) => ({
+									...previousFilters,
+									expirationDate: {
+										...previousFilters.expirationDate,
+										value: {
+											onOrAfter: undefined,
+											onOrBefore: undefined,
+										},
+									},
+								}))
+							}
+						/>
+					)}
+
+					{!!(
+						filters.startDate.value.onOrAfter ||
+						filters.startDate.value.onOrBefore
+					) && (
+						<BadgePill
+							filterName={filters.startDate.name}
+							filterValue={getDatesDisplay(filters.startDate)}
+							onClick={() =>
+								setFilters((previousFilters) => ({
+									...previousFilters,
+									startDate: {
+										...previousFilters.startDate,
+										value: {
+											onOrAfter: undefined,
+											onOrBefore: undefined,
+										},
+									},
+								}))
+							}
+						/>
+					)}
+				</div>
+
+				<div className="bd-highlight flex-shrink-2 pt-2">
+					{filters.hasValue && (
+						<Button
+							borderless
+							className="link"
+							onClick={() => {
+								setFilters({
+									...INITIAL_FILTER,
+									searchTerm: filters.searchTerm,
+								});
+							}}
+							prependIcon="times-circle"
+							small
+						>
+							Clear All Filters
+						</Button>
+					)}
+				</div>
+			</div>
+		</>
 	);
 };
 

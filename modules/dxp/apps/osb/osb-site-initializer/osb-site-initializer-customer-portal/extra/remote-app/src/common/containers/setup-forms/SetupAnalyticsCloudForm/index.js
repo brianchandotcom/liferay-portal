@@ -8,7 +8,7 @@
  * permissions and limitations under the License, including but not limited to
  * distribution rights of the Software.
  */
-import {useLazyQuery, useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client';
 import ClayForm from '@clayui/form';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useMemo, useState} from 'react';
@@ -26,8 +26,7 @@ import {
 	maxLength,
 } from '../../../../common/utils/validations.form';
 import {Button, Input, Select} from '../../../components';
-import useDebounce from '../../../hooks/useDebounce';
-import {getBannedEmailDomains} from '../../../services/liferay/graphql/queries';
+import useBannedDomains from '../../../hooks/useBannedDomains';
 import getInitialAnalyticsInvite from '../../../utils/getInitialAnalyticsInvite';
 import Layout from '../Layout';
 
@@ -45,56 +44,15 @@ const SetupAnalyticsCloudPage = ({
 }) => {
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 
-	const debouncedOwnerEmail = useDebounce(
+	const debouncedOwnerEmail = useBannedDomains(
 		values?.activations?.ownerEmailAddress,
 		500
 	);
-	const [bannedOwnerEmailDomain, setBannedOwnerEmailDomain] = useState(
-		debouncedOwnerEmail
-	);
 
-	const debouncedAllowedDomains = useDebounce(
+	const debouncedAllowedDomains = useBannedDomains(
 		values?.activations?.allowedEmailDomains,
 		500
 	);
-	const [bannedAllowedDomains, setBannedAllowedDomains] = useState(
-		debouncedAllowedDomains
-	);
-	const [fetchBannedDomain, {data: dataBannedDomains}] = useLazyQuery(
-		getBannedEmailDomains
-	);
-
-	const bannedDomainsItems = dataBannedDomains?.c?.bannedEmailDomains?.items;
-
-	useEffect(() => {
-		const [, emailDomain] = debouncedOwnerEmail.split('@');
-		const [, bannedEmailDomain] = debouncedAllowedDomains.split('@');
-
-		if (emailDomain) {
-			fetchBannedDomain({
-				variables: {
-					filter: `domain eq '${emailDomain}'`,
-				},
-			});
-
-			if (bannedDomainsItems?.length) {
-				setBannedOwnerEmailDomain(bannedDomainsItems[0].domain);
-			}
-		}
-
-		if (bannedEmailDomain) {
-			fetchBannedDomain({
-				variables: {
-					filter: `domain eq '${bannedEmailDomain}'`,
-				},
-			});
-			if (bannedDomainsItems?.length) {
-				setBannedAllowedDomains(bannedDomainsItems[0].domain);
-			}
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [bannedDomainsItems, debouncedAllowedDomains, debouncedOwnerEmail]);
 
 	const {data} = useQuery(getAnalyticsCloudPageInfo, {
 		variables: {
@@ -219,7 +177,7 @@ const SetupAnalyticsCloudPage = ({
 							type="email"
 							validations={[
 								(value) =>
-									isValidEmail(value, bannedOwnerEmailDomain),
+									isValidEmail(value, debouncedOwnerEmail),
 							]}
 						/>
 
@@ -278,7 +236,7 @@ const SetupAnalyticsCloudPage = ({
 								(value) =>
 									isValidEmailDomain(
 										value,
-										bannedAllowedDomains
+										debouncedAllowedDomains
 									),
 							]}
 						/>
@@ -325,7 +283,7 @@ const SetupAnalyticsCloudForm = (props) => {
 		<Formik
 			initialValues={{
 				activations: {
-					allowedEmailDomains: [],
+					allowedEmailDomains: '',
 					dataCenterLocation: '',
 					disasterDataCenterLocation: '',
 					incidentReportContact: [getInitialAnalyticsInvite()],

@@ -22,7 +22,7 @@ export default function useBannedDomains(email) {
 	const bannedDomainsItems = data?.c?.bannedEmailDomains?.items;
 
 	useEffect(() => {
-		const [, emailDomain] = debouncedEmail.split('@');
+		const [, emailDomain] = debouncedEmail?.split('@');
 
 		if (emailDomain) {
 			fetchBannedDomain({

@@ -33,9 +33,11 @@ import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.object.util.ObjectFieldUtil;
 import com.liferay.petra.string.StringBundler;
@@ -206,10 +208,7 @@ public class ObjectEntryLocalServiceTest {
 						"portrait", false),
 					ObjectFieldUtil.createObjectField(
 						"LongText", "Clob", false, false, null, "Script",
-						"script", false),
-					ObjectFieldUtil.createObjectField(
-						"Attachment", "Long", true, false, null, "Upload",
-						"upload", false)));
+						"script", false)));
 
 		_objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(
@@ -234,6 +233,15 @@ public class ObjectEntryLocalServiceTest {
 			"BigDecimal", true, false, null,
 			LocalizedMapUtil.getLocalizedMap("Speed"), "speed", false,
 			Collections.emptyList());
+		_objectFieldLocalService.addCustomObjectField(
+			TestPropsValues.getUserId(), 0,
+			_objectDefinition.getObjectDefinitionId(), "Attachment", "Long",
+			true, false, null, LocalizedMapUtil.getLocalizedMap("Upload"),
+			"upload", false,
+			Arrays.asList(
+				_createObjectFieldSetting("acceptedFileExtensions", "txt"),
+				_createObjectFieldSetting("fileSource", "userComputer"),
+				_createObjectFieldSetting("maximumFileSize", "100")));
 		_objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), "Decimal", "Double",
@@ -1706,6 +1714,18 @@ public class ObjectEntryLocalServiceTest {
 		}
 	}
 
+	private ObjectFieldSetting _createObjectFieldSetting(
+		String name, String value) {
+
+		ObjectFieldSetting objectFieldSetting =
+			_objectFieldSettingLocalService.createObjectFieldSetting(0L);
+
+		objectFieldSetting.setName(name);
+		objectFieldSetting.setValue(value);
+
+		return objectFieldSetting;
+	}
+
 	private BigDecimal _getBigDecimal(long value) {
 		BigDecimal bigDecimal = BigDecimal.valueOf(value);
 
@@ -1909,6 +1929,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Inject
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Inject
 	private WorkflowDefinitionLinkLocalService

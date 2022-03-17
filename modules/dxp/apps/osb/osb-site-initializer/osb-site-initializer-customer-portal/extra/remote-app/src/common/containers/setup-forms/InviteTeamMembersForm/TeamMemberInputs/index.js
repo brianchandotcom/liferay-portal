@@ -14,6 +14,8 @@ import {Input, Select} from '../../../../components';
 import useBannedDomains from '../../../../hooks/useBannedDomains';
 import {isValidEmail} from '../../../../utils/validations.form';
 
+const FETCH_DELAY_AFTER_TYPING = 500;
+
 const TeamMemberInputs = ({
 	disableError,
 	id,
@@ -22,7 +24,10 @@ const TeamMemberInputs = ({
 	placeholderEmail,
 	selectOnChange,
 }) => {
-	const bannedDomains = useBannedDomains(invite?.email, 500);
+	const bannedDomains = useBannedDomains(
+		invite?.email,
+		FETCH_DELAY_AFTER_TYPING
+	);
 
 	return (
 		<ClayInput.Group className="m-0">

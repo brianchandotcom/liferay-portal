@@ -14,8 +14,10 @@ import {useEffect, useState} from 'react';
 import {getBannedEmailDomains} from '../services/liferay/graphql/queries';
 import useDebounce from './useDebounce';
 
+const FETCH_DELAY_AFTER_TYPING = 500;
+
 export default function useBannedDomains(value) {
-	const debouncedValue = useDebounce(value, 500);
+	const debouncedValue = useDebounce(value, FETCH_DELAY_AFTER_TYPING);
 	const [bannedDomains, setBannedDomains] = useState([]);
 
 	const [fetchBannedDomain, {data}] = useLazyQuery(getBannedEmailDomains);
@@ -34,8 +36,7 @@ export default function useBannedDomains(value) {
 				},
 				''
 			);
-		}
-		else {
+		} else {
 			const [, emailDomain] = debouncedValue?.split('@');
 
 			if (emailDomain) {
@@ -49,8 +50,7 @@ export default function useBannedDomains(value) {
 					filter: filterDomains,
 				},
 			});
-		}
-		else {
+		} else {
 			setBannedDomains([]);
 		}
 

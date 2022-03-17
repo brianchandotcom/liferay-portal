@@ -32,6 +32,7 @@ import Layout from '../Layout';
 
 import IncidentReportInput from './IncidentReportInput';
 
+const FETCH_DELAY_AFTER_TYPING = 500;
 const MAX_LENGTH = 255;
 
 const SetupAnalyticsCloudPage = ({
@@ -48,12 +49,12 @@ const SetupAnalyticsCloudPage = ({
 
 	const bannedDomainsOwnerEmail = useBannedDomains(
 		values?.activations?.ownerEmailAddress,
-		500
+		FETCH_DELAY_AFTER_TYPING
 	);
 
 	const bannedDomainsAllowedDomains = useBannedDomains(
 		values?.activations?.allowedEmailDomains,
-		500
+		FETCH_DELAY_AFTER_TYPING
 	);
 
 	useEffect(() => {}, [values?.activations?.allowedEmailDomains]);
@@ -212,7 +213,7 @@ const SetupAnalyticsCloudPage = ({
 							required
 						/>
 
-						{!!hasDisasterRecovery && (
+						{hasDisasterRecovery && (
 							<Select
 								groupStyle="mb-0 pt-2"
 								label="Disaster Recovery Data Center Location"

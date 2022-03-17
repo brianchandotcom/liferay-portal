@@ -37,9 +37,6 @@ const openAlertModal = ({message}) => {
 				},
 			},
 		],
-		size: 'sm',
-		title: Liferay.Language.get('alert'),
-		withTitle: false,
 	});
 };
 
@@ -64,7 +61,6 @@ const Modal = ({
 	status,
 	title,
 	url,
-	withTitle,
 	zIndex,
 }) => {
 	const [loading, setLoading] = useState(true);
@@ -205,10 +201,7 @@ const Modal = ({
 					status={status}
 					zIndex={zIndex}
 				>
-					<ClayModal.Header
-						className={headerCssClass}
-						withTitle={withTitle}
-					>
+					<ClayModal.Header className={headerCssClass}>
 						{headerHTML ? (
 							<div
 								dangerouslySetInnerHTML={{

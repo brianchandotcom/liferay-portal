@@ -16,6 +16,11 @@ import {ClayCheckbox, ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 
+const INVALID_NODE_MESSAGE = 'Enter a valid number';
+const INVALID_MIN_NODE_MESSAGE = 'Enter a minimum node value greater than 0';
+const INVALID_MAX_NODE_MESSAGE = 'Max nodes must be greater than min nodes';
+const INVALID_NEGATIVE_NODES_MESSAGE = 'Enter nodes values greater than 0';
+
 const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 	const [minNodesValue, setMinNodesValue] = useState('');
 	const [maxNodesValue, setMaxNodesValue] = useState('');
@@ -24,12 +29,6 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 	const [onPromiseChecked, setOnPromiseChecked] = useState(false);
 
 	const [errorMessage, setErrorMessage] = useState('');
-
-	const INVALID_NODE_MESSAGE = 'Enter a valid number';
-	const INVALID_MIN_NODE_MESSAGE =
-		'Enter a minimum node value greater than 0';
-	const INVALID_MAX_NODE_MESSAGE = 'Max nodes must be greater than min nodes';
-	const INVALID_NEGATIVE_NODES_MESSAGE = 'Enter nodes values greater than 0';
 
 	useEffect(() => {
 		if (isNaN(minNodesValue) || isNaN(maxNodesValue)) {

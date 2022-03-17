@@ -1698,27 +1698,34 @@ definition {
 				locator1 = "Select#GENERIC_SELECT_FIELD",
 				value1 = "${pagination}");
 
+			if ("${displayAllPages}" == "true") {
+				Check.checkNotVisible(
+					checkboxName = "Display All Pages",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+			else if ("${displayAllPages}" == "false") {
+				Uncheck.uncheckNotVisible(
+					checkboxName = "Display All Pages",
+					locator1 = "Checkbox#ANY_CHECKBOX");
+			}
+
 			if ("${displayAllCollectionItems}" == "true") {
 				Check.checkNotVisible(
 					checkboxName = "Display All Collection Items",
 					locator1 = "Checkbox#ANY_CHECKBOX");
-
-				PageEditor.waitForAutoSave();
 			}
-			else {
+			else if ("${displayAllCollectionItems}" == "false") {
 				Uncheck.uncheckNotVisible(
 					checkboxName = "Display All Collection Items",
 					locator1 = "Checkbox#ANY_CHECKBOX");
-
-				PageEditor.waitForAutoSave();
 			}
 		}
 
-		if (isSet(maxNumberOfItems)) {
+		if (isSet(maxNumberOfItemsToDisplay)) {
 			Type(
-				key_fieldLabel = "Maximum Number of Items",
+				key_fieldLabel = "Maximum Number of Items to Display",
 				locator1 = "FormFields#NUMBER_FIELD",
-				value1 = "${maxNumberOfItems}");
+				value1 = "${maxNumberOfItemsToDisplay}");
 
 			Click(
 				key_sidebarButton = "Browser",
@@ -1727,9 +1734,27 @@ definition {
 			PageEditor.waitForAutoSave();
 
 			AssertTextEquals(
-				key_fieldLabel = "Maximum Number of Items",
+				key_fieldLabel = "Maximum Number of Items to Display",
 				locator1 = "FormFields#NUMBER_FIELD",
-				value1 = "${maxNumberOfItems}");
+				value1 = "${maxNumberOfItemsToDisplay}");
+		}
+
+		if (isSet(maxNumberOfPagesToDisplay)) {
+			Type(
+				key_fieldLabel = "Maximum Number of Pages to Display",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "${maxNumberOfPagesToDisplay}");
+
+			Click(
+				key_sidebarButton = "Browser",
+				locator1 = "PageEditor#FRAGMENT_SIDEBAR_TITLE");
+
+			PageEditor.waitForAutoSave();
+
+			AssertTextEquals(
+				key_fieldLabel = "Maximum Number of Pages to Display",
+				locator1 = "FormFields#NUMBER_FIELD",
+				value1 = "${maxNumberOfPagesToDisplay}");
 		}
 
 		if (isSet(maxNumberOfItemsPerPage)) {

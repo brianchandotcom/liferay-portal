@@ -28,6 +28,7 @@ import React, {
 } from 'react';
 
 import useShouldConfirmBeforeNavigate from '../hooks/useShouldConfirmBeforeNavigate';
+import sxpElementSchema from '../schema/sxpelement.schema.json';
 import CodeMirrorEditor from '../shared/CodeMirrorEditor';
 import ErrorBoundary from '../shared/ErrorBoundary';
 import JSONSXPElement from '../shared/JSONSXPElement';
@@ -630,6 +631,7 @@ function EditSXPElementForm({
 									size={showVariablesSidebar ? 9 : 12}
 								>
 									<CodeMirrorEditor
+										autocompleteSchema={sxpElementSchema}
 										onChange={(value) =>
 											setElementJSONEditorValue(value)
 										}

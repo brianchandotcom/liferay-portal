@@ -1,0 +1,353 @@
+{
+	"$id": "sxpelement.schema.json",
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"definitions": {
+		"Clause": {
+			"properties": {
+				"additive": {
+					"type": "boolean"
+				},
+				"boost": {
+					"format": "float",
+					"type": "number"
+				},
+				"context": {
+					"type": "string"
+				},
+				"disabled": {
+					"type": "boolean"
+				},
+				"field": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"occur": {
+					"type": "string"
+				},
+				"parent": {
+					"type": "string"
+				},
+				"query": {
+					"type": "object"
+				},
+				"type": {
+					"type": "string"
+				},
+				"value": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Condition": {
+			"properties": {
+				"allConditions": {
+					"items": {
+						"$ref": "#/definitions/Condition"
+					},
+					"type": "array"
+				},
+				"anyConditions": {
+					"items": {
+						"$ref": "#/definitions/Condition"
+					},
+					"type": "array"
+				},
+				"contains": {
+					"$ref": "#/definitions/Contains"
+				},
+				"equals": {
+					"$ref": "#/definitions/Equals"
+				},
+				"exists": {
+					"$ref": "#/definitions/Exists"
+				},
+				"in": {
+					"$ref": "#/definitions/In"
+				},
+				"not": {
+					"$ref": "#/definitions/Condition"
+				},
+				"range": {
+					"$ref": "#/definitions/Range"
+				}
+			},
+			"type": "object"
+		},
+		"Configuration": {
+			"properties": {
+				"queryConfiguration": {
+					"$ref": "#/definitions/QueryConfiguration"
+				}
+			},
+			"type": "object"
+		},
+		"Contains": {
+			"properties": {
+				"parameterName": {
+					"type": "string"
+				},
+				"value": {
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"ElementDefinition": {
+			"properties": {
+				"category": {
+					"type": "string"
+				},
+				"configuration": {
+					"$ref": "#/definitions/Configuration"
+				},
+				"icon": {
+					"type": "string"
+				},
+				"uiConfiguration": {
+					"$ref": "#/definitions/UiConfiguration"
+				}
+			},
+			"type": "object"
+		},
+		"Equals": {
+			"properties": {
+				"format": {
+					"type": "string"
+				},
+				"parameterName": {
+					"type": "string"
+				},
+				"value": {
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"Exists": {
+			"properties": {
+				"parameterName": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Field": {
+			"properties": {
+				"fieldMappings": {
+					"items": {
+						"$ref": "#/definitions/FieldMapping"
+					},
+					"type": "array"
+				},
+				"helpText": {
+					"type": "string"
+				},
+				"label": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"step": {
+					"type": "object"
+				},
+				"type": {
+					"type": "string"
+				},
+				"typeOptions": {
+					"$ref": "#/definitions/TypeOptions"
+				}
+			},
+			"type": "object"
+		},
+		"FieldMapping": {
+			"properties": {
+				"boost": {
+					"format": "float",
+					"type": "number"
+				},
+				"field": {
+					"type": "string"
+				},
+				"locale": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"FieldSet": {
+			"properties": {
+				"fields": {
+					"items": {
+						"$ref": "#/definitions/Field"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"In": {
+			"properties": {
+				"parameterName": {
+					"type": "string"
+				},
+				"value": {
+					"type": "object"
+				}
+			},
+			"type": "object"
+		},
+		"Option": {
+			"properties": {
+				"label": {
+					"type": "string"
+				},
+				"value": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"QueryConfiguration": {
+			"properties": {
+				"queryEntries": {
+					"items": {
+						"$ref": "#/definitions/QueryEntry"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"QueryEntry": {
+			"properties": {
+				"clauses": {
+					"items": {
+						"$ref": "#/definitions/Clause"
+					},
+					"type": "array"
+				},
+				"condition": {
+					"$ref": "#/definitions/Condition"
+				},
+				"enabled": {
+					"type": "boolean"
+				},
+				"postFilterClauses": {
+					"items": {
+						"$ref": "#/definitions/Clause"
+					},
+					"type": "array"
+				},
+				"rescores": {
+					"items": {
+						"$ref": "#/definitions/Rescore"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		},
+		"Range": {
+			"properties": {
+				"format": {
+					"type": "string"
+				},
+				"lte": {
+					"type": "object"
+				},
+				"parameterName": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"Rescore": {
+			"properties": {
+				"query": {
+					"type": "object"
+				},
+				"queryWeight": {
+					"format": "float",
+					"type": "number"
+				},
+				"rescoreQueryWeight": {
+					"format": "float",
+					"type": "number"
+				},
+				"scoreMode": {
+					"type": "string"
+				},
+				"windowSize": {
+					"format": "int32",
+					"type": "integer"
+				}
+			},
+			"type": "object"
+		},
+		"TypeOptions": {
+			"properties": {
+				"boost": {
+					"type": "boolean"
+				},
+				"format": {
+					"type": "string"
+				},
+				"nullable": {
+					"type": "boolean"
+				},
+				"options": {
+					"items": {
+						"$ref": "#/definitions/Option"
+					},
+					"type": "array"
+				},
+				"required": {
+					"type": "boolean"
+				},
+				"step": {
+					"type": "object"
+				},
+				"unit": {
+					"type": "string"
+				},
+				"unitSuffix": {
+					"type": "string"
+				}
+			},
+			"type": "object"
+		},
+		"UiConfiguration": {
+			"properties": {
+				"fieldSets": {
+					"items": {
+						"$ref": "#/definitions/FieldSet"
+					},
+					"type": "array"
+				}
+			},
+			"type": "object"
+		}
+	},
+	"properties": {
+		"description_i18n": {
+			"additionalProperties": {
+				"type": "string"
+			},
+			"type": "object"
+		},
+		"elementDefinition": {
+			"$ref": "#/definitions/ElementDefinition"
+		},
+		"title_i18n": {
+			"additionalProperties": {
+				"type": "string"
+			},
+			"type": "object"
+		}
+	},
+	"type": "object"
+}

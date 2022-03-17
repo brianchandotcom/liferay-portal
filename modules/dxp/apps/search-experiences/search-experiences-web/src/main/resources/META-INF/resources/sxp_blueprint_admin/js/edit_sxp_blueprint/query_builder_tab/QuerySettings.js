@@ -136,14 +136,11 @@ function QuerySettings({
 								</span>
 
 								<ClaySticker
-									borderless
 									displayType="secondary"
-									monospaced
 									onClick={(event) => {
 										event.stopPropagation();
 										onChangeIndexerClausesVisibility();
 									}}
-									size="md"
 								>
 									<ClayIcon symbol="question-circle" />
 								</ClaySticker>

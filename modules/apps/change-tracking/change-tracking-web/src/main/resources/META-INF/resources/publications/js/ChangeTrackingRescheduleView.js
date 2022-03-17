@@ -40,7 +40,7 @@ class ChangeTrackingRescheduleView extends ChangeTrackingBaseScheduleView {
 		this.unscheduleURL = unscheduleURL;
 
 		this.state = {
-			date: new Date(scheduledDate + 'T12:00:00'),
+			date: scheduledDate,
 			dateError: '',
 			formError: null,
 			time: scheduledTime,

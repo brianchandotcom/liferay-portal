@@ -47,8 +47,8 @@ const DateFilter = ({
 	}, [clearInputs]);
 
 	return (
-		<div>
-			<div className="w-100">
+		<div className="p-3 w-100">
+			<div className="font-weight-semi-bold pb-3 text-paragraph">
 				On or after
 				<ClayDatePicker
 					dateFormat="MM/dd/yyyy"
@@ -71,7 +71,7 @@ const DateFilter = ({
 				/>
 			</div>
 
-			<div className="w-100">
+			<div className="font-weight-semi-bold pb-3 text-paragraph">
 				On or before
 				<ClayDatePicker
 					dateFormat="MM/dd/yyyy"

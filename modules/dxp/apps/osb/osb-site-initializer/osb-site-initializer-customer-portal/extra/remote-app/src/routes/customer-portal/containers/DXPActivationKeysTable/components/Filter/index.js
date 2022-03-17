@@ -93,6 +93,7 @@ const Filter = ({activationKeys, filtersState: [filters, setFilters]}) => {
 				<Search setFilters={setFilters} />
 
 				<DropDownWithDrillDown
+					className="align-items-center d-flex"
 					initialActiveMenu="x0a0"
 					menus={{
 						x0a0: [
@@ -176,7 +177,6 @@ const Filter = ({activationKeys, filtersState: [filters, setFilters]}) => {
 								type: 'component',
 							},
 						],
-
 						x0a4: [
 							{
 								child: (
@@ -253,7 +253,7 @@ const Filter = ({activationKeys, filtersState: [filters, setFilters]}) => {
 											availableFields.productVersions
 										}
 										clearCheckboxes={
-											filters.productVersions.value
+											!filters.productVersions.value
 												?.length
 										}
 										updateFilters={(checkedItems) =>
@@ -298,7 +298,7 @@ const Filter = ({activationKeys, filtersState: [filters, setFilters]}) => {
 					trigger={
 						<Button
 							borderless
-							className="btn-secondary p-2"
+							className="btn-secondary px-3 py-2"
 							prependIcon="filter"
 						>
 							Filter

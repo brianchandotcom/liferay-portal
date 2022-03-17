@@ -19,7 +19,7 @@ const PAGE = 1;
 export default function useGetActivationKeysData(project, sessionId) {
 	const {licenseKeyDownloadURL} = useApplicationProvider();
 
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [activationKeys, setActivationKeys] = useState([]);
 	const [filterTerm, setFilterTerm] = useState('active eq true');
 

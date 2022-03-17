@@ -33,8 +33,8 @@ const CheckboxFilter = ({availableItems, clearCheckboxes, updateFilters}) => {
 	}, [clearCheckboxes]);
 
 	return (
-		<div>
-			<div className="w-100">
+		<div className="w-100">
+			<div className="pt-2 px-3">
 				{availableItems?.map((item, index) => (
 					<ClayCheckbox
 						checked={checkedItems.includes(item)}
@@ -45,7 +45,7 @@ const CheckboxFilter = ({availableItems, clearCheckboxes, updateFilters}) => {
 				))}
 			</div>
 
-			<div>
+			<div className="mb-3 mt-2 mx-3">
 				<ClayButton
 					className="w-100"
 					onClick={() => updateFilters(checkedItems)}

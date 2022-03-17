@@ -25,50 +25,46 @@ const Search = ({setFilters}) => {
 	};
 
 	return (
-		<div>
-			<div>
-				<ClayInput.Group>
-					<ClayInput.GroupItem>
-						<ClayInput
-							aria-label="Search"
-							className="form-control input-group-inset input-group-inset-after"
-							onChange={(event) => {
-								setSearchTerm(event.target.value);
+		<ClayInput.Group className="m-0 mr-2">
+			<ClayInput.GroupItem>
+				<ClayInput
+					aria-label="Search"
+					className="form-control input-group-inset input-group-inset-after"
+					onChange={(event) => {
+						setSearchTerm(event.target.value);
+						setIsSearchButton(true);
+					}}
+					placeholder="Search"
+					type="text"
+					value={searchTerm}
+				/>
+
+				<ClayInput.GroupInsetItem after tag="span">
+					{isSearchButton ? (
+						<ClayButtonWithIcon
+							displayType="unstyled"
+							onClick={() => {
+								setIsSearchButton(false);
+								updateSearchTermFilter(searchTerm);
+							}}
+							symbol="search"
+							type="submit"
+						/>
+					) : (
+						<ClayButtonWithIcon
+							className="navbar-breakpoint-d-none"
+							displayType="unstyled"
+							onClick={() => {
+								setSearchTerm('');
+								updateSearchTermFilter('');
 								setIsSearchButton(true);
 							}}
-							placeholder="Search"
-							type="text"
-							value={searchTerm}
+							symbol="times"
 						/>
-
-						<ClayInput.GroupInsetItem after tag="span">
-							{isSearchButton ? (
-								<ClayButtonWithIcon
-									displayType="unstyled"
-									onClick={() => {
-										setIsSearchButton(false);
-										updateSearchTermFilter(searchTerm);
-									}}
-									symbol="search"
-									type="submit"
-								/>
-							) : (
-								<ClayButtonWithIcon
-									className="navbar-breakpoint-d-none"
-									displayType="unstyled"
-									onClick={() => {
-										setSearchTerm('');
-										updateSearchTermFilter('');
-										setIsSearchButton(true);
-									}}
-									symbol="times"
-								/>
-							)}
-						</ClayInput.GroupInsetItem>
-					</ClayInput.GroupItem>
-				</ClayInput.Group>
-			</div>
-		</div>
+					)}
+				</ClayInput.GroupInsetItem>
+			</ClayInput.GroupItem>
+		</ClayInput.Group>
 	);
 };
 export default Search;

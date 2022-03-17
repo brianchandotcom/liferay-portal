@@ -12,6 +12,7 @@
 
 import ClayButton from '@clayui/button';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
+import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 
 const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
@@ -38,8 +39,8 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 	}, [clearInputs]);
 
 	return (
-		<div>
-			<div className="w-100">
+		<>
+			<div className="px-3 py-2">
 				<ClayCheckbox
 					checked={onPromiseChecked}
 					label="On-Premise"
@@ -50,54 +51,74 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 						)
 					}
 				/>
-
-				<div>
-					<ClayCheckbox
-						checked={virtualClusterChecked}
-						label="Virtual Cluster"
-						onChange={() =>
-							setVirtualClusterChecked(
-								(previousVirtualClusterChecked) =>
-									!previousVirtualClusterChecked
-							)
-						}
-					/>
-
-					{hasVirtualCluster && (
-						<div className="d-flex ml-4">
-							<div className="mr-2">
-								<ClayInput
-									disabled={!virtualClusterChecked}
-									min="0"
-									onChange={(event) => {
-										setMinNodesValue(event.target.value);
-									}}
-									type="number"
-									value={minNodesValue}
-								/>
-
-								<p className="m-0 text-neutral-7">min nodes</p>
-							</div>
-
-							<div>
-								<ClayInput
-									disabled={!virtualClusterChecked}
-									min="0"
-									onChange={(event) => {
-										setMaxNodesValue(event.target.value);
-									}}
-									type="number"
-									value={maxNodesValue}
-								/>
-
-								<p className="m-0 text-neutral-7">max nodes </p>
-							</div>
-						</div>
-					)}
-				</div>
 			</div>
 
-			<div>
+			<div
+				className={classNames('py-2 px-3', {
+					'bg-brand-primary-lighten-5': virtualClusterChecked,
+				})}
+			>
+				<ClayCheckbox
+					checked={virtualClusterChecked}
+					label="Virtual Cluster"
+					onChange={() =>
+						setVirtualClusterChecked(
+							(previousVirtualClusterChecked) =>
+								!previousVirtualClusterChecked
+						)
+					}
+				/>
+
+				{hasVirtualCluster && (
+					<div className="d-flex ml-4">
+						<div className="mr-2">
+							<ClayInput
+								className={{
+									'bg-neutral-1 border-white': !virtualClusterChecked,
+								}}
+								disabled={!virtualClusterChecked}
+								min="0"
+								onChange={(event) => {
+									setMinNodesValue(event.target.value);
+								}}
+								placeholder="1"
+								type="number"
+								value={minNodesValue}
+							/>
+
+							{virtualClusterChecked && (
+								<p className="m-0 text-neutral-7 text-paragraph-sm">
+									min nodes
+								</p>
+							)}
+						</div>
+
+						<div>
+							<ClayInput
+								className={{
+									'bg-neutral-1 border-white': !virtualClusterChecked,
+								}}
+								disabled={!virtualClusterChecked}
+								min="0"
+								onChange={(event) => {
+									setMaxNodesValue(event.target.value);
+								}}
+								placeholder="28"
+								type="number"
+								value={maxNodesValue}
+							/>
+
+							{virtualClusterChecked && (
+								<p className="m-0 text-neutral-7 text-paragraph-sm">
+									max nodes
+								</p>
+							)}
+						</div>
+					</div>
+				)}
+			</div>
+
+			<div className="mb-3 mt-2 mx-3">
 				<ClayButton
 					className="w-100"
 					onClick={() => {
@@ -119,7 +140,7 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 					Apply
 				</ClayButton>
 			</div>
-		</div>
+		</>
 	);
 };
 export default KeyTypeFilter;

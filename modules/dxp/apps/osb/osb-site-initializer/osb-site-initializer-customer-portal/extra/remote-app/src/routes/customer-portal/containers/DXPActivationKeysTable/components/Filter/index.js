@@ -15,9 +15,9 @@ import CheckboxFilter from '../../../../components/CheckboxFilter';
 import getAvailableFieldsCheckboxs from '../../../../components/CheckboxFilter/utils/getAvailableFieldsCheckboxs';
 import DateFilter from '../../../../components/DateFilter';
 import DropDownWithDrillDown from '../../../../components/DropDownWithDrillDown';
-import ExpirationDate from '../../../../components/ExpirationDate';
-import KeyTypeFilter from '../../../../components/KeyType';
-import Search from '../../../../components/Search';
+import ExpirationDate from '../../../../components/ExpirationDateFilter';
+import KeyTypeFilter from '../../../../components/KeyTypeFilter';
+import SearchBar from '../../../../components/SearchBar';
 import {
 	getDoesNotExpire,
 	getEnvironmentType,
@@ -90,7 +90,7 @@ const Filter = ({activationKeys, filtersState: [filters, setFilters]}) => {
 	return (
 		<div className="d-flex flex-column">
 			<div className="d-flex">
-				<Search setFilters={setFilters} />
+				<SearchBar setFilters={setFilters} />
 
 				<DropDownWithDrillDown
 					className="align-items-center d-flex"

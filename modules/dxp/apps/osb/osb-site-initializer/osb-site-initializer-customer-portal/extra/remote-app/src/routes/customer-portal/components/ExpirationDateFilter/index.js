@@ -13,7 +13,11 @@ import {ClayCheckbox} from '@clayui/form';
 import {useCallback, useEffect, useState} from 'react';
 import DateFilter from '../DateFilter';
 
-export default function ExpirationDate({clearInputs, hasDNE, setFilters}) {
+export default function ExpirationDateFilter({
+	clearInputs,
+	hasDNE,
+	setFilters,
+}) {
 	const [dneChecked, setDNEChecked] = useState(false);
 
 	const getOnOrAfterValue = useCallback(

@@ -13,7 +13,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import {useState} from 'react';
 
-const Search = ({setFilters}) => {
+const SearchBar = ({setFilters}) => {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [isSearchButton, setIsSearchButton] = useState(true);
 
@@ -67,4 +67,4 @@ const Search = ({setFilters}) => {
 		</ClayInput.Group>
 	);
 };
-export default Search;
+export default SearchBar;

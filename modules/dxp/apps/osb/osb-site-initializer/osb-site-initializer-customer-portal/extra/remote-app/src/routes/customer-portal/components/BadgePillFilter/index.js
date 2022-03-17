@@ -10,7 +10,7 @@
  */
 import {Button} from '../../../../common/components';
 
-const BadgePill = ({filterName, filterValue, onClick}) => {
+const BadgePillFilter = ({filterName, filterValue, onClick}) => {
 	return (
 		<div>
 			<div className="align-items-center badge badge-light badge-pill bg-white border border-secondary pl-2 text-neutral-8 text-paragraph-sm">
@@ -33,4 +33,4 @@ const BadgePill = ({filterName, filterValue, onClick}) => {
 		</div>
 	);
 };
-export default BadgePill;
+export default BadgePillFilter;

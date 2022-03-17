@@ -12,7 +12,7 @@
 import {useCallback} from 'react';
 import Button from '../../../../../../common/components/Button';
 import getCurrentEndDate from '../../../../../../common/utils/getCurrentEndDate';
-import BadgePill from '../../../../components/BadgePillFilter';
+import BadgePillFilter from '../../../../components/BadgePillFilter';
 import {INITIAL_FILTER} from '../../utils/constants/initialFilter';
 
 const BadgeFilter = ({
@@ -86,7 +86,7 @@ const BadgeFilter = ({
 			}
 
 			return (
-				<BadgePill
+				<BadgePillFilter
 					filterName={filterKeyType.name}
 					filterValue={keyTypesDisplay.join(', ')}
 					onClick={() =>
@@ -129,7 +129,7 @@ const BadgeFilter = ({
 					) && <>{getKeyTypeDisplay(filters.keyType)} </>}
 
 					{!!filters.environmentTypes.value?.length && (
-						<BadgePill
+						<BadgePillFilter
 							filterName={filters.environmentTypes.name}
 							filterValue={filters.environmentTypes.value.join(
 								', '
@@ -147,7 +147,7 @@ const BadgeFilter = ({
 					)}
 
 					{!!filters.instanceSizes.value?.length && (
-						<BadgePill
+						<BadgePillFilter
 							filterName={filters.instanceSizes.name}
 							filterValue={filters.instanceSizes.value.join(', ')}
 							onClick={() =>
@@ -163,7 +163,7 @@ const BadgeFilter = ({
 					)}
 
 					{!!filters.productVersions.value?.length && (
-						<BadgePill
+						<BadgePillFilter
 							filterName={filters.productVersions.name}
 							filterValue={filters.productVersions.value.join(
 								', '
@@ -181,7 +181,7 @@ const BadgeFilter = ({
 					)}
 
 					{!!filters.status.value?.length && (
-						<BadgePill
+						<BadgePillFilter
 							filterName={filters.status.name}
 							filterValue={filters.status.value.join(', ')}
 							onClick={() =>
@@ -200,7 +200,7 @@ const BadgeFilter = ({
 						filters.expirationDate.value.onOrAfter ||
 						filters.expirationDate.value.onOrBefore
 					) && (
-						<BadgePill
+						<BadgePillFilter
 							filterName={filters.expirationDate.name}
 							filterValue={getDatesDisplay(
 								filters.expirationDate
@@ -224,7 +224,7 @@ const BadgeFilter = ({
 						filters.startDate.value.onOrAfter ||
 						filters.startDate.value.onOrBefore
 					) && (
-						<BadgePill
+						<BadgePillFilter
 							filterName={filters.startDate.name}
 							filterValue={getDatesDisplay(filters.startDate)}
 							onClick={() =>

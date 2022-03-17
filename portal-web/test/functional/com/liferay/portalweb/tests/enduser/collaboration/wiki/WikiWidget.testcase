@@ -128,6 +128,15 @@ definition {
 		Breadcrumb.viewPG(breadcrumbListVisible = "Wiki Test Page,Draft Pages");
 	}
 
+	@description = "This is a test for LPS-67548. It ensures that the history can be viewed in wiki details."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanViewHistoryInDetails {
+
+		// TODO LPS-149058 CanViewHistoryInDetails pending implementation
+
+	}
+
 	@description = "This is a test for LPS-136997. It checks that pages can be viewed using the Tree Menu."
 	@priority = "3"
 	test CanViewPagesViaTreeMenu {

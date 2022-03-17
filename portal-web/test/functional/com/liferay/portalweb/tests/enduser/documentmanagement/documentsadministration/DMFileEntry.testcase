@@ -2646,4 +2646,13 @@ definition {
 			tagNameList = "tag1,tag2");
 	}
 
+	@description = "This is a test for LPS-94829. It ensures that the wildcard can be defined with other file extensions."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test WildcardCanBeDefinedWithOtherFileExtensions {
+
+		// TODO LPS-148982 WildcardCanBeDefinedWithOtherFileExtensions pending implementation
+
+	}
+
 }

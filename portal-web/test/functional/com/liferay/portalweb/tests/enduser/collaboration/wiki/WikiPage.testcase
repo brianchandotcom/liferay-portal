@@ -593,6 +593,15 @@ definition {
 			wikiPageTitle = "FrontPage");
 	}
 
+	@description = "This is a test for LPS-71134. It ensures that an exported wiki page can be imported using default mirror strategy between different sites."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanImportPageBetweenDifferentSites {
+
+		// TODO LPS-149057 CanImportPageBetweenDifferentSites pending implementation
+
+	}
+
 	@description = "This ensures that a wiki page can link to other wiki page."
 	@priority = "4"
 	@refactordone

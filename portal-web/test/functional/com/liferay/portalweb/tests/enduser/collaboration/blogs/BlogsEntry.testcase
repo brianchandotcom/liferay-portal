@@ -806,6 +806,42 @@ definition {
 			entryTitle = "Blogs Entry Title Edit");
 	}
 
+	@description = "This is a test for LPS-67515. It ensures that an exported blog entry with a cover image can be imported to a new site after cleaning the DB."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanImportEntryWithImageAfterCleaningDB {
+
+		// TODO LPS-149060 CanImportEntryWithImageAfterCleaningDB pending implementation
+
+	}
+
+	@description = "This is a test for LPS-67515. It ensures that a blog entry with a cover image can be exported and imported between different sites."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanImportEntryWithImageBetweenDifferentSites {
+
+		// TODO LPS-149060 CanImportEntryWithImageBetweenDifferentSites pending implementation
+
+	}
+
+	@description = "This is a test for LPS-67515. It ensures that an exported blog entry with a small image can be imported to a new site after cleaning the DB."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanImportEntryWithSmallImageAfterCleaningDB {
+
+		// TODO LPS-149060 CanImportEntryWithSmallImageAfterCleaningDB pending implementation
+
+	}
+
+	@description = "This is a test for LPS-67515. It ensures that a blog entry with a small image can be exported and imported between different sites."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanImportEntryWithSmallImageBetweenDifferentSites {
+
+		// TODO LPS-149060 CanImportEntryWithSmallImageBetweenDifferentSites pending implementation
+
+	}
+
 	@description = "This checks that a blog entry can be manually saved as a draft."
 	@priority = "5"
 	@refactordone

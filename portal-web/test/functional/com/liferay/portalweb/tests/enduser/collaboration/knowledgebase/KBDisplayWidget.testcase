@@ -237,6 +237,15 @@ definition {
 			subscribe = "false");
 	}
 
+	@description = "This is a test for LPS-94613. It checks that a user cannot select the draft article from the folder in KB display widget."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotSelectDraftArticleFromFolder {
+
+		// TODO LPS-148977 CannotSelectDraftArticleFromFolder pending implementation
+
+	}
+
 	@priority = "3"
 	@refactordone
 	test CannotViewDuplicateBreadcrumbsWhenAddingParentArticle {

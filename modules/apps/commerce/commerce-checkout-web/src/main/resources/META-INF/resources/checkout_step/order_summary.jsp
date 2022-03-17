@@ -17,6 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CommerceContext commerceContext = (CommerceContext)request.getAttribute(CommerceWebKeys.COMMERCE_CONTEXT);
+
+CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
+
 OrderSummaryCheckoutStepDisplayContext orderSummaryCheckoutStepDisplayContext = (OrderSummaryCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
 CommerceOrder commerceOrder = orderSummaryCheckoutStepDisplayContext.getCommerceOrder();
@@ -455,10 +459,10 @@ if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 			CommerceAddress billingAddress = commerceOrder.getBillingAddress();
 			%>
 
-			<c:if test="<%= billingAddress != null %>">
+			<c:if test="<%= (billingAddress != null) && orderSummaryCheckoutStepDisplayContext.hasViewBillingAddressPermission(permissionChecker, commerceAccount) %>">
 				<address class="billing-address">
 					<h5>
-						<liferay-ui:message key="billing-address-and-date" />
+						<liferay-ui:message key="billing-address" />
 					</h5>
 
 					<%

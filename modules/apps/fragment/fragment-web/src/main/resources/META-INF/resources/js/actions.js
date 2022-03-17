@@ -89,6 +89,8 @@ export const ACTIONS = {
 
 				submitForm(form, exportFragmentCollectionsURL);
 
+				form.removeChild(input);
+
 				processed = true;
 			},
 			() => {

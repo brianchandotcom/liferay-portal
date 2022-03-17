@@ -203,7 +203,6 @@ definition {
 		ObjectCustomViews.assertColumnNotPresent(colunmName = "Author");
 
 		ObjectCustomViews.assertEmptyStateTextOnViewBuilder(text = "No columns added yet.");
-
 	}
 
 	@description = "LPS-135394 - Verify it is possible to delete a View"

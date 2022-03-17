@@ -171,7 +171,7 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import-translation"));
 												displayType="secondary"
 												download="translation-error.csv"
 												href="<%= importTranslationResultsDisplayContext.getFailureMessagesCSVDataURL(locale) %>"
-												label="download-csv-report"
+												label="download-csv-error-report"
 												small="<%= true %>"
 												target="_blank"
 												type="button"

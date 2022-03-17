@@ -68,6 +68,13 @@ definition {
 		MenuItem.clickNoError(menuItem = "${menuItem}");
 	}
 
+	macro viewDeleteTermsAndConditionEntry {
+		AssertElementNotPresent(
+			key_termsAndConditionName = "${termsAndConditionName}",
+			locator1 = "CommercePaymentTerms#ORDER_DETAILS_TERMS_AND_CONDITIONS_NAME",
+			value1 = "${termsAndConditionName}");
+	}
+
 	macro viewNoPG {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO",

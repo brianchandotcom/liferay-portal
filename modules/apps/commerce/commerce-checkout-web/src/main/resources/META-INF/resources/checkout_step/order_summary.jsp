@@ -452,6 +452,43 @@ if (priceDisplayType.equals(CommercePricingConstants.TAX_INCLUDED_IN_PRICE)) {
 			</c:if>
 
 			<%
+			CommerceAddress billingAddress = commerceOrder.getBillingAddress();
+			%>
+
+			<c:if test="<%= billingAddress != null %>">
+				<address class="billing-address">
+					<h5>
+						<liferay-ui:message key="billing-address-and-date" />
+					</h5>
+
+					<%
+					request.setAttribute("address.jsp-commerceAddress", billingAddress);
+					%>
+
+					<%= HtmlUtil.escape(billingAddress.getName()) %> <br />
+					<%= HtmlUtil.escape(billingAddress.getStreet1()) %> <br />
+
+					<c:if test="<%= Validator.isNotNull(billingAddress.getStreet2()) %>">
+						<%= HtmlUtil.escape(billingAddress.getStreet2()) %> <br />
+					</c:if>
+
+					<c:if test="<%= Validator.isNotNull(billingAddress.getStreet3()) %>">
+						<%= HtmlUtil.escape(billingAddress.getStreet3()) %> <br />
+					</c:if>
+
+					<%= HtmlUtil.escape(billingAddress.getCity()) %> <br />
+
+					<%
+					Country country = billingAddress.getCountry();
+					%>
+
+					<c:if test="<%= country != null %>">
+						<%= HtmlUtil.escape(country.getTitle(locale)) %><br />
+					</c:if>
+				</address>
+			</c:if>
+
+			<%
 			String commerceShippingOptionName = StringPool.BLANK;
 
 			if (commerceOrder.getShippingOptionName() != null) {

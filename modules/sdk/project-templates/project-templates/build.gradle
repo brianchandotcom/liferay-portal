@@ -66,7 +66,7 @@ dependencies {
 
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.api", version: "1.0.160"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.control.menu.entry", version: "1.0.158"
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.form.field", version: "1.0.157"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.form.field", version: "1.0.158"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.fragment", version: "1.0.157"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.layout.template", version: "1.0.154"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.modules.ext", version: "1.0.141"
@@ -81,7 +81,7 @@ dependencies {
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.rest", version: "1.0.157"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.rest.builder", version: "1.0.63"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service", version: "1.0.154"
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service.builder", version: "1.0.156"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service.builder", version: "1.0.157"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.service.wrapper", version: "1.0.153"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.simulation.panel.entry", version: "1.0.153"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.spring.mvc.portlet", version: "1.0.151"
@@ -91,7 +91,7 @@ dependencies {
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.war.core.ext", version: "1.0.123"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.war.hook", version: "1.0.149"
 	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.war.mvc.portlet", version: "1.0.149"
-	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.workspace", version: "1.0.159"
+	projectTemplates group: "com.liferay", name: "com.liferay.project.templates.workspace", version: "1.0.160"
 
 	if (project.hasProperty("releaseApiJarName")) {
 		releaseApiJar group: "com.liferay.portal", name: "release.${releaseApiJarName}.api", version: "${releaseApiJarVersion}"

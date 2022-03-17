@@ -7,10 +7,6 @@ definition {
 	property testray.main.component.name = "Analytics Cloud";
 
 	setUp {
-		AntCommand(
-			locator1 = "build-test.xml",
-			value1 = "record-test-generated-properties");
-
 		ACUtils.launchAC();
 
 		ACSettings.takeTokenFromAnalyticsCloud();
@@ -604,7 +600,7 @@ definition {
 				applicationId = "Blog",
 				eventId = "blogViewed",
 				property = "numberOfWords",
-				value = "22");
+				value = "20");
 		}
 
 		task ("View the request common properties value") {

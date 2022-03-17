@@ -22,18 +22,24 @@ export function getWebContents({dxpVersion, slaCurrent, subscriptionGroups}) {
 		slaCurrent?.includes(slaType)
 	);
 
-	const initialSubscriptions = Object.keys(
-		PRODUCT_TYPES
-	).map((productKey) => [productKey, false]);
+	const allProductsNames = Object.values(PRODUCT_TYPES);
+
+	const allProductsKeys = Object.keys(PRODUCT_TYPES);
+
+	const initialSubscriptions = allProductsKeys.map((productKey) => [
+		productKey,
+		false,
+	]);
 
 	const hasSubscriptionGroup = subscriptionGroups?.reduce(
 		(subscriptionGroupsAccumulator, subscriptionGroup) => {
-			const [currentProduct] = Object.entries(PRODUCT_TYPES).find(
-				([, productName]) => productName === subscriptionGroup?.name
+			const currentProductIndex = allProductsNames.findIndex(
+				(productName) => productName === subscriptionGroup?.name
 			);
 
-			if (currentProduct) {
-				subscriptionGroupsAccumulator[currentProduct] = true;
+			if (currentProductIndex !== -1) {
+				const productKey = allProductsKeys[currentProductIndex];
+				subscriptionGroupsAccumulator[productKey] = true;
 			}
 
 			return subscriptionGroupsAccumulator;

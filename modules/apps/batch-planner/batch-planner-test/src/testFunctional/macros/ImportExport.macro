@@ -8,6 +8,16 @@ definition {
 			locator1 = "ImportExport#EXECUTION_ENTRY");
 	}
 
+	macro assertExecutionNotification {
+		var executionStatus = StringUtil.upperCase("${executionStatus}");
+
+		AssertElementPresent(
+			key_entityType = "${entityType}",
+			key_executionAction = "${executionAction}",
+			key_jobStatus = "${executionStatus}",
+			locator1 = "ImportExport#EXECUTION_NOTIFICATION");
+	}
+
 	macro assertExportTemplate {
 		WaitForElementPresent(
 			key_title = "Field Mapping",

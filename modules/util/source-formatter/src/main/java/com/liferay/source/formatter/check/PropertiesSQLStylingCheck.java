@@ -39,6 +39,7 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 
 		Matcher matcher = _sqlPattern1.matcher(content);
 
+		outerLoop:
 		while (matcher.find()) {
 			String originalSqlClauses = matcher.group(2);
 
@@ -54,15 +55,12 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 
 			int y = x;
 			String s = StringPool.BLANK;
-			boolean unmatchedParenthesis = false;
 
 			while (true) {
 				y = sqlClauses.indexOf(")", y + 1);
 
 				if (y == -1) {
-					unmatchedParenthesis = true;
-
-					break;
+					continue outerLoop;
 				}
 
 				s = sqlClauses.substring(x, y + 1);
@@ -86,10 +84,6 @@ public class PropertiesSQLStylingCheck extends BaseFileCheck {
 				}
 
 				y = x;
-			}
-
-			if (unmatchedParenthesis) {
-				continue;
 			}
 
 			sqlClauses = StringUtil.replace(sqlClauses, " AND ", " AND \\\n");

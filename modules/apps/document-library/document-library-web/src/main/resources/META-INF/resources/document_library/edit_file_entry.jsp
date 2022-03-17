@@ -574,7 +574,6 @@ renderResponse.setTitle(headerTitle);
 						<liferay-friendly-url:input
 							className="<%= FileEntry.class.getName() %>"
 							classPK="<%= fileEntryId %>"
-							disabled="<%= true %>"
 							inputAddon="<%= dlEditFileEntryDisplayContext.getFriendlyURLBase() %>"
 							localizable="<%= false %>"
 							name="urlTitle"

@@ -12,8 +12,8 @@ import {Button} from '../../../../../../../common/components';
 
 const BadgePill = ({filterName, filterValue, onClick}) => {
 	return (
-		<div className="pt-2">
-			<div className="align-items-center badge badge-light badge-pill bg-white border border-secondary pl-2 pr-1 text-neutral-8 text-paragraph-sm">
+		<div>
+			<div className="align-items-center badge badge-light badge-pill bg-white border border-secondary pl-2 text-neutral-8 text-paragraph-sm">
 				<p className="font-weight-semi-bold mx-1 my-0">
 					{filterName}
 

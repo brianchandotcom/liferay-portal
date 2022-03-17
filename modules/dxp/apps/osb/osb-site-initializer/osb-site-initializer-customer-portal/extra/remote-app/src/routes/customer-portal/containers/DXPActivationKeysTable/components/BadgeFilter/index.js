@@ -109,9 +109,6 @@ const BadgeFilter = ({
 		[setFilters]
 	);
 
-	// eslint-disable-next-line no-console
-	console.log(loading);
-
 	return (
 		<>
 			<div className="d-flex">
@@ -126,7 +123,7 @@ const BadgeFilter = ({
 				)}
 			</div>
 			<div className="bd-highlight d-flex">
-				<div className="bd-highlight col d-flex pl-0 w-100">
+				<div className="bd-highlight col d-flex flex-wrap pl-0 pt-2 w-100">
 					{!!Object.values(filters.keyType.value).some(
 						(value) => !!value
 					) && <>{getKeyTypeDisplay(filters.keyType)} </>}

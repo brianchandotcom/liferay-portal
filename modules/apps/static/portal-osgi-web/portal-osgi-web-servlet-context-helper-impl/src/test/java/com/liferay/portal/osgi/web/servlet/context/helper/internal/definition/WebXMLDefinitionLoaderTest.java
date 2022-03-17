@@ -24,6 +24,7 @@ import com.liferay.portal.osgi.web.servlet.context.helper.internal.order.OrderBe
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.order.OrderCircularDependencyException;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.order.OrderUtil;
 import com.liferay.portal.osgi.web.servlet.context.helper.order.Order;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.net.URL;
 
@@ -35,26 +36,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletContextListener;
 
 import javax.xml.parsers.SAXParserFactory;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Mock;
 
 import org.osgi.framework.Bundle;
-
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Miguel Pastor
  */
-@RunWith(PowerMockRunner.class)
 public class WebXMLDefinitionLoaderTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testLoadCustomWebAbsoluteOrdering1XML() throws Exception {
@@ -485,12 +486,6 @@ public class WebXMLDefinitionLoaderTest {
 			filterDefinitions.toString(), filterDefinitionsCount,
 			filterDefinitions.size());
 	}
-
-	@Mock
-	private Servlet _servlet;
-
-	@Mock
-	private ServletContextListener _servletContextListener;
 
 	private static class TestBundle extends MockBundle {
 

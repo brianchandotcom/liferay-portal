@@ -279,6 +279,69 @@ public class FriendlyURLDLFileEntryLocalServiceWrapperTest
 	}
 
 	@Test
+	public void testUpdateFileEntryUpdatesBlankCreateFriendlyURLEntryWithTitle()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		byte[] bytes = TestDataConstants.TEST_BYTE_ARRAY;
+
+		InputStream inputStream = new ByteArrayInputStream(bytes);
+
+		AtomicLong fileEntryId = new AtomicLong();
+
+		_testWithActiveFFFriendlyURLEntryFileEntryConfiguration(
+			() -> {
+				DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
+					null, TestPropsValues.getUserId(), group.getGroupId(),
+					group.getGroupId(), parentFolder.getFolderId(),
+					RandomTestUtil.randomString(),
+					ContentTypes.APPLICATION_OCTET_STREAM,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), StringPool.BLANK,
+					StringPool.BLANK,
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+					null, null, inputStream, bytes.length, null, null,
+					serviceContext);
+
+				fileEntryId.set(dlFileEntry.getFileEntryId());
+
+				FriendlyURLEntry friendlyURLEntry =
+					_friendlyURLEntryLocalService.fetchMainFriendlyURLEntry(
+						_portal.getClassNameId(FileEntry.class),
+						fileEntryId.get());
+
+				Assert.assertNull(friendlyURLEntry);
+			},
+			false);
+
+		_testWithActiveFFFriendlyURLEntryFileEntryConfiguration(
+			() -> {
+				_dlFileEntryLocalService.updateFileEntry(
+					group.getCreatorUserId(), fileEntryId.get(),
+					StringUtil.randomString(),
+					ContentTypes.APPLICATION_OCTET_STREAM, "title",
+					StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+					DLVersionNumberIncrease.MAJOR,
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+					Collections.emptyMap(), null, inputStream, 0, null, null,
+					serviceContext);
+
+				FriendlyURLEntry friendlyURLEntry =
+					_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
+						_portal.getClassNameId(FileEntry.class),
+						fileEntryId.get());
+
+				Assert.assertNotNull(friendlyURLEntry);
+
+				Assert.assertEquals("title", friendlyURLEntry.getUrlTitle());
+			},
+			true);
+	}
+
+	@Test
 	public void testUpdateFileEntryUpdatesCreateFriendlyURLEntryIfPreviousExisted()
 		throws Exception {
 

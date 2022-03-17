@@ -20,15 +20,13 @@ import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Iván Zaera
  */
-public class FallbackSettingsTest extends PowerMockito {
+public class FallbackSettingsTest {
 
 	public FallbackSettingsTest() {
-		_settings = mock(Settings.class);
+		_settings = Mockito.mock(Settings.class);
 
 		_fallbackKeys.add("key1", "key2", "key3");
 		_fallbackKeys.add("key2", "key7");
@@ -43,7 +41,7 @@ public class FallbackSettingsTest extends PowerMockito {
 
 		String[] mockValues = {"value"};
 
-		when(
+		Mockito.when(
 			_settings.getValues("key2", null)
 		).thenReturn(
 			mockValues
@@ -67,7 +65,7 @@ public class FallbackSettingsTest extends PowerMockito {
 
 	@Test
 	public void testGetValueWhenConfigured() {
-		when(
+		Mockito.when(
 			_settings.getValue("key2", null)
 		).thenReturn(
 			"value"

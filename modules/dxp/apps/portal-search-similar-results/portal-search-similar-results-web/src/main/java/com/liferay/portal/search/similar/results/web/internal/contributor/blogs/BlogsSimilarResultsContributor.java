@@ -76,9 +76,7 @@ public class BlogsSimilarResultsContributor
 
 		AssetRenderer<?> assetRenderer = destinationHelper.getAssetRenderer();
 
-		if (assetRenderer.getGroupId() !=
-				destinationHelper.getScopeGroupId()) {
-
+		if (assetRenderer.getGroupId() != destinationHelper.getScopeGroupId()) {
 			destinationBuilder.replaceURLString(
 				destinationHelper.getAssetViewURL());
 

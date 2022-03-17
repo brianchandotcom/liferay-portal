@@ -49,6 +49,12 @@ definition {
 			locator1 = "LexiconList#LIST_ENTRY");
 	}
 
+	macro viewListEntryPresent {
+		AssertVisible(
+			key_listEntry = "${listEntry}",
+			locator1 = "LexiconList#LIST_ENTRY");
+	}
+
 	macro viewListEntrySubtitle {
 		AssertTextEquals(
 			key_listEntry = "${listEntry}",

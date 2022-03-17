@@ -14,9 +14,12 @@
 
 package com.liferay.object.field.business.type;
 
+import com.liferay.object.exception.ObjectFieldSettingsValidationException;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -48,6 +51,15 @@ public interface ObjectFieldBusinessType {
 
 	public default boolean isVisible() {
 		return true;
+	}
+
+	public default void validateObjectFieldSettings(
+			String objectFieldName, Map<String, String> objectFieldSettings)
+		throws PortalException {
+
+		if (MapUtil.isNotEmpty(objectFieldSettings)) {
+			throw new ObjectFieldSettingsValidationException();
+		}
 	}
 
 }

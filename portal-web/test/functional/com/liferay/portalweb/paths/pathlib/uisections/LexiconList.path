@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>LIST_ENTRY_SUBTITLE</td>
-	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//h6[contains(.,'${key_listEntrySubtitle}')]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//h6[contains(.,'${key_listEntrySubtitle}')] | //*[@data-qa-id='row'][contains(.,'${key_listEntry}')]//div[contains(@class,'text-default')][contains(.,'${key_listEntrySubtitle}')]</td>
 	<td></td>
 </tr>
 <tr>

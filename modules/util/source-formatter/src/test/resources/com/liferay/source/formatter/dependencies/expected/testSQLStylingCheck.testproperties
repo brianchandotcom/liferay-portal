@@ -82,6 +82,9 @@
         (${test.batch.run.property.query[functional-tomcat90-mysql57-jdk8][search]}) AND \
         (embedded.elasticsearch.only != "true")
 
+    test.batch.run.property.query[functional-smoke-bundle-jboss73-mysql57-jdk8]=\
+        ${test.batch.run.property.query[functional-smoke-bundle-jboss-mysql57-jdk8]}
+
     test.batch.run.property.query[functional-tomcat90-mysql57-jdk8][site-template]=\
         (testray.component.names ~ "Site Templates") OR \
         (testray.main.component.name ~ "Site Templates")

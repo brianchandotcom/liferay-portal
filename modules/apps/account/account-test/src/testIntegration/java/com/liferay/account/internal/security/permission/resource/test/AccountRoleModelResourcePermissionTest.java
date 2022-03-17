@@ -15,6 +15,7 @@
 package com.liferay.account.internal.security.permission.resource.test;
 
 import com.liferay.account.constants.AccountActionKeys;
+import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -40,6 +41,8 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.function.Consumer;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -62,33 +65,18 @@ public class AccountRoleModelResourcePermissionTest {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
 
-		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
+		AccountRole ownedAccountRole = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
 			RandomTestUtil.randomString(), null, null);
 
-		_addResourcePermission(
-			accountRole.getRole(), AccountRole.class.getName(),
-			new String[] {
-				AccountActionKeys.ASSIGN_USERS, ActionKeys.DEFINE_PERMISSIONS,
-				ActionKeys.DELETE, ActionKeys.UPDATE, ActionKeys.VIEW
-			});
+		_testPermissions(Assert::assertTrue, accountEntry, ownedAccountRole);
 
-		User user = UserTestUtil.addUser();
+		AccountRole sharedAccountRole = _accountRoleLocalService.addAccountRole(
+			TestPropsValues.getUserId(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), null, null);
 
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry.getAccountEntryId(), user.getUserId());
-
-		_userGroupRoleLocalService.addUserGroupRole(
-			user.getUserId(), accountEntry.getAccountEntryGroupId(),
-			accountRole.getRoleId());
-
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(user);
-
-		_assertContains(
-			permissionChecker, accountRole, AccountActionKeys.ASSIGN_USERS);
-		_assertContains(permissionChecker, accountRole, ActionKeys.DELETE);
-		_assertContains(permissionChecker, accountRole, ActionKeys.UPDATE);
+		_testPermissions(Assert::assertFalse, accountEntry, sharedAccountRole);
 	}
 
 	@Test
@@ -114,9 +102,10 @@ public class AccountRoleModelResourcePermissionTest {
 			userA.getUserId(), accountEntry.getAccountEntryGroupId(),
 			accountRole.getRoleId());
 
-		_assertContains(
-			PermissionCheckerFactoryUtil.create(userA), accountRole,
-			ActionKeys.VIEW);
+		Assert.assertTrue(
+			_accountRoleModelResourcePermission.contains(
+				PermissionCheckerFactoryUtil.create(userA), accountRole,
+				ActionKeys.VIEW));
 
 		User userB = UserTestUtil.addUser();
 
@@ -128,9 +117,10 @@ public class AccountRoleModelResourcePermissionTest {
 
 		UserLocalServiceUtil.addRoleUser(role.getRoleId(), userB.getUserId());
 
-		_assertContains(
-			PermissionCheckerFactoryUtil.create(userB), accountRole,
-			ActionKeys.VIEW);
+		Assert.assertTrue(
+			_accountRoleModelResourcePermission.contains(
+				PermissionCheckerFactoryUtil.create(userB), accountRole,
+				ActionKeys.VIEW));
 	}
 
 	private void _addResourcePermission(
@@ -144,14 +134,40 @@ public class AccountRoleModelResourcePermissionTest {
 		}
 	}
 
-	private void _assertContains(
-			PermissionChecker permissionChecker, AccountRole accountRole,
-			String actionId)
+	private void _testPermissions(
+			Consumer<Boolean> assertConsumer, AccountEntry accountEntry,
+			AccountRole accountRole)
 		throws Exception {
 
-		Assert.assertTrue(
+		_addResourcePermission(
+			accountRole.getRole(), AccountRole.class.getName(),
+			new String[] {
+				AccountActionKeys.ASSIGN_USERS, ActionKeys.DEFINE_PERMISSIONS,
+				ActionKeys.DELETE, ActionKeys.UPDATE, ActionKeys.VIEW
+			});
+
+		User user = UserTestUtil.addUser();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), user.getUserId());
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			user.getUserId(), accountEntry.getAccountEntryGroupId(),
+			accountRole.getRoleId());
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
+
+		assertConsumer.accept(
 			_accountRoleModelResourcePermission.contains(
-				permissionChecker, accountRole, actionId));
+				permissionChecker, accountRole,
+				AccountActionKeys.ASSIGN_USERS));
+		assertConsumer.accept(
+			_accountRoleModelResourcePermission.contains(
+				permissionChecker, accountRole, ActionKeys.DELETE));
+		assertConsumer.accept(
+			_accountRoleModelResourcePermission.contains(
+				permissionChecker, accountRole, ActionKeys.UPDATE));
 	}
 
 	@Inject

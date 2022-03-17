@@ -20,6 +20,7 @@ import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.EscapableLocalizableFunction;
 import com.liferay.portal.kernel.util.EscapableObject;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -63,7 +64,7 @@ public class DefaultMailTemplateTest {
 			StringPool.BLANK, false);
 
 		String result = mailTemplate.renderAsString(
-			Locale.ENGLISH, _mailTemplateContext);
+			LocaleUtil.ENGLISH, _mailTemplateContext);
 
 		Assert.assertEquals(StringPool.BLANK, result);
 	}
@@ -75,7 +76,7 @@ public class DefaultMailTemplateTest {
 		MailTemplate mailTemplate = new DefaultMailTemplate(template, false);
 
 		String result = mailTemplate.renderAsString(
-			Locale.ENGLISH, _mailTemplateContext);
+			LocaleUtil.ENGLISH, _mailTemplateContext);
 
 		Assert.assertEquals("<a href=\"http://liferay.com/resource\">", result);
 	}
@@ -87,7 +88,7 @@ public class DefaultMailTemplateTest {
 		MailTemplate mailTemplate = new DefaultMailTemplate(template, false);
 
 		String result = mailTemplate.renderAsString(
-			Locale.ENGLISH, _mailTemplateContext);
+			LocaleUtil.ENGLISH, _mailTemplateContext);
 
 		Assert.assertEquals(
 			"<img src=\"http://liferay.com/resource\">", result);
@@ -100,7 +101,7 @@ public class DefaultMailTemplateTest {
 		MailTemplate mailTemplate = new DefaultMailTemplate(template, false);
 
 		String result = mailTemplate.renderAsString(
-			Locale.ENGLISH, _mailTemplateContext);
+			LocaleUtil.ENGLISH, _mailTemplateContext);
 
 		Assert.assertEquals("This template contains a <>", result);
 	}
@@ -112,7 +113,7 @@ public class DefaultMailTemplateTest {
 		MailTemplate mailTemplate = new DefaultMailTemplate(template, false);
 
 		String result = mailTemplate.renderAsString(
-			Locale.ENGLISH, _mailTemplateContext);
+			LocaleUtil.ENGLISH, _mailTemplateContext);
 
 		Assert.assertEquals("This template is in en", result);
 	}
@@ -124,7 +125,7 @@ public class DefaultMailTemplateTest {
 		MailTemplate mailTemplate = new DefaultMailTemplate(template, false);
 
 		String result = mailTemplate.renderAsString(
-			Locale.ENGLISH, _mailTemplateContext);
+			LocaleUtil.ENGLISH, _mailTemplateContext);
 
 		Assert.assertEquals(template, result);
 	}
@@ -136,7 +137,7 @@ public class DefaultMailTemplateTest {
 		MailTemplate mailTemplate = new DefaultMailTemplate(template, false);
 
 		String result = mailTemplate.renderAsString(
-			Locale.ENGLISH, _mailTemplateContext);
+			LocaleUtil.ENGLISH, _mailTemplateContext);
 
 		Assert.assertEquals("This template contains a replacement", result);
 	}

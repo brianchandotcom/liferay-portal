@@ -342,7 +342,7 @@ public class CalendarDisplayContext {
 
 		_orderByCol = SearchOrderByUtil.getOrderByCol(
 			_renderRequest, CalendarPortletKeys.CALENDAR,
-			"users-resources-order-by-col", "name");
+			"resources-order-by-col", "name");
 
 		return _orderByCol;
 	}
@@ -354,7 +354,7 @@ public class CalendarDisplayContext {
 
 		_orderByType = SearchOrderByUtil.getOrderByType(
 			_renderRequest, CalendarPortletKeys.CALENDAR,
-			"users-resources-order-by-type", "asc");
+			"resources-order-by-type", "asc");
 
 		return _orderByType;
 	}

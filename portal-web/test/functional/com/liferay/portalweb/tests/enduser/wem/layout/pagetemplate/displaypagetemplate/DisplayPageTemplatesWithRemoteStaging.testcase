@@ -75,8 +75,6 @@ definition {
 
 			PageEditor.addWidget(portletName = "Asset Publisher");
 
-			AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
-
 			PageEditor.clickPublish();
 		}
 

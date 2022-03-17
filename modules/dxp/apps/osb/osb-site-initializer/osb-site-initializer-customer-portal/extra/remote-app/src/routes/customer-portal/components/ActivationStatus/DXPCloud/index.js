@@ -251,7 +251,7 @@ const ActivationStatusDXPCloud = ({
 					{...setupModalProps}
 					onClose={onCloseSetupModal}
 					project={project}
-					setVisibleModal={visibleSetup}
+					setVisibleModal={setVisibleSetup}
 					subscriptionGroupId={
 						subscriptionGroupDXPCloud.accountSubscriptionGroupId
 					}

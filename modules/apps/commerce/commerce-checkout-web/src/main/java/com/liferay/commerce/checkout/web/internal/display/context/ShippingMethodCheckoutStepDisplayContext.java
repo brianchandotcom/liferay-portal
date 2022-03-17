@@ -15,7 +15,9 @@
 package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.commerce.checkout.web.internal.util.ShippingMethodCommerceCheckoutStep;
+import com.liferay.commerce.configuration.CommerceOrderCheckoutConfiguration;
 import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.util.CommercePriceFormatter;
@@ -28,14 +30,19 @@ import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
+import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.comparator.CommerceShippingOptionLabelComparator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +62,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 		CommerceShippingMethodLocalService commerceShippingMethodLocalService,
 		CommerceShippingFixedOptionLocalService
 			commerceShippingFixedOptionLocalService,
+		ConfigurationProvider configurationProvider,
 		HttpServletRequest httpServletRequest) {
 
 		_commercePriceFormatter = commercePriceFormatter;
@@ -63,6 +71,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			commerceShippingMethodLocalService;
 		_commerceShippingFixedOptionLocalService =
 			commerceShippingFixedOptionLocalService;
+		_configurationProvider = configurationProvider;
 		_httpServletRequest = httpServletRequest;
 
 		_commerceOrder = (CommerceOrder)httpServletRequest.getAttribute(
@@ -96,6 +105,13 @@ public class ShippingMethodCheckoutStepDisplayContext {
 	public String getCommerceShippingOptionLabel(
 			CommerceShippingOption commerceShippingOption)
 		throws PortalException {
+
+		if (isHideShippingPriceZero() &&
+			CommerceBigDecimalUtil.lte(
+				commerceShippingOption.getAmount(), BigDecimal.ZERO)) {
+
+			return commerceShippingOption.getLabel();
+		}
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
@@ -184,6 +200,19 @@ public class ShippingMethodCheckoutStepDisplayContext {
 		return filteredCommerceShippingOptions;
 	}
 
+	public boolean isHideShippingPriceZero() throws PortalException {
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		CommerceOrderCheckoutConfiguration commerceOrderCheckoutConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderCheckoutConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceOrder.getGroupId(),
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		return commerceOrderCheckoutConfiguration.hideShippingPriceZero();
+	}
+
 	private CommerceContext _getCommerceContext() {
 		return (CommerceContext)_httpServletRequest.getAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT);
@@ -197,6 +226,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 		_commerceShippingFixedOptionLocalService;
 	private final CommerceShippingMethodLocalService
 		_commerceShippingMethodLocalService;
+	private final ConfigurationProvider _configurationProvider;
 	private final HttpServletRequest _httpServletRequest;
 
 }

@@ -83,13 +83,16 @@ public class AccountRoleModelResourcePermissionTest {
 	public void testViewPermissions() throws Exception {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
-
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
 			RandomTestUtil.randomString(), null, null);
 
+		AccountRole permissionAccountRole = _accountRoleLocalService.addAccountRole(
+			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
+			RandomTestUtil.randomString(), null, null);
+
 		RoleTestUtil.addResourcePermission(
-			accountRole.getRole(), AccountEntry.class.getName(),
+			permissionAccountRole.getRole(), AccountEntry.class.getName(),
 			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
 			AccountActionKeys.VIEW_ACCOUNT_ROLES);
 
@@ -100,7 +103,7 @@ public class AccountRoleModelResourcePermissionTest {
 
 		_userGroupRoleLocalService.addUserGroupRole(
 			userA.getUserId(), accountEntry.getAccountEntryGroupId(),
-			accountRole.getRoleId());
+			permissionAccountRole.getRoleId());
 
 		Assert.assertTrue(
 			_accountRoleModelResourcePermission.contains(
@@ -139,8 +142,13 @@ public class AccountRoleModelResourcePermissionTest {
 			AccountRole accountRole)
 		throws Exception {
 
+		AccountRole permissionAccountRole =
+			_accountRoleLocalService.addAccountRole(
+				TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
+				RandomTestUtil.randomString(), null, null);
+
 		_addResourcePermission(
-			accountRole.getRole(), AccountRole.class.getName(),
+			permissionAccountRole.getRole(), AccountRole.class.getName(),
 			new String[] {
 				AccountActionKeys.ASSIGN_USERS, ActionKeys.DEFINE_PERMISSIONS,
 				ActionKeys.DELETE, ActionKeys.UPDATE, ActionKeys.VIEW
@@ -153,7 +161,7 @@ public class AccountRoleModelResourcePermissionTest {
 
 		_userGroupRoleLocalService.addUserGroupRole(
 			user.getUserId(), accountEntry.getAccountEntryGroupId(),
-			accountRole.getRoleId());
+			permissionAccountRole.getRoleId());
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);

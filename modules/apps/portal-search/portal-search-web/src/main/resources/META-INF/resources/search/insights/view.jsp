@@ -72,7 +72,9 @@ SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDispl
 						small="<%= true %>"
 					/>
 
-					<textarea readonly id="<portlet:namespace />insightsRequest"><%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %></textarea>
+					<div class="codemirror-editor-wrapper">
+						<textarea readonly id="<portlet:namespace />insightsRequest"><%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %></textarea>
+					</div>
 
 					<liferay-frontend:component
 						context='<%=
@@ -99,7 +101,9 @@ SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDispl
 						small="<%= true %>"
 					/>
 
-					<textarea readonly id="<portlet:namespace />insightsResponse"><%= HtmlUtil.escape(searchInsightsDisplayContext.getResponseString()) %></textarea>
+					<div class="codemirror-editor-wrapper">
+						<textarea readonly id="<portlet:namespace />insightsResponse"><%= HtmlUtil.escape(searchInsightsDisplayContext.getResponseString()) %></textarea>
+					</div>
 
 					<liferay-frontend:component
 						context='<%=

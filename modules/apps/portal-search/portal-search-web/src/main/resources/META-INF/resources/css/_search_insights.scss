@@ -1,23 +1,27 @@
 .portlet-search-insights {
-	textarea {
-		background: #f5f5f8;
-		border-color: #cdced9;
-		font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-			'Courier New', monospace;
-		height: 300px;
+	.codemirror-editor-wrapper {
+		border: 1px solid #e7e7ed;
+		border-radius: 4px;
 		margin-top: 16px;
-		padding: 16px;
-		resize: none;
-		width: 100%;
 
-		&:focus-visible {
-			outline: none;
+		textarea {
+			border: none;
+			border-radius: 4px;
+			font-family: SFMono-Regular, Menlo, Monaco, Consolas,
+				'Liberation Mono', 'Courier New', monospace;
+			height: 300px;
+			padding: 16px;
+			resize: none;
+			width: 100%;
+
+			&:focus-visible {
+				outline: none;
+			}
 		}
-	}
 
-	.CodeMirror {
-		border: 1px solid #cdced9;
-		height: 300px;
-		margin-top: 16px;
+		.CodeMirror {
+			border-radius: 4px;
+			height: 300px;
+		}
 	}
 }

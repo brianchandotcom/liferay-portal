@@ -2000,7 +2000,7 @@ definition {
 		Select(
 			key_criterion = "options",
 			locator1 = "Segmentation#CRITERION_INPUT_FORM_CONTROL",
-			value1 = "FALSE");
+			value1 = "False");
 
 		Button.clickSave();
 

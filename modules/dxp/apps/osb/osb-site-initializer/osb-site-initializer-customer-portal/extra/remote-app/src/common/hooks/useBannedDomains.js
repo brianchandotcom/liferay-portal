@@ -14,30 +14,49 @@ import {useEffect, useState} from 'react';
 import {getBannedEmailDomains} from '../services/liferay/graphql/queries';
 import useDebounce from './useDebounce';
 
-export default function useBannedDomains(email) {
-	const debouncedEmail = useDebounce(email, 500);
-	const [bannedDomains, setBannedDomains] = useState(debouncedEmail);
+export default function useBannedDomains(value) {
+	const debouncedValue = useDebounce(value, 500);
+	const [bannedDomains, setBannedDomains] = useState([]);
 
 	const [fetchBannedDomain, {data}] = useLazyQuery(getBannedEmailDomains);
 	const bannedDomainsItems = data?.c?.bannedEmailDomains?.items;
 
 	useEffect(() => {
-		const [, emailDomain] = debouncedEmail?.split('@');
+		let filterDomains = '';
+		const splittedDomains = debouncedValue.split(',');
 
-		if (emailDomain) {
-			fetchBannedDomain({
-				variables: {
-					filter: `domain eq '${emailDomain}'`,
+		if (splittedDomains.length > 1) {
+			filterDomains = splittedDomains.reduce(
+				(accumulatorFilter, domain, index) => {
+					return `${accumulatorFilter}${
+						index > 0 ? ' or ' : ''
+					}domain eq '${domain.replace('@', '').trim()}'`;
 				},
-			});
+				''
+			);
+		}
+		else {
+			const [, emailDomain] = debouncedValue?.split('@');
 
-			if (bannedDomainsItems?.length) {
-				setBannedDomains(bannedDomainsItems[0].domain);
+			if (emailDomain) {
+				filterDomains = `domain eq '${emailDomain}'`;
 			}
 		}
 
+		if (filterDomains) {
+			fetchBannedDomain({
+				variables: {
+					filter: filterDomains,
+				},
+			});
+		}
+		else {
+			setBannedDomains([]);
+		}
+
+		setBannedDomains(bannedDomainsItems?.map((item) => item.domain) || []);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [bannedDomainsItems, debouncedEmail]);
+	}, [bannedDomainsItems, debouncedValue, fetchBannedDomain]);
 
 	return bannedDomains;
 }

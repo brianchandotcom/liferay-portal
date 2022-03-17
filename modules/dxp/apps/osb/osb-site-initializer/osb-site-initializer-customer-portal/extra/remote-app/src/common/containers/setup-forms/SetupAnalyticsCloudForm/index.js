@@ -32,6 +32,8 @@ import Layout from '../Layout';
 
 import IncidentReportInput from './IncidentReportInput';
 
+const MAX_LENGTH = 255;
+
 const SetupAnalyticsCloudPage = ({
 	errors,
 	handlePage,
@@ -44,15 +46,17 @@ const SetupAnalyticsCloudPage = ({
 }) => {
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 
-	const debouncedOwnerEmail = useBannedDomains(
+	const bannedDomainsOwnerEmail = useBannedDomains(
 		values?.activations?.ownerEmailAddress,
 		500
 	);
 
-	const debouncedAllowedDomains = useBannedDomains(
+	const bannedDomainsAllowedDomains = useBannedDomains(
 		values?.activations?.allowedEmailDomains,
 		500
 	);
+
+	useEffect(() => {}, [values?.activations?.allowedEmailDomains]);
 
 	const {data} = useQuery(getAnalyticsCloudPageInfo, {
 		variables: {
@@ -85,9 +89,7 @@ const SetupAnalyticsCloudPage = ({
 				);
 			}
 		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [analyticsDataCenterLocations, hasDisasterRecovery]);
+	}, [analyticsDataCenterLocations, hasDisasterRecovery, setFieldValue]);
 
 	useEffect(() => {
 		const hasTouched = !Object.keys(touched).length;
@@ -96,7 +98,7 @@ const SetupAnalyticsCloudPage = ({
 		setBaseButtonDisabled(hasTouched || hasError);
 	}, [touched, errors]);
 
-	const sendEmail = async () => {
+	const handleSubmit = async () => {
 		const analyticsCloud = values?.activations;
 
 		const {data} = await client.mutate({
@@ -116,6 +118,7 @@ const SetupAnalyticsCloudPage = ({
 			const analyticsCloudWorkspaceId =
 				data?.c?.createAnalyticsCloudWorkspace
 					?.analyticsCloudWorkspaceId;
+
 			await Promise.all(
 				analyticsCloud?.incidentReportContact.map(({email}) => {
 					return client.mutate({
@@ -131,6 +134,7 @@ const SetupAnalyticsCloudPage = ({
 				})
 			);
 		}
+
 		handlePage();
 	};
 
@@ -142,7 +146,7 @@ const SetupAnalyticsCloudPage = ({
 					<Button
 						borderless
 						className="text-neutral-10"
-						onClick={() => onClose()}
+						onClick={onClose}
 					>
 						{leftButton}
 					</Button>
@@ -151,7 +155,7 @@ const SetupAnalyticsCloudPage = ({
 					<Button
 						disabled={baseButtonDisabled}
 						displayType="primary"
-						onClick={sendEmail}
+						onClick={handleSubmit}
 					>
 						Submit
 					</Button>
@@ -177,7 +181,10 @@ const SetupAnalyticsCloudPage = ({
 							type="email"
 							validations={[
 								(value) =>
-									isValidEmail(value, debouncedOwnerEmail),
+									isValidEmail(
+										value,
+										bannedDomainsOwnerEmail
+									),
 							]}
 						/>
 
@@ -190,7 +197,7 @@ const SetupAnalyticsCloudPage = ({
 							required
 							type="text"
 							validations={[
-								(value) => maxLength(value, 255),
+								(value) => maxLength(value, MAX_LENGTH),
 								(value) => isLowercaseAndNumbers(value),
 							]}
 						/>
@@ -231,12 +238,11 @@ const SetupAnalyticsCloudPage = ({
 							label="Allowed Email Domains"
 							name="activations.allowedEmailDomains"
 							placeholder="@mycompany.com"
-							type="email"
+							type="text"
 							validations={[
-								(value) =>
+								() =>
 									isValidEmailDomain(
-										value,
-										debouncedAllowedDomains
+										bannedDomainsAllowedDomains
 									),
 							]}
 						/>
@@ -267,7 +273,6 @@ const SetupAnalyticsCloudPage = ({
 
 			<Button
 				className="btn-outline-primary ml-3 my-2 rounded-xs"
-				disabled={baseButtonDisabled}
 				onClick={() => setBaseButtonDisabled(true)}
 				prependIcon="plus"
 				small

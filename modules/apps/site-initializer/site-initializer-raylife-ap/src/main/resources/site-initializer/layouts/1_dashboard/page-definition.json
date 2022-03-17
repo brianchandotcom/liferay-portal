@@ -39,10 +39,12 @@
 									{
 										"definition": {
 											"fragmentStyle": {
+												"borderWidth": "0",
 												"paddingBottom": "5",
-												"paddingLeft": "5",
-												"paddingRight": "5",
-												"paddingTop": "5"
+												"paddingLeft": "4",
+												"paddingRight": "4",
+												"paddingTop": "5",
+												"textAlign": ""
 											},
 											"layout": {
 												"borderWidth": 0,
@@ -52,15 +54,18 @@
 												"marginRight": 0,
 												"marginTop": 0,
 												"paddingBottom": 4,
-												"paddingLeft": 4,
-												"paddingRight": 4,
+												"paddingLeft": 2,
+												"paddingRight": 2,
 												"paddingTop": 4,
-												"widthType": "Fluid"
+												"widthType": "Fixed"
 											}
 										},
 										"pageElements": [
 											{
 												"definition": {
+													"fragmentStyle": {
+														"borderWidth": "0"
+													},
 													"layout": {
 														"borderWidth": 0,
 														"htmlTag": "Div",
@@ -79,7 +84,8 @@
 													{
 														"definition": {
 															"fragmentStyle": {
-																"borderWidth": "0"
+																"borderWidth": "0",
+																"textAlign": ""
 															},
 															"gutters": true,
 															"modulesPerRow": 2,
@@ -177,6 +183,9 @@
 																				"pageElements": [
 																					{
 																						"definition": {
+																							"fragmentStyle": {
+																								"borderWidth": "0"
+																							},
 																							"layout": {
 																								"borderWidth": 0,
 																								"htmlTag": "Div",
@@ -198,7 +207,6 @@
 																										"key": "section"
 																									},
 																									"fragmentConfig": {
-																										"height": "464px",
 																										"sectionId": "primary"
 																									},
 																									"fragmentFields": [
@@ -261,13 +269,13 @@
 																								"key": "section"
 																							},
 																							"fragmentConfig": {
-																								"height": "",
 																								"sectionId": "primary"
 																							},
 																							"fragmentFields": [
 																							],
 																							"fragmentStyle": {
-																								"marginTop": "4"
+																								"marginTop": "4",
+																								"textAlign": ""
 																							}
 																						},
 																						"pageElements": [
@@ -327,7 +335,8 @@
 																	{
 																		"definition": {
 																			"fragmentStyle": {
-																				"backgroundColor": ""
+																				"backgroundColor": "",
+																				"textAlign": ""
 																			},
 																			"gutters": true,
 																			"modulesPerRow": 2,
@@ -381,7 +390,6 @@
 																								"key": "section"
 																							},
 																							"fragmentConfig": {
-																								"height": "",
 																								"sectionId": "primary"
 																							},
 																							"fragmentFields": [
@@ -441,7 +449,6 @@
 																								"key": "section"
 																							},
 																							"fragmentConfig": {
-																								"height": "300px",
 																								"sectionId": "primary"
 																							},
 																							"fragmentFields": [
@@ -479,8 +486,10 @@
 																	{
 																		"definition": {
 																			"fragmentStyle": {
+																				"borderWidth": "0",
 																				"marginTop": "4",
-																				"shadow": "boxShadow"
+																				"shadow": "boxShadow",
+																				"textAlign": ""
 																			},
 																			"layout": {
 																				"borderWidth": 0,
@@ -503,7 +512,6 @@
 																						"key": "section"
 																					},
 																					"fragmentConfig": {
-																						"height": "",
 																						"sectionId": "primary"
 																					},
 																					"fragmentFields": [
@@ -547,7 +555,9 @@
 											{
 												"definition": {
 													"fragmentStyle": {
-														"marginTop": "4"
+														"borderWidth": "0",
+														"marginTop": "4",
+														"textAlign": ""
 													},
 													"layout": {
 														"borderWidth": 0,
@@ -618,7 +628,6 @@
 																				"key": "section"
 																			},
 																			"fragmentConfig": {
-																				"height": "",
 																				"sectionId": "primary"
 																			},
 																			"fragmentFields": [
@@ -678,7 +687,6 @@
 																				"key": "section"
 																			},
 																			"fragmentConfig": {
-																				"height": "",
 																				"sectionId": "primary"
 																			},
 																			"fragmentFields": [

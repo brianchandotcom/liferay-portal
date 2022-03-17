@@ -3,11 +3,6 @@ import com.liferay.gradle.util.StringUtil
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import com.liferay.gradle.util.OSDetector
-import com.liferay.gradle.util.StringUtil
-
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 
 import java.util.Date
 import java.util.TimeZone

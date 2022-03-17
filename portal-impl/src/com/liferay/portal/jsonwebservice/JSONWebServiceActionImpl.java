@@ -19,7 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNaming;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNamingUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -78,12 +78,10 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 	public JSONWebServiceActionImpl(
 		JSONWebServiceActionConfig jsonWebServiceActionConfig,
-		JSONWebServiceActionParameters jsonWebServiceActionParameters,
-		JSONWebServiceNaming jsonWebServiceNaming) {
+		JSONWebServiceActionParameters jsonWebServiceActionParameters) {
 
 		_jsonWebServiceActionConfig = jsonWebServiceActionConfig;
 		_jsonWebServiceActionParameters = jsonWebServiceActionParameters;
-		_jsonWebServiceNaming = jsonWebServiceNaming;
 	}
 
 	@Override
@@ -156,7 +154,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 
 		if (parameterType.isPrimitive() ||
 			parameterTypeName.equals(
-				_jsonWebServiceNaming.convertModelClassToImplClassName(
+				JSONWebServiceNamingUtil.convertModelClassToImplClassName(
 					targetClass)) ||
 			ArrayUtil.contains(
 				_JSONWS_WEB_SERVICE_PARAMETER_TYPE_WHITELIST_CLASS_NAMES,
@@ -228,7 +226,7 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 						ClassLoader classLoader = clazz.getClassLoader();
 
 						String modelClassName =
-							_jsonWebServiceNaming.
+							JSONWebServiceNamingUtil.
 								convertModelClassToImplClassName(targetType);
 
 						try {
@@ -606,7 +604,6 @@ public class JSONWebServiceActionImpl implements JSONWebServiceAction {
 	private final JSONWebServiceActionConfig _jsonWebServiceActionConfig;
 	private final JSONWebServiceActionParameters
 		_jsonWebServiceActionParameters;
-	private final JSONWebServiceNaming _jsonWebServiceNaming;
 
 	private static class DateTypeConverter implements TypeConverter<Date> {
 

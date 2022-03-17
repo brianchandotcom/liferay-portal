@@ -36,23 +36,23 @@ import java.util.Set;
 /**
  * @author Igor Spasic
  */
-public class JSONWebServiceNaming {
+public class JSONWebServiceNamingUtil {
 
-	public String convertMethodToHttpMethod(Method method) {
+	public static String convertMethodToHttpMethod(Method method) {
 		String methodName = method.getName();
 
-		if (prefixes.contains(getMethodNamePrefix(methodName))) {
+		if (_prefixes.contains(_getMethodNamePrefix(methodName))) {
 			return HttpMethods.GET;
 		}
 
 		return HttpMethods.POST;
 	}
 
-	public String convertMethodToPath(Method method) {
+	public static String convertMethodToPath(Method method) {
 		return CamelCaseUtil.fromCamelCase(method.getName());
 	}
 
-	public String convertModelClassToImplClassName(Class<?> clazz) {
+	public static String convertModelClassToImplClassName(Class<?> clazz) {
 		ImplementationClassName implementationClassName = clazz.getAnnotation(
 			ImplementationClassName.class);
 
@@ -69,13 +69,13 @@ public class JSONWebServiceNaming {
 		return className;
 	}
 
-	public String convertServiceClassToPath(Class<?> clazz) {
+	public static String convertServiceClassToPath(Class<?> clazz) {
 		String className = convertServiceClassToSimpleName(clazz);
 
 		return StringUtil.toLowerCase(className);
 	}
 
-	public String convertServiceClassToSimpleName(Class<?> clazz) {
+	public static String convertServiceClassToSimpleName(Class<?> clazz) {
 		String className = clazz.getSimpleName();
 
 		if (className.endsWith("ServiceImpl")) {
@@ -88,14 +88,14 @@ public class JSONWebServiceNaming {
 		return className;
 	}
 
-	public boolean isIncludedMethod(Method method) {
-		if ((excludedMethodNames != null) &&
-			excludedMethodNames.contains(method.getName())) {
+	public static boolean isIncludedMethod(Method method) {
+		if ((_excludedMethodNames != null) &&
+			_excludedMethodNames.contains(method.getName())) {
 
 			return false;
 		}
 
-		if (excludedTypesNames == null) {
+		if (_EXCLUDED_TYPES_NAMES == null) {
 			return true;
 		}
 
@@ -107,7 +107,7 @@ public class JSONWebServiceNaming {
 
 		String returnTypeName = returnType.getName();
 
-		for (String excludedTypesName : excludedTypesNames) {
+		for (String excludedTypesName : _EXCLUDED_TYPES_NAMES) {
 			if (excludedTypesName.startsWith(returnTypeName)) {
 				return false;
 			}
@@ -128,7 +128,7 @@ public class JSONWebServiceNaming {
 
 			String parameterTypeName = parameterType.getName();
 
-			for (String excludedTypesName : excludedTypesNames) {
+			for (String excludedTypesName : _EXCLUDED_TYPES_NAMES) {
 				if (parameterTypeName.startsWith(excludedTypesName)) {
 					return false;
 				}
@@ -154,14 +154,14 @@ public class JSONWebServiceNaming {
 		return true;
 	}
 
-	public boolean isIncludedPath(String contextPath, String path) {
+	public static boolean isIncludedPath(String contextPath, String path) {
 		String portalContextPath = PortalUtil.getPathContext();
 
 		if (!contextPath.equals(portalContextPath)) {
 			path = contextPath + StringPool.PERIOD + path.substring(1);
 		}
 
-		for (String excludedPath : excludedPaths) {
+		for (String excludedPath : _EXCLUDED_PATHS) {
 			if (StringUtil.wildcardMatches(
 					path, excludedPath, '?', '*', '\\', false)) {
 
@@ -169,11 +169,11 @@ public class JSONWebServiceNaming {
 			}
 		}
 
-		if (includedPaths.length == 0) {
+		if (_INCLUDED_PATHS.length == 0) {
 			return true;
 		}
 
-		for (String includedPath : includedPaths) {
+		for (String includedPath : _INCLUDED_PATHS) {
 			if (StringUtil.wildcardMatches(
 					path, includedPath, '?', '*', '\\', false)) {
 
@@ -184,15 +184,15 @@ public class JSONWebServiceNaming {
 		return false;
 	}
 
-	public boolean isValidHttpMethod(String httpMethod) {
-		if (invalidHttpMethods.contains(httpMethod)) {
+	public static boolean isValidHttpMethod(String httpMethod) {
+		if (_invalidHttpMethods.contains(httpMethod)) {
 			return false;
 		}
 
 		return true;
 	}
 
-	protected String getMethodNamePrefix(String methodName) {
+	private static String _getMethodNamePrefix(String methodName) {
 		int i = 0;
 
 		while (i < methodName.length()) {
@@ -206,17 +206,21 @@ public class JSONWebServiceNaming {
 		return methodName.substring(0, i);
 	}
 
-	protected Set<String> excludedMethodNames = SetUtil.fromArray(
-		PropsUtil.getArray(PropsKeys.JSON_SERVICE_INVALID_METHOD_NAMES));
-	protected String[] excludedPaths = PropsUtil.getArray(
+	private static final String[] _EXCLUDED_PATHS = PropsUtil.getArray(
 		PropsKeys.JSONWS_WEB_SERVICE_PATHS_EXCLUDES);
-	protected String[] excludedTypesNames = {
+
+	private static final String[] _EXCLUDED_TYPES_NAMES = {
 		InputStream.class.getName(), OutputStream.class.getName(), "javax."
 	};
-	protected String[] includedPaths = PropsUtil.getArray(
+
+	private static final String[] _INCLUDED_PATHS = PropsUtil.getArray(
 		PropsKeys.JSONWS_WEB_SERVICE_PATHS_INCLUDES);
-	protected Set<String> invalidHttpMethods = SetUtil.fromArray(
+
+	private static final Set<String> _excludedMethodNames = SetUtil.fromArray(
+		PropsUtil.getArray(PropsKeys.JSON_SERVICE_INVALID_METHOD_NAMES));
+	private static final Set<String> _invalidHttpMethods = SetUtil.fromArray(
 		PropsUtil.getArray(PropsKeys.JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS));
-	protected Set<String> prefixes = SetUtil.fromArray("get", "has", "is");
+	private static final Set<String> _prefixes = SetUtil.fromArray(
+		"get", "has", "is");
 
 }

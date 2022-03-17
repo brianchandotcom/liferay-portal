@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMappingResolver;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNaming;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNamingUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceRegistrator;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceScannerStrategy;
 import com.liferay.portal.kernel.log.Log;
@@ -42,33 +42,18 @@ public class DefaultJSONWebServiceRegistrator
 	implements JSONWebServiceRegistrator {
 
 	public DefaultJSONWebServiceRegistrator() {
-		_jsonWebServiceNaming =
-			JSONWebServiceActionsManagerUtil.getJSONWebServiceNaming();
-
-		_jsonWebServiceMappingResolver = new JSONWebServiceMappingResolver(
-			_jsonWebServiceNaming);
+		_jsonWebServiceMappingResolver = new JSONWebServiceMappingResolver();
 
 		_jsonWebServiceScannerStrategy =
 			new SpringJSONWebServiceScannerStrategy();
 	}
 
 	public DefaultJSONWebServiceRegistrator(
-		JSONWebServiceNaming jsonWebServiceNaming,
 		JSONWebServiceScannerStrategy jsonWebServiceScannerStrategy) {
 
-		_jsonWebServiceNaming = jsonWebServiceNaming;
 		_jsonWebServiceScannerStrategy = jsonWebServiceScannerStrategy;
 
-		_jsonWebServiceMappingResolver = new JSONWebServiceMappingResolver(
-			_jsonWebServiceNaming);
-	}
-
-	public DefaultJSONWebServiceRegistrator(
-		JSONWebServiceScannerStrategy jsonWebServiceScannerStrategy) {
-
-		this(
-			JSONWebServiceActionsManagerUtil.getJSONWebServiceNaming(),
-			jsonWebServiceScannerStrategy);
+		_jsonWebServiceMappingResolver = new JSONWebServiceMappingResolver();
 	}
 
 	public void processAllBeans(
@@ -228,7 +213,7 @@ public class DefaultJSONWebServiceRegistrator
 			String httpMethod =
 				_jsonWebServiceMappingResolver.resolveHttpMethod(method);
 
-			if (!_jsonWebServiceNaming.isValidHttpMethod(httpMethod)) {
+			if (!JSONWebServiceNamingUtil.isValidHttpMethod(httpMethod)) {
 				continue;
 			}
 
@@ -237,11 +222,11 @@ public class DefaultJSONWebServiceRegistrator
 			String path = _jsonWebServiceMappingResolver.resolvePath(
 				serviceBeanClass, method);
 
-			if (!_jsonWebServiceNaming.isIncludedPath(contextPath, path)) {
+			if (!JSONWebServiceNamingUtil.isIncludedPath(contextPath, path)) {
 				continue;
 			}
 
-			if (_jsonWebServiceNaming.isIncludedMethod(method)) {
+			if (JSONWebServiceNamingUtil.isIncludedMethod(method)) {
 				JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
 					contextName, contextPath, serviceBean, serviceBeanClass,
 					method, path, httpMethod);
@@ -253,7 +238,6 @@ public class DefaultJSONWebServiceRegistrator
 		DefaultJSONWebServiceRegistrator.class);
 
 	private final JSONWebServiceMappingResolver _jsonWebServiceMappingResolver;
-	private final JSONWebServiceNaming _jsonWebServiceNaming;
 	private final JSONWebServiceScannerStrategy _jsonWebServiceScannerStrategy;
 
 }

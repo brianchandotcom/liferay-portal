@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMappingResolver;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNaming;
 import com.liferay.portal.kernel.jsonwebservice.NoSuchJSONWebServiceException;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.util.MethodParametersResolverUtil;
@@ -97,7 +96,7 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 		Object action, Class<?> actionClass, String servletContextName) {
 
 		JSONWebServiceMappingResolver jsonWebServiceMappingResolver =
-			new JSONWebServiceMappingResolver(new JSONWebServiceNaming());
+			new JSONWebServiceMappingResolver();
 
 		Method[] methods = actionClass.getMethods();
 

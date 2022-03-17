@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceNaming;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceRegistrator;
 import com.liferay.portal.kernel.jsonwebservice.NoSuchJSONWebServiceException;
 import com.liferay.portal.kernel.log.Log;
@@ -119,8 +118,7 @@ public class JSONWebServiceActionsManagerImpl
 				jsonWebServiceActionParameters);
 
 		return new JSONWebServiceActionImpl(
-			jsonWebServiceActionConfig, jsonWebServiceActionParameters,
-			_jsonWebServiceNaming);
+			jsonWebServiceActionConfig, jsonWebServiceActionParameters);
 	}
 
 	@Override
@@ -141,8 +139,7 @@ public class JSONWebServiceActionsManagerImpl
 				jsonWebServiceActionParameters);
 
 		return new JSONWebServiceActionImpl(
-			jsonWebServiceActionConfig, jsonWebServiceActionParameters,
-			_jsonWebServiceNaming);
+			jsonWebServiceActionConfig, jsonWebServiceActionParameters);
 	}
 
 	@Override
@@ -177,11 +174,6 @@ public class JSONWebServiceActionsManagerImpl
 		}
 
 		return jsonWebServiceActionConfigs.size();
-	}
-
-	@Override
-	public JSONWebServiceNaming getJSONWebServiceNaming() {
-		return _jsonWebServiceNaming;
 	}
 
 	@Override
@@ -667,8 +659,6 @@ public class JSONWebServiceActionsManagerImpl
 	private final Map<String, List<JSONWebServiceActionConfig>>
 		_contextNameIndexedJSONWebServiceActionConfigs =
 			new ConcurrentHashMap<>();
-	private final JSONWebServiceNaming _jsonWebServiceNaming =
-		new JSONWebServiceNaming();
 	private final Map<String, List<JSONWebServiceActionConfig>>
 		_pathIndexedJSONWebServiceActionConfigs = new ConcurrentHashMap<>();
 	private final ConcurrentMap<String, JSONWebServiceActionConfig>

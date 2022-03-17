@@ -24,12 +24,6 @@ import java.lang.reflect.Method;
  */
 public class JSONWebServiceMappingResolver {
 
-	public JSONWebServiceMappingResolver(
-		JSONWebServiceNaming jsonWebServiceNaming) {
-
-		_jsonWebServiceNaming = jsonWebServiceNaming;
-	}
-
 	public String resolveHttpMethod(Method method) {
 		JSONWebService annotationJSONWebService = method.getAnnotation(
 			JSONWebService.class);
@@ -44,7 +38,7 @@ public class JSONWebServiceMappingResolver {
 			return httpMethod;
 		}
 
-		return _jsonWebServiceNaming.convertMethodToHttpMethod(method);
+		return JSONWebServiceNamingUtil.convertMethodToHttpMethod(method);
 	}
 
 	public String resolvePath(Class<?> clazz, Method method) {
@@ -58,7 +52,7 @@ public class JSONWebServiceMappingResolver {
 		}
 
 		if ((path == null) || (path.length() == 0)) {
-			path = _jsonWebServiceNaming.convertMethodToPath(method);
+			path = JSONWebServiceNamingUtil.convertMethodToPath(method);
 		}
 
 		if (path.startsWith(StringPool.SLASH)) {
@@ -76,7 +70,7 @@ public class JSONWebServiceMappingResolver {
 		}
 
 		if ((pathFromClass == null) || (pathFromClass.length() == 0)) {
-			pathFromClass = _jsonWebServiceNaming.convertServiceClassToPath(
+			pathFromClass = JSONWebServiceNamingUtil.convertServiceClassToPath(
 				clazz);
 		}
 
@@ -86,7 +80,5 @@ public class JSONWebServiceMappingResolver {
 
 		return pathFromClass + path;
 	}
-
-	private final JSONWebServiceNaming _jsonWebServiceNaming;
 
 }

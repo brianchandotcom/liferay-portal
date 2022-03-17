@@ -168,7 +168,7 @@ public class PortalHotfixReleasePortalTopLevelBuild
 				String servicePackVersion = patcherPortalVersion62Matcher.group(
 					"servicePackVersion");
 
-				if (JenkinsResultsParserUtil.isNullOrEmpty(
+				if (!JenkinsResultsParserUtil.isNullOrEmpty(
 						servicePackVersion)) {
 
 					sb.append(".");

@@ -618,6 +618,70 @@ definition {
 		}
 	}
 
+	@description = "Verify users receive a notification when an export is triggered."
+	@priority = "3"
+	test CanViewExportNotifications {
+		property portal.acceptance = "true";
+
+		task ("Given a failed export") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoExport();
+
+			ImportExport.selectEntity(
+				entityType = "Account",
+				headlessEndpoint = "/headless-admin-user");
+
+			Uncheck.uncheckNotVisible(
+				key_checkboxOption = "Attribute Code",
+				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+
+			Button.click(button = "Export");
+
+			WaitForElementPresent(locator1 = "Message#ERROR_FORM_FIELD_REQUIRED");
+		}
+
+		task ("And given a succesful export") {
+			Button.clickCancel();
+
+			ImportExport.mapExport(exportFields = "name,type,description,externalReferenceCode");
+
+			Button.click(button = "Export");
+
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+		}
+
+		task ("When the exports are finished") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.assertExecutionEntry(
+				entityType = "Account",
+				executionAction = "Export",
+				executionStatus = "Failed");
+
+			ImportExport.assertExecutionEntry(
+				entityType = "Account",
+				executionAction = "Export",
+				executionStatus = "Completed");
+		}
+
+		task ("Then the the user should receive a notification for the failed and successful exports") {
+			Notifications.viewBadgeCount(notificationCount = "2");
+
+			Notifications.gotoNotifications();
+
+			ImportExport.assertExecutionNotification(
+				entityType = "Account",
+				executionAction = "Export",
+				executionStatus = "Completed");
+
+			ImportExport.assertExecutionNotification(
+				entityType = "Account",
+				executionAction = "Export",
+				executionStatus = "Failed");
+		}
+	}
+
 	@description = "Verify users receive a notification when an import is triggered."
 	@priority = "3"
 	test CanViewImportNotifications {

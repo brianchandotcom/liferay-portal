@@ -114,7 +114,7 @@ definition {
 	}
 
 	macro mapExport {
-		Click.clickAtNotVisible(
+		Uncheck.uncheckNotVisible(
 			key_checkboxOption = "Attribute Code",
 			locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 

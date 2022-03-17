@@ -1,3 +1,3 @@
-Bundle-Name: Liferay Petra Mail Template
-Bundle-SymbolicName: com.liferay.petra.mail.template
-Bundle-Version: 4.0.7
+Bundle-Name: Liferay Mail Template Implementation
+Bundle-SymbolicName: com.liferay.mail.template.impl
+Bundle-Version: 1.0.0

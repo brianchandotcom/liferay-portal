@@ -23,8 +23,6 @@ import org.junit.Test;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
 
-import org.powermock.api.mockito.PowerMockito;
-
 /**
  * @author Iván Zaera
  */
@@ -32,7 +30,7 @@ public class PortletPreferencesSettingsTest {
 
 	@Before
 	public void setUp() {
-		_portletPreferences = PowerMockito.mock(PortletPreferences.class);
+		_portletPreferences = Mockito.mock(PortletPreferences.class);
 
 		Mockito.when(
 			_portletPreferences.getValue(

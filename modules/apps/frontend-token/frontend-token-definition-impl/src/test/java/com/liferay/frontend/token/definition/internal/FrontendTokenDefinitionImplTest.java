@@ -22,6 +22,7 @@ import com.liferay.frontend.token.definition.FrontendTokenSet;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -257,9 +258,12 @@ public class FrontendTokenDefinitionImplTest {
 				jsonFactory.createJSONObject(_FRONTEND_TOKEN_DEFINITION_JSON),
 				jsonFactory, resourceBundleLoader, "theme_id");
 
+		JSONObject actualJSONObject = frontendTokenDefinitionImpl.getJSONObject(
+			LocaleUtil.ENGLISH);
+
 		Assert.assertEquals(
-			_TRANSLATED_FRONTEND_TOKEN_DEFINITION_JSON,
-			frontendTokenDefinitionImpl.getJSON(LocaleUtil.ENGLISH));
+			_TRANSLATED_FRONTEND_TOKEN_DEFINITION_JSON_OBJECT.toMap(),
+			actualJSONObject.toMap());
 	}
 
 	private void _assertCollectionEquals(
@@ -270,7 +274,8 @@ public class FrontendTokenDefinitionImplTest {
 
 	private static final String _FRONTEND_TOKEN_DEFINITION_JSON;
 
-	private static final String _TRANSLATED_FRONTEND_TOKEN_DEFINITION_JSON;
+	private static final JSONObject
+		_TRANSLATED_FRONTEND_TOKEN_DEFINITION_JSON_OBJECT;
 
 	static {
 		URL url = FrontendTokenDefinitionRegistryImplTest.class.getResource(
@@ -289,9 +294,8 @@ public class FrontendTokenDefinitionImplTest {
 		try (InputStream inputStream = url.openStream()) {
 			JSONFactory jsonFactory = new JSONFactoryImpl();
 
-			_TRANSLATED_FRONTEND_TOKEN_DEFINITION_JSON =
-				jsonFactory.looseSerializeDeep(
-					jsonFactory.createJSONObject(StringUtil.read(inputStream)));
+			_TRANSLATED_FRONTEND_TOKEN_DEFINITION_JSON_OBJECT =
+				jsonFactory.createJSONObject(StringUtil.read(inputStream));
 		}
 		catch (IOException | JSONException exception) {
 			throw new RuntimeException(exception);

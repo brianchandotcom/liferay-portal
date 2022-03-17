@@ -18,6 +18,7 @@ import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -87,10 +88,14 @@ public class FrontendTokenDefinitionRegistryImplTest {
 
 			JSONFactory jsonFactory = new JSONFactoryImpl();
 
+			JSONObject expectJSONObject = jsonFactory.createJSONObject(
+				StringUtil.read(inputStream));
+
+			JSONObject actualJSONObject = frontendTokenDefinition.getJSONObject(
+				LocaleUtil.ENGLISH);
+
 			Assert.assertEquals(
-				jsonFactory.looseSerializeDeep(
-					jsonFactory.createJSONObject(StringUtil.read(inputStream))),
-				frontendTokenDefinition.getJSON(LocaleUtil.ENGLISH));
+				expectJSONObject.toMap(), actualJSONObject.toMap());
 		}
 	}
 

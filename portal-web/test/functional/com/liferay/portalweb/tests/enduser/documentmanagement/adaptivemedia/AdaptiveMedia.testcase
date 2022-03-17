@@ -343,7 +343,7 @@ definition {
 	test CanRenderImageAfterChangingScreenResolution {
 		property portal.acceptance = "false";
 
-		// TODO LPS-78626 CanRenderImageAfterChangingScreenResolution pending implementation
+		// TODO LPS-148675 CanRenderImageAfterChangingScreenResolution pending implementation
 
 	}
 

@@ -43,7 +43,7 @@ definition {
 	test CanDeleteAllDocumentsOnDifferentPagesAtOnce {
 		property portal.acceptance = "false";
 
-		// TODO LPS-91199 CanDeleteAllDocumentsOnDifferentPagesAtOnce pending implementation
+		// TODO LPS-148508 CanDeleteAllDocumentsOnDifferentPagesAtOnce pending implementation
 
 	}
 
@@ -53,7 +53,7 @@ definition {
 	test CanResetCountsInManagementToolbar {
 		property portal.acceptance = "false";
 
-		// TODO LPS-91861 CanResetCountsInManagementToolbar pending implementation
+		// TODO LPS-148592 CanResetCountsInManagementToolbar pending implementation
 
 	}
 

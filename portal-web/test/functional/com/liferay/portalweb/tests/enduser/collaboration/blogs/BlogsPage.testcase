@@ -615,7 +615,7 @@ definition {
 	test CanViewEntryUsingDisplayPageTemplate {
 		property portal.acceptance = "false";
 
-		// TODO LPS-94990 CanViewEntryUsingDisplayPageTemplate pending implementation
+		// TODO LPS-148504 CanViewEntryUsingDisplayPageTemplate pending implementation
 
 	}
 

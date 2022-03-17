@@ -32,7 +32,7 @@ definition {
 	test CanDeleteNotificationAfterDeletingPendingFile {
 		property portal.acceptance = "false";
 
-		// TODO LPS-84593 CanDeleteNotificationAfterDeletingPendingFile pending implementation
+		// TODO LPS-148586 CanDeleteNotificationAfterDeletingPendingFile pending implementation
 
 	}
 

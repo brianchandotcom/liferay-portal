@@ -47,6 +47,44 @@ definition {
 		}
 	}
 
+	@description = "LPS-147849. Assert the filter and order buttons are independent dropdowns"
+	@priority = "5"
+	test FilterAndOrderButtonsRenderIndependent {
+		task ("Navigate to Management Toolbars tab") {
+			Navigator.gotoNavTab(navTab = "Management Toolbars");
+		}
+
+		task ("Assert 'filter' and 'order' button is not rendered together") {
+			AssertElementNotPresent(locator1 = "ManagementBar#FILTER_AND_ORDER");
+		}
+
+		task ("Assert 'filter' button is an independent dropdown") {
+			AssertClick(
+				key_filter = "Show Filter Options",
+				locator1 = "ManagementBar#FILTER_OR_ORDER",
+				value1 = "Filter");
+
+			AssertElementPresent(
+				key_item = "Filter",
+				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
+		}
+
+		task ("Assert 'order' button is an independent dropdown") {
+			AssertClick(
+				key_filter = "Show Order Options",
+				locator1 = "ManagementBar#FILTER_OR_ORDER",
+				value1 = "Order");
+
+			AssertElementPresent(
+				key_item = "Order",
+				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
+
+			AssertElementPresent(
+				key_item = "Ascending",
+				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
+		}
+	}
+
 	@description = "LPS-147404. Assert the more actions button is displayed"
 	@priority = "5"
 	test MoreActionsButtonCanRender {
@@ -84,16 +122,16 @@ definition {
 
 		task ("Assert quick actions are displayed") {
 			AssertElementPresent(
-				key_action = "Edit",
-				locator1 = "ManagementBar#QUICK_ACTION_DROPDOWN_ITEM");
+				key_item = "Edit",
+				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
 
 			AssertElementPresent(
-				key_action = "Download",
-				locator1 = "ManagementBar#QUICK_ACTION_DROPDOWN_ITEM");
+				key_item = "Download",
+				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
 
 			AssertElementPresent(
-				key_action = "Delete",
-				locator1 = "ManagementBar#QUICK_ACTION_DROPDOWN_ITEM");
+				key_item = "Delete",
+				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
 		}
 	}
 

@@ -219,7 +219,8 @@ public class LayoutAnalyticsReportsInfoItemTest {
 		try {
 			LocaleThreadLocal.setSiteDefaultLocale(LocaleUtil.SPAIN);
 
-			Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+			Layout layout = LayoutTestUtil.addTypeContentLayout(
+				_group, "título", "título");
 
 			Assert.assertEquals(
 				layout.getTitle(LocaleUtil.SPAIN),

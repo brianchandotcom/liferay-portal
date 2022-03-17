@@ -280,7 +280,8 @@ definition {
 			panel = "Control Panel",
 			portlet = "Users and Organizations");
 
-		User.addGeolocationCP(
+		User.addCP(
+			destination = "100,100",
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
 			userLastName = "userln",

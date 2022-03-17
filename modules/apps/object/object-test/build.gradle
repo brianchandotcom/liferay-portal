@@ -1,10 +1,14 @@
 dependencies {
+	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	testCompile project(":apps:object:object-api")
+	testCompile project(":apps:object:object-service")
+	testCompile project(":core:petra:petra-string")
+
 	testIntegrationCompile group: "org.apache.commons", name: "commons-lang3", version: "3.11"
 	testIntegrationCompile project(":apps:asset:asset-api")
 	testIntegrationCompile project(":apps:depot:depot-api")
 	testIntegrationCompile project(":apps:list-type:list-type-api")
 	testIntegrationCompile project(":apps:object:object-admin-rest-api")
-	testIntegrationCompile project(":apps:object:object-api")
 	testIntegrationCompile project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
 }

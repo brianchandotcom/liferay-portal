@@ -76,7 +76,7 @@ public class BasicFragmentManagementToolbarDisplayContext
 							dropdownItem.putData(
 								"action",
 								"exportFragmentCompositionsAndFragmentEntries");
-							dropdownItem.setIcon("import-export");
+							dropdownItem.setIcon("upload");
 							dropdownItem.setLabel(
 								LanguageUtil.get(httpServletRequest, "export"));
 							dropdownItem.setQuickAction(true);
@@ -86,7 +86,7 @@ public class BasicFragmentManagementToolbarDisplayContext
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "copySelectedFragmentEntries");
-							dropdownItem.setIcon("paste");
+							dropdownItem.setIcon("copy");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									httpServletRequest, "make-a-copy"));
@@ -115,7 +115,7 @@ public class BasicFragmentManagementToolbarDisplayContext
 							dropdownItem.putData(
 								"action",
 								"deleteFragmentCompositionsAndFragmentEntries");
-							dropdownItem.setIcon("times-circle");
+							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(httpServletRequest, "delete"));
 							dropdownItem.setQuickAction(true);

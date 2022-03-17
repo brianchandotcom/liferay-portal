@@ -68,7 +68,7 @@ public class ContributedFragmentManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData(
 					"action", "copyContributedEntriesToFragmentCollection");
-				dropdownItem.setIcon("paste");
+				dropdownItem.setIcon("copy");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "make-a-copy"));
 				dropdownItem.setQuickAction(true);

@@ -92,6 +92,7 @@ public class InheritedFragmentEntryActionDropdownItemsProvider {
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).buildString());
+			dropdownItem.setIcon("copy");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "copy-to"));
 		};
@@ -111,6 +112,7 @@ public class InheritedFragmentEntryActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(exportFragmentEntryURL);
+			dropdownItem.setIcon("upload");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "export"));
 		};

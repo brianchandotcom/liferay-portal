@@ -77,6 +77,7 @@ public class FragmentCollectionResourceActionDropdownItemsProvider {
 				).setParameter(
 					"fileEntryId", _fileEntry.getFileEntryId()
 				).buildString());
+			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};

@@ -61,6 +61,7 @@ public class FragmentCollectionActionDropdownItemsProvider {
 									_fragmentDisplayContext.
 										getFragmentCollectionId()
 								).buildString());
+							dropdownItem.setIcon("pencil");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "edit"));
 						}
@@ -90,6 +91,7 @@ public class FragmentCollectionActionDropdownItemsProvider {
 								exportFragmentCompositionsAndFragmentEntriesURL.
 									toString());
 
+							dropdownItem.setIcon("upload");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "export"));
@@ -112,7 +114,7 @@ public class FragmentCollectionActionDropdownItemsProvider {
 								).setWindowState(
 									LiferayWindowState.POP_UP
 								).buildString());
-
+							dropdownItem.setIcon("import");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "import"));
@@ -139,6 +141,7 @@ public class FragmentCollectionActionDropdownItemsProvider {
 									_fragmentDisplayContext.
 										getFragmentCollectionId()
 								).buildString());
+							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "delete"));

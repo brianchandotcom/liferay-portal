@@ -200,6 +200,7 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).buildString());
+			dropdownItem.setIcon("copy");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
 		};
@@ -242,6 +243,7 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 				).setParameter(
 					"fragmentEntryId", _fragmentEntry.getFragmentEntryId()
 				).buildString());
+			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
@@ -294,6 +296,7 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 				_themeDisplay.getURLCurrent(), "fragmentCollectionId",
 				editFragmentEntry.getFragmentCollectionId(), "fragmentEntryId",
 				editFragmentEntry.getFragmentEntryId());
+			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
@@ -314,6 +317,7 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.setDisabled(_fragmentEntry.isDraft());
 			dropdownItem.setHref(exportFragmentEntryURL);
+			dropdownItem.setIcon("upload");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "export"));
 		};
@@ -372,6 +376,7 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).buildString());
+			dropdownItem.setIcon("move-folder");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "move"));
 		};
@@ -412,6 +417,7 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 				"fragmentEntryId",
 				String.valueOf(_fragmentEntry.getFragmentEntryId()));
 			dropdownItem.putData("itemSelectorURL", _getItemSelectorURL());
+			dropdownItem.setIcon("change");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "change-thumbnail"));
 		};
@@ -427,6 +433,7 @@ public class BasicFragmentEntryActionDropdownItemsProvider {
 				_themeDisplay.getURLCurrent(), "fragmentCollectionId",
 				_fragmentEntry.getFragmentCollectionId(), "fragmentEntryId",
 				_fragmentEntry.getFragmentEntryId());
+			dropdownItem.setIcon("list-ul");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "view-usages"));
 		};

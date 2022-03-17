@@ -63,7 +63,7 @@ public class InheritedFragmentManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData(
 					"action", "exportFragmentCompositionsAndFragmentEntries");
-				dropdownItem.setIcon("import-export");
+				dropdownItem.setIcon("upload");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "export"));
 				dropdownItem.setQuickAction(true);
@@ -75,7 +75,7 @@ public class InheritedFragmentManagementToolbarDisplayContext
 				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES),
 			dropdownItem -> {
 				dropdownItem.putData("action", "copyToSelectedFragmentEntries");
-				dropdownItem.setIcon("paste");
+				dropdownItem.setIcon("copy");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "copy-to"));
 				dropdownItem.setQuickAction(true);

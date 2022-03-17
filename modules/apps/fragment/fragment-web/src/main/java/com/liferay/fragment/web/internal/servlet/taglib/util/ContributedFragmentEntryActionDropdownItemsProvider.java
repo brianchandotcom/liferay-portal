@@ -90,6 +90,7 @@ public class ContributedFragmentEntryActionDropdownItemsProvider {
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).buildString());
+			dropdownItem.setIcon("copy");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "copy-to"));
 		};

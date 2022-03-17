@@ -132,6 +132,7 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 					"fragmentCompositionId",
 					_fragmentComposition.getFragmentCompositionId()
 				).buildString());
+			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
@@ -175,6 +176,7 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(exportFragmentEntryURL);
+			dropdownItem.setIcon("upload");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "export"));
 		};
@@ -235,6 +237,7 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).buildString());
+			dropdownItem.setIcon("move-folder");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "move"));
 		};
@@ -276,6 +279,7 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 				String.valueOf(
 					_fragmentComposition.getFragmentCompositionId()));
 			dropdownItem.putData("itemSelectorURL", _getItemSelectorURL());
+			dropdownItem.setIcon("change");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "change-thumbnail"));
 		};

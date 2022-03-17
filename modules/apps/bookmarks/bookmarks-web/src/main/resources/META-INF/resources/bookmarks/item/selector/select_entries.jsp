@@ -99,16 +99,6 @@ BookmarkEntriesItemSelectorDisplayContext bookmarkEntriesItemSelectorDisplayCont
 					<%
 					AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(BookmarksEntry.class.getName(), entry.getEntryId());
 					%>
-
-					<%--<liferay-ui:search-container-column-text
-						cssClass="table-column-text-end"
-						name="views"
-						value="<%= String.valueOf(assetEntry.getViewCount()) %>"
-					/>
-
-					<liferay-ui:search-container-column-status
-						name="status"
-					/>--%>
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>

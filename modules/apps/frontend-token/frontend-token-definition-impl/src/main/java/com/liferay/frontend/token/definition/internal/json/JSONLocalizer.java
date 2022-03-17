@@ -53,37 +53,41 @@ public class JSONLocalizer {
 	}
 
 	/**
-	 * Get a translated JSON
-	 * @param locale the target locale or null to get the untranslated JSON
-	 * @return the translated JSON
+	 * Get a JSONObject
+	 * @param locale the target locale or null to get the default JSONObject
+	 * @return the JSONObject that created with the translated JSON
 	 */
-	public String getJSON(Locale locale) {
+	public JSONObject getJSON(Locale locale) {
 		if ((_resourceBundleLoader == null) || (locale == null)) {
-			return _json;
-		}
-
-		String json = _jsons.get(locale);
-
-		if (json == null) {
 			try {
-				JSONObject jsonObject = _jsonFactory.createJSONObject(_json);
-
-				_localize(jsonObject, locale);
-
-				json = _jsonFactory.looseSerializeDeep(jsonObject);
+				return _jsonFactory.createJSONObject(_json);
 			}
-			catch (JSONException jsonException) {
-				_log.error(
-					"Unable to parse JSON for theme " + _themeId,
-					jsonException);
-
-				json = _json;
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
 			}
-
-			_jsons.put(locale, json);
 		}
 
-		return json;
+		JSONObject jsonObject = _jsonObjects.computeIfAbsent(
+			locale,
+			key -> {
+				try {
+					JSONObject newJSONObject = _jsonFactory.createJSONObject(
+						_json);
+
+					_localize(newJSONObject, locale);
+
+					return newJSONObject;
+				}
+				catch (JSONException jsonException) {
+					_log.error(
+						"Unable to parse JSON for theme " + _themeId,
+						jsonException);
+
+					return null;
+				}
+			});
+
+		return _jsonFactory.createJSONObject(jsonObject.toMap());
 	}
 
 	private void _localize(JSONObject jsonObject, Locale locale) {
@@ -156,7 +160,8 @@ public class JSONLocalizer {
 
 	private final String _json;
 	private final JSONFactory _jsonFactory;
-	private final Map<Locale, String> _jsons = new ConcurrentHashMap<>();
+	private final Map<Locale, JSONObject> _jsonObjects =
+		new ConcurrentHashMap<>();
 	private final ResourceBundleLoader _resourceBundleLoader;
 	private final String _themeId;
 

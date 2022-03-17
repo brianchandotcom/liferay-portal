@@ -62,6 +62,8 @@ import java.util.zip.ZipOutputStream;
 
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.StreamingOutput;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -111,6 +113,37 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 		return _toImportTask(
 			_batchEngineImportTaskLocalService.getBatchEngineImportTask(
 				importTaskId));
+	}
+
+	@Override
+	public Response getImportTaskContent(Long importTaskId) throws Exception {
+		BatchEngineImportTask batchEngineImportTask =
+			_batchEngineImportTaskLocalService.getBatchEngineImportTask(
+				importTaskId);
+
+		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus =
+			BatchEngineTaskExecuteStatus.valueOf(
+				batchEngineImportTask.getExecuteStatus());
+
+		if (batchEngineTaskExecuteStatus ==
+				BatchEngineTaskExecuteStatus.COMPLETED) {
+
+			StreamingOutput streamingOutput =
+				outputStream -> StreamUtil.transfer(
+					_batchEngineImportTaskLocalService.openContentInputStream(
+						importTaskId),
+					outputStream);
+
+			return Response.ok(
+				streamingOutput
+			).header(
+				"content-disposition", "attachment; filename=import.zip"
+			).build();
+		}
+
+		return Response.status(
+			Response.Status.NOT_FOUND
+		).build();
 	}
 
 	@Override

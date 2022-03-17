@@ -14,16 +14,11 @@
 
 package com.liferay.calendar.web.internal.search;
 
-import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.util.comparator.CalendarResourceCodeComparator;
-import com.liferay.calendar.util.comparator.CalendarResourceNameComparator;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,46 +73,11 @@ public class CalendarResourceSearch extends SearchContainer<CalendarResource> {
 
 		try {
 			setOrderableHeaders(orderableHeaders);
-
-			String orderByCol = SearchOrderByUtil.getOrderByCol(
-				portletRequest, CalendarPortletKeys.CALENDAR,
-				"users-resources-order-by-col", "last-name");
-
-			setOrderByCol(orderByCol);
-
-			String orderByType = SearchOrderByUtil.getOrderByType(
-				portletRequest, CalendarPortletKeys.CALENDAR,
-				"users-resources-order-by-type", "asc");
-
-			setOrderByComparator(
-				_getOrderByComparator(orderByCol, orderByType));
-			setOrderByType(orderByType);
 		}
 		catch (Exception exception) {
 			_log.error(
 				"Unable to initialize calendar resource search", exception);
 		}
-	}
-
-	private OrderByComparator<CalendarResource> _getOrderByComparator(
-		String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<CalendarResource> orderByComparator = null;
-
-		if (orderByCol.equals("name")) {
-			orderByComparator = new CalendarResourceNameComparator(orderByAsc);
-		}
-		else {
-			orderByComparator = new CalendarResourceCodeComparator(orderByAsc);
-		}
-
-		return orderByComparator;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

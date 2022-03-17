@@ -2483,6 +2483,16 @@ definition {
 
 	}
 
+	@description = "This is a test for LPS-145630. It checks that the PDFs linked in web articles content can be updated."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test PDFLinkedInWCCanBeUpdated {
+		property portal.acceptance = "false";
+
+		// TODO LPS-145630|| PDFLinkedInWCCanBeUpdated pending implementation
+
+	}
+
 	@description = "This test covers LPS-101667. It makes sure that the file size can be displayed correctly in the different versions after editing the document file."
 	@priority = "3"
 	@refactordone

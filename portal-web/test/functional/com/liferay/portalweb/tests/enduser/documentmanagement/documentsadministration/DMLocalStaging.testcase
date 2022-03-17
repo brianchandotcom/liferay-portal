@@ -253,6 +253,16 @@ definition {
 		DMDocument.viewDocumentVersionNumberCmdPG(dmDocumentVersionNumber = "1.1");
 	}
 
+	@description = "This is a test for LPS-91043. It asserts that user can publish an old file entry version to live."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanPublishOldVerion {
+		property portal.acceptance = "false";
+
+		// TODO LPS-91043 CanPublishOldVerion pending implementation
+
+	}
+
 	@description = "This is a test for LPS-136827. It checks that the related asset of a file can be published."
 	@priority = "3"
 	test CanPublishRelatedAsset {

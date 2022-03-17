@@ -1235,6 +1235,16 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-80502. It asserts that user can search a draft blog entry."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanSearchForDraftEntry {
+		property portal.acceptance = "false";
+
+		// TODO LPS-80502 CanSearchForDraftEntry pending implementation
+
+	}
+
 	@priority = "4"
 	@refactorneeded
 	test CanViewDefaultAbstract {

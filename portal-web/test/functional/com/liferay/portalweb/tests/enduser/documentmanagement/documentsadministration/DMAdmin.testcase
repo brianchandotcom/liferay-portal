@@ -47,6 +47,16 @@ definition {
 
 	}
 
+	@description = "This is a test for LPS-89025. It checks that document edits are saved when hard links are enabled."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanEditDocumentWhenHardLinksEnabled {
+		property portal.acceptance = "false";
+
+		// TODO LPS-89025| CanEditDocumentWhenHardLinksEnabled pending implementation
+
+	}
+
 	@description = "This is a test for LPS-91861. It checks that the counts can be reset in management toolbar."
 	@ignore = "Test Stub"
 	@priority = "5"

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -81,21 +80,13 @@ public class AccountRoleModelResourcePermissionTest {
 			user.getUserId(), accountEntry.getAccountEntryGroupId(),
 			accountRole.getRoleId());
 
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(user);
 
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(user));
-
-			_assertContains(accountRole, AccountActionKeys.ASSIGN_USERS);
-			_assertContains(accountRole, ActionKeys.DELETE);
-			_assertContains(accountRole, ActionKeys.UPDATE);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
+		_assertContains(
+			permissionChecker, accountRole, AccountActionKeys.ASSIGN_USERS);
+		_assertContains(permissionChecker, accountRole, ActionKeys.DELETE);
+		_assertContains(permissionChecker, accountRole, ActionKeys.UPDATE);
 	}
 
 	private void _addResourcePermission(
@@ -109,13 +100,14 @@ public class AccountRoleModelResourcePermissionTest {
 		}
 	}
 
-	private void _assertContains(AccountRole accountRole, String actionId)
+	private void _assertContains(
+			PermissionChecker permissionChecker, AccountRole accountRole,
+			String actionId)
 		throws Exception {
 
 		Assert.assertTrue(
 			_accountRoleModelResourcePermission.contains(
-				PermissionThreadLocal.getPermissionChecker(), accountRole,
-				actionId));
+				permissionChecker, accountRole, actionId));
 	}
 
 	@Inject

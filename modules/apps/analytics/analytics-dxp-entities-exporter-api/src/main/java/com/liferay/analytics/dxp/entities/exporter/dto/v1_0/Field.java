@@ -42,7 +42,7 @@ import javax.validation.Valid;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * @author Riccardo Ferrari, Rachael Koestartyo, Marcos Martins
+ * @author Marcos Martins, Rachael Koestartyo, Riccardo Ferrari
  * @generated
  */
 @Generated("")

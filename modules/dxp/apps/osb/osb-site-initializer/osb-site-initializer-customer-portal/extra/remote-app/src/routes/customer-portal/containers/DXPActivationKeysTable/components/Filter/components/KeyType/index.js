@@ -10,6 +10,7 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import classNames from 'classnames';
@@ -21,6 +22,28 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 
 	const [virtualClusterChecked, setVirtualClusterChecked] = useState(false);
 	const [onPromiseChecked, setOnPromiseChecked] = useState(false);
+
+	const [errorMessage, setErrorMessage] = useState('');
+
+	const INVALID_NODE_MESSAGE = 'Enter a valid number';
+	const INVALID_MIN_NODE_MESSAGE =
+		'Enter a minimum node value greater than 0';
+	const INVALID_MAX_NODE_MESSAGE = 'Max nodes must be greater than min nodes';
+	const INVALID_NEGATIVE_NODES_MESSAGE = 'Enter nodes values greater than 0';
+
+	useEffect(() => {
+		if (isNaN(minNodesValue) || isNaN(maxNodesValue)) {
+			setErrorMessage(INVALID_NODE_MESSAGE);
+		} else if (minNodesValue === '0') {
+			setErrorMessage(INVALID_MIN_NODE_MESSAGE);
+		} else if (maxNodesValue <= -1 || minNodesValue <= -1) {
+			setErrorMessage(INVALID_NEGATIVE_NODES_MESSAGE);
+		} else if (maxNodesValue < minNodesValue) {
+			setErrorMessage(INVALID_MAX_NODE_MESSAGE);
+		} else {
+			setErrorMessage('');
+		}
+	}, [maxNodesValue, minNodesValue]);
 
 	useEffect(() => {
 		if (!virtualClusterChecked) {
@@ -74,15 +97,19 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 						<div className="mr-2">
 							<ClayInput
 								className={{
+									'bg-neutral-1 border-danger':
+										errorMessage ===
+											INVALID_MIN_NODE_MESSAGE ||
+										isNaN(minNodesValue) ||
+										minNodesValue <= -1,
+
 									'bg-neutral-1 border-white': !virtualClusterChecked,
 								}}
 								disabled={!virtualClusterChecked}
-								min="0"
 								onChange={(event) => {
 									setMinNodesValue(event.target.value);
 								}}
 								placeholder="1"
-								type="number"
 								value={minNodesValue}
 							/>
 
@@ -96,15 +123,18 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 						<div>
 							<ClayInput
 								className={{
+									'bg-neutral-1 border-danger':
+										errorMessage ===
+											INVALID_MAX_NODE_MESSAGE ||
+										isNaN(maxNodesValue) ||
+										maxNodesValue <= -1,
 									'bg-neutral-1 border-white': !virtualClusterChecked,
 								}}
 								disabled={!virtualClusterChecked}
-								min="0"
 								onChange={(event) => {
 									setMaxNodesValue(event.target.value);
 								}}
 								placeholder="28"
-								type="number"
 								value={maxNodesValue}
 							/>
 
@@ -116,11 +146,21 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 						</div>
 					</div>
 				)}
+
+				{errorMessage && (
+					<ClayAlert
+						className="mx-0 p-2 text-paragraph-xs"
+						displayType="danger"
+					>
+						{errorMessage}
+					</ClayAlert>
+				)}
 			</div>
 
 			<div className="mb-3 mt-2 mx-3">
 				<ClayButton
 					className="w-100"
+					disabled={errorMessage}
 					onClick={() => {
 						setFilters((previousFilters) => ({
 							...previousFilters,

@@ -1239,7 +1239,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanSearchForDraftEntry {
-		property portal.acceptance = "false";
 
 		// TODO LPS-80502 CanSearchForDraftEntry pending implementation
 

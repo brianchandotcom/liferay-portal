@@ -2487,7 +2487,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test PDFLinkedInWCCanBeUpdated {
-		property portal.acceptance = "false";
 
 		// TODO LPS-145630|| PDFLinkedInWCCanBeUpdated pending implementation
 

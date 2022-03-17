@@ -257,7 +257,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanPublishOldVerion {
-		property portal.acceptance = "false";
 
 		// TODO LPS-91043 CanPublishOldVerion pending implementation
 

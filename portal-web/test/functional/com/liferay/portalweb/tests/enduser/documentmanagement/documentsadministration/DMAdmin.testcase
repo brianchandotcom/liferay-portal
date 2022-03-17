@@ -51,7 +51,6 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "5"
 	test CanEditDocumentWhenHardLinksEnabled {
-		property portal.acceptance = "false";
 
 		// TODO LPS-89025| CanEditDocumentWhenHardLinksEnabled pending implementation
 

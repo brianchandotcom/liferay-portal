@@ -143,6 +143,7 @@ public class StyleBookEntryActionDropdownItemsProvider {
 				).setParameter(
 					"styleBookEntryIds", _styleBookEntry.getStyleBookEntryId()
 				).buildString());
+			dropdownItem.setIcon("copy");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "make-a-copy"));
 		};
@@ -164,6 +165,7 @@ public class StyleBookEntryActionDropdownItemsProvider {
 				).setParameter(
 					"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
 				).buildString());
+			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
@@ -222,6 +224,7 @@ public class StyleBookEntryActionDropdownItemsProvider {
 				_renderResponse.createRenderURL(), "mvcRenderCommandName",
 				"/style_book/edit_style_book_entry", "styleBookEntryId",
 				_styleBookEntry.getStyleBookEntryId());
+			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
@@ -241,6 +244,7 @@ public class StyleBookEntryActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(exportStyleBookEntryURL);
+			dropdownItem.setIcon("upload");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "export"));
 		};
@@ -351,6 +355,7 @@ public class StyleBookEntryActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"styleBookEntryId",
 				String.valueOf(_styleBookEntry.getStyleBookEntryId()));
+			dropdownItem.setIcon("change");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "change-thumbnail"));
 		};

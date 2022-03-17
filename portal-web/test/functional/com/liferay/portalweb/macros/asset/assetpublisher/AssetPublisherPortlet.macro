@@ -409,12 +409,8 @@ definition {
 	}
 
 	macro configureDynamicAssetSelectionPG {
-		if (IsElementPresent(locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST_LINK")) {
-			AssertClick(
-				locator1 = "APConfiguration#ASSET_SELECTION_ASSET_LIST_LINK",
-				value1 = "Select a collection to make it visible.");
-
-			SelectFrame(locator1 = "IFrame#MODAL_BODY");
+		if (IsElementPresent(key_portletName = "${portletName}", key_text = "Select a collection to make it visible.", locator1 = "Portlet#PORTLET_SELECTOR")) {
+			AssetPublisherPortlet.gotoSelectCollection(portletName = "${portletName}");
 		}
 		else {
 			AssetPublisherPortlet.gotoConfigurationPG(portletName = "${portletName}");
@@ -1014,15 +1010,21 @@ definition {
 	}
 
 	macro selectAssetList {
-		Portlet.gotoPortletOptions(
-			portletName = "Asset Publisher",
-			portletOption = "Configuration");
+		if (IsElementPresent(key_tab = "Asset Selection", locator1 = "NavTab#TAB_LINK")) {
+			Navigator.gotoNavTab(navTab = "Asset Selection");
+		}
+		else {
+			if (IsElementPresent(key_portletName = "Asset Publisher", key_text = "Select a collection to make it visible.", locator1 = "Portlet#PORTLET_SELECTOR")) {
+				AssetPublisherPortlet.gotoSelectCollection();
+			}
+			else {
+				AssetPublisherPortlet.gotoConfigurationPG();
+			}
+
+			Navigator.gotoNavTab(navTab = "Asset Selection");
+		}
 
 		var key_title = "${assetListName}";
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		Navigator.gotoNavTab(navTab = "Asset Selection");
 
 		Panel.expandPanel(panel = "Asset Selection");
 

@@ -907,6 +907,10 @@ public class PortalImpl implements Portal {
 			return url;
 		}
 
+		if (url.contains(_UNICODE_REPLACEMENT_CHARACTER)) {
+			return null;
+		}
+
 		URI uri = HttpUtil.getURI(url);
 
 		if (uri == null) {
@@ -8763,6 +8767,8 @@ public class PortalImpl implements Portal {
 
 	private static final String _PUBLIC_GROUP_SERVLET_MAPPING =
 		PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING;
+
+	private static final String _UNICODE_REPLACEMENT_CHARACTER = "\uFFFD";
 
 	private static final Log _log = LogFactoryUtil.getLog(PortalImpl.class);
 

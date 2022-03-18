@@ -74,6 +74,8 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		).put(
 			"modulesPerRow", getModulesPerRow()
 		).put(
+			"nonindexed", _nonindexed
+		).put(
 			"numberOfColumns", _numberOfColumns
 		).put(
 			"reverseOrder", _reverseOrder
@@ -163,6 +165,10 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		return _gutters;
 	}
 
+	public boolean isNonindexed() {
+		return _nonindexed;
+	}
+
 	public boolean isReverseOrder() {
 		return _reverseOrder;
 	}
@@ -173,6 +179,10 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 
 	public void setModulesPerRow(int modulesPerRow) {
 		_modulesPerRow = modulesPerRow;
+	}
+
+	public void setNonindexed(boolean nonindexed) {
+		_nonindexed = nonindexed;
 	}
 
 	public void setNumberOfColumns(int numberOfColumns) {
@@ -238,6 +248,10 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			setModulesPerRow(itemConfigJSONObject.getInt("modulesPerRow"));
 		}
 
+		if (itemConfigJSONObject.has("nonindexed")) {
+			setNonindexed(itemConfigJSONObject.getBoolean("nonindexed"));
+		}
+
 		if (itemConfigJSONObject.has("numberOfColumns")) {
 			setNumberOfColumns(itemConfigJSONObject.getInt("numberOfColumns"));
 		}
@@ -269,6 +283,7 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 
 	private boolean _gutters = true;
 	private Integer _modulesPerRow;
+	private boolean _nonindexed;
 	private int _numberOfColumns;
 	private boolean _reverseOrder;
 	private String _verticalAlignment = "top";

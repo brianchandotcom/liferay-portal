@@ -88,6 +88,8 @@ public class ContainerStyledLayoutStructureItem
 		).put(
 			"link", _linkJSONObject
 		).put(
+			"nonindexed", _nonindexed
+		).put(
 			"widthType", _widthType
 		);
 	}
@@ -108,6 +110,10 @@ public class ContainerStyledLayoutStructureItem
 	@Override
 	public int hashCode() {
 		return HashUtil.hash(0, getItemId());
+	}
+
+	public boolean isNonindexed() {
+		return _nonindexed;
 	}
 
 	public void setAlign(String align) {
@@ -132,6 +138,10 @@ public class ContainerStyledLayoutStructureItem
 
 	public void setLinkJSONObject(JSONObject linkJSONObject) {
 		_linkJSONObject = linkJSONObject;
+	}
+
+	public void setNonindexed(boolean nonindexed) {
+		_nonindexed = nonindexed;
 	}
 
 	public void setWidthType(String widthType) {
@@ -166,6 +176,10 @@ public class ContainerStyledLayoutStructureItem
 
 		if (itemConfigJSONObject.has("link")) {
 			setLinkJSONObject(itemConfigJSONObject.getJSONObject("link"));
+		}
+
+		if (itemConfigJSONObject.has("nonindexed")) {
+			setNonindexed(itemConfigJSONObject.getBoolean("nonindexed"));
 		}
 
 		if (itemConfigJSONObject.has("containerType") ||
@@ -268,6 +282,7 @@ public class ContainerStyledLayoutStructureItem
 	private String _htmlTag = "div";
 	private String _justify = "";
 	private JSONObject _linkJSONObject;
+	private boolean _nonindexed;
 	private String _widthType = "fluid";
 
 }

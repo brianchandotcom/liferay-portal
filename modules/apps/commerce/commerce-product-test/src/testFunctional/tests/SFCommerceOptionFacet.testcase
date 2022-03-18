@@ -126,7 +126,7 @@ definition {
 	@description = "[Please Update]"
 	@ignore = "Test Stub"
 	@priority = "4"
-	test VerifySpecificationFacetCanShowAllPossibleEntries {
+	test VerifyOptionFacetCanShowAllPossibleEntries {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8400 VerifySpecificationFacetCanShowAllPossibleEntries pending implementation
@@ -134,7 +134,7 @@ definition {
 	}
 
 	@description = "This is for COMMERCE-8646."
-	test VerifySpecificationFacetSetupTab {
+	test VerifyOptionFacetSetupTab {
 		ApplicationsMenu.gotoSite(site = "Minium");
 
 		Portlet.gotoPortletOptions(

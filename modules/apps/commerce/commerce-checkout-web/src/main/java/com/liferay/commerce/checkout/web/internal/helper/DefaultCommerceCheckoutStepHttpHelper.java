@@ -37,7 +37,7 @@ import com.liferay.commerce.payment.service.CommercePaymentMethodGroupRelLocalSe
 import com.liferay.commerce.price.CommerceOrderPrice;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
 import com.liferay.commerce.service.CommerceAddressService;
-import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
@@ -180,11 +180,13 @@ public class DefaultCommerceCheckoutStepHttpHelper
 		}
 
 		if (deliveryCommerceTermEntries.size() == 1) {
-			if (commerceOrder.isOpen()) {
+			if ((commerceOrder.getDeliveryCommerceTermEntryId() <= 0) &&
+				commerceOrder.isOpen()) {
+
 				CommerceTermEntry commerceTermEntry =
 					deliveryCommerceTermEntries.get(0);
 
-				_commerceOrderService.updateTermsAndConditions(
+				_commerceOrderLocalService.updateTermsAndConditions(
 					commerceOrder.getCommerceOrderId(),
 					commerceTermEntry.getCommerceTermEntryId(), 0, languageId);
 			}
@@ -209,15 +211,16 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			if ((commerceTermEntry != null) && commerceTermEntry.isActive() &&
 				deliveryCommerceTermEntries.contains(commerceTermEntry)) {
 
-				_commerceOrderService.updateTermsAndConditions(
+				_commerceOrderLocalService.updateTermsAndConditions(
 					commerceOrder.getCommerceOrderId(),
 					accountEntry.getDefaultDeliveryCTermEntryId(), 0,
-					LanguageUtil.getLanguageId(httpServletRequest.getLocale()));
+					LanguageUtil.getLanguageId(
+						_portal.getLocale(httpServletRequest)));
 			}
 			else {
 				commerceTermEntry = deliveryCommerceTermEntries.get(0);
 
-				_commerceOrderService.updateTermsAndConditions(
+				_commerceOrderLocalService.updateTermsAndConditions(
 					commerceOrder.getCommerceOrderId(),
 					commerceTermEntry.getCommerceTermEntryId(), 0, languageId);
 			}
@@ -371,11 +374,13 @@ public class DefaultCommerceCheckoutStepHttpHelper
 		}
 
 		if (paymentCommerceTermEntries.size() == 1) {
-			if (commerceOrder.isOpen()) {
+			if ((commerceOrder.getPaymentCommerceTermEntryId() <= 0) &&
+				commerceOrder.isOpen()) {
+
 				CommerceTermEntry commerceTermEntry =
 					paymentCommerceTermEntries.get(0);
 
-				_commerceOrderService.updateTermsAndConditions(
+				_commerceOrderLocalService.updateTermsAndConditions(
 					commerceOrder.getCommerceOrderId(), 0,
 					commerceTermEntry.getCommerceTermEntryId(), languageId);
 			}
@@ -400,14 +405,14 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			if ((commerceTermEntry != null) && commerceTermEntry.isActive() &&
 				paymentCommerceTermEntries.contains(commerceTermEntry)) {
 
-				_commerceOrderService.updateTermsAndConditions(
+				_commerceOrderLocalService.updateTermsAndConditions(
 					commerceOrder.getCommerceOrderId(), 0,
 					accountEntry.getDefaultPaymentCTermEntryId(), languageId);
 			}
 			else {
 				commerceTermEntry = paymentCommerceTermEntries.get(0);
 
-				_commerceOrderService.updateTermsAndConditions(
+				_commerceOrderLocalService.updateTermsAndConditions(
 					commerceOrder.getCommerceOrderId(), 0,
 					commerceTermEntry.getCommerceTermEntryId(), languageId);
 			}
@@ -522,7 +527,7 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			return;
 		}
 
-		commerceOrder = _commerceOrderService.updateCommerceShippingMethod(
+		commerceOrder = _commerceOrderLocalService.updateCommerceShippingMethod(
 			commerceOrder.getCommerceOrderId(), commerceShippingMethodId,
 			commerceShippingOption.getName(), commerceContext,
 			_portal.getLocale(httpServletRequest));
@@ -553,8 +558,9 @@ public class DefaultCommerceCheckoutStepHttpHelper
 			return;
 		}
 
-		commerceOrder = _commerceOrderService.updateCommercePaymentMethodKey(
-			commerceOrder.getCommerceOrderId(), commercePaymentMethodKey);
+		commerceOrder =
+			_commerceOrderLocalService.updateCommercePaymentMethodKey(
+				commerceOrder.getCommerceOrderId(), commercePaymentMethodKey);
 
 		httpServletRequest.setAttribute(
 			CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
@@ -569,6 +575,9 @@ public class DefaultCommerceCheckoutStepHttpHelper
 	@Reference
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 
+	@Reference
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
 	@Reference(
 		target = "(resource.name=" + CommerceOrderConstants.RESOURCE_NAME + ")"
 	)
@@ -576,9 +585,6 @@ public class DefaultCommerceCheckoutStepHttpHelper
 
 	@Reference
 	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;
-
-	@Reference
-	private CommerceOrderService _commerceOrderService;
 
 	@Reference
 	private CommercePaymentEngine _commercePaymentEngine;

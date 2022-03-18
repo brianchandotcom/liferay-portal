@@ -23,6 +23,7 @@ import com.liferay.batch.planner.model.BatchPlannerPlanTable;
 import com.liferay.batch.planner.service.base.BatchPlannerLogLocalServiceBaseImpl;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.JoinStep;
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -213,7 +214,7 @@ public class BatchPlannerLogLocalServiceImpl
 					BatchPlannerPlanTable.INSTANCE.getColumn(
 						searchByField
 					).like(
-						StringUtil.quote(searchByKeyword)
+						StringUtil.quote(searchByKeyword, CharPool.PERCENT)
 					)
 				)
 			).orderBy(
@@ -246,7 +247,7 @@ public class BatchPlannerLogLocalServiceImpl
 					BatchPlannerPlanTable.INSTANCE.getColumn(
 						searchByField
 					).like(
-						StringUtil.quote(searchByKeyword)
+						StringUtil.quote(searchByKeyword, CharPool.PERCENT)
 					)
 				)
 			).orderBy(
@@ -287,7 +288,7 @@ public class BatchPlannerLogLocalServiceImpl
 					BatchPlannerPlanTable.INSTANCE.getColumn(
 						searchByField
 					).like(
-						StringUtil.quote(searchByKeyword)
+						StringUtil.quote(searchByKeyword, CharPool.PERCENT)
 					)
 				)));
 	}
@@ -304,7 +305,7 @@ public class BatchPlannerLogLocalServiceImpl
 					BatchPlannerPlanTable.INSTANCE.getColumn(
 						searchByField
 					).like(
-						StringUtil.quote(searchByKeyword)
+						StringUtil.quote(searchByKeyword, CharPool.PERCENT)
 					)
 				)));
 	}

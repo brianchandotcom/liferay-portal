@@ -4542,16 +4542,19 @@ go</echo>
 				<then>
 					<delete dir="${liferay.home}/elasticsearch7" failonerror="false" />
 				</then>
-				<else>
-					<chmod
-						perm="777"
-					>
-						<fileset
-							dir="${liferay.home}/elasticsearch-sidecar"
-							includes="**/controller"
-						/>
-					</chmod>
-				</else>
+				<elseif>
+					<available file="${liferay.home}/elasticsearch-sidecar" />
+					<then>
+						<chmod
+							perm="777"
+						>
+							<fileset
+								dir="${liferay.home}/elasticsearch-sidecar"
+								includes="**/controller"
+							/>
+						</chmod>
+					</then>
+				</elseif>
 			</if>
 		</sequential>
 	</macrodef>

@@ -850,6 +850,41 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	@Test
+	public void testLimitSearchToContentsCreatedWithinAPeriodOfTime()
+		throws Exception {
+
+		_addJournalArticleSleep = 2;
+
+		_setUpJournalArticles(
+			new String[] {"cola cola", "", ""},
+			new String[] {"Coca Cola", "Pepsi Cola", "Sprite"});
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"end_date",
+					DateUtil.getDate(
+						new Date(System.currentTimeMillis()), "yyyyMMddHHmmss",
+						LocaleUtil.US)
+				).put(
+					"start_date",
+					DateUtil.getDate(
+						new Date(System.currentTimeMillis() - 200),
+						"yyyyMMddHHmmss", LocaleUtil.US)
+				).build()
+			},
+			new String[] {
+				"Limit Search to Contents Created Within a Period of Time"
+			});
+
+		_assertSearchIgnoreRelevance("[Pepsi Cola, Sprite]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance("[Coca Cola, Pepsi Cola, Sprite]");
+	}
+
+	@Test
 	public void testMatch() throws Exception {
 		_setUpJournalArticles(
 			new String[] {

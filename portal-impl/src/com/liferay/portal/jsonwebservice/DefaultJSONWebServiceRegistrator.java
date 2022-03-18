@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceRegistrator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
@@ -33,10 +32,8 @@ import java.lang.reflect.Method;
 /**
  * @author Igor Spasic
  */
-public class DefaultJSONWebServiceRegistrator
-	implements JSONWebServiceRegistrator {
+public class DefaultJSONWebServiceRegistrator {
 
-	@Override
 	public void processBean(
 		String contextName, String contextPath, Object bean) {
 

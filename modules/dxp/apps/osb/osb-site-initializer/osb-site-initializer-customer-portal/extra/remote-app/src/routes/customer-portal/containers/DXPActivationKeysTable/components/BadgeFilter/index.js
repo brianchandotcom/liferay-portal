@@ -61,14 +61,16 @@ const BadgeFilter = ({
 					)
 				) {
 					keyTypesDisplay.push(`Virtual Cluster`);
-				} else if (
+				}
+				else if (
 					filterKeyType.value?.minNodes ===
 					filterKeyType.value?.maxNodes
 				) {
 					keyTypesDisplay.push(
 						`Virtual Cluster (${filterKeyType.value?.minNodes} nodes)`
 					);
-				} else {
+				}
+				else {
 					const nodesDisplay = [];
 
 					if (filterKeyType.value?.minNodes) {

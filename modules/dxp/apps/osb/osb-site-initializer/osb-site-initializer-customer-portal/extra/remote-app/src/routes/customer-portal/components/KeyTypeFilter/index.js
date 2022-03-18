@@ -33,13 +33,17 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 	useEffect(() => {
 		if (isNaN(minNodesValue) || isNaN(maxNodesValue)) {
 			setErrorMessage(INVALID_NODE_MESSAGE);
-		} else if (minNodesValue === '0') {
+		}
+		else if (minNodesValue === '0') {
 			setErrorMessage(INVALID_MIN_NODE_MESSAGE);
-		} else if (maxNodesValue <= -1 || minNodesValue <= -1) {
+		}
+		else if (maxNodesValue <= -1 || minNodesValue <= -1) {
 			setErrorMessage(INVALID_NEGATIVE_NODES_MESSAGE);
-		} else if (maxNodesValue < minNodesValue) {
+		}
+		else if (maxNodesValue < minNodesValue) {
 			setErrorMessage(INVALID_MAX_NODE_MESSAGE);
-		} else {
+		}
+		else {
 			setErrorMessage('');
 		}
 	}, [maxNodesValue, minNodesValue]);

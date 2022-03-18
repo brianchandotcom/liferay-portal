@@ -117,6 +117,18 @@
 					"objectFieldName": "textField2",
 					"priority": 1
 				}
+			],
+			"objectViewSortColumns": [
+				{
+					"objectFieldName": "textField1",
+					"priority": 0,
+					"sortOrder": "asc"
+				},
+				{
+					"objectFieldName": "textField2",
+					"priority": 1,
+					"sortOrder": "asc"
+				}
 			]
 		}
 	],

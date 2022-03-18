@@ -18,5 +18,5 @@ interface ICustomViewWrapperProps extends React.HTMLAttributes<HTMLElement> {
 	isViewOnly: boolean;
 	objectViewId: string;
 }
-declare const CustomViewWrapper: React.FC<ICustonViewWrapperProps>;
+declare const CustomViewWrapper: React.FC<ICustomViewWrapperProps>;
 export default CustomViewWrapper;

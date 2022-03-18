@@ -60,7 +60,9 @@ import com.liferay.portal.kernel.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
@@ -148,6 +150,13 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			renderLayoutStructureDisplayContext);
 
 		return SKIP_BODY;
+	}
+
+	private String _getLayoutMode() {
+		HttpServletRequest httpServletRequest = getRequest();
+
+		return ParamUtil.getString(
+			httpServletRequest, "p_l_mode", Constants.VIEW);
 	}
 
 	private void _renderCollectionStyledLayoutStructureItem(
@@ -682,6 +691,16 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			else if (layoutStructureItem instanceof
 						ContainerStyledLayoutStructureItem) {
 
+				ContainerStyledLayoutStructureItem
+					containerStyledLayoutStructureItem =
+						(ContainerStyledLayoutStructureItem)layoutStructureItem;
+
+				if (Objects.equals(_getLayoutMode(), Constants.SEARCH) &&
+					containerStyledLayoutStructureItem.isNonindexed()) {
+
+					continue;
+				}
+
 				_renderContainerStyledLayoutStructureItem(
 					layoutStructureItem, renderLayoutStructureDisplayContext);
 			}
@@ -694,12 +713,31 @@ public class RenderLayoutStructureTag extends IncludeTag {
 			else if (layoutStructureItem instanceof
 						FragmentStyledLayoutStructureItem) {
 
+				FragmentStyledLayoutStructureItem
+					fragmentStyledLayoutStructureItem =
+						(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+				if (Objects.equals(_getLayoutMode(), Constants.SEARCH) &&
+					fragmentStyledLayoutStructureItem.isNonindexed()) {
+
+					continue;
+				}
+
 				_renderFragmentStyledLayoutStructureItem(
 					collectionElementIndex, layoutStructureItem,
 					renderLayoutStructureDisplayContext);
 			}
 			else if (layoutStructureItem instanceof
 						RowStyledLayoutStructureItem) {
+
+				RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
+					(RowStyledLayoutStructureItem)layoutStructureItem;
+
+				if (Objects.equals(_getLayoutMode(), Constants.SEARCH) &&
+					rowStyledLayoutStructureItem.isNonindexed()) {
+
+					continue;
+				}
 
 				_renderRowStyledLayoutStructureItem(
 					layoutStructureItem, renderLayoutStructureDisplayContext);

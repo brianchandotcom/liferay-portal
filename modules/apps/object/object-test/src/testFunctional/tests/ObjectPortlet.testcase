@@ -396,11 +396,11 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject237");
 
-		ObjectPortlet.addSingleFieldEntryViaUI(entry = "12345678912345678");
+		ObjectPortlet.addSingleFieldEntryViaUI(entry = "1234567891234567");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject237");
 
-		ObjectPortlet.viewEntry(entry = "12345678912345678");
+		ObjectPortlet.viewEntry(entry = "1234567891234567");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to add an Object entry with the Add Object Entry permission"

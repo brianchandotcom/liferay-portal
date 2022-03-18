@@ -1,0 +1,161 @@
+@component-name = "portal-commerce"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Shopping Experience";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+	}
+
+	tearDown {
+		Navigator.openURL();
+
+		if (IsElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE")) {
+			User.logoutPG();
+		}
+
+		User.firstLoginPG();
+
+		CommerceConfiguration.commerceAdminTearDown();
+
+		CommerceConfiguration.commerceInitializersTearDown();
+	}
+
+	@description = "This is a test for COMMERCE-8646"
+	@priority = "4"
+	test VerifyDisplayFrequencies {
+		property portal.acceptance = "false";
+
+		var facetValueNameList = "6,12,24,48,112";
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceWidget.updateFacetConfiguration(
+			displayFrequencies = "disable",
+			portletName = "Option Facet");
+
+		for (var facetValueName : list "${facetValueNameList}") {
+			AssertElementNotPresent(
+				facetValueName = "${facetValueName}",
+				locator1 = "Search#FACET_DISPLAY_FREQUENCIES");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-8646"
+	@priority = "4"
+	test VerifyDisplayTemplate {
+		property portal.acceptance = "false";
+
+		var packageQuantityTagNameList = "6,12,24,48,112";
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceWidget.updateFacetConfiguration(
+			displayTemplate = "Cloud Layout",
+			portletName = "Option Facet");
+
+		for (var tagName : list "${packageQuantityTagNameList}") {
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_CLOUD_LAYOUT",
+				tagName = "${tagName}");
+		}
+
+		CommerceWidget.updateFacetConfiguration(
+			displayTemplate = "Compact Layout",
+			portletName = "Option Facet");
+
+		for (var tagName : list "${packageQuantityTagNameList}") {
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
+				tagName = "${tagName}");
+		}
+
+		CommerceWidget.updateFacetConfiguration(
+			displayTemplate = "Label Layout",
+			portletName = "Option Facet");
+
+		for (var tagName : list "${packageQuantityTagNameList}") {
+			AssertElementPresent(
+				locator1 = "CommerceWidget#TAG_FACET_LABEL_LAYOUT",
+				tagName = "${tagName}");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-8646"
+	@priority = "4"
+	test VerifyFrequencyThreshold {
+		property portal.acceptance = "false";
+
+		var packageQuantityLabelNameList = "6,12,24,112";
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceWidget.updateFacetConfiguration(
+			frequencyThreshold = "2",
+			portletName = "Option Facet");
+
+		AssertElementPresent(
+			key_facetLabel = "48",
+			locator1 = "CommerceWidget#FACET_DEFAULT_LABEL");
+
+		for (var facetLabel : list "${warrantyLabelNameList}") {
+			AssertElementNotPresent(
+				key_facetLabel = "${facetLabel}",
+				locator1 = "CommerceWidget#FACET_DEFAULT_LABEL");
+		}
+	}
+
+	@description = "This is a test for COMMERCE-8646."
+	@priority = "3"
+	test VerifyMaxTermsFieldValue {
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceWidget.updateFacetConfiguration(
+			maxTerms = "101",
+			portletName = "Option Facet");
+
+		Alert.viewErrorMessage(errorMessage = "Maximum terms cannot exceed 100.");
+	}
+
+	@description = "[Please Update]"
+	@ignore = "Test Stub"
+	@priority = "4"
+	test VerifySpecificationFacetCanShowAllPossibleEntries {
+		property portal.acceptance = "false";
+
+		// TODO COMMERCE-8400 VerifySpecificationFacetCanShowAllPossibleEntries pending implementation
+
+	}
+
+	@description = "This is for COMMERCE-8646."
+	test VerifySpecificationFacetSetupTab {
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		Portlet.gotoPortletOptions(
+			portletName = "Option Facet",
+			portletOption = "Configuration");
+
+		IFrame.selectModalFrame();
+
+		AssertElementPresent(
+			key_navItem = "Setup",
+			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
+
+		AssertElementPresent(locator1 = "Select#DISPLAY_TEMPLATE");
+
+		AssertElementPresent(
+			key_fieldName = "maxTerms",
+			locator1 = "FormFields#TEXT_FIELD");
+
+		AssertElementPresent(
+			key_fieldName = "frequencyThreshold",
+			locator1 = "FormFields#TEXT_FIELD");
+	}
+
+}

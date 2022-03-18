@@ -27,7 +27,7 @@ definition {
 	}
 
 	macro assertType {
-		AssertSelectedLabel(
+		AssertElementPresent(
 			locator1 = "ObjectField#TYPE_FIELD",
 			value1 = "${fieldType}");
 	}

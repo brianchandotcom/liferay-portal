@@ -578,7 +578,7 @@ definition {
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
 			objectName = "CustomObject323",
-			value = "123456789123456789");
+			value = "1234567891234567");
 
 		ContentPages.addPage(pageName = "Test Content Page Name");
 
@@ -594,7 +594,7 @@ definition {
 
 		VisualizeObjectCollectionDisplay.mapFragment(fieldLabel = "Long");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123456789123456789");
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1234567891234567");
 
 		PageEditor.clickPublish();
 
@@ -602,7 +602,7 @@ definition {
 			menuItem = "View",
 			pageName = "Test Content Page Name");
 
-		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "123456789123456789");
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "1234567891234567");
 	}
 
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to display a specific entry of String type for a specific Object"

@@ -2998,9 +2998,9 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		ObjectPortlet.searchEntryRelationshipField(entryValue = "ABC");
+		ObjectPortlet.searchEntryRelationshipField(entryValue = "Entry ABC");
 
-		ObjectPortlet.assertRelationshipEntrySearchResultsPresent(entry = "Entry");
+		ObjectPortlet.assertRelationshipEntrySearchResultsPresent(entry = "Entry ABC");
 
 		ObjectPortlet.assertRelationshipEntrySearchResultsNotPresent(entry = "Custom Field");
 	}
@@ -4527,11 +4527,11 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject141616");
 
-		ObjectAdmin.addObjectLongFieldEntryViaUI(entryValue = "12345678912345678");
+		ObjectAdmin.addObjectLongFieldEntryViaUI(entryValue = "1234567891234567");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject141616");
 
-		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "12345678912345678");
+		CreateObject.assertAddedEntryRelationshipIsDisplayed(entry = "1234567891234567");
 	}
 
 	@description = "LPS-139803 - Verify it the Object Entry Title is displayed on the Item Selector of a fragment on a Display Page"

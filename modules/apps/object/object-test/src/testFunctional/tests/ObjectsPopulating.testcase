@@ -417,7 +417,7 @@ definition {
 
 		FormViewBuilder.editText(
 			fieldName = "Numeric",
-			fieldValue = "12345678912345678");
+			fieldValue = "1234567891234567");
 
 		FormPortlet.submitSuccessfully();
 
@@ -425,7 +425,7 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject220");
 
-		ObjectPortlet.viewEntry(entry = "12345678912345678");
+		ObjectPortlet.viewEntry(entry = "1234567891234567");
 	}
 
 	@description = "LPS-138495 - Verify it is possible to map a Picklist for a Select From List field and view its entries"

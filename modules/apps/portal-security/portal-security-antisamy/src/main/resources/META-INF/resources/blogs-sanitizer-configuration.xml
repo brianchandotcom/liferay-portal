@@ -524,6 +524,12 @@ http://www.w3.org/TR/html401/struct/global.html
 		<tag name="s" action="validate" />
 		<tag name="section" action="validate" />
 		<tag name="source" action="validate">
+			<attribute name="src" onInvalid="removeTag">
+				<regexp-list>
+					<regexp name="onsiteURL"/>
+					<regexp name="offsiteURL"/>
+				</regexp-list>
+			</attribute>
 			<attribute name="srcset">
 				<regexp-list>
 					<regexp name="anything"/>
@@ -542,6 +548,63 @@ http://www.w3.org/TR/html401/struct/global.html
 		</tag>
 		<tag name="summary" action="validate" />
 		<tag name="time" action="validate" />
+		<tag name="video" action="validate">
+			<attribute name="autoplay">
+				<regexp-list>
+					<regexp name="anything"/>
+				</regexp-list>
+			</attribute>
+			<attribute name="controls">
+				<regexp-list>
+					<regexp name="anything"/>
+				</regexp-list>
+			</attribute>
+			<attribute name="crossorigin">
+				<literal-list>
+					<literal value="anonymous"/>
+					<literal value="use-credentials"/>
+				</literal-list>
+			</attribute>
+			<attribute name="height">
+				<regexp-list>
+					<regexp name="number"/>
+				</regexp-list>
+			</attribute>
+			<attribute name="loop">
+				<regexp-list>
+					<regexp name="anything"/>
+				</regexp-list>
+			</attribute>
+			<attribute name="muted">
+				<regexp-list>
+					<regexp name="anything"/>
+				</regexp-list>
+			</attribute>
+			<attribute name="poster">
+				<regexp-list>
+					<regexp name="onsiteURL"/>
+					<regexp name="offsiteURL"/>
+				</regexp-list>
+			</attribute>
+			<attribute name="preload">
+				<literal-list>
+					<literal value="auto"/>
+					<literal value="metadata"/>
+					<literal value="none"/>
+				</literal-list>
+			</attribute>
+			<attribute name="src">
+				<regexp-list>
+					<regexp name="onsiteURL"/>
+					<regexp name="offsiteURL"/>
+				</regexp-list>
+			</attribute>
+			<attribute name="width">
+				<regexp-list>
+					<regexp name="number" />
+				</regexp-list>
+			</attribute>
+		</tag>
 		<tag name="wbr" action="validate" />
 
 		<!-- Tags related to JavaScript -->

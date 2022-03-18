@@ -1805,18 +1805,18 @@ public class CommerceOrderLocalServiceImpl
 			commerceOrder.setDeliveryCommerceTermEntryId(
 				deliveryCommerceTermEntry.getCommerceTermEntryId());
 			commerceOrder.setDeliveryCommerceTermEntryDescription(
-				deliveryCommerceTermEntry.getDescription(languageId));
+				deliveryCommerceTermEntry.getDescription(languageId, true));
 			commerceOrder.setDeliveryCommerceTermEntryName(
-				deliveryCommerceTermEntry.getLabel(languageId));
+				deliveryCommerceTermEntry.getLabel(languageId, true));
 		}
 
 		if (paymentCommerceTermEntry != null) {
 			commerceOrder.setPaymentCommerceTermEntryId(
 				paymentCommerceTermEntry.getCommerceTermEntryId());
 			commerceOrder.setPaymentCommerceTermEntryDescription(
-				paymentCommerceTermEntry.getDescription(languageId));
+				paymentCommerceTermEntry.getDescription(languageId, true));
 			commerceOrder.setPaymentCommerceTermEntryName(
-				paymentCommerceTermEntry.getLabel(languageId));
+				paymentCommerceTermEntry.getLabel(languageId, true));
 		}
 
 		return commerceOrderPersistence.update(commerceOrder);

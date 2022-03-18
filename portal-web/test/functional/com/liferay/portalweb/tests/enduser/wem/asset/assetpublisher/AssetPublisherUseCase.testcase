@@ -556,64 +556,54 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-120568."
+	@description = "This is a use case for LPS-120568. The user could edit message board thread reply via Asset Publisher."
 	@priority = "5"
-	test EditMessageBoardPostsViaAP {
-		JSONLayout.addPublicLayout(
-			groupName = "Test Site Name",
-			layoutName = "Message Boards Page");
+	test EditMessageBoardThreadReplyViaAP {
+		task ("Add a Message Boards to page") {
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Asset Publisher Page",
+				widgetName = "Message Boards");
+		}
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Test Site Name",
-			layoutName = "Message Boards Page",
-			widgetName = "Message Boards");
+		task ("Add a message board thread") {
+			JSONMBMessage.addMessage(
+				groupName = "Test Site Name",
+				threadBody = "MB Thread Message Body",
+				threadSubject = "MB Thread Message Subject");
+		}
 
-		Navigator.gotoSitePage(
-			pageName = "Message Boards Page",
-			siteName = "Test Site Name");
+		task ("Add a reply under thread") {
+			JSONMBMessage.addMessageReply(
+				groupName = "Test Site Name",
+				replyBody = "MB Thread Reply Body",
+				threadSubject = "MB Thread Message Subject");
+		}
 
-		MessageboardsThread.addPG(
-			threadBody = "MB Thread Message Body",
-			threadSubject = "MB Thread Message Subject");
+		task ("Select the message board thread in Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Message Boards Page",
-			siteName = "Test Site Name");
+			AssetPublisherPortlet.configureSelectedPG(selectedAsset = "Message Boards Message");
+		}
 
-		MessageboardsThread.replyPG(
-			threadBody = "MB Thread Message Body",
-			threadReplyBody = "MB Thread Reply Body",
-			threadSubject = "MB Thread Message Subject");
+		task ("Edit the reply via Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Asset Publisher Page",
+				siteName = "Test Site Name");
 
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
+			MessageboardsThread.editReplyViaAP(
+				threadBody = "MB Thread Reply Body Edit",
+				threadReplySubject = "RE: MB Thread Message Subject",
+				threadSubject = "RE: MB Thread Message Subject Edit");
+		}
 
-		AssetPublisherPortlet.gotoConfigurationPG();
-
-		Navigator.gotoNavTab(navTab = "Asset Selection");
-
-		Click(locator1 = "APConfiguration#ASSET_SELECTION_DYNAMIC");
-
-		PortletEntry.save();
-
-		IFrame.closeFrame();
-
-		AssetPublisherPortlet.configureSelectedPG(selectedAsset = "Message Boards Message");
-
-		Navigator.gotoSitePage(
-			pageName = "Asset Publisher Page",
-			siteName = "Test Site Name");
-
-		MessageboardsThread.editReplyViaAP(
-			threadBody = "MB Thread Reply Body Edit",
-			threadReplySubject = "RE: MB Thread Message Subject",
-			threadSubject = "RE: MB Thread Message Subject Edit");
-
-		AssetPublisherPortlet.viewPG(
-			assetContent = "MB Thread Reply Body Edit",
-			assetTitle = "RE: MB Thread Message Subject Edit");
+		task ("View edited message board reply shown in Asset Publisher") {
+			AssetPublisherPortlet.viewPG(
+				assetContent = "MB Thread Reply Body Edit",
+				assetTitle = "RE: MB Thread Message Subject Edit");
+		}
 	}
 
 	@description = "Filter and order the displayed assets by field."

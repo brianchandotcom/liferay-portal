@@ -33,6 +33,9 @@ page import="com.liferay.portal.search.web.internal.search.insights.display.cont
 
 <%
 SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDisplayContext)java.util.Objects.requireNonNull(request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT));
+
+String insightsRequestId = liferayPortletResponse.getNamespace() + "insightsRequest";
+String insightsResponseId = liferayPortletResponse.getNamespace() + "insightsResponse";
 %>
 
 <style>
@@ -68,18 +71,18 @@ SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDispl
 						displayType="secondary"
 						icon="copy"
 						label="copy-to-clipboard"
-						onClick='<%= liferayPortletResponse.getNamespace() + "copyToClipboard('insightsRequest');" %>'
+						onClick='<%= liferayPortletResponse.getNamespace() + "copyToClipboard('" + insightsRequestId + "');" %>'
 						small="<%= true %>"
 					/>
 
 					<div class="codemirror-editor-wrapper">
-						<textarea readonly id="<portlet:namespace />insightsRequest"><%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %></textarea>
+						<textarea readonly id="<%= insightsRequestId %>"><%= HtmlUtil.escape(searchInsightsDisplayContext.getRequestString()) %></textarea>
 					</div>
 
 					<liferay-frontend:component
 						context='<%=
 							HashMapBuilder.<String, Object>put(
-								"id", liferayPortletResponse.getNamespace() + "insightsRequest"
+								"id", insightsRequestId
 							).build()
 						%>'
 						module="js/CodeMirrorTextArea"
@@ -97,18 +100,18 @@ SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDispl
 						displayType="secondary"
 						icon="copy"
 						label="copy-to-clipboard"
-						onClick='<%= liferayPortletResponse.getNamespace() + "copyToClipboard('insightsResponse');" %>'
+						onClick='<%= liferayPortletResponse.getNamespace() + "copyToClipboard('" + insightsResponseId + "');" %>'
 						small="<%= true %>"
 					/>
 
 					<div class="codemirror-editor-wrapper">
-						<textarea readonly id="<portlet:namespace />insightsResponse"><%= HtmlUtil.escape(searchInsightsDisplayContext.getResponseString()) %></textarea>
+						<textarea readonly id="<%= insightsResponseId %>"><%= HtmlUtil.escape(searchInsightsDisplayContext.getResponseString()) %></textarea>
 					</div>
 
 					<liferay-frontend:component
 						context='<%=
 							HashMapBuilder.<String, Object>put(
-								"id", liferayPortletResponse.getNamespace() + "insightsResponse"
+								"id", insightsResponseId
 							).build()
 						%>'
 						module="js/CodeMirrorTextArea"
@@ -121,7 +124,7 @@ SearchInsightsDisplayContext searchInsightsDisplayContext = (SearchInsightsDispl
 
 <aui:script>
 	function <portlet:namespace />copyToClipboard(id) {
-		const text = document.getElementById('<portlet:namespace />' + id).value;
+		const text = document.getElementById(id).value;
 
 		navigator.clipboard.writeText(text).then(
 			() => {

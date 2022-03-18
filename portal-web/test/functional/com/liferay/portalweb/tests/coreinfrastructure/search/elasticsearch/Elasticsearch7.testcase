@@ -195,17 +195,13 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "apple");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_STRING_QUERY",
-			value1 = "&quot;explain&quot;:true");
+		AssertElementPresent(
+			key_text = "&quot;explain&quot;",
+			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_REQUEST_QUERY");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_QUERY",
-			value1 = "buckets");
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_QUERY",
-			value1 = "_explanation");
+		AssertElementPresent(
+			key_text = "&quot;_explanation&quot;",
+			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_QUERY");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Insights",
@@ -223,13 +219,13 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "apple");
 
-		AssertTextEquals.assertPartialText(
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_STRING_QUERY",
-			value1 = "&quot;explain&quot;:false");
+		AssertElementPresent(
+			key_text = "&quot;explain&quot;",
+			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_REQUEST_QUERY");
 
-		AssertTextNotEquals.assertNotPartialText(
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_QUERY",
-			value1 = "_explanation");
+		AssertElementNotPresent(
+			key_text = "&quot;_explanation&quot;",
+			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_QUERY");
 	}
 
 	@priority = "5"

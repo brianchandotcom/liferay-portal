@@ -120,9 +120,9 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "test");
 
-		AssertTextNotEquals.assertNotPartialText(
-			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_QUERY",
-			value1 = "hits");
+		AssertElementNotPresent(
+			key_text = "hits",
+			locator1 = "SearchResults#SEARCH_INSIGHTS_PORTLET_RESPONSE_QUERY");
 	}
 
 	test ApplyBlueprintToContentPageViaBlueprintsOptions {

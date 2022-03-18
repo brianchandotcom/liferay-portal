@@ -14,12 +14,12 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.assignment;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
-import com.liferay.portal.workflow.kaleo.runtime.assignment.KaleoTaskAssignmentSelector;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,19 +30,21 @@ import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-
-import org.powermock.api.support.membermodification.MemberMatcher;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Rafael Praxedes
  */
-@RunWith(PowerMockRunner.class)
 public class AggregateKaleoTaskAssignmentSelectorImplTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
@@ -149,31 +151,16 @@ public class AggregateKaleoTaskAssignmentSelectorImplTest {
 				_kaleoTaskAssignmentSelectors.entrySet()) {
 
 			kaleoTaskAssignmentSelectorTracker.addKaleoTaskAssignmentSelector(
-				new KaleoTaskAssignmentSelector() {
-
-					@Override
-					public Collection<KaleoTaskAssignment>
-							getKaleoTaskAssignments(
-								KaleoTaskAssignment kaleoTaskAssignment,
-								ExecutionContext executionContext)
-						throws PortalException {
-
-						return entry.getValue();
-					}
-
-				},
+				(kaleoTaskAssignment, executionContext) -> entry.getValue(),
 				HashMapBuilder.<String, Object>put(
 					"assignee.class.name", entry.getKey()
 				).build());
 		}
 
-		MemberMatcher.field(
-			AggregateKaleoTaskAssignmentSelectorImpl.class,
-			"_kaleoTaskAssignmentSelectorRegistry"
-		).set(
+		ReflectionTestUtil.setFieldValue(
 			_aggregateKaleoTaskAssignmentSelectorImpl,
-			kaleoTaskAssignmentSelectorTracker
-		);
+			"_kaleoTaskAssignmentSelectorRegistry",
+			kaleoTaskAssignmentSelectorTracker);
 	}
 
 	private final AggregateKaleoTaskAssignmentSelectorImpl

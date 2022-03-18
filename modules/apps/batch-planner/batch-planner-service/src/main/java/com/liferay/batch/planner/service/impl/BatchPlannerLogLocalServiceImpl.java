@@ -16,7 +16,6 @@ package com.liferay.batch.planner.service.impl;
 
 import com.liferay.batch.planner.exception.BatchPlannerLogBatchEngineExportTaskERCException;
 import com.liferay.batch.planner.exception.BatchPlannerLogBatchEngineImportTaskERCException;
-import com.liferay.batch.planner.internal.sql.dsl.PredicateBuilder;
 import com.liferay.batch.planner.model.BatchPlannerLog;
 import com.liferay.batch.planner.model.BatchPlannerLogTable;
 import com.liferay.batch.planner.model.BatchPlannerPlan;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -181,17 +181,14 @@ public class BatchPlannerLogLocalServiceImpl
 		long companyId, boolean export, int start, int end,
 		OrderByComparator<BatchPlannerLog> orderByComparator) {
 
-		PredicateBuilder builder = PredicateBuilder.instance(
-			BatchPlannerPlanTable.INSTANCE);
-
 		return batchPlannerLogPersistence.dslQuery(
 			_getSelectJoinStep(
 			).where(
-				builder.andEq(
-					BatchPlannerPlanTable.INSTANCE.companyId, companyId
-				).andEq(
-					BatchPlannerPlanTable.INSTANCE.export, export
-				).build()
+				BatchPlannerPlanTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					BatchPlannerPlanTable.INSTANCE.export.eq(export)
+				)
 			).orderBy(
 				BatchPlannerLogTable.INSTANCE, orderByComparator
 			).limit(
@@ -205,19 +202,20 @@ public class BatchPlannerLogLocalServiceImpl
 		String searchByKeyword, int start, int end,
 		OrderByComparator<BatchPlannerLog> orderByComparator) {
 
-		PredicateBuilder builder = PredicateBuilder.instance(
-			BatchPlannerPlanTable.INSTANCE);
-
 		return batchPlannerLogPersistence.dslQuery(
 			_getSelectJoinStep(
 			).where(
-				builder.andEq(
-					BatchPlannerPlanTable.INSTANCE.companyId, companyId
-				).andEq(
-					BatchPlannerPlanTable.INSTANCE.export, export
-				).andLike(
-					searchByField, searchByKeyword
-				).build()
+				BatchPlannerPlanTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					BatchPlannerPlanTable.INSTANCE.export.eq(export)
+				).and(
+					BatchPlannerPlanTable.INSTANCE.getColumn(
+						searchByField
+					).like(
+						StringUtil.quote(searchByKeyword)
+					)
+				)
 			).orderBy(
 				BatchPlannerLogTable.INSTANCE, orderByComparator
 			).limit(
@@ -239,17 +237,18 @@ public class BatchPlannerLogLocalServiceImpl
 		long companyId, String searchByField, String searchByKeyword, int start,
 		int end, OrderByComparator<BatchPlannerLog> orderByComparator) {
 
-		PredicateBuilder builder = PredicateBuilder.instance(
-			BatchPlannerPlanTable.INSTANCE);
-
 		return batchPlannerLogPersistence.dslQuery(
 			_getSelectJoinStep(
 			).where(
-				builder.andEq(
-					BatchPlannerPlanTable.INSTANCE.companyId, companyId
-				).andLike(
-					searchByField, searchByKeyword
-				).build()
+				BatchPlannerPlanTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					BatchPlannerPlanTable.INSTANCE.getColumn(
+						searchByField
+					).like(
+						StringUtil.quote(searchByKeyword)
+					)
+				)
 			).orderBy(
 				BatchPlannerLogTable.INSTANCE, orderByComparator
 			).limit(
@@ -264,16 +263,13 @@ public class BatchPlannerLogLocalServiceImpl
 
 	@Override
 	public int getCompanyBatchPlannerLogsCount(long companyId, boolean export) {
-		PredicateBuilder builder = PredicateBuilder.instance(
-			BatchPlannerPlanTable.INSTANCE);
-
 		return dslQueryCount(
 			_getCountJoinStep().where(
-				builder.andEq(
-					BatchPlannerPlanTable.INSTANCE.companyId, companyId
-				).andEq(
-					BatchPlannerPlanTable.INSTANCE.export, export
-				).build()));
+				BatchPlannerPlanTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					BatchPlannerPlanTable.INSTANCE.export.eq(export)
+				)));
 	}
 
 	@Override
@@ -281,34 +277,36 @@ public class BatchPlannerLogLocalServiceImpl
 		long companyId, boolean export, String searchByField,
 		String searchByKeyword) {
 
-		PredicateBuilder builder = PredicateBuilder.instance(
-			BatchPlannerPlanTable.INSTANCE);
-
 		return dslQueryCount(
 			_getCountJoinStep().where(
-				builder.andEq(
-					BatchPlannerPlanTable.INSTANCE.companyId, companyId
-				).andEq(
-					BatchPlannerPlanTable.INSTANCE.export, export
-				).andLike(
-					searchByField, searchByKeyword
-				).build()));
+				BatchPlannerPlanTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					BatchPlannerPlanTable.INSTANCE.export.eq(export)
+				).and(
+					BatchPlannerPlanTable.INSTANCE.getColumn(
+						searchByField
+					).like(
+						StringUtil.quote(searchByKeyword)
+					)
+				)));
 	}
 
 	@Override
 	public int getCompanyBatchPlannerLogsCount(
 		long companyId, String searchByField, String searchByKeyword) {
 
-		PredicateBuilder builder = PredicateBuilder.instance(
-			BatchPlannerPlanTable.INSTANCE);
-
 		return dslQueryCount(
 			_getCountJoinStep().where(
-				builder.andEq(
-					BatchPlannerLogTable.INSTANCE.companyId, companyId
-				).andLike(
-					searchByField, searchByKeyword
-				).build()));
+				BatchPlannerLogTable.INSTANCE.companyId.eq(
+					companyId
+				).and(
+					BatchPlannerPlanTable.INSTANCE.getColumn(
+						searchByField
+					).like(
+						StringUtil.quote(searchByKeyword)
+					)
+				)));
 	}
 
 	@Override

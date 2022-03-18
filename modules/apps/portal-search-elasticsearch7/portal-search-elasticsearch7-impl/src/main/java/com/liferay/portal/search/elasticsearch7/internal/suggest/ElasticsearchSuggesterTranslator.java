@@ -15,7 +15,6 @@
 package com.liferay.portal.search.elasticsearch7.internal.suggest;
 
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.suggest.AggregateSuggester;
 import com.liferay.portal.kernel.search.suggest.CompletionSuggester;
 import com.liferay.portal.kernel.search.suggest.PhraseSuggester;
 import com.liferay.portal.kernel.search.suggest.Suggester;
@@ -44,11 +43,6 @@ public class ElasticsearchSuggesterTranslator
 		Suggester suggester, SearchContext searchContext) {
 
 		return suggester.accept(this);
-	}
-
-	@Override
-	public SuggestionBuilder visit(AggregateSuggester aggregateSuggester) {
-		return null;
 	}
 
 	@Override

@@ -45,14 +45,74 @@ definition {
 
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "This is a test for COMMERCE-8333. Deleting an account default delivery term will revert to Use Priority Settings"
 	@priority = "4"
 	test RemoveADeliveryTermLinkedToAnAccountAsDefaultOne {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8333 RemoveADeliveryTermLinkedToAnAccountAsDefaultOne pending implementation
+		task ("Given the Sales Manager created two delivery terms entries with different priority into "Terms and Conditions".") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
 
+			CommercePaymentTerms.addTermsAndCondition(
+				active = "true",
+				termsAndConditionName = "Terms and Condition Entry 1",
+				termsAndConditionType = "Delivery Terms",
+				valuePosition = "1");
+
+			Click(locator1 = "Icon#BACK");
+
+			CommercePaymentTerms.addTermsAndCondition(
+				active = "true",
+				termsAndConditionName = "Terms and Condition Entry 2",
+				termsAndConditionType = "Delivery Terms",
+				valuePosition = "2");
+		}
+
+		task ("Given the Sales Manager created an account with a specific default delivery term already selected.") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Accounts.setDefaultDeliveryCommerceTermsEntry(termEntry = "terms-and-condition-entry-1");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Accounts.viewDefaultDeliveryCommerceTermsEntry(termEntry = "terms-and-condition-entry-1");
+		}
+
+		task ("When the Sales Manager delete the delivery term that was linked to an Account as a default") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
+
+			CommercePaymentTerms.gotoEntryMenuItem(
+				menuItem = "Delete",
+				termsAndConditionName = "Terms and Condition Entry 1");
+
+			CommercePaymentTerms.viewDeleteTermsAndConditionEntry(termsAndConditionName = "Terms and Condition Entry 1");
+		}
+
+		task ("And go into the account edit page") {
+			Accounts.openAccountsAdmin();
+
+			Accounts.goToEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Account Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+		}
+
+		task ("Then the default payment is changed to "Use Priority Settings".") {
+			Accounts.viewDefaultDeliveryCommerceTermsEntry();
+		}
 	}
 
 	@description = "This is a test for COMMERCE-8320. Delete an account default payment term will revert to "Use Priority Settings"."

@@ -140,15 +140,11 @@ definition {
 	@description = "LPS-147835. Assert the action buttons are displayed as icon buttons in responsive mode"
 	@priority = "3"
 	test ResponsiveModeActionsAsIconButtons {
-		task ("Set window size to tablet size") {
+		task ("Given window size set to tablet size") {
 			SetWindowSize(value1 = "800,1024");
 		}
 
-		task ("Navigate to Management Toolbars tab") {
-			Navigator.gotoNavTab(navTab = "Management Toolbars");
-		}
-
-		task ("Assert action buttons are not displayed as icon and text buttons") {
+		task ("Then action buttons are not displayed as icon and text buttons") {
 			AssertNotVisible(
 				key_action = "Download",
 				key_icon = "download",
@@ -160,7 +156,7 @@ definition {
 				locator1 = "ManagementBar#ICON_AND_TEXT_ACTION_BUTTON");
 		}
 
-		task ("Assert action buttons are displayed as icon buttons") {
+		task ("Then action buttons are displayed as icon buttons") {
 			AssertElementPresent(
 				key_text = "download",
 				locator1 = "ManagementBar#ANY_ICON");

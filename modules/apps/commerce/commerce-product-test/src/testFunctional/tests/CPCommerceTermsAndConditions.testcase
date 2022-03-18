@@ -185,14 +185,76 @@ definition {
 		}
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
+	@description = "This is a test for COMMERCE-8334. If the delivery term set for the account is changed to inactive, the default term remains shown but inactive"
 	@priority = "4"
 	test SetAnInactiveDeliveryTermLinkedToAnAccountAsDefaultOne {
 		property portal.acceptance = "false";
 
-		// TODO COMMERCE-8334 SetAnInactiveDeliveryTermLinkedToAnAccountAsDefaultOne pending implementation
+		task ("Given a new entry into the "Terms and Conditions" with status to "Active".") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
 
+			CommercePaymentTerms.addTermsAndCondition(
+				active = "true",
+				termsAndConditionName = "Terms and Condition Entry 1",
+				termsAndConditionType = "Delivery Terms",
+				valuePosition = "1");
+
+			Click(locator1 = "Button#BACK");
+		}
+
+		task ("Given an account with a specific default delivery term already selected.") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+
+			Accounts.setDefaultDeliveryCommerceTermsEntry(termEntry = "terms-and-condition-entry-1");
+		}
+
+		task ("When the Sales Manager set the delivery term that was linked to an account as "inactive".") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
+
+			CommercePaymentTerms.gotoEntryMenuItem(
+				menuItem = "Edit",
+				termsAndConditionName = "Terms and Condition Entry 1");
+
+			ClickNoError(locator1 = "ToggleSwitch#ACTIVE");
+
+			Button.clickPublish();
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("And go into the account edit order page") {
+			Accounts.openAccountsAdmin();
+
+			Accounts.goToEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Account Name");
+
+			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
+		}
+
+		task ("Then near the default delivery appear an orange triangle") {
+			Accounts.viewDefaultDeliveryCommerceTermsEntry(
+				inactive = "true",
+				termEntry = "terms-and-condition-entry-1");
+		}
+
+		task ("And if we move the mouse over the triangle the word "Inactive" appears.") {
+			MouseOver(
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_ENTRY_INACTIVE_ICON",
+				value1 = "Inactive term");
+		}
 	}
 
 	@description = "This is a test for COMMERCE-8328. If the payment term set for the account is changed to inactive, the default term remains shown but inactive"

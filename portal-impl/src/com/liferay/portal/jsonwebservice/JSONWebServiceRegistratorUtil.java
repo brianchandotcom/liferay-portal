@@ -32,9 +32,9 @@ import java.lang.reflect.Method;
 /**
  * @author Igor Spasic
  */
-public class DefaultJSONWebServiceRegistrator {
+public class JSONWebServiceRegistratorUtil {
 
-	public void processBean(
+	public static void processBean(
 		String contextName, String contextPath, Object bean) {
 
 		if (!PropsValues.JSON_WEB_SERVICE_ENABLED) {
@@ -42,14 +42,14 @@ public class DefaultJSONWebServiceRegistrator {
 		}
 
 		JSONWebService jsonWebService = AnnotationLocator.locate(
-			getTargetClass(bean), JSONWebService.class);
+			_getTargetClass(bean), JSONWebService.class);
 
 		if (jsonWebService == null) {
 			return;
 		}
 
 		try {
-			onJSONWebServiceBean(
+			_onJSONWebServiceBean(
 				contextName, contextPath, bean, jsonWebService);
 		}
 		catch (Exception exception) {
@@ -57,7 +57,7 @@ public class DefaultJSONWebServiceRegistrator {
 		}
 	}
 
-	protected Class<?> getTargetClass(Object service) {
+	private static Class<?> _getTargetClass(Object service) {
 		while (ProxyUtil.isProxyClass(service.getClass())) {
 			InvocationHandler invocationHandler =
 				ProxyUtil.getInvocationHandler(service);
@@ -96,7 +96,7 @@ public class DefaultJSONWebServiceRegistrator {
 		return service.getClass();
 	}
 
-	protected void onJSONWebServiceBean(
+	private static void _onJSONWebServiceBean(
 			String contextName, String contextPath, Object serviceBean,
 			JSONWebService jsonWebService)
 		throws Exception {
@@ -154,6 +154,6 @@ public class DefaultJSONWebServiceRegistrator {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DefaultJSONWebServiceRegistrator.class);
+		JSONWebServiceRegistratorUtil.class);
 
 }

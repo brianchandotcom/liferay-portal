@@ -246,10 +246,7 @@ public class JSONWebServiceActionsManagerImpl
 	public int registerService(
 		String contextName, String contextPath, Object service) {
 
-		DefaultJSONWebServiceRegistrator defaultJSONWebServiceRegistrator =
-			new DefaultJSONWebServiceRegistrator();
-
-		defaultJSONWebServiceRegistrator.processBean(
+		JSONWebServiceRegistratorUtil.processBean(
 			contextName, contextPath, service);
 
 		int count = getJSONWebServiceActionsCount(contextPath);
@@ -292,14 +289,11 @@ public class JSONWebServiceActionsManagerImpl
 			return -1;
 		}
 
-		DefaultJSONWebServiceRegistrator defaultJSONWebServiceRegistrator =
-			new DefaultJSONWebServiceRegistrator();
-
 		String[] beanNames = beanLocator.getNames();
 
 		for (String beanName : beanNames) {
 			try {
-				defaultJSONWebServiceRegistrator.processBean(
+				JSONWebServiceRegistratorUtil.processBean(
 					contextName, contextPath, beanLocator.locate(beanName));
 			}
 			catch (BeanLocatorException beanLocatorException) {

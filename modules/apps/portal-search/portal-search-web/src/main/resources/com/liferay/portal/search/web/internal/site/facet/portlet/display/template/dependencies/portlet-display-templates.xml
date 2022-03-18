@@ -6,7 +6,7 @@
 		<name>portlet-display-template-name-compact-layout</name>
 		<description>portlet-display-template-description-facet-compact</description>
 		<language>ftl</language>
-		<script-file>com/liferay/portal/search/web/internal/site/facet/template/dependencies/portlet_display_template_compact.ftl</script-file>
+		<script-file>com/liferay/portal/search/web/internal/site/facet/portlet/display/template/dependencies/portlet_display_template_compact.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 	<template>
@@ -14,7 +14,7 @@
 		<name>portlet-display-template-name-label-layout</name>
 		<description>portlet-display-template-description-facet-label</description>
 		<language>ftl</language>
-		<script-file>com/liferay/portal/search/web/internal/site/facet/template/dependencies/portlet_display_template_label.ftl</script-file>
+		<script-file>com/liferay/portal/search/web/internal/site/facet/portlet/display/template/dependencies/portlet_display_template_label.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 </root>

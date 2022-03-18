@@ -109,8 +109,8 @@ public class SiteFacetPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return "com/liferay/portal/search/web/internal/site/facet/template" +
-			"/dependencies/portlet-display-templates.xml";
+		return "com/liferay/portal/search/web/internal/site/facet/portlet" +
+			"/display/template/dependencies/portlet-display-templates.xml";
 	}
 
 	@Reference

@@ -26,33 +26,35 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PropsImpl;
 
 import java.util.Locale;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mockito;
-
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Adam Brandizzi
  */
-@RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor("com.liferay.portal.kernel.search.BaseIndexer")
 public class FolderTitleLookupTest {
 
-	@Before
-	public void setUp() {
-		_setUpPropsUtil();
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@BeforeClass
+	public static void setUpClass() {
+		PropsUtil.setProps(new PropsImpl());
 	}
 
 	@Test
@@ -144,10 +146,6 @@ public class FolderTitleLookupTest {
 		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return request;
-	}
-
-	private void _setUpPropsUtil() {
-		PropsUtil.setProps(new PropsImpl());
 	}
 
 }

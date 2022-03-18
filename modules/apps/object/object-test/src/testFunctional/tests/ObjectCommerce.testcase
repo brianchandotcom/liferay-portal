@@ -41,11 +41,44 @@ definition {
 	}
 
 	@description = "LPS-136741 - Verify that Object scoped by Company is not displayed on the Commerce notification type for Site type Channel"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ObjectScopedCompanyNotDisplayedSiteChannel {
 
-		// TODO LPS-145735 ObjectScopedCompanyNotDisplayedSiteChannel pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 145735",
+			objectName = "CustomObject145735",
+			pluralLabelName = "Custom Objects 145735");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject145735");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject145735");
+
+		CommerceNavigator.gotoPortlet(
+			category = "Store Management",
+			portlet = "Channels");	
+
+		Click(locator1 = "Button#PLUS");	
+		
+		CommerceEntry.addNewChannelsEntry(
+			channelCurrency = "US Dollar",
+			channelName = "Test Channel",
+			channelType = "Site");
+
+		Refresh();
+		
+		ObjectCommerce.channelsTab(navigatorChannels = "Notification Templates");
+		
+		LexiconEntry.gotoAdd();
+
+		for ( var	optionTypeList : list "Create,Delete,Update"){
+			ObjectCommerce.viewNotPresentOptionType(optionType = "${optionTypeList}");	
+			}
 
 	}
 

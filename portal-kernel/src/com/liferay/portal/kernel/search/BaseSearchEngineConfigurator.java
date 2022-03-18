@@ -227,15 +227,6 @@ public abstract class BaseSearchEngineConfigurator
 
 	protected abstract IndexWriter getIndexWriter();
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #getOperatingClassLoader()}
-	 */
-	@Deprecated
-	protected ClassLoader getOperatingClassloader() {
-		return getOperatingClassLoader();
-	}
-
 	protected abstract ClassLoader getOperatingClassLoader();
 
 	protected abstract SearchEngineHelper getSearchEngineHelper();

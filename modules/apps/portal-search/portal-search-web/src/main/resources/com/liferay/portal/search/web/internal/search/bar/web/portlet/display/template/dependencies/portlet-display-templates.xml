@@ -6,7 +6,7 @@
 		<name>portlet-display-template-name-left-aligned-icon-layout</name>
 		<description>portlet-display-template-description-left-aligned-icon</description>
 		<language>ftl</language>
-		<script-file>com/liferay/portal/search/web/internal/search/bar/web/portlet/template/dependencies/portlet_display_template_left_aligned_icon.ftl</script-file>
+		<script-file>com/liferay/portal/search/web/internal/search/bar/web/portlet/display/template/dependencies/portlet_display_template_left_aligned_icon.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 </root>

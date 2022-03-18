@@ -99,7 +99,7 @@ public class SearchBarPortletDisplayTemplateHandler
 	@Override
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/portal/search/web/internal/search/bar/web/portlet" +
-			"/template/dependencies/portlet-display-templates.xml";
+			"/display/template/dependencies/portlet-display-templates.xml";
 	}
 
 	@Reference

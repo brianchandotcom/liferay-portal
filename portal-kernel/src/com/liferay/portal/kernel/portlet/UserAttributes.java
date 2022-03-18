@@ -81,13 +81,6 @@ public class UserAttributes {
 
 	public static final String USER_NAME_SUFFIX = "user.name.suffix";
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #USER_NAME_NICK_NAME}
-	 */
-	@Deprecated
-	public static final String USER_NAME_NICKNAME = "user.name.nickName";
-
 	public static final String USER_NAME_NICK_NAME = "user.name.nickName";
 
 	public static final String USER_HOME_INFO_POSTAL_NAME =
@@ -469,7 +462,7 @@ public class UserAttributes {
 		else if (name.equals(USER_NAME_SUFFIX)) {
 			return StringPool.BLANK;
 		}
-		else if (name.equals(USER_NAME_NICKNAME)) {
+		else if (name.equals(USER_NAME_NICK_NAME)) {
 			return _user.getScreenName();
 		}
 		else if (name.equals(USER_LOGIN_ID)) {

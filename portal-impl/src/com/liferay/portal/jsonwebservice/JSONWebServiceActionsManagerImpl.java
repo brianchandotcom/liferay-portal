@@ -166,37 +166,6 @@ public class JSONWebServiceActionsManagerImpl
 
 	@Override
 	public synchronized void registerJSONWebServiceAction(
-		String contextName, String contextPath, Class<?> actionClass,
-		Method actionMethod, String path, String method) {
-
-		try {
-			if (!_addJSONWebServiceActionConfig(
-					new JSONWebServiceActionConfig(
-						contextName, contextPath, actionClass, actionMethod,
-						path, method))) {
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"A JSON web service action is already registered at " +
-							path);
-				}
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					StringBundler.concat(
-						"Unable to register service method {actionClass=",
-						actionClass, ", actionMethod=", actionMethod,
-						", contextName=", contextName, ", contextPath=",
-						contextPath, ", method=", method, ", path=", path,
-						"} due to ", exception.getMessage()));
-			}
-		}
-	}
-
-	@Override
-	public synchronized void registerJSONWebServiceAction(
 		String contextName, String contextPath, Object actionObject,
 		Class<?> actionClass, Method actionMethod, String path, String method) {
 

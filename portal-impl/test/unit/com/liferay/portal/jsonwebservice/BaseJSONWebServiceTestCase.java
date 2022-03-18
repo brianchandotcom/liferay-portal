@@ -106,16 +106,9 @@ public abstract class BaseJSONWebServiceTestCase extends PowerMockito {
 			String method = JSONWebServiceMappingResolverUtil.resolveHttpMethod(
 				actionMethod);
 
-			if (action != null) {
-				JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
-					servletContextName, StringPool.BLANK, action, actionClass,
-					actionMethod, path, method);
-			}
-			else {
-				JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
-					servletContextName, StringPool.BLANK, actionClass,
-					actionMethod, path, method);
-			}
+			JSONWebServiceActionsManagerUtil.registerJSONWebServiceAction(
+				servletContextName, StringPool.BLANK, action, actionClass,
+				actionMethod, path, method);
 		}
 	}
 

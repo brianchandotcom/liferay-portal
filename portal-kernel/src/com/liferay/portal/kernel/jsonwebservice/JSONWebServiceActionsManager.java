@@ -46,10 +46,6 @@ public interface JSONWebServiceActionsManager {
 		String contextName);
 
 	public void registerJSONWebServiceAction(
-		String contextName, String contextPath, Class<?> actionClass,
-		Method actionMethod, String path, String method);
-
-	public void registerJSONWebServiceAction(
 		String contextName, String contextPath, Object actionObject,
 		Class<?> actionClass, Method actionMethod, String path, String method);
 

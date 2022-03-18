@@ -258,9 +258,7 @@ public class AnalyticsBatchExportImportManagerImpl
 					"/dxp-batch-entities",
 				"resourceName", resourceName));
 
-		try {
-			InputStream inputStream = _http.URLtoInputStream(options);
-
+		try (InputStream inputStream = _http.URLtoInputStream(options)) {
 			Http.Response response = options.getResponse();
 
 			if (response.getResponseCode() ==
@@ -414,9 +412,7 @@ public class AnalyticsBatchExportImportManagerImpl
 
 		options.setPost(true);
 
-		try {
-			InputStream inputStream = _http.URLtoInputStream(options);
-
+		try (InputStream inputStream = _http.URLtoInputStream(options)) {
 			Http.Response response = options.getResponse();
 
 			if (response.getResponseCode() ==

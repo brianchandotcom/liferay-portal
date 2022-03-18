@@ -195,6 +195,8 @@ public class DBUpgrader {
 		if (PropsValues.UPGRADE_DATABASE_MANAGED_STARTUP) {
 			_releaseLock(thread, owner);
 		}
+
+		StartupHelperUtil.setUpgrading(false);
 	}
 
 	public static void verify() throws VerifyException {

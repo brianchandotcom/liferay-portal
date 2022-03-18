@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.module.framework.ModuleFrameworkUtil;
 import com.liferay.portal.transaction.TransactionsUtil;
@@ -162,7 +163,14 @@ public class DBUpgrader {
 	public static void upgrade(ApplicationContext applicationContext)
 		throws Exception {
 
+		Thread thread = null;
+		String owner = PortalUUIDUtil.generate();
+
 		StartupHelperUtil.setUpgrading(true);
+
+		if (PropsValues.UPGRADE_DATABASE_MANAGED_STARTUP) {
+			thread = _acquireLock(owner);
+		}
 
 		_upgradePortal();
 
@@ -182,6 +190,10 @@ public class DBUpgrader {
 
 		if (applicationContext == null) {
 			DependencyManagerSyncUtil.sync();
+		}
+
+		if (PropsValues.UPGRADE_DATABASE_MANAGED_STARTUP) {
+			_releaseLock(thread, owner);
 		}
 	}
 

@@ -3882,11 +3882,15 @@ definition {
 				assetTitle = "WC Title 1",
 				assetType = "Basic Web Content");
 
+			IFrame.closeFrame();
+
 			PageEditor.changeExperience(newExperience = "New Experience");
 
 			AssetPublisherPortlet.configureManualAssetSelectionPG(
 				assetTitle = "Blogs Entry Title",
 				assetType = "Blogs Entry");
+
+			IFrame.closeFrame();
 
 			PageEditor.clickPublish();
 		}

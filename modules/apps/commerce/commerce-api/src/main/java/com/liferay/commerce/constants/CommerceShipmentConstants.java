@@ -28,6 +28,8 @@ public class CommerceShipmentConstants {
 		CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED
 	};
 
+	public static final String FDS_NAMESPACE = "com_liferay_commerce_shipment";
+
 	public static final int SHIPMENT_STATUS_DELIVERED = 3;
 
 	public static final int SHIPMENT_STATUS_PROCESSING = 0;

@@ -1116,13 +1116,13 @@ definition {
 
 		ObjectPortlet.updateEntry(
 			entry = "987654321",
-			updateEntry = "12345678912345678");
+			updateEntry = "1234567891234567");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject253");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "987654321");
 
-		ObjectPortlet.viewEntry(entry = "12345678912345678");
+		ObjectPortlet.viewEntry(entry = "1234567891234567");
 	}
 
 	@description = "LPS-135396 - Verify it is possible to edit a Picklist entry on layout"

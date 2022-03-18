@@ -141,6 +141,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_SUBTITLE</td>
+	<td>//div[contains(@class,'form-group')][label[normalize-space(text())='${key_fieldLabel}']]/following-sibling::p[contains(@class,'text-secondary')][normalize-space(text())='${key_subtitle}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_VISIBLE</td>
 	<td>//div[@class='form-group' and contains(@data-field-name,'${key_fieldName}')]</td>
 	<td></td>

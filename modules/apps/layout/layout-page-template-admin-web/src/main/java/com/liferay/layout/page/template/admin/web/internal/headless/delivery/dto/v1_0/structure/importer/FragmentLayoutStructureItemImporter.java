@@ -111,64 +111,65 @@ public class FragmentLayoutStructureItemImporter
 		Map<String, Object> definitionMap = getDefinitionMap(
 			pageElement.getDefinition());
 
-		if (definitionMap != null) {
-			Map<String, Object> fragmentStyleMap =
-				(Map<String, Object>)definitionMap.get("fragmentStyle");
+		if (definitionMap == null) {
+			return layoutStructureItem;
+		}
 
-			int oldVersionCompareValue = Double.compare(
-				layoutStructureItemImporterContext.getPageDefinitionVersion(),
-				1.1);
+		Map<String, Object> fragmentStyleMap =
+			(Map<String, Object>)definitionMap.get("fragmentStyle");
 
-			if (oldVersionCompareValue < 0) {
-				Map<String, Object> fragmentConfigMap =
-					(Map<String, Object>)definitionMap.get("fragmentConfig");
+		int oldVersionCompareValue = Double.compare(
+			layoutStructureItemImporterContext.getPageDefinitionVersion(), 1.1);
 
-				if (MapUtil.isNotEmpty(fragmentConfigMap) ||
-					MapUtil.isNotEmpty(fragmentStyleMap)) {
+		if (oldVersionCompareValue < 0) {
+			Map<String, Object> fragmentConfigMap =
+				(Map<String, Object>)definitionMap.get("fragmentConfig");
 
-					JSONObject commonStylesJSONObject = toStylesJSONObject(
-						layoutStructureItemImporterContext, fragmentStyleMap);
-					JSONObject configStylesJSONObject = toStylesJSONObject(
-						layoutStructureItemImporterContext, fragmentConfigMap);
+			if (MapUtil.isNotEmpty(fragmentConfigMap) ||
+				MapUtil.isNotEmpty(fragmentStyleMap)) {
 
-					for (String key : commonStylesJSONObject.keySet()) {
-						if (Validator.isNull(
-								configStylesJSONObject.getString(key))) {
+				JSONObject commonStylesJSONObject = toStylesJSONObject(
+					layoutStructureItemImporterContext, fragmentStyleMap);
+				JSONObject configStylesJSONObject = toStylesJSONObject(
+					layoutStructureItemImporterContext, fragmentConfigMap);
 
-							configStylesJSONObject.put(
-								key, commonStylesJSONObject.get(key));
-						}
+				for (String key : commonStylesJSONObject.keySet()) {
+					if (Validator.isNull(
+							configStylesJSONObject.getString(key))) {
+
+						configStylesJSONObject.put(
+							key, commonStylesJSONObject.get(key));
 					}
-
-					JSONObject jsonObject = JSONUtil.put(
-						"styles",
-						JSONUtil.merge(
-							commonStylesJSONObject, configStylesJSONObject));
-
-					layoutStructureItem.updateItemConfig(jsonObject);
 				}
-			}
-			else if (fragmentStyleMap != null) {
+
 				JSONObject jsonObject = JSONUtil.put(
 					"styles",
-					toStylesJSONObject(
-						layoutStructureItemImporterContext, fragmentStyleMap));
+					JSONUtil.merge(
+						commonStylesJSONObject, configStylesJSONObject));
 
 				layoutStructureItem.updateItemConfig(jsonObject);
 			}
+		}
+		else if (fragmentStyleMap != null) {
+			JSONObject jsonObject = JSONUtil.put(
+				"styles",
+				toStylesJSONObject(
+					layoutStructureItemImporterContext, fragmentStyleMap));
 
-			if (definitionMap.containsKey("fragmentViewports")) {
-				List<Map<String, Object>> fragmentViewports =
-					(List<Map<String, Object>>)definitionMap.get(
-						"fragmentViewports");
+			layoutStructureItem.updateItemConfig(jsonObject);
+		}
 
-				for (Map<String, Object> fragmentViewport : fragmentViewports) {
-					JSONObject jsonObject = JSONUtil.put(
-						(String)fragmentViewport.get("id"),
-						toFragmentViewportStylesJSONObject(fragmentViewport));
+		if (definitionMap.containsKey("fragmentViewports")) {
+			List<Map<String, Object>> fragmentViewports =
+				(List<Map<String, Object>>)definitionMap.get(
+					"fragmentViewports");
 
-					layoutStructureItem.updateItemConfig(jsonObject);
-				}
+			for (Map<String, Object> fragmentViewport : fragmentViewports) {
+				JSONObject jsonObject = JSONUtil.put(
+					(String)fragmentViewport.get("id"),
+					toFragmentViewportStylesJSONObject(fragmentViewport));
+
+				layoutStructureItem.updateItemConfig(jsonObject);
 			}
 		}
 

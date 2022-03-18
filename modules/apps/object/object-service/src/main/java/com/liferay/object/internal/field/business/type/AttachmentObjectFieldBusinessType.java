@@ -20,7 +20,6 @@ import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectD
 import com.liferay.object.exception.ObjectFieldSettingsValidationException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
-import com.liferay.object.internal.field.business.type.util.ObjectFieldSettingsValidationUtil;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
@@ -137,13 +136,18 @@ public class AttachmentObjectFieldBusinessType
 	}
 
 	@Override
+	public Set<String> getRequiredSettings() {
+		return SetUtil.fromArray(
+			"acceptedFileExtensions", "fileSource", "maximumFileSize");
+	}
+
+	@Override
 	public void validateObjectFieldSettings(
 			String objectFieldName, Map<String, String> objectFieldSettings)
 		throws PortalException {
 
-		ObjectFieldSettingsValidationUtil.validate(
-			_allowedSettings, objectFieldName, objectFieldSettings,
-			_allowedSettings);
+		ObjectFieldBusinessType.super.validateObjectFieldSettings(
+			objectFieldName, objectFieldSettings);
 
 		String fileSource = objectFieldSettings.get("fileSource");
 
@@ -252,9 +256,6 @@ public class AttachmentObjectFieldBusinessType
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AttachmentObjectFieldBusinessType.class);
-
-	private static final Set<String> _allowedSettings = SetUtil.fromArray(
-		"acceptedFileExtensions", "fileSource", "maximumFileSize");
 
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;

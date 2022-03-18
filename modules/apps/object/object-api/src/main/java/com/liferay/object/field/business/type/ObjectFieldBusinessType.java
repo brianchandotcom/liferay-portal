@@ -19,16 +19,22 @@ import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Marcela Cunha
  */
 public interface ObjectFieldBusinessType {
+
+	public default Set<String> getAllowedSettings() {
+		return Collections.emptySet();
+	}
 
 	public String getDBType();
 
@@ -49,6 +55,10 @@ public interface ObjectFieldBusinessType {
 		return Collections.emptyMap();
 	}
 
+	public default Set<String> getRequiredSettings() {
+		return Collections.emptySet();
+	}
+
 	public default boolean isVisible() {
 		return true;
 	}
@@ -57,9 +67,27 @@ public interface ObjectFieldBusinessType {
 			String objectFieldName, Map<String, String> objectFieldSettings)
 		throws PortalException {
 
-		if (MapUtil.isNotEmpty(objectFieldSettings)) {
+		Set<String> settings = new HashSet<>(objectFieldSettings.keySet());
+
+		settings.removeAll(getAllowedSettings());
+		settings.removeAll(getRequiredSettings());
+
+		if (!settings.isEmpty()) {
 			throw new ObjectFieldSettingsValidationException.NotAllowedSettings(
-				objectFieldName, objectFieldSettings.keySet());
+				objectFieldName, settings);
+		}
+
+		settings = new HashSet<>();
+
+		for (String requiredSetting : getRequiredSettings()) {
+			if (Validator.isNull(objectFieldSettings.get(requiredSetting))) {
+				settings.add(requiredSetting);
+			}
+		}
+
+		if (!settings.isEmpty()) {
+			throw new ObjectFieldSettingsValidationException.RequiredSettings(
+				objectFieldName, settings);
 		}
 	}
 

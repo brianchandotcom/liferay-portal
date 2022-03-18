@@ -30,6 +30,11 @@
 	<td>//span[@class='label-item label-item-expand' and contains(text(), '${tagName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>MAX_TERMS_ERROR_MESSAGE</td>
+	<td>//div[@role='alert'][normalize-space(text()='${errorMessage}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

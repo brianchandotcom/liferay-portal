@@ -146,6 +146,12 @@ public class DLOpenerGoogleDriveManagerTest {
 
 				Assert.assertTrue(
 					_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry));
+
+				_dlOpenerGoogleDriveManager.delete(
+					_user.getUserId(), fileEntry);
+
+				Assert.assertFalse(
+					_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry));
 			});
 	}
 
@@ -167,6 +173,12 @@ public class DLOpenerGoogleDriveManagerTest {
 						dlOpenerGoogleDriveFileReference.getContentFile()));
 
 				Assert.assertTrue(
+					_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry));
+
+				_dlOpenerGoogleDriveManager.delete(
+					_user.getUserId(), fileEntry);
+
+				Assert.assertFalse(
 					_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry));
 			});
 	}

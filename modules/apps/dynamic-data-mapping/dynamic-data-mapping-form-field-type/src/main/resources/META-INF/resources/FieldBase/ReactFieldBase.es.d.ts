@@ -12,15 +12,34 @@
  * details.
  */
 
-export {FieldBase as ReactFieldBase} from './FieldBase/ReactFieldBase.es';
+import {LocalizedValue} from '../types';
 
-// @ts-ignore
+export function FieldBase(props: IFieldBase): JSX.Element;
 
-export {default as FieldBase} from './FieldBase/FieldBase.es';
-
-export type {
-	Direction,
-	FieldChangeEventHandler,
-	Locale,
-	LocalizedValue,
-} from './types';
+interface IFieldBase {
+	accessible?: boolean;
+	children?: any;
+	displayErrors?: any;
+	errorMessage?: any;
+	fieldName?: any;
+	hideEditedFlag?: any;
+	hideField?: any;
+	id?: any;
+	label?: any;
+	localizedValue?: LocalizedValue<any>;
+	name?: any;
+	nestedFields?: any;
+	onClick?: any;
+	overMaximumRepetitionsLimit?: boolean;
+	readOnly?: any;
+	repeatable?: any;
+	required?: any;
+	showLabel?: boolean;
+	style?: any;
+	text?: any;
+	tip?: any;
+	tooltip?: any;
+	type?: any;
+	valid?: any;
+	visible?: any;
+}

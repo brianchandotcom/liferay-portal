@@ -16,10 +16,19 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.RootCauseAnalysisToolJob;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class RCABatchTestClassGroup extends BatchTestClassGroup {
+
+	protected RCABatchTestClassGroup(
+		JSONObject jsonObject,
+		RootCauseAnalysisToolJob rootCauseAnalysisToolJob) {
+
+		super(jsonObject, rootCauseAnalysisToolJob);
+	}
 
 	protected RCABatchTestClassGroup(
 		String batchName, RootCauseAnalysisToolJob rootCauseAnalysisToolJob) {

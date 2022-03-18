@@ -19,6 +19,8 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 
 import java.io.File;
 
+import org.json.JSONObject;
+
 /**
  * @author Yi-Chen Tsai
  */
@@ -31,6 +33,12 @@ public class DefaultBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		return super.getAxisCount();
+	}
+
+	protected DefaultBatchTestClassGroup(
+		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
+
+		super(jsonObject, portalTestClassJob);
 	}
 
 	protected DefaultBatchTestClassGroup(

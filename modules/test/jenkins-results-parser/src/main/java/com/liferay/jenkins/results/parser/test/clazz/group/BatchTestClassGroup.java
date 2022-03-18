@@ -138,19 +138,30 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public JSONObject getJSONObject() {
-		JSONObject jsonObject = new JSONObject();
-
-		JSONArray axesJSONArray = new JSONArray();
-
-		for (AxisTestClassGroup axisTestClassGroup : getAxisTestClassGroups()) {
-			axesJSONArray.put(axisTestClassGroup.getJSONObject());
+		if (jsonObject != null) {
+			return jsonObject;
 		}
 
-		jsonObject.put("axes", axesJSONArray);
+		jsonObject = new JSONObject();
+
+		JSONArray segmentJSONArray = new JSONArray();
+
+		for (SegmentTestClassGroup segmentTestClassGroup :
+				getSegmentTestClassGroups()) {
+
+			segmentJSONArray.put(segmentTestClassGroup.getJSONObject());
+		}
+
+		jsonObject.put("segments", segmentJSONArray);
 
 		jsonObject.put("batch_name", getBatchName());
-
+		jsonObject.put("include_stable_test_suite", includeStableTestSuite);
 		jsonObject.put("job_properties", _getJobPropertiesMap());
+		jsonObject.put("test_release_bundle", testReleaseBundle);
+		jsonObject.put("test_relevant_changes", testRelevantChanges);
+		jsonObject.put(
+			"test_relevant_integration_unit_only",
+			testRelevantIntegrationUnitOnly);
 
 		return jsonObject;
 	}
@@ -226,6 +237,48 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return sb.toString();
+	}
+
+	protected BatchTestClassGroup(
+		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
+
+		this.jsonObject = jsonObject;
+		this.portalTestClassJob = portalTestClassJob;
+
+		batchName = jsonObject.getString("batch_name");
+
+		includeStableTestSuite = jsonObject.getBoolean(
+			"include_stable_test_suite");
+
+		portalGitWorkingDirectory =
+			portalTestClassJob.getPortalGitWorkingDirectory();
+
+		JSONArray segmentsJSONArray = jsonObject.optJSONArray("segments");
+
+		if ((segmentsJSONArray != null) && !segmentsJSONArray.isEmpty()) {
+			for (int i = 0; i < segmentsJSONArray.length(); i++) {
+				JSONObject segmentJSONObject = segmentsJSONArray.getJSONObject(
+					i);
+
+				_segmentTestClassGroups.add(
+					TestClassGroupFactory.newSegmentTestClassGroup(
+						this, segmentJSONObject));
+			}
+		}
+
+		testRelevantChanges = jsonObject.getBoolean("test_relevant_changes");
+		testReleaseBundle = jsonObject.getBoolean("test_release_bundle");
+		testRelevantIntegrationUnitOnly = jsonObject.getBoolean(
+			"test_relevant_integration_unit_only");
+
+		if (portalTestClassJob instanceof TestSuiteJob) {
+			TestSuiteJob testSuiteJob = (TestSuiteJob)portalTestClassJob;
+
+			testSuiteName = testSuiteJob.getTestSuiteName();
+		}
+		else {
+			testSuiteName = null;
+		}
 	}
 
 	protected BatchTestClassGroup(
@@ -603,6 +656,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		new ArrayList<>();
 	protected final String batchName;
 	protected boolean includeStableTestSuite;
+	protected JSONObject jsonObject;
 	protected final PortalGitWorkingDirectory portalGitWorkingDirectory;
 	protected final PortalTestClassJob portalTestClassJob;
 	protected boolean testReleaseBundle;

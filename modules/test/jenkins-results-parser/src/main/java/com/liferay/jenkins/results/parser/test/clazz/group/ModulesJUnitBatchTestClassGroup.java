@@ -32,10 +32,18 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONObject;
+
 /**
  * @author Yi-Chen Tsai
  */
 public class ModulesJUnitBatchTestClassGroup extends JUnitBatchTestClassGroup {
+
+	protected ModulesJUnitBatchTestClassGroup(
+		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
+
+		super(jsonObject, portalTestClassJob);
+	}
 
 	protected ModulesJUnitBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {

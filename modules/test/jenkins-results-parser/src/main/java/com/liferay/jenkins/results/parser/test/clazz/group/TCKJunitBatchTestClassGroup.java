@@ -51,12 +51,25 @@ public class TCKJunitBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
 	public JSONObject getJSONObject() {
-		JSONObject jsonObject = super.getJSONObject();
+		if (jsonObject != null) {
+			return jsonObject;
+		}
+
+		jsonObject = super.getJSONObject();
 
 		jsonObject.put("exclude_globs", getGlobs(_getExcludesJobProperties()));
 		jsonObject.put("include_globs", getGlobs(_getIncludesJobProperties()));
+		jsonObject.put("tck_home_dir", _tckHomeDir);
 
 		return jsonObject;
+	}
+
+	protected TCKJunitBatchTestClassGroup(
+		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
+
+		super(jsonObject, portalTestClassJob);
+
+		_tckHomeDir = new File(jsonObject.getString("tck_home_dir"));
 	}
 
 	protected TCKJunitBatchTestClassGroup(

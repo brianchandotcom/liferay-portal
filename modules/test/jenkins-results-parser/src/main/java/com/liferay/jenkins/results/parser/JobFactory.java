@@ -31,6 +31,146 @@ import org.json.JSONObject;
  */
 public class JobFactory {
 
+	public static String getKey(Job job) {
+		PortalGitWorkingDirectory portalGitWorkingDirectory = null;
+
+		if (job instanceof PortalTestClassJob) {
+			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
+
+			portalGitWorkingDirectory =
+				portalTestClassJob.getPortalGitWorkingDirectory();
+		}
+
+		List<String> projectNames = null;
+
+		if (job instanceof QAWebsitesGitRepositoryJob) {
+			QAWebsitesGitRepositoryJob qaWebsitesGitRepositoryJob =
+				(QAWebsitesGitRepositoryJob)job;
+
+			projectNames = qaWebsitesGitRepositoryJob.getProjectNames();
+		}
+
+		String repositoryName = null;
+
+		if (job instanceof GitRepositoryJob) {
+			GitRepositoryJob gitRepositoryJob = (GitRepositoryJob)job;
+
+			GitWorkingDirectory gitWorkingDirectory =
+				gitRepositoryJob.getGitWorkingDirectory();
+
+			repositoryName = gitWorkingDirectory.getGitRepositoryName();
+		}
+
+		String testSuiteName = "default";
+
+		if (job instanceof TestSuiteJob) {
+			TestSuiteJob testSuiteJob = (TestSuiteJob)job;
+
+			testSuiteName = testSuiteJob.getTestSuiteName();
+		}
+
+		String upstreamBranchName = null;
+
+		if (job instanceof GitRepositoryJob) {
+			GitRepositoryJob gitRepositoryJob = (GitRepositoryJob)job;
+
+			upstreamBranchName = gitRepositoryJob.getUpstreamBranchName();
+		}
+
+		return getKey(
+			job.getBuildProfile(), job.getJobName(), portalGitWorkingDirectory,
+			null, projectNames, repositoryName, testSuiteName,
+			upstreamBranchName);
+	}
+
+	public static String getKey(
+		Job.BuildProfile buildProfile, String jobName,
+		PortalGitWorkingDirectory portalGitWorkingDirectory,
+		String portalUpstreamBranchName, List<String> projectNames,
+		String repositoryName, String testSuiteName,
+		String upstreamBranchName) {
+
+		StringBuilder sb = new StringBuilder();
+
+		if (buildProfile == null) {
+			buildProfile = Job.BuildProfile.DXP;
+		}
+
+		sb.append(buildProfile);
+		sb.append("_");
+
+		sb.append(jobName);
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName) &&
+			(portalGitWorkingDirectory != null)) {
+
+			portalUpstreamBranchName =
+				portalGitWorkingDirectory.getUpstreamBranchName();
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
+			sb.append("_");
+			sb.append(portalUpstreamBranchName);
+		}
+
+		if ((projectNames != null) && !projectNames.isEmpty()) {
+			Collections.sort(projectNames);
+
+			sb.append("_");
+			sb.append(JenkinsResultsParserUtil.join("_", projectNames));
+		}
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(repositoryName)) {
+			sb.append("_");
+			sb.append(repositoryName);
+		}
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(testSuiteName)) {
+			testSuiteName = "default";
+		}
+
+		sb.append("_");
+		sb.append(testSuiteName);
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+			sb.append("_");
+			sb.append(upstreamBranchName);
+		}
+
+		return sb.toString();
+	}
+
+	public static String getKey(JSONObject jsonObject) {
+		Job.BuildProfile buildProfile = Job.BuildProfile.DXP;
+
+		if (jsonObject.has("build_profile")) {
+			buildProfile = Job.BuildProfile.getByString(
+				jsonObject.getString("build_profile"));
+		}
+
+		List<String> projectNames = null;
+
+		JSONArray projectNamesJSONArray = jsonObject.optJSONArray(
+			"project_names");
+
+		if ((projectNamesJSONArray != null) &&
+			!projectNamesJSONArray.isEmpty()) {
+
+			projectNames = new ArrayList<>();
+
+			for (int i = 0; i < projectNamesJSONArray.length(); i++) {
+				projectNames.add(projectNamesJSONArray.getString(i));
+			}
+		}
+
+		return getKey(
+			buildProfile, jsonObject.getString("job_name"), null,
+			jsonObject.optString("portal_upstream_branch_name"), projectNames,
+			jsonObject.optString("repository_name"),
+			jsonObject.optString("test_suite_name"),
+			jsonObject.optString("upstream_branch_name"));
+	}
+
 	public static Job newJob(Build build) {
 		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
 
@@ -126,80 +266,19 @@ public class JobFactory {
 		String repositoryName, String testSuiteName,
 		String upstreamBranchName) {
 
+		String key;
+
 		if (jsonObject != null) {
-			buildProfile = Job.BuildProfile.getByString(
-				jsonObject.getString("build_profile"));
 			jobName = jsonObject.getString("job_name");
-			portalUpstreamBranchName = jsonObject.optString(
-				"portal_upstream_branch_name");
-			repositoryName = jsonObject.optString("repository_name");
 
-			JSONArray projectNamesJSONArray = jsonObject.optJSONArray(
-				"project_names");
-
-			if ((projectNamesJSONArray != null) &&
-				!projectNamesJSONArray.isEmpty()) {
-
-				projectNames = new ArrayList<>();
-
-				for (int i = 0; i < projectNamesJSONArray.length(); i++) {
-					String projectName = projectNamesJSONArray.getString(i);
-
-					if (JenkinsResultsParserUtil.isNullOrEmpty(projectName) ||
-						projectNames.contains(projectName)) {
-
-						continue;
-					}
-
-					projectNames.add(projectName);
-				}
-			}
-
-			testSuiteName = jsonObject.optString("test_suite_name");
-			upstreamBranchName = jsonObject.optString("upstream_branch_name");
+			key = getKey(jsonObject);
 		}
-
-		StringBuilder sb = new StringBuilder();
-
-		if (buildProfile == null) {
-			buildProfile = Job.BuildProfile.DXP;
+		else {
+			key = getKey(
+				buildProfile, jobName, portalGitWorkingDirectory,
+				portalUpstreamBranchName, projectNames, repositoryName,
+				testSuiteName, upstreamBranchName);
 		}
-
-		sb.append("_");
-		sb.append(buildProfile);
-
-		sb.append(jobName);
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
-			sb.append("_");
-			sb.append(portalUpstreamBranchName);
-		}
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(repositoryName)) {
-			sb.append("_");
-			sb.append(repositoryName);
-		}
-
-		if ((projectNames != null) && !projectNames.isEmpty()) {
-			Collections.sort(projectNames);
-
-			sb.append("_");
-			sb.append(JenkinsResultsParserUtil.join("_", projectNames));
-		}
-
-		if (JenkinsResultsParserUtil.isNullOrEmpty(testSuiteName)) {
-			testSuiteName = "default";
-		}
-
-		sb.append("_");
-		sb.append(testSuiteName);
-
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
-			sb.append("_");
-			sb.append(upstreamBranchName);
-		}
-
-		String key = sb.toString();
 
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 
@@ -511,7 +590,9 @@ public class JobFactory {
 
 		_jobs.put(key, job);
 
-		buildDatabase.putJob(key, job);
+		if (jsonObject == null) {
+			buildDatabase.putJob(key, job);
+		}
 
 		return _jobs.get(key);
 	}

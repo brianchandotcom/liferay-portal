@@ -36,10 +36,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class JUnitRCABatchTestClassGroup extends RCABatchTestClassGroup {
+
+	protected JUnitRCABatchTestClassGroup(
+		JSONObject jsonObject,
+		RootCauseAnalysisToolJob rootCauseAnalysisToolJob) {
+
+		super(jsonObject, rootCauseAnalysisToolJob);
+	}
 
 	protected JUnitRCABatchTestClassGroup(
 		String batchName, RootCauseAnalysisToolJob rootCauseAnalysisToolJob) {

@@ -23,10 +23,19 @@ import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class FunctionalRCABatchTestClassGroup extends RCABatchTestClassGroup {
+
+	protected FunctionalRCABatchTestClassGroup(
+		JSONObject jsonObject,
+		RootCauseAnalysisToolJob rootCauseAnalysisToolJob) {
+
+		super(jsonObject, rootCauseAnalysisToolJob);
+	}
 
 	protected FunctionalRCABatchTestClassGroup(
 		String batchName, RootCauseAnalysisToolJob rootCauseAnalysisToolJob) {

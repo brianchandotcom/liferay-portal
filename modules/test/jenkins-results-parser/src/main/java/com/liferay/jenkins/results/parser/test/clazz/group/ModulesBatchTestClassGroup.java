@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 
@@ -25,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -43,12 +45,42 @@ public abstract class ModulesBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
 	public JSONObject getJSONObject() {
-		JSONObject jsonObject = super.getJSONObject();
+		if (jsonObject != null) {
+			return jsonObject;
+		}
+
+		jsonObject = super.getJSONObject();
 
 		jsonObject.put("exclude_globs", getGlobs(getExcludesJobProperties()));
 		jsonObject.put("include_globs", getGlobs(getIncludesJobProperties()));
+		jsonObject.put("modified_dirs_list", moduleDirsList);
 
 		return jsonObject;
+	}
+
+	protected ModulesBatchTestClassGroup(
+		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
+
+		super(jsonObject, portalTestClassJob);
+
+		JSONArray modifiedDirsJSONArray = jsonObject.optJSONArray(
+			"modified_dirs_list");
+
+		if ((modifiedDirsJSONArray == null) ||
+			modifiedDirsJSONArray.isEmpty()) {
+
+			return;
+		}
+
+		for (int i = 0; i < modifiedDirsJSONArray.length(); i++) {
+			String modifiedDirPath = modifiedDirsJSONArray.getString(i);
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(modifiedDirPath)) {
+				continue;
+			}
+
+			moduleDirsList.add(new File(modifiedDirPath));
+		}
 	}
 
 	protected ModulesBatchTestClassGroup(

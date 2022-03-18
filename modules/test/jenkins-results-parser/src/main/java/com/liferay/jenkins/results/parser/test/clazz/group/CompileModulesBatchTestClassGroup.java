@@ -28,6 +28,8 @@ import java.nio.file.PathMatcher;
 import java.util.Collections;
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Leslie Wong
  */
@@ -41,6 +43,12 @@ public class CompileModulesBatchTestClassGroup
 		}
 
 		return super.getAxisCount();
+	}
+
+	protected CompileModulesBatchTestClassGroup(
+		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
+
+		super(jsonObject, portalTestClassJob);
 	}
 
 	protected CompileModulesBatchTestClassGroup(

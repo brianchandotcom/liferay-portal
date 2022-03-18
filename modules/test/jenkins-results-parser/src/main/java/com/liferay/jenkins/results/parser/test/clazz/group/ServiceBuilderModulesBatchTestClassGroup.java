@@ -28,6 +28,8 @@ import java.nio.file.PathMatcher;
 import java.util.Collections;
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Yi-Chen Tsai
  */
@@ -53,10 +55,31 @@ public class ServiceBuilderModulesBatchTestClassGroup
 		return _buildType;
 	}
 
+	@Override
+	public JSONObject getJSONObject() {
+		if (jsonObject != null) {
+			return jsonObject;
+		}
+
+		jsonObject = super.getJSONObject();
+
+		jsonObject.put("build_type", _buildType);
+
+		return jsonObject;
+	}
+
 	public static enum BuildType {
 
 		CORE, FULL
 
+	}
+
+	protected ServiceBuilderModulesBatchTestClassGroup(
+		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
+
+		super(jsonObject, portalTestClassJob);
+
+		_buildType = BuildType.valueOf(jsonObject.getString("build_type"));
 	}
 
 	protected ServiceBuilderModulesBatchTestClassGroup(

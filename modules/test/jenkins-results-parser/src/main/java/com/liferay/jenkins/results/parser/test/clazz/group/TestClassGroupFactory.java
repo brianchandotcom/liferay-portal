@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
+import com.liferay.jenkins.results.parser.JobFactory;
 import com.liferay.jenkins.results.parser.PortalAWSJob;
 import com.liferay.jenkins.results.parser.PortalEnvironmentJob;
 import com.liferay.jenkins.results.parser.PortalTestClassJob;
@@ -87,141 +88,15 @@ public class TestClassGroupFactory {
 	}
 
 	public static BatchTestClassGroup newBatchTestClassGroup(
+		Job job, JSONObject jsonObject) {
+
+		return _newBatchTestClassGroup(null, job, jsonObject);
+	}
+
+	public static BatchTestClassGroup newBatchTestClassGroup(
 		String batchName, Job job) {
 
-		String key = JenkinsResultsParserUtil.combine(
-			batchName, "_", String.valueOf(job.getBuildProfile()), "_",
-			job.getJobName());
-
-		if (_batchTestClassGroups.containsKey(key)) {
-			return _batchTestClassGroups.get(key);
-		}
-
-		BatchTestClassGroup batchTestClassGroup = null;
-
-		if (job instanceof PortalEnvironmentJob) {
-			batchTestClassGroup = new EnvironmentFunctionalBatchTestClassGroup(
-				batchName, (PortalEnvironmentJob)job);
-		}
-
-		if ((batchTestClassGroup == null) &&
-			(job instanceof RootCauseAnalysisToolJob)) {
-
-			if (batchName.startsWith("functional-")) {
-				batchTestClassGroup = new FunctionalRCABatchTestClassGroup(
-					batchName, (RootCauseAnalysisToolJob)job);
-			}
-			else if (batchName.startsWith("integration-") ||
-					 batchName.startsWith("modules-integration-") ||
-					 batchName.startsWith("modules-unit-") ||
-					 batchName.startsWith("unit-")) {
-
-				batchTestClassGroup = new JUnitRCABatchTestClassGroup(
-					batchName, (RootCauseAnalysisToolJob)job);
-			}
-			else {
-				batchTestClassGroup = new RCABatchTestClassGroup(
-					batchName, (RootCauseAnalysisToolJob)job);
-			}
-		}
-
-		if ((batchTestClassGroup == null) &&
-			(job instanceof PortalTestClassJob)) {
-
-			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
-
-			if (batchName.startsWith("functional-") ||
-				batchName.startsWith("modules-functional-") ||
-				batchName.startsWith("subrepository-functional-")) {
-
-				batchTestClassGroup = new FunctionalBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-			else if (batchName.startsWith("integration-") ||
-					 batchName.startsWith("junit-test-") ||
-					 batchName.startsWith(
-						 "modules-integration-project-templates-") ||
-					 batchName.startsWith("modules-unit-project-templates-") ||
-					 batchName.startsWith("unit-")) {
-
-				batchTestClassGroup = new JUnitBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-			else if (batchName.startsWith("js-test-") ||
-					 batchName.startsWith("portal-frontend-js-")) {
-
-				batchTestClassGroup = new NPMTestBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-			else if (batchName.startsWith("js-unit-")) {
-				batchTestClassGroup = new JSUnitModulesBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-			else if (batchName.startsWith("modules-compile-")) {
-				batchTestClassGroup = new CompileModulesBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-			else if ((batchName.startsWith("modules-integration-") &&
-					  !batchName.startsWith(
-						  "modules-integration-project-templates-")) ||
-					 (batchName.startsWith("modules-unit-") &&
-					  !batchName.startsWith(
-						  "modules-unit-project-templates-")) ||
-					 batchName.startsWith("subrepository-integration-") ||
-					 batchName.startsWith("subrepository-unit-")) {
-
-				batchTestClassGroup = new ModulesJUnitBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-			else if (batchName.startsWith("modules-semantic-versioning-")) {
-				batchTestClassGroup = new SemVerModulesBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-			else if (batchName.startsWith("plugins-compile-")) {
-				batchTestClassGroup = new PluginsBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-			else if (batchName.startsWith("plugins-functional-")) {
-				batchTestClassGroup = new PluginsFunctionalBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-			else if (batchName.startsWith("plugins-gulp-")) {
-				batchTestClassGroup = new PluginsGulpBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-			else if (batchName.startsWith("qa-websites-functional-") &&
-					 (job instanceof QAWebsitesGitRepositoryJob)) {
-
-				batchTestClassGroup =
-					new QAWebsitesFunctionalBatchTestClassGroup(
-						batchName, (QAWebsitesGitRepositoryJob)job);
-			}
-			else if (batchName.startsWith("rest-builder-")) {
-				batchTestClassGroup = new RESTBuilderModulesBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-			else if (batchName.startsWith("service-builder-")) {
-				batchTestClassGroup =
-					new ServiceBuilderModulesBatchTestClassGroup(
-						batchName, portalTestClassJob);
-			}
-			else if (batchName.startsWith("tck-")) {
-				batchTestClassGroup = new TCKJunitBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-			else {
-				batchTestClassGroup = new DefaultBatchTestClassGroup(
-					batchName, portalTestClassJob);
-			}
-		}
-
-		if (batchTestClassGroup == null) {
-			throw new IllegalArgumentException("Unknown test class group");
-		}
-
-		_batchTestClassGroups.put(key, batchTestClassGroup);
-
-		return batchTestClassGroup;
+		return _newBatchTestClassGroup(batchName, job, null);
 	}
 
 	public static SegmentTestClassGroup newSegmentTestClassGroup(
@@ -333,6 +208,268 @@ public class TestClassGroupFactory {
 		}
 
 		return new SegmentTestClassGroup(batchTestClassGroup);
+	}
+
+	private static BatchTestClassGroup _newBatchTestClassGroup(
+		String batchName, Job job, JSONObject jsonObject) {
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(batchName)) {
+			batchName = jsonObject.getString("batch_name");
+		}
+
+		String key = JobFactory.getKey(job) + "_" + batchName;
+
+		if (_batchTestClassGroups.containsKey(key)) {
+			return _batchTestClassGroups.get(key);
+		}
+
+		BatchTestClassGroup batchTestClassGroup = null;
+
+		if (job instanceof PortalEnvironmentJob) {
+			if (jsonObject != null) {
+				batchTestClassGroup =
+					new EnvironmentFunctionalBatchTestClassGroup(
+						jsonObject, (PortalEnvironmentJob)job);
+			}
+			else {
+				batchTestClassGroup =
+					new EnvironmentFunctionalBatchTestClassGroup(
+						batchName, (PortalEnvironmentJob)job);
+			}
+		}
+
+		if ((batchTestClassGroup == null) &&
+			(job instanceof RootCauseAnalysisToolJob)) {
+
+			if (batchName.startsWith("functional-")) {
+				if (jsonObject != null) {
+					batchTestClassGroup = new FunctionalRCABatchTestClassGroup(
+						jsonObject, (RootCauseAnalysisToolJob)job);
+				}
+				else {
+					batchTestClassGroup = new FunctionalRCABatchTestClassGroup(
+						batchName, (RootCauseAnalysisToolJob)job);
+				}
+			}
+			else if (batchName.startsWith("integration-") ||
+					 batchName.startsWith("modules-integration-") ||
+					 batchName.startsWith("modules-unit-") ||
+					 batchName.startsWith("unit-")) {
+
+				if (jsonObject != null) {
+					batchTestClassGroup = new JUnitRCABatchTestClassGroup(
+						jsonObject, (RootCauseAnalysisToolJob)job);
+				}
+				else {
+					batchTestClassGroup = new JUnitRCABatchTestClassGroup(
+						batchName, (RootCauseAnalysisToolJob)job);
+				}
+			}
+			else {
+				if (jsonObject != null) {
+					batchTestClassGroup = new RCABatchTestClassGroup(
+						jsonObject, (RootCauseAnalysisToolJob)job);
+				}
+				else {
+					batchTestClassGroup = new RCABatchTestClassGroup(
+						batchName, (RootCauseAnalysisToolJob)job);
+				}
+			}
+		}
+
+		if ((batchTestClassGroup == null) &&
+			(job instanceof PortalTestClassJob)) {
+
+			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
+
+			if (batchName.startsWith("functional-") ||
+				batchName.startsWith("modules-functional-") ||
+				batchName.startsWith("subrepository-functional-")) {
+
+				if (jsonObject != null) {
+					batchTestClassGroup = new FunctionalBatchTestClassGroup(
+						jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup = new FunctionalBatchTestClassGroup(
+						batchName, portalTestClassJob);
+				}
+			}
+			else if (batchName.startsWith("integration-") ||
+					 batchName.startsWith("junit-test-") ||
+					 batchName.startsWith(
+						 "modules-integration-project-templates-") ||
+					 batchName.startsWith("modules-unit-project-templates-") ||
+					 batchName.startsWith("unit-")) {
+
+				if (jsonObject != null) {
+					batchTestClassGroup = new JUnitBatchTestClassGroup(
+						jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup = new JUnitBatchTestClassGroup(
+						batchName, portalTestClassJob);
+				}
+			}
+			else if (batchName.startsWith("js-test-") ||
+					 batchName.startsWith("portal-frontend-js-")) {
+
+				if (jsonObject != null) {
+					batchTestClassGroup = new NPMTestBatchTestClassGroup(
+						jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup = new NPMTestBatchTestClassGroup(
+						batchName, portalTestClassJob);
+				}
+			}
+			else if (batchName.startsWith("js-unit-")) {
+				if (jsonObject != null) {
+					batchTestClassGroup = new JSUnitModulesBatchTestClassGroup(
+						jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup = new JSUnitModulesBatchTestClassGroup(
+						batchName, portalTestClassJob);
+				}
+			}
+			else if (batchName.startsWith("modules-compile-")) {
+				if (jsonObject != null) {
+					batchTestClassGroup = new CompileModulesBatchTestClassGroup(
+						jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup = new CompileModulesBatchTestClassGroup(
+						batchName, portalTestClassJob);
+				}
+			}
+			else if ((batchName.startsWith("modules-integration-") &&
+					  !batchName.startsWith(
+						  "modules-integration-project-templates-")) ||
+					 (batchName.startsWith("modules-unit-") &&
+					  !batchName.startsWith(
+						  "modules-unit-project-templates-")) ||
+					 batchName.startsWith("subrepository-integration-") ||
+					 batchName.startsWith("subrepository-unit-")) {
+
+				if (jsonObject != null) {
+					batchTestClassGroup = new ModulesJUnitBatchTestClassGroup(
+						jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup = new ModulesJUnitBatchTestClassGroup(
+						batchName, portalTestClassJob);
+				}
+			}
+			else if (batchName.startsWith("modules-semantic-versioning-")) {
+				if (jsonObject != null) {
+					batchTestClassGroup = new SemVerModulesBatchTestClassGroup(
+						jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup = new SemVerModulesBatchTestClassGroup(
+						batchName, portalTestClassJob);
+				}
+			}
+			else if (batchName.startsWith("plugins-compile-")) {
+				if (jsonObject != null) {
+					batchTestClassGroup = new PluginsBatchTestClassGroup(
+						jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup = new PluginsBatchTestClassGroup(
+						batchName, portalTestClassJob);
+				}
+			}
+			else if (batchName.startsWith("plugins-functional-")) {
+				if (jsonObject != null) {
+					batchTestClassGroup =
+						new PluginsFunctionalBatchTestClassGroup(
+							jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup =
+						new PluginsFunctionalBatchTestClassGroup(
+							batchName, portalTestClassJob);
+				}
+			}
+			else if (batchName.startsWith("plugins-gulp-")) {
+				if (jsonObject != null) {
+					batchTestClassGroup = new PluginsGulpBatchTestClassGroup(
+						jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup = new PluginsGulpBatchTestClassGroup(
+						batchName, portalTestClassJob);
+				}
+			}
+			else if (batchName.startsWith("qa-websites-functional-") &&
+					 (job instanceof QAWebsitesGitRepositoryJob)) {
+
+				if (jsonObject != null) {
+					batchTestClassGroup =
+						new QAWebsitesFunctionalBatchTestClassGroup(
+							jsonObject, (QAWebsitesGitRepositoryJob)job);
+				}
+				else {
+					batchTestClassGroup =
+						new QAWebsitesFunctionalBatchTestClassGroup(
+							batchName, (QAWebsitesGitRepositoryJob)job);
+				}
+			}
+			else if (batchName.startsWith("rest-builder-")) {
+				if (jsonObject != null) {
+					batchTestClassGroup =
+						new RESTBuilderModulesBatchTestClassGroup(
+							jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup =
+						new RESTBuilderModulesBatchTestClassGroup(
+							batchName, portalTestClassJob);
+				}
+			}
+			else if (batchName.startsWith("service-builder-")) {
+				if (jsonObject != null) {
+					batchTestClassGroup =
+						new ServiceBuilderModulesBatchTestClassGroup(
+							jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup =
+						new ServiceBuilderModulesBatchTestClassGroup(
+							batchName, portalTestClassJob);
+				}
+			}
+			else if (batchName.startsWith("tck-")) {
+				if (jsonObject != null) {
+					batchTestClassGroup = new TCKJunitBatchTestClassGroup(
+						jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup = new TCKJunitBatchTestClassGroup(
+						batchName, portalTestClassJob);
+				}
+			}
+			else {
+				if (jsonObject != null) {
+					batchTestClassGroup = new DefaultBatchTestClassGroup(
+						jsonObject, portalTestClassJob);
+				}
+				else {
+					batchTestClassGroup = new DefaultBatchTestClassGroup(
+						batchName, portalTestClassJob);
+				}
+			}
+		}
+
+		if (batchTestClassGroup == null) {
+			throw new IllegalArgumentException("Unknown test class group");
+		}
+
+		_batchTestClassGroups.put(key, batchTestClassGroup);
+
+		return batchTestClassGroup;
 	}
 
 	private static final Map<String, BatchTestClassGroup>

@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -48,6 +50,12 @@ public class PluginsFunctionalBatchTestClassGroup
 			(PluginsGitRepositoryJob)portalTestClassJob;
 
 		return pluginsGitRepositoryJob.getPluginsTestBaseDirs();
+	}
+
+	protected PluginsFunctionalBatchTestClassGroup(
+		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
+
+		super(jsonObject, portalTestClassJob);
 	}
 
 	protected PluginsFunctionalBatchTestClassGroup(

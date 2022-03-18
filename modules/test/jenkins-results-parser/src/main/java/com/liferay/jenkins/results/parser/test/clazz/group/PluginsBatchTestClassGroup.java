@@ -52,12 +52,25 @@ public class PluginsBatchTestClassGroup extends BatchTestClassGroup {
 
 	@Override
 	public JSONObject getJSONObject() {
-		JSONObject jsonObject = super.getJSONObject();
+		if (jsonObject != null) {
+			return jsonObject;
+		}
+
+		jsonObject = super.getJSONObject();
 
 		jsonObject.put("exclude_globs", getGlobs(_getExcludesJobProperties()));
 		jsonObject.put("include_globs", getGlobs(_getIncludesJobProperties()));
 
 		return jsonObject;
+	}
+
+	protected PluginsBatchTestClassGroup(
+		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
+
+		super(jsonObject, portalTestClassJob);
+
+		_pluginsGitWorkingDirectory =
+			portalGitWorkingDirectory.getPluginsGitWorkingDirectory();
 	}
 
 	protected PluginsBatchTestClassGroup(

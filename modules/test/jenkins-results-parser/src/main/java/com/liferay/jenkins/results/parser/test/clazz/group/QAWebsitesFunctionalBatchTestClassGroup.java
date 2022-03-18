@@ -16,6 +16,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+import com.liferay.jenkins.results.parser.PortalTestClassJob;
 import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.poshi.core.PoshiContext;
@@ -27,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -37,13 +40,11 @@ public class QAWebsitesFunctionalBatchTestClassGroup
 	public List<File> getTestBaseDirs() {
 		List<File> testBaseDirs = new ArrayList<>();
 
-		QAWebsitesGitRepositoryJob qaWebsitesGitRepositoryJob =
-			_getQAWebsitesGitRepositoryJob();
 		GitWorkingDirectory qaWebsitesGitWorkingDirectory =
 			_getQAWebsitesGitWorkingDirectory();
 
 		for (String projectName :
-				qaWebsitesGitRepositoryJob.getProjectNames()) {
+				_qaWebsitesGitRepositoryJob.getProjectNames()) {
 
 			testBaseDirs.add(
 				new File(
@@ -55,10 +56,31 @@ public class QAWebsitesFunctionalBatchTestClassGroup
 	}
 
 	protected QAWebsitesFunctionalBatchTestClassGroup(
-		String batchName,
-		QAWebsitesGitRepositoryJob qaWebsitesGitRepositoryJob) {
+		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 
-		super(batchName, qaWebsitesGitRepositoryJob);
+		super(jsonObject, portalTestClassJob);
+
+		if (!(portalTestClassJob instanceof QAWebsitesGitRepositoryJob)) {
+			throw new RuntimeException(
+				"Invalid job type " + portalTestClassJob);
+		}
+
+		_qaWebsitesGitRepositoryJob =
+			(QAWebsitesGitRepositoryJob)portalTestClassJob;
+	}
+
+	protected QAWebsitesFunctionalBatchTestClassGroup(
+		String batchName, PortalTestClassJob portalTestClassJob) {
+
+		super(batchName, portalTestClassJob);
+
+		if (!(portalTestClassJob instanceof QAWebsitesGitRepositoryJob)) {
+			throw new RuntimeException(
+				"Invalid job type " + portalTestClassJob);
+		}
+
+		_qaWebsitesGitRepositoryJob =
+			(QAWebsitesGitRepositoryJob)portalTestClassJob;
 	}
 
 	@Override
@@ -127,20 +149,10 @@ public class QAWebsitesFunctionalBatchTestClassGroup
 		}
 	}
 
-	private QAWebsitesGitRepositoryJob _getQAWebsitesGitRepositoryJob() {
-		if (!(portalTestClassJob instanceof QAWebsitesGitRepositoryJob)) {
-			throw new RuntimeException(
-				"Invalid job type " + portalTestClassJob);
-		}
-
-		return (QAWebsitesGitRepositoryJob)portalTestClassJob;
-	}
-
 	private GitWorkingDirectory _getQAWebsitesGitWorkingDirectory() {
-		QAWebsitesGitRepositoryJob qaWebsitesGitRepositoryJob =
-			_getQAWebsitesGitRepositoryJob();
-
-		return qaWebsitesGitRepositoryJob.getGitWorkingDirectory();
+		return _qaWebsitesGitRepositoryJob.getGitWorkingDirectory();
 	}
+
+	private final QAWebsitesGitRepositoryJob _qaWebsitesGitRepositoryJob;
 
 }

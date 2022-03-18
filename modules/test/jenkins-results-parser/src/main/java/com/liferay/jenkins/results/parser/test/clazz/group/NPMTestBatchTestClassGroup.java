@@ -32,6 +32,8 @@ import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -134,6 +136,12 @@ public class NPMTestBatchTestClassGroup extends BatchTestClassGroup {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	protected NPMTestBatchTestClassGroup(
+		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
+
+		super(jsonObject, portalTestClassJob);
 	}
 
 	protected NPMTestBatchTestClassGroup(

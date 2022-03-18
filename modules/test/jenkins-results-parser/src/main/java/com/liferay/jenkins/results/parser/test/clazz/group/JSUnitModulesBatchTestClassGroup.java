@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -50,6 +52,12 @@ public class JSUnitModulesBatchTestClassGroup
 		}
 
 		return false;
+	}
+
+	protected JSUnitModulesBatchTestClassGroup(
+		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
+
+		super(jsonObject, portalTestClassJob);
 	}
 
 	protected JSUnitModulesBatchTestClassGroup(

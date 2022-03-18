@@ -2787,6 +2787,72 @@ definition {
 			locator1 = "Blueprints#BLUEPRINTS_EDIT_PAGE_VIEW_ELEMENT_JSON_TEXT");
 	}
 
+	test ViewElementsAdminBulkDeletion {
+		Blueprints.openBlueprintsAdmin();
+
+		for (var count : list "1,2,3") {
+			Blueprints.createElement(title = "Test Element ${count}");
+		}
+
+		Check.checkNotVisible(
+			entryTitle = "Test Element 1",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		Button.clickTrash();
+
+		Blueprints.viewNoEntry(title = "Test Element 1");
+
+		Check.checkNotVisible(
+			entryTitle = "Test Element 2",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
+
+		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
+
+		AssertChecked.assertCheckedNotVisible(
+			entryTitle = "Test Element 2",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		AssertChecked.assertCheckedNotVisible(
+			entryTitle = "Test Element 3",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		Uncheck.uncheckNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			entryTitle = "Test Element 2",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			entryTitle = "Test Element 3",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		Check.checkNotVisible(
+			entryTitle = "Test Element 3",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		Click(
+			key_text = "Select All",
+			locator1 = "Link#ANY");
+
+		AssertChecked.assertCheckedNotVisible(
+			entryTitle = "Test Element 2",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		AssertChecked.assertCheckedNotVisible(
+			entryTitle = "Test Element 3",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		Button.clickTrash();
+
+		Alert.viewErrorMessage(errorMessage = "System read-only elements cannot be deleted.");
+
+		Blueprints.viewNoEntry(title = "Test Element 2");
+
+		Blueprints.viewNoEntry(title = "Test Element 3");
+	}
+
 	test ViewElementsAdminPreview {
 		Blueprints.openBlueprintsAdmin();
 

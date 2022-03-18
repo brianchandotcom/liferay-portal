@@ -1201,6 +1201,42 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro setDefaultDeliveryCommerceTermsEntry {
+		AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_HEADING");
+
+		AssertElementPresent(
+			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_USE_PRIORITY_SETTINGS",
+			value1 = "Use Priority Settings");
+
+		AssertClick(
+			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_SET_DEFAULT_DELIVERY",
+			value1 = "Set Default Delivery Commerce Terms Entry");
+
+		Pause(locator1 = "3000");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		Click(
+			key_termEntry = "${termEntry}",
+			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_SELECT_TERM_ENTRY_RADIO");
+
+		SelectFrameTop();
+
+		AssertClick(
+			locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_SAVE_BUTTON",
+			value1 = "Save");
+
+		Alert.viewSuccessMessage();
+
+		Accounts.gotoAssigneeTab(assigneeTab = "Details");
+
+		AssertClick(
+			locator1 = "Button#SAVE",
+			value1 = "Save");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro setDefaultPaymentCommerceTermsEntry {
 		AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_HEADING");
 
@@ -1431,6 +1467,25 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Account#DEFAULT_ACCOUNT_ADDRESSES_DEFAULT_BILLING_ADDRESS",
 				value1 = "${phoneNumber}");
+		}
+	}
+
+	macro viewDefaultDeliveryCommerceTermsEntry {
+		if (isSet(termEntry)) {
+			AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DELIVERY_TEXT");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_ENTRY",
+				value1 = "${termEntry}");
+
+			if ("${inactive}" == "true") {
+				AssertElementPresent(locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_ENTRY_INACTIVE_ICON");
+			}
+		}
+		else {
+			AssertElementPresent(
+				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_USE_PRIORITY_SETTINGS",
+				value1 = "Use Priority Settings");
 		}
 	}
 

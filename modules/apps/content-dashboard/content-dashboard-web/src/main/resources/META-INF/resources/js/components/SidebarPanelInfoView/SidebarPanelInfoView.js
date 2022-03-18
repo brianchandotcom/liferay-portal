@@ -84,13 +84,15 @@ const SidebarPanelInfoView = ({
 	const showTaxonomies =
 		!!internalCategoriesCount || !!publicCategoriesCount || !!tags?.length;
 
+	const showClipboard = clipboard && Object.keys(clipboard).length !== 0;
+
 	return (
 		<>
 			<Sidebar.Header title={title} />
 
 			<Sidebar.Body>
 				<div className="sidebar-section sidebar-section--compress">
-					{clipboard && (
+					{showClipboard && (
 						<>
 							<div className="c-mt-1">
 								<FileUrlCopyButton url={clipboard.url} />

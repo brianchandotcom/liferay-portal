@@ -655,7 +655,7 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	@Test
-	public void testLimitSearch() throws Exception {
+	public void testLimitSearchToMyContents() throws Exception {
 		_addGroupAAndGroupB();
 
 		_setUpJournalArticles(
@@ -670,6 +670,19 @@ public class SXPBlueprintSearchResultTest {
 			null, new String[] {"Limit Search to My Contents"});
 
 		_assertSearchIgnoreRelevance("[cola coca, cola pepsi, cola sprite]");
+	}
+
+	@Test
+	public void testLimitSearchToMySites() throws Exception {
+		_addGroupAAndGroupB();
+
+		_setUpJournalArticles(
+			new String[] {"", "", ""},
+			new String[] {"cola coca", "cola pepsi", "cola sprite"});
+
+		_keywords = "cola";
+
+		_assertSearchIgnoreRelevance("[cola coca, cola pepsi, cola sprite]");
 
 		User user = UserTestUtil.addUser(_groupA.getGroupId());
 
@@ -679,6 +692,23 @@ public class SXPBlueprintSearchResultTest {
 			null, new String[] {"Limit Search to My Sites"});
 
 		_assertSearchIgnoreRelevance("[cola coca]");
+	}
+
+	@Test
+	public void testLimitSearchToTheseSites() throws Exception {
+		_addGroupAAndGroupB();
+
+		_setUpJournalArticles(
+			new String[] {"", "", ""},
+			new String[] {"cola coca", "cola pepsi", "cola sprite"});
+
+		_keywords = "cola";
+
+		_assertSearchIgnoreRelevance("[cola coca, cola pepsi, cola sprite]");
+
+		User user = UserTestUtil.addUser(_groupA.getGroupId());
+
+		_serviceContext.setUserId(user.getUserId());
 
 		_updateElementInstancesJSON(
 			new Object[] {

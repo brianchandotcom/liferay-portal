@@ -169,7 +169,12 @@
 	<td>NAME_FIELD</td>
 	<td>//div/input[contains(@id,'name')]</td>
 	<td></td>
+</tr><tr>
+	<td>NAME_FIELD_SPECIAL</td>
+	<td>//label[contains(.,'Title')]//..//input[@type="text"]</td>
+	<td></td>
 </tr>
+
 <tr>
 	<td>NOTIFICATION_TEMPLATE_FROM_NAME_FIELD</td>
 	<td>//label[contains(.,'From Name')]//..//input[contains(@id,'from')]</td>

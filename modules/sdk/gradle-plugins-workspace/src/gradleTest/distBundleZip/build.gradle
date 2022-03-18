@@ -1,5 +1,6 @@
 import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
+import java.util.zip.ZipInputStream
 
 task runGradleTest
 
@@ -18,6 +19,25 @@ runGradleTest {
 	dependsOn distBundleZip
 
 	doLast {
+		def portalExtPropertiesCount = 0;
+
+		ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(distBundleZip.archivePath))
+
+		ZipEntry zipIteratorEntry = zipInputStream.getNextEntry()
+
+		while (zipIteratorEntry != null) {
+			if (!zipIteratorEntry.isDirectory() && zipIteratorEntry.name.endsWith("portal-ext.properties") ) {
+				portalExtPropertiesCount++
+			}
+			zipIteratorEntry = zipInputStream.getNextEntry()
+		}
+
+		zipInputStream.closeEntry()
+
+		zipInputStream.close()
+
+		assert portalExtPropertiesCount == 1
+
 		ZipFile zipFile = new ZipFile(distBundleZip.archivePath)
 
 		String zipEntryRootName = gradle.liferayWorkspace.bundleDistRootDirName
@@ -33,7 +53,7 @@ runGradleTest {
 
 			// Configs
 
-			for (String fileName in ["common/common.txt", "production/production.txt", "production/license/copyright.txt"]) {
+			for (String fileName in ["common/common.txt", "production/production.txt", "production/license/copyright.txt", "production/portal-ext.properties"]) {
 				File expectedFile = file("configs/" + fileName)
 
 				String zipEntryName = zipEntryRootName + fileName.substring(fileName.indexOf('/') + 1)

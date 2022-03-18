@@ -37,7 +37,6 @@ html#{$cadmin-selector} {
 			display: flex;
 			flex-direction: column;
 			height: -moz-available;
-			height: -webkit-fill-available;
 			height: stretch;
 			max-height: 100vh;
 		}

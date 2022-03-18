@@ -552,9 +552,7 @@ definition {
 		task ("Open and assert that Ab Test Panel displays instructions to sync to AC and do not 'Don't show me this again' button and the message is not displayed") {
 			ABTest.openABTestPanel();
 
-			AssertVisible(
-				key_title = "Sync to Liferay Analytics Cloud",
-				locator1 = "Header#H4_TITLE");
+			AssertVisible(locator1 = "ABTest#CONNECTED_NOT_SYNC_BUTTON");
 
 			AssertVisible(
 				key_message = "In order to perform an A/B test, your site has to be synced to Liferay Analytics Cloud.",

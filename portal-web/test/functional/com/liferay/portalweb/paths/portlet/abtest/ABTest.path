@@ -51,6 +51,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONNECTED_NOT_SYNC_BUTTON</td>
+	<td>xpath=(//h4[contains(.,'Sync to Liferay Analytics Cloud')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTROL_VARIANT</td>
 	<td>//*[contains(@class,'lfr-portal-tooltip text-truncate btn btn-unstyled') and @data-title='Control']</td>
 	<td></td>
@@ -82,7 +87,7 @@
 </tr>
 <tr>
 	<td>HIDE_AB_TEST_BUTTON</td>
-	<td>//a[contains(@class,'d-block')]//*[contains(text(),'Do not show me this again.')]</td>
+	<td>xpath=(//a[contains(@class,'d-block')]//*[contains(text(),'Do not show me this again.')])[2]</td>
 	<td></td>
 </tr>
 <tr>

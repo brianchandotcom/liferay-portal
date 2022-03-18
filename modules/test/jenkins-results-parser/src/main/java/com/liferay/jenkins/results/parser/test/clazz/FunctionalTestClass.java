@@ -24,6 +24,8 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -48,6 +50,16 @@ public class FunctionalTestClass extends BaseTestClass {
 	}
 
 	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put("poshi_properties", _poshiProperties);
+		jsonObject.put("test_class_method_name", _testClassMethodName);
+
+		return jsonObject;
+	}
+
+	@Override
 	public String getName() {
 		String name = super.getName();
 		String testClassMethodName = getTestClassMethodName();
@@ -63,6 +75,28 @@ public class FunctionalTestClass extends BaseTestClass {
 
 	public String getTestClassMethodName() {
 		return _testClassMethodName;
+	}
+
+	protected FunctionalTestClass(
+		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
+
+		super(batchTestClassGroup, jsonObject);
+
+		_testClassMethodName = jsonObject.getString("test_class_method_name");
+
+		_poshiProperties = new Properties();
+
+		JSONObject poshiPropertiesJSONObject = jsonObject.getJSONObject(
+			"poshi_properties");
+
+		if (poshiPropertiesJSONObject == null) {
+			return;
+		}
+
+		for (String key : poshiPropertiesJSONObject.keySet()) {
+			_poshiProperties.setProperty(
+				key, poshiPropertiesJSONObject.getString(key));
+		}
 	}
 
 	protected FunctionalTestClass(

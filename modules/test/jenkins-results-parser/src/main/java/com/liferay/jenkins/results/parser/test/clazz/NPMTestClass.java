@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -48,6 +50,19 @@ public class NPMTestClass extends BaseTestClass {
 		_moduleFile = testClassFile;
 
 		initJSTestClassMethods();
+	}
+
+	protected NPMTestClass(
+		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
+
+		super(batchTestClassGroup, jsonObject);
+
+		addTestClassMethod(batchTestClassGroup.getBatchName());
+
+		_gitWorkingDirectory =
+			batchTestClassGroup.getPortalGitWorkingDirectory();
+
+		_moduleFile = new File(jsonObject.getString("test_class_file"));
 	}
 
 	protected void initJSTestClassMethods() {
@@ -81,7 +96,7 @@ public class NPMTestClass extends BaseTestClass {
 					}
 
 					_jsTestClassMethods.add(
-						new TestClassMethod(
+						TestClassFactory.newTestClassMethod(
 							methodIgnored,
 							jsFileRelativePath + _TOKEN_CLASS_METHOD_SEPARATOR +
 								methodName,

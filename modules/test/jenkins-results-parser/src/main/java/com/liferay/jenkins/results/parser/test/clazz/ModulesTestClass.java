@@ -24,10 +24,21 @@ import java.nio.file.Path;
 
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public abstract class ModulesTestClass extends BaseTestClass {
+
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put("task_name", _taskName);
+
+		return jsonObject;
+	}
 
 	protected ModulesTestClass(
 		BatchTestClassGroup batchTestClassGroup, File moduleBaseDir,
@@ -46,6 +57,14 @@ public abstract class ModulesTestClass extends BaseTestClass {
 
 			addTestClassMethod(moduleTaskCall);
 		}
+	}
+
+	protected ModulesTestClass(
+		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
+
+		super(batchTestClassGroup, jsonObject);
+
+		_taskName = jsonObject.getString("task_name");
 	}
 
 	protected File getModuleBaseDir() {

@@ -25,10 +25,21 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class JUnitTestClass extends BaseTestClass {
+
+	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put("test_properties", _testProperties);
+
+		return jsonObject;
+	}
 
 	public Properties getTestProperties() {
 		return _testProperties;
@@ -61,6 +72,30 @@ public class JUnitTestClass extends BaseTestClass {
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
+		}
+	}
+
+	protected JUnitTestClass(
+		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
+
+		super(batchTestClassGroup, jsonObject);
+
+		_classIgnored = jsonObject.getBoolean("ignored");
+
+		_fileContent = "";
+
+		_testProperties = new Properties();
+
+		JSONObject testPropertiesJSONObject = jsonObject.getJSONObject(
+			"test_properties");
+
+		if (testPropertiesJSONObject == null) {
+			return;
+		}
+
+		for (String key : testPropertiesJSONObject.keySet()) {
+			_testProperties.setProperty(
+				key, testPropertiesJSONObject.getString(key));
 		}
 	}
 

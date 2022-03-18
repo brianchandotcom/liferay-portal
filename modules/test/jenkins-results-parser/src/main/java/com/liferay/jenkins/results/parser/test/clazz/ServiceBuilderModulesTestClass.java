@@ -28,6 +28,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -37,6 +39,12 @@ public class ServiceBuilderModulesTestClass extends ModulesTestClass {
 		BatchTestClassGroup batchTestClassGroup, File testClassFile) {
 
 		super(batchTestClassGroup, testClassFile, "buildService");
+	}
+
+	protected ServiceBuilderModulesTestClass(
+		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
+
+		super(batchTestClassGroup, jsonObject);
 	}
 
 	@Override

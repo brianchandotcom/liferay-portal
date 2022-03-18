@@ -18,6 +18,8 @@ import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 
 import java.io.File;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -29,6 +31,12 @@ public class PluginsTestClass extends BaseTestClass {
 		super(batchTestClassGroup, testClassFile);
 
 		addTestClassMethod(batchTestClassGroup.getBatchName());
+	}
+
+	protected PluginsTestClass(
+		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
+
+		super(batchTestClassGroup, jsonObject);
 	}
 
 }

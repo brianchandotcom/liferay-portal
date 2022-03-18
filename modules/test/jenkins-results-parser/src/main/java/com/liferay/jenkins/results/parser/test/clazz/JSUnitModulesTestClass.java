@@ -44,6 +44,12 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 		super(batchTestClassGroup, testClassFile, "packageRunTest");
 	}
 
+	protected JSUnitModulesTestClass(
+		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
+
+		super(batchTestClassGroup, jsonObject);
+	}
+
 	@Override
 	protected List<File> getModulesProjectDirs() {
 		final List<File> modulesProjectDirs = new ArrayList<>();

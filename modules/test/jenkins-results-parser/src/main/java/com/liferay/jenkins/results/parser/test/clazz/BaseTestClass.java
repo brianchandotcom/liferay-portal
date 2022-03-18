@@ -63,15 +63,17 @@ public abstract class BaseTestClass implements TestClass {
 		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put("file", getTestClassFile());
-		jsonObject.put("name", getName());
+		jsonObject.put("ignored", isIgnored());
 
 		JSONArray methodsJSONArray = new JSONArray();
 
+		for (TestClassMethod testClassMethod : getTestClassMethods()) {
+			methodsJSONArray.put(testClassMethod.getJSONObject());
+		}
+
 		jsonObject.put("methods", methodsJSONArray);
 
-		for (TestClassMethod testClassMethod : getTestClassMethods()) {
-			methodsJSONArray.put(testClassMethod.getName());
-		}
+		jsonObject.put("name", getName());
 
 		return jsonObject;
 	}
@@ -124,6 +126,30 @@ public abstract class BaseTestClass implements TestClass {
 
 		_batchTestClassGroup = batchTestClassGroup;
 		_testClassFile = testClassFile;
+	}
+
+	protected BaseTestClass(
+		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
+
+		_batchTestClassGroup = batchTestClassGroup;
+
+		_testClassFile = new File(jsonObject.getString("file"));
+
+		JSONArray methodsJSONArray = jsonObject.getJSONArray("methods");
+
+		if ((methodsJSONArray != null) && !methodsJSONArray.isEmpty()) {
+			for (int i = 0; i < methodsJSONArray.length(); i++) {
+				JSONObject methodJSONObject = methodsJSONArray.getJSONObject(i);
+
+				if (methodJSONObject == null) {
+					continue;
+				}
+
+				_testClassMethods.add(
+					TestClassFactory.newTestClassMethod(
+						methodJSONObject, this));
+			}
+		}
 	}
 
 	protected void addTestClassMethod(

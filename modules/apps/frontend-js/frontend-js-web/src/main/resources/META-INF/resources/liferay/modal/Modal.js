@@ -40,8 +40,6 @@ const openAlertModal = ({message}) => {
 	});
 };
 
-const modalLabelId = `modalLabelId-${crypto.randomUUID()}`;
-
 const Modal = ({
 	bodyHTML,
 	buttons,
@@ -195,7 +193,6 @@ const Modal = ({
 		<>
 			{visible && (
 				<ClayModal
-					aria-labelledby={modalLabelId}
 					center={center}
 					className="liferay-modal"
 					containerProps={{...containerProps}}
@@ -207,10 +204,7 @@ const Modal = ({
 					status={status}
 					zIndex={zIndex}
 				>
-					<ClayModal.Header
-						className={headerCssClass}
-						id={modalLabelId}
-					>
+					<ClayModal.Header className={headerCssClass}>
 						{headerHTML ? (
 							<div
 								dangerouslySetInnerHTML={{
@@ -258,24 +252,41 @@ const Modal = ({
 							className={footerCssClass}
 							last={
 								<ClayButton.Group spaced>
-									{buttons.map((button, index) => (
-										<ClayButton
-											displayType={button.displayType}
-											id={button.id}
-											key={index}
-											onClick={() => {
-												onButtonClick(button);
-											}}
-											type={
-												button.type === 'cancel'
-													? 'button'
-													: button.type
-											}
-											{...button.otherProps}
-										>
-											{button.label}
-										</ClayButton>
-									))}
+									{buttons.map(
+										(
+											{
+												displayType,
+												formId,
+												id,
+												label,
+												onClick,
+												type,
+												...otherProps
+											},
+											index
+										) => (
+											<ClayButton
+												displayType={displayType}
+												id={id}
+												key={index}
+												onClick={() => {
+													onButtonClick({
+														formId,
+														onClick,
+														type,
+													});
+												}}
+												type={
+													type === 'cancel'
+														? 'button'
+														: type
+												}
+												{...otherProps}
+											>
+												{label}
+											</ClayButton>
+										)
+									)}
 								</ClayButton.Group>
 							}
 						/>
@@ -288,7 +299,7 @@ const Modal = ({
 
 const openConfirmModal = ({message, onConfirm}) => {
 	openModal({
-		bodyHTML: message,
+		bodyHTML: escapeHTML(message),
 		buttons: [
 			{
 				displayType: 'secondary',
@@ -296,20 +307,16 @@ const openConfirmModal = ({message, onConfirm}) => {
 				type: 'cancel',
 			},
 			{
+				autoFocus: true,
 				label: Liferay.Language.get('ok'),
 				onClick: ({processClose}) => {
 					processClose();
 
 					onConfirm(true);
 				},
-				otherProps: {
-					autoFocus: true,
-				},
 			},
 		],
 		onClose: () => onConfirm(false),
-		size: 'sm',
-		title: Liferay.Language.get('confirm'),
 	});
 };
 

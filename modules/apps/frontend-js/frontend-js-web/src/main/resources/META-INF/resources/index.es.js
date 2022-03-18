@@ -53,6 +53,7 @@ export {default as PortletBase} from './liferay/PortletBase.es';
 export {
 	openModal,
 	openAlertModal,
+	openConfirmModal,
 	openSelectionModal,
 } from './liferay/modal/Modal';
 

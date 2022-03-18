@@ -15,6 +15,7 @@ exports[`Modal renders markup based on given configuration 1`] = `
     <div
       class="fade modal d-block liferay-modal show"
       id="abcd"
+      role="dialog"
     >
       <div
         aria-labelledby="clay-modal-label-1"

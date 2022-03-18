@@ -253,7 +253,6 @@ Liferay.Util.toCharCode = toCharCode;
  */
 Liferay.Util.toggleDisabled = toggleDisabled;
 
-
 Liferay.Util.openConfirmModal = (...args) => {
 	Liferay.Loader.require(
 		'frontend-js-web/liferay/modal/Modal',

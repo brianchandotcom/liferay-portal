@@ -65,288 +65,281 @@ public class ContainerLayoutStructureItemImporter
 					layoutStructureItemImporterContext.getParentItemId(),
 					layoutStructureItemImporterContext.getPosition());
 
-		JSONObject stylesJSONObject = JSONFactoryUtil.createJSONObject();
-
 		Map<String, Object> definitionMap = getDefinitionMap(
 			pageElement.getDefinition());
 
-		if (definitionMap != null) {
+		if (definitionMap == null) {
+			return containerStyledLayoutStructureItem;
+		}
+
+		JSONObject stylesJSONObject = JSONUtil.put(
+			"backgroundColor", definitionMap.get("backgroundColor"));
+
+		Map<String, Object> backgroundFragmentImageMap =
+			(Map<String, Object>)definitionMap.get("backgroundFragmentImage");
+
+		if (MapUtil.isEmpty(backgroundFragmentImageMap)) {
+			backgroundFragmentImageMap = (Map<String, Object>)definitionMap.get(
+				"backgroundImage");
+		}
+
+		if (backgroundFragmentImageMap != null) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			Map<String, Object> titleMap =
+				(Map<String, Object>)backgroundFragmentImageMap.get("title");
+
+			if (titleMap != null) {
+				jsonObject.put("title", getLocalizedValue(titleMap));
+			}
+
+			Map<String, Object> urlMap =
+				(Map<String, Object>)backgroundFragmentImageMap.get("url");
+
+			if (urlMap != null) {
+				jsonObject.put("url", getLocalizedValue(urlMap));
+
+				processMapping(
+					jsonObject, layoutStructureItemImporterContext,
+					(Map<String, Object>)urlMap.get("mapping"));
+			}
+
+			stylesJSONObject.put("backgroundImage", jsonObject);
+		}
+
+		Map<String, Object> containerLayout =
+			(Map<String, Object>)definitionMap.get("layout");
+
+		if (containerLayout != null) {
+			String align = String.valueOf(
+				containerLayout.getOrDefault("align", StringPool.BLANK));
+
+			if (Validator.isNotNull(align)) {
+				containerStyledLayoutStructureItem.setAlign(
+					AlignConverter.convertToInternalValue(align));
+			}
+
 			stylesJSONObject.put(
-				"backgroundColor", definitionMap.get("backgroundColor"));
+				"borderColor", (String)containerLayout.get("borderColor")
+			).put(
+				"borderRadius",
+				BorderRadiusConverter.convertToInternalValue(
+					(String)containerLayout.get("borderRadius"))
+			);
 
-			Map<String, Object> backgroundFragmentImageMap =
-				(Map<String, Object>)definitionMap.get(
-					"backgroundFragmentImage");
+			String borderWidth = String.valueOf(
+				containerLayout.getOrDefault("borderWidth", StringPool.BLANK));
 
-			if (MapUtil.isEmpty(backgroundFragmentImageMap)) {
-				backgroundFragmentImageMap =
-					(Map<String, Object>)definitionMap.get("backgroundImage");
+			if (Validator.isNotNull(borderWidth)) {
+				stylesJSONObject.put("borderWidth", borderWidth);
 			}
 
-			if (backgroundFragmentImageMap != null) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			String contentDisplay = String.valueOf(
+				containerLayout.getOrDefault(
+					"contentDisplay", StringPool.BLANK));
 
-				Map<String, Object> titleMap =
-					(Map<String, Object>)backgroundFragmentImageMap.get(
-						"title");
-
-				if (titleMap != null) {
-					jsonObject.put("title", getLocalizedValue(titleMap));
-				}
-
-				Map<String, Object> urlMap =
-					(Map<String, Object>)backgroundFragmentImageMap.get("url");
-
-				if (urlMap != null) {
-					jsonObject.put("url", getLocalizedValue(urlMap));
-
-					processMapping(
-						jsonObject, layoutStructureItemImporterContext,
-						(Map<String, Object>)urlMap.get("mapping"));
-				}
-
-				stylesJSONObject.put("backgroundImage", jsonObject);
+			if (Validator.isNotNull(contentDisplay)) {
+				containerStyledLayoutStructureItem.setContentDisplay(
+					ContentDisplayConverter.convertToInternalValue(
+						contentDisplay));
 			}
 
-			Map<String, Object> containerLayout =
-				(Map<String, Object>)definitionMap.get("layout");
+			String flexWrap = String.valueOf(
+				containerLayout.getOrDefault("flexWrap", StringPool.BLANK));
 
-			if (containerLayout != null) {
-				String align = String.valueOf(
-					containerLayout.getOrDefault("align", StringPool.BLANK));
+			if (Validator.isNotNull(flexWrap)) {
+				containerStyledLayoutStructureItem.setFlexWrap(
+					FlexWrapConverter.convertToInternalValue(flexWrap));
+			}
 
-				if (Validator.isNotNull(align)) {
-					containerStyledLayoutStructureItem.setAlign(
-						AlignConverter.convertToInternalValue(align));
-				}
+			String htmlTag = String.valueOf(
+				containerLayout.getOrDefault("htmlTag", StringPool.BLANK));
 
-				stylesJSONObject.put(
-					"borderColor", (String)containerLayout.get("borderColor")
-				).put(
-					"borderRadius",
-					BorderRadiusConverter.convertToInternalValue(
-						(String)containerLayout.get("borderRadius"))
-				);
+			if (Validator.isNotNull(htmlTag)) {
+				containerStyledLayoutStructureItem.setHtmlTag(
+					HtmlTagConverter.convertToInternalValue(htmlTag));
+			}
 
-				String borderWidth = String.valueOf(
+			String justify = String.valueOf(
+				containerLayout.getOrDefault("justify", StringPool.BLANK));
+
+			if (Validator.isNotNull(justify)) {
+				containerStyledLayoutStructureItem.setJustify(
+					JustifyConverter.convertToInternalValue(justify));
+			}
+
+			String marginBottom = MarginConverter.convertToInternalValue(
+				String.valueOf(
 					containerLayout.getOrDefault(
-						"borderWidth", StringPool.BLANK));
+						"marginBottom", StringPool.BLANK)));
 
-				if (Validator.isNotNull(borderWidth)) {
-					stylesJSONObject.put("borderWidth", borderWidth);
-				}
+			if (Validator.isNotNull(marginBottom)) {
+				stylesJSONObject.put("marginBottom", marginBottom);
+			}
 
-				String contentDisplay = String.valueOf(
+			String marginLeft = MarginConverter.convertToInternalValue(
+				String.valueOf(
 					containerLayout.getOrDefault(
-						"contentDisplay", StringPool.BLANK));
+						"marginLeft", StringPool.BLANK)));
 
-				if (Validator.isNotNull(contentDisplay)) {
-					containerStyledLayoutStructureItem.setContentDisplay(
-						ContentDisplayConverter.convertToInternalValue(
-							contentDisplay));
-				}
-
-				String flexWrap = String.valueOf(
-					containerLayout.getOrDefault("flexWrap", StringPool.BLANK));
-
-				if (Validator.isNotNull(flexWrap)) {
-					containerStyledLayoutStructureItem.setFlexWrap(
-						FlexWrapConverter.convertToInternalValue(flexWrap));
-				}
-
-				String htmlTag = String.valueOf(
-					containerLayout.getOrDefault("htmlTag", StringPool.BLANK));
-
-				if (Validator.isNotNull(htmlTag)) {
-					containerStyledLayoutStructureItem.setHtmlTag(
-						HtmlTagConverter.convertToInternalValue(htmlTag));
-				}
-
-				String justify = String.valueOf(
-					containerLayout.getOrDefault("justify", StringPool.BLANK));
-
-				if (Validator.isNotNull(justify)) {
-					containerStyledLayoutStructureItem.setJustify(
-						JustifyConverter.convertToInternalValue(justify));
-				}
-
-				String marginBottom = MarginConverter.convertToInternalValue(
-					String.valueOf(
-						containerLayout.getOrDefault(
-							"marginBottom", StringPool.BLANK)));
-
-				if (Validator.isNotNull(marginBottom)) {
-					stylesJSONObject.put("marginBottom", marginBottom);
-				}
-
-				String marginLeft = MarginConverter.convertToInternalValue(
-					String.valueOf(
-						containerLayout.getOrDefault(
-							"marginLeft", StringPool.BLANK)));
-
-				if (Validator.isNotNull(marginLeft)) {
-					stylesJSONObject.put("marginLeft", marginLeft);
-				}
-
-				String marginRight = MarginConverter.convertToInternalValue(
-					String.valueOf(
-						containerLayout.getOrDefault(
-							"marginRight", StringPool.BLANK)));
-
-				if (Validator.isNotNull(marginRight)) {
-					stylesJSONObject.put("marginRight", marginRight);
-				}
-
-				String marginTop = MarginConverter.convertToInternalValue(
-					String.valueOf(
-						containerLayout.getOrDefault(
-							"marginTop", StringPool.BLANK)));
-
-				if (Validator.isNotNull(marginTop)) {
-					stylesJSONObject.put("marginTop", marginTop);
-				}
-
-				String opacity = String.valueOf(
-					containerLayout.getOrDefault("opacity", StringPool.BLANK));
-
-				if (Validator.isNotNull(opacity)) {
-					stylesJSONObject.put("opacity", opacity);
-				}
-
-				String paddingBottom = PaddingConverter.convertToInternalValue(
-					String.valueOf(
-						containerLayout.getOrDefault(
-							"paddingBottom", StringPool.BLANK)));
-
-				if (Validator.isNotNull(paddingBottom)) {
-					stylesJSONObject.put("paddingBottom", paddingBottom);
-				}
-
-				String paddingHorizontal =
-					PaddingConverter.convertToInternalValue(
-						String.valueOf(
-							containerLayout.getOrDefault(
-								"paddingHorizontal", StringPool.BLANK)));
-				String paddingLeft = PaddingConverter.convertToInternalValue(
-					String.valueOf(
-						containerLayout.getOrDefault(
-							"paddingLeft", StringPool.BLANK)));
-				String paddingRight = PaddingConverter.convertToInternalValue(
-					String.valueOf(
-						containerLayout.getOrDefault(
-							"paddingRight", StringPool.BLANK)));
-
-				if (Validator.isNotNull(paddingLeft)) {
-					stylesJSONObject.put("paddingLeft", paddingLeft);
-				}
-				else if (Validator.isNotNull(paddingHorizontal)) {
-					stylesJSONObject.put("paddingLeft", paddingHorizontal);
-				}
-
-				if (Validator.isNotNull(paddingRight)) {
-					stylesJSONObject.put("paddingRight", paddingRight);
-				}
-				else if (Validator.isNotNull(paddingHorizontal)) {
-					stylesJSONObject.put("paddingRight", paddingHorizontal);
-				}
-
-				String paddingTop = PaddingConverter.convertToInternalValue(
-					String.valueOf(
-						containerLayout.getOrDefault(
-							"paddingTop", StringPool.BLANK)));
-
-				if (Validator.isNotNull(paddingTop)) {
-					stylesJSONObject.put("paddingTop", paddingTop);
-				}
-
-				stylesJSONObject.put(
-					"shadow",
-					ShadowConverter.convertToInternalValue(
-						(String)containerLayout.get("shadow")));
-
-				String containerType = StringUtil.toLowerCase(
-					(String)containerLayout.get("containerType"));
-				String widthType = StringUtil.toLowerCase(
-					(String)containerLayout.get("widthType"));
-
-				if (widthType != null) {
-					containerStyledLayoutStructureItem.setWidthType(widthType);
-				}
-				else if (containerType != null) {
-					containerStyledLayoutStructureItem.setWidthType(
-						containerType);
-				}
+			if (Validator.isNotNull(marginLeft)) {
+				stylesJSONObject.put("marginLeft", marginLeft);
 			}
 
-			containerStyledLayoutStructureItem.updateItemConfig(
-				JSONUtil.put("styles", stylesJSONObject));
+			String marginRight = MarginConverter.convertToInternalValue(
+				String.valueOf(
+					containerLayout.getOrDefault(
+						"marginRight", StringPool.BLANK)));
 
-			Map<String, Object> fragmentLinkMap =
-				(Map<String, Object>)definitionMap.get("fragmentLink");
-
-			if (fragmentLinkMap != null) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				Map<String, Object> hrefMap =
-					(Map<String, Object>)fragmentLinkMap.get("href");
-
-				if (hrefMap != null) {
-					Object localizedValue = getLocalizedValue(hrefMap);
-
-					if (localizedValue != null) {
-						jsonObject.put("href", localizedValue);
-					}
-
-					processMapping(
-						jsonObject, layoutStructureItemImporterContext,
-						(Map<String, Object>)hrefMap.get("mapping"));
-				}
-
-				String target = (String)fragmentLinkMap.get("target");
-
-				if (target != null) {
-					if (Objects.equals(
-							target, FragmentLink.Target.PARENT.getValue()) ||
-						Objects.equals(
-							target, FragmentLink.Target.TOP.getValue())) {
-
-						target = FragmentLink.Target.SELF.getValue();
-					}
-
-					jsonObject.put(
-						"target",
-						StringPool.UNDERLINE + StringUtil.toLowerCase(target));
-				}
-
-				containerStyledLayoutStructureItem.setLinkJSONObject(
-					jsonObject);
+			if (Validator.isNotNull(marginRight)) {
+				stylesJSONObject.put("marginRight", marginRight);
 			}
 
-			Map<String, Object> fragmentStyleMap =
-				(Map<String, Object>)definitionMap.get("fragmentStyle");
+			String marginTop = MarginConverter.convertToInternalValue(
+				String.valueOf(
+					containerLayout.getOrDefault(
+						"marginTop", StringPool.BLANK)));
 
-			if (fragmentStyleMap != null) {
+			if (Validator.isNotNull(marginTop)) {
+				stylesJSONObject.put("marginTop", marginTop);
+			}
+
+			String opacity = String.valueOf(
+				containerLayout.getOrDefault("opacity", StringPool.BLANK));
+
+			if (Validator.isNotNull(opacity)) {
+				stylesJSONObject.put("opacity", opacity);
+			}
+
+			String paddingBottom = PaddingConverter.convertToInternalValue(
+				String.valueOf(
+					containerLayout.getOrDefault(
+						"paddingBottom", StringPool.BLANK)));
+
+			if (Validator.isNotNull(paddingBottom)) {
+				stylesJSONObject.put("paddingBottom", paddingBottom);
+			}
+
+			String paddingHorizontal = PaddingConverter.convertToInternalValue(
+				String.valueOf(
+					containerLayout.getOrDefault(
+						"paddingHorizontal", StringPool.BLANK)));
+			String paddingLeft = PaddingConverter.convertToInternalValue(
+				String.valueOf(
+					containerLayout.getOrDefault(
+						"paddingLeft", StringPool.BLANK)));
+			String paddingRight = PaddingConverter.convertToInternalValue(
+				String.valueOf(
+					containerLayout.getOrDefault(
+						"paddingRight", StringPool.BLANK)));
+
+			if (Validator.isNotNull(paddingLeft)) {
+				stylesJSONObject.put("paddingLeft", paddingLeft);
+			}
+			else if (Validator.isNotNull(paddingHorizontal)) {
+				stylesJSONObject.put("paddingLeft", paddingHorizontal);
+			}
+
+			if (Validator.isNotNull(paddingRight)) {
+				stylesJSONObject.put("paddingRight", paddingRight);
+			}
+			else if (Validator.isNotNull(paddingHorizontal)) {
+				stylesJSONObject.put("paddingRight", paddingHorizontal);
+			}
+
+			String paddingTop = PaddingConverter.convertToInternalValue(
+				String.valueOf(
+					containerLayout.getOrDefault(
+						"paddingTop", StringPool.BLANK)));
+
+			if (Validator.isNotNull(paddingTop)) {
+				stylesJSONObject.put("paddingTop", paddingTop);
+			}
+
+			stylesJSONObject.put(
+				"shadow",
+				ShadowConverter.convertToInternalValue(
+					(String)containerLayout.get("shadow")));
+
+			String containerType = StringUtil.toLowerCase(
+				(String)containerLayout.get("containerType"));
+			String widthType = StringUtil.toLowerCase(
+				(String)containerLayout.get("widthType"));
+
+			if (widthType != null) {
+				containerStyledLayoutStructureItem.setWidthType(widthType);
+			}
+			else if (containerType != null) {
+				containerStyledLayoutStructureItem.setWidthType(containerType);
+			}
+		}
+
+		containerStyledLayoutStructureItem.updateItemConfig(
+			JSONUtil.put("styles", stylesJSONObject));
+
+		Map<String, Object> fragmentLinkMap =
+			(Map<String, Object>)definitionMap.get("fragmentLink");
+
+		if (fragmentLinkMap != null) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			Map<String, Object> hrefMap =
+				(Map<String, Object>)fragmentLinkMap.get("href");
+
+			if (hrefMap != null) {
+				Object localizedValue = getLocalizedValue(hrefMap);
+
+				if (localizedValue != null) {
+					jsonObject.put("href", localizedValue);
+				}
+
+				processMapping(
+					jsonObject, layoutStructureItemImporterContext,
+					(Map<String, Object>)hrefMap.get("mapping"));
+			}
+
+			String target = (String)fragmentLinkMap.get("target");
+
+			if (target != null) {
+				if (Objects.equals(
+						target, FragmentLink.Target.PARENT.getValue()) ||
+					Objects.equals(
+						target, FragmentLink.Target.TOP.getValue())) {
+
+					target = FragmentLink.Target.SELF.getValue();
+				}
+
+				jsonObject.put(
+					"target",
+					StringPool.UNDERLINE + StringUtil.toLowerCase(target));
+			}
+
+			containerStyledLayoutStructureItem.setLinkJSONObject(jsonObject);
+		}
+
+		Map<String, Object> fragmentStyleMap =
+			(Map<String, Object>)definitionMap.get("fragmentStyle");
+
+		if (fragmentStyleMap != null) {
+			JSONObject jsonObject = JSONUtil.put(
+				"styles",
+				toStylesJSONObject(
+					layoutStructureItemImporterContext, fragmentStyleMap));
+
+			containerStyledLayoutStructureItem.updateItemConfig(jsonObject);
+		}
+
+		if (definitionMap.containsKey("fragmentViewports")) {
+			List<Map<String, Object>> fragmentViewports =
+				(List<Map<String, Object>>)definitionMap.get(
+					"fragmentViewports");
+
+			for (Map<String, Object> fragmentViewport : fragmentViewports) {
 				JSONObject jsonObject = JSONUtil.put(
-					"styles",
-					toStylesJSONObject(
-						layoutStructureItemImporterContext, fragmentStyleMap));
+					(String)fragmentViewport.get("id"),
+					toFragmentViewportStylesJSONObject(fragmentViewport));
 
 				containerStyledLayoutStructureItem.updateItemConfig(jsonObject);
-			}
-
-			if (definitionMap.containsKey("fragmentViewports")) {
-				List<Map<String, Object>> fragmentViewports =
-					(List<Map<String, Object>>)definitionMap.get(
-						"fragmentViewports");
-
-				for (Map<String, Object> fragmentViewport : fragmentViewports) {
-					JSONObject jsonObject = JSONUtil.put(
-						(String)fragmentViewport.get("id"),
-						toFragmentViewportStylesJSONObject(fragmentViewport));
-
-					containerStyledLayoutStructureItem.updateItemConfig(
-						jsonObject);
-				}
 			}
 		}
 

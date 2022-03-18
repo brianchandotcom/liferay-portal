@@ -129,6 +129,7 @@ exports[`DocumentPreviewerWrapper renders with a document 1`] = `
       >
         <button
           class="page-link"
+          disabled=""
           type="button"
         >
           1
@@ -254,6 +255,7 @@ exports[`DocumentPreviewerWrapper renders with a document without preview 1`] = 
       >
         <button
           class="page-link"
+          disabled=""
           type="button"
         >
           1
@@ -399,6 +401,7 @@ exports[`DocumentPreviewerWrapper renders with an image 1`] = `
       >
         <button
           class="page-link"
+          disabled=""
           type="button"
         >
           1

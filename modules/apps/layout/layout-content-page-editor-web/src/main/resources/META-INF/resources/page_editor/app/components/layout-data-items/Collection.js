@@ -134,11 +134,15 @@ const Grid = ({
 		<>
 			{Array.from({length: numberOfRows}).map((_, i) => (
 				<ClayLayout.Row
-					className={classNames('', {
-						'no-gutters':
-							config.featureFlagLps119551 &&
-							!collectionConfig.gutters,
-					})}
+					className={
+						config.featureFlagLps119551 &&
+						classNames(
+							`align-items-${collectionConfig.verticalAlignment}`,
+							{
+								'no-gutters': !collectionConfig.gutters,
+							}
+						)
+					}
 					key={`row-${i}`}
 				>
 					{Array.from({length: collectionConfig.numberOfColumns}).map(

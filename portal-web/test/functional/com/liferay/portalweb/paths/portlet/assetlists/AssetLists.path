@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>ADD_VARIATION_ICON</td>
-	<td>//ul[contains(@class, 'navbar-nav')]//*[contains(@class, 'btn-sm')]</td>
+	<td>xpath=((//div[contains(@class, 'justify-content-between')] | //ul[contains(@class, 'navbar-nav')])//*[contains(@class, 'btn-sm')])</td>
 	<td></td>
 </tr>
 <tr>

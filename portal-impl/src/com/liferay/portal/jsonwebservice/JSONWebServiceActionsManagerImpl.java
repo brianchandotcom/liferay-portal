@@ -246,15 +246,8 @@ public class JSONWebServiceActionsManagerImpl
 	public int registerService(
 		String contextName, String contextPath, Object service) {
 
-		return registerService(
-			contextName, contextPath, service,
-			new DefaultJSONWebServiceRegistrator());
-	}
-
-	@Override
-	public int registerService(
-		String contextName, String contextPath, Object service,
-		JSONWebServiceRegistrator jsonWebServiceRegistrator) {
+		JSONWebServiceRegistrator jsonWebServiceRegistrator =
+			new DefaultJSONWebServiceRegistrator();
 
 		jsonWebServiceRegistrator.processBean(
 			contextName, contextPath, service);

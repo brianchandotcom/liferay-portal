@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceRegistrator;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceScannerStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
@@ -38,17 +37,6 @@ import java.lang.reflect.Method;
  */
 public class DefaultJSONWebServiceRegistrator
 	implements JSONWebServiceRegistrator {
-
-	public DefaultJSONWebServiceRegistrator() {
-		_jsonWebServiceScannerStrategy =
-			new SpringJSONWebServiceScannerStrategy();
-	}
-
-	public DefaultJSONWebServiceRegistrator(
-		JSONWebServiceScannerStrategy jsonWebServiceScannerStrategy) {
-
-		_jsonWebServiceScannerStrategy = jsonWebServiceScannerStrategy;
-	}
 
 	public void processAllBeans(
 		String contextName, String contextPath, BeanLocator beanLocator) {
@@ -227,6 +215,7 @@ public class DefaultJSONWebServiceRegistrator
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultJSONWebServiceRegistrator.class);
 
-	private final JSONWebServiceScannerStrategy _jsonWebServiceScannerStrategy;
+	private final JSONWebServiceScannerStrategy _jsonWebServiceScannerStrategy =
+		new JSONWebServiceScannerStrategy();
 
 }

@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.remote.json.web.service.extender.internal;
+package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceScannerStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceWrapper;
@@ -30,10 +29,8 @@ import java.util.List;
 /**
  * @author Miguel Pastor
  */
-public class ServiceJSONWebServiceScannerStrategy
-	implements JSONWebServiceScannerStrategy {
+public class JSONWebServiceScannerStrategy {
 
-	@Override
 	public Method[] scan(Object service) {
 		Class<?> clazz = _getTargetClass(service);
 
@@ -54,10 +51,6 @@ public class ServiceJSONWebServiceScannerStrategy
 		return serviceMethods.toArray(new Method[0]);
 	}
 
-	/**
-	 * @see com.liferay.portal.jsonwebservice.SpringJSONWebServiceScannerStrategy#_getTargetClass(
-	 *      Object)
-	 */
 	private Class<?> _getTargetClass(Object service) {
 		while (ProxyUtil.isProxyClass(service.getClass())) {
 			InvocationHandler invocationHandler =
@@ -101,6 +94,6 @@ public class ServiceJSONWebServiceScannerStrategy
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ServiceJSONWebServiceScannerStrategy.class);
+		JSONWebServiceScannerStrategy.class);
 
 }

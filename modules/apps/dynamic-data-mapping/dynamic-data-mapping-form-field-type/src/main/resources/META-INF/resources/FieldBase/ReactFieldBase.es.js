@@ -29,7 +29,10 @@ import React, {useMemo, useState} from 'react';
 
 import './FieldBase.scss';
 
-const convertInputValue = (fieldType, locale, value) => {
+function normalizeInputValue(fieldType, locale, value) {
+	if (!value) {
+		return '';
+	}
 	if (fieldType === 'date') {
 		const momentLocale = moment().locale(locale);
 
@@ -48,28 +51,11 @@ const convertInputValue = (fieldType, locale, value) => {
 		fieldType === 'grid' ||
 		fieldType === 'image'
 	) {
-		if (Object.keys(value).length === 0) {
-			return '';
-		}
-
-		return JSON.stringify(value);
+		return Object.keys(value).length === 0 ? '' : JSON.stringify(value);
 	}
 
 	return value;
-};
-
-const getDefaultRows = (nestedFields) => {
-	return nestedFields.map((nestedField) => {
-		return {
-			columns: [
-				{
-					fields: [nestedField],
-					size: 12,
-				},
-			],
-		};
-	});
-};
+}
 
 const getFieldDetails = ({errorMessage, hasError, required, text, tip}) => {
 	let fieldDetails = '';
@@ -205,37 +191,41 @@ export function FieldBase({
 
 	const accessibleProps =
 		accessible && fieldDetails ? {'aria-labelledby': fieldDetailsId} : null;
-	const hiddenTranslations = useMemo(() => {
-		const array = [];
 
+	const hiddenTranslations = useMemo(() => {
 		if (!localizedValue) {
-			return array;
+			return;
 		}
 
-		Object.keys(localizedValue).forEach((key) => {
-			if (key !== editingLanguageId) {
-				array.push({
-					inputName: name.replace(editingLanguageId, key),
-					locale: key,
-					value: localizedValue[key],
-				});
+		return Object.entries(localizedValue).map(([locale, value]) => {
+			if (locale === editingLanguageId) {
+				return null;
 			}
+
+			return (
+				<input
+					key={locale}
+					name={name.replace(editingLanguageId, locale)}
+					type="hidden"
+					value={normalizeInputValue(type, locale, value)}
+				/>
+			);
 		});
+	}, [localizedValue, editingLanguageId, name, type]);
 
-		return array;
-	}, [localizedValue, editingLanguageId, name]);
-
-	const inputEditedName = name + '_edited';
 	const renderLabel =
 		(label && showLabel) || hideField || repeatable || required || tooltip;
 	const repeatedIndex = useMemo(() => getRepeatedIndex(name), [name]);
 	const showLegend =
-		type &&
-		(type === 'checkbox_multiple' ||
-			type === 'grid' ||
-			type === 'paragraph' ||
-			type === 'radio');
+		type === 'checkbox_multiple' ||
+		type === 'grid' ||
+		type === 'paragraph' ||
+		type === 'radio';
 	const showPopover = fieldName === 'inputMaskFormat';
+
+	const defaultRows = nestedFields?.map((field) => ({
+		columns: [{fields: [field], size: 12}],
+	}));
 
 	return (
 		<div
@@ -247,11 +237,11 @@ export function FieldBase({
 			data-field-name={name}
 			onClick={onClick}
 			style={style}
-			tabIndex={!renderLabel ? 0 : null}
+			tabIndex={!renderLabel ? 0 : undefined}
 		>
 			{repeatable && (
 				<div className="lfr-ddm-form-field-repeatable-toolbar">
-					{repeatable && repeatedIndex > 0 && (
+					{repeatedIndex > 0 && (
 						<ClayButton
 							aria-label={Liferay.Util.sub(
 								Liferay.Language.get('remove-duplicate-field'),
@@ -307,7 +297,7 @@ export function FieldBase({
 							<legend
 								{...accessibleProps}
 								className="lfr-ddm-legend"
-								tabIndex="0"
+								tabIndex={0}
 							>
 								{showLabel && label}
 
@@ -332,7 +322,7 @@ export function FieldBase({
 									'ddm-label': showLabel || required,
 								})}
 								htmlFor={id ?? name}
-								tabIndex="0"
+								tabIndex={0}
 							>
 								{showLabel && label && (
 									<LabelProperty
@@ -368,27 +358,11 @@ export function FieldBase({
 
 			{!renderLabel && children}
 
-			{hiddenTranslations.length > 0 &&
-				hiddenTranslations.map((translation) => (
-					<input
-						key={translation.inputName}
-						name={translation.inputName}
-						type="hidden"
-						value={
-							translation.value
-								? convertInputValue(
-										type,
-										translation.locale,
-										translation.value
-								  )
-								: ''
-						}
-					/>
-				))}
+			{hiddenTranslations}
 
 			{!hideEditedFlag && (
 				<input
-					name={inputEditedName}
+					name={`${name}_edited`}
 					type="hidden"
 					value={localizedValue[editingLanguageId] !== undefined}
 				/>
@@ -418,7 +392,7 @@ export function FieldBase({
 				/>
 			)}
 
-			{nestedFields && <Layout rows={getDefaultRows(nestedFields)} />}
+			{defaultRows && <Layout rows={defaultRows} />}
 		</div>
 	);
 }

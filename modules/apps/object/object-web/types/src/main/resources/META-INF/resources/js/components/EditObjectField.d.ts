@@ -16,12 +16,14 @@
 
 import './EditObjectField.scss';
 export default function EditObjectField({
+	allowMaxLength,
 	isApproved,
 	objectField: initialValues,
 	objectFieldTypes,
 	readOnly,
 }: IProps): JSX.Element;
 interface IProps {
+	allowMaxLength?: boolean;
 	isApproved: boolean;
 	objectField: ObjectField;
 	objectFieldTypes: ObjectFieldType[];

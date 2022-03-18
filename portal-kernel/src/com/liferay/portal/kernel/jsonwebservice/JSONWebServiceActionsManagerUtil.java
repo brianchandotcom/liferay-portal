@@ -63,11 +63,6 @@ public class JSONWebServiceActionsManagerUtil {
 			contextName);
 	}
 
-	public static int getJSONWebServiceActionsCount(String contextName) {
-		return _jsonWebServiceActionsManager.getJSONWebServiceActionsCount(
-			contextName);
-	}
-
 	public static JSONWebServiceActionsManager
 		getJSONWebServiceActionsManager() {
 

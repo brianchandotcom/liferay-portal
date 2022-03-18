@@ -165,18 +165,6 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	@Override
-	public int getJSONWebServiceActionsCount(String contextName) {
-		List<JSONWebServiceActionConfig> jsonWebServiceActionConfigs =
-			_contextNameIndexedJSONWebServiceActionConfigs.get(contextName);
-
-		if (jsonWebServiceActionConfigs == null) {
-			return 0;
-		}
-
-		return jsonWebServiceActionConfigs.size();
-	}
-
-	@Override
 	public synchronized void registerJSONWebServiceAction(
 		String contextName, String contextPath, Class<?> actionClass,
 		Method actionMethod, String path, String method) {
@@ -249,7 +237,7 @@ public class JSONWebServiceActionsManagerImpl
 		JSONWebServiceRegistratorUtil.processBean(
 			contextName, contextPath, service);
 
-		int count = getJSONWebServiceActionsCount(contextPath);
+		int count = _getJSONWebServiceActionsCount(contextPath);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -303,7 +291,7 @@ public class JSONWebServiceActionsManagerImpl
 			}
 		}
 
-		int count = getJSONWebServiceActionsCount(contextPath);
+		int count = _getJSONWebServiceActionsCount(contextPath);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -577,6 +565,17 @@ public class JSONWebServiceActionsManagerImpl
 		}
 
 		return matchedJSONWebServiceActionConfig;
+	}
+
+	private int _getJSONWebServiceActionsCount(String contextName) {
+		List<JSONWebServiceActionConfig> jsonWebServiceActionConfigs =
+			_contextNameIndexedJSONWebServiceActionConfigs.get(contextName);
+
+		if (jsonWebServiceActionConfigs == null) {
+			return 0;
+		}
+
+		return jsonWebServiceActionConfigs.size();
 	}
 
 	private int _getParameterPathIndex(String path) {

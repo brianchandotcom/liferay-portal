@@ -6,7 +6,7 @@
 		<name>portlet-display-template-name-compact-layout</name>
 		<description>portlet-display-template-description-sort-compact</description>
 		<language>ftl</language>
-		<script-file>com/liferay/portal/search/web/internal/sort/template/dependencies/portlet_display_template_compact.ftl</script-file>
+		<script-file>com/liferay/portal/search/web/internal/sort/portlet/display/template/dependencies/portlet_display_template_compact.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 </root>

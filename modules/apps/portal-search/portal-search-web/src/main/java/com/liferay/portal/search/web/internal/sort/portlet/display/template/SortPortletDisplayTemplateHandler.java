@@ -110,8 +110,8 @@ public class SortPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return "com/liferay/portal/search/web/internal/sort/template" +
-			"/dependencies/portlet-display-templates.xml";
+		return "com/liferay/portal/search/web/internal/sort/portlet/display" +
+			"/template/dependencies/portlet-display-templates.xml";
 	}
 
 	@Reference

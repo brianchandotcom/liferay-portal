@@ -346,6 +346,7 @@ definition {
 	@description = "This is a test for LPS-126009 and LPS-147390. The user is able to filter web contents in Collection Display using Tag."
 	@priority = "5"
 	test FilterWebContentByTag {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CollectionDisplayWithCollectionProviders#FilterWebContentByTag";
 
 		task ("Enable Basic Web Content flag in Gogo Shell") {
@@ -2319,6 +2320,7 @@ definition {
 	@description = "This is a test for LPS-147390. The user could view the prefilter results in Prefilter Collection modal."
 	@priority = "5"
 	test ViewPrefilterResults {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CollectionDisplayWithCollectionProviders#ViewPrefilterResults";
 
 		task ("Enable Basic Web Content flag in Gogo Shell") {

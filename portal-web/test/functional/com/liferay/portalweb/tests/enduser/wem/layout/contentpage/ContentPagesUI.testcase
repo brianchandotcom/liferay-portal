@@ -73,6 +73,8 @@ definition {
 	@description = "This is a test for LPS-136412. View collapse style changes in fragment configuration."
 	@priority = "5"
 	test ViewCollapseStyleInFragmentConfiguration {
+		property portal.acceptance = "true";
+
 		task ("Add a dropdown fragment to a content page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",

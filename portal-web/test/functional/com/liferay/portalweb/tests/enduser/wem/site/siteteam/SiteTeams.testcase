@@ -368,6 +368,7 @@ definition {
 	@description = "Able to find user in site team."
 	@priority = "5"
 	test AddSiteTeamSearchUsers {
+		property portal.acceptance = "true";
 		property testray.component.names = "Site Administration,Users and Organizations";
 
 		task ("Add 2 users and assign them to the created site") {

@@ -976,6 +976,8 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 	@description = "This is a test for LPS-64814. Validate remote code execution via untrusted Java Deserialization in templates cannot cause out of memory errors."
 	@priority = "5"
 	test ValidateRemoteCodeViaTemplatesCannotCauseOutOfMemoryErrors {
+		property portal.acceptance = "true";
+
 		task ("Add a text field to web content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1035,6 +1037,8 @@ ${company.getKeyObj()}
 	@description = "This is a test for LPS-58698. Validate remote code execution can't privilege escalation in templates."
 	@priority = "5"
 	test ValidateTemplateRCEReturnsNoRuntimeClasses {
+		property portal.acceptance = "true";
+
 		task ("Add a text field to web content structure") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
@@ -1495,6 +1499,8 @@ ${runtimeInstance}
 	@description = "This is a test for LPS-83798. Validate File system can't access using Journal/DDM templates."
 	@priority = "5"
 	test ViewNoFileSystemAccessViaJournalTemplates {
+		property portal.acceptance = "true";
+
 		task ("Add a web content structure with a text field") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 

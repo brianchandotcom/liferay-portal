@@ -400,6 +400,7 @@ definition {
 	@description = "This is a test for LPS-119582. View content page shown in search results after execute reindex all."
 	@priority = "5"
 	test ViewContentPageShownInSearchResultsAfterExecuteReindexAll {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "ContentPagesWithSearch#ViewContentPageShownInSearchResultsAfterExecuteReindexAll";
 
 		task ("Add a Paragraph fragment to content page") {

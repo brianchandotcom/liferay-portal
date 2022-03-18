@@ -289,6 +289,8 @@ definition {
 	@description = "This is a test for LPS-140717. The user can change fragment text color via color picker configuration."
 	@priority = "5"
 	test ConfigureColorPicker {
+		property portal.acceptance = "true";
+
 		task ("Add a fragment with colorPicker configuration") {
 			FragmentsAdmin.addFragment(fragmentName = "Fragment Name");
 

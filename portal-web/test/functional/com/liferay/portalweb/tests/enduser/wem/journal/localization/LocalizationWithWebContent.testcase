@@ -391,6 +391,7 @@ definition {
 	@description = "This is a use case for LPS-83319. The user could change default language of web content after enable Changeable Default Language."
 	@priority = "5"
 	test ChangeWebContentDefaultLanguage {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "LocalizationWithWebContent#ChangeWebContentDefaultLanguage";
 
 		task ("Enable Changeable Default Language for Web Content") {

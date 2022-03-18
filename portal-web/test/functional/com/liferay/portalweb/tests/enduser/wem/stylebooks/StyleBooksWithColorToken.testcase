@@ -269,6 +269,8 @@ definition {
 	@description = "This is a test for LPS-145650. The user could continue publish process in page editor if link invalid color token."
 	@priority = "5"
 	test ContinuePublishProcessInPageEditorIfLinkInvalidColorToken {
+		property portal.acceptance = "true";
+
 		task ("Add a Heading fragment to a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",
@@ -332,6 +334,8 @@ definition {
 	@description = "This is a test for LPS-145650. The user could continue publish process in style book editor if link invalid color token."
 	@priority = "5"
 	test ContinuePublishProcessInStyleBookEditorIfLinkInvalidColorToken {
+		property portal.acceptance = "true";
+
 		task ("Add a style book") {
 			JSONStylebooks.addStyleBookEntry(
 				groupName = "Test Site Name",

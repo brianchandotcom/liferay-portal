@@ -154,6 +154,7 @@ definition {
 	@description = "This is a test for LPS-149293. The site creation process continues even though the user close the modal after submitting form."
 	@priority = "5"
 	test ViewSiteCreatedEvenThoughCloseModalAfterSubmitForm {
+		property portal.acceptance = "true";
 		property portal.release = "false";
 
 		task ("Navigate to the Sites admin") {
@@ -192,6 +193,7 @@ definition {
 	@priority = "5"
 	@uitest
 	test ViewSiteCreationMessage {
+		property portal.acceptance = "true";
 		property portal.release = "false";
 
 		task ("Navigate to the Sites admin") {

@@ -466,6 +466,7 @@ definition {
 	@priority = "5"
 	test DisplayCollectionInAssetPublisher {
 		property asset.publisher.selection.style = "asset-list";
+		property portal.acceptance = "true";
 
 		task ("Add a dynamic collection for Web Content Article and Basic Web Content") {
 			JSONAssetlist.addDynamicAssetListEntryWithItemType(
@@ -559,6 +560,8 @@ definition {
 	@description = "This is a use case for LPS-120568. The user could edit message board thread reply via Asset Publisher."
 	@priority = "5"
 	test EditMessageBoardThreadReplyViaAP {
+		property portal.acceptance = "true";
+
 		task ("Add a Message Boards to page") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Test Site Name",
@@ -1325,6 +1328,8 @@ definition {
 	@description = "This is a use case for LPS-133629. The user can select folder when create web content based on Basic Web Content via Asset Publisher."
 	@priority = "5"
 	test SelectFolderWhenCreateWebContentViaAssetPublisher {
+		property portal.acceptance = "true";
+
 		task ("Add a web content folder") {
 			JSONWebcontent.addFolder(
 				folderDescription = "WC Folder Description",

@@ -38,6 +38,8 @@ definition {
 	@description = "This is a test for LPS-140820. The user could decrease the Number of Slides in Banner Slider."
 	@priority = "5"
 	test DecreaseNumberOfSlides {
+		property portal.acceptance = "true";
+
 		task ("Add a Banner Slider fragment to a display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
@@ -159,6 +161,8 @@ definition {
 	@description = "This is a test for LPS-140820. The user could increase the Number of Slides in Banner Slider."
 	@priority = "5"
 	test IncreaseNumberOfSlides {
+		property portal.acceptance = "true";
+
 		task ("Add a Banner Slider fragment to page") {
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Page Name",

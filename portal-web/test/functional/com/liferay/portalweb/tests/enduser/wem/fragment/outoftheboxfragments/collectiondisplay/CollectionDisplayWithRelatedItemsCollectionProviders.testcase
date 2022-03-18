@@ -1499,6 +1499,7 @@ definition {
 	@description = "This is a test for LPS-127025. The DPT author can use Basic Document related item collection provider in DPT for Category."
 	@priority = "5"
 	test ViewCollectionItemsBasedOnBasicDocumentOnDisplayPageTemplateForCategory {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewCollectionItemsBasedOnBasicDocumentOnDisplayPageTemplateForCategory";
 
 		task ("Enable the DLFileEntry feature via gogo shell") {
@@ -1620,6 +1621,7 @@ definition {
 	@description = "This is a test for LPS-127025. The DPT author can use Basic Web Content related item collection provider in DPT for Category."
 	@priority = "5"
 	test ViewCollectionItemsBasedOnBasicWebContentOnDisplayPageTemplateForCategory {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CollectionDisplayWithRelatedItemsCollectionProviders#ViewCollectionItemsBasedOnBasicWebContentOnDisplayPageTemplateForCategory";
 
 		task ("Enable the DDMStructure feature via gogo shell") {
@@ -1734,6 +1736,8 @@ definition {
 	@description = "This is a test for LPS-127025. The DPT author can use Blogs related item collection provider in DPT for Category."
 	@priority = "5"
 	test ViewCollectionItemsBasedOnBlogsOnDisplayPageTemplateForCategory {
+		property portal.acceptance = "true";
+
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",

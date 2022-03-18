@@ -31,6 +31,8 @@ definition {
 	@description = "This is a test for LPS-98753. The fragment styles and inline text should be copied to duplicated one."
 	@priority = "5"
 	test DuplicateFragmentWithStylesAndInlineText {
+		property portal.acceptance = "true";
+
 		task ("Add a content page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Test Site Name",

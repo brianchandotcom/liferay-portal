@@ -29,6 +29,8 @@ definition {
 	@priority = "5"
 	@uitest
 	test AddCategories {
+		property portal.acceptance = "true";
+
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -58,6 +60,8 @@ definition {
 	@priority = "5"
 	@uitest
 	test AddSubcategories {
+		property portal.acceptance = "true";
+
 		task ("Add a vocabulary") {
 			JSONCategory.addVocabulary(
 				groupName = "Test Site Name",
@@ -134,6 +138,7 @@ definition {
 	@description = "This is a test for LPS-118305. The user cannot add a category to a vocabulary if the limit was exceeded."
 	@priority = "5"
 	test CannotAddCategoriesWhenReachTheLimit {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CategoriesUI#CannotAddCategoriesWhenReachTheLimit";
 
 		task ("Change the Maximum Number of Categories per Vocabulary to 3") {
@@ -213,6 +218,7 @@ definition {
 	@priority = "5"
 	@uitest
 	test ConfigureMaximumNumberOfCategoriesPerVocabulary {
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "CategoriesUI#ConfigureMaximumNumberOfCategoriesPerVocabulary";
 
 		task ("Change the Maximum Number of Categories per Vocabulary in System Settings") {
@@ -546,6 +552,8 @@ definition {
 	@priority = "5"
 	@uitest
 	test ViewDefaultMaximumNumberOfCategoriesPerVocabulary {
+		property portal.acceptance = "true";
+
 		task ("Navigate to the Categories admin") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 		}
@@ -577,6 +585,8 @@ definition {
 	@priority = "5"
 	@uitest
 	test ViewDescriptionOfVocabulary {
+		property portal.acceptance = "true";
+
 		task ("Navigate to the Categories admin") {
 			Category.openCategoriesAdmin(siteURLKey = "test-site-name");
 		}

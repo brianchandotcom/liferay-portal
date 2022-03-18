@@ -42,6 +42,8 @@ definition {
 	@description = "This is a test for LPS-141351. The site admin could find display page type items in dropdown menu."
 	@priority = "5"
 	test AddDisplayPageTypeNavigationMenuItems {
+		property portal.acceptance = "true";
+
 		task ("Add the first display page template for Web Content Article and Basic Web Content") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
 				contentType = "Web Content Article",
@@ -339,6 +341,7 @@ definition {
 	test AddPageToNavigationMenuAndViewPageStatus {
 		property osgi.module.configuration.file.names = "com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Add a page to the site") {
 			JSONLayout.addPublicLayout(

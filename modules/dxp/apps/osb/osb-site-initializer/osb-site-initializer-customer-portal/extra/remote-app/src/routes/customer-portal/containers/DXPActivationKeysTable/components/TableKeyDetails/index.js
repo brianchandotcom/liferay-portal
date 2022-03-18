@@ -15,6 +15,7 @@ import {useEffect, useState} from 'react';
 import getCurrentEndDate from '../../../../../../common/utils/getCurrentEndDate';
 import {
 	getFormatedProductName,
+	getInstanceSize,
 	getProductDescription,
 	getProductName,
 	getStatusActivationTag,
@@ -34,7 +35,7 @@ const TableKeyDetails = ({
 	setValueToCopyToClipboard,
 }) => {
 	const [actionToCopy, setActionToCopy] = useState('');
-	const instanceSizeFormated = currentActivationKey.sizing?.slice(7, 8);
+	const instanceSizeFormated = getInstanceSize(currentActivationKey.sizing);
 
 	const now = new Date();
 

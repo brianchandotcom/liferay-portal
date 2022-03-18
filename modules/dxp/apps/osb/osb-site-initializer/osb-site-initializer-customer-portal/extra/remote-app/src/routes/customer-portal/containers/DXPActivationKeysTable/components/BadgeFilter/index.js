@@ -15,6 +15,8 @@ import getCurrentEndDate from '../../../../../../common/utils/getCurrentEndDate'
 import BadgePillFilter from '../../../../components/BadgePillFilter';
 import {INITIAL_FILTER} from '../../utils/constants/initialFilter';
 
+const DNE_YEARS = 100;
+
 const BadgeFilter = ({
 	activationKeysLength,
 	loading,
@@ -25,7 +27,7 @@ const BadgeFilter = ({
 
 		if (dateFilterState.value?.onOrAfter) {
 			const todayDNE = new Date();
-			todayDNE.setFullYear(todayDNE.getFullYear() + 100);
+			todayDNE.setFullYear(todayDNE.getFullYear() + DNE_YEARS);
 
 			if (new Date(dateFilterState.value?.onOrAfter) >= todayDNE) {
 				return 'DNE';
@@ -61,16 +63,14 @@ const BadgeFilter = ({
 					)
 				) {
 					keyTypesDisplay.push(`Virtual Cluster`);
-				}
-				else if (
+				} else if (
 					filterKeyType.value?.minNodes ===
 					filterKeyType.value?.maxNodes
 				) {
 					keyTypesDisplay.push(
 						`Virtual Cluster (${filterKeyType.value?.minNodes} nodes)`
 					);
-				}
-				else {
+				} else {
 					const nodesDisplay = [];
 
 					if (filterKeyType.value?.minNodes) {
@@ -128,7 +128,7 @@ const BadgeFilter = ({
 				<div className="bd-highlight col d-flex flex-wrap pl-0 pt-2 w-100">
 					{!!Object.values(filters.keyType.value).some(
 						(value) => !!value
-					) && <>{getKeyTypeDisplay(filters.keyType)} </>}
+					) && getKeyTypeDisplay(filters.keyType)}
 
 					{!!filters.environmentTypes.value?.length && (
 						<BadgePillFilter
@@ -213,8 +213,8 @@ const BadgeFilter = ({
 									expirationDate: {
 										...previousFilters.expirationDate,
 										value: {
-											onOrAfter: undefined,
-											onOrBefore: undefined,
+											onOrAfter: false,
+											onOrBefore: false,
 										},
 									},
 								}))
@@ -235,8 +235,8 @@ const BadgeFilter = ({
 									startDate: {
 										...previousFilters.startDate,
 										value: {
-											onOrAfter: undefined,
-											onOrBefore: undefined,
+											onOrAfter: false,
+											onOrBefore: false,
 										},
 									},
 								}))

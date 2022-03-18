@@ -12,6 +12,8 @@ import ClayButton from '@clayui/button';
 import ClayDatePicker from '@clayui/date-picker';
 import {useEffect, useState} from 'react';
 
+const NAVIGATION_YEARS_RANGE = 5;
+
 const DateFilter = ({
 	children,
 	clearInputs,
@@ -65,8 +67,8 @@ const DateFilter = ({
 					placeholder="MM/DD/YYYY"
 					value={onOrAfterValue}
 					years={{
-						end: now.getFullYear() + 5,
-						start: now.getFullYear() - 5,
+						end: now.getFullYear() + NAVIGATION_YEARS_RANGE,
+						start: now.getFullYear() - NAVIGATION_YEARS_RANGE,
 					}}
 				/>
 			</div>
@@ -88,8 +90,8 @@ const DateFilter = ({
 					placeholder="MM/DD/YYYY"
 					value={onOrBeforeValue}
 					years={{
-						end: now.getFullYear() + 5,
-						start: now.getFullYear() - 5,
+						end: now.getFullYear() + NAVIGATION_YEARS_RANGE,
+						start: now.getFullYear() - NAVIGATION_YEARS_RANGE,
 					}}
 				/>
 			</div>

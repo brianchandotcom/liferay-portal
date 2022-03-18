@@ -44,7 +44,7 @@ const DropDownWithDrillDown = ({
 				...menuElementAttrs,
 				className: classNames(
 					menuElementAttrs?.className,
-					'drilldown drop-down-menu-items'
+					'drilldown drop-down-menu-items p-0'
 				),
 			}}
 			menuHeight={menuHeight}

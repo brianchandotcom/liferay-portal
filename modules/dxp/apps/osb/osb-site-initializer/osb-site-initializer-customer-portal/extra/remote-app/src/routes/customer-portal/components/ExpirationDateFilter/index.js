@@ -13,6 +13,8 @@ import {ClayCheckbox} from '@clayui/form';
 import {useCallback, useEffect, useState} from 'react';
 import DateFilter from '../DateFilter';
 
+const DNE_YEARS = 100;
+
 export default function ExpirationDateFilter({
 	clearInputs,
 	hasDNE,
@@ -24,7 +26,7 @@ export default function ExpirationDateFilter({
 		(currentValue) => {
 			if (dneChecked) {
 				const today = new Date();
-				today.setFullYear(today.getFullYear() + 100);
+				today.setFullYear(today.getFullYear() + DNE_YEARS);
 
 				return today;
 			}

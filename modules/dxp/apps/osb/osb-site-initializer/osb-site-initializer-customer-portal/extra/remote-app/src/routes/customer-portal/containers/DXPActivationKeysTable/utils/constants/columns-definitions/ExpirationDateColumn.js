@@ -11,9 +11,13 @@
 
 import getCurrentEndDate from '../../../../../../../common/utils/getCurrentEndDate';
 
+const DNE_YEARS = 100;
+
 const ExpirationDateColumn = ({activationKey}) => {
 	const today = new Date();
-	const unlimitedLicenseDate = today.setFullYear(today.getFullYear() + 100);
+	const unlimitedLicenseDate = today.setFullYear(
+		today.getFullYear() + DNE_YEARS
+	);
 	if (
 		new Date(activationKey.expirationDate) >= new Date(unlimitedLicenseDate)
 	) {

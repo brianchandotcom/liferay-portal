@@ -9,9 +9,11 @@
  * distribution rights of the Software.
  */
 
+const DNE_YEARS = 100;
+
 export function getDoesNotExpire(date) {
 	const today = new Date();
-	today.setFullYear(today.getFullYear() + 100);
+	today.setFullYear(today.getFullYear() + DNE_YEARS);
 
 	return new Date(date) >= today;
 }

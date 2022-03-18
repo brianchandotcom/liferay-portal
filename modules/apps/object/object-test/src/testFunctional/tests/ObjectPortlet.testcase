@@ -2489,11 +2489,11 @@ definition {
 		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
 			fieldName = "customObjectField",
 			objectName = "CustomObject284",
-			value = "12345678912345678");
+			value = "1234567891234567");
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject284");
 
-		ObjectPortlet.viewEntry(entry = "12345678912345678");
+		ObjectPortlet.viewEntry(entry = "1234567891234567");
 	}
 
 	@description = "LPS-135393 - Verify that a String entry is correctly displayed on the auto-generated table on the Custom Object Portlet"

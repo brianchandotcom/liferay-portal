@@ -1,9 +1,0 @@
-dependencies {
-	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
-	testIntegrationCompile project(":apps:analytics:analytics-api")
-	testIntegrationCompile project(":test:arquillian-extension-junit-bridge")
-}
-
-test {
-	enabled = false
-}

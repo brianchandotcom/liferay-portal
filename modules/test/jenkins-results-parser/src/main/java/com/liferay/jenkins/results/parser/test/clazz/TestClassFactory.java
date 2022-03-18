@@ -148,6 +148,12 @@ public class TestClassFactory {
 		return new TestClassMethod(ignored, name, testClass);
 	}
 
+	public static TestClassMethod newTestClassMethod(
+		JSONObject jsonObject, TestClass testClass) {
+
+		return new TestClassMethod(jsonObject, testClass);
+	}
+
 	private static final Map<String, TestClass> _testClasses = new HashMap<>();
 
 }

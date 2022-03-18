@@ -14,10 +14,16 @@
 
 package com.liferay.jenkins.results.parser.test.clazz;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class TestClassMethod {
+
+	public JSONObject getJSONObject() {
+		return _jsonObject;
+	}
 
 	public String getName() {
 		return _name;
@@ -37,9 +43,23 @@ public class TestClassMethod {
 		_ignored = ignored;
 		_name = name;
 		_testClass = testClass;
+
+		_jsonObject = new JSONObject();
+
+		_jsonObject.put("ignored", ignored);
+		_jsonObject.put("name", name);
+	}
+
+	protected TestClassMethod(JSONObject jsonObject, TestClass testClass) {
+		_jsonObject = jsonObject;
+		_testClass = testClass;
+
+		_ignored = jsonObject.getBoolean("ignored");
+		_name = jsonObject.getString("name");
 	}
 
 	private final boolean _ignored;
+	private final JSONObject _jsonObject;
 	private final String _name;
 	private final TestClass _testClass;
 

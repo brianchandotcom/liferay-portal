@@ -1761,19 +1761,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/soap.jar</file-name>
-				<version>2.2</version>
-				<project-name>Apache Simple Object Access Protocol</project-name>
-				<project-url>http://archive.apache.org/dist/ws/soap</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 1.1</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-1.1</license-url>
-						<copyright-notice>Copyright (c) 1999 The Apache Software Foundation. All rights reserved.</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/soap-api.jar</file-name>
 				<version>1.4.0</version>
 				<project-name>SAAJ API</project-name>

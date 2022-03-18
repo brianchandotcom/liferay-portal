@@ -2782,11 +2782,13 @@ definition {
 	@priority = "4"
 	test MimeTypeCompressed {
 		task ("Add a compressed file") {
-			JSONDocument.addFileWithUploadedFile(
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name");
+
+			DMDocument.addCP(
+				dmDocumentDescription = "Document Description",
+				dmDocumentFileName = "document.zip",
 				dmDocumentTitle = "Document_1",
-				groupName = "Test Site Name",
-				mimeType = "compressed/zip",
-				sourceFileName = "fragment-collection.zip");
+				nullFile = "true");
 		}
 
 		task ("Navigate to the content Dashboard and filter by file extension") {

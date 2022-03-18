@@ -49,7 +49,7 @@ exports[`ValidationDate shows date range validation 1`] = `
   <label>
     START-DATE
   </label>
-  <div
+  <hr
     class="separator"
   />
   <div
@@ -245,7 +245,7 @@ exports[`ValidationDate shows date range validation 1`] = `
   <label>
     END-DATE
   </label>
-  <div
+  <hr
     class="separator"
   />
   <div

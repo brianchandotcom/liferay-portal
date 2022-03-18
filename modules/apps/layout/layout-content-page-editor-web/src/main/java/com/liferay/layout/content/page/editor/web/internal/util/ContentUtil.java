@@ -452,7 +452,7 @@ public class ContentUtil {
 				if (!Objects.equals(
 						fragmentEntryLink.getSegmentsExperienceId(),
 						ParamUtil.getLong(
-							httpServletRequest, "segmentExperienceId"))) {
+							httpServletRequest, "segmentsExperienceId"))) {
 
 					continue;
 				}

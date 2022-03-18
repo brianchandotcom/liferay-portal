@@ -127,7 +127,7 @@ public class DuplicateSegmentsExperienceMVCActionCommand
 
 	private JSONObject _getFragmentEntryLinksJSONObject(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			long plid, long groupId, long segmentExperienceId)
+			long plid, long groupId, long segmentsExperienceId)
 		throws Exception {
 
 		JSONObject fragmentEntryLinksJSONObject =
@@ -136,7 +136,7 @@ public class DuplicateSegmentsExperienceMVCActionCommand
 		List<FragmentEntryLink> fragmentEntryLinks =
 			_fragmentEntryLinkLocalService.
 				getFragmentEntryLinksBySegmentsExperienceId(
-					groupId, segmentExperienceId, plid);
+					groupId, segmentsExperienceId, plid);
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			fragmentEntryLinksJSONObject.put(

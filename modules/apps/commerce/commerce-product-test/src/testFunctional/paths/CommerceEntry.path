@@ -174,7 +174,6 @@
 	<td>//label[contains(.,'Title')]//..//input[@type="text"]</td>
 	<td></td>
 </tr>
-
 <tr>
 	<td>NOTIFICATION_TEMPLATE_FROM_NAME_FIELD</td>
 	<td>//label[contains(.,'From Name')]//..//input[contains(@id,'from')]</td>

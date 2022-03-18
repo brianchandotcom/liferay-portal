@@ -28,6 +28,24 @@ definition {
 		}
 	}
 
+	macro assertTermsAndConditionEntry {
+		AssertTextEquals(
+			locator1 = "CommerceEntry#NAME_FIELD_SPECIAL",
+			value1 = "${termsAndConditionName}");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+		AssertTextEquals(
+			locator1 = "CKEditor#BODY",
+			value1 = "${termsAndConditionDescription}");
+
+		if (isSet(valuePosition)) {
+			AssertTextEquals(
+				locator1 = "CommerceEntry#PRIORITY_FIELD",
+				value1 = "${valuePosition}");
+		}
+	}
+
 	macro cancelAddTermsAndCondition {
 		LexiconEntry.gotoAdd();
 
@@ -60,12 +78,46 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro editTermsAndCondition {
+		if (isSet(termsAndConditionName)) {
+			Type(
+				locator1 = "CommerceEntry#NAME_FIELD_SPECIAL",
+				value1 = "${termsAndConditionName}");
+		}
+
+		if (isSet(termsAndConditionDescription)) {
+			SelectFrame.selectFrameNoLoading(locator1 = "CKEditor#BODY_FIELD_IFRAME");
+
+			Type(
+				locator1 = "CKEditor#BODY",
+				value1 = "${termsAndConditionDescription}");
+
+			SelectFrame(value1 = "relative=top");
+		}
+
+		if (isSet(valuePosition)) {
+			Type(
+				locator1 = "CommerceEntry#PRIORITY_FIELD",
+				value1 = "${valuePosition}");
+		}
+
+		Button.clickPublish();
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro gotoEntryMenuItem {
 		Click(
 			key_value = "${termsAndConditionName}",
 			locator1 = "CommerceEntry#BODY_VERTICAL_ELLIPSIS");
 
 		MenuItem.clickNoError(menuItem = "${menuItem}");
+	}
+
+	macro openTermsAndConditionAdmin {
+		Navigator.openWithAppendToBaseURL(
+			baseURL = "${baseURL}",
+			urlAppend = "group/control_panel/manage?p_p_id=com_liferay_commerce_term_web_internal_portlet_CommerceTermEntryPortlet");
 	}
 
 	macro viewDeleteTermsAndConditionEntry {

@@ -15,11 +15,13 @@
 package com.liferay.portal.kernel.security.auth;
 
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionIdSupplier;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.function.Consumer;
 
@@ -28,20 +30,13 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mockito;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Alberto Chaparro
  */
-@PrepareForTest(ServiceProxyFactory.class)
-@RunWith(PowerMockRunner.class)
-public class CompanyThreadLocalTest extends PowerMockito {
+public class CompanyThreadLocalTest {
 
 	@ClassRule
 	@Rule
@@ -51,15 +46,11 @@ public class CompanyThreadLocalTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		mockStatic(ServiceProxyFactory.class);
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-		when(
-			ServiceProxyFactory.newServiceTrackedInstance(
-				Mockito.anyObject(), Mockito.anyObject(), Mockito.anyString(),
-				Mockito.anyBoolean(), Mockito.anyBoolean())
-		).thenReturn(
-			null
-		);
+		bundleContext.registerService(
+			CTCollectionIdSupplier.class,
+			ProxyFactory.newDummyInstance(CTCollectionIdSupplier.class), null);
 	}
 
 	@Test

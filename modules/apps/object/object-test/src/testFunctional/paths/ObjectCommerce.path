@@ -11,16 +11,15 @@
 
 <tbody>
 	<tr>
-        <td>VIEW_OPTION_TYPE</td>
-        <td>//option[contains(text(),'${key_optionType}')]</td>
-        <td></td>
-    </tr>
-    	<tr>
-        <td>CHANNELS_TAB</td>
-        <td>//a[contains(@class,'nav-link') and normalize-space()='${key_navigatorChannels}']</td>
-        <td></td>
-    </tr>
-
+		<td>VIEW_OPTION_TYPE</td>
+		<td>//option[contains(text(),'${key_optionType}')]</td>
+		<td></td>
+	</tr>
+		<tr>
+		<td>CHANNELS_TAB</td>
+		<td>//a[contains(@class,'nav-link') and normalize-space()='${key_navigatorChannels}']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

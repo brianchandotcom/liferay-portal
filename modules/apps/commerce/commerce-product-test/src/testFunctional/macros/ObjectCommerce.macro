@@ -1,19 +1,15 @@
 definition {
 
-	macro viewNotPresentOptionType {
-        
-        AssertElementNotPresent(
-            locator1 = "ObjectCommerce#VIEW_OPTION_TYPE",
-            key_optionType = "${optionType}");
-			
+	macro channelsTab {
+		Click(
+			key_navigatorChannels = "${navigatorChannels}",
+			locator1 = "ObjectCommerce#CHANNELS_TAB");
 	}
 
-    macro channelsTab {
-
-        Click(
-            locator1 = "ObjectCommerce#CHANNELS_TAB",
-            key_navigatorChannels = "${navigatorChannels}");    
-
-    }
+	macro viewNotPresentOptionType {
+		AssertElementNotPresent(
+			key_optionType = "${optionType}",
+			locator1 = "ObjectCommerce#VIEW_OPTION_TYPE");
+	}
 
 }

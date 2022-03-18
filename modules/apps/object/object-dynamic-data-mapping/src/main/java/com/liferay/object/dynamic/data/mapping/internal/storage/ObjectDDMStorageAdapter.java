@@ -315,7 +315,11 @@ public class ObjectDDMStorageAdapter implements DDMStorageAdapter {
 			DDMFormField ddmFormField = ddmFormFieldsMap.get(
 				ddmFormFieldValue.getName());
 
-			if (ddmFormField.isTransient()) {
+			if (ddmFormField.isTransient() &&
+				!StringUtil.equals(
+					ddmFormField.getType(),
+					DDMFormFieldTypeConstants.FIELDSET)) {
+
 				continue;
 			}
 

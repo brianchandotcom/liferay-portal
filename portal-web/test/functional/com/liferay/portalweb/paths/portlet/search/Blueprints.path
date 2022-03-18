@@ -101,6 +101,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_ADMIN_ENTRY_CHECKBOX</td>
+	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${entryTitle}']]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_DESCRIPTION</td>
 	<td>//div[contains(@class,'dnd-tr')][.//*[normalize-space(text())='${entryTitle}']]//div[contains(@class,'dnd-td')][3]</td>
 	<td></td>

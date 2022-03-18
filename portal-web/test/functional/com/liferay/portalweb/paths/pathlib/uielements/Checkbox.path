@@ -271,6 +271,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FDS_SELECT_ALL</td>
+	<td>//input[contains(@name,'table-head-selector') and (@type='checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HISTORY_ENABLED</td>
 	<td>//label[contains(.,'History Enabled')]/input[@type='checkbox']</td>
 	<td></td>

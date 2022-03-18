@@ -2089,6 +2089,72 @@ definition {
 			value1 = "Test Blueprint");
 	}
 
+	test ViewBlueprintsAdminBulkDeletion {
+		Blueprints.openBlueprintsAdmin();
+
+		for (var count : list "1,2,3") {
+			Blueprints.createBlueprint(title = "Test Blueprint ${count}");
+
+			PortletEntry.save();
+		}
+
+		Check.checkNotVisible(
+			entryTitle = "Test Blueprint 1",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		Button.clickTrash();
+
+		Blueprints.viewNoEntry(title = "Test Blueprint 1");
+
+		Check.checkNotVisible(
+			entryTitle = "Test Blueprint 2",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		AssertChecked.assertCheckedNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
+
+		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
+
+		AssertChecked.assertCheckedNotVisible(
+			entryTitle = "Test Blueprint 2",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		AssertChecked.assertCheckedNotVisible(
+			entryTitle = "Test Blueprint 3",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		Uncheck.uncheckNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			entryTitle = "Test Blueprint 2",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		AssertNotChecked.assertNotCheckedNotVisible(
+			entryTitle = "Test Blueprint 3",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		Check.checkNotVisible(
+			entryTitle = "Test Blueprint 3",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		Click(
+			key_text = "Select All",
+			locator1 = "Link#ANY");
+
+		AssertChecked.assertCheckedNotVisible(
+			entryTitle = "Test Blueprint 2",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		AssertChecked.assertCheckedNotVisible(
+			entryTitle = "Test Blueprint 3",
+			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+
+		Button.clickTrash();
+
+		Blueprints.viewNoEntry(title = "Test Blueprint 2");
+
+		Blueprints.viewNoEntry(title = "Test Blueprint 3");
+	}
+
 	test ViewBlueprintsAdminTableValues {
 		Blueprints.openBlueprintsAdmin();
 

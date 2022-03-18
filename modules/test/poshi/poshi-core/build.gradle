@@ -11,3 +11,11 @@ dependencies {
 liferay {
 	deployDir = project.properties["sdk.dir"] + "/dependencies/com.liferay.poshi.core/lib"
 }
+
+updateFileVersions {
+	replaceOnlyIf([{
+		String group, String replacement, String content, File contentFile ->
+
+		return contentFile.path.contains("modules/test/poshi/poshi-runner")
+	}])
+}

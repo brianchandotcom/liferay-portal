@@ -24,6 +24,7 @@ definition {
 	}
 
 	@description = "LPS-133365 - Verify if it's possible to map an Object field and view its entries in a Field Group"
+	@ignore = "true"
 	@priority = "4"
 	test CanMapAndViewEntriesForFieldGroup {
 		ObjectAdmin.addObjectViaAPI(

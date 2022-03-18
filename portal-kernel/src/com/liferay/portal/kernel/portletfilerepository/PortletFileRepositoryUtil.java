@@ -359,16 +359,6 @@ public class PortletFileRepositoryUtil {
 			repositoryId, searchContext);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setPortletFileRepository(
-		PortletFileRepository portletFileRepository) {
-
-		_portletFileRepository = portletFileRepository;
-	}
-
 	private static volatile PortletFileRepository _portletFileRepository =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			PortletFileRepository.class, PortletFileRepositoryUtil.class,

@@ -439,6 +439,50 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-147394. View warning message and view change in DOM and Page Elements panel."
+	@priority = "4"
+	test ConfigureHTMLTagOfContainer {
+		property osgi.module.configuration.file.names = "com.liferay.layout.content.page.editor.web.internal.configuration.FFLayoutContentPageEditorConfiguration.config";
+		property osgi.module.configurations = "fragmentAdvancedOptionsEnabled=&quot;0&quot;";
+
+		task ("Add a Container to page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Content Page Name",
+				siteName = "Test Site Name");
+
+			PageEditor.addFragment(
+				collectionName = "Layout Elements",
+				fragmentName = "Container");
+		}
+
+		task ("Change the HTML tag of Container to section") {
+			PageEditor.editLayoutContainer(
+				htmlTag = "section",
+				panel = "Advanced");
+		}
+
+		task ("View the warning message shown below the HTML Tag field") {
+			AssertVisible(
+				key_fieldLabel = "HTML Tag",
+				key_subtitle = "Misusing this setup might impact SEO.",
+				locator1 = "Message#SUBTITLE");
+		}
+
+		task ("View the HTML tag of Container is section") {
+			AssertVisible(
+				key_position = "1",
+				key_type = "section",
+				locator1 = "PageEditor#CONTAINER_CONTAINER_TYPE");
+		}
+
+		task ("View the HTML tag type is shown in Container item") {
+			AssertVisible(
+				key_info = "section",
+				key_nodeName = "Container",
+				locator1 = "Treeview#PAGE_STRUCTURE_TREE_NODE_NAME_INFO");
+		}
+	}
+
 	@description = "This is a test for LPS-107285. When duplicate the Container with the Grid, the Grid should also be duplicated."
 	@priority = "5"
 	test DuplicateContainerWithGrid {

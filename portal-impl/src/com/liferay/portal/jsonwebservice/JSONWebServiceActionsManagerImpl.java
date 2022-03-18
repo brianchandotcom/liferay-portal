@@ -195,11 +195,6 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	@Override
-	public int registerService(String contextPath, Object service) {
-		return registerService(StringPool.BLANK, contextPath, service);
-	}
-
-	@Override
 	public int registerService(
 		String contextName, String contextPath, Object service) {
 

@@ -46,6 +46,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -272,10 +273,18 @@ public class RenderLayoutStructureTag extends IncludeTag {
 				for (int i = 0; i < numberOfRows; i++) {
 					RowTag rowTag = new RowTag();
 
+					StringBundler cssClassSB = new StringBundler(3);
+
+					cssClassSB.append("align-items-");
+					cssClassSB.append(
+						collectionStyledLayoutStructureItem.
+							getVerticalAlignment());
+
 					if (!collectionStyledLayoutStructureItem.isGutters()) {
-						rowTag.setCssClass("no-gutters");
+						cssClassSB.append(" no-gutters");
 					}
 
+					rowTag.setCssClass(cssClassSB.toString());
 					rowTag.setPageContext(pageContext);
 
 					rowTag.doStartTag();

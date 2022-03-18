@@ -139,7 +139,8 @@ public class SearchResultsPortletDisplayTemplateHandler
 	@Override
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/portal/search/web/internal/search/results/web" +
-			"/portlet/template/dependencies/portlet-display-templates.xml";
+			"/portlet/display/template/dependencies/portlet-display-" +
+				"templates.xml";
 	}
 
 	@Reference

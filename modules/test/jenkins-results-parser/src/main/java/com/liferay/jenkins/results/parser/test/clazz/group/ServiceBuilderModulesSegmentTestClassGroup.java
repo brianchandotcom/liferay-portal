@@ -14,26 +14,13 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class ServiceBuilderModulesSegmentTestClassGroup
 	extends ModulesSegmentTestClassGroup {
-
-	public ServiceBuilderModulesSegmentTestClassGroup(
-		BatchTestClassGroup parentBatchTestClassGroup) {
-
-		super(parentBatchTestClassGroup);
-
-		if (!(parentBatchTestClassGroup instanceof
-				ServiceBuilderModulesBatchTestClassGroup)) {
-
-			throw new RuntimeException("Invalid parent batch test class group");
-		}
-
-		_serviceBuilderModulesBatchTestClassGroup =
-			(ServiceBuilderModulesBatchTestClassGroup)parentBatchTestClassGroup;
-	}
 
 	@Override
 	public String getTestCasePropertiesContent() {
@@ -57,6 +44,36 @@ public class ServiceBuilderModulesSegmentTestClassGroup
 		}
 
 		return sb.toString();
+	}
+
+	protected ServiceBuilderModulesSegmentTestClassGroup(
+		BatchTestClassGroup batchTestClassGroup) {
+
+		super(batchTestClassGroup);
+
+		if (!(batchTestClassGroup instanceof
+				ServiceBuilderModulesBatchTestClassGroup)) {
+
+			throw new RuntimeException("Invalid parent batch test class group");
+		}
+
+		_serviceBuilderModulesBatchTestClassGroup =
+			(ServiceBuilderModulesBatchTestClassGroup)batchTestClassGroup;
+	}
+
+	protected ServiceBuilderModulesSegmentTestClassGroup(
+		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
+
+		super(batchTestClassGroup, jsonObject);
+
+		if (!(batchTestClassGroup instanceof
+				ServiceBuilderModulesBatchTestClassGroup)) {
+
+			throw new RuntimeException("Invalid parent batch test class group");
+		}
+
+		_serviceBuilderModulesBatchTestClassGroup =
+			(ServiceBuilderModulesBatchTestClassGroup)batchTestClassGroup;
 	}
 
 	private final ServiceBuilderModulesBatchTestClassGroup

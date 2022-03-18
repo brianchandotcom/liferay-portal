@@ -14,15 +14,23 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class PluginsGulpSegmentTestClassGroup extends SegmentTestClassGroup {
 
 	protected PluginsGulpSegmentTestClassGroup(
-		PluginsGulpBatchTestClassGroup parentPluginsGulpBatchTestClassGroup) {
+		BatchTestClassGroup batchTestClassGroup) {
 
-		super(parentPluginsGulpBatchTestClassGroup);
+		super(batchTestClassGroup);
+	}
+
+	protected PluginsGulpSegmentTestClassGroup(
+		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
+
+		super(batchTestClassGroup, jsonObject);
 	}
 
 }

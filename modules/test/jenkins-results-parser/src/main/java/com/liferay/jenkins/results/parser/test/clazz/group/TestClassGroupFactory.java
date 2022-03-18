@@ -66,7 +66,7 @@ public class TestClassGroupFactory {
 		JSONObject jsonObject, SegmentTestClassGroup segmentTestClassGroup) {
 
 		BatchTestClassGroup batchTestClassGroup =
-			segmentTestClassGroup.getParentBatchTestClassGroup();
+			segmentTestClassGroup.getBatchTestClassGroup();
 
 		if (batchTestClassGroup instanceof FunctionalBatchTestClassGroup) {
 			return new FunctionalAxisTestClassGroup(
@@ -227,18 +227,34 @@ public class TestClassGroupFactory {
 	public static SegmentTestClassGroup newSegmentTestClassGroup(
 		BatchTestClassGroup batchTestClassGroup) {
 
+		return newSegmentTestClassGroup(batchTestClassGroup, null);
+	}
+
+	public static SegmentTestClassGroup newSegmentTestClassGroup(
+		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
+
 		if (batchTestClassGroup instanceof
 				EnvironmentFunctionalBatchTestClassGroup) {
 
+			if (jsonObject != null) {
+				return new EnvironmentFunctionalSegmentTestClassGroup(
+					batchTestClassGroup, jsonObject);
+			}
+
 			return new EnvironmentFunctionalSegmentTestClassGroup(
-				(EnvironmentFunctionalBatchTestClassGroup)batchTestClassGroup);
+				batchTestClassGroup);
 		}
 
 		if (batchTestClassGroup instanceof
 				QAWebsitesFunctionalBatchTestClassGroup) {
 
+			if (jsonObject != null) {
+				return new QAWebsitesFunctionalSegmentTestClassGroup(
+					batchTestClassGroup, jsonObject);
+			}
+
 			return new QAWebsitesFunctionalSegmentTestClassGroup(
-				(QAWebsitesFunctionalBatchTestClassGroup)batchTestClassGroup);
+				batchTestClassGroup);
 		}
 
 		if (batchTestClassGroup instanceof FunctionalBatchTestClassGroup ||
@@ -247,8 +263,18 @@ public class TestClassGroupFactory {
 			Job job = batchTestClassGroup.getJob();
 
 			if (job instanceof PortalAWSJob) {
+				if (jsonObject != null) {
+					return new AWSFunctionalSegmentTestClassGroup(
+						batchTestClassGroup, jsonObject);
+				}
+
 				return new AWSFunctionalSegmentTestClassGroup(
 					batchTestClassGroup);
+			}
+
+			if (jsonObject != null) {
+				return new FunctionalSegmentTestClassGroup(
+					batchTestClassGroup, jsonObject);
 			}
 
 			return new FunctionalSegmentTestClassGroup(batchTestClassGroup);
@@ -256,27 +282,54 @@ public class TestClassGroupFactory {
 		else if (batchTestClassGroup instanceof JUnitBatchTestClassGroup ||
 				 batchTestClassGroup instanceof JUnitRCABatchTestClassGroup) {
 
+			if (jsonObject != null) {
+				return new JUnitSegmentTestClassGroup(
+					batchTestClassGroup, jsonObject);
+			}
+
 			return new JUnitSegmentTestClassGroup(batchTestClassGroup);
 		}
 		else if (batchTestClassGroup instanceof ModulesBatchTestClassGroup) {
 			if (batchTestClassGroup instanceof
 					ServiceBuilderModulesBatchTestClassGroup) {
 
+				if (jsonObject != null) {
+					return new ServiceBuilderModulesSegmentTestClassGroup(
+						batchTestClassGroup, jsonObject);
+				}
+
 				return new ServiceBuilderModulesSegmentTestClassGroup(
 					batchTestClassGroup);
+			}
+
+			if (jsonObject != null) {
+				return new ModulesSegmentTestClassGroup(
+					batchTestClassGroup, jsonObject);
 			}
 
 			return new ModulesSegmentTestClassGroup(batchTestClassGroup);
 		}
 		else if (batchTestClassGroup instanceof PluginsBatchTestClassGroup) {
-			return new PluginsSegmentTestClassGroup(
-				(PluginsBatchTestClassGroup)batchTestClassGroup);
+			if (jsonObject != null) {
+				return new PluginsSegmentTestClassGroup(
+					batchTestClassGroup, jsonObject);
+			}
+
+			return new PluginsSegmentTestClassGroup(batchTestClassGroup);
 		}
 		else if (batchTestClassGroup instanceof
 					PluginsGulpBatchTestClassGroup) {
 
-			return new PluginsGulpSegmentTestClassGroup(
-				(PluginsGulpBatchTestClassGroup)batchTestClassGroup);
+			if (jsonObject != null) {
+				return new PluginsGulpSegmentTestClassGroup(
+					batchTestClassGroup, jsonObject);
+			}
+
+			return new PluginsGulpSegmentTestClassGroup(batchTestClassGroup);
+		}
+
+		if (jsonObject != null) {
+			return new SegmentTestClassGroup(batchTestClassGroup, jsonObject);
 		}
 
 		return new SegmentTestClassGroup(batchTestClassGroup);

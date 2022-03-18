@@ -45,6 +45,7 @@ public class FunctionalAxisTestClassGroup extends AxisTestClassGroup {
 		return functionalTestClasses;
 	}
 
+	@Override
 	public JSONObject getJSONObject() {
 		JSONObject jsonObject = super.getJSONObject();
 

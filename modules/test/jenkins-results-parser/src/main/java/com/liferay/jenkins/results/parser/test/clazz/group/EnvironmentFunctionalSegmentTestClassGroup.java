@@ -26,6 +26,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -68,17 +70,21 @@ public class EnvironmentFunctionalSegmentTestClassGroup
 	}
 
 	protected EnvironmentFunctionalSegmentTestClassGroup(
-		EnvironmentFunctionalBatchTestClassGroup
-			parentEnvironmentFunctionalBatchTestClassGroup) {
+		BatchTestClassGroup parentBatchTestClassGroup) {
 
-		super(parentEnvironmentFunctionalBatchTestClassGroup);
+		super(parentBatchTestClassGroup);
+	}
+
+	protected EnvironmentFunctionalSegmentTestClassGroup(
+		BatchTestClassGroup parentBatchTestClassGroup, JSONObject jsonObject) {
+
+		super(parentBatchTestClassGroup, jsonObject);
 	}
 
 	private String _getAppServerType() {
-		BatchTestClassGroup parentBatchTestClassGroup =
-			getParentBatchTestClassGroup();
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
-		JobProperty jobProperty = parentBatchTestClassGroup.getJobProperty(
+		JobProperty jobProperty = batchTestClassGroup.getJobProperty(
 			"environment.app.server.type");
 
 		String jobPropertyValue = jobProperty.getValue();
@@ -88,7 +94,7 @@ public class EnvironmentFunctionalSegmentTestClassGroup
 		}
 
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			parentBatchTestClassGroup.getPortalGitWorkingDirectory();
+			batchTestClassGroup.getPortalGitWorkingDirectory();
 
 		if (portalGitWorkingDirectory == null) {
 			return null;
@@ -110,10 +116,9 @@ public class EnvironmentFunctionalSegmentTestClassGroup
 	}
 
 	private String _getAppServerVersion() {
-		BatchTestClassGroup parentBatchTestClassGroup =
-			getParentBatchTestClassGroup();
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
-		JobProperty jobProperty = parentBatchTestClassGroup.getJobProperty(
+		JobProperty jobProperty = batchTestClassGroup.getJobProperty(
 			"environment.app.server.version");
 
 		String jobPropertyValue = jobProperty.getValue();
@@ -123,7 +128,7 @@ public class EnvironmentFunctionalSegmentTestClassGroup
 		}
 
 		PortalGitWorkingDirectory portalGitWorkingDirectory =
-			parentBatchTestClassGroup.getPortalGitWorkingDirectory();
+			batchTestClassGroup.getPortalGitWorkingDirectory();
 		String appServerType = _getAppServerType();
 
 		if ((portalGitWorkingDirectory == null) ||

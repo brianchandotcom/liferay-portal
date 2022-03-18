@@ -127,7 +127,7 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 		JSONObject jsonObject, SegmentTestClassGroup segmentTestClassGroup) {
 
 		BatchTestClassGroup batchTestClassGroup =
-			segmentTestClassGroup.getParentBatchTestClassGroup();
+			segmentTestClassGroup.getBatchTestClassGroup();
 
 		setBatchTestClassGroup(batchTestClassGroup);
 

@@ -21,6 +21,8 @@ import com.liferay.jenkins.results.parser.QAWebsitesGitRepositoryJob;
 
 import java.io.File;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -41,10 +43,15 @@ public class QAWebsitesFunctionalSegmentTestClassGroup
 	}
 
 	protected QAWebsitesFunctionalSegmentTestClassGroup(
-		QAWebsitesFunctionalBatchTestClassGroup
-			parentQAWebsitesFunctionalBatchTestClassGroup) {
+		BatchTestClassGroup parentBatchTestClassGroup) {
 
-		super(parentQAWebsitesFunctionalBatchTestClassGroup);
+		super(parentBatchTestClassGroup);
+	}
+
+	protected QAWebsitesFunctionalSegmentTestClassGroup(
+		BatchTestClassGroup parentBatchTestClassGroup, JSONObject jsonObject) {
+
+		super(parentBatchTestClassGroup, jsonObject);
 	}
 
 	private String _getProjectName() {

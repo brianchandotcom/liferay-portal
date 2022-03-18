@@ -29,6 +29,17 @@ import org.json.JSONObject;
 public class PluginsGulpAxisTestClassGroup extends AxisTestClassGroup {
 
 	@Override
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put(
+			"test_base_dir",
+			JenkinsResultsParserUtil.getCanonicalPath(getTestBaseDir()));
+
+		return jsonObject;
+	}
+
+	@Override
 	public File getTestBaseDir() {
 		if (_testBaseDir != null) {
 			return _testBaseDir;
@@ -45,16 +56,6 @@ public class PluginsGulpAxisTestClassGroup extends AxisTestClassGroup {
 		_testBaseDir = testClass.getTestClassFile();
 
 		return _testBaseDir;
-	}
-
-	public JSONObject getJSONObject() {
-		JSONObject jsonObject = super.getJSONObject();
-
-		jsonObject.put(
-			"test_base_dir",
-			JenkinsResultsParserUtil.getCanonicalPath(getTestBaseDir()));
-
-		return jsonObject;
 	}
 
 	protected PluginsGulpAxisTestClassGroup(

@@ -23,6 +23,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -48,38 +51,54 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 
 	public int getBatchIndex() {
 		List<SegmentTestClassGroup> segmentTestClassGroups =
-			_parentBatchTestClassGroup.getSegmentTestClassGroups();
+			_batchTestClassGroup.getSegmentTestClassGroups();
 
 		return segmentTestClassGroups.indexOf(this);
 	}
 
 	public String getBatchJobName() {
-		return _parentBatchTestClassGroup.getBatchJobName();
+		return _batchTestClassGroup.getBatchJobName();
 	}
 
 	public String getBatchName() {
-		return _parentBatchTestClassGroup.getBatchName();
+		return _batchTestClassGroup.getBatchName();
+	}
+
+	public BatchTestClassGroup getBatchTestClassGroup() {
+		return _batchTestClassGroup;
 	}
 
 	public String getCohortName() {
-		return _parentBatchTestClassGroup.getCohortName();
+		return _batchTestClassGroup.getCohortName();
 	}
 
 	@Override
 	public Job getJob() {
-		return _parentBatchTestClassGroup.getJob();
+		return _batchTestClassGroup.getJob();
+	}
+
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = new JSONObject();
+
+		JSONArray axesJSONArray = new JSONArray();
+
+		for (AxisTestClassGroup axisTestClassGroup : getAxisTestClassGroups()) {
+			axesJSONArray.put(axisTestClassGroup.getJSONObject());
+		}
+
+		jsonObject.put("axes", axesJSONArray);
+
+		jsonObject.put("segment_name", getSegmentName());
+
+		return jsonObject;
 	}
 
 	public Integer getMaximumSlavesPerHost() {
-		return _parentBatchTestClassGroup.getMaximumSlavesPerHost();
+		return _batchTestClassGroup.getMaximumSlavesPerHost();
 	}
 
 	public Integer getMinimumSlaveRAM() {
-		return _parentBatchTestClassGroup.getMinimumSlaveRAM();
-	}
-
-	public BatchTestClassGroup getParentBatchTestClassGroup() {
-		return _parentBatchTestClassGroup;
+		return _batchTestClassGroup.getMinimumSlaveRAM();
 	}
 
 	public String getSegmentName() {
@@ -88,8 +107,7 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 	}
 
 	public String getSlaveLabel() {
-		BatchTestClassGroup batchTestClassGroup =
-			getParentBatchTestClassGroup();
+		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
 		return batchTestClassGroup.getSlaveLabel();
 	}
@@ -134,11 +152,35 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 	protected SegmentTestClassGroup(
 		BatchTestClassGroup parentBatchTestClassGroup) {
 
-		_parentBatchTestClassGroup = parentBatchTestClassGroup;
+		_batchTestClassGroup = parentBatchTestClassGroup;
+	}
+
+	protected SegmentTestClassGroup(
+		BatchTestClassGroup parentBatchTestClassGroup, JSONObject jsonObject) {
+
+		_batchTestClassGroup = parentBatchTestClassGroup;
+
+		JSONArray axesJSONArray = jsonObject.getJSONArray("axes");
+
+		if ((axesJSONArray == null) || axesJSONArray.isEmpty()) {
+			return;
+		}
+
+		for (int i = 0; i < axesJSONArray.length(); i++) {
+			JSONObject axisJSONObject = axesJSONArray.getJSONObject(i);
+
+			if (axisJSONObject == null) {
+				continue;
+			}
+
+			_axisTestClassGroups.add(
+				TestClassGroupFactory.newAxisTestClassGroup(
+					axisJSONObject, this));
+		}
 	}
 
 	private final List<AxisTestClassGroup> _axisTestClassGroups =
 		new ArrayList<>();
-	private final BatchTestClassGroup _parentBatchTestClassGroup;
+	private final BatchTestClassGroup _batchTestClassGroup;
 
 }

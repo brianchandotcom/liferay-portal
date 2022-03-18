@@ -19,6 +19,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -56,6 +58,12 @@ public class AWSFunctionalSegmentTestClassGroup
 		BatchTestClassGroup parentBatchTestClassGroup) {
 
 		super(parentBatchTestClassGroup);
+	}
+
+	protected AWSFunctionalSegmentTestClassGroup(
+		BatchTestClassGroup parentBatchTestClassGroup, JSONObject jsonObject) {
+
+		super(parentBatchTestClassGroup, jsonObject);
 	}
 
 	private Map.Entry<String, String> _getAppServerTypeEntry() {

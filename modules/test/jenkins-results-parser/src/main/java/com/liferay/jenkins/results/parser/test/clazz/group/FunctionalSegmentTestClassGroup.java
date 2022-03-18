@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -134,11 +136,19 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 	}
 
 	protected FunctionalSegmentTestClassGroup(
-		BatchTestClassGroup parentBatchTestClassGroup) {
+		BatchTestClassGroup batchTestClassGroup) {
 
-		super(parentBatchTestClassGroup);
+		super(batchTestClassGroup);
 
-		_parentBatchTestClassGroup = parentBatchTestClassGroup;
+		_batchTestClassGroup = batchTestClassGroup;
+	}
+
+	protected FunctionalSegmentTestClassGroup(
+		BatchTestClassGroup batchTestClassGroup, JSONObject jsonObject) {
+
+		super(batchTestClassGroup, jsonObject);
+
+		_batchTestClassGroup = batchTestClassGroup;
 	}
 
 	protected Map.Entry<String, String> getEnvironmentVariableEntry(
@@ -150,8 +160,7 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 			return null;
 		}
 
-		JobProperty jobProperty = _parentBatchTestClassGroup.getJobProperty(
-			name);
+		JobProperty jobProperty = _batchTestClassGroup.getJobProperty(name);
 
 		String value = jobProperty.getValue();
 
@@ -162,6 +171,6 @@ public class FunctionalSegmentTestClassGroup extends SegmentTestClassGroup {
 		return new AbstractMap.SimpleEntry<>(key, value);
 	}
 
-	private final BatchTestClassGroup _parentBatchTestClassGroup;
+	private final BatchTestClassGroup _batchTestClassGroup;
 
 }

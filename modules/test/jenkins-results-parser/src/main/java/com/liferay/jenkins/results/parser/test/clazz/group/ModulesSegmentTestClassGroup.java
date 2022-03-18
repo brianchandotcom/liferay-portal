@@ -21,16 +21,12 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClassMethod;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class ModulesSegmentTestClassGroup extends SegmentTestClassGroup {
-
-	public ModulesSegmentTestClassGroup(
-		BatchTestClassGroup parentBatchTestClassGroup) {
-
-		super(parentBatchTestClassGroup);
-	}
 
 	@Override
 	public String getTestCasePropertiesContent() {
@@ -73,6 +69,18 @@ public class ModulesSegmentTestClassGroup extends SegmentTestClassGroup {
 		sb.append("\n");
 
 		return sb.toString();
+	}
+
+	protected ModulesSegmentTestClassGroup(
+		BatchTestClassGroup parentBatchTestClassGroup) {
+
+		super(parentBatchTestClassGroup);
+	}
+
+	protected ModulesSegmentTestClassGroup(
+		BatchTestClassGroup parentBatchTestClassGroup, JSONObject jsonObject) {
+
+		super(parentBatchTestClassGroup, jsonObject);
 	}
 
 }

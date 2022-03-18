@@ -198,6 +198,12 @@ public class OpenIdConnectAuthenticationHandlerImpl
 			openIdConnectProvider,
 			Scope.parse(openIdConnectProvider.getScopes()), state);
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Authentication request query: " +
+					authenticationRequestURI.getQuery());
+		}
+
 		try {
 			httpServletResponse.sendRedirect(
 				authenticationRequestURI.toString());

@@ -160,6 +160,7 @@ ReferenceAnnotationCheck | .java | Performs several checks on classes with @Refe
 ResourceImplCheck | .java | Performs several checks on `*ResourceImpl` classes (except `Base*ResourceImpl` classes). |
 [SQLLongNamesCheck](check/sql_long_names_check.markdown#sqllongnamescheck) | .sql | Checks for table and column names that exceed 30 characters. |
 SelfReferenceCheck | .java | Finds cases of unnecessary reference to its own class. |
+ServiceProxyFactoryCheck | .java | Finds incorrect parameter in method call. |
 [StaticBlockCheck](check/static_block_check.markdown#staticblockcheck) | .java | Performs several checks on static blocks. |
 SystemEventCheck | .java | Finds missing or redundant usage of @SystemEvent for delete events. |
 TLDTypeCheck | .tld | Ensures the fully qualified name is used for types in `.tld` file. |

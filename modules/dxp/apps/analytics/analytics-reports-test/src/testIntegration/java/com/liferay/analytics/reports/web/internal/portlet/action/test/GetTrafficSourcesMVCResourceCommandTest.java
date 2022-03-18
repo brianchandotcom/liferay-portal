@@ -115,52 +115,6 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 					).put(
 						"social", 385L
 					).toString()
-				).put(
-					"/api/1.0/pages/page-referrer-hosts",
-					() -> JSONUtil.put(
-						"slickdeals.net", 2.0
-					).toString()
-				).put(
-					"/api/1.0/pages/page-referrers",
-					() -> JSONUtil.put(
-						"https://slickdeals.net/credit-card-offers/", 2.0
-					).toString()
-				).put(
-					"/api/1.0/pages/social-page-referrers",
-					() -> JSONUtil.put(
-						"facebook", 385.0
-					).toString()
-				).put(
-					"/api/seo/1.0/traffic-sources",
-					() -> JSONUtil.put(
-						JSONUtil.put(
-							"countryKeywords",
-							JSONUtil.put(
-								JSONUtil.put(
-									"countryCode", "us"
-								).put(
-									"countryName", "United States"
-								).put(
-									"keywords",
-									JSONUtil.put(
-										JSONUtil.put(
-											"keyword", "liferay"
-										).put(
-											"position", 1
-										).put(
-											"searchVolume", 3600
-										).put(
-											"traffic", 2880L
-										))
-								))
-						).put(
-							"name", "organic"
-						).put(
-							"trafficAmount", 3L
-						).put(
-							"trafficShare", 93.93D
-						)
-					).toString()
 				).build()));
 
 		try {
@@ -201,6 +155,9 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 
 					JSONObject jsonObject2 = jsonArray.getJSONObject(0);
 
+					Assert.assertEquals(
+						"http//localhost/test?param_name=organic",
+						jsonObject2.getString("endpointURL"));
 					Assert.assertEquals("organic", jsonObject2.get("name"));
 					Assert.assertEquals(
 						String.format("%.1f", 89.20D),
@@ -208,75 +165,27 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 
 					Assert.assertEquals(3192, jsonObject2.get("value"));
 
-					JSONArray countryKeywordsJSONArray =
-						(JSONArray)jsonObject2.get("countryKeywords");
-
-					Assert.assertEquals(
-						JSONUtil.put(
-							JSONUtil.put(
-								"countryCode", "us"
-							).put(
-								"countryName", "United States"
-							).put(
-								"keywords",
-								JSONUtil.put(
-									JSONUtil.put(
-										"keyword", "liferay"
-									).put(
-										"position", 1
-									).put(
-										"searchVolume", 3600
-									).put(
-										"traffic", 2880
-									))
-							)
-						).toString(),
-						countryKeywordsJSONArray.toString());
-
 					JSONObject jsonObject3 = jsonArray.getJSONObject(1);
 
+					Assert.assertEquals(
+						"http//localhost/test?",
+						jsonObject3.getString("endpointURL"));
 					Assert.assertEquals("social", jsonObject3.get("name"));
 					Assert.assertEquals(385, jsonObject3.getInt("value"));
 
-					JSONArray referringSocialMediaJSONArray =
-						jsonObject3.getJSONArray("referringSocialMedia");
-
-					JSONObject referringSocialMediaJSONObject =
-						referringSocialMediaJSONArray.getJSONObject(0);
-
-					Assert.assertEquals(
-						"facebook", referringSocialMediaJSONObject.get("name"));
-					Assert.assertEquals(
-						385,
-						referringSocialMediaJSONObject.get("trafficAmount"));
-
 					JSONObject jsonObject4 = jsonArray.getJSONObject(2);
 
+					Assert.assertEquals(
+						"http//localhost/test?",
+						jsonObject4.getString("endpointURL"));
 					Assert.assertEquals("referral", jsonObject4.get("name"));
 					Assert.assertEquals(2L, jsonObject4.getInt("value"));
 
-					JSONArray referringDomainsJSONArray =
-						jsonObject4.getJSONArray("referringDomains");
-
-					JSONObject referringDomainsJSONObject =
-						referringDomainsJSONArray.getJSONObject(0);
-
-					Assert.assertEquals(
-						"slickdeals.net",
-						referringDomainsJSONObject.get("url"));
-
-					JSONArray referringPagesJSONArray =
-						jsonObject4.getJSONArray("referringPages");
-
-					JSONObject referringPagesJSONObject =
-						referringPagesJSONArray.getJSONObject(0);
-
-					Assert.assertEquals(
-						"https://slickdeals.net/credit-card-offers/",
-						referringPagesJSONObject.get("url"));
-
 					JSONObject jsonObject5 = jsonArray.getJSONObject(3);
 
+					Assert.assertEquals(
+						"http//localhost/test?param_name=paid",
+						jsonObject5.getString("endpointURL"));
 					Assert.assertEquals("paid", jsonObject5.get("name"));
 					Assert.assertEquals(0, jsonObject5.getInt("value"));
 
@@ -284,6 +193,7 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 
 					Assert.assertEquals("direct", jsonObject6.get("name"));
 					Assert.assertEquals(0, jsonObject6.getInt("value"));
+					Assert.assertNull(jsonObject6.get("endpointURL"));
 				});
 		}
 		finally {
@@ -350,77 +260,20 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 								"helpMessage",
 								ResourceBundleUtil.getString(
 									resourceBundle,
-									StringBundler.concat(
-										"this-is-the-number-of-page-views-",
-										"generated-by-people-coming-to-your-",
-										"page-from-other-sites-which-are-not-",
-										"search-engine-pages-or-social-sites"))
-							).put(
-								"name", "referral"
-							).put(
-								"share", String.format("%.1f", 0.0)
-							).put(
-								"title",
-								ResourceBundleUtil.getString(
-									resourceBundle, "referral")
-							).put(
-								"value", 0
-							),
-							JSONUtil.put(
-								"helpMessage",
-								ResourceBundleUtil.getString(
-									resourceBundle,
-									"this-is-the-number-of-page-views-" +
-										"generated-by-people-coming-to-your-" +
-											"page-from-social-sites")
-							).put(
-								"name", "social"
-							).put(
-								"share", String.format("%.1f", 0.0)
-							).put(
-								"title",
-								ResourceBundleUtil.getString(
-									resourceBundle, "social")
-							).put(
-								"value", 0
-							),
-							JSONUtil.put(
-								"helpMessage",
-								ResourceBundleUtil.getString(
-									resourceBundle,
 									"this-is-the-number-of-page-views-" +
 										"generated-by-people-arriving-" +
 											"directly-to-your-page")
 							).put(
 								"name", "direct"
 							).put(
-								"share", String.format("%.1f", 0.0)
-							).put(
 								"title",
 								ResourceBundleUtil.getString(
 									resourceBundle, "direct")
-							).put(
-								"value", 0
 							),
 							JSONUtil.put(
-								"helpMessage",
-								ResourceBundleUtil.getString(
-									resourceBundle,
-									"this-is-the-number-of-page-views-" +
-										"generated-by-people-that-find-your-" +
-											"page-through-google-adwords")
+								"endpointURL",
+								"http//localhost/test?param_name=organic"
 							).put(
-								"name", "paid"
-							).put(
-								"share", String.format("%.1f", 0.0)
-							).put(
-								"title",
-								ResourceBundleUtil.getString(
-									resourceBundle, "paid")
-							).put(
-								"value", 0
-							),
-							JSONUtil.put(
 								"helpMessage",
 								ResourceBundleUtil.getString(
 									resourceBundle,
@@ -430,13 +283,60 @@ public class GetTrafficSourcesMVCResourceCommandTest {
 							).put(
 								"name", "organic"
 							).put(
-								"share", String.format("%.1f", 0.0)
-							).put(
 								"title",
 								ResourceBundleUtil.getString(
 									resourceBundle, "organic")
+							),
+							JSONUtil.put(
+								"endpointURL",
+								"http//localhost/test?param_name=paid"
 							).put(
-								"value", 0
+								"helpMessage",
+								ResourceBundleUtil.getString(
+									resourceBundle,
+									"this-is-the-number-of-page-views-" +
+										"generated-by-people-that-find-your-" +
+											"page-through-google-adwords")
+							).put(
+								"name", "paid"
+							).put(
+								"title",
+								ResourceBundleUtil.getString(
+									resourceBundle, "paid")
+							),
+							JSONUtil.put(
+								"endpointURL", "http//localhost/test?"
+							).put(
+								"helpMessage",
+								ResourceBundleUtil.getString(
+									resourceBundle,
+									StringBundler.concat(
+										"this-is-the-number-of-page-views-",
+										"generated-by-people-coming-to-your-",
+										"page-from-other-sites-which-are-not-",
+										"search-engine-pages-or-social-sites"))
+							).put(
+								"name", "referral"
+							).put(
+								"title",
+								ResourceBundleUtil.getString(
+									resourceBundle, "referral")
+							),
+							JSONUtil.put(
+								"endpointURL", "http//localhost/test?"
+							).put(
+								"helpMessage",
+								ResourceBundleUtil.getString(
+									resourceBundle,
+									"this-is-the-number-of-page-views-" +
+										"generated-by-people-coming-to-your-" +
+											"page-from-social-sites")
+							).put(
+								"name", "social"
+							).put(
+								"title",
+								ResourceBundleUtil.getString(
+									resourceBundle, "social")
 							)
 						).toJSONString(),
 						jsonArray.toJSONString());

@@ -222,10 +222,6 @@ public class GetReferralTrafficSourcesMVCResourceCommandTest {
 		ReflectionTestUtil.setFieldValue(
 			PrefsPropsUtil.class, "_prefsProps", validPrefsPropsWrapper);
 
-		JSONObject emptyJSONObject = JSONFactoryUtil.createJSONObject();
-
-		String emptyJSONObjectString = emptyJSONObject.toString();
-
 		ReflectionTestUtil.setFieldValue(
 			_mvcResourceCommand, "_http",
 			MockHttpUtil.geHttp(
@@ -240,9 +236,10 @@ public class GetReferralTrafficSourcesMVCResourceCommandTest {
 					() -> StringPool.BLANK
 				).put(
 					"/api/1.0/pages/page-referrer-hosts",
-					() -> emptyJSONObjectString
+					() -> String.valueOf(JSONFactoryUtil.createJSONObject())
 				).put(
-					"/api/1.0/pages/page-referrers", () -> emptyJSONObjectString
+					"/api/1.0/pages/page-referrers",
+					() -> String.valueOf(JSONFactoryUtil.createJSONObject())
 				).build()));
 
 		try {

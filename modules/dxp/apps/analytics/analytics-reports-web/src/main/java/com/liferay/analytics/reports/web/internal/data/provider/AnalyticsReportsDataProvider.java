@@ -29,7 +29,6 @@ import com.liferay.analytics.reports.web.internal.model.TimeRange;
 import com.liferay.analytics.reports.web.internal.model.TimeSpan;
 import com.liferay.analytics.reports.web.internal.model.TrafficChannel;
 import com.liferay.analytics.reports.web.internal.model.TrafficSource;
-import com.liferay.analytics.reports.web.internal.model.util.TrafficChannelUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -318,23 +317,11 @@ public class AnalyticsReportsDataProvider {
 		}
 	}
 
-	public Map<String, TrafficChannel> getTrafficChannels(
+	public Map<TrafficChannel.Type, TrafficChannel> getTrafficChannels(
 			long companyId, TimeRange timeRange, String url)
 		throws PortalException {
 
 		try {
-			Map<String, TrafficSource> trafficSourceMap = getTrafficSources(
-				companyId, url);
-
-			List<ReferringURL> domainReferringURLs = getDomainReferringURLs(
-				companyId, timeRange, url);
-
-			List<ReferringURL> pageReferringURLs = getPageReferringURLs(
-				companyId, timeRange, url);
-
-			List<ReferringSocialMedia> referringSocialMediaList =
-				getReferringSocialMediaList(companyId, timeRange, url);
-
 			Map<String, AcquisitionChannel> acquisitionChannels =
 				getAcquisitionChannels(companyId, timeRange, url);
 
@@ -344,12 +331,10 @@ public class AnalyticsReportsDataProvider {
 			Stream<AcquisitionChannel> stream = values.stream();
 
 			return stream.map(
-				acquisitionChannel -> TrafficChannelUtil.toTrafficChannel(
-					acquisitionChannel, domainReferringURLs, pageReferringURLs,
-					referringSocialMediaList, trafficSourceMap)
+				TrafficChannel::newInstance
 			).map(
 				trafficChannel -> new AbstractMap.SimpleEntry<>(
-					trafficChannel.getName(), trafficChannel)
+					trafficChannel.getType(), trafficChannel)
 			).collect(
 				Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)
 			);

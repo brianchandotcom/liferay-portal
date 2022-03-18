@@ -36,7 +36,6 @@ definition {
 		task ("When navigate to Management Toolbars tab") {
 			Navigator.gotoNavTab(navTab = "Management Toolbars");
 		}
-
 	}
 
 	tearDown {
@@ -49,40 +48,6 @@ definition {
 			JSONLayout.deletePublicLayout(
 				groupName = "Guest",
 				layoutName = "Clay Sample Test Page");
-		}
-	}
-
-	@description = "LPS-147849. Assert the filter and order buttons are independent dropdowns"
-	@priority = "5"
-	test RendersIndependentFilterAndOrderButtons {
-		task ("Then 'filter' and 'order' button is not rendered together") {
-			AssertElementNotPresent(locator1 = "ManagementBar#FILTER_AND_ORDER");
-		}
-
-		task ("Then 'filter' button is an independent dropdown") {
-			AssertClick(
-				key_filter = "Show Filter Options",
-				locator1 = "ManagementBar#FILTER_OR_ORDER",
-				value1 = "Filter");
-
-			AssertElementPresent(
-				key_item = "Filter",
-				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
-		}
-
-		task ("Then 'order' button is an independent dropdown") {
-			AssertClick(
-				key_filter = "Show Order Options",
-				locator1 = "ManagementBar#FILTER_OR_ORDER",
-				value1 = "Order");
-
-			AssertElementPresent(
-				key_item = "Order",
-				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
-
-			AssertElementPresent(
-				key_item = "Ascending",
-				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
 		}
 	}
 
@@ -135,6 +100,40 @@ definition {
 			AssertTextEquals(
 				locator1 = "ManagementBar#NEW_BUTTON",
 				value1 = "New");
+		}
+	}
+
+	@description = "LPS-147849. Assert the filter and order buttons are independent dropdowns"
+	@priority = "5"
+	test RendersIndependentFilterAndOrderButtons {
+		task ("Then 'filter' and 'order' button is not rendered together") {
+			AssertElementNotPresent(locator1 = "ManagementBar#FILTER_AND_ORDER");
+		}
+
+		task ("Then 'filter' button is an independent dropdown") {
+			AssertClick(
+				key_filter = "Show Filter Options",
+				locator1 = "ManagementBar#FILTER_OR_ORDER",
+				value1 = "Filter");
+
+			AssertElementPresent(
+				key_item = "Filter",
+				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
+		}
+
+		task ("Then 'order' button is an independent dropdown") {
+			AssertClick(
+				key_filter = "Show Order Options",
+				locator1 = "ManagementBar#FILTER_OR_ORDER",
+				value1 = "Order");
+
+			AssertElementPresent(
+				key_item = "Order",
+				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
+
+			AssertElementPresent(
+				key_item = "Ascending",
+				locator1 = "ManagementBar#ACTIVE_DROPDOWN_ITEM");
 		}
 	}
 

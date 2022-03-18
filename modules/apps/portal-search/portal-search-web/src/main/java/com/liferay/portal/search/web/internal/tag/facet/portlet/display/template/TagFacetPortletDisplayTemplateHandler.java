@@ -110,8 +110,8 @@ public class TagFacetPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return "com/liferay/portal/search/web/internal/tag/facet/template" +
-			"/dependencies/portlet-display-templates.xml";
+		return "com/liferay/portal/search/web/internal/tag/facet/portlet" +
+			"/display/template/dependencies/portlet-display-templates.xml";
 	}
 
 	@Reference

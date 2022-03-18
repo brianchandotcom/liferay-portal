@@ -34,7 +34,11 @@ public class ServiceProxyFactoryCheck extends BaseCheck {
 	protected void doVisitToken(DetailAST detailAST) {
 		DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
-		if (firstChildDetailAST.getType() != TokenTypes.DOT) {
+		String absolutePath = getAbsolutePath();
+
+		if (absolutePath.endsWith("ServiceProxyFactoryTest.java") ||
+			(firstChildDetailAST.getType() != TokenTypes.DOT)) {
+
 			return;
 		}
 

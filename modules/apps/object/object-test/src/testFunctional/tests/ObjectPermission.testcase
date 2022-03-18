@@ -570,7 +570,7 @@ definition {
 				roleTitle = "Regular Role",
 				roleType = "Regular");
 		}
-		
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -589,7 +589,7 @@ definition {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
-		
+
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry Test");
@@ -712,7 +712,7 @@ definition {
 				roleTitle = "Regular Role",
 				roleType = "Regular");
 		}
-		
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -731,7 +731,7 @@ definition {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
-		
+
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry Test");
@@ -751,7 +751,6 @@ definition {
 		ObjectCustomViews.viewOptionNotPresentInKebabMenu(
 			entryName = "Entry Test",
 			menuItem = "Permissions");
-
 	}
 
 	@description = "LPS-146757 - Verify it is not possible to update a single Object Entry create by the user if the Update Owner permission is removed"
@@ -792,7 +791,7 @@ definition {
 				roleTitle = "Regular Role",
 				roleType = "Regular");
 		}
-		
+
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
 			userFirstName = "userfn",
@@ -811,7 +810,7 @@ definition {
 		User.logoutAndLoginPG(
 			userLoginEmailAddress = "userea@liferay.com",
 			userLoginFullName = "userfn userln");
-		
+
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
 		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry Test");
@@ -833,9 +832,6 @@ definition {
 		ObjectAdmin.viewFieldValueDisabled(fieldValue = "Entry Test");
 
 		AssertElementNotPresent(locator1 = "Button#SAVE");
-
-
-
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to update a Picklist without the Update permission"
@@ -926,12 +922,78 @@ definition {
 	}
 
 	@description = "LPS-146757 - Verify it is not possible to view a single Object Entry create by the user if the View Owner permission is removed"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotViewOwnSingleObjectEntryWithoutViewOwnerPermission {
+		property test.name.skip.portal.instance = "ObjectPermission#CannotViewOwnSingleObjectEntryWithoutViewOwnerPermission";
 
-		// TODO LPS-148929 CannotViewOwnSingleObjectEntryWithoutViewOwnerPermission pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		JSONRole.addRegularRole(roleTitle = "Regular Role");
+
+		for (var resourceActionIndex : list "APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX,RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			Role.definePermissionCP(
+				permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_${resourceActionIndex}",
+				permissionDefinitionValue = "",
+				permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
+				permissionNavigationValue = "Custom Objects",
+				roleTitle = "Regular Role",
+				roleType = "Regular");
+		}
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectCustomViews.gotoPermissions(entryName = "Entry Test");
+
+		ObjectCustomViews.selectAnyPermissions(
+			owner = "true",
+			permissionsList = "VIEW");
+
+		Button.clickSave();
+
+		Refresh();
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Entry Test");
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to view a Picklist without the View permission"
@@ -1899,7 +1961,6 @@ definition {
 		Navigator.gotoPage(pageName = "Object Page");
 
 		ObjectPortlet.assertPlusButtonIsNotPresent();
-
 	}
 
 	@description = "LPS-146756 - Verify that a guest user with the resource permission action of "View"  unactivated can't vizualize object entries"
@@ -1961,7 +2022,6 @@ definition {
 		Navigator.gotoPage(pageName = "Object Page");
 
 		ObjectPortlet.assertEntryNotPresent(entry = "Entry Test");
-
 	}
 
 	@description = "LPS-146756 - Verify that a guest user with the resource permission action of "View" activated can vizualize object entries"

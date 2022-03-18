@@ -118,6 +118,15 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 		long maxFileSize = UploadImageUtil.getMaxFileSize(actionRequest);
 
 		try {
+			UploadPortletRequest uploadPortletRequest =
+				_portal.getUploadPortletRequest(actionRequest);
+
+			File file = uploadPortletRequest.getFile("fileName");
+
+			if (file.length() > maxFileSize) {
+				throw new FileSizeException(maxFileSize);
+			}
+
 			UploadException uploadException =
 				(UploadException)actionRequest.getAttribute(
 					WebKeys.UPLOAD_EXCEPTION);
@@ -142,8 +151,7 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 						"tempImageFileName",
 						() -> {
 							FileEntry tempImageFileEntry =
-								_addTempImageFileEntry(
-									actionRequest, maxFileSize);
+								_addTempImageFileEntry(actionRequest);
 
 							return tempImageFileEntry.getTitle();
 						}));
@@ -156,10 +164,6 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 
 				if (imageUploaded) {
 					fileEntry = _saveTempImageFileEntry(actionRequest);
-
-					if (fileEntry.getSize() > maxFileSize) {
-						throw new FileSizeException(maxFileSize);
-					}
 				}
 
 				SessionMessages.add(actionRequest, "imageUploaded", fileEntry);
@@ -173,18 +177,13 @@ public class UploadImageMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
-	private FileEntry _addTempImageFileEntry(
-			PortletRequest portletRequest, Long maxFileSize)
+	private FileEntry _addTempImageFileEntry(PortletRequest portletRequest)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
 			_portal.getUploadPortletRequest(portletRequest);
 
 		File file = uploadPortletRequest.getFile("fileName");
-
-		if (file.length() > maxFileSize) {
-			throw new UploadRequestSizeException();
-		}
 
 		String contentType = uploadPortletRequest.getContentType("fileName");
 

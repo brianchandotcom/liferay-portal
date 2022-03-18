@@ -74,7 +74,7 @@ public class DisplayPageManagementToolbarDisplayContext
 							dropdownItem.putData(
 								"exportDisplayPageURL",
 								_getExportDisplayPageURL());
-							dropdownItem.setIcon("download");
+							dropdownItem.setIcon("upload");
 							dropdownItem.setLabel(
 								LanguageUtil.get(httpServletRequest, "export"));
 							dropdownItem.setQuickAction(true);
@@ -89,7 +89,7 @@ public class DisplayPageManagementToolbarDisplayContext
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "deleteSelectedDisplayPages");
-							dropdownItem.setIcon("times-circle");
+							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(httpServletRequest, "delete"));
 							dropdownItem.setQuickAction(true);

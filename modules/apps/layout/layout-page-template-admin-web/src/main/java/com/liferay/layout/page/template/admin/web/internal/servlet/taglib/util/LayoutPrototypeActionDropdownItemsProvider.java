@@ -129,6 +129,7 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 				_renderResponse.createRenderURL(), "mvcPath",
 				"/edit_layout_prototype.jsp", "layoutPrototypeId",
 				_layoutPrototype.getLayoutPrototypeId());
+			dropdownItem.setIcon("cog");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "configure"));
 		};
@@ -150,6 +151,7 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 				).setParameter(
 					"layoutPrototypeId", _layoutPrototype.getLayoutPrototypeId()
 				).buildString());
+			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
@@ -164,6 +166,7 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.setHref(
 				_getLayoutPrototypeGroupHref(layoutPrototypeGroup));
+			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
@@ -197,6 +200,7 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).buildString());
+			dropdownItem.setIcon("upload");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "export"));
 		};
@@ -230,6 +234,7 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 				).setWindowState(
 					LiferayWindowState.POP_UP
 				).buildString());
+			dropdownItem.setIcon("download");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "import"));
 		};
@@ -263,6 +268,7 @@ public class LayoutPrototypeActionDropdownItemsProvider {
 			dropdownItem.putData("action", "permissionsLayoutPrototype");
 			dropdownItem.putData(
 				"permissionsLayoutPrototypeURL", permissionsLayoutPrototypeURL);
+			dropdownItem.setIcon("password-policies");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};

@@ -194,7 +194,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 				_themeDisplay.getURLCurrent(), "portletResource",
 				LayoutPageTemplateAdminPortletKeys.LAYOUT_PAGE_TEMPLATES,
 				"selPlid", _layoutPageTemplateEntry.getPlid());
-
+			dropdownItem.setIcon("cog");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "configure"));
 		};
@@ -217,6 +217,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(configureLayoutPrototypeURL);
+			dropdownItem.setIcon("cog");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "configure"));
 		};
@@ -240,6 +241,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 					"layoutPageTemplateEntryId",
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 				).buildString());
+			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
@@ -328,6 +330,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 				dropdownItem.setHref(layoutFullURL);
 
+				dropdownItem.setIcon("pencil");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "edit"));
 			};
@@ -344,6 +347,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 
 			dropdownItem.setHref(layoutFullURL);
 
+			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
@@ -369,6 +373,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.setDisabled(_layoutPageTemplateEntry.isDraft());
 			dropdownItem.setHref(exportLayoutPageTemplateURL);
+			dropdownItem.setIcon("upload");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "export"));
 		};
@@ -437,6 +442,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 					"layoutPageTemplateEntryId",
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()
 				).buildString());
+			dropdownItem.setIcon("move-folder");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "move-to"));
 		};
@@ -459,6 +465,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			dropdownItem.putData(
 				"permissionsLayoutPageTemplateEntryURL",
 				permissionsLayoutPageTemplateEntryURL);
+			dropdownItem.setIcon("password-policies");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
@@ -522,6 +529,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 				"layoutPageTemplateEntryId",
 				String.valueOf(
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+			dropdownItem.setIcon("change");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "change-thumbnail"));
 		};

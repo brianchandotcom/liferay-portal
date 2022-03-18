@@ -75,6 +75,7 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 									layoutPageTemplateCollection.
 										getLayoutPageTemplateCollectionId()
 								).buildString());
+							dropdownItem.setIcon("pencil");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "edit"));
 						}
@@ -106,6 +107,7 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 											getLayoutPageTemplateCollectionId()),
 									LiferayWindowState.POP_UP.toString(), null,
 									_httpServletRequest));
+							dropdownItem.setIcon("password-policies");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "permissions"));
@@ -141,6 +143,7 @@ public class LayoutPageTemplateCollectionActionDropdownItem {
 									layoutPageTemplateCollection.
 										getLayoutPageTemplateCollectionId()
 								).buildString());
+							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "delete"));

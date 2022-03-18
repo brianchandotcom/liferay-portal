@@ -83,6 +83,7 @@ public class LayoutPageTemplateDisplayContext {
 				getLayoutPageTemplateCollectionId(), ActionKeys.DELETE),
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteCollections");
+				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "delete"));
 			}

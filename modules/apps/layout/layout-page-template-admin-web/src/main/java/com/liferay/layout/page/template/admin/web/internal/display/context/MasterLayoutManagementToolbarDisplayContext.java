@@ -76,7 +76,7 @@ public class MasterLayoutManagementToolbarDisplayContext
 							dropdownItem.putData(
 								"exportMasterLayoutURL",
 								_getExportMasterLayoutURL());
-							dropdownItem.setIcon("download");
+							dropdownItem.setIcon("upload");
 							dropdownItem.setLabel(
 								LanguageUtil.get(httpServletRequest, "export"));
 							dropdownItem.setQuickAction(true);
@@ -91,7 +91,7 @@ public class MasterLayoutManagementToolbarDisplayContext
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "deleteSelectedMasterLayouts");
-							dropdownItem.setIcon("times-circle");
+							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(httpServletRequest, "delete"));
 							dropdownItem.setQuickAction(true);

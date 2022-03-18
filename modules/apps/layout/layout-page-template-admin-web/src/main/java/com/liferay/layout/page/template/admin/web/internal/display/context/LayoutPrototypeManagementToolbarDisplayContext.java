@@ -65,7 +65,7 @@ public class LayoutPrototypeManagementToolbarDisplayContext
 			dropdownItem -> {
 				dropdownItem.putData(
 					"action", "deleteSelectedLayoutPrototypes");
-				dropdownItem.setIcon("times-circle");
+				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);

@@ -77,7 +77,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 							dropdownItem.putData(
 								"exportLayoutPageTemplateEntryURL",
 								_getExportLayoutPageTemplateEntryURL());
-							dropdownItem.setIcon("download");
+							dropdownItem.setIcon("upload");
 							dropdownItem.setLabel(
 								LanguageUtil.get(httpServletRequest, "export"));
 							dropdownItem.setQuickAction(true);
@@ -92,7 +92,7 @@ public class LayoutPageTemplateManagementToolbarDisplayContext
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "deleteLayoutPageTemplateEntries");
-							dropdownItem.setIcon("times-circle");
+							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(httpServletRequest, "delete"));
 							dropdownItem.setQuickAction(true);

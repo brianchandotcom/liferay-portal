@@ -1641,12 +1641,64 @@ definition {
 	}
 
 	@description = "LPS-146756 - Verify that a guest user with the resource permission action of "View"  unactivated can't vizualize object entries"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test GuestCannotViewObjectEntriesWithoutViewPermission {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ObjectPermission#GuestCannotViewObjectEntriesWithoutViewPermission";
 
-		// TODO LPS-148948 GuestCannotViewObjectEntriesWithoutViewPermission pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 148948",
+			objectName = "CustomObject148948",
+			pluralLabelName = "Custom Objects 148948");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject148948");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject148948");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject148948",
+			value = "Entry Test");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 148948");
+
+		Check.checkToggleSwitch(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
+
+		CreateObject.saveObject();
+
+		Navigator.openURL();
+
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+
+		PagesAdmin.addPublicPage(
+			pageName = "Object Page",
+			sitePageType = "Widget Page");
+
+		Navigator.openURL();
+
+		Navigator.gotoPage(pageName = "Object Page");
+
+		Portlet.addPG(
+			pageName = "Object Page",
+			portletName = "Custom Objects 148948");
+
+		Navigator.openURL();
+
+		User.logoutPG();
+
+		Navigator.gotoPage(pageName = "Object Page");
+
+		ObjectPortlet.assertEntryNotPresent(entry = "Entry Test");
 
 	}
 

@@ -177,14 +177,10 @@ public class DefaultJSONWebServiceRegistrator
 			jsonWebServiceMode = jsonWebService.mode();
 		}
 
-		JSONWebServiceScannerStrategy.MethodDescriptor[] methodDescriptors =
-			_jsonWebServiceScannerStrategy.scan(serviceBean);
+		Method[] serviceMethods = _jsonWebServiceScannerStrategy.scan(
+			serviceBean);
 
-		for (JSONWebServiceScannerStrategy.MethodDescriptor methodDescriptor :
-				methodDescriptors) {
-
-			Method method = methodDescriptor.getMethod();
-
+		for (Method method : serviceMethods) {
 			JSONWebService methodJSONWebService = method.getAnnotation(
 				JSONWebService.class);
 
@@ -211,7 +207,7 @@ public class DefaultJSONWebServiceRegistrator
 				continue;
 			}
 
-			Class<?> serviceBeanClass = methodDescriptor.getDeclaringClass();
+			Class<?> serviceBeanClass = method.getDeclaringClass();
 
 			String path = JSONWebServiceMappingResolverUtil.resolvePath(
 				serviceBeanClass, method);

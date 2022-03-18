@@ -21,27 +21,6 @@ import java.lang.reflect.Method;
  */
 public interface JSONWebServiceScannerStrategy {
 
-	public MethodDescriptor[] scan(Object service);
-
-	public class MethodDescriptor {
-
-		public MethodDescriptor(Method method) {
-			_method = method;
-
-			_clazz = method.getDeclaringClass();
-		}
-
-		public Class<?> getDeclaringClass() {
-			return _clazz;
-		}
-
-		public Method getMethod() {
-			return _method;
-		}
-
-		private final Class<?> _clazz;
-		private final Method _method;
-
-	}
+	public Method[] scan(Object service);
 
 }

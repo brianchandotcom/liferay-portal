@@ -39,13 +39,12 @@ public class SpringJSONWebServiceScannerStrategy
 	implements JSONWebServiceScannerStrategy {
 
 	@Override
-	public MethodDescriptor[] scan(Object service) {
+	public Method[] scan(Object service) {
 		Class<?> clazz = getTargetClass(service);
 
 		Method[] methods = clazz.getMethods();
 
-		List<MethodDescriptor> methodDescriptors = new ArrayList<>(
-			methods.length);
+		List<Method> serviceMethods = new ArrayList<>(methods.length);
 
 		for (Method method : methods) {
 			Class<?> declaringClass = method.getDeclaringClass();
@@ -54,10 +53,10 @@ public class SpringJSONWebServiceScannerStrategy
 				continue;
 			}
 
-			methodDescriptors.add(new MethodDescriptor(method));
+			serviceMethods.add(method);
 		}
 
-		return methodDescriptors.toArray(new MethodDescriptor[0]);
+		return serviceMethods.toArray(new Method[0]);
 	}
 
 	/**

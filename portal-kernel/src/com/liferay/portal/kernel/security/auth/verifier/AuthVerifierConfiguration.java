@@ -21,27 +21,12 @@ import java.util.Properties;
  */
 public class AuthVerifierConfiguration {
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
-	 */
-	@Deprecated
-	public AuthVerifier getAuthVerifier() {
-		return null;
-	}
-
 	public String getAuthVerifierClassName() {
 		return _authVerifierClassName;
 	}
 
 	public Properties getProperties() {
 		return _properties;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no replacement
-	 */
-	@Deprecated
-	public void setAuthVerifier(AuthVerifier authVerifier) {
 	}
 
 	public void setAuthVerifierClassName(String authVerifierClassName) {

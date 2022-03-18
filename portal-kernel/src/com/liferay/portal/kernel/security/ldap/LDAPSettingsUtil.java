@@ -23,19 +23,6 @@ import java.util.Properties;
  */
 public class LDAPSettingsUtil {
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String getAuthSearchFilter(
-			long ldapServerId, long companyId, String emailAddress,
-			String screenName, String userId)
-		throws Exception {
-
-		return _ldapSettings.getAuthSearchFilter(
-			ldapServerId, companyId, emailAddress, screenName, userId);
-	}
-
 	public static Properties getContactExpandoMappings(
 			long ldapServerId, long companyId)
 		throws Exception {

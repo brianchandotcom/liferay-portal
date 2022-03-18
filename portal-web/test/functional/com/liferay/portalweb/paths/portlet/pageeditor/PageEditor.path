@@ -603,6 +603,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTAINER_CONTAINER_TYPE</td>
+	<td>xpath=(//div[@aria-label='Container'])[${key_position}]/div[contains(@class,'page-editor__topper__content')]/${key_type}[contains(@class,'page-editor__container')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GRID_COLUMN</td>
 	<td>xpath=(//div[@aria-label='Grid'])[${key_position}]//div[contains(@class,'page-editor__col')][${key_columnNumber}]</td>
 	<td></td>

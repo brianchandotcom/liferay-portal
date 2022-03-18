@@ -203,6 +203,44 @@ definition {
 		}
 	}
 
+	@description = "This is a test for COMMERCE-8282. Verify can edit payment term"
+	@priority = "4"
+	test CanEditAPaymentTerm {
+		property portal.acceptance = "false";
+
+		task ("Given a new entry into the Terms and Conditions") {
+			CommerceNavigator.gotoPortlet(
+				category = "Order Management",
+				portlet = "Terms and Conditions");
+
+			CommercePaymentTerms.addTermsAndCondition(
+				active = "true",
+				termsAndConditionName = "Test Terms and Condition",
+				termsAndConditionType = "Payment Terms",
+				valuePosition = "");
+		}
+
+		task ("When I edit the name and description of the payment term and publish it") {
+			CommercePaymentTerms.openTermsAndConditionAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Terms and Condition");
+
+			CommercePaymentTerms.editTermsAndCondition(
+				termsAndConditionDescription = "Test Terms and Condition Description Edit",
+				termsAndConditionName = "Test Terms and Condition Edit");
+		}
+
+		task ("Then the payment term name and description should be updated") {
+			Navigator.gotoBack();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Terms and Condition Edit");
+
+			CommercePaymentTerms.assertTermsAndConditionEntry(
+				termsAndConditionDescription = "Test Terms and Condition Description Edit",
+				termsAndConditionName = "Test Terms and Condition Edit");
+		}
+	}
+
 	@description = "COMMERCE-8291. The Sales Manager can use the search bar to search a specific entry."
 	@priority = "4"
 	test CanSearchForSpecificEntry {
@@ -250,16 +288,6 @@ definition {
 		property portal.acceptance = "false";
 
 		// TODO COMMERCE-8280 ChangeTheStatus pending implementation
-
-	}
-
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test EditAPaymentTerm {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-8282 EditAPaymentTerm pending implementation
 
 	}
 

@@ -179,9 +179,11 @@ public class LinkTag extends BaseContainerTag {
 
 	@Override
 	protected Map<String, Object> prepareProps(Map<String, Object> props) {
-		props.put("icon", _icon);
-
+		props.put("block", _block);
+		props.put("borderless", _borderless);
 		props.put("button", _type.equals("button"));
+		props.put("displayType", _displayType);
+		props.put("icon", _icon);
 
 		if (Validator.isNotNull(_label)) {
 			props.put(
@@ -190,6 +192,10 @@ public class LinkTag extends BaseContainerTag {
 					TagResourceBundleUtil.getResourceBundle(pageContext),
 					_label));
 		}
+
+		props.put("monospaced", _monospaced);
+		props.put("outline", _outline);
+		props.put("small", _small);
 
 		return super.prepareProps(props);
 	}
@@ -202,6 +208,10 @@ public class LinkTag extends BaseContainerTag {
 			cssPrefix = "btn-";
 
 			cssClasses.add("btn");
+		}
+
+		if (_block) {
+			cssClasses.add(cssPrefix + "block");
 		}
 
 		if (_borderless) {

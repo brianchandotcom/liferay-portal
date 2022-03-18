@@ -114,6 +114,26 @@
 </tr>
 <!--DEFAULT_ACCOUNT_TERMS_AND_CONDITION-->
 <tr>
+	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_ENTRY</td>
+	<td>//a[@data-type='delivery-terms']/../../preceding-sibling::h4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_ENTRY_INACTIVE_ICON</td>
+	<td>//a[@data-type='delivery-terms']/../../preceding-sibling::h4/strong[contains(@style,'orange')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_USE_PRIORITY_SETTINGS</td>
+	<td>//a[@data-type='delivery-terms']/../../preceding-sibling::span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DELIVERY_TEXT</td>
+	<td>//a[@data-type='delivery-terms']/../../preceding-sibling::div[normalize-space(text())='Delivery']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_PAYMENT_ENTRY</td>
 	<td>//a[@data-type='payment-terms']/../../preceding-sibling::h4</td>
 	<td></td>
@@ -141,6 +161,11 @@
 <tr>
 	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_SELECT_TERM_ENTRY_RADIO</td>
 	<td>//input[contains(@name,'selectCommerceTermEntry')]//following-sibling::span/span[normalize-space()='${key_termEntry}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFAULT_ACCOUNT_TERMS_AND_CONDITION_SET_DEFAULT_DELIVERY</td>
+	<td>//a[@data-type='delivery-terms']//span[normalize-space(text())='Set Default Delivery Commerce Terms Entry']</td>
 	<td></td>
 </tr>
 <tr>

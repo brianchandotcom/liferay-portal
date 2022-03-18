@@ -120,7 +120,9 @@ definition {
 			maxTerms = "101",
 			portletName = "Option Facet");
 
-		Alert.viewErrorMessage(errorMessage = "Maximum terms cannot exceed 100.");
+		AssertElementPresent(
+			locator1 = "CommerceWidget#MAX_TERMS_ERROR_MESSAGE",
+			errorMessage = "Maximum terms cannot exceed 100.");
 	}
 
 	@description = "[Please Update]"

@@ -14,10 +14,12 @@
 
 package com.liferay.portal.servlet.filters.aggregate;
 
+import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.ServiceProxyFactory;
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -27,9 +29,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+
+import org.osgi.framework.BundleContext;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -38,7 +41,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 /**
  * @author Cleydyr de Albuquerque
  */
-@PrepareForTest({PortalUtil.class, ServiceProxyFactory.class})
+@PrepareForTest(PortalUtil.class)
 @RunWith(PowerMockRunner.class)
 public class AggregateFilterTest extends PowerMockito {
 
@@ -52,7 +55,12 @@ public class AggregateFilterTest extends PowerMockito {
 		MockitoAnnotations.initMocks(this);
 
 		_setUpPortalUtil();
-		_setUpServiceProxyFactory();
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		bundleContext.registerService(
+			PortalExecutorManager.class,
+			ProxyFactory.newDummyInstance(PortalExecutorManager.class), null);
 	}
 
 	@Test
@@ -124,18 +132,6 @@ public class AggregateFilterTest extends PowerMockito {
 			PortalUtil.getPathModule()
 		).thenReturn(
 			StringPool.BLANK
-		);
-	}
-
-	private void _setUpServiceProxyFactory() {
-		mockStatic(ServiceProxyFactory.class);
-
-		when(
-			ServiceProxyFactory.newServiceTrackedInstance(
-				Matchers.any(), Matchers.any(), Matchers.anyString(),
-				Matchers.anyBoolean())
-		).thenReturn(
-			null
 		);
 	}
 

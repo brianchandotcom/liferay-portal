@@ -2598,6 +2598,19 @@ definition {
 				PageEditor.waitForAutoSave();
 			}
 		}
+
+		if ("${panel}" == "Advanced") {
+			Navigator.gotoNavTab(navTab = "Advanced");
+
+			if (isSet(htmlTag)) {
+				Select(
+					key_fieldLabel = "HTML Tag",
+					locator1 = "Select#GENERIC_SELECT_FIELD",
+					value1 = "${htmlTag}");
+
+				PageEditor.waitForAutoSave();
+			}
+		}
 	}
 
 	macro editLayoutGrid {

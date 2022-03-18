@@ -2,9 +2,12 @@
 	background-color: #f1f2f5;
 	padding: 1.5rem;
 
-	&-buttons {
+	&-container {
 		display: flex;
 		gap: 0.5rem;
-		margin-top: 1.5rem;
+	}
+
+	&-tooltip-icon {
+		color: #a7a9bc;
 	}
 }

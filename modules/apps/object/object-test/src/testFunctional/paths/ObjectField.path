@@ -59,7 +59,7 @@
 	</tr>
 	<tr>
 		<td>SAVE_BUTTON</td>
-		<td>//div[contains(@class,'lfr-objects__edit-object-field-buttons')]//button[@type='submit']</td>
+		<td>//div[contains(@class,'lfr-objects__edit-object-field-container')]//button[@type='submit']</td>
 		<td></td>
 	</tr>
 </tbody>

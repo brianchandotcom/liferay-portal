@@ -12,21 +12,13 @@
  * details.
  */
 
-import React from 'react';
-declare const Input: React.ForwardRefExoticComponent<
-	IProps & React.RefAttributes<HTMLInputElement>
->;
-export default Input;
-interface IProps
-	extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
-	component?: 'input' | 'textarea' | React.ForwardRefExoticComponent<any>;
-	disabled?: boolean;
-	error?: string;
-	feedbackMessage?: string;
-	id?: string;
-	label: string;
-	name?: string;
-	required?: boolean;
-	type?: 'number' | 'text';
-	value?: string | number | string[];
-}
+export declare function createAutoCorrectedNumberPipe(
+	max: number,
+	min: number
+): (
+	conformedValue: string
+) =>
+	| false
+	| {
+			value: string;
+	  };

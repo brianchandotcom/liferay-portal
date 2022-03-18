@@ -102,8 +102,8 @@ public class CustomFilterPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return "com/liferay/portal/search/web/internal/custom/filter/template" +
-			"/dependencies/portlet-display-templates.xml";
+		return "com/liferay/portal/search/web/internal/custom/filter/portlet" +
+			"/display/template/dependencies/portlet-display-templates.xml";
 	}
 
 	@Reference

@@ -44,6 +44,15 @@ definition {
 		}
 	}
 
+	@description = "This test covers LPS-117986. It validates that consecutive mentions can be added in a message boards post."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanAddConsecutiveMentions {
+
+		// TODO LPS-149588
+
+	}
+
 	@priority = "5"
 	@refactordone
 	test CanViewMentionViaMBThread {

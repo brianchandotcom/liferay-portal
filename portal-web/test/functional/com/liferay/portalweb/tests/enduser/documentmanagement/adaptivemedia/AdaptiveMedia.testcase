@@ -485,4 +485,13 @@ definition {
 		AdaptiveMedia.viewNoImageResolution(imageName = "This should not appear on new virtual instance");
 	}
 
+	@description = "This test covers LPS-136280. It validates that an image can be adapted in a web content after it is updated."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ImageVariantsAreGeneratedAfterEditingWebContentWithImage {
+
+		// TODO LPS-149586
+
+	}
+
 }

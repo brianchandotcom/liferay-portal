@@ -105,6 +105,11 @@
 		<td>//input[@id='regular-role_ACTION_${key_permissionName}']</td>
 		<td></td>
 	</tr>
+	<tr>
+		<td>SELECT_ANY_PERMISSIONS</td>
+		<td>//input[@id='${key_roleName}_ACTION_${key_permissionName}']</td>
+		<td></td>
+	</tr>
 </tbody>
 </table>
 </body>

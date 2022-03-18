@@ -2812,6 +2812,9 @@ public interface PropsKeys {
 	public static final String UPGRADE_DATABASE_LOCK_REFRESH_TIME =
 		"upgrade.database.lock.refresh.time";
 
+	public static final String UPGRADE_DATABASE_MANAGED_STARTUP =
+		"upgrade.database.managed.startup";
+
 	public static final String UPGRADE_DATABASE_TRANSACTIONS_DISABLED =
 		"upgrade.database.transactions.disabled";
 

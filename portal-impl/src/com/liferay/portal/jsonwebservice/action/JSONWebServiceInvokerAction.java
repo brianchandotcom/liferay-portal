@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -71,11 +70,6 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 		}
 
 		_command = command;
-	}
-
-	@Override
-	public JSONWebServiceActionMapping getJSONWebServiceActionMapping() {
-		return null;
 	}
 
 	@Override

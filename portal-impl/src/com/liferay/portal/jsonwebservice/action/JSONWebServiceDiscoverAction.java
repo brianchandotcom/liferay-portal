@@ -77,11 +77,6 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 	}
 
 	@Override
-	public JSONWebServiceActionMapping getJSONWebServiceActionMapping() {
-		return null;
-	}
-
-	@Override
 	public Object invoke() throws Exception {
 		return new DiscoveryContent(
 			LinkedHashMapBuilder.<String, Object>put(

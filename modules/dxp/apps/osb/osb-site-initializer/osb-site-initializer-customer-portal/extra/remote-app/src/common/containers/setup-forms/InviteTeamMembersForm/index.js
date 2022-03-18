@@ -116,39 +116,30 @@ const InviteTeamMembersPage = ({
 
 	useEffect(() => {
 		if (values && accountRoles?.length) {
+			const selectedAdministrators = [];
+
 			const totalAdmins = values.invites?.reduce(
 				(totalInvites, currentInvite) => {
 					if (
 						currentInvite.role.name === ROLE_TYPES.requester.name ||
 						currentInvite.role.name === ROLE_TYPES.admin.name
 					) {
+						selectedAdministrators.push(true);
+
 						return ++totalInvites;
 					}
+					selectedAdministrators.push(false);
 
 					return totalInvites;
 				},
 				0
 			);
+
 			const remainingAdmins = availableAdministratorAssets - totalAdmins;
-
-			setAccountRolesOptions((previousAccountRoles) =>
-				previousAccountRoles.map((previousAccountRole) => {
-					const isAdministratorOrRequestorRole =
-						previousAccountRole.label ===
-							ROLE_TYPES.requester.name ||
-						previousAccountRole.label === ROLE_TYPES.admin.name;
-
-					return {
-						...previousAccountRole,
-						disabled:
-							isAdministratorOrRequestorRole &&
-							remainingAdmins === 0,
-					};
-				})
-			);
 
 			setAvailableAdminsRoles(remainingAdmins);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [values, project, accountRoles, availableAdministratorAssets]);
 
 	useEffect(() => {
@@ -164,8 +155,7 @@ const InviteTeamMembersPage = ({
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 			setshowEmptyEmailError(false);
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -220,8 +210,7 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({
@@ -288,6 +277,9 @@ const InviteTeamMembersPage = ({
 							<ClayForm.Group className="m-0">
 								{values?.invites?.map((invite, index) => (
 									<TeamMemberInputs
+										administratorsAssetsAvailable={
+											availableAdminsRoles
+										}
 										disableError={hasInitialError}
 										id={index}
 										invite={invite}
@@ -376,7 +368,7 @@ const InviteTeamMembersPage = ({
 										projectHasSLAGoldPlatinum
 											? ROLE_TYPES.requester.name
 											: ROLE_TYPES.admin.name
-									}	roles available: ${availableAdminsRoles} of ${
+									}   roles available: ${availableAdminsRoles} of ${
 										project.maxRequestors
 									}`}
 								</h5>
@@ -385,8 +377,8 @@ const InviteTeamMembersPage = ({
 									{`Only ${project.maxRequestors} member${
 										project.maxRequestors > 1 ? 's' : ''
 									} per project (including yourself) have
-								 role permissions (Admins & Requestors) to open Support
-								 tickets. `}
+								   role permissions (Admins & Requestors) to open Support
+								   tickets. `}
 
 									<a
 										className="font-weight-bold text-neutral-9"

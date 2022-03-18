@@ -29,9 +29,9 @@ import java.util.List;
 /**
  * @author Miguel Pastor
  */
-public class JSONWebServiceScannerStrategy {
+public class JSONWebServiceScannerUtil {
 
-	public Method[] scan(Object service) {
+	public static Method[] scan(Object service) {
 		Class<?> clazz = _getTargetClass(service);
 
 		Method[] methods = clazz.getMethods();
@@ -51,7 +51,7 @@ public class JSONWebServiceScannerStrategy {
 		return serviceMethods.toArray(new Method[0]);
 	}
 
-	private Class<?> _getTargetClass(Object service) {
+	private static Class<?> _getTargetClass(Object service) {
 		while (ProxyUtil.isProxyClass(service.getClass())) {
 			InvocationHandler invocationHandler =
 				ProxyUtil.getInvocationHandler(service);
@@ -94,6 +94,6 @@ public class JSONWebServiceScannerStrategy {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JSONWebServiceScannerStrategy.class);
+		JSONWebServiceScannerUtil.class);
 
 }

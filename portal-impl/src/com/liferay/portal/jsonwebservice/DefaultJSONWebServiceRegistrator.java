@@ -165,8 +165,7 @@ public class DefaultJSONWebServiceRegistrator
 			jsonWebServiceMode = jsonWebService.mode();
 		}
 
-		Method[] serviceMethods = _jsonWebServiceScannerStrategy.scan(
-			serviceBean);
+		Method[] serviceMethods = JSONWebServiceScannerUtil.scan(serviceBean);
 
 		for (Method method : serviceMethods) {
 			JSONWebService methodJSONWebService = method.getAnnotation(
@@ -214,8 +213,5 @@ public class DefaultJSONWebServiceRegistrator
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultJSONWebServiceRegistrator.class);
-
-	private final JSONWebServiceScannerStrategy _jsonWebServiceScannerStrategy =
-		new JSONWebServiceScannerStrategy();
 
 }

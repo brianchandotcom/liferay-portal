@@ -19,30 +19,40 @@ import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.internal.asset.AssetRendererFactoryRegistry;
 import com.liferay.portal.search.internal.asset.SearchableAssetClassNamesProviderImpl;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Arrays;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Adam Brandizzi
  */
-@RunWith(PowerMockRunner.class)
-@SuppressStaticInitializationFor("com.liferay.portal.kernel.search.BaseIndexer")
 public class AssetEntriesSearchFacetTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() {
+		assetRendererFactory1 = Mockito.mock(AssetRendererFactory.class);
+
+		assetRendererFactory2 = Mockito.mock(AssetRendererFactory.class);
+
+		_assetRendererFactoryRegistry = Mockito.mock(
+			AssetRendererFactoryRegistry.class);
+
+		_searchEngineHelper = Mockito.mock(SearchEngineHelper.class);
+
 		assetEntriesSearchFacet = new AssetEntriesSearchFacet() {
 			{
 				searchableAssetClassNamesProvider =
@@ -127,11 +137,7 @@ public class AssetEntriesSearchFacetTest {
 	protected static final String CLASS_NAME_2 = "com.liferay.model.Model2";
 
 	protected AssetEntriesSearchFacet assetEntriesSearchFacet;
-
-	@Mock
 	protected AssetRendererFactory<?> assetRendererFactory1;
-
-	@Mock
 	protected AssetRendererFactory<?> assetRendererFactory2;
 
 	private void _mockAssetRendererFactoryGetClassName(
@@ -175,10 +181,7 @@ public class AssetEntriesSearchFacetTest {
 		);
 	}
 
-	@Mock
 	private AssetRendererFactoryRegistry _assetRendererFactoryRegistry;
-
-	@Mock
 	private SearchEngineHelper _searchEngineHelper;
 
 }

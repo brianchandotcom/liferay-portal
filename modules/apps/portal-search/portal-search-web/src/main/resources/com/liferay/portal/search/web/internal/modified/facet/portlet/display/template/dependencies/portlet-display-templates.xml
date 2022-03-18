@@ -6,7 +6,7 @@
 		<name>portlet-display-template-name-radio-layout</name>
 		<description>portlet-display-template-description-facet-radio</description>
 		<language>ftl</language>
-		<script-file>com/liferay/portal/search/web/internal/modified/facet/template/dependencies/portlet_display_template_radio.ftl</script-file>
+		<script-file>com/liferay/portal/search/web/internal/modified/facet/portlet/display/template/dependencies/portlet_display_template_radio.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 </root>

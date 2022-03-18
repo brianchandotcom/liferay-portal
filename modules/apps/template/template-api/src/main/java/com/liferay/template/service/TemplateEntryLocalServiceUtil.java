@@ -316,6 +316,16 @@ public class TemplateEntryLocalServiceUtil {
 		return getService().getTemplateEntries(groupIds);
 	}
 
+	public static List<TemplateEntry> getTemplateEntries(
+		long[] groupIds, String infoItemClassName,
+		String infoItemFormVariationKey, int start, int end,
+		OrderByComparator<TemplateEntry> orderByComparator) {
+
+		return getService().getTemplateEntries(
+			groupIds, infoItemClassName, infoItemFormVariationKey, start, end,
+			orderByComparator);
+	}
+
 	/**
 	 * Returns all the template entries matching the UUID and company.
 	 *

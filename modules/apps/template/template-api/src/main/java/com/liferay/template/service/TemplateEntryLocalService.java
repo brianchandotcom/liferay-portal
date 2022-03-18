@@ -280,6 +280,12 @@ public interface TemplateEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<TemplateEntry> getTemplateEntries(long[] groupIds);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<TemplateEntry> getTemplateEntries(
+		long[] groupIds, String infoItemClassName,
+		String infoItemFormVariationKey, int start, int end,
+		OrderByComparator<TemplateEntry> orderByComparator);
+
 	/**
 	 * Returns all the template entries matching the UUID and company.
 	 *

@@ -12,22 +12,20 @@
  * details.
  */
 
+import ClayEmptyState from '@clayui/empty-state';
 import React from 'react';
-
-import NoCommentsMessageIcon from './NoCommentsMessageIcon';
 
 export default function NoCommentsMessage() {
 	return (
 		<div className="p-4 text-center">
-			<NoCommentsMessageIcon />
-
-			<h1 className="h4">
-				{Liferay.Language.get('there-are-no-comments-yet')}
-			</h1>
-
-			<p className="small text-secondary">
-				{Liferay.Language.get('select-a-fragment-to-add-a-comment')}
-			</p>
+			<ClayEmptyState
+				description={Liferay.Language.get(
+					'try-again-with-a-different-search'
+				)}
+				imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
+				small
+				title={Liferay.Language.get('no-results-found')}
+			/>
 		</div>
 	);
 }

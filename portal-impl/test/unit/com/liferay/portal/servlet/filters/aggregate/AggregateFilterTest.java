@@ -18,6 +18,7 @@ import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -27,23 +28,15 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 import org.osgi.framework.BundleContext;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Cleydyr de Albuquerque
  */
-@PrepareForTest(PortalUtil.class)
-@RunWith(PowerMockRunner.class)
-public class AggregateFilterTest extends PowerMockito {
+public class AggregateFilterTest {
 
 	@ClassRule
 	@Rule
@@ -52,8 +45,6 @@ public class AggregateFilterTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
 		_setUpPortalUtil();
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
@@ -82,41 +73,41 @@ public class AggregateFilterTest extends PowerMockito {
 	}
 
 	private ServletPaths _createMockServletPaths(String fileName, String css) {
-		ServletPaths servletPaths = mock(ServletPaths.class);
+		ServletPaths servletPaths = Mockito.mock(ServletPaths.class);
 
-		when(
+		Mockito.when(
 			servletPaths.down(Mockito.anyString())
 		).thenReturn(
 			servletPaths
 		);
 
-		ServletPaths cssServletPaths = mock(ServletPaths.class);
+		ServletPaths cssServletPaths = Mockito.mock(ServletPaths.class);
 
-		when(
+		Mockito.when(
 			cssServletPaths.getContent()
 		).thenReturn(
 			css
 		);
 
-		when(
+		Mockito.when(
 			cssServletPaths.getResourcePath()
 		).thenReturn(
 			StringPool.BLANK
 		);
 
-		when(
+		Mockito.when(
 			servletPaths.down(StringPool.QUOTE + fileName + StringPool.QUOTE)
 		).thenReturn(
 			cssServletPaths
 		);
 
-		when(
+		Mockito.when(
 			servletPaths.getContent()
 		).thenReturn(
 			null
 		);
 
-		when(
+		Mockito.when(
 			servletPaths.getResourcePath()
 		).thenReturn(
 			StringPool.BLANK
@@ -126,10 +117,14 @@ public class AggregateFilterTest extends PowerMockito {
 	}
 
 	private void _setUpPortalUtil() {
-		mockStatic(PortalUtil.class);
+		PortalUtil portalUtil = new PortalUtil();
 
-		PowerMockito.when(
-			PortalUtil.getPathModule()
+		Portal portal = Mockito.mock(Portal.class);
+
+		portalUtil.setPortal(portal);
+
+		Mockito.when(
+			portal.getPathModule()
 		).thenReturn(
 			StringPool.BLANK
 		);

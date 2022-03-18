@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -76,7 +77,10 @@ public class LayoutCrawlerImpl implements LayoutCrawler {
 		ThemeDisplay themeDisplay = _getThemeDisplay(
 			layout, locale, inetAddress, company);
 
-		options.setLocation(_portal.getLayoutFullURL(layout, themeDisplay));
+		options.setLocation(
+			_http.addParameter(
+				_portal.getLayoutFullURL(layout, themeDisplay), "p_l_mode",
+				Constants.SEARCH));
 
 		String response = _http.URLtoString(options);
 

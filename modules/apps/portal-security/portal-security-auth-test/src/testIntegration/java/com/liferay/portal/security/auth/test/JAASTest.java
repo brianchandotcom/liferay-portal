@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -45,8 +44,6 @@ import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.callback.NameCallback;
 import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
-import javax.security.auth.login.AppConfigurationEntry;
-import javax.security.auth.login.AppConfigurationEntry.LoginModuleControlFlag;
 import javax.security.auth.login.Configuration;
 import javax.security.auth.login.LoginContext;
 
@@ -59,7 +56,6 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -83,16 +79,6 @@ public class JAASTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@BeforeClass
-	public static void setUpClass() {
-		_jaasAuthType = PropsValues.PORTAL_JAAS_AUTH_TYPE;
-		_jaasEnabled = PropsValues.PORTAL_JAAS_ENABLE;
-
-		PropsValues.PORTAL_JAAS_ENABLE = true;
-
-		Configuration.setConfiguration(new JAASConfiguration());
-	}
 
 	@AfterClass
 	public static void tearDownClass() {
@@ -338,25 +324,6 @@ public class JAASTest {
 
 		private final String _name;
 		private final String _password;
-
-	}
-
-	private static class JAASConfiguration extends Configuration {
-
-		@Override
-		public AppConfigurationEntry[] getAppConfigurationEntry(String name) {
-			AppConfigurationEntry[] appConfigurationEntries =
-				new AppConfigurationEntry[1];
-
-			appConfigurationEntries[0] = new AppConfigurationEntry(
-				"com.liferay.portal.kernel.security.jaas.PortalLoginModule",
-				LoginModuleControlFlag.REQUIRED,
-				HashMapBuilder.<String, Object>put(
-					"debug", Boolean.TRUE
-				).build());
-
-			return appConfigurationEntries;
-		}
 
 	}
 

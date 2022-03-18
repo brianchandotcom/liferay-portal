@@ -201,8 +201,8 @@ definition {
 
 	macro assertRelationshipEntrySearchResultsPresent {
 		AssertElementPresent(
-			key_entry = "${entry}",
-			locator1 = "ObjectPortlet#SEARCH_RESULT_RELATIONSHIP_ENTRY");
+			value1 = "${entry}",
+			locator1 = "ObjectPortlet#SEARCH_RELATIONSHIP_ENTRY");
 	}
 
 	macro assertUserCanNotUpdateEntryWithoutPermission {

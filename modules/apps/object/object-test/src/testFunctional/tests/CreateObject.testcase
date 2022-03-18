@@ -2998,9 +2998,9 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		ObjectPortlet.searchEntryRelationshipField(entryValue = "ABC");
+		ObjectPortlet.searchEntryRelationshipField(entryValue = "Entry ABC");
 
-		ObjectPortlet.assertRelationshipEntrySearchResultsPresent(entry = "Entry");
+		ObjectPortlet.assertRelationshipEntrySearchResultsPresent(entry = "Entry ABC");
 
 		ObjectPortlet.assertRelationshipEntrySearchResultsNotPresent(entry = "Custom Field");
 	}

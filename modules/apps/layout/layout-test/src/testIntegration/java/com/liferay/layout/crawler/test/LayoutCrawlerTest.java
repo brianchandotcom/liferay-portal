@@ -219,7 +219,7 @@ public class LayoutCrawlerTest {
 				JSONUtil.put(
 					"instanceid", StringUtil.randomString()
 				).put(
-					"portletId", AssetPublisherPortletKeys.ASSET_PUBLISHER
+					"portletId", AssetPublisherPortletKeys.RECENT_CONTENT
 				).toString(),
 				StringPool.BLANK, 0, StringPool.BLANK, serviceContext);
 

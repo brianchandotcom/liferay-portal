@@ -14,17 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.job.property.JobProperty;
-import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
-
 import java.io.File;
 import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -32,42 +23,7 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class SubrepositoryGitRepositoryJob
-	extends GitRepositoryJob
-	implements BatchDependentJob, SubrepositoryTestClassJob {
-
-	@Override
-	public List<AxisTestClassGroup> getDependentAxisTestClassGroups() {
-		List<AxisTestClassGroup> axisTestClassGroups = new ArrayList<>();
-
-		for (BatchTestClassGroup batchTestClassGroup :
-				getDependentBatchTestClassGroups()) {
-
-			axisTestClassGroups.addAll(
-				batchTestClassGroup.getAxisTestClassGroups());
-		}
-
-		return axisTestClassGroups;
-	}
-
-	@Override
-	public Set<String> getDependentBatchNames() {
-		return getFilteredBatchNames(getRawDependentBatchNames());
-	}
-
-	@Override
-	public List<BatchTestClassGroup> getDependentBatchTestClassGroups() {
-		return getBatchTestClassGroups(getRawDependentBatchNames());
-	}
-
-	@Override
-	public Set<String> getDependentSegmentNames() {
-		return getFilteredSegmentNames(getRawDependentBatchNames());
-	}
-
-	@Override
-	public List<SegmentTestClassGroup> getDependentSegmentTestClassGroups() {
-		return getSegmentTestClassGroups(getRawDependentBatchNames());
-	}
+	extends GitRepositoryJob implements SubrepositoryTestClassJob {
 
 	@Override
 	public GitWorkingDirectory getGitWorkingDirectory() {
@@ -167,14 +123,6 @@ public class SubrepositoryGitRepositoryJob
 		_upstreamBranchName = jsonObject.getString("upstream_branch_name");
 
 		_initialize();
-	}
-
-	protected Set<String> getRawDependentBatchNames() {
-		JobProperty jobProperty = getJobProperty("test.batch.names.smoke");
-
-		recordJobProperty(jobProperty);
-
-		return getSetFromString(jobProperty.getValue());
 	}
 
 	protected PortalGitWorkingDirectory portalGitWorkingDirectory;

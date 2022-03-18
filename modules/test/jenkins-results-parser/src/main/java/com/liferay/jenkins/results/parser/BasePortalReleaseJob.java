@@ -15,13 +15,9 @@
 package com.liferay.jenkins.results.parser;
 
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
-import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
-import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
 
 import java.io.File;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -32,42 +28,7 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public abstract class BasePortalReleaseJob
-	extends BaseJob
-	implements BatchDependentJob, PortalTestClassJob, TestSuiteJob {
-
-	@Override
-	public List<AxisTestClassGroup> getDependentAxisTestClassGroups() {
-		List<AxisTestClassGroup> axisTestClassGroups = new ArrayList<>();
-
-		for (BatchTestClassGroup batchTestClassGroup :
-				getDependentBatchTestClassGroups()) {
-
-			axisTestClassGroups.addAll(
-				batchTestClassGroup.getAxisTestClassGroups());
-		}
-
-		return axisTestClassGroups;
-	}
-
-	@Override
-	public Set<String> getDependentBatchNames() {
-		return getFilteredBatchNames(getRawDependentBatchNames());
-	}
-
-	@Override
-	public List<BatchTestClassGroup> getDependentBatchTestClassGroups() {
-		return getBatchTestClassGroups(getRawDependentBatchNames());
-	}
-
-	@Override
-	public Set<String> getDependentSegmentNames() {
-		return getFilteredSegmentNames(getRawDependentBatchNames());
-	}
-
-	@Override
-	public List<SegmentTestClassGroup> getDependentSegmentTestClassGroups() {
-		return getSegmentTestClassGroups(getRawDependentBatchNames());
-	}
+	extends BaseJob implements PortalTestClassJob, TestSuiteJob {
 
 	@Override
 	public Set<String> getDistTypes() {
@@ -140,6 +101,7 @@ public abstract class BasePortalReleaseJob
 		return getSetFromString(jobProperty.getValue());
 	}
 
+	@Override
 	protected Set<String> getRawDependentBatchNames() {
 		JobProperty jobProperty = getJobProperty(
 			"test.batch.names.smoke", false);

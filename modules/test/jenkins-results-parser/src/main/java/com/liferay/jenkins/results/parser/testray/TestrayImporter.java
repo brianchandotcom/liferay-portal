@@ -16,7 +16,6 @@ package com.liferay.jenkins.results.parser.testray;
 
 import com.liferay.jenkins.results.parser.AntException;
 import com.liferay.jenkins.results.parser.AntUtil;
-import com.liferay.jenkins.results.parser.BatchDependentJob;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.GitWorkingDirectory;
@@ -909,15 +908,10 @@ public class TestrayImporter {
 	public void recordTestrayCaseResults() {
 		final Job job = getJob();
 
-		List<AxisTestClassGroup> axisTestClassGroups =
-			job.getAxisTestClassGroups();
+		List<AxisTestClassGroup> axisTestClassGroups = new ArrayList<>(
+			job.getAxisTestClassGroups());
 
-		if (job instanceof BatchDependentJob) {
-			BatchDependentJob batchDependentJob = (BatchDependentJob)job;
-
-			axisTestClassGroups.addAll(
-				batchDependentJob.getDependentAxisTestClassGroups());
-		}
+		axisTestClassGroups.addAll(job.getDependentAxisTestClassGroups());
 
 		List<Callable<Void>> callables = new ArrayList<>();
 

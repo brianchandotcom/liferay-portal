@@ -44,6 +44,16 @@ public interface Job {
 
 	public BuildProfile getBuildProfile();
 
+	public List<AxisTestClassGroup> getDependentAxisTestClassGroups();
+
+	public Set<String> getDependentBatchNames();
+
+	public List<BatchTestClassGroup> getDependentBatchTestClassGroups();
+
+	public Set<String> getDependentSegmentNames();
+
+	public List<SegmentTestClassGroup> getDependentSegmentTestClassGroups();
+
 	public List<String> getDistNodes();
 
 	public DistType getDistType();

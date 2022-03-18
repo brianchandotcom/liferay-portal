@@ -152,6 +152,73 @@ definition {
 			value1 = "${colunmName}");
 	}
 
+	macro selectAnyPermissions {
+		for (var permissionsName : list "${permissionsList}") {
+			if (isSet(analyticsAdministrator)) {
+				Click(
+					key_permissionName = "${permissionsName}",
+					key_roleName = "analytics-administrator",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(guest)) {
+				Click(
+					key_permissionName = "${permissionsName}",
+					key_roleName = "guest",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(owner)) {
+				Click(
+					key_permissionName = "${permissionsName}",
+					key_roleName = "owner",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(powerUser)) {
+				Click(
+					key_permissionName = "${permissionsName}",
+					key_roleName = "power-user",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(portalContentReviewer)) {
+				Click(
+					key_permissionName = "${permissionsName}",
+					key_roleName = "portal-content-reviewer",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(publicationsUser)) {
+				Click(
+					key_permissionName = "${permissionsName}",
+					key_roleName = "publications-user",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(siteContentReviewer)) {
+				Click(
+					key_permissionName = "${permissionsName}",
+					key_roleName = "site-content-reviewer",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(siteMember)) {
+				Click(
+					key_permissionName = "${permissionsName}",
+					key_roleName = "site-member",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(user)) {
+				Click(
+					key_permissionName = "${permissionsName}",
+					key_roleName = "user",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+		}
+	}
+
 	macro selectPermissionToRegularRole {
 		for (var permissionsName : list "${permissionsList}") {
 			Click(
@@ -167,80 +234,6 @@ definition {
 			locator1 = "ObjectCustomViews#VIEW_COLUMN_ENTRIES");
 	}
 
-	macro viewOrdersOfTheColumns {
-		AssertVisible(
-			key_colunmName1 = "${colunmName}",
-			key_position = "${position}",
-			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION");
-	}
-
-	macro selectAnyPermissions {
-		for (var permissionsName : list "${permissionsList}") {
-			if (isSet(analyticsAdministrator)) {
-				Click(
-					key_roleName = "analytics-administrator",
-					key_permissionName = "${permissionsName}",
-					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
-			}
-
-			if (isSet(guest)) {
-				Click(
-					key_roleName = "guest",
-					key_permissionName = "${permissionsName}",
-					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
-			}
-
-			if (isSet(owner)) {
-				Click(
-					key_roleName = "owner",
-					key_permissionName = "${permissionsName}",
-					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
-			}
-
-			if (isSet(powerUser)) {
-				Click(
-					key_roleName = "power-user",
-					key_permissionName = "${permissionsName}",
-					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
-			}
-
-			if (isSet(portalContentReviewer)) {
-				Click(
-					key_roleName = "portal-content-reviewer",
-					key_permissionName = "${permissionsName}",
-					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
-			}
-
-			if (isSet(publicationsUser)) {
-				Click(
-					key_roleName = "publications-user",
-					key_permissionName = "${permissionsName}",
-					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
-			}
-
-			if (isSet(siteContentReviewer)) {
-				Click(
-					key_roleName = "site-content-reviewer",
-					key_permissionName = "${permissionsName}",
-					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
-			}
-
-			if (isSet(siteMember)) {
-				Click(
-					key_roleName = "site-member",
-					key_permissionName = "${permissionsName}",
-					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
-			}
-
-			if (isSet(user)) {
-				Click(
-					key_roleName = "user",
-					key_permissionName = "${permissionsName}",
-					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
-			}
-		}
-	}
-
 	macro viewOptionNotPresentInKebabMenu {
 		Click(
 			key_objectLabel = "${entryName}",
@@ -249,6 +242,13 @@ definition {
 		AssertElementNotPresent(
 			key_menuItem = "${menuItem}",
 			locator1 = "MenuItem#ANY_MENU_ITEM");
+	}
+
+	macro viewOrdersOfTheColumns {
+		AssertVisible(
+			key_colunmName1 = "${colunmName}",
+			key_position = "${position}",
+			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION");
 	}
 
 }

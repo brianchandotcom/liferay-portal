@@ -37,7 +37,7 @@ definition {
 	test AddChildSiteFromImportedSiteTemplate {
 		property portal.acceptance = "true";
 		property portal.upstream = "true";
-		property test.name.skip.portal.instance = "SitesUsecase#AddChildSiteFromImportedSiteTemplate";
+		property test.name.skip.portal.instance = "SitesUseCase#AddChildSiteFromImportedSiteTemplate";
 		property testray.component.names = "Training";
 
 		task ("Add an organization") {
@@ -180,7 +180,7 @@ definition {
 		}
 	}
 
-	@description = "Add 2 organization sites and deactive organization site using new created user."
+	@description = "Add 2 organization sites and deactivate organization site using new created user."
 	@priority = "5"
 	test AddOrganizationSitesAndDeactivate {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -207,7 +207,7 @@ definition {
 			SiteTemplates.addCP(siteTemplateName = "Site Template Name 2");
 		}
 
-		task ("Add an organization siste") {
+		task ("Add an organization site") {
 			JSONOrganization.addOrganization(organizationName = "Organization Name 1");
 
 			User.openUsersAdmin();
@@ -219,7 +219,7 @@ definition {
 				siteTemplateName = "Site Template Name 1");
 		}
 
-		task ("Set Allow manual memebership management for the site") {
+		task ("Set Allow manual membership management for the site") {
 			Site.openSiteSettingsAdmin(siteURLKey = "organization-name-1");
 
 			Site.manageMembershipOptions(
@@ -236,7 +236,7 @@ definition {
 				siteName = "Organization Name 1");
 		}
 
-		task ("Add another organization siste") {
+		task ("Add another organization site") {
 			JSONOrganization.addOrganization(organizationName = "Organization Name 2");
 
 			User.openUsersAdmin();
@@ -248,7 +248,7 @@ definition {
 				siteTemplateName = "Site Template Name 2");
 		}
 
-		task ("Set Allow manual memebership management for the site") {
+		task ("Set Allow manual membership management for the site") {
 			Site.openSiteSettingsAdmin(siteURLKey = "organization-name-2");
 
 			Site.manageMembershipOptions(
@@ -318,7 +318,7 @@ definition {
 				siteName = "Organization Name 2");
 		}
 
-		task ("Deactive the second organization site") {
+		task ("Deactivate the second organization site") {
 			Navigator.openSiteURL(siteName = "Organization Name 2");
 
 			Site.openSitesAdmin();
@@ -337,7 +337,7 @@ definition {
 		}
 	}
 
-	@description = "Assert user can't assign user group with regular role with assign memebers."
+	@description = "Assert user can't assign user group with regular role with assign members."
 	@priority = "3"
 	test OnlySiteOwnersCanAssignSiteRolesToUserGroups {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -371,7 +371,7 @@ definition {
 				roleTitle = "Roles Regrole Name");
 		}
 
-		task ("Add assign memeber permission to the regular role") {
+		task ("Add assign member permission to the regular role") {
 			for (var resourceActionIndex : list "ASSIGN_MEMBERS,ASSIGN_USER_ROLES,VIEW_MEMBERS,VIEW_SITE_ADMINISTRATION") {
 				Permissions.definePermissionViaJSONAPI(
 					resourceAction = "${resourceActionIndex}",
@@ -423,7 +423,7 @@ definition {
 				userLoginFullName = "userfn userln");
 		}
 
-		task ("Assign site role to created user in default site's memeberships") {
+		task ("Assign site role to created user in default site's memberships") {
 			Site.openSiteMembershipsAdmin(siteURLKey = "guest");
 
 			Site.assignSiteRoleCP(
@@ -470,7 +470,7 @@ definition {
 				layoutName = "Test Private Page");
 		}
 
-		task ("Log out as guest and visist the pricate page") {
+		task ("Log out as guest and visit the private page") {
 			User.logoutPG();
 
 			Navigator.openSpecificURL(url = "http://www.able.com:8080/test-private-page");
@@ -521,7 +521,7 @@ definition {
 		}
 	}
 
-	@description = "Assert user can't assign user group with regular role with assign memebers."
+	@description = "Assert user can't assign user group with regular role with assign members."
 	@priority = "3"
 	test ReturnWrongLayoutForSignedInUserWithVirtualHostsConfigured {
 		property custom.properties = "layout.default.template.id=2_columns_iii${line.separator}layout.user.private.layouts.enabled=false${line.separator}layout.user.private.layouts.auto.create=false${line.separator}layout.user.private.layouts.power.user.required=true${line.separator}layout.user.public.layouts.enabled=false${line.separator}layout.user.public.layouts.auto.create=false${line.separator}layout.user.public.layouts.power.user.required=true";
@@ -698,7 +698,7 @@ definition {
 		}
 	}
 
-	@description = "This test is based on LPS-14245 and it is designed to have the User test if the LayouImporter checks when the Page Names are different but the Friendly URL is the same. The User will assert no errors display when a User is assigned to a User Group with the same Friendly URL. The User will also assert that they can enter a Friendly URL through the Site Manager with adding a slash."
+	@description = "This test is based on LPS-14245 and it is designed to have the User test if the LayoutImporter checks when the Page Names are different but the Friendly URL is the same. The User will assert no errors display when a User is assigned to a User Group with the same Friendly URL. The User will also assert that they can enter a Friendly URL through the Site Manager with adding a slash."
 	@priority = "3"
 	test SiteFriendlyURLLayoutImporter {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
@@ -788,7 +788,7 @@ definition {
 		}
 	}
 
-	@description = "In one coummuty site and one edited site with page template, can deactive Community site."
+	@description = "In one community site and one edited site with page template, can deactivate Community site."
 	@priority = "3"
 	test SitesDeactivated {
 		property custom.properties = "jsonws.web.service.paths.excludes=";

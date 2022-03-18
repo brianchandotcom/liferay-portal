@@ -174,4 +174,81 @@ definition {
 			locator1 = "ObjectCustomViews#VIEW_LIST_COLUMNS_BY_POSITION");
 	}
 
+	macro selectAnyPermissions {
+		for (var permissionsName : list "${permissionsList}") {
+			if (isSet(analyticsAdministrator)) {
+				Click(
+					key_roleName = "analytics-administrator",
+					key_permissionName = "${permissionsName}",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(guest)) {
+				Click(
+					key_roleName = "guest",
+					key_permissionName = "${permissionsName}",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(owner)) {
+				Click(
+					key_roleName = "owner",
+					key_permissionName = "${permissionsName}",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(powerUser)) {
+				Click(
+					key_roleName = "power-user",
+					key_permissionName = "${permissionsName}",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(portalContentReviewer)) {
+				Click(
+					key_roleName = "portal-content-reviewer",
+					key_permissionName = "${permissionsName}",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(publicationsUser)) {
+				Click(
+					key_roleName = "publications-user",
+					key_permissionName = "${permissionsName}",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(siteContentReviewer)) {
+				Click(
+					key_roleName = "site-content-reviewer",
+					key_permissionName = "${permissionsName}",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(siteMember)) {
+				Click(
+					key_roleName = "site-member",
+					key_permissionName = "${permissionsName}",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+
+			if (isSet(user)) {
+				Click(
+					key_roleName = "user",
+					key_permissionName = "${permissionsName}",
+					locator1 = "ObjectCustomViews#SELECT_ANY_PERMISSIONS");
+			}
+		}
+	}
+
+	macro viewOptionNotPresentInKebabMenu {
+		Click(
+			key_objectLabel = "${entryName}",
+			locator1 = "ObjectAdmin#OBJECT_KEBAB_MENU");
+
+		AssertElementNotPresent(
+			key_menuItem = "${menuItem}",
+			locator1 = "MenuItem#ANY_MENU_ITEM");
+	}
+
 }

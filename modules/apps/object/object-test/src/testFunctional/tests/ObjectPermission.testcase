@@ -533,14 +533,82 @@ definition {
 	}
 
 	@description = "LPS-146757 - Verify it is not possible to delete a single Object Entry create by the user if the Delete Owner permission is removed"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotDeleteOwnSingleObjectEntryWithoutDeleteOwnerPermission {
 		property osgi.module.configuration.file.names = "com.liferay.object.rest.internal.configuration.FFObjectEntryPermissionsActionConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property test.name.skip.portal.instance = "ObjectPermission#CannotDeleteOwnSingleObjectEntryWithoutDeleteOwnerPermission";
 
-		// TODO LPS-147744 CannotDeleteOwnSingleObjectEntryWithoutDeleteOwnerPermission pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object",
+			objectName = "CustomObject",
+			pluralLabelName = "Custom Objects");
 
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject");
+
+		JSONRole.addRegularRole(roleTitle = "Regular Role");
+
+		for (var resourceActionIndex : list "APPLICATION_PERMISSION_ACCESS_CONTROL_PANEL_CHECKBOX,RESOURCE_PERMISSION_ADD_ENTRY_CHECKBOX") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Roles");
+
+			Role.definePermissionCP(
+				permissionDefinitionKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS_${resourceActionIndex}",
+				permissionDefinitionValue = "",
+				permissionNavigationKey = "CONTROL_PANEL_CUSTOM_OBJECTS_PERMISSIONS",
+				permissionNavigationValue = "Custom Objects",
+				roleTitle = "Regular Role",
+				roleType = "Regular");
+		}
+		
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+		
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectAdmin.addObjectStringFieldEntryViaUI(entryValue = "Entry Test");
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
+
+		ObjectCustomViews.gotoPermissions(entryName = "Entry Test");
+
+		ObjectCustomViews.selectAnyPermissions(
+			owner = "true",
+			permissionsList = "DELETE");
+
+		Button.clickSave();
+
+		Refresh();
+
+		ObjectCustomViews.viewOptionNotPresentInKebabMenu(
+			entryName = "Entry Test",
+			menuItem = "Delete");
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to delete a Picklist without the Delete permission"

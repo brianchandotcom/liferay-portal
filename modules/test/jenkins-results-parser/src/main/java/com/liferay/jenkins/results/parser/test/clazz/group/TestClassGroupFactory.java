@@ -27,6 +27,8 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -58,6 +60,30 @@ public class TestClassGroupFactory {
 		}
 
 		return new AxisTestClassGroup(batchTestClassGroup);
+	}
+
+	public static AxisTestClassGroup newAxisTestClassGroup(
+		JSONObject jsonObject, SegmentTestClassGroup segmentTestClassGroup) {
+
+		BatchTestClassGroup batchTestClassGroup =
+			segmentTestClassGroup.getParentBatchTestClassGroup();
+
+		if (batchTestClassGroup instanceof FunctionalBatchTestClassGroup) {
+			return new FunctionalAxisTestClassGroup(
+				jsonObject, segmentTestClassGroup);
+		}
+
+		if (batchTestClassGroup instanceof JUnitBatchTestClassGroup) {
+			return new JUnitAxisTestClassGroup(
+				jsonObject, segmentTestClassGroup);
+		}
+
+		if (batchTestClassGroup instanceof PluginsGulpBatchTestClassGroup) {
+			return new PluginsGulpAxisTestClassGroup(
+				jsonObject, segmentTestClassGroup);
+		}
+
+		return new AxisTestClassGroup(jsonObject, segmentTestClassGroup);
 	}
 
 	public static BatchTestClassGroup newBatchTestClassGroup(

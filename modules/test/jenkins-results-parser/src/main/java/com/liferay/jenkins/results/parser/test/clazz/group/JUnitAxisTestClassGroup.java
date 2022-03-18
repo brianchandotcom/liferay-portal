@@ -14,10 +14,18 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
 public class JUnitAxisTestClassGroup extends AxisTestClassGroup {
+
+	protected JUnitAxisTestClassGroup(
+		JSONObject jsonObject, SegmentTestClassGroup segmentTestClassGroup) {
+
+		super(jsonObject, segmentTestClassGroup);
+	}
 
 	protected JUnitAxisTestClassGroup(
 		JUnitBatchTestClassGroup jUnitBatchTestClassGroup) {

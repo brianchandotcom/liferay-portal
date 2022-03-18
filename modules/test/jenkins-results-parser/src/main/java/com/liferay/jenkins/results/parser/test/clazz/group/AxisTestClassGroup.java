@@ -17,6 +17,7 @@ package com.liferay.jenkins.results.parser.test.clazz.group;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
+import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 
 import java.io.File;
 
@@ -120,6 +121,37 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 
 	protected AxisTestClassGroup(BatchTestClassGroup batchTestClassGroup) {
 		setBatchTestClassGroup(batchTestClassGroup);
+	}
+
+	protected AxisTestClassGroup(
+		JSONObject jsonObject, SegmentTestClassGroup segmentTestClassGroup) {
+
+		BatchTestClassGroup batchTestClassGroup =
+			segmentTestClassGroup.getParentBatchTestClassGroup();
+
+		setBatchTestClassGroup(batchTestClassGroup);
+
+		setSegmentTestClassGroup(segmentTestClassGroup);
+
+		JSONArray testClassesJSONArray = jsonObject.getJSONArray(
+			"test_classes");
+
+		if ((testClassesJSONArray == null) || testClassesJSONArray.isEmpty()) {
+			return;
+		}
+
+		for (int i = 0; i < testClassesJSONArray.length(); i++) {
+			JSONObject testClassJSONObject = testClassesJSONArray.getJSONObject(
+				i);
+
+			if (testClassJSONObject == null) {
+				continue;
+			}
+
+			testClasses.add(
+				TestClassFactory.newTestClass(
+					batchTestClassGroup, testClassJSONObject));
+		}
 	}
 
 	protected void setBatchTestClassGroup(

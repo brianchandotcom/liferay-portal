@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import org.json.JSONObject;
+
 /**
  * @author Michael Hashimoto
  */
@@ -41,6 +43,16 @@ public class FunctionalAxisTestClassGroup extends AxisTestClassGroup {
 		}
 
 		return functionalTestClasses;
+	}
+
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put(
+			"test_base_dir",
+			JenkinsResultsParserUtil.getCanonicalPath(_testBaseDir));
+
+		return jsonObject;
 	}
 
 	@Override
@@ -103,6 +115,14 @@ public class FunctionalAxisTestClassGroup extends AxisTestClassGroup {
 		super(functionalBatchTestClassGroup);
 
 		_testBaseDir = testBaseDir;
+	}
+
+	protected FunctionalAxisTestClassGroup(
+		JSONObject jsonObject, SegmentTestClassGroup segmentTestClassGroup) {
+
+		super(jsonObject, segmentTestClassGroup);
+
+		_testBaseDir = new File(jsonObject.getString("test_base_dir"));
 	}
 
 	private final File _testBaseDir;

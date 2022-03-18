@@ -14,11 +14,14 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.io.File;
 
 import java.util.List;
+
+import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
@@ -27,6 +30,10 @@ public class PluginsGulpAxisTestClassGroup extends AxisTestClassGroup {
 
 	@Override
 	public File getTestBaseDir() {
+		if (_testBaseDir != null) {
+			return _testBaseDir;
+		}
+
 		List<TestClass> testClasses = getTestClasses();
 
 		if (testClasses.isEmpty()) {
@@ -35,13 +42,31 @@ public class PluginsGulpAxisTestClassGroup extends AxisTestClassGroup {
 
 		TestClass testClass = testClasses.get(0);
 
-		File testBaseDir = testClass.getTestClassFile();
+		_testBaseDir = testClass.getTestClassFile();
 
-		if ((testBaseDir == null) || !testBaseDir.exists()) {
-			return null;
+		return _testBaseDir;
+	}
+
+	public JSONObject getJSONObject() {
+		JSONObject jsonObject = super.getJSONObject();
+
+		jsonObject.put(
+			"test_base_dir",
+			JenkinsResultsParserUtil.getCanonicalPath(getTestBaseDir()));
+
+		return jsonObject;
+	}
+
+	protected PluginsGulpAxisTestClassGroup(
+		JSONObject jsonObject, SegmentTestClassGroup segmentTestClassGroup) {
+
+		super(jsonObject, segmentTestClassGroup);
+
+		String testBaseDirPath = jsonObject.optString("test_base_dir");
+
+		if (!JenkinsResultsParserUtil.isNullOrEmpty(testBaseDirPath)) {
+			_testBaseDir = new File(testBaseDirPath);
 		}
-
-		return testBaseDir;
 	}
 
 	protected PluginsGulpAxisTestClassGroup(
@@ -49,5 +74,7 @@ public class PluginsGulpAxisTestClassGroup extends AxisTestClassGroup {
 
 		super(pluginsGulpBatchTestClassGroup);
 	}
+
+	private File _testBaseDir;
 
 }

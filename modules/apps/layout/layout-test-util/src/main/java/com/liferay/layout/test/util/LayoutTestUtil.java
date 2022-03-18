@@ -201,16 +201,16 @@ public class LayoutTestUtil {
 			Group group, int status, String name)
 		throws Exception {
 
+		Layout layout = addTypeContentLayout(group, name);
+
+		Layout draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
+			layout.getPlid());
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 
-		Layout layout = addTypeContentLayout(group, name);
-
 		serviceContext.setAttribute("published", Boolean.TRUE);
-
-		Layout draftLayout = LayoutLocalServiceUtil.fetchDraftLayout(
-			layout.getPlid());
 
 		if (draftLayout != null) {
 			LayoutLocalServiceUtil.updateStatus(

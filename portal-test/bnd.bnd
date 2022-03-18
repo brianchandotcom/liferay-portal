@@ -34,6 +34,7 @@ Import-Package: *;resolution:=optional
 Include-Resource:\
 	classes,\
 	@${project.dir}/../lib/development/aspectj-rt.jar,\
+	@${project.dir}/../lib/development/commons-collections4.jar,\
 	@${project.dir}/../lib/development/commons-lang3.jar,\
 	@${project.dir}/../lib/development/dumbster.jar,\
 	@${project.dir}/../lib/development/hamcrest-core.jar,\

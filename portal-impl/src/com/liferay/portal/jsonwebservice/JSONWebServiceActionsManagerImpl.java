@@ -287,8 +287,8 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	@Override
-	public synchronized int unregisterJSONWebServiceActions(
-		String contextPath) {
+	public int unregisterServletContext(ServletContext servletContext) {
+		String contextPath = servletContext.getContextPath();
 
 		int count = 0;
 
@@ -304,11 +304,6 @@ public class JSONWebServiceActionsManagerImpl
 		}
 
 		return count;
-	}
-
-	@Override
-	public int unregisterServletContext(ServletContext servletContext) {
-		return unregisterJSONWebServiceActions(servletContext.getContextPath());
 	}
 
 	private boolean _addJSONWebServiceActionConfig(

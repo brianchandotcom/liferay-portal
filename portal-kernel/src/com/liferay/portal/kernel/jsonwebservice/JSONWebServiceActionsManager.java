@@ -56,8 +56,6 @@ public interface JSONWebServiceActionsManager {
 
 	public int unregisterJSONWebServiceActions(Object actionObject);
 
-	public int unregisterJSONWebServiceActions(String contextPath);
-
 	public int unregisterServletContext(ServletContext servletContext);
 
 }

@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanLocator;
+import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
@@ -265,6 +266,10 @@ public class JSONWebServiceActionsManagerImpl
 
 	@Override
 	public int registerServletContext(ServletContext servletContext) {
+		if (!PropsValues.JSON_WEB_SERVICE_ENABLED) {
+			return 0;
+		}
+
 		BeanLocator beanLocator = null;
 
 		String contextName = servletContext.getServletContextName();
@@ -291,8 +296,19 @@ public class JSONWebServiceActionsManagerImpl
 		DefaultJSONWebServiceRegistrator defaultJSONWebServiceRegistrator =
 			new DefaultJSONWebServiceRegistrator();
 
-		defaultJSONWebServiceRegistrator.processAllBeans(
-			contextName, contextPath, beanLocator);
+		String[] beanNames = beanLocator.getNames();
+
+		for (String beanName : beanNames) {
+			try {
+				defaultJSONWebServiceRegistrator.processBean(
+					contextName, contextPath, beanLocator.locate(beanName));
+			}
+			catch (BeanLocatorException beanLocatorException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(beanLocatorException);
+				}
+			}
+		}
 
 		int count = getJSONWebServiceActionsCount(contextPath);
 

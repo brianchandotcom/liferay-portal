@@ -15,8 +15,6 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.petra.reflect.AnnotationLocator;
-import com.liferay.portal.kernel.bean.BeanLocator;
-import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
@@ -37,48 +35,6 @@ import java.lang.reflect.Method;
  */
 public class DefaultJSONWebServiceRegistrator
 	implements JSONWebServiceRegistrator {
-
-	public void processAllBeans(
-		String contextName, String contextPath, BeanLocator beanLocator) {
-
-		if (beanLocator == null) {
-			return;
-		}
-
-		String[] beanNames = beanLocator.getNames();
-
-		for (String beanName : beanNames) {
-			processBean(contextName, contextPath, beanLocator, beanName);
-		}
-	}
-
-	public void processBean(
-		String contextName, String contextPath, BeanLocator beanLocator,
-		String beanName) {
-
-		if (!PropsValues.JSON_WEB_SERVICE_ENABLED) {
-			return;
-		}
-
-		Object bean = null;
-
-		try {
-			bean = beanLocator.locate(beanName);
-		}
-		catch (BeanLocatorException beanLocatorException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(beanLocatorException);
-			}
-
-			return;
-		}
-
-		if (bean == null) {
-			return;
-		}
-
-		processBean(contextName, contextPath, bean);
-	}
 
 	@Override
 	public void processBean(

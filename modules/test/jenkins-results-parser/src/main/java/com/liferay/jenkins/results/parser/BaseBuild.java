@@ -581,6 +581,7 @@ public abstract class BaseBuild implements Build {
 
 		buildResultsJSONObject.put("jobVariant", getJobVariant());
 		buildResultsJSONObject.put("result", getResult());
+		buildResultsJSONObject.put("testSuiteName", getTestSuiteName());
 
 		return buildResultsJSONObject;
 	}

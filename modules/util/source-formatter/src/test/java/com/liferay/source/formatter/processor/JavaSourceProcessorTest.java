@@ -193,6 +193,16 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testServiceProxyFactoryNewServiceTrackedInstance() throws Exception {
+		test(
+			"ServiceProxyFactoryNewServiceTrackedInstance.testjava",
+			"Pass 'ServiceProxyFactoryNewServiceTrackedInstance.class' as " +
+				"the second parameter when calling method " +
+					"'ServiceProxyFactory.newServiceTrackedInstance'",
+			30);
+	}
+
+	@Test
 	public void testIncorrectImports() throws Exception {
 		test("IncorrectImports1.testjava");
 		test(

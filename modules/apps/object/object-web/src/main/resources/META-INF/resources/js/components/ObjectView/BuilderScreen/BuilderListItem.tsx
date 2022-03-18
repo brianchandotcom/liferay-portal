@@ -56,12 +56,9 @@ const BuilderListItem: React.FC<Iprops> = ({
 	onVisibleEditModal,
 }) => {
 	const [active, setActive] = useState<boolean>(false);
-	const [
-		{
-			isFFObjectViewColumnAliasEnabled,
-		},
-		dispatch,
-	] = useContext(ViewContext);
+	const [{isFFObjectViewColumnAliasEnabled}, dispatch] = useContext(
+		ViewContext
+	);
 
 	const ref = useRef<HTMLLIElement>(null);
 

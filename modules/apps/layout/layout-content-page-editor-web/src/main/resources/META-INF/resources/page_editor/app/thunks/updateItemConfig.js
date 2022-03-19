@@ -36,6 +36,7 @@ export default function updateItemConfig({
 			.then(() => {
 				InfoItemService.getPageContents({
 					onNetworkStatus: dispatch,
+					segmentsExperienceId: config.defaultSegmentsExperienceId,
 				}).then((pageContents) => {
 					dispatch(
 						updatePageContents({

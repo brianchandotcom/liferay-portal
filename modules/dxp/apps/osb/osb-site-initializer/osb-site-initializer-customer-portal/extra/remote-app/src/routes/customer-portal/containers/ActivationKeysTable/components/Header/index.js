@@ -24,6 +24,7 @@ const ActivationKeysTableHeader = ({
 	activationKeysByStatusPaginatedChecked,
 	activationKeysState,
 	project,
+	productName,
 	sessionId,
 	loading,
 	filterState: [filters, setFilters],
@@ -126,6 +127,7 @@ const ActivationKeysTableHeader = ({
 							isAbleToDownloadAggregateKeys={
 								isAbleToDownloadAggregateKeys
 							}
+							productName={productName}
 							project={project}
 							sessionId={sessionId}
 							setStatus={setStatus}

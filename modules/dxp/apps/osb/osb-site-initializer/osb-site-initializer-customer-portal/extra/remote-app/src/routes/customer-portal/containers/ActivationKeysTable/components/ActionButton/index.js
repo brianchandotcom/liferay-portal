@@ -24,6 +24,7 @@ const ActionButton = ({
 	activationKeysByStatusPaginatedChecked,
 	filterCheckedActivationKeys,
 	isAbleToDownloadAggregateKeys,
+	productName,
 	project,
 	sessionId,
 	setStatus,
@@ -89,7 +90,8 @@ const ActionButton = ({
 		licenseKeyDownloadURL,
 		sessionId,
 		handleAlertStatus,
-		handleRedirectPage
+		handleRedirectPage,
+		productName
 	);
 
 	return (

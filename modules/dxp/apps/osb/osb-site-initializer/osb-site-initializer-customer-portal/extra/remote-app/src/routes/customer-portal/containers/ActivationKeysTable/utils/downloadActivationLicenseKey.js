@@ -110,12 +110,14 @@ export async function downloadAggregatedActivationKey(
 export async function downloadAllKeysDetails(
 	accountKey,
 	licenseKeyDownloadURL,
-	sessionId
+	sessionId,
+	productName
 ) {
 	const license = await getExportedLicenseKeys(
 		accountKey,
 		licenseKeyDownloadURL,
-		sessionId
+		sessionId,
+		productName
 	);
 
 	if (license.status === STATUS_CODE.success) {

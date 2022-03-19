@@ -23,7 +23,7 @@ const ExpirationDateColumn = ({activationKey}) => {
 	) {
 		return (
 			<p
-				className="cp-dxp-activation-key-cell-small font-weight-bold m-0 text-neutral-10"
+				className="cp-activation-key-cell-small font-weight-bold m-0 text-neutral-10"
 				title={['This key does not expire']}
 			>
 				DNE

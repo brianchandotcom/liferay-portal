@@ -35,7 +35,7 @@ import {downloadActivationLicenseKey} from './utils/downloadActivationLicenseKey
 import {getActivationKeyDownload} from './utils/getActivationKeyDownload';
 import {getTooltipContentRenderer} from './utils/getTooltipContentRenderer';
 
-const ActivationKeysTable = ({project, sessionId}) => {
+const ActivationKeysTable = ({productName, project, sessionId}) => {
 	const {licenseKeyDownloadURL} = useApplicationProvider();
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [downloadStatus, setDownloadStatus] = useState('');
@@ -44,7 +44,7 @@ const ActivationKeysTable = ({project, sessionId}) => {
 		activationKeysState: [activationKeys, setActivationKeys],
 		loading,
 		setFilterTerm,
-	} = useGetActivationKeysData(project, sessionId);
+	} = useGetActivationKeysData(project, sessionId, productName);
 
 	const {
 		navigationGroupButtons,
@@ -56,7 +56,7 @@ const ActivationKeysTable = ({project, sessionId}) => {
 		statusFilter
 	);
 
-	const [filters, setFilters] = useFilters(setFilterTerm);
+	const [filters, setFilters] = useFilters(setFilterTerm, productName);
 
 	const [currentActivationKey, setCurrentActivationKey] = useState();
 	const [activationKeysIdChecked, setActivationKeysIdChecked] = useState([]);
@@ -149,7 +149,7 @@ const ActivationKeysTable = ({project, sessionId}) => {
 				delay={100}
 			>
 				<div>
-					<div className="align-center cp-dxp-activation-key-container d-flex justify-content-between mb-2">
+					<div className="align-center cp-activation-key-container d-flex justify-content-between mb-2">
 						<h3 className="m-0">Activation Keys</h3>
 
 						<RoundedGroupButtons
@@ -169,6 +169,7 @@ const ActivationKeysTable = ({project, sessionId}) => {
 							]}
 							filterState={[filters, setFilters]}
 							loading={loading}
+							productName={productName}
 							project={project}
 							sessionId={sessionId}
 						/>
@@ -180,7 +181,7 @@ const ActivationKeysTable = ({project, sessionId}) => {
 								checkboxesChecked: activationKeysIdChecked,
 								setCheckboxesChecked: setActivationKeysIdChecked,
 							}}
-							className="border-0 cp-dxp-activation-key-table"
+							className="border-0 cp-activation-key-table"
 							columns={COLUMNS}
 							hasCheckbox
 							hasPagination

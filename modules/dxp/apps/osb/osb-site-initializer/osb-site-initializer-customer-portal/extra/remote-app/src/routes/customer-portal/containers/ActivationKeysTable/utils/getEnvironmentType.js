@@ -10,5 +10,5 @@
  */
 
 export function getEnvironmentType(productName) {
-	return productName?.replace('DXP ', '');
+	return productName?.substr(productName?.indexOf(' ') + 1);
 }

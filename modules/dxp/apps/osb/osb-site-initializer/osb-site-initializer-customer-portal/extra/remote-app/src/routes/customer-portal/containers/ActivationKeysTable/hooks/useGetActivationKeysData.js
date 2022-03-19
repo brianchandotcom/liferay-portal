@@ -16,12 +16,18 @@ import {getActivationLicenseKey} from '../../../../../common/services/liferay/re
 const MAX_ITEMS = 9999;
 const PAGE = 1;
 
-export default function useGetActivationKeysData(project, sessionId) {
+export default function useGetActivationKeysData(
+	project,
+	sessionId,
+	productName
+) {
 	const {licenseKeyDownloadURL} = useApplicationProvider();
 
 	const [loading, setLoading] = useState(true);
 	const [activationKeys, setActivationKeys] = useState([]);
-	const [filterTerm, setFilterTerm] = useState('active eq true');
+	const [filterTerm, setFilterTerm] = useState(
+		`active eq true and startswith(productName,'${productName}')`
+	);
 
 	useEffect(() => {
 		setLoading(true);

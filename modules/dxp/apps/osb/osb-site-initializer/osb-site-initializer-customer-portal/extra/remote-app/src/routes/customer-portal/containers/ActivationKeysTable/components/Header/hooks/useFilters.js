@@ -12,15 +12,15 @@
 import {useEffect, useState} from 'react';
 import {ACTIVATION_STATUS} from '../../../utils/constants/activationStatus';
 import {INITIAL_FILTER} from '../../../utils/constants/initialFilter';
-const DEFAULT_FILTER = 'active eq true';
+
 const COMPLIMENTARY = 'Complimentary';
 const SUBSCRIPTION = 'Subscription';
 
-export default function useFilters(setFilterTerm) {
+export default function useFilters(setFilterTerm, productName) {
 	const [filters, setFilters] = useState(INITIAL_FILTER);
 
 	useEffect(() => {
-		let initialFilter = DEFAULT_FILTER;
+		let initialFilter = `active eq true and startswith(productName,'${productName}')`;
 		let hasFilterPill = false;
 
 		if (filters.searchTerm) {
@@ -218,6 +218,7 @@ export default function useFilters(setFilterTerm) {
 		filters.searchTerm,
 		filters.startDate.value,
 		filters.status.value,
+		productName,
 		setFilterTerm,
 	]);
 

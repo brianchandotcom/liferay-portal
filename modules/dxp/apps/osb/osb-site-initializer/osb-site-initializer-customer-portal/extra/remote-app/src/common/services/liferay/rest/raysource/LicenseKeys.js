@@ -113,11 +113,12 @@ export async function getAggregatedActivationDownloadKey(
 export async function getExportedLicenseKeys(
 	accountKey,
 	licenseKeyDownloadURL,
-	sessionId
+	sessionId,
+	productName
 ) {
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${licenseKeyDownloadURL}/accounts/${accountKey}/license-keys/export`,
+		`${licenseKeyDownloadURL}/accounts/${accountKey}/license-keys/export?filter=active+eq+true+and+startswith(productName,'${productName}')`,
 
 		{
 			headers: {

@@ -156,17 +156,17 @@ definition {
 	@description = "LPS-147866. Assert the tooltip message is displayed when hovered over the new button in responsive mode"
 	@priority = "3"
 	test ResponsiveModeNewButtonTooltip {
-		task ("Set window size to phone size") {
+		task ("When window size to phone size") {
 			SetWindowSize(value1 = "360,720");
 		}
 
-		task ("Hover over the new button") {
+		task ("And hovers over the new button") {
 			WaitForPageLoad();
-			
+
 			MouseOver(locator1 = "ManagementBar#NEW_BUTTON_MOBILE");
 		}
 
-		task ("Assert tooltip message is displayed") {
+		task ("Then tooltip message is displayed") {
 			AssertTextEquals(
 				locator1 = "Message#TOOLTIP",
 				value1 = "New");

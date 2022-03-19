@@ -23,7 +23,7 @@ import {
 	getAccountSubscriptionsTerms,
 } from '../../../../../common/services/liferay/graphql/queries';
 import getActivationStatusDateRange from '../../../../../common/utils/getActivationStatusDateRange';
-import {ALERT_UPDATE_DXP_CLOUD_STATUS} from '../../../containers/DXPActivationKeysTable/utils/constants';
+import {ALERT_UPDATE_DXP_CLOUD_STATUS} from '../../../containers/ActivationKeysTable/utils/constants';
 import {useCustomerPortal} from '../../../context';
 import {actionTypes} from '../../../context/reducer';
 import {

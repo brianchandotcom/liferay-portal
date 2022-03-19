@@ -19,7 +19,7 @@ import {
 	getProductName,
 	getStatusActivationTag,
 	hasVirtualCluster,
-} from '../../containers/DXPActivationKeysTable/utils';
+} from '../../containers/ActivationKeysTable/utils';
 
 const HOST_NAME = 'Host Name';
 const IP_ADDRESSES = 'IP Addresses';

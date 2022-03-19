@@ -20,7 +20,7 @@ import DeactivateButton from '../Deactivate';
 import DownloadAlert from '../DownloadAlert';
 import Filter from '../Filter';
 
-const DXPActivationKeysTableHeader = ({
+const ActivationKeysTableHeader = ({
 	activationKeysByStatusPaginatedChecked,
 	activationKeysState,
 	project,
@@ -182,4 +182,4 @@ const DXPActivationKeysTableHeader = ({
 	);
 };
 
-export default DXPActivationKeysTableHeader;
+export default ActivationKeysTableHeader;

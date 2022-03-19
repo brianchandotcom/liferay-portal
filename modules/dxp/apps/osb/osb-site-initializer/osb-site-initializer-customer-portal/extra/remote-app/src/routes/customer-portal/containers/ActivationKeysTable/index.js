@@ -16,9 +16,8 @@ import RoundedGroupButtons from '../../../../common/components/RoundedGroupButto
 import Table from '../../../../common/components/Table';
 import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
 import {ALERT_DOWNLOAD_TYPE} from '../../utils/constants/alertDownloadType';
-import {getActivationKeyDownload} from '../DXPActivationKeysTable/utils/getActivationKeyDownload';
 import DownloadAlert from './components/DownloadAlert';
-import DXPActivationKeysTableHeader from './components/Header';
+import ActivationKeysTableHeader from './components/Header';
 import useFilters from './components/Header/hooks/useFilters';
 import ModalKeyDetails from './components/ModalKeyDetails';
 import useGetActivationKeysData from './hooks/useGetActivationKeysData';
@@ -33,9 +32,10 @@ import {
 	StatusColumn,
 } from './utils/constants/columns-definitions';
 import {downloadActivationLicenseKey} from './utils/downloadActivationLicenseKey';
+import {getActivationKeyDownload} from './utils/getActivationKeyDownload';
 import {getTooltipContentRenderer} from './utils/getTooltipContentRenderer';
 
-const DXPActivationKeysTable = ({project, sessionId}) => {
+const ActivationKeysTable = ({project, sessionId}) => {
 	const {licenseKeyDownloadURL} = useApplicationProvider();
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [downloadStatus, setDownloadStatus] = useState('');
@@ -159,7 +159,7 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 					</div>
 
 					<div className="mt-4 py-2">
-						<DXPActivationKeysTableHeader
+						<ActivationKeysTableHeader
 							activationKeysByStatusPaginatedChecked={
 								activationKeysByStatusPaginatedChecked
 							}
@@ -218,4 +218,4 @@ const DXPActivationKeysTable = ({project, sessionId}) => {
 	);
 };
 
-export default DXPActivationKeysTable;
+export default ActivationKeysTable;

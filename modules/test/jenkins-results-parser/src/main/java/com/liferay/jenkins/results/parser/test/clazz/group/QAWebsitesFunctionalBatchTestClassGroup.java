@@ -43,8 +43,11 @@ public class QAWebsitesFunctionalBatchTestClassGroup
 		GitWorkingDirectory qaWebsitesGitWorkingDirectory =
 			_getQAWebsitesGitWorkingDirectory();
 
+		QAWebsitesGitRepositoryJob qaWebsitesGitRepositoryJob =
+			_getQAWebsitesGitRepositoryJob();
+
 		for (String projectName :
-				_qaWebsitesGitRepositoryJob.getProjectNames()) {
+				qaWebsitesGitRepositoryJob.getProjectNames()) {
 
 			testBaseDirs.add(
 				new File(
@@ -59,28 +62,12 @@ public class QAWebsitesFunctionalBatchTestClassGroup
 		JSONObject jsonObject, PortalTestClassJob portalTestClassJob) {
 
 		super(jsonObject, portalTestClassJob);
-
-		if (!(portalTestClassJob instanceof QAWebsitesGitRepositoryJob)) {
-			throw new RuntimeException(
-				"Invalid job type " + portalTestClassJob);
-		}
-
-		_qaWebsitesGitRepositoryJob =
-			(QAWebsitesGitRepositoryJob)portalTestClassJob;
 	}
 
 	protected QAWebsitesFunctionalBatchTestClassGroup(
 		String batchName, PortalTestClassJob portalTestClassJob) {
 
 		super(batchName, portalTestClassJob);
-
-		if (!(portalTestClassJob instanceof QAWebsitesGitRepositoryJob)) {
-			throw new RuntimeException(
-				"Invalid job type " + portalTestClassJob);
-		}
-
-		_qaWebsitesGitRepositoryJob =
-			(QAWebsitesGitRepositoryJob)portalTestClassJob;
 	}
 
 	@Override
@@ -149,10 +136,20 @@ public class QAWebsitesFunctionalBatchTestClassGroup
 		}
 	}
 
-	private GitWorkingDirectory _getQAWebsitesGitWorkingDirectory() {
-		return _qaWebsitesGitRepositoryJob.getGitWorkingDirectory();
+	private QAWebsitesGitRepositoryJob _getQAWebsitesGitRepositoryJob() {
+		if (!(portalTestClassJob instanceof QAWebsitesGitRepositoryJob)) {
+			throw new RuntimeException(
+				"Invalid job type " + portalTestClassJob);
+		}
+
+		return (QAWebsitesGitRepositoryJob)portalTestClassJob;
 	}
 
-	private final QAWebsitesGitRepositoryJob _qaWebsitesGitRepositoryJob;
+	private GitWorkingDirectory _getQAWebsitesGitWorkingDirectory() {
+		QAWebsitesGitRepositoryJob qaWebsitesGitRepositoryJob =
+			_getQAWebsitesGitRepositoryJob();
+
+		return qaWebsitesGitRepositoryJob.getGitWorkingDirectory();
+	}
 
 }

@@ -9,7 +9,9 @@
  * distribution rights of the Software.
  */
 
+import {useCallback} from 'react';
 import {useCustomerPortal} from '../../../../../context';
+import {hasCluster} from '../../hasCluster';
 import {hasVirtualCluster} from '../../index';
 
 const KeyTypeColumn = ({activationKey}) => {
@@ -18,6 +20,22 @@ const KeyTypeColumn = ({activationKey}) => {
 	const hasVirtualClusterForActivationKeys = hasVirtualCluster(
 		activationKey?.licenseEntryType
 	);
+
+	const hasClusterForActivationKeys = hasCluster(
+		activationKey?.licenseEntryType
+	);
+
+	const getColumnTitle = useCallback(() => {
+		if (hasVirtualClusterForActivationKeys) {
+			return 'Virtual Cluster';
+		}
+
+		if (hasClusterForActivationKeys) {
+			return 'Cluster';
+		}
+
+		return 'On-Premise';
+	}, [hasClusterForActivationKeys, hasVirtualClusterForActivationKeys]);
 
 	return (
 		<div className="align-items-start d-flex">
@@ -30,13 +48,12 @@ const KeyTypeColumn = ({activationKey}) => {
 
 			<div>
 				<p className="font-weight-bold m-0 text-neutral-10">
-					{hasVirtualClusterForActivationKeys
-						? 'Virtual Cluster'
-						: 'On-Premise'}
+					{getColumnTitle()}
 				</p>
 
 				<p className="font-weight-normal m-0 text-neutral-7 text-paragraph-sm text-truncate">
-					{hasVirtualClusterForActivationKeys
+					{hasVirtualClusterForActivationKeys ||
+					hasClusterForActivationKeys
 						? `${activationKey.maxClusterNodes} Cluster Nodes (Keys)`
 						: activationKey.hostName || '-'}
 				</p>

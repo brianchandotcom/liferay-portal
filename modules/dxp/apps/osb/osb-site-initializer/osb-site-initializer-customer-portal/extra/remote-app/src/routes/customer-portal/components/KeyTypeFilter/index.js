@@ -14,18 +14,23 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import classNames from 'classnames';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 const INVALID_NODE_MESSAGE = 'Enter a valid number';
 const INVALID_MIN_NODE_MESSAGE = 'Enter a minimum node value greater than 0';
 const INVALID_MAX_NODE_MESSAGE = 'Max nodes must be greater than min nodes';
 const INVALID_NEGATIVE_NODES_MESSAGE = 'Enter nodes values greater than 0';
 
-const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
+const KeyTypeFilter = ({
+	clearInputs,
+	hasCluster,
+	hasVirtualCluster,
+	setFilters,
+}) => {
 	const [minNodesValue, setMinNodesValue] = useState('');
 	const [maxNodesValue, setMaxNodesValue] = useState('');
 
-	const [virtualClusterChecked, setVirtualClusterChecked] = useState(false);
+	const [clusterChecked, setClusterChecked] = useState(false);
 	const [onPromiseChecked, setOnPromiseChecked] = useState(false);
 
 	const [errorMessage, setErrorMessage] = useState('');
@@ -36,39 +41,57 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 
 			return;
 		}
+
 		if (minNodesValue === '0') {
 			setErrorMessage(INVALID_MIN_NODE_MESSAGE);
 
 			return;
 		}
+
 		if (maxNodesValue <= -1 || minNodesValue <= -1) {
 			setErrorMessage(INVALID_NEGATIVE_NODES_MESSAGE);
 
 			return;
 		}
+
 		if (maxNodesValue < minNodesValue) {
 			setErrorMessage(INVALID_MAX_NODE_MESSAGE);
 
 			return;
 		}
+
 		setErrorMessage('');
 	}, [maxNodesValue, minNodesValue]);
 
 	useEffect(() => {
-		if (!virtualClusterChecked) {
+		if (!clusterChecked) {
 			setMinNodesValue('');
 			setMaxNodesValue('');
 		}
-	}, [virtualClusterChecked]);
+	}, [clusterChecked]);
 
 	useEffect(() => {
 		if (clearInputs) {
 			setMinNodesValue('');
 			setMaxNodesValue('');
-			setVirtualClusterChecked(false);
+			setClusterChecked(false);
 			setOnPromiseChecked(false);
 		}
 	}, [clearInputs]);
+
+	const getClusterFilter = useCallback(() => {
+		if (hasVirtualCluster) {
+			return {
+				hasVirtualCluster: clusterChecked,
+			};
+		}
+
+		if (hasCluster) {
+			return {
+				hasCluster: clusterChecked,
+			};
+		}
+	}, [clusterChecked, hasCluster, hasVirtualCluster]);
 
 	return (
 		<>
@@ -87,21 +110,20 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 
 			<div
 				className={classNames('py-2 px-3', {
-					'bg-brand-primary-lighten-5': virtualClusterChecked,
+					'bg-brand-primary-lighten-5': clusterChecked,
 				})}
 			>
 				<ClayCheckbox
-					checked={virtualClusterChecked}
+					checked={clusterChecked}
 					label="Virtual Cluster"
 					onChange={() =>
-						setVirtualClusterChecked(
-							(previousVirtualClusterChecked) =>
-								!previousVirtualClusterChecked
+						setClusterChecked(
+							(previousClusterChecked) => !previousClusterChecked
 						)
 					}
 				/>
 
-				{hasVirtualCluster && (
+				{(hasVirtualCluster || hasCluster) && (
 					<div className="d-flex ml-4">
 						<div className="mr-2">
 							<ClayInput
@@ -112,9 +134,9 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 										isNaN(minNodesValue) ||
 										minNodesValue <= -1,
 
-									'bg-neutral-1 border-white': !virtualClusterChecked,
+									'bg-neutral-1 border-white': !clusterChecked,
 								}}
-								disabled={!virtualClusterChecked}
+								disabled={!clusterChecked}
 								onChange={(event) => {
 									setMinNodesValue(event.target.value);
 								}}
@@ -122,7 +144,7 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 								value={minNodesValue}
 							/>
 
-							{virtualClusterChecked && (
+							{clusterChecked && (
 								<p className="m-0 text-neutral-7 text-paragraph-sm">
 									min nodes
 								</p>
@@ -137,9 +159,9 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 											INVALID_MAX_NODE_MESSAGE ||
 										isNaN(maxNodesValue) ||
 										maxNodesValue <= -1,
-									'bg-neutral-1 border-white': !virtualClusterChecked,
+									'bg-neutral-1 border-white': !clusterChecked,
 								}}
-								disabled={!virtualClusterChecked}
+								disabled={!clusterChecked}
 								onChange={(event) => {
 									setMaxNodesValue(event.target.value);
 								}}
@@ -147,7 +169,7 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 								value={maxNodesValue}
 							/>
 
-							{virtualClusterChecked && (
+							{clusterChecked && (
 								<p className="m-0 text-neutral-7 text-paragraph-sm">
 									max nodes
 								</p>
@@ -177,9 +199,9 @@ const KeyTypeFilter = ({clearInputs, hasVirtualCluster, setFilters}) => {
 								...previousFilters.keyType,
 								value: {
 									hasOnPremise: onPromiseChecked,
-									hasVirtualCluster: virtualClusterChecked,
 									maxNodes: maxNodesValue,
 									minNodes: minNodesValue,
+									...getClusterFilter(),
 								},
 							},
 						}));

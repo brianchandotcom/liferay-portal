@@ -184,6 +184,14 @@ export default function useFilters(setFilterTerm, productName) {
 				filtersKeyType.push("licenseEntryType eq 'virtual-cluster'");
 			}
 
+			if (
+				!isNaN(filters.keyType.value.hasCluster) &&
+				filters.keyType.value.hasCluster
+			) {
+				hasFilterPill = true;
+				filtersKeyType.push("licenseEntryType eq 'cluster'");
+			}
+
 			if (filters.keyType.value.maxNodes) {
 				filtersKeyType.push(
 					`maxClusterNodes le ${filters.keyType.value.maxNodes}`

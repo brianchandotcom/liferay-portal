@@ -29,6 +29,7 @@ export const INITIAL_FILTER = {
 	keyType: {
 		name: 'Key Type',
 		value: {
+			hasCluster: undefined,
 			hasOnPremise: undefined,
 			hasVirtualCluster: undefined,
 			maxNodes: '',

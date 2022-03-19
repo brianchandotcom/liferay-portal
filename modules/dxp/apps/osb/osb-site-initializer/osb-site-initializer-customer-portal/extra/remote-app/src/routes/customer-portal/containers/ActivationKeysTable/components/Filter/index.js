@@ -23,6 +23,7 @@ import {
 	getStatusActivationTag,
 	hasVirtualCluster,
 } from '../../utils';
+import {hasCluster} from '../../utils/hasCluster';
 
 const MAX_UPDATE = 3;
 
@@ -31,6 +32,7 @@ const Filter = ({activationKeys, filtersState: [filters, setFilters]}) => {
 
 	const [availableFields, setAvailableFields] = useState({
 		environmentTypes: [],
+		hasCluster: false,
 		hasDNE: false,
 		hasVirtualCluster: false,
 		instanceSizes: [],
@@ -49,7 +51,7 @@ const Filter = ({activationKeys, filtersState: [filters, setFilters]}) => {
 			activationKeys &&
 			countFetchActivationKeysRef?.current < MAX_UPDATE
 		) {
-			setAvailableFields(() => ({
+			setAvailableFields({
 				environmentTypes: [
 					...getAvailableFieldsCheckboxs(
 						activationKeys,
@@ -61,6 +63,9 @@ const Filter = ({activationKeys, filtersState: [filters, setFilters]}) => {
 							getProductDescription(complimentary)
 					),
 				],
+				hasCluster: activationKeys?.some(({licenseEntryType}) =>
+					hasCluster(licenseEntryType)
+				),
 				hasDNE: activationKeys?.some(({expirationDate}) =>
 					getDoesNotExpire(expirationDate)
 				),
@@ -80,7 +85,7 @@ const Filter = ({activationKeys, filtersState: [filters, setFilters]}) => {
 					(activationKey) =>
 						getStatusActivationTag(activationKey)?.title
 				),
-			}));
+			});
 		}
 	}, [activationKeys]);
 

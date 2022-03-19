@@ -54,17 +54,9 @@ export function getDropDownAvailableFields(
 						clearInputs={Object.values(filters.keyType.value).every(
 							(value) => !value
 						)}
+						hasCluster={availableFields.hasCluster}
 						hasVirtualCluster={availableFields.hasVirtualCluster}
 						setFilters={setFilters}
-						updateFilters={(checkedItems) =>
-							setFilters((previousFilters) => ({
-								...previousFilters,
-								keyType: {
-									...previousFilters.keyType,
-									value: checkedItems,
-								},
-							}))
-						}
 					/>
 				),
 				type: 'component',
@@ -78,7 +70,6 @@ export function getDropDownAvailableFields(
 						clearCheckboxes={
 							!filters.environmentTypes.value?.length
 						}
-						setFilters={setFilters}
 						updateFilters={(checkedItems) =>
 							setFilters((previousFilters) => ({
 								...previousFilters,

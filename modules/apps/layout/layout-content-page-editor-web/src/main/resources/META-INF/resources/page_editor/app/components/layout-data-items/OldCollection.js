@@ -25,6 +25,7 @@ import {
 import {useDisplayPagePreviewItem} from '../../contexts/DisplayPagePreviewItemContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import CollectionService from '../../services/CollectionService';
 import updateItemConfig from '../../thunks/updateItemConfig';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
@@ -195,6 +196,7 @@ const OldCollection = React.memo(
 
 		const dispatch = useDispatch();
 		const languageId = useSelector(selectLanguageId);
+		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 		const [activePage, setActivePage] = useState(1);
 		const [collection, setCollection] = useState(emptyCollection);
@@ -291,6 +293,7 @@ const OldCollection = React.memo(
 										},
 									},
 									itemId: item.itemId,
+									segmentsExperienceId,
 								})
 							);
 						}
@@ -313,6 +316,7 @@ const OldCollection = React.memo(
 			itemClassNameId,
 			itemClassPK,
 			languageId,
+			segmentsExperienceId,
 			totalPages,
 		]);
 

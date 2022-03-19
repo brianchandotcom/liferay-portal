@@ -27,6 +27,7 @@ import {
 import {useDisplayPagePreviewItem} from '../../contexts/DisplayPagePreviewItemContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
+import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import CollectionService from '../../services/CollectionService';
 import updateItemConfig from '../../thunks/updateItemConfig';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
@@ -216,6 +217,7 @@ const Collection = React.memo(
 
 		const dispatch = useDispatch();
 		const languageId = useSelector(selectLanguageId);
+		const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 		const [activePage, setActivePage] = useState(1);
 		const [collection, setCollection] = useState(emptyCollection);
@@ -318,6 +320,7 @@ const Collection = React.memo(
 										},
 									},
 									itemId: item.itemId,
+									segmentsExperienceId,
 								})
 							);
 						}
@@ -340,6 +343,7 @@ const Collection = React.memo(
 			itemClassNameId,
 			itemClassPK,
 			languageId,
+			segmentsExperienceId,
 		]);
 
 		const selectedViewportSize = useSelector(

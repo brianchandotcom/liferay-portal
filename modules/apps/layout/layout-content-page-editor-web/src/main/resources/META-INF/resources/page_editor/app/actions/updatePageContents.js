@@ -14,9 +14,13 @@
 
 import {UPDATE_PAGE_CONTENTS} from './types';
 
-export default function updatePageContents({pageContents}) {
+export default function updatePageContents({
+	pageContents,
+	segmentsExperienceId,
+}) {
 	return {
 		pageContents,
+		segmentsExperienceId,
 		type: UPDATE_PAGE_CONTENTS,
 	};
 }

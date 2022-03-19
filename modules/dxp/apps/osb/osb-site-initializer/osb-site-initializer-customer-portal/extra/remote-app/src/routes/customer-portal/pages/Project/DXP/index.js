@@ -10,6 +10,8 @@
  */
 import ActivationKeysTable from '../../../containers/ActivationKeysTable';
 import DeveloperKeysLayouts from '../../../layouts/DeveloperKeysLayout';
+import {LIST_TYPES} from '../../../utils/constants';
+
 const DXP = ({project, sessionId}) => {
 	return (
 		<div className="mr-4">
@@ -24,6 +26,8 @@ const DXP = ({project, sessionId}) => {
 					accountKey={project.accountKey}
 					downloadTextHelper="Select the Liferay DXP version for which you want to download a developer key."
 					dxpVersion={project.dxpVersion}
+					listType={LIST_TYPES.dxpVersion}
+					productName="DXP"
 					projectName={project.name}
 					sessionId={sessionId}
 				></DeveloperKeysLayouts.Inputs>

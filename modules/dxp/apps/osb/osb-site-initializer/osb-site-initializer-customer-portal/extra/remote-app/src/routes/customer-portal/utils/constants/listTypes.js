@@ -11,4 +11,5 @@
 
 export const LIST_TYPES = {
 	dxpVersion: 'DXP Version',
+	portalVersion: 'Portal Version',
 };

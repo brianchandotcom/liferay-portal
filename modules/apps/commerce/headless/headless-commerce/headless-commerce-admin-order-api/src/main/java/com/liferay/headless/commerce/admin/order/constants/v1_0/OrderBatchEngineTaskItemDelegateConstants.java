@@ -16,7 +16,9 @@ package com.liferay.headless.commerce.admin.order.constants.v1_0;
 
 /**
  * @author Riccardo Ferrari
+ * @deprecated As of Cavanaugh (7.4.x)
  */
+@Deprecated
 public class OrderBatchEngineTaskItemDelegateConstants {
 
 	public static final String COMMERCE_ML_ORDER = "commerce-ml-order";

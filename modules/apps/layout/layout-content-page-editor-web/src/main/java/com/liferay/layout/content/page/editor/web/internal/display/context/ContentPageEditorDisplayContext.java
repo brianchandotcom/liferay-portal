@@ -664,7 +664,7 @@ public class ContentPageEditorDisplayContext {
 				ContentUtil.getPageContentsJSONArray(
 					httpServletRequest,
 					PortalUtil.getHttpServletResponse(_renderResponse),
-					themeDisplay.getPlid())
+					themeDisplay.getPlid(), getSegmentsExperienceId())
 			).put(
 				"permissions",
 				HashMapBuilder.<String, Object>put(

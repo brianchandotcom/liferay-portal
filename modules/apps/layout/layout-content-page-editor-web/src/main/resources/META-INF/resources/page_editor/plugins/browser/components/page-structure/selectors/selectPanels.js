@@ -193,6 +193,7 @@ export function selectPanels(activeItemId, activeItemType, state) {
 	else if (activeItem.type === LAYOUT_DATA_ITEM_TYPES.collection) {
 		panelsIds = {
 			[PANEL_IDS.collectionGeneral]:
+				config.featureFlagLps119551 ||
 				state.selectedViewportSize === VIEWPORT_SIZES.desktop,
 		};
 	}

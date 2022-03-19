@@ -30,6 +30,7 @@ import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../../app/config
 import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
+import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
 import {config} from '../../../../../../app/config/index';
 import {
 	useDispatch,
@@ -255,6 +256,13 @@ export function CollectionGeneralPanel({item}) {
 
 	const handleConfigurationChanged = useCallback(
 		(itemConfig) => {
+			if (
+				config.featureFlagLps119551 &&
+				selectedViewportSize !== VIEWPORT_SIZES.desktop
+			) {
+				itemConfig = {[selectedViewportSize]: itemConfig};
+			}
+
 			dispatch(
 				updateItemConfig({
 					itemConfig,
@@ -263,7 +271,7 @@ export function CollectionGeneralPanel({item}) {
 				})
 			);
 		},
-		[item.itemId, dispatch, segmentsExperienceId]
+		[item.itemId, dispatch, segmentsExperienceId, selectedViewportSize]
 	);
 
 	useEffect(() => {
@@ -345,44 +353,55 @@ export function CollectionGeneralPanel({item}) {
 					label={Liferay.Language.get('collection-display-options')}
 					open
 				>
-					<CollectionSelector
-						collectionItem={collection}
-						itemSelectorURL={config.collectionSelectorURL}
-						label={Liferay.Language.get('collection')}
-						onCollectionSelect={handleCollectionSelect}
-						optionsMenuItems={optionsMenuItems}
-						shouldPreventCollectionSelect={
-							shouldPreventCollectionSelect
-						}
-					/>
+					{selectedViewportSize === VIEWPORT_SIZES.desktop && (
+						<CollectionSelector
+							collectionItem={collection}
+							itemSelectorURL={config.collectionSelectorURL}
+							label={Liferay.Language.get('collection')}
+							onCollectionSelect={handleCollectionSelect}
+							optionsMenuItems={optionsMenuItems}
+							shouldPreventCollectionSelect={
+								shouldPreventCollectionSelect
+							}
+						/>
+					)}
 
 					{collection && (
 						<>
-							<ClayForm.Group small>
-								<label htmlFor={listStyleId}>
-									{config.featureFlagLps119551
-										? Liferay.Language.get('style-display')
-										: Liferay.Language.get('list-style')}
-								</label>
-
-								<ClaySelectWithOption
-									aria-label={
-										config.featureFlagLps119551
+							{selectedViewportSize ===
+								VIEWPORT_SIZES.desktop && (
+								<ClayForm.Group small>
+									<label htmlFor={listStyleId}>
+										{config.featureFlagLps119551
 											? Liferay.Language.get(
 													'style-display'
 											  )
-											: Liferay.Language.get('list-style')
-									}
-									id={listStyleId}
-									onChange={(event) =>
-										handleConfigurationChanged({
-											listStyle: event.target.value,
-										})
-									}
-									options={availableListStyles}
-									value={listStyle}
-								/>
-							</ClayForm.Group>
+											: Liferay.Language.get(
+													'list-style'
+											  )}
+									</label>
+
+									<ClaySelectWithOption
+										aria-label={
+											config.featureFlagLps119551
+												? Liferay.Language.get(
+														'style-display'
+												  )
+												: Liferay.Language.get(
+														'list-style'
+												  )
+										}
+										id={listStyleId}
+										onChange={(event) =>
+											handleConfigurationChanged({
+												listStyle: event.target.value,
+											})
+										}
+										options={availableListStyles}
+										value={listStyle}
+									/>
+								</ClayForm.Group>
+							)}
 
 							{listStyle === LIST_STYLE_GRID && (
 								<>
@@ -407,134 +426,156 @@ export function CollectionGeneralPanel({item}) {
 										/>
 									</ClayForm.Group>
 
-									{config.featureFlagLps119551 && (
-										<>
-											<ClayForm.Group small>
-												<ClayCheckbox
-													checked={
-														item.config.gutters
-													}
-													label={Liferay.Language.get(
-														'show-gutter'
-													)}
-													onChange={({
-														target: {checked},
-													}) =>
-														handleConfigurationChanged(
-															{
-																gutters: checked,
-															}
-														)
-													}
-												/>
-											</ClayForm.Group>
+									{config.featureFlagLps119551 &&
+										selectedViewportSize ===
+											VIEWPORT_SIZES.desktop && (
+											<>
+												<ClayForm.Group small>
+													<ClayCheckbox
+														checked={
+															item.config.gutters
+														}
+														label={Liferay.Language.get(
+															'show-gutter'
+														)}
+														onChange={({
+															target: {checked},
+														}) =>
+															handleConfigurationChanged(
+																{
+																	gutters: checked,
+																}
+															)
+														}
+													/>
+												</ClayForm.Group>
 
+												<ClayForm.Group small>
+													<label
+														htmlFor={
+															collectionLayoutId
+														}
+													>
+														{Liferay.Language.get(
+															'vertical-alignment'
+														)}
+													</label>
+
+													<ClaySelectWithOption
+														id={collectionLayoutId}
+														onChange={(event) => {
+															const nextValue =
+																event.target
+																	.value;
+
+															handleConfigurationChanged(
+																{
+																	verticalAlignment: nextValue,
+																}
+															);
+														}}
+														options={
+															VERTICAL_ALIGNMENT_OPTIONS
+														}
+														value={
+															item.config
+																.verticalAlignment ||
+															''
+														}
+													/>
+												</ClayForm.Group>
+											</>
+										)}
+								</>
+							)}
+							{selectedViewportSize ===
+								VIEWPORT_SIZES.desktop && (
+								<>
+									{listStyle !== LIST_STYLE_GRID &&
+										availableListItemStyles.length > 0 && (
 											<ClayForm.Group small>
 												<label
-													htmlFor={collectionLayoutId}
+													htmlFor={
+														collectionListItemStyleId
+													}
 												>
 													{Liferay.Language.get(
-														'vertical-alignment'
+														'list-item-style'
 													)}
 												</label>
 
-												<ClaySelectWithOption
-													id={collectionLayoutId}
-													onChange={(event) => {
-														const nextValue =
-															event.target.value;
-
-														handleConfigurationChanged(
-															{
-																verticalAlignment: nextValue,
-															}
-														);
-													}}
-													options={
-														VERTICAL_ALIGNMENT_OPTIONS
+												<ClaySelect
+													aria-label={Liferay.Language.get(
+														'list-item-style'
+													)}
+													id={
+														collectionListItemStyleId
 													}
-													value={
-														item.config
-															.verticalAlignment ||
-														''
+													onChange={
+														handleCollectionListItemStyleChanged
 													}
-												/>
+												>
+													<ListItemStylesOptions
+														item={item}
+														listItemStyles={
+															availableListItemStyles
+														}
+													/>
+												</ClaySelect>
 											</ClayForm.Group>
-										</>
-									)}
-								</>
-							)}
+										)}
 
-							{listStyle !== LIST_STYLE_GRID &&
-								availableListItemStyles.length > 0 && (
 									<ClayForm.Group small>
 										<label
-											htmlFor={collectionListItemStyleId}
+											htmlFor={collectionPaginationTypeId}
 										>
-											{Liferay.Language.get(
-												'list-item-style'
-											)}
+											{Liferay.Language.get('pagination')}
 										</label>
 
-										<ClaySelect
+										<ClaySelectWithOption
 											aria-label={Liferay.Language.get(
-												'list-item-style'
+												'pagination'
 											)}
-											id={collectionListItemStyleId}
-											onChange={
-												handleCollectionListItemStyleChanged
+											id={collectionPaginationTypeId}
+											onChange={(event) =>
+												handleConfigurationChanged({
+													paginationType:
+														event.target.value,
+												})
 											}
-										>
-											<ListItemStylesOptions
-												item={item}
-												listItemStyles={
-													availableListItemStyles
-												}
-											/>
-										</ClaySelect>
+											options={PAGINATION_TYPE_OPTIONS}
+											value={paginationType || 'none'}
+										/>
 									</ClayForm.Group>
-								)}
 
-							<ClayForm.Group small>
-								<label htmlFor={collectionPaginationTypeId}>
-									{Liferay.Language.get('pagination')}
-								</label>
-
-								<ClaySelectWithOption
-									aria-label={Liferay.Language.get(
-										'pagination'
+									{paginationType !== 'none' ? (
+										<PaginationOptions
+											displayAllPages={displayAllPages}
+											handleConfigurationChanged={
+												handleConfigurationChanged
+											}
+											initialNumberOfItemsPerPage={
+												initialNumberOfItemsPerPage
+											}
+											initialNumberOfPages={
+												initialNumberOfPages
+											}
+										/>
+									) : (
+										<NoPaginationOptions
+											displayAllItems={displayAllItems}
+											handleConfigurationChanged={
+												handleConfigurationChanged
+											}
+											initialNumberOfItems={
+												initialNumberOfItems
+											}
+											totalNumberOfItems={
+												totalNumberOfItems
+											}
+										/>
 									)}
-									id={collectionPaginationTypeId}
-									onChange={(event) =>
-										handleConfigurationChanged({
-											paginationType: event.target.value,
-										})
-									}
-									options={PAGINATION_TYPE_OPTIONS}
-									value={paginationType || 'none'}
-								/>
-							</ClayForm.Group>
-
-							{paginationType !== 'none' ? (
-								<PaginationOptions
-									displayAllPages={displayAllPages}
-									handleConfigurationChanged={
-										handleConfigurationChanged
-									}
-									initialNumberOfItemsPerPage={
-										initialNumberOfItemsPerPage
-									}
-									initialNumberOfPages={initialNumberOfPages}
-								/>
-							) : (
-								<NoPaginationOptions
-									displayAllItems={displayAllItems}
-									handleConfigurationChanged={
-										handleConfigurationChanged
-									}
-									initialNumberOfItems={initialNumberOfItems}
-									totalNumberOfItems={totalNumberOfItems}
-								/>
+								</>
 							)}
 						</>
 					)}

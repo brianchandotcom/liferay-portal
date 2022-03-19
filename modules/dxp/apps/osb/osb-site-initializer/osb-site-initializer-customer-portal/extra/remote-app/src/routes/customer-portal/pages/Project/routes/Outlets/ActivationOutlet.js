@@ -16,6 +16,7 @@ import ActivationKeys from '../../ActivationKeys';
 import AnalyticsCloud from '../../AnalyticsCloud';
 import DXP from '../../DXP';
 import DXPCloud from '../../DXPCloud';
+import Portal from '../../Portal';
 
 const ACTIVATION_ROOT_ROUTER = 'activation';
 
@@ -61,6 +62,7 @@ const ActivationOutlet = () => {
 			/>
 		),
 		[PAGE_TYPES.dxp]: <DXP project={project} sessionId={sessionId} />,
+		[PAGE_TYPES.portal]: <Portal project={project} sessionId={sessionId} />,
 		[PAGE_TYPES.dxpCloud]: (
 			<DXPCloud
 				project={project}

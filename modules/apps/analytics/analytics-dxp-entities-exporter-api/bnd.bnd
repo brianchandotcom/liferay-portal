@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Analytics DXP Entities Exporter API
-Bundle-SymbolicName: com.liferay.analytics.dxp.entities.exporter.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.analytics.dxp.entities.exporter.dto.v1_0,\
-	com.liferay.analytics.dxp.entities.exporter.retriever

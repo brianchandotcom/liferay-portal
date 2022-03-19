@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Analytics DXP Entities Exporter Implementation
-Bundle-SymbolicName: com.liferay.analytics.dxp.entities.exporter.impl
-Bundle-Version: 1.0.0
--dsannotations-options: inherit

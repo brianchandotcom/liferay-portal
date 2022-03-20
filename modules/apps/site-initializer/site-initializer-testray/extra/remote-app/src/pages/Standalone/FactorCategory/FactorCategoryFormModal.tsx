@@ -88,12 +88,14 @@ const FactorCategoryFormModal: React.FC<FactorCategoryProps> = ({
 				variables.factorCategoryId = form.id;
 
 				await onUpdateFactorCategory({variables});
-			} else {
+			}
+			else {
 				await onCreateFactorCategory({variables});
 			}
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 		}
 	};

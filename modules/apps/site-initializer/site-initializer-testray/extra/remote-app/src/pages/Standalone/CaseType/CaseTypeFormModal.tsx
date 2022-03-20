@@ -85,12 +85,14 @@ const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
 				variables.caseTypeId = form.id;
 
 				onUpdateCaseType({variables});
-			} else {
+			}
+			else {
 				await onCreateCaseType({variables});
 			}
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 		}
 	};

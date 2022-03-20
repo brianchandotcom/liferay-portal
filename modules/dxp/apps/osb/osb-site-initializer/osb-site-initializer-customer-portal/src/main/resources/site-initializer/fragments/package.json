@@ -3,6 +3,7 @@
 		"@clayui/button": "^3.40.0",
 		"@clayui/css": "^3.46.0",
 		"@clayui/drop-down": "^3.45.0",
+		"@clayui/icon": "^3.40.0",
 		"classnames": "^2.3.1",
 		"react": "16.8.6",
 		"react-dom": "16.8.6",

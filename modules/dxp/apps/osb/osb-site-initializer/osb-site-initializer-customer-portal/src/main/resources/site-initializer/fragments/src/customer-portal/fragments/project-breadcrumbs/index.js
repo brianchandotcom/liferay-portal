@@ -9,160 +9,187 @@
  * distribution rights of the Software.
  */
 
-import ClayButton from '@clayui/button';
-import {ClayDropDownWithItems} from '@clayui/drop-down';
-import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
-import React, {useEffect, useMemo, useState} from 'react';
-
-const MAX_ITEM = 10;
+import ClayDropDown from '@clayui/drop-down';
+import React, {useCallback, useEffect, useState} from 'react';
 
 const spritemap =
 	Liferay.ThemeDisplay.getCDNBaseURL() +
 	'/o/admin-theme/images/clay/icons.svg';
 
-const getLiferaySiteName = () => {
-	const {pathname} = new URL(Liferay.ThemeDisplay.getCanonicalURL());
-	const pathSplit = pathname.split('/').filter(Boolean);
-	const siteName = `/${(pathSplit.length > 2
-		? pathSplit.slice(0, pathSplit.length - 1)
-		: pathSplit
-	).join('/')}`;
+const KORONEIKI_ACCOUNTS_EVENT_NAME =
+	'customer-portal-koroneiki-accounts-available';
 
-	return siteName;
-};
+const SELECTED_KORONEIKI_ACCOUNT_EVENT_NAME = 'customer-portal-project-loading';
 
-const handleClickHome = () => {
-	const urlHome = `${window.location.origin}${getLiferaySiteName()}`;
-	window.location.href = urlHome;
-};
+const useIntersectionObserver = () => {
+	const [trackedRefCurrent, setTrackedRefCurrent] = useState();
+	const [isIntersecting, setIsIntersecting] = useState(false);
 
-export default function () {
-	const [items, setItems] = useState([]);
-	const [value, setValue] = useState('');
-	const [isArrowShown, setIsArrowShown] = useState(false);
-	const selectedExternalReferenceCode = useMemo(() => {
-		const liferaySearchParams = new URLSearchParams(window.location.search);
+	const memoizedSetIntersecting = useCallback((entities) => {
+		const target = entities[0];
 
-		return liferaySearchParams.get('kor_id');
+		setIsIntersecting(target.isIntersecting);
 	}, []);
 
-	const filteredItems =
-		items?.filter((item) =>
-			item?.label?.toLowerCase().includes(value?.toLowerCase())
-		) || [];
-
-	if (!filteredItems.length) {
-		filteredItems.push({
-			className: 'px-3 my-3 text-neutral-5',
-			disabled: true,
-			label: 'No projects match that name.',
+	useEffect(() => {
+		const observer = new IntersectionObserver(memoizedSetIntersecting, {
+			root: null,
+			threshold: 1.0,
 		});
-	}
 
-	const firstPageItems = items.filter((_, index) => index <= 19);
+		if (trackedRefCurrent) {
+			observer.observe(trackedRefCurrent);
+		}
 
-	const itemName =
-		items.find((item) => item.name === selectedExternalReferenceCode)
-			?.label || '';
+		return () => {
+			if (trackedRefCurrent) {
+				observer.unobserve(trackedRefCurrent);
+			}
+		};
+	}, [memoizedSetIntersecting, trackedRefCurrent]);
+
+	return [setTrackedRefCurrent, isIntersecting];
+};
+
+const useDebounce = (value, delay) => {
+	const [debouncedValue, setDebouncedValue] = useState(value);
 
 	useEffect(() => {
-		Liferay.once(
-			'customer-portal-select-user-loading',
-			({detail: userAccount}) => {
-				const accountBriefs = userAccount.accountBriefs;
+		const handler = setTimeout(() => {
+			setDebouncedValue(value);
+		}, delay);
 
-				if (accountBriefs) {
-					setItems(
-						accountBriefs.map(({externalReferenceCode, name}) => {
-							const urlLocation = `${
-								window.location.origin
-							}${getLiferaySiteName()}/overview?kor_id=${externalReferenceCode}`;
+		return () => {
+			clearTimeout(handler);
+		};
+	}, [value, delay]);
 
-							return {
-								className: `c-py-3 m-0 ${
-									selectedExternalReferenceCode ===
-									externalReferenceCode
-										? 'selected-item'
-										: 'unselect-item'
-								}`,
-								href: urlLocation,
-								label: name,
-								name: externalReferenceCode,
-								symbolRight:
-									selectedExternalReferenceCode ===
-									externalReferenceCode
-										? 'check'
-										: '',
-							};
-						})
-					);
-				}
+	return debouncedValue;
+};
+
+const eventFetchMoreData = Liferay.publish(
+	'customer-portal-fetch-more-koroneiki-accounts'
+);
+
+const eventSearchData = Liferay.publish(
+	'customer-portal-search-koroneiki-accounts'
+);
+
+export default function () {
+	const [active, setActive] = useState(false);
+	const [searchTerm, setSearchTerm] = useState('');
+	const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+	const [trackedRef, isIntersecting] = useIntersectionObserver();
+
+	const [koroneikiAccounts, setKoroneikiAccounts] = useState([]);
+	const [totalCount, setTotalCount] = useState();
+	const [initialTotalCount, setInitialTotalCount] = useState();
+	const [selectedKoroneikiAccount, setSelectKoroneikiAccount] = useState();
+
+	useEffect(() => {
+		Liferay.once(SELECTED_KORONEIKI_ACCOUNT_EVENT_NAME, ({detail}) => {
+			setSelectKoroneikiAccount(detail);
+		});
+
+		return () => Liferay.detach(SELECTED_KORONEIKI_ACCOUNT_EVENT_NAME);
+	}, []);
+
+	useEffect(() => {
+		Liferay.on(KORONEIKI_ACCOUNTS_EVENT_NAME, ({detail}) => {
+			if (detail?.koroneikiAccounts) {
+				setKoroneikiAccounts(detail.koroneikiAccounts);
 			}
+
+			if (detail?.totalCount) {
+				setTotalCount(detail.totalCount);
+			}
+
+			if (detail?.initialTotalCount) {
+				setInitialTotalCount(detail.initialTotalCount);
+			}
+		});
+
+		return () => Liferay.detach(KORONEIKI_ACCOUNTS_EVENT_NAME);
+	}, []);
+
+	useEffect(() => {
+		if (isIntersecting) {
+			eventFetchMoreData.fire();
+		}
+	}, [isIntersecting]);
+
+	useEffect(() => {
+		eventSearchData.fire({
+			detail: debouncedSearchTerm,
+		});
+	}, [debouncedSearchTerm]);
+
+	const getHref = useCallback((accountKey) => {
+		const hashLocation = window.location.hash.replace(
+			/[A-Z]+-\d+/g,
+			accountKey
 		);
-	}, [selectedExternalReferenceCode]);
+
+		return `${Liferay.ThemeDisplay.getCanonicalURL()}/${hashLocation}`;
+	}, []);
+
+	const getDropDownItems = useCallback(
+		() =>
+			koroneikiAccounts?.map((koroneikiAccount, index) => {
+				const isSelected =
+					koroneikiAccount.accountKey ===
+					selectedKoroneikiAccount?.accountKey;
+
+				return (
+					<ClayDropDown.Item
+						active={isSelected}
+						href={
+							isSelected
+								? ''
+								: getHref(koroneikiAccount.accountKey)
+						}
+						key={`${koroneikiAccount.code}-${index}`}
+						spritemap={spritemap}
+						symbolRight={isSelected ? 'check' : ''}
+					>
+						{koroneikiAccount.name || koroneikiAccount.code}
+					</ClayDropDown.Item>
+				);
+			}),
+		[getHref, koroneikiAccounts, selectedKoroneikiAccount?.accountKey]
+	);
+
+	if (!koroneikiAccounts || !selectedKoroneikiAccount) {
+		return <div>Loading</div>;
+	}
 
 	return (
-		<ClayDropDownWithItems
-			alignmentPosition={['tl', 'br']}
-			footerContent={
-				<div
-					className={classNames('all-projects c-py-2', {
-						'show-arrow': isArrowShown,
-					})}
-					onClick={handleClickHome}
-					onMouseEnter={() => setIsArrowShown(true)}
-					onMouseLeave={() => setIsArrowShown(false)}
-				>
-					<a>
-						<p className="c-pl-4 my-0 py-2">
-							{isArrowShown && (
-								<ClayIcon
-									className="mr-2"
-									spritemap={spritemap}
-									symbol="order-arrow-left"
-								/>
-							)}
-							All Projects
-						</p>
-					</a>
-				</div>
-			}
-			items={value ? filteredItems : firstPageItems}
-			menuElementAttrs={{
-				className: `custom-projects-dropdown ${
-					filteredItems.length > MAX_ITEM
-						? 'show-scroll'
-						: 'hide-scroll'
-				} c-p-0`,
-			}}
-			onSearchValueChange={setValue}
-			searchProps={{placeholder: 'Search'}}
-			searchValue={value}
-			searchable={items.length >= MAX_ITEM}
-			spritemap={spritemap}
-			trigger={
-				<ClayButton className="shadow-none" displayType="unstyled">
-					<div className="align-items-center d-flex">
-						<h5 className="m-0 selected-project-title">
-							{!itemName ? (
-								<div
-									className="customer-portal-select-project font-weight-bold mr rounded-sm skeleton text-neutral-10 text-paragraph text-truncate"
-									id="customer-portal-project-application"
-								></div>
-							) : (
-								<>{itemName}</>
-							)}
-						</h5>
+		<ClayDropDown
+			active={active}
+			closeOnClickOutside
+			hasRightSymbols
+			onActiveChange={setActive}
+			trigger={<button className="btn btn-primary">Click here!</button>}
+		>
+			{initialTotalCount > 20 && (
+				<ClayDropDown.Search
+					onChange={(event) => setSearchTerm(event.target.value)}
+					spritemap={spritemap}
+					value={searchTerm}
+				/>
+			)}
 
-						<ClayIcon
-							className="arrow-down-item ml-1"
-							spritemap={spritemap}
-							symbol="caret-bottom"
-						/>
-					</div>
-				</ClayButton>
-			}
-		/>
+			<ClayDropDown.ItemList>
+				{getDropDownItems()}
+
+				{!!koroneikiAccounts.length &&
+					koroneikiAccounts.length < totalCount && (
+						<ClayDropDown.Section>
+							<div ref={trackedRef}>Loading more...</div>
+						</ClayDropDown.Section>
+					)}
+			</ClayDropDown.ItemList>
+		</ClayDropDown>
 	);
 }

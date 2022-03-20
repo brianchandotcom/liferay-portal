@@ -373,9 +373,17 @@ export const getAccountSubscriptionGroups = gql`
 `;
 
 export const getKoroneikiAccounts = gql`
-	query getKoroneikiAccounts($filter: String, $pageSize: Int = 20) {
+	query getKoroneikiAccounts(
+		$filter: String
+		$pageSize: Int = 20
+		$page: Int = 1
+	) {
 		c {
-			koroneikiAccounts(filter: $filter, pageSize: $pageSize) {
+			koroneikiAccounts(
+				filter: $filter
+				pageSize: $pageSize
+				page: $page
+			) {
 				items {
 					accountKey
 					code
@@ -386,6 +394,7 @@ export const getKoroneikiAccounts = gql`
 					maxRequestors
 					partner
 					region
+					name
 					slaCurrent
 					slaCurrentEndDate
 					slaCurrentStartDate
@@ -396,6 +405,7 @@ export const getKoroneikiAccounts = gql`
 					slaFutureEndDate
 					slaFutureStartDate
 				}
+				totalCount
 			}
 		}
 	}

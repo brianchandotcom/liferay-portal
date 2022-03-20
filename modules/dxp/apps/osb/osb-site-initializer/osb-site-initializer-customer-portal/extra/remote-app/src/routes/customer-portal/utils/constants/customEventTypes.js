@@ -10,9 +10,12 @@
  */
 
 export const CUSTOM_EVENT_TYPES = {
+	fetchMoreKoroneikiAccounts: 'customer-portal-fetch-more-koroneiki-accounts',
+	koroneikiAccounts: 'customer-portal-koroneiki-accounts-available',
 	menuPage: 'customer-portal-menu-selected',
 	project: 'customer-portal-project-loading',
 	quickLinks: 'customer-portal-quick-links',
+	searchKoroneikiAccounts: 'customer-portal-search-koroneiki-accounts',
 	subscriptionGroups: 'customer-portal-subscription-groups-loading',
 	userAccount: 'customer-portal-select-user-loading',
 };

@@ -1,3 +1,7 @@
+label .control-label {
+	margin-bottom: 10px !important;
+}
+
 .testray-login-page {
 	align-items: center;
 	background-color: var(--color-neutral-1);
@@ -29,6 +33,7 @@
 .testray-login-page .btn-primary:hover {
 	background-color: var(--btn-hover-background-color);
 }
+
 .testray-login-page .btn-primary:active {
 	background-color: var(
 		--btn-active-background-color,
@@ -42,7 +47,7 @@
 }
 
 .testray-login-page .form-group label {
-	margin: 0px;
+	margin: 0;
 }
 
 .testray-login-page .login-container {
@@ -61,7 +66,7 @@
 }
 
 .testray-login-page div label {
-	margin: 0px;
+	margin: 0;
 }
 
 .testray-login-page .form-group > label:not(.toggle-switch),
@@ -85,10 +90,6 @@
 .testray-login-page .contol-label {
 	font-weight: 400;
 	margin-bottom: 6px !important;
-}
-
-label .control-label {
-	margin-bottom: 10px !important;
 }
 
 .testray-login-page ul {

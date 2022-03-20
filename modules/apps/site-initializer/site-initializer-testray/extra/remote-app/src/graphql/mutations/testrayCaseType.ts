@@ -36,7 +36,6 @@ export const DeleteCaseType = gql`
 	}
 `;
 
-
 export const UpdateCaseType = gql`
 	${testrayCaseTypeFragment}
 

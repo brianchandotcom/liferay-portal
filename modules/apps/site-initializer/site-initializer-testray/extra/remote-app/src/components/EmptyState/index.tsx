@@ -15,6 +15,8 @@
 import ClayEmptyState from '@clayui/empty-state';
 import React from 'react';
 
+import i18n from '../../i18n';
+
 export type EmptyStateProps = {
 	description?: string;
 	title?: string;
@@ -27,9 +29,12 @@ const EmptyState: React.FC<EmptyStateProps> = ({
 }) => {
 	return (
 		<ClayEmptyState
-			description={description}
+			description={
+				description ||
+				i18n.translate('sorry-there-are-no-results-found')
+			}
 			imgSrc="https://clayui.com/images/success_state.gif"
-			title={title}
+			title={title || i18n.translate('no-results-found')}
 		>
 			{children}
 		</ClayEmptyState>

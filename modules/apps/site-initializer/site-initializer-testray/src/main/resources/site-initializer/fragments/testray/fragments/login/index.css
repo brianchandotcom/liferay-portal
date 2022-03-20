@@ -1,0 +1,145 @@
+.testray-login-page {
+	align-items: center;
+	background-color: var(--color-neutral-1);
+	display: flex;
+	height: 100vh;
+	justify-content: center;
+	width: 100%;
+}
+
+.testray-login-page .logo {
+	display: flex;
+	justify-content: center;
+	padding: 10px;
+	width: 300px;
+}
+
+.testray-login-page .img {
+	height: 64.38px;
+}
+
+.testray-login-page .btn-primary {
+	background-color: var(--color-action-primary-default);
+	display: block;
+	font-weight: 400;
+	line-height: 1.333;
+	width: 100%;
+}
+
+.testray-login-page .btn-primary:hover {
+	background-color: var(--btn-hover-background-color);
+}
+.testray-login-page .btn-primary:active {
+	background-color: var(
+		--btn-active-background-color,
+		var(--btn-default-background-color)
+	);
+	border-color: var(
+		--btn-active-border-color,
+		var(--btn-default-border-color)
+	);
+	color: var(--btn-active-color);
+}
+
+.testray-login-page .form-group label {
+	margin: 0px;
+}
+
+.testray-login-page .login-container {
+	margin-bottom: 24px;
+	padding: 12px;
+}
+
+.testray-login-page .sign-in-form {
+	background-color: var(--color-neutral-0);
+	border: solid 1px #dddddd;
+	border-radius: 3px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), 0 1px 1px rgba(0, 0, 0, 0.08);
+	margin-bottom: 24px;
+	padding: 42px;
+	width: 450px !important;
+}
+
+.testray-login-page div label {
+	margin: 0px;
+}
+
+.testray-login-page .form-group > label:not(.toggle-switch),
+.lfr-ddm-legend:not(.toggle-switch) {
+	line-height: var(--form-input-label-line-height);
+	margin: 0px !important;
+	transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out,
+		font-size 0.15s ease-in-out, transform 0.15s ease-in-out;
+}
+
+.testray-login-page .portlet-boundary {
+	display: flex;
+	justify-content: center;
+}
+
+.testray-login-page .form-control {
+	border-radius: 3px !important;
+	height: 34px !important;
+}
+
+.testray-login-page .contol-label {
+	font-weight: 400;
+	margin-bottom: 6px !important;
+}
+
+label .control-label {
+	margin-bottom: 10px !important;
+}
+
+.testray-login-page ul {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.testray-login-page label {
+	font-weight: 400;
+}
+
+.testray-login-page li {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	padding-right: 5px;
+}
+
+.testray-login-page a {
+	align-items: center;
+	color: var(--color-brand-primary) !important;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	padding-right: 5px;
+}
+
+.testray-login-page li:nth-child(1) a::before {
+	background: url('[resources:plus.svg]');
+	background-repeat: no-repeat;
+	background-size: contain !important;
+	content: '';
+	height: 16px;
+	margin-right: 5px;
+	transition: var(--transition-value);
+	width: 16px;
+}
+
+.testray-login-page li:nth-child(2) a::before {
+	background: url('[resources:help.svg]');
+	background-repeat: no-repeat;
+	background-size: contain !important;
+	content: '';
+	height: 16px;
+	margin-right: 5px;
+	transition: var(--transition-value);
+	width: 16px;
+}
+
+.testray-login-page .taglib-text {
+	color: var(--color-brand-primary) !important;
+}

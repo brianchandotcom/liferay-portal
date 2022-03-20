@@ -12,28 +12,35 @@
  * details.
  */
 
-import {getFactorCategories} from '../../graphql/queries';
-import i18n from '../../i18n';
-import Container from '../Layout/Container';
-import ListView from '../ListView/ListView';
+import ListView from '../../../components/ListView/ListView';
+import {getFactorOptions} from '../../../graphql/queries';
+import FactorOptionsFormModal from './FactorOptionsFormModal';
+import useFactorOptionsActions from './useFactorOptionsActions';
 
-const CategoryModal = () => {
+const FactorOptionsModal = () => {
+	const {actions, formModal} = useFactorOptionsActions();
+
 	return (
-		<Container>
+		<>
 			<ListView
-				query={getFactorCategories}
+				forceRefetch={formModal.forceRefetch}
+				managementToolbarProps={{addButton: formModal.modal.open}}
+				query={getFactorOptions}
 				tableProps={{
+					actions,
 					columns: [
 						{
 							key: 'name',
-							value: i18n.translate('name'),
+							value: 'Name',
 						},
 					],
 				}}
-				transformData={(data) => data?.c?.factorCategories}
+				transformData={(data) => data?.c?.factorOptions}
 			/>
-		</Container>
+
+			<FactorOptionsFormModal modal={formModal.modal} />
+		</>
 	);
 };
 
-export default CategoryModal;
+export default FactorOptionsModal;

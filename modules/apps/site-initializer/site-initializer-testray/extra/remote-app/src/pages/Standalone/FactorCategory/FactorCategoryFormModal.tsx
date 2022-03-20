@@ -19,22 +19,25 @@ import {useEffect, useState} from 'react';
 
 import Input from '../../../components/Input';
 import Modal from '../../../components/Modal';
-import {CreateCaseType, UpdateCaseType} from '../../../graphql/mutations';
+import {
+	CreateFactorCategory,
+	UpdateFactorCategory,
+} from '../../../graphql/mutations';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
-type CaseTypeForm = {
+type FactorCategoryForm = {
 	id?: number;
 	name: string;
 };
 
-type CaseTypeFormProps = {
-	form: CaseTypeForm;
+type FactorCategoryFormProps = {
+	form: FactorCategoryForm;
 	onChange: (event: any) => void;
 	onSubmit: (event: any) => void;
 };
 
-const FormCaseType: React.FC<CaseTypeFormProps> = ({
+const FormFactorCategory: React.FC<FactorCategoryFormProps> = ({
 	form,
 	onChange,
 	onSubmit,
@@ -52,18 +55,18 @@ const FormCaseType: React.FC<CaseTypeFormProps> = ({
 	);
 };
 
-type CaseTypeProps = {
+type FactorCategoryProps = {
 	modal: FormModalOptions;
 };
-const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
+const FactorCategoryFormModal: React.FC<FactorCategoryProps> = ({
 	modal: {modalState, observer, onChange, onClose, onError, onSave, visible},
 }) => {
-	const [form, setForm] = useState<CaseTypeForm>({
+	const [form, setForm] = useState<FactorCategoryForm>({
 		name: '',
 	});
 
-	const [onCreateCaseType] = useMutation(CreateCaseType);
-	const [onUpdateCaseType] = useMutation(UpdateCaseType);
+	const [onCreateFactorCategory] = useMutation(CreateFactorCategory);
+	const [onUpdateFactorCategory] = useMutation(UpdateFactorCategory);
 
 	useEffect(() => {
 		if (visible && modalState) {
@@ -75,19 +78,19 @@ const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
 		event?.preventDefault();
 
 		const variables: any = {
-			CaseType: {
+			FactorCategory: {
 				name: form.name,
 			},
 		};
 
 		try {
 			if (form.id) {
-				variables.caseTypeId = form.id;
+				variables.factorCategoryId = form.id;
 
-				onUpdateCaseType({variables});
+				await onUpdateFactorCategory({variables});
 			}
 			else {
-				await onCreateCaseType({variables});
+				await onCreateFactorCategory({variables});
 			}
 
 			onSave();
@@ -112,10 +115,12 @@ const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
 			}
 			observer={observer}
 			size="lg"
-			title={i18n.translate(form.id ? 'edit-case-type' : 'new-case-type')}
+			title={i18n.translate(
+				form.id ? 'edit-factor-category' : 'new-factor-category'
+			)}
 			visible={visible}
 		>
-			<FormCaseType
+			<FormFactorCategory
 				form={form}
 				onChange={onChange({form, setForm})}
 				onSubmit={onSubmit}
@@ -124,4 +129,4 @@ const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
 	);
 };
 
-export default CaseTypeFormModal;
+export default FactorCategoryFormModal;

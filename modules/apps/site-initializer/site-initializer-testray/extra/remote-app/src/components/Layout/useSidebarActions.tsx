@@ -15,37 +15,49 @@
 import ClayButton from '@clayui/button';
 import {Context} from '@clayui/modal';
 import {Size} from '@clayui/modal/lib/types';
-import {ReactElement, useContext} from 'react';
+import React, {ReactElement, useContext} from 'react';
 
+import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
+import ProjectModal from '../../pages/Project';
 import CaseTypeModal from '../../pages/Standalone/CaseType/CaseTypeModal';
+import FactorCategoryModal from '../../pages/Standalone/FactorCategory/FactorCategoryModal';
+import OptionsModal from '../../pages/Standalone/FactorOptions/FactorOptionsModal';
 import {LIFERAY_URLS} from '../../services/liferay/liferay';
-import CategoryModal from '../Modal/CategoryModal';
-import OptionsModal from '../Modal/OptionsModal';
+
+interface ModalOptions {
+	body: ReactElement;
+	footer?: ReactElement;
+	size: Size;
+	title: string;
+}
 
 const useSidebarActions = () => {
+	const {modal} = useFormModal();
 	const [state, dispatch] = useContext(Context);
 
-	const onOpenModal = (title: string, body: ReactElement, size: Size) => {
+	const onOpenModal = ({body, footer, size, title}: ModalOptions) => {
 		dispatch({
 			payload: {
 				body,
-				footer: [
-					undefined,
-					undefined,
-					<ClayButton.Group key={3} spaced>
-						<ClayButton
-							displayType="secondary"
-							onClick={state.onClose}
-						>
-							Cancel
-						</ClayButton>
+				footer: footer
+					? [
+							undefined,
+							undefined,
+							<ClayButton.Group key={3} spaced>
+								<ClayButton
+									displayType="secondary"
+									onClick={state.onClose}
+								>
+									Cancel
+								</ClayButton>
 
-						<ClayButton key={4} onClick={state.onClose}>
-							Save
-						</ClayButton>
-					</ClayButton.Group>,
-				],
+								<ClayButton key={4} onClick={state.onClose}>
+									Save
+								</ClayButton>
+							</ClayButton.Group>,
+					  ]
+					: [],
 				header: title,
 				size,
 			},
@@ -58,20 +70,29 @@ const useSidebarActions = () => {
 			items: [
 				{
 					icon: 'plus',
-					label: i18n.translate('new-project'),
-					onClick: () =>
-						onOpenModal(i18n.translate('new-project'), <></>, 'lg'),
+					label: i18n.translate('add-project'),
+					onClick: () => {
+						modal.setVisible(true);
+
+						onOpenModal({
+							body: (
+								<ProjectModal PageContainer={React.Fragment} />
+							),
+							size: 'full-screen',
+							title: i18n.translate('projects'),
+						});
+					},
 					path: '/',
 				},
 				{
 					icon: 'cog',
 					label: i18n.translate('case-types'),
 					onClick: () =>
-						onOpenModal(
-							i18n.translate('case-types'),
-							<CaseTypeModal />,
-							'full-screen'
-						),
+						onOpenModal({
+							body: <CaseTypeModal />,
+							size: 'full-screen',
+							title: i18n.translate('case-types'),
+						}),
 					path: '/',
 				},
 			],
@@ -83,22 +104,22 @@ const useSidebarActions = () => {
 					icon: 'cog',
 					label: i18n.translate('categories'),
 					onClick: () =>
-						onOpenModal(
-							i18n.translate('categories'),
-							<CategoryModal />,
-							'full-screen'
-						),
+						onOpenModal({
+							body: <FactorCategoryModal />,
+							size: 'full-screen',
+							title: i18n.translate('categories'),
+						}),
 					path: '/',
 				},
 				{
 					icon: 'cog',
 					label: i18n.translate('options'),
 					onClick: () =>
-						onOpenModal(
-							i18n.translate('options'),
-							<OptionsModal />,
-							'full-screen'
-						),
+						onOpenModal({
+							body: <OptionsModal />,
+							size: 'full-screen',
+							title: i18n.translate('options'),
+						}),
 					path: '/',
 				},
 			],

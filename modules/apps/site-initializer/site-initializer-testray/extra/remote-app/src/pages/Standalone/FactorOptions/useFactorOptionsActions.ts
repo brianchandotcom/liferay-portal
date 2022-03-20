@@ -14,13 +14,13 @@
 
 import {useMutation} from '@apollo/client';
 
-import {DeleteCaseType} from '../../../graphql/mutations';
-import {TestrayCaseType} from '../../../graphql/queries';
+import {DeleteFactorOption} from '../../../graphql/mutations';
+import {TestrayFactorOptions} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
-const useCaseTypeActions = () => {
-	const [onDeleteCaseType] = useMutation(DeleteCaseType);
+const useFactorOptionsActions = () => {
+	const [onDeleteFactorOption] = useMutation(DeleteFactorOption);
 
 	const formModal = useFormModal();
 	const modal = formModal.modal;
@@ -28,13 +28,13 @@ const useCaseTypeActions = () => {
 	return {
 		actions: [
 			{
-				action: (item: TestrayCaseType) => modal.open(item),
+				action: (item: TestrayFactorOptions) => modal.open(item),
 				disabled: true,
 				name: i18n.translate('edit'),
 			},
 			{
-				action: ({id: caseTypeId}: TestrayCaseType) =>
-					onDeleteCaseType({variables: {caseTypeId}})
+				action: ({id: factorOptionId}: TestrayFactorOptions) =>
+					onDeleteFactorOption({variables: {factorOptionId}})
 						.then(() => modal.onSave())
 						.catch(modal.onError),
 				name: i18n.translate('delete'),
@@ -44,4 +44,4 @@ const useCaseTypeActions = () => {
 	};
 };
 
-export default useCaseTypeActions;
+export default useFactorOptionsActions;

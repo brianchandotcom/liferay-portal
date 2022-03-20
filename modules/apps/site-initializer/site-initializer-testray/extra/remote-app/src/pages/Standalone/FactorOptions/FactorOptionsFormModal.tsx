@@ -12,33 +12,47 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
-import ClayForm from '@clayui/form';
+import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import {useEffect, useState} from 'react';
 
 import Input from '../../../components/Input';
 import Modal from '../../../components/Modal';
-import {CreateCaseType, UpdateCaseType} from '../../../graphql/mutations';
+import {
+	CreateFactorOption,
+	UpdateFactorOption,
+} from '../../../graphql/mutations';
+import {
+	CTypePagination,
+	TestrayFactorCategory,
+	getFactorCategories,
+} from '../../../graphql/queries';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
-type CaseTypeForm = {
+type FactorOptionsForm = {
 	id?: number;
 	name: string;
 };
 
-type CaseTypeFormProps = {
-	form: CaseTypeForm;
+type FactorOptionsFormProps = {
+	form: FactorOptionsForm;
 	onChange: (event: any) => void;
 	onSubmit: (event: any) => void;
 };
 
-const FormCaseType: React.FC<CaseTypeFormProps> = ({
+const FormFactorOptions: React.FC<FactorOptionsFormProps> = ({
 	form,
 	onChange,
 	onSubmit,
 }) => {
+	const {data} = useQuery<
+		CTypePagination<'factorCategories', TestrayFactorCategory>
+	>(getFactorCategories);
+
+	const factorCategories = data?.c.factorCategories.items || [];
+
 	return (
 		<ClayForm onSubmit={onSubmit}>
 			<Input
@@ -48,22 +62,34 @@ const FormCaseType: React.FC<CaseTypeFormProps> = ({
 				required
 				value={form.name}
 			/>
+
+			<label htmlFor="category-type">
+				{i18n.translate('category-type')}
+			</label>
+
+			<ClaySelectWithOption
+				id="category-type"
+				options={factorCategories.map(({id, name}) => ({
+					label: name,
+					value: id,
+				}))}
+			/>
 		</ClayForm>
 	);
 };
 
-type CaseTypeProps = {
+type FactorOptionsProps = {
 	modal: FormModalOptions;
 };
-const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
+const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 	modal: {modalState, observer, onChange, onClose, onError, onSave, visible},
 }) => {
-	const [form, setForm] = useState<CaseTypeForm>({
+	const [form, setForm] = useState<FactorOptionsForm>({
 		name: '',
 	});
 
-	const [onCreateCaseType] = useMutation(CreateCaseType);
-	const [onUpdateCaseType] = useMutation(UpdateCaseType);
+	const [onCreateFactorOption] = useMutation(CreateFactorOption);
+	const [onUpdateFactorOption] = useMutation(UpdateFactorOption);
 
 	useEffect(() => {
 		if (visible && modalState) {
@@ -75,19 +101,19 @@ const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
 		event?.preventDefault();
 
 		const variables: any = {
-			CaseType: {
+			FactorOption: {
 				name: form.name,
 			},
 		};
 
 		try {
 			if (form.id) {
-				variables.caseTypeId = form.id;
+				variables.factorOptionId = form.id;
 
-				onUpdateCaseType({variables});
+				await onUpdateFactorOption({variables});
 			}
 			else {
-				await onCreateCaseType({variables});
+				await onCreateFactorOption({variables});
 			}
 
 			onSave();
@@ -112,10 +138,12 @@ const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
 			}
 			observer={observer}
 			size="lg"
-			title={i18n.translate(form.id ? 'edit-case-type' : 'new-case-type')}
+			title={i18n.translate(
+				form.id ? 'edit-factor-option' : 'new-factor-option'
+			)}
 			visible={visible}
 		>
-			<FormCaseType
+			<FormFactorOptions
 				form={form}
 				onChange={onChange({form, setForm})}
 				onSubmit={onSubmit}
@@ -124,4 +152,4 @@ const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
 	);
 };
 
-export default CaseTypeFormModal;
+export default FactorOptionsFormModal;

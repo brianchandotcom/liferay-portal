@@ -21,6 +21,7 @@ import ProgressBar from '../../../components/ProgressBar';
 import useTotalTestCases from '../../../data/useTotalTestCases';
 import {getBuilds} from '../../../graphql/queries';
 import i18n from '../../../i18n';
+import dayjs from '../../../util/date';
 import RoutineBuildModal from './RoutineBuildModal';
 import useRoutineActions from './useRoutineActions';
 
@@ -88,9 +89,21 @@ const Routine = () => {
 							},
 							value: i18n.translate('status'),
 						},
-						{key: 'dateCreated', size: 'sm', value: 'Create Date'},
-						{key: 'gitHash', value: 'Git Hash'},
 						{
+							clickable: true,
+							key: 'dateCreated',
+							render: (dateCreated) =>
+								dayjs(dateCreated).format('lll'),
+							size: 'sm',
+							value: 'Create Date',
+						},
+						{
+							clickable: true,
+							key: 'gitHash',
+							value: 'Git Hash',
+						},
+						{
+							clickable: true,
 							key: 'product_version',
 							render: (_, {testrayProductVersion}) =>
 								testrayProductVersion?.name,
@@ -102,17 +115,50 @@ const Routine = () => {
 							size: 'lg',
 							value: i18n.translate('build'),
 						},
-						{key: 'failed', value: i18n.translate('failed')},
-						{key: 'blocked', value: i18n.translate('blocked')},
-						{key: 'untested', value: i18n.translate('untested')},
 						{
+							clickable: true,
+							key: 'failed',
+							render: () => 0,
+							value: i18n.translate('failed'),
+						},
+						{
+							clickable: true,
+							key: 'blocked',
+							render: () => 0,
+							value: i18n.translate('blocked'),
+						},
+						{
+							clickable: true,
+							key: 'untested',
+							render: () => 0,
+							value: i18n.translate('untested'),
+						},
+						{
+							clickable: true,
 							key: 'in_progress',
+							render: () => 0,
 							value: i18n.translate('in-progress'),
 						},
-						{key: 'passed', value: i18n.translate('passed')},
-						{key: 'test_fix', value: i18n.translate('test-fix')},
-						{key: 'total', value: i18n.translate('total')},
 						{
+							clickable: true,
+							key: 'passed',
+							render: () => 0,
+							value: i18n.translate('passed'),
+						},
+						{
+							clickable: true,
+							key: 'test_fix',
+							render: () => 0,
+							value: i18n.translate('test-fix'),
+						},
+						{
+							clickable: true,
+							key: 'total',
+							render: () => 0,
+							value: i18n.translate('total'),
+						},
+						{
+							clickable: true,
 							key: 'metrics',
 							render: () => (
 								<ProgressBar

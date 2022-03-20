@@ -16,37 +16,38 @@ import {gql} from '@apollo/client';
 
 import {testrayFactorOptionFragment} from '../fragments';
 
-export type TestrayFactorOptions = {
-	dateCreated: string;
-	dateModified: string;
-	id: number;
-	name: string;
-};
-
-export const getFactorOptions = gql`
+export const CreateFactorOption = gql`
 	${testrayFactorOptionFragment}
 
-	query getFactorOptions {
+	mutation CreateFactorOption($FactorOption: InputC_FactorOption!) {
 		c {
-			factorOptions {
-				items {
-					...FactorOptionFragment
-				}
-				lastPage
-				page
-				pageSize
-				totalCount
+			createFactorOption(FactorOption: $FactorOption) {
+				...FactorOptionFragment
 			}
 		}
 	}
 `;
 
-export const getFactorOption = gql`
+export const DeleteFactorOption = gql`
+	mutation deleteFactorOption($factorOptionId: Long) {
+		c {
+			deleteFactorOption(factorOptionId: $factorOptionId)
+		}
+	}
+`;
+
+export const UpdateFactorOption = gql`
 	${testrayFactorOptionFragment}
 
-	query getFactorOption($factorOptionId: Long) {
+	mutation updateFactorOption(
+		$factorOptionId: Long
+		$FactorOption: InputC_FactorOption!
+	) {
 		c {
-			factorOption(factorOption: $factorOptionId) {
+			updateFactorOption(
+				factorOptionId: $factorOptionId
+				FactorOption: $FactorOption
+			) {
 				...FactorOptionFragment
 			}
 		}

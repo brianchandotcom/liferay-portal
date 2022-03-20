@@ -17,7 +17,7 @@ import ListView from '../../../components/ListView/ListView';
 import ProgressBar from '../../../components/ProgressBar';
 import {getRoutines} from '../../../graphql/queries';
 import i18n from '../../../i18n';
-import {progress} from '../../../util/mock';
+import {getTimeFromNow} from '../../../util/date';
 import RoutineModal from './RoutineModal';
 import useRoutineActions from './useRoutineActions';
 
@@ -39,15 +39,43 @@ const Routines = () => {
 							value: i18n.translate('routine'),
 						},
 						{
-							key: 'execution_date',
+							clickable: true,
+							key: 'dateCreated',
+							render: (dateCreated) =>
+								getTimeFromNow(dateCreated),
 							value: i18n.translate('execution-date'),
 						},
-						{key: 'failed', value: i18n.translate('failed')},
-						{key: 'blocked', value: i18n.translate('blocked')},
-						{key: 'test_fix', value: i18n.translate('test-fix')},
 						{
+							clickable: true,
+							key: 'failed',
+							render: () => 0,
+							value: i18n.translate('failed'),
+						},
+						{
+							clickable: true,
+							key: 'blocked',
+							render: () => 0,
+							value: i18n.translate('blocked'),
+						},
+						{
+							clickable: true,
+							key: 'test_fix',
+							render: () => 0,
+							value: i18n.translate('test-fix'),
+						},
+						{
+							clickable: true,
 							key: 'metrics',
-							render: () => <ProgressBar items={progress[0]} />,
+							render: () => (
+								<ProgressBar
+									items={{
+										blocked: 0,
+										failed: 1,
+										passed: 70,
+									}}
+								/>
+							),
+							size: 'sm',
 							value: i18n.translate('metrics'),
 						},
 					],

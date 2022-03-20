@@ -14,8 +14,8 @@
 
 import {gql} from '@apollo/client';
 
-export const testrayFactorOptionsFragment = gql`
-	fragment FactorOptionsFragment on C_FactorOptions {
+export const testrayFactorOptionFragment = gql`
+	fragment FactorOptionFragment on C_FactorOption {
 		dateCreated
 		dateModified
 		id: factorOptionId

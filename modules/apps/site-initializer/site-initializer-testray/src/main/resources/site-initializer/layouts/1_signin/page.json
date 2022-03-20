@@ -1,0 +1,15 @@
+{
+	"hidden": false,
+	"name_i18n": {
+		"en_US": "SignIn"
+	},
+	"private": false,
+	"system": false,
+	"type": "Content",
+	"typeSettings": [
+		{
+			"key": "collectionType",
+			"value": "com.liferay.item.selector.criteria.InfoListItemSelectorReturnType"
+		}
+	]
+}

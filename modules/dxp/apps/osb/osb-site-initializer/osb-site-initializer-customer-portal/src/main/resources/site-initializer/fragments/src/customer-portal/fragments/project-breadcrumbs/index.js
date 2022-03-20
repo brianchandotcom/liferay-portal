@@ -46,7 +46,7 @@ const useIntersectionObserver = () => {
 	useEffect(() => {
 		const observer = new IntersectionObserver(memoizedSetIntersecting, {
 			root: null,
-			threshold: 1.0,
+			threshold: 0.25,
 		});
 
 		if (trackedRefCurrent) {

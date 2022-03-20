@@ -252,7 +252,8 @@ const AppContextProvider = ({assetsPath, children, page}) => {
 							accountBrief =
 								dataAccount?.accountByExternalReferenceCode;
 						}
-					} else {
+					}
+					else {
 						accountBrief = user.accountBriefs?.find(
 							(accountBrief) =>
 								accountBrief.externalReferenceCode ===

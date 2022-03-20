@@ -10,6 +10,7 @@
 					"layout": {
 						"borderWidth": 0,
 						"contentDisplay": "FlexRow",
+						"htmlTag": "Div",
 						"marginBottom": 0,
 						"marginLeft": 0,
 						"marginRight": 0,
@@ -44,6 +45,7 @@
 							},
 							"layout": {
 								"borderWidth": 0,
+								"htmlTag": "Div",
 								"marginBottom": 0,
 								"marginLeft": 0,
 								"marginRight": 2,
@@ -61,15 +63,17 @@
 									"fragmentStyle": {
 										"borderWidth": "0",
 										"height": "64px",
+										"marginLeft": "4",
 										"textAlign": ""
 									},
 									"layout": {
 										"align": "Center",
 										"borderWidth": 0,
 										"contentDisplay": "FlexRow",
-										"justify": "End",
+										"htmlTag": "Div",
+										"justify": "SpaceBetween",
 										"marginBottom": 0,
-										"marginLeft": 0,
+										"marginLeft": 2,
 										"marginRight": 0,
 										"marginTop": 0,
 										"paddingBottom": 0,
@@ -83,38 +87,23 @@
 									{
 										"definition": {
 											"fragment": {
+												"key": "project-breadcrumbs"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											]
+										},
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"fragment": {
 												"key": "select-user"
 											},
 											"fragmentConfig": {
 											},
 											"fragmentFields": [
-												{
-													"id": "user-name",
-													"value": {
-														"fragmentLink": {
-															"value_i18n": {
-															}
-														}
-													}
-												},
-												{
-													"id": "select-icon",
-													"value": {
-														"fragmentLink": {
-															"value_i18n": {
-															}
-														}
-													}
-												},
-												{
-													"id": "user-icon",
-													"value": {
-														"fragmentLink": {
-															"value_i18n": {
-															}
-														}
-													}
-												}
 											]
 										},
 										"type": "Fragment"
@@ -130,6 +119,7 @@
 									},
 									"layout": {
 										"borderWidth": 0,
+										"htmlTag": "Div",
 										"marginBottom": 0,
 										"marginLeft": 0,
 										"marginRight": 0,

@@ -35,3 +35,16 @@ export const DeleteCaseType = gql`
 		}
 	}
 `;
+
+
+export const UpdateCaseType = gql`
+	${testrayCaseTypeFragment}
+
+	mutation updateCaseType($caseTypeId: Long, $CaseType: InputC_CaseType!) {
+		c {
+			updateCaseType(caseTypeId: $caseTypeId, CaseType: $CaseType) {
+				...CaseTypeFragment
+			}
+		}
+	}
+`;

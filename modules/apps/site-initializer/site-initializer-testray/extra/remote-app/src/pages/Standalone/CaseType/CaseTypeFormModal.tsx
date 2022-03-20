@@ -19,10 +19,7 @@ import {useEffect, useState} from 'react';
 
 import Input from '../../../components/Input';
 import Modal from '../../../components/Modal';
-import {
-	CreateProject,
-	UpdateProject,
-} from '../../../graphql/mutations/testrayProject';
+import {CreateCaseType, UpdateCaseType} from '../../../graphql/mutations';
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
@@ -65,8 +62,8 @@ const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
 		name: '',
 	});
 
-	const [onCreateProject] = useMutation(CreateProject);
-	const [onUpdateProject] = useMutation(UpdateProject);
+	const [onCreateCaseType] = useMutation(CreateCaseType);
+	const [onUpdateCaseType] = useMutation(UpdateCaseType);
 
 	useEffect(() => {
 		if (visible && modalState) {
@@ -74,20 +71,22 @@ const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
 		}
 	}, [visible, modalState]);
 
-	const onSubmit = async () => {
+	const onSubmit = async (event?: any) => {
+		event?.preventDefault();
+
 		const variables: any = {
-			Project: {
+			CaseType: {
 				name: form.name,
 			},
 		};
 
 		try {
 			if (form.id) {
-				variables.projectId = form.id;
+				variables.caseTypeId = form.id;
 
-				onUpdateProject({variables});
+				onUpdateCaseType({variables});
 			} else {
-				await onCreateProject({variables});
+				await onCreateCaseType({variables});
 			}
 
 			onSave();

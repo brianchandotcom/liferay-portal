@@ -127,7 +127,7 @@ const AllProjectButton = memo(({onClick}) => {
 
 	return (
 		<a
-			className="dropdown-item font-weight-semi-bold px-3 text-decoration-none text-paragraph-sm"
+			className="align-items-center d-flex dropdown-item font-weight-semi-bold pl-3 pr-5 py-1 text-decoration-none text-paragraph-sm"
 			href={Liferay.ThemeDisplay.getCanonicalURL().replace(
 				'/project',
 				''
@@ -193,7 +193,7 @@ const DropDown = memo(
 					return (
 						<ClayDropDown.Item
 							active={isSelected}
-							className="font-weight-semi-bold px-3 text-paragraph-sm"
+							className="align-items-center d-flex font-weight-semi-bold pl-3 pr-5 py-1 text-paragraph-sm"
 							href={
 								!isSelected &&
 								getHref(koroneikiAccount.accountKey)
@@ -305,7 +305,12 @@ export default function () {
 	}, []);
 
 	if (!koroneikiAccounts || !selectedKoroneikiAccount) {
-		return <div>Loading</div>;
+		return (
+			<span
+				className="cp-project-breadcrumbs-skeleton"
+				style={{height: '30px', width: '264px'}}
+			></span>
+		);
 	}
 
 	return (

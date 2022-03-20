@@ -17,6 +17,7 @@ import {gql} from '@apollo/client';
 import {testrayRoutineFragment} from '../fragments';
 
 export type TestrayRoutine = {
+	dateCreated: string;
 	id: number;
 	name: string;
 };

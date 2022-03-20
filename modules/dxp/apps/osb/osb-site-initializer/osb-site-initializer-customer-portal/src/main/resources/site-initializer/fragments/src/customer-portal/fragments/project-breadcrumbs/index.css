@@ -17,6 +17,10 @@
 	transition: 0.15s ease-in-out;
 }
 
+.cp-project-breadcrumbs-toggle .inline-item-after.position-absolute {
+	right: -20px;
+}
+
 .cp-project-breadcrumbs-menu ::placeholder {
 	color: var(--color-neutral-10);
 	font-size: var(--text-paragraph-sm-font-size);

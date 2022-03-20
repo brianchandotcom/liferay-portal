@@ -212,6 +212,7 @@ const DropDown = memo(
 		return (
 			<ClayDropDown
 				active={active}
+				alignmentPosition={['tl', 'br']}
 				closeOnClickOutside
 				hasRightSymbols
 				menuElementAttrs={{
@@ -219,7 +220,19 @@ const DropDown = memo(
 				}}
 				onActiveChange={setActive}
 				trigger={
-					<button className="btn btn-primary">Click here!</button>
+					<Button className="align-items-center bg-white cp-project-breadcrumbs-toggle d-flex p-0">
+						<div className="font-weight-bold h5 m-0 text-neutral-9">
+							{selectedKoroneikiAccount.name ||
+								selectedKoroneikiAccount.code}
+						</div>
+
+						<span className="inline-item inline-item-after position-absolute text-brand-primary">
+							<ClayIcon
+								spritemap={spritemap}
+								symbol="caret-bottom"
+							/>
+						</span>
+					</Button>
 				}
 			>
 				{initialTotalCount > 20 && (

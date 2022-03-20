@@ -13,6 +13,10 @@
 	border-color: var(--color-focus);
 }
 
+.cp-project-breadcrumbs-menu .inline-item-before {
+	transition: 0.15s ease-in-out;
+}
+
 .cp-project-breadcrumbs-menu ::placeholder {
 	color: var(--color-neutral-10);
 	font-size: var(--text-paragraph-sm-font-size);
@@ -34,6 +38,7 @@
 	padding-top: 0.75rem;
 	padding-bottom: 0.75rem;
 	color: var(--color-neutral-8);
+	transition: 0.15s ease-in-out;
 }
 
 .cp-project-breadcrumbs-menu .dropdown-item.active {

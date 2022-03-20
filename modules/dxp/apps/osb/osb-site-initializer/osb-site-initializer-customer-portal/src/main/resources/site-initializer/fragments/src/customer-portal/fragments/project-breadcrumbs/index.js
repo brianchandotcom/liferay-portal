@@ -148,17 +148,120 @@ const AllProjectButton = memo(({onClick}) => {
 	);
 });
 
+const DropDown = memo(
+	({
+		initialTotalCount,
+		koroneikiAccounts,
+		selectedKoroneikiAccount,
+		totalCount,
+	}) => {
+		const [active, setActive] = useState(false);
+
+		const [searchTerm, setSearchTerm] = useState('');
+		const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+		const [trackedRef, isIntersecting] = useIntersectionObserver();
+
+		useEffect(() => {
+			if (isIntersecting) {
+				eventFetchMoreData.fire();
+			}
+		}, [isIntersecting]);
+
+		useEffect(() => {
+			eventSearchData.fire({
+				detail: debouncedSearchTerm,
+			});
+		}, [debouncedSearchTerm]);
+
+		const getHref = useCallback((accountKey) => {
+			const hashLocation = window.location.hash.replace(
+				/[A-Z]+-\d+/g,
+				accountKey
+			);
+
+			return `${Liferay.ThemeDisplay.getCanonicalURL()}/${hashLocation}`;
+		}, []);
+
+		const getDropDownItems = useCallback(
+			() =>
+				koroneikiAccounts?.map((koroneikiAccount, index) => {
+					const isSelected =
+						koroneikiAccount.accountKey ===
+						selectedKoroneikiAccount?.accountKey;
+
+					return (
+						<ClayDropDown.Item
+							active={isSelected}
+							className="font-weight-semi-bold px-3 text-paragraph-sm"
+							href={
+								!isSelected &&
+								getHref(koroneikiAccount.accountKey)
+							}
+							key={`${koroneikiAccount.code}-${index}`}
+							spritemap={spritemap}
+							symbolRight={isSelected ? 'check' : ''}
+						>
+							{koroneikiAccount.name || koroneikiAccount.code}
+						</ClayDropDown.Item>
+					);
+				}),
+			[getHref, koroneikiAccounts, selectedKoroneikiAccount?.accountKey]
+		);
+
+		return (
+			<ClayDropDown
+				active={active}
+				closeOnClickOutside
+				hasRightSymbols
+				menuElementAttrs={{
+					className: 'cp-project-breadcrumbs-menu p-0',
+				}}
+				onActiveChange={setActive}
+				trigger={
+					<button className="btn btn-primary">Click here!</button>
+				}
+			>
+				{initialTotalCount > 20 && (
+					<div className="dropdown-section px-3">
+						<Search setSearchTerm={setSearchTerm} />
+					</div>
+				)}
+
+				{!koroneikiAccounts.length && (
+					<div className="dropdown-section px-3">
+						<div className="font-weight-semi-bold text-neutral-5 text-paragraph-sm">
+							No projects match that name.
+						</div>
+					</div>
+				)}
+
+				{!!koroneikiAccounts.length && initialTotalCount > 1 && (
+					<ClayDropDown.ItemList className="overflow-auto">
+						{getDropDownItems()}
+
+						{koroneikiAccounts.length < totalCount && (
+							<ClayDropDown.Section className="px-3">
+								<div
+									className="font-weight-semi-bold text-neutral-5 text-paragraph-sm"
+									ref={trackedRef}
+								>
+									Loading more...
+								</div>
+							</ClayDropDown.Section>
+						)}
+					</ClayDropDown.ItemList>
+				)}
+
+				<AllProjectButton onClick={() => setActive(false)} />
+			</ClayDropDown>
+		);
+	}
+);
+
 export default function () {
-	const [active, setActive] = useState(false);
-
-	const [searchTerm, setSearchTerm] = useState('');
-	const debouncedSearchTerm = useDebounce(searchTerm, 500);
-
-	const [trackedRef, isIntersecting] = useIntersectionObserver();
-
 	const [totalCount, setTotalCount] = useState();
 	const [initialTotalCount, setInitialTotalCount] = useState();
-
 	const [koroneikiAccounts, setKoroneikiAccounts] = useState();
 	const [selectedKoroneikiAccount, setSelectKoroneikiAccount] = useState();
 
@@ -188,98 +291,16 @@ export default function () {
 		return () => Liferay.detach(KORONEIKI_ACCOUNTS_EVENT_NAME);
 	}, []);
 
-	useEffect(() => {
-		if (isIntersecting) {
-			eventFetchMoreData.fire();
-		}
-	}, [isIntersecting]);
-
-	useEffect(() => {
-		eventSearchData.fire({
-			detail: debouncedSearchTerm,
-		});
-	}, [debouncedSearchTerm]);
-
-	const getHref = useCallback((accountKey) => {
-		const hashLocation = window.location.hash.replace(
-			/[A-Z]+-\d+/g,
-			accountKey
-		);
-
-		return `${Liferay.ThemeDisplay.getCanonicalURL()}/${hashLocation}`;
-	}, []);
-
-	const getDropDownItems = useCallback(
-		() =>
-			koroneikiAccounts?.map((koroneikiAccount, index) => {
-				const isSelected =
-					koroneikiAccount.accountKey ===
-					selectedKoroneikiAccount?.accountKey;
-
-				return (
-					<ClayDropDown.Item
-						active={isSelected}
-						className="font-weight-semi-bold px-3 text-paragraph-sm"
-						href={
-							!isSelected && getHref(koroneikiAccount.accountKey)
-						}
-						key={`${koroneikiAccount.code}-${index}`}
-						spritemap={spritemap}
-						symbolRight={isSelected ? 'check' : ''}
-					>
-						{koroneikiAccount.name || koroneikiAccount.code}
-					</ClayDropDown.Item>
-				);
-			}),
-		[getHref, koroneikiAccounts, selectedKoroneikiAccount?.accountKey]
-	);
-
 	if (!koroneikiAccounts || !selectedKoroneikiAccount) {
 		return <div>Loading</div>;
 	}
 
 	return (
-		<ClayDropDown
-			active={active}
-			closeOnClickOutside
-			hasRightSymbols
-			menuElementAttrs={{
-				className: 'cp-project-breadcrumbs-menu p-0',
-			}}
-			onActiveChange={setActive}
-			trigger={<button className="btn btn-primary">Click here!</button>}
-		>
-			{initialTotalCount > 20 && (
-				<div className="dropdown-section px-3">
-					<Search setSearchTerm={setSearchTerm} />
-				</div>
-			)}
-
-			<ClayDropDown.ItemList className="overflow-auto">
-				{getDropDownItems()}
-
-				{!koroneikiAccounts.length && (
-					<ClayDropDown.Section className="px-3">
-						<div className="font-weight-semi-bold text-neutral-5 text-paragraph-sm">
-							No projects match that name.
-						</div>
-					</ClayDropDown.Section>
-				)}
-
-				{!!koroneikiAccounts.length &&
-					koroneikiAccounts.length < totalCount && (
-						<ClayDropDown.Section className="px-3">
-							<div
-								className="font-weight-semi-bold text-neutral-5 text-paragraph-sm"
-								ref={trackedRef}
-							>
-								Loading more...
-							</div>
-						</ClayDropDown.Section>
-					)}
-			</ClayDropDown.ItemList>
-
-			<AllProjectButton onClick={() => setActive(false)} />
-		</ClayDropDown>
+		<DropDown
+			initialTotalCount={initialTotalCount}
+			koroneikiAccounts={koroneikiAccounts}
+			selectedKoroneikiAccount={selectedKoroneikiAccount}
+			totalCount={totalCount}
+		/>
 	);
 }

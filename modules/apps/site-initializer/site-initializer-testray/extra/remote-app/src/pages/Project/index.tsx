@@ -21,14 +21,14 @@ import i18n from '../../i18n';
 import ProjectModal from './ProjectModal';
 import useProjectActions from './useProjectActions';
 
-const Home = () => {
+const Projects = ({PageContainer = Container}) => {
 	const {actions, formModal} = useProjectActions();
 
 	useHeader({useHeading: initialState.heading});
 
 	return (
 		<>
-			<Container title={i18n.translate('projects')}>
+			<PageContainer title={i18n.translate('projects')}>
 				<ListView
 					forceRefetch={formModal.forceRefetch}
 					managementToolbarProps={{
@@ -53,11 +53,11 @@ const Home = () => {
 					}}
 					transformData={(data) => data?.c?.projects}
 				/>
-			</Container>
+			</PageContainer>
 
 			<ProjectModal modal={formModal.modal} />
 		</>
 	);
 };
 
-export default Home;
+export default Projects;

@@ -17,11 +17,11 @@ import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
 import OutletBridge from './pages/OutletBridge';
+import Projects from './pages/Project';
 import Cases from './pages/Project/Cases';
 import Case from './pages/Project/Cases/Case';
 import CaseOutlet from './pages/Project/Cases/CaseOutlet';
 import CaseRequirement from './pages/Project/Cases/CaseRequirement';
-import Home from './pages/Project/Home';
 import Overview from './pages/Project/Overview';
 import ProjectOutlet from './pages/Project/ProjectOutlet';
 import Requirements from './pages/Project/Requirements';
@@ -55,13 +55,13 @@ const TestrayRoute = () => (
 		<ClayModalProvider>
 			<Routes>
 				<Route element={<Layout />} path="/">
-					<Route element={<Home />} index />
+					<Route element={<Projects />} index />
 
 					<Route
 						element={<ProjectOutlet />}
 						path="project/:projectId"
 					>
-						<Route element={<Home />} index />
+						<Route element={<Projects />} index />
 
 						<Route element={<Overview />} path="overview" />
 

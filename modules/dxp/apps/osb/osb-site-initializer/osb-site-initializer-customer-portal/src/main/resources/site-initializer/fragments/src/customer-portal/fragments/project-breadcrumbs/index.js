@@ -9,8 +9,11 @@
  * distribution rights of the Software.
  */
 
+import Button from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import React, {useCallback, useEffect, useState} from 'react';
+import {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import React, {memo, useCallback, useEffect, useState} from 'react';
 
 const spritemap =
 	Liferay.ThemeDisplay.getCDNBaseURL() +
@@ -20,6 +23,14 @@ const KORONEIKI_ACCOUNTS_EVENT_NAME =
 	'customer-portal-koroneiki-accounts-available';
 
 const SELECTED_KORONEIKI_ACCOUNT_EVENT_NAME = 'customer-portal-project-loading';
+
+const eventFetchMoreData = Liferay.publish(
+	'customer-portal-fetch-more-koroneiki-accounts'
+);
+
+const eventSearchData = Liferay.publish(
+	'customer-portal-search-koroneiki-accounts'
+);
 
 const useIntersectionObserver = () => {
 	const [trackedRefCurrent, setTrackedRefCurrent] = useState();
@@ -67,13 +78,48 @@ const useDebounce = (value, delay) => {
 	return debouncedValue;
 };
 
-const eventFetchMoreData = Liferay.publish(
-	'customer-portal-fetch-more-koroneiki-accounts'
-);
+const Search = memo(({setSearchTerm}) => {
+	const [value, setValue] = useState('');
+	const [isClear, setIsClear] = useState(false);
 
-const eventSearchData = Liferay.publish(
-	'customer-portal-search-koroneiki-accounts'
-);
+	useEffect(() => setIsClear(!!value), [value]);
+	useEffect(() => setSearchTerm(value), [setSearchTerm, value]);
+
+	return (
+		<ClayInput.Group className="m-0" small>
+			<ClayInput.GroupItem>
+				<ClayInput
+					className="border-brand-primary-lighten-5 font-weight-semi-bold text-neutral-10 text-paragraph-sm"
+					insetAfter
+					onChange={(event) => setValue(event.target.value)}
+					placeholder="Search"
+					type="text"
+					value={value}
+				/>
+
+				<ClayInput.GroupInsetItem
+					after
+					className="border-brand-primary-lighten-5"
+					tag="span"
+				>
+					<Button
+						displayType="unstyled"
+						onClick={() =>
+							setValue((previousValue) =>
+								isClear ? '' : previousValue
+							)
+						}
+					>
+						<ClayIcon
+							spritemap={spritemap}
+							symbol={isClear ? 'times' : 'search'}
+						/>
+					</Button>
+				</ClayInput.GroupInsetItem>
+			</ClayInput.GroupItem>
+		</ClayInput.Group>
+	);
+});
 
 export default function () {
 	const [active, setActive] = useState(false);
@@ -82,7 +128,7 @@ export default function () {
 
 	const [trackedRef, isIntersecting] = useIntersectionObserver();
 
-	const [koroneikiAccounts, setKoroneikiAccounts] = useState([]);
+	const [koroneikiAccounts, setKoroneikiAccounts] = useState();
 	const [totalCount, setTotalCount] = useState();
 	const [initialTotalCount, setInitialTotalCount] = useState();
 	const [selectedKoroneikiAccount, setSelectKoroneikiAccount] = useState();
@@ -144,10 +190,9 @@ export default function () {
 				return (
 					<ClayDropDown.Item
 						active={isSelected}
+						className="font-weight-semi-bold px-3 text-paragraph-sm"
 						href={
-							isSelected
-								? ''
-								: getHref(koroneikiAccount.accountKey)
+							!isSelected && getHref(koroneikiAccount.accountKey)
 						}
 						key={`${koroneikiAccount.code}-${index}`}
 						spritemap={spritemap}
@@ -169,19 +214,26 @@ export default function () {
 			active={active}
 			closeOnClickOutside
 			hasRightSymbols
+			menuElementAttrs={{
+				className: 'cp-project-breadcrumbs-menu p-0',
+			}}
 			onActiveChange={setActive}
 			trigger={<button className="btn btn-primary">Click here!</button>}
 		>
 			{initialTotalCount > 20 && (
-				<ClayDropDown.Search
-					onChange={(event) => setSearchTerm(event.target.value)}
-					spritemap={spritemap}
-					value={searchTerm}
-				/>
+				<div className="dropdown-section px-3">
+					<Search setSearchTerm={setSearchTerm} />
+				</div>
 			)}
 
-			<ClayDropDown.ItemList>
+			<ClayDropDown.ItemList className="overflow-auto">
 				{getDropDownItems()}
+
+				{!koroneikiAccounts.length && (
+					<ClayDropDown.Section>
+						<div>No projects match that name.</div>
+					</ClayDropDown.Section>
+				)}
 
 				{!!koroneikiAccounts.length &&
 					koroneikiAccounts.length < totalCount && (
@@ -190,6 +242,17 @@ export default function () {
 						</ClayDropDown.Section>
 					)}
 			</ClayDropDown.ItemList>
+
+			<a
+				className="dropdown-item font-weight-semi-bold px-3 text-decoration-none text-paragraph-sm"
+				href={Liferay.ThemeDisplay.getCanonicalURL().replace(
+					'/project',
+					''
+				)}
+				onClick={() => setActive(false)}
+			>
+				All Projects
+			</a>
 		</ClayDropDown>
 	);
 }

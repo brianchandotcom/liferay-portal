@@ -11,13 +11,8 @@
 
 <tbody>
 <tr>
-	<td>REQUEST_LOG</td>
-	<td>//h4[contains(.,'Request Log')]/../..//a[contains(@class,'button') and contains(.,'Manage')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SUPPRESSED_USERS</td>
-	<td>//h4[contains(.,'Suppressed Users')]/../..//a[contains(@class,'button') and contains(.,'Manage')]</td>
+	<td>REQUEST_SUPPRESSED_OPTIONS</td>
+	<td>//h4[contains(.,'${key_OptionName}')]/../..//*[contains(@class,'button-root') and contains(.,'${key_OptionValue}')]</td>
 	<td></td>
 </tr>
 <tr>

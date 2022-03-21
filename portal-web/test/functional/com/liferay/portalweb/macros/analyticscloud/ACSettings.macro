@@ -460,8 +460,8 @@ definition {
 	}
 
 	macro clickRequestSuppressedOptions {
-		var key_OptionName = "${optionName}";
-		var key_OptionValue = "${optionValue}";
+		var key_optionName = "${optionName}";
+		var key_optionValue = "${optionValue}";
 
 		Click(locator1 = "ACDataControlAndPrivacy#REQUEST_SUPPRESSED_OPTIONS");
 	}

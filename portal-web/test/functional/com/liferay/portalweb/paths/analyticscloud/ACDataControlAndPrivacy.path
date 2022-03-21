@@ -12,7 +12,7 @@
 <tbody>
 <tr>
 	<td>REQUEST_SUPPRESSED_OPTIONS</td>
-	<td>//h4[contains(.,'${key_OptionName}')]/../..//*[contains(@class,'button-root') and contains(.,'${key_OptionValue}')]</td>
+	<td>//h4[contains(.,'${key_optionName}')]/../..//*[contains(@class,'button-root') and contains(.,'${key_optionValue}')]</td>
 	<td></td>
 </tr>
 <tr>

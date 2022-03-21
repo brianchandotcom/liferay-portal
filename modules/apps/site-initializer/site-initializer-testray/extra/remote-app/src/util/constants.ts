@@ -67,4 +67,9 @@ export const SUBTASK_STATUS = {
 	4: {color: 'label-secondary', label: 'OPEN'},
 };
 
+export const BUILD_STATUS = {
+	0: {color: 'label-warning', label: 'IN ANALYSIS'},
+	2: {color: 'label-secondary', label: 'OPEN'},
+};
+
 export {getStatusLabel};

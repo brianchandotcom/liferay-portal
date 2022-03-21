@@ -18,10 +18,9 @@ import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
+import com.liferay.account.role.AccountRolePermissionThreadLocal;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
-import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
@@ -76,19 +75,6 @@ public class AccountRoleModelResourcePermission
 		}
 	}
 
-	public void checkWithAccountEntry(
-			long accountEntryId, PermissionChecker permissionChecker,
-			long accountRoleId, String actionId)
-		throws PortalException {
-
-		try (SafeCloseable safeCloseable =
-				_accountEntryIdThreadLocal.setWithSafeCloseable(
-					accountEntryId)) {
-
-			check(permissionChecker, accountRoleId, actionId);
-		}
-	}
-
 	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, AccountRole accountRole,
@@ -107,7 +93,8 @@ public class AccountRoleModelResourcePermission
 
 		Group group = null;
 
-		long contextAccountEntryId = _accountEntryIdThreadLocal.get();
+		long contextAccountEntryId =
+			AccountRolePermissionThreadLocal.getAccountEntryId();
 
 		if (contextAccountEntryId > 0) {
 			AccountEntry accountEntry =
@@ -158,31 +145,27 @@ public class AccountRoleModelResourcePermission
 
 				return true;
 			}
+
+			if (Objects.equals(actionId, AccountActionKeys.ASSIGN_USERS) &&
+				(accountEntryId > 0) &&
+				_accountEntryModelResourcePermission.contains(
+					permissionChecker, accountEntryId,
+					ActionKeys.MANAGE_USERS)) {
+
+				return true;
+			}
 		}
 
 		if ((group == null) && (accountRoleAccountEntryId > 0)) {
 			AccountEntry accountEntry =
 				_accountEntryLocalService.getAccountEntry(
-					contextAccountEntryId);
+					accountRoleAccountEntryId);
 
 			group = accountEntry.getAccountEntryGroup();
 		}
 
 		return permissionChecker.hasPermission(
 			group, AccountRole.class.getName(), accountRoleId, actionId);
-	}
-
-	public boolean containsWithAccountEntry(
-			long accountEntryId, PermissionChecker permissionChecker,
-			long accountRoleId, String actionId)
-		throws PortalException {
-
-		try (SafeCloseable safeCloseable =
-				_accountEntryIdThreadLocal.setWithSafeCloseable(
-					accountEntryId)) {
-
-			return contains(permissionChecker, accountRoleId, actionId);
-		}
 	}
 
 	@Override
@@ -194,11 +177,6 @@ public class AccountRoleModelResourcePermission
 	public PortletResourcePermission getPortletResourcePermission() {
 		return _portletResourcePermission;
 	}
-
-	private final CentralizedThreadLocal<Long> _accountEntryIdThreadLocal =
-		new CentralizedThreadLocal<>(
-			AccountRoleModelResourcePermission.class + "._accountEntryId",
-			() -> AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;

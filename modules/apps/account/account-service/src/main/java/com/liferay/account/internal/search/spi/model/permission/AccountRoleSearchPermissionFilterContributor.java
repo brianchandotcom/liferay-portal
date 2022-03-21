@@ -15,11 +15,12 @@
 package com.liferay.account.internal.search.spi.model.permission;
 
 import com.liferay.account.constants.AccountConstants;
-import com.liferay.account.internal.security.permission.resource.AccountRoleModelResourcePermission;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
+import com.liferay.account.role.AccountRolePermissionThreadLocal;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -30,8 +31,10 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.search.spi.model.permission.SearchPermissionFilterContributor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,18 +58,35 @@ public class AccountRoleSearchPermissionFilterContributor
 			return;
 		}
 
-		_addAccountRoleIdsFilter(booleanFilter, userId, permissionChecker);
+		try {
+			_addAccountRoleIdsFilter(booleanFilter, userId, permissionChecker);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
+		}
 	}
 
 	private void _addAccountRoleIdsFilter(
-		BooleanFilter booleanFilter, long userId,
-		PermissionChecker permissionChecker) {
+			BooleanFilter booleanFilter, long userId,
+			PermissionChecker permissionChecker)
+		throws PortalException {
 
 		TermsFilter classPksFilter = new TermsFilter(Field.ENTRY_CLASS_PK);
 
 		Set<Long> accountRoleIds = new HashSet<>();
 
-		try {
+		List<Long> accountEntryIds = new ArrayList<>();
+
+		long permissionAccountEntryId =
+			AccountRolePermissionThreadLocal.getAccountEntryId();
+
+		if (permissionAccountEntryId !=
+				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT) {
+
+			accountEntryIds.add(permissionAccountEntryId);
+		}
+
+		if (accountEntryIds.isEmpty()) {
 			List<AccountEntry> accountEntries =
 				_accountEntryLocalService.getUserAccountEntries(
 					userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
@@ -78,29 +98,32 @@ public class AccountRoleSearchPermissionFilterContributor
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			for (AccountEntry accountEntry : accountEntries) {
-				List<AccountRole> accountRoles =
-					_accountRoleLocalService.getAccountRolesByAccountEntryIds(
-						new long[] {
-							AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-							accountEntry.getAccountEntryId()
-						});
+				accountEntryIds.add(accountEntry.getAccountEntryId());
+			}
+		}
+
+		for (long accountEntryId : accountEntryIds) {
+			List<AccountRole> accountRoles =
+				_accountRoleLocalService.getAccountRolesByAccountEntryIds(
+					new long[] {
+						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+						accountEntryId
+					});
+
+			try (SafeCloseable safeCloseable =
+					AccountRolePermissionThreadLocal.setWithSafeCloseable(
+						accountEntryId)) {
 
 				for (AccountRole accountRole : accountRoles) {
 					if (!accountRoleIds.contains(accountRole.getRoleId()) &&
-						_accountRoleModelResourcePermission.
-							containsWithAccountEntry(
-								accountEntry.getAccountEntryId(),
-								permissionChecker,
-								accountRole.getAccountRoleId(),
-								ActionKeys.VIEW)) {
+						_accountRoleModelResourcePermission.contains(
+							permissionChecker, accountRole.getAccountRoleId(),
+							ActionKeys.VIEW)) {
 
 						accountRoleIds.add(accountRole.getAccountRoleId());
 					}
 				}
 			}
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
 		}
 
 		for (long accountRoleId : accountRoleIds) {
@@ -121,8 +144,10 @@ public class AccountRoleSearchPermissionFilterContributor
 	@Reference
 	private AccountRoleLocalService _accountRoleLocalService;
 
-	@Reference
-	private AccountRoleModelResourcePermission
+	@Reference(
+		target = "(model.class.name=com.liferay.account.model.AccountRole)"
+	)
+	private ModelResourcePermission<AccountRole>
 		_accountRoleModelResourcePermission;
 
 }

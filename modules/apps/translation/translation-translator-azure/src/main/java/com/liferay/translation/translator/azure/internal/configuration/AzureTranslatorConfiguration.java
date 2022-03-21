@@ -32,7 +32,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface AzureTranslatorConfiguration {
 
-	@Meta.AD(deflt = "false", name = "enabled", required = false)
+	@Meta.AD(
+		deflt = "false", description = "enabled-description[azure-translation]",
+		name = "enabled", required = false
+	)
 	public boolean enabled();
 
 	@Meta.AD(deflt = "", name = "subscription-key-name", required = false)

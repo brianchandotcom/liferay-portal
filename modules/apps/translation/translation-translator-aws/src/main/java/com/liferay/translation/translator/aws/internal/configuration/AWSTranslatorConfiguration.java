@@ -32,7 +32,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface AWSTranslatorConfiguration {
 
-	@Meta.AD(deflt = "false", name = "enabled", required = false)
+	@Meta.AD(
+		deflt = "false", description = "enabled-description[aws-translation]",
+		name = "enabled", required = false
+	)
 	public boolean enabled();
 
 	@Meta.AD(deflt = "", name = "access-key", required = false)

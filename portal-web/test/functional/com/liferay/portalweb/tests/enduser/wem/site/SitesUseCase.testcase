@@ -449,7 +449,9 @@ definition {
 	@description = "Private virtual hosts redirects to private page."
 	@priority = "4"
 	test PrivateVirtualHostUrlDoesNotRedirectUserToLoginPage {
-		property custom.properties = "auth.login.prompt.enabled=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
+		property osgi.module.configurations = "promptEnabled=&quot;true&quot;";
 		property testray.component.names = "Site Administration";
 
 		task ("Get site name") {
@@ -896,7 +898,9 @@ definition {
 	@description = "Manage demo site virtual URL, friendly URL and logo, add JS to page, export and import page with child pages."
 	@priority = "4"
 	test SitesDemoSiteManagement {
-		property custom.properties = "auth.login.prompt.enabled=true${line.separator}jsonws.web.service.paths.excludes=";
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
+		property osgi.module.configurations = "promptEnabled=&quot;true&quot;";
 		property portal.release = "true";
 		property test.name.skip.portal.instance = "SitesUsecase#SitesDemoSiteManagement";
 		property testray.component.names = "Site Administration,Site Pages Administration";

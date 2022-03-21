@@ -42,7 +42,9 @@ definition {
 	@description = "Add and edit web content via Asset Publisher in organization site with virtual host."
 	@priority = "4"
 	test AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost {
-		property custom.properties = "auth.login.prompt.enabled=true${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
+		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
+		property osgi.module.configurations = "promptEnabled=&quot;true&quot;";
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost";
 
 		task ("Add an organization with site") {
@@ -180,9 +182,9 @@ definition {
 	@description = "Add and edit web content via Asset Publisher in organization site with virtual host. This is a use case for LPS-140253. View no private page in  site settings's virtual host."
 	@priority = "4"
 	test AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHostFF {
-		property custom.properties = "auth.login.prompt.enabled=true${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
-		property osgi.module.configuration.file.names = "com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com,www.baker.com";
+		property osgi.module.configuration.file.names = "com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration.config:com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;:promptEnabled=&quot;true&quot;";
 		property test.name.skip.portal.instance = "AssetPublisherUseCase#AddAndEditWebContentViaAssetPublisherInOrganizationSiteWithVirtualHost";
 
 		task ("Add an organization with site") {

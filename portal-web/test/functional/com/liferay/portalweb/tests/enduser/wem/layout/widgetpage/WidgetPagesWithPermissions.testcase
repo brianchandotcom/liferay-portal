@@ -37,7 +37,8 @@ definition {
 	@description = "The guest cannot view private content and page."
 	@priority = "3"
 	test CannotViewPrivateContentAndPageAsGuest {
-		property custom.properties = "auth.login.prompt.enabled=true";
+		property osgi.module.configuration.file.names = "com.liferay.login.web.internal.configuration.AuthLoginConfiguration.config";
+		property osgi.module.configurations = "promptEnabled=&quot;true&quot;";
 		property testray.component.names = "Message Boards";
 
 		task ("Add a private page") {

@@ -89,6 +89,8 @@ public interface ImportTaskResource {
 
 	public ImportTask getImportTask(Long importTaskId) throws Exception;
 
+	public Response getImportTaskContent(Long importTaskId) throws Exception;
+
 	public Response getImportTaskFailedItemReport(Long importTaskId)
 		throws Exception;
 

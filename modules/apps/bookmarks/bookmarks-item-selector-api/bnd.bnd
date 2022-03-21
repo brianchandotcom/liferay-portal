@@ -2,5 +2,4 @@ Bundle-Name: Liferay Bookmarks Item Selector API
 Bundle-SymbolicName: com.liferay.bookmarks.item.selector.api
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.bookmarks.item.selector.constants,\
 	com.liferay.bookmarks.item.selector.criterion

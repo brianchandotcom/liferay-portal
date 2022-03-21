@@ -17,7 +17,7 @@
 <%@ include file="/bookmarks/item/selector/init.jsp" %>
 
 <%
-BookmarkEntriesItemSelectorDisplayContext bookmarkEntriesItemSelectorDisplayContext = (BookmarkEntriesItemSelectorDisplayContext)request.getAttribute(BookmarksWebKeys.BOOKMARKS_ITEM_SELECTOR_DISPLAY_CONTEXT);
+BookmarkEntriesItemSelectorDisplayContext bookmarkEntriesItemSelectorDisplayContext = (BookmarkEntriesItemSelectorDisplayContext)request.getAttribute(BookmarkEntriesItemSelectorDisplayContext.class.getName());
 %>
 
 <clay:management-toolbar

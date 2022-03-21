@@ -15,7 +15,6 @@
 package com.liferay.bookmarks.web.internal.item.selector;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.web.internal.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.web.internal.display.context.BookmarkEntriesItemSelectorDisplayContext;
 import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -99,7 +98,7 @@ public class BookmarksEntryItemSelectorView
 					itemSelectedEventName, portletURL);
 
 		servletRequest.setAttribute(
-			BookmarksWebKeys.BOOKMARKS_ITEM_SELECTOR_DISPLAY_CONTEXT,
+			BookmarkEntriesItemSelectorDisplayContext.class.getName(),
 			bookmarkEntriesItemSelectorDisplayContext);
 
 		ServletContext servletContext = getServletContext();

@@ -817,11 +817,11 @@ definition {
 				userName = "Test Test");
 		}
 
-		task ("Configure none IP address allowed") {
+		task ("Configure custom IP address allowed, to trigger MFA during login flow") {
 			MultiFactorAuthentication.openToConfigInInstanceSettings(portlet = "IP Address");
 
 			MultiFactorAuthentication.configureIPAddress(
-				allowedIp = " ",
+				allowedIp = "9.9.9.9",
 				enableIp = "true");
 		}
 

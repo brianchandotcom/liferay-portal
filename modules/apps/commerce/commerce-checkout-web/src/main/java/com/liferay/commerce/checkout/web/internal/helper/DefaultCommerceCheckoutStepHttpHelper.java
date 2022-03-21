@@ -158,12 +158,12 @@ public class DefaultCommerceCheckoutStepHttpHelper
 		for (CommerceShippingOption commerceShippingOption :
 				commerceShippingOptions) {
 
-			if (shippingOptionName.equals(commerceShippingOption.getName())) {
+			if (shippingOptionName.equals(commerceShippingOption.getKey())) {
 				CommerceShippingFixedOption commerceShippingFixedOption =
 					_commerceShippingFixedOptionLocalService.
 						fetchCommerceShippingFixedOption(
 							commerceOrder.getCompanyId(),
-							commerceShippingOption.getName());
+							commerceShippingOption.getKey());
 
 				if (commerceShippingFixedOption != null) {
 					deliveryCommerceTermEntries =

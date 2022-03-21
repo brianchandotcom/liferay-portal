@@ -104,12 +104,12 @@ public class TermCommerceCheckoutStepDisplayContext {
 		for (CommerceShippingOption commerceShippingOption :
 				commerceShippingOptions) {
 
-			if (shippingOptionName.equals(commerceShippingOption.getName())) {
+			if (shippingOptionName.equals(commerceShippingOption.getKey())) {
 				CommerceShippingFixedOption commerceShippingFixedOption =
 					_commerceShippingFixedOptionLocalService.
 						fetchCommerceShippingFixedOption(
 							_commerceOrder.getCompanyId(),
-							commerceShippingOption.getName());
+							commerceShippingOption.getKey());
 
 				if (commerceShippingFixedOption != null) {
 					return _commerceTermEntryLocalService.

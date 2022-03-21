@@ -100,7 +100,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			shippingOptionName;
 	}
 
-	public String getCommerceShippingOptionLabel(
+	public String getCommerceShippingOptionName(
 			CommerceShippingOption commerceShippingOption)
 		throws PortalException {
 
@@ -108,7 +108,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			CommerceBigDecimalUtil.lte(
 				commerceShippingOption.getAmount(), BigDecimal.ZERO)) {
 
-			return commerceShippingOption.getLabel();
+			return commerceShippingOption.getName();
 		}
 
 		ThemeDisplay themeDisplay =
@@ -116,7 +116,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		return StringBundler.concat(
-			commerceShippingOption.getLabel(), " (+",
+			commerceShippingOption.getName(), " (+",
 			_commercePriceFormatter.format(
 				_commerceOrder.getCommerceCurrency(),
 				commerceShippingOption.getAmount(), themeDisplay.getLocale()),
@@ -183,7 +183,7 @@ public class ShippingMethodCheckoutStepDisplayContext {
 
 				String key = commerceShippingFixedOption.getKey();
 
-				if (key.equals(commerceShippingOption.getName())) {
+				if (key.equals(commerceShippingOption.getKey())) {
 					filteredCommerceShippingOptions.add(commerceShippingOption);
 				}
 			}

@@ -1550,7 +1550,7 @@ public class CommerceOrderLocalServiceImpl
 
 			if (Validator.isNotNull(commerceShippingOptionName) &&
 				commerceShippingOptionName.equals(
-					commerceShippingOption.getName())) {
+					commerceShippingOption.getKey())) {
 
 				commerceOrder.setShippingAmount(
 					commerceShippingOption.getAmount());

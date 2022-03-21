@@ -276,12 +276,12 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		for (CommerceShippingOption commerceShippingOption :
 				commerceShippingOptions) {
 
-			String shippingOptionName = commerceShippingOption.getName();
+			String commerceShippingOptionKey = commerceShippingOption.getKey();
 
-			if (shippingOptionName.equals(
+			if (commerceShippingOptionKey.equals(
 					commerceOrder.getShippingOptionName())) {
 
-				return commerceShippingOption.getLabel();
+				return commerceShippingOption.getName();
 			}
 		}
 

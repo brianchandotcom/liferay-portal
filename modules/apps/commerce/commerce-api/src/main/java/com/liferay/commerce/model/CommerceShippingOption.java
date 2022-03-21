@@ -18,31 +18,45 @@ import java.math.BigDecimal;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CommerceShippingOption {
 
 	public CommerceShippingOption(
-		String name, String label, BigDecimal amount) {
+		String commerceShippingMethodKey, String key, String name,
+		BigDecimal amount, double priority) {
 
+		_commerceShippingMethodKey = commerceShippingMethodKey;
+		_key = key;
 		_name = name;
-		_label = label;
 		_amount = amount;
+		_priority = priority;
 	}
 
 	public BigDecimal getAmount() {
 		return _amount;
 	}
 
-	public String getLabel() {
-		return _label;
+	public String getCommerceShippingMethodKey() {
+		return _commerceShippingMethodKey;
+	}
+
+	public String getKey() {
+		return _key;
 	}
 
 	public String getName() {
 		return _name;
 	}
 
+	public double getPriority() {
+		return _priority;
+	}
+
 	private final BigDecimal _amount;
-	private final String _label;
+	private final String _commerceShippingMethodKey;
+	private final String _key;
 	private final String _name;
+	private final double _priority;
 
 }

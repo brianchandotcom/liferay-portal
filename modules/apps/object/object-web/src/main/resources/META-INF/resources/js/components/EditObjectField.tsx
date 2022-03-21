@@ -309,7 +309,6 @@ function AttachmentProperties({
 				error={errors.maximumFileSize}
 				feedbackMessage={Liferay.Language.get('maximum-file-size-help')}
 				label={Liferay.Language.get('maximum-file-size')}
-				max={100}
 				min={0}
 				name="maximumFileSize"
 				onChange={handleChange}

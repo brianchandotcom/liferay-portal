@@ -22,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -42,6 +43,7 @@ public class DartSassCompilerTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testCompileFileClayCss() throws Exception {
 		try (SassCompiler sassCompiler = new DartSassCompiler()) {
@@ -88,6 +90,7 @@ public class DartSassCompilerTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testCompileFileSassSpec() throws Exception {
 		try (SassCompiler sassCompiler = new DartSassCompiler()) {
@@ -121,6 +124,7 @@ public class DartSassCompilerTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testCompileFileSassVariableWithUnicode() throws Exception {
 		try (SassCompiler sassCompiler = new DartSassCompiler()) {
@@ -145,6 +149,7 @@ public class DartSassCompilerTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testCompileFileWithSourceMap() throws Exception {
 		try (SassCompiler sassCompiler = new DartSassCompiler()) {
@@ -193,6 +198,7 @@ public class DartSassCompilerTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testCompileStringSassVariableWithUnicode() throws Exception {
 		try (SassCompiler sassCompiler = new DartSassCompiler()) {
@@ -218,6 +224,7 @@ public class DartSassCompilerTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testCompileStringWithSourceMap() throws Exception {
 		try (SassCompiler sassCompiler = new DartSassCompiler()) {

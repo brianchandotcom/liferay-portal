@@ -65,6 +65,7 @@ definition {
 	test DefaultSiteCanBeExportedAfterUpgrade701016 {
 		property data.archive.type = "data-archive-default-site-export";
 		property database.types = "db2,mariadb,mysql,oracle,postgresql,sybase";
+		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property portal.version = "7.0.10.16";
 

@@ -43,9 +43,11 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResourc
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountRole;
+import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
+import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.workflow.dto.v1_0.WorkflowDefinition;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
@@ -210,7 +212,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
-		ObjectEntryLocalService objectEntryLocalService, Portal portal,
+		ObjectEntryLocalService objectEntryLocalService,
+		OrganizationResource.Factory organizationResourceFactory, Portal portal,
 		PortletSettingsImporter portletSettingsImporter,
 		RemoteAppEntryLocalService remoteAppEntryLocalService,
 		ResourceActionLocalService resourceActionLocalService,
@@ -264,6 +267,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_objectDefinitionResourceFactory = objectDefinitionResourceFactory;
 		_objectRelationshipResourceFactory = objectRelationshipResourceFactory;
 		_objectEntryLocalService = objectEntryLocalService;
+		_organizationResourceFactory = organizationResourceFactory;
 		_portal = portal;
 		_portletSettingsImporter = portletSettingsImporter;
 		_remoteAppEntryLocalService = remoteAppEntryLocalService;
@@ -373,6 +377,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				() -> _addFragmentEntries(
 					assetListEntryIdsStringUtilReplaceValues,
 					documentsStringUtilReplaceValues, serviceContext));
+
+			_invoke(() -> _addOrganizations(serviceContext));
 
 			_invoke(() -> _addSAPEntries(serviceContext));
 			_invoke(() -> _addSiteConfiguration(serviceContext));
@@ -1807,6 +1813,106 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
+	private void _addOrganization(
+			String json, Organization parentOrganization,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(json);
+
+		Organization organization = Organization.toDTO(json);
+
+		if (organization == null) {
+			_log.error("Unable to transform organization from JSON: " + json);
+
+			return;
+		}
+
+		organization.setParentOrganization(parentOrganization);
+
+		OrganizationResource.Builder organizationResourceBuilder =
+			_organizationResourceFactory.create();
+
+		OrganizationResource organizationResource =
+			organizationResourceBuilder.user(
+				serviceContext.fetchUser()
+			).httpServletRequest(
+				serviceContext.getRequest()
+			).build();
+
+		if (parentOrganization == null) {
+			Page<Organization> organizationsPage =
+				organizationResource.getOrganizationsPage(
+					null, null,
+					organizationResource.toFilter(
+						StringBundler.concat(
+							"name eq '", organization.getName(), "'")),
+					null, null);
+
+			Organization existingOrganization =
+				organizationsPage.fetchFirstItem();
+
+			if (existingOrganization == null) {
+				organization = organizationResource.postOrganization(
+					organization);
+			}
+			else {
+				organization = organizationResource.putOrganization(
+					existingOrganization.getId(), organization);
+			}
+		}
+		else {
+			Page<Organization> organizationsPage =
+				organizationResource.getOrganizationChildOrganizationsPage(
+					parentOrganization.getId(), null, null, null, null, null);
+
+			Organization existingOrganization =
+				organizationsPage.fetchFirstItem();
+
+			if (existingOrganization == null) {
+				organization = organizationResource.postOrganization(
+					organization);
+			}
+			else {
+				organization = organizationResource.putOrganization(
+					existingOrganization.getId(), organization);
+			}
+		}
+
+		JSONArray childOrganizationsJSONArray = jsonObject.getJSONArray(
+			"childOrganizations");
+
+		if (childOrganizationsJSONArray != null) {
+			for (int i = 0; i < childOrganizationsJSONArray.length(); i++) {
+				_addOrganization(
+					childOrganizationsJSONArray.getString(i), organization,
+					serviceContext);
+			}
+		}
+	}
+
+	private void _addOrganizations(ServiceContext serviceContext)
+		throws Exception {
+
+		Set<String> resourcePaths = _servletContext.getResourcePaths(
+			"/site-initializer/organizations");
+
+		if (SetUtil.isEmpty(resourcePaths)) {
+			return;
+		}
+
+		for (String resourcePath : resourcePaths) {
+			String json = SiteInitializerUtil.read(
+				resourcePath, _servletContext);
+
+			if (json == null) {
+				return;
+			}
+
+			_addOrganization(json, null, serviceContext);
+		}
+	}
+
 	private void _addPermissions(
 			Map<String, String> objectDefinitionIdsStringUtilReplaceValues,
 			ServiceContext serviceContext)
@@ -3091,6 +3197,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectRelationshipResource.Factory
 		_objectRelationshipResourceFactory;
+	private final OrganizationResource.Factory _organizationResourceFactory;
 	private final Portal _portal;
 	private final PortletSettingsImporter _portletSettingsImporter;
 	private final RemoteAppEntryLocalService _remoteAppEntryLocalService;

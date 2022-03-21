@@ -29,6 +29,7 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResourc
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
+import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
@@ -115,9 +116,10 @@ public class SiteInitializerExtender
 				_listTypeEntryResourceFactory, _objectDefinitionLocalService,
 				_objectDefinitionResourceFactory,
 				_objectRelationshipResourceFactory, _objectEntryLocalService,
-				_portal, _portletSettingsImporter, _remoteAppEntryLocalService,
-				_resourceActionLocalService, _resourcePermissionLocalService,
-				_roleLocalService, _sapEntryLocalService, _settingsFactory,
+				_organizationResourceFactory, _portal, _portletSettingsImporter,
+				_remoteAppEntryLocalService, _resourceActionLocalService,
+				_resourcePermissionLocalService, _roleLocalService,
+				_sapEntryLocalService, _settingsFactory,
 				_siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
@@ -255,6 +257,9 @@ public class SiteInitializerExtender
 	@Reference
 	private ObjectRelationshipResource.Factory
 		_objectRelationshipResourceFactory;
+
+	@Reference
+	private OrganizationResource.Factory _organizationResourceFactory;
 
 	@Reference
 	private Portal _portal;

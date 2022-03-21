@@ -29,6 +29,7 @@ import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyCategoryResourc
 import com.liferay.headless.admin.taxonomy.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
+import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
 import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowDefinitionResource;
 import com.liferay.headless.delivery.resource.v1_0.DocumentFolderResource;
@@ -108,7 +109,8 @@ public class SiteInitializerExtension {
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionResource.Factory objectDefinitionResourceFactory,
 		ObjectRelationshipResource.Factory objectRelationshipResourceFactory,
-		ObjectEntryLocalService objectEntryLocalService, Portal portal,
+		ObjectEntryLocalService objectEntryLocalService,
+		OrganizationResource.Factory organizationResourceFactory, Portal portal,
 		PortletSettingsImporter portletSettingsImporter,
 		RemoteAppEntryLocalService remoteAppEntryLocalService,
 		ResourceActionLocalService resourceActionLocalService,
@@ -150,9 +152,10 @@ public class SiteInitializerExtension {
 				listTypeEntryResource, listTypeEntryResourceFactory,
 				objectDefinitionLocalService, objectDefinitionResourceFactory,
 				objectRelationshipResourceFactory, objectEntryLocalService,
-				portal, portletSettingsImporter, remoteAppEntryLocalService,
-				resourceActionLocalService, resourcePermissionLocalService,
-				roleLocalService, sapEntryLocalService, settingsFactory,
+				organizationResourceFactory, portal, portletSettingsImporter,
+				remoteAppEntryLocalService, resourceActionLocalService,
+				resourcePermissionLocalService, roleLocalService,
+				sapEntryLocalService, settingsFactory,
 				siteNavigationMenuItemLocalService,
 				siteNavigationMenuItemTypeRegistry,
 				siteNavigationMenuLocalService,

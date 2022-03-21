@@ -530,7 +530,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {comment(commentId: ___){actions, creator, dateCreated, dateModified, id, numberOfComments, parentCommentId, text}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {comment(commentId: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, numberOfComments, parentCommentId, text}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the comment.")
 	public Comment comment(@GraphQLName("commentId") Long commentId)
@@ -600,6 +600,116 @@ public class Query {
 					_filterBiFunction.apply(commentResource, filterString),
 					Pagination.of(page, pageSize),
 					_sortsBiFunction.apply(commentResource, sortsString))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {blogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(blogPostingExternalReferenceCode: ___, externalReferenceCode: ___, siteKey: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, numberOfComments, parentCommentId, text}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the blog posting's comment by blog posting's and comment's external reference codes."
+	)
+	public Comment
+			blogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("blogPostingExternalReferenceCode") String
+					blogPostingExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource ->
+				commentResource.
+					getSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
+						Long.valueOf(siteKey), blogPostingExternalReferenceCode,
+						externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {commentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(externalReferenceCode: ___, parentCommentExternalReferenceCode: ___, siteKey: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, numberOfComments, parentCommentId, text}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the parent comment's comment by its parent comment's and comment's external reference codes."
+	)
+	public Comment
+			commentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("parentCommentExternalReferenceCode") String
+					parentCommentExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource ->
+				commentResource.
+					getSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
+						Long.valueOf(siteKey),
+						parentCommentExternalReferenceCode,
+						externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {documentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(documentExternalReferenceCode: ___, externalReferenceCode: ___, siteKey: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, numberOfComments, parentCommentId, text}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the document's comment by document's and comment's external reference codes."
+	)
+	public Comment
+			documentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("documentExternalReferenceCode") String
+					documentExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource ->
+				commentResource.
+					getSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
+						Long.valueOf(siteKey), documentExternalReferenceCode,
+						externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {structuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(externalReferenceCode: ___, siteKey: ___, structuredContentExternalReferenceCode: ___){actions, creator, dateCreated, dateModified, externalReferenceCode, id, numberOfComments, parentCommentId, text}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(
+		description = "Retrieves the structured content's comment by structured content's and comment's external reference codes."
+	)
+	public Comment
+			structuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
+				@GraphQLName("siteKey") @NotEmpty String siteKey,
+				@GraphQLName("structuredContentExternalReferenceCode") String
+					structuredContentExternalReferenceCode,
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_commentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			commentResource ->
+				commentResource.
+					getSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
+						Long.valueOf(siteKey),
+						structuredContentExternalReferenceCode,
+						externalReferenceCode));
 	}
 
 	/**

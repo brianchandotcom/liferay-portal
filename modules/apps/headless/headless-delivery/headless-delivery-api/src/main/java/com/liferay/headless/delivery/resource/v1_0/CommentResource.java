@@ -106,6 +106,78 @@ public interface CommentResource {
 			Long documentId, String callbackURL, Object object)
 		throws Exception;
 
+	public void
+			deleteSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String blogPostingExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public Comment
+			getSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String blogPostingExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public Comment
+			putSiteBlogPostingByExternalReferenceCodeBlogPostingExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String blogPostingExternalReferenceCode,
+				String externalReferenceCode, Comment comment)
+		throws Exception;
+
+	public void
+			deleteSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String parentCommentExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public Comment
+			getSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String parentCommentExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public Comment
+			putSiteCommentByExternalReferenceCodeParentCommentExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String parentCommentExternalReferenceCode,
+				String externalReferenceCode, Comment comment)
+		throws Exception;
+
+	public void
+			deleteSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String documentExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public Comment
+			getSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String documentExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public Comment
+			putSiteDocumentByExternalReferenceCodeDocumentExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String documentExternalReferenceCode,
+				String externalReferenceCode, Comment comment)
+		throws Exception;
+
+	public void
+			deleteSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String structuredContentExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public Comment
+			getSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String structuredContentExternalReferenceCode,
+				String externalReferenceCode)
+		throws Exception;
+
+	public Comment
+			putSiteStructuredContentByExternalReferenceCodeStructuredContentExternalReferenceCodeCommentByExternalReferenceCode(
+				Long siteId, String structuredContentExternalReferenceCode,
+				String externalReferenceCode, Comment comment)
+		throws Exception;
+
 	public Page<Comment> getStructuredContentCommentsPage(
 			Long structuredContentId, String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,

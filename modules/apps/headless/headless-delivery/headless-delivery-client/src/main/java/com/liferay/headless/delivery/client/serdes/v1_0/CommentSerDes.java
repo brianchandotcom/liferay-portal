@@ -108,6 +108,20 @@ public class CommentSerDes {
 			sb.append("\"");
 		}
 
+		if (comment.getExternalReferenceCode() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(comment.getExternalReferenceCode()));
+
+			sb.append("\"");
+		}
+
 		if (comment.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -205,6 +219,15 @@ public class CommentSerDes {
 				liferayToJSONDateFormat.format(comment.getDateModified()));
 		}
 
+		if (comment.getExternalReferenceCode() == null) {
+			map.put("externalReferenceCode", null);
+		}
+		else {
+			map.put(
+				"externalReferenceCode",
+				String.valueOf(comment.getExternalReferenceCode()));
+		}
+
 		if (comment.getId() == null) {
 			map.put("id", null);
 		}
@@ -279,6 +302,14 @@ public class CommentSerDes {
 				if (jsonParserFieldValue != null) {
 					comment.setDateModified(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
+				if (jsonParserFieldValue != null) {
+					comment.setExternalReferenceCode(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

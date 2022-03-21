@@ -15,6 +15,7 @@
 package com.liferay.segments.security.permission.contributor.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -33,6 +34,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
@@ -82,6 +84,16 @@ public class SegmentsEntryRoleContributorTest {
 				"roleSegmentationEnabled", true
 			).build());
 
+		_companyConfigurationTemporarySwapper =
+			new CompanyConfigurationTemporarySwapper(
+				TestPropsValues.getCompanyId(),
+				"com.liferay.segments.configuration." +
+					"SegmentsCompanyConfiguration",
+				HashMapDictionaryBuilder.<String, Object>put(
+					"roleSegmentationEnabled", true
+				).build(),
+				SettingsFactoryUtil.getSettingsFactory());
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
@@ -100,6 +112,7 @@ public class SegmentsEntryRoleContributorTest {
 	@After
 	public void tearDown() throws Exception {
 		_configurationTemporarySwapper.close();
+		_companyConfigurationTemporarySwapper.close();
 
 		ServiceContextThreadLocal.popServiceContext();
 	}
@@ -353,6 +366,8 @@ public class SegmentsEntryRoleContributorTest {
 
 	private static final String _ACTION_KEY = ActionKeys.UPDATE;
 
+	private CompanyConfigurationTemporarySwapper
+		_companyConfigurationTemporarySwapper;
 	private ConfigurationTemporarySwapper _configurationTemporarySwapper;
 
 	@Inject

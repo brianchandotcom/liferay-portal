@@ -204,8 +204,10 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			(objectField) => objectField.inLayout
 		);
 
+		const parentWindow = Liferay.Util.getOpener();
+
 		if (!hasFieldsInLayout) {
-			Liferay.Util.openToast({
+			parentWindow.Liferay.Util.openToast({
 				message: Liferay.Language.get('please-add-at-least-one-field'),
 				type: 'danger',
 			});
@@ -226,24 +228,21 @@ const Layout: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			window.location.reload();
 		}
 		else if (response.ok) {
-			Liferay.Util.openToast({
+			onCloseSidePanel();
+
+			parentWindow.Liferay.Util.openToast({
 				message: Liferay.Language.get(
 					'the-object-layout-was-updated-successfully'
 				),
 				type: 'success',
 			});
-
-			setTimeout(() => {
-				const parentWindow = Liferay.Util.getOpener();
-				parentWindow.Liferay.fire('close-side-panel');
-			}, 1500);
 		}
 		else {
 			const {
 				title = Liferay.Language.get('an-error-occurred'),
 			} = (await response.json()) as {title: any};
 
-			Liferay.Util.openToast({
+			parentWindow.Liferay.Util.openToast({
 				message: title,
 				type: 'danger',
 			});

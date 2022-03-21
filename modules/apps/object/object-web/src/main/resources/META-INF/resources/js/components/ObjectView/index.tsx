@@ -53,7 +53,6 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 	const onCloseSidePanel = () => {
 		const parentWindow = Liferay.Util.getOpener();
-
 		parentWindow.Liferay.fire('close-side-panel');
 	};
 
@@ -154,6 +153,8 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 		const {objectViewColumns} = newObjectView;
 
+		const parentWindow = Liferay.Util.getOpener();
+
 		if (!objectView.defaultObjectView || objectViewColumns.length !== 0) {
 			const response = await Liferay.Util.fetch(
 				`/o/object-admin/v1.0/object-views/${objectViewId}`,
@@ -168,31 +169,28 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 				window.location.reload();
 			}
 			else if (response.ok) {
-				Liferay.Util.openToast({
+				onCloseSidePanel();
+
+				parentWindow.Liferay.Util.openToast({
 					message: Liferay.Language.get(
 						'modifications-saved-successfully'
 					),
 					type: 'success',
 				});
-
-				setTimeout(() => {
-					const parentWindow = Liferay.Util.getOpener();
-					parentWindow.Liferay.fire('close-side-panel');
-				}, 1500);
 			}
 			else {
 				const {
 					title = Liferay.Language.get('an-error-occurred'),
 				} = await response.json();
 
-				Liferay.Util.openToast({
+				parentWindow.Liferay.Util.openToast({
 					message: title,
 					type: 'danger',
 				});
 			}
 		}
 		else {
-			Liferay.Util.openToast({
+			parentWindow.Liferay.Util.openToast({
 				message: Liferay.Language.get(
 					'default-view-must-have-at-least-one-column'
 				),

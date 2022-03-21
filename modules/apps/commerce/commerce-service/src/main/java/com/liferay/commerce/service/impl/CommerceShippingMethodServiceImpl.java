@@ -205,24 +205,27 @@ public class CommerceShippingMethodServiceImpl
 	}
 
 	@Override
-	public List<CommerceShippingMethod> getCommerceShippingMethods(long groupId)
+	public List<CommerceShippingMethod> getCommerceShippingMethods(
+			long groupId, boolean active, int start, int end,
+			OrderByComparator<CommerceShippingMethod> orderByComparator)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
 
 		return commerceShippingMethodLocalService.getCommerceShippingMethods(
-			groupId);
+			groupId, active, start, end, orderByComparator);
 	}
 
 	@Override
 	public List<CommerceShippingMethod> getCommerceShippingMethods(
-			long groupId, boolean active)
+			long groupId, int start, int end,
+			OrderByComparator<CommerceShippingMethod> orderByComparator)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
 
 		return commerceShippingMethodLocalService.getCommerceShippingMethods(
-			groupId, active);
+			groupId, start, end, orderByComparator);
 	}
 
 	@Override
@@ -237,13 +240,13 @@ public class CommerceShippingMethodServiceImpl
 	}
 
 	@Override
-	public int getCommerceShippingMethodsCount(long groupId, boolean active)
+	public int getCommerceShippingMethodsCount(long groupId)
 		throws PortalException {
 
 		_checkCommerceChannel(groupId);
 
 		return commerceShippingMethodLocalService.
-			getCommerceShippingMethodsCount(groupId, active);
+			getCommerceShippingMethodsCount(groupId);
 	}
 
 	@Override

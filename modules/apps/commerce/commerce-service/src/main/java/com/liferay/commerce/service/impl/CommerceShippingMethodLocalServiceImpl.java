@@ -215,16 +215,20 @@ public class CommerceShippingMethodLocalServiceImpl
 
 	@Override
 	public List<CommerceShippingMethod> getCommerceShippingMethods(
-		long groupId) {
+		long groupId, boolean active, int start, int end,
+		OrderByComparator<CommerceShippingMethod> orderByComparator) {
 
-		return commerceShippingMethodPersistence.findByGroupId(groupId);
+		return commerceShippingMethodPersistence.findByG_A(
+			groupId, active, start, end, orderByComparator);
 	}
 
 	@Override
 	public List<CommerceShippingMethod> getCommerceShippingMethods(
-		long groupId, boolean active) {
+		long groupId, int start, int end,
+		OrderByComparator<CommerceShippingMethod> orderByComparator) {
 
-		return commerceShippingMethodPersistence.findByG_A(groupId, active);
+		return commerceShippingMethodPersistence.findByGroupId(
+			groupId, start, end, orderByComparator);
 	}
 
 	@Override
@@ -253,6 +257,11 @@ public class CommerceShippingMethodLocalServiceImpl
 		}
 
 		return filteredCommerceShippingMethods;
+	}
+
+	@Override
+	public int getCommerceShippingMethodsCount(long groupId) {
+		return commerceShippingMethodPersistence.countByGroupId(groupId);
 	}
 
 	@Override

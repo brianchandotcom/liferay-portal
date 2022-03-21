@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -88,6 +89,7 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 
 		_sharedAccountRoles = TransformUtil.transform(
 			_accountRoleLocalService.getAccountRolesByAccountEntryIds(
+				TestPropsValues.getCompanyId(),
 				new long[] {AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT}),
 			serviceBuilderAccountRole -> {
 				Role role = serviceBuilderAccountRole.getRole();

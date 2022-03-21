@@ -36,7 +36,7 @@ export const getBuilds = gql`
 		builds(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
 				type: "C_Build"
-				path: "builds?page={args.page}&pageSize={args.pageSize}&nestedFields=ProductVersion"
+				path: "builds?page={args.page}&pageSize={args.pageSize}&nestedFields=productVersion"
 			) {
 			items {
 				dateCreated
@@ -46,7 +46,7 @@ export const getBuilds = gql`
 				name
 				promoted
 				id
-				productVersion: r_buildProductVersion_c_ProductVersion {
+				productVersion: r_productVersionToBuilds_c_productVersion {
 					name
 				}
 			}
@@ -63,7 +63,7 @@ export const getBuild = gql`
 		build(buildId: $buildId)
 			@rest(
 				type: "C_Build"
-				path: "builds/{args.buildId}?nestedFields=ProductVersion"
+				path: "builds/{args.buildId}?nestedFields=productVersion"
 			) {
 			dateCreated
 			description
@@ -71,7 +71,7 @@ export const getBuild = gql`
 			gitHash
 			id
 			name
-			productVersion: r_buildProductVersion_c_ProductVersion {
+			productVersion: r_productVersionToBuilds_c_productVersion {
 				name
 			}
 			promoted

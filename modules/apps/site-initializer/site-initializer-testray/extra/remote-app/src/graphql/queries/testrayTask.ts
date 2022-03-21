@@ -35,15 +35,15 @@ export const getTasks = gql`
 				dateCreated
 				dueStatus
 				name
-				build: r_taskBuild_c_Build {
-					dueDate
+				build: r_buildToTasks_c_build {
+					dueDate: dateCreated
 					id
 					name
-					project: r_buildProject_c_Project {
+					project: r_projectToBuilds_c_project {
 						id
 						name
 					}
-					routine: r_buildRoutine_c_Routine {
+					routine: r_routineToBuilds_c_routine {
 						id
 						name
 					}
@@ -68,15 +68,15 @@ export const getTask = gql`
 			dateCreated
 			dueStatus
 			name
-			build: r_taskBuild_c_Build {
+			build: r_buildToTasks_c_build {
 				id
 				dueDate
 				name
-				project: r_buildProject_c_Project {
+				project: r_projectToBuilds_c_project {
 					id
 					name
 				}
-				routine: r_buildRoutine_c_Routine {
+				routine: r_routineToBuilds_c_routine {
 					id
 					name
 				}

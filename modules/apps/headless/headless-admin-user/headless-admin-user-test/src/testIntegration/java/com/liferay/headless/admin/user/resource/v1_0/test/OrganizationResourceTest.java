@@ -77,18 +77,6 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 	@Override
 	@Test
-	public void testDeleteAccountOrganization() throws Exception {
-		Organization organization =
-			testDeleteAccountOrganization_addOrganization();
-
-		assertHttpResponseStatusCode(
-			204,
-			organizationResource.deleteAccountOrganizationHttpResponse(
-				_accountEntry.getAccountEntryId(), organization.getId()));
-	}
-
-	@Override
-	@Test
 	public void testDeleteUserAccountByEmailAddress() throws Exception {
 		Organization organization = _toOrganization(
 			_addOrganization(randomOrganization(), "0"));
@@ -292,6 +280,13 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		return organizationResource.putOrganizationByExternalReferenceCode(
 			StringUtil.toLowerCase(RandomTestUtil.randomString()),
 			randomOrganization());
+	}
+
+	@Override
+	protected Long testDeleteAccountOrganization_getAccountId()
+		throws Exception {
+
+		return _accountEntry.getAccountEntryId();
 	}
 
 	@Override

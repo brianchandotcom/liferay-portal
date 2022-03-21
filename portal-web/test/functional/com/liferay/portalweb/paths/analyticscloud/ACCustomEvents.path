@@ -82,6 +82,11 @@
 	<td>//div[contains(@class,'alert-warning')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>BLOCK_LIST_EMPTY_MESSAGE</td>
+	<td>//*[text()="To block events, select one from the events' table."]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -92,7 +92,7 @@ continueQuoteButton.onclick = async function () {
 	}
 
 	const raylifeApplicationResponse = await fetchHeadless(
-		`o/c/raylifeapplications/scopes/${scopeGroupId}?filter=email eq '${emailInput.value}'`
+		`o/c/raylifeapplications/?filter=email eq '${emailInput.value}'`
 	);
 
 	if (!raylifeApplicationResponse.items.length) {

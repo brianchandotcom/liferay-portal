@@ -106,6 +106,8 @@ export function FormBuilder() {
 
 	const [visibleFormSettings, setVisibleFormSettings] = useState(false);
 
+	const [session, setSession] = useState();
+
 	const dispatch = useForm();
 
 	const emailContentRef = useRef({
@@ -134,18 +136,27 @@ export function FormBuilder() {
 	);
 
 	useEffect(() => {
-		const sessionLength = Liferay.Session
-			? Liferay.Session.get('sessionLength')
-			: 60000;
-
-		const interval = setInterval(() => {
+		const getSession = (attemps) => {
 			if (Liferay.Session) {
-				Liferay.Session.extend();
+				setSession(Liferay.Session);
 			}
-		}, sessionLength / 2);
+			else if (attemps > 0) {
+				setTimeout(() => {
+					getSession(--attemps);
+				}, 500);
+			}
+		};
 
-		return () => clearInterval(interval);
+		getSession(10);
 	}, []);
+
+	useEffect(() => {
+		if (session && !session.get('autoExtend')) {
+			Liferay.Session.set('autoExtend', true);
+
+			return () => Liferay.Session.set('autoExtend', false);
+		}
+	}, [session]);
 
 	/**
 	 * Opens the sidebar whenever a field is focused

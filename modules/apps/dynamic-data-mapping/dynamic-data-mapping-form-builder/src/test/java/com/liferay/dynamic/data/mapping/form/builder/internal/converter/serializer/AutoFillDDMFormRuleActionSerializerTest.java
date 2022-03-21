@@ -18,21 +18,24 @@ import com.liferay.dynamic.data.mapping.form.builder.internal.converter.model.ac
 import com.liferay.dynamic.data.mapping.spi.converter.serializer.SPIDDMFormRuleSerializerContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 /**
  * @author Leonardo Barros
  */
-@RunWith(PowerMockRunner.class)
-public class AutoFillDDMFormRuleActionSerializerTest extends PowerMockito {
+public class AutoFillDDMFormRuleActionSerializerTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testSerialize() {
@@ -89,7 +92,7 @@ public class AutoFillDDMFormRuleActionSerializerTest extends PowerMockito {
 	}
 
 	private void _mockGetDDMDataProviderInstanceUUID() {
-		when(
+		Mockito.when(
 			_autoFillDDMFormRuleAction.getDDMDataProviderInstanceUUID()
 		).thenReturn(
 			"0"
@@ -97,7 +100,7 @@ public class AutoFillDDMFormRuleActionSerializerTest extends PowerMockito {
 	}
 
 	private void _mockGetInputParametersMapper(String fieldName) {
-		when(
+		Mockito.when(
 			_autoFillDDMFormRuleAction.getInputParametersMapper()
 		).thenReturn(
 			HashMapBuilder.put(
@@ -109,7 +112,7 @@ public class AutoFillDDMFormRuleActionSerializerTest extends PowerMockito {
 	private void _mockGetOutputParametersMapper(
 		String fieldName1, String fieldName2) {
 
-		when(
+		Mockito.when(
 			_autoFillDDMFormRuleAction.getOutputParametersMapper()
 		).thenReturn(
 			HashMapBuilder.put(
@@ -120,10 +123,10 @@ public class AutoFillDDMFormRuleActionSerializerTest extends PowerMockito {
 		);
 	}
 
-	@Mock
-	private AutoFillDDMFormRuleAction _autoFillDDMFormRuleAction;
-
-	@Mock
-	private SPIDDMFormRuleSerializerContext _spiDDMFormRuleSerializerContext;
+	private final AutoFillDDMFormRuleAction _autoFillDDMFormRuleAction =
+		Mockito.mock(AutoFillDDMFormRuleAction.class);
+	private final SPIDDMFormRuleSerializerContext
+		_spiDDMFormRuleSerializerContext = Mockito.mock(
+			SPIDDMFormRuleSerializerContext.class);
 
 }

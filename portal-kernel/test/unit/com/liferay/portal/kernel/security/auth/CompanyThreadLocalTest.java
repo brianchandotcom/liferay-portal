@@ -44,29 +44,24 @@ public class CompanyThreadLocalTest {
 
 	@Test
 	public void testLock() {
-		_testLock(companyId -> CompanyThreadLocal.setCompanyId(companyId));
+		_testLock(CompanyThreadLocal::setCompanyId);
 	}
 
 	@Test
 	public void testLockWithSetWithSafeCloseable() {
-		_testLock(
-			companyId -> CompanyThreadLocal.setWithSafeCloseable(companyId));
+		_testLock(CompanyThreadLocal::setWithSafeCloseable);
 	}
 
 	private void _testLock(Consumer<Long> consumer) {
-		SafeCloseable safeCloseable = CompanyThreadLocal.lock(
-			CompanyConstants.SYSTEM);
+		try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
+				CompanyConstants.SYSTEM)) {
 
-		try {
 			consumer.accept(1L);
 
 			Assert.fail();
 		}
 		catch (UnsupportedOperationException unsupportedOperationException) {
 			Assert.assertNotNull(unsupportedOperationException);
-		}
-		finally {
-			safeCloseable.close();
 		}
 	}
 

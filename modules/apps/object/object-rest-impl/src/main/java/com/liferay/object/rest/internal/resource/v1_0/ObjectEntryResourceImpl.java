@@ -125,13 +125,9 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		if (_entityModel == null) {
-			_entityModel = new ObjectEntryEntityModel(
-				_objectFieldLocalService.getObjectFields(
-					_objectDefinition.getObjectDefinitionId()));
-		}
-
-		return _entityModel;
+		return new ObjectEntryEntityModel(
+			_objectFieldLocalService.getObjectFields(
+				_objectDefinition.getObjectDefinitionId()));
 	}
 
 	@Override
@@ -303,8 +299,6 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 
 		throw new NotFoundException("Missing parameter \"objectDefinitionId\"");
 	}
-
-	private EntityModel _entityModel;
 
 	@Context
 	private ObjectDefinition _objectDefinition;

@@ -18,11 +18,13 @@ import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountRole;
+import com.liferay.account.role.AccountRolePermissionThreadLocal;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.account.service.test.util.AccountEntryTestUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -71,12 +73,31 @@ public class AccountRoleModelResourcePermissionTest {
 
 		_testPermissions(Assert::assertTrue, accountEntry, ownedAccountRole);
 
+		AccountEntry accountEntryB = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+
+		try (SafeCloseable safeCloseable =
+				AccountRolePermissionThreadLocal.setWithSafeCloseable(
+					accountEntryB.getAccountEntryId())) {
+
+			_testPermissions(
+				Assert::assertFalse, accountEntry, ownedAccountRole);
+		}
+
 		AccountRole sharedAccountRole = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(),
 			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 			RandomTestUtil.randomString(), null, null);
 
 		_testPermissions(Assert::assertFalse, accountEntry, sharedAccountRole);
+
+		try (SafeCloseable safeCloseable =
+				AccountRolePermissionThreadLocal.setWithSafeCloseable(
+					accountEntry.getAccountEntryId())) {
+
+			_testPermissions(
+				Assert::assertTrue, accountEntry, sharedAccountRole);
+		}
 	}
 
 	@Test

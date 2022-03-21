@@ -26,14 +26,13 @@ definition {
 	@description = "LPS-145393 - Verify it is possible to relate 2 entries from a Custom Object entry with the same Native Object entry in a One-to-Many relation"
 	@priority = "4"
 	test CanAddMultipleOneToManyRelationsWithNativeObject {
-		property portal.upstream = "quarantine";
-
 		ObjectAdmin.addObjectViaAPI(
 			labelName = "Custom Object 288",
 			objectName = "CustomObject288",
 			pluralLabelName = "Custom Objects 288");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",
@@ -96,6 +95,7 @@ definition {
 			pluralLabelName = "Custom Objects 289");
 
 		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
 			fieldLabelName = "Custom Field",
 			fieldName = "customObjectField",
 			fieldType = "String",

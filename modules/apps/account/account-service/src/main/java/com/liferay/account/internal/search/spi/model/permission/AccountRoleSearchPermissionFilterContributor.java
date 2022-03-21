@@ -59,7 +59,8 @@ public class AccountRoleSearchPermissionFilterContributor
 		}
 
 		try {
-			_addAccountRoleIdsFilter(booleanFilter, userId, permissionChecker);
+			_addAccountRoleIdsFilter(
+				booleanFilter, companyId, userId, permissionChecker);
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -67,7 +68,7 @@ public class AccountRoleSearchPermissionFilterContributor
 	}
 
 	private void _addAccountRoleIdsFilter(
-			BooleanFilter booleanFilter, long userId,
+			BooleanFilter booleanFilter, long companyId, long userId,
 			PermissionChecker permissionChecker)
 		throws PortalException {
 
@@ -105,6 +106,7 @@ public class AccountRoleSearchPermissionFilterContributor
 		for (long accountEntryId : accountEntryIds) {
 			List<AccountRole> accountRoles =
 				_accountRoleLocalService.getAccountRolesByAccountEntryIds(
+					companyId,
 					new long[] {
 						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
 						accountEntryId

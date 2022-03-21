@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.analytics.dxp.entity.dto.v1_0;
+package com.liferay.analytics.dxp.entity.rest.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -36,6 +37,8 @@ import java.util.Set;
 
 import javax.annotation.Generated;
 
+import javax.validation.Valid;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -43,46 +46,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName("ExpandoField")
+@GraphQLName("Field")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ExpandoField")
-public class ExpandoField implements Serializable {
+@XmlRootElement(name = "Field")
+public class Field implements Serializable {
 
-	public static ExpandoField toDTO(String json) {
-		return ObjectMapperUtil.readValue(ExpandoField.class, json);
+	public static Field toDTO(String json) {
+		return ObjectMapperUtil.readValue(Field.class, json);
 	}
 
-	public static ExpandoField unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(ExpandoField.class, json);
+	public static Field unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Field.class, json);
 	}
-
-	@Schema
-	public Long getColumnId() {
-		return columnId;
-	}
-
-	public void setColumnId(Long columnId) {
-		this.columnId = columnId;
-	}
-
-	@JsonIgnore
-	public void setColumnId(
-		UnsafeSupplier<Long, Exception> columnIdUnsafeSupplier) {
-
-		try {
-			columnId = columnIdUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Long columnId;
 
 	@Schema
 	public String getName() {
@@ -111,17 +86,18 @@ public class ExpandoField implements Serializable {
 	protected String name;
 
 	@Schema
-	public String getValue() {
+	@Valid
+	public Object getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(Object value) {
 		this.value = value;
 	}
 
 	@JsonIgnore
 	public void setValue(
-		UnsafeSupplier<String, Exception> valueUnsafeSupplier) {
+		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
 
 		try {
 			value = valueUnsafeSupplier.get();
@@ -136,7 +112,7 @@ public class ExpandoField implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String value;
+	protected Object value;
 
 	@Override
 	public boolean equals(Object object) {
@@ -144,13 +120,13 @@ public class ExpandoField implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ExpandoField)) {
+		if (!(object instanceof Field)) {
 			return false;
 		}
 
-		ExpandoField expandoField = (ExpandoField)object;
+		Field field = (Field)object;
 
-		return Objects.equals(toString(), expandoField.toString());
+		return Objects.equals(toString(), field.toString());
 	}
 
 	@Override
@@ -164,16 +140,6 @@ public class ExpandoField implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		if (columnId != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"columnId\": ");
-
-			sb.append(columnId);
-		}
 
 		if (name != null) {
 			if (sb.length() > 1) {
@@ -196,11 +162,17 @@ public class ExpandoField implements Serializable {
 
 			sb.append("\"value\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(value));
-
-			sb.append("\"");
+			if (value instanceof Map) {
+				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)value));
+			}
+			else if (value instanceof String) {
+				sb.append("\"");
+				sb.append(_escape((String)value));
+				sb.append("\"");
+			}
+			else {
+				sb.append(value);
+			}
 		}
 
 		sb.append("}");
@@ -210,7 +182,7 @@ public class ExpandoField implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.analytics.dxp.entity.dto.v1_0.ExpandoField",
+		defaultValue = "com.liferay.analytics.dxp.entity.rest.dto.v1_0.Field",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.analytics.dxp.entity.internal.resource.v1_0;
+package com.liferay.analytics.dxp.entity.rest.internal.resource.v1_0;
 
 import com.liferay.portal.vulcan.resource.OpenAPIResource;
 
@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 @Generated("")
 @OpenAPIDefinition(
-	info = @Info(license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "Liferay Analytics DXP Entity", version = "v1.0")
+	info = @Info(license = @License(name = "Apache 2.0", url = "http://www.apache.org/licenses/LICENSE-2.0.html"), title = "Liferay Analytics DXP Entity REST", version = "v1.0")
 )
 public class OpenAPIResourceImpl {
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.analytics.dxp.entity.dto.v1_0;
+package com.liferay.analytics.dxp.entity.rest.dto.v1_0;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -270,7 +270,7 @@ public class DXPEntity implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.analytics.dxp.entity.dto.v1_0.DXPEntity",
+		defaultValue = "com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity",
 		name = "x-class-name"
 	)
 	public String xClassName;

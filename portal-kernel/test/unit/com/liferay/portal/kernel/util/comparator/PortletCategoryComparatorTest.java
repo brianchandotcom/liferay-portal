@@ -26,27 +26,27 @@ import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.Mock;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 /**
  * @author Eduardo García
  */
-@PrepareForTest(LanguageUtil.class)
-@RunWith(PowerMockRunner.class)
-public class PortletCategoryComparatorTest extends PowerMockito {
+public class PortletCategoryComparatorTest {
 
 	@Before
 	public void setUp() {
 		PropsTestUtil.setProps(Collections.emptyMap());
 
-		setUpLanguageUtil();
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		_language = Mockito.mock(Language.class);
+
+		languageUtil.setLanguage(_language);
+
+		whenLanguageGet(LocaleUtil.SPAIN, "area", "Área");
+		whenLanguageGet(LocaleUtil.SPAIN, "zone", "Zona");
 	}
 
 	@Test
@@ -63,24 +63,14 @@ public class PortletCategoryComparatorTest extends PowerMockito {
 		Assert.assertTrue(value < 0);
 	}
 
-	protected void setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(_language);
-
-		whenLanguageGet(LocaleUtil.SPAIN, "area", "Área");
-		whenLanguageGet(LocaleUtil.SPAIN, "zone", "Zona");
-	}
-
 	protected void whenLanguageGet(Locale locale, String key, String value) {
-		when(
+		Mockito.when(
 			_language.get(Matchers.eq(locale), Matchers.eq(key))
 		).thenReturn(
 			value
 		);
 	}
 
-	@Mock
 	private Language _language;
 
 }

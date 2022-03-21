@@ -337,6 +337,15 @@ public class AccountRoleLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.account.model.AccountRole>
+		getAccountRolesByAccountEntryIds(
+			long companyId, long[] accountEntryIds) {
+
+		return _accountRoleLocalService.getAccountRolesByAccountEntryIds(
+			companyId, accountEntryIds);
+	}
+
+	@Override
+	public java.util.List<com.liferay.account.model.AccountRole>
 		getAccountRolesByAccountEntryIds(long[] accountEntryIds) {
 
 		return _accountRoleLocalService.getAccountRolesByAccountEntryIds(

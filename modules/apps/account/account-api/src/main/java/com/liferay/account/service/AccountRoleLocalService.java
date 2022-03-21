@@ -262,6 +262,10 @@ public interface AccountRoleLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AccountRole> getAccountRolesByAccountEntryIds(
+		long companyId, long[] accountEntryIds);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AccountRole> getAccountRolesByAccountEntryIds(
 		long[] accountEntryIds);
 
 	/**

@@ -295,6 +295,13 @@ public class AccountRoleLocalServiceUtil {
 	}
 
 	public static List<AccountRole> getAccountRolesByAccountEntryIds(
+		long companyId, long[] accountEntryIds) {
+
+		return getService().getAccountRolesByAccountEntryIds(
+			companyId, accountEntryIds);
+	}
+
+	public static List<AccountRole> getAccountRolesByAccountEntryIds(
 		long[] accountEntryIds) {
 
 		return getService().getAccountRolesByAccountEntryIds(accountEntryIds);

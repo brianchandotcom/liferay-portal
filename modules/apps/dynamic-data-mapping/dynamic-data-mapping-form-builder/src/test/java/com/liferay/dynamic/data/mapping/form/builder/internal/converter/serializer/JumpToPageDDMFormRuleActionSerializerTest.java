@@ -17,31 +17,34 @@ package com.liferay.dynamic.data.mapping.form.builder.internal.converter.seriali
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.model.action.JumpToPageDDMFormRuleAction;
 import com.liferay.dynamic.data.mapping.spi.converter.serializer.SPIDDMFormRuleSerializerContext;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 /**
  * @author Leonardo Barros
  */
-@RunWith(PowerMockRunner.class)
-public class JumpToPageDDMFormRuleActionSerializerTest extends PowerMockito {
+public class JumpToPageDDMFormRuleActionSerializerTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Test
 	public void testSerialize() {
-		when(
+		Mockito.when(
 			_jumpToPageDDMFormRuleAction.getSource()
 		).thenReturn(
 			"1"
 		);
 
-		when(
+		Mockito.when(
 			_jumpToPageDDMFormRuleAction.getTarget()
 		).thenReturn(
 			"3"
@@ -60,7 +63,7 @@ public class JumpToPageDDMFormRuleActionSerializerTest extends PowerMockito {
 
 	@Test
 	public void testSerializeWithEmptyTarget() {
-		when(
+		Mockito.when(
 			_jumpToPageDDMFormRuleAction.getTarget()
 		).thenReturn(
 			StringPool.BLANK
@@ -77,10 +80,10 @@ public class JumpToPageDDMFormRuleActionSerializerTest extends PowerMockito {
 		Assert.assertNull(result);
 	}
 
-	@Mock
-	private JumpToPageDDMFormRuleAction _jumpToPageDDMFormRuleAction;
-
-	@Mock
-	private SPIDDMFormRuleSerializerContext _spiDDMFormRuleSerializerContext;
+	private final JumpToPageDDMFormRuleAction _jumpToPageDDMFormRuleAction =
+		Mockito.mock(JumpToPageDDMFormRuleAction.class);
+	private final SPIDDMFormRuleSerializerContext
+		_spiDDMFormRuleSerializerContext = Mockito.mock(
+			SPIDDMFormRuleSerializerContext.class);
 
 }

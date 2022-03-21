@@ -122,3 +122,33 @@
 @include color-variant(accent-5-lighten, var(--color-accent-5-lighten));
 @include color-variant(accent-6, var(--color-accent-6));
 @include color-variant(accent-6-lighten, var(--color-accent-6-lighten));
+
+// States
+
+// Success
+
+@include color-variant(success-darken-2, var(--color-state-success-darken-2));
+@include color-variant(success-darken-1, var(--color-state-success-darken-1));
+@include color-variant(success-lighten-1, var(--color-state-success-lighten-1));
+@include color-variant(success-lighten-2, var(--color-state-success-lighten-2));
+
+// Info
+
+@include color-variant(info-darken-2, var(--color-state-info-darken-2));
+@include color-variant(info-darken-1, var(--color-state-info-darken-1));
+@include color-variant(info-lighten-1, var(--color-state-info-lighten-1));
+@include color-variant(info-lighten-2, var(--color-state-info-lighten-2));
+
+// Warning
+
+@include color-variant(warning-darken-2, var(--color-state-warning-darken-2));
+@include color-variant(warning-darken-1, var(--color-state-warning-darken-1));
+@include color-variant(warning-lighten-1, var(--color-state-warning-lighten-1));
+@include color-variant(warning-lighten-2, var(--color-state-warning-lighten-2));
+
+// Danger
+
+@include color-variant(danger-darken-2, var(--color-state-error-darken-2));
+@include color-variant(danger-darken-1, var(--color-state-error-darken-1));
+@include color-variant(danger-lighten-1, var(--color-state-error-lighten-1));
+@include color-variant(danger-lighten-2, var(--color-state-error-lighten-2));

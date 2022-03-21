@@ -1,5 +1,15 @@
 definition {
 
+	macro assertTextCountFromHtml {
+		var count = Page.getTextCountFromHtmlSource(text = "API Value");
+
+		var count = ${count2} / 2;
+
+		if ("${count}" != "${value}") {
+			fail("Labels number is not correct");
+		}
+	}
+
 	macro updateFacetConfiguration {
 		Portlet.gotoPortletOptions(
 			portletName = "${portletName}",

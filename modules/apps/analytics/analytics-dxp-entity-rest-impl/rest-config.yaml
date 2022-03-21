@@ -1,5 +1,5 @@
-apiDir: "../analytics-dxp-entity-api/src/main/java"
-apiPackagePath: "com.liferay.analytics.dxp.entity"
+apiDir: "../analytics-dxp-entity-rest-api/src/main/java"
+apiPackagePath: "com.liferay.analytics.dxp.entity.rest"
 author: "Marcos Martins, Rachael Koestartyo, Riccardo Ferrari"
 forcePredictableOperationId: true
 liferayEnterpriseApp: true

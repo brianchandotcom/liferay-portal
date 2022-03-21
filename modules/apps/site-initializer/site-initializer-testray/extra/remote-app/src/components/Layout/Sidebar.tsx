@@ -12,7 +12,7 @@
  * details.
  */
 
-import {useLocation} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 
 import i18n from '../../i18n';
 import TestrayLogo from '../../images/testray-logo';
@@ -44,12 +44,9 @@ const Sidebar = () => {
 	return (
 		<div className="testray-sidebar">
 			<div className="testray-sidebar-content">
-				<a
-					className="d-flex flex-center mb-5 testray-logo"
-					href="https://testray.liferay.com/web/guest"
-				>
+				<Link className="d-flex flex-center mb-5 testray-logo" to="/">
 					<TestrayLogo />
-				</a>
+				</Link>
 
 				{sidebarItems.map(({className, icon, label, path}, index) => {
 					const [, ...items] = sidebarItems;

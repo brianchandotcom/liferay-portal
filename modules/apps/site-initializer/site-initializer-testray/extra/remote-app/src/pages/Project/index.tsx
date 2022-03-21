@@ -24,7 +24,7 @@ import useProjectActions from './useProjectActions';
 const Projects = ({PageContainer = Container}) => {
 	const {actions, formModal} = useProjectActions();
 
-	useHeader({useHeading: initialState.heading});
+	useHeader({useDropdown: [], useHeading: initialState.heading});
 
 	return (
 		<>

@@ -53,12 +53,7 @@ type InitialState = {
 
 export const initialState: InitialState = {
 	actions: [],
-	dropdown: [
-		{
-			items: [],
-			title: '',
-		},
-	],
+	dropdown: [],
 	heading: [
 		{
 			category: i18n.translate('project'),

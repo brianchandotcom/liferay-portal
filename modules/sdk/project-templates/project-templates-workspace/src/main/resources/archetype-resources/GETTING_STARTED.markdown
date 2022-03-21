@@ -139,6 +139,10 @@ You can organize environment settings and generate an environment installation
 with those settings. There are five environments: common, dev, docker, local,
 prod, and uat. The default value is `local`.
 
+$h4 liferay.workspace.bundle.dist.include.metadata
+Set this to true to append metadata for the current environment settings and
+timestamp. The default value is `false`.
+
 $h4 liferay.workspace.ext.dir
 Set the folder that contains all Ext OSGi modules and Ext plugins. The default
 value is `ext`.

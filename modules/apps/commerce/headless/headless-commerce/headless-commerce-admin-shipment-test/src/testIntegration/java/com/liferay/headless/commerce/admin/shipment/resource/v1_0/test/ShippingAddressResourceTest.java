@@ -25,10 +25,8 @@ import com.liferay.commerce.service.CommerceShipmentLocalServiceUtil;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.admin.shipment.client.dto.v1_0.ShippingAddress;
-import com.liferay.headless.commerce.admin.shipment.client.serdes.v1_0.ShippingAddressSerDes;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
@@ -40,12 +38,10 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.math.BigDecimal;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -118,66 +114,6 @@ public class ShippingAddressResourceTest
 
 		assertEquals(shippingAddress, getShippingAddress);
 		assertValid(getShippingAddress);
-	}
-
-	@Override
-	@Test
-	public void testGetShipmentShippingAddress() throws Exception {
-		ShippingAddress shippingAddress = _toShippingAddress(
-			_commerceShipment.fetchCommerceAddress());
-
-		ShippingAddress getShippingAddress =
-			shippingAddressResource.getShipmentShippingAddress(
-				_commerceShipment.getCommerceShipmentId());
-
-		assertEquals(shippingAddress, getShippingAddress);
-		assertValid(getShippingAddress);
-	}
-
-	@Override
-	@Test
-	public void testGraphQLGetShipmentByExternalReferenceCodeShippingAddress()
-		throws Exception {
-
-		ShippingAddress shippingAddress = _toShippingAddress(
-			_commerceShipment.fetchCommerceAddress());
-
-		Assert.assertTrue(
-			equals(
-				shippingAddress,
-				ShippingAddressSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"shipmentShippingAddress",
-								HashMapBuilder.<String, Object>put(
-									"shipmentId",
-									_commerceShipment.getCommerceShipmentId()
-								).build(),
-								getGraphQLFields())),
-						"JSONObject/data", "Object/shipmentShippingAddress"))));
-	}
-
-	@Override
-	@Test
-	public void testGraphQLGetShipmentShippingAddress() throws Exception {
-		ShippingAddress shippingAddress = _toShippingAddress(
-			_commerceShipment.fetchCommerceAddress());
-
-		Assert.assertTrue(
-			equals(
-				shippingAddress,
-				ShippingAddressSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"shipmentShippingAddress",
-								HashMapBuilder.<String, Object>put(
-									"shipmentId",
-									_commerceShipment.getCommerceShipmentId()
-								).build(),
-								getGraphQLFields())),
-						"JSONObject/data", "Object/shipmentShippingAddress"))));
 	}
 
 	@Override
@@ -258,6 +194,35 @@ public class ShippingAddressResourceTest
 				zip = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
+	}
+
+	@Override
+	protected ShippingAddress
+			testGetShipmentShippingAddress_addShippingAddress()
+		throws Exception {
+
+		return _toShippingAddress(_commerceShipment.fetchCommerceAddress());
+	}
+
+	@Override
+	protected Long testGetShipmentShippingAddress_getShipmentId()
+		throws Exception {
+
+		return _commerceShipment.getCommerceShipmentId();
+	}
+
+	@Override
+	protected Long testGraphQLGetShipmentShippingAddress_getShipmentId()
+		throws Exception {
+
+		return _commerceShipment.getCommerceShipmentId();
+	}
+
+	@Override
+	protected ShippingAddress testGraphQLShippingAddress_addShippingAddress()
+		throws Exception {
+
+		return _toShippingAddress(_commerceShipment.fetchCommerceAddress());
 	}
 
 	private String _getRegionISOCode(CommerceAddress commerceAddress)

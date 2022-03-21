@@ -67,44 +67,6 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 
 	@Override
 	@Test
-	public void testDeleteOrganizationRoleUserAccountAssociation()
-		throws Exception {
-
-		Role role = testDeleteOrganizationRoleUserAccountAssociation_addRole();
-		Organization organization = OrganizationTestUtil.addOrganization();
-
-		assertHttpResponseStatusCode(
-			204,
-			roleResource.
-				deleteOrganizationRoleUserAccountAssociationHttpResponse(
-					role.getId(), _user.getUserId(),
-					organization.getOrganizationId()));
-	}
-
-	@Override
-	@Test
-	public void testDeleteRoleUserAccountAssociation() throws Exception {
-		Role role = testDeleteRoleUserAccountAssociation_addRole();
-
-		assertHttpResponseStatusCode(
-			204,
-			roleResource.deleteRoleUserAccountAssociationHttpResponse(
-				role.getId(), _user.getUserId()));
-	}
-
-	@Override
-	@Test
-	public void testDeleteSiteRoleUserAccountAssociation() throws Exception {
-		Role role = testDeleteSiteRoleUserAccountAssociation_addRole();
-
-		assertHttpResponseStatusCode(
-			204,
-			roleResource.deleteSiteRoleUserAccountAssociationHttpResponse(
-				role.getId(), _user.getUserId(), testGroup.getGroupId()));
-	}
-
-	@Override
-	@Test
 	public void testGetRolesPage() throws Exception {
 		Page<Role> page = roleResource.getRolesPage(
 			null, Pagination.of(1, 100));
@@ -292,6 +254,24 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	}
 
 	@Override
+	protected Long
+			testDeleteOrganizationRoleUserAccountAssociation_getOrganizationId()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		return organization.getOrganizationId();
+	}
+
+	@Override
+	protected Long
+			testDeleteOrganizationRoleUserAccountAssociation_getUserAccountId()
+		throws Exception {
+
+		return _user.getUserId();
+	}
+
+	@Override
 	protected Role testDeleteRoleUserAccountAssociation_addRole()
 		throws Exception {
 
@@ -299,10 +279,31 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 	}
 
 	@Override
+	protected Long testDeleteRoleUserAccountAssociation_getUserAccountId()
+		throws Exception {
+
+		return _user.getUserId();
+	}
+
+	@Override
 	protected Role testDeleteSiteRoleUserAccountAssociation_addRole()
 		throws Exception {
 
 		return _addRole(RoleConstants.TYPE_SITE);
+	}
+
+	@Override
+	protected Long testDeleteSiteRoleUserAccountAssociation_getSiteId()
+		throws Exception {
+
+		return testGroup.getGroupId();
+	}
+
+	@Override
+	protected Long testDeleteSiteRoleUserAccountAssociation_getUserAccountId()
+		throws Exception {
+
+		return _user.getUserId();
 	}
 
 	@Override

@@ -26,18 +26,15 @@ import com.liferay.commerce.term.model.CommerceTermEntryRel;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.commerce.term.service.CommerceTermEntryRelLocalService;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderType;
-import com.liferay.headless.commerce.admin.order.client.serdes.v1_0.OrderTypeSerDes;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
@@ -45,7 +42,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -93,21 +89,6 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 
 	@Override
 	@Test
-	public void testGetOrderRuleOrderTypeOrderType() throws Exception {
-		OrderType postOrderType = _addOrderType(randomOrderType());
-
-		COREntryRel corEntryRel = _getCOREntryRel(postOrderType);
-
-		OrderType getOrderType =
-			orderTypeResource.getOrderRuleOrderTypeOrderType(
-				corEntryRel.getCOREntryRelId());
-
-		assertEquals(postOrderType, getOrderType);
-		assertValid(getOrderType);
-	}
-
-	@Override
-	@Test
 	public void testGetTermOrderTypeOrderType() throws Exception {
 		OrderType postOrderType = _addOrderType(randomOrderType());
 
@@ -123,56 +104,7 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 
 	@Override
 	@Test
-	public void testGraphQLGetOrderRuleOrderTypeOrderType() throws Exception {
-		OrderType orderType = testGraphQLOrderType_addOrderType();
-
-		COREntryRel corEntryRel = _getCOREntryRel(orderType);
-
-		Assert.assertTrue(
-			equals(
-				orderType,
-				OrderTypeSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"orderRuleOrderTypeOrderType",
-								HashMapBuilder.<String, Object>put(
-									"orderRuleOrderTypeId",
-									corEntryRel.getCOREntryRelId()
-								).build(),
-								getGraphQLFields())),
-						"JSONObject/data",
-						"Object/orderRuleOrderTypeOrderType"))));
-	}
-
-	@Override
-	@Test
 	public void testGraphQLGetOrderTypeNotFound() throws Exception {
-	}
-
-	@Override
-	@Test
-	public void testGraphQLGetTermOrderTypeOrderType() throws Exception {
-		OrderType orderType = testGraphQLOrderType_addOrderType();
-
-		CommerceTermEntryRel commerceTermEntryRel = _getCommerceTermEntryRel(
-			orderType);
-
-		Assert.assertTrue(
-			equals(
-				orderType,
-				OrderTypeSerDes.toDTO(
-					JSONUtil.getValueAsString(
-						invokeGraphQLQuery(
-							new GraphQLField(
-								"termOrderTypeOrderType",
-								HashMapBuilder.<String, Object>put(
-									"termOrderTypeId",
-									commerceTermEntryRel.
-										getCommerceTermEntryRelId()
-								).build(),
-								getGraphQLFields())),
-						"JSONObject/data", "Object/termOrderTypeOrderType"))));
 	}
 
 	@Override
@@ -217,6 +149,24 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 	}
 
 	@Override
+	protected OrderType testGetOrderRuleOrderTypeOrderType_addOrderType()
+		throws Exception {
+
+		OrderType orderType = _addOrderType(randomOrderType());
+
+		_corEntryRel = _getCOREntryRel(orderType);
+
+		return orderType;
+	}
+
+	@Override
+	protected Long testGetOrderRuleOrderTypeOrderType_getOrderRuleOrderTypeId()
+		throws Exception {
+
+		return _corEntryRel.getCOREntryRelId();
+	}
+
+	@Override
 	protected OrderType testGetOrderType_addOrderType() throws Exception {
 		return _addOrderType(randomOrderType());
 	}
@@ -236,8 +186,28 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 	}
 
 	@Override
+	protected Long
+			testGraphQLGetOrderRuleOrderTypeOrderType_getOrderRuleOrderTypeId()
+		throws Exception {
+
+		return _corEntryRel.getCOREntryRelId();
+	}
+
+	@Override
+	protected Long testGraphQLGetTermOrderTypeOrderType_getTermOrderTypeId()
+		throws Exception {
+
+		return _commerceTermEntryRel.getCommerceTermEntryRelId();
+	}
+
+	@Override
 	protected OrderType testGraphQLOrderType_addOrderType() throws Exception {
-		return _addOrderType(randomOrderType());
+		OrderType orderType = _addOrderType(randomOrderType());
+
+		_commerceTermEntryRel = _getCommerceTermEntryRel(orderType);
+		_corEntryRel = _getCOREntryRel(orderType);
+
+		return orderType;
 	}
 
 	@Override
@@ -364,11 +334,15 @@ public class OrderTypeResourceTest extends BaseOrderTypeResourceTestCase {
 	@Inject
 	private CommerceTermEntryLocalService _commerceTermEntryLocalService;
 
+	private CommerceTermEntryRel _commerceTermEntryRel;
+
 	@Inject
 	private CommerceTermEntryRelLocalService _commerceTermEntryRelLocalService;
 
 	@Inject
 	private COREntryLocalService _corEntryLocalService;
+
+	private COREntryRel _corEntryRel;
 
 	@Inject
 	private COREntryRelLocalService _corEntryRelLocalService;

@@ -210,6 +210,10 @@
 		<finder name="RoleId" return-type="AccountRole">
 			<finder-column name="roleId" />
 		</finder>
+		<finder name="C_A" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column arrayable-operator="OR" name="accountEntryId" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>AccountEntryDomains</exception>

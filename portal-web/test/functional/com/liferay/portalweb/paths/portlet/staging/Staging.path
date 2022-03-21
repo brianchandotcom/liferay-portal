@@ -33,6 +33,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROCESS_GROUP_TITLE</td>
+	<td>//div[contains(@class,'group-header-title')][normalize-space(text())='${key_title}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PROCESS_SUCCESSFUL</td>
 	<td>//*[@data-qa-id='processResult'][contains(.,'Successful')] | //h6[contains(.,'Successful')]</td>
 	<td></td>

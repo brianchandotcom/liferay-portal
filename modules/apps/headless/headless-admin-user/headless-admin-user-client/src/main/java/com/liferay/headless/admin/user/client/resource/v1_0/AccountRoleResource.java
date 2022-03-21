@@ -77,14 +77,14 @@ public interface AccountRoleResource {
 		throws Exception;
 
 	public Page<AccountRole> getAccountAccountRolesByExternalReferenceCodePage(
-			String externalReferenceCode, String keywords,
+			String externalReferenceCode, String keywords, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getAccountAccountRolesByExternalReferenceCodePageHttpResponse(
 				String externalReferenceCode, String keywords,
-				Pagination pagination, String sortString)
+				String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public AccountRole postAccountAccountRoleByExternalReferenceCode(
@@ -131,13 +131,13 @@ public interface AccountRoleResource {
 		throws Exception;
 
 	public Page<AccountRole> getAccountAccountRolesPage(
-			Long accountId, String keywords, Pagination pagination,
-			String sortString)
+			Long accountId, String keywords, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getAccountAccountRolesPageHttpResponse(
-			Long accountId, String keywords, Pagination pagination,
-			String sortString)
+			Long accountId, String keywords, String filterString,
+			Pagination pagination, String sortString)
 		throws Exception;
 
 	public AccountRole postAccountAccountRole(
@@ -526,12 +526,14 @@ public interface AccountRoleResource {
 		public Page<AccountRole>
 				getAccountAccountRolesByExternalReferenceCodePage(
 					String externalReferenceCode, String keywords,
-					Pagination pagination, String sortString)
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getAccountAccountRolesByExternalReferenceCodePageHttpResponse(
-					externalReferenceCode, keywords, pagination, sortString);
+					externalReferenceCode, keywords, filterString, pagination,
+					sortString);
 
 			String content = httpResponse.getContent();
 
@@ -573,7 +575,8 @@ public interface AccountRoleResource {
 		public HttpInvoker.HttpResponse
 				getAccountAccountRolesByExternalReferenceCodePageHttpResponse(
 					String externalReferenceCode, String keywords,
-					Pagination pagination, String sortString)
+					String filterString, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -599,6 +602,10 @@ public interface AccountRoleResource {
 
 			if (keywords != null) {
 				httpInvoker.parameter("keywords", String.valueOf(keywords));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
 			}
 
 			if (pagination != null) {
@@ -976,13 +983,13 @@ public interface AccountRoleResource {
 		}
 
 		public Page<AccountRole> getAccountAccountRolesPage(
-				Long accountId, String keywords, Pagination pagination,
-				String sortString)
+				Long accountId, String keywords, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getAccountAccountRolesPageHttpResponse(
-					accountId, keywords, pagination, sortString);
+					accountId, keywords, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -1022,8 +1029,8 @@ public interface AccountRoleResource {
 		}
 
 		public HttpInvoker.HttpResponse getAccountAccountRolesPageHttpResponse(
-				Long accountId, String keywords, Pagination pagination,
-				String sortString)
+				Long accountId, String keywords, String filterString,
+				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1049,6 +1056,10 @@ public interface AccountRoleResource {
 
 			if (keywords != null) {
 				httpInvoker.parameter("keywords", String.valueOf(keywords));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
 			}
 
 			if (pagination != null) {

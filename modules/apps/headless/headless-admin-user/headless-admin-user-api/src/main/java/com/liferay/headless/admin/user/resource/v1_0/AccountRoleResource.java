@@ -77,7 +77,7 @@ public interface AccountRoleResource {
 		throws Exception;
 
 	public Page<AccountRole> getAccountAccountRolesByExternalReferenceCodePage(
-			String externalReferenceCode, String keywords,
+			String externalReferenceCode, String keywords, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
@@ -103,8 +103,8 @@ public interface AccountRoleResource {
 		throws Exception;
 
 	public Page<AccountRole> getAccountAccountRolesPage(
-			Long accountId, String keywords, Pagination pagination,
-			Sort[] sorts)
+			Long accountId, String keywords, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public AccountRole postAccountAccountRole(

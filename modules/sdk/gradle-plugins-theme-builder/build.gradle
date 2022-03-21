@@ -15,7 +15,7 @@ copyGradleTestDependencies {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "5.0.2"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "5.0.3"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.getByName("extractGradleApi" + gradleVersion.replace(".", ""))], dir: new File(rootProject.buildDir, "gradle-${gradleVersion}"))
 }

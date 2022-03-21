@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.RoleWrapper;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceWrapper;
@@ -38,20 +39,15 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Jorge Ferrer
  */
-@PrepareForTest(ResourceActionsUtil.class)
-@RunWith(PowerMockRunner.class)
-public class ModelPermissionsFactoryTest extends PowerMockito {
+public class ModelPermissionsFactoryTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -189,16 +185,20 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 
 		String className = RandomTestUtil.randomString();
 
-		mockStatic(ResourceActionsUtil.class);
+		ResourceActionsUtil resourceActionsUtil = new ResourceActionsUtil();
 
-		when(
-			ResourceActionsUtil.getModelResourceGroupDefaultActions(className)
+		ResourceActions resourceActions = Mockito.mock(ResourceActions.class);
+
+		resourceActionsUtil.setResourceActions(resourceActions);
+
+		Mockito.when(
+			resourceActions.getModelResourceGroupDefaultActions(className)
 		).thenReturn(
 			Arrays.asList(ActionKeys.VIEW)
 		);
 
-		when(
-			ResourceActionsUtil.getModelResourceGuestDefaultActions(className)
+		Mockito.when(
+			resourceActions.getModelResourceGuestDefaultActions(className)
 		).thenReturn(
 			Arrays.asList(ActionKeys.VIEW)
 		);

@@ -1,7 +1,3 @@
-label .control-label {
-	margin-bottom: 10px !important;
-}
-
 .testray-login-page {
 	align-items: center;
 	background-color: var(--color-neutral-1);
@@ -72,7 +68,7 @@ label .control-label {
 .testray-login-page .form-group > label:not(.toggle-switch),
 .lfr-ddm-legend:not(.toggle-switch) {
 	line-height: var(--form-input-label-line-height);
-	margin: 0px !important;
+	margin: 0 !important;
 	transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out,
 		font-size 0.15s ease-in-out, transform 0.15s ease-in-out;
 }
@@ -81,7 +77,6 @@ label .control-label {
 	display: flex;
 	justify-content: center;
 }
-
 .testray-login-page .form-control {
 	border-radius: 3px !important;
 	height: 34px !important;
@@ -92,6 +87,9 @@ label .control-label {
 	margin-bottom: 6px !important;
 }
 
+label .control-label {
+	margin-bottom: 10px !important;
+}
 .testray-login-page ul {
 	display: flex;
 	flex-direction: row;
@@ -119,28 +117,10 @@ label .control-label {
 	padding-right: 5px;
 }
 
-.testray-login-page li:nth-child(1) a::before {
-	background: url('[resources:plus.svg]');
-	background-repeat: no-repeat;
-	background-size: contain !important;
-	content: '';
-	height: 16px;
-	margin-right: 5px;
-	transition: var(--transition-value);
-	width: 16px;
+.testray-login-page div .navigation {
+	display: none;
 }
 
-.testray-login-page li:nth-child(2) a::before {
-	background: url('[resources:help.svg]');
-	background-repeat: no-repeat;
-	background-size: contain !important;
-	content: '';
-	height: 16px;
-	margin-right: 5px;
-	transition: var(--transition-value);
-	width: 16px;
-}
-
-.testray-login-page .taglib-text {
-	color: var(--color-brand-primary) !important;
+.testray-login-page div label .control-label {
+	color: red !important;
 }

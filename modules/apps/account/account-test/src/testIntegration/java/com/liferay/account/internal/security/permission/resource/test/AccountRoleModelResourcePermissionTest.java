@@ -101,16 +101,52 @@ public class AccountRoleModelResourcePermissionTest {
 	}
 
 	@Test
-	public void testViewPermissions() throws Exception {
+	public void testAssignUsersPermissions() throws Exception {
 		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
 			_accountEntryLocalService);
+
 		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
 			RandomTestUtil.randomString(), null, null);
 
-		AccountRole permissionAccountRole = _accountRoleLocalService.addAccountRole(
+		AccountRole permissionAccountRole =
+			_accountRoleLocalService.addAccountRole(
+				TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
+				RandomTestUtil.randomString(), null, null);
+
+		RoleTestUtil.addResourcePermission(
+			permissionAccountRole.getRole(), AccountEntry.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE, "0",
+			ActionKeys.MANAGE_USERS);
+
+		User userA = UserTestUtil.addUser();
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), userA.getUserId());
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			userA.getUserId(), accountEntry.getAccountEntryGroupId(),
+			permissionAccountRole.getRoleId());
+
+		Assert.assertTrue(
+			_accountRoleModelResourcePermission.contains(
+				PermissionCheckerFactoryUtil.create(userA), accountRole,
+				AccountActionKeys.ASSIGN_USERS));
+	}
+
+	@Test
+	public void testViewPermissions() throws Exception {
+		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
+			_accountEntryLocalService);
+
+		AccountRole accountRole = _accountRoleLocalService.addAccountRole(
 			TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
 			RandomTestUtil.randomString(), null, null);
+
+		AccountRole permissionAccountRole =
+			_accountRoleLocalService.addAccountRole(
+				TestPropsValues.getUserId(), accountEntry.getAccountEntryId(),
+				RandomTestUtil.randomString(), null, null);
 
 		RoleTestUtil.addResourcePermission(
 			permissionAccountRole.getRole(), AccountEntry.class.getName(),

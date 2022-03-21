@@ -78,6 +78,7 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		Account account2 = testGetAccountsPage_addAccount(randomAccount());
 
 		_testGetAccountsPage(Arrays.asList(account1, account2));
+
 		_testGetAccountsPage(Collections.emptyList());
 
 		Organization organization = OrganizationTestUtil.addOrganization();

@@ -198,10 +198,18 @@ public abstract class BaseAccountResourceTestCase {
 	public void testGetOrderRuleAccountAccount() throws Exception {
 		Account postAccount = testGetOrderRuleAccountAccount_addAccount();
 
-		Account getAccount = accountResource.getOrderRuleAccountAccount(null);
+		Account getAccount = accountResource.getOrderRuleAccountAccount(
+			testGetOrderRuleAccountAccount_getOrderRuleAccountId());
 
 		assertEquals(postAccount, getAccount);
 		assertValid(getAccount);
+	}
+
+	protected Long testGetOrderRuleAccountAccount_getOrderRuleAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Account testGetOrderRuleAccountAccount_addAccount()
@@ -225,11 +233,20 @@ public abstract class BaseAccountResourceTestCase {
 								"orderRuleAccountAccount",
 								new HashMap<String, Object>() {
 									{
-										put("orderRuleAccountId", null);
+										put(
+											"orderRuleAccountId",
+											testGraphQLGetOrderRuleAccountAccount_getOrderRuleAccountId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/orderRuleAccountAccount"))));
+	}
+
+	protected Long testGraphQLGetOrderRuleAccountAccount_getOrderRuleAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

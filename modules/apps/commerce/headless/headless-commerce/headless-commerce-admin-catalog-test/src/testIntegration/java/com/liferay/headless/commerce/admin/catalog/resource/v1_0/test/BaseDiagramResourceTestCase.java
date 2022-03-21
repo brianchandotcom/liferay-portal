@@ -207,10 +207,19 @@ public abstract class BaseDiagramResourceTestCase {
 			testGetProductByExternalReferenceCodeDiagram_addDiagram();
 
 		Diagram getDiagram =
-			diagramResource.getProductByExternalReferenceCodeDiagram(null);
+			diagramResource.getProductByExternalReferenceCodeDiagram(
+				testGetProductByExternalReferenceCodeDiagram_getExternalReferenceCode());
 
 		assertEquals(postDiagram, getDiagram);
 		assertValid(getDiagram);
+	}
+
+	protected String
+			testGetProductByExternalReferenceCodeDiagram_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Diagram testGetProductByExternalReferenceCodeDiagram_addDiagram()
@@ -236,12 +245,22 @@ public abstract class BaseDiagramResourceTestCase {
 								"productByExternalReferenceCodeDiagram",
 								new HashMap<String, Object>() {
 									{
-										put("externalReferenceCode", null);
+										put(
+											"externalReferenceCode",
+											testGraphQLGetProductByExternalReferenceCodeDiagram_getExternalReferenceCode());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/productByExternalReferenceCodeDiagram"))));
+	}
+
+	protected String
+			testGraphQLGetProductByExternalReferenceCodeDiagram_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

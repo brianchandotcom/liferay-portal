@@ -194,10 +194,19 @@ public abstract class BaseAccountGroupResourceTestCase {
 			testGetDiscountAccountGroupAccountGroup_addAccountGroup();
 
 		AccountGroup getAccountGroup =
-			accountGroupResource.getDiscountAccountGroupAccountGroup(null);
+			accountGroupResource.getDiscountAccountGroupAccountGroup(
+				testGetDiscountAccountGroupAccountGroup_getDiscountAccountGroupId());
 
 		assertEquals(postAccountGroup, getAccountGroup);
 		assertValid(getAccountGroup);
+	}
+
+	protected Long
+			testGetDiscountAccountGroupAccountGroup_getDiscountAccountGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected AccountGroup
@@ -224,12 +233,22 @@ public abstract class BaseAccountGroupResourceTestCase {
 								"discountAccountGroupAccountGroup",
 								new HashMap<String, Object>() {
 									{
-										put("discountAccountGroupId", null);
+										put(
+											"discountAccountGroupId",
+											testGraphQLGetDiscountAccountGroupAccountGroup_getDiscountAccountGroupId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/discountAccountGroupAccountGroup"))));
+	}
+
+	protected Long
+			testGraphQLGetDiscountAccountGroupAccountGroup_getDiscountAccountGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -262,10 +281,19 @@ public abstract class BaseAccountGroupResourceTestCase {
 			testGetPriceListAccountGroupAccountGroup_addAccountGroup();
 
 		AccountGroup getAccountGroup =
-			accountGroupResource.getPriceListAccountGroupAccountGroup(null);
+			accountGroupResource.getPriceListAccountGroupAccountGroup(
+				testGetPriceListAccountGroupAccountGroup_getPriceListAccountGroupId());
 
 		assertEquals(postAccountGroup, getAccountGroup);
 		assertValid(getAccountGroup);
+	}
+
+	protected Long
+			testGetPriceListAccountGroupAccountGroup_getPriceListAccountGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected AccountGroup
@@ -292,12 +320,22 @@ public abstract class BaseAccountGroupResourceTestCase {
 								"priceListAccountGroupAccountGroup",
 								new HashMap<String, Object>() {
 									{
-										put("priceListAccountGroupId", null);
+										put(
+											"priceListAccountGroupId",
+											testGraphQLGetPriceListAccountGroupAccountGroup_getPriceListAccountGroupId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/priceListAccountGroupAccountGroup"))));
+	}
+
+	protected Long
+			testGraphQLGetPriceListAccountGroupAccountGroup_getPriceListAccountGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

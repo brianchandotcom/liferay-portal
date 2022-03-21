@@ -197,10 +197,17 @@ public abstract class BaseCategoryResourceTestCase {
 		Category postCategory = testGetDiscountCategoryCategory_addCategory();
 
 		Category getCategory = categoryResource.getDiscountCategoryCategory(
-			null);
+			testGetDiscountCategoryCategory_getDiscountCategoryId());
 
 		assertEquals(postCategory, getCategory);
 		assertValid(getCategory);
+	}
+
+	protected Long testGetDiscountCategoryCategory_getDiscountCategoryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Category testGetDiscountCategoryCategory_addCategory()
@@ -224,12 +231,22 @@ public abstract class BaseCategoryResourceTestCase {
 								"discountCategoryCategory",
 								new HashMap<String, Object>() {
 									{
-										put("discountCategoryId", null);
+										put(
+											"discountCategoryId",
+											testGraphQLGetDiscountCategoryCategory_getDiscountCategoryId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/discountCategoryCategory"))));
+	}
+
+	protected Long
+			testGraphQLGetDiscountCategoryCategory_getDiscountCategoryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -262,10 +279,19 @@ public abstract class BaseCategoryResourceTestCase {
 			testGetPriceModifierCategoryCategory_addCategory();
 
 		Category getCategory =
-			categoryResource.getPriceModifierCategoryCategory(null);
+			categoryResource.getPriceModifierCategoryCategory(
+				testGetPriceModifierCategoryCategory_getPriceModifierCategoryId());
 
 		assertEquals(postCategory, getCategory);
 		assertValid(getCategory);
+	}
+
+	protected Long
+			testGetPriceModifierCategoryCategory_getPriceModifierCategoryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Category testGetPriceModifierCategoryCategory_addCategory()
@@ -289,12 +315,22 @@ public abstract class BaseCategoryResourceTestCase {
 								"priceModifierCategoryCategory",
 								new HashMap<String, Object>() {
 									{
-										put("priceModifierCategoryId", null);
+										put(
+											"priceModifierCategoryId",
+											testGraphQLGetPriceModifierCategoryCategory_getPriceModifierCategoryId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/priceModifierCategoryCategory"))));
+	}
+
+	protected Long
+			testGraphQLGetPriceModifierCategoryCategory_getPriceModifierCategoryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

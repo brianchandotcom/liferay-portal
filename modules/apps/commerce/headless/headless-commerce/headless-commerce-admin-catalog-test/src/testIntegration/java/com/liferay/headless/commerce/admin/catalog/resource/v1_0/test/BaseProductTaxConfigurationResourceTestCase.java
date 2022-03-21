@@ -205,10 +205,19 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 
 		ProductTaxConfiguration getProductTaxConfiguration =
 			productTaxConfigurationResource.
-				getProductByExternalReferenceCodeTaxConfiguration(null);
+				getProductByExternalReferenceCodeTaxConfiguration(
+					testGetProductByExternalReferenceCodeTaxConfiguration_getExternalReferenceCode());
 
 		assertEquals(postProductTaxConfiguration, getProductTaxConfiguration);
 		assertValid(getProductTaxConfiguration);
+	}
+
+	protected String
+			testGetProductByExternalReferenceCodeTaxConfiguration_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected ProductTaxConfiguration
@@ -236,12 +245,22 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 								"productByExternalReferenceCodeTaxConfiguration",
 								new HashMap<String, Object>() {
 									{
-										put("externalReferenceCode", null);
+										put(
+											"externalReferenceCode",
+											testGraphQLGetProductByExternalReferenceCodeTaxConfiguration_getExternalReferenceCode());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/productByExternalReferenceCodeTaxConfiguration"))));
+	}
+
+	protected String
+			testGraphQLGetProductByExternalReferenceCodeTaxConfiguration_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

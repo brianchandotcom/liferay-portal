@@ -562,10 +562,19 @@ public abstract class BaseMappedProductResourceTestCase {
 		MappedProduct getMappedProduct =
 			mappedProductResource.
 				getProductByExternalReferenceCodeMappedProductBySequence(
-					null, postMappedProduct.getSequence());
+					testGetProductByExternalReferenceCodeMappedProductBySequence_getExternalReferenceCode(),
+					postMappedProduct.getSequence());
 
 		assertEquals(postMappedProduct, getMappedProduct);
 		assertValid(getMappedProduct);
+	}
+
+	protected String
+			testGetProductByExternalReferenceCodeMappedProductBySequence_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected MappedProduct
@@ -593,7 +602,9 @@ public abstract class BaseMappedProductResourceTestCase {
 								"productByExternalReferenceCodeMappedProductBySequence",
 								new HashMap<String, Object>() {
 									{
-										put("externalReferenceCode", null);
+										put(
+											"externalReferenceCode",
+											testGraphQLGetProductByExternalReferenceCodeMappedProductBySequence_getExternalReferenceCode());
 										put(
 											"sequence",
 											"\"" + mappedProduct.getSequence() +
@@ -603,6 +614,14 @@ public abstract class BaseMappedProductResourceTestCase {
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/productByExternalReferenceCodeMappedProductBySequence"))));
+	}
+
+	protected String
+			testGraphQLGetProductByExternalReferenceCodeMappedProductBySequence_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

@@ -650,17 +650,26 @@ public abstract class BaseStructuredContentResourceTestCase {
 			204,
 			structuredContentResource.
 				deleteStructuredContentByVersionHttpResponse(
-					structuredContent.getId(), null));
+					structuredContent.getId(),
+					testDeleteStructuredContentByVersion_getVersion()));
 
 		assertHttpResponseStatusCode(
 			404,
 			structuredContentResource.getStructuredContentByVersionHttpResponse(
-				structuredContent.getId(), null));
+				structuredContent.getId(),
+				testDeleteStructuredContentByVersion_getVersion()));
 
 		assertHttpResponseStatusCode(
 			404,
 			structuredContentResource.getStructuredContentByVersionHttpResponse(
-				0L, null));
+				0L, testDeleteStructuredContentByVersion_getVersion()));
+	}
+
+	protected Double testDeleteStructuredContentByVersion_getVersion()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected StructuredContent
@@ -678,10 +687,18 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		StructuredContent getStructuredContent =
 			structuredContentResource.getStructuredContentByVersion(
-				postStructuredContent.getId(), null);
+				postStructuredContent.getId(),
+				testGetStructuredContentByVersion_getVersion());
 
 		assertEquals(postStructuredContent, getStructuredContent);
 		assertValid(getStructuredContent);
+	}
+
+	protected Double testGetStructuredContentByVersion_getVersion()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected StructuredContent
@@ -710,12 +727,21 @@ public abstract class BaseStructuredContentResourceTestCase {
 										put(
 											"structuredContentId",
 											structuredContent.getId());
-										put("version", null);
+										put(
+											"version",
+											testGraphQLGetStructuredContentByVersion_getVersion());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/structuredContentByVersion"))));
+	}
+
+	protected Double testGraphQLGetStructuredContentByVersion_getVersion()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

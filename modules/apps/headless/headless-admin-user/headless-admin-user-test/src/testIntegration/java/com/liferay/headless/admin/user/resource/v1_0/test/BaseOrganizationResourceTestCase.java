@@ -1030,7 +1030,15 @@ public abstract class BaseOrganizationResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			organizationResource.deleteAccountOrganizationHttpResponse(
-				null, organization.getId()));
+				testDeleteAccountOrganization_getAccountId(),
+				organization.getId()));
+	}
+
+	protected Long testDeleteAccountOrganization_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Organization testDeleteAccountOrganization_addOrganization()
@@ -2210,7 +2218,15 @@ public abstract class BaseOrganizationResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			organizationResource.deleteUserAccountByEmailAddressHttpResponse(
-				organization.getId(), null));
+				organization.getId(),
+				testDeleteUserAccountByEmailAddress_getEmailAddress()));
+	}
+
+	protected String testDeleteUserAccountByEmailAddress_getEmailAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Organization testDeleteUserAccountByEmailAddress_addOrganization()

@@ -198,10 +198,18 @@ public abstract class BaseChannelResourceTestCase {
 	public void testGetDiscountChannelChannel() throws Exception {
 		Channel postChannel = testGetDiscountChannelChannel_addChannel();
 
-		Channel getChannel = channelResource.getDiscountChannelChannel(null);
+		Channel getChannel = channelResource.getDiscountChannelChannel(
+			testGetDiscountChannelChannel_getDiscountChannelId());
 
 		assertEquals(postChannel, getChannel);
 		assertValid(getChannel);
+	}
+
+	protected Long testGetDiscountChannelChannel_getDiscountChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Channel testGetDiscountChannelChannel_addChannel()
@@ -225,11 +233,20 @@ public abstract class BaseChannelResourceTestCase {
 								"discountChannelChannel",
 								new HashMap<String, Object>() {
 									{
-										put("discountChannelId", null);
+										put(
+											"discountChannelId",
+											testGraphQLGetDiscountChannelChannel_getDiscountChannelId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/discountChannelChannel"))));
+	}
+
+	protected Long testGraphQLGetDiscountChannelChannel_getDiscountChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -260,10 +277,18 @@ public abstract class BaseChannelResourceTestCase {
 	public void testGetPriceListChannelChannel() throws Exception {
 		Channel postChannel = testGetPriceListChannelChannel_addChannel();
 
-		Channel getChannel = channelResource.getPriceListChannelChannel(null);
+		Channel getChannel = channelResource.getPriceListChannelChannel(
+			testGetPriceListChannelChannel_getPriceListChannelId());
 
 		assertEquals(postChannel, getChannel);
 		assertValid(getChannel);
+	}
+
+	protected Long testGetPriceListChannelChannel_getPriceListChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Channel testGetPriceListChannelChannel_addChannel()
@@ -287,11 +312,20 @@ public abstract class BaseChannelResourceTestCase {
 								"priceListChannelChannel",
 								new HashMap<String, Object>() {
 									{
-										put("priceListChannelId", null);
+										put(
+											"priceListChannelId",
+											testGraphQLGetPriceListChannelChannel_getPriceListChannelId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/priceListChannelChannel"))));
+	}
+
+	protected Long testGraphQLGetPriceListChannelChannel_getPriceListChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

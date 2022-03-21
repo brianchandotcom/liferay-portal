@@ -194,10 +194,19 @@ public abstract class BaseAccountGroupResourceTestCase {
 			testGetOrderRuleAccountGroupAccountGroup_addAccountGroup();
 
 		AccountGroup getAccountGroup =
-			accountGroupResource.getOrderRuleAccountGroupAccountGroup(null);
+			accountGroupResource.getOrderRuleAccountGroupAccountGroup(
+				testGetOrderRuleAccountGroupAccountGroup_getOrderRuleAccountGroupId());
 
 		assertEquals(postAccountGroup, getAccountGroup);
 		assertValid(getAccountGroup);
+	}
+
+	protected Long
+			testGetOrderRuleAccountGroupAccountGroup_getOrderRuleAccountGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected AccountGroup
@@ -224,12 +233,22 @@ public abstract class BaseAccountGroupResourceTestCase {
 								"orderRuleAccountGroupAccountGroup",
 								new HashMap<String, Object>() {
 									{
-										put("orderRuleAccountGroupId", null);
+										put(
+											"orderRuleAccountGroupId",
+											testGraphQLGetOrderRuleAccountGroupAccountGroup_getOrderRuleAccountGroupId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/orderRuleAccountGroupAccountGroup"))));
+	}
+
+	protected Long
+			testGraphQLGetOrderRuleAccountGroupAccountGroup_getOrderRuleAccountGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

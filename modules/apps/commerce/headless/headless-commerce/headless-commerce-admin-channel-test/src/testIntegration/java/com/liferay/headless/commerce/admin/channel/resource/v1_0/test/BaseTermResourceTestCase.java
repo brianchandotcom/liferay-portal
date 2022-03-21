@@ -192,10 +192,19 @@ public abstract class BaseTermResourceTestCase {
 	public void testGetPaymentMethodGroupRelTermTerm() throws Exception {
 		Term postTerm = testGetPaymentMethodGroupRelTermTerm_addTerm();
 
-		Term getTerm = termResource.getPaymentMethodGroupRelTermTerm(null);
+		Term getTerm = termResource.getPaymentMethodGroupRelTermTerm(
+			testGetPaymentMethodGroupRelTermTerm_getPaymentMethodGroupRelTermId());
 
 		assertEquals(postTerm, getTerm);
 		assertValid(getTerm);
+	}
+
+	protected Long
+			testGetPaymentMethodGroupRelTermTerm_getPaymentMethodGroupRelTermId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Term testGetPaymentMethodGroupRelTermTerm_addTerm()
@@ -221,12 +230,20 @@ public abstract class BaseTermResourceTestCase {
 									{
 										put(
 											"paymentMethodGroupRelTermId",
-											null);
+											testGraphQLGetPaymentMethodGroupRelTermTerm_getPaymentMethodGroupRelTermId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/paymentMethodGroupRelTermTerm"))));
+	}
+
+	protected Long
+			testGraphQLGetPaymentMethodGroupRelTermTerm_getPaymentMethodGroupRelTermId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -258,10 +275,19 @@ public abstract class BaseTermResourceTestCase {
 	public void testGetShippingFixedOptionTermTerm() throws Exception {
 		Term postTerm = testGetShippingFixedOptionTermTerm_addTerm();
 
-		Term getTerm = termResource.getShippingFixedOptionTermTerm(null);
+		Term getTerm = termResource.getShippingFixedOptionTermTerm(
+			testGetShippingFixedOptionTermTerm_getShippingFixedOptionTermId());
 
 		assertEquals(postTerm, getTerm);
 		assertValid(getTerm);
+	}
+
+	protected Long
+			testGetShippingFixedOptionTermTerm_getShippingFixedOptionTermId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Term testGetShippingFixedOptionTermTerm_addTerm()
@@ -285,12 +311,22 @@ public abstract class BaseTermResourceTestCase {
 								"shippingFixedOptionTermTerm",
 								new HashMap<String, Object>() {
 									{
-										put("shippingFixedOptionTermId", null);
+										put(
+											"shippingFixedOptionTermId",
+											testGraphQLGetShippingFixedOptionTermTerm_getShippingFixedOptionTermId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/shippingFixedOptionTermTerm"))));
+	}
+
+	protected Long
+			testGraphQLGetShippingFixedOptionTermTerm_getShippingFixedOptionTermId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

@@ -203,10 +203,18 @@ public abstract class BaseOrderTypeResourceTestCase {
 			testGetOrderRuleOrderTypeOrderType_addOrderType();
 
 		OrderType getOrderType =
-			orderTypeResource.getOrderRuleOrderTypeOrderType(null);
+			orderTypeResource.getOrderRuleOrderTypeOrderType(
+				testGetOrderRuleOrderTypeOrderType_getOrderRuleOrderTypeId());
 
 		assertEquals(postOrderType, getOrderType);
 		assertValid(getOrderType);
+	}
+
+	protected Long testGetOrderRuleOrderTypeOrderType_getOrderRuleOrderTypeId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected OrderType testGetOrderRuleOrderTypeOrderType_addOrderType()
@@ -230,12 +238,22 @@ public abstract class BaseOrderTypeResourceTestCase {
 								"orderRuleOrderTypeOrderType",
 								new HashMap<String, Object>() {
 									{
-										put("orderRuleOrderTypeId", null);
+										put(
+											"orderRuleOrderTypeId",
+											testGraphQLGetOrderRuleOrderTypeOrderType_getOrderRuleOrderTypeId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/orderRuleOrderTypeOrderType"))));
+	}
+
+	protected Long
+			testGraphQLGetOrderRuleOrderTypeOrderType_getOrderRuleOrderTypeId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -878,10 +896,17 @@ public abstract class BaseOrderTypeResourceTestCase {
 		OrderType postOrderType = testGetTermOrderTypeOrderType_addOrderType();
 
 		OrderType getOrderType = orderTypeResource.getTermOrderTypeOrderType(
-			null);
+			testGetTermOrderTypeOrderType_getTermOrderTypeId());
 
 		assertEquals(postOrderType, getOrderType);
 		assertValid(getOrderType);
+	}
+
+	protected Long testGetTermOrderTypeOrderType_getTermOrderTypeId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected OrderType testGetTermOrderTypeOrderType_addOrderType()
@@ -905,11 +930,20 @@ public abstract class BaseOrderTypeResourceTestCase {
 								"termOrderTypeOrderType",
 								new HashMap<String, Object>() {
 									{
-										put("termOrderTypeId", null);
+										put(
+											"termOrderTypeId",
+											testGraphQLGetTermOrderTypeOrderType_getTermOrderTypeId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/termOrderTypeOrderType"))));
+	}
+
+	protected Long testGraphQLGetTermOrderTypeOrderType_getTermOrderTypeId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

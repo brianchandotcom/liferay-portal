@@ -189,10 +189,18 @@ public abstract class BaseOrderTypeResourceTestCase {
 			testGetDiscountOrderTypeOrderType_addOrderType();
 
 		OrderType getOrderType =
-			orderTypeResource.getDiscountOrderTypeOrderType(null);
+			orderTypeResource.getDiscountOrderTypeOrderType(
+				testGetDiscountOrderTypeOrderType_getDiscountOrderTypeId());
 
 		assertEquals(postOrderType, getOrderType);
 		assertValid(getOrderType);
+	}
+
+	protected Long testGetDiscountOrderTypeOrderType_getDiscountOrderTypeId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected OrderType testGetDiscountOrderTypeOrderType_addOrderType()
@@ -216,12 +224,22 @@ public abstract class BaseOrderTypeResourceTestCase {
 								"discountOrderTypeOrderType",
 								new HashMap<String, Object>() {
 									{
-										put("discountOrderTypeId", null);
+										put(
+											"discountOrderTypeId",
+											testGraphQLGetDiscountOrderTypeOrderType_getDiscountOrderTypeId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/discountOrderTypeOrderType"))));
+	}
+
+	protected Long
+			testGraphQLGetDiscountOrderTypeOrderType_getDiscountOrderTypeId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -254,10 +272,18 @@ public abstract class BaseOrderTypeResourceTestCase {
 			testGetPriceListOrderTypeOrderType_addOrderType();
 
 		OrderType getOrderType =
-			orderTypeResource.getPriceListOrderTypeOrderType(null);
+			orderTypeResource.getPriceListOrderTypeOrderType(
+				testGetPriceListOrderTypeOrderType_getPriceListOrderTypeId());
 
 		assertEquals(postOrderType, getOrderType);
 		assertValid(getOrderType);
+	}
+
+	protected Long testGetPriceListOrderTypeOrderType_getPriceListOrderTypeId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected OrderType testGetPriceListOrderTypeOrderType_addOrderType()
@@ -281,12 +307,22 @@ public abstract class BaseOrderTypeResourceTestCase {
 								"priceListOrderTypeOrderType",
 								new HashMap<String, Object>() {
 									{
-										put("priceListOrderTypeId", null);
+										put(
+											"priceListOrderTypeId",
+											testGraphQLGetPriceListOrderTypeOrderType_getPriceListOrderTypeId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/priceListOrderTypeOrderType"))));
+	}
+
+	protected Long
+			testGraphQLGetPriceListOrderTypeOrderType_getPriceListOrderTypeId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

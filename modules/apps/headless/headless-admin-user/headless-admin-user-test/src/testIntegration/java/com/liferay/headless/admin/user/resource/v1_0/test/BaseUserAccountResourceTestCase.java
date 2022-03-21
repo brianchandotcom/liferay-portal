@@ -235,7 +235,24 @@ public abstract class BaseUserAccountResourceTestCase {
 			204,
 			userAccountResource.
 				deleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCodeHttpResponse(
-					null, null));
+					testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode(),
+					testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getUserAccountExternalReferenceCode()));
+	}
+
+	protected String
+			testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getAccountExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String
+			testDeleteAccountByExternalReferenceCodeUserAccountByExternalReferenceCode_getUserAccountExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected UserAccount
@@ -1181,7 +1198,15 @@ public abstract class BaseUserAccountResourceTestCase {
 			204,
 			userAccountResource.
 				deleteAccountUserAccountsByEmailAddressHttpResponse(
-					null, null));
+					testDeleteAccountUserAccountsByEmailAddress_getAccountId(),
+					null));
+	}
+
+	protected Long testDeleteAccountUserAccountsByEmailAddress_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected UserAccount
@@ -1207,7 +1232,15 @@ public abstract class BaseUserAccountResourceTestCase {
 			204,
 			userAccountResource.
 				deleteAccountUserAccountByEmailAddressHttpResponse(
-					null, userAccount.getEmailAddress()));
+					testDeleteAccountUserAccountByEmailAddress_getAccountId(),
+					userAccount.getEmailAddress()));
+	}
+
+	protected Long testDeleteAccountUserAccountByEmailAddress_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected UserAccount

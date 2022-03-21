@@ -192,10 +192,18 @@ public abstract class BaseAccountResourceTestCase {
 	public void testGetDiscountAccountAccount() throws Exception {
 		Account postAccount = testGetDiscountAccountAccount_addAccount();
 
-		Account getAccount = accountResource.getDiscountAccountAccount(null);
+		Account getAccount = accountResource.getDiscountAccountAccount(
+			testGetDiscountAccountAccount_getDiscountAccountId());
 
 		assertEquals(postAccount, getAccount);
 		assertValid(getAccount);
+	}
+
+	protected Long testGetDiscountAccountAccount_getDiscountAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Account testGetDiscountAccountAccount_addAccount()
@@ -219,11 +227,20 @@ public abstract class BaseAccountResourceTestCase {
 								"discountAccountAccount",
 								new HashMap<String, Object>() {
 									{
-										put("discountAccountId", null);
+										put(
+											"discountAccountId",
+											testGraphQLGetDiscountAccountAccount_getDiscountAccountId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/discountAccountAccount"))));
+	}
+
+	protected Long testGraphQLGetDiscountAccountAccount_getDiscountAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -254,10 +271,18 @@ public abstract class BaseAccountResourceTestCase {
 	public void testGetPriceListAccountAccount() throws Exception {
 		Account postAccount = testGetPriceListAccountAccount_addAccount();
 
-		Account getAccount = accountResource.getPriceListAccountAccount(null);
+		Account getAccount = accountResource.getPriceListAccountAccount(
+			testGetPriceListAccountAccount_getPriceListAccountId());
 
 		assertEquals(postAccount, getAccount);
 		assertValid(getAccount);
+	}
+
+	protected Long testGetPriceListAccountAccount_getPriceListAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Account testGetPriceListAccountAccount_addAccount()
@@ -281,11 +306,20 @@ public abstract class BaseAccountResourceTestCase {
 								"priceListAccountAccount",
 								new HashMap<String, Object>() {
 									{
-										put("priceListAccountId", null);
+										put(
+											"priceListAccountId",
+											testGraphQLGetPriceListAccountAccount_getPriceListAccountId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/priceListAccountAccount"))));
+	}
+
+	protected Long testGraphQLGetPriceListAccountAccount_getPriceListAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

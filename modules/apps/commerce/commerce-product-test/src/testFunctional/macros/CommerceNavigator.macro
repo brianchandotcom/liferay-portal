@@ -69,6 +69,8 @@ definition {
 		Click(
 			key_menuItem = "${menuItem}",
 			locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_MENU_ITEM");
+
+		WaitForPageLoad();
 	}
 
 	macro gotoOptionValues {

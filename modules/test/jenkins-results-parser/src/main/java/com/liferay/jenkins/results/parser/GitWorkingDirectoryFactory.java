@@ -93,6 +93,11 @@ public class GitWorkingDirectoryFactory {
 					upstreamBranchName, gitRepositoryDirPath,
 					gitRepositoryName);
 			}
+			else if (gitRepositoryName.equals("liferay-qa-websites-ee")) {
+				gitWorkingDirectory = new QAWebsitesGitWorkingDirectory(
+					upstreamBranchName, gitRepositoryDirPath,
+					gitRepositoryName);
+			}
 			else {
 				gitWorkingDirectory = new GitWorkingDirectory(
 					upstreamBranchName, gitRepositoryDirPath,

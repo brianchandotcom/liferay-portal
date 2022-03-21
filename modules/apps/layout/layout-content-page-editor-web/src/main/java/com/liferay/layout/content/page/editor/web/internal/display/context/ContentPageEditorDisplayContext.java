@@ -348,6 +348,9 @@ public class ContentPageEditorDisplayContext {
 				getFragmentEntryActionURL(
 					"/layout_content_page_editor/edit_fragment_entry_link")
 			).put(
+				"feature.flag.LPS-141410",
+				PropsUtil.get("feature.flag.LPS-141410")
+			).put(
 				"featureFlagLps119551",
 				GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-119551"))
 			).put(

@@ -74,11 +74,41 @@ export function CommonStyles({
 		});
 	};
 
+	let spacingField = null;
+
+	if (config['feature.flag.LPS-141410']) {
+		spacingField = styles.find((fieldSet) => isSpacingFieldSet(fieldSet))
+			?.styles[0];
+
+		if (spacingField) {
+			styles = styles.filter((fieldSet) => !isSpacingFieldSet(fieldSet));
+		}
+	}
+
 	return (
 		<>
 			<div
 				className={classNames('page-editor__common-styles', className)}
 			>
+				{spacingField ? (
+					<FieldSet
+						fields={[
+							{
+								...spacingField,
+								displaySize: '',
+								label: '',
+								name: '',
+								type: 'spacing',
+							},
+						]}
+						item={item}
+						label={Liferay.Language.get('spacing')}
+						languageId={config.defaultLanguageId}
+						onValueSelect={handleValueSelect}
+						values={commonStylesValues}
+					/>
+				) : null}
+
 				{styles.map((fieldSet, index) => {
 					return (
 						<FieldSet
@@ -94,6 +124,13 @@ export function CommonStyles({
 				})}
 			</div>
 		</>
+	);
+}
+
+function isSpacingFieldSet(fieldSet) {
+	return (
+		fieldSet.styles.every((field) => field.name.startsWith('margin')) ||
+		fieldSet.styles.every((field) => field.name.startsWith('padding'))
 	);
 }
 

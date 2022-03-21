@@ -36,7 +36,7 @@ public class BuildCSSMojoTestUtil {
 		throws IOException {
 
 		String content = FileTestUtil.read(
-			BuildCSSMojoJni32Test.class, "dependencies/pom_xml.tmpl");
+			BuildCSSMojoTest.class, "dependencies/pom_xml.tmpl");
 
 		content = _replace(
 			content, "[$CSS_BUILDER_VERSION$]", _CSS_BUILDER_VERSION);

@@ -109,7 +109,10 @@ public abstract class BaseCSSBuilderJniTestCase extends BaseCSSBuilderTestCase {
 		String output = testCSSBuilder(importDirPath, "jni");
 
 		Assert.assertTrue(
-			output, output.contains("Using native Sass compiler"));
+			output,
+			output.contains(
+				"Using Dart Sass compiler. Other sass compilers are no " +
+					"longer supported"));
 	}
 
 	@Test
@@ -117,21 +120,10 @@ public abstract class BaseCSSBuilderJniTestCase extends BaseCSSBuilderTestCase {
 		String output = testCSSBuilder(importJarPath, "jni");
 
 		Assert.assertTrue(
-			output, output.contains("Using native Sass compiler"));
-	}
-
-	@Test
-	public void testCSSBuilderWithRuby() throws Exception {
-		String output = testCSSBuilder(importDirPath, "ruby");
-
-		Assert.assertTrue(output, output.contains("Using Ruby Sass compiler"));
-	}
-
-	@Test
-	public void testCSSBuilderWithRubyAndPortalCommonJar() throws Exception {
-		String output = testCSSBuilder(importJarPath, "ruby");
-
-		Assert.assertTrue(output, output.contains("Using Ruby Sass compiler"));
+			output,
+			output.contains(
+				"Using Dart Sass compiler. Other sass compilers are no " +
+					"longer supported"));
 	}
 
 }

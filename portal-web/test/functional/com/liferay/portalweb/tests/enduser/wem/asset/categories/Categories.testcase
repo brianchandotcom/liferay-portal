@@ -520,7 +520,7 @@ definition {
 
 			Navigator.gotoNavUnderline(navUnderline = "Properties");
 
-			Type(
+			Type.sendKeys(
 				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
 				value1 = "${inputText}");
 
@@ -532,7 +532,7 @@ definition {
 				locator1 = "CategoriesEditCategory#PROPERTIES_KEY_FIELD_1",
 				value1 = "${actualText}");
 
-			Type(
+			Type.sendKeys(
 				locator1 = "CategoriesEditCategory#PROPERTIES_VALUE_FIELD_1",
 				value1 = "${inputText}");
 

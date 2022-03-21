@@ -53,12 +53,21 @@ public class VerifyProductTask extends DefaultTask {
 		_dockerImageLiferay = dockerImageLiferay;
 	}
 
+	public void setErrorMessage(String errorMessage) {
+		_errorMessage = errorMessage;
+	}
+
 	public void setTargetPlatformVersion(String targetPlatformVersion) {
 		_targetPlatformVersion = targetPlatformVersion;
 	}
 
 	@TaskAction
 	public void verifyProduct() throws Exception {
+		if (!_errorMessage.isEmpty()) {
+			throw new GradleException("Please check the product key in Liferay " +
+					"workspace");
+		}
+
 		if (Objects.isNull(_bundleUrl) || _bundleUrl.isEmpty()) {
 			throw new GradleException("Liferay bundle URL should not be null");
 		}
@@ -73,6 +82,7 @@ public class VerifyProductTask extends DefaultTask {
 
 	private String _bundleUrl = "";
 	private String _dockerImageLiferay = "";
+	private String _errorMessage = "";
 	private String _targetPlatformVersion = "";
 
 }

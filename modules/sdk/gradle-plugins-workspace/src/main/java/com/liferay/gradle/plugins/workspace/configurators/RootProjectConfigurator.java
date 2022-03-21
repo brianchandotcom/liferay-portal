@@ -1466,7 +1466,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 								productInfo.getTargetPlatformVersion());
 						}
 						else {
-							throw new GradleException(
+							verifyProductTask.setErrorMessage(
 								"Please check the product key in Liferay " +
 									"workspace");
 						}

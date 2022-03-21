@@ -25,7 +25,8 @@ import {
 import {ROLE_TYPES} from '../../../../common/utils/constants';
 import TeamMembersTableHeader from './components/Header';
 import RemoveUserModal from './components/RemoveUserModal';
-import useAccountUser from './hooks/useAccountUser';
+import useAccountRoles from './hooks/useAccountRoles';
+import useGetAccountUserAccount from './hooks/useGetAccountUserAccounts';
 import {
 	STATUS_ACTION_TYPES,
 	STATUS_NAME_TYPES,
@@ -45,14 +46,14 @@ const ROLE_FILTER_NAME = 'contactRoleNames';
 const ALERT_TIMEOUT = 3000;
 
 const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
+	const {accountRoles} = useAccountRoles(project);
+
 	const {
-		accountRoles,
-		administratorsAvailable,
 		isLoadingUserAccounts,
-		setAdministratorsAvailable,
-		setUserAccounts,
-		userAccounts,
-	} = useAccountUser(project);
+		userAccountsState: [userAccounts, setUserAccounts],
+	} = useGetAccountUserAccount(project);
+
+	const [administratorsAvailable, setAdministratorsAvailable] = useState();
 
 	const [userAction, setUserAction] = useState();
 	const [selectedRole, setSelectedRole] = useState();

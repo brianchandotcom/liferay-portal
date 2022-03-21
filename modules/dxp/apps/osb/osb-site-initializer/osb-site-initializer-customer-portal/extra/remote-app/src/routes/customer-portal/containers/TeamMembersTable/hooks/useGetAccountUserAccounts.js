@@ -12,25 +12,12 @@
 import {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
 import {getAccountUserAccountsByExternalReferenceCode} from '../../../../../common/services/liferay/graphql/queries';
-import getProjectRoles from '../../../../../common/utils/getProjectRoles';
 
 const MAX_PAGE_SIZE = 9999;
 
-const useAccountUser = (project) => {
-	const [accountRoles, setAccountRoles] = useState([]);
-	const [administratorsAvailable, setAdministratorsAvailable] = useState();
+export default function useGetAccountUserAccount(project) {
 	const [userAccounts, setUserAccounts] = useState([]);
 	const [isLoadingUserAccounts, setIsLoadingUserAccounts] = useState(false);
-
-	useEffect(() => {
-		const getRoles = async () => {
-			const roles = await getProjectRoles(project);
-			if (roles) {
-				setAccountRoles(roles);
-			}
-		};
-		getRoles();
-	}, [project]);
 
 	useEffect(() => {
 		setIsLoadingUserAccounts(true);
@@ -74,13 +61,7 @@ const useAccountUser = (project) => {
 	}, [project.accountKey]);
 
 	return {
-		accountRoles,
-		administratorsAvailable,
 		isLoadingUserAccounts,
-		setAdministratorsAvailable,
-		setUserAccounts,
-		userAccounts,
+		userAccountsState: [userAccounts, setUserAccounts],
 	};
-};
-
-export default useAccountUser;
+}

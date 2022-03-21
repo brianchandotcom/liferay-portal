@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PersistenceTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
@@ -60,7 +60,8 @@ public class FragmentEntryLinkServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE,
 			new TransactionalTestRule(
 				Propagation.REQUIRED,
 				FragmentPersistenceConstants.BUNDLE_SYMBOLIC_NAME));

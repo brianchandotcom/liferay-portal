@@ -23,24 +23,16 @@ import java.util.TimeZone;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Alexander Chow
  * @author Manuel de la Peña
  * @author Raymond Augé
  */
-@PrepareForTest({CalendarFactoryUtil.class, DateFormatFactoryUtil.class})
-@RunWith(PowerMockRunner.class)
-public class DateUtilTest extends PowerMockito {
+public class DateUtilTest {
 
 	@Test
 	public void testEquals() throws Exception {
@@ -123,24 +115,43 @@ public class DateUtilTest extends PowerMockito {
 
 	@Test
 	public void testGetUTCFormat() {
-		_testGetUTCFormat("19721223", "yyyyMMdd");
-	}
+		DateFormatFactoryUtil dateFormatFactoryUtil =
+			new DateFormatFactoryUtil();
 
-	private void _mockDateUtilPattern(String pattern) {
-		mockStatic(DateFormatFactoryUtil.class);
+		DateFormatFactory dateFormatFactory = Mockito.mock(
+			DateFormatFactory.class);
 
-		when(
-			DateFormatFactoryUtil.getSimpleDateFormat(pattern)
-		).thenReturn(
-			new SimpleDateFormat(pattern, LocaleUtil.SPAIN)
+		dateFormatFactoryUtil.setDateFormatFactory(dateFormatFactory);
+
+		Mockito.when(
+			dateFormatFactory.getSimpleDateFormat(
+				Mockito.anyString(), Mockito.any(TimeZone.class))
+		).thenAnswer(
+			(Answer<SimpleDateFormat>)
+				invocationOnMock -> new TestSimpleDateFormat(
+					(String)invocationOnMock.getArguments()[0])
 		);
+
+		DateFormat utcDateFormat = DateUtil.getUTCFormat("19721223");
+
+		Assert.assertNotNull(utcDateFormat);
+		Assert.assertTrue(utcDateFormat instanceof SimpleDateFormat);
+
+		TestSimpleDateFormat testSimpleDateFormat =
+			(TestSimpleDateFormat)utcDateFormat;
+
+		Assert.assertEquals("yyyyMMdd", testSimpleDateFormat.getPattern());
 	}
 
 	private void _testGetDaysBetween(Date date1, Date date2, int expected) {
-		mockStatic(CalendarFactoryUtil.class);
+		CalendarFactoryUtil calendarFactoryUtil = new CalendarFactoryUtil();
 
-		when(
-			CalendarFactoryUtil.getCalendar()
+		CalendarFactory calendarFactory = Mockito.mock(CalendarFactory.class);
+
+		calendarFactoryUtil.setCalendarFactory(calendarFactory);
+
+		Mockito.when(
+			calendarFactory.getCalendar()
 		).thenReturn(
 			new GregorianCalendar()
 		);
@@ -150,45 +161,25 @@ public class DateUtilTest extends PowerMockito {
 	}
 
 	private void _testGetISOFormat(String text, String pattern) {
-		_mockDateUtilPattern(pattern);
+		DateFormatFactoryUtil dateFormatFactoryUtil =
+			new DateFormatFactoryUtil();
+
+		DateFormatFactory dateFormatFactory = Mockito.mock(
+			DateFormatFactory.class);
+
+		dateFormatFactoryUtil.setDateFormatFactory(dateFormatFactory);
+
+		Mockito.when(
+			dateFormatFactory.getSimpleDateFormat(pattern)
+		).thenReturn(
+			new SimpleDateFormat(pattern, LocaleUtil.SPAIN)
+		);
 
 		DateFormat dateFormat = DateUtil.getISOFormat(text);
 
 		SimpleDateFormat simpleDateFormat = (SimpleDateFormat)dateFormat;
 
 		Assert.assertEquals(pattern, simpleDateFormat.toPattern());
-	}
-
-	private void _testGetUTCFormat(String date, String pattern) {
-		mockStatic(DateFormatFactoryUtil.class);
-
-		when(
-			DateFormatFactoryUtil.getSimpleDateFormat(
-				Mockito.anyString(), Mockito.any(TimeZone.class))
-		).thenAnswer(
-			new Answer<SimpleDateFormat>() {
-
-				@Override
-				public SimpleDateFormat answer(
-						InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					return new TestSimpleDateFormat(
-						(String)invocationOnMock.getArguments()[0]);
-				}
-
-			}
-		);
-
-		DateFormat utcDateFormat = DateUtil.getUTCFormat(date);
-
-		Assert.assertNotNull(utcDateFormat);
-		Assert.assertTrue(utcDateFormat instanceof SimpleDateFormat);
-
-		TestSimpleDateFormat testSimpleDateFormat =
-			(TestSimpleDateFormat)utcDateFormat;
-
-		Assert.assertEquals(testSimpleDateFormat.getPattern(), pattern);
 	}
 
 	private static class TestSimpleDateFormat extends SimpleDateFormat {

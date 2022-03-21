@@ -39,31 +39,52 @@ import javax.servlet.http.HttpServletRequest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Tomas Polesovsky
  */
-@RunWith(PowerMockRunner.class)
-public class ServletResponseUtilRangeTest extends PowerMockito {
+public class ServletResponseUtilRangeTest {
 
 	@Before
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		setUpFileUtil();
-		setUpPropsUtil();
+		FileUtil fileUtil = new FileUtil();
+
+		fileUtil.setFile(_file);
+
+		Mockito.when(
+			_file.createTempFile()
+		).thenAnswer(
+			(Answer<File>)invocation -> {
+				String name = String.valueOf(System.currentTimeMillis());
+
+				return File.createTempFile(name, null);
+			}
+		);
+
+		Mockito.when(
+			_file.delete(Matchers.any(File.class))
+		).thenAnswer(
+			(Answer<Boolean>)invocation -> {
+				Object[] args = invocation.getArguments();
+
+				File file = (File)args[0];
+
+				return file.delete();
+			}
+		);
+
+		PropsTestUtil.setProps(
+			PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS, "10");
 	}
 
 	@Test
@@ -200,57 +221,10 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 		Assert.assertEquals(range.getLength(), length);
 	}
 
-	protected void setUpFileUtil() {
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(_file);
-
-		when(
-			_file.createTempFile()
-		).thenAnswer(
-			new Answer<File>() {
-
-				@Override
-				public File answer(InvocationOnMock invocation)
-					throws Throwable {
-
-					String name = String.valueOf(System.currentTimeMillis());
-
-					return File.createTempFile(name, null);
-				}
-
-			}
-		);
-
-		when(
-			_file.delete(Matchers.any(File.class))
-		).thenAnswer(
-			new Answer<Boolean>() {
-
-				@Override
-				public Boolean answer(InvocationOnMock invocation)
-					throws Throwable {
-
-					Object[] args = invocation.getArguments();
-
-					File file = (File)args[0];
-
-					return file.delete();
-				}
-
-			}
-		);
-	}
-
-	protected void setUpPropsUtil() {
-		PropsTestUtil.setProps(
-			PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS, "10");
-	}
-
 	protected void setUpRange(
 		HttpServletRequest httpServletRequest, String rangeHeader) {
 
-		when(
+		Mockito.when(
 			httpServletRequest.getHeader(HttpHeaders.RANGE)
 		).thenReturn(
 			rangeHeader
@@ -323,9 +297,6 @@ public class ServletResponseUtilRangeTest extends PowerMockito {
 
 	private static final String _CONTENT_TYPE_BOUNDARY_PREFACE =
 		"multipart/byteranges; boundary=";
-
-	@Mock
-	private BrowserSniffer _browserSniffer;
 
 	@Mock
 	private com.liferay.portal.kernel.util.File _file;

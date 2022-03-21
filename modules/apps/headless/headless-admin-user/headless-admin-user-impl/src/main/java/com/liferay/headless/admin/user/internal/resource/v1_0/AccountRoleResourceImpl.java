@@ -15,6 +15,7 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.role.AccountRolePermissionThreadLocal;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.AccountRole;
@@ -22,6 +23,7 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.converter.AccountResour
 import com.liferay.headless.admin.user.internal.dto.v1_0.converter.UserResourceDTOConverter;
 import com.liferay.headless.admin.user.internal.odata.entity.v1_0.AccountRoleEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.AccountRoleResource;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -116,37 +118,44 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 
 		_accountEntryLocalService.getAccountEntry(accountId);
 
-		return SearchUtil.search(
-			null,
-			booleanQuery -> {
-				BooleanFilter preBooleanFilter =
-					booleanQuery.getPreBooleanFilter();
+		try (SafeCloseable safeCloseable =
+				AccountRolePermissionThreadLocal.setWithSafeCloseable(
+					accountId)) {
 
-				TermsFilter termsFilter = new TermsFilter("accountEntryId");
+			return SearchUtil.search(
+				null,
+				booleanQuery -> {
+					BooleanFilter preBooleanFilter =
+						booleanQuery.getPreBooleanFilter();
 
-				termsFilter.addValues(
-					ArrayUtil.toStringArray(
-						new long[] {
-							AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, accountId
-						}));
+					TermsFilter termsFilter = new TermsFilter("accountEntryId");
 
-				preBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
-			},
-			filter, com.liferay.account.model.AccountRole.class.getName(),
-			keywords, pagination,
-			queryConfig -> {
-			},
-			searchContext -> {
-				searchContext.setCompanyId(contextCompany.getCompanyId());
+					termsFilter.addValues(
+						ArrayUtil.toStringArray(
+							new long[] {
+								AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+								accountId
+							}));
 
-				if (Validator.isNotNull(keywords)) {
-					searchContext.setKeywords(keywords);
-				}
-			},
-			sorts,
-			document -> _toAccountRole(
-				_accountRoleLocalService.getAccountRole(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+					preBooleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
+				},
+				filter, com.liferay.account.model.AccountRole.class.getName(),
+				keywords, pagination,
+				queryConfig -> {
+				},
+				searchContext -> {
+					searchContext.setCompanyId(contextCompany.getCompanyId());
+
+					if (Validator.isNotNull(keywords)) {
+						searchContext.setKeywords(keywords);
+					}
+				},
+				sorts,
+				document -> _toAccountRole(
+					_accountRoleLocalService.getAccountRole(
+						GetterUtil.getLong(
+							document.get(Field.ENTRY_CLASS_PK)))));
+		}
 	}
 
 	@Override

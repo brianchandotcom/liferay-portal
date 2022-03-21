@@ -7,7 +7,7 @@
 	<description/>
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.css.builder</artifactId>
-	<version>3.0.3</version>
+	<version>3.1.0</version>
 	<goalPrefix>css-builder</goalPrefix>
 	<isolatedRealm>false</isolatedRealm>
 	<inheritedByDefault>true</inheritedByDefault>
@@ -148,30 +148,6 @@
 		</mojo>
 	</mojos>
 	<dependencies>
-		<dependency>
-			<groupId>com.liferay</groupId>
-			<artifactId>com.liferay.sass.compiler.jni</artifactId>
-			<type>jar</type>
-			<version>2.0.9</version>
-		</dependency>
-		<dependency>
-			<groupId>com.liferay</groupId>
-			<artifactId>com.liferay.sass.compiler.api</artifactId>
-			<type>jar</type>
-			<version>2.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>com.liferay</groupId>
-			<artifactId>com.liferay.sass.compiler.ruby</artifactId>
-			<type>jar</type>
-			<version>2.0.6</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jruby</groupId>
-			<artifactId>jruby-complete</artifactId>
-			<type>jar</type>
-			<version>9.2.7.0</version>
-		</dependency>
 		<dependency>
 			<groupId>org.codehaus.plexus</groupId>
 			<artifactId>plexus-utils</artifactId>

@@ -120,6 +120,10 @@ function FieldSetContent({fields, item, languageId, onValueSelect, values}) {
 }
 
 function getFieldValue({field, languageId, values}) {
+	if (field.name === '') {
+		return values;
+	}
+
 	const value = values[field.name];
 
 	if (isNullOrUndefined(value)) {

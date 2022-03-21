@@ -1,5 +1,36 @@
 # Poshi Runner Change Log
 
+## 1.0.342
+
+### Core
+
+* [POSHI-260](https://issues.liferay.com/browse/POSHI-260) - Add new property to grab all wanted test directories
+* [POSHI-308](https://issues.liferay.com/browse/POSHI-308) - WIndows Issue: Poshi Validation error when using poshi resource function
+
+### Prose
+
+* [POSHI-292](https://issues.liferay.com/browse/POSHI-292) - Fix Poshi Prose parsing to work after Validation refactors
+
+### Runner
+
+* [POSHI-303](https://issues.liferay.com/browse/POSHI-303) - As a test writer, I should be able to set a match percentage for Ocular images
+
+### Script
+
+* [POSHI-253](https://issues.liferay.com/browse/POSHI-253) - Investigate CDATA usage in Poshi
+
+### Standalone
+
+* [POSHI-306](https://issues.liferay.com/browse/POSHI-306) - Add install.sh file to poshi-standalone
+
+### Utils
+
+* [POSHI-305](https://issues.liferay.com/browse/POSHI-305) - Add StringUtils.center method
+
+### Validation
+
+* [POSHI-307](https://issues.liferay.com/browse/POSHI-307) - Throw correct error when the test name cannot be found
+
 ## 1.0.337
 
 ### Documentation

@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.CamelCaseUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration;
+import com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyCompanyConfiguration;
 import com.liferay.segments.field.Field;
 import com.liferay.segments.field.customizer.SegmentsFieldCustomizer;
 
@@ -44,19 +44,19 @@ import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Raymond Augé
+ * @author Yurena Cabrera
  */
 @Component(
-	configurationPid = "com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration",
+	configurationPid = "com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyCompanyConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	property = {
 		"segments.field.customizer.entity.name=Context",
-		"segments.field.customizer.key=" + SegmentsContextVocabularySegmentsFieldCustomizer.KEY,
+		"segments.field.customizer.key=" + SegmentsContextVocabularySegmentsFieldCompanyCustomizer.KEY,
 		"segments.field.customizer.priority:Integer=-1"
 	},
 	service = SegmentsFieldCustomizer.class
 )
-public class SegmentsContextVocabularySegmentsFieldCustomizer
+public class SegmentsContextVocabularySegmentsFieldCompanyCustomizer
 	implements SegmentsFieldCustomizer {
 
 	public static final String KEY = "assetVocabulary";
@@ -125,19 +125,21 @@ public class SegmentsContextVocabularySegmentsFieldCustomizer
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		SegmentsContextVocabularyConfiguration
-			segmentsContextVocabularyConfiguration =
+		SegmentsContextVocabularyCompanyConfiguration
+			segmentsContextVocabularyCompanyConfiguration =
 				ConfigurableUtil.createConfigurable(
-					SegmentsContextVocabularyConfiguration.class, properties);
+					SegmentsContextVocabularyCompanyConfiguration.class,
+					properties);
 
-		_entityField = segmentsContextVocabularyConfiguration.entityField();
+		_entityField =
+			segmentsContextVocabularyCompanyConfiguration.entityField();
 
 		_assetVocabulary =
-			segmentsContextVocabularyConfiguration.assetVocabulary();
+			segmentsContextVocabularyCompanyConfiguration.assetVocabulary();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SegmentsContextVocabularySegmentsFieldCustomizer.class);
+		SegmentsContextVocabularySegmentsFieldCompanyCustomizer.class);
 
 	private volatile String _assetVocabulary;
 

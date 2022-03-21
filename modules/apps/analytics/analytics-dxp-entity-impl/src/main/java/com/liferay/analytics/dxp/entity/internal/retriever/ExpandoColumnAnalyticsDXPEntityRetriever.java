@@ -15,7 +15,7 @@
 package com.liferay.analytics.dxp.entity.internal.retriever;
 
 import com.liferay.analytics.dxp.entity.dto.v1_0.DXPEntity;
-import com.liferay.analytics.dxp.entity.retriever.DXPEntityRetriever;
+import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetriever;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
 import com.liferay.expando.kernel.model.ExpandoColumn;
@@ -48,10 +48,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "dxp.entity.retriever.class.name=com.liferay.expando.kernel.model.ExpandoColumn",
-	service = DXPEntityRetriever.class
+	property = "analytics.dxp.entity.retriever.class.name=com.liferay.expando.kernel.model.ExpandoColumn",
+	service = AnalyticsDXPEntityRetriever.class
 )
-public class ExpandoColumnDXPEntityRetriever implements DXPEntityRetriever {
+public class ExpandoColumnAnalyticsDXPEntityRetriever implements
+	AnalyticsDXPEntityRetriever {
 
 	@Override
 	public Page<DXPEntity> getDXPEntitiesPage(

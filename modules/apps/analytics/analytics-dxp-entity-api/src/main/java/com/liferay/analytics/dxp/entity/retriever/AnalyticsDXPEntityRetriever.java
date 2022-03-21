@@ -14,11 +14,21 @@
 
 package com.liferay.analytics.dxp.entity.retriever;
 
+import com.liferay.analytics.dxp.entity.dto.v1_0.DXPEntity;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+
 /**
  * @author Marcos Martins
  */
-public interface DXPEntityRetrieverTracker {
+public interface AnalyticsDXPEntityRetriever {
 
-	public DXPEntityRetriever getDXPEntityRetriever(String className);
+	public Page<DXPEntity> getDXPEntitiesPage(
+			long companyId, Pagination pagination,
+			UnsafeFunction<BaseModel<?>, DXPEntity, Exception>
+				transformUnsafeFunction)
+		throws Exception;
 
 }

@@ -15,7 +15,7 @@
 package com.liferay.analytics.dxp.entity.internal.retriever;
 
 import com.liferay.analytics.dxp.entity.dto.v1_0.DXPEntity;
-import com.liferay.analytics.dxp.entity.retriever.DXPEntityRetriever;
+import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetriever;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Role;
@@ -35,10 +35,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.Role",
-	service = DXPEntityRetriever.class
+	property = "analytics.dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.Role",
+	service = AnalyticsDXPEntityRetriever.class
 )
-public class RoleDXPEntityRetriever implements DXPEntityRetriever {
+public class RoleAnalyticsDXPEntityRetriever
+	implements AnalyticsDXPEntityRetriever {
 
 	@Override
 	public Page<DXPEntity> getDXPEntitiesPage(

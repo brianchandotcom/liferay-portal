@@ -15,16 +15,16 @@
 package com.liferay.analytics.dxp.entity.internal.retriever;
 
 import com.liferay.analytics.dxp.entity.dto.v1_0.DXPEntity;
-import com.liferay.analytics.dxp.entity.retriever.DXPEntityRetriever;
+import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetriever;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,10 +34,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.Organization",
-	service = DXPEntityRetriever.class
+	property = "analytics.dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.Team",
+	service = AnalyticsDXPEntityRetriever.class
 )
-public class OrganizationDXPEntityRetriever implements DXPEntityRetriever {
+public class TeamAnalyticsDXPEntityRetriever
+	implements AnalyticsDXPEntityRetriever {
 
 	@Override
 	public Page<DXPEntity> getDXPEntitiesPage(
@@ -46,18 +47,20 @@ public class OrganizationDXPEntityRetriever implements DXPEntityRetriever {
 				transformUnsafeFunction)
 		throws Exception {
 
-		return SearchUtil.search(
-			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), null,
-			Organization.class.getName(), null, pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> searchContext.setCompanyId(companyId), null,
-			document -> transformUnsafeFunction.apply(
-				_organizationLocalService.getOrganization(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+		List<DXPEntity> dxpEntities = new ArrayList<>();
+
+		List<Team> teams = _teamLocalService.getTeams(
+			pagination.getStartPosition(), pagination.getEndPosition());
+
+		for (Team team : teams) {
+			dxpEntities.add(transformUnsafeFunction.apply(team));
+		}
+
+		return Page.of(
+			dxpEntities, pagination, _teamLocalService.getTeamsCount());
 	}
 
 	@Reference
-	private OrganizationLocalService _organizationLocalService;
+	private TeamLocalService _teamLocalService;
 
 }

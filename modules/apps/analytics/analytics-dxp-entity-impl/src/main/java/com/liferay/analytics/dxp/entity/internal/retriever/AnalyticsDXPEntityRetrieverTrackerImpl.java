@@ -14,8 +14,8 @@
 
 package com.liferay.analytics.dxp.entity.internal.retriever;
 
-import com.liferay.analytics.dxp.entity.retriever.DXPEntityRetriever;
-import com.liferay.analytics.dxp.entity.retriever.DXPEntityRetrieverTracker;
+import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetriever;
+import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetrieverTracker;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
@@ -27,20 +27,22 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Marcos Martins
  */
-@Component(immediate = true, service = DXPEntityRetrieverTracker.class)
-public class DXPEntityRetrieverTrackerImpl
-	implements DXPEntityRetrieverTracker {
+@Component(immediate = true, service = AnalyticsDXPEntityRetrieverTracker.class)
+public class AnalyticsDXPEntityRetrieverTrackerImpl
+	implements AnalyticsDXPEntityRetrieverTracker {
 
 	@Override
-	public DXPEntityRetriever getDXPEntityRetriever(String className) {
+	public AnalyticsDXPEntityRetriever getAnalyticsDXPEntityRetriever(
+		String className) {
+
 		return _serviceTrackerMap.getService(className);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, DXPEntityRetriever.class,
-			"dxp.entity.retriever.class.name");
+			bundleContext, AnalyticsDXPEntityRetriever.class,
+			"analytics.dxp.entity.retriever.class.name");
 	}
 
 	@Deactivate
@@ -48,6 +50,7 @@ public class DXPEntityRetrieverTrackerImpl
 		_serviceTrackerMap.close();
 	}
 
-	private ServiceTrackerMap<String, DXPEntityRetriever> _serviceTrackerMap;
+	private ServiceTrackerMap<String, AnalyticsDXPEntityRetriever>
+		_serviceTrackerMap;
 
 }

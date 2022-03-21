@@ -15,17 +15,16 @@
 package com.liferay.analytics.dxp.entity.internal.retriever;
 
 import com.liferay.analytics.dxp.entity.dto.v1_0.DXPEntity;
-import com.liferay.analytics.dxp.entity.retriever.DXPEntityRetriever;
+import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetriever;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -35,10 +34,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.Group",
-	service = DXPEntityRetriever.class
+	property = "analytics.dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.Organization",
+	service = AnalyticsDXPEntityRetriever.class
 )
-public class GroupDXPEntityRetriever implements DXPEntityRetriever {
+public class OrganizationAnalyticsDXPEntityRetriever implements
+	AnalyticsDXPEntityRetriever {
 
 	@Override
 	public Page<DXPEntity> getDXPEntitiesPage(
@@ -47,27 +47,18 @@ public class GroupDXPEntityRetriever implements DXPEntityRetriever {
 				transformUnsafeFunction)
 		throws Exception {
 
-		List<DXPEntity> dxpEntities = new ArrayList<>();
-
-		List<Group> groups = _groupLocalService.search(
-			companyId,
-			LinkedHashMapBuilder.<String, Object>put(
-				"active", true
-			).put(
-				"site", true
-			).build(),
-			pagination.getStartPosition(), pagination.getEndPosition());
-
-		for (Group group : groups) {
-			dxpEntities.add(transformUnsafeFunction.apply(group));
-		}
-
-		return Page.of(
-			dxpEntities, pagination,
-			_groupLocalService.getActiveGroupsCount(companyId, true));
+		return SearchUtil.search(
+			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), null,
+			Organization.class.getName(), null, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> searchContext.setCompanyId(companyId), null,
+			document -> transformUnsafeFunction.apply(
+				_organizationLocalService.getOrganization(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Reference
-	private GroupLocalService _groupLocalService;
+	private OrganizationLocalService _organizationLocalService;
 
 }

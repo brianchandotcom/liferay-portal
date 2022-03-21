@@ -1784,6 +1784,14 @@ definition {
 		return "${responseHeader}";
 	}
 
+	macro getLatestVersionURL {
+		var latestVersionURL = selenium.getAttribute("//input[contains(@id,'urlInput')]@value");
+
+		return "${latestVersionURL}";
+
+		echo("## * latestVersionURL: ${latestVersionURL}");
+	}
+
 	macro gotoEntry {
 		Click(
 			key_card = "${dmDocumentTitle}",

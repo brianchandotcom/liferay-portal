@@ -95,7 +95,7 @@ public class BookmarksItemSelectorView
 					_bookmarksEntryLocalService);
 
 		servletRequest.setAttribute(
-				BookmarksItemSelectorViewDisplayContext.class.getName(),
+			BookmarksItemSelectorViewDisplayContext.class.getName(),
 			bookmarksItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();

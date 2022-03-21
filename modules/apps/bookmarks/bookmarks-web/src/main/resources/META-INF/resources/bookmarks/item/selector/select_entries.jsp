@@ -21,7 +21,7 @@ BookmarkEntriesItemSelectorDisplayContext bookmarkEntriesItemSelectorDisplayCont
 %>
 
 <clay:management-toolbar
-	displayContext="<%= new BookmarkEntriesItemSelectorManagementToolbarDisplayContext(liferayPortletRequest, liferayPortletResponse, request, bookmarkEntriesItemSelectorDisplayContext.getSearchContainer()) %>"
+	displayContext="<%= new BookmarkEntriesItemSelectorManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, bookmarkEntriesItemSelectorDisplayContext.getSearchContainer()) %>"
 	searchContainerId="bookmarkEntries"
 />
 
@@ -95,10 +95,6 @@ BookmarkEntriesItemSelectorDisplayContext bookmarkEntriesItemSelectorDisplayCont
 						name="name"
 						value="<%= entry.getName() %>"
 					/>
-
-					<%
-					AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(BookmarksEntry.class.getName(), entry.getEntryId());
-					%>
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>

@@ -140,9 +140,9 @@ public class PriceModifierCategoryResourceImpl
 
 		CommercePriceModifierRel commercePriceModifierRel =
 			PriceModifierCategoryUtil.addCommercePriceModifierRel(
-				_assetCategoryLocalService, _commercePriceModifierRelService,
-				priceModifierCategory, commercePriceModifier,
-				_serviceContextHelper);
+				contextCompany.getGroupId(), _assetCategoryLocalService,
+				_commercePriceModifierRelService, priceModifierCategory,
+				commercePriceModifier, _serviceContextHelper);
 
 		return _toPriceModifierCategory(
 			commercePriceModifierRel.getCommercePriceModifierRelId());
@@ -155,8 +155,8 @@ public class PriceModifierCategoryResourceImpl
 
 		CommercePriceModifierRel commercePriceModifierRel =
 			PriceModifierCategoryUtil.addCommercePriceModifierRel(
-				_assetCategoryLocalService, _commercePriceModifierRelService,
-				priceModifierCategory,
+				contextCompany.getGroupId(), _assetCategoryLocalService,
+				_commercePriceModifierRelService, priceModifierCategory,
 				_commercePriceModifierService.getCommercePriceModifier(id),
 				_serviceContextHelper);
 

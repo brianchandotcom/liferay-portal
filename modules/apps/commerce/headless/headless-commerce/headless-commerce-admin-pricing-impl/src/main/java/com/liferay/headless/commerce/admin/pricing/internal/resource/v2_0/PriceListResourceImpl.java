@@ -497,10 +497,10 @@ public class PriceListResourceImpl extends BasePriceListResourceImpl {
 							serviceContext);
 
 				PriceModifierUtil.addOrUpdateCommercePriceModifierRels(
-					_assetCategoryLocalService, _commercePricingClassService,
-					_cProductLocalService, _commercePriceModifierRelService,
-					priceModifier, commercePriceModifier,
-					_serviceContextHelper);
+					contextCompany.getGroupId(), _assetCategoryLocalService,
+					_commercePricingClassService, _cProductLocalService,
+					_commercePriceModifierRelService, priceModifier,
+					commercePriceModifier, _serviceContextHelper);
 			}
 		}
 

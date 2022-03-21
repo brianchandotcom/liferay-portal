@@ -462,8 +462,9 @@ public class DiscountResourceImpl extends BaseDiscountResourceImpl {
 				}
 
 				DiscountCategoryUtil.addCommerceDiscountRel(
-					_assetCategoryLocalService, _commerceDiscountRelService,
-					discountCategory, commerceDiscount, _serviceContextHelper);
+					contextCompany.getGroupId(), _assetCategoryLocalService,
+					_commerceDiscountRelService, discountCategory,
+					commerceDiscount, _serviceContextHelper);
 			}
 		}
 

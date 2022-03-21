@@ -1776,6 +1776,10 @@ definition {
 	}
 
 	macro getFileResponseHeader {
+		WaitForElementPresent(
+			key_dmDocumentFileName = "${dmDocumentFileName}",
+			locator1 = "DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW");
+
 		var dmDocumentURL = selenium.getAttribute("//img[contains(@class,'preview-file-image') and contains(@src,'${dmDocumentFileName}')]@src");
 
 		var curl = '''${dmDocumentURL} -I''';

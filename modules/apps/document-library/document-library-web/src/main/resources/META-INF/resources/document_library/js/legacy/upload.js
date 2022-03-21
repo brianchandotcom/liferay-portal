@@ -158,6 +158,20 @@ AUI.add(
 			'</ul>'
 		);
 
+		var TPL_ERROR_NOTIFICATION = new A.Template(
+			'{title}',
+
+			'<tpl if="invalidFiles.length < 3">',
+
+			'<ul class="mb-0 mt-2 pl-3">',
+			'<tpl for="invalidFiles">',
+			'<li><b>{name}</b>: {errorMessage}</li>',
+			'</tpl>',
+			'</ul>',
+
+			'</tpl>'
+		);
+
 		var TPL_HIDDEN_CHECK_BOX =
 			'<input class="hide ' +
 			CSS_ENTRY_SELECTOR +
@@ -1078,6 +1092,47 @@ AUI.add(
 								!emptyMessage.hasClass('hide')
 							) {
 								emptyMessage.hide(true);
+							}
+
+							var currentUploadData = instance._getCurrentUploadData();
+
+							const invalidFilesLength =
+								currentUploadData.invalidFiles.length;
+							const validFilesLength =
+								currentUploadData.fileList.length;
+
+							if (validFilesLength) {
+								const openToastProps = {
+									autoClose: false,
+									message: `${validFilesLength} files were uploaded`,
+									type: 'success',
+								};
+
+								if (!invalidFilesLength) {
+									openToastProps.message =
+										openToastProps.message +
+										' <button class="dl-reload">Reload</button>';
+
+									openToastProps.onClick = (...args) => {
+										console.log({args});
+									};
+								}
+
+								Liferay.Util.openToast(openToastProps);
+							}
+
+							if (invalidFilesLength) {
+								const message = TPL_ERROR_NOTIFICATION.parse({
+									invalidFiles:
+										currentUploadData.invalidFiles,
+									title: `${invalidFilesLength} files could not be uploaded`,
+								});
+
+								Liferay.Util.openToast({
+									autoClose: false,
+									message,
+									type: 'danger',
+								});
 							}
 						});
 

@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Site Intializer Jobzz
+Bundle-SymbolicName: com.liferay.site.initializer.jobzz
+Bundle-Version: 1.0.0
+Liferay-Site-Initializer-Name: Jobzz
+Provide-Capability: liferay.site.initializer
+Web-ContextPath: /site-initializer-jobzz

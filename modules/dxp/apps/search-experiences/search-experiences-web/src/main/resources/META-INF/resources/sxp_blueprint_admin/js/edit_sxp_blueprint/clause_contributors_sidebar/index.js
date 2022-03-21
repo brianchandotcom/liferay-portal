@@ -9,6 +9,8 @@
  * distribution rights of the Software.
  */
 
+import ClayAlert from '@clayui/alert';
+import ClayButton from '@clayui/button';
 import {ClayCheckbox, ClayToggle} from '@clayui/form';
 import ClayList from '@clayui/list';
 import React, {useEffect, useState} from 'react';
@@ -47,6 +49,7 @@ export default function ({
 	frameworkConfig,
 	initialClauseContributorsList = [],
 	onClose,
+	onFetchContributors,
 	onFrameworkConfigChange,
 	visible,
 }) {
@@ -255,6 +258,30 @@ export default function ({
 				/>
 
 				<ClayList>
+					{initialClauseContributorsList.some(
+						({value}) => value.length === 0
+					) && (
+						<ClayAlert
+							actions={
+								<ClayButton.Group>
+									<ClayButton
+										alert
+										onClick={onFetchContributors}
+									>
+										{Liferay.Language.get('refresh')}
+									</ClayButton>
+								</ClayButton.Group>
+							}
+							displayType="danger"
+							title={Liferay.Language.get('error')}
+							variant="inline"
+						>
+							{Liferay.Language.get(
+								'an-error-has-occurred-and-we-were-unable-to-load-the-results'
+							)}
+						</ClayAlert>
+					)}
+
 					{contributors.map((contributor) => (
 						<React.Fragment key={contributor.label}>
 							<ClayList.Header>

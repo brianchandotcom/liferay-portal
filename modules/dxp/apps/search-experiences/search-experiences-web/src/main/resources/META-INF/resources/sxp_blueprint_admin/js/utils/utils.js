@@ -20,7 +20,7 @@ import {INPUT_TYPES} from './inputTypes';
  * @param {Array} items Array of objects with classNames
  * @return {Array} Array of classNames
  */
-export function filterAndSortClassNames(items) {
+export function filterAndSortClassNames(items = []) {
 	return items
 		.map(({className}) => className)
 		.filter((item) => item)

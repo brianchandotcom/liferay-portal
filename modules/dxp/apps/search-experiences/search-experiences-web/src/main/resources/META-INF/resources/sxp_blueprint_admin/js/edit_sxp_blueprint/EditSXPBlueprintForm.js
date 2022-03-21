@@ -98,23 +98,38 @@ function EditSXPBlueprintForm({
 	const [tab, setTab] = useState('query-builder');
 
 	const [indexFields, setIndexFields] = useState(null);
-	const [keywordQueryContributors, setKeywordQueryContributors] = useState(
-		null
-	);
-	const [
-		modelPrefilterContributors,
-		setModelPrefilterContributors,
-	] = useState(null);
-	const [
-		queryPrefilterContributors,
-		setQueryPrefilterContributors,
-	] = useState(null);
 
 	const {
 		data: searchableTypes,
 		refetch: refetchSearchableTypes,
 	} = useFetchData({
 		resource: `/o/search-experiences-rest/v1.0/searchable-asset-names/${locale}`,
+	});
+
+	const {
+		data: keywordQueryContributors,
+		refetch: refetchKeywordQueryContributors,
+	} = useFetchData({
+		getData: (response) => filterAndSortClassNames(response?.items),
+		resource: '/o/search-experiences-rest/v1.0/keyword-query-contributors',
+	});
+
+	const {
+		data: modelPrefilterContributors,
+		refetch: refetchModelPrefilterContributors,
+	} = useFetchData({
+		getData: (response) => filterAndSortClassNames(response?.items),
+		resource:
+			'/o/search-experiences-rest/v1.0/model-prefilter-contributors',
+	});
+
+	const {
+		data: queryPrefilterContributors,
+		refetch: refetchQueryPrefilterContributors,
+	} = useFetchData({
+		getData: (response) => filterAndSortClassNames(response?.items),
+		resource:
+			'/o/search-experiences-rest/v1.0/query-prefilter-contributors',
 	});
 
 	/**
@@ -389,30 +404,6 @@ function EditSXPBlueprintForm({
 		fetchData(`/o/search-experiences-rest/v1.0/field-mapping-infos`)
 			.then((responseContent) => setIndexFields(responseContent.items))
 			.catch(() => setIndexFields([]));
-
-		[
-			{
-				setProperty: setKeywordQueryContributors,
-				url:
-					'/o/search-experiences-rest/v1.0/keyword-query-contributors',
-			},
-			{
-				setProperty: setModelPrefilterContributors,
-				url:
-					'/o/search-experiences-rest/v1.0/model-prefilter-contributors',
-			},
-			{
-				setProperty: setQueryPrefilterContributors,
-				url:
-					'/o/search-experiences-rest/v1.0/query-prefilter-contributors',
-			},
-		].forEach(({setProperty, url}) =>
-			fetchData(url)
-				.then((responseContent) =>
-					setProperty(filterAndSortClassNames(responseContent.items))
-				)
-				.catch(() => setProperty([]))
-		);
 
 		setStorageAddSXPElementSidebar('open');
 	}, []); //eslint-disable-line
@@ -805,6 +796,11 @@ function EditSXPBlueprintForm({
 								},
 							]}
 							onClose={_handleCloseSidebar}
+							onFetchContributors={() => {
+								refetchKeywordQueryContributors();
+								refetchModelPrefilterContributors();
+								refetchQueryPrefilterContributors();
+							}}
 							onFrameworkConfigChange={
 								_handleFrameworkConfigChange
 							}
@@ -885,12 +881,7 @@ function EditSXPBlueprintForm({
 		}
 	};
 
-	if (
-		!indexFields ||
-		!keywordQueryContributors ||
-		!modelPrefilterContributors ||
-		!queryPrefilterContributors
-	) {
+	if (!indexFields) {
 		return null;
 	}
 

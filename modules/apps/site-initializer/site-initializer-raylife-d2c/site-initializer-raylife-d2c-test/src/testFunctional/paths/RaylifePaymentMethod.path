@@ -55,6 +55,21 @@
 	<td>//h1[contains(text(),'Congrats!')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>QUOTATION_VALUES</td>
+	<td>//div[contains(@class, 'value')]/span[contains(.,'${value}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAYMENT_AMOUNT_TWO_INSTALLMENTS</td>
+	<td>//p[contains(., '${installments}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BILLINGS_OPTIONS_DISCOUNT</td>
+	<td>//p[contains(@class, 'text-center') and contains(., '${discount}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

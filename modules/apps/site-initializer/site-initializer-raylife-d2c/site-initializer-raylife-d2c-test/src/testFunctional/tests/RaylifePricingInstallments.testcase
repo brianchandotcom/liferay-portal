@@ -1,0 +1,165 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Raylife";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		//Raylife.createRaylifeSite(siteName = "Raylife");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		//Raylife.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			User.logoutPG();
+		}
+	}
+
+	@description = "LPS-149425 - When selecting '2 payments', make sure it is possible to complete the payment"
+	@priority = "4"
+	test CanContinueFlowTwoPortion {
+		RaylifePaymentMethod.enablePayPalPayment();
+
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
+
+        Click(
+			locator1 = "RaylifePaymentMethod#BILLING_OPTIONS",
+			value = "payments");
+
+		Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
+
+		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
+
+		AssertElementPresent(locator1 = "RaylifePaymentMethod#CONGRATS");
+	}
+
+	@description = "LPS-149424 - When selecting payment in 1 installment, make sure it is possible to complete the payment"
+	@priority = "4"
+	test CanContinueFlowOnePortion {
+		RaylifePaymentMethod.enablePayPalPayment();
+
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
+
+		Click(
+			locator1 = "RaylifePaymentMethod#BILLING_OPTIONS",
+			value = "Pay in full");
+
+		Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
+
+		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
+
+		AssertElementPresent(locator1 = "RaylifePaymentMethod#CONGRATS");
+	}
+
+	@description = "LPS-149423 - Check that when selecting '2 payments' the amount appears divided into two exactly equal installments"
+	@priority = "3"
+	test IfDiscountAppearsSplit {
+		RaylifePaymentMethod.enablePayPalPayment();
+
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
+
+		AssertElementPresent(
+			locator1 = "RaylifePaymentMethod#QUOTATION_VALUES",
+			value = "719");
+
+		AssertElementPresent(
+			locator1 = "RaylifePaymentMethod#PAYMENT_AMOUNT_TWO_INSTALLMENTS",
+			installments = "359.50");
+	}
+
+	@description = "LPS-149422 - Make sure that when you select Pay in Full the discount appears"
+	@priority = "3"
+	test CanViewDiscountAppearsOnPaypal {
+		RaylifePaymentMethod.enablePayPalPayment();
+
+		ApplicationsMenu.gotoSite(key_site = "Raylife");
+
+		RaylifeHomePage.startFlow();
+
+		Raylife.formsFlow();
+
+		RaylifeCreateAccount.createAccount();
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.pdf",
+			title = "Business");
+
+		RaylifeUploadDocuments.uploadDocuments(
+			dmDocumentFileList = "Document_1.jpg",
+			title = "Build");
+
+		Click(locator1 = "RaylifeUploadDocuments#BUTTON_CONFIRM_UPLOADS");
+
+		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
+
+		AssertElementPresent(
+			locator1 = "RaylifePaymentMethod#BILLINGS_OPTIONS_DISCOUNT",
+			discount = "35.95");
+	}
+
+}

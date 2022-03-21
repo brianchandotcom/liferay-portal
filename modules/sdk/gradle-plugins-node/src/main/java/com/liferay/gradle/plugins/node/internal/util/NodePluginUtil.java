@@ -31,6 +31,16 @@ public class NodePluginUtil {
 		return binDir;
 	}
 
+	public static int getNodeMajorVersion(String version) {
+		int index = version.indexOf('.');
+
+		if (index > 0) {
+			return Integer.parseInt(version.substring(0, index));
+		}
+
+		return Integer.parseInt(version);
+	}
+
 	public static File getNpmDir(File nodeDir) {
 		File nodeModulesDir = new File(nodeDir, "node_modules");
 

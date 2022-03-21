@@ -728,6 +728,43 @@
 			<finder-column name="active" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="CommerceShippingOptionAccountEntryRel" remote-service="true" table="CSOptionAccountEntryRel">
+
+		<!-- PK fields -->
+
+		<column db-name="CSOptionAccountEntryRelId" name="CommerceShippingOptionAccountEntryRelId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="accountEntryId" type="long" />
+		<column name="commerceChannelId" type="long" />
+		<column name="commerceShippingMethodKey" type="String" />
+		<column name="commerceShippingOptionKey" type="String" />
+
+		<!-- Finder methods -->
+
+		<finder name="AccountEntryId" return-type="Collection">
+			<finder-column name="accountEntryId" />
+		</finder>
+		<finder name="CommerceChannelId" return-type="Collection">
+			<finder-column name="commerceChannelId" />
+		</finder>
+		<finder name="CommerceShippingOptionKey" return-type="Collection">
+			<finder-column name="commerceShippingOptionKey" />
+		</finder>
+		<finder name="A_C" return-type="CommerceShippingOptionAccountEntryRel" unique="true">
+			<finder-column name="accountEntryId" />
+			<finder-column name="commerceChannelId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommerceSubscriptionEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
@@ -913,6 +950,7 @@
 		<exception>CommerceSubscriptionType</exception>
 		<exception>DuplicateCommerceOrderNote</exception>
 		<exception>DuplicateCommerceOrderTypeRel</exception>
+		<exception>DuplicateCommerceShippingOptionAccountEntryRel</exception>
 		<exception>GuestCartItemMaxAllowed</exception>
 		<exception>GuestCartMaxAllowed</exception>
 		<exception>ProductBundle</exception>

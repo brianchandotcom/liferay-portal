@@ -102,7 +102,7 @@ export default function StructureTreeNode({node}) {
 	useEffect(() => {
 		if (node.type === LAYOUT_DATA_ITEM_TYPES.collection) {
 			const item =
-				layoutData.items[node.id] || masterLayoutData.items[node.id];
+				layoutData.items[node.id] || masterLayoutData?.items[node.id];
 
 			if (!item?.config?.collection) {
 				return;

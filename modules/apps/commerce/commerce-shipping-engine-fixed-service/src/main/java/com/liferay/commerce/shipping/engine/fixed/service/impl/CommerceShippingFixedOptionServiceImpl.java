@@ -86,6 +86,22 @@ public class CommerceShippingFixedOptionServiceImpl
 	}
 
 	@Override
+	public CommerceShippingFixedOption fetchCommerceShippingFixedOption(
+			long companyId, String key)
+		throws PortalException {
+
+		CommerceShippingFixedOption commerceShippingFixedOption =
+			commerceShippingFixedOptionLocalService.
+				fetchCommerceShippingFixedOption(companyId, key);
+
+		if (commerceShippingFixedOption != null) {
+			_checkCommerceChannel(commerceShippingFixedOption.getGroupId());
+		}
+
+		return commerceShippingFixedOption;
+	}
+
+	@Override
 	public List<CommerceShippingFixedOption> getCommerceShippingFixedOptions(
 			long commerceShippingMethodId, int start, int end)
 		throws PortalException {

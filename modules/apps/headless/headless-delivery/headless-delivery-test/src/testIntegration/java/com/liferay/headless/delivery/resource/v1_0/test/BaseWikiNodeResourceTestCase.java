@@ -547,8 +547,8 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 		Assert.assertEquals(0, wikiNodesJSONObject.get("totalCount"));
 
-		WikiNode wikiNode1 = testGraphQLWikiNode_addWikiNode();
-		WikiNode wikiNode2 = testGraphQLWikiNode_addWikiNode();
+		WikiNode wikiNode1 = testGraphQLGetSiteWikiNodesPage_addWikiNode();
+		WikiNode wikiNode2 = testGraphQLGetSiteWikiNodesPage_addWikiNode();
 
 		wikiNodesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -560,6 +560,12 @@ public abstract class BaseWikiNodeResourceTestCase {
 			Arrays.asList(wikiNode1, wikiNode2),
 			Arrays.asList(
 				WikiNodeSerDes.toDTOs(wikiNodesJSONObject.getString("items"))));
+	}
+
+	protected WikiNode testGraphQLGetSiteWikiNodesPage_addWikiNode()
+		throws Exception {
+
+		return testGraphQLWikiNode_addWikiNode();
 	}
 
 	@Test
@@ -647,7 +653,8 @@ public abstract class BaseWikiNodeResourceTestCase {
 	public void testGraphQLGetSiteWikiNodeByExternalReferenceCode()
 		throws Exception {
 
-		WikiNode wikiNode = testGraphQLWikiNode_addWikiNode();
+		WikiNode wikiNode =
+			testGraphQLGetSiteWikiNodeByExternalReferenceCode_addWikiNode();
 
 		Assert.assertTrue(
 			equals(
@@ -701,6 +708,13 @@ public abstract class BaseWikiNodeResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected WikiNode
+			testGraphQLGetSiteWikiNodeByExternalReferenceCode_addWikiNode()
+		throws Exception {
+
+		return testGraphQLWikiNode_addWikiNode();
 	}
 
 	@Test
@@ -839,7 +853,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteWikiNode() throws Exception {
-		WikiNode wikiNode = testGraphQLWikiNode_addWikiNode();
+		WikiNode wikiNode = testGraphQLDeleteWikiNode_addWikiNode();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -852,7 +866,6 @@ public abstract class BaseWikiNodeResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteWikiNode"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -866,6 +879,12 @@ public abstract class BaseWikiNodeResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected WikiNode testGraphQLDeleteWikiNode_addWikiNode()
+		throws Exception {
+
+		return testGraphQLWikiNode_addWikiNode();
 	}
 
 	@Test
@@ -886,7 +905,7 @@ public abstract class BaseWikiNodeResourceTestCase {
 
 	@Test
 	public void testGraphQLGetWikiNode() throws Exception {
-		WikiNode wikiNode = testGraphQLWikiNode_addWikiNode();
+		WikiNode wikiNode = testGraphQLGetWikiNode_addWikiNode();
 
 		Assert.assertTrue(
 			equals(
@@ -923,6 +942,10 @@ public abstract class BaseWikiNodeResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected WikiNode testGraphQLGetWikiNode_addWikiNode() throws Exception {
+		return testGraphQLWikiNode_addWikiNode();
 	}
 
 	@Test

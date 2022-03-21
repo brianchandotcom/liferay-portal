@@ -234,7 +234,7 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 	@Test
 	public void testGraphQLDeleteWikiPageAttachment() throws Exception {
 		WikiPageAttachment wikiPageAttachment =
-			testGraphQLWikiPageAttachment_addWikiPageAttachment();
+			testGraphQLDeleteWikiPageAttachment_addWikiPageAttachment();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -249,7 +249,6 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteWikiPageAttachment"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -265,6 +264,13 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected WikiPageAttachment
+			testGraphQLDeleteWikiPageAttachment_addWikiPageAttachment()
+		throws Exception {
+
+		return testGraphQLWikiPageAttachment_addWikiPageAttachment();
 	}
 
 	@Test
@@ -291,7 +297,7 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 	@Test
 	public void testGraphQLGetWikiPageAttachment() throws Exception {
 		WikiPageAttachment wikiPageAttachment =
-			testGraphQLWikiPageAttachment_addWikiPageAttachment();
+			testGraphQLGetWikiPageAttachment_addWikiPageAttachment();
 
 		Assert.assertTrue(
 			equals(
@@ -332,6 +338,13 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected WikiPageAttachment
+			testGraphQLGetWikiPageAttachment_addWikiPageAttachment()
+		throws Exception {
+
+		return testGraphQLWikiPageAttachment_addWikiPageAttachment();
 	}
 
 	@Test

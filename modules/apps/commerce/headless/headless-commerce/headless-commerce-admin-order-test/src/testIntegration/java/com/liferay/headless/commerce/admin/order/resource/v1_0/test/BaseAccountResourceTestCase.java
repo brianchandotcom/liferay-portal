@@ -198,10 +198,18 @@ public abstract class BaseAccountResourceTestCase {
 	public void testGetOrderRuleAccountAccount() throws Exception {
 		Account postAccount = testGetOrderRuleAccountAccount_addAccount();
 
-		Account getAccount = accountResource.getOrderRuleAccountAccount(null);
+		Account getAccount = accountResource.getOrderRuleAccountAccount(
+			testGetOrderRuleAccountAccount_getOrderRuleAccountId());
 
 		assertEquals(postAccount, getAccount);
 		assertValid(getAccount);
+	}
+
+	protected Long testGetOrderRuleAccountAccount_getOrderRuleAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Account testGetOrderRuleAccountAccount_addAccount()
@@ -213,7 +221,7 @@ public abstract class BaseAccountResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOrderRuleAccountAccount() throws Exception {
-		Account account = testGraphQLAccount_addAccount();
+		Account account = testGraphQLGetOrderRuleAccountAccount_addAccount();
 
 		Assert.assertTrue(
 			equals(
@@ -225,11 +233,20 @@ public abstract class BaseAccountResourceTestCase {
 								"orderRuleAccountAccount",
 								new HashMap<String, Object>() {
 									{
-										put("orderRuleAccountId", null);
+										put(
+											"orderRuleAccountId",
+											testGraphQLGetOrderRuleAccountAccount_getOrderRuleAccountId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/orderRuleAccountAccount"))));
+	}
+
+	protected Long testGraphQLGetOrderRuleAccountAccount_getOrderRuleAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -256,6 +273,12 @@ public abstract class BaseAccountResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Account testGraphQLGetOrderRuleAccountAccount_addAccount()
+		throws Exception {
+
+		return testGraphQLAccount_addAccount();
+	}
+
 	@Test
 	public void testGetOrderByExternalReferenceCodeAccount() throws Exception {
 		Account postAccount =
@@ -280,7 +303,8 @@ public abstract class BaseAccountResourceTestCase {
 	public void testGraphQLGetOrderByExternalReferenceCodeAccount()
 		throws Exception {
 
-		Account account = testGraphQLAccount_addAccount();
+		Account account =
+			testGraphQLGetOrderByExternalReferenceCodeAccount_addAccount();
 
 		Assert.assertTrue(
 			equals(
@@ -330,6 +354,13 @@ public abstract class BaseAccountResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Account
+			testGraphQLGetOrderByExternalReferenceCodeAccount_addAccount()
+		throws Exception {
+
+		return testGraphQLAccount_addAccount();
+	}
+
 	@Test
 	public void testGetOrderIdAccount() throws Exception {
 		Account postAccount = testGetOrderIdAccount_addAccount();
@@ -348,7 +379,7 @@ public abstract class BaseAccountResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOrderIdAccount() throws Exception {
-		Account account = testGraphQLAccount_addAccount();
+		Account account = testGraphQLGetOrderIdAccount_addAccount();
 
 		Assert.assertTrue(
 			equals(
@@ -385,6 +416,12 @@ public abstract class BaseAccountResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Account testGraphQLGetOrderIdAccount_addAccount()
+		throws Exception {
+
+		return testGraphQLAccount_addAccount();
 	}
 
 	protected Account testGraphQLAccount_addAccount() throws Exception {

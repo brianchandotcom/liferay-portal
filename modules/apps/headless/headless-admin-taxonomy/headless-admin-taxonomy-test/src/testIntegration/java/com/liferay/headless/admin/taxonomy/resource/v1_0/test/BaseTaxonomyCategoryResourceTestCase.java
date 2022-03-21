@@ -759,7 +759,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	@Test
 	public void testGraphQLDeleteTaxonomyCategory() throws Exception {
 		TaxonomyCategory taxonomyCategory =
-			testGraphQLTaxonomyCategory_addTaxonomyCategory();
+			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -774,7 +774,6 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteTaxonomyCategory"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -790,6 +789,13 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected TaxonomyCategory
+			testGraphQLDeleteTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return testGraphQLTaxonomyCategory_addTaxonomyCategory();
 	}
 
 	@Test
@@ -815,7 +821,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 	@Test
 	public void testGraphQLGetTaxonomyCategory() throws Exception {
 		TaxonomyCategory taxonomyCategory =
-			testGraphQLTaxonomyCategory_addTaxonomyCategory();
+			testGraphQLGetTaxonomyCategory_addTaxonomyCategory();
 
 		Assert.assertTrue(
 			equals(
@@ -858,6 +864,13 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected TaxonomyCategory
+			testGraphQLGetTaxonomyCategory_addTaxonomyCategory()
+		throws Exception {
+
+		return testGraphQLTaxonomyCategory_addTaxonomyCategory();
 	}
 
 	@Test
@@ -1484,7 +1497,7 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		throws Exception {
 
 		TaxonomyCategory taxonomyCategory =
-			testGraphQLTaxonomyCategory_addTaxonomyCategory();
+			testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory();
 
 		Assert.assertTrue(
 			equals(
@@ -1540,6 +1553,13 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected TaxonomyCategory
+			testGraphQLGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_addTaxonomyCategory()
+		throws Exception {
+
+		return testGraphQLTaxonomyCategory_addTaxonomyCategory();
 	}
 
 	@Test

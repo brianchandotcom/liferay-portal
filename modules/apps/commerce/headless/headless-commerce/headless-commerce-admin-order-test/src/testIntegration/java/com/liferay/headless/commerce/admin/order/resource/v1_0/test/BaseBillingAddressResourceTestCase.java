@@ -240,7 +240,7 @@ public abstract class BaseBillingAddressResourceTestCase {
 		throws Exception {
 
 		BillingAddress billingAddress =
-			testGraphQLBillingAddress_addBillingAddress();
+			testGraphQLGetOrderByExternalReferenceCodeBillingAddress_addBillingAddress();
 
 		Assert.assertTrue(
 			equals(
@@ -290,6 +290,13 @@ public abstract class BaseBillingAddressResourceTestCase {
 				"Object/code"));
 	}
 
+	protected BillingAddress
+			testGraphQLGetOrderByExternalReferenceCodeBillingAddress_addBillingAddress()
+		throws Exception {
+
+		return testGraphQLBillingAddress_addBillingAddress();
+	}
+
 	@Test
 	public void testPatchOrderByExternalReferenceCodeBillingAddress()
 		throws Exception {
@@ -320,7 +327,7 @@ public abstract class BaseBillingAddressResourceTestCase {
 	@Test
 	public void testGraphQLGetOrderIdBillingAddress() throws Exception {
 		BillingAddress billingAddress =
-			testGraphQLBillingAddress_addBillingAddress();
+			testGraphQLGetOrderIdBillingAddress_addBillingAddress();
 
 		Assert.assertTrue(
 			equals(
@@ -357,6 +364,13 @@ public abstract class BaseBillingAddressResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected BillingAddress
+			testGraphQLGetOrderIdBillingAddress_addBillingAddress()
+		throws Exception {
+
+		return testGraphQLBillingAddress_addBillingAddress();
 	}
 
 	@Test

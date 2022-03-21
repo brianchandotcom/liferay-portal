@@ -531,9 +531,9 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		long totalCount = optionCategoriesJSONObject.getLong("totalCount");
 
 		OptionCategory optionCategory1 =
-			testGraphQLOptionCategory_addOptionCategory();
+			testGraphQLGetOptionCategoriesPage_addOptionCategory();
 		OptionCategory optionCategory2 =
-			testGraphQLOptionCategory_addOptionCategory();
+			testGraphQLGetOptionCategoriesPage_addOptionCategory();
 
 		optionCategoriesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -552,6 +552,13 @@ public abstract class BaseOptionCategoryResourceTestCase {
 			Arrays.asList(
 				OptionCategorySerDes.toDTOs(
 					optionCategoriesJSONObject.getString("items"))));
+	}
+
+	protected OptionCategory
+			testGraphQLGetOptionCategoriesPage_addOptionCategory()
+		throws Exception {
+
+		return testGraphQLOptionCategory_addOptionCategory();
 	}
 
 	@Test
@@ -605,7 +612,7 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	@Test
 	public void testGraphQLDeleteOptionCategory() throws Exception {
 		OptionCategory optionCategory =
-			testGraphQLOptionCategory_addOptionCategory();
+			testGraphQLDeleteOptionCategory_addOptionCategory();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -618,7 +625,6 @@ public abstract class BaseOptionCategoryResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteOptionCategory"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -632,6 +638,12 @@ public abstract class BaseOptionCategoryResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected OptionCategory testGraphQLDeleteOptionCategory_addOptionCategory()
+		throws Exception {
+
+		return testGraphQLOptionCategory_addOptionCategory();
 	}
 
 	@Test
@@ -657,7 +669,7 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	@Test
 	public void testGraphQLGetOptionCategory() throws Exception {
 		OptionCategory optionCategory =
-			testGraphQLOptionCategory_addOptionCategory();
+			testGraphQLGetOptionCategory_addOptionCategory();
 
 		Assert.assertTrue(
 			equals(
@@ -694,6 +706,12 @@ public abstract class BaseOptionCategoryResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected OptionCategory testGraphQLGetOptionCategory_addOptionCategory()
+		throws Exception {
+
+		return testGraphQLOptionCategory_addOptionCategory();
 	}
 
 	@Test

@@ -486,8 +486,8 @@ public abstract class BaseOptionResourceTestCase {
 
 		long totalCount = optionsJSONObject.getLong("totalCount");
 
-		Option option1 = testGraphQLOption_addOption();
-		Option option2 = testGraphQLOption_addOption();
+		Option option1 = testGraphQLGetOptionsPage_addOption();
+		Option option2 = testGraphQLGetOptionsPage_addOption();
 
 		optionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -504,6 +504,10 @@ public abstract class BaseOptionResourceTestCase {
 			option2,
 			Arrays.asList(
 				OptionSerDes.toDTOs(optionsJSONObject.getString("items"))));
+	}
+
+	protected Option testGraphQLGetOptionsPage_addOption() throws Exception {
+		return testGraphQLOption_addOption();
 	}
 
 	@Test
@@ -569,7 +573,7 @@ public abstract class BaseOptionResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOptionByExternalReferenceCode() throws Exception {
-		Option option = testGraphQLOption_addOption();
+		Option option = testGraphQLGetOptionByExternalReferenceCode_addOption();
 
 		Assert.assertTrue(
 			equals(
@@ -619,6 +623,12 @@ public abstract class BaseOptionResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Option testGraphQLGetOptionByExternalReferenceCode_addOption()
+		throws Exception {
+
+		return testGraphQLOption_addOption();
+	}
+
 	@Test
 	public void testPatchOptionByExternalReferenceCode() throws Exception {
 		Assert.assertTrue(false);
@@ -646,7 +656,7 @@ public abstract class BaseOptionResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteOption() throws Exception {
-		Option option = testGraphQLOption_addOption();
+		Option option = testGraphQLDeleteOption_addOption();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -659,7 +669,6 @@ public abstract class BaseOptionResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteOption"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -673,6 +682,10 @@ public abstract class BaseOptionResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected Option testGraphQLDeleteOption_addOption() throws Exception {
+		return testGraphQLOption_addOption();
 	}
 
 	@Test
@@ -692,7 +705,7 @@ public abstract class BaseOptionResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOption() throws Exception {
-		Option option = testGraphQLOption_addOption();
+		Option option = testGraphQLGetOption_addOption();
 
 		Assert.assertTrue(
 			equals(
@@ -729,6 +742,10 @@ public abstract class BaseOptionResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Option testGraphQLGetOption_addOption() throws Exception {
+		return testGraphQLOption_addOption();
 	}
 
 	@Test

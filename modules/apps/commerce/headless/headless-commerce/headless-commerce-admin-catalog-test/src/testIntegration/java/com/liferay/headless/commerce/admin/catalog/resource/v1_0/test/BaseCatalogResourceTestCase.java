@@ -254,7 +254,8 @@ public abstract class BaseCatalogResourceTestCase {
 	public void testGraphQLGetCatalogByExternalReferenceCode()
 		throws Exception {
 
-		Catalog catalog = testGraphQLCatalog_addCatalog();
+		Catalog catalog =
+			testGraphQLGetCatalogByExternalReferenceCode_addCatalog();
 
 		Assert.assertTrue(
 			equals(
@@ -304,6 +305,12 @@ public abstract class BaseCatalogResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Catalog testGraphQLGetCatalogByExternalReferenceCode_addCatalog()
+		throws Exception {
+
+		return testGraphQLCatalog_addCatalog();
+	}
+
 	@Test
 	public void testPatchCatalogByExternalReferenceCode() throws Exception {
 		Assert.assertTrue(false);
@@ -331,7 +338,7 @@ public abstract class BaseCatalogResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteCatalog() throws Exception {
-		Catalog catalog = testGraphQLCatalog_addCatalog();
+		Catalog catalog = testGraphQLDeleteCatalog_addCatalog();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -344,7 +351,6 @@ public abstract class BaseCatalogResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteCatalog"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -358,6 +364,10 @@ public abstract class BaseCatalogResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected Catalog testGraphQLDeleteCatalog_addCatalog() throws Exception {
+		return testGraphQLCatalog_addCatalog();
 	}
 
 	@Test
@@ -377,7 +387,7 @@ public abstract class BaseCatalogResourceTestCase {
 
 	@Test
 	public void testGraphQLGetCatalog() throws Exception {
-		Catalog catalog = testGraphQLCatalog_addCatalog();
+		Catalog catalog = testGraphQLGetCatalog_addCatalog();
 
 		Assert.assertTrue(
 			equals(
@@ -414,6 +424,10 @@ public abstract class BaseCatalogResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Catalog testGraphQLGetCatalog_addCatalog() throws Exception {
+		return testGraphQLCatalog_addCatalog();
 	}
 
 	@Test
@@ -708,8 +722,8 @@ public abstract class BaseCatalogResourceTestCase {
 
 		long totalCount = catalogsJSONObject.getLong("totalCount");
 
-		Catalog catalog1 = testGraphQLCatalog_addCatalog();
-		Catalog catalog2 = testGraphQLCatalog_addCatalog();
+		Catalog catalog1 = testGraphQLGetCatalogsPage_addCatalog();
+		Catalog catalog2 = testGraphQLGetCatalogsPage_addCatalog();
 
 		catalogsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -726,6 +740,10 @@ public abstract class BaseCatalogResourceTestCase {
 			catalog2,
 			Arrays.asList(
 				CatalogSerDes.toDTOs(catalogsJSONObject.getString("items"))));
+	}
+
+	protected Catalog testGraphQLGetCatalogsPage_addCatalog() throws Exception {
+		return testGraphQLCatalog_addCatalog();
 	}
 
 	@Test
@@ -771,7 +789,8 @@ public abstract class BaseCatalogResourceTestCase {
 	public void testGraphQLGetProductByExternalReferenceCodeCatalog()
 		throws Exception {
 
-		Catalog catalog = testGraphQLCatalog_addCatalog();
+		Catalog catalog =
+			testGraphQLGetProductByExternalReferenceCodeCatalog_addCatalog();
 
 		Assert.assertTrue(
 			equals(
@@ -821,6 +840,13 @@ public abstract class BaseCatalogResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Catalog
+			testGraphQLGetProductByExternalReferenceCodeCatalog_addCatalog()
+		throws Exception {
+
+		return testGraphQLCatalog_addCatalog();
+	}
+
 	@Test
 	public void testGetProductIdCatalog() throws Exception {
 		Catalog postCatalog = testGetProductIdCatalog_addCatalog();
@@ -839,7 +865,7 @@ public abstract class BaseCatalogResourceTestCase {
 
 	@Test
 	public void testGraphQLGetProductIdCatalog() throws Exception {
-		Catalog catalog = testGraphQLCatalog_addCatalog();
+		Catalog catalog = testGraphQLGetProductIdCatalog_addCatalog();
 
 		Assert.assertTrue(
 			equals(
@@ -876,6 +902,12 @@ public abstract class BaseCatalogResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Catalog testGraphQLGetProductIdCatalog_addCatalog()
+		throws Exception {
+
+		return testGraphQLCatalog_addCatalog();
 	}
 
 	@Rule

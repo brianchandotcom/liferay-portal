@@ -1067,7 +1067,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteDocument() throws Exception {
-		Document document = testGraphQLDocument_addDocument();
+		Document document = testGraphQLDeleteDocument_addDocument();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -1080,7 +1080,6 @@ public abstract class BaseDocumentResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteDocument"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -1094,6 +1093,12 @@ public abstract class BaseDocumentResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected Document testGraphQLDeleteDocument_addDocument()
+		throws Exception {
+
+		return testGraphQLDocument_addDocument();
 	}
 
 	@Test
@@ -1114,7 +1119,7 @@ public abstract class BaseDocumentResourceTestCase {
 
 	@Test
 	public void testGraphQLGetDocument() throws Exception {
-		Document document = testGraphQLDocument_addDocument();
+		Document document = testGraphQLGetDocument_addDocument();
 
 		Assert.assertTrue(
 			equals(
@@ -1151,6 +1156,10 @@ public abstract class BaseDocumentResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Document testGraphQLGetDocument_addDocument() throws Exception {
+		return testGraphQLDocument_addDocument();
 	}
 
 	@Test
@@ -1648,8 +1657,8 @@ public abstract class BaseDocumentResourceTestCase {
 
 		Assert.assertEquals(0, documentsJSONObject.get("totalCount"));
 
-		Document document1 = testGraphQLDocument_addDocument();
-		Document document2 = testGraphQLDocument_addDocument();
+		Document document1 = testGraphQLGetSiteDocumentsPage_addDocument();
+		Document document2 = testGraphQLGetSiteDocumentsPage_addDocument();
 
 		documentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1661,6 +1670,12 @@ public abstract class BaseDocumentResourceTestCase {
 			Arrays.asList(document1, document2),
 			Arrays.asList(
 				DocumentSerDes.toDTOs(documentsJSONObject.getString("items"))));
+	}
+
+	protected Document testGraphQLGetSiteDocumentsPage_addDocument()
+		throws Exception {
+
+		return testGraphQLDocument_addDocument();
 	}
 
 	@Test
@@ -1744,7 +1759,8 @@ public abstract class BaseDocumentResourceTestCase {
 	public void testGraphQLGetSiteDocumentByExternalReferenceCode()
 		throws Exception {
 
-		Document document = testGraphQLDocument_addDocument();
+		Document document =
+			testGraphQLGetSiteDocumentByExternalReferenceCode_addDocument();
 
 		Assert.assertTrue(
 			equals(
@@ -1798,6 +1814,13 @@ public abstract class BaseDocumentResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Document
+			testGraphQLGetSiteDocumentByExternalReferenceCode_addDocument()
+		throws Exception {
+
+		return testGraphQLDocument_addDocument();
 	}
 
 	@Test

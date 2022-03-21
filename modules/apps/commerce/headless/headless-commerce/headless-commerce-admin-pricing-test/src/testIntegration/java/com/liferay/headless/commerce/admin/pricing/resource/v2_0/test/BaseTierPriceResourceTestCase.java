@@ -534,7 +534,8 @@ public abstract class BaseTierPriceResourceTestCase {
 	public void testGraphQLGetTierPriceByExternalReferenceCode()
 		throws Exception {
 
-		TierPrice tierPrice = testGraphQLTierPrice_addTierPrice();
+		TierPrice tierPrice =
+			testGraphQLGetTierPriceByExternalReferenceCode_addTierPrice();
 
 		Assert.assertTrue(
 			equals(
@@ -584,6 +585,13 @@ public abstract class BaseTierPriceResourceTestCase {
 				"Object/code"));
 	}
 
+	protected TierPrice
+			testGraphQLGetTierPriceByExternalReferenceCode_addTierPrice()
+		throws Exception {
+
+		return testGraphQLTierPrice_addTierPrice();
+	}
+
 	@Test
 	public void testPatchTierPriceByExternalReferenceCode() throws Exception {
 		Assert.assertTrue(false);
@@ -612,7 +620,7 @@ public abstract class BaseTierPriceResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteTierPrice() throws Exception {
-		TierPrice tierPrice = testGraphQLTierPrice_addTierPrice();
+		TierPrice tierPrice = testGraphQLDeleteTierPrice_addTierPrice();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -625,7 +633,6 @@ public abstract class BaseTierPriceResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteTierPrice"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -639,6 +646,12 @@ public abstract class BaseTierPriceResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected TierPrice testGraphQLDeleteTierPrice_addTierPrice()
+		throws Exception {
+
+		return testGraphQLTierPrice_addTierPrice();
 	}
 
 	@Test
@@ -659,7 +672,7 @@ public abstract class BaseTierPriceResourceTestCase {
 
 	@Test
 	public void testGraphQLGetTierPrice() throws Exception {
-		TierPrice tierPrice = testGraphQLTierPrice_addTierPrice();
+		TierPrice tierPrice = testGraphQLGetTierPrice_addTierPrice();
 
 		Assert.assertTrue(
 			equals(
@@ -696,6 +709,12 @@ public abstract class BaseTierPriceResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected TierPrice testGraphQLGetTierPrice_addTierPrice()
+		throws Exception {
+
+		return testGraphQLTierPrice_addTierPrice();
 	}
 
 	@Test

@@ -1210,7 +1210,8 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 
 	@Test
 	public void testGraphQLGetWorkflowTask() throws Exception {
-		WorkflowTask workflowTask = testGraphQLWorkflowTask_addWorkflowTask();
+		WorkflowTask workflowTask =
+			testGraphQLGetWorkflowTask_addWorkflowTask();
 
 		Assert.assertTrue(
 			equals(
@@ -1249,6 +1250,12 @@ public abstract class BaseWorkflowTaskResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected WorkflowTask testGraphQLGetWorkflowTask_addWorkflowTask()
+		throws Exception {
+
+		return testGraphQLWorkflowTask_addWorkflowTask();
 	}
 
 	@Test

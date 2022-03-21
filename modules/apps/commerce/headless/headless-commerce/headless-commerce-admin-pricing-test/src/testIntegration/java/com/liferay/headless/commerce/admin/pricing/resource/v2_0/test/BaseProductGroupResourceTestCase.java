@@ -189,10 +189,19 @@ public abstract class BaseProductGroupResourceTestCase {
 			testGetDiscountProductGroupProductGroup_addProductGroup();
 
 		ProductGroup getProductGroup =
-			productGroupResource.getDiscountProductGroupProductGroup(null);
+			productGroupResource.getDiscountProductGroupProductGroup(
+				testGetDiscountProductGroupProductGroup_getDiscountProductGroupId());
 
 		assertEquals(postProductGroup, getProductGroup);
 		assertValid(getProductGroup);
+	}
+
+	protected Long
+			testGetDiscountProductGroupProductGroup_getDiscountProductGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected ProductGroup
@@ -207,7 +216,8 @@ public abstract class BaseProductGroupResourceTestCase {
 	public void testGraphQLGetDiscountProductGroupProductGroup()
 		throws Exception {
 
-		ProductGroup productGroup = testGraphQLProductGroup_addProductGroup();
+		ProductGroup productGroup =
+			testGraphQLGetDiscountProductGroupProductGroup_addProductGroup();
 
 		Assert.assertTrue(
 			equals(
@@ -219,12 +229,22 @@ public abstract class BaseProductGroupResourceTestCase {
 								"discountProductGroupProductGroup",
 								new HashMap<String, Object>() {
 									{
-										put("discountProductGroupId", null);
+										put(
+											"discountProductGroupId",
+											testGraphQLGetDiscountProductGroupProductGroup_getDiscountProductGroupId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/discountProductGroupProductGroup"))));
+	}
+
+	protected Long
+			testGraphQLGetDiscountProductGroupProductGroup_getDiscountProductGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -251,6 +271,13 @@ public abstract class BaseProductGroupResourceTestCase {
 				"Object/code"));
 	}
 
+	protected ProductGroup
+			testGraphQLGetDiscountProductGroupProductGroup_addProductGroup()
+		throws Exception {
+
+		return testGraphQLProductGroup_addProductGroup();
+	}
+
 	@Test
 	public void testGetPriceModifierProductGroupProductGroup()
 		throws Exception {
@@ -259,10 +286,19 @@ public abstract class BaseProductGroupResourceTestCase {
 			testGetPriceModifierProductGroupProductGroup_addProductGroup();
 
 		ProductGroup getProductGroup =
-			productGroupResource.getPriceModifierProductGroupProductGroup(null);
+			productGroupResource.getPriceModifierProductGroupProductGroup(
+				testGetPriceModifierProductGroupProductGroup_getPriceModifierProductGroupId());
 
 		assertEquals(postProductGroup, getProductGroup);
 		assertValid(getProductGroup);
+	}
+
+	protected Long
+			testGetPriceModifierProductGroupProductGroup_getPriceModifierProductGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected ProductGroup
@@ -277,7 +313,8 @@ public abstract class BaseProductGroupResourceTestCase {
 	public void testGraphQLGetPriceModifierProductGroupProductGroup()
 		throws Exception {
 
-		ProductGroup productGroup = testGraphQLProductGroup_addProductGroup();
+		ProductGroup productGroup =
+			testGraphQLGetPriceModifierProductGroupProductGroup_addProductGroup();
 
 		Assert.assertTrue(
 			equals(
@@ -291,12 +328,20 @@ public abstract class BaseProductGroupResourceTestCase {
 									{
 										put(
 											"priceModifierProductGroupId",
-											null);
+											testGraphQLGetPriceModifierProductGroupProductGroup_getPriceModifierProductGroupId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/priceModifierProductGroupProductGroup"))));
+	}
+
+	protected Long
+			testGraphQLGetPriceModifierProductGroupProductGroup_getPriceModifierProductGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -322,6 +367,13 @@ public abstract class BaseProductGroupResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ProductGroup
+			testGraphQLGetPriceModifierProductGroupProductGroup_addProductGroup()
+		throws Exception {
+
+		return testGraphQLProductGroup_addProductGroup();
 	}
 
 	protected ProductGroup testGraphQLProductGroup_addProductGroup()

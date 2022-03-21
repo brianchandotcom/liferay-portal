@@ -274,8 +274,8 @@ public abstract class BaseRoleResourceTestCase {
 
 		long totalCount = rolesJSONObject.getLong("totalCount");
 
-		Role role1 = testGraphQLRole_addRole();
-		Role role2 = testGraphQLRole_addRole();
+		Role role1 = testGraphQLGetRolesPage_addRole();
+		Role role2 = testGraphQLGetRolesPage_addRole();
 
 		rolesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -292,6 +292,10 @@ public abstract class BaseRoleResourceTestCase {
 			role2,
 			Arrays.asList(
 				RoleSerDes.toDTOs(rolesJSONObject.getString("items"))));
+	}
+
+	protected Role testGraphQLGetRolesPage_addRole() throws Exception {
+		return testGraphQLRole_addRole();
 	}
 
 	@Test
@@ -311,7 +315,7 @@ public abstract class BaseRoleResourceTestCase {
 
 	@Test
 	public void testGraphQLGetRole() throws Exception {
-		Role role = testGraphQLRole_addRole();
+		Role role = testGraphQLGetRole_addRole();
 
 		Assert.assertTrue(
 			equals(
@@ -350,6 +354,10 @@ public abstract class BaseRoleResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Role testGraphQLGetRole_addRole() throws Exception {
+		return testGraphQLRole_addRole();
+	}
+
 	@Test
 	public void testDeleteRoleUserAccountAssociation() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
@@ -358,7 +366,15 @@ public abstract class BaseRoleResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			roleResource.deleteRoleUserAccountAssociationHttpResponse(
-				role.getId(), null));
+				role.getId(),
+				testDeleteRoleUserAccountAssociation_getUserAccountId()));
+	}
+
+	protected Long testDeleteRoleUserAccountAssociation_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Role testDeleteRoleUserAccountAssociation_addRole()
@@ -401,7 +417,25 @@ public abstract class BaseRoleResourceTestCase {
 			204,
 			roleResource.
 				deleteOrganizationRoleUserAccountAssociationHttpResponse(
-					role.getId(), null, null));
+					role.getId(),
+					testDeleteOrganizationRoleUserAccountAssociation_getUserAccountId(),
+					testDeleteOrganizationRoleUserAccountAssociation_getOrganizationId()));
+	}
+
+	protected Long
+			testDeleteOrganizationRoleUserAccountAssociation_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long
+			testDeleteOrganizationRoleUserAccountAssociation_getOrganizationId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Role testDeleteOrganizationRoleUserAccountAssociation_addRole()
@@ -444,7 +478,23 @@ public abstract class BaseRoleResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			roleResource.deleteSiteRoleUserAccountAssociationHttpResponse(
-				role.getId(), null, null));
+				role.getId(),
+				testDeleteSiteRoleUserAccountAssociation_getUserAccountId(),
+				testDeleteSiteRoleUserAccountAssociation_getSiteId()));
+	}
+
+	protected Long testDeleteSiteRoleUserAccountAssociation_getUserAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Long testDeleteSiteRoleUserAccountAssociation_getSiteId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Role testDeleteSiteRoleUserAccountAssociation_addRole()

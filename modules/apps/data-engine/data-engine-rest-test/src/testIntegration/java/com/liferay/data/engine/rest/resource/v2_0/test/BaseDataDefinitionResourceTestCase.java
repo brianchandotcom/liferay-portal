@@ -549,7 +549,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	@Test
 	public void testGraphQLDeleteDataDefinition() throws Exception {
 		DataDefinition dataDefinition =
-			testGraphQLDataDefinition_addDataDefinition();
+			testGraphQLDeleteDataDefinition_addDataDefinition();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -562,7 +562,6 @@ public abstract class BaseDataDefinitionResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteDataDefinition"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -576,6 +575,12 @@ public abstract class BaseDataDefinitionResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected DataDefinition testGraphQLDeleteDataDefinition_addDataDefinition()
+		throws Exception {
+
+		return testGraphQLDataDefinition_addDataDefinition();
 	}
 
 	@Test
@@ -601,7 +606,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 	@Test
 	public void testGraphQLGetDataDefinition() throws Exception {
 		DataDefinition dataDefinition =
-			testGraphQLDataDefinition_addDataDefinition();
+			testGraphQLGetDataDefinition_addDataDefinition();
 
 		Assert.assertTrue(
 			equals(
@@ -642,6 +647,12 @@ public abstract class BaseDataDefinitionResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected DataDefinition testGraphQLGetDataDefinition_addDataDefinition()
+		throws Exception {
+
+		return testGraphQLDataDefinition_addDataDefinition();
 	}
 
 	@Test
@@ -1132,7 +1143,7 @@ public abstract class BaseDataDefinitionResourceTestCase {
 		throws Exception {
 
 		DataDefinition dataDefinition =
-			testGraphQLDataDefinition_addDataDefinition();
+			testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey_addDataDefinition();
 
 		Assert.assertTrue(
 			equals(
@@ -1195,6 +1206,13 @@ public abstract class BaseDataDefinitionResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected DataDefinition
+			testGraphQLGetSiteDataDefinitionByContentTypeByDataDefinitionKey_addDataDefinition()
+		throws Exception {
+
+		return testGraphQLDataDefinition_addDataDefinition();
 	}
 
 	protected DataDefinition testGraphQLDataDefinition_addDataDefinition()

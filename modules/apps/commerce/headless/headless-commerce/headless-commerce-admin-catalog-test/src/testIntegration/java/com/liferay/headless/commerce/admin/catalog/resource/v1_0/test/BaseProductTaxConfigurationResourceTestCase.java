@@ -205,10 +205,19 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 
 		ProductTaxConfiguration getProductTaxConfiguration =
 			productTaxConfigurationResource.
-				getProductByExternalReferenceCodeTaxConfiguration(null);
+				getProductByExternalReferenceCodeTaxConfiguration(
+					testGetProductByExternalReferenceCodeTaxConfiguration_getExternalReferenceCode());
 
 		assertEquals(postProductTaxConfiguration, getProductTaxConfiguration);
 		assertValid(getProductTaxConfiguration);
+	}
+
+	protected String
+			testGetProductByExternalReferenceCodeTaxConfiguration_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected ProductTaxConfiguration
@@ -224,7 +233,7 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 		throws Exception {
 
 		ProductTaxConfiguration productTaxConfiguration =
-			testGraphQLProductTaxConfiguration_addProductTaxConfiguration();
+			testGraphQLGetProductByExternalReferenceCodeTaxConfiguration_addProductTaxConfiguration();
 
 		Assert.assertTrue(
 			equals(
@@ -236,12 +245,24 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 								"productByExternalReferenceCodeTaxConfiguration",
 								new HashMap<String, Object>() {
 									{
-										put("externalReferenceCode", null);
+										put(
+											"externalReferenceCode",
+											"\"" +
+												testGraphQLGetProductByExternalReferenceCodeTaxConfiguration_getExternalReferenceCode() +
+													"\"");
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/productByExternalReferenceCodeTaxConfiguration"))));
+	}
+
+	protected String
+			testGraphQLGetProductByExternalReferenceCodeTaxConfiguration_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -267,6 +288,13 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ProductTaxConfiguration
+			testGraphQLGetProductByExternalReferenceCodeTaxConfiguration_addProductTaxConfiguration()
+		throws Exception {
+
+		return testGraphQLProductTaxConfiguration_addProductTaxConfiguration();
 	}
 
 	@Test
@@ -300,7 +328,7 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 	@Test
 	public void testGraphQLGetProductIdTaxConfiguration() throws Exception {
 		ProductTaxConfiguration productTaxConfiguration =
-			testGraphQLProductTaxConfiguration_addProductTaxConfiguration();
+			testGraphQLGetProductIdTaxConfiguration_addProductTaxConfiguration();
 
 		Assert.assertTrue(
 			equals(
@@ -342,6 +370,13 @@ public abstract class BaseProductTaxConfigurationResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ProductTaxConfiguration
+			testGraphQLGetProductIdTaxConfiguration_addProductTaxConfiguration()
+		throws Exception {
+
+		return testGraphQLProductTaxConfiguration_addProductTaxConfiguration();
 	}
 
 	@Test

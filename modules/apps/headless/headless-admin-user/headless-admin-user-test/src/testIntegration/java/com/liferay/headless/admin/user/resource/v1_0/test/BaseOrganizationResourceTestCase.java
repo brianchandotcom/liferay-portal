@@ -1030,7 +1030,15 @@ public abstract class BaseOrganizationResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			organizationResource.deleteAccountOrganizationHttpResponse(
-				null, organization.getId()));
+				testDeleteAccountOrganization_getAccountId(),
+				organization.getId()));
+	}
+
+	protected Long testDeleteAccountOrganization_getAccountId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Organization testDeleteAccountOrganization_addOrganization()
@@ -1377,8 +1385,10 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		long totalCount = organizationsJSONObject.getLong("totalCount");
 
-		Organization organization1 = testGraphQLOrganization_addOrganization();
-		Organization organization2 = testGraphQLOrganization_addOrganization();
+		Organization organization1 =
+			testGraphQLGetOrganizationsPage_addOrganization();
+		Organization organization2 =
+			testGraphQLGetOrganizationsPage_addOrganization();
 
 		organizationsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1397,6 +1407,12 @@ public abstract class BaseOrganizationResourceTestCase {
 			Arrays.asList(
 				OrganizationSerDes.toDTOs(
 					organizationsJSONObject.getString("items"))));
+	}
+
+	protected Organization testGraphQLGetOrganizationsPage_addOrganization()
+		throws Exception {
+
+		return testGraphQLOrganization_addOrganization();
 	}
 
 	@Test
@@ -1478,7 +1494,8 @@ public abstract class BaseOrganizationResourceTestCase {
 	public void testGraphQLGetOrganizationByExternalReferenceCode()
 		throws Exception {
 
-		Organization organization = testGraphQLOrganization_addOrganization();
+		Organization organization =
+			testGraphQLGetOrganizationByExternalReferenceCode_addOrganization();
 
 		Assert.assertTrue(
 			equals(
@@ -1526,6 +1543,13 @@ public abstract class BaseOrganizationResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Organization
+			testGraphQLGetOrganizationByExternalReferenceCode_addOrganization()
+		throws Exception {
+
+		return testGraphQLOrganization_addOrganization();
 	}
 
 	@Test
@@ -1650,7 +1674,8 @@ public abstract class BaseOrganizationResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteOrganization() throws Exception {
-		Organization organization = testGraphQLOrganization_addOrganization();
+		Organization organization =
+			testGraphQLDeleteOrganization_addOrganization();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -1665,7 +1690,6 @@ public abstract class BaseOrganizationResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteOrganization"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -1681,6 +1705,12 @@ public abstract class BaseOrganizationResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected Organization testGraphQLDeleteOrganization_addOrganization()
+		throws Exception {
+
+		return testGraphQLOrganization_addOrganization();
 	}
 
 	@Test
@@ -1703,7 +1733,8 @@ public abstract class BaseOrganizationResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOrganization() throws Exception {
-		Organization organization = testGraphQLOrganization_addOrganization();
+		Organization organization =
+			testGraphQLGetOrganization_addOrganization();
 
 		Assert.assertTrue(
 			equals(
@@ -1743,6 +1774,12 @@ public abstract class BaseOrganizationResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Organization testGraphQLGetOrganization_addOrganization()
+		throws Exception {
+
+		return testGraphQLOrganization_addOrganization();
 	}
 
 	@Test
@@ -2210,7 +2247,15 @@ public abstract class BaseOrganizationResourceTestCase {
 		assertHttpResponseStatusCode(
 			204,
 			organizationResource.deleteUserAccountByEmailAddressHttpResponse(
-				organization.getId(), null));
+				organization.getId(),
+				testDeleteUserAccountByEmailAddress_getEmailAddress()));
+	}
+
+	protected String testDeleteUserAccountByEmailAddress_getEmailAddress()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Organization testDeleteUserAccountByEmailAddress_addOrganization()

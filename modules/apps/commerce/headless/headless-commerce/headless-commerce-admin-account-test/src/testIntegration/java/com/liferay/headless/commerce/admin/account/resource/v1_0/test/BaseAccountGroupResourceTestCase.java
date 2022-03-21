@@ -508,8 +508,10 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 		long totalCount = accountGroupsJSONObject.getLong("totalCount");
 
-		AccountGroup accountGroup1 = testGraphQLAccountGroup_addAccountGroup();
-		AccountGroup accountGroup2 = testGraphQLAccountGroup_addAccountGroup();
+		AccountGroup accountGroup1 =
+			testGraphQLGetAccountGroupsPage_addAccountGroup();
+		AccountGroup accountGroup2 =
+			testGraphQLGetAccountGroupsPage_addAccountGroup();
 
 		accountGroupsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -528,6 +530,12 @@ public abstract class BaseAccountGroupResourceTestCase {
 			Arrays.asList(
 				AccountGroupSerDes.toDTOs(
 					accountGroupsJSONObject.getString("items"))));
+	}
+
+	protected AccountGroup testGraphQLGetAccountGroupsPage_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
 	}
 
 	@Test
@@ -609,7 +617,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 	public void testGraphQLGetAccountGroupByExternalReferenceCode()
 		throws Exception {
 
-		AccountGroup accountGroup = testGraphQLAccountGroup_addAccountGroup();
+		AccountGroup accountGroup =
+			testGraphQLGetAccountGroupByExternalReferenceCode_addAccountGroup();
 
 		Assert.assertTrue(
 			equals(
@@ -659,6 +668,13 @@ public abstract class BaseAccountGroupResourceTestCase {
 				"Object/code"));
 	}
 
+	protected AccountGroup
+			testGraphQLGetAccountGroupByExternalReferenceCode_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
+	}
+
 	@Test
 	public void testPatchAccountGroupByExternalReferenceCode()
 		throws Exception {
@@ -696,7 +712,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteAccountGroup() throws Exception {
-		AccountGroup accountGroup = testGraphQLAccountGroup_addAccountGroup();
+		AccountGroup accountGroup =
+			testGraphQLDeleteAccountGroup_addAccountGroup();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -709,7 +726,6 @@ public abstract class BaseAccountGroupResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteAccountGroup"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -723,6 +739,12 @@ public abstract class BaseAccountGroupResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected AccountGroup testGraphQLDeleteAccountGroup_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
 	}
 
 	@Test
@@ -745,7 +767,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 
 	@Test
 	public void testGraphQLGetAccountGroup() throws Exception {
-		AccountGroup accountGroup = testGraphQLAccountGroup_addAccountGroup();
+		AccountGroup accountGroup =
+			testGraphQLGetAccountGroup_addAccountGroup();
 
 		Assert.assertTrue(
 			equals(
@@ -782,6 +805,12 @@ public abstract class BaseAccountGroupResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected AccountGroup testGraphQLGetAccountGroup_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
 	}
 
 	@Test

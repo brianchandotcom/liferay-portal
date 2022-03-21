@@ -1163,9 +1163,9 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			0, structuredContentFoldersJSONObject.get("totalCount"));
 
 		StructuredContentFolder structuredContentFolder1 =
-			testGraphQLStructuredContentFolder_addStructuredContentFolder();
+			testGraphQLGetSiteStructuredContentFoldersPage_addStructuredContentFolder();
 		StructuredContentFolder structuredContentFolder2 =
-			testGraphQLStructuredContentFolder_addStructuredContentFolder();
+			testGraphQLGetSiteStructuredContentFoldersPage_addStructuredContentFolder();
 
 		structuredContentFoldersJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1179,6 +1179,13 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			Arrays.asList(
 				StructuredContentFolderSerDes.toDTOs(
 					structuredContentFoldersJSONObject.getString("items"))));
+	}
+
+	protected StructuredContentFolder
+			testGraphQLGetSiteStructuredContentFoldersPage_addStructuredContentFolder()
+		throws Exception {
+
+		return testGraphQLStructuredContentFolder_addStructuredContentFolder();
 	}
 
 	@Test
@@ -1848,7 +1855,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	@Test
 	public void testGraphQLDeleteStructuredContentFolder() throws Exception {
 		StructuredContentFolder structuredContentFolder =
-			testGraphQLStructuredContentFolder_addStructuredContentFolder();
+			testGraphQLDeleteStructuredContentFolder_addStructuredContentFolder();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -1863,7 +1870,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteStructuredContentFolder"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -1879,6 +1885,13 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected StructuredContentFolder
+			testGraphQLDeleteStructuredContentFolder_addStructuredContentFolder()
+		throws Exception {
+
+		return testGraphQLStructuredContentFolder_addStructuredContentFolder();
 	}
 
 	@Test
@@ -1905,7 +1918,7 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	@Test
 	public void testGraphQLGetStructuredContentFolder() throws Exception {
 		StructuredContentFolder structuredContentFolder =
-			testGraphQLStructuredContentFolder_addStructuredContentFolder();
+			testGraphQLGetStructuredContentFolder_addStructuredContentFolder();
 
 		Assert.assertTrue(
 			equals(
@@ -1948,6 +1961,13 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected StructuredContentFolder
+			testGraphQLGetStructuredContentFolder_addStructuredContentFolder()
+		throws Exception {
+
+		return testGraphQLStructuredContentFolder_addStructuredContentFolder();
 	}
 
 	@Test

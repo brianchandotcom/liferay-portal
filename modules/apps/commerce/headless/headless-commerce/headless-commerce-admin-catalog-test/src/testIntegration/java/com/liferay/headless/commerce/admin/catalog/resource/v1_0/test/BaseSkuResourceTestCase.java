@@ -719,8 +719,8 @@ public abstract class BaseSkuResourceTestCase {
 
 		long totalCount = skusJSONObject.getLong("totalCount");
 
-		Sku sku1 = testGraphQLSku_addSku();
-		Sku sku2 = testGraphQLSku_addSku();
+		Sku sku1 = testGraphQLGetSkusPage_addSku();
+		Sku sku2 = testGraphQLGetSkusPage_addSku();
 
 		skusJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -735,6 +735,10 @@ public abstract class BaseSkuResourceTestCase {
 		assertContains(
 			sku2,
 			Arrays.asList(SkuSerDes.toDTOs(skusJSONObject.getString("items"))));
+	}
+
+	protected Sku testGraphQLGetSkusPage_addSku() throws Exception {
+		return testGraphQLSku_addSku();
 	}
 
 	@Test
@@ -783,7 +787,7 @@ public abstract class BaseSkuResourceTestCase {
 
 	@Test
 	public void testGraphQLGetSkuByExternalReferenceCode() throws Exception {
-		Sku sku = testGraphQLSku_addSku();
+		Sku sku = testGraphQLGetSkuByExternalReferenceCode_addSku();
 
 		Assert.assertTrue(
 			equals(
@@ -832,6 +836,12 @@ public abstract class BaseSkuResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Sku testGraphQLGetSkuByExternalReferenceCode_addSku()
+		throws Exception {
+
+		return testGraphQLSku_addSku();
+	}
+
 	@Test
 	public void testPatchSkuByExternalReferenceCode() throws Exception {
 		Assert.assertTrue(false);
@@ -859,7 +869,7 @@ public abstract class BaseSkuResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteSku() throws Exception {
-		Sku sku = testGraphQLSku_addSku();
+		Sku sku = testGraphQLDeleteSku_addSku();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -872,7 +882,6 @@ public abstract class BaseSkuResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteSku"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -886,6 +895,10 @@ public abstract class BaseSkuResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected Sku testGraphQLDeleteSku_addSku() throws Exception {
+		return testGraphQLSku_addSku();
 	}
 
 	@Test
@@ -905,7 +918,7 @@ public abstract class BaseSkuResourceTestCase {
 
 	@Test
 	public void testGraphQLGetSku() throws Exception {
-		Sku sku = testGraphQLSku_addSku();
+		Sku sku = testGraphQLGetSku_addSku();
 
 		Assert.assertTrue(
 			equals(
@@ -942,6 +955,10 @@ public abstract class BaseSkuResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Sku testGraphQLGetSku_addSku() throws Exception {
+		return testGraphQLSku_addSku();
 	}
 
 	@Test

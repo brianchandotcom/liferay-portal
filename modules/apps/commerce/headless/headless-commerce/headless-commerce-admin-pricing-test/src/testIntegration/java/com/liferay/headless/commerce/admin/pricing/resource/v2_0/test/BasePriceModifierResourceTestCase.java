@@ -811,7 +811,7 @@ public abstract class BasePriceModifierResourceTestCase {
 		throws Exception {
 
 		PriceModifier priceModifier =
-			testGraphQLPriceModifier_addPriceModifier();
+			testGraphQLGetPriceModifierByExternalReferenceCode_addPriceModifier();
 
 		Assert.assertTrue(
 			equals(
@@ -861,6 +861,13 @@ public abstract class BasePriceModifierResourceTestCase {
 				"Object/code"));
 	}
 
+	protected PriceModifier
+			testGraphQLGetPriceModifierByExternalReferenceCode_addPriceModifier()
+		throws Exception {
+
+		return testGraphQLPriceModifier_addPriceModifier();
+	}
+
 	@Test
 	public void testPatchPriceModifierByExternalReferenceCode()
 		throws Exception {
@@ -900,7 +907,7 @@ public abstract class BasePriceModifierResourceTestCase {
 	@Test
 	public void testGraphQLDeletePriceModifier() throws Exception {
 		PriceModifier priceModifier =
-			testGraphQLPriceModifier_addPriceModifier();
+			testGraphQLDeletePriceModifier_addPriceModifier();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -913,7 +920,6 @@ public abstract class BasePriceModifierResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deletePriceModifier"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -927,6 +933,12 @@ public abstract class BasePriceModifierResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected PriceModifier testGraphQLDeletePriceModifier_addPriceModifier()
+		throws Exception {
+
+		return testGraphQLPriceModifier_addPriceModifier();
 	}
 
 	@Test
@@ -951,7 +963,7 @@ public abstract class BasePriceModifierResourceTestCase {
 	@Test
 	public void testGraphQLGetPriceModifier() throws Exception {
 		PriceModifier priceModifier =
-			testGraphQLPriceModifier_addPriceModifier();
+			testGraphQLGetPriceModifier_addPriceModifier();
 
 		Assert.assertTrue(
 			equals(
@@ -988,6 +1000,12 @@ public abstract class BasePriceModifierResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected PriceModifier testGraphQLGetPriceModifier_addPriceModifier()
+		throws Exception {
+
+		return testGraphQLPriceModifier_addPriceModifier();
 	}
 
 	@Test

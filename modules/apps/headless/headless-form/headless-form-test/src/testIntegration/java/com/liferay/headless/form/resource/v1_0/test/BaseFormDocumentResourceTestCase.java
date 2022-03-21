@@ -225,7 +225,8 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteFormDocument() throws Exception {
-		FormDocument formDocument = testGraphQLFormDocument_addFormDocument();
+		FormDocument formDocument =
+			testGraphQLDeleteFormDocument_addFormDocument();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -238,7 +239,6 @@ public abstract class BaseFormDocumentResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteFormDocument"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -252,6 +252,12 @@ public abstract class BaseFormDocumentResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected FormDocument testGraphQLDeleteFormDocument_addFormDocument()
+		throws Exception {
+
+		return testGraphQLFormDocument_addFormDocument();
 	}
 
 	@Test
@@ -274,7 +280,8 @@ public abstract class BaseFormDocumentResourceTestCase {
 
 	@Test
 	public void testGraphQLGetFormDocument() throws Exception {
-		FormDocument formDocument = testGraphQLFormDocument_addFormDocument();
+		FormDocument formDocument =
+			testGraphQLGetFormDocument_addFormDocument();
 
 		Assert.assertTrue(
 			equals(
@@ -313,6 +320,12 @@ public abstract class BaseFormDocumentResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected FormDocument testGraphQLGetFormDocument_addFormDocument()
+		throws Exception {
+
+		return testGraphQLFormDocument_addFormDocument();
 	}
 
 	protected FormDocument testGraphQLFormDocument_addFormDocument()

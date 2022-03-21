@@ -287,8 +287,8 @@ public abstract class BaseDiscountResourceTestCase {
 
 		long totalCount = discountsJSONObject.getLong("totalCount");
 
-		Discount discount1 = testGraphQLDiscount_addDiscount();
-		Discount discount2 = testGraphQLDiscount_addDiscount();
+		Discount discount1 = testGraphQLGetDiscountsPage_addDiscount();
+		Discount discount2 = testGraphQLGetDiscountsPage_addDiscount();
 
 		discountsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -305,6 +305,12 @@ public abstract class BaseDiscountResourceTestCase {
 			discount2,
 			Arrays.asList(
 				DiscountSerDes.toDTOs(discountsJSONObject.getString("items"))));
+	}
+
+	protected Discount testGraphQLGetDiscountsPage_addDiscount()
+		throws Exception {
+
+		return testGraphQLDiscount_addDiscount();
 	}
 
 	@Test
@@ -377,7 +383,8 @@ public abstract class BaseDiscountResourceTestCase {
 	public void testGraphQLGetDiscountByExternalReferenceCode()
 		throws Exception {
 
-		Discount discount = testGraphQLDiscount_addDiscount();
+		Discount discount =
+			testGraphQLGetDiscountByExternalReferenceCode_addDiscount();
 
 		Assert.assertTrue(
 			equals(
@@ -427,6 +434,13 @@ public abstract class BaseDiscountResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Discount
+			testGraphQLGetDiscountByExternalReferenceCode_addDiscount()
+		throws Exception {
+
+		return testGraphQLDiscount_addDiscount();
+	}
+
 	@Test
 	public void testPatchDiscountByExternalReferenceCode() throws Exception {
 		Assert.assertTrue(false);
@@ -454,7 +468,7 @@ public abstract class BaseDiscountResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteDiscount() throws Exception {
-		Discount discount = testGraphQLDiscount_addDiscount();
+		Discount discount = testGraphQLDeleteDiscount_addDiscount();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -467,7 +481,6 @@ public abstract class BaseDiscountResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteDiscount"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -481,6 +494,12 @@ public abstract class BaseDiscountResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected Discount testGraphQLDeleteDiscount_addDiscount()
+		throws Exception {
+
+		return testGraphQLDiscount_addDiscount();
 	}
 
 	@Test
@@ -501,7 +520,7 @@ public abstract class BaseDiscountResourceTestCase {
 
 	@Test
 	public void testGraphQLGetDiscount() throws Exception {
-		Discount discount = testGraphQLDiscount_addDiscount();
+		Discount discount = testGraphQLGetDiscount_addDiscount();
 
 		Assert.assertTrue(
 			equals(
@@ -538,6 +557,10 @@ public abstract class BaseDiscountResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Discount testGraphQLGetDiscount_addDiscount() throws Exception {
+		return testGraphQLDiscount_addDiscount();
 	}
 
 	@Test

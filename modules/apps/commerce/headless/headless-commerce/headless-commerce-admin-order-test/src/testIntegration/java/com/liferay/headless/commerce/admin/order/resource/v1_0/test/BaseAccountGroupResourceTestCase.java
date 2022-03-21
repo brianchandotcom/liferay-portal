@@ -194,10 +194,19 @@ public abstract class BaseAccountGroupResourceTestCase {
 			testGetOrderRuleAccountGroupAccountGroup_addAccountGroup();
 
 		AccountGroup getAccountGroup =
-			accountGroupResource.getOrderRuleAccountGroupAccountGroup(null);
+			accountGroupResource.getOrderRuleAccountGroupAccountGroup(
+				testGetOrderRuleAccountGroupAccountGroup_getOrderRuleAccountGroupId());
 
 		assertEquals(postAccountGroup, getAccountGroup);
 		assertValid(getAccountGroup);
+	}
+
+	protected Long
+			testGetOrderRuleAccountGroupAccountGroup_getOrderRuleAccountGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected AccountGroup
@@ -212,7 +221,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 	public void testGraphQLGetOrderRuleAccountGroupAccountGroup()
 		throws Exception {
 
-		AccountGroup accountGroup = testGraphQLAccountGroup_addAccountGroup();
+		AccountGroup accountGroup =
+			testGraphQLGetOrderRuleAccountGroupAccountGroup_addAccountGroup();
 
 		Assert.assertTrue(
 			equals(
@@ -224,12 +234,22 @@ public abstract class BaseAccountGroupResourceTestCase {
 								"orderRuleAccountGroupAccountGroup",
 								new HashMap<String, Object>() {
 									{
-										put("orderRuleAccountGroupId", null);
+										put(
+											"orderRuleAccountGroupId",
+											testGraphQLGetOrderRuleAccountGroupAccountGroup_getOrderRuleAccountGroupId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/orderRuleAccountGroupAccountGroup"))));
+	}
+
+	protected Long
+			testGraphQLGetOrderRuleAccountGroupAccountGroup_getOrderRuleAccountGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -254,6 +274,13 @@ public abstract class BaseAccountGroupResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected AccountGroup
+			testGraphQLGetOrderRuleAccountGroupAccountGroup_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
 	}
 
 	protected AccountGroup testGraphQLAccountGroup_addAccountGroup()

@@ -295,7 +295,7 @@ public abstract class BasePostalAddressResourceTestCase {
 	@Test
 	public void testGraphQLGetPostalAddress() throws Exception {
 		PostalAddress postalAddress =
-			testGraphQLPostalAddress_addPostalAddress();
+			testGraphQLGetPostalAddress_addPostalAddress();
 
 		Assert.assertTrue(
 			equals(
@@ -336,6 +336,12 @@ public abstract class BasePostalAddressResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected PostalAddress testGraphQLGetPostalAddress_addPostalAddress()
+		throws Exception {
+
+		return testGraphQLPostalAddress_addPostalAddress();
 	}
 
 	@Test

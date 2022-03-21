@@ -223,7 +223,8 @@ public abstract class BaseObjectActionResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteObjectAction() throws Exception {
-		ObjectAction objectAction = testGraphQLObjectAction_addObjectAction();
+		ObjectAction objectAction =
+			testGraphQLDeleteObjectAction_addObjectAction();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -236,7 +237,6 @@ public abstract class BaseObjectActionResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteObjectAction"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -250,6 +250,12 @@ public abstract class BaseObjectActionResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected ObjectAction testGraphQLDeleteObjectAction_addObjectAction()
+		throws Exception {
+
+		return testGraphQLObjectAction_addObjectAction();
 	}
 
 	@Test
@@ -272,7 +278,8 @@ public abstract class BaseObjectActionResourceTestCase {
 
 	@Test
 	public void testGraphQLGetObjectAction() throws Exception {
-		ObjectAction objectAction = testGraphQLObjectAction_addObjectAction();
+		ObjectAction objectAction =
+			testGraphQLGetObjectAction_addObjectAction();
 
 		Assert.assertTrue(
 			equals(
@@ -311,6 +318,12 @@ public abstract class BaseObjectActionResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ObjectAction testGraphQLGetObjectAction_addObjectAction()
+		throws Exception {
+
+		return testGraphQLObjectAction_addObjectAction();
 	}
 
 	@Test

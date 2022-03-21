@@ -508,8 +508,10 @@ public abstract class BaseProductGroupResourceTestCase {
 
 		long totalCount = productGroupsJSONObject.getLong("totalCount");
 
-		ProductGroup productGroup1 = testGraphQLProductGroup_addProductGroup();
-		ProductGroup productGroup2 = testGraphQLProductGroup_addProductGroup();
+		ProductGroup productGroup1 =
+			testGraphQLGetProductGroupsPage_addProductGroup();
+		ProductGroup productGroup2 =
+			testGraphQLGetProductGroupsPage_addProductGroup();
 
 		productGroupsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -528,6 +530,12 @@ public abstract class BaseProductGroupResourceTestCase {
 			Arrays.asList(
 				ProductGroupSerDes.toDTOs(
 					productGroupsJSONObject.getString("items"))));
+	}
+
+	protected ProductGroup testGraphQLGetProductGroupsPage_addProductGroup()
+		throws Exception {
+
+		return testGraphQLProductGroup_addProductGroup();
 	}
 
 	@Test
@@ -609,7 +617,8 @@ public abstract class BaseProductGroupResourceTestCase {
 	public void testGraphQLGetProductGroupByExternalReferenceCode()
 		throws Exception {
 
-		ProductGroup productGroup = testGraphQLProductGroup_addProductGroup();
+		ProductGroup productGroup =
+			testGraphQLGetProductGroupByExternalReferenceCode_addProductGroup();
 
 		Assert.assertTrue(
 			equals(
@@ -659,6 +668,13 @@ public abstract class BaseProductGroupResourceTestCase {
 				"Object/code"));
 	}
 
+	protected ProductGroup
+			testGraphQLGetProductGroupByExternalReferenceCode_addProductGroup()
+		throws Exception {
+
+		return testGraphQLProductGroup_addProductGroup();
+	}
+
 	@Test
 	public void testPatchProductGroupByExternalReferenceCode()
 		throws Exception {
@@ -696,7 +712,8 @@ public abstract class BaseProductGroupResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteProductGroup() throws Exception {
-		ProductGroup productGroup = testGraphQLProductGroup_addProductGroup();
+		ProductGroup productGroup =
+			testGraphQLDeleteProductGroup_addProductGroup();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -709,7 +726,6 @@ public abstract class BaseProductGroupResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteProductGroup"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -723,6 +739,12 @@ public abstract class BaseProductGroupResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected ProductGroup testGraphQLDeleteProductGroup_addProductGroup()
+		throws Exception {
+
+		return testGraphQLProductGroup_addProductGroup();
 	}
 
 	@Test
@@ -745,7 +767,8 @@ public abstract class BaseProductGroupResourceTestCase {
 
 	@Test
 	public void testGraphQLGetProductGroup() throws Exception {
-		ProductGroup productGroup = testGraphQLProductGroup_addProductGroup();
+		ProductGroup productGroup =
+			testGraphQLGetProductGroup_addProductGroup();
 
 		Assert.assertTrue(
 			equals(
@@ -782,6 +805,12 @@ public abstract class BaseProductGroupResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ProductGroup testGraphQLGetProductGroup_addProductGroup()
+		throws Exception {
+
+		return testGraphQLProductGroup_addProductGroup();
 	}
 
 	@Test

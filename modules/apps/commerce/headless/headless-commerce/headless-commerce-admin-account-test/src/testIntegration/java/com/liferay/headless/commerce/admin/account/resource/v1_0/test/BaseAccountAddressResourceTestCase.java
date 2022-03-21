@@ -274,7 +274,7 @@ public abstract class BaseAccountAddressResourceTestCase {
 		throws Exception {
 
 		AccountAddress accountAddress =
-			testGraphQLAccountAddress_addAccountAddress();
+			testGraphQLGetAccountAddressByExternalReferenceCode_addAccountAddress();
 
 		Assert.assertTrue(
 			equals(
@@ -324,6 +324,13 @@ public abstract class BaseAccountAddressResourceTestCase {
 				"Object/code"));
 	}
 
+	protected AccountAddress
+			testGraphQLGetAccountAddressByExternalReferenceCode_addAccountAddress()
+		throws Exception {
+
+		return testGraphQLAccountAddress_addAccountAddress();
+	}
+
 	@Test
 	public void testPatchAccountAddressByExternalReferenceCode()
 		throws Exception {
@@ -363,7 +370,7 @@ public abstract class BaseAccountAddressResourceTestCase {
 	@Test
 	public void testGraphQLDeleteAccountAddress() throws Exception {
 		AccountAddress accountAddress =
-			testGraphQLAccountAddress_addAccountAddress();
+			testGraphQLDeleteAccountAddress_addAccountAddress();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -376,7 +383,6 @@ public abstract class BaseAccountAddressResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteAccountAddress"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -390,6 +396,12 @@ public abstract class BaseAccountAddressResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected AccountAddress testGraphQLDeleteAccountAddress_addAccountAddress()
+		throws Exception {
+
+		return testGraphQLAccountAddress_addAccountAddress();
 	}
 
 	@Test
@@ -415,7 +427,7 @@ public abstract class BaseAccountAddressResourceTestCase {
 	@Test
 	public void testGraphQLGetAccountAddress() throws Exception {
 		AccountAddress accountAddress =
-			testGraphQLAccountAddress_addAccountAddress();
+			testGraphQLGetAccountAddress_addAccountAddress();
 
 		Assert.assertTrue(
 			equals(
@@ -452,6 +464,12 @@ public abstract class BaseAccountAddressResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected AccountAddress testGraphQLGetAccountAddress_addAccountAddress()
+		throws Exception {
+
+		return testGraphQLAccountAddress_addAccountAddress();
 	}
 
 	@Test

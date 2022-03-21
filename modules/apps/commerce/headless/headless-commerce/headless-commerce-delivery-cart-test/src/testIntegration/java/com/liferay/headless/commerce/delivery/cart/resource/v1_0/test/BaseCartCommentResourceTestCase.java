@@ -220,7 +220,7 @@ public abstract class BaseCartCommentResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteCartComment() throws Exception {
-		CartComment cartComment = testGraphQLCartComment_addCartComment();
+		CartComment cartComment = testGraphQLDeleteCartComment_addCartComment();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -233,7 +233,6 @@ public abstract class BaseCartCommentResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteCartComment"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -247,6 +246,12 @@ public abstract class BaseCartCommentResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected CartComment testGraphQLDeleteCartComment_addCartComment()
+		throws Exception {
+
+		return testGraphQLCartComment_addCartComment();
 	}
 
 	@Test
@@ -267,7 +272,7 @@ public abstract class BaseCartCommentResourceTestCase {
 
 	@Test
 	public void testGraphQLGetCartComment() throws Exception {
-		CartComment cartComment = testGraphQLCartComment_addCartComment();
+		CartComment cartComment = testGraphQLGetCartComment_addCartComment();
 
 		Assert.assertTrue(
 			equals(
@@ -306,6 +311,12 @@ public abstract class BaseCartCommentResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected CartComment testGraphQLGetCartComment_addCartComment()
+		throws Exception {
+
+		return testGraphQLCartComment_addCartComment();
 	}
 
 	@Test
@@ -487,8 +498,10 @@ public abstract class BaseCartCommentResourceTestCase {
 
 		Assert.assertEquals(0, cartCommentsJSONObject.get("totalCount"));
 
-		CartComment cartComment1 = testGraphQLCartComment_addCartComment();
-		CartComment cartComment2 = testGraphQLCartComment_addCartComment();
+		CartComment cartComment1 =
+			testGraphQLGetCartCommentsPage_addCartComment();
+		CartComment cartComment2 =
+			testGraphQLGetCartCommentsPage_addCartComment();
 
 		cartCommentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -501,6 +514,12 @@ public abstract class BaseCartCommentResourceTestCase {
 			Arrays.asList(
 				CartCommentSerDes.toDTOs(
 					cartCommentsJSONObject.getString("items"))));
+	}
+
+	protected CartComment testGraphQLGetCartCommentsPage_addCartComment()
+		throws Exception {
+
+		return testGraphQLCartComment_addCartComment();
 	}
 
 	@Test

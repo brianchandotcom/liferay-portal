@@ -228,7 +228,7 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 	@Test
 	public void testGraphQLDeleteProductAccountGroup() throws Exception {
 		ProductAccountGroup productAccountGroup =
-			testGraphQLProductAccountGroup_addProductAccountGroup();
+			testGraphQLDeleteProductAccountGroup_addProductAccountGroup();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -241,7 +241,6 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteProductAccountGroup"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -255,6 +254,13 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected ProductAccountGroup
+			testGraphQLDeleteProductAccountGroup_addProductAccountGroup()
+		throws Exception {
+
+		return testGraphQLProductAccountGroup_addProductAccountGroup();
 	}
 
 	@Test
@@ -281,7 +287,7 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 	@Test
 	public void testGraphQLGetProductAccountGroup() throws Exception {
 		ProductAccountGroup productAccountGroup =
-			testGraphQLProductAccountGroup_addProductAccountGroup();
+			testGraphQLGetProductAccountGroup_addProductAccountGroup();
 
 		Assert.assertTrue(
 			equals(
@@ -318,6 +324,13 @@ public abstract class BaseProductAccountGroupResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ProductAccountGroup
+			testGraphQLGetProductAccountGroup_addProductAccountGroup()
+		throws Exception {
+
+		return testGraphQLProductAccountGroup_addProductAccountGroup();
 	}
 
 	@Test

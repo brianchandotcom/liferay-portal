@@ -362,7 +362,8 @@ public abstract class BaseObjectLayoutResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteObjectLayout() throws Exception {
-		ObjectLayout objectLayout = testGraphQLObjectLayout_addObjectLayout();
+		ObjectLayout objectLayout =
+			testGraphQLDeleteObjectLayout_addObjectLayout();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -375,7 +376,6 @@ public abstract class BaseObjectLayoutResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteObjectLayout"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -389,6 +389,12 @@ public abstract class BaseObjectLayoutResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected ObjectLayout testGraphQLDeleteObjectLayout_addObjectLayout()
+		throws Exception {
+
+		return testGraphQLObjectLayout_addObjectLayout();
 	}
 
 	@Test
@@ -411,7 +417,8 @@ public abstract class BaseObjectLayoutResourceTestCase {
 
 	@Test
 	public void testGraphQLGetObjectLayout() throws Exception {
-		ObjectLayout objectLayout = testGraphQLObjectLayout_addObjectLayout();
+		ObjectLayout objectLayout =
+			testGraphQLGetObjectLayout_addObjectLayout();
 
 		Assert.assertTrue(
 			equals(
@@ -450,6 +457,12 @@ public abstract class BaseObjectLayoutResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ObjectLayout testGraphQLGetObjectLayout_addObjectLayout()
+		throws Exception {
+
+		return testGraphQLObjectLayout_addObjectLayout();
 	}
 
 	@Test

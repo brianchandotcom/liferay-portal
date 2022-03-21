@@ -207,10 +207,19 @@ public abstract class BaseDiagramResourceTestCase {
 			testGetProductByExternalReferenceCodeDiagram_addDiagram();
 
 		Diagram getDiagram =
-			diagramResource.getProductByExternalReferenceCodeDiagram(null);
+			diagramResource.getProductByExternalReferenceCodeDiagram(
+				testGetProductByExternalReferenceCodeDiagram_getExternalReferenceCode());
 
 		assertEquals(postDiagram, getDiagram);
 		assertValid(getDiagram);
+	}
+
+	protected String
+			testGetProductByExternalReferenceCodeDiagram_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Diagram testGetProductByExternalReferenceCodeDiagram_addDiagram()
@@ -224,7 +233,8 @@ public abstract class BaseDiagramResourceTestCase {
 	public void testGraphQLGetProductByExternalReferenceCodeDiagram()
 		throws Exception {
 
-		Diagram diagram = testGraphQLDiagram_addDiagram();
+		Diagram diagram =
+			testGraphQLGetProductByExternalReferenceCodeDiagram_addDiagram();
 
 		Assert.assertTrue(
 			equals(
@@ -236,12 +246,24 @@ public abstract class BaseDiagramResourceTestCase {
 								"productByExternalReferenceCodeDiagram",
 								new HashMap<String, Object>() {
 									{
-										put("externalReferenceCode", null);
+										put(
+											"externalReferenceCode",
+											"\"" +
+												testGraphQLGetProductByExternalReferenceCodeDiagram_getExternalReferenceCode() +
+													"\"");
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/productByExternalReferenceCodeDiagram"))));
+	}
+
+	protected String
+			testGraphQLGetProductByExternalReferenceCodeDiagram_getExternalReferenceCode()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -267,6 +289,13 @@ public abstract class BaseDiagramResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Diagram
+			testGraphQLGetProductByExternalReferenceCodeDiagram_addDiagram()
+		throws Exception {
+
+		return testGraphQLDiagram_addDiagram();
 	}
 
 	@Test
@@ -309,7 +338,7 @@ public abstract class BaseDiagramResourceTestCase {
 
 	@Test
 	public void testGraphQLGetProductIdDiagram() throws Exception {
-		Diagram diagram = testGraphQLDiagram_addDiagram();
+		Diagram diagram = testGraphQLGetProductIdDiagram_addDiagram();
 
 		Assert.assertTrue(
 			equals(
@@ -348,6 +377,12 @@ public abstract class BaseDiagramResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Diagram testGraphQLGetProductIdDiagram_addDiagram()
+		throws Exception {
+
+		return testGraphQLDiagram_addDiagram();
 	}
 
 	@Test

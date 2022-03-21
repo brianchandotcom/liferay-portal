@@ -240,7 +240,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	@Test
 	public void testGraphQLDeleteBlogPostingImage() throws Exception {
 		BlogPostingImage blogPostingImage =
-			testGraphQLBlogPostingImage_addBlogPostingImage();
+			testGraphQLDeleteBlogPostingImage_addBlogPostingImage();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -255,7 +255,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteBlogPostingImage"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -269,6 +268,13 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected BlogPostingImage
+			testGraphQLDeleteBlogPostingImage_addBlogPostingImage()
+		throws Exception {
+
+		return testGraphQLBlogPostingImage_addBlogPostingImage();
 	}
 
 	@Test
@@ -295,7 +301,7 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	@Test
 	public void testGraphQLGetBlogPostingImage() throws Exception {
 		BlogPostingImage blogPostingImage =
-			testGraphQLBlogPostingImage_addBlogPostingImage();
+			testGraphQLGetBlogPostingImage_addBlogPostingImage();
 
 		Assert.assertTrue(
 			equals(
@@ -336,6 +342,13 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected BlogPostingImage
+			testGraphQLGetBlogPostingImage_addBlogPostingImage()
+		throws Exception {
+
+		return testGraphQLBlogPostingImage_addBlogPostingImage();
 	}
 
 	@Test
@@ -734,9 +747,9 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 		Assert.assertEquals(0, blogPostingImagesJSONObject.get("totalCount"));
 
 		BlogPostingImage blogPostingImage1 =
-			testGraphQLBlogPostingImage_addBlogPostingImage();
+			testGraphQLGetSiteBlogPostingImagesPage_addBlogPostingImage();
 		BlogPostingImage blogPostingImage2 =
-			testGraphQLBlogPostingImage_addBlogPostingImage();
+			testGraphQLGetSiteBlogPostingImagesPage_addBlogPostingImage();
 
 		blogPostingImagesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -750,6 +763,13 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			Arrays.asList(
 				BlogPostingImageSerDes.toDTOs(
 					blogPostingImagesJSONObject.getString("items"))));
+	}
+
+	protected BlogPostingImage
+			testGraphQLGetSiteBlogPostingImagesPage_addBlogPostingImage()
+		throws Exception {
+
+		return testGraphQLBlogPostingImage_addBlogPostingImage();
 	}
 
 	@Test

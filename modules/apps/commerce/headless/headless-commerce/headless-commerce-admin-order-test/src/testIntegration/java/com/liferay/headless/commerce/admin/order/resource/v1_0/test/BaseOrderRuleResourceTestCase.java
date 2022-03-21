@@ -505,8 +505,8 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 		long totalCount = orderRulesJSONObject.getLong("totalCount");
 
-		OrderRule orderRule1 = testGraphQLOrderRule_addOrderRule();
-		OrderRule orderRule2 = testGraphQLOrderRule_addOrderRule();
+		OrderRule orderRule1 = testGraphQLGetOrderRulesPage_addOrderRule();
+		OrderRule orderRule2 = testGraphQLGetOrderRulesPage_addOrderRule();
 
 		orderRulesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -525,6 +525,12 @@ public abstract class BaseOrderRuleResourceTestCase {
 			Arrays.asList(
 				OrderRuleSerDes.toDTOs(
 					orderRulesJSONObject.getString("items"))));
+	}
+
+	protected OrderRule testGraphQLGetOrderRulesPage_addOrderRule()
+		throws Exception {
+
+		return testGraphQLOrderRule_addOrderRule();
 	}
 
 	@Test
@@ -600,7 +606,8 @@ public abstract class BaseOrderRuleResourceTestCase {
 	public void testGraphQLGetOrderRuleByExternalReferenceCode()
 		throws Exception {
 
-		OrderRule orderRule = testGraphQLOrderRule_addOrderRule();
+		OrderRule orderRule =
+			testGraphQLGetOrderRuleByExternalReferenceCode_addOrderRule();
 
 		Assert.assertTrue(
 			equals(
@@ -648,6 +655,13 @@ public abstract class BaseOrderRuleResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected OrderRule
+			testGraphQLGetOrderRuleByExternalReferenceCode_addOrderRule()
+		throws Exception {
+
+		return testGraphQLOrderRule_addOrderRule();
 	}
 
 	@Test
@@ -705,7 +719,7 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteOrderRule() throws Exception {
-		OrderRule orderRule = testGraphQLOrderRule_addOrderRule();
+		OrderRule orderRule = testGraphQLDeleteOrderRule_addOrderRule();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -718,7 +732,6 @@ public abstract class BaseOrderRuleResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteOrderRule"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -732,6 +745,12 @@ public abstract class BaseOrderRuleResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected OrderRule testGraphQLDeleteOrderRule_addOrderRule()
+		throws Exception {
+
+		return testGraphQLOrderRule_addOrderRule();
 	}
 
 	@Test
@@ -752,7 +771,7 @@ public abstract class BaseOrderRuleResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOrderRule() throws Exception {
-		OrderRule orderRule = testGraphQLOrderRule_addOrderRule();
+		OrderRule orderRule = testGraphQLGetOrderRule_addOrderRule();
 
 		Assert.assertTrue(
 			equals(
@@ -789,6 +808,12 @@ public abstract class BaseOrderRuleResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected OrderRule testGraphQLGetOrderRule_addOrderRule()
+		throws Exception {
+
+		return testGraphQLOrderRule_addOrderRule();
 	}
 
 	@Test

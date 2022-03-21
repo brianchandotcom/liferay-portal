@@ -198,10 +198,18 @@ public abstract class BaseChannelResourceTestCase {
 	public void testGetOrderRuleChannelChannel() throws Exception {
 		Channel postChannel = testGetOrderRuleChannelChannel_addChannel();
 
-		Channel getChannel = channelResource.getOrderRuleChannelChannel(null);
+		Channel getChannel = channelResource.getOrderRuleChannelChannel(
+			testGetOrderRuleChannelChannel_getOrderRuleChannelId());
 
 		assertEquals(postChannel, getChannel);
 		assertValid(getChannel);
+	}
+
+	protected Long testGetOrderRuleChannelChannel_getOrderRuleChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Channel testGetOrderRuleChannelChannel_addChannel()
@@ -213,7 +221,7 @@ public abstract class BaseChannelResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOrderRuleChannelChannel() throws Exception {
-		Channel channel = testGraphQLChannel_addChannel();
+		Channel channel = testGraphQLGetOrderRuleChannelChannel_addChannel();
 
 		Assert.assertTrue(
 			equals(
@@ -225,11 +233,20 @@ public abstract class BaseChannelResourceTestCase {
 								"orderRuleChannelChannel",
 								new HashMap<String, Object>() {
 									{
-										put("orderRuleChannelId", null);
+										put(
+											"orderRuleChannelId",
+											testGraphQLGetOrderRuleChannelChannel_getOrderRuleChannelId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/orderRuleChannelChannel"))));
+	}
+
+	protected Long testGraphQLGetOrderRuleChannelChannel_getOrderRuleChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -256,14 +273,28 @@ public abstract class BaseChannelResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Channel testGraphQLGetOrderRuleChannelChannel_addChannel()
+		throws Exception {
+
+		return testGraphQLChannel_addChannel();
+	}
+
 	@Test
 	public void testGetOrderTypeChannelChannel() throws Exception {
 		Channel postChannel = testGetOrderTypeChannelChannel_addChannel();
 
-		Channel getChannel = channelResource.getOrderTypeChannelChannel(null);
+		Channel getChannel = channelResource.getOrderTypeChannelChannel(
+			testGetOrderTypeChannelChannel_getOrderTypeChannelId());
 
 		assertEquals(postChannel, getChannel);
 		assertValid(getChannel);
+	}
+
+	protected Long testGetOrderTypeChannelChannel_getOrderTypeChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Channel testGetOrderTypeChannelChannel_addChannel()
@@ -275,7 +306,7 @@ public abstract class BaseChannelResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOrderTypeChannelChannel() throws Exception {
-		Channel channel = testGraphQLChannel_addChannel();
+		Channel channel = testGraphQLGetOrderTypeChannelChannel_addChannel();
 
 		Assert.assertTrue(
 			equals(
@@ -287,11 +318,20 @@ public abstract class BaseChannelResourceTestCase {
 								"orderTypeChannelChannel",
 								new HashMap<String, Object>() {
 									{
-										put("orderTypeChannelId", null);
+										put(
+											"orderTypeChannelId",
+											testGraphQLGetOrderTypeChannelChannel_getOrderTypeChannelId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/orderTypeChannelChannel"))));
+	}
+
+	protected Long testGraphQLGetOrderTypeChannelChannel_getOrderTypeChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -318,6 +358,12 @@ public abstract class BaseChannelResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Channel testGraphQLGetOrderTypeChannelChannel_addChannel()
+		throws Exception {
+
+		return testGraphQLChannel_addChannel();
+	}
+
 	@Test
 	public void testGetOrderByExternalReferenceCodeChannel() throws Exception {
 		Channel postChannel =
@@ -342,7 +388,8 @@ public abstract class BaseChannelResourceTestCase {
 	public void testGraphQLGetOrderByExternalReferenceCodeChannel()
 		throws Exception {
 
-		Channel channel = testGraphQLChannel_addChannel();
+		Channel channel =
+			testGraphQLGetOrderByExternalReferenceCodeChannel_addChannel();
 
 		Assert.assertTrue(
 			equals(
@@ -392,6 +439,13 @@ public abstract class BaseChannelResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Channel
+			testGraphQLGetOrderByExternalReferenceCodeChannel_addChannel()
+		throws Exception {
+
+		return testGraphQLChannel_addChannel();
+	}
+
 	@Test
 	public void testGetOrderIdChannel() throws Exception {
 		Channel postChannel = testGetOrderIdChannel_addChannel();
@@ -410,7 +464,7 @@ public abstract class BaseChannelResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOrderIdChannel() throws Exception {
-		Channel channel = testGraphQLChannel_addChannel();
+		Channel channel = testGraphQLGetOrderIdChannel_addChannel();
 
 		Assert.assertTrue(
 			equals(
@@ -447,6 +501,12 @@ public abstract class BaseChannelResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Channel testGraphQLGetOrderIdChannel_addChannel()
+		throws Exception {
+
+		return testGraphQLChannel_addChannel();
 	}
 
 	protected Channel testGraphQLChannel_addChannel() throws Exception {

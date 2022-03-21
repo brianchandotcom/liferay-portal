@@ -382,7 +382,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 	@Test
 	public void testGraphQLDeleteMeasurementUnit() throws Exception {
 		MeasurementUnit measurementUnit =
-			testGraphQLMeasurementUnit_addMeasurementUnit();
+			testGraphQLDeleteMeasurementUnit_addMeasurementUnit();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -395,7 +395,6 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteMeasurementUnit"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -409,6 +408,13 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected MeasurementUnit
+			testGraphQLDeleteMeasurementUnit_addMeasurementUnit()
+		throws Exception {
+
+		return testGraphQLMeasurementUnit_addMeasurementUnit();
 	}
 
 	@Test
@@ -434,7 +440,7 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 	@Test
 	public void testGraphQLGetMeasurementUnit() throws Exception {
 		MeasurementUnit measurementUnit =
-			testGraphQLMeasurementUnit_addMeasurementUnit();
+			testGraphQLGetMeasurementUnit_addMeasurementUnit();
 
 		Assert.assertTrue(
 			equals(
@@ -471,6 +477,12 @@ public abstract class BaseMeasurementUnitResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected MeasurementUnit testGraphQLGetMeasurementUnit_addMeasurementUnit()
+		throws Exception {
+
+		return testGraphQLMeasurementUnit_addMeasurementUnit();
 	}
 
 	@Test

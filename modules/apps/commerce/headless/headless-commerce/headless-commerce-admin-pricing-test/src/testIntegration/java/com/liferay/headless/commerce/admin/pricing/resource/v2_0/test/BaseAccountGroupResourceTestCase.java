@@ -194,10 +194,19 @@ public abstract class BaseAccountGroupResourceTestCase {
 			testGetDiscountAccountGroupAccountGroup_addAccountGroup();
 
 		AccountGroup getAccountGroup =
-			accountGroupResource.getDiscountAccountGroupAccountGroup(null);
+			accountGroupResource.getDiscountAccountGroupAccountGroup(
+				testGetDiscountAccountGroupAccountGroup_getDiscountAccountGroupId());
 
 		assertEquals(postAccountGroup, getAccountGroup);
 		assertValid(getAccountGroup);
+	}
+
+	protected Long
+			testGetDiscountAccountGroupAccountGroup_getDiscountAccountGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected AccountGroup
@@ -212,7 +221,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 	public void testGraphQLGetDiscountAccountGroupAccountGroup()
 		throws Exception {
 
-		AccountGroup accountGroup = testGraphQLAccountGroup_addAccountGroup();
+		AccountGroup accountGroup =
+			testGraphQLGetDiscountAccountGroupAccountGroup_addAccountGroup();
 
 		Assert.assertTrue(
 			equals(
@@ -224,12 +234,22 @@ public abstract class BaseAccountGroupResourceTestCase {
 								"discountAccountGroupAccountGroup",
 								new HashMap<String, Object>() {
 									{
-										put("discountAccountGroupId", null);
+										put(
+											"discountAccountGroupId",
+											testGraphQLGetDiscountAccountGroupAccountGroup_getDiscountAccountGroupId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/discountAccountGroupAccountGroup"))));
+	}
+
+	protected Long
+			testGraphQLGetDiscountAccountGroupAccountGroup_getDiscountAccountGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -256,16 +276,32 @@ public abstract class BaseAccountGroupResourceTestCase {
 				"Object/code"));
 	}
 
+	protected AccountGroup
+			testGraphQLGetDiscountAccountGroupAccountGroup_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
+	}
+
 	@Test
 	public void testGetPriceListAccountGroupAccountGroup() throws Exception {
 		AccountGroup postAccountGroup =
 			testGetPriceListAccountGroupAccountGroup_addAccountGroup();
 
 		AccountGroup getAccountGroup =
-			accountGroupResource.getPriceListAccountGroupAccountGroup(null);
+			accountGroupResource.getPriceListAccountGroupAccountGroup(
+				testGetPriceListAccountGroupAccountGroup_getPriceListAccountGroupId());
 
 		assertEquals(postAccountGroup, getAccountGroup);
 		assertValid(getAccountGroup);
+	}
+
+	protected Long
+			testGetPriceListAccountGroupAccountGroup_getPriceListAccountGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected AccountGroup
@@ -280,7 +316,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 	public void testGraphQLGetPriceListAccountGroupAccountGroup()
 		throws Exception {
 
-		AccountGroup accountGroup = testGraphQLAccountGroup_addAccountGroup();
+		AccountGroup accountGroup =
+			testGraphQLGetPriceListAccountGroupAccountGroup_addAccountGroup();
 
 		Assert.assertTrue(
 			equals(
@@ -292,12 +329,22 @@ public abstract class BaseAccountGroupResourceTestCase {
 								"priceListAccountGroupAccountGroup",
 								new HashMap<String, Object>() {
 									{
-										put("priceListAccountGroupId", null);
+										put(
+											"priceListAccountGroupId",
+											testGraphQLGetPriceListAccountGroupAccountGroup_getPriceListAccountGroupId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/priceListAccountGroupAccountGroup"))));
+	}
+
+	protected Long
+			testGraphQLGetPriceListAccountGroupAccountGroup_getPriceListAccountGroupId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -322,6 +369,13 @@ public abstract class BaseAccountGroupResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected AccountGroup
+			testGraphQLGetPriceListAccountGroupAccountGroup_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
 	}
 
 	protected AccountGroup testGraphQLAccountGroup_addAccountGroup()

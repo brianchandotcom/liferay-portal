@@ -257,7 +257,8 @@ public abstract class BaseOptionValueResourceTestCase {
 	public void testGraphQLGetOptionValueByExternalReferenceCode()
 		throws Exception {
 
-		OptionValue optionValue = testGraphQLOptionValue_addOptionValue();
+		OptionValue optionValue =
+			testGraphQLGetOptionValueByExternalReferenceCode_addOptionValue();
 
 		Assert.assertTrue(
 			equals(
@@ -307,6 +308,13 @@ public abstract class BaseOptionValueResourceTestCase {
 				"Object/code"));
 	}
 
+	protected OptionValue
+			testGraphQLGetOptionValueByExternalReferenceCode_addOptionValue()
+		throws Exception {
+
+		return testGraphQLOptionValue_addOptionValue();
+	}
+
 	@Test
 	public void testPatchOptionValueByExternalReferenceCode() throws Exception {
 		Assert.assertTrue(false);
@@ -342,7 +350,7 @@ public abstract class BaseOptionValueResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteOptionValue() throws Exception {
-		OptionValue optionValue = testGraphQLOptionValue_addOptionValue();
+		OptionValue optionValue = testGraphQLDeleteOptionValue_addOptionValue();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -355,7 +363,6 @@ public abstract class BaseOptionValueResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteOptionValue"));
-
 		JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 			invokeGraphQLQuery(
 				new GraphQLField(
@@ -369,6 +376,12 @@ public abstract class BaseOptionValueResourceTestCase {
 			"JSONArray/errors");
 
 		Assert.assertTrue(errorsJSONArray.length() > 0);
+	}
+
+	protected OptionValue testGraphQLDeleteOptionValue_addOptionValue()
+		throws Exception {
+
+		return testGraphQLOptionValue_addOptionValue();
 	}
 
 	@Test
@@ -389,7 +402,7 @@ public abstract class BaseOptionValueResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOptionValue() throws Exception {
-		OptionValue optionValue = testGraphQLOptionValue_addOptionValue();
+		OptionValue optionValue = testGraphQLGetOptionValue_addOptionValue();
 
 		Assert.assertTrue(
 			equals(
@@ -426,6 +439,12 @@ public abstract class BaseOptionValueResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected OptionValue testGraphQLGetOptionValue_addOptionValue()
+		throws Exception {
+
+		return testGraphQLOptionValue_addOptionValue();
 	}
 
 	@Test

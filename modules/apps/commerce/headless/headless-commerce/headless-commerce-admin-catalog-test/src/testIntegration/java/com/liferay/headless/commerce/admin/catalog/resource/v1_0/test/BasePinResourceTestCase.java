@@ -210,7 +210,7 @@ public abstract class BasePinResourceTestCase {
 
 	@Test
 	public void testGraphQLDeletePin() throws Exception {
-		Pin pin = testGraphQLPin_addPin();
+		Pin pin = testGraphQLDeletePin_addPin();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -223,6 +223,10 @@ public abstract class BasePinResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deletePin"));
+	}
+
+	protected Pin testGraphQLDeletePin_addPin() throws Exception {
+		return testGraphQLPin_addPin();
 	}
 
 	@Test

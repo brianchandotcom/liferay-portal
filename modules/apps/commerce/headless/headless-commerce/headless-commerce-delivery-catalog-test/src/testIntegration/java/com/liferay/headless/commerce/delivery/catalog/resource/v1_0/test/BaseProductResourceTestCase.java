@@ -531,10 +531,15 @@ public abstract class BaseProductResourceTestCase {
 		Product postProduct = testGetChannelProduct_addProduct();
 
 		Product getProduct = productResource.getChannelProduct(
-			null, postProduct.getId(), null);
+			testGetChannelProduct_getChannelId(), postProduct.getId(), null);
 
 		assertEquals(postProduct, getProduct);
 		assertValid(getProduct);
+	}
+
+	protected Long testGetChannelProduct_getChannelId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Product testGetChannelProduct_addProduct() throws Exception {
@@ -544,7 +549,7 @@ public abstract class BaseProductResourceTestCase {
 
 	@Test
 	public void testGraphQLGetChannelProduct() throws Exception {
-		Product product = testGraphQLProduct_addProduct();
+		Product product = testGraphQLGetChannelProduct_addProduct();
 
 		Assert.assertTrue(
 			equals(
@@ -556,12 +561,21 @@ public abstract class BaseProductResourceTestCase {
 								"channelProduct",
 								new HashMap<String, Object>() {
 									{
-										put("channelId", null);
+										put(
+											"channelId",
+											testGraphQLGetChannelProduct_getChannelId());
 										put("productId", product.getId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/channelProduct"))));
+	}
+
+	protected Long testGraphQLGetChannelProduct_getChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -584,6 +598,12 @@ public abstract class BaseProductResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Product testGraphQLGetChannelProduct_addProduct()
+		throws Exception {
+
+		return testGraphQLProduct_addProduct();
 	}
 
 	@Rule

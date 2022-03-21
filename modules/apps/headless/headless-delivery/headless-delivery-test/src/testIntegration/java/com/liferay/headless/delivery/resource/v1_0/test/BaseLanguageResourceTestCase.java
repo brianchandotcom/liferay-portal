@@ -351,8 +351,8 @@ public abstract class BaseLanguageResourceTestCase {
 
 		Assert.assertEquals(0, languagesJSONObject.get("totalCount"));
 
-		Language language1 = testGraphQLLanguage_addLanguage();
-		Language language2 = testGraphQLLanguage_addLanguage();
+		Language language1 = testGraphQLGetSiteLanguagesPage_addLanguage();
+		Language language2 = testGraphQLGetSiteLanguagesPage_addLanguage();
 
 		languagesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -364,6 +364,12 @@ public abstract class BaseLanguageResourceTestCase {
 			Arrays.asList(language1, language2),
 			Arrays.asList(
 				LanguageSerDes.toDTOs(languagesJSONObject.getString("items"))));
+	}
+
+	protected Language testGraphQLGetSiteLanguagesPage_addLanguage()
+		throws Exception {
+
+		return testGraphQLLanguage_addLanguage();
 	}
 
 	protected Language testGraphQLLanguage_addLanguage() throws Exception {

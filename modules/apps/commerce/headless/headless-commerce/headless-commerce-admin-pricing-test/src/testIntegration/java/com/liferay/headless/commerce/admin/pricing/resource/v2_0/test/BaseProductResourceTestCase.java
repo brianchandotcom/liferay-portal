@@ -194,10 +194,18 @@ public abstract class BaseProductResourceTestCase {
 	public void testGetDiscountProductProduct() throws Exception {
 		Product postProduct = testGetDiscountProductProduct_addProduct();
 
-		Product getProduct = productResource.getDiscountProductProduct(null);
+		Product getProduct = productResource.getDiscountProductProduct(
+			testGetDiscountProductProduct_getDiscountProductId());
 
 		assertEquals(postProduct, getProduct);
 		assertValid(getProduct);
+	}
+
+	protected Long testGetDiscountProductProduct_getDiscountProductId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Product testGetDiscountProductProduct_addProduct()
@@ -209,7 +217,7 @@ public abstract class BaseProductResourceTestCase {
 
 	@Test
 	public void testGraphQLGetDiscountProductProduct() throws Exception {
-		Product product = testGraphQLProduct_addProduct();
+		Product product = testGraphQLGetDiscountProductProduct_addProduct();
 
 		Assert.assertTrue(
 			equals(
@@ -221,11 +229,20 @@ public abstract class BaseProductResourceTestCase {
 								"discountProductProduct",
 								new HashMap<String, Object>() {
 									{
-										put("discountProductId", null);
+										put(
+											"discountProductId",
+											testGraphQLGetDiscountProductProduct_getDiscountProductId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/discountProductProduct"))));
+	}
+
+	protected Long testGraphQLGetDiscountProductProduct_getDiscountProductId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -252,14 +269,28 @@ public abstract class BaseProductResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Product testGraphQLGetDiscountProductProduct_addProduct()
+		throws Exception {
+
+		return testGraphQLProduct_addProduct();
+	}
+
 	@Test
 	public void testGetPriceEntryIdProduct() throws Exception {
 		Product postProduct = testGetPriceEntryIdProduct_addProduct();
 
-		Product getProduct = productResource.getPriceEntryIdProduct(null);
+		Product getProduct = productResource.getPriceEntryIdProduct(
+			testGetPriceEntryIdProduct_getPriceEntryId());
 
 		assertEquals(postProduct, getProduct);
 		assertValid(getProduct);
+	}
+
+	protected Long testGetPriceEntryIdProduct_getPriceEntryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Product testGetPriceEntryIdProduct_addProduct() throws Exception {
@@ -269,7 +300,7 @@ public abstract class BaseProductResourceTestCase {
 
 	@Test
 	public void testGraphQLGetPriceEntryIdProduct() throws Exception {
-		Product product = testGraphQLProduct_addProduct();
+		Product product = testGraphQLGetPriceEntryIdProduct_addProduct();
 
 		Assert.assertTrue(
 			equals(
@@ -281,11 +312,20 @@ public abstract class BaseProductResourceTestCase {
 								"priceEntryIdProduct",
 								new HashMap<String, Object>() {
 									{
-										put("priceEntryId", null);
+										put(
+											"priceEntryId",
+											testGraphQLGetPriceEntryIdProduct_getPriceEntryId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/priceEntryIdProduct"))));
+	}
+
+	protected Long testGraphQLGetPriceEntryIdProduct_getPriceEntryId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -308,15 +348,29 @@ public abstract class BaseProductResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Product testGraphQLGetPriceEntryIdProduct_addProduct()
+		throws Exception {
+
+		return testGraphQLProduct_addProduct();
+	}
+
 	@Test
 	public void testGetPriceModifierProductProduct() throws Exception {
 		Product postProduct = testGetPriceModifierProductProduct_addProduct();
 
 		Product getProduct = productResource.getPriceModifierProductProduct(
-			null);
+			testGetPriceModifierProductProduct_getPriceModifierProductId());
 
 		assertEquals(postProduct, getProduct);
 		assertValid(getProduct);
+	}
+
+	protected Long
+			testGetPriceModifierProductProduct_getPriceModifierProductId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Product testGetPriceModifierProductProduct_addProduct()
@@ -328,7 +382,8 @@ public abstract class BaseProductResourceTestCase {
 
 	@Test
 	public void testGraphQLGetPriceModifierProductProduct() throws Exception {
-		Product product = testGraphQLProduct_addProduct();
+		Product product =
+			testGraphQLGetPriceModifierProductProduct_addProduct();
 
 		Assert.assertTrue(
 			equals(
@@ -340,12 +395,22 @@ public abstract class BaseProductResourceTestCase {
 								"priceModifierProductProduct",
 								new HashMap<String, Object>() {
 									{
-										put("priceModifierProductId", null);
+										put(
+											"priceModifierProductId",
+											testGraphQLGetPriceModifierProductProduct_getPriceModifierProductId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/priceModifierProductProduct"))));
+	}
+
+	protected Long
+			testGraphQLGetPriceModifierProductProduct_getPriceModifierProductId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -370,6 +435,12 @@ public abstract class BaseProductResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Product testGraphQLGetPriceModifierProductProduct_addProduct()
+		throws Exception {
+
+		return testGraphQLProduct_addProduct();
 	}
 
 	protected Product testGraphQLProduct_addProduct() throws Exception {

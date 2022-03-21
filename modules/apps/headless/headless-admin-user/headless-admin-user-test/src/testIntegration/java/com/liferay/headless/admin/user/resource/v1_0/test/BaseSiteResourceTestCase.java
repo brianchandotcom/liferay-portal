@@ -279,7 +279,7 @@ public abstract class BaseSiteResourceTestCase {
 
 	@Test
 	public void testGraphQLGetSiteByFriendlyUrlPath() throws Exception {
-		Site site = testGraphQLSite_addSite();
+		Site site = testGraphQLGetSiteByFriendlyUrlPath_addSite();
 
 		Assert.assertTrue(
 			equals(
@@ -324,6 +324,12 @@ public abstract class BaseSiteResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Site testGraphQLGetSiteByFriendlyUrlPath_addSite()
+		throws Exception {
+
+		return testGraphQLSite_addSite();
+	}
+
 	@Test
 	public void testGetSite() throws Exception {
 		Site postSite = testGetSite_addSite();
@@ -341,7 +347,7 @@ public abstract class BaseSiteResourceTestCase {
 
 	@Test
 	public void testGraphQLGetSite() throws Exception {
-		Site site = testGraphQLSite_addSite();
+		Site site = testGraphQLGetSite_addSite();
 
 		Assert.assertTrue(
 			equals(
@@ -378,6 +384,10 @@ public abstract class BaseSiteResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Site testGraphQLGetSite_addSite() throws Exception {
+		return testGraphQLSite_addSite();
 	}
 
 	protected Site testGraphQLSite_addSite() throws Exception {

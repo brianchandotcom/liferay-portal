@@ -235,7 +235,7 @@ const DropDown = memo(
 					</Button>
 				}
 			>
-				{initialTotalCount > 20 && (
+				{initialTotalCount > 10 && (
 					<div className="dropdown-section px-3">
 						<Search setSearchTerm={setSearchTerm} />
 					</div>

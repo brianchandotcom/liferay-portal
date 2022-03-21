@@ -2625,6 +2625,10 @@ public class PropsValues {
 		GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.WEBDAV_SERVLET_HTTPS_REQUIRED));
 
+	public static final boolean WEBHOOK_EXPOSE_INTERNAL_MODEL =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.WEBHOOK_EXPOSE_INTERNAL_MODEL));
+
 	public static final String WIDGET_SERVLET_MAPPING = PropsUtil.get(
 		PropsKeys.WIDGET_SERVLET_MAPPING);
 

@@ -3010,6 +3010,9 @@ public interface PropsKeys {
 	public static final String WEBDAV_SERVLET_HTTPS_REQUIRED =
 		"webdav.servlet.https.required";
 
+	public static final String WEBHOOK_EXPOSE_INTERNAL_MODEL =
+		"webhook.expose.internal.model";
+
 	public static final String WEBLOGIC_REQUEST_WRAP_NON_SERIALIZABLE =
 		"weblogic.request.wrap.non.serializable";
 

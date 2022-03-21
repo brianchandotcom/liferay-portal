@@ -41,6 +41,7 @@ import com.liferay.commerce.internal.upgrade.v5_0_1.CommercePermissionUpgradePro
 import com.liferay.commerce.internal.upgrade.v7_2_0.util.CommerceOrderTypeRelTable;
 import com.liferay.commerce.internal.upgrade.v7_2_0.util.CommerceOrderTypeTable;
 import com.liferay.commerce.internal.upgrade.v8_2_0.CommerceShipmentExternalReferenceCodeUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v8_4_0.util.CommerceShippingOptionAccountEntryRelTable;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -279,6 +280,10 @@ public class CommerceUpgradeStepRegistrator implements UpgradeStepRegistrator {
 		registry.register(
 			"8.2.0", "8.3.0",
 			new CTModelUpgradeProcess("CPDefinitionInventory"));
+
+		registry.register(
+			"8.3.0", "8.4.0",
+			CommerceShippingOptionAccountEntryRelTable.create());
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");

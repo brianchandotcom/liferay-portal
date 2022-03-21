@@ -457,6 +457,33 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	@Test
+	public void testBoostTaggedContents() throws Exception {
+		_assetTag = AssetTagLocalServiceUtil.addTag(
+			_user.getUserId(), _group.getGroupId(), "cola", _serviceContext);
+
+		_setUpJournalArticles(
+			new String[] {"", ""}, new String[] {"coca cola", "pepsi cola"});
+
+		_keywords = "cola";
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"asset_tags", new String[] {String.valueOf(_assetTag)}
+				).put(
+					"boost", 100
+				).build()
+			},
+			new String[] {"Boost Tagged Contents"});
+
+		_assertSearch("[pepsi cola, coca cola]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance("[coca cola, pepsi cola]");
+	}
+
+	@Test
 	public void testBoostTagsMatch() throws Exception {
 		_assetTag = AssetTagLocalServiceUtil.addTag(
 			_user.getUserId(), _group.getGroupId(), "cola", _serviceContext);

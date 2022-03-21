@@ -15,7 +15,6 @@
 import updateFragmentEntryLinkConfiguration from '../actions/updateFragmentEntryLinkConfiguration';
 import updatePageContents from '../actions/updatePageContents';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../config/constants/freemarkerFragmentEntryProcessor';
-import {config} from '../config/index';
 import FragmentService from '../services/FragmentService';
 import InfoItemService from '../services/InfoItemService';
 
@@ -49,13 +48,11 @@ export default function updateFragmentConfiguration({
 			.then(() => {
 				InfoItemService.getPageContents({
 					onNetworkStatus: dispatch,
-					segmentsExperienceId: config.defaultSegmentsExperienceId,
+					segmentsExperienceId: getState().segmentsExperienceId,
 				}).then((pageContents) => {
 					dispatch(
 						updatePageContents({
 							pageContents,
-							segmentsExperienceId:
-								config.defaultSegmentsExperienceId,
 						})
 					);
 				});

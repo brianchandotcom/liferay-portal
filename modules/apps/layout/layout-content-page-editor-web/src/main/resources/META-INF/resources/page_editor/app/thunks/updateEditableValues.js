@@ -14,7 +14,6 @@
 
 import updateEditableValuesAction from '../actions/updateEditableValues';
 import updatePageContents from '../actions/updatePageContents';
-import {config} from '../config/index';
 import FragmentService from '../services/FragmentService';
 import InfoItemService from '../services/InfoItemService';
 
@@ -44,13 +43,11 @@ export default function updateEditableValues({
 			.then(() => {
 				InfoItemService.getPageContents({
 					onNetworkStatus: dispatch,
-					segmentsExperienceId: config.defaultSegmentsExperienceId,
+					segmentsExperienceId,
 				}).then((pageContents) => {
 					dispatch(
 						updatePageContents({
 							pageContents,
-							segmentsExperienceId:
-								config.defaultSegmentsExperienceId,
 						})
 					);
 				});

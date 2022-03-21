@@ -14,7 +14,6 @@
 
 import updateItemConfigAction from '../actions/updateItemConfig';
 import updatePageContents from '../actions/updatePageContents';
-import {config} from '../config/index';
 import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
 
@@ -36,13 +35,11 @@ export default function updateItemConfig({
 			.then(() => {
 				InfoItemService.getPageContents({
 					onNetworkStatus: dispatch,
-					segmentsExperienceId: config.defaultSegmentsExperienceId,
+					segmentsExperienceId,
 				}).then((pageContents) => {
 					dispatch(
 						updatePageContents({
 							pageContents,
-							segmentsExperienceId:
-								config.defaultSegmentsExperienceId,
 						})
 					);
 				});

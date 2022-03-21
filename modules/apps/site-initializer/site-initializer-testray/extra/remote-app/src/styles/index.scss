@@ -24,6 +24,8 @@ body {
 	margin-bottom: 0;
 }
 
+@import 'liferay';
+
 // stylelint-disable selector-type-no-unknown
 liferay-remote-app-testray {
 	@import 'variables';
@@ -32,7 +34,6 @@ liferay-remote-app-testray {
 
 	@import 'components/avatar';
 	@import 'components/chart';
-	@import 'components/input';
 	@import 'components/layout';
 	@import 'components/progress_bar';
 	@import 'components/table';

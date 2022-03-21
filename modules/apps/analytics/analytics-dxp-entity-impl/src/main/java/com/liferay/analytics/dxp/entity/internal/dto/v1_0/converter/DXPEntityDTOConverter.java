@@ -14,9 +14,9 @@
 
 package com.liferay.analytics.dxp.entity.internal.dto.v1_0.converter;
 
-import com.liferay.analytics.dxp.entity.dto.v1_0.DXPEntity;
-import com.liferay.analytics.dxp.entity.dto.v1_0.ExpandoField;
-import com.liferay.analytics.dxp.entity.dto.v1_0.Field;
+import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
+import com.liferay.analytics.dxp.entity.rest.dto.v1_0.ExpandoField;
+import com.liferay.analytics.dxp.entity.rest.dto.v1_0.Field;
 import com.liferay.analytics.message.sender.util.AnalyticsExpandoBridgeUtil;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Rachael Koestartyo
  */
 @Component(
-	property = "dto.class.name=com.liferay.analytics.dxp.entities.exporter.dto.v1_0.DXPEntity",
+	property = "dto.class.name=com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity",
 	service = {DTOConverter.class, DXPEntityDTOConverter.class}
 )
 public class DXPEntityDTOConverter

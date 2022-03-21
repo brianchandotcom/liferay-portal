@@ -14,7 +14,7 @@
 
 package com.liferay.analytics.dxp.entity.internal.retriever;
 
-import com.liferay.analytics.dxp.entity.dto.v1_0.DXPEntity;
+import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetriever;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.BaseModel;

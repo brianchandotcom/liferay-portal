@@ -63,6 +63,17 @@ export function CommonStyles({
 			});
 	}
 
+	const handleValueSelect = (name, value) => {
+		updateItemStyle({
+			dispatch,
+			itemId: item.itemId,
+			segmentsExperienceId,
+			selectedViewportSize,
+			styleName: name,
+			styleValue: value,
+		});
+	};
+
 	return (
 		<>
 			<div
@@ -76,16 +87,7 @@ export function CommonStyles({
 							key={index}
 							label={fieldSet.label}
 							languageId={config.defaultLanguageId}
-							onValueSelect={(name, value) =>
-								updateItemStyle({
-									dispatch,
-									itemId: item.itemId,
-									segmentsExperienceId,
-									selectedViewportSize,
-									styleName: name,
-									styleValue: value,
-								})
-							}
+							onValueSelect={handleValueSelect}
 							values={commonStylesValues}
 						/>
 					);

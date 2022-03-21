@@ -15,7 +15,6 @@
 import deleteItemAction from '../actions/deleteItem';
 import updatePageContents from '../actions/updatePageContents';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
-import {config} from '../config/index';
 import InfoItemService from '../services/InfoItemService';
 import LayoutService from '../services/LayoutService';
 import getFragmentEntryLinkIdsFromItemId from '../utils/getFragmentEntryLinkIdsFromItemId';
@@ -55,13 +54,11 @@ export default function deleteItem({itemId, selectItem = () => {}}) {
 			.then(() => {
 				InfoItemService.getPageContents({
 					onNetworkStatus: dispatch,
-					segmentsExperienceId: config.defaultSegmentsExperienceId,
+					segmentsExperienceId,
 				}).then((pageContents) => {
 					dispatch(
 						updatePageContents({
 							pageContents,
-							segmentsExperienceId:
-								config.defaultSegmentsExperienceId,
 						})
 					);
 				});

@@ -22,8 +22,10 @@ import App from '../../../../src/main/resources/META-INF/resources/js/ddm_templa
 const renderApp = ({initialScript = ''} = {}) => {
 	return render(
 		<App
+			editorAutocompleteData={{}}
 			portletNamespace="portletNamespace"
 			script={initialScript}
+			showCacheableWarning
 			templateVariableGroups={[
 				{
 					items: [
@@ -108,14 +110,13 @@ describe('', () => {
 		expect(queryByText('variableTemplate1')).not.toBeInTheDocument();
 	});
 
-	it('filters variable groups when search', () => {
+	it('no result when searching', () => {
 		const {getByLabelText, queryByText} = renderApp();
 
 		const searchInput = getByLabelText('search');
 
-		userEvent.type(searchInput, 'variableTemplate2');
+		userEvent.type(searchInput, 'anotherVariable');
 
-		expect(queryByText('variableTemplate2')).toBeInTheDocument();
-		expect(queryByText('variableTemplate1')).not.toBeInTheDocument();
+		expect(queryByText('no-results-found')).toBeInTheDocument();
 	});
 });

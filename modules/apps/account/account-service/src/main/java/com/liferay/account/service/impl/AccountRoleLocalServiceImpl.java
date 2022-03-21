@@ -254,6 +254,13 @@ public class AccountRoleLocalServiceImpl
 
 	@Override
 	public List<AccountRole> getAccountRolesByAccountEntryIds(
+		long companyId, long[] accountEntryIds) {
+
+		return accountRolePersistence.findByC_A(companyId, accountEntryIds);
+	}
+
+	@Override
+	public List<AccountRole> getAccountRolesByAccountEntryIds(
 		long[] accountEntryIds) {
 
 		return accountRolePersistence.findByAccountEntryId(accountEntryIds);

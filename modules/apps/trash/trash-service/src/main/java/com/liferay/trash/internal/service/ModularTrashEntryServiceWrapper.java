@@ -71,8 +71,8 @@ public class ModularTrashEntryServiceWrapper extends TrashEntryServiceWrapper {
 
 	@Override
 	public TrashEntryList getEntries(long groupId) throws PrincipalException {
-		return ModelAdapterUtil.adapt(
-			TrashEntryList.class, _trashEntryService.getEntries(groupId));
+		throw new UnsupportedOperationException(
+			getClass() + " does not support getEntries() method.");
 	}
 
 	@Override
@@ -81,11 +81,8 @@ public class ModularTrashEntryServiceWrapper extends TrashEntryServiceWrapper {
 			OrderByComparator<TrashEntry> orderByComparator)
 		throws PrincipalException {
 
-		return ModelAdapterUtil.adapt(
-			TrashEntryList.class,
-			_trashEntryService.getEntries(
-				groupId, start, end,
-				new TrashEntryOrderByComparatorAdapter(orderByComparator)));
+		throw new UnsupportedOperationException(
+			getClass() + " does not support getEntries() method.");
 	}
 
 	@Override

@@ -1633,6 +1633,50 @@ definition {
 
 	}
 
+	@description = "This test covers LPS-148758. It ensures that a PDF without an extension can be previewed through the latest version URL."
+	@priority = "3"
+	test CanPreviewPDFWithoutExtensionViaLatestVersionURL {
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "Document_1.pdf",
+			groupName = "Guest",
+			mimeType = "application/pdf",
+			sourceFileName = "Document_1.pdf");
+
+		JSONDocument.addFileWithUploadedFile(
+			dmDocumentTitle = "pdf_no_extension",
+			groupName = "Guest",
+			mimeType = "application/pdf",
+			sourceFileName = "pdf_no_extension");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "Document_1.pdf",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		var latestVersionURL = DMDocument.getLatestVersionURL();
+
+		Navigator.openSpecificURL(url = "${latestVersionURL}");
+
+		AssertAttributeValue(
+			attribute1 = "baseURI",
+			locator1 = "//embed",
+			value1 = "${latestVersionURL}");
+
+		DMNavigator.openToEntryInAdmin(
+			dmDocumentTitle = "pdf_no_extension",
+			groupName = "Guest",
+			siteURLKey = "guest");
+
+		var latestVersionURL = DMDocument.getLatestVersionURL();
+
+		Navigator.openSpecificURL(url = "${latestVersionURL}");
+
+		AssertAttributeValue(
+			attribute1 = "baseURI",
+			locator1 = "//embed",
+			value1 = "${latestVersionURL}");
+	}
+
 	@description = "This test covers LPS-104957. It ensures that the PNG file can be previewed."
 	@priority = "5"
 	@refactordone

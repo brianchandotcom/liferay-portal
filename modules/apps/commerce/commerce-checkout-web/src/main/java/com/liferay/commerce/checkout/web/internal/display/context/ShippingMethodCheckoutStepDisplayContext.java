@@ -32,14 +32,12 @@ import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOpt
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
 import com.liferay.commerce.util.CommerceBigDecimalUtil;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
-import com.liferay.commerce.util.comparator.CommerceShippingOptionLabelComparator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.math.BigDecimal;
@@ -137,11 +135,8 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			_commerceShippingEngineRegistry.getCommerceShippingEngine(
 				commerceShippingMethod.getEngineKey());
 
-		return ListUtil.sort(
-			commerceShippingEngine.getCommerceShippingOptions(
-				_getCommerceContext(), _commerceOrder,
-				themeDisplay.getLocale()),
-			new CommerceShippingOptionLabelComparator());
+		return commerceShippingEngine.getCommerceShippingOptions(
+			_getCommerceContext(), _commerceOrder, themeDisplay.getLocale());
 	}
 
 	public List<CommerceShippingFixedOption>

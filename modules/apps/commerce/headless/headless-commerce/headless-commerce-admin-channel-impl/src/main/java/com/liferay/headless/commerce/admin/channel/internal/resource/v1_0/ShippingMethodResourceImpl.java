@@ -20,7 +20,9 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
+import com.liferay.commerce.shipping.engine.fixed.util.comparator.CommerceShippingFixedOptionPriorityComparator;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
+import com.liferay.commerce.util.comparator.CommerceShippingMethodPriorityComparator;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingMethod;
 import com.liferay.headless.commerce.admin.channel.dto.v1_0.ShippingOption;
 import com.liferay.headless.commerce.admin.channel.resource.v1_0.ShippingMethodResource;
@@ -60,11 +62,13 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 		return Page.of(
 			TransformUtil.transform(
 				_commerceShippingMethodService.getCommerceShippingMethods(
-					commerceChannel.getGroupId()),
+					commerceChannel.getGroupId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS,
+					new CommerceShippingMethodPriorityComparator()),
 				this::_toShippingMethod),
 			pagination,
 			_commerceShippingMethodService.getCommerceShippingMethodsCount(
-				commerceChannel.getGroupId(), true));
+				commerceChannel.getGroupId()));
 	}
 
 	private ShippingOption[] _getShippingOptions(long shippingMethodId)
@@ -72,7 +76,8 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 
 		return TransformUtil.transformToArray(
 			_commerceShippingFixedOptionService.getCommerceShippingFixedOptions(
-				shippingMethodId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				shippingMethodId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new CommerceShippingFixedOptionPriorityComparator()),
 			commerceShippingFixedOption -> new ShippingOption() {
 				{
 					description = LanguageUtils.getLanguageIdMap(

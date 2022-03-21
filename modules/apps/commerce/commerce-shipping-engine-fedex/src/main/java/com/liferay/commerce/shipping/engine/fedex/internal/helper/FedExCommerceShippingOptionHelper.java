@@ -58,10 +58,12 @@ import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.service.CommerceChannelService;
+import com.liferay.commerce.shipping.engine.fedex.internal.FedExCommerceShippingEngine;
 import com.liferay.commerce.shipping.engine.fedex.internal.configuration.FedExCommerceShippingEngineGroupServiceConfiguration;
 import com.liferay.commerce.shipping.engine.fedex.internal.constants.FedExCommerceShippingEngineConstants;
 import com.liferay.commerce.shipping.origin.locator.CommerceShippingOriginLocator;
 import com.liferay.commerce.util.CommerceShippingHelper;
+import com.liferay.commerce.util.comparator.CommerceShippingOptionPriorityComparator;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -73,6 +75,7 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -190,6 +193,8 @@ public class FedExCommerceShippingOptionHelper {
 		List<CommerceShippingOption> commerceShippingOptions = new ArrayList<>(
 			_serviceTypes.size());
 
+		double priority = Double.MAX_VALUE;
+
 		for (Map.Entry<String, List<BigDecimal>> entry : rates.entrySet()) {
 			List<BigDecimal> amounts = entry.getValue();
 
@@ -234,10 +239,14 @@ public class FedExCommerceShippingOptionHelper {
 			}
 
 			commerceShippingOptions.add(
-				new CommerceShippingOption(name, label, amount));
+				new CommerceShippingOption(
+					FedExCommerceShippingEngine.KEY, name, label, amount,
+					priority--));
 		}
 
-		return commerceShippingOptions;
+		return ListUtil.sort(
+			commerceShippingOptions,
+			new CommerceShippingOptionPriorityComparator());
 	}
 
 	private void _executeRateRequest(

@@ -29,12 +29,15 @@ import com.liferay.commerce.service.CommerceAddressRestrictionLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
+import com.liferay.commerce.shipping.engine.fixed.util.comparator.CommerceShippingFixedOptionPriorityComparator;
 import com.liferay.commerce.util.CommerceShippingHelper;
+import com.liferay.commerce.util.comparator.CommerceShippingOptionPriorityComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.math.BigDecimal;
@@ -113,7 +116,8 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 		return _commerceShippingFixedOptionLocalService.
 			getCommerceShippingFixedOptions(
 				commerceShippingMethod.getCommerceShippingMethodId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new CommerceShippingFixedOptionPriorityComparator());
 	}
 
 	private List<CommerceShippingOption> _getCommerceShippingOptions(
@@ -150,10 +154,12 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 
 			String key = commerceShippingFixedOption.getKey();
 			String name = commerceShippingFixedOption.getName(locale);
+			double priority = commerceShippingFixedOption.getPriority();
 
 			if (_commerceShippingHelper.isFreeShipping(commerceOrder)) {
 				commerceShippingOptions.add(
-					new CommerceShippingOption(key, name, BigDecimal.ZERO));
+					new CommerceShippingOption(
+						KEY, key, name, BigDecimal.ZERO, priority));
 
 				continue;
 			}
@@ -186,10 +192,12 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 			}
 
 			commerceShippingOptions.add(
-				new CommerceShippingOption(key, name, amount));
+				new CommerceShippingOption(KEY, key, name, amount, priority));
 		}
 
-		return commerceShippingOptions;
+		return ListUtil.sort(
+			commerceShippingOptions,
+			new CommerceShippingOptionPriorityComparator());
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {

@@ -22,6 +22,7 @@ import com.liferay.commerce.service.CommerceAddressRestrictionLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.web.internal.model.ShippingRestriction;
 import com.liferay.commerce.util.CommerceUtil;
+import com.liferay.commerce.util.comparator.CommerceShippingMethodPriorityComparator;
 import com.liferay.frontend.taglib.clay.data.Filter;
 import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView;
@@ -29,6 +30,7 @@ import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvide
 import com.liferay.frontend.taglib.clay.data.set.view.table.selectable.BaseSelectableTableClayDataSetDisplayView;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanProperties;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Country;
@@ -102,7 +104,9 @@ public class CommerceShippingRestrictionsPageClayTable
 
 		List<CommerceShippingMethod> commerceShippingMethods =
 			_commerceShippingMethodService.getCommerceShippingMethods(
-				commerceChannel.getGroupId());
+				commerceChannel.getGroupId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new CommerceShippingMethodPriorityComparator());
 
 		String orderByFieldName = _beanProperties.getString(
 			sort, "fieldName", StringPool.BLANK);

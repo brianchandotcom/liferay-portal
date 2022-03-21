@@ -27,7 +27,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
-import com.liferay.commerce.util.comparator.CommerceShippingOptionLabelComparator;
+import com.liferay.commerce.util.comparator.CommerceShippingOptionPriorityComparator;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.ShippingMethod;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.ShippingOption;
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.ShippingMethodResource;
@@ -98,7 +98,7 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 				commerceShippingEngine.getCommerceShippingOptions(
 					commerceContext, commerceOrder,
 					contextAcceptLanguage.getPreferredLocale()),
-				new CommerceShippingOptionLabelComparator()),
+				new CommerceShippingOptionPriorityComparator()),
 			shippingOption -> _toShippingOption(
 				shippingOption, commerceContext),
 			ShippingOption.class);

@@ -50,6 +50,7 @@ import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
+import com.liferay.commerce.util.comparator.CommerceShippingMethodPriorityComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -419,7 +420,9 @@ public class CommerceOrderGenerator {
 		List<CommerceShippingMethod> commerceShippingMethods =
 			_commerceShippingMethodLocalService.getCommerceShippingMethods(
 				_commerceChannelLocalService.
-					getCommerceChannelGroupIdBySiteGroupId(groupId));
+					getCommerceChannelGroupIdBySiteGroupId(groupId),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new CommerceShippingMethodPriorityComparator());
 
 		if (commerceShippingMethods.isEmpty()) {
 			return 0;

@@ -14,7 +14,6 @@
 
 import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
-import ClayButtonGroup from '@clayui/button/lib/Group';
 import ClayLayout from '@clayui/layout';
 import {useState} from 'react';
 import {Link, useOutletContext} from 'react-router-dom';
@@ -51,7 +50,7 @@ const CaseResult = () => {
 	return (
 		<ClayLayout.Row>
 			<ClayLayout.Col xs={12}>
-				<ClayButtonGroup className="ml-3" spaced>
+				<ClayButton.Group className="ml-3" spaced>
 					<ClayButton>{i18n.translate('assign')}</ClayButton>
 
 					<ClayButton displayType="secondary">
@@ -73,7 +72,7 @@ const CaseResult = () => {
 					<ClayButton displayType="secondary">
 						{i18n.translate('edit')}
 					</ClayButton>
-				</ClayButtonGroup>
+				</ClayButton.Group>
 			</ClayLayout.Col>
 
 			<ClayLayout.Col xs={9}>

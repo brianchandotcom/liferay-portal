@@ -10,7 +10,6 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayButtonGroup from '@clayui/button/lib/Group';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -121,7 +120,7 @@ function ManagementToolbar({
 
 						<ClayManagementToolbar.ItemList>
 							<ClayManagementToolbar.Item>
-								<ClayButtonGroup spaced>
+								<ClayButton.Group spaced>
 									<ClayButton
 										displayType="secondary"
 										onClick={onUpdateSelected(true)}
@@ -137,7 +136,7 @@ function ManagementToolbar({
 									>
 										{Liferay.Language.get('turn-off')}
 									</ClayButton>
-								</ClayButtonGroup>
+								</ClayButton.Group>
 							</ClayManagementToolbar.Item>
 						</ClayManagementToolbar.ItemList>
 					</>

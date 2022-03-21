@@ -13,7 +13,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayButton from '@clayui/button/lib/Button';
+import ClayButton from '@clayui/button';
 import {Context as ClayModalContext} from '@clayui/modal';
 import ClayPanel from '@clayui/panel';
 import {useFormState} from 'data-engine-js-components-web';

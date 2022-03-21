@@ -16,5 +16,5 @@ create index IX_448835E3 on AccountGroupRel (accountGroupId, classNameId, classP
 create index IX_E31F0762 on AccountGroupRel (classNameId, classPK);
 
 create index IX_3A47CDD on AccountRole (accountEntryId);
-create index IX_76E515F on AccountRole (companyId);
+create index IX_6BCBD313 on AccountRole (companyId, accountEntryId);
 create index IX_714A358E on AccountRole (roleId);

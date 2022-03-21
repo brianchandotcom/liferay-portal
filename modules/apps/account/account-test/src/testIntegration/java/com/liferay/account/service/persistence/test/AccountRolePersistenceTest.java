@@ -179,6 +179,21 @@ public class AccountRolePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_A() throws Exception {
+		_persistence.countByC_A(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByC_A(0L, 0L);
+	}
+
+	@Test
+	public void testCountByC_AArrayable() throws Exception {
+		_persistence.countByC_A(
+			RandomTestUtil.nextLong(),
+			new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		AccountRole newAccountRole = addAccountRole();
 

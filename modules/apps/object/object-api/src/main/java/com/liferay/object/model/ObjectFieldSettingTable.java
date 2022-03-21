@@ -61,9 +61,6 @@ public class ObjectFieldSettingTable
 			"objectFieldId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldSettingTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ObjectFieldSettingTable, Boolean> required =
-		createColumn(
-			"required", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<ObjectFieldSettingTable, String> value = createColumn(
 		"value", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 

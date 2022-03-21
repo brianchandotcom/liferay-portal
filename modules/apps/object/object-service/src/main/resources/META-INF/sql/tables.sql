@@ -97,7 +97,6 @@ create table ObjectFieldSetting (
 	modifiedDate DATE null,
 	objectFieldId LONG,
 	name VARCHAR(75) null,
-	required BOOLEAN,
 	value VARCHAR(75) null
 );
 

@@ -13,12 +13,12 @@ export const ROLE_TYPES = {
 	admin: {
 		key: 'Account Administrator',
 		name: 'Administrator',
-		raysourceName: 'Administrator',
+		raysourceName: 'Support Administrator',
 	},
 	member: {
 		key: 'Account Member',
 		name: 'User',
-		raysourceName: 'Support Watcher',
+		raysourceName: 'Support User',
 	},
 	partnerManager: {
 		key: 'Partner Manager',
@@ -33,6 +33,6 @@ export const ROLE_TYPES = {
 	requester: {
 		key: 'Requester',
 		name: 'Requester',
-		raysourceName: 'Support Developer',
+		raysourceName: 'Support Requester',
 	},
 };

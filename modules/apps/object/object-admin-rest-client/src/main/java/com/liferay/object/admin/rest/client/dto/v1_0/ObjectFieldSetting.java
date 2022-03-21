@@ -93,27 +93,6 @@ public class ObjectFieldSetting implements Cloneable, Serializable {
 
 	protected Long objectFieldId;
 
-	public Boolean getRequired() {
-		return required;
-	}
-
-	public void setRequired(Boolean required) {
-		this.required = required;
-	}
-
-	public void setRequired(
-		UnsafeSupplier<Boolean, Exception> requiredUnsafeSupplier) {
-
-		try {
-			required = requiredUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Boolean required;
-
 	public String getValue() {
 		return value;
 	}

@@ -137,34 +137,6 @@ public class ObjectFieldSetting implements Serializable {
 	protected Long objectFieldId;
 
 	@Schema
-	public Boolean getRequired() {
-		return required;
-	}
-
-	public void setRequired(Boolean required) {
-		this.required = required;
-	}
-
-	@JsonIgnore
-	public void setRequired(
-		UnsafeSupplier<Boolean, Exception> requiredUnsafeSupplier) {
-
-		try {
-			required = requiredUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean required;
-
-	@Schema
 	public String getValue() {
 		return value;
 	}
@@ -251,16 +223,6 @@ public class ObjectFieldSetting implements Serializable {
 			sb.append("\"objectFieldId\": ");
 
 			sb.append(objectFieldId);
-		}
-
-		if (required != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"required\": ");
-
-			sb.append(required);
 		}
 
 		if (value != null) {

@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
@@ -524,18 +525,23 @@ public class EditStyleBookEntryDisplayContext {
 			if (layoutPageTemplateEntry.getType() ==
 					LayoutPageTemplateEntryTypeConstants.TYPE_DISPLAY_PAGE) {
 
-				String url = ResourceURLBuilder.createResourceURL(
-					PortletURLFactoryUtil.create(
-						_httpServletRequest,
-						ContentPageEditorPortletKeys.
-							CONTENT_PAGE_EDITOR_PORTLET,
-						layout, PortletRequest.RESOURCE_PHASE)
-				).setResourceID(
-					"/layout_content_page_editor/get_page_preview"
-				).buildString();
+				ResourceURL getPagePreviewURL = PortletURLFactoryUtil.create(
+					_httpServletRequest,
+					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+					layout, PortletRequest.RESOURCE_PHASE);
 
-				url = HttpUtil.addParameter(
-					url, "doAsUserId", _themeDisplay.getDefaultUserId());
+				getPagePreviewURL.setParameter(
+					"segmentsExperienceId",
+					String.valueOf(
+						SegmentsExperienceLocalServiceUtil.
+							fetchDefaultSegmentsExperienceId(
+								layoutPageTemplateEntry.getPlid())));
+				getPagePreviewURL.setResourceID(
+					"/layout_content_page_editor/get_page_preview");
+
+				String url = HttpUtil.addParameter(
+					getPagePreviewURL.toString(), "doAsUserId",
+					_themeDisplay.getDefaultUserId());
 
 				url = HttpUtil.addParameter(url, "p_l_mode", Constants.PREVIEW);
 

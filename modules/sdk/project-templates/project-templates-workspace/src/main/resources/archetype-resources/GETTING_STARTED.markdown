@@ -52,6 +52,12 @@ $h3 Creating a zip
 my-project $ blade gw distBundleZip
 ```
 
+$h3 Creating multiple bundles
+```
+my-project $ blade gw distBundleTarAll
+my-project $ blade gw distBundleZipAll
+```
+
 $h3 Creating a docker image
 ```
 my-project $ blade gw buildDockerImage

@@ -334,11 +334,14 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 					targetLayout.getGroupId(), targetLayout.getPlid());
 
 		if (targetLayoutPageTemplateStructure == null) {
+			long defaultSegmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(targetLayout.getPlid());
+
 			_layoutPageTemplateStructureLocalService.
 				addLayoutPageTemplateStructure(
 					targetLayout.getUserId(), targetLayout.getGroupId(),
-					targetLayout.getPlid(),
-					SegmentsExperienceConstants.ID_DEFAULT, null,
+					targetLayout.getPlid(), defaultSegmentsExperienceId, null,
 					ServiceContextThreadLocal.getServiceContext());
 		}
 
@@ -404,15 +407,18 @@ public class LayoutCopyHelperImpl implements LayoutCopyHelper {
 				deletedLayoutStructureItem.getItemId());
 		}
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				targetLayout.getPlid());
+
 		JSONObject dataJSONObject = _processDataJSONObject(
 			layoutStructure.toString(), targetLayout, fragmentEntryLinksMap,
-			SegmentsExperienceConstants.ID_DEFAULT);
+			defaultSegmentsExperienceId);
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				targetLayout.getGroupId(), targetLayout.getPlid(),
-				SegmentsExperienceConstants.ID_DEFAULT,
-				dataJSONObject.toString());
+				defaultSegmentsExperienceId, dataJSONObject.toString());
 	}
 
 	private void _copyLayoutSEOEntry(Layout sourceLayout, Layout targetLayout)

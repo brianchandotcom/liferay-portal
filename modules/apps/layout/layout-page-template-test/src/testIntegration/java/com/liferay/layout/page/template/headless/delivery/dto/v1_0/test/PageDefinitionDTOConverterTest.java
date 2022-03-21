@@ -74,7 +74,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -629,11 +629,15 @@ public class PageDefinitionDTOConverterTest {
 			String fileName, Map<String, String> valuesMap)
 		throws Exception {
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layoutPageTemplateEntry.getPlid());
+
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				updateLayoutPageTemplateStructureData(
 					_group.getGroupId(), _layoutPageTemplateEntry.getPlid(),
-					SegmentsExperienceConstants.ID_DEFAULT,
+					defaultSegmentsExperienceId,
 					StringUtil.replace(_read(fileName), "${", "}", valuesMap));
 
 		return LayoutStructure.of(layoutPageTemplateStructure.getData(0L));
@@ -878,6 +882,9 @@ public class PageDefinitionDTOConverterTest {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
 

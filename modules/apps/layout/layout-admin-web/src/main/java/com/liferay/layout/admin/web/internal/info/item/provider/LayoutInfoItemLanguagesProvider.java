@@ -19,7 +19,7 @@ import com.liferay.layout.admin.web.internal.info.item.helper.LayoutInfoItemLang
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.translation.info.item.provider.InfoItemLanguagesProvider;
 
 import org.osgi.service.component.annotations.Activate;
@@ -38,8 +38,12 @@ public class LayoutInfoItemLanguagesProvider
 	public String[] getAvailableLanguageIds(Layout layout)
 		throws PortalException {
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
 		return _layoutInfoItemLanguagesProviderHelper.getAvailableLanguageIds(
-			layout, SegmentsExperienceConstants.ID_DEFAULT);
+			layout, defaultSegmentsExperienceId);
 	}
 
 	@Override
@@ -64,5 +68,8 @@ public class LayoutInfoItemLanguagesProvider
 
 	private volatile LayoutInfoItemLanguagesProviderHelper
 		_layoutInfoItemLanguagesProviderHelper;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

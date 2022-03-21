@@ -158,9 +158,13 @@ public class GetPagePreviewMVCResourceCommandTest {
 				0, FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
 		_fragmentEntryLink = _fragmentEntryLinkService.addFragmentEntryLink(
 			_group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
-			SegmentsExperienceConstants.ID_DEFAULT, layout.getPlid(),
+			defaultSegmentsExperienceId, layout.getPlid(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
 			StringPool.BLANK, 0, null, _serviceContext);
@@ -170,10 +174,8 @@ public class GetPagePreviewMVCResourceCommandTest {
 				fetchLayoutPageTemplateStructure(
 					_group.getGroupId(), layout.getPlid());
 
-		String data = layoutPageTemplateStructure.getData(
-			SegmentsExperienceConstants.ID_DEFAULT);
-
-		LayoutStructure layoutStructure = LayoutStructure.of(data);
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(defaultSegmentsExperienceId));
 
 		layoutStructure.addFragmentStyledLayoutStructureItem(
 			_fragmentEntryLink.getFragmentEntryLinkId(),
@@ -182,8 +184,7 @@ public class GetPagePreviewMVCResourceCommandTest {
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				_group.getGroupId(), layout.getPlid(),
-				SegmentsExperienceConstants.ID_DEFAULT,
-				layoutStructure.toString());
+				defaultSegmentsExperienceId, layoutStructure.toString());
 
 		_themeDisplay.setLayout(layout);
 		_themeDisplay.setLayoutSet(layout.getLayoutSet());

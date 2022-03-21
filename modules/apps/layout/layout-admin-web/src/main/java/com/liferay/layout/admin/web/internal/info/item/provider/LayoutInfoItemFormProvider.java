@@ -19,7 +19,7 @@ import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.layout.admin.web.internal.info.item.helper.LayoutInfoItemFormProviderHelper;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -40,8 +40,12 @@ public class LayoutInfoItemFormProvider
 
 	@Override
 	public InfoForm getInfoForm(Layout layout) {
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
 		return _layoutInfoItemFormProviderHelper.getInfoForm(
-			layout, SegmentsExperienceConstants.ID_DEFAULT);
+			layout, defaultSegmentsExperienceId);
 	}
 
 	@Activate
@@ -56,5 +60,8 @@ public class LayoutInfoItemFormProvider
 
 	private volatile LayoutInfoItemFormProviderHelper
 		_layoutInfoItemFormProviderHelper;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

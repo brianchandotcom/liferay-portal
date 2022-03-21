@@ -92,7 +92,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
@@ -1287,9 +1287,13 @@ public class LayoutPageTemplatesImporterImpl
 				deleteLayoutPageTemplateStructure(layoutPageTemplateStructure);
 		}
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			layout.getUserId(), layout.getGroupId(), layout.getPlid(),
-			SegmentsExperienceConstants.ID_DEFAULT, jsonObject.toString(),
+			defaultSegmentsExperienceId, jsonObject.toString(),
 			ServiceContextThreadLocal.getServiceContext());
 	}
 
@@ -1468,6 +1472,9 @@ public class LayoutPageTemplatesImporterImpl
 
 	@Reference
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
 	private StyleBookEntryLocalService _styleBookEntryLocalService;

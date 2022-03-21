@@ -46,10 +46,10 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.service.SegmentsExperimentRelService;
 import com.liferay.segments.service.SegmentsExperimentService;
@@ -96,7 +96,7 @@ public class AddSegmentsExperienceMVCActionCommand
 			themeDisplay.getPlid(), segmentsExperiment, serviceContext);
 
 		long baseSegmentsExperienceId = _getBaseSegmentsExperienceId(
-			segmentsExperiment);
+			segmentsExperiment, themeDisplay);
 
 		SegmentsExperienceUtil.copySegmentsExperienceData(
 			themeDisplay.getPlid(), _commentManager,
@@ -158,8 +158,12 @@ public class AddSegmentsExperienceMVCActionCommand
 		if (segmentsExperiment != null) {
 			long segmentsEntryId = SegmentsEntryConstants.ID_DEFAULT;
 
+			long defaultSegmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(classPK);
+
 			if (segmentsExperiment.getSegmentsExperienceId() !=
-					SegmentsExperienceConstants.ID_DEFAULT) {
+					defaultSegmentsExperienceId) {
 
 				SegmentsExperience segmentsExperience =
 					_segmentsExperienceService.getSegmentsExperience(
@@ -200,10 +204,11 @@ public class AddSegmentsExperienceMVCActionCommand
 	}
 
 	private long _getBaseSegmentsExperienceId(
-		SegmentsExperiment segmentsExperiment) {
+		SegmentsExperiment segmentsExperiment, ThemeDisplay themeDisplay) {
 
 		if (segmentsExperiment == null) {
-			return SegmentsExperienceConstants.ID_DEFAULT;
+			return _segmentsExperienceLocalService.
+				fetchDefaultSegmentsExperienceId(themeDisplay.getPlid());
 		}
 
 		return segmentsExperiment.getSegmentsExperienceId();
@@ -336,6 +341,9 @@ public class AddSegmentsExperienceMVCActionCommand
 
 	@Reference
 	private PortletRegistry _portletRegistry;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
 	private SegmentsExperienceService _segmentsExperienceService;

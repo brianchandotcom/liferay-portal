@@ -76,7 +76,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.sites.kernel.util.SitesUtil;
 
 import java.io.Closeable;
@@ -403,10 +403,14 @@ public class ExportImportPerformanceTest {
 				StringPool.BLANK, 0, null, _serviceContext);
 		}
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				_group.getGroupId(), draftLayout.getPlid(),
-				SegmentsExperienceConstants.ID_DEFAULT,
+				defaultSegmentsExperienceId,
 				_generateContentLayoutStructureJSONObject(draftLayout));
 
 		_layoutCopyHelper.copyLayout(draftLayout, layout);
@@ -616,6 +620,9 @@ public class ExportImportPerformanceTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
 

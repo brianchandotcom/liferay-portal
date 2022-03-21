@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -180,7 +180,11 @@ public class LayoutInfoItemFieldValuesUpdaterHelper {
 			return null;
 		}
 
-		if (segmentsExperienceId == SegmentsExperienceConstants.ID_DEFAULT) {
+		long defaultSegmentsExperienceId =
+			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		if (segmentsExperienceId == defaultSegmentsExperienceId) {
 			layout.setNameMap(
 				_getFieldMap(
 					LayoutInfoItemFields.nameInfoField.getName(),

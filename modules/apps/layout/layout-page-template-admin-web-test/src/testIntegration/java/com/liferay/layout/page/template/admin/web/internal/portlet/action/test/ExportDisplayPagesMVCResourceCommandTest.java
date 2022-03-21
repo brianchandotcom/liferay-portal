@@ -50,7 +50,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.File;
 
@@ -102,11 +102,14 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 			_addLayoutPageTemplateEntry(
 				name, WorkflowConstants.STATUS_APPROVED);
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layoutPageTemplateEntry.getPlid());
+
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				_group.getGroupId(), layoutPageTemplateEntry.getPlid(),
-				SegmentsExperienceConstants.ID_DEFAULT,
-				_read("layout_data.json"));
+				defaultSegmentsExperienceId, _read("layout_data.json"));
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			_group.getGroupId(), RandomTestUtil.randomString(),
@@ -176,22 +179,29 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 			_addLayoutPageTemplateEntry(
 				name1, WorkflowConstants.STATUS_APPROVED);
 
+		long defaultSegmentsExperienceId1 =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layoutPageTemplateEntry1.getPlid());
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				_group.getGroupId(), layoutPageTemplateEntry1.getPlid(),
+				defaultSegmentsExperienceId1, _read("layout_data.json"));
+
 		String name2 = "Display Page Template Two";
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry2 =
 			_addLayoutPageTemplateEntry(
 				name2, WorkflowConstants.STATUS_APPROVED);
 
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), layoutPageTemplateEntry1.getPlid(),
-				SegmentsExperienceConstants.ID_DEFAULT,
-				_read("layout_data.json"));
+		long defaultSegmentsExperienceId2 =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layoutPageTemplateEntry2.getPlid());
+
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				_group.getGroupId(), layoutPageTemplateEntry2.getPlid(),
-				SegmentsExperienceConstants.ID_DEFAULT,
-				_read("layout_data.json"));
+				defaultSegmentsExperienceId2, _read("layout_data.json"));
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			_group.getGroupId(), RandomTestUtil.randomString(),
@@ -489,6 +499,9 @@ public class ExportDisplayPagesMVCResourceCommandTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
 

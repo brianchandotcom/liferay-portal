@@ -58,6 +58,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import org.hamcrest.CoreMatchers;
 
@@ -112,9 +113,13 @@ public class LayoutCrawlerTest {
 				0, FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
+
 		_fragmentEntryLinkService.addFragmentEntryLink(
 			_group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
-			SegmentsExperienceConstants.ID_DEFAULT, _layout.getPlid(),
+			defaultSegmentsExperienceId, _layout.getPlid(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
 			StringPool.BLANK, 0, null, serviceContext);
@@ -140,7 +145,7 @@ public class LayoutCrawlerTest {
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				_group.getGroupId(), 0,
 				contributedFragmentEntry.getFragmentEntryId(),
-				SegmentsExperienceConstants.ID_DEFAULT, _layout.getPlid(),
+				defaultSegmentsExperienceId, _layout.getPlid(),
 				contributedFragmentEntry.getCss(),
 				contributedFragmentEntry.getHtml(),
 				contributedFragmentEntry.getJs(),
@@ -194,7 +199,7 @@ public class LayoutCrawlerTest {
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				_group.getGroupId(), 0,
 				contributedFragmentEntry.getFragmentEntryId(),
-				SegmentsExperienceConstants.ID_DEFAULT, _layout.getPlid(),
+				defaultSegmentsExperienceId, _layout.getPlid(),
 				contributedFragmentEntry.getCss(),
 				contributedFragmentEntry.getHtml(),
 				contributedFragmentEntry.getJs(),
@@ -212,10 +217,9 @@ public class LayoutCrawlerTest {
 
 		FragmentEntryLink widgetFragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
-				_group.getGroupId(), 0, 0,
-				SegmentsExperienceConstants.ID_DEFAULT, _layout.getPlid(),
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK,
+				_group.getGroupId(), 0, 0, defaultSegmentsExperienceId,
+				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK,
 				JSONUtil.put(
 					"instanceid", StringUtil.randomString()
 				).put(
@@ -230,8 +234,7 @@ public class LayoutCrawlerTest {
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				_layout.getGroupId(), _layout.getPlid(),
-				SegmentsExperienceConstants.ID_DEFAULT,
-				layoutStructure.toString());
+				defaultSegmentsExperienceId, layoutStructure.toString());
 	}
 
 	@Test
@@ -312,5 +315,8 @@ public class LayoutCrawlerTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

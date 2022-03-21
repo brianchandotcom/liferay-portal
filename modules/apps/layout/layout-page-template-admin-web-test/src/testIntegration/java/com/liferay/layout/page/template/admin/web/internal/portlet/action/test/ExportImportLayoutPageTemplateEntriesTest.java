@@ -63,7 +63,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.File;
 
@@ -137,10 +137,14 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 				_read("export_import_fragment_field_text_editable_values.json"),
 				StringPool.BLANK, 0, null, _serviceContext1);
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layoutPageTemplateEntry1.getPlid());
+
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				_group1.getGroupId(), layoutPageTemplateEntry1.getPlid(),
-				SegmentsExperienceConstants.ID_DEFAULT,
+				defaultSegmentsExperienceId,
 				StringUtil.replace(
 					_read("export_import_layout_data.json"), "${", "}",
 					HashMapBuilder.put(
@@ -537,6 +541,9 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 		filter = "mvc.command.name=/layout_page_template_admin/export_layout_page_template_entries"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext1;
 	private ServiceContext _serviceContext2;

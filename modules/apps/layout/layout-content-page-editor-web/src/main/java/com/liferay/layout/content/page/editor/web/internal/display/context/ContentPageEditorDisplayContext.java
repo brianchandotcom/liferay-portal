@@ -289,7 +289,8 @@ public class ContentPageEditorDisplayContext {
 				LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale())
 			).put(
 				"defaultSegmentsExperienceId",
-				SegmentsExperienceConstants.ID_DEFAULT
+				SegmentsExperienceLocalServiceUtil.
+					fetchDefaultSegmentsExperienceId(themeDisplay.getPlid())
 			).put(
 				"defaultStyleBookEntryImagePreviewURL",
 				() -> {

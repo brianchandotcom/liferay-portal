@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.awt.image.BufferedImage;
 
@@ -159,11 +159,14 @@ public class LayoutCopyHelperTest {
 			fragmentEntryLink.getFragmentEntryLinkId(),
 			containerLayoutStructureItem.getItemId(), 0);
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				sourceLayout.getPlid());
+
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				sourceLayout.getGroupId(), sourceLayout.getPlid(),
-				SegmentsExperienceConstants.ID_DEFAULT,
-				layoutStructure.toString());
+				defaultSegmentsExperienceId, layoutStructure.toString());
 
 		Layout targetLayout = LayoutTestUtil.addTypeContentLayout(_group);
 
@@ -365,6 +368,9 @@ public class LayoutCopyHelperTest {
 		filter = "javax.portlet.name=" + LayoutPortletKeys.LAYOUT_TEST_PORTLET
 	)
 	private final Portlet _portlet = null;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
 

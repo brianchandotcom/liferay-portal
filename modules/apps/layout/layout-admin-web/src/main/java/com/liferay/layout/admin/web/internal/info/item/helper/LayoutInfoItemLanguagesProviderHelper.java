@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -84,7 +84,11 @@ public class LayoutInfoItemLanguagesProviderHelper {
 	private List<FragmentEntryLink> _getFragmentEntryLinks(
 		Layout layout, long segmentsExperienceId) {
 
-		if (segmentsExperienceId == SegmentsExperienceConstants.ID_DEFAULT) {
+		long defaultSegmentsExperienceId =
+			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		if (segmentsExperienceId == defaultSegmentsExperienceId) {
 			return _fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				layout.getGroupId(), layout.getPlid());
 		}

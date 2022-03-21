@@ -152,7 +152,8 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 
 		segmentsExperienceId = longStream.findFirst(
 		).orElse(
-			SegmentsExperienceConstants.ID_DEFAULT
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				classPK)
 		);
 
 		List<SegmentsExperiment> segmentsExperiments =

@@ -1,0 +1,127 @@
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__spacing-selector {
+			$selectorWidth: 232px;
+			$selectorHeight: 154px;
+
+			$marginButtonHeight: 0.2 * $selectorHeight;
+			$paddingButtonHeight: 0.215 * $selectorHeight;
+			$verticalSpacing: 0.022 * $selectorHeight;
+			$marginButtonWidth: 0.175 * $selectorWidth;
+			$paddingButtonWidth: 0.175 * $selectorWidth;
+			$horizontalSpacing: 0.02 * $selectorWidth;
+
+			display: grid;
+			grid:
+				#{$marginButtonHeight} #{$verticalSpacing} #{$paddingButtonHeight} auto #{$paddingButtonHeight} #{$verticalSpacing} #{$marginButtonHeight} /
+				#{$marginButtonWidth} #{$horizontalSpacing} #{$paddingButtonWidth} auto #{$paddingButtonWidth} #{$horizontalSpacing} #{$marginButtonWidth};
+			justify-items: stretch;
+			width: 100%;
+
+			svg {
+				grid-area: 1 / 1 / -1 / -1;
+			}
+
+			&__dropdown {
+				align-items: stretch;
+				display: flex;
+				font-size: 10px;
+				text-align: center;
+
+				&:hover {
+					background-color: #c9edd2;
+				}
+
+				& > .page-editor__spacing-selector__button {
+					background: none;
+					border: none;
+					flex-grow: 1;
+				}
+
+				&--margin {
+					&.page-editor__spacing-selector__dropdown--bottom {
+						grid-area: 7 / 1 / 8 / 8;
+						clip-path: polygon(
+							0 #{$marginButtonHeight},
+							100% #{$marginButtonHeight},
+							calc(100% - #{$marginButtonWidth}) 0,
+							#{$marginButtonWidth} 0
+						);
+					}
+
+					&.page-editor__spacing-selector__dropdown--left {
+						grid-area: 1 / 1 / 8 / 2;
+						clip-path: polygon(
+							0 0,
+							#{$marginButtonWidth} #{$marginButtonHeight},
+							#{$marginButtonWidth} calc(100% - #{$marginButtonHeight}),
+							0 100%
+						);
+					}
+
+					&.page-editor__spacing-selector__dropdown--right {
+						grid-area: 1 / 7 / 8 / 8;
+						clip-path: polygon(
+							0 #{$marginButtonHeight},
+							100% 0,
+							#{$marginButtonWidth} 100%,
+							0 calc(100% - #{$marginButtonHeight})
+						);
+					}
+
+					&.page-editor__spacing-selector__dropdown--top {
+						grid-area: 1 / 1 / 2 / 8;
+						clip-path: polygon(
+							0 0,
+							100% 0,
+							calc(100% - #{$marginButtonWidth}) #{$marginButtonHeight},
+							#{$marginButtonWidth} #{$marginButtonHeight}
+						);
+					}
+				}
+
+				&--padding {
+					&.page-editor__spacing-selector__dropdown--bottom {
+						grid-area: 5 / 3 / 6 / 6;
+						clip-path: polygon(
+							0 #{$paddingButtonHeight},
+							100% #{$paddingButtonHeight},
+							calc(100% - #{$paddingButtonWidth}) 0,
+							#{$paddingButtonWidth} 0
+						);
+					}
+
+					&.page-editor__spacing-selector__dropdown--left {
+						grid-area: 3 / 3 / 6 / 4;
+						clip-path: polygon(
+							0 0,
+							#{$paddingButtonWidth} #{$paddingButtonHeight},
+							#{$paddingButtonWidth} calc(100% - #{$paddingButtonHeight}),
+							0 100%
+						);
+					}
+
+					&.page-editor__spacing-selector__dropdown--right {
+						grid-area: 3 / 5 / 6 / 6;
+						clip-path: polygon(
+							0 #{$paddingButtonHeight},
+							100% 0,
+							#{$paddingButtonWidth} 100%,
+							0 calc(100% - #{$paddingButtonHeight})
+						);
+					}
+
+					&.page-editor__spacing-selector__dropdown--top {
+						grid-area: 3 / 3 / 4 / 6;
+						clip-path: polygon(
+							0 0,
+							100% 0,
+							calc(100% - #{$paddingButtonWidth}) #{$paddingButtonHeight},
+							#{$paddingButtonWidth} #{$paddingButtonHeight}
+						);
+					}
+				}
+			}
+		}
+	}
+}

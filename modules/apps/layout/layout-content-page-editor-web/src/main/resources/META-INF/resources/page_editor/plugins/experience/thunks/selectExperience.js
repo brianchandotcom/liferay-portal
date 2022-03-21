@@ -12,7 +12,9 @@
  * details.
  */
 
+import updatePageContents from '../../../app/actions/updatePageContents';
 import ExperienceService from '../../../app/services/ExperienceService';
+import InfoItemService from '../../../app/services/InfoItemService';
 import selectExperienceAction from '../actions/selectExperience';
 
 export default function selectExperience({id}) {
@@ -30,6 +32,18 @@ export default function selectExperience({id}) {
 						segmentsExperienceId: id,
 					})
 				);
+			})
+			.then(() => {
+				InfoItemService.getPageContents({
+					onNetworkStatus: dispatch,
+					segmentsExperienceId: id,
+				}).then((pageContents) => {
+					dispatch(
+						updatePageContents({
+							pageContents,
+						})
+					);
+				});
 			})
 			.catch((error) => {
 				return error;

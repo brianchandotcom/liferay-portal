@@ -479,7 +479,7 @@ definition {
 
 		ACSettings.goToDataControlAndPrivacy();
 
-		Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
+		ACSettings.clickRequestSuppressedOptions(optionName = "Request Log", optionValue = "Manage");
 
 		Click(locator1 = "ACDataControlAndPrivacy#CREATE_REQUEST");
 

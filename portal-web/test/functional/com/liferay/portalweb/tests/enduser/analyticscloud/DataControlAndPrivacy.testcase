@@ -101,7 +101,7 @@ definition {
 
 			ACSettings.goToDataControlAndPrivacy();
 
-			Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
+			ACSettings.clickRequestSuppressedOptions(optionName = "Request Log", optionValue = "Manage");
 
 			ACSettings.assertRequestLog(
 				jobType = "Access",
@@ -144,7 +144,7 @@ definition {
 
 			ACSettings.goToDataControlAndPrivacy();
 
-			Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
+			ACSettings.clickRequestSuppressedOptions(optionName = "Request Log", optionValue = "Manage");
 
 			ACSettings.assertRequestLog(
 				jobType = "Delete",
@@ -187,7 +187,7 @@ definition {
 
 			ACSettings.goToDataControlAndPrivacy();
 
-			Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
+			ACSettings.clickRequestSuppressedOptions(optionName = "Request Log", optionValue = "Manage");
 
 			ACSettings.assertRequestLog(
 				jobType = "Suppress",
@@ -234,7 +234,7 @@ definition {
 		task ("Wait for the suppress request be completed") {
 			ACSettings.goToDataControlAndPrivacy();
 
-			Click(locator1 = "ACDataControlAndPrivacy#SUPPRESSED_USERS");
+			ACSettings.clickRequestSuppressedOptions(optionName = "Suppressed Users", optionValue = "Manage");
 
 			while (IsElementNotPresent(itemName = "${userEmail}", locator1 = "ACSettings#ITEM_ON_LIST") && (maxIterations = "50")) {
 				ACUtils.searchBar(searchItem = "${userName}");
@@ -256,7 +256,7 @@ definition {
 
 			ACSettings.goToDataControlAndPrivacy();
 
-			Click(locator1 = "ACDataControlAndPrivacy#REQUEST_LOG");
+			ACSettings.clickRequestSuppressedOptions(optionName = "Request Log", optionValue = "Manage");
 
 			ACSettings.assertRequestLog(
 				jobType = "Unsuppress",
@@ -308,7 +308,7 @@ definition {
 		task ("Assert that the user is in the suppressed user list") {
 			ACSettings.goToDataControlAndPrivacy();
 
-			Click(locator1 = "ACDataControlAndPrivacy#SUPPRESSED_USERS");
+			ACSettings.clickRequestSuppressedOptions(optionName = "Suppressed Users", optionValue = "Manage");
 
 			while (IsElementNotPresent(itemName = "${userEmail}", locator1 = "ACSettings#ITEM_ON_LIST") && (maxIterations = "50")) {
 				Refresh();

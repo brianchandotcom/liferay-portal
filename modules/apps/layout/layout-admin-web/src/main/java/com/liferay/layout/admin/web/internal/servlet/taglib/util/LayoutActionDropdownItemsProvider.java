@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.translation.constants.TranslationActionKeys;
 import com.liferay.translation.security.permission.TranslationPermission;
 import com.liferay.translation.url.provider.TranslationURLProvider;
@@ -119,6 +120,11 @@ public class LayoutActionDropdownItemsProvider {
 
 										return portletDisplay.getId();
 									}
+								).setParameter(
+									"segmentsExperienceId",
+									SegmentsExperienceLocalServiceUtil.
+										fetchDefaultSegmentsExperienceId(
+											layout.getPlid())
 								).buildString());
 							dropdownItem.setLabel(
 								LanguageUtil.get(

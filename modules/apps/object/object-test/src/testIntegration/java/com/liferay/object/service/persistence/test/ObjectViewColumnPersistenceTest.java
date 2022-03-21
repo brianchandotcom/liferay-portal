@@ -135,6 +135,8 @@ public class ObjectViewColumnPersistenceTest {
 
 		newObjectViewColumn.setObjectViewId(RandomTestUtil.nextLong());
 
+		newObjectViewColumn.setLabel(RandomTestUtil.randomString());
+
 		newObjectViewColumn.setObjectFieldName(RandomTestUtil.randomString());
 
 		newObjectViewColumn.setPriority(RandomTestUtil.nextInt());
@@ -170,6 +172,9 @@ public class ObjectViewColumnPersistenceTest {
 		Assert.assertEquals(
 			existingObjectViewColumn.getObjectViewId(),
 			newObjectViewColumn.getObjectViewId());
+		Assert.assertEquals(
+			existingObjectViewColumn.getLabel(),
+			newObjectViewColumn.getLabel());
 		Assert.assertEquals(
 			existingObjectViewColumn.getObjectFieldName(),
 			newObjectViewColumn.getObjectFieldName());
@@ -240,7 +245,8 @@ public class ObjectViewColumnPersistenceTest {
 			"ObjectViewColumn", "mvccVersion", true, "uuid", true,
 			"objectViewColumnId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"objectViewId", true, "objectFieldName", true, "priority", true);
+			"objectViewId", true, "label", true, "objectFieldName", true,
+			"priority", true);
 	}
 
 	@Test
@@ -456,6 +462,8 @@ public class ObjectViewColumnPersistenceTest {
 		objectViewColumn.setModifiedDate(RandomTestUtil.nextDate());
 
 		objectViewColumn.setObjectViewId(RandomTestUtil.nextLong());
+
+		objectViewColumn.setLabel(RandomTestUtil.randomString());
 
 		objectViewColumn.setObjectFieldName(RandomTestUtil.randomString());
 

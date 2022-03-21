@@ -55,6 +55,8 @@ public class ObjectViewColumnTable extends BaseTable<ObjectViewColumnTable> {
 	public final Column<ObjectViewColumnTable, Long> objectViewId =
 		createColumn(
 			"objectViewId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ObjectViewColumnTable, String> label = createColumn(
+		"label", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectViewColumnTable, String> objectFieldName =
 		createColumn(
 			"objectFieldName", String.class, Types.VARCHAR,

@@ -231,6 +231,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="objectViewId" type="long" />
+		<field localized="true" name="label" type="String" />
 		<field name="objectFieldName" type="String" />
 		<field name="priority" type="int" />
 	</model>

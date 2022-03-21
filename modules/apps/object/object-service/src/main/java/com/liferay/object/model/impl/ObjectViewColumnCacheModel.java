@@ -78,7 +78,7 @@ public class ObjectViewColumnCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -98,6 +98,8 @@ public class ObjectViewColumnCacheModel
 		sb.append(modifiedDate);
 		sb.append(", objectViewId=");
 		sb.append(objectViewId);
+		sb.append(", label=");
+		sb.append(label);
 		sb.append(", objectFieldName=");
 		sb.append(objectFieldName);
 		sb.append(", priority=");
@@ -147,6 +149,13 @@ public class ObjectViewColumnCacheModel
 
 		objectViewColumnImpl.setObjectViewId(objectViewId);
 
+		if (label == null) {
+			objectViewColumnImpl.setLabel("");
+		}
+		else {
+			objectViewColumnImpl.setLabel(label);
+		}
+
 		if (objectFieldName == null) {
 			objectViewColumnImpl.setObjectFieldName("");
 		}
@@ -176,6 +185,7 @@ public class ObjectViewColumnCacheModel
 		modifiedDate = objectInput.readLong();
 
 		objectViewId = objectInput.readLong();
+		label = objectInput.readUTF();
 		objectFieldName = objectInput.readUTF();
 
 		priority = objectInput.readInt();
@@ -210,6 +220,13 @@ public class ObjectViewColumnCacheModel
 
 		objectOutput.writeLong(objectViewId);
 
+		if (label == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(label);
+		}
+
 		if (objectFieldName == null) {
 			objectOutput.writeUTF("");
 		}
@@ -229,6 +246,7 @@ public class ObjectViewColumnCacheModel
 	public long createDate;
 	public long modifiedDate;
 	public long objectViewId;
+	public String label;
 	public String objectFieldName;
 	public int priority;
 

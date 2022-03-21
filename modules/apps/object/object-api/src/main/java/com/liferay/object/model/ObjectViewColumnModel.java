@@ -15,12 +15,16 @@
 package com.liferay.object.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
 
 import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -37,8 +41,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ObjectViewColumnModel
-	extends BaseModel<ObjectViewColumn>, MVCCModel, ShardedModel,
-			StagedAuditedModel {
+	extends BaseModel<ObjectViewColumn>, LocalizedModel, MVCCModel,
+			ShardedModel, StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -219,6 +223,105 @@ public interface ObjectViewColumnModel
 	public void setObjectViewId(long objectViewId);
 
 	/**
+	 * Returns the label of this object view column.
+	 *
+	 * @return the label of this object view column
+	 */
+	public String getLabel();
+
+	/**
+	 * Returns the localized label of this object view column in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the locale of the language
+	 * @return the localized label of this object view column
+	 */
+	@AutoEscape
+	public String getLabel(Locale locale);
+
+	/**
+	 * Returns the localized label of this object view column in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param locale the local of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized label of this object view column. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	 */
+	@AutoEscape
+	public String getLabel(Locale locale, boolean useDefault);
+
+	/**
+	 * Returns the localized label of this object view column in the language. Uses the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @return the localized label of this object view column
+	 */
+	@AutoEscape
+	public String getLabel(String languageId);
+
+	/**
+	 * Returns the localized label of this object view column in the language, optionally using the default language if no localization exists for the requested language.
+	 *
+	 * @param languageId the ID of the language
+	 * @param useDefault whether to use the default language if no localization exists for the requested language
+	 * @return the localized label of this object view column
+	 */
+	@AutoEscape
+	public String getLabel(String languageId, boolean useDefault);
+
+	@AutoEscape
+	public String getLabelCurrentLanguageId();
+
+	@AutoEscape
+	public String getLabelCurrentValue();
+
+	/**
+	 * Returns a map of the locales and localized labels of this object view column.
+	 *
+	 * @return the locales and localized labels of this object view column
+	 */
+	public Map<Locale, String> getLabelMap();
+
+	/**
+	 * Sets the label of this object view column.
+	 *
+	 * @param label the label of this object view column
+	 */
+	public void setLabel(String label);
+
+	/**
+	 * Sets the localized label of this object view column in the language.
+	 *
+	 * @param label the localized label of this object view column
+	 * @param locale the locale of the language
+	 */
+	public void setLabel(String label, Locale locale);
+
+	/**
+	 * Sets the localized label of this object view column in the language, and sets the default locale.
+	 *
+	 * @param label the localized label of this object view column
+	 * @param locale the locale of the language
+	 * @param defaultLocale the default locale
+	 */
+	public void setLabel(String label, Locale locale, Locale defaultLocale);
+
+	public void setLabelCurrentLanguageId(String languageId);
+
+	/**
+	 * Sets the localized labels of this object view column from the map of locales and localized labels.
+	 *
+	 * @param labelMap the locales and localized labels of this object view column
+	 */
+	public void setLabelMap(Map<Locale, String> labelMap);
+
+	/**
+	 * Sets the localized labels of this object view column from the map of locales and localized labels, and sets the default locale.
+	 *
+	 * @param labelMap the locales and localized labels of this object view column
+	 * @param defaultLocale the default locale
+	 */
+	public void setLabelMap(Map<Locale, String> labelMap, Locale defaultLocale);
+
+	/**
 	 * Returns the object field name of this object view column.
 	 *
 	 * @return the object field name of this object view column
@@ -246,6 +349,19 @@ public interface ObjectViewColumnModel
 	 * @param priority the priority of this object view column
 	 */
 	public void setPriority(int priority);
+
+	@Override
+	public String[] getAvailableLanguageIds();
+
+	@Override
+	public String getDefaultLanguageId();
+
+	@Override
+	public void prepareLocalizedFieldsForImport() throws LocaleException;
+
+	@Override
+	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
+		throws LocaleException;
 
 	@Override
 	public ObjectViewColumn cloneWithOriginalValues();

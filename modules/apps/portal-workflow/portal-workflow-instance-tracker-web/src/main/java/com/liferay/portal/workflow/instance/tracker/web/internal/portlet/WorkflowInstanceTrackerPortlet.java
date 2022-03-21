@@ -31,7 +31,8 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=Workflow Instance Tracker",
 		"javax.portlet.init-param.template-path=/META-INF/resources/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + WorkflowInstanceTrackerPortletKeys.WORKFLOW_INSTANCE_TRACKER
+		"javax.portlet.name=" + WorkflowInstanceTrackerPortletKeys.WORKFLOW_INSTANCE_TRACKER,
+		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )

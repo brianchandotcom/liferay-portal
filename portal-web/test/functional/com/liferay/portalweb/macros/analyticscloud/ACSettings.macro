@@ -459,6 +459,13 @@ definition {
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 	}
 
+	macro clickRequestSuppressedOptions {
+		var key_OptionName = "${optionName}";
+		var key_OptionValue = "${optionValue}";
+
+		Click(locator1 = "ACDataControlAndPrivacy#REQUEST_SUPPRESSED_OPTIONS");
+	}
+
 	macro clickUsersByEmail {
 		for (var userEmail : list "${userEmail}") {
 			Click(
@@ -479,7 +486,9 @@ definition {
 
 		ACSettings.goToDataControlAndPrivacy();
 
-		ACSettings.clickRequestSuppressedOptions(optionName = "Request Log", optionValue = "Manage");
+		ACSettings.clickRequestSuppressedOptions(
+			optionName = "Request Log",
+			optionValue = "Manage");
 
 		Click(locator1 = "ACDataControlAndPrivacy#CREATE_REQUEST");
 
@@ -906,13 +915,6 @@ definition {
 		AssertElementPresent(
 			locator1 = "ACSettings#USER_UNSELECTABLE",
 			userEmail = "${email}");
-	}
-
-	macro clickRequestSuppressedOptions {
-		var key_OptionName = "${optionName}";
-		var key_OptionValue = "${optionValue}";
-
-		Click(locator1 = "ACDataControlAndPrivacy#REQUEST_SUPPRESSED_OPTIONS");		
 	}
 
 }

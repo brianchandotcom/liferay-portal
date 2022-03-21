@@ -28,6 +28,161 @@ definition {
 		ACUtils.tearDownAC();
 	}
 
+	@description = "Feature ID: LRAC-9248 | Automation ID: LRAC-10727 | Test Summary: Empty state of pages with no data source and no property"
+	@priority = "2"
+	test CheckAllMessagesRelatedToSettings {
+		property test.name.skip.portal.instance = "EmptyState#CheckAllMessagesRelatedToSettings";
+
+		task ("Close the onboarding modal") {
+			ACUtils.closeModal();
+		}
+
+		task ("Go to settings") {
+			ACNavigation.goToSettings();
+		}
+
+		task ("Go to Data Sources, check the empty page status message") {
+			ACSettings.goToDataSources();
+
+			ACUtils.viewGenericText(textValueList = "No Data Sources Connected,Add a data source to get started.,Access our documentation to learn more.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
+
+			SelectWindow(locator1 = "title=Connecting Data Sources — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Connecting Data Sources");
+
+			SelectWindow(locator1 = "title=Data Sources - Settings - Analytics Cloud");
+		}
+
+		task ("Go to Properties and then check the empty page status message then check the if the hyperlink is taking the user to the documentation") {
+			ACSettings.goToProperties();
+
+			ACUtils.viewGenericText(textValueList = "No Properties Found,Create a property to get started.,Access our documentation to learn more.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
+
+			SelectWindow(locator1 = "title=Scoping Sites and Individuals Using Properties — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Scoping Sites and Individuals Using Properties");
+
+			SelectWindow(locator1 = "title=Properties - Settings - Analytics Cloud");
+		}
+
+		task ("Go to Definitions then go to Individuals and check the empty page status message") {
+			ACSettings.goToDefinitions();
+
+			ACDefinitions.goToDefinitionType(definitionType = "Individuals");
+
+			ACUtils.viewGenericText(textValueList = "No Individuals Synced from Data Sources,Connect a data source with people data.,Access our documentation to learn more.");
+
+			ACUtils.viewGenericButton(buttonName = "Connect Data Source");
+		}
+
+		task ("Go back to Definitions and go to Event Attributes and check the empty page status message then check the if the hyperlink is taking the user to the documentation") {
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEventAttributes();
+
+			ACUtils.searchBar(searchItem = "canonicalUrl");
+
+			ACNavigation.openItem(itemName = "canonicalUrl");
+
+			ACUtils.viewGenericText(textValueList = "No Sample Data Found,You can come back later and check if there is any data received from your events.,Learn more about event tracking.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about event tracking.");
+
+			SelectWindow(locator1 = "title=Definitions for Event Attributes — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Definitions for Event Attributes");
+
+			SelectWindow(locator1 = "title=canonicalUrl - Settings - Analytics Cloud");
+		}
+
+		task ("Go to Definitions, then go to Events, select the Custom Events tab and check the empty page status message then check the if the hyperlink is taking the user to the documentation") {
+			ACSettings.goToDefinitions();
+
+			ACSettings.goToEvents();
+
+			ACNavigation.openItem(itemName = "Custom Events");
+
+			ACUtils.viewGenericText(textValueList = "No Custom Events Found,Create some custom events to get started.,Learn how to add custom events on your site.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn how to add custom events on your site.");
+
+			SelectWindow(locator1 = "title=Tracking Events — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Tracking Events");
+
+			SelectWindow(locator1 = "title=Events - Settings - Analytics Cloud");
+		}
+
+		task ("Still in the Custom Events tab go to block list and check the empty page status message then check the if the hyperlink is taking the user to the documentation") {
+			ACCustomEvents.openBlockCustomEventList();
+
+			ACUtils.viewGenericText(textValueList = "There are no events blocked.,Access our documentation to learn how to manage custom events.");
+
+			AssertElementPresent(locator1 = "ACCustomEvents#BLOCK_LIST_EMPTY_MESSAGE");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn how to manage custom events.");
+
+			SelectWindow(locator1 = "title=Definitions for Events — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Definitions for Events");
+
+			SelectWindow(locator1 = "title=Block List - Settings - Analytics Cloud");
+		}
+
+		task ("Go to Definitions, then go to Interests, select the Custom Events tab and check the empty page status message then check the if the hyperlink is taking the user to the documentation") {
+			ACSettings.goToDefinitions();
+
+			ACDefinitions.goToDefinitionType(definitionType = "Interests");
+
+			ACUtils.viewGenericText(textValueList = "No Keywords Found,Add a keyword to be blocked.,Learn more about interest topics.");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Learn more about interest topics.");
+
+			SelectWindow(locator1 = "title=Managing Interest Topics — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Managing Interest Topics");
+
+			SelectWindow(locator1 = "title=Interest Topics - Settings - Analytics Cloud");
+		}
+
+		task ("Go to Data Control and Privacy, then go to Request Log > Manage and check the empty page status message") {
+			ACSettings.goToDataControlAndPrivacy();
+
+			ACSettings.clickRequestSuppressedOptions(
+				optionName = "Request Log",
+				optionValue = "Manage");
+
+			ACUtils.viewGenericText(textValueList = "No Requests Found,Create a request to get started.,Access our documentation to learn more.");
+		}
+
+		task ("Go back to Data Control and Privacy, then go to Suppressed Users > Manage, and check the empty page status message then check the if the hyperlink is taking the user to the documentation") {
+			ACSettings.goToDataControlAndPrivacy();
+
+			ACSettings.clickRequestSuppressedOptions(
+				optionName = "Suppressed Users",
+				optionValue = "Manage");
+
+			ACUtils.viewGenericText(textValueList = "No Suppressed Users Found,Access our documentation to learn more.");
+
+			var textValue = "To suppress a user, go to data control & privacy under settings and create a new request on the request log.";
+
+			AssertTextEquals.assertPartialText(
+				key_textValue = "${textValue}",
+				locator1 = "ACUtils#GENERIC_TEXT",
+				value1 = "${textValue}");
+
+			ACUtils.clickGenericHyperlink(hyperlinkText = "Access our documentation to learn more.");
+
+			SelectWindow(locator1 = "title=Data Control and Privacy — Liferay Learn");
+
+			ACUtils.viewGenericText(textValueList = "Documentation,Data Control and Privacy");
+		}
+	}
+
 	@description = "Feature ID: LRAC-10403 | Automation ID: LRAC-10740 | Test Summary: Empty state of pages without data source and with property"
 	@priority = "2"
 	test CheckAllMessageWhenHasPropertyNoDataSource {

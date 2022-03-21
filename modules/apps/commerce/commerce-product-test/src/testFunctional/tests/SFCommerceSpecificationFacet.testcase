@@ -140,8 +140,8 @@ definition {
 			portletName = "Specification Facet");
 
 		AssertElementPresent(
-			locator1 = "CommerceWidget#MAX_TERMS_ERROR_MESSAGE",
-			errorMessage = "Maximum terms cannot exceed 100.");
+			errorMessage = "Maximum terms cannot exceed 100.",
+			locator1 = "CommerceWidget#MAX_TERMS_ERROR_MESSAGE");
 	}
 
 	@description = "[Please Update]"
@@ -177,6 +177,20 @@ definition {
 		AssertElementPresent(
 			key_fieldName = "frequencyThreshold",
 			locator1 = "FormFields#TEXT_FIELD");
+	}
+
+	test View100Terms {
+		CommerceJSONSpecificationsAPI._addCommerceProductsWithSpecifications(
+			catalogName = "Minium",
+			specificationKey = "material");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceWidget.updateFacetConfiguration(
+			maxTerms = "100",
+			portletName = "Specification Facet");
+
+		CommerceWidget.assertTextCountFromHtml(value = "95");
 	}
 
 }

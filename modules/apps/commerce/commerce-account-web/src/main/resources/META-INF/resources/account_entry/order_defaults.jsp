@@ -17,13 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AccountEntryDisplay accountEntryDisplay = AccountEntryDisplay.of(ParamUtil.getLong(request, "accountEntryId"));
+CommerceAccountDisplayContext commerceAccountDisplayContext = (CommerceAccountDisplayContext)request.getAttribute(CommerceAccountWebKeys.COMMERCE_ACCOUNT_DISPLAY_CONTEXT);
 
 String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL);
-renderResponse.setTitle((accountEntryDisplay.getAccountEntryId() == 0) ? LanguageUtil.get(request, "add-account") : LanguageUtil.format(request, "edit-x", accountEntryDisplay.getName(), false));
+renderResponse.setTitle((commerceAccountDisplayContext.getAccountEntryId() == 0) ? LanguageUtil.get(request, "add-account") : LanguageUtil.format(request, "edit-x", commerceAccountDisplayContext.getName(), false));
 %>
 
 <liferay-frontend:edit-form>
@@ -37,7 +37,7 @@ renderResponse.setTitle((accountEntryDisplay.getAccountEntryId() == 0) ? Languag
 
 			<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/order_defaults.jsp#payment_methods" />
 
-			<liferay-util:dynamic-include key="com.liferay.commerce.account.web#/account_entry/order_defaults.jsp#shipping_options" />
+			<%@ include file="/account_entry/shipping_options/default_commerce_shipping_options.jspf" %>
 		</liferay-frontend:fieldset-group>
 	</liferay-frontend:edit-form-body>
 </liferay-frontend:edit-form>

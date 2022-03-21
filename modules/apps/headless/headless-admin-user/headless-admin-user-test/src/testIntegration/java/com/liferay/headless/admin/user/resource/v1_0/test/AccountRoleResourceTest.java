@@ -516,6 +516,22 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 	}
 
 	@Override
+	protected String
+			testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getEmailAddress()
+		throws Exception {
+
+		return null;
+	}
+
+	@Override
+	protected String
+			testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByEmailAddress_getExternalReferenceCode()
+		throws Exception {
+
+		return null;
+	}
+
+	@Override
 	protected AccountRole
 			testDeleteAccountByExternalReferenceCodeAccountRoleUserAccountByExternalReferenceCode_addAccountRole()
 		throws Exception {

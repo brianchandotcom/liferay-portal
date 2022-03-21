@@ -32,9 +32,11 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -90,7 +92,13 @@ public class CPDefinitionItemSelectorView
 
 	@Override
 	public boolean isVisible(ThemeDisplay themeDisplay) {
-		return true;
+		if (GetterUtil.getBoolean(
+				PropsUtil.get("feature.flag.COMMERCE-5898"))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

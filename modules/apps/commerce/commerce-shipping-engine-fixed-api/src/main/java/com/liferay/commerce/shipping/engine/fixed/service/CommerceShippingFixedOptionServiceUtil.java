@@ -68,6 +68,13 @@ public class CommerceShippingFixedOptionServiceUtil {
 			commerceShippingFixedOptionId);
 	}
 
+	public static CommerceShippingFixedOption fetchCommerceShippingFixedOption(
+			long companyId, String key)
+		throws PortalException {
+
+		return getService().fetchCommerceShippingFixedOption(companyId, key);
+	}
+
 	public static List<CommerceShippingFixedOption>
 			getCommerceShippingFixedOptions(
 				long commerceShippingMethodId, int start, int end)

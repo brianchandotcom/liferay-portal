@@ -37,6 +37,20 @@ create table CPDefinitionInventory (
 	primary key (CPDefinitionInventoryId, ctCollectionId)
 );
 
+create table CSOptionAccountEntryRel (
+	mvccVersion LONG default 0 not null,
+	CSOptionAccountEntryRelId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	accountEntryId LONG,
+	commerceChannelId LONG,
+	commerceShippingMethodKey VARCHAR(75) null,
+	commerceShippingOptionKey VARCHAR(75) null
+);
+
 create table CommerceAddressRestriction (
 	mvccVersion LONG default 0 not null,
 	commerceAddressRestrictionId LONG not null primary key,

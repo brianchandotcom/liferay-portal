@@ -56,6 +56,10 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceShippingMethodServiceImpl" id="com.liferay.commerce.service.CommerceShippingMethodService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceShippingMethodModelArgumentsResolver" id="com.liferay.commerce.service.persistence.impl.CommerceShippingMethodModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceShippingMethodPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence" />
+	<bean class="com.liferay.commerce.service.impl.CommerceShippingOptionAccountEntryRelLocalServiceImpl" id="com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelLocalService" />
+	<bean class="com.liferay.commerce.service.impl.CommerceShippingOptionAccountEntryRelServiceImpl" id="com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelService" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceShippingOptionAccountEntryRelModelArgumentsResolver" id="com.liferay.commerce.service.persistence.impl.CommerceShippingOptionAccountEntryRelModelArgumentsResolver" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceShippingOptionAccountEntryRelPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceShippingOptionAccountEntryRelPersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceSubscriptionEntryLocalServiceImpl" id="com.liferay.commerce.service.CommerceSubscriptionEntryLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceSubscriptionEntryServiceImpl" id="com.liferay.commerce.service.CommerceSubscriptionEntryService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceSubscriptionEntryModelArgumentsResolver" id="com.liferay.commerce.service.persistence.impl.CommerceSubscriptionEntryModelArgumentsResolver" />

@@ -34,6 +34,7 @@ import com.liferay.commerce.service.persistence.CommerceShipmentItemFinder;
 import com.liferay.commerce.service.persistence.CommerceShipmentItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceShipmentPersistence;
 import com.liferay.commerce.service.persistence.CommerceShippingMethodPersistence;
+import com.liferay.commerce.service.persistence.CommerceShippingOptionAccountEntryRelPersistence;
 import com.liferay.commerce.service.persistence.CommerceSubscriptionEntryFinder;
 import com.liferay.commerce.service.persistence.CommerceSubscriptionEntryPersistence;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -926,6 +927,83 @@ public abstract class CommerceOrderServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce shipping option account entry rel local service.
+	 *
+	 * @return the commerce shipping option account entry rel local service
+	 */
+	public com.liferay.commerce.service.
+		CommerceShippingOptionAccountEntryRelLocalService
+			getCommerceShippingOptionAccountEntryRelLocalService() {
+
+		return commerceShippingOptionAccountEntryRelLocalService;
+	}
+
+	/**
+	 * Sets the commerce shipping option account entry rel local service.
+	 *
+	 * @param commerceShippingOptionAccountEntryRelLocalService the commerce shipping option account entry rel local service
+	 */
+	public void setCommerceShippingOptionAccountEntryRelLocalService(
+		com.liferay.commerce.service.
+			CommerceShippingOptionAccountEntryRelLocalService
+				commerceShippingOptionAccountEntryRelLocalService) {
+
+		this.commerceShippingOptionAccountEntryRelLocalService =
+			commerceShippingOptionAccountEntryRelLocalService;
+	}
+
+	/**
+	 * Returns the commerce shipping option account entry rel remote service.
+	 *
+	 * @return the commerce shipping option account entry rel remote service
+	 */
+	public
+		com.liferay.commerce.service.
+			CommerceShippingOptionAccountEntryRelService
+				getCommerceShippingOptionAccountEntryRelService() {
+
+		return commerceShippingOptionAccountEntryRelService;
+	}
+
+	/**
+	 * Sets the commerce shipping option account entry rel remote service.
+	 *
+	 * @param commerceShippingOptionAccountEntryRelService the commerce shipping option account entry rel remote service
+	 */
+	public void setCommerceShippingOptionAccountEntryRelService(
+		com.liferay.commerce.service.
+			CommerceShippingOptionAccountEntryRelService
+				commerceShippingOptionAccountEntryRelService) {
+
+		this.commerceShippingOptionAccountEntryRelService =
+			commerceShippingOptionAccountEntryRelService;
+	}
+
+	/**
+	 * Returns the commerce shipping option account entry rel persistence.
+	 *
+	 * @return the commerce shipping option account entry rel persistence
+	 */
+	public CommerceShippingOptionAccountEntryRelPersistence
+		getCommerceShippingOptionAccountEntryRelPersistence() {
+
+		return commerceShippingOptionAccountEntryRelPersistence;
+	}
+
+	/**
+	 * Sets the commerce shipping option account entry rel persistence.
+	 *
+	 * @param commerceShippingOptionAccountEntryRelPersistence the commerce shipping option account entry rel persistence
+	 */
+	public void setCommerceShippingOptionAccountEntryRelPersistence(
+		CommerceShippingOptionAccountEntryRelPersistence
+			commerceShippingOptionAccountEntryRelPersistence) {
+
+		this.commerceShippingOptionAccountEntryRelPersistence =
+			commerceShippingOptionAccountEntryRelPersistence;
+	}
+
+	/**
 	 * Returns the commerce subscription entry local service.
 	 *
 	 * @return the commerce subscription entry local service
@@ -1580,6 +1658,27 @@ public abstract class CommerceOrderServiceBaseImpl
 	@BeanReference(type = CommerceShippingMethodPersistence.class)
 	protected CommerceShippingMethodPersistence
 		commerceShippingMethodPersistence;
+
+	@BeanReference(
+		type = com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelLocalService.class
+	)
+	protected com.liferay.commerce.service.
+		CommerceShippingOptionAccountEntryRelLocalService
+			commerceShippingOptionAccountEntryRelLocalService;
+
+	@BeanReference(
+		type = com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelService.class
+	)
+	protected
+		com.liferay.commerce.service.
+			CommerceShippingOptionAccountEntryRelService
+				commerceShippingOptionAccountEntryRelService;
+
+	@BeanReference(
+		type = CommerceShippingOptionAccountEntryRelPersistence.class
+	)
+	protected CommerceShippingOptionAccountEntryRelPersistence
+		commerceShippingOptionAccountEntryRelPersistence;
 
 	@BeanReference(
 		type = com.liferay.commerce.service.CommerceSubscriptionEntryLocalService.class

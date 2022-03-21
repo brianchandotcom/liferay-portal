@@ -13,6 +13,7 @@
 	<import class="com.liferay.commerce.model.CommerceShipment" />
 	<import class="com.liferay.commerce.model.CommerceShipmentItem" />
 	<import class="com.liferay.commerce.model.CommerceShippingMethod" />
+	<import class="com.liferay.commerce.model.CommerceShippingOptionAccountEntryRel" />
 	<import class="com.liferay.commerce.model.CommerceSubscriptionEntry" />
 	<import class="com.liferay.commerce.model.CPDAvailabilityEstimate" />
 	<import class="com.liferay.commerce.model.CPDefinitionInventory" />
@@ -316,6 +317,21 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="engineKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="active_" name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class dynamic-update="true" name="com.liferay.commerce.model.impl.CommerceShippingOptionAccountEntryRelImpl" table="CSOptionAccountEntryRel">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="CSOptionAccountEntryRelId" name="CommerceShippingOptionAccountEntryRelId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" name="mvccVersion" type="long" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="accountEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceChannelId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceShippingMethodKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceShippingOptionKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class dynamic-update="true" name="com.liferay.commerce.model.impl.CommerceSubscriptionEntryImpl" table="CommerceSubscriptionEntry">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="commerceSubscriptionEntryId" type="long">

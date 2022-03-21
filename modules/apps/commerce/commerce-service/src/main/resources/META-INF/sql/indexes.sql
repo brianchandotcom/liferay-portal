@@ -7,6 +7,10 @@ create index IX_E7573C34 on CPDefinitionInventory (uuid_[$COLUMN_LENGTH:75$], co
 create index IX_9C196570 on CPDefinitionInventory (uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
 create unique index IX_E7C1FC36 on CPDefinitionInventory (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
+create unique index IX_4F4C712A on CSOptionAccountEntryRel (accountEntryId, commerceChannelId);
+create index IX_B48AB5E on CSOptionAccountEntryRel (commerceChannelId);
+create index IX_64B9CFFC on CSOptionAccountEntryRel (commerceShippingOptionKey[$COLUMN_LENGTH:75$]);
+
 create unique index IX_9DD3ABD3 on CommerceAddressRestriction (classNameId, classPK, countryId);
 create index IX_AE21488 on CommerceAddressRestriction (countryId);
 

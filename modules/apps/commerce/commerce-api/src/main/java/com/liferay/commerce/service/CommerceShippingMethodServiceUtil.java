@@ -141,17 +141,21 @@ public class CommerceShippingMethodServiceUtil {
 	}
 
 	public static List<CommerceShippingMethod> getCommerceShippingMethods(
-			long groupId)
+			long groupId, boolean active, int start, int end,
+			OrderByComparator<CommerceShippingMethod> orderByComparator)
 		throws PortalException {
 
-		return getService().getCommerceShippingMethods(groupId);
+		return getService().getCommerceShippingMethods(
+			groupId, active, start, end, orderByComparator);
 	}
 
 	public static List<CommerceShippingMethod> getCommerceShippingMethods(
-			long groupId, boolean active)
+			long groupId, int start, int end,
+			OrderByComparator<CommerceShippingMethod> orderByComparator)
 		throws PortalException {
 
-		return getService().getCommerceShippingMethods(groupId, active);
+		return getService().getCommerceShippingMethods(
+			groupId, start, end, orderByComparator);
 	}
 
 	public static List<CommerceShippingMethod> getCommerceShippingMethods(
@@ -162,11 +166,10 @@ public class CommerceShippingMethodServiceUtil {
 			groupId, countryId, active);
 	}
 
-	public static int getCommerceShippingMethodsCount(
-			long groupId, boolean active)
+	public static int getCommerceShippingMethodsCount(long groupId)
 		throws PortalException {
 
-		return getService().getCommerceShippingMethodsCount(groupId, active);
+		return getService().getCommerceShippingMethodsCount(groupId);
 	}
 
 	/**

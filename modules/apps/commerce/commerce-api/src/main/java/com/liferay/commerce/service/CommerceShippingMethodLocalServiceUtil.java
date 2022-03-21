@@ -336,15 +336,19 @@ public class CommerceShippingMethodLocalServiceUtil {
 	}
 
 	public static List<CommerceShippingMethod> getCommerceShippingMethods(
-		long groupId) {
+		long groupId, boolean active, int start, int end,
+		OrderByComparator<CommerceShippingMethod> orderByComparator) {
 
-		return getService().getCommerceShippingMethods(groupId);
+		return getService().getCommerceShippingMethods(
+			groupId, active, start, end, orderByComparator);
 	}
 
 	public static List<CommerceShippingMethod> getCommerceShippingMethods(
-		long groupId, boolean active) {
+		long groupId, int start, int end,
+		OrderByComparator<CommerceShippingMethod> orderByComparator) {
 
-		return getService().getCommerceShippingMethods(groupId, active);
+		return getService().getCommerceShippingMethods(
+			groupId, start, end, orderByComparator);
 	}
 
 	public static List<CommerceShippingMethod> getCommerceShippingMethods(
@@ -361,6 +365,10 @@ public class CommerceShippingMethodLocalServiceUtil {
 	 */
 	public static int getCommerceShippingMethodsCount() {
 		return getService().getCommerceShippingMethodsCount();
+	}
+
+	public static int getCommerceShippingMethodsCount(long groupId) {
+		return getService().getCommerceShippingMethodsCount(groupId);
 	}
 
 	public static int getCommerceShippingMethodsCount(

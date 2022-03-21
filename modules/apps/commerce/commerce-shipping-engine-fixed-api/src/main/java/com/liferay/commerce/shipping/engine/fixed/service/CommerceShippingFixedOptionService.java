@@ -80,6 +80,11 @@ public interface CommerceShippingFixedOptionService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceShippingFixedOption fetchCommerceShippingFixedOption(
+			long companyId, String key)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceShippingFixedOption> getCommerceShippingFixedOptions(
 			long commerceShippingMethodId, int start, int end)
 		throws PortalException;

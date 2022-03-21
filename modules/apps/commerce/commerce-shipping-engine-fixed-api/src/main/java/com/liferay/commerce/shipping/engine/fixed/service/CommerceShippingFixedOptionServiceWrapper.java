@@ -76,6 +76,17 @@ public class CommerceShippingFixedOptionServiceWrapper
 	}
 
 	@Override
+	public
+		com.liferay.commerce.shipping.engine.fixed.model.
+			CommerceShippingFixedOption fetchCommerceShippingFixedOption(
+					long companyId, String key)
+				throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceShippingFixedOptionService.
+			fetchCommerceShippingFixedOption(companyId, key);
+	}
+
+	@Override
 	public java.util.List
 		<com.liferay.commerce.shipping.engine.fixed.model.
 			CommerceShippingFixedOption> getCommerceShippingFixedOptions(

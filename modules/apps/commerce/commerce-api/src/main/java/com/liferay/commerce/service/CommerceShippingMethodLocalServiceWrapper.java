@@ -383,18 +383,26 @@ public class CommerceShippingMethodLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceShippingMethod>
-		getCommerceShippingMethods(long groupId) {
+		getCommerceShippingMethods(
+			long groupId, boolean active, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.commerce.model.CommerceShippingMethod>
+					orderByComparator) {
 
 		return _commerceShippingMethodLocalService.getCommerceShippingMethods(
-			groupId);
+			groupId, active, start, end, orderByComparator);
 	}
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceShippingMethod>
-		getCommerceShippingMethods(long groupId, boolean active) {
+		getCommerceShippingMethods(
+			long groupId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.commerce.model.CommerceShippingMethod>
+					orderByComparator) {
 
 		return _commerceShippingMethodLocalService.getCommerceShippingMethods(
-			groupId, active);
+			groupId, start, end, orderByComparator);
 	}
 
 	@Override
@@ -415,6 +423,12 @@ public class CommerceShippingMethodLocalServiceWrapper
 	public int getCommerceShippingMethodsCount() {
 		return _commerceShippingMethodLocalService.
 			getCommerceShippingMethodsCount();
+	}
+
+	@Override
+	public int getCommerceShippingMethodsCount(long groupId) {
+		return _commerceShippingMethodLocalService.
+			getCommerceShippingMethodsCount(groupId);
 	}
 
 	@Override

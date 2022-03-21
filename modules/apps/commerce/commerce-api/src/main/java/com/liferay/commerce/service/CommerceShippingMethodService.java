@@ -121,12 +121,15 @@ public interface CommerceShippingMethodService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceShippingMethod> getCommerceShippingMethods(long groupId)
+	public List<CommerceShippingMethod> getCommerceShippingMethods(
+			long groupId, boolean active, int start, int end,
+			OrderByComparator<CommerceShippingMethod> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceShippingMethod> getCommerceShippingMethods(
-			long groupId, boolean active)
+			long groupId, int start, int end,
+			OrderByComparator<CommerceShippingMethod> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -135,7 +138,7 @@ public interface CommerceShippingMethodService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceShippingMethodsCount(long groupId, boolean active)
+	public int getCommerceShippingMethodsCount(long groupId)
 		throws PortalException;
 
 	/**

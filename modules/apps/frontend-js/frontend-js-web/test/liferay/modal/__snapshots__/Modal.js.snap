@@ -9,6 +9,7 @@ exports[`Modal renders markup based on given configuration 1`] = `
     class="cadmin"
   >
     <div
+      aria-hidden="true"
       class="modal-backdrop fade show"
     />
     <div
@@ -16,7 +17,9 @@ exports[`Modal renders markup based on given configuration 1`] = `
       id="abcd"
     >
       <div
+        aria-labelledby="clay-modal-label-1"
         class="modal-dialog modal-lg"
+        role="dialog"
         tabindex="-1"
       >
         <div
@@ -27,6 +30,7 @@ exports[`Modal renders markup based on given configuration 1`] = `
           >
             <div
               class="modal-title"
+              id="clay-modal-label-1"
             >
               My Modal
             </div>

@@ -53,9 +53,7 @@ definition {
 		}
 
 		task ("Add CP") {
-			Site.openSitesAdmin();
-
-			Site.addBlankCP(siteName = "Site Name");
+			JSONGroup.addGroup(groupName = "Site Name");
 		}
 
 		task ("Add user group CP") {
@@ -63,25 +61,22 @@ definition {
 		}
 
 		task ("Assign user group as member CP") {
-			Site.openSiteMembershipsAdmin(siteURLKey = "Site Name");
-
-			Site.assignUserGroupAsMemberCP(
-				siteName = "Site Name",
+			JSONGroup.assignUserGroupToGroup(
+				groupName = "Site Name",
 				userGroupName = "UG UserGroup Name");
 		}
 
 		task ("Assign site role to user group") {
-			Site.assignSiteRoleToUserGroup(
-				roleName = "TestSiteRole",
+			JSONUserGroup.assignGroupRoleToUserGroup(
+				groupName = "Site Name",
+				roleTitle = "TestSiteRole",
 				userGroupName = "UG UserGroup Name");
 		}
 
 		task ("Assign member CP") {
-			UserGroup.openUserGroupsAdmin();
-
-			UserGroup.assignMemberCP(
-				userGroupName = "UG UserGroup Name",
-				userScreenName = "test");
+			JSONUser.addUserToUserGroup(
+				userEmailAddress = "test@liferay.com",
+				userGroupName = "UG UserGroup Name");
 		}
 
 		task ("View user information roles CP") {

@@ -21,6 +21,7 @@ import ProgressBar from '../../../components/ProgressBar';
 import useTotalTestCases from '../../../data/useTotalTestCases';
 import {getBuilds} from '../../../graphql/queries';
 import i18n from '../../../i18n';
+import {BUILD_STATUS} from '../../../util/constants';
 import dayjs from '../../../util/date';
 import RoutineBuildModal from './RoutineBuildModal';
 import useRoutineActions from './useRoutineActions';
@@ -70,20 +71,38 @@ const Routine = () => {
 					columns: [
 						{
 							key: 'status',
-							render: (_, {promoted}) => {
+							render: (_, {dueStatus, promoted}) => {
 								return (
 									<>
 										{promoted && (
-											<ClayIcon
-												className="mr-3"
-												symbol="star"
-											/>
+											<span
+												title={i18n.translate(
+													'promoted'
+												)}
+											>
+												<ClayIcon
+													className="mr-3"
+													color="darkblue"
+													symbol="star"
+												/>
+											</span>
 										)}
 
-										<ClayIcon
-											color="darkblue"
-											symbol="circle"
-										/>
+										<span
+											title={
+												(BUILD_STATUS as any)[dueStatus]
+													?.label || ''
+											}
+										>
+											<ClayIcon
+												className={
+													(BUILD_STATUS as any)[
+														dueStatus
+													]?.color
+												}
+												symbol="circle"
+											/>
+										</span>
 									</>
 								);
 							},
@@ -105,8 +124,8 @@ const Routine = () => {
 						{
 							clickable: true,
 							key: 'product_version',
-							render: (_, {testrayProductVersion}) =>
-								testrayProductVersion?.name,
+							render: (_, {productVersion}) =>
+								productVersion?.name,
 							value: 'Product Version',
 						},
 						{

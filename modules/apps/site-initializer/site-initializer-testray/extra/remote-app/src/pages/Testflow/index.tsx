@@ -22,6 +22,8 @@ import {getTasks} from '../../graphql/queries';
 import useFormModal from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 import {SUBTASK_STATUS} from '../../util/constants';
+import {getTimeFromNow} from '../../util/date';
+import {routines} from '../../util/mock';
 import TestflowModal from './TestflowModal';
 
 const TestFlow = () => {
@@ -51,7 +53,9 @@ const TestFlow = () => {
 						{
 							clickable: true,
 							key: 'dueDate',
-							render: (_, task) => task?.build?.dueDate,
+							render: (_, task) =>
+								task?.build?.dueDate &&
+								getTimeFromNow(task?.build?.dueDate),
 							value: i18n.translate('start-date'),
 						},
 						{
@@ -80,38 +84,30 @@ const TestFlow = () => {
 						},
 						{
 							key: 'score',
-							render: (score: any) => {
-								if (!score) {
-									return;
-								}
-
-								const {incomplete, other, self} = score || {};
-
-								const total = self + other + incomplete;
-								const passed = self + other;
-
-								return `${passed} / ${total}, ${Math.ceil(
-									(passed * 100) / total
-								)}%`;
-							},
+							render: () => '59 / 2172 (3%)',
 							value: i18n.translate('score'),
 						},
 						{
 							key: 'progress',
-							render: (progress: any) =>
-								progress && <ProgressBar items={progress} />,
+							render: () => (
+								<ProgressBar
+									items={{
+										incomplete: 100,
+										passed: 10,
+									}}
+								/>
+							),
 							size: 'sm',
 							value: i18n.translate('progress'),
 						},
 						{
 							key: 'assigned',
-							render: (assigned: any) =>
-								assigned && (
-									<AvatarGroup
-										assignedUsers={assigned}
-										groupSize={3}
-									/>
-								),
+							render: () => (
+								<AvatarGroup
+									assignedUsers={routines[0].assigned}
+									groupSize={3}
+								/>
+							),
 							value: i18n.translate('assigned'),
 						},
 					],

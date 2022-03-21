@@ -194,10 +194,15 @@ public abstract class BaseSLAResultResourceTestCase {
 		SLAResult postSLAResult = testGetProcessLastSLAResult_addSLAResult();
 
 		SLAResult getSLAResult = slaResultResource.getProcessLastSLAResult(
-			null);
+			testGetProcessLastSLAResult_getProcessId());
 
 		assertEquals(postSLAResult, getSLAResult);
 		assertValid(getSLAResult);
+	}
+
+	protected Long testGetProcessLastSLAResult_getProcessId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected SLAResult testGetProcessLastSLAResult_addSLAResult()
@@ -221,11 +226,20 @@ public abstract class BaseSLAResultResourceTestCase {
 								"processLastSLAResult",
 								new HashMap<String, Object>() {
 									{
-										put("processId", null);
+										put(
+											"processId",
+											testGraphQLGetProcessLastSLAResult_getProcessId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/processLastSLAResult"))));
+	}
+
+	protected Long testGraphQLGetProcessLastSLAResult_getProcessId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

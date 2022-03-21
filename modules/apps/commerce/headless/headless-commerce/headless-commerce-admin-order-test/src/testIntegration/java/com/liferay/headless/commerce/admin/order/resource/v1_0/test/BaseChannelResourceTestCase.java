@@ -198,10 +198,18 @@ public abstract class BaseChannelResourceTestCase {
 	public void testGetOrderRuleChannelChannel() throws Exception {
 		Channel postChannel = testGetOrderRuleChannelChannel_addChannel();
 
-		Channel getChannel = channelResource.getOrderRuleChannelChannel(null);
+		Channel getChannel = channelResource.getOrderRuleChannelChannel(
+			testGetOrderRuleChannelChannel_getOrderRuleChannelId());
 
 		assertEquals(postChannel, getChannel);
 		assertValid(getChannel);
+	}
+
+	protected Long testGetOrderRuleChannelChannel_getOrderRuleChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Channel testGetOrderRuleChannelChannel_addChannel()
@@ -225,11 +233,20 @@ public abstract class BaseChannelResourceTestCase {
 								"orderRuleChannelChannel",
 								new HashMap<String, Object>() {
 									{
-										put("orderRuleChannelId", null);
+										put(
+											"orderRuleChannelId",
+											testGraphQLGetOrderRuleChannelChannel_getOrderRuleChannelId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/orderRuleChannelChannel"))));
+	}
+
+	protected Long testGraphQLGetOrderRuleChannelChannel_getOrderRuleChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -260,10 +277,18 @@ public abstract class BaseChannelResourceTestCase {
 	public void testGetOrderTypeChannelChannel() throws Exception {
 		Channel postChannel = testGetOrderTypeChannelChannel_addChannel();
 
-		Channel getChannel = channelResource.getOrderTypeChannelChannel(null);
+		Channel getChannel = channelResource.getOrderTypeChannelChannel(
+			testGetOrderTypeChannelChannel_getOrderTypeChannelId());
 
 		assertEquals(postChannel, getChannel);
 		assertValid(getChannel);
+	}
+
+	protected Long testGetOrderTypeChannelChannel_getOrderTypeChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Channel testGetOrderTypeChannelChannel_addChannel()
@@ -287,11 +312,20 @@ public abstract class BaseChannelResourceTestCase {
 								"orderTypeChannelChannel",
 								new HashMap<String, Object>() {
 									{
-										put("orderTypeChannelId", null);
+										put(
+											"orderTypeChannelId",
+											testGraphQLGetOrderTypeChannelChannel_getOrderTypeChannelId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/orderTypeChannelChannel"))));
+	}
+
+	protected Long testGraphQLGetOrderTypeChannelChannel_getOrderTypeChannelId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

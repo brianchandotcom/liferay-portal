@@ -334,10 +334,18 @@ public abstract class BaseShippingAddressResourceTestCase {
 			testGetShipmentShippingAddress_addShippingAddress();
 
 		ShippingAddress getShippingAddress =
-			shippingAddressResource.getShipmentShippingAddress(null);
+			shippingAddressResource.getShipmentShippingAddress(
+				testGetShipmentShippingAddress_getShipmentId());
 
 		assertEquals(postShippingAddress, getShippingAddress);
 		assertValid(getShippingAddress);
+	}
+
+	protected Long testGetShipmentShippingAddress_getShipmentId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected ShippingAddress
@@ -363,11 +371,20 @@ public abstract class BaseShippingAddressResourceTestCase {
 								"shipmentShippingAddress",
 								new HashMap<String, Object>() {
 									{
-										put("shipmentId", null);
+										put(
+											"shipmentId",
+											testGraphQLGetShipmentShippingAddress_getShipmentId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/shipmentShippingAddress"))));
+	}
+
+	protected Long testGraphQLGetShipmentShippingAddress_getShipmentId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

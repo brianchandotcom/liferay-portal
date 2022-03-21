@@ -218,10 +218,16 @@ public abstract class BaseAddressResourceTestCase {
 	public void testGetCartBillingAddres() throws Exception {
 		Address postAddress = testGetCartBillingAddres_addAddress();
 
-		Address getAddress = addressResource.getCartBillingAddres(null);
+		Address getAddress = addressResource.getCartBillingAddres(
+			testGetCartBillingAddres_getCartId());
 
 		assertEquals(postAddress, getAddress);
 		assertValid(getAddress);
+	}
+
+	protected Long testGetCartBillingAddres_getCartId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Address testGetCartBillingAddres_addAddress() throws Exception {
@@ -243,11 +249,20 @@ public abstract class BaseAddressResourceTestCase {
 								"cartBillingAddres",
 								new HashMap<String, Object>() {
 									{
-										put("cartId", null);
+										put(
+											"cartId",
+											testGraphQLGetCartBillingAddres_getCartId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/cartBillingAddres"))));
+	}
+
+	protected Long testGraphQLGetCartBillingAddres_getCartId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -274,10 +289,16 @@ public abstract class BaseAddressResourceTestCase {
 	public void testGetCartShippingAddres() throws Exception {
 		Address postAddress = testGetCartShippingAddres_addAddress();
 
-		Address getAddress = addressResource.getCartShippingAddres(null);
+		Address getAddress = addressResource.getCartShippingAddres(
+			testGetCartShippingAddres_getCartId());
 
 		assertEquals(postAddress, getAddress);
 		assertValid(getAddress);
+	}
+
+	protected Long testGetCartShippingAddres_getCartId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Address testGetCartShippingAddres_addAddress() throws Exception {
@@ -299,11 +320,20 @@ public abstract class BaseAddressResourceTestCase {
 								"cartShippingAddres",
 								new HashMap<String, Object>() {
 									{
-										put("cartId", null);
+										put(
+											"cartId",
+											testGraphQLGetCartShippingAddres_getCartId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data", "Object/cartShippingAddres"))));
+	}
+
+	protected Long testGraphQLGetCartShippingAddres_getCartId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

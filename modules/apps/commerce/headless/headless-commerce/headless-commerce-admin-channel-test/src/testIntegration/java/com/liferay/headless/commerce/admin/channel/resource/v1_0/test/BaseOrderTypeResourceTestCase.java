@@ -191,10 +191,19 @@ public abstract class BaseOrderTypeResourceTestCase {
 			testGetPaymentMethodGroupRelOrderTypeOrderType_addOrderType();
 
 		OrderType getOrderType =
-			orderTypeResource.getPaymentMethodGroupRelOrderTypeOrderType(null);
+			orderTypeResource.getPaymentMethodGroupRelOrderTypeOrderType(
+				testGetPaymentMethodGroupRelOrderTypeOrderType_getPaymentMethodGroupRelOrderTypeId());
 
 		assertEquals(postOrderType, getOrderType);
 		assertValid(getOrderType);
+	}
+
+	protected Long
+			testGetPaymentMethodGroupRelOrderTypeOrderType_getPaymentMethodGroupRelOrderTypeId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected OrderType
@@ -223,12 +232,20 @@ public abstract class BaseOrderTypeResourceTestCase {
 									{
 										put(
 											"paymentMethodGroupRelOrderTypeId",
-											null);
+											testGraphQLGetPaymentMethodGroupRelOrderTypeOrderType_getPaymentMethodGroupRelOrderTypeId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/paymentMethodGroupRelOrderTypeOrderType"))));
+	}
+
+	protected Long
+			testGraphQLGetPaymentMethodGroupRelOrderTypeOrderType_getPaymentMethodGroupRelOrderTypeId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -264,10 +281,19 @@ public abstract class BaseOrderTypeResourceTestCase {
 			testGetShippingFixedOptionOrderTypeOrderType_addOrderType();
 
 		OrderType getOrderType =
-			orderTypeResource.getShippingFixedOptionOrderTypeOrderType(null);
+			orderTypeResource.getShippingFixedOptionOrderTypeOrderType(
+				testGetShippingFixedOptionOrderTypeOrderType_getShippingFixedOptionOrderTypeId());
 
 		assertEquals(postOrderType, getOrderType);
 		assertValid(getOrderType);
+	}
+
+	protected Long
+			testGetShippingFixedOptionOrderTypeOrderType_getShippingFixedOptionOrderTypeId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected OrderType
@@ -296,12 +322,20 @@ public abstract class BaseOrderTypeResourceTestCase {
 									{
 										put(
 											"shippingFixedOptionOrderTypeId",
-											null);
+											testGraphQLGetShippingFixedOptionOrderTypeOrderType_getShippingFixedOptionOrderTypeId());
 									}
 								},
 								getGraphQLFields())),
 						"JSONObject/data",
 						"Object/shippingFixedOptionOrderTypeOrderType"))));
+	}
+
+	protected Long
+			testGraphQLGetShippingFixedOptionOrderTypeOrderType_getShippingFixedOptionOrderTypeId()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

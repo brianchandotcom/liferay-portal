@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,19 +42,26 @@ public class AggregateFilterTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		_setUpPortalUtil();
+	@Test
+	public void testAggregateWithImports() throws Exception {
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = Mockito.mock(Portal.class);
+
+		portalUtil.setPortal(portal);
+
+		Mockito.when(
+			portal.getPathModule()
+		).thenReturn(
+			StringPool.BLANK
+		);
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		bundleContext.registerService(
 			PortalExecutorManager.class,
 			ProxyFactory.newDummyInstance(PortalExecutorManager.class), null);
-	}
 
-	@Test
-	public void testAggregateWithImports() throws Exception {
 		String fileName = "./my-styles.css";
 		String css = "body {color: black;}";
 
@@ -114,20 +120,6 @@ public class AggregateFilterTest {
 		);
 
 		return servletPaths;
-	}
-
-	private void _setUpPortalUtil() {
-		PortalUtil portalUtil = new PortalUtil();
-
-		Portal portal = Mockito.mock(Portal.class);
-
-		portalUtil.setPortal(portal);
-
-		Mockito.when(
-			portal.getPathModule()
-		).thenReturn(
-			StringPool.BLANK
-		);
 	}
 
 	private void _testAggregateWithImports(

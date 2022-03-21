@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.ProxyFactory;
 import java.util.function.Consumer;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.osgi.framework.BundleContext;
@@ -33,8 +33,8 @@ import org.osgi.framework.BundleContext;
  */
 public class CompanyThreadLocalTest {
 
-	@Before
-	public void setUp() {
+	@BeforeClass
+	public static void setUpClass() {
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
 		bundleContext.registerService(

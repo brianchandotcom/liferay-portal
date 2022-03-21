@@ -16,6 +16,7 @@ package com.liferay.commerce.internal.model.listener;
 
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.service.CommerceShippingOptionAccountEntryRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,6 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Riccardo Alberti
+ * @author Alessio Antonio Rendina
  */
 @Component(enabled = false, immediate = true, service = ModelListener.class)
 public class CommerceChannelModelListener
@@ -37,6 +39,10 @@ public class CommerceChannelModelListener
 		try {
 			_commerceShippingMethodLocalService.deleteCommerceShippingMethods(
 				commerceChannel.getGroupId());
+
+			_commerceShippingOptionAccountEntryRelLocalService.
+				deleteCommerceShippingOptionAccountEntryRelsByCommerceChannelId(
+					commerceChannel.getCommerceChannelId());
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -49,5 +55,9 @@ public class CommerceChannelModelListener
 	@Reference
 	private CommerceShippingMethodLocalService
 		_commerceShippingMethodLocalService;
+
+	@Reference
+	private CommerceShippingOptionAccountEntryRelLocalService
+		_commerceShippingOptionAccountEntryRelLocalService;
 
 }

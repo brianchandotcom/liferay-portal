@@ -17,6 +17,7 @@ package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
 import com.liferay.account.admin.web.internal.constants.AccountWebKeys;
 import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -30,9 +31,10 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Albert Lee
+ * @author Alessio Antonio Rendina
  */
 public abstract class BaseAccountEntryScreenNavigationEntry
-	implements ScreenNavigationEntry<AccountEntryDisplay> {
+	implements ScreenNavigationEntry<AccountEntry> {
 
 	public abstract String getJspPath();
 

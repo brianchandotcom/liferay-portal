@@ -15,7 +15,7 @@
 package com.liferay.account.admin.web.internal.frontend.taglib.servlet.taglib;
 
 import com.liferay.account.admin.web.internal.constants.AccountScreenNavigationEntryConstants;
-import com.liferay.account.admin.web.internal.display.AccountEntryDisplay;
+import com.liferay.account.model.AccountEntry;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Erick Monteiro
+ * @author Alessio Antonio Rendina
  */
 @Component(
 	property = {
@@ -61,10 +62,8 @@ public class AccountEntryAccountGroupsScreenNavigationCategory
 	}
 
 	@Override
-	public boolean isVisible(
-		User user, AccountEntryDisplay accountEntryDisplay) {
-
-		if (accountEntryDisplay.getAccountEntryId() == 0) {
+	public boolean isVisible(User user, AccountEntry accountEntry) {
+		if (accountEntry == null) {
 			return false;
 		}
 

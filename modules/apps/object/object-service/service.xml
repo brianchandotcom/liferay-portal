@@ -525,6 +525,7 @@
 		<!-- Other fields -->
 
 		<column name="objectViewId" type="long" />
+		<column localized="true" name="label" type="String" />
 		<column name="objectFieldName" type="String" />
 		<column name="priority" type="int" />
 

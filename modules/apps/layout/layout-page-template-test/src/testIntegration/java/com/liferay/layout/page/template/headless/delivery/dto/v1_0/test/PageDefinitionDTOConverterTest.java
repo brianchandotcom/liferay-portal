@@ -640,7 +640,8 @@ public class PageDefinitionDTOConverterTest {
 					defaultSegmentsExperienceId,
 					StringUtil.replace(_read(fileName), "${", "}", valuesMap));
 
-		return LayoutStructure.of(layoutPageTemplateStructure.getData(0L));
+		return LayoutStructure.of(
+			layoutPageTemplateStructure.getData(defaultSegmentsExperienceId));
 	}
 
 	private PageDefinition _getPageDefinition(
@@ -680,13 +681,17 @@ public class PageDefinitionDTOConverterTest {
 				configuration, null, 0, FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layoutPageTemplateEntry.getPlid());
+
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), 0, layout.getPlid(),
-				StringPool.BLANK, html, StringPool.BLANK, configuration,
-				_read(editableValuesFileName), StringPool.BLANK, 0, null,
-				_serviceContext);
+				fragmentEntry.getFragmentEntryId(), defaultSegmentsExperienceId,
+				layout.getPlid(), StringPool.BLANK, html, StringPool.BLANK,
+				configuration, _read(editableValuesFileName), StringPool.BLANK,
+				0, null, _serviceContext);
 
 		LayoutStructure layoutStructure = _getLayoutStructure(
 			"layout_data_fragment.json",

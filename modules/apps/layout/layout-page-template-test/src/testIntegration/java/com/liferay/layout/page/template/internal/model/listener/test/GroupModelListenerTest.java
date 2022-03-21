@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
 
@@ -82,8 +83,17 @@ public class GroupModelListenerTest {
 	public void testDeletingGroupDeletesFragmentEntryLinks() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_addLayoutPageTemplateCollection(group.getGroupId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_addLayoutPageTemplateEntry(
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				group.getGroupId());
+
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			group.getGroupId());
+			group.getGroupId(), layoutPageTemplateEntry.getPlid());
 
 		_groupLocalService.deleteGroup(group);
 
@@ -160,7 +170,7 @@ public class GroupModelListenerTest {
 			StringPool.BLANK, serviceContext);
 	}
 
-	private FragmentEntryLink _addFragmentEntryLink(long groupId)
+	private FragmentEntryLink _addFragmentEntryLink(long groupId, long plid)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -178,10 +188,14 @@ public class GroupModelListenerTest {
 				StringPool.BLANK, null, 0, FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				plid);
+
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			TestPropsValues.getUserId(), groupId, 0,
-			fragmentEntry.getFragmentEntryId(), 0, RandomTestUtil.randomLong(),
-			fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			fragmentEntry.getFragmentEntryId(), defaultSegmentsExperienceId,
+			plid, fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 			StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
 	}
@@ -235,5 +249,8 @@ public class GroupModelListenerTest {
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

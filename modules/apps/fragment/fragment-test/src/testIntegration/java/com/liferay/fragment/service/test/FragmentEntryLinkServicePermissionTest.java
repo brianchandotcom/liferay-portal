@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -79,6 +80,10 @@ public class FragmentEntryLinkServicePermissionTest {
 			fragmentCollection.getFragmentCollectionId());
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
 	}
 
 	@Test
@@ -88,10 +93,10 @@ public class FragmentEntryLinkServicePermissionTest {
 		UserTestUtil.setUser(_user);
 
 		_fragmentEntryLinkService.addFragmentEntryLink(
-			_group.getGroupId(), 0, _fragmentEntry.getFragmentEntryId(), 0,
-			_layout.getPlid(), StringPool.BLANK, "<div>test</div>",
-			StringPool.BLANK, "{fieldSets: []}", StringPool.BLANK,
-			StringPool.BLANK, 0, null,
+			_group.getGroupId(), 0, _fragmentEntry.getFragmentEntryId(),
+			_defaultSegmentsExperienceId, _layout.getPlid(), StringPool.BLANK,
+			"<div>test</div>", StringPool.BLANK, "{fieldSets: []}",
+			StringPool.BLANK, StringPool.BLANK, 0, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group, _user.getUserId()));
 	}
@@ -104,11 +109,11 @@ public class FragmentEntryLinkServicePermissionTest {
 		UserTestUtil.setUser(_user);
 
 		_fragmentEntryLinkService.addFragmentEntryLink(
-			_group.getGroupId(), 0, _fragmentEntry.getFragmentEntryId(), 0,
-			_layout.getPlid(), _fragmentEntry.getCss(),
-			_fragmentEntry.getHtml(), _fragmentEntry.getJs(),
-			_fragmentEntry.getConfiguration(), StringPool.BLANK,
-			StringPool.BLANK, 0, null, serviceContext);
+			_group.getGroupId(), 0, _fragmentEntry.getFragmentEntryId(),
+			_defaultSegmentsExperienceId, _layout.getPlid(),
+			_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
+			_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(),
+			StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
 	}
 
 	@Test
@@ -187,6 +192,7 @@ public class FragmentEntryLinkServicePermissionTest {
 		return jsonObject.toString();
 	}
 
+	private long _defaultSegmentsExperienceId;
 	private FragmentEntry _fragmentEntry;
 
 	@Inject
@@ -199,6 +205,9 @@ public class FragmentEntryLinkServicePermissionTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@DeleteAfterTestRun
 	private User _user;

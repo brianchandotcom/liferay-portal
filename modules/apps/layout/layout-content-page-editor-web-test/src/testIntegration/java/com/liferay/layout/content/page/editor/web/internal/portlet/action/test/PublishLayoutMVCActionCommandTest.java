@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Collections;
 import java.util.List;
@@ -99,10 +100,14 @@ public class PublishLayoutMVCActionCommandTest {
 		layoutStructure.markLayoutStructureItemForDeletion(
 			layoutStructureItem2.getItemId(), Collections.emptyList());
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
-				_group.getGroupId(), draftLayout.getPlid(), 0,
-				layoutStructure.toString());
+				_group.getGroupId(), draftLayout.getPlid(),
+				defaultSegmentsExperienceId, layoutStructure.toString());
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_publishLayout",
@@ -156,6 +161,9 @@ public class PublishLayoutMVCActionCommandTest {
 		filter = "mvc.command.name=/layout_content_page_editor/publish_layout"
 	)
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
 

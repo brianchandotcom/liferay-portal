@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -54,7 +55,7 @@ public class LayoutSetPrototypeLayoutModelListener
 			return;
 		}
 
-		Group group = layout.getGroup();
+		Group group = GroupLocalServiceUtil.fetchGroup(layout.getGroupId());
 
 		if ((group == null) || !group.isLayoutSetPrototype()) {
 			return;

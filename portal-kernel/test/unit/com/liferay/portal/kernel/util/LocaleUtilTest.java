@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
@@ -25,25 +26,24 @@ import java.util.logging.Level;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 /**
  * @author Wesley Gong
  */
-@PrepareForTest(LanguageUtil.class)
-@RunWith(PowerMockRunner.class)
-public class LocaleUtilTest extends PowerMockito {
+public class LocaleUtilTest {
 
 	@Test
 	public void testFromLanguageId() {
-		mockStatic(LanguageUtil.class);
+		LanguageUtil languageUtil = new LanguageUtil();
 
-		when(
-			LanguageUtil.isAvailableLocale(Locale.US)
+		Language language = Mockito.mock(Language.class);
+
+		languageUtil.setLanguage(language);
+
+		Mockito.when(
+			language.isAvailableLocale(Locale.US)
 		).thenReturn(
 			true
 		);
@@ -71,18 +71,22 @@ public class LocaleUtilTest extends PowerMockito {
 
 	@Test
 	public void testFromLanguageIdBCP47() {
-		mockStatic(LanguageUtil.class);
+		LanguageUtil languageUtil = new LanguageUtil();
 
-		when(
-			LanguageUtil.isAvailableLocale(Locale.US)
+		Language language = Mockito.mock(Language.class);
+
+		languageUtil.setLanguage(language);
+
+		Mockito.when(
+			language.isAvailableLocale(Locale.US)
 		).thenReturn(
 			true
 		);
 
 		Assert.assertEquals(Locale.US, LocaleUtil.fromLanguageId("en-US"));
 
-		when(
-			LanguageUtil.isAvailableLocale(Locale.SIMPLIFIED_CHINESE)
+		Mockito.when(
+			language.isAvailableLocale(Locale.SIMPLIFIED_CHINESE)
 		).thenReturn(
 			true
 		);
@@ -90,8 +94,8 @@ public class LocaleUtilTest extends PowerMockito {
 		Assert.assertEquals(
 			Locale.SIMPLIFIED_CHINESE, LocaleUtil.fromLanguageId("zh-Hans-CN"));
 
-		when(
-			LanguageUtil.isAvailableLocale(Locale.TRADITIONAL_CHINESE)
+		Mockito.when(
+			language.isAvailableLocale(Locale.TRADITIONAL_CHINESE)
 		).thenReturn(
 			true
 		);

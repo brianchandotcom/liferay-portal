@@ -83,6 +83,7 @@ public class InfoCollectionProviderActionDropdownItems {
 			dropdownItem.putData(
 				"viewInfoCollectionProviderItemsURL",
 				String.valueOf(viewInfoCollectionProviderItemsURL));
+			dropdownItem.setIcon("view");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "view-items"));
 		};

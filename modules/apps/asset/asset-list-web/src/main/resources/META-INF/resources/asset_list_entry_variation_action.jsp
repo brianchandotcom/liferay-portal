@@ -32,6 +32,9 @@
 	</portlet:renderURL>
 
 	<liferay-ui:icon
+		icon="view"
+		linkCssClass="asset-list-entry-variation-action"
+		markupView="lexicon"
 		message="view-items"
 		method="get"
 		url="<%= viewAssetListEntryVariationItemsURL %>"
@@ -45,6 +48,9 @@
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
+			icon="trash"
+			linkCssClass="asset-list-entry-variation-action"
+			showIcon="<%= true %>"
 			url="<%= deleteAssetListEntryVariationURL %>"
 		/>
 	</c:if>

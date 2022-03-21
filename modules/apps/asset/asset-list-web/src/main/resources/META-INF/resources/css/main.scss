@@ -1,5 +1,18 @@
 @import './variations-nav';
 
+.asset-list-entry-variation-action {
+	display: flex;
+
+	.c-inner {
+		display: block;
+		flex-grow: 0;
+	}
+
+	.taglib-text-icon {
+		margin-left: 18px;
+	}
+}
+
 .portlet-asset-list-web {
 	.timeline-item {
 		&:first-child {

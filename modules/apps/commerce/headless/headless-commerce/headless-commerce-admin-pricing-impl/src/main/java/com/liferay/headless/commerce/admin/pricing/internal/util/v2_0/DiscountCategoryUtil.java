@@ -23,7 +23,6 @@ import com.liferay.commerce.discount.service.CommerceDiscountRelService;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountCategory;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -32,15 +31,12 @@ import com.liferay.portal.kernel.util.Validator;
 public class DiscountCategoryUtil {
 
 	public static CommerceDiscountRel addCommerceDiscountRel(
-			AssetCategoryLocalService assetCategoryLocalService,
+			long groupId, AssetCategoryLocalService assetCategoryLocalService,
 			CommerceDiscountRelService commerceDiscountRelService,
 			DiscountCategory discountCategory,
 			CommerceDiscount commerceDiscount,
 			ServiceContextHelper serviceContextHelper)
 		throws PortalException {
-
-		ServiceContext serviceContext =
-			serviceContextHelper.getServiceContext();
 
 		AssetCategory assetCategory;
 
@@ -52,9 +48,10 @@ public class DiscountCategoryUtil {
 		}
 		else {
 			assetCategory =
-				assetCategoryLocalService.fetchAssetCategoryByReferenceCode(
-					serviceContext.getCompanyId(),
-					discountCategory.getCategoryExternalReferenceCode());
+				assetCategoryLocalService.
+					fetchAssetCategoryByExternalReferenceCode(
+						groupId,
+						discountCategory.getCategoryExternalReferenceCode());
 
 			if (assetCategory == null) {
 				throw new NoSuchCategoryException(
@@ -66,7 +63,7 @@ public class DiscountCategoryUtil {
 		return commerceDiscountRelService.addCommerceDiscountRel(
 			commerceDiscount.getCommerceDiscountId(),
 			AssetCategory.class.getName(), assetCategory.getCategoryId(),
-			serviceContext);
+			serviceContextHelper.getServiceContext());
 	}
 
 }

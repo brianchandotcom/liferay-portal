@@ -31,7 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 public class DiscountCategoryUtil {
 
 	public static CommerceDiscountRel addCommerceDiscountRel(
-			AssetCategoryLocalService assetCategoryLocalService,
+			long groupId, AssetCategoryLocalService assetCategoryLocalService,
 			CommerceDiscountRelService commerceDiscountRelService,
 			DiscountCategory discountCategory,
 			CommerceDiscount commerceDiscount, ServiceContext serviceContext)
@@ -47,9 +47,10 @@ public class DiscountCategoryUtil {
 		}
 		else {
 			assetCategory =
-				assetCategoryLocalService.fetchAssetCategoryByReferenceCode(
-					serviceContext.getCompanyId(),
-					discountCategory.getCategoryExternalReferenceCode());
+				assetCategoryLocalService.
+					fetchAssetCategoryByExternalReferenceCode(
+						groupId,
+						discountCategory.getCategoryExternalReferenceCode());
 
 			if (assetCategory == null) {
 				throw new NoSuchCategoryException(

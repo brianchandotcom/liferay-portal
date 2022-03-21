@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 public class PriceModifierUtil {
 
 	public static void addOrUpdateCommercePriceModifierRels(
-			AssetCategoryLocalService assetCategoryLocalService,
+			long groupId, AssetCategoryLocalService assetCategoryLocalService,
 			CommercePricingClassService commercePricingClassService,
 			CProductLocalService cProductLocalService,
 			CommercePriceModifierRelService commercePriceModifierRelService,
@@ -64,9 +64,9 @@ public class PriceModifierUtil {
 				}
 
 				PriceModifierCategoryUtil.addCommercePriceModifierRel(
-					assetCategoryLocalService, commercePriceModifierRelService,
-					priceModifierCategory, commercePriceModifier,
-					serviceContextHelper);
+					groupId, assetCategoryLocalService,
+					commercePriceModifierRelService, priceModifierCategory,
+					commercePriceModifier, serviceContextHelper);
 			}
 		}
 

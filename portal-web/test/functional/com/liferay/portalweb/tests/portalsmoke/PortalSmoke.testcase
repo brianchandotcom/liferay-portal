@@ -71,14 +71,9 @@ definition {
 		property portal.smoke = "false";
 
 		User.firstLoginUI(
+			newPassword = "test2",
 			password = "test",
 			userEmailAddress = "test@liferay.com");
-
-		User.resetPassword(newPassword = "test2");
-
-		User.answerPasswordReminder();
-
-		User.acceptEndUserLicenseAgreement();
 
 		AssertElementPresent(locator1 = "UserBar#USER_AVATAR_IMAGE");
 

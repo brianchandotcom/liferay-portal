@@ -101,7 +101,7 @@ dependencies {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.target.platform", version: "2.1.39"
-	compile(group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.17") {
+	compile(group: "com.liferay", name: "com.liferay.gradle.plugins.theme.builder", version: "2.0.18") {
 		exclude group: "biz.aQute.bnd", module: "biz.aQute.bnd"
 	}
 	compile(group: "com.liferay", name: "com.liferay.portal.tools.bundle.support", version: "3.7.3") {

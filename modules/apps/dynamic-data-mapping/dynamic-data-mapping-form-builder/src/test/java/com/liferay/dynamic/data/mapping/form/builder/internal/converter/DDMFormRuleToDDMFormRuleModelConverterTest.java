@@ -28,10 +28,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.lang.reflect.Field;
 
@@ -43,24 +43,24 @@ import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest(ServiceContextThreadLocal.class)
-@RunWith(PowerMockRunner.class)
 public class DDMFormRuleToDDMFormRuleModelConverterTest
 	extends BaseDDMConverterTestCase {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
@@ -207,7 +207,7 @@ public class DDMFormRuleToDDMFormRuleModelConverterTest
 		ddmForm.setDDMFormFields(
 			Arrays.asList(ddmFormField0, ddmFormField1, ddmFormField2));
 
-		PowerMockito.when(
+		Mockito.when(
 			_spiDDMFormRuleSerializerContext.getAttribute("form")
 		).thenReturn(
 			ddmForm
@@ -417,8 +417,8 @@ public class DDMFormRuleToDDMFormRuleModelConverterTest
 		new DDMFormRuleConverterImpl();
 	private final DDMFormRuleDeserializerImpl _ddmFormRuleDeserializerImpl =
 		new DDMFormRuleDeserializerImpl();
-
-	@Mock
-	private SPIDDMFormRuleSerializerContext _spiDDMFormRuleSerializerContext;
+	private final SPIDDMFormRuleSerializerContext
+		_spiDDMFormRuleSerializerContext = Mockito.mock(
+			SPIDDMFormRuleSerializerContext.class);
 
 }

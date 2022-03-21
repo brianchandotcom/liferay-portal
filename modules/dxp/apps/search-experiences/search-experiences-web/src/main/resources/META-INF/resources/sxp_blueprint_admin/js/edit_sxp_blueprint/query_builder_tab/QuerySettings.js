@@ -26,6 +26,7 @@ function QuerySettings({
 	onApplyIndexerClausesChange,
 	onChangeClauseContributorsVisibility,
 	onChangeIndexerClausesVisibility,
+	onFetchSearchableTypes,
 	onFrameworkConfigChange,
 	searchableTypes,
 }) {
@@ -111,6 +112,9 @@ function QuerySettings({
 									</div>
 
 									<SelectTypes
+										onFetchSearchableTypes={
+											onFetchSearchableTypes
+										}
 										onFrameworkConfigChange={
 											onFrameworkConfigChange
 										}

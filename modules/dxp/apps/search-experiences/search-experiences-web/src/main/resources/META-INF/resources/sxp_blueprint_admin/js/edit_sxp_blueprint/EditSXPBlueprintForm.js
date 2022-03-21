@@ -39,6 +39,7 @@ import {
 	openSuccessToast,
 	setInitialSuccessToast,
 } from '../utils/toasts';
+import useFetchData from '../utils/useFetchData';
 import useShouldConfirmBeforeNavigate from '../utils/useShouldConfirmBeforeNavigate';
 import {
 	cleanUIConfiguration,
@@ -108,7 +109,13 @@ function EditSXPBlueprintForm({
 		queryPrefilterContributors,
 		setQueryPrefilterContributors,
 	] = useState(null);
-	const [searchableTypes, setSearchableTypes] = useState(null);
+
+	const {
+		data: searchableTypes,
+		refetch: refetchSearchableTypes,
+	} = useFetchData({
+		resource: `/o/search-experiences-rest/v1.0/searchable-asset-names/${locale}`,
+	});
 
 	/**
 	 * This method must go before the useFormik hook.
@@ -379,14 +386,6 @@ function EditSXPBlueprintForm({
 	useShouldConfirmBeforeNavigate(formik.dirty && !formik.isSubmitting);
 
 	useEffect(() => {
-		fetchData(
-			`/o/search-experiences-rest/v1.0/searchable-asset-names/${locale}`
-		)
-			.then((responseContent) =>
-				setSearchableTypes(responseContent.items)
-			)
-			.catch(() => setSearchableTypes([]));
-
 		fetchData(`/o/search-experiences-rest/v1.0/field-mapping-infos`)
 			.then((responseContent) => setIndexFields(responseContent.items))
 			.catch(() => setIndexFields([]));
@@ -869,11 +868,12 @@ function EditSXPBlueprintForm({
 								onBlur={formik.handleBlur}
 								onChange={formik.handleChange}
 								onDeleteSXPElement={_handleDeleteSXPElement}
+								onFetchSearchableTypes={refetchSearchableTypes}
 								onFrameworkConfigChange={
 									_handleFrameworkConfigChange
 								}
 								openSidebar={openSidebar}
-								searchableTypes={searchableTypes}
+								searchableTypes={searchableTypes?.items}
 								setFieldTouched={formik.setFieldTouched}
 								setFieldValue={formik.setFieldValue}
 								setOpenSidebar={setOpenSidebar}
@@ -889,8 +889,7 @@ function EditSXPBlueprintForm({
 		!indexFields ||
 		!keywordQueryContributors ||
 		!modelPrefilterContributors ||
-		!queryPrefilterContributors ||
-		!searchableTypes
+		!queryPrefilterContributors
 	) {
 		return null;
 	}

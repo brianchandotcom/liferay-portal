@@ -1,5 +1,74 @@
 definition {
 
+	macro _addCommerceProductsWithSpecifications {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = "${catalogName}");
+
+		var optionCategoryIds = CommerceJSONSpecificationsAPI._getCommerceSpecificationIdBySpecKey(specificationKey = "${specificationKey}");
+
+		for (var optionCategoryId : list "${optionCategoryIds}") {
+
+
+			echo("optionCategoryId is ${optionCategoryId}");
+		}
+
+		//echo("optionCategoryId is ${optionCategoryId}");
+
+		var size = "101";
+		var i = "1";
+		var payload = "[";
+
+		while ("${i}" != "${size}" && (maxIterations = "101")) {
+			var line = '''
+    		{
+				"active": true,
+				"catalogId": ${catalogId},
+				"name":{
+					"en_US": "Product ${i}"
+				},
+				"productType": "simple",
+				"productSpecifications":[
+					{
+						"optionCategoryId": ${optionCategoryId},
+						"priority": 0,
+						"specificationKey": "${specificationKey}",
+						"value":{
+							"en_US": "Spec Value ${i}"
+						}
+					}
+				]
+			}''';
+			var j = ${i} + 1;
+
+			if ("${j}" == "${size}") {
+				var payload = StringUtil.replace("${payload}", "${payload}", "${payload}${line}");
+			}
+			else {
+				var line = StringUtil.replace("${line}", "${line}", "${line},");
+				var payload = StringUtil.replace("${payload}", "${payload}", "${payload}${line}");
+			}
+
+			var i = ${i} + 1;
+		}
+
+		var payload = StringUtil.replace("${payload}", "${payload}", "${payload}]");
+
+		var curl = '''
+				${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/batch \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '${payload}'
+			''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	macro _deleteAllCommerceSpecifications {
 		var baseURL = "${baseURL}";
 
@@ -27,6 +96,23 @@ definition {
 		else {
 			echo("No Commerce Specifications to be deleted");
 		}
+	}
+
+	macro _getCommerceSpecificationIdBySpecKey {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/specifications?search=${specificationKey} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+		var optionCategoryId = JSONCurlUtil.get("${curl}", "$.items..optionCategory.id");
+
+		return "${optionCategoryId}";
 	}
 
 	macro _getCommerceSpecificationIds {

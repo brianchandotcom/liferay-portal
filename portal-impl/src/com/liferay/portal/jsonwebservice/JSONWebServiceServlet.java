@@ -15,15 +15,11 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.servlet.JSONServlet;
-import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.util.PropsValues;
 
@@ -65,32 +61,11 @@ public class JSONWebServiceServlet extends JSONServlet {
 			return;
 		}
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Servlet context " + httpServletRequest.getContextPath());
-		}
+		RequestDispatcher requestDispatcher =
+			httpServletRequest.getRequestDispatcher(
+				Portal.PATH_MAIN + "/portal/api/jsonws");
 
-		String portalContextPath =
-			PortalContextLoaderListener.getPortalServletContextPath();
-
-		String requestContextPath = httpServletRequest.getContextPath();
-
-		if (requestContextPath.equals(portalContextPath)) {
-			RequestDispatcher requestDispatcher =
-				httpServletRequest.getRequestDispatcher(
-					Portal.PATH_MAIN + "/portal/api/jsonws");
-
-			requestDispatcher.forward(httpServletRequest, httpServletResponse);
-		}
-		else {
-			ServletContext servletContext = getServletContext();
-
-			String redirectPath =
-				PortalUtil.getPathContext() + "/api/jsonws?contextName=" +
-					URLCodec.encodeURL(servletContext.getServletContextName());
-
-			httpServletResponse.sendRedirect(redirectPath);
-		}
+		requestDispatcher.forward(httpServletRequest, httpServletResponse);
 	}
 
 	@Override
@@ -102,8 +77,5 @@ public class JSONWebServiceServlet extends JSONServlet {
 
 		return jsonWebServiceServiceAction;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JSONWebServiceServlet.class);
 
 }

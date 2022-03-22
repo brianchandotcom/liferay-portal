@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -519,15 +520,18 @@ public class PullRequest {
 	}
 
 	public boolean hasRequiredPassingTestSuites() {
-		String requiredPassingSuites;
+		Properties buildProperties;
 
 		try {
-			requiredPassingSuites = JenkinsResultsParserUtil.getBuildProperty(
-				"pull.request.forward.required.passing.suites");
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+
+		String requiredPassingSuites = JenkinsResultsParserUtil.getProperty(
+			buildProperties, "pull.request.forward.required.passing.suites",
+			getGitRepositoryName());
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(requiredPassingSuites)) {
 			return true;

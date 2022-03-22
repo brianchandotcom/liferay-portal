@@ -191,6 +191,35 @@ public class Layout implements Cloneable, Serializable {
 
 	protected ContentDisplay contentDisplay;
 
+	public FlexWrap getFlexWrap() {
+		return flexWrap;
+	}
+
+	public String getFlexWrapAsString() {
+		if (flexWrap == null) {
+			return null;
+		}
+
+		return flexWrap.toString();
+	}
+
+	public void setFlexWrap(FlexWrap flexWrap) {
+		this.flexWrap = flexWrap;
+	}
+
+	public void setFlexWrap(
+		UnsafeSupplier<FlexWrap, Exception> flexWrapUnsafeSupplier) {
+
+		try {
+			flexWrap = flexWrapUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected FlexWrap flexWrap;
+
 	public HtmlTag getHtmlTag() {
 		return htmlTag;
 	}
@@ -675,6 +704,39 @@ public class Layout implements Cloneable, Serializable {
 		}
 
 		private ContentDisplay(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
+
+	public static enum FlexWrap {
+
+		NO_WRAP("NoWrap"), WRAP("Wrap"), WRAP_REVERSE("WrapReverse");
+
+		public static FlexWrap create(String value) {
+			for (FlexWrap flexWrap : values()) {
+				if (Objects.equals(flexWrap.getValue(), value) ||
+					Objects.equals(flexWrap.name(), value)) {
+
+					return flexWrap;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private FlexWrap(String value) {
 			_value = value;
 		}
 

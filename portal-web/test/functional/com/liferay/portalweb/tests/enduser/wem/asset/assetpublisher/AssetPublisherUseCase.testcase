@@ -380,6 +380,7 @@ definition {
 	@description = "Configure the Asset Publisher as Site Administrator."
 	@priority = "4"
 	test ConfigureAssetPublisherAsSiteAdministrater {
+		property asset.publisher.selection.style = "asset-list";
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Add a new user") {

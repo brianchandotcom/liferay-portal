@@ -1409,6 +1409,15 @@
 							"title": "The contentDisplay Schema",
 							"type": "string"
 						},
+						"flexWrap": {
+							"enum": [
+								"NoWrap",
+								"Wrap",
+								"WrapReverse"
+							],
+							"title": "The flexWrap Schema",
+							"type": "string"
+						},
 						"htmlTag": {
 							"enum": [
 								"Article",

@@ -37,6 +37,7 @@ import isMappedToCollection from '../../../../../app/utils/editable-value/isMapp
 import getLayoutDataItemLabel from '../../../../../app/utils/getLayoutDataItemLabel';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
 import {getResponsiveConfig} from '../../../../../app/utils/getResponsiveConfig';
+import getSelectedField from '../../../../../app/utils/getSelectedField';
 import PageStructureSidebarSection from './PageStructureSidebarSection';
 import StructureTreeNode from './StructureTreeNode';
 
@@ -213,17 +214,18 @@ function getMappedFieldLabel(
 	const {selectedMappingTypes} = config;
 
 	if (!infoItem && !selectedMappingTypes && !collectionConfig) {
-		for (const [key, value] of Object.entries(mappingFields)) {
-			if (key.startsWith(editable.classNameId)) {
-				const field = value
-					.flatMap((fieldSet) => fieldSet.fields)
-					.find(
-						(field) =>
-							field.key ===
-							(editable.mappedField ||
-								editable.fieldId ||
-								editable.collectionFieldId)
-					);
+		for (const [mappingFieldsKey, fields] of Object.entries(
+			mappingFields
+		)) {
+			if (mappingFieldsKey.startsWith(editable.classNameId)) {
+				const field = getSelectedField({
+					fields,
+					mappingFieldsKey,
+					value:
+						editable.mappedField ||
+						editable.fieldId ||
+						editable.collectionFieldId,
+				});
 
 				return field?.label;
 			}
@@ -241,15 +243,14 @@ function getMappedFieldLabel(
 	const fields = mappingFields[key];
 
 	if (fields) {
-		const field = fields
-			.flatMap((fieldSet) => fieldSet.fields)
-			.find(
-				(field) =>
-					field.key ===
-					(editable.mappedField ||
-						editable.fieldId ||
-						editable.collectionFieldId)
-			);
+		const field = getSelectedField({
+			fields,
+			mappingFieldsKey: key,
+			value:
+				editable.mappedField ||
+				editable.fieldId ||
+				editable.collectionFieldId,
+		});
 
 		return field?.label;
 	}

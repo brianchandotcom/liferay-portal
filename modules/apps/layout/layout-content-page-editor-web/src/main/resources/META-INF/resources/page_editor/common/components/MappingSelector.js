@@ -29,6 +29,7 @@ import isMapped from '../../app/utils/editable-value/isMapped';
 import isMappedToInfoItem from '../../app/utils/editable-value/isMappedToInfoItem';
 import isMappedToStructure from '../../app/utils/editable-value/isMappedToStructure';
 import getMappingFieldsKey from '../../app/utils/getMappingFieldsKey';
+import getSelectedField from '../../app/utils/getSelectedField';
 import itemSelectorValueToInfoItem from '../../app/utils/item-selector-value/itemSelectorValueToInfoItem';
 import {useId} from '../../app/utils/useId';
 import ItemSelector from './ItemSelector';
@@ -453,6 +454,8 @@ function MappingFieldSelect({fieldType, fields, onValueSelect, value}) {
 
 	const hasWarnings = fields && fields.length === 0;
 
+	const selectedField = getSelectedField({fields, value});
+
 	return (
 		<ClayForm.Group
 			className={classNames('mt-3', {'has-warning': hasWarnings})}
@@ -467,7 +470,7 @@ function MappingFieldSelect({fieldType, fields, onValueSelect, value}) {
 				disabled={!(fields && !!fields.length)}
 				id={mappingSelectorFieldSelectId}
 				onChange={onValueSelect}
-				value={value}
+				value={selectedField?.key}
 			>
 				{fields && !!fields.length && (
 					<>

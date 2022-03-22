@@ -126,6 +126,8 @@ definition {
 			key_text = "Add",
 			locator1 = "Button#ANY");
 
+		WaitForPageLoad();
+
 		if (isSet(siteName)) {
 			Click(
 				key_menuTab = "Type",

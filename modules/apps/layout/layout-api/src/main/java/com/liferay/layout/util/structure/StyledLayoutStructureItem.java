@@ -107,6 +107,10 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 		return _getStringStyleProperty("display");
 	}
 
+	public String getFlexWrap() {
+		return GetterUtil.getString(_getStyleProperty("flexWrap"));
+	}
+
 	public String getFontFamily() {
 		return GetterUtil.getString(_getStyleProperty("fontFamily"));
 	}

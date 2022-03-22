@@ -283,7 +283,7 @@ public class RenderLayoutStructureDisplayContext {
 			StyledLayoutStructureItem styledLayoutStructureItem)
 		throws Exception {
 
-		StringBundler cssClassSB = new StringBundler(33);
+		StringBundler cssClassSB = new StringBundler(35);
 
 		String align = styledLayoutStructureItem.getAlign();
 
@@ -329,6 +329,13 @@ public class RenderLayoutStructureDisplayContext {
 		else if (Validator.isNotNull(display)) {
 			cssClassSB.append(" d-lg-");
 			cssClassSB.append(display);
+		}
+
+		String flexWrap = styledLayoutStructureItem.getFlexWrap();
+
+		if (Validator.isNotNull(flexWrap)) {
+			cssClassSB.append(" ");
+			cssClassSB.append(flexWrap);
 		}
 
 		String justify = styledLayoutStructureItem.getJustify();

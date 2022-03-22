@@ -224,7 +224,7 @@ definition {
 
 	@description = "LPS-147836. Assert tooltip message will be displayed when hovered over an action button in responsive mode"
 	@priority = "3"
-	test ResponsiveModeActionsButtonsTooltips {
+	test ResponsiveModeActionButtonsShouldDisplayTooltips {
 		task ("Given a window size set to tablet size") {
 			SetWindowSize(value1 = "800,1024");
 		}

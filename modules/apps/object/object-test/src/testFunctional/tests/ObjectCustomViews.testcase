@@ -357,7 +357,7 @@ definition {
 		ObjectCustomViews.addColumnsViaUI(
 			columnOption = "Workflow Status",
 			viewLabel = "Custom Views A");
-		
+
 		Button.clickSave();
 
 		Refresh();
@@ -504,7 +504,6 @@ definition {
 	@description = "LPS-148955 - Verify it is possible to view the values of 2 or more relationship fields for a same object"
 	@priority = "4"
 	test CanView2RelationshipFieldValues {
-
 		for (var letter : list "A,B,C") {
 			ObjectAdmin.addObjectViaAPI(
 				labelName = "Custom Object ${letter} 149238",
@@ -520,7 +519,7 @@ definition {
 				relationshipName = "relationship",
 				relationshipType = "oneToMany");
 		}
-		
+
 		for (var letter : list "A,B,C") {
 			ObjectAdmin.addObjectFieldViaAPI(
 				fieldBusinessType = "Text",
@@ -539,7 +538,7 @@ definition {
 				objectName = "CustomObject${letter}149238",
 				value = "Entry ${letter}");
 		}
-		
+
 		for (var letter : list "A,B") {
 			ObjectAdmin.openObjectAdmin();
 
@@ -556,8 +555,8 @@ definition {
 			ObjectPortlet.viewEntryDetails(entry = "Entry C");
 
 			ObjectPortlet.chooseEntryOnRelationshipFieldSpecific(
-				relationshipFieldLabel = "Custom Object ${letter} 149238",
-				entryOption = "Entry ${letter}");
+				entryOption = "Entry ${letter}",
+				relationshipFieldLabel = "Custom Object ${letter} 149238");
 		}
 
 		ObjectAdmin.openObjectAdmin();
@@ -583,13 +582,12 @@ definition {
 			viewLabel = "Custom Views");
 
 		Button.clickSave();
-	
+
 		ObjectAdmin.goToCustomObject(objectName = "CustomObjectC149238");
 
 		ObjectPortlet.viewEntry(entry = "Entry A");
 
 		ObjectPortlet.viewEntry(entry = "Entry B");
-
 	}
 
 	@description = "LPS-144902 - Verify if the entries from an object in a table view defined as default are presented correctly"

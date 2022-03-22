@@ -55,6 +55,37 @@ definition {
 
 	}
 
+	@description = "This test ensures that user is not able to upload the mimetypes files that bigger than the limit set when the admin sets a size limit for multiple mimetypes."
+	@priority = "4"
+	test CanLimitMultipleMimeTypesSize {
+		property test.name.skip.portal.instance = "DMAdmin#CanLimitMultipleMimeTypesSize";
+
+		DMDocument.updateMimeTypeSizeLimit(fieldValue = "image/jpeg:40960");
+
+		for (var fieldValue : list "application/pdf:30720,application/msword:20480") {
+			DMDocument.updateMimeTypeSizeLimit(
+				fieldValue = "${fieldValue}",
+				indexNumber = "2");
+		}
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		DMDocument.addMultipleCP(
+			dmDocumentFileFailed = "Document_1.doc,large_file.pdf,Commerce_Blue.jpg",
+			dmDocumentFileList = "Commerce_Black.jpg,Commerce_Blue.jpg,Document_2.pdf,large_file.pdf,Document_1.doc,Document_3.docx",
+			validationError = "Please enter a file with a valid file size no larger than 20 KB,Please enter a file with a valid file size no larger than 30 KB,Please enter a file with a valid file size no larger than 40 KB");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
+
+		for (var fileName : list "Document_1,large_file,Commerce_Blue") {
+			LexiconCard.viewCardNotPresent(card = "${fileName}");
+		}
+
+		for (var fileName : list "Commerce_Black,Document_3,Document_2") {
+			LexiconCard.viewCardTitle(card = "${fileName}");
+		}
+	}
+
 	@description = "This is a test for LPS-91861. It checks that the counts can be reset in management toolbar."
 	@ignore = "Test Stub"
 	@priority = "5"

@@ -26,11 +26,70 @@ definition {
 
 	@description = "This is a stubbed description"
 	@ignore = "true"
-	@priority = "3"
+	@priority = "5"
 	test CanTranslateLabelPlaceholderAndHelpTextOfTextField {
 
 		// TODO pending implementation
 
 	}
+
+	@description = "This is a stubbed description"
+	@priority = "5"
+	test CanInputtedDataBeTranslatedOnTextField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "文本");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		WebContent.addWithStructureCP(
+			webContentText = "Test",
+			webContentTitle = "Test");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		WebContent.addWithStructureCP(
+			webContentText = "测试",
+			webContentTextFieldLabel = "文本",
+			webContentTitle = "测试");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "文本",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "测试");
+	}
+
+	
 
 }

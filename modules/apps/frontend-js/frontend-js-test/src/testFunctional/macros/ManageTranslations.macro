@@ -1,5 +1,13 @@
 definition {
 
+	macro addLanguage {
+		Click(locator1 = "Modal#PLUS");
+
+		Click(
+			key_locale = "${key_locale}",
+			locator1 = "Translation#DROPDOWN_MENU_ITEM");
+	}
+
 	macro deleteLanguage {
 		Click(locator1 = "ManageTranslations#LIST_ITEM_DELETE_LANGUAGE_BUTTON");
 

@@ -10,68 +10,62 @@
  * distribution rights of the Software.
  */
 
-import {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
 
-// import {Button} from '../../../../../../common/components';
-// import getCurrentActiveRoles from '../../../../components/';
-// import getAvailableFieldsCheckboxs from '../../../../components/CheckboxFilter/utils/getAvailableFieldsCheckboxs';
-// import DropDownWithDrillDown from '../../../../components/DropDownWithDrillDown';
+import {Button} from '../../../../../../common/components';
+
+import getAvailableFieldsCheckboxs from '../../../../components/CheckboxFilter/utils/getAvailableFieldsCheckboxs';
+
+import DropDownWithDrillDown from '../../../../components/DropDownWithDrillDown';
 
 import SearchBar from '../../../../components/SearchBar';
 
-// import {getDropDownAvailableFields, getEnvironmentType} from '../../utils';
+import {getCurrentActiveRoles} from '../../utils/getCurrentActiveRoles';
 
-// const MAX_UPDATE = 3;
+import {getDropDownAvailableFields} from '../../utils/getDropDownAvailableFields';
+
+const MAX_UPDATE = 3;
 
 const TeamMembersFilter = ({
-	activationKeys: userAccounts,
+	userAccounts,
 	filtersState: [filters, setFilters],
 }) => {
-	console.log('🚀 ~ file: index.js ~ line 26 ~ filters', filters);
-	const countFetchActivationKeysRef = useRef(0);
+	const countFetchUserAccountsRef = useRef(0);
 
-	// const [availableFields, setAvailableFields] = useState({
-	// 	role: [],
-	// 	status: [],
-	// 	supportRoles: [],
-	// });
+	const [availableFields, setAvailableFields] = useState({
+		roles: [],
+	});
 
 	useEffect(() => {
 		if (userAccounts) {
-			countFetchActivationKeysRef.current = ++countFetchActivationKeysRef.current;
+			countFetchUserAccountsRef.current = ++countFetchUserAccountsRef.current;
 		}
 	}, [userAccounts]);
 
-	// useEffect(() => {
-	// 	if (userAccounts && countFetchActivationKeysRef?.current < MAX_UPDATE) {
-	// 		setAvailableFields(() => ({
-	// 			role: [
-	// 				...getAvailableFieldsCheckboxs(userAccounts, ({roles}) =>
-	// 					getCurrentActiveRoles(roles)
-	// 				),
-	// 			],
-	// 			status: [
-	// 				...getAvailableFieldsCheckboxs(
-	// 					userAccounts,
-	// 					({productName}) => getEnvironmentType(productName)
-	// 				),
-	// 			],
-	// 			supportRoles: [
-	// 				...getAvailableFieldsCheckboxs(
-	// 					userAccounts,
-	// 					({productName}) => getEnvironmentType(productName)
-	// 				),
-	// 			],
-	// 		}));
-	// 	}
-	// }, [userAccounts]);
+	useEffect(() => {
+		if (userAccounts && countFetchUserAccountsRef?.current < MAX_UPDATE) {
+			setAvailableFields(() => ({
+				roles: getAvailableFieldsCheckboxs(
+					userAccounts,
+					(userAccount) => getCurrentActiveRoles(userAccount?.roles)
+				),
+			}));
+		}
+	}, [userAccounts]);
+
+	console.log('🚀 ~ file: index.js ~ line 26 ~ filters', filters);
+
+	console.log(
+		'🚀 ~ file: index.js ~ line 31 ~ availableFields',
+		availableFields
+	);
 
 	return (
 		<div className="d-flex flex-column">
 			<div className="d-flex">
 				<SearchBar setFilters={setFilters} />
 
-				{/* <DropDownWithDrillDown
+				<DropDownWithDrillDown
 					className="align-items-center d-flex"
 					initialActiveMenu="x0a0"
 					menus={getDropDownAvailableFields(
@@ -88,7 +82,7 @@ const TeamMembersFilter = ({
 							Filter
 						</Button>
 					}
-				/> */}
+				/>
 			</div>
 		</div>
 	);

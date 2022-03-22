@@ -1399,14 +1399,6 @@ components:
                 neverExpire:
                     example: true
                     type: boolean
-                options:
-                    additionalProperties:
-                        type: string
-                    example:
-                        color: yellow
-                        optionKey: optionValueKey
-                        size: xs
-                    type: object
                 price:
                     example: 101
                     format: bigdecimal
@@ -1449,6 +1441,10 @@ components:
                 sku:
                     example: "12341234"
                     type: string
+                skuOptions:
+                    items:
+                        $ref: "#/components/schemas/SkuOption"
+                    type: array
                 unspsc:
                     example: "1234567890"
                     type: string
@@ -1464,6 +1460,21 @@ components:
                     type: number
             required:
                 - sku
+            type: object
+        SkuOption:
+            properties:
+                key:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                value:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
             type: object
         Specification:
             properties:

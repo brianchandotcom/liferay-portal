@@ -222,6 +222,26 @@ definition {
 		}
 	}
 
+	@description = "LPS-147836. Assert tooltip message will be displayed when hovered over an action button in responsive mode"
+	@priority = "3"
+	test ResponsiveModeActionsButtonsTooltips {
+		task ("Given a window size set to tablet size") {
+			SetWindowSize(value1 = "800,1024");
+		}
+
+		task ("And hovers over an action button") {
+			MouseOver(
+				key_text = "download",
+				locator1 = "ManagementBar#ANY_ICON");
+		}
+
+		task ("Then a tooltip message will be displayed") {
+			AssertTextEquals(
+				locator1 = "Message#TOOLTIP",
+				value1 = "Download");
+		}
+	}
+
 	@description = "LPS-147865. Assert the new button is displayed as an icon button in responsive mode"
 	@priority = "5"
 	test ResponsiveModeNewButtonAsIconButton {

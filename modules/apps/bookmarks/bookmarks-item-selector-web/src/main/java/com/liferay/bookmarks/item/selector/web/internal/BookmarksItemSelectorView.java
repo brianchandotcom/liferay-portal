@@ -86,17 +86,12 @@ public class BookmarksItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		BookmarksItemSelectorViewDisplayContext
-			bookmarksItemSelectorViewDisplayContext =
-				new BookmarksItemSelectorViewDisplayContext(
-					bookmarksItemSelectorCriterion, this,
-					_itemSelectorReturnTypeResolverHandler,
-					itemSelectedEventName, search, portletURL,
-					_bookmarksEntryLocalService);
-
 		servletRequest.setAttribute(
 			BookmarksItemSelectorViewDisplayContext.class.getName(),
-			bookmarksItemSelectorViewDisplayContext);
+			new BookmarksItemSelectorViewDisplayContext(
+				bookmarksItemSelectorCriterion, this,
+				_itemSelectorReturnTypeResolverHandler, itemSelectedEventName,
+				search, portletURL, _bookmarksEntryLocalService));
 
 		ServletContext servletContext = getServletContext();
 

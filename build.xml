@@ -796,6 +796,16 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 		<ant antfile="build-dist.xml" inheritAll="false" target="prepare-generated-files" />
 	</target>
 
+	<target name="print-machine-info">
+		<java
+			classname="com.liferay.portal.tools.MachineInfoUtil"
+			classpathref="project.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+		</java>
+	</target>
+
 	<target name="propertiesdoc">
 		<property name="properties.dest.dir" value="${doc.dir}/propertiesdoc" />
 

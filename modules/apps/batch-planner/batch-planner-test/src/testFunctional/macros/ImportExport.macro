@@ -101,6 +101,43 @@ definition {
 			value1 = "${entityType}");
 	}
 
+	macro exportFile {
+		Click(locator1 = "Button#PLUS");
+
+		MenuItem.click(menuItem = "Export File");
+
+		ImportExport.selectEntity(
+			entityType = "${entityType}",
+			headlessEndpoint = "${headlessEndpoint}");
+
+		Select(
+			key_selectFieldLabel = "Export File Format",
+			locator1 = "ImportExport#SELECT",
+			value1 = "${exportFileFormat}");
+
+		if ("${containsHeaders}" == "false") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "Headers",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		ImportExport.mapExport(exportFields = "${exportFields}");
+
+		Button.click(button = "Export");
+
+		WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+
+		Button.click(button = "Download");
+
+		DownloadTempFile();
+
+		DMDocument.assertFileNameFromTempFolder(fileName = "Export.zip");
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "unzip-temp-file -DfileName=Export.zip");
+	}
+
 	macro gotoExport {
 		Click(locator1 = "Button#PLUS");
 
@@ -111,6 +148,45 @@ definition {
 		Click(locator1 = "Button#PLUS");
 
 		MenuItem.click(menuItem = "Import File");
+	}
+
+	macro importFile {
+		Click(locator1 = "Button#PLUS");
+
+		MenuItem.click(menuItem = "Import File");
+
+		UploadDependencyFile.uploadFile(fileName = "${fileName}");
+
+		if (isSet(csvSeparator)) {
+			Type(
+				key_text = "CSV Separator",
+				locator1 = "TextInput#ANY",
+				value1 = "${csvSeparator}");
+		}
+
+		if ("${containsHeaders}" == "false") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "Headers",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		ImportExport.selectEntity(
+			entityType = "${entityType}",
+			headlessEndpoint = "${headlessEndpoint}");
+
+		if ("${stopImportOnError}" == "false") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "Stop the Import on Error",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		ImportExport.mapImport(fieldMappings = "${fieldMappings}");
+
+		Button.click(button = "Import");
+
+		WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+
+		Button.clickDone();
 	}
 
 	macro mapExport {

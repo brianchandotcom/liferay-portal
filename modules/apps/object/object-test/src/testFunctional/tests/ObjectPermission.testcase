@@ -1031,11 +1031,69 @@ definition {
 	}
 
 	@description = "LPS-146759 - Verify it is not possible to update a single Picklist created by the user if the Update Owner permission is removed"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotUpdateSinglePicklistWithoutUpdateOwnerPermission {
+		property test.name.skip.portal.instance = "ObjectPermission#CannotUpdateSinglePicklistWithoutUpdateOwnerPermission";
 
-		// TODO LPS-148943 CannotUpdateSinglePicklistWithoutUpdateOwnerPermission pending implementation
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_LIST_TYPE_DEFINITION",
+			resourceName = "com.liferay.list.type",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "PERMISSIONS",
+			resourceName = "com.liferay.list.type.model.ListTypeDefinition",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Picklist.gotoPicklists();
+
+		Picklist.addPicklistViaUI(picklistName = "Picklist Test");
+
+		Refresh();
+
+		ObjectCustomViews.gotoPermissions(entryName = "Picklist Test");
+
+		ObjectCustomViews.selectAnyPermissions(
+			owner = "true",
+			permissionsList = "UPDATE");
+
+		Button.clickSave();
+
+		Refresh();
+
+		Picklist.gotoPicklistView(picklistName = "Picklist Test");
+
+		Picklist.assertDisabledPicklistName();
+
+		Picklist.assertDisabledSaveButton();
 
 	}
 

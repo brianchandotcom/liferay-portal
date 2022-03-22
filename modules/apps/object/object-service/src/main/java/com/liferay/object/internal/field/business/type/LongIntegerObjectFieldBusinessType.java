@@ -57,7 +57,7 @@ public class LongIntegerObjectFieldBusinessType
 		return LanguageUtil.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
-			"add-a-long-integer-up-to-19-digits");
+			"add-a-long-integer-up-to-16-digits");
 	}
 
 	@Override

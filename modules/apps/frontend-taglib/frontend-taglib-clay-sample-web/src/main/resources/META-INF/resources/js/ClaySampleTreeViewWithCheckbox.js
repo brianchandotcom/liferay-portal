@@ -24,33 +24,33 @@ export default function ClaySampleTreeViewWithCheckbox() {
 					children: [
 						{
 							children: [
-								{id: 5, name: 'Blogs'},
-								{id: 6, name: 'Documents and Media'},
+								{id: 5, name: 'Style Books'},
+								{id: 6, name: 'Fragments'},
 							],
 							id: 4,
-							name: 'Repositories',
+							name: 'Design',
 						},
 						{
 							children: [
-								{id: 8, name: 'PDF'},
-								{id: 9, name: 'Word'},
-								{id: 10, name: 'Google Drive'},
-								{id: 11, name: 'Figma'},
+								{id: 8, name: 'Kaleo Forms Admin'},
+								{id: 9, name: 'Web Contend'},
+								{id: 10, name: 'Blogs'},
+								{id: 11, name: 'Bookmarks'},
 							],
 							id: 7,
-							name: 'Documents and Media',
+							name: 'Content e Data',
 						},
 						{
 							children: [],
 							id: 12,
-							name: 'Empty directory',
+							name: 'Categorization',
 						},
 					],
 					id: 1,
-					name: 'Liferay Drive',
+					name: 'Liferay DXP',
 				},
 			]}
-			defaultSelectedKeys={new Set([5, 6, 8])}
+			defaultSelectedKeys={new Set([4, 5, 6, 8])}
 			selectionMode="multiple-recursive"
 			showExpanderOnHover={false}
 		>

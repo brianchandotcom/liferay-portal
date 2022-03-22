@@ -46,6 +46,11 @@
 	<td>//div[contains(@data-lfr-background-image-id,'${key_imageName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>CARD_TITLE_LINK</td>
+	<td>//h2[contains(.,'${key_entryTitle}')]//a</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

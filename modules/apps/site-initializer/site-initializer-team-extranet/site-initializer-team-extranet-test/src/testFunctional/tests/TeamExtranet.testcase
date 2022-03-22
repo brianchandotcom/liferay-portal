@@ -1170,8 +1170,8 @@ definition {
 
 		task ("Click on the Careers Card Title and Assert it is redirected to Careers Page") {
 			Click(
-				key_title = "Browse all the open job positions",
-				locator1 = "TeamExtranet#FRAGMENT_HEADING");
+				key_entryTitle = "Browse all the open job positions",
+				locator1 = "TeamExtranet#CARD_TITLE_LINK");
 
 			AssertElementPresent(
 				key_description = "Careers",
@@ -1184,8 +1184,8 @@ definition {
 
 		task ("Click on the Team Card Title and Assert it is redirected to Team Page") {
 			Click(
-				key_title = "Meet the members of the team",
-				locator1 = "TeamExtranet#FRAGMENT_HEADING");
+				key_entryTitle = "Meet the members of the team",
+				locator1 = "TeamExtranet#CARD_TITLE_LINK");
 
 			AssertElementPresent(
 				key_description = "Team",
@@ -1198,8 +1198,8 @@ definition {
 
 		task ("Click on the Blog Card Title and Assert it is redirected to Blog Page") {
 			Click(
-				key_title = "Stay on top of the latest news",
-				locator1 = "TeamExtranet#FRAGMENT_HEADING");
+				key_entryTitle = "Stay on top of the latest news",
+				locator1 = "TeamExtranet#CARD_TITLE_LINK");
 
 			AssertElementPresent(
 				key_title = "20 gifts you can give to your marketing boss",

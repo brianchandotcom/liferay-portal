@@ -18,6 +18,7 @@ const MAX_PAGE_SIZE = 9999;
 export default function useGetAccountUserAccount(project) {
 	const [userAccounts, setUserAccounts] = useState([]);
 	const [isLoadingUserAccounts, setIsLoadingUserAccounts] = useState(false);
+	const [filterTerm, setFilterTerm] = useState('');
 
 	useEffect(() => {
 		setIsLoadingUserAccounts(true);
@@ -26,6 +27,7 @@ export default function useGetAccountUserAccount(project) {
 				query: getAccountUserAccountsByExternalReferenceCode,
 				variables: {
 					externalReferenceCode: project.accountKey,
+					filter: filterTerm,
 					pageSize: MAX_PAGE_SIZE,
 				},
 			});
@@ -58,10 +60,11 @@ export default function useGetAccountUserAccount(project) {
 			setIsLoadingUserAccounts(false);
 		};
 		getAccountUserAccounts();
-	}, [project.accountKey]);
+	}, [filterTerm, project.accountKey]);
 
 	return {
 		isLoadingUserAccounts,
+		setFilterTerm,
 		userAccountsState: [userAccounts, setUserAccounts],
 	};
 }

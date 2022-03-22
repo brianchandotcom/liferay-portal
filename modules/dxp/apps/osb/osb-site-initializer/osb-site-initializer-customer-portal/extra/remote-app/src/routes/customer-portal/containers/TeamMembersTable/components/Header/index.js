@@ -15,6 +15,7 @@ import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import {Button} from '../../../../../../common/components';
 import {ROLE_TYPES} from '../../../../../../common/utils/constants';
+import TeamMembersFilter from '../Filter';
 import InvitesModal from '../InvitesModal';
 import PopoverIconButton from '../PopoverIconButton';
 
@@ -26,6 +27,7 @@ const TeamMembersTableHeader = ({
 	setAdministratorsAvailable,
 	setUserAccounts,
 	userAccounts,
+	filterState: [filters, setFilters],
 }) => {
 	const [visible, setVisible] = useState(false);
 
@@ -78,6 +80,11 @@ const TeamMembersTableHeader = ({
 				}
 			)}
 		>
+			<TeamMembersFilter
+				filtersState={[filters, setFilters]}
+				userAccounts={userAccounts}
+			/>
+
 			<div className="align-items-center d-flex ml-auto">
 				{project?.maxRequestors > 0 && (
 					<>

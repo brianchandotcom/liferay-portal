@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -26,6 +27,7 @@ import {ROLE_TYPES} from '../../../../common/utils/constants';
 import TeamMembersTableHeader from './components/Header';
 import RemoveUserModal from './components/RemoveUserModal';
 import useAccountRoles from './hooks/useAccountRoles';
+import useFilters from './hooks/useFilters';
 import useGetAccountUserAccount from './hooks/useGetAccountUserAccounts';
 import {
 	STATUS_ACTION_TYPES,
@@ -50,10 +52,12 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 
 	const {
 		isLoadingUserAccounts,
+		setFilterTerm,
 		userAccountsState: [userAccounts, setUserAccounts],
 	} = useGetAccountUserAccount(project);
 
 	const [administratorsAvailable, setAdministratorsAvailable] = useState();
+	const [filters, setFilters] = useFilters(setFilterTerm);
 
 	const [userAction, setUserAction] = useState();
 	const [selectedRole, setSelectedRole] = useState();
@@ -210,6 +214,12 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 
 	const columnsByUserAccess = getColumnsByUserAccess(hasAdminAccess);
 
+	// eslint-disable-next-line no-console
+	console.log(
+		'🚀 ~ file: index.js ~ line 182 ~ TeamMembersTable ~ userAccounts',
+		userAccounts
+	);
+
 	return (
 		<div className="pt-2">
 			<RemoveUserModal
@@ -220,6 +230,7 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 
 			<TeamMembersTableHeader
 				administratorsAvailable={administratorsAvailable}
+				filterState={[filters, setFilters]}
 				hasAdminAccess={hasAdminAccess}
 				project={project}
 				sessionId={sessionId}

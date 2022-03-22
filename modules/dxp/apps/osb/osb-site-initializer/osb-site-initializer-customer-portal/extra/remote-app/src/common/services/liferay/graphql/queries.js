@@ -450,10 +450,12 @@ export const getAccountUserAccountsByExternalReferenceCode = gql`
 	query getAccountUserAccountsByExternalReferenceCode(
 		$externalReferenceCode: String!
 		$pageSize: Int = 20
+		$filter: String
 	) {
 		accountUserAccountsByExternalReferenceCode(
 			externalReferenceCode: $externalReferenceCode
 			pageSize: $pageSize
+			filter: $filter
 		) {
 			items {
 				id

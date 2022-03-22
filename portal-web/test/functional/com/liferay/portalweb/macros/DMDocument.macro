@@ -534,9 +534,31 @@ definition {
 			locator1 = "Button#PUBLISH",
 			value1 = "Publish");
 
-		AssertElementPresent.pauseAssertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_HOME");
+		if (isSet(validationError)) {
+			var list1 = ListUtil.newListFromString("${dmDocumentFileFailed}");
+			var list2 = ListUtil.newListFromString("${validationError}");
+			var size = ListUtil.size("${list1}");
+			var i = "0";
 
-		VerifyElementPresent(locator1 = "Message#SUCCESS");
+			while ("${i}" != "${size}") {
+				var dmDocumentFileFailed = ListUtil.get("${list1}", "${i}");
+				var validationError = ListUtil.get("${list2}", "${i}");
+
+				AssertTextEquals.assertPartialText(
+					dmDocumentFile = "${dmDocumentFileFailed}",
+					key_alertMessage = "${validationError}",
+					locator1 = "Message#ERROR_MULTIPLE_UPLOAD_INVALID",
+					value1 = "${validationError}");
+
+				var i = ${i} + 1;
+				var i = StringUtil.valueOf("${i}");
+			}
+		}
+		else {
+			AssertElementPresent.pauseAssertVisible(locator1 = "DocumentsAndMedia#BREADCRUMB_HOME");
+
+			VerifyElementPresent(locator1 = "Message#SUCCESS");
+		}
 	}
 
 	macro addMultiplePG {

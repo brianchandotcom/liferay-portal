@@ -231,6 +231,19 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public Comment fetchComment(long groupId, String externalReferenceCode) {
+		MBMessage mbMessage =
+			_mbMessageLocalService.fetchMBMessageByExternalReferenceCode(
+				groupId, externalReferenceCode);
+
+		if (mbMessage == null) {
+			return null;
+		}
+
+		return new MBCommentImpl(mbMessage);
+	}
+
+	@Override
 	public DiscussionComment fetchDiscussionComment(long userId, long commentId)
 		throws PortalException {
 
@@ -269,6 +282,15 @@ public class MBCommentManagerImpl implements CommentManager {
 	public int getChildCommentsCount(long parentCommentId, int status) {
 		return _mbMessageLocalService.getChildMessagesCount(
 			parentCommentId, status);
+	}
+
+	@Override
+	public Comment getComment(long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return new MBCommentImpl(
+			_mbMessageLocalService.getMBMessageByExternalReferenceCode(
+				groupId, externalReferenceCode));
 	}
 
 	@Override

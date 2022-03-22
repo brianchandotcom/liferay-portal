@@ -67,6 +67,16 @@ public interface CommentManager {
 
 	public Comment fetchComment(long commentId);
 
+	/**
+	 * Returns a comment matching with the external reference code and the
+	 * group ID
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the comment's external reference code
+	 * @return the matching comment or null if it could not be found
+	 */
+	public Comment fetchComment(long groupId, String externalReferenceCode);
+
 	public DiscussionComment fetchDiscussionComment(long userId, long commentId)
 		throws PortalException;
 
@@ -91,6 +101,19 @@ public interface CommentManager {
 	 * @return the number of matching comments
 	 */
 	public int getChildCommentsCount(long parentCommentId, int status);
+
+
+	/**
+	 * Returns a comment matching with the external reference code and the
+	 * group ID
+	 *
+	 * @param groupId the primary key of the group
+	 * @param externalReferenceCode the comment's external reference code
+	 * @return the comment
+	 * @throws PortalException if the comment could not be found
+	 */
+	public Comment getComment(long groupId, String externalReferenceCode)
+		throws PortalException;
 
 	public int getCommentsCount(String className, long classPK);
 

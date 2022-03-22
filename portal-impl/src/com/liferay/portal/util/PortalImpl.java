@@ -7304,9 +7304,9 @@ public class PortalImpl implements Portal {
 			}
 
 			String[] validLayoutTypes = {
-				LayoutConstants.TYPE_PORTLET,
+				LayoutConstants.TYPE_CONTENT,
 				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
-				LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_CONTENT
+				LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET
 			};
 
 			for (String layoutType : validLayoutTypes) {

@@ -17,6 +17,7 @@ package com.liferay.bookmarks.web.internal.info.item.renderer;
 import com.liferay.bookmarks.constants.BookmarksWebKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.info.item.renderer.InfoItemRenderer;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
@@ -46,18 +47,18 @@ public class BookmarksEntryFullContentInfoItemRenderer
 		BookmarksEntry entry, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		httpServletRequest.setAttribute(
-			BookmarksWebKeys.BOOKMARKS_ENTRY, entry);
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/bookmarks/info/item/renderer/full_content.jsp");
-
 		try {
+			httpServletRequest.setAttribute(
+				BookmarksWebKeys.BOOKMARKS_ENTRY, entry);
+
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(
+					"/bookmarks/info/item/renderer/full_content.jsp");
+
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			ReflectionUtil.throwException(exception);
 		}
 	}
 

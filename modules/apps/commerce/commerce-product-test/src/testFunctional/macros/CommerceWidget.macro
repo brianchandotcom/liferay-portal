@@ -3,7 +3,7 @@ definition {
 	macro assertTextCountFromHtml {
 		var count = Page.getTextCountFromHtmlSource(text = "API Value");
 
-		var count = ${count2} / 2;
+		var count = ${count} / 2;
 
 		if ("${count}" != "${value}") {
 			fail("Labels number is not correct");

@@ -32,15 +32,17 @@ import {
 import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
-type RequirementsForm = {
-	components: string;
-	description: string;
-	descriptionType: string;
-	key: string;
-	linkTitle: string;
-	linkURL: string;
-	summary: string;
+const requirementFormDefault = {
+	components: '',
+	description: '',
+	descriptionType: '',
+	key: '',
+	linkTitle: '',
+	linkURL: '',
+	summary: '',
 };
+
+type RequirementsForm = typeof requirementFormDefault;
 
 const descriptionTypes = [
 	{
@@ -94,6 +96,7 @@ const RequirementsForm: React.FC<RequirementsFormProps> = ({
 								name="key"
 								onChange={onChange}
 								required
+								value={form.key}
 							/>
 
 							<Input
@@ -101,6 +104,7 @@ const RequirementsForm: React.FC<RequirementsFormProps> = ({
 								name="summary"
 								onChange={onChange}
 								required
+								value={form.summary}
 							/>
 
 							<Input
@@ -108,6 +112,7 @@ const RequirementsForm: React.FC<RequirementsFormProps> = ({
 								name="linkURL"
 								onChange={onChange}
 								required
+								value={form.linkURL}
 							/>
 
 							<Input
@@ -115,6 +120,7 @@ const RequirementsForm: React.FC<RequirementsFormProps> = ({
 								name="linkTitle"
 								onChange={onChange}
 								required
+								value={form.linkTitle}
 							/>
 
 							<label
@@ -177,15 +183,7 @@ type RequirementsModalProps = {
 const RequirementsModal: React.FC<RequirementsModalProps> = ({
 	modal: {observer, onClose, onError, onSave, visible},
 }) => {
-	const [form, setForm] = useState<RequirementsForm>({
-		components: '',
-		description: '',
-		descriptionType: '',
-		key: '',
-		linkTitle: '',
-		linkURL: '',
-		summary: '',
-	});
+	const [form, setForm] = useState<RequirementsForm>(requirementFormDefault);
 
 	const [onCreateRequirement] = useMutation(CreateRequirement);
 
@@ -224,8 +222,7 @@ const RequirementsModal: React.FC<RequirementsModalProps> = ({
 			});
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError();
 		}
 	};
@@ -256,4 +253,5 @@ const RequirementsModal: React.FC<RequirementsModalProps> = ({
 		</Modal>
 	);
 };
+
 export default RequirementsModal;

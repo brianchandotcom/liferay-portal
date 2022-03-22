@@ -606,8 +606,6 @@ definition {
 		for (var columnName : list "Author,Created Date,Modified Date,Status,ID") {
 			ObjectPortlet.assertEntryColumnPresent(column = "${columnName}");
 		}
-
-
 	}
 
 	@description = "LPS-144902 - Verify if selected Columns on custom view are presented correctly during visualization"

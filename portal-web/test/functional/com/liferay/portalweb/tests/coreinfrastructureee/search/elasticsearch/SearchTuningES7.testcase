@@ -399,8 +399,6 @@ definition {
 
 		Button.clickSave();
 
-		SearchAdministration.executeReindex();
-
 		Navigator.openURL();
 
 		SearchPortlets.searchEmbedded(searchTerm = "Article");

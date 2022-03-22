@@ -1177,6 +1177,10 @@
 					"title": "The fragmentViewports Schema",
 					"type": "array"
 				},
+				"nonindexable": {
+					"title": "The nonindexable Schema",
+					"type": "boolean"
+				},
 				"widgetInstances": {
 					"items": {
 						"$ref": "#/definitions/WidgetInstance"
@@ -1213,6 +1217,10 @@
 				"modulesPerRow": {
 					"title": "The modulesPerRow Schema",
 					"type": "integer"
+				},
+				"nonindexable": {
+					"title": "The nonindexable Schema",
+					"type": "boolean"
 				},
 				"numberOfColumns": {
 					"maximum": 6,
@@ -1598,6 +1606,10 @@
 					},
 					"title": "The layout Schema",
 					"type": "object"
+				},
+				"nonindexable": {
+					"title": "The nonindexable Schema",
+					"type": "boolean"
 				}
 			},
 			"title": "The PageSectionDefinition Schema",

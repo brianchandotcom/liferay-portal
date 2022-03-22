@@ -1098,11 +1098,72 @@ definition {
 	}
 
 	@description = "LPS-146758 - Verify it is not possible to View a single Object created by the user if the View Owner permission is removed"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotViewSingleObjectWithoutViewOwnerPermission {
+		property test.name.skip.portal.instance = "ObjectPermission#CannotViewSingleObjectWithoutViewOwnerPermission";
 
-		// TODO LPS-148936 CannotViewSingleObjectWithoutViewOwnerPermission pending implementation
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_object_definitions_portlet_ObjectDefinitionsPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_OBJECT_DEFINITION",
+			resourceName = "com.liferay.object",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "PERMISSIONS",
+			resourceName = "com.liferay.object.model.ObjectDefinition",
+			roleTitle = "Regular Role");	
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.addNewObject(
+			fieldLabelName = "Custom Object 148936",
+			pluralLabelName = "Custom Objects 148936");
+
+		ObjectAdmin.saveCustomObject();
+
+		Refresh();
+
+		ObjectCustomViews.gotoPermissions(entryName = "Custom Object 148936");
+
+		ObjectCustomViews.selectAnyPermissions(
+			owner = "true",
+			permissionsList = "VIEW");
+
+		Button.clickSave();
+
+		Refresh();
+
+		CreateObject.assertCustomObjectNotPresent(labelName = "Custom Object 148936");
+
+		
+
 
 	}
 

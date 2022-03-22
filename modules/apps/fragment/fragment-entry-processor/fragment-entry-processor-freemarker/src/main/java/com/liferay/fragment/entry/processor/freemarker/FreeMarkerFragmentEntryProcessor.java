@@ -79,6 +79,10 @@ public class FreeMarkerFragmentEntryProcessor
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
 		throws PortalException {
 
+		if (Validator.isNull(html)) {
+			return html;
+		}
+
 		FreeMarkerFragmentEntryProcessorConfiguration
 			freeMarkerFragmentEntryProcessorConfiguration =
 				_configurationProvider.getCompanyConfiguration(

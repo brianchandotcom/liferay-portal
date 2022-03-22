@@ -139,7 +139,7 @@ definition {
 
 	@description = "LPS-147835. Assert the action buttons are displayed as icon buttons in responsive mode"
 	@priority = "3"
-	test ResponsiveModeActionsAsIconButtons {
+	test ResponsiveModeActionButtonsShouldDisplayAsIcons {
 		task ("Given window size set to tablet size") {
 			SetWindowSize(value1 = "800,1024");
 		}

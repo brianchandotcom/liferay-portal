@@ -224,8 +224,6 @@ definition {
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10150 | Test Summary: Block/Unblock custom events as non-admin"
 	@priority = "3"
 	test CheckCannotBlockOrUnblockCustomEventsAsNonAdmin {
-		property portal.upstream = "quarantine";
-
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 

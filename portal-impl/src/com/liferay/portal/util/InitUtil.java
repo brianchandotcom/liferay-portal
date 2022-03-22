@@ -16,7 +16,6 @@ package com.liferay.portal.util;
 
 import com.liferay.petra.log4j.Log4JUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.bean.BeanLocatorImpl;
 import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.dao.db.DBManagerImpl;
@@ -57,8 +56,6 @@ import com.liferay.portal.spring.compat.CompatBeanDefinitionRegistryPostProcesso
 import com.liferay.portal.spring.configurator.ConfigurableApplicationContextConfigurator;
 import com.liferay.portal.spring.context.ArrayApplicationContext;
 import com.liferay.portal.xml.SAXReaderImpl;
-
-import com.rometools.rome.io.XmlReader;
 
 import java.lang.reflect.Field;
 
@@ -194,8 +191,6 @@ public class InitUtil {
 			new UnsecureSAXReaderUtil();
 
 		unsecureSAXReaderUtil.setSAXReader(new SAXReaderImpl());
-
-		XmlReader.setDefaultEncoding(StringPool.UTF8);
 
 		if (_PRINT_TIME) {
 			System.out.println(

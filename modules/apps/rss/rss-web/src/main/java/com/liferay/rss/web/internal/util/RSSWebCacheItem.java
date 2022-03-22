@@ -14,6 +14,7 @@
 
 package com.liferay.rss.web.internal.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -65,7 +66,8 @@ public class RSSWebCacheItem implements WebCacheItem {
 		SyndFeedInput input = new SyndFeedInput();
 
 		try (InputStream inputStream = _readURL()) {
-			return input.build(new XmlReader(inputStream));
+			return input.build(
+				new XmlReader(inputStream, true, StringPool.UTF8));
 		}
 		catch (Exception exception) {
 			throw new WebCacheException(

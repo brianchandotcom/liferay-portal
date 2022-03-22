@@ -72,7 +72,7 @@ export default function TabItem({displayStyle, item}) {
 		<ListItem
 			disabled={item.disabled || isDraggingSource}
 			item={item}
-			ref={sourceRef}
+			ref={item.disabled ? null : sourceRef}
 		/>
 	);
 }

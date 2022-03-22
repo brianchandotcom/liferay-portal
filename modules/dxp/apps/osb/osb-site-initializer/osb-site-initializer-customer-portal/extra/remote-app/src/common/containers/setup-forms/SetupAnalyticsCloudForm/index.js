@@ -17,6 +17,7 @@ import {
 	addAnalyticsCloudWorkspace,
 	addIncidentReportAnalyticsCloud,
 	getAnalyticsCloudPageInfo,
+	updateAccountSubscriptionGroups,
 } from '../../../../common/services/liferay/graphql/queries';
 import {
 	isLowercaseAndNumbers,
@@ -25,6 +26,7 @@ import {
 	isValidFriendlyURL,
 	maxLength,
 } from '../../../../common/utils/validations.form';
+import {STATUS_TAG_TYPE_NAMES} from '../../../../routes/customer-portal/utils/constants';
 import {Button, Input, Select} from '../../../components';
 import useBannedDomains from '../../../hooks/useBannedDomains';
 import getInitialAnalyticsInvite from '../../../utils/getInitialAnalyticsInvite';
@@ -42,6 +44,7 @@ const SetupAnalyticsCloudPage = ({
 	onClose,
 	project,
 	setFieldValue,
+	subscriptionGroupId,
 	touched,
 	values,
 }) => {
@@ -134,6 +137,16 @@ const SetupAnalyticsCloudPage = ({
 					});
 				})
 			);
+
+			await client.mutate({
+				mutation: updateAccountSubscriptionGroups,
+				variables: {
+					accountSubscriptionGroup: {
+						activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
+					},
+					id: subscriptionGroupId,
+				},
+			});
 		}
 
 		handlePage();

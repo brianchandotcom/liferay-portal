@@ -18,8 +18,8 @@ const ConfirmationMessageModal = ({handlePage}) => {
 				<p className="h2 mb-1">Set up Analytics Cloud</p>
 
 				<p className="text-paragraph-sm">
-					We'll need a few details to finish creating your Analytics
-					Cloud Workspace.
+					We&apos;ll need a few details to finish creating your
+					Analytics Cloud Workspace.
 				</p>
 			</div>
 

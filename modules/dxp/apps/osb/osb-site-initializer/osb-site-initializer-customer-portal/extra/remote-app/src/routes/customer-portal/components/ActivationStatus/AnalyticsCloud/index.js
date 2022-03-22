@@ -116,6 +116,9 @@ const ActivationStatusAnalyticsCloud = ({
 					observer={observer}
 					onClose={onClose}
 					project={project}
+					subscriptionGroupId={
+						subscriptionGroupAnalyticsCloud.accountSubscriptionGroupId
+					}
 				/>
 			)}
 			<ActivationStatusLayout

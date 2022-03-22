@@ -35,6 +35,7 @@ import {getLayoutDataItemPropTypes} from '../../../../../../prop-types/index';
 import {CommonStyles} from './CommonStyles';
 
 const ALIGN_ITEMS_STRETCH = 'align-items-stretch';
+const FLEX_WRAP_NOWRAP = 'flex-nowrap';
 const JUSTIFY_CONTENT_START = 'justify-content-start';
 
 const CONTENT_DISPLAY_OPTIONS = [
@@ -72,6 +73,21 @@ const ALIGN_OPTIONS = [
 	{
 		label: Liferay.Language.get('baseline'),
 		value: 'align-items-baseline',
+	},
+];
+
+const FLEX_WRAP_OPTIONS = [
+	{
+		label: Liferay.Language.get('nowrap'),
+		value: FLEX_WRAP_NOWRAP,
+	},
+	{
+		label: Liferay.Language.get('wrap'),
+		value: 'flex-wrap',
+	},
+	{
+		label: Liferay.Language.get('wrap-reverse'),
+		value: 'flex-wrap-reverse',
 	},
 ];
 
@@ -195,6 +211,7 @@ export default function ContainerGeneralPanel({item}) {
 									value === CONTAINER_DISPLAY_OPTIONS.block
 										? {
 												align: '',
+												flexWrap: '',
 												justify: '',
 												[name]: '',
 										  }
@@ -212,16 +229,15 @@ export default function ContainerGeneralPanel({item}) {
 						/>
 
 						{flexOptionsVisible && (
-							<div className="d-flex justify-content-between">
+							<>
 								<SelectField
-									className="page-editor__sidebar__fieldset__field-small"
 									field={{
 										label: Liferay.Language.get(
-											'align-items'
+											'flex-wrap'
 										),
-										name: 'align',
+										name: 'flexWrap',
 										typeOptions: {
-											validValues: ALIGN_OPTIONS,
+											validValues: FLEX_WRAP_OPTIONS,
 										},
 									}}
 									onValueSelect={(name, value) => {
@@ -230,7 +246,7 @@ export default function ContainerGeneralPanel({item}) {
 												itemConfig: {
 													[name]:
 														value ===
-														ALIGN_ITEMS_STRETCH
+														FLEX_WRAP_NOWRAP
 															? ''
 															: value,
 												},
@@ -240,42 +256,76 @@ export default function ContainerGeneralPanel({item}) {
 										);
 									}}
 									value={
-										item.config.align || ALIGN_ITEMS_STRETCH
+										item.config.flexWrap || FLEX_WRAP_NOWRAP
 									}
 								/>
 
-								<SelectField
-									className="page-editor__sidebar__fieldset__field-small"
-									field={{
-										label: Liferay.Language.get(
-											'justify-content'
-										),
-										name: 'justify',
-										typeOptions: {
-											validValues: JUSTIFY_OPTIONS,
-										},
-									}}
-									onValueSelect={(name, value) => {
-										dispatch(
-											updateItemConfig({
-												itemConfig: {
-													[name]:
-														value ===
-														JUSTIFY_CONTENT_START
-															? ''
-															: value,
-												},
-												itemId: item.itemId,
-												segmentsExperienceId,
-											})
-										);
-									}}
-									value={
-										item.config.justify ||
-										JUSTIFY_CONTENT_START
-									}
-								/>
-							</div>
+								<div className="d-flex justify-content-between">
+									<SelectField
+										className="page-editor__sidebar__fieldset__field-small"
+										field={{
+											label: Liferay.Language.get(
+												'align-items'
+											),
+											name: 'align',
+											typeOptions: {
+												validValues: ALIGN_OPTIONS,
+											},
+										}}
+										onValueSelect={(name, value) => {
+											dispatch(
+												updateItemConfig({
+													itemConfig: {
+														[name]:
+															value ===
+															ALIGN_ITEMS_STRETCH
+																? ''
+																: value,
+													},
+													itemId: item.itemId,
+													segmentsExperienceId,
+												})
+											);
+										}}
+										value={
+											item.config.align ||
+											ALIGN_ITEMS_STRETCH
+										}
+									/>
+
+									<SelectField
+										className="page-editor__sidebar__fieldset__field-small"
+										field={{
+											label: Liferay.Language.get(
+												'justify-content'
+											),
+											name: 'justify',
+											typeOptions: {
+												validValues: JUSTIFY_OPTIONS,
+											},
+										}}
+										onValueSelect={(name, value) => {
+											dispatch(
+												updateItemConfig({
+													itemConfig: {
+														[name]:
+															value ===
+															JUSTIFY_CONTENT_START
+																? ''
+																: value,
+													},
+													itemId: item.itemId,
+													segmentsExperienceId,
+												})
+											);
+										}}
+										value={
+											item.config.justify ||
+											JUSTIFY_CONTENT_START
+										}
+									/>
+								</div>
+							</>
 						)}
 
 						<SelectField

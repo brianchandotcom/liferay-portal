@@ -78,7 +78,13 @@ const Container = React.forwardRef(
 			width,
 		} = itemConfig.styles;
 
-		const {align, contentDisplay, justify, widthType} = itemConfig;
+		const {
+			align,
+			contentDisplay,
+			flexWrap,
+			justify,
+			widthType,
+		} = itemConfig;
 
 		const backgroundImageValue = useBackgroundImageValue(
 			elementId,
@@ -173,7 +179,8 @@ const Container = React.forwardRef(
 					'empty': !item.children.length && !height,
 					[`bg-${backgroundColor}`]:
 						backgroundColor && !backgroundColor.startsWith('#'),
-					[justify]: !!justify,
+					[flexWrap]: Boolean(flexWrap),
+					[justify]: Boolean(justify),
 					[`mb-${marginBottom}`]: isValidSpacingOption(marginBottom),
 					[`mt-${marginTop}`]: isValidSpacingOption(marginTop),
 					[`pb-${paddingBottom}`]: isValidSpacingOption(

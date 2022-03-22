@@ -169,7 +169,7 @@ definition {
 
 	@description = "LPS-147859. Assert the clear button will be displayed as an icon button in responsive mode"
 	@priority = "4"
-	test ResponsiveModeClearAsAButton {
+	test ResponsiveModeClearButtonShouldDisplayAsIcon {
 		task ("Given a window size set to phone size") {
 			SetWindowSize(value1 = "360,720");
 		}

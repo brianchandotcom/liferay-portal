@@ -17,6 +17,10 @@ import {gql} from '@apollo/client';
 import {testrayProjectFragment} from '../fragments';
 
 export type TestrayProject = {
+	creator: {
+		name: string;
+	};
+	dateCreated: string;
 	description: string;
 	id: number;
 	name: string;

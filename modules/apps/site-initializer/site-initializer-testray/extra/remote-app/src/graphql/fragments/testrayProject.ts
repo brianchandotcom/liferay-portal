@@ -16,6 +16,10 @@ import {gql} from '@apollo/client';
 
 export const testrayProjectFragment = gql`
 	fragment ProjectFragment on C_Project {
+		creator {
+			name
+		}
+		dateCreated
 		description
 		id: projectId
 		name

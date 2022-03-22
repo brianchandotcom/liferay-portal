@@ -43,7 +43,6 @@ public class AccountRoleModelPreFilterContributor
 		SearchContext searchContext) {
 
 		_filterByAccountEntryIds(booleanFilter, searchContext);
-		_filterByExcludedRoleIds(booleanFilter, searchContext);
 		_filterByExcludedRoleNames(booleanFilter, searchContext);
 	}
 
@@ -59,21 +58,6 @@ public class AccountRoleModelPreFilterContributor
 			termsFilter.addValues(ArrayUtil.toStringArray(accountEntryIds));
 
 			booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
-		}
-	}
-
-	private void _filterByExcludedRoleIds(
-		BooleanFilter booleanFilter, SearchContext searchContext) {
-
-		Long[] excludedRoleIds = (Long[])searchContext.getAttribute(
-			"excludedRoleIds");
-
-		if (ArrayUtil.isNotEmpty(excludedRoleIds)) {
-			TermsFilter termsFilter = new TermsFilter(Field.ROLE_ID);
-
-			termsFilter.addValues(ArrayUtil.toStringArray(excludedRoleIds));
-
-			booleanFilter.add(termsFilter, BooleanClauseOccur.MUST_NOT);
 		}
 	}
 

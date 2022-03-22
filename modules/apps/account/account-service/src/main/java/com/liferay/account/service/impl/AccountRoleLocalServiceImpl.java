@@ -432,13 +432,6 @@ public class AccountRoleLocalServiceImpl
 					searchContext.setAttribute(
 						"excludedRoleNames", excludedRoleNames);
 				}
-
-				Long[] excludedRoleIds = (Long[])params.get("excludedRoleIds");
-
-				if (ArrayUtil.isNotEmpty(excludedRoleIds)) {
-					searchContext.setAttribute(
-						"excludedRoleIds", excludedRoleIds);
-				}
 			}
 		);
 

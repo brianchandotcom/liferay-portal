@@ -52,7 +52,6 @@ public class AccountRoleModelDocumentContributor
 		document.addKeyword(Field.COMPANY_ID, accountRole.getCompanyId());
 		document.addLocalizedText(Field.DESCRIPTION, role.getDescriptionMap());
 		document.addText(Field.NAME, role.getName());
-		document.addKeyword(Field.ROLE_ID, role.getRoleId());
 		document.addLocalizedText(Field.TITLE, role.getTitleMap());
 		document.addKeyword("accountEntryId", accountRole.getAccountEntryId());
 	}

@@ -613,6 +613,64 @@ definition {
 		}
 	}
 
+	@description = "Verify users can order Import/Export executions by Create Date."
+	@priority = "3"
+	test CanOrderExecutionsByCreateDate {
+		property portal.acceptance = "true";
+
+		task ("Given an account import and export") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.importFile(
+				entityType = "Account",
+				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
+				fileName = "csv_account_import.csv",
+				headlessEndpoint = "/headless-admin-user");
+
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "Account",
+				exportFields = "name,type,description",
+				exportFileFormat = "CSV",
+				headlessEndpoint = "/headless-admin-user");
+		}
+
+		task ("When I go to the Import/Export Center and order by create date") {
+			ImportExport.openImportExportAdmin();
+
+			ManagementBar.setFilterAndOrder(orderBy = "Create Date");
+		}
+
+		task ("Then the executions should be ordered by create date in descending order") {
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Export Account");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "2",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Import Account");
+		}
+
+		task ("When I click on the Reverse Sort Direction button") {
+			ManagementBar.toggleViewOrder();
+		}
+
+		task ("Then the executions should be ordered by create date in descending order") {
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "1",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Import Account");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "2",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Export Account");
+		}
+	}
+
 	@description = "Verify users can save export configuration as a template during the export process"
 	@priority = "3"
 	test CanSaveTemplateDuringExport {

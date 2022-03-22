@@ -399,7 +399,7 @@ describe('Experiment History Tab', () => {
 		/*
 		 * Terminated test should be archived now
 		 */
-		await findByText('history (1)');
+		await findByText('history[record] (1)');
 		getByText('create-test');
 	});
 
@@ -447,7 +447,7 @@ describe('Experiment History Tab', () => {
 			})
 		);
 
-		const historyTab = getByText('history (1)');
+		const historyTab = getByText('history[record] (1)');
 
 		userEvent.click(historyTab);
 
@@ -484,7 +484,7 @@ describe('Experiment History Tab', () => {
 		/*
 		 * History tab has the number of arhived Experiments
 		 */
-		const historyTab = getByText('history (2)');
+		const historyTab = getByText('history[record] (2)');
 
 		userEvent.click(historyTab);
 

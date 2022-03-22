@@ -286,6 +286,66 @@ definition {
 			key_image = "Document_1.jpeg");
 	}
 
-	
+	@description = "Verify that is possible to translate input data on the Rich Text Field"
+    @priority = "5"
+    test CanInputtedDataBeTranslatedOnRichTextField {
+
+        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+        NavItem.gotoStructures();
+
+        WebContentStructures.addCP(
+            structureDescription = "Structure Description Test",
+            structureName = "Structure Name Test");
+
+        DataEngine.addField(
+            fieldFieldLabel = "Rich Text",
+            fieldName = "Rich Text");
+
+        WebContentStructures.addTranslations(localeList = "zh-CN");
+
+        PortletEntry.changeLocale(locale = "zh-CN");
+
+        DataEngine.editFieldLabel(
+            fieldFieldLabel = "Rich Text",
+            fieldFieldLabelEdit = "富文本");
+
+        WebContentStructures.saveCP();
+
+        NavItem.click(navItem = "Web Content");
+
+        WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+        WebContent.addWithStructureCP(
+            webContentRichText = "This is a Rich Text field",
+            webContentTitle = "Test");
+
+        PortletEntry.changeLocale(locale = "zh-CN");
+
+        WebContent.addWithStructureCP(
+            webContentRichText = "这是一个富文本字段",
+            webContentRichTextFieldLabel = "富文本",
+            webContentTitle = "测试");
+
+        PortletEntry.publish();
+
+        WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+        PortletEntry.changeLocale(locale = "zh-CN");
+
+        AssertTextEquals(
+            locator1 = "TextInput#TITLE",
+            value1 = "测试");
+
+		SelectFrame.selectFrameNoLoading(
+			key_fieldLabel = "富文本",
+			locator1 = "CKEditor#BODY_FIELD_IFRAME_WEB_CONTENT_ARTICLE");
+
+		AssertTextEquals(
+			locator1 = "CKEditor#BODY",
+			value1 = "这是一个富文本字段");
+
+        
+    }
 
 }

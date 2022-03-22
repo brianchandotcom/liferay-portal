@@ -459,6 +459,15 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_P_TArrayable() throws Exception {
+		_persistence.countByG_P_T(
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			new String[] {
+				RandomTestUtil.randomString(), "", "null", null, null
+			});
+	}
+
+	@Test
 	public void testCountByG_P_F() throws Exception {
 		_persistence.countByG_P_F(
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(), "");

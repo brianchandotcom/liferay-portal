@@ -10731,6 +10731,7 @@ public class LayoutPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindByG_P_T;
 	private FinderPath _finderPathWithoutPaginationFindByG_P_T;
 	private FinderPath _finderPathCountByG_P_T;
+	private FinderPath _finderPathWithPaginationCountByG_P_T;
 
 	/**
 	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63;.
@@ -11628,6 +11629,416 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
+	 * Returns all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = any &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param types the types
+	 * @return the matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_T(
+		long groupId, boolean privateLayout, String[] types) {
+
+		return filterFindByG_P_T(
+			groupId, privateLayout, types, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param types the types
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_T(
+		long groupId, boolean privateLayout, String[] types, int start,
+		int end) {
+
+		return filterFindByG_P_T(
+			groupId, privateLayout, types, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param types the types
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts that the user has permission to view
+	 */
+	@Override
+	public List<Layout> filterFindByG_P_T(
+		long groupId, boolean privateLayout, String[] types, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return findByG_P_T(
+				groupId, privateLayout, types, start, end, orderByComparator);
+		}
+
+		if (types == null) {
+			types = new String[0];
+		}
+		else if (types.length > 1) {
+			for (int i = 0; i < types.length; i++) {
+				types[i] = Objects.toString(types[i], "");
+			}
+
+			types = ArrayUtil.sortedUnique(types);
+		}
+
+		StringBundler sb = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_LAYOUT_WHERE);
+		}
+		else {
+			sb.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_G_P_T_GROUPID_2_SQL);
+
+		sb.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2_SQL);
+
+		if (types.length > 0) {
+			sb.append("(");
+
+			for (int i = 0; i < types.length; i++) {
+				String type = types[i];
+
+				if (type.isEmpty()) {
+					sb.append(_FINDER_COLUMN_G_P_T_TYPE_6_SQL);
+				}
+				else {
+					sb.append(_FINDER_COLUMN_G_P_T_TYPE_5_SQL);
+				}
+
+				if ((i + 1) < types.length) {
+					sb.append(WHERE_OR);
+				}
+			}
+
+			sb.append(")");
+		}
+
+		sb.setStringAt(
+			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+		sb.append(" AND layout.system_ = [$FALSE$]");
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+			else {
+				sb.append(LayoutModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(_FILTER_ENTITY_ALIAS, LayoutImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(_FILTER_ENTITY_TABLE, LayoutImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(groupId);
+
+			queryPos.add(privateLayout);
+
+			for (String type : types) {
+				if ((type != null) && !type.isEmpty()) {
+					queryPos.add(type);
+				}
+			}
+
+			return (List<Layout>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns all the layouts where groupId = &#63; and privateLayout = &#63; and type = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param types the types
+	 * @return the matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_T(
+		long groupId, boolean privateLayout, String[] types) {
+
+		return findByG_P_T(
+			groupId, privateLayout, types, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the layouts where groupId = &#63; and privateLayout = &#63; and type = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param types the types
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @return the range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_T(
+		long groupId, boolean privateLayout, String[] types, int start,
+		int end) {
+
+		return findByG_P_T(groupId, privateLayout, types, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and type = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param types the types
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_T(
+		long groupId, boolean privateLayout, String[] types, int start, int end,
+		OrderByComparator<Layout> orderByComparator) {
+
+		return findByG_P_T(
+			groupId, privateLayout, types, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param type the type
+	 * @param start the lower bound of the range of layouts
+	 * @param end the upper bound of the range of layouts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching layouts
+	 */
+	@Override
+	public List<Layout> findByG_P_T(
+		long groupId, boolean privateLayout, String[] types, int start, int end,
+		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
+
+		if (types == null) {
+			types = new String[0];
+		}
+		else if (types.length > 1) {
+			for (int i = 0; i < types.length; i++) {
+				types[i] = Objects.toString(types[i], "");
+			}
+
+			types = ArrayUtil.sortedUnique(types);
+		}
+
+		if (types.length == 1) {
+			return findByG_P_T(
+				groupId, privateLayout, types[0], start, end,
+				orderByComparator);
+		}
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache && productionMode) {
+				finderArgs = new Object[] {
+					groupId, privateLayout, StringUtil.merge(types)
+				};
+			}
+		}
+		else if (useFinderCache && productionMode) {
+			finderArgs = new Object[] {
+				groupId, privateLayout, StringUtil.merge(types), start, end,
+				orderByComparator
+			};
+		}
+
+		List<Layout> list = null;
+
+		if (useFinderCache && productionMode) {
+			list = (List<Layout>)FinderCacheUtil.getResult(
+				_finderPathWithPaginationFindByG_P_T, finderArgs);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (Layout layout : list) {
+					if ((groupId != layout.getGroupId()) ||
+						(privateLayout != layout.isPrivateLayout()) ||
+						!ArrayUtil.contains(types, layout.getType())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = new StringBundler();
+
+			sb.append(_SQL_SELECT_LAYOUT_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_P_T_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
+
+			if (types.length > 0) {
+				sb.append("(");
+
+				for (int i = 0; i < types.length; i++) {
+					String type = types[i];
+
+					if (type.isEmpty()) {
+						sb.append(_FINDER_COLUMN_G_P_T_TYPE_6);
+					}
+					else {
+						sb.append(_FINDER_COLUMN_G_P_T_TYPE_5);
+					}
+
+					if ((i + 1) < types.length) {
+						sb.append(WHERE_OR);
+					}
+				}
+
+				sb.append(")");
+			}
+
+			sb.setStringAt(
+				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+			sb.append(" AND layout.system = [$FALSE$]");
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(LayoutModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(privateLayout);
+
+				for (String type : types) {
+					if ((type != null) && !type.isEmpty()) {
+						queryPos.add(type);
+					}
+				}
+
+				list = (List<Layout>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache && productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationFindByG_P_T, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
 	 * Removes all the layouts where groupId = &#63; and privateLayout = &#63; and type = &#63; from the database.
 	 *
 	 * @param groupId the group ID
@@ -11732,6 +12143,120 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
+	 * Returns the number of layouts where groupId = &#63; and privateLayout = &#63; and type = any &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param types the types
+	 * @return the number of matching layouts
+	 */
+	@Override
+	public int countByG_P_T(
+		long groupId, boolean privateLayout, String[] types) {
+
+		if (types == null) {
+			types = new String[0];
+		}
+		else if (types.length > 1) {
+			for (int i = 0; i < types.length; i++) {
+				types[i] = Objects.toString(types[i], "");
+			}
+
+			types = ArrayUtil.sortedUnique(types);
+		}
+
+		boolean productionMode = CTPersistenceHelperUtil.isProductionMode(
+			Layout.class);
+
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderArgs = new Object[] {
+				groupId, privateLayout, StringUtil.merge(types)
+			};
+
+			count = (Long)FinderCacheUtil.getResult(
+				_finderPathWithPaginationCountByG_P_T, finderArgs);
+		}
+
+		if (count == null) {
+			StringBundler sb = new StringBundler();
+
+			sb.append(_SQL_COUNT_LAYOUT_WHERE);
+
+			sb.append(_FINDER_COLUMN_G_P_T_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2);
+
+			if (types.length > 0) {
+				sb.append("(");
+
+				for (int i = 0; i < types.length; i++) {
+					String type = types[i];
+
+					if (type.isEmpty()) {
+						sb.append(_FINDER_COLUMN_G_P_T_TYPE_6);
+					}
+					else {
+						sb.append(_FINDER_COLUMN_G_P_T_TYPE_5);
+					}
+
+					if ((i + 1) < types.length) {
+						sb.append(WHERE_OR);
+					}
+				}
+
+				sb.append(")");
+			}
+
+			sb.setStringAt(
+				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+			sb.append(" AND layout.system = [$FALSE$]");
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(privateLayout);
+
+				for (String type : types) {
+					if ((type != null) && !type.isEmpty()) {
+						queryPos.add(type);
+					}
+				}
+
+				count = (Long)query.uniqueResult();
+
+				if (productionMode) {
+					FinderCacheUtil.putResult(
+						_finderPathWithPaginationCountByG_P_T, finderArgs,
+						count);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
 	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
@@ -11804,6 +12329,105 @@ public class LayoutPersistenceImpl
 		}
 	}
 
+	/**
+	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and privateLayout = &#63; and type = any &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param privateLayout the private layout
+	 * @param types the types
+	 * @return the number of matching layouts that the user has permission to view
+	 */
+	@Override
+	public int filterCountByG_P_T(
+		long groupId, boolean privateLayout, String[] types) {
+
+		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
+			return countByG_P_T(groupId, privateLayout, types);
+		}
+
+		if (types == null) {
+			types = new String[0];
+		}
+		else if (types.length > 1) {
+			for (int i = 0; i < types.length; i++) {
+				types[i] = Objects.toString(types[i], "");
+			}
+
+			types = ArrayUtil.sortedUnique(types);
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
+
+		sb.append(_FINDER_COLUMN_G_P_T_GROUPID_2_SQL);
+
+		sb.append(_FINDER_COLUMN_G_P_T_PRIVATELAYOUT_2_SQL);
+
+		if (types.length > 0) {
+			sb.append("(");
+
+			for (int i = 0; i < types.length; i++) {
+				String type = types[i];
+
+				if (type.isEmpty()) {
+					sb.append(_FINDER_COLUMN_G_P_T_TYPE_6_SQL);
+				}
+				else {
+					sb.append(_FINDER_COLUMN_G_P_T_TYPE_5_SQL);
+				}
+
+				if ((i + 1) < types.length) {
+					sb.append(WHERE_OR);
+				}
+			}
+
+			sb.append(")");
+		}
+
+		sb.setStringAt(
+			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+		sb.append(" AND layout.system_ = [$FALSE$]");
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), Layout.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN, groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(groupId);
+
+			queryPos.add(privateLayout);
+
+			for (String type : types) {
+				if ((type != null) && !type.isEmpty()) {
+					queryPos.add(type);
+				}
+			}
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	private static final String _FINDER_COLUMN_G_P_T_GROUPID_2 =
 		"layout.groupId = ? AND ";
 
@@ -11822,11 +12446,23 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_3 =
 		"(layout.type IS NULL OR layout.type = '') AND layout.system = [$FALSE$]";
 
+	private static final String _FINDER_COLUMN_G_P_T_TYPE_5 =
+		"(" + removeConjunction(_FINDER_COLUMN_G_P_T_TYPE_2) + ")";
+
+	private static final String _FINDER_COLUMN_G_P_T_TYPE_6 =
+		"(" + removeConjunction(_FINDER_COLUMN_G_P_T_TYPE_3) + ")";
+
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_2_SQL =
 		"layout.type_ = ? AND layout.system_ = [$FALSE$]";
 
 	private static final String _FINDER_COLUMN_G_P_T_TYPE_3_SQL =
 		"(layout.type_ IS NULL OR layout.type_ = '') AND layout.system_ = [$FALSE$]";
+
+	private static final String _FINDER_COLUMN_G_P_T_TYPE_5_SQL =
+		"(" + removeConjunction(_FINDER_COLUMN_G_P_T_TYPE_2) + ")";
+
+	private static final String _FINDER_COLUMN_G_P_T_TYPE_6_SQL =
+		"(" + removeConjunction(_FINDER_COLUMN_G_P_T_TYPE_3) + ")";
 
 	private FinderPath _finderPathFetchByG_P_F;
 	private FinderPath _finderPathCountByG_P_F;
@@ -19866,6 +20502,14 @@ public class LayoutPersistenceImpl
 
 		_finderPathCountByG_P_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_P_T",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				String.class.getName()
+			},
+			new String[] {"groupId", "privateLayout", "type_"}, false);
+
+		_finderPathWithPaginationCountByG_P_T = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByG_P_T",
 			new String[] {
 				Long.class.getName(), Boolean.class.getName(),
 				String.class.getName()

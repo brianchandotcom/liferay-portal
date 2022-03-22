@@ -1110,6 +1110,25 @@ public class LayoutLocalServiceWrapper
 	}
 
 	/**
+	 * Returns all the layouts that match the type and belong to the group.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param types the layout's type (optionally {@link
+	 LayoutConstants#TYPE_PORTLET}). The possible types can be found
+	 in {@link LayoutConstants}.
+	 * @return the matching layouts, or <code>null</code> if no matches were
+	 found
+	 */
+	@Override
+	public java.util.List<Layout> getLayouts(
+			long groupId, boolean privateLayout, String[] types)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.getLayouts(groupId, privateLayout, types);
+	}
+
+	/**
 	 * Returns a range of all the layouts belonging to the group.
 	 *
 	 * @param groupId the primary key of the group

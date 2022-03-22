@@ -24,7 +24,7 @@ const ManageProductUser = ({project, subscriptionGroups}) => {
 	const activatedLinkDXPC = `https://console.liferay.cloud/projects/${dxpCloudProjectId}/overview`;
 	const activatedLinkAC = `https://analytics.liferay.com/workspace/${analyctsCloudGroupId}/sites`;
 	useEffect(() => {
-		const getOnboardingFormData = async () => {
+		const getDxpCloudEnvimentProjectId = async () => {
 			const {data} = await client.query({
 				query: getDXPCloudEnvironment,
 				variables: {
@@ -39,7 +39,7 @@ const ManageProductUser = ({project, subscriptionGroups}) => {
 				setDxpCloudProjectId(dxpProjectId);
 			}
 		};
-		getOnboardingFormData();
+		getDxpCloudEnvimentProjectId();
 
 		const getAnalyticsCloudWorkspaces = async () => {
 			const {data} = await client.query({

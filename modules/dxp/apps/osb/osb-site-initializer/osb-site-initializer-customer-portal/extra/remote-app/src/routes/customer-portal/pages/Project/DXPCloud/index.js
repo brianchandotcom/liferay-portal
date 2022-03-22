@@ -21,7 +21,7 @@ const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
 	const [dxpCloudEnvironment, setDxpCloudEnvironment] = useState();
 
 	useEffect(() => {
-		const getOnboardingFormData = async () => {
+		const getDxpCloudEnvironmentData = async () => {
 			const {data} = await client.query({
 				query: getDXPCloudEnvironment,
 				variables: {
@@ -39,7 +39,7 @@ const DXPCloud = ({project, sessionId, subscriptionGroups, userAccount}) => {
 			}
 		};
 
-		getOnboardingFormData();
+		getDxpCloudEnvironmentData();
 	}, [project, subscriptionGroups]);
 
 	return (

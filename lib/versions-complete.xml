@@ -5355,6 +5355,28 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>com.liferay.shared.dependencies.rome.jar!rome-utils.jar</file-name>
+				<version>1.16.0</version>
+				<project-name>rome-utils</project-name>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
+				<file-name>com.liferay.shared.dependencies.rome.jar!rome.jar</file-name>
+				<version>1.16.0</version>
+				<project-name>rome</project-name>
+				<licenses>
+					<license>
+						<license-name>The Apache Software License, Version 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0.txt</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>com.liferay.shared.dependencies.xstream.jar!kxml2.jar</file-name>
 				<version>2.3.0</version>
 				<project-name>kXML 2 is a small XML pull parser based on the common XML pull API</project-name>

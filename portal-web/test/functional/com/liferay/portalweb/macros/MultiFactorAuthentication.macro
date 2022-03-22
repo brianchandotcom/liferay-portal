@@ -191,6 +191,8 @@ definition {
 				locator1 = "MultiFactorAuthentication#TOTP_FIELD",
 				value1 = "${totp}");
 
+			takeScreenshot();
+
 			Click(locator1 = "MultiFactorAuthentication#TOTP_SUBMIT_BUTTON");
 
 			AssertElementPresent(

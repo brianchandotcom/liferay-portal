@@ -108,7 +108,7 @@ public class BookmarksEntryInfoDisplayContributor
 
 	@Override
 	public String getInfoURLSeparator() {
-		return "/b/";
+		return "/bm/";
 	}
 
 	@Reference

@@ -92,6 +92,64 @@ definition {
 		}
 	}
 
+	@description = "LPS-148142. Validates Manage Translations cancel add language by click cancel button."
+	@priority = "3"
+	test CancelAddLanguageByClickCancelButton {
+		task ("Given manage translations modal") {
+			TranslationManagerPortlet.goToManageTranslationsModal(
+				key_currentLocale = "en-us",
+				key_title = "Admin");
+		}
+
+		task ("When add language in Manage Translations table list") {
+			ManageTranslations.addLanguage(key_locale = "zh-CN");
+		}
+
+		task ("Then cancel add a language with cancel button") {
+			Click(locator1 = "Button#CANCEL");
+		}
+
+		task ("Then view language not active in selector menu") {
+			TranslationManagerPortlet.clickSelectTranslation(
+				key_currentLocale = "en-us",
+				key_title = "Admin");
+
+			AssertElementNotPresent(
+				key_locale = "zh-CN",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+		}
+	}
+
+	@description = "LPS-148142. Validates Manage Translations cancel add language by click somewhere outside the modal."
+	@priority = "3"
+	test CancelAddLanguageByClickSomewhereOutsideModal {
+		task ("Given manage translations modal") {
+			TranslationManagerPortlet.goToManageTranslationsModal(
+				key_currentLocale = "en-us",
+				key_title = "Admin");
+		}
+
+		task ("When add language in Manage Translations table list") {
+			ManageTranslations.addLanguage(key_locale = "zh-CN");
+		}
+
+		task ("Then cancel add a language with click somewhere outside the modal") {
+			Click.mouseDownMouseUp(locator1 = "TranslationManager#AUI_TAG");
+
+			AssertElementNotPresent(locator1 = "Modal#MODAL");
+		}
+
+		task ("Then view language not active in selector menu") {
+			TranslationManagerPortlet.clickSelectTranslation(
+				key_currentLocale = "en-us",
+				key_title = "Admin");
+
+			AssertElementNotPresent(
+				key_locale = "zh-CN",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+		}
+	}
+
 	@description = "LPS-147946. Validates language can be deleted from the Manage Translation list."
 	@priority = "3"
 	test CanDeleteLanguageFromManageTranslationsList {

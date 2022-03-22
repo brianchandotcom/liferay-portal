@@ -551,12 +551,62 @@ definition {
 	}
 
 	@description = "LPS-143190 - Verify that the metadata values are correctly displayed on a Custom View"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanViewMetadataValues {
 		property portal.acceptance = "true";
 
-		// TODO LPS-149239 CanViewMetadataValues pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 149239",
+			objectName = "CustomObject149239",
+			pluralLabelName = "Custom Objects 149239");
+
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject149239");
+
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject149239");
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject149239",
+			value = "Entry Test");
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 149239");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		LexiconEntry.gotoAdd();
+
+		for (var columnOption : list "Author,Creation Date,Modified Date,Workflow Status,ID") {
+			Click.clickAtNotVisible(
+				key_columnOption = "${columnOption}",
+				locator1 = "ObjectCustomViews#CHECKBOX_COLUMN_OPTION");
+		}
+
+		ObjectCustomViews.saveColumnsModal();
+
+		Button.clickSave();
+
+		ObjectAdmin.goToCustomObject(objectName = "CustomObject149239");
+
+		for (var columnName : list "Author,Created Date,Modified Date,Status,ID") {
+			ObjectPortlet.assertEntryColumnPresent(column = "${columnName}");
+		}
+
 
 	}
 

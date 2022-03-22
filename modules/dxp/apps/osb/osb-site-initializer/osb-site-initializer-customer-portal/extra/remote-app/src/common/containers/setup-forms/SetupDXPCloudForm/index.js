@@ -107,14 +107,14 @@ const SetupDXPCloudPage = ({
 			return false;
 		};
 
-		const alreadySubmited = await getDXPCloudActivationSubmitedStatus(
+		const alreadySubmitted = await getDXPCloudActivationSubmitedStatus(
 			project.accountKey
 		);
-		if (alreadySubmited) {
+		if (alreadySubmitted) {
 			setFormAlreadySubmitted(true);
 		}
 
-		if (!alreadySubmited && dxp) {
+		if (!alreadySubmitted && dxp) {
 			const {data} = await client.mutate({
 				mutation: addDXPCloudEnvironment,
 				variables: {

@@ -18,6 +18,7 @@ import {
 	addIncidentReportAnalyticsCloud,
 	getAnalyticsCloudPageInfo,
 	updateAccountSubscriptionGroups,
+	getAnalyticsCloudWorkspace,
 } from '../../../../common/services/liferay/graphql/queries';
 import {
 	isLowercaseAndNumbers,
@@ -45,6 +46,7 @@ const SetupAnalyticsCloudPage = ({
 	project,
 	setFieldValue,
 	subscriptionGroupId,
+	setFormAlreadySubmitted,
 	touched,
 	values,
 }) => {
@@ -105,51 +107,78 @@ const SetupAnalyticsCloudPage = ({
 	const handleSubmit = async () => {
 		const analyticsCloud = values?.activations;
 
-		const {data} = await client.mutate({
-			mutation: addAnalyticsCloudWorkspace,
-			variables: {
-				analyticsCloudWorkspace: {
-					accountKey: project.accountKey,
-					dataCenterLocation: analyticsCloud.dataCenterLocation,
-					ownerEmailAddress: analyticsCloud.ownerEmailAddress,
-					workspaceName: analyticsCloud.workspaceName,
-				},
-				scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
-			},
-		});
-
-		if (data) {
-			const analyticsCloudWorkspaceId =
-				data?.c?.createAnalyticsCloudWorkspace
-					?.analyticsCloudWorkspaceId;
-
-			await Promise.all(
-				analyticsCloud?.incidentReportContact.map(({email}) => {
-					return client.mutate({
-						mutation: addIncidentReportAnalyticsCloud,
-						variables: {
-							IncidentReportContactAnalyticsCloud: {
-								analyticsCloudWorkspaceId,
-								emailAddress: email,
-							},
-							scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
-						},
-					});
-				})
-			);
-
-			await client.mutate({
-				mutation: updateAccountSubscriptionGroups,
+		const getAnalyticsCloudSubmittedStatus = async (accountKey) => {
+			const {data} = await client.query({
+				query: getAnalyticsCloudWorkspace,
 				variables: {
-					accountSubscriptionGroup: {
-						activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
-					},
-					id: subscriptionGroupId,
+					filter: `accountKey eq '${accountKey}'`,
+					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
 				},
 			});
+
+			if (data) {
+				const status = !!data.c?.analyticsCloudWorkspaces?.items
+					?.length;
+
+				return status;
+			}
+
+			return false;
+		};
+
+		const alreadySubmitted = await getAnalyticsCloudSubmittedStatus(
+			project.accountKey
+		);
+		if (alreadySubmitted) {
+			setFormAlreadySubmitted(true);
 		}
 
-		handlePage();
+		if (!alreadySubmitted) {
+			const {data} = await client.mutate({
+				mutation: addAnalyticsCloudWorkspace,
+				variables: {
+					analyticsCloudWorkspace: {
+						accountKey: project.accountKey,
+						dataCenterLocation: analyticsCloud.dataCenterLocation,
+						ownerEmailAddress: analyticsCloud.ownerEmailAddress,
+						workspaceName: analyticsCloud.workspaceName,
+					},
+					scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
+				},
+			});
+
+			if (data) {
+				const analyticsCloudWorkspaceId =
+					data?.c?.createAnalyticsCloudWorkspace
+						?.analyticsCloudWorkspaceId;
+
+				await client.mutate({
+					mutation: updateAccountSubscriptionGroups,
+					variables: {
+						accountSubscriptionGroup: {
+							activationStatus: STATUS_TAG_TYPE_NAMES.inProgress,
+						},
+						id: subscriptionGroupId,
+					},
+				});
+
+				await Promise.all(
+					analyticsCloud?.incidentReportContact.map(({email}) => {
+						return client.mutate({
+							mutation: addIncidentReportAnalyticsCloud,
+							variables: {
+								IncidentReportContactAnalyticsCloud: {
+									analyticsCloudWorkspaceId,
+									emailAddress: email,
+								},
+								scopeKey: Liferay.ThemeDisplay.getScopeGroupId(),
+							},
+						});
+					})
+				);
+			}
+			handlePage();
+		}
 	};
 
 	return (

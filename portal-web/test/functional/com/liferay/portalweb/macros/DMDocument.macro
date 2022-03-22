@@ -2438,6 +2438,31 @@ definition {
 		SystemSettings.saveConfiguration();
 	}
 
+	macro updateMimeTypeSizeLimit {
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Documents and Media",
+			configurationName = "Size Limits by Mime Type",
+			configurationScope = "Virtual Instance Scope");
+
+		if ("${indexNumber}" == "2") {
+			Click(locator1 = "Button#DUPLICATE");
+
+			Type(
+				key_indexNumber = "${indexNumber}",
+				key_label = "Mime Type Size Limit",
+				locator1 = "TextArea#ANY_LABELED_N",
+				value1 = "${fieldValue}");
+		}
+		else {
+			Type(
+				key_label = "Mime Type Size Limit",
+				locator1 = "TextArea#ANY_LABELED",
+				value1 = "${fieldValue}");
+		}
+
+		SystemSettings.saveConfiguration();
+	}
+
 	macro viewAllPG {
 		DMDocument.viewPG(
 			categoryName = "${categoryName}",

@@ -287,6 +287,80 @@ definition {
 		}
 	}
 
+	@description = "Verify users can filter Import/Export executions by Action."
+	@priority = "3"
+	test CanFilterExecutionsByAction {
+		property portal.acceptance = "true";
+
+		task ("Given an account import and export") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.importFile(
+				entityType = "Account",
+				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
+				fileName = "csv_account_import.csv",
+				headlessEndpoint = "/headless-admin-user");
+
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "Account",
+				exportFields = "name,type,description,externalReferenceCode",
+				exportFileFormat = "CSV",
+				headlessEndpoint = "/headless-admin-user");
+		}
+
+		task ("When I go to the Import/Export Center and filter action by all") {
+			ImportExport.openImportExportAdmin();
+
+			ManagementBar.setFilterAndOrder(filterBy = "All");
+		}
+
+		task ("Then both the export and import should be shown") {
+			ImportExport.assertExecutionEntry(
+				entityType = "Account",
+				executionAction = "Import",
+				executionStatus = "Completed");
+
+			ImportExport.assertExecutionEntry(
+				entityType = "Account",
+				executionAction = "Export",
+				executionStatus = "Completed");
+		}
+
+		task ("When I filter Action by Import") {
+			ManagementBar.setFilterAndOrder(filterBy = "Import");
+		}
+
+		task ("Then only the import should be shown") {
+			ImportExport.assertExecutionEntry(
+				entityType = "Account",
+				executionAction = "Import",
+				executionStatus = "Completed");
+
+			ImportExport.assertNoExecutionEntry(
+				entityType = "Account",
+				executionAction = "Export",
+				executionStatus = "Completed");
+		}
+
+		task ("When I filter Action by Export") {
+			ManagementBar.setFilterAndOrder(filterBy = "Export");
+		}
+
+		task ("Then only the export should be shown") {
+			ImportExport.assertExecutionEntry(
+				entityType = "Account",
+				executionAction = "Export",
+				executionStatus = "Completed");
+
+			ImportExport.assertNoExecutionEntry(
+				entityType = "Account",
+				executionAction = "Import",
+				executionStatus = "Completed");
+		}
+	}
+
 	@description = "Verify users can import entities via CSV files"
 	@priority = "3"
 	test CanImportCSVFiles {

@@ -64,6 +64,8 @@ public class DDMTemplateInfoItemFieldSetProviderImpl
 						ddmTemplate -> InfoField.builder(
 						).infoFieldType(
 							TextInfoFieldType.INSTANCE
+						).uniqueId(
+							_getTemplateFieldName(ddmTemplate)
 						).name(
 							_getTemplateFieldName(ddmTemplate)
 						).labelInfoLocalizedValue(

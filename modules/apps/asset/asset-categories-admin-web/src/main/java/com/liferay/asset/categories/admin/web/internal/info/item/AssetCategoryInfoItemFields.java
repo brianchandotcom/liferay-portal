@@ -14,6 +14,7 @@
 
 package com.liferay.asset.categories.admin.web.internal.info.item;
 
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
@@ -27,6 +28,8 @@ public interface AssetCategoryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
+		).uniqueId(
+			AssetCategory.class.getSimpleName() + "_displayPageURL"
 		).name(
 			"description"
 		).labelInfoLocalizedValue(
@@ -37,6 +40,8 @@ public interface AssetCategoryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
+		).uniqueId(
+			AssetCategory.class.getSimpleName() + "_displayPageURL"
 		).name(
 			"displayPageURL"
 		).labelInfoLocalizedValue(
@@ -47,6 +52,8 @@ public interface AssetCategoryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
+		).uniqueId(
+			AssetCategory.class.getSimpleName() + "_name"
 		).name(
 			"name"
 		).labelInfoLocalizedValue(
@@ -57,6 +64,8 @@ public interface AssetCategoryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
+		).uniqueId(
+			AssetCategory.class.getSimpleName() + "_vocabulary"
 		).name(
 			"vocabulary"
 		).labelInfoLocalizedValue(

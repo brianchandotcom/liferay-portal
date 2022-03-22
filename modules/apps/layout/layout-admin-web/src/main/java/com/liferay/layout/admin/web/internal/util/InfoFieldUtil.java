@@ -140,6 +140,8 @@ public class InfoFieldUtil {
 		return InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
+		).uniqueId(
+			fragmentEntryLinkId + StringPool.COLON + name
 		).name(
 			fragmentEntryLinkId + StringPool.COLON + name
 		).labelInfoLocalizedValue(

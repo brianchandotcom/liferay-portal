@@ -470,6 +470,8 @@ public class LayoutReportsDataMVCResourceCommandTest {
 					InfoField.builder(
 					).infoFieldType(
 						TextInfoFieldType.INSTANCE
+					).uniqueId(
+						"title"
 					).name(
 						"title"
 					).build(),

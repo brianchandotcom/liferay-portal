@@ -14,6 +14,7 @@
 
 package com.liferay.blogs.web.internal.info.item;
 
+import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
@@ -30,6 +31,8 @@ public interface BlogsEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
+		).uniqueId(
+			BlogsEntry.class.getSimpleName() + "_authorName"
 		).name(
 			"authorName"
 		).labelInfoLocalizedValue(
@@ -40,6 +43,8 @@ public interface BlogsEntryInfoItemFields {
 		authorProfileImageInfoField = InfoField.builder(
 		).infoFieldType(
 			ImageInfoFieldType.INSTANCE
+		).uniqueId(
+			BlogsEntry.class.getSimpleName() + "_authorProfileImage"
 		).name(
 			"authorProfileImage"
 		).labelInfoLocalizedValue(
@@ -50,6 +55,8 @@ public interface BlogsEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
+		).uniqueId(
+			BlogsEntry.class.getSimpleName() + "_content"
 		).name(
 			"content"
 		).labelInfoLocalizedValue(
@@ -60,6 +67,8 @@ public interface BlogsEntryInfoItemFields {
 		coverImageCaptionInfoField = InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
+		).uniqueId(
+			BlogsEntry.class.getSimpleName() + "_coverImageCaption"
 		).name(
 			"coverImageCaption"
 		).labelInfoLocalizedValue(
@@ -70,6 +79,8 @@ public interface BlogsEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			ImageInfoFieldType.INSTANCE
+		).uniqueId(
+			BlogsEntry.class.getSimpleName() + "_coverImage"
 		).name(
 			"coverImage"
 		).labelInfoLocalizedValue(
@@ -80,6 +91,8 @@ public interface BlogsEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			DateInfoFieldType.INSTANCE
+		).uniqueId(
+			BlogsEntry.class.getSimpleName() + "_createDate"
 		).name(
 			"createDate"
 		).labelInfoLocalizedValue(
@@ -90,6 +103,8 @@ public interface BlogsEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
+		).uniqueId(
+			BlogsEntry.class.getSimpleName() + "_description"
 		).name(
 			"description"
 		).labelInfoLocalizedValue(
@@ -100,6 +115,8 @@ public interface BlogsEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			DateInfoFieldType.INSTANCE
+		).uniqueId(
+			BlogsEntry.class.getSimpleName() + "_displayDate"
 		).name(
 			"displayDate"
 		).labelInfoLocalizedValue(
@@ -110,6 +127,8 @@ public interface BlogsEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			URLInfoFieldType.INSTANCE
+		).uniqueId(
+			BlogsEntry.class.getSimpleName() + "_displayPageURL"
 		).name(
 			"displayPageURL"
 		).labelInfoLocalizedValue(
@@ -120,6 +139,8 @@ public interface BlogsEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			DateInfoFieldType.INSTANCE
+		).uniqueId(
+			BlogsEntry.class.getSimpleName() + "_modifiedDate"
 		).name(
 			"modifiedDate"
 		).labelInfoLocalizedValue(
@@ -130,6 +151,8 @@ public interface BlogsEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			DateInfoFieldType.INSTANCE
+		).uniqueId(
+			BlogsEntry.class.getSimpleName() + "_publishDate"
 		).name(
 			"publishDate"
 		).labelInfoLocalizedValue(
@@ -140,6 +163,8 @@ public interface BlogsEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			ImageInfoFieldType.INSTANCE
+		).uniqueId(
+			BlogsEntry.class.getSimpleName() + "_smallImage"
 		).name(
 			"smallImage"
 		).labelInfoLocalizedValue(
@@ -150,6 +175,8 @@ public interface BlogsEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
+		).uniqueId(
+			BlogsEntry.class.getSimpleName() + "_subtitle"
 		).name(
 			"subtitle"
 		).labelInfoLocalizedValue(
@@ -160,6 +187,8 @@ public interface BlogsEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
+		).uniqueId(
+			BlogsEntry.class.getSimpleName() + "_title"
 		).name(
 			"title"
 		).labelInfoLocalizedValue(

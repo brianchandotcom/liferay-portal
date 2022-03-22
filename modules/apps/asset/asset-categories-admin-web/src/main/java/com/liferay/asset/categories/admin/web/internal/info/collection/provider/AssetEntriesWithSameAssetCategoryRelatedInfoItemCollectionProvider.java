@@ -253,6 +253,8 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		InfoField.FinalStep finalStep = InfoField.builder(
 		).infoFieldType(
 			SelectInfoFieldType.INSTANCE
+		).uniqueId(
+			"item_types"
 		).name(
 			"item_types"
 		).attribute(

@@ -20,6 +20,7 @@ import com.liferay.info.field.type.ImageInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.object.model.ObjectEntry;
 
 /**
  * @author Jorge Ferrer
@@ -30,6 +31,8 @@ public interface ObjectEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			DateInfoFieldType.INSTANCE
+		).uniqueId(
+			ObjectEntry.class.getSimpleName() + "_createDate"
 		).name(
 			"createDate"
 		).labelInfoLocalizedValue(
@@ -40,6 +43,8 @@ public interface ObjectEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			URLInfoFieldType.INSTANCE
+		).uniqueId(
+			ObjectEntry.class.getSimpleName() + "_displayPageURL"
 		).name(
 			"displayPageURL"
 		).labelInfoLocalizedValue(
@@ -50,6 +55,8 @@ public interface ObjectEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			DateInfoFieldType.INSTANCE
+		).uniqueId(
+			ObjectEntry.class.getSimpleName() + "_modifiedDate"
 		).name(
 			"modifiedDate"
 		).labelInfoLocalizedValue(
@@ -60,6 +67,8 @@ public interface ObjectEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			DateInfoFieldType.INSTANCE
+		).uniqueId(
+			ObjectEntry.class.getSimpleName() + "_publishDate"
 		).name(
 			"publishDate"
 		).labelInfoLocalizedValue(
@@ -70,6 +79,8 @@ public interface ObjectEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
+		).uniqueId(
+			ObjectEntry.class.getSimpleName() + "_userName"
 		).name(
 			"userName"
 		).labelInfoLocalizedValue(
@@ -79,6 +90,8 @@ public interface ObjectEntryInfoItemFields {
 	public static final InfoField userProfileImageInfoField = InfoField.builder(
 	).infoFieldType(
 		ImageInfoFieldType.INSTANCE
+	).uniqueId(
+		ObjectEntry.class.getSimpleName() + "_userProfileImage"
 	).name(
 		"userProfileImage"
 	).labelInfoLocalizedValue(

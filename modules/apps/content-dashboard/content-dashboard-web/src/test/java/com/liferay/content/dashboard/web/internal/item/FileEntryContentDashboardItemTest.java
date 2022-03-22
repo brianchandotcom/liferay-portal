@@ -200,6 +200,8 @@ public class FileEntryContentDashboardItemTest {
 					InfoField.builder(
 					).infoFieldType(
 						DateInfoFieldType.INSTANCE
+					).uniqueId(
+						FileEntry.class.getSimpleName() + "_description"
 					).name(
 						"description"
 					).labelInfoLocalizedValue(

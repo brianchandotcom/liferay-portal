@@ -46,6 +46,8 @@ public class AssetCategoryFriendlyURLInfoItemFieldReader
 		return InfoField.builder(
 		).infoFieldType(
 			URLInfoFieldType.INSTANCE
+		).uniqueId(
+			AssetCategory.class.getSimpleName() + "_friendlyURL"
 		).name(
 			"friendlyURL"
 		).labelInfoLocalizedValue(

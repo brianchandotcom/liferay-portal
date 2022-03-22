@@ -190,6 +190,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 						InfoField.builder(
 						).infoFieldType(
 							_getInfoFieldType(objectField)
+						).uniqueId(
+							ObjectField.class.getSimpleName() +
+								StringPool.UNDERLINE + objectField.getName()
 						).name(
 							objectField.getName()
 						).labelInfoLocalizedValue(

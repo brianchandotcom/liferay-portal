@@ -217,6 +217,8 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 		InfoField.FinalStep<?> finalStep = InfoField.builder(
 		).infoFieldType(
 			SelectInfoFieldType.INSTANCE
+		).uniqueId(
+			Field.ASSET_TAG_NAMES
 		).name(
 			Field.ASSET_TAG_NAMES
 		).attribute(

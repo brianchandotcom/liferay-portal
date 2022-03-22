@@ -152,6 +152,8 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 							InfoField.builder(
 							).infoFieldType(
 								SelectInfoFieldType.INSTANCE
+							).uniqueId(
+								objectField.getName()
 							).name(
 								objectField.getName()
 							).attribute(

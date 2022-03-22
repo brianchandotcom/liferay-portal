@@ -457,6 +457,8 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemTest {
 					InfoField.builder(
 					).infoFieldType(
 						DateInfoFieldType.INSTANCE
+					).uniqueId(
+						"createDate"
 					).name(
 						"createDate"
 					).labelInfoLocalizedValue(
@@ -468,6 +470,8 @@ public class LayoutDisplayPageObjectProviderAnalyticsReportsInfoItemTest {
 					InfoField.builder(
 					).infoFieldType(
 						TextInfoFieldType.INSTANCE
+					).uniqueId(
+						"title"
 					).name(
 						"title"
 					).labelInfoLocalizedValue(

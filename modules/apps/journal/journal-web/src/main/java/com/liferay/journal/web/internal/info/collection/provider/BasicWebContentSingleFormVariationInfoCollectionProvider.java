@@ -133,6 +133,8 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 			InfoField.builder(
 			).infoFieldType(
 				TextInfoFieldType.INSTANCE
+			).uniqueId(
+				Field.TITLE
 			).name(
 				Field.TITLE
 			).labelInfoLocalizedValue(
@@ -275,6 +277,8 @@ public class BasicWebContentSingleFormVariationInfoCollectionProvider
 		InfoField.FinalStep<?> finalStep = InfoField.builder(
 		).infoFieldType(
 			SelectInfoFieldType.INSTANCE
+		).uniqueId(
+			Field.ASSET_TAG_NAMES
 		).name(
 			Field.ASSET_TAG_NAMES
 		).attribute(

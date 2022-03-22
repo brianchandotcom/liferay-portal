@@ -148,6 +148,8 @@ public class LayoutSEOTemplateProcessorTest {
 				InfoField.builder(
 				).infoFieldType(
 					TextInfoFieldType.INSTANCE
+				).uniqueId(
+					"description"
 				).name(
 					"description"
 				).labelInfoLocalizedValue(
@@ -159,6 +161,8 @@ public class LayoutSEOTemplateProcessorTest {
 				InfoField.builder(
 				).infoFieldType(
 					TextInfoFieldType.INSTANCE
+				).uniqueId(
+					"Text45966564"
 				).name(
 					"Text45966564"
 				).labelInfoLocalizedValue(
@@ -170,6 +174,8 @@ public class LayoutSEOTemplateProcessorTest {
 				InfoField.builder(
 				).infoFieldType(
 					TextInfoFieldType.INSTANCE
+				).uniqueId(
+					"title"
 				).name(
 					"title"
 				).labelInfoLocalizedValue(

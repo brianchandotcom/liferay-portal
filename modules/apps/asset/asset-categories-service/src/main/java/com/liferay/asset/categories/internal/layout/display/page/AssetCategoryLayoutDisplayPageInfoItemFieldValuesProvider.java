@@ -74,6 +74,8 @@ public class AssetCategoryLayoutDisplayPageInfoItemFieldValuesProvider
 					InfoField.builder(
 					).infoFieldType(
 						TextInfoFieldType.INSTANCE
+					).uniqueId(
+						AssetCategory.class.getSimpleName() + "_vocabulary"
 					).name(
 						"vocabulary"
 					).labelInfoLocalizedValue(
@@ -98,6 +100,8 @@ public class AssetCategoryLayoutDisplayPageInfoItemFieldValuesProvider
 					InfoField.builder(
 					).infoFieldType(
 						TextInfoFieldType.INSTANCE
+					).uniqueId(
+						AssetCategory.class.getSimpleName() + "_group"
 					).name(
 						"group"
 					).labelInfoLocalizedValue(

@@ -39,6 +39,8 @@ public class TextInfoFieldTypeTest {
 		InfoField<TextInfoFieldType> infoField = InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
+		).uniqueId(
+			"test-field"
 		).name(
 			"test-field"
 		).attribute(
@@ -56,6 +58,8 @@ public class TextInfoFieldTypeTest {
 		InfoField<TextInfoFieldType> infoField = InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
+		).uniqueId(
+			"test-field"
 		).name(
 			"test-field"
 		).attribute(
@@ -73,6 +77,8 @@ public class TextInfoFieldTypeTest {
 		InfoField<TextInfoFieldType> infoField = InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
+		).uniqueId(
+			"test-field"
 		).name(
 			"test-field"
 		).build();

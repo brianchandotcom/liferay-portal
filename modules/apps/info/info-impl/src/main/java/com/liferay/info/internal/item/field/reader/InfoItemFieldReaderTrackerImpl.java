@@ -29,6 +29,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFa
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.reflect.GenericUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -190,6 +191,9 @@ public class InfoItemFieldReaderTrackerImpl
 			return InfoField.builder(
 			).infoFieldType(
 				infoFieldType
+			).uniqueId(
+				InfoDisplayContributorField.class.getSimpleName() +
+					StringPool.UNDERLINE + getKey()
 			).name(
 				getKey()
 			).labelInfoLocalizedValue(

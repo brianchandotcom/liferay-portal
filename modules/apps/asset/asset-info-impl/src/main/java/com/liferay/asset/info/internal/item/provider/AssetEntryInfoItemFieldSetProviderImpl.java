@@ -34,6 +34,7 @@ import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.categorization.Category;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -91,6 +92,10 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 					InfoField.builder(
 					).infoFieldType(
 						CategoriesInfoFieldType.INSTANCE
+					).uniqueId(
+						AssetVocabulary.class.getSimpleName() +
+							StringPool.UNDERLINE +
+								assetVocabulary.getVocabularyId()
 					).name(
 						assetVocabulary.getName()
 					).labelInfoLocalizedValue(
@@ -198,6 +203,10 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 					InfoField.builder(
 					).infoFieldType(
 						CategoriesInfoFieldType.INSTANCE
+					).uniqueId(
+						AssetVocabulary.class.getSimpleName() +
+							StringPool.UNDERLINE +
+								assetVocabulary.getVocabularyId()
 					).name(
 						assetVocabulary.getName()
 					).labelInfoLocalizedValue(
@@ -291,6 +300,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		InfoField.builder(
 		).infoFieldType(
 			CategoriesInfoFieldType.INSTANCE
+		).uniqueId(
+			AssetCategory.class.getSimpleName() + "_categories"
 		).name(
 			"categories"
 		).labelInfoLocalizedValue(
@@ -310,6 +321,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		InfoField.builder(
 		).infoFieldType(
 			TagsInfoFieldType.INSTANCE
+		).uniqueId(
+			AssetTag.class.getSimpleName() + "_tagNames"
 		).name(
 			"tagNames"
 		).labelInfoLocalizedValue(

@@ -34,6 +34,7 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.info.item.ObjectEntryInfoItemFields;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -239,6 +240,9 @@ public class ObjectEntryInfoItemFormProvider
 						InfoField.builder(
 						).infoFieldType(
 							_getInfoFieldType(objectField)
+						).uniqueId(
+							ObjectField.class.getSimpleName() +
+								StringPool.UNDERLINE + objectField.getName()
 						).name(
 							objectField.getName()
 						).labelInfoLocalizedValue(

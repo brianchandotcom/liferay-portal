@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.web.internal.info.field.converter;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.info.field.converter.DDMFormFieldInfoFieldConverter;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.constants.FieldConstants;
 import com.liferay.info.field.InfoField;
@@ -30,6 +31,7 @@ import com.liferay.info.field.type.RadioInfoFieldType;
 import com.liferay.info.field.type.SelectInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Objects;
@@ -52,6 +54,9 @@ public class DDMFormFieldInfoFieldConverterImpl
 			InfoField.builder(
 			).infoFieldType(
 				_getInfoFieldType(ddmFormField)
+			).uniqueId(
+				DDMStructure.class.getSimpleName() + StringPool.UNDERLINE +
+					ddmFormField.getName()
 			).name(
 				ddmFormField.getName()
 			)

@@ -48,6 +48,7 @@ import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -277,6 +278,9 @@ public class InfoDisplayContributorWrapper
 						InfoField.builder(
 						).infoFieldType(
 							_getInfoFieldTypeType(infoDisplayField.getType())
+						).uniqueId(
+							InfoDisplayField.class.getSimpleName() +
+								StringPool.UNDERLINE + infoDisplayField.getKey()
 						).name(
 							infoDisplayField.getKey()
 						).labelInfoLocalizedValue(
@@ -332,6 +336,8 @@ public class InfoDisplayContributorWrapper
 						InfoField infoField = InfoField.builder(
 						).infoFieldType(
 							TextInfoFieldType.INSTANCE
+						).uniqueId(
+							InfoDisplayField.class.getName() + fieldName
 						).name(
 							fieldName
 						).labelInfoLocalizedValue(

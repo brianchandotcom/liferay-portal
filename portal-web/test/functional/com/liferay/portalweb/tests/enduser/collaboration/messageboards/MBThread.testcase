@@ -536,6 +536,15 @@ definition {
 		AssertAlertNotPresent();
 	}
 
+	@description = "This is a test for LPS-87376. It ensures that a user can publish a thread with a tag."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanPublishThreadWithTag {
+
+		// TODO LPS-149484 CanPublishThreadWithTag pending implementation
+
+	}
+
 	@priority = "5"
 	@refactordone
 	test CanRestoreThread {

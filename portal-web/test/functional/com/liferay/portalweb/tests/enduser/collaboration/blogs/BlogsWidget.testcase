@@ -645,6 +645,15 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This is a test for LPS-78189. It ensures that a user can view the blog entry via Blogs Aggregator after configuring the organization."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewEntryWithOrganizationViaBlogsAggregator {
+
+		// TODO LPS-149577 CanViewEntryWithOrganizationViaBlogsAggregator pending implementation
+
+	}
+
 	@description = "This is a test for LPS-141740. It checks that a user can view the details of latest blogs entry via recent bloggers."
 	@priority = "4"
 	test CanViewLatestEntryViaRecentBloggers {

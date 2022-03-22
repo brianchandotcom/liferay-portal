@@ -260,7 +260,7 @@ definition {
 		WaitForElementPresent(locator1 = "ContentDashboard#ASSET_MENU_DROPDOWN_BUTTON");
 	}
 
-	macro filterBySiteGlobal {
+	macro filterBySite {
 		if (IsElementPresent(locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN")) {
 			AssertClickNoError(
 				locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
@@ -269,13 +269,15 @@ definition {
 
 		var key_filterOption = "${filterOption}";
 
+		var key_siteName = "${siteName}";
+
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
 
 		SelectFrame.selectFrameNoLoading(locator1 = "IFrame#MODAL_IFRAME");
 
 		Click(locator1 = "ContentDashboard#MY_SITES_TAB");
 
-		Click(locator1 = "ContentDashboard#GLOBAL_SITE_CARD");
+		Click(locator1 = "ContentDashboard#SITE_CARD"); 
 
 		SelectFrame(value1 = "relative=top");
 	}

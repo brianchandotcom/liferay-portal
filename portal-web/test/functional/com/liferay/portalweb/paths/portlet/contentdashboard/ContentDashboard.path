@@ -255,8 +255,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>GLOBAL_SITE_CARD</td>
-	<td>//*[contains(@class, 'card')]//*[contains(@data-groupdescriptivename, 'Global')]</td>
+	<td>SITE_CARD</td>
+	<td>//*[contains(@class, 'card')]//*[contains(@data-groupdescriptivename, '${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

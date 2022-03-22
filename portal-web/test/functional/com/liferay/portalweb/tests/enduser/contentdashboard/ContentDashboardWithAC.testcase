@@ -106,6 +106,50 @@ definition {
 		}
 	}
 
+	@description = "LPS-136512 Given A blog associated with a Display Page
+	When the user clicks on the option "View metrics" in the kebab menu
+	Then the Content Performance panel is displayed"
+	@priority = "4"
+	test ViewMetricsButtonKebabWhenBlogHasDPT {
+		task ("Add Display Page and mark it as default") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Blogs Entry",
+				displayPageTemplateEntryName = "Display Page Name",
+				groupName = "Test Site Name");
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Display Page Name");
+
+			Button.clickPublish();
+
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name");
+
+			DisplayPageTemplatesAdmin.markDisplayPageAsDefault(displayPageName = "Display Page Name");
+		}
+
+		task ("Create a blog") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Go to Content Dashboard and click on View Metrics in the kebab menu") {
+			ContentDashboard.goToContentDashboard();
+
+			Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");
+
+			Click(
+				key_dropdownItem = "View Metrics",
+				locator1 = "ACUtils#DROPDOWN_ITEM");
+		}
+
+		task ("Assert the Content Performance is present") {
+			AssertVisible(locator1 = "ContentDashboard#CONTENT_PERFORMANCE_TITLE_PANEL");
+		}
+	}
+
 	@description = "LPS-136512 Given A document associated with a Display Page
 	When the user clicks on the option "View metrics" in the kebab menu
 	Then the Content Performance panel is displayed"
@@ -137,7 +181,7 @@ definition {
 				sourceFileName = "Document_1.txt");
 		}
 
-		task ("Go to Content Dashboard and click on View Mtrics in the kebab menu") {
+		task ("Go to Content Dashboard and click on View Metrics in the kebab menu") {
 			ContentDashboard.goToContentDashboard();
 
 			Click(locator1 = "Icon#VERTICAL_ELLIPSIS_BUTTON");

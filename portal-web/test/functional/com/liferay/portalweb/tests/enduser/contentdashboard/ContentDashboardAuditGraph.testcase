@@ -706,6 +706,71 @@ definition {
 		}
 	}
 
+	@description = "LPS-119966 Given a blog with at least one category in one of the vocabularies featured in the graph
+	When the user views the content dashboard
+	Then the document is counted as an asset in the graph"
+	@priority = "4"
+	test BlogWithOneCategory {
+		property portal.acceptance = "true";
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
+		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+
+		task ("Add a vocabulary for Test Site Name") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary 1");
+		}
+
+		task ("Add a vocabulary for Test Site Name") {
+			JSONCategory.addVocabulary(
+				groupName = "Test Site Name",
+				title = "Vocabulary 2");
+		}
+
+		task ("Create a category for Vocabulary 1") {
+			var categoryId1 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category1",
+				vocabularyName = "Vocabulary 1");
+		}
+
+		task ("Create a category for Vocabulary 2") {
+			var categoryId2 = JSONCategory.addCategory(
+				groupName = "Test Site Name",
+				title = "Category2",
+				vocabularyName = "Vocabulary 2");
+		}
+
+		task ("Create a blog") {
+			JSONBlog.addEntry(
+				assetCategoryIds = "${categoryId1},${categoryId2}",
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Navigate Content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Configure the audit graph with the previous created categories") {
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Audience");
+
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Vocabulary 1");
+
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Stage");
+
+			ContentDashboard.moveVocabularyDisplayConfiguration(vocabularyName = "Vocabulary 2");
+		}
+
+		task ("Assert the blog is counted as an asset") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#X_AXIS_VOCABULARY_NAME",
+				value1 = "Blogs Entry Title",
+				xAxisCategoryName = "Category1");
+		}
+	}
+
 	@description = "LPS-133797 When the user selects the option Available, the modal lists all the existing Global Vocabularies"
 	@priority = "5"
 	test CheckAvailableVocabulariesDisplayed {

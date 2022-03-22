@@ -90,8 +90,9 @@ public class BookmarksItemSelectorView
 			BookmarksItemSelectorViewDisplayContext.class.getName(),
 			new BookmarksItemSelectorViewDisplayContext(
 				bookmarksItemSelectorCriterion, this,
+				_bookmarksEntryLocalService,
 				_itemSelectorReturnTypeResolverHandler, itemSelectedEventName,
-				search, portletURL, _bookmarksEntryLocalService));
+				search, portletURL));
 
 		ServletContext servletContext = getServletContext();
 

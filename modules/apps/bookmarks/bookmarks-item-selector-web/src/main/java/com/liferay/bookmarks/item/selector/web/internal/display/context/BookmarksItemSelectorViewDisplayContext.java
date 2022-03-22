@@ -39,19 +39,19 @@ public class BookmarksItemSelectorViewDisplayContext {
 	public BookmarksItemSelectorViewDisplayContext(
 		BookmarksItemSelectorCriterion bookmarksItemSelectorCriterion,
 		BookmarksItemSelectorView bookmarksItemSelectorView,
+		BookmarksEntryLocalService bookmarksEntryLocalService,
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler,
-		String itemSelectedEventName, boolean search, PortletURL portletURL,
-		BookmarksEntryLocalService bookmarksEntryLocalService) {
+		String itemSelectedEventName, boolean search, PortletURL portletURL) {
 
 		_bookmarksItemSelectorCriterion = bookmarksItemSelectorCriterion;
 		_bookmarksItemSelectorView = bookmarksItemSelectorView;
+		_bookmarksEntryLocalService = bookmarksEntryLocalService;
 		_itemSelectorReturnTypeResolverHandler =
 			itemSelectorReturnTypeResolverHandler;
 		_itemSelectedEventName = itemSelectedEventName;
 		_search = search;
 		_portletURL = portletURL;
-		_bookmarksEntryLocalService = bookmarksEntryLocalService;
 	}
 
 	public BookmarksItemSelectorCriterion getBookmarksItemSelectorCriterion() {

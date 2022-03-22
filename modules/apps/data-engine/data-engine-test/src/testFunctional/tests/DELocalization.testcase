@@ -24,19 +24,9 @@ definition {
 		}
 	}
 
-	@description = "This is a stubbed description"
-	@ignore = "true"
+	@description = "Verify that is possible to choose a different color on the Color Field for a translated language"
 	@priority = "5"
-	test CanTranslateLabelPlaceholderAndHelpTextOfTextField {
-
-		// TODO pending implementation
-
-	}
-
-	@description = "Verify that is possible to translate input data on the Text Field"
-	@priority = "5"
-	test CanInputtedDataBeTranslatedOnTextField {
-
+	test CanInputtedDataBeTranslatedOnColorField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -46,16 +36,16 @@ definition {
 			structureName = "Structure Name Test");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Text",
-			fieldName = "Text");
+			fieldFieldLabel = "Color",
+			fieldName = "Color");
 
 		WebContentStructures.addTranslations(localeList = "zh-CN");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Text",
-			fieldFieldLabelEdit = "文本");
+			fieldFieldLabel = "Color",
+			fieldFieldLabelEdit = "颜色");
 
 		WebContentStructures.saveCP();
 
@@ -63,16 +53,19 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
 
-		WebContent.addWithStructureCP(
-			webContentText = "Test",
-			webContentTitle = "Test");
+		PortletEntry.inputTitle(title = "Test");
+
+		DERenderer.inputDataInColorField(
+			fieldLabel = "Color",
+			value = "FF0D0D");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
-		WebContent.addWithStructureCP(
-			webContentText = "测试",
-			webContentTextFieldLabel = "文本",
-			webContentTitle = "测试");
+		PortletEntry.inputTitle(title = "测试");
+
+		DERenderer.inputDataInColorField(
+			fieldLabel = "颜色",
+			value = "FF0D0D");
 
 		PortletEntry.publish();
 
@@ -84,16 +77,14 @@ definition {
 			locator1 = "TextInput#TITLE",
 			value1 = "测试");
 
-		AssertTextEquals.assertValue(
-			key_fieldFieldLabel = "文本",
-			locator1 = "WCEditWebContent#TEXT_INPUT",
-			value1 = "测试");
+		DERenderer.assertDataInColorField(
+			fieldLabel = "颜色",
+			value = "FF0D0D");
 	}
 
 	@description = "Verify that is possible to translate input data on the Date Field"
 	@priority = "5"
 	test CanInputtedDataBeTranslatedOnDateField {
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -150,7 +141,6 @@ definition {
 	@description = "Verify that is possible to translate input data on the Numeric Field"
 	@priority = "5"
 	test CanInputtedDataBeTranslatedOnNumericField {
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -204,10 +194,9 @@ definition {
 			value1 = "12345");
 	}
 
-	@description = "Verify that is possible to upload a different image on the Image Field for a translated language"
+	@description = "Verify that is possible to translate input data on the Rich Text Field"
 	@priority = "5"
-	test CanUploadedImageChangeWithTranslations {
-
+	test CanInputtedDataBeTranslatedOnRichTextField {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -217,16 +206,16 @@ definition {
 			structureName = "Structure Name Test");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Image",
-			fieldName = "Image");
+			fieldFieldLabel = "Rich Text",
+			fieldName = "Rich Text");
 
 		WebContentStructures.addTranslations(localeList = "zh-CN");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Image",
-			fieldFieldLabelEdit = "图片");
+			fieldFieldLabel = "Rich Text",
+			fieldFieldLabelEdit = "富文本");
 
 		WebContentStructures.saveCP();
 
@@ -235,107 +224,25 @@ definition {
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
 
 		WebContent.addWithStructureCP(
-				navTab = "Web Content Images",
-				webContentImage = "Document_2.jpeg",
-				webContentTitle = "Test");
-
-		PortletEntry.publish();
-
-	
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Test");				
+			webContentRichText = "This is a Rich Text field",
+			webContentTitle = "Test");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
-		AssertClick(
-			key_fieldFieldLabel = "Image",
-			locator1 = "AppBuilder#CLEAR_SEARCH",
-			value1 = "Clear");
-
 		WebContent.addWithStructureCP(
-				navTab = "Web Content Images",
-				webContentImage = "Document_1.jpeg",
-				webContentImageFieldLabel = "图片",
-				webContentTitle = "测试");
+			webContentRichText = "这是一个富文本字段",
+			webContentRichTextFieldLabel = "富文本",
+			webContentTitle = "测试");
 
 		PortletEntry.publish();
 
-		
-		
-
 		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
-
-		AssertTextEquals(
-			locator1 = "TextInput#TITLE",
-			value1 = "Test");
-
-		AssertElementPresent(
-			key_fieldFieldLabel = "Image",
-			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW",
-			key_image = "Document_2.jpeg");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
 			value1 = "测试");
-
-		AssertElementPresent(
-			key_fieldFieldLabel = "图片",
-			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW",
-			key_image = "Document_1.jpeg");
-	}
-
-	@description = "Verify that is possible to translate input data on the Rich Text Field"
-    @priority = "5"
-    test CanInputtedDataBeTranslatedOnRichTextField {
-
-        WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
-
-        NavItem.gotoStructures();
-
-        WebContentStructures.addCP(
-            structureDescription = "Structure Description Test",
-            structureName = "Structure Name Test");
-
-        DataEngine.addField(
-            fieldFieldLabel = "Rich Text",
-            fieldName = "Rich Text");
-
-        WebContentStructures.addTranslations(localeList = "zh-CN");
-
-        PortletEntry.changeLocale(locale = "zh-CN");
-
-        DataEngine.editFieldLabel(
-            fieldFieldLabel = "Rich Text",
-            fieldFieldLabelEdit = "富文本");
-
-        WebContentStructures.saveCP();
-
-        NavItem.click(navItem = "Web Content");
-
-        WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
-
-        WebContent.addWithStructureCP(
-            webContentRichText = "This is a Rich Text field",
-            webContentTitle = "Test");
-
-        PortletEntry.changeLocale(locale = "zh-CN");
-
-        WebContent.addWithStructureCP(
-            webContentRichText = "这是一个富文本字段",
-            webContentRichTextFieldLabel = "富文本",
-            webContentTitle = "测试");
-
-        PortletEntry.publish();
-
-        WebContentNavigator.gotoEditCP(webContentTitle = "Test");
-
-        PortletEntry.changeLocale(locale = "zh-CN");
-
-        AssertTextEquals(
-            locator1 = "TextInput#TITLE",
-            value1 = "测试");
 
 		SelectFrame.selectFrameNoLoading(
 			key_fieldLabel = "富文本",
@@ -344,14 +251,76 @@ definition {
 		AssertTextEquals(
 			locator1 = "CKEditor#BODY",
 			value1 = "这是一个富文本字段");
+	}
 
-        
-    }
+	@description = "Verify that is possible to translate input data on the Text Field"
+	@priority = "5"
+	test CanInputtedDataBeTranslatedOnTextField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Text",
+			fieldName = "Text");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Text",
+			fieldFieldLabelEdit = "文本");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		WebContent.addWithStructureCP(
+			webContentText = "Test",
+			webContentTitle = "Test");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		WebContent.addWithStructureCP(
+			webContentText = "测试",
+			webContentTextFieldLabel = "文本",
+			webContentTitle = "测试");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "文本",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "测试");
+	}
+
+	@description = "This is a stubbed description"
+	@ignore = "true"
+	@priority = "5"
+	test CanTranslateLabelPlaceholderAndHelpTextOfTextField {
+
+		// TODO pending implementation
+
+	}
 
 	@description = "Verify that is possible to upload a different file on the Upload Field for a translated language"
 	@priority = "5"
 	test CanUploadedChangeWithTranslations {
-
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -385,12 +354,9 @@ definition {
 			fieldLabel = "Upload",
 			webContentUpload = "Document_1.jpg");
 
-
 		PortletEntry.publish();
 
-		Pause(locator1 = "3000");
-
-		WebContentNavigator.gotoEditCP(webContentTitle = "Test");				
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
@@ -407,8 +373,6 @@ definition {
 			webContentUpload = "Document_2.jpg");
 
 		PortletEntry.publish();
-
-		Pause(locator1 = "3000");
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
 
@@ -429,14 +393,11 @@ definition {
 		DERenderer.assertDataInUploadField(
 			fieldLabel = "文件",
 			webContentUpload = "Document_2.jpg");
-
-		
 	}
 
-	@description = "Verify that is possible to choose a different color on the Color Field for a translated language"
+	@description = "Verify that is possible to upload a different image on the Image Field for a translated language"
 	@priority = "5"
-	test CanInputtedDataBeTranslatedOnColorField {
-
+	test CanUploadedImageChangeWithTranslations {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
 
 		NavItem.gotoStructures();
@@ -446,16 +407,16 @@ definition {
 			structureName = "Structure Name Test");
 
 		DataEngine.addField(
-			fieldFieldLabel = "Color",
-			fieldName = "Color");
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
 
 		WebContentStructures.addTranslations(localeList = "zh-CN");
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
 		DataEngine.editFieldLabel(
-			fieldFieldLabel = "Color",
-			fieldFieldLabelEdit = "颜色");
+			fieldFieldLabel = "Image",
+			fieldFieldLabelEdit = "图片");
 
 		WebContentStructures.saveCP();
 
@@ -463,21 +424,10 @@ definition {
 
 		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
 
-		PortletEntry.inputTitle(title = "Test");
-
-		DERenderer.inputDataInColorField(
-			fieldLabel = "Color",
-			value = "FF0D0D");
-
-		PortletEntry.changeLocale(locale = "zh-CN");
-
-		PortletEntry.inputTitle(title = "测试");
-
-	
-
-		DERenderer.inputDataInColorField(
-			fieldLabel = "颜色",
-			value = "FF0D0D");
+		WebContent.addWithStructureCP(
+			navTab = "Web Content Images",
+			webContentImage = "Document_2.jpeg",
+			webContentTitle = "Test");
 
 		PortletEntry.publish();
 
@@ -485,13 +435,117 @@ definition {
 
 		PortletEntry.changeLocale(locale = "zh-CN");
 
+		AssertClick(
+			key_fieldFieldLabel = "Image",
+			locator1 = "AppBuilder#CLEAR_SEARCH",
+			value1 = "Clear");
+
+		WebContent.addWithStructureCP(
+			navTab = "Web Content Images",
+			webContentImage = "Document_1.jpeg",
+			webContentImageFieldLabel = "图片",
+			webContentTitle = "测试");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Image",
+			key_image = "Document_2.jpeg",
+			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
 		AssertTextEquals(
 			locator1 = "TextInput#TITLE",
 			value1 = "测试");
 
-		DERenderer.assertDataInColorField(
-			fieldLabel = "颜色",
-			value = "FF0D0D");
+		AssertElementPresent(
+			key_fieldFieldLabel = "图片",
+			key_image = "Document_1.jpeg",
+			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW");
+	}
+
+	@description = "Verify that is possible to choose a different Web Content on the Web Content Field for a translated language"
+	@priority = "5"
+	test CanUploadedWebContentChangeWithTranslations {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		for (var n : list "1,2") {
+			JSONWebcontent.addWebContent(
+				content = "Web Content Content",
+				groupName = "Test Site Name",
+				title = "Web Content Title ${n}");
+		}
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Web Content",
+			fieldName = "Web Content");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Web Content",
+			fieldFieldLabelEdit = "网页内容");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		WebContent.addWithStructureCP(
+			webContentTitle = "Test",
+			webContentWebContent = "Web Content Title 1");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertClick(
+			key_fieldFieldLabel = "网页内容",
+			locator1 = "AppBuilder#CLEAR_SEARCH",
+			value1 = "Clear");
+
+		WebContent.addWithStructureCP(
+			webContentTitle = "测试",
+			webContentWebContent = "Web Content Title 2",
+			webContentWebContentFieldLabel = "网页内容");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test");
+
+		AssertTextEquals(
+			key_fieldFieldLabel = "Web Content",
+			locator1 = "TextInput#SELECTOR_INPUT",
+			value1 = "Web Content Title 1");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		AssertTextEquals(
+			key_fieldFieldLabel = "网页内容",
+			locator1 = "TextInput#SELECTOR_INPUT",
+			value1 = "Web Content Title 2");
 	}
 
 }

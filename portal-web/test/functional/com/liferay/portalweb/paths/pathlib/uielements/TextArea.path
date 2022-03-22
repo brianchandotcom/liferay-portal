@@ -26,6 +26,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_LABELED_N</td>
+	<td>xpath=(//*[normalize-space(text())='${key_label}']/following-sibling::textarea)[${key_indexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHANGE_LOG</td>
 	<td>//textarea[contains(@id,'ChangeLog')]</td>
 	<td></td>

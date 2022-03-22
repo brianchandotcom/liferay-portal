@@ -266,6 +266,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MULTIPLE_UPLOAD_INVALID</td>
+	<td>//div[contains(@class,'card-horizontal') and contains(.,'${dmDocumentFile}')]//div[contains(@class,'text-danger')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_SELECT_VALID_DATE_RANGE</td>
 	<td>//div[@role='alert' and contains(.,'Please select a valid date range.')]</td>
 	<td></td>

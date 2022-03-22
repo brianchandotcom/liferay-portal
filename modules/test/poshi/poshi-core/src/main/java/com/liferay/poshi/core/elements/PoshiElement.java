@@ -1047,20 +1047,16 @@ public abstract class PoshiElement
 
 				CommandPoshiElement commandPoshiElement1 =
 					(CommandPoshiElement)poshiNode1;
-
 				CommandPoshiElement commandPoshiElement2 =
 					(CommandPoshiElement)poshiNode2;
 
 				String poshiScriptKeyword1 =
 					commandPoshiElement1.getPoshiScriptKeyword();
-
 				String poshiScriptKeyword2 =
 					commandPoshiElement2.getPoshiScriptKeyword();
 
 				String blockName1 = commandPoshiElement1.getBlockName();
-
 				String blockName2 = commandPoshiElement2.getBlockName();
-
 				NaturalOrderStringComparator naturalOrderStringComparator =
 					new NaturalOrderStringComparator();
 

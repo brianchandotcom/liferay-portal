@@ -46,6 +46,7 @@ export type IItem = {
 };
 
 type ManagementToolbarFilterAndOrderProps = {
+	disabled: boolean;
 	filterItems: IItem[];
 	onSelectAllRows: () => void;
 	onSort: () => void;
@@ -53,6 +54,7 @@ type ManagementToolbarFilterAndOrderProps = {
 };
 
 const ManagementToolbarFilterAndOrder: React.FC<ManagementToolbarFilterAndOrderProps> = ({
+	disabled,
 	filterItems,
 	onSelectAllRows,
 	onSort,
@@ -65,6 +67,7 @@ const ManagementToolbarFilterAndOrder: React.FC<ManagementToolbarFilterAndOrderP
 			<ClayManagementToolbar.Item>
 				<ClayCheckbox
 					checked={checked}
+					disabled={disabled}
 					onChange={() => {
 						onSelectAllRows();
 						setChecked(!checked);
@@ -75,7 +78,11 @@ const ManagementToolbarFilterAndOrder: React.FC<ManagementToolbarFilterAndOrderP
 			<ClayDropDownWithItems
 				items={filterItems}
 				trigger={
-					<ClayButton className="nav-link" displayType="unstyled">
+					<ClayButton
+						className="nav-link"
+						disabled={disabled}
+						displayType="unstyled"
+					>
 						<span className="navbar-breakpoint-down-d-none">
 							<span className="navbar-text-truncate">
 								Filter and Order
@@ -97,6 +104,7 @@ const ManagementToolbarFilterAndOrder: React.FC<ManagementToolbarFilterAndOrderP
 			<ClayManagementToolbar.Item>
 				<ClayButton
 					className="nav-link nav-link-monospaced"
+					disabled={disabled}
 					displayType="unstyled"
 					onClick={onSort}
 				>

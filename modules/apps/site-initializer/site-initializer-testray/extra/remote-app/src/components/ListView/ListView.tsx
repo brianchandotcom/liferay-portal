@@ -116,10 +116,6 @@ const ListView: React.FC<ListViewProps> = ({
 		return <span>{i18n.translate('loading')}...</span>;
 	}
 
-	if (!items.length) {
-		return <EmptyState />;
-	}
-
 	return (
 		<>
 			{managementToolbarVisible && (
@@ -131,28 +127,36 @@ const ListView: React.FC<ListViewProps> = ({
 				/>
 			)}
 
-			<Table
-				{...tableProps}
-				columns={columns}
-				items={items}
-				onSelectRow={onSelectRow}
-				selectedRows={selectedRows}
-			/>
+			{!items.length && <EmptyState />}
 
-			<ClayPaginationBarWithBasicItems
-				activeDelta={pageSize}
-				activePage={page}
-				deltas={deltas}
-				ellipsisBuffer={PAGINATION.ellipsisBuffer}
-				labels={{
-					paginationResults: i18n.translate('showing-x-to-x-of-x'),
-					perPageItems: i18n.translate('x-items'),
-					selectPerPageItems: i18n.translate('x-items'),
-				}}
-				onDeltaChange={(delta) => onRefetch({pageSize: delta})}
-				onPageChange={(page) => onRefetch({page})}
-				totalItems={totalCount}
-			/>
+			{!!items.length && (
+				<>
+					<Table
+						{...tableProps}
+						columns={columns}
+						items={items}
+						onSelectRow={onSelectRow}
+						selectedRows={selectedRows}
+					/>
+
+					<ClayPaginationBarWithBasicItems
+						activeDelta={pageSize}
+						activePage={page}
+						deltas={deltas}
+						ellipsisBuffer={PAGINATION.ellipsisBuffer}
+						labels={{
+							paginationResults: i18n.translate(
+								'showing-x-to-x-of-x'
+							),
+							perPageItems: i18n.translate('x-items'),
+							selectPerPageItems: i18n.translate('x-items'),
+						}}
+						onDeltaChange={(delta) => onRefetch({pageSize: delta})}
+						onPageChange={(page) => onRefetch({page})}
+						totalItems={totalCount}
+					/>
+				</>
+			)}
 		</>
 	);
 };

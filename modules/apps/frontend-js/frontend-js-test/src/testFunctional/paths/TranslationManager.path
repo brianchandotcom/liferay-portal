@@ -40,6 +40,11 @@
 	<td>//div[contains(@class,'col') and h3='${key_title}']//div[contains(@class,'form-group')]//div[contains(@class,'form-text')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>AUI_TAG</td>
+	<td>//div[contains(@class,'col') and h2='AUI Tag']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

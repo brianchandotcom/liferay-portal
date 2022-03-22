@@ -100,11 +100,20 @@ public class Main {
 				continue;
 			}
 
-			_processArchive(blob.getContent());
+			try {
+				_processArchive(blob.getContent());
 
-			blob.copyTo(_s3BucketName, name.replaceFirst("inbox", "processed"));
+				blob.copyTo(
+					_s3BucketName, name.replaceFirst("inbox", "processed"));
 
-			blob.delete();
+				blob.delete();
+			}
+			catch (Exception exception) {
+				blob.copyTo(
+					_s3BucketName, name.replaceFirst("inbox", "errored"));
+
+				blob.delete();
+			}
 		}
 	}
 

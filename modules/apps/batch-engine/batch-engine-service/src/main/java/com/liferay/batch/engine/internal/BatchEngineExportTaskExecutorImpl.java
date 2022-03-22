@@ -171,7 +171,7 @@ public class BatchEngineExportTaskExecutorImpl
 					batchEngineExportTask.getFieldNamesList(),
 					_batchEngineTaskMethodRegistry.getItemClass(
 						batchEngineExportTask.getClassName()),
-					zipOutputStream)) {
+					zipOutputStream, batchEngineExportTask.getParameters())) {
 
 			Page<?> page = batchEngineTaskItemDelegateExecutor.getItems(
 				1, _batchSize);

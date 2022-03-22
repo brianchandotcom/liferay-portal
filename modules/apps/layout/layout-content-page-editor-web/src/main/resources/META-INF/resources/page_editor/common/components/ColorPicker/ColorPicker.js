@@ -428,14 +428,15 @@ export function ColorPicker({
 							<ClayButtonWithIcon
 								className="border-0"
 								displayType="secondary"
-								onClick={() =>
+								onClick={() => {
+									setError({label: null, value: null});
 									onSetValue(
 										field.defaultValue ?? '',
 										field.defaultValue
 											? null
 											: Liferay.Language.get('default')
-									)
-								}
+									);
+								}}
 								small
 								symbol="times-circle"
 								title={Liferay.Language.get('clear-selection')}

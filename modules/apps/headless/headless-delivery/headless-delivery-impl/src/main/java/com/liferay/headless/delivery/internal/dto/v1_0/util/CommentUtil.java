@@ -42,6 +42,7 @@ public class CommentUtil {
 					portal, Optional.empty(), comment.getUser());
 				dateCreated = comment.getCreateDate();
 				dateModified = comment.getModifiedDate();
+				externalReferenceCode = comment.getExternalReferenceCode();
 				id = comment.getCommentId();
 				numberOfComments = commentManager.getChildCommentsCount(
 					comment.getCommentId(), WorkflowConstants.STATUS_APPROVED);

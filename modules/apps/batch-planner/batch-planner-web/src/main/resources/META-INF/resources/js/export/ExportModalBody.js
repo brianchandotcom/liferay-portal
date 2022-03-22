@@ -33,17 +33,17 @@ const ExportModalBody = ({errorMessage, percentage, readyToDownload}) => {
 			'your-file-has-been-generated-and-is-ready-to-download'
 		);
 		labelType = 'success';
-		label = Liferay.Language.get('created');
+		label = Liferay.Language.get('completed');
 	}
 	else if (errorMessage) {
 		title = Liferay.Language.get('error');
 		labelType = 'danger';
-		label = Liferay.Language.get('error');
+		label = Liferay.Language.get('failed');
 	}
 	else {
 		title = Liferay.Language.get('export-file-is-being-created');
 		labelType = 'warning';
-		label = Liferay.Language.get('being-created');
+		label = Liferay.Language.get('running');
 	}
 
 	return (

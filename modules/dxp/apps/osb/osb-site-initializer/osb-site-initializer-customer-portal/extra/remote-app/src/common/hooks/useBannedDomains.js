@@ -36,7 +36,8 @@ export default function useBannedDomains(value) {
 				},
 				''
 			);
-		} else {
+		}
+		else {
 			const [, emailDomain] = debouncedValue?.split('@');
 
 			if (emailDomain) {
@@ -50,7 +51,8 @@ export default function useBannedDomains(value) {
 					filter: filterDomains,
 				},
 			});
-		} else {
+		}
+		else {
 			setBannedDomains([]);
 		}
 

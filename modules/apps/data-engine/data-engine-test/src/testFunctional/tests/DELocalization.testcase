@@ -147,6 +147,63 @@ definition {
 			value1 = "1000/01/01");
 	}
 
+	@description = "Verify that is possible to translate input data on the Numeric Field"
+	@priority = "5"
+	test CanInputtedDataBeTranslatedOnNumericField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "数字");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "12345",
+			webContentTitle = "Test");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "12345",
+			webContentNumericFieldLabel = "数字",
+			webContentTitle = "测试");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "数字",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "12345");
+	}
+
 	
 
 }

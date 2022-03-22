@@ -2282,7 +2282,7 @@ definition {
 
 		DMDocument.setExpirationDate(
 			enableExpirationDate = "true",
-			increaseMinutes = "2");
+			increaseMinutes = "1");
 
 		Pause(locator1 = "120000");
 

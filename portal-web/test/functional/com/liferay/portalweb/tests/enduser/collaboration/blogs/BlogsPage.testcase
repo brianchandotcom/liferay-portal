@@ -420,8 +420,8 @@ definition {
 	@priority = "3"
 	@refactordone
 	test CanSubscribeToComment {
-		property testray.component.names = "Comment";
 		property test.name.skip.portal.instance = "BlogsPage#CanSubscribeToComment";
+		property testray.component.names = "Comment";
 
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",

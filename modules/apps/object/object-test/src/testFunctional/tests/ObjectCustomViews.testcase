@@ -1,12 +1,12 @@
 @component-name = "portal-object"
 definition {
 
+	property osgi.module.configuration.file.names = "com.liferay.object.web.internal.configuration.FFObjectViewConfiguration.config";
+	property osgi.module.configurations = "enabled=&quot;true&quot;";
 	property portal.acceptance = "true";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Object";
-	property osgi.module.configuration.file.names = "com.liferay.object.web.internal.configuration.FFObjectViewConfiguration.config";
-	property osgi.module.configurations = "enabled=&quot;true&quot;";
 
 	setUp {
 		TestCase.setUpPortalInstance();

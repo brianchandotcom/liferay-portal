@@ -66,9 +66,9 @@ definition {
 	@priority = "4"
 	test ConfigureMultipleOpenIDConnectProviders {
 		property dummy.socket.proxy.disabled = "true";
-		property test.name.skip.portal.instance = "OpenIDConnect#MultipleOpenIDConnectProvider";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property test.name.skip.portal.instance = "OpenIDConnect#MultipleOpenIDConnectProvider";
 
 		var openIdConnectClientId = PropsUtil.get("google.client.id.2");
 		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.2");
@@ -337,10 +337,10 @@ definition {
 	@priority = "5"
 	test OpenIDConnectSmokeWithAuth0 {
 		property dummy.socket.proxy.disabled = "true";
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithAuth0";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithAuth0";
 
 		var userEmailAddress = PropsUtil.get("openid.provider.auth0.test.account.email.address");
 		var userPassword = PropsUtil.get("openid.provider.auth0.test.account.password");
@@ -368,11 +368,11 @@ definition {
 	@priority = "5"
 	test OpenIDConnectSmokeWithAzure {
 		property dummy.socket.proxy.disabled = "true";
+		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
+		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
 		property portal.release = "quarantine";
 		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithAzure";
-		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
-		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
 
 		var userEmailAddress = PropsUtil.get("openid.provider.azure.test.account.email.address");
 		var userPassword = PropsUtil.get("openid.provider.azure.test.account.password");
@@ -400,10 +400,10 @@ definition {
 	@priority = "5"
 	test OpenIDConnectSmokeWithOkta {
 		property dummy.socket.proxy.disabled = "true";
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithOkta";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithOkta";
 
 		var userEmailAddress = PropsUtil.get("openid.provider.okta.test.account.email.address");
 		var userPassword = PropsUtil.get("openid.provider.okta.test.account.password");
@@ -431,10 +431,10 @@ definition {
 	@priority = "5"
 	test OpenIDConnectSmokeWithPingOne {
 		property dummy.socket.proxy.disabled = "true";
-		property portal.acceptance = "true";
-		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithPingOne";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}tokenRefreshOffset=&quot;120&quot;";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "OpenIDConnect#OpenIDConnectSmokeWithPingOne";
 
 		var userName = PropsUtil.get("openid.provider.pingone.test.account.username");
 		var userPassword = PropsUtil.get("openid.provider.pingone.test.account.password");

@@ -10,8 +10,8 @@ definition {
 	@priority = "4"
 	test AdminIsRequiredToChangePasswordWithSetupWizardDisabled {
 		property custom.properties = "setup.wizard.enabled=false${line.separator}passwords.default.policy.change.required=true";
-		property test.prepare.bundle.properties = "true";
 		property database.types = "mysql";
+		property test.prepare.bundle.properties = "true";
 		property testray.main.component.name = "Users and Organizations";
 
 		task ("When an admin logs in with Setup Wizard disabled") {

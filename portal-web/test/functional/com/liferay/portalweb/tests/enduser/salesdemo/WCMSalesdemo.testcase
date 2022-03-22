@@ -64,9 +64,9 @@ definition {
 	@description = "This is a test for LPS-140253. View no private page in page administration."
 	@priority = "4"
 	test IFrameDemoFF {
-		property testray.component.names = "IFrame Portlet";
 		property osgi.module.configuration.file.names = "com.liferay.layout.internal.configuration.FFDisablePrivateLayoutsConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;";
+		property testray.component.names = "IFrame Portlet";
 
 		ProductMenu.gotoPortlet(
 			category = "Site Builder",

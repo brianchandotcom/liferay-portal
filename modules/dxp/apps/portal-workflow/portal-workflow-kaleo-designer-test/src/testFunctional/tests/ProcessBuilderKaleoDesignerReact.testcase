@@ -1,12 +1,12 @@
 @component-name = "portal-workflow-ee"
 definition {
 
+	property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
+	property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Kaleo Designer";
-	property osgi.module.configuration.file.names = "com.liferay.portal.workflow.kaleo.designer.web.internal.configuration.FFKaleoDesignerConfiguration_default.config";
-	property osgi.module.configurations = "newKaleoDesignerEnabled=&quot;true&quot;";
 
 	setUp {
 		TestCase.setUpPortalInstance();

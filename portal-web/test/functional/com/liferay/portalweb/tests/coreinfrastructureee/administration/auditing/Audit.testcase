@@ -54,9 +54,9 @@ definition {
 	@description = "LPS-133646 and LPS-133653 TC-2: Verify that Console outputs a different X-Request-ID if an invalid X-Request-ID was inputted."
 	@priority = "5"
 	test AssertInvalidXRequestId {
-		property test.name.skip.portal.instance = "Audit#AssertInvalidXRequestId";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}useIncomingXRequestId=&quot;true&quot;";
+		property test.name.skip.portal.instance = "Audit#AssertInvalidXRequestId";
 
 		var companyId = JSONCompany.getCompanyId();
 
@@ -79,10 +79,10 @@ definition {
 	@description = "LPS-133646 and LPS-133653 TC-3: Verify that Console outputs the same X-Request-ID as inputted X-Request-ID."
 	@priority = "5"
 	test AssertValidXRequestId {
-		property test.name.skip.portal.instance = "Audit#AssertValidXRequestId";
 		property osgi.module.configuration.file.names = "com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration.config";
 		property osgi.module.configurations = "enabled=&quot;true&quot;${line.separator}useIncomingXRequestId=&quot;true&quot;";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Audit#AssertValidXRequestId";
 
 		var companyId = JSONCompany.getCompanyId();
 

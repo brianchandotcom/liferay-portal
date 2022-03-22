@@ -1,9 +1,9 @@
 @component-name = "portal-liferay-online"
 definition {
 
-	property osgi.modules.includes = "site-initializer-team-extranet";
 	property database.types = "mysql";
 	property liferay.online.properties = "true";
+	property osgi.modules.includes = "site-initializer-team-extranet";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Liferay Online";
@@ -36,8 +36,8 @@ definition {
 	@description = "This is a test for LPS-135077. I can create a Virtual Instance with Default Initializer"
 	@priority = "5"
 	test AddVirtualInstanceWithDefaultInitializer {
-		property portal.acceptance = "true";
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.baker.com";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "LiferayOnline#AddVirtualInstanceWithDefaultInitializer";
 
 		task ("Add virtual instance able.com with a blank Initializer") {
@@ -62,8 +62,8 @@ definition {
 	@description = "This is a test for LPS-135077. I can create a New Virtual Instance with the initializer"
 	@priority = "5"
 	test AddVirtualInstanceWithInitializer {
-		property portal.acceptance = "true";
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property portal.acceptance = "true";
 		property test.name.skip.portal.instance = "LiferayOnline#AddVirtualInstanceWithInitializer";
 
 		task ("Add virtual instance raylife.com with the Masterclass Initializer") {

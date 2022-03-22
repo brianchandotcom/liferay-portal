@@ -143,10 +143,10 @@ definition {
 	@priority = "4"
 	test CustomFieldDeletionViaImporting {
 		property app.server.bundles.size = "1";
-		property test.name.skip.portal.instance = "ExportImport#CustomFieldDeletionViaImporting";
-		property minimum.slave.ram = "24";
 		property databases.size = "1";
+		property minimum.slave.ram = "24";
 		property portal.upstream = "marcell";
+		property test.name.skip.portal.instance = "ExportImport#CustomFieldDeletionViaImporting";
 
 		CustomFields.addCP(
 			customFieldName = "Text Field",

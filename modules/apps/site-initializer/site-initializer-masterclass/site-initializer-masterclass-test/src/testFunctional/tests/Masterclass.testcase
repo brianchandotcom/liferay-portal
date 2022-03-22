@@ -594,8 +594,8 @@ definition {
 	@priority = "4"
 	test CreateAccountInMasterclass {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property test.name.skip.portal.instance = "Masterclass#CreateAccountInMasterclass";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Masterclass#CreateAccountInMasterclass";
 
 		task ("Disable Captcha to Create a New User") {
 			WorkflowUser.disableCaptchaToCreateNewUserAndSendPassword();
@@ -648,8 +648,8 @@ definition {
 	@description = "This is a test for LPS-141750. Forgot Password in Masterclass"
 	@priority = "4"
 	test ForgotPasswordInMasterclass {
-		property test.name.skip.portal.instance = "Masterclass#ForgotPasswordInMasterclass";
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "Masterclass#ForgotPasswordInMasterclass";
 
 		task ("Disable Captcha to Create a New User") {
 			WorkflowUser.disableCaptchaToCreateNewUserAndSendPassword();

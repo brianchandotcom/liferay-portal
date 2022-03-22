@@ -393,8 +393,8 @@ definition {
 	@description = "This test Audit can capture events when user login, logout, login fail, view pages, and event details contain the correct info."
 	@priority = "4"
 	test CanCaptureEventsAboutUserLoginLogoutLoginFailAndViewPages {
-		property test.name.skip.portal.instance = "AuditPortlet#CanCaptureEventsAboutUserLoginLogoutLoginFailAndViewPages";
 		property custom.properties = "audit.message.com.liferay.portal.kernel.model.Layout.VIEW=true";
+		property test.name.skip.portal.instance = "AuditPortlet#CanCaptureEventsAboutUserLoginLogoutLoginFailAndViewPages";
 
 		ApplicationsMenu.gotoPortlet(
 			category = "Security",

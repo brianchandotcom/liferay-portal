@@ -22,8 +22,8 @@ definition {
 	@refactorneeded
 	test ViewRedirectArchive73101 {
 		property data.archive.type = "data-archive-redirection";
-		property test.name.skip.portal.instance = "RedirectUpgrade#ViewRedirectArchive73101";
 		property portal.version = "7.3.10.1";
+		property test.name.skip.portal.instance = "RedirectUpgrade#ViewRedirectArchive73101";
 
 		Redirect.openToConfigInSystemSettings();
 

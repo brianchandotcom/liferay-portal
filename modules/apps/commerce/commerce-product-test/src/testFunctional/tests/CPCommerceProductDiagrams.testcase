@@ -1,10 +1,10 @@
 @component-name = "portal-commerce"
 definition {
 
-	property portal.release = "true";
-	property portal.upstream = "true";
 	property osgi.module.configuration.file.names = "com.liferay.commerce.shop.by.diagram.configuration.CSDiagramCPTypeConfiguration.config";
 	property osgi.module.configurations = "enabled=&quot;true&quot;";
+	property portal.release = "true";
+	property portal.upstream = "true";
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Product Info Management";
 

@@ -15,7 +15,6 @@
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
-import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -23,7 +22,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PortletCategory;
@@ -42,9 +40,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -97,14 +93,10 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long segmentsExperienceId = ParamUtil.getLong(
-			resourceRequest, "segmentsExperienceId");
-
 		try {
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse,
-				_getWidgetsJSONArray(
-					httpServletRequest, segmentsExperienceId, themeDisplay));
+				_getWidgetsJSONArray(httpServletRequest, themeDisplay));
 		}
 		catch (Exception exception) {
 			_log.error("Unable to get widgets", exception);
@@ -157,8 +149,7 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private JSONArray _getPortletItemsJSONArray(
-			Portlet portlet, long segmentsExperienceId,
-			ThemeDisplay themeDisplay)
+			Portlet portlet, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		List<PortletItem> portletItems =
@@ -182,8 +173,6 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 					"portletItemId", portletItem.getPortletItemId()
 				).put(
 					"title", HtmlUtil.escape(portletItem.getName())
-				).put(
-					"used", _isUsed(portlet, segmentsExperienceId, themeDisplay)
 				));
 		}
 
@@ -228,8 +217,7 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private JSONArray _getPortletsJSONArray(
 			HttpServletRequest httpServletRequest,
-			PortletCategory portletCategory, long segmentsExperienceId,
-			ThemeDisplay themeDisplay)
+			PortletCategory portletCategory, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -253,14 +241,11 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 					"portletId", portlet.getPortletId()
 				).put(
 					"portletItems",
-					_getPortletItemsJSONArray(
-						portlet, segmentsExperienceId, themeDisplay)
+					_getPortletItemsJSONArray(portlet, themeDisplay)
 				).put(
 					"title",
 					_portal.getPortletTitle(
 						portlet, servletContext, themeDisplay.getLocale())
-				).put(
-					"used", _isUsed(portlet, segmentsExperienceId, themeDisplay)
 				));
 		}
 
@@ -269,8 +254,7 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 
 	private JSONArray _getWidgetCategoriesJSONArray(
 			HttpServletRequest httpServletRequest,
-			PortletCategory portletCategory, long segmentsExperienceId,
-			ThemeDisplay themeDisplay)
+			PortletCategory portletCategory, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -292,7 +276,7 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 					"categories",
 					_getWidgetCategoriesJSONArray(
 						httpServletRequest, currentPortletCategory,
-						segmentsExperienceId, themeDisplay)
+						themeDisplay)
 				).put(
 					"path",
 					StringUtil.replace(
@@ -302,7 +286,7 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 					"portlets",
 					_getPortletsJSONArray(
 						httpServletRequest, currentPortletCategory,
-						segmentsExperienceId, themeDisplay)
+						themeDisplay)
 				).put(
 					"title",
 					_getPortletCategoryTitle(
@@ -315,8 +299,7 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private JSONArray _getWidgetsJSONArray(
-			HttpServletRequest httpServletRequest, long segmentsExperienceId,
-			ThemeDisplay themeDisplay)
+			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
@@ -328,34 +311,7 @@ public class GetWidgetsMVCResourceCommand extends BaseMVCResourceCommand {
 			themeDisplay.getLayoutTypePortlet());
 
 		return _getWidgetCategoriesJSONArray(
-			httpServletRequest, portletCategory, segmentsExperienceId,
-			themeDisplay);
-	}
-
-	private boolean _isUsed(
-			Portlet portlet, long segmentsExperienceId,
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		if (portlet.isInstanceable()) {
-			return false;
-		}
-
-		long count = _portletPreferencesLocalService.getPortletPreferencesCount(
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
-			portlet.getPortletId());
-
-		Layout layout = themeDisplay.getLayout();
-
-		if ((count > 0) &&
-			!LayoutStructureUtil.isPortletMarkedForDeletion(
-				layout.getGroupId(), layout.getPlid(), portlet.getPortletId(),
-				segmentsExperienceId)) {
-
-			return true;
-		}
-
-		return false;
+			httpServletRequest, portletCategory, themeDisplay);
 	}
 
 	private static final String[] _UNSUPPORTED_PORTLETS_NAMES = {

@@ -1102,12 +1102,12 @@ public abstract class PoshiElement
 				PropertyPoshiElement propertyPoshiElement2 =
 					(PropertyPoshiElement)poshiNode2;
 
-				String blockName1 = propertyPoshiElement1.attributeValue(
+				String propertyName1 = propertyPoshiElement1.attributeValue(
 					"name");
-				String blockName2 = propertyPoshiElement2.attributeValue(
+				String propertyName2 = propertyPoshiElement2.attributeValue(
 					"name");
 
-				return blockName1.compareTo(blockName2);
+				return propertyName1.compareTo(propertyName2);
 			}
 
 			return 0;

@@ -7303,23 +7303,16 @@ public class PortalImpl implements Portal {
 				groupId = scopeLayout.getGroupId();
 			}
 
-			String[] validLayoutTypes = {
-				LayoutConstants.TYPE_CONTENT, LayoutConstants.TYPE_COLLECTION,
-				LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
-				LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET
-			};
+			List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+				groupId, privateLayout,
+				new String[] {
+					LayoutConstants.TYPE_CONTENT,
+					LayoutConstants.TYPE_COLLECTION,
+					LayoutConstants.TYPE_FULL_PAGE_APPLICATION,
+					LayoutConstants.TYPE_PANEL, LayoutConstants.TYPE_PORTLET
+				});
 
-			for (String layoutType : validLayoutTypes) {
-				List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-					groupId, privateLayout, layoutType);
-
-				long plid = getPlidFromPortletId(
-					layouts, portletId, scopeGroupId);
-
-				if (plid != LayoutConstants.DEFAULT_PLID) {
-					return plid;
-				}
-			}
+			return getPlidFromPortletId(layouts, portletId, scopeGroupId);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

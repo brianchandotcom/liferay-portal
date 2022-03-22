@@ -666,12 +666,67 @@ definition {
 	}
 
 	@description = "LPS-146759 - Verify it is not possible to delete a single Picklist created by the user if the Delete Owner permission is removed"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotDeleteSinglePicklistWithoutDeleteOwnerPermission {
+		property test.name.skip.portal.instance = "ObjectPermission#CannotDeleteSinglePicklistWithoutDeleteOwnerPermission";
 
-		// TODO LPS-148942 CannotDeleteSinglePicklistWithoutDeleteOwnerPermission pending implementation
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_LIST_TYPE_DEFINITION",
+			resourceName = "com.liferay.list.type",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "PERMISSIONS",
+			resourceName = "com.liferay.list.type.model.ListTypeDefinition",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Picklist.gotoPicklists();
+
+		Picklist.addPicklistViaUI(picklistName = "Picklist Test");
+
+		Refresh();
+
+		ObjectCustomViews.gotoPermissions(entryName = "Picklist Test");
+
+		ObjectCustomViews.selectAnyPermissions(
+			owner = "true",
+			permissionsList = "DELETE");
+
+		Button.clickSave();
+
+		Refresh();
+
+		ObjectCustomViews.viewOptionNotPresentInKebabMenu(
+			entryName = "Picklist Test",
+			menuItem = "Delete");
 	}
 
 	@description = "LPS-146757 - Verify it is not possible to update a single Object Entry permissions create by the user if the Permissions Owner permission is removed"

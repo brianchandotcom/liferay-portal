@@ -285,10 +285,11 @@ definition {
 				layoutName = "page${num}");
 		}
 
-		HeadlessPortalInstanceAPI.addPortalInstance(
-			domain = "liferay.com",
-			portalInstanceId = "www.able.com",
-			virtualHost = "www.able.com");
+		Site.openSiteSettingsAdmin(siteURLKey = "guest");
+
+		Site.addVirtualHostsURLCP(
+			publicPageVirtualHostURL = "www.able.com",
+			publicVirtualHosts = "true");
 
 		User.logoutPG();
 

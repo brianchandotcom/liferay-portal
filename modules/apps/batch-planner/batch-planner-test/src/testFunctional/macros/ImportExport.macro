@@ -101,6 +101,14 @@ definition {
 			value1 = "${entityType}");
 	}
 
+	macro assertNoExecutionEntry {
+		AssertElementNotPresent(
+			key_entityType = "${entityType}",
+			key_executionAction = "${executionAction}",
+			key_executionStatus = "${executionStatus}",
+			locator1 = "ImportExport#EXECUTION_ENTRY");
+	}
+
 	macro exportFile {
 		Click(locator1 = "Button#PLUS");
 

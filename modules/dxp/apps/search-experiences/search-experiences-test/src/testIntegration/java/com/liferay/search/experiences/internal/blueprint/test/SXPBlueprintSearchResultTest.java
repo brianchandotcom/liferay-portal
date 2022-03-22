@@ -143,7 +143,7 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	@Test
-	public void testBoostContents() throws Exception {
+	public void testBoostContentsInACategory() throws Exception {
 		_addAssetCategory("Important", _user);
 
 		_addGroupAAndGroupB();
@@ -186,6 +186,145 @@ public class SXPBlueprintSearchResultTest {
 			new String[] {"Boost Contents on My Sites"});
 
 		_assertSearch("[pepsi cola, coca cola]");
+	}
+
+	@Test
+	public void testBoostContentsInACategoryByKeywordMatch() throws Exception {
+		_addAssetCategory("Promoted", _addGroupUser(_group, "employee"));
+
+		_setUpJournalArticles(
+			new String[] {"alpha alpha", ""},
+			new String[] {"beta alpha", "charlie alpha"});
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"asset_category_id",
+					String.valueOf(_assetCategory.getCategoryId())
+				).put(
+					"boost", 100
+				).put(
+					"keywords", "alpha"
+				).build()
+			},
+			new String[] {"Boost Contents in a Category by Keyword Match"});
+
+		_keywords = "alpha";
+
+		_assertSearch("[charlie alpha, beta alpha]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance("[beta alpha, charlie alpha]");
+	}
+
+	@Test
+	public void testBoostContentsInACategoryForAPeriodOfTime()
+		throws Exception {
+
+		_addAssetCategory("Promoted", _addGroupUser(_group, "Customers"));
+
+		_setUpJournalArticles(
+			new String[] {"cola cola", ""},
+			new String[] {"Coca Cola", "Pepsi Cola"});
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"asset_category_id",
+					String.valueOf(_assetCategory.getCategoryId())
+				).put(
+					"boost", 1000
+				).put(
+					"end_date",
+					DateUtil.getDate(
+						new Date(System.currentTimeMillis() + Time.DAY),
+						"yyyyMMdd", LocaleUtil.US)
+				).put(
+					"start_date",
+					DateUtil.getDate(
+						new Date(System.currentTimeMillis() - Time.DAY),
+						"yyyyMMdd", LocaleUtil.US)
+				).build()
+			},
+			new String[] {"Boost Contents in a Category for a Period of Time"});
+
+		_keywords = "cola";
+
+		_assertSearch("[Pepsi Cola, Coca Cola]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance("[Coca Cola, Pepsi Cola]");
+	}
+
+	@Test
+	public void testBoostContentsInACategoryForAUserSegment() throws Exception {
+		_addAssetCategory("Promoted", _addGroupUser(_group, "employee"));
+
+		_setUpJournalArticles(
+			new String[] {"alpha alpha", ""},
+			new String[] {"beta alpha", "charlie alpha"});
+
+		_keywords = "alpha";
+
+		SegmentsEntry segmentsEntry = _addSegmentsEntry(_user);
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"asset_category_id",
+					String.valueOf(_assetCategory.getCategoryId())
+				).put(
+					"boost", 1000
+				).put(
+					"user_segment_ids",
+					Long.valueOf(segmentsEntry.getSegmentsEntryId())
+				).build()
+			},
+			new String[] {"Boost Contents in a Category for a User Segment"});
+
+		_assertSearch("[charlie alpha, beta alpha]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance("[beta alpha, charlie alpha]");
+	}
+
+	@Test
+	public void testBoostContentsInACategoryForNewUserAccounts()
+		throws Exception {
+
+		_addAssetCategory(
+			"For New Recruits", _addGroupUser(_group, "Employee"));
+
+		_setUpJournalArticles(
+			new String[] {"policies policies", ""},
+			new String[] {
+				"Company Policies for All Employees Recruits",
+				"Company Policies for New Recruits"
+			});
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"asset_category_id",
+					String.valueOf(_assetCategory.getCategoryId())
+				).put(
+					"boost", 1000
+				).put(
+					"time_range", "30d"
+				).build()
+			},
+			new String[] {
+				"Boost Contents in a Category for New User Accounts"
+			});
+
+		_keywords = "policies";
+
+		_assertSearch(
+			"[Company Policies for New Recruits, Company Policies for All" +
+				" Employees Recruits]");
 	}
 
 	@Test
@@ -318,33 +457,39 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	@Test
-	public void testConditionContains() throws Exception {
+	public void testBoostTagsMatch() throws Exception {
+		_assetTag = AssetTagLocalServiceUtil.addTag(
+			_user.getUserId(), _group.getGroupId(), "cola", _serviceContext);
+
+		_setUpJournalArticles(
+			new String[] {"", ""}, new String[] {"coca cola", "pepsi cola"});
+
+		_keywords = "cola";
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"boost", 100
+				).build()
+			},
+			new String[] {"Boost Tags Match"});
+
+		_assertSearch("[pepsi cola, coca cola]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance("[coca cola, pepsi cola]");
+	}
+
+	@Test
+	public void testBoostWebContentsByKeywordsMatch() throws Exception {
 		_addAssetCategory("Promoted", _addGroupUser(_group, "employee"));
 
 		_setUpJournalArticles(
 			new String[] {"alpha alpha", ""},
 			new String[] {"beta alpha", "charlie alpha"});
 
-		_updateElementInstancesJSON(
-			new Object[] {
-				HashMapBuilder.<String, Object>put(
-					"asset_category_id",
-					String.valueOf(_assetCategory.getCategoryId())
-				).put(
-					"boost", 100
-				).put(
-					"keywords", "alpha"
-				).build()
-			},
-			new String[] {"Boost Contents in a Category by Keyword Match"});
-
 		_keywords = "alpha";
-
-		_assertSearch("[charlie alpha, beta alpha]");
-
-		_updateElementInstancesJSON(null, null);
-
-		_assertSearchIgnoreRelevance("[beta alpha, charlie alpha]");
 
 		JournalArticle journalArticle = _journalArticles.get(1);
 
@@ -362,92 +507,9 @@ public class SXPBlueprintSearchResultTest {
 
 		_assertSearch("[charlie alpha, beta alpha]");
 
-		SegmentsEntry segmentsEntry = _addSegmentsEntry(_user);
-
-		_updateElementInstancesJSON(
-			new Object[] {
-				HashMapBuilder.<String, Object>put(
-					"asset_category_id",
-					String.valueOf(_assetCategory.getCategoryId())
-				).put(
-					"boost", 1000
-				).put(
-					"user_segment_ids",
-					Long.valueOf(segmentsEntry.getSegmentsEntryId())
-				).build()
-			},
-			new String[] {"Boost Contents in a Category for a User Segment"});
-
-		_assertSearch("[charlie alpha, beta alpha]");
-	}
-
-	@Test
-	public void testConditionRange() throws Exception {
-		_addAssetCategory("Promoted", _addGroupUser(_group, "Customers"));
-
-		_setUpJournalArticles(
-			new String[] {"cola cola", ""},
-			new String[] {"Coca Cola", "Pepsi Cola"});
-
-		_updateElementInstancesJSON(
-			new Object[] {
-				HashMapBuilder.<String, Object>put(
-					"asset_category_id",
-					String.valueOf(_assetCategory.getCategoryId())
-				).put(
-					"boost", 1000
-				).put(
-					"end_date",
-					DateUtil.getDate(
-						new Date(System.currentTimeMillis() + Time.DAY),
-						"yyyyMMdd", LocaleUtil.US)
-				).put(
-					"start_date",
-					DateUtil.getDate(
-						new Date(System.currentTimeMillis() - Time.DAY),
-						"yyyyMMdd", LocaleUtil.US)
-				).build()
-			},
-			new String[] {"Boost Contents in a Category for a Period of Time"});
-
-		_keywords = "cola";
-
-		_assertSearch("[Pepsi Cola, Coca Cola]");
-
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[Coca Cola, Pepsi Cola]");
-
-		_addAssetCategory(
-			"For New Recruits", _addGroupUser(_group, "Employee"));
-
-		_setUpJournalArticles(
-			new String[] {"policies policies", ""},
-			new String[] {
-				"Company Policies for All Employees Recruits",
-				"Company Policies for New Recruits"
-			});
-
-		_updateElementInstancesJSON(
-			new Object[] {
-				HashMapBuilder.<String, Object>put(
-					"asset_category_id",
-					String.valueOf(_assetCategory.getCategoryId())
-				).put(
-					"boost", 1000
-				).put(
-					"time_range", "30d"
-				).build()
-			},
-			new String[] {
-				"Boost Contents in a Category for New User Accounts"
-			});
-
-		_keywords = "policies";
-
-		_assertSearch(
-			"[Company Policies for New Recruits, Company Policies for All" +
-				" Employees Recruits]");
+		_assertSearchIgnoreRelevance("[beta alpha, charlie alpha]");
 	}
 
 	@Test

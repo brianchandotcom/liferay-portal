@@ -22,22 +22,45 @@ export default function () {
 	const togglePersonalization = document.querySelector(
 		'.toggle-switch-check-personalization'
 	);
+
+	function setCookie(name, value, days = 180) {
+		var date = new Date();
+
+		date.setTime(date.getTime() + (days*24*60*60*1000));
+		expires = "; expires=" + date.toUTCString();
+
+		document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+	}
+
+	function getCookie(name) {
+		var cookieName = name + "=";
+		var cookieSet = document.cookie.split(';');
+
+		for(var i=0;i < cookieSet.length;i++) {
+			var c = cookieSet[i];
+
+			while (c.charAt(0)==' ') c = c.substring(1,c.length);
+
+			if (c.indexOf(cookieName) == 0) return c.substring(cookieName.length,c.length);
+		}
+
+		return null;
+	}
+
 	if (
-		localStorage.getItem('liferay.cookie.consent.functional') === 'accepted'
+		getCookie('liferay.cookie.consent.functional') === 'accepted'
 	) {
 		toggleFunctional.checked = true;
 	}
 
 	if (
-		localStorage.getItem('liferay.cookie.consent.performance') ===
-		'accepted'
+		getCookie('liferay.cookie.consent.performance') ===	'accepted'
 	) {
 		togglePerformance.checked = true;
 	}
 
 	if (
-		localStorage.getItem('liferay.cookie.consent.personalization') ===
-		'accepted'
+		getCookie('liferay.cookie.consent.personalization') ===	'accepted'
 	) {
 		togglePersonalization.checked = true;
 	}
@@ -46,13 +69,13 @@ export default function () {
 		'click',
 		function handletoggleFunctional() {
 			if (toggleFunctional.checked) {
-				localStorage.setItem(
+				setCookie(
 					'liferay.cookie.consent.functional',
 					'accepted'
 				);
 			}
 			else {
-				localStorage.setItem(
+				setCookie(
 					'liferay.cookie.consent.functional',
 					'decline'
 				);
@@ -64,13 +87,13 @@ export default function () {
 		'click',
 		function handleTogglePerformance() {
 			if (togglePerformance.checked) {
-				localStorage.setItem(
+				setCookie(
 					'liferay.cookie.consent.performance',
 					'accepted'
 				);
 			}
 			else {
-				localStorage.setItem(
+				setCookie(
 					'liferay.cookie.consent.performance',
 					'decline'
 				);
@@ -82,13 +105,13 @@ export default function () {
 		'click',
 		function handletogglePersonalization() {
 			if (togglePersonalization.checked) {
-				localStorage.setItem(
+				setCookie(
 					'liferay.cookie.consent.personalization',
 					'accepted'
 				);
 			}
 			else {
-				localStorage.setItem(
+				setCookie(
 					'liferay.cookie.consent.personalization',
 					'decline'
 				);

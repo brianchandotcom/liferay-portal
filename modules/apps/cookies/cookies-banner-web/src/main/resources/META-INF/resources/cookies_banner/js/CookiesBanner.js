@@ -12,19 +12,43 @@
  * details.
  */
 
+ function setCookie(name, value, days = 180) {
+	var date = new Date();
+
+	date.setTime(date.getTime() + (days*24*60*60*1000));
+	expires = "; expires=" + date.toUTCString();
+
+	document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+
+function getCookie(name) {
+	var cookieName = name + "=";
+	var cookieSet = document.cookie.split(';');
+
+	for(var i=0;i < cookieSet.length;i++) {
+		var c = cookieSet[i];
+
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+
+		if (c.indexOf(cookieName) == 0) return c.substring(cookieName.length,c.length);
+	}
+
+	return null;
+}
+
 function checkCookiesConsent(cookieBanner) {
 	if (
-		localStorage.getItem('liferay.cookie.consent.functional') ===
+		getCookie('liferay.cookie.consent.functional') ===
 			'accepted' ||
-		localStorage.getItem('liferay.cookie.consent.functional') ===
+		getCookie('liferay.cookie.consent.functional') ===
 			'decline' ||
-		localStorage.getItem('liferay.cookie.consent.performance') ===
+		getCookie('liferay.cookie.consent.performance') ===
 			'accepted' ||
-		localStorage.getItem('liferay.cookie.consent.performance') ===
+		getCookie('liferay.cookie.consent.performance') ===
 			'decline' ||
-		localStorage.getItem('liferay.cookie.consent.personalization') ===
+		getCookie('liferay.cookie.consent.personalization') ===
 			'accepted' ||
-		localStorage.getItem('liferay.cookie.consent.personalization') ===
+		getCookie('liferay.cookie.consent.personalization') ===
 			'decline'
 	) {
 		cookieBanner.style.display = 'none';
@@ -35,15 +59,15 @@ function checkCookiesConsent(cookieBanner) {
 }
 
 function cookiesAcceptAll() {
-	localStorage.setItem('liferay.cookie.consent.functional', 'accepted');
-	localStorage.setItem('liferay.cookie.consent.performance', 'accepted');
-	localStorage.setItem('liferay.cookie.consent.personalization', 'accepted');
+	setCookie('liferay.cookie.consent.functional', 'accepted');
+	setCookie('liferay.cookie.consent.performance', 'accepted');
+	setCookie('liferay.cookie.consent.personalization', 'accepted');
 }
 
 function cookiesDeclineAll() {
-	localStorage.setItem('liferay.cookie.consent.functional', 'decline');
-	localStorage.setItem('liferay.cookie.consent.performance', 'decline');
-	localStorage.setItem('liferay.cookie.consent.personalization', 'decline');
+	setCookie('liferay.cookie.consent.functional', 'decline');
+	setCookie('liferay.cookie.consent.performance', 'decline');
+	setCookie('liferay.cookie.consent.personalization', 'decline');
 }
 
 export default function ({configurationTitle, configurationUrl}) {

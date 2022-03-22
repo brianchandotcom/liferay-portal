@@ -141,6 +141,7 @@ export default {
 	'order-by': 'Order By',
 	'overview': 'Overview',
 	'passed': 'Passed',
+	'password': 'Password',
 	'priority': 'Priority',
 	'product-version': 'Product Version',
 	'progress': 'Progress',

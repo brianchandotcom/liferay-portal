@@ -7320,8 +7320,6 @@ public class PortalImpl implements Portal {
 					return plid;
 				}
 			}
-
-			return LayoutConstants.DEFAULT_PLID;
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

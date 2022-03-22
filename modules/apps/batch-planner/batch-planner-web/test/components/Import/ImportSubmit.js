@@ -66,14 +66,17 @@ describe('ImportSubmit', () => {
 		fetchMock.restore();
 	});
 
-	it('must start import task', () => {
+	it('must show modal preview ', () => {
 		const {getByText} = render(<ImportSubmit {...BASE_PROPS} />);
 
 		act(() => {
 			fireEvent.click(getByText(Liferay.Language.get('next')));
 		});
-
-		expect(document.querySelector('.modal-content')).toBeInTheDocument();
+		waitFor(() => {
+			expect(
+				document.querySelector('.modal-content')
+			).toBeInTheDocument();
+		});
 	});
 
 	it('must start polling import status and enable button when import process is completed', async () => {

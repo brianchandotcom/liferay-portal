@@ -108,7 +108,7 @@ ImportMappingItem.propTypes = {
 		description: PropTypes.string,
 		label: PropTypes.string.isRequired,
 		name: PropTypes.string.isRequired,
-	}).isRequired,
+	}),
 	fileFields: PropTypes.arrayOf(
 		PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 	).isRequired,

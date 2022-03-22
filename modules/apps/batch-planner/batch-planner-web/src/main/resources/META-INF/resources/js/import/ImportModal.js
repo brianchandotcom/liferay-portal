@@ -21,41 +21,22 @@ import ImportProcessModal from './ImportProcessModal';
 
 const ImportModal = ({
 	closeModal,
-	dbFields,
 	fieldsSelections,
-	fileContent,
-	fileFields,
+	fileContentPreview,
 	formDataQuerySelector,
 	formSubmitURL,
 	observer,
 	portletNamespace,
-	setFileContent,
 	setStartImport,
 	startImport,
 }) => {
-	const handleEditCell = (newValue, cellIndex, rowIndex) => {
-		const newRow = fileContent[rowIndex];
-		const newFileContent = fileContent;
-		Object.entries(newRow).forEach(([key], index) => {
-			if (cellIndex === index) {
-				newRow[key] = newValue;
-			}
-		});
-
-		newFileContent.splice(rowIndex, 1, newRow);
-		setFileContent(newFileContent);
-	};
-
 	return (
 		<ClayModal observer={observer} size={startImport ? 'lg' : 'md'}>
 			{!startImport && (
 				<ImportPreviewModal
 					closeModal={closeModal}
-					dbFields={dbFields}
 					fieldsSelections={fieldsSelections}
-					fileContent={fileContent}
-					fileFields={fileFields}
-					handleEditCell={handleEditCell}
+					fileContentPreview={fileContentPreview}
 					setStartImport={setStartImport}
 				/>
 			)}

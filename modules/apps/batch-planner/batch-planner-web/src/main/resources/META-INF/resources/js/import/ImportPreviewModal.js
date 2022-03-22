@@ -22,14 +22,9 @@ import CellPreview from './CellPreview';
 const ImportPreviewModal = ({
 	closeModal,
 	fieldsSelections,
-	fileContent,
-	handleEditCell,
+	fileContentPreview,
 	setStartImport,
 }) => {
-	const fileFieldsToMap = fieldsSelections
-		? Object.keys(fieldsSelections)
-		: {};
-
 	return (
 		<>
 			<ClayModal.Header>
@@ -40,12 +35,14 @@ const ImportPreviewModal = ({
 				<ClayTable borderless hover={false}>
 					<ClayTable.Head>
 						<ClayTable.Row>
-							{Array.from(fileFieldsToMap).map(
+							{Object.keys(fieldsSelections).map(
 								(element, index) => {
 									return (
-										<ClayTable.Cell headingCell key={index}>
-											{element.charAt(0).toUpperCase() +
-												element.slice(1)}
+										<ClayTable.Cell
+											headingCell
+											key={`preview_table_header-${index}`}
+										>
+											{element}
 										</ClayTable.Cell>
 									);
 								}
@@ -54,18 +51,19 @@ const ImportPreviewModal = ({
 					</ClayTable.Head>
 
 					<ClayTable.Body className="inline-scroller w-100">
-						{fileContent?.map((row, index) => {
+						{fileContentPreview.map((row, index) => {
 							return (
-								<ClayTable.Row key={index}>
+								<ClayTable.Row
+									key={`preview_table_row-${index}`}
+								>
 									{Object.values(row).map(
 										(cell, cellIndex) => {
 											return (
 												<CellPreview
 													cell={cell}
 													cellIndex={cellIndex}
-													fileRows={fileContent}
-													handleEditCell={
-														handleEditCell
+													fileRows={
+														fileContentPreview
 													}
 													key={cellIndex}
 													rowIndex={index}
@@ -94,7 +92,7 @@ const ImportPreviewModal = ({
 							data-testid="start-import"
 							disabled={
 								fieldsSelections?.length === 0 &&
-								fileContent?.length === 0
+								fileContentPreview?.length === 0
 							}
 							displayType="primary"
 							onClick={() => setStartImport(true)}

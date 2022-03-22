@@ -111,6 +111,7 @@ describe('parseFile', () => {
 
 		expect(onComplete).toBeCalledWith({
 			extension: 'csv',
+			fileContent: [['USD', 'My Channel 0', 'site'], ['']],
 			firstItemDetails: {
 				currencyCode: 'USD',
 				name: 'My Channel 0',
@@ -175,6 +176,6 @@ describe('extractFieldsFromJSON', () => {
 	it('must correctly extract the first item details', () => {
 		expect(
 			extractFieldsFromJSON(jsonFileContent).firstItemDetails
-		).toStrictEqual(JSON.parse(jsonFileContent)[0]);
+		).toStrictEqual(Object.values(JSON.parse(jsonFileContent)[0]));
 	});
 });

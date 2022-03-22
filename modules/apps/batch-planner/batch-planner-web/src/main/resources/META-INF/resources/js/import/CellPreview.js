@@ -15,12 +15,7 @@
 import ClayTable from '@clayui/table';
 import React from 'react';
 
-const CellPreview = ({cell, cellIndex,}) => {
-
-	return (
-		<ClayTable.Cell key={cellIndex}>
-			{cell}
-		</ClayTable.Cell>
-	);
+const CellPreview = ({cell}) => {
+	return <ClayTable.Cell>{cell}</ClayTable.Cell>;
 };
 export default CellPreview;

@@ -42,4 +42,18 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro changeItemsPerPage {
+		
+		Click(locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
+
+		Click(key_itemvalue = "${itemValue}",
+				locator1 = "Testray#ITEMS_PER_PAGE_BUTTON_DROPDOWN");
+	}
+
+	macro assertItemsPerPageValue {
+		
+		AssertElementPresent(key_value = "${itemValue}",
+							 locator1 = "Testray#ITEMS_PER_PAGE_VALUE_BUTTON");
+	}
+
 }

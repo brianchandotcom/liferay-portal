@@ -162,6 +162,15 @@ public class TestClassFactory {
 					batchTestClassGroup, testClassFile);
 			}
 		}
+		else if (batchTestClassGroup instanceof NPMTestBatchTestClassGroup) {
+			if (jsonObject != null) {
+				testClass = new NPMTestClass(batchTestClassGroup, jsonObject);
+			}
+			else {
+				testClass = new NPMTestClass(
+					batchTestClassGroup, testClassFile);
+			}
+		}
 		else if (batchTestClassGroup instanceof PluginsBatchTestClassGroup) {
 			if (jsonObject != null) {
 				testClass = new PluginsTestClass(
@@ -181,15 +190,6 @@ public class TestClassFactory {
 			}
 			else {
 				testClass = new PluginsGulpTestClass(
-					batchTestClassGroup, testClassFile);
-			}
-		}
-		else if (batchTestClassGroup instanceof NPMTestBatchTestClassGroup) {
-			if (jsonObject != null) {
-				testClass = new NPMTestClass(batchTestClassGroup, jsonObject);
-			}
-			else {
-				testClass = new NPMTestClass(
 					batchTestClassGroup, testClassFile);
 			}
 		}

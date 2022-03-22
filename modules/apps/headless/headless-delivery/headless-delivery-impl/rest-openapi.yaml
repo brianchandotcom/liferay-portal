@@ -3332,6 +3332,11 @@ components:
                     items:
                         $ref: "#/components/schemas/FragmentViewport"
                     type: array
+                nonindexable:
+                    # @review
+                    description:
+                        A flag that indicates whether the page fragment instance is indexable or not.
+                    type: boolean
                 widgetInstances:
                     # @review
                     description:
@@ -3373,6 +3378,11 @@ components:
                     description:
                         The page row's modules per row.
                     type: integer
+                nonindexable:
+                    # @review
+                    description:
+                        A flag that indicates whether the page row is indexable or not.
+                    type: boolean
                 numberOfColumns:
                     # @review
                     description:
@@ -3558,6 +3568,11 @@ components:
                             enum: [Fixed, Fluid]
                             type: string
                     type: object
+                nonindexable:
+                    # @review
+                    description:
+                        A flag that indicates whether the page section is indexable or not.
+                    type: boolean
             type: object
         PageSettings:
             # @review

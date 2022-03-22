@@ -10,7 +10,21 @@
 </thead>
 
 <tbody>
-
+<tr>
+	<td>ITEMS_PER_PAGE_BUTTON</td>
+	<td>//div[contains(@class, testray-page)]//div[contains(@class, 'pagination')]//button[contains(@class, 'dropdown')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ITEMS_PER_PAGE_BUTTON_DROPDOWN</td>
+	<td>//button[contains(text(), "${key_itemvalue}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ITEMS_PER_PAGE_DESCRIPTION</td>
+	<td>//div[contains(@class, 'pagination')]//div[contains(@class, 'pagination-results') and contains(text(), "${key_text}")]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

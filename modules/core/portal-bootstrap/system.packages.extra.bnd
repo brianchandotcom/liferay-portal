@@ -96,16 +96,6 @@ Export-Package:\
 	\
 	com.ibm.crypto.provider,\
 	\
-	com.rometools.rome;version='1.16.0',\
-	com.rometools.rome.feed;version='1.16.0',\
-	com.rometools.rome.feed.atom;version='1.16.0',\
-	com.rometools.rome.feed.impl;version='1.16.0',\
-	com.rometools.rome.feed.module;version='1.16.0',\
-	com.rometools.rome.feed.rss;version='1.16.0',\
-	com.rometools.rome.feed.synd;version='1.16.0',\
-	com.rometools.rome.io;version='1.16.0',\
-	com.rometools.utils;version='1.16.0',\
-	\
 	com.sun.security.auth.module,\
 	\
 	java_cup.runtime.*;version='2.7.1',\
@@ -319,8 +309,6 @@ Provide-Capability:\
 	@../../../lib/portal/persistence.jar,\
 	@../../../lib/portal/portlet.jar,\
 	@../../../lib/portal/portletmvc4spring-framework.jar,\
-	@../../../lib/portal/rometools-utils.jar,\
-	@../../../lib/portal/rometools.jar,\
 	@../../../lib/portal/slf4j-api.jar,\
 	@../../../lib/portal/spring-aop.jar,\
 	@../../../lib/portal/spring-aspects.jar,\

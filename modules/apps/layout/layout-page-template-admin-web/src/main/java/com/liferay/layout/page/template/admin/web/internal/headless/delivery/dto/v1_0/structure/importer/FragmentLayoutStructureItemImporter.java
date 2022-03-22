@@ -34,6 +34,7 @@ import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.helper.PortletConfigurationImporterHelper;
 import com.liferay.layout.page.template.admin.web.internal.headless.delivery.dto.v1_0.structure.importer.helper.PortletPermissionsImporterHelper;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
@@ -102,17 +103,18 @@ public class FragmentLayoutStructureItemImporter
 			return null;
 		}
 
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.addFragmentStyledLayoutStructureItem(
-				fragmentEntryLink.getFragmentEntryLinkId(),
-				layoutStructureItemImporterContext.getParentItemId(),
-				layoutStructureItemImporterContext.getPosition());
+		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
+			(FragmentStyledLayoutStructureItem)
+				layoutStructure.addFragmentStyledLayoutStructureItem(
+					fragmentEntryLink.getFragmentEntryLinkId(),
+					layoutStructureItemImporterContext.getParentItemId(),
+					layoutStructureItemImporterContext.getPosition());
 
 		Map<String, Object> definitionMap = getDefinitionMap(
 			pageElement.getDefinition());
 
 		if (definitionMap == null) {
-			return layoutStructureItem;
+			return fragmentStyledLayoutStructureItem;
 		}
 
 		Map<String, Object> fragmentStyleMap =
@@ -147,7 +149,7 @@ public class FragmentLayoutStructureItemImporter
 					JSONUtil.merge(
 						commonStylesJSONObject, configStylesJSONObject));
 
-				layoutStructureItem.updateItemConfig(jsonObject);
+				fragmentStyledLayoutStructureItem.updateItemConfig(jsonObject);
 			}
 		}
 		else if (fragmentStyleMap != null) {
@@ -156,7 +158,7 @@ public class FragmentLayoutStructureItemImporter
 				toStylesJSONObject(
 					layoutStructureItemImporterContext, fragmentStyleMap));
 
-			layoutStructureItem.updateItemConfig(jsonObject);
+			fragmentStyledLayoutStructureItem.updateItemConfig(jsonObject);
 		}
 
 		if (definitionMap.containsKey("fragmentViewports")) {
@@ -169,11 +171,18 @@ public class FragmentLayoutStructureItemImporter
 					(String)fragmentViewport.get("id"),
 					toFragmentViewportStylesJSONObject(fragmentViewport));
 
-				layoutStructureItem.updateItemConfig(jsonObject);
+				fragmentStyledLayoutStructureItem.updateItemConfig(jsonObject);
 			}
 		}
 
-		return layoutStructureItem;
+		boolean nonindexable = GetterUtil.getBoolean(
+			definitionMap.get("nonindexable"));
+
+		if (nonindexable) {
+			fragmentStyledLayoutStructureItem.setNonindexed(nonindexable);
+		}
+
+		return fragmentStyledLayoutStructureItem;
 	}
 
 	@Override

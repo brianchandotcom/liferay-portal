@@ -1012,4 +1012,13 @@ definition {
 		Ratings.viewRateLike(ratingLikeCount = "2");
 	}
 
+	@description = "This is a test for LPS-84584. It checks that the rating tooltip can be translated to Japanese."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test ToolTipCanBeTranslatedToJapanese {
+
+		// TODO LPS-149969 ToolTipCanBeTranslatedToJapanese pending implementation
+
+	}
+
 }

@@ -37,6 +37,15 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-80187. It checks that the Email configuration changes can be canceled."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CancelingEmailConfigurationScreenDoesNotSaveChanges {
+
+		// TODO LPS-149976 CancelingEmailConfigurationScreenDoesNotSaveChanges pending implementation
+
+	}
+
 	@description = "This is a test for LPS-91199. It checks that all files selected on different pages can be deleted."
 	@ignore = "Test Stub"
 	@priority = "5"

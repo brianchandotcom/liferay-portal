@@ -454,6 +454,15 @@ definition {
 			entryTitle = "Blogs Entry Title");
 	}
 
+	@description = "This is a test for LPS-90983. It checks that the custom abstract can be viewed in card display template."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewCustomAbstractInCardDisplayTemplate {
+
+		// TODO LPS-149974 CanViewCustomAbstractInCardDisplayTemplate pending implementation
+
+	}
+
 	@description = "This checks that a blog entry can be added, edited, saved as a draft and published via AP."
 	@priority = "4"
 	@refactordone

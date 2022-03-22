@@ -153,4 +153,13 @@ definition {
 			searchAssetType = "Document");
 	}
 
+	@description = "This is a test for LPS-80203. It checks that the users will remain in the current context after clearing the search."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test UserRemainsInCurrentContextAfterClearingSearch {
+
+		// TODO LPS-149975 UserRemainsInCurrentContextAfterClearingSearch pending implementation
+
+	}
+
 }

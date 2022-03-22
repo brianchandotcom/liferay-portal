@@ -56,6 +56,15 @@ definition {
 		DMDocument.viewTagInfo(tagName = "carton");
 	}
 
+	@description = "This is a test for LPS-93334. It checks that an ODT file can be auto-tagged."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanAddAutoTagForODTFile {
+
+		// TODO LPS-149972 CanAddAutoTagForODTFile pending implementation
+
+	}
+
 	@description = "This test asserts that auto-tags added to an image uploaded on a staged site gets published to Live."
 	@priority = "4"
 	@refactordone

@@ -1350,6 +1350,15 @@ definition {
 			userName = "Test Test");
 	}
 
+	@description = "This is a test for LPS-82205. It checks that the XSS can not be executed after accessing HTML file."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CannotExecuteXSSWhenAccessingHTMLFIle {
+
+		// TODO LPS-149971 CannotExecuteXSSWhenAccessingHTMLFIle pending implementation
+
+	}
+
 	@priority = "4"
 	@refactordone
 	test CannotMoveToFolderWithDuplicateTitle {

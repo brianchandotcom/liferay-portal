@@ -24,6 +24,7 @@ import com.liferay.headless.delivery.internal.dto.v1_0.mapper.util.LocalizedValu
 import com.liferay.layout.page.template.util.AlignConverter;
 import com.liferay.layout.page.template.util.BorderRadiusConverter;
 import com.liferay.layout.page.template.util.ContentDisplayConverter;
+import com.liferay.layout.page.template.util.FlexWrapConverter;
 import com.liferay.layout.page.template.util.HtmlTagConverter;
 import com.liferay.layout.page.template.util.JustifyConverter;
 import com.liferay.layout.page.template.util.MarginConverter;
@@ -217,6 +218,18 @@ public class ContainerLayoutStructureItemMapper
 						return ContentDisplay.create(
 							ContentDisplayConverter.convertToExternalValue(
 								contentDisplay));
+					});
+				setFlexWrap(
+					() -> {
+						String flexWrap =
+							containerStyledLayoutStructureItem.getFlexWrap();
+
+						if (Validator.isNull(flexWrap)) {
+							return null;
+						}
+
+						return FlexWrap.create(
+							FlexWrapConverter.convertToExternalValue(flexWrap));
 					});
 				setHtmlTag(
 					() -> {

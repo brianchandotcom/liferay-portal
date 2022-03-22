@@ -19,6 +19,7 @@ import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.layout.page.template.util.AlignConverter;
 import com.liferay.layout.page.template.util.BorderRadiusConverter;
 import com.liferay.layout.page.template.util.ContentDisplayConverter;
+import com.liferay.layout.page.template.util.FlexWrapConverter;
 import com.liferay.layout.page.template.util.HtmlTagConverter;
 import com.liferay.layout.page.template.util.JustifyConverter;
 import com.liferay.layout.page.template.util.MarginConverter;
@@ -143,6 +144,14 @@ public class ContainerLayoutStructureItemImporter
 					containerStyledLayoutStructureItem.setContentDisplay(
 						ContentDisplayConverter.convertToInternalValue(
 							contentDisplay));
+				}
+
+				String flexWrap = String.valueOf(
+					containerLayout.getOrDefault("flexWrap", StringPool.BLANK));
+
+				if (Validator.isNotNull(flexWrap)) {
+					containerStyledLayoutStructureItem.setFlexWrap(
+						FlexWrapConverter.convertToInternalValue(flexWrap));
 				}
 
 				String htmlTag = String.valueOf(

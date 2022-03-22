@@ -57,6 +57,8 @@ public class RowLayoutStructureItemMapper
 						gutters = rowStyledLayoutStructureItem.isGutters();
 						modulesPerRow =
 							rowStyledLayoutStructureItem.getModulesPerRow();
+						nonindexable =
+							rowStyledLayoutStructureItem.isNonindexed();
 						numberOfColumns =
 							rowStyledLayoutStructureItem.getNumberOfColumns();
 						reverseOrder =

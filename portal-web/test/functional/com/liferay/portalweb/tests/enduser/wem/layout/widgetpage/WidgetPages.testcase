@@ -442,4 +442,71 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-142251. View widgets are rendered well after adding a web content via content panel."
+	@priority = "4"
+	test ViewWidgetAfterAddWebContentViaContentPanel {
+		task ("Add an IFrame and a Web Content Display to a widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "2",
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "IFrame");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Test Page Name",
+				widgetName = "Web Content Display");
+		}
+
+		task ("Add a Home page as source URL in IFrame") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			var baseURL = PropsUtil.get("portal.url");
+
+			Portlet.gotoPortletOptions(
+				portletName = "IFrame",
+				portletOption = "Configuration");
+
+			IFrame.addCP(sourceURL = "${baseURL}");
+
+			IFrame.closeFrame();
+		}
+
+		task ("Add the first web content via Web Content Display") {
+			WebContentDisplayPortlet.add(
+				webContentContent = "Web Content Content 1",
+				webContentTitle = "Web Content Title 1");
+		}
+
+		task ("Add the second web content via content panel") {
+			WidgetPages.addNewContent(assetType = "Basic Web Content");
+
+			WebContent.addCP(
+				webContentContent = "Web Content Content 2",
+				webContentTitle = "Web Content Title 2");
+
+			PortletEntry.publish();
+		}
+
+		task ("View the Home page shown in IFrame widget") {
+			SelectFrame.selectFrameNoLoading(locator1 = "IFrame#IFRAME_PORTLET");
+
+			Smoke.viewWelcomeContentPage();
+
+			SelectFrameTop();
+		}
+
+		task ("View the first web content shown in Web Content Display widget") {
+			WebContentDisplayPortlet.viewContent(
+				webContentContent = "Web Content Content 1",
+				webContentTitle = "Web Content Title 1");
+		}
+	}
+
 }

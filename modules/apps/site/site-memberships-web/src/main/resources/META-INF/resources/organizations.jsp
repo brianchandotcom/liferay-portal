@@ -31,10 +31,6 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 />
 
 <div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-	<liferay-ui:breadcrumb
-		showLayout="<%= false %>"
-	/>
-
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/site_memberships/organizations_info_panel" var="sidebarPanelURL">
 		<portlet:param name="groupId" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 	</liferay-portlet:resourceURL>
@@ -55,6 +51,10 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 			<aui:form action="<%= deleteGroupOrganizationsURL %>" method="post" name="fm">
 				<aui:input name="tabs1" type="hidden" value="organizations" />
 				<aui:input name="groupId" type="hidden" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
+
+				<liferay-ui:breadcrumb
+					showLayout="<%= false %>"
+				/>
 
 				<liferay-ui:search-container
 					id="organizations"

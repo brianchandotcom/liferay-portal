@@ -17,6 +17,7 @@ package com.liferay.batch.engine.internal.writer;
 import com.liferay.petra.io.unsync.UnsyncPrintWriter;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -47,6 +48,9 @@ public class CSVBatchEngineExportTaskItemWriterImpl
 		}
 
 		_delimiter = delimiter;
+
+		fieldNames = ListUtil.sort(
+			fieldNames, (value1, value2) -> value1.compareToIgnoreCase(value2));
 
 		_columnValuesExtractor = new ColumnValuesExtractor(
 			fieldMap, fieldNames);

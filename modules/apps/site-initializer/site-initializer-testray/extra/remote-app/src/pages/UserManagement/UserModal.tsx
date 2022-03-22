@@ -26,20 +26,21 @@ import {FormModalOptions} from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 import {Liferay} from '../../services/liferay/liferay';
 
-type CreateUserForm = {
-	alternateName: string;
-	emailAddress: string;
-	familyName: string;
-	givenName: string;
-	password: string;
-	testRayAnalyst: boolean;
-	testrayAdministrator: boolean;
-	testrayLead: boolean;
-	testrayUser: boolean;
+const userFormDefault = {
+	alternateName: '',
+	confirmPassword: '',
+	emailAddress: '',
+	familyName: '',
+	givenName: '',
+	password: '',
+	testRayAnalyst: false,
+	testrayAdministrator: false,
+	testrayLead: false,
+	testrayUser: false,
 };
 
 type CreateUserFormProps = {
-	form: CreateUserForm;
+	form: typeof userFormDefault;
 	onChange: (event: any) => void;
 };
 
@@ -48,17 +49,20 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({form, onChange}) => {
 		<Container>
 			<ClayForm>
 				<ClayLayout.Row justify="start">
-					<ClayLayout.Col size={3} sm={12} xl={3}>
-						<h5 className="font-weight-normal">User Information</h5>
+					<ClayLayout.Col size={12} sm={12} xl={3}>
+						<h5 className="font-weight-normal mt-1">
+							{i18n.translate('user-information')}
+						</h5>
 					</ClayLayout.Col>
 
-					<ClayLayout.Col size={3} sm={12} xl={7}>
+					<ClayLayout.Col size={12} sm={12} xl={9}>
 						<ClayForm.Group className="form-group-sm">
 							<Input
 								label={i18n.translate('first-name')}
 								name="givenName"
 								onChange={onChange}
 								required
+								value={form.givenName}
 							/>
 
 							<Input
@@ -66,6 +70,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({form, onChange}) => {
 								name="familyName"
 								onChange={onChange}
 								required
+								value={form.familyName}
 							/>
 
 							<Input
@@ -74,6 +79,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({form, onChange}) => {
 								onChange={onChange}
 								required
 								type="email"
+								value={form.emailAddress}
 							/>
 
 							<Input
@@ -81,6 +87,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({form, onChange}) => {
 								name="alternateName"
 								onChange={onChange}
 								required
+								value={form.alternateName}
 							/>
 						</ClayForm.Group>
 					</ClayLayout.Col>
@@ -89,11 +96,13 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({form, onChange}) => {
 				<hr />
 
 				<ClayLayout.Row justify="start">
-					<ClayLayout.Col size={3} sm={12} xl={3}>
-						<h5 className="font-weight-normal">Password</h5>
+					<ClayLayout.Col size={12} sm={12} xl={3}>
+						<h5 className="font-weight-normal mt-1">
+							{i18n.translate('password')}
+						</h5>
 					</ClayLayout.Col>
 
-					<ClayLayout.Col size={3} sm={12} xl={3}>
+					<ClayLayout.Col size={12} sm={12} xl={9}>
 						<ClayForm.Group className="form-group-sm">
 							<Input
 								label={i18n.translate('password')}
@@ -101,6 +110,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({form, onChange}) => {
 								onChange={onChange}
 								required
 								type="password"
+								value={form.password}
 							/>
 
 							<Input
@@ -109,6 +119,7 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({form, onChange}) => {
 								onChange={onChange}
 								required
 								type="password"
+								value={form.password}
 							/>
 						</ClayForm.Group>
 					</ClayLayout.Col>
@@ -117,11 +128,11 @@ const CreateUserForm: React.FC<CreateUserFormProps> = ({form, onChange}) => {
 				<hr />
 
 				<ClayLayout.Row justify="start">
-					<ClayLayout.Col size={3} sm={12} xl={3}>
+					<ClayLayout.Col size={12} sm={12} xl={3}>
 						<h5 className="font-weight-normal">Roles</h5>
 					</ClayLayout.Col>
 
-					<ClayLayout.Col size={3} sm={12} xl={9}>
+					<ClayLayout.Col size={12} sm={12} xl={9}>
 						<div>
 							<ClayCheckbox
 								checked={form.testrayAdministrator}
@@ -169,47 +180,21 @@ type CreateUserProps = {
 };
 
 const CreateUser: React.FC<CreateUserProps> = ({
-	modal: {observer, onClose, onSave, visible},
+	modal: {observer, onChange, onClose, onSave, visible},
 }) => {
-	const [form, setForm] = useState<CreateUserForm>({
-		alternateName: '',
-		emailAddress: '',
-		familyName: '',
-		givenName: '',
-		password: '',
-		testRayAnalyst: false,
-		testrayAdministrator: false,
-		testrayLead: false,
-		testrayUser: false,
-	});
+	const [form, setForm] = useState(userFormDefault);
 
 	const [onCreateliferayAccount] = useMutation(createUserAccount);
 
-	const onChange = (event: any) => {
-		const {
-			target: {checked, name, type, ...target},
-		} = event;
-
-		let {value} = target;
-
-		if (type === 'checkbox') {
-			value = checked;
-		}
-
-		setForm({
-			...form,
-			[name]: value,
-		});
-	};
-
 	const onSubmit = async () => {
-		const newForm: Partial<CreateUserForm> = {
+		const newForm: Partial<typeof userFormDefault> = {
 			alternateName: form.alternateName,
 			emailAddress: form.emailAddress,
 			familyName: form.familyName,
 			givenName: form.givenName,
 			password: form.password,
 		};
+
 		try {
 			await onCreateliferayAccount({
 				variables: {
@@ -217,11 +202,8 @@ const CreateUser: React.FC<CreateUserProps> = ({
 				},
 			});
 
-			Liferay.Util.openToast({message: 'TestrayCase Registered'});
-
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			Liferay.Util.openToast({
 				message: (error as any).message,
 				type: 'danger',
@@ -247,7 +229,7 @@ const CreateUser: React.FC<CreateUserProps> = ({
 			title={i18n.translate('new-user-account')}
 			visible={visible}
 		>
-			<CreateUserForm form={form} onChange={onChange} />
+			<CreateUserForm form={form} onChange={onChange({form, setForm})} />
 		</Modal>
 	);
 };

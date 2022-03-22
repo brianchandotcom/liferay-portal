@@ -309,6 +309,70 @@ definition {
 		}
 	}
 
+	@description = "LPS-132510 Given The Content Dashboard
+	When the info panel of a blog is open
+	Then the ID of the blog is shown in the Details section"
+	@priority = "3"
+	test BlogIDDateInInfoPanel {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
+		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+
+		task ("Create a blog") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Go to Content Dashboard and check the title in the Info panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Go to Content Dashboard and check the ID in the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
+
+			Panel.expandPanel(panel = "Details");
+
+			AssertElementPresent(locator1 = "ContentDashboard#INFO_PANEL_ID");
+		}
+	}
+
+	@description = "LPS-132510 Given The Content Dashboard
+	When the info panel of a blog is open
+	Then the Modification date of the blog is shown in the Details section"
+	@priority = "3"
+	test BlogModificationDateInInfoPanel {
+		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
+		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+
+		task ("Create a blog") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				groupName = "Test Site Name");
+		}
+
+		task ("Go to Content Dashboard and check the title in the Info panel") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Content",
+				panel = "Applications",
+				portlet = "Content Dashboard");
+		}
+
+		task ("Go to Content Dashboard and check the Modified date in the Info panel") {
+			ContentDashboard.openInfoPanelByDropdownMenu();
+
+			Panel.expandPanel(panel = "Details");
+
+			AssertElementPresent(
+				locator1 = "ContentDashboard#INFO_PANEL_TYPE_OF_DATE",
+				typeOfDate = "Modified Date");
+		}
+	}
+
 	@description = "LPS-132509 Given a blog created in site A in the instance, and another one created in the site B
 	When the user goes to the content dashboard
 	Then the user can see both listed"
@@ -360,39 +424,9 @@ definition {
 				locator1 = "ContentDashboard#FIRST_ELEMENT_LISTED",
 				value1 = "Blogs Entry Title 2");
 		}
+
 		task ("Delete site created for this test") {
 			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
-		}
-	}
-
-	@description = "LPS-132510 Given The Content Dashboard
-	When the info panel of a blog is open
-	Then the ID of the blog is shown in the Details section"
-	@priority = "3"
-	test BlogIDDateInInfoPanel {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
-
-		task ("Create a blog") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
-		}
-
-		task ("Go to Content Dashboard and check the title in the Info panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-		}
-
-		task ("Go to Content Dashboard and check the ID in the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
-
-			Panel.expandPanel(panel = "Details");
-
-			AssertElementPresent(locator1 = "ContentDashboard#INFO_PANEL_ID");
 		}
 	}
 
@@ -424,39 +458,6 @@ definition {
 					key_tableHeader = "${columnHeader}",
 					locator1 = "LexiconTable#TABLE_HEADER");
 			}
-		}
-	}
-
-	@description = "LPS-132510 Given The Content Dashboard
-	When the info panel of a blog is open
-	Then the Modification date of the blog is shown in the Details section"
-	@priority = "3"
-	test BlogModificationDateInInfoPanel {
-		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
-		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
-
-		task ("Create a blog") {
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title",
-				groupName = "Test Site Name");
-		}
-
-		task ("Go to Content Dashboard and check the title in the Info panel") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Content",
-				panel = "Applications",
-				portlet = "Content Dashboard");
-		}
-
-		task ("Go to Content Dashboard and check the Modified date in the Info panel") {
-			ContentDashboard.openInfoPanelByDropdownMenu();
-
-			Panel.expandPanel(panel = "Details");
-
-			AssertElementPresent(
-				locator1 = "ContentDashboard#INFO_PANEL_TYPE_OF_DATE",
-				typeOfDate = "Modified Date");
 		}
 	}
 
@@ -1732,7 +1733,7 @@ definition {
 			LexiconTable.clickTableEntryColumnLink(
 				columnName = "title",
 				tableEntry = "");
-			
+
 			AssertElementPresent(
 				locator1 = "Button#PUBLISH",
 				value1 = "Publish");

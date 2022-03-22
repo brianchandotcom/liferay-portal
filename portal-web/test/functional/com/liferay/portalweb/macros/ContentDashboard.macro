@@ -268,7 +268,6 @@ definition {
 		}
 
 		var key_filterOption = "${filterOption}";
-
 		var key_siteName = "${siteName}";
 
 		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
@@ -277,7 +276,7 @@ definition {
 
 		Click(locator1 = "ContentDashboard#MY_SITES_TAB");
 
-		Click(locator1 = "ContentDashboard#SITE_CARD"); 
+		Click(locator1 = "ContentDashboard#SITE_CARD");
 
 		SelectFrame(value1 = "relative=top");
 	}

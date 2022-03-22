@@ -127,6 +127,7 @@ public class TemplateEntryActionDropdownItemsProvider {
 				).setParameter(
 					"templateEntryId", _templateEntry.getTemplateEntryId()
 				).buildPortletURL());
+			dropdownItem.setIcon("copy");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "copy"));
 		};
@@ -148,6 +149,7 @@ public class TemplateEntryActionDropdownItemsProvider {
 				).setParameter(
 					"templateEntryId", _templateEntry.getTemplateEntryId()
 				).buildString());
+			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
@@ -171,6 +173,7 @@ public class TemplateEntryActionDropdownItemsProvider {
 				).setParameter(
 					"templateEntryId", _templateEntry.getTemplateEntryId()
 				).buildPortletURL());
+			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
@@ -193,6 +196,7 @@ public class TemplateEntryActionDropdownItemsProvider {
 			dropdownItem.putData("action", "permissionsTemplateEntry");
 			dropdownItem.putData(
 				"permissionsTemplateEntryURL", permissionsDisplayPageURL);
+			dropdownItem.setIcon("password-policies");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};

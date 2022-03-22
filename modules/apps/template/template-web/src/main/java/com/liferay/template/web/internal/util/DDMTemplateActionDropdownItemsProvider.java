@@ -131,6 +131,7 @@ public class DDMTemplateActionDropdownItemsProvider {
 				).setParameter(
 					"ddmTemplateId", _ddmTemplate.getTemplateId()
 				).buildPortletURL());
+			dropdownItem.setIcon("copy");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "copy"));
 		};
@@ -152,6 +153,7 @@ public class DDMTemplateActionDropdownItemsProvider {
 				).setParameter(
 					"ddmTemplateId", _ddmTemplate.getTemplateId()
 				).buildString());
+			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
@@ -173,6 +175,7 @@ public class DDMTemplateActionDropdownItemsProvider {
 				).setParameter(
 					"ddmTemplateId", _ddmTemplate.getTemplateId()
 				).buildPortletURL());
+			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
@@ -192,6 +195,7 @@ public class DDMTemplateActionDropdownItemsProvider {
 			dropdownItem.putData("action", "permissionsDDMTemplate");
 			dropdownItem.putData(
 				"permissionsDDMTemplateURL", permissionsDisplayPageURL);
+			dropdownItem.setIcon("password-policies");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};

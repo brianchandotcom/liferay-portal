@@ -75,7 +75,7 @@ public class WidgetTemplatesManagementToolbarDisplayContext
 		return DropdownItemListBuilder.add(
 			dropdownItem -> {
 				dropdownItem.putData("action", "deleteSelectedDDMTemplates");
-				dropdownItem.setIcon("times-circle");
+				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "delete"));
 				dropdownItem.setQuickAction(true);

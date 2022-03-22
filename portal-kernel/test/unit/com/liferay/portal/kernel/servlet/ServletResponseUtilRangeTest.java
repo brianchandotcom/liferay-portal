@@ -15,10 +15,12 @@
 package com.liferay.portal.kernel.servlet;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypes;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,10 +34,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -46,6 +50,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.stubbing.Answer;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -87,6 +94,24 @@ public class ServletResponseUtilRangeTest {
 
 		PropsTestUtil.setProps(
 			PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS, "10");
+
+		MimeTypes mimeTypes = Mockito.mock(MimeTypes.class);
+
+		Mockito.when(
+			mimeTypes.getExtensions(Mockito.anyString())
+		).thenReturn(
+			Collections.emptySet()
+		);
+
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+
+		_serviceRegistration = bundleContext.registerService(
+			MimeTypes.class, mimeTypes, null);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_serviceRegistration.unregister();
 	}
 
 	@Before
@@ -304,6 +329,8 @@ public class ServletResponseUtilRangeTest {
 
 	private static final String _CONTENT_TYPE_BOUNDARY_PREFACE =
 		"multipart/byteranges; boundary=";
+
+	private static ServiceRegistration<MimeTypes> _serviceRegistration;
 
 	@Mock
 	private HttpServletRequest _httpServletRequest;

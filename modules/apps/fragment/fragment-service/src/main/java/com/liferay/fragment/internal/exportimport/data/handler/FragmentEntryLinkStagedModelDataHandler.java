@@ -27,6 +27,8 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -111,6 +113,25 @@ public class FragmentEntryLinkStagedModelDataHandler
 		}
 
 		fragmentEntryLink.setEditableValues(editableValues);
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.fetchFragmentEntry(
+				fragmentEntryLink.getFragmentEntryId());
+
+		if ((fragmentEntry != null) &&
+			(fragmentEntry.getGroupId() != fragmentEntryLink.getGroupId())) {
+
+			Group group = _groupLocalService.fetchGroup(
+				fragmentEntry.getGroupId());
+
+			if (group != null) {
+				fragmentEntryLinkElement.addAttribute(
+					"fragment-entry-group-key", group.getGroupKey());
+			}
+
+			fragmentEntryLinkElement.addAttribute(
+				"fragment-entry-key", fragmentEntry.getFragmentEntryKey());
+		}
 
 		portletDataContext.addClassedModel(
 			fragmentEntryLinkElement,
@@ -269,6 +290,9 @@ public class FragmentEntryLinkStagedModelDataHandler
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

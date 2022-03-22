@@ -239,6 +239,14 @@ definition {
 		}
 
 		task ("Login as a non-admin user and switch the property in AC") {
+			var analyticsCloudURL = PropsUtil.get("analytics.cloud.url");
+
+			Open(locator1 = "${analyticsCloudURL}");
+
+			if (IsElementNotPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) {
+				ACWorkspace.signOut();
+			}
+			
 			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");

@@ -9,6 +9,8 @@ Import-Package:\
 	\
 	!org.junit,\
 	\
+	com.rometools.*,\
+	\
 	org.apache.pdfbox.*,\
 	\
 	*;resolution:=optional

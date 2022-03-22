@@ -204,6 +204,88 @@ definition {
 			value1 = "12345");
 	}
 
+	@description = "Verify that is possible to upload a different image on the Image Field for a translated language"
+	@priority = "5"
+	test CanUploadedImageChangeWithTranslations {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Image",
+			fieldName = "Image");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Image",
+			fieldFieldLabelEdit = "图片");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		WebContent.addWithStructureCP(
+				navTab = "Web Content Images",
+				webContentImage = "Document_2.jpeg",
+				webContentTitle = "Test");
+
+		PortletEntry.publish();
+
+	
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");				
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertClick(
+			key_fieldFieldLabel = "Image",
+			locator1 = "AppBuilder#CLEAR_SEARCH",
+			value1 = "Clear");
+
+		WebContent.addWithStructureCP(
+				navTab = "Web Content Images",
+				webContentImage = "Document_1.jpeg",
+				webContentImageFieldLabel = "图片",
+				webContentTitle = "测试");
+
+		PortletEntry.publish();
+
+		
+		
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "Image",
+			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW",
+			key_image = "Document_2.jpeg");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		AssertElementPresent(
+			key_fieldFieldLabel = "图片",
+			locator1 = "WCEditWebContent#IMAGE_PICKER_PREVIEW",
+			key_image = "Document_1.jpeg");
+	}
+
 	
 
 }

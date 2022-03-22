@@ -18,6 +18,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Sku;
+import com.liferay.headless.commerce.admin.catalog.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.admin.catalog.internal.util.DateConfigUtil;
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.petra.string.StringPool;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.math.BigDecimal;
 
 import java.util.Calendar;
-import java.util.Map;
 
 /**
  * @author Alessio Antonio Rendina
@@ -139,20 +139,20 @@ public class SkuUtil {
 	}
 
 	private static String _getOptions(Sku sku) {
-		Map<String, String> options = sku.getOptions();
+		SkuOption[] skuOptions = sku.getSkuOptions();
 
-		if (options == null) {
+		if (skuOptions == null) {
 			return StringPool.BLANK;
 		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (Map.Entry<String, String> entry : options.entrySet()) {
+		for (SkuOption skuOption : skuOptions) {
 			jsonArray.put(
 				JSONUtil.put(
-					"key", entry.getKey()
+					"key", skuOption.getKey()
 				).put(
-					"value", JSONUtil.put(entry.getValue())
+					"value", JSONUtil.put(skuOption.getValue())
 				));
 		}
 

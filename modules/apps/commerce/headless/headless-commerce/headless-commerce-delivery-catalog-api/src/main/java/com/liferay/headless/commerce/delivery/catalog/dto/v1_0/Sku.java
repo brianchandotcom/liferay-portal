@@ -403,35 +403,6 @@ public class Sku implements Serializable {
 
 	@Schema
 	@Valid
-	public Map<String, String> getOptions() {
-		return options;
-	}
-
-	public void setOptions(Map<String, String> options) {
-		this.options = options;
-	}
-
-	@JsonIgnore
-	public void setOptions(
-		UnsafeSupplier<Map<String, String>, Exception> optionsUnsafeSupplier) {
-
-		try {
-			options = optionsUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, String> options;
-
-	@Schema
-	@Valid
 	public Price getPrice() {
 		return price;
 	}
@@ -538,6 +509,35 @@ public class Sku implements Serializable {
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String sku;
+
+	@Schema
+	@Valid
+	public SkuOption[] getSkuOptions() {
+		return skuOptions;
+	}
+
+	public void setSkuOptions(SkuOption[] skuOptions) {
+		this.skuOptions = skuOptions;
+	}
+
+	@JsonIgnore
+	public void setSkuOptions(
+		UnsafeSupplier<SkuOption[], Exception> skuOptionsUnsafeSupplier) {
+
+		try {
+			skuOptions = skuOptionsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected SkuOption[] skuOptions;
 
 	@DecimalMin("0")
 	@Schema
@@ -777,16 +777,6 @@ public class Sku implements Serializable {
 			sb.append(neverExpire);
 		}
 
-		if (options != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"options\": ");
-
-			sb.append(_toJSON(options));
-		}
-
 		if (price != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -829,6 +819,26 @@ public class Sku implements Serializable {
 			sb.append(_escape(sku));
 
 			sb.append("\"");
+		}
+
+		if (skuOptions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"skuOptions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < skuOptions.length; i++) {
+				sb.append(String.valueOf(skuOptions[i]));
+
+				if ((i + 1) < skuOptions.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (weight != null) {

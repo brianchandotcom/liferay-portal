@@ -20,7 +20,6 @@ import com.liferay.headless.commerce.delivery.catalog.client.serdes.v1_0.SkuSerD
 import java.io.Serializable;
 
 import java.util.Date;
-import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -286,27 +285,6 @@ public class Sku implements Cloneable, Serializable {
 
 	protected Boolean neverExpire;
 
-	public Map<String, String> getOptions() {
-		return options;
-	}
-
-	public void setOptions(Map<String, String> options) {
-		this.options = options;
-	}
-
-	public void setOptions(
-		UnsafeSupplier<Map<String, String>, Exception> optionsUnsafeSupplier) {
-
-		try {
-			options = optionsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Map<String, String> options;
-
 	public Price getPrice() {
 		return price;
 	}
@@ -386,6 +364,27 @@ public class Sku implements Cloneable, Serializable {
 	}
 
 	protected String sku;
+
+	public SkuOption[] getSkuOptions() {
+		return skuOptions;
+	}
+
+	public void setSkuOptions(SkuOption[] skuOptions) {
+		this.skuOptions = skuOptions;
+	}
+
+	public void setSkuOptions(
+		UnsafeSupplier<SkuOption[], Exception> skuOptionsUnsafeSupplier) {
+
+		try {
+			skuOptions = skuOptionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected SkuOption[] skuOptions;
 
 	public Double getWeight() {
 		return weight;

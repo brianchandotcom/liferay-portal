@@ -14,6 +14,7 @@ task copyRepo(type: Copy)
 task downloadBundle(type: Download)
 task downloadHotFixZip(type: Download)
 task downloadPluginsSdk(type: Download)
+task downloadProductInfo(type: Download)
 
 String bundleUrl = "https://releases-cdn.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.tar.gz"
 File gradleTestDependenciesDir = new File(buildDir, "gradle-test-dependencies")
@@ -135,6 +136,16 @@ downloadPluginsSdk {
 	dest new File(buildDir, "plugins-sdk.zip")
 	onlyIfModified true
 	src pluginsSdkUrl
+}
+
+downloadProductInfo {
+	src "https://releases-cdn.liferay.com/tools/workspace/.product_info.json"
+	dest buildDir
+	onlyIfNewer true
+}
+
+processResources {
+	from downloadProductInfo
 }
 
 eclipse.classpath.file {

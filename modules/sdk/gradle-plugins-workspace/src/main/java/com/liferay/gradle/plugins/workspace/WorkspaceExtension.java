@@ -35,6 +35,8 @@ import groovy.lang.Closure;
 import groovy.lang.MissingPropertyException;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import java.net.URL;
 
@@ -528,24 +530,43 @@ public class WorkspaceExtension {
 					try (JsonReader jsonReader = new JsonReader(
 							Files.newBufferedReader(downloadPath))) {
 
-						Gson gson = new Gson();
-
-						TypeToken<Map<String, ProductInfo>> typeToken =
-							new TypeToken<Map<String, ProductInfo>>() {
-							};
-
-						Map<String, ProductInfo> productInfos = gson.fromJson(
-							jsonReader, typeToken.getType());
+						Map<String, ProductInfo> productInfos =
+							_getProductInfoFromReader(jsonReader);
 
 						return productInfos.get(product);
 					}
 				}
-				catch (Exception exception) {
-					throw new GradleException(
-						"Unable to get product info for :" + product,
-						exception);
+				catch (Exception exception1) {
+					try (InputStream resourceInputStream =
+							WorkspaceExtension.class.getResourceAsStream(
+								"/.product_info.json");
+						JsonReader jsonReader = new JsonReader(
+							new InputStreamReader(resourceInputStream))) {
+
+						Map<String, ProductInfo> productInfos =
+							_getProductInfoFromReader(jsonReader);
+
+						return productInfos.get(product);
+					}
+					catch (Exception exception2) {
+						throw new GradleException(
+							"Unable to get product info for :" + product,
+							exception2);
+					}
 				}
 			});
+	}
+
+	private Map<String, ProductInfo> _getProductInfoFromReader(
+		JsonReader jsonReader) {
+
+		Gson gson = new Gson();
+
+		TypeToken<Map<String, ProductInfo>> typeToken =
+			new TypeToken<Map<String, ProductInfo>>() {
+			};
+
+		return gson.fromJson(jsonReader, typeToken.getType());
 	}
 
 	private boolean _getProperty(

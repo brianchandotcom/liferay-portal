@@ -148,8 +148,6 @@
 /portal/persistence.jar
 /portal/portlet.jar
 /portal/portletmvc4spring-framework.jar
-/portal/rometools-utils.jar
-/portal/rometools.jar
 /portal/saaj-api.jar
 /portal/saaj-impl.jar
 /portal/serializer.jar

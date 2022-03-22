@@ -82,6 +82,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLEAR_BUTTON</td>
+	<td>//nav[contains(@class,'management-bar')]//*[contains(@aria-label, 'Clear')]//*[contains(.,'Clear')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLEAR_BUTTON_MOBILE</td>
+	<td>//nav[contains(@class,'management-bar')]//*[contains(@aria-label, 'Clear')]//*[contains(@class,'icon-times-circle')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FILTER_OR_ORDER</td>
 	<td>//nav[contains(@class,'management-bar')]//*[*[contains(@title,'${key_filter}')]]</td>
 	<td></td>

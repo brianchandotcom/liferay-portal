@@ -33,7 +33,7 @@ definition {
 
 	}
 
-	@description = "This is a stubbed description"
+	@description = "Verify that is possible to translate input data on the Text Field"
 	@priority = "5"
 	test CanInputtedDataBeTranslatedOnTextField {
 
@@ -88,6 +88,63 @@ definition {
 			key_fieldFieldLabel = "文本",
 			locator1 = "WCEditWebContent#TEXT_INPUT",
 			value1 = "测试");
+	}
+
+	@description = "Verify that is possible to translate input data on the Date Field"
+	@priority = "5"
+	test CanInputtedDataBeTranslatedOnDateField {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Date",
+			fieldName = "Date");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Date",
+			fieldFieldLabelEdit = "日期");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "01/01/1000",
+			webContentTitle = "Test");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		WebContent.addWithStructureCP(
+			webContentDate = "1000/01/01",
+			webContentDateFieldLabel = "日期",
+			webContentTitle = "测试");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "日期",
+			locator1 = "WCEditWebContent#DATE_INPUT",
+			value1 = "1000/01/01");
 	}
 
 	

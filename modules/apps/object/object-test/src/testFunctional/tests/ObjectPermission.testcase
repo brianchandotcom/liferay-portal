@@ -980,7 +980,7 @@ definition {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "PERMISSIONS",
 			resourceName = "com.liferay.object.model.ObjectDefinition",
-			roleTitle = "Regular Role");	
+			roleTitle = "Regular Role");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1026,8 +1026,6 @@ definition {
 		CreateObject.assertDisabledAllFields();
 
 		CreateObject.assertDisabledPublishObjectButton();
-
-
 	}
 
 	@description = "LPS-146759 - Verify it is not possible to update a single Picklist created by the user if the Update Owner permission is removed"
@@ -1094,7 +1092,6 @@ definition {
 		Picklist.assertDisabledPicklistName();
 
 		Picklist.assertDisabledSaveButton();
-
 	}
 
 	@description = "LPS-146757 - Verify it is not possible to view a single Object Entry create by the user if the View Owner permission is removed"
@@ -1232,7 +1229,7 @@ definition {
 		Permissions.definePermissionViaJSONAPI(
 			resourceAction = "PERMISSIONS",
 			resourceName = "com.liferay.object.model.ObjectDefinition",
-			roleTitle = "Regular Role");	
+			roleTitle = "Regular Role");
 
 		JSONUser.addUser(
 			userEmailAddress = "userea@liferay.com",
@@ -1274,19 +1271,68 @@ definition {
 		Refresh();
 
 		CreateObject.assertCustomObjectNotPresent(labelName = "Custom Object 148936");
-
-		
-
-
 	}
 
 	@description = "LPS-146759 - Verify it is not possible to view a single Picklist created by the user if the View Owner permission is removed"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CannotViewSinglePicklistWithoutViewOwnerPermission {
+		property test.name.skip.portal.instance = "ObjectPermission#CannotViewSinglePicklistWithoutViewOwnerPermission";
 
-		// TODO LPS-148944 CannotViewSinglePicklistWithoutViewOwnerPermission pending implementation
+		JSONRole.addRegularRole(
+			roleKey = "Regular Role",
+			roleTitle = "Regular Role");
 
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ACCESS_IN_CONTROL_PANEL",
+			resourceName = "com_liferay_object_web_internal_list_type_portlet_portlet_ListTypeDefinitionsPortlet",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "ADD_LIST_TYPE_DEFINITION",
+			resourceName = "com.liferay.list.type",
+			roleTitle = "Regular Role");
+
+		Permissions.definePermissionViaJSONAPI(
+			resourceAction = "PERMISSIONS",
+			resourceName = "com.liferay.list.type.model.ListTypeDefinition",
+			roleTitle = "Regular Role");
+
+		JSONUser.addUser(
+			userEmailAddress = "userea@liferay.com",
+			userFirstName = "userfn",
+			userLastName = "userln",
+			userScreenName = "usersn");
+
+		JSONUser.setFirstPassword(
+			agreeToTermsAndAnswerReminderQuery = "true",
+			requireReset = "false",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONRole.assignRoleToUser(
+			roleTitle = "Regular Role",
+			userEmailAddress = "userea@liferay.com");
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "userea@liferay.com",
+			userLoginFullName = "userfn userln");
+
+		Picklist.gotoPicklists();
+
+		Picklist.addPicklistViaUI(picklistName = "Picklist Test");
+
+		Refresh();
+
+		ObjectCustomViews.gotoPermissions(entryName = "Picklist Test");
+
+		ObjectCustomViews.selectAnyPermissions(
+			owner = "true",
+			permissionsList = "VIEW");
+
+		Button.clickSave();
+
+		Refresh();
+
+		Picklist.assertPicklistNotPresent(picklistName = "Picklist Test");
 	}
 
 	@description = "LPS-135390 - Verify it is possible to update a Picklist with the Update permission"

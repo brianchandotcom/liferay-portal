@@ -83,6 +83,72 @@ definition {
 			locator1 = "ClaySamplePortlet#CHECKBOX");
 	}
 
+	@description = "LRQA-65496: Verify status checked in clay checkbox indeterminate"
+	@priority = "3"
+	test CheckboxIndeterminateStatusChecked {
+		task ("Go to Form Elements tab") {
+			Navigator.gotoNavTab(navTab = "Form Elements");
+		}
+
+		task ("Click at Design and Categorization checkboxes") {
+			Click.clickAtNotVisible(
+				key_label = "Content e Data",
+				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED");
+
+			Click.clickAtNotVisible(
+				key_label = "Categorization",
+				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED");
+		}
+
+		task ("Assert the status of undetermined checkbox is checked") {
+			AssertChecked.assertCheckedNotVisible(
+				key_label = "Liferay DXP",
+				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED");
+		}
+	}
+
+	@description = "LRQA-65496: Verify status indeterminate in clay checkbox indeterminate"
+	@priority = "3"
+	test CheckboxIndeterminateStatusDefaut {
+		task ("Go to Form Elements tab") {
+			Navigator.gotoNavTab(navTab = "Form Elements");
+		}
+
+		task ("Assert the status in checkbox is indeterminate") {
+			AssertAttributeValue(
+				attribute1 = "indeterminate",
+				key_label = "Liferay DXP",
+				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED",
+				value1 = "true");
+		}
+	}
+
+	@description = "LRQA-65496: Verify status unchecked in clay checkbox indeterminate"
+	@priority = "3"
+	test CheckboxIndeterminateStatusUnchecked {
+		task ("Go to Form Elements tab") {
+			Navigator.gotoNavTab(navTab = "Form Elements");
+		}
+
+		task ("Click at Design and Categorization checkboxes") {
+			Click.clickAtNotVisible(
+				key_label = "Design",
+				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED");
+
+			for (var click : list "1,2") {
+				Click.clickAtNotVisible(
+					key_label = "Content e Data",
+					locator1 = "ClaySamplePortlet#CHECKBOX_NESTED");
+			}
+		}
+
+		task ("Assert the status of undetermined checkbox is uncheck") {
+			Uncheck.uncheckNotVisible(
+				key_label = "Liferay DXP",
+				locator1 = "ClaySamplePortlet#CHECKBOX_NESTED");
+		}
+	}
+
 	@description = "Verify clay checkbox UI looks ok"
 	@priority = "5"
 	@refactordone

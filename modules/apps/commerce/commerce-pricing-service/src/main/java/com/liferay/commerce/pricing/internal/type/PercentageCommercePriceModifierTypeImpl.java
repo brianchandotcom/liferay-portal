@@ -67,7 +67,7 @@ public class PercentageCommercePriceModifierTypeImpl
 			commerceCurrency.getRoundingMode());
 
 		BigDecimal percentage = BigDecimal.ONE.add(
-			modifierAmount.divide(_ONE_HUNDRED));
+			modifierAmount.scaleByPowerOfTen(-2));
 
 		MathContext mathContext = new MathContext(
 			percentage.precision(), roundingMode);
@@ -87,8 +87,6 @@ public class PercentageCommercePriceModifierTypeImpl
 
 		return LanguageUtil.get(resourceBundle, "percentage");
 	}
-
-	private static final BigDecimal _ONE_HUNDRED = BigDecimal.valueOf(100);
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;

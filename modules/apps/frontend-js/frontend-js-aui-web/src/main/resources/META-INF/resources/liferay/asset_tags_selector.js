@@ -238,7 +238,7 @@ AUI.add(
 							{
 								dialog: {
 									cssClass: CSS_POPUP,
-									hideClass: 'hide-accessible',
+									hideClass: 'hide-accessible sr-only',
 									width: 600,
 								},
 							}

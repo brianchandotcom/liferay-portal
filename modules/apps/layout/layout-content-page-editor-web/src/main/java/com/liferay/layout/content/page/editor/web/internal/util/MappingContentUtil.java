@@ -82,9 +82,11 @@ public class MappingContentUtil {
 
 				defaultFieldSetFieldsJSONArray.put(
 					JSONUtil.put(
-						"key", infoField.getName()
+						"key", infoField.getUniqueId()
 					).put(
 						"label", infoField.getLabel(locale)
+					).put(
+						"name", infoField.getName()
 					).put(
 						"type",
 						() -> {
@@ -104,9 +106,11 @@ public class MappingContentUtil {
 				for (InfoField infoField : infoFieldSet.getAllInfoFields()) {
 					fieldSetFieldsJSONArray.put(
 						JSONUtil.put(
-							"key", infoField.getName()
+							"key", infoField.getUniqueId()
 						).put(
 							"label", infoField.getLabel(locale)
+						).put(
+							"name", infoField.getName()
 						).put(
 							"type",
 							() -> {

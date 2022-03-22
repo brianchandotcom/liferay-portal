@@ -416,13 +416,13 @@ definition {
 			fieldPositionNumber = "0",
 			fieldType = "Color");
 
-		FormFields.editPredefinedValueInput(fieldValue = "7F26FF");
+		FormFields.editPredefinedValueInput(fieldValue = "7f26ff");
 
 		Form.save();
 
 		FormFields.viewColorValue(
 			fieldName = "Color",
-			fieldValue = "7F26FF");
+			fieldValue = "7f26ff");
 
 		Form.publishForm();
 
@@ -430,7 +430,7 @@ definition {
 
 		FormFields.viewColorValue(
 			fieldName = "Color",
-			fieldValue = "7F26FF");
+			fieldValue = "7f26ff");
 
 		FormPortlet.submitSuccessfully();
 

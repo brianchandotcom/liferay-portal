@@ -42,8 +42,7 @@ public class PortletPreferencesSettingsTest {
 
 		Mockito.when(
 			_portletPreferences.getValues(
-				Matchers.eq(_PORTLET_PREFERENCES_MULTIPLE_KEY),
-				(String[])Matchers.any())
+				Matchers.eq(_PORTLET_PREFERENCES_MULTIPLE_KEY), Matchers.any())
 		).thenReturn(
 			_PORTLET_PREFERENCES_MULTIPLE_VALUES
 		);

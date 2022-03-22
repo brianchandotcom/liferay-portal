@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -194,13 +195,13 @@ public class ModelPermissionsFactoryTest {
 		Mockito.when(
 			resourceActions.getModelResourceGroupDefaultActions(className)
 		).thenReturn(
-			Arrays.asList(ActionKeys.VIEW)
+			Collections.singletonList(ActionKeys.VIEW)
 		);
 
 		Mockito.when(
 			resourceActions.getModelResourceGuestDefaultActions(className)
 		).thenReturn(
-			Arrays.asList(ActionKeys.VIEW)
+			Collections.singletonList(ActionKeys.VIEW)
 		);
 
 		ModelPermissions modelPermissions = ModelPermissionsFactory.create(

@@ -38,6 +38,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.mockito.Matchers;
@@ -53,16 +54,17 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 public class ServletResponseUtilRangeTest {
 
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
+	@BeforeClass
+	public static void setUpClass() {
 		FileUtil fileUtil = new FileUtil();
 
-		fileUtil.setFile(_file);
+		com.liferay.portal.kernel.util.File file = Mockito.mock(
+			com.liferay.portal.kernel.util.File.class);
+
+		fileUtil.setFile(file);
 
 		Mockito.when(
-			_file.createTempFile()
+			file.createTempFile()
 		).thenAnswer(
 			(Answer<File>)invocation -> {
 				String name = String.valueOf(System.currentTimeMillis());
@@ -72,19 +74,24 @@ public class ServletResponseUtilRangeTest {
 		);
 
 		Mockito.when(
-			_file.delete(Matchers.any(File.class))
+			file.delete(Matchers.any(File.class))
 		).thenAnswer(
 			(Answer<Boolean>)invocation -> {
 				Object[] args = invocation.getArguments();
 
-				File file = (File)args[0];
+				File arg = (File)args[0];
 
-				return file.delete();
+				return arg.delete();
 			}
 		);
 
 		PropsTestUtil.setProps(
 			PropsKeys.WEB_SERVER_SERVLET_MAX_RANGE_FIELDS, "10");
+	}
+
+	@Before
+	public void setUp() {
+		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
@@ -297,9 +304,6 @@ public class ServletResponseUtilRangeTest {
 
 	private static final String _CONTENT_TYPE_BOUNDARY_PREFACE =
 		"multipart/byteranges; boundary=";
-
-	@Mock
-	private com.liferay.portal.kernel.util.File _file;
 
 	@Mock
 	private HttpServletRequest _httpServletRequest;

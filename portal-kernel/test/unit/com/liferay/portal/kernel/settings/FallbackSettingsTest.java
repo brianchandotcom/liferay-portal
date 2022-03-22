@@ -28,11 +28,13 @@ public class FallbackSettingsTest {
 	public FallbackSettingsTest() {
 		_settings = Mockito.mock(Settings.class);
 
-		_fallbackKeys.add("key1", "key2", "key3");
-		_fallbackKeys.add("key2", "key7");
-		_fallbackKeys.add("key3", "key5");
+		FallbackKeys fallbackKeys = new FallbackKeys();
 
-		_fallbackSettings = new FallbackSettings(_settings, _fallbackKeys);
+		fallbackKeys.add("key1", "key2", "key3");
+		fallbackKeys.add("key2", "key7");
+		fallbackKeys.add("key3", "key5");
+
+		_fallbackSettings = new FallbackSettings(_settings, fallbackKeys);
 	}
 
 	@Test
@@ -109,7 +111,6 @@ public class FallbackSettingsTest {
 		}
 	}
 
-	private final FallbackKeys _fallbackKeys = new FallbackKeys();
 	private final FallbackSettings _fallbackSettings;
 	private final Settings _settings;
 

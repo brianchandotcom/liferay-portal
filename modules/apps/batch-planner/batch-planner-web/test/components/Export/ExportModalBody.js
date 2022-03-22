@@ -37,7 +37,7 @@ describe('ExportModalBody', () => {
 
 		getByText(EXPORT_FILE_NAME);
 		getByText('50%');
-		getByText(Liferay.Language.get('being-created'));
+		getByText(Liferay.Language.get('running'));
 		getByText(Liferay.Language.get('export-file-is-being-created'));
 	});
 
@@ -51,7 +51,7 @@ describe('ExportModalBody', () => {
 		);
 
 		getByText(EXPORT_FILE_NAME);
-		getByText(Liferay.Language.get('created'));
+		getByText(Liferay.Language.get('completed'));
 		getByText(
 			Liferay.Language.get(
 				'your-file-has-been-generated-and-is-ready-to-download'

@@ -222,8 +222,6 @@ Export-Package:\
 	\
 	org.jaxen.*;version='1.1.6',\
 	\
-	org.jdom2.*;version='2.0.6',\
-	\
 	org.json.*;version='20180813',\
 	\
 	org.objectweb.asm;version='7.0',\
@@ -297,7 +295,6 @@ Provide-Capability:\
 	@../../../lib/portal/hibernate-core.jar,\
 	@../../../lib/portal/jaxen.jar,\
 	@../../../lib/portal/jaxrpc.jar,\
-	@../../../lib/portal/jdom2.jar!/org/**,\
 	@../../../lib/portal/jodd-json.jar,\
 	@../../../lib/portal/jodd-proxetta.jar,\
 	@../../../lib/portal/jodd-util.jar,\

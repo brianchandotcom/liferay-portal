@@ -7,7 +7,7 @@ dependencies {
 	compileInclude group: "com.sun.mail", name: "jakarta.mail", version: "1.6.6"
 	compileInclude group: "javax.activation", name: "activation", version: "1.1.1"
 	compileInclude group: "net.minidev", name: "accessors-smart", version: "2.4.2"
-	compileInclude group: "net.minidev", name: "json-smart", version: "2.4.2"
+	compileInclude group: "net.minidev", name: "json-smart", version: "2.4.5"
 	compileInclude group: "org.apache.commons", name: "commons-lang3", version: "3.4"
 	compileInclude group: "org.ow2.asm", name: "asm", version: "5.0.4"
 

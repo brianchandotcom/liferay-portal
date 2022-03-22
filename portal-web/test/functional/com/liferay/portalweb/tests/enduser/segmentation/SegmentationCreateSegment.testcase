@@ -2164,12 +2164,19 @@ definition {
 		}
 
 		task ("Create Segment with Vocabulary") {
-			JSONSegmentsentry.addSegment(
-				fieldName = "Browser",
-				groupName = "Guest",
-				operator = "equals",
-				segmentName = "KeepInfomationOfDeleteVocabularyInSegment Test",
-				text = "Audience Category 1");
+			Segmentation.openSegmentsAdmin(siteURLKey = "guest");
+
+			LexiconEntry.gotoAdd();
+
+			Segmentation.gotoSidebar(fieldType = "Session");
+
+			Segmentation.addProperties(propertyOption = "Browser");
+
+			Segmentation.fillTitle(titleField = "KeepInfomationOfDeleteVocabularyInSegment Test");
+
+			Segmentation.fillProperty(optionsValue = "Audience Category 1");
+
+			Button.clickSave();
 		}
 
 		task ("Delete category of vocabulary") {

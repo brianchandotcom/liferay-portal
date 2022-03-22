@@ -28,7 +28,11 @@ exports[`Modal renders markup based on given configuration 1`] = `
             <div
               class="modal-title"
             >
-              My Modal
+              <div
+                class="modal-title"
+              >
+                My Modal
+              </div>
             </div>
             <button
               aria-label="close"

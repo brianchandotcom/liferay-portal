@@ -126,6 +126,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>SEARCH_ENTRY_ON_RELATIONSHIP_FIELD_LABEL_SPECIFIC</td>
+		<td>//label[contains(text(),'${key_relationshipFieldLabel}')]/..//input[contains(@placeholder,'Search')]</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>SELECT_CUSTOM_OBJECT</td>
 		<td>//div[(@class='table-list-title') and contains (.,'${key_label}')]</td>
 		<td></td>

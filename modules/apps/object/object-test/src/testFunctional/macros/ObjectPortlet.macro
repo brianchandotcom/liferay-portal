@@ -402,4 +402,24 @@ definition {
 		AssertElementPresent(locator1 = "ObjectPortlet#VIEW_WIDGET_BUTTON");
 	}
 
+	macro chooseEntryOnRelationshipFieldSpecific {
+		
+		Click(
+			key_relationshipFieldLabel = "${relationshipFieldLabel}",
+			locator1 = "ObjectPortlet#SEARCH_ENTRY_ON_RELATIONSHIP_FIELD_LABEL_SPECIFIC");
+
+		KeyPress(
+			key_relationshipFieldLabel = "${relationshipFieldLabel}",
+			locator1 = "ObjectPortlet#SEARCH_ENTRY_ON_RELATIONSHIP_FIELD_LABEL_SPECIFIC",
+			value1 = "\BACK_SPACE");
+
+		Click(
+			key_picklistOption = "${entryOption}",
+			locator1 = "ObjectAdmin#ENTRY_PICKLIST_OPTION");
+
+		Button.clickSave();
+
+		WaitForSPARefresh();
+	}
+
 }

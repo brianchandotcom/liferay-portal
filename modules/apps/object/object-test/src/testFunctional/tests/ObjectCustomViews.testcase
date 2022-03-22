@@ -348,17 +348,33 @@ definition {
 
 		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views A");
 
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views A");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
 		ObjectCustomViews.addColumnsViaUI(
 			columnOption = "Workflow Status",
 			viewLabel = "Custom Views A");
+		
+		Button.clickSave();
 
 		Refresh();
 
 		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views B");
 
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views B");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
 		ObjectCustomViews.addColumnsViaUI(
 			columnOption = "Author",
 			viewLabel = "Custom Views B");
+
+		Button.clickSave();
 
 		Alert.viewErrorMessage(errorMessage = "There can only be one default object view");
 	}
@@ -486,11 +502,93 @@ definition {
 	}
 
 	@description = "LPS-148955 - Verify it is possible to view the values of 2 or more relationship fields for a same object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanView2RelationshipFieldValues {
 
-		// TODO LPS-149238 CanView2RelationshipFieldValues pending implementation
+		for (var letter : list "A,B,C") {
+			ObjectAdmin.addObjectViaAPI(
+				labelName = "Custom Object ${letter} 149238",
+				objectName = "CustomObject${letter}149238",
+				pluralLabelName = "Custom Objects ${letter} 149238");
+		}
+
+		for (var letter : list "A,B") {
+			ObjectAdmin.addObjectRelationshipViaAPI(
+				objectName_1 = "CustomObject${letter}149238",
+				objectName_2 = "CustomObjectC149238",
+				relationshipLabel = "Relationship",
+				relationshipName = "relationship",
+				relationshipType = "oneToMany");
+		}
+		
+		for (var letter : list "A,B,C") {
+			ObjectAdmin.addObjectFieldViaAPI(
+				fieldBusinessType = "Text",
+				fieldLabelName = "Custom Field ${letter} 149238",
+				fieldName = "customObjectField${letter}",
+				fieldType = "String",
+				isRequired = "false",
+				objectName = "CustomObject${letter}149238");
+
+			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject${letter}149238");
+		}
+
+		for (var letter : list "A,B,C") {
+			ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+				fieldName = "customObjectField${letter}",
+				objectName = "CustomObject${letter}149238",
+				value = "Entry ${letter}");
+		}
+		
+		for (var letter : list "A,B") {
+			ObjectAdmin.openObjectAdmin();
+
+			ObjectPortlet.selectCustomObject(label = "Custom Object ${letter} 149238");
+
+			CreateObject.selectTitleField(fieldLabel = "Custom Field ${letter} 149238");
+
+			CreateObject.saveObject();
+		}
+
+		for (var letter : list "A,B") {
+			ObjectAdmin.goToCustomObject(objectName = "CustomObjectC149238");
+
+			ObjectPortlet.viewEntryDetails(entry = "Entry C");
+
+			ObjectPortlet.chooseEntryOnRelationshipFieldSpecific(
+				relationshipFieldLabel = "Custom Object ${letter} 149238",
+				entryOption = "Entry ${letter}");
+		}
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object C 149238");
+
+		ObjectCustomViews.goToViewsTab();
+
+		ObjectCustomViews.addObjectViewViaUI(viewName = "Custom Views");
+
+		ObjectCustomViews.goToViewsDetails(label = "Custom Views");
+
+		ObjectCustomViews.markViewAsDefault();
+
+		ObjectCustomViews.goToViewsBuilderTab();
+
+		ObjectCustomViews.addColumnsViaUI(
+			columnOption = "Custom Object A 149238",
+			viewLabel = "Custom Views");
+
+		ObjectCustomViews.addColumnsViaUI(
+			columnOption = "Custom Object B 149238",
+			viewLabel = "Custom Views");
+
+		Button.clickSave();
+	
+		ObjectAdmin.goToCustomObject(objectName = "CustomObjectC149238");
+
+		ObjectPortlet.viewEntry(entry = "Entry A");
+
+		ObjectPortlet.viewEntry(entry = "Entry B");
 
 	}
 

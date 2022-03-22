@@ -1,12 +1,6 @@
 definition {
 
 	macro addColumnsViaUI {
-		ObjectCustomViews.goToViewsDetails(label = "${viewLabel}");
-
-		Click.clickAtNotVisible(locator1 = "ObjectCustomViews#CUSTOM_VIEW_BOOLEAN_CHECKBOX");
-
-		Click(locator1 = "ObjectCustomViews#VIEW_BUILDER_TAB");
-
 		LexiconEntry.gotoAdd();
 
 		Click.clickAtNotVisible(
@@ -16,8 +10,6 @@ definition {
 		Click(
 			key_tab = "Save",
 			locator1 = "Button#TAB_SUBMIT_BTN");
-
-		Button.clickSave();
 	}
 
 	macro addObjectViewViaUI {

@@ -685,7 +685,7 @@
 		<finder name="G_P_T" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="groupId" />
 			<finder-column name="privateLayout" />
-			<finder-column name="type" />
+			<finder-column arrayable-operator="OR" name="type" />
 		</finder>
 		<finder name="G_P_F" return-type="Layout" unique="true">
 			<finder-column name="groupId" />

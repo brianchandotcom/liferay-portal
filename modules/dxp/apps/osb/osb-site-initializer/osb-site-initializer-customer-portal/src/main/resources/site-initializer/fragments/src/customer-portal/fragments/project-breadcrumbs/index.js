@@ -25,6 +25,9 @@ const KORONEIKI_ACCOUNTS_EVENT_NAME =
 
 const SELECTED_KORONEIKI_ACCOUNT_EVENT_NAME = 'customer-portal-project-loading';
 
+const DELAY_TYPING_TIME = 500;
+const MAX_ITEM_BEFORE_FILTER = 10;
+
 const eventFetchMoreData = Liferay.publish(
 	'customer-portal-fetch-more-koroneiki-accounts'
 );
@@ -158,7 +161,7 @@ const DropDown = memo(
 		const [active, setActive] = useState(false);
 
 		const [searchTerm, setSearchTerm] = useState('');
-		const debouncedSearchTerm = useDebounce(searchTerm, 500);
+		const debouncedSearchTerm = useDebounce(searchTerm, DELAY_TYPING_TIME);
 
 		const [trackedRef, isIntersecting] = useIntersectionObserver();
 
@@ -235,7 +238,7 @@ const DropDown = memo(
 					</Button>
 				}
 			>
-				{initialTotalCount > 10 && (
+				{initialTotalCount > MAX_ITEM_BEFORE_FILTER && (
 					<div className="dropdown-section px-3">
 						<Search setSearchTerm={setSearchTerm} />
 					</div>

@@ -348,4 +348,89 @@ definition {
         
     }
 
+	@description = "Verify that is possible to upload a different file on the Upload Field for a translated language"
+	@priority = "5"
+	test CanUploadedChangeWithTranslations {
+
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Upload",
+			fieldName = "Upload");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Upload",
+			fieldFieldLabelEdit = "文件");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		PortletEntry.inputTitle(title = "Test");
+
+		DERenderer.inputDataInUploadField(
+			dmNavTab = "User Personal Folder",
+			fieldLabel = "Upload",
+			webContentUpload = "Document_1.jpg");
+
+
+		PortletEntry.publish();
+
+		Pause(locator1 = "3000");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");				
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "测试");
+
+		AssertClick(
+			key_fieldFieldLabel = "Image",
+			locator1 = "AppBuilder#CLEAR_SEARCH",
+			value1 = "Clear");
+
+		DERenderer.inputDataInUploadField(
+			dmNavTab = "User Personal Folder",
+			fieldLabel = "文件",
+			webContentUpload = "Document_2.jpg");
+
+		PortletEntry.publish();
+
+		Pause(locator1 = "3000");
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test");
+
+		DERenderer.assertDataInUploadField(
+			fieldLabel = "Upload",
+			webContentUpload = "Document_1.jpg");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		DERenderer.assertDataInUploadField(
+			fieldLabel = "文件",
+			webContentUpload = "Document_2.jpg");
+
+		
+	}
+
 }

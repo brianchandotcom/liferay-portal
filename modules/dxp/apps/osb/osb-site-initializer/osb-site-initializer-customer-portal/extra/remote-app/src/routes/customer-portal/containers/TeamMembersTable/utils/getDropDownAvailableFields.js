@@ -22,6 +22,16 @@ export function getDropDownAvailableFields(
 				disabled: !availableFields.roles.length,
 				title: 'Roles',
 			},
+			{
+				child: 'x0a2',
+				disabled: !availableFields.status.length,
+				title: 'Status',
+			},
+			{
+				child: 'x0a3',
+				disabled: !availableFields.supportSeat.length,
+				title: 'Support Seat',
+			},
 		],
 		x0a1: [
 			{
@@ -35,6 +45,48 @@ export function getDropDownAvailableFields(
 								...previousFilters,
 								roles: {
 									...previousFilters.roles,
+									value: checkedItems,
+								},
+							}))
+						}
+					/>
+				),
+				type: 'component',
+			},
+		],
+		x0a2: [
+			{
+				child: (
+					<CheckboxFilter
+						availableItems={availableFields.status}
+						clearCheckboxes={!filters.status?.length}
+						setFilters={setFilters}
+						updateFilters={(checkedItems) =>
+							setFilters((previousFilters) => ({
+								...previousFilters,
+								status: {
+									...previousFilters.status,
+									value: checkedItems,
+								},
+							}))
+						}
+					/>
+				),
+				type: 'component',
+			},
+		],
+		x0a3: [
+			{
+				child: (
+					<CheckboxFilter
+						availableItems={availableFields.supportSeat}
+						clearCheckboxes={!filters.supportSeat?.length}
+						setFilters={setFilters}
+						updateFilters={(checkedItems) =>
+							setFilters((previousFilters) => ({
+								...previousFilters,
+								supportSeat: {
+									...previousFilters.supportSeat,
 									value: checkedItems,
 								},
 							}))

@@ -42,6 +42,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHECKBOX_NESTED</td>
+	<td>//div[contains(@class,'autofit-row')]//div[contains(text(),'${key_label}')]//..//..//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CARD_ACTIVE</td>
 	<td>//h4[contains(text(), '${key_header}')]//following::div[contains(@class,'active file-card')]</td>
 	<td></td>

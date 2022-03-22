@@ -19,7 +19,9 @@ import com.liferay.message.boards.model.MBMessageDisplay;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -192,6 +194,94 @@ public class MBCommentManagerImplTest extends Mockito {
 			_mbMessageLocalService
 		).fetchMBMessage(
 			commentId
+		);
+	}
+
+	@Test
+	public void testFetchCommentByClassNameClassPKExternalReferenceCodeGroupId() {
+		String className = RandomTestUtil.randomString();
+		long classPK = RandomTestUtil.randomLong();
+		String externalReferenceCode = RandomTestUtil.randomString();
+		long groupId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_mbMessageLocalService.fetchMBMessage(
+				anyString(), anyLong(), anyString(), anyLong())
+		).thenReturn(
+			_mbMessage
+		);
+
+		Comment comment = _mbCommentManagerImpl.fetchComment(
+			className, classPK, externalReferenceCode, groupId);
+
+		Assert.assertTrue(comment instanceof MBCommentImpl);
+		Assert.assertSame(
+			_mbMessage,
+			ReflectionTestUtil.getFieldValue(
+				(MBCommentImpl)comment, "_message"));
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).fetchMBMessage(
+			className, classPK, externalReferenceCode, groupId
+		);
+	}
+
+	@Test
+	public void testFetchCommentByClassNameClassPKExternalReferenceCodeGroupIdNull() {
+		String className = RandomTestUtil.randomString();
+		long classPK = RandomTestUtil.randomLong();
+		String externalReferenceCode = RandomTestUtil.randomString();
+		long groupId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_mbMessageLocalService.fetchMBMessage(
+				anyString(), anyLong(), anyString(), anyLong())
+		).thenReturn(
+			null
+		);
+
+		Comment comment = _mbCommentManagerImpl.fetchComment(
+			className, classPK, externalReferenceCode, groupId);
+
+		Assert.assertNull(comment);
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).fetchMBMessage(
+			className, classPK, externalReferenceCode, groupId
+		);
+	}
+
+	@Test
+	public void testGetCommentByClassNameClassPKExternalReferenceCodeGroupId()
+		throws PortalException {
+
+		String className = RandomTestUtil.randomString();
+		long classPK = RandomTestUtil.randomLong();
+		String externalReferenceCode = RandomTestUtil.randomString();
+		long groupId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_mbMessageLocalService.getMBMessage(
+				anyString(), anyLong(), anyString(), anyLong())
+		).thenReturn(
+			_mbMessage
+		);
+
+		Comment comment = _mbCommentManagerImpl.getComment(
+			className, classPK, externalReferenceCode, groupId);
+
+		Assert.assertTrue(comment instanceof MBCommentImpl);
+		Assert.assertSame(
+			_mbMessage,
+			ReflectionTestUtil.getFieldValue(
+				(MBCommentImpl)comment, "_message"));
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).getMBMessage(
+			className, classPK, externalReferenceCode, groupId
 		);
 	}
 

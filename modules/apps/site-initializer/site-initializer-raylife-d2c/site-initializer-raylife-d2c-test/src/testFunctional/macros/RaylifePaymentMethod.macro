@@ -12,7 +12,10 @@ definition {
 
 		Refresh();
 
-		CommerceChannels.configurationPaypal(mode = "Sandbox");
+		RaylifePaymentMethod.configurationPaypal(
+			clientID = "AbYFv5Emsgk85LbhRSu3Hp4ur-9YJdTBz27bWRYD0EnrGxN4BZxWD77upJ8tTQ2W2dbJ-Ln0CdVFaPXj",
+			clientSecret = "EMiMaIJKB121Z_bYFDOxLPe0kkIQMkhUuKf_v9uOUFQ2tqyauoxdwwwb8ZNAQlYM_ns7sBGIP-GDgJKI",
+			mode = "Sandbox");
 
 		Refresh();
 	}
@@ -23,6 +26,37 @@ definition {
 		Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
 
 		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
+	}
+
+	macro configurationPaypal {
+		CommerceEntry.clickTableEntryEditButton(
+			entryName = "PayPal",
+			table = "Payment Methods");
+
+		SelectFrame.selectFrameNoLoading(locator1 = "CommerceEntry#IFRAME_SIDE_PANEL");
+
+		Click(
+			locator1 = "CommerceEntry#PAYMENT_METHODS_SIDE_PANEL_NAV_ITEMS",
+			navItem = "Configuration");
+
+		Type(
+			key_text = "Client ID",
+			locator1 = "TextInput#ANY",
+			value1 = "${clientID}");
+
+		Type(
+			key_text = "Client Secret",
+			locator1 = "TextInput#ANY",
+			value1 = "${clientSecret}");
+
+		Select(
+			key_fieldLabel = "Mode",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "${mode}");
+
+		Button.clickSave();
+
+		Click(locator1 = "Icon#CLOSE");
 	}
 
 }

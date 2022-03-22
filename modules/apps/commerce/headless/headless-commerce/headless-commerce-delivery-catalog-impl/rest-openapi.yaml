@@ -155,14 +155,6 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
-                options:
-                    additionalProperties:
-                        type: string
-                    example:
-                        color: yellow
-                        optionKey: optionValueKey
-                        size: xs
-                    type: object
                 price:
                     $ref: "#/components/schemas/Price"
                 productConfiguration:
@@ -218,6 +210,10 @@ components:
                     format: int64
                     minimum: 0
                     type: integer
+                skuOptions:
+                    items:
+                        $ref: "#/components/schemas/SkuOption"
+                    type: array
                 thumbnail:
                     example: simple
                     readOnly: true
@@ -582,14 +578,6 @@ components:
                 neverExpire:
                     example: true
                     type: boolean
-                options:
-                    additionalProperties:
-                        type: string
-                    example:
-                        color: yellow
-                        optionKey: optionValueKey
-                        size: xs
-                    type: object
                 price:
                     $ref: "#/components/schemas/Price"
                 published:
@@ -600,6 +588,10 @@ components:
                     type: boolean
                 sku:
                     type: string
+                skuOptions:
+                    items:
+                        $ref: "#/components/schemas/SkuOption"
+                    type: array
                 weight:
                     example: 1.1
                     format: double
@@ -610,6 +602,21 @@ components:
                     format: double
                     minimum: 0
                     type: number
+            type: object
+        SkuOption:
+            properties:
+                key:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                value:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
             type: object
 info:
     description:

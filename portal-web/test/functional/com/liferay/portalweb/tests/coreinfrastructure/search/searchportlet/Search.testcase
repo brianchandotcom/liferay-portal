@@ -667,11 +667,9 @@ definition {
 
 		SearchPortlets.searchEmbedded(searchTerm = "WC Title");
 
-		while (IsElementNotPresent(key_searchAssetTitle = "WC Title 1", locator1 = "SearchResults#ASSET_ENTRY_TABLE_TITLE")) {
-			Pause(locator1 = "5000");
-		}
-
-		WaitForLiferayEvent.initializeLiferayEventLog();
+		SearchResultPortlet.viewSearchResults(
+			searchAssetTitle = "WC Title 1",
+			searchAssetType = "Web Content Article");
 
 		Portlet.gotoPortletOptions(
 			portletName = "Search Results",

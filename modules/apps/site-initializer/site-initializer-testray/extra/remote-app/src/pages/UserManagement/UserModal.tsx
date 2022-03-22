@@ -203,7 +203,8 @@ const CreateUser: React.FC<CreateUserProps> = ({
 			});
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			Liferay.Util.openToast({
 				message: (error as any).message,
 				type: 'danger',

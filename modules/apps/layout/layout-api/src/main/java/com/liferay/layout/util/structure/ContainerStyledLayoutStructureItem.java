@@ -80,6 +80,8 @@ public class ContainerStyledLayoutStructureItem
 		).put(
 			"contentDisplay", _contentDisplay
 		).put(
+			"flexWrap", _flexWrap
+		).put(
 			"htmlTag", _htmlTag
 		).put(
 			"justify", _justify
@@ -116,6 +118,10 @@ public class ContainerStyledLayoutStructureItem
 		_contentDisplay = contentDisplay;
 	}
 
+	public void setFlexWrap(String flexWrap) {
+		_flexWrap = flexWrap;
+	}
+
 	public void setHtmlTag(String htmlTag) {
 		_htmlTag = htmlTag;
 	}
@@ -144,6 +150,10 @@ public class ContainerStyledLayoutStructureItem
 
 		if (itemConfigJSONObject.has("contentDisplay")) {
 			setContentDisplay(itemConfigJSONObject.getString("contentDisplay"));
+		}
+
+		if (itemConfigJSONObject.has("flexWrap")) {
+			setFlexWrap(itemConfigJSONObject.getString("flexWrap"));
 		}
 
 		if (itemConfigJSONObject.has("htmlTag")) {
@@ -254,6 +264,7 @@ public class ContainerStyledLayoutStructureItem
 
 	private String _align = "";
 	private String _contentDisplay = "";
+	private String _flexWrap = "";
 	private String _htmlTag = "div";
 	private String _justify = "";
 	private JSONObject _linkJSONObject;

@@ -319,6 +319,7 @@ public abstract class PoshiElement
 		PoshiNode<?, ?> previousPoshiNode = null;
 
 		Collections.sort(poshiNodes, new CommandComparator());
+		Collections.sort(poshiNodes, new PropertyComparator());
 
 		for (Iterator<PoshiNode<?, ?>> iterator = poshiNodes.iterator();
 			 iterator.hasNext();) {
@@ -1086,6 +1087,31 @@ public abstract class PoshiElement
 
 				return naturalOrderStringComparator.compare(
 					blockName1, blockName2);
+			}
+
+			return 0;
+		}
+
+	}
+
+	private class PropertyComparator implements Comparator<PoshiNode> {
+
+		@Override
+		public int compare(PoshiNode poshiNode1, PoshiNode poshiNode2) {
+			if ((poshiNode1 instanceof PropertyPoshiElement) &&
+				(poshiNode2 instanceof PropertyPoshiElement)) {
+
+				PropertyPoshiElement propertyPoshiElement1 =
+					(PropertyPoshiElement)poshiNode1;
+				PropertyPoshiElement propertyPoshiElement2 =
+					(PropertyPoshiElement)poshiNode2;
+
+				String blockName1 = propertyPoshiElement1.attributeValue(
+					"name");
+				String blockName2 = propertyPoshiElement2.attributeValue(
+					"name");
+
+				return blockName1.compareTo(blockName2);
 			}
 
 			return 0;

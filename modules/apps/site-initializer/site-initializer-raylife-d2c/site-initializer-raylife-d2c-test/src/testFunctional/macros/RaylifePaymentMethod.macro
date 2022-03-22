@@ -1,33 +1,5 @@
 definition {
 
-	macro enablePayPalPayment {
-		ApplicationsMenu.gotoPortlet(
-			category = "Store Management",
-			panel = "Commerce",
-			portlet = "Channels");
-
-		CommerceNavigator.gotoEntry(entryName = "Raylife Channel");
-
-		CommerceChannels.activatePaymentMethod(paymentMethod = "PayPal");
-
-		Refresh();
-
-		RaylifePaymentMethod.configurationPaypal(
-			clientID = "AbYFv5Emsgk85LbhRSu3Hp4ur-9YJdTBz27bWRYD0EnrGxN4BZxWD77upJ8tTQ2W2dbJ-Ln0CdVFaPXj",
-			clientSecret = "EMiMaIJKB121Z_bYFDOxLPe0kkIQMkhUuKf_v9uOUFQ2tqyauoxdwwwb8ZNAQlYM_ns7sBGIP-GDgJKI",
-			mode = "Sandbox");
-
-		Refresh();
-	}
-
-	macro payPalFlow {
-		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
-
-		Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
-
-		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
-	}
-
 	macro configurationPaypal {
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = "PayPal",
@@ -57,6 +29,34 @@ definition {
 		Button.clickSave();
 
 		Click(locator1 = "Icon#CLOSE");
+	}
+
+	macro enablePayPalPayment {
+		ApplicationsMenu.gotoPortlet(
+			category = "Store Management",
+			panel = "Commerce",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Raylife Channel");
+
+		CommerceChannels.activatePaymentMethod(paymentMethod = "PayPal");
+
+		Refresh();
+
+		RaylifePaymentMethod.configurationPaypal(
+			clientID = "AbYFv5Emsgk85LbhRSu3Hp4ur-9YJdTBz27bWRYD0EnrGxN4BZxWD77upJ8tTQ2W2dbJ-Ln0CdVFaPXj",
+			clientSecret = "EMiMaIJKB121Z_bYFDOxLPe0kkIQMkhUuKf_v9uOUFQ2tqyauoxdwwwb8ZNAQlYM_ns7sBGIP-GDgJKI",
+			mode = "Sandbox");
+
+		Refresh();
+	}
+
+	macro payPalFlow {
+		Click(locator1 = "RaylifePaymentMethod#PAYMENT_METHOD_PAYPAL");
+
+		Click(locator1 = "RaylifePaymentMethod#TERMS_CONDITIONS_CHECKBOX");
+
+		Click(locator1 = "RaylifePaymentMethod#PAY_NOW");
 	}
 
 }

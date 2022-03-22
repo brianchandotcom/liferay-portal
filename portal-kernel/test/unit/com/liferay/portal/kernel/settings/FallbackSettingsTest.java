@@ -89,9 +89,11 @@ public class FallbackSettingsTest {
 		InOrder inOrder = Mockito.inOrder(_settings);
 
 		for (String key : keys) {
-			inOrder.verify(_settings);
-
-			_settings.getValue(key, null);
+			inOrder.verify(
+				_settings
+			).getValue(
+				key, null
+			);
 		}
 	}
 
@@ -99,9 +101,11 @@ public class FallbackSettingsTest {
 		InOrder inOrder = Mockito.inOrder(_settings);
 
 		for (String key : keys) {
-			inOrder.verify(_settings);
-
-			_settings.getValues(key, null);
+			inOrder.verify(
+				_settings
+			).getValues(
+				key, null
+			);
 		}
 	}
 

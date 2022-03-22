@@ -192,9 +192,11 @@ public class ComboServletTest {
 			_mockHttpServletRequest, _mockHttpServletResponse,
 			"/js/javascript.js");
 
-		Mockito.verify(_portalServletContext);
-
-		_portalServletContext.getRequestDispatcher(path);
+		Mockito.verify(
+			_portalServletContext
+		).getRequestDispatcher(
+			path
+		);
 	}
 
 	@Test
@@ -203,9 +205,11 @@ public class ComboServletTest {
 			_mockHttpServletRequest, _mockHttpServletResponse,
 			_TEST_PORTLET_ID + ":/js/javascript.js");
 
-		Mockito.verify(_pluginServletContext);
-
-		_pluginServletContext.getRequestDispatcher("/js/javascript.js");
+		Mockito.verify(
+			_pluginServletContext
+		).getRequestDispatcher(
+			"/js/javascript.js"
+		);
 	}
 
 	@Test

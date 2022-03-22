@@ -113,9 +113,11 @@ public class PortletPreferencesSettingsTest {
 
 		_portletPreferencesSettings.setValue("key", "value");
 
-		Mockito.verify(_portletPreferences);
-
-		_portletPreferences.setValue("key", "value");
+		Mockito.verify(
+			_portletPreferences
+		).setValue(
+			"key", "value"
+		);
 	}
 
 	@Test
@@ -126,18 +128,20 @@ public class PortletPreferencesSettingsTest {
 
 		_portletPreferencesSettings.setValues("key", values);
 
-		Mockito.verify(_portletPreferences);
-
-		_portletPreferences.setValues("key", values);
+		Mockito.verify(
+			_portletPreferences
+		).setValues(
+			"key", values
+		);
 	}
 
 	@Test
 	public void testStoreIsPerformedOnPortletPreferences() throws Exception {
 		_portletPreferencesSettings.store();
 
-		Mockito.verify(_portletPreferences);
-
-		_portletPreferences.store();
+		Mockito.verify(
+			_portletPreferences
+		).store();
 	}
 
 	private static final String _DEFAULT_SETTINGS_MULTIPLE_KEY = "defaultKeys";

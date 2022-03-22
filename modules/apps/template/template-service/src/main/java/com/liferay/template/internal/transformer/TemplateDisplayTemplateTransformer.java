@@ -93,6 +93,7 @@ public class TemplateDisplayTemplateTransformer {
 				infoFieldValue, themeDisplay);
 
 			contextObjects.put(infoField.getName(), templateNode);
+			contextObjects.put(infoField.getUniqueId(), templateNode);
 		}
 
 		TemplateHandler templateHandler =

@@ -189,14 +189,14 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 
 			for (InfoField<?> infoField : infoFieldSet.getAllInfoFields()) {
 				if (!StringUtil.startsWith(
-						infoField.getName(),
+						infoField.getUniqueId(),
 						PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 
 					InfoFieldType infoFieldType = infoField.getInfoFieldType();
 
 					templateVariableGroup.addFieldVariable(
 						infoField.getLabel(_themeDisplay.getLocale()),
-						TemplateNode.class, infoField.getName(),
+						TemplateNode.class, infoField.getUniqueId(),
 						infoField.getLabel(_themeDisplay.getLocale()),
 						infoFieldType.getName(), infoField.isMultivalued(),
 						_templateVariableCodeHandler);

@@ -19,7 +19,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
-import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalServiceUtil;
 import com.liferay.asset.list.service.persistence.AssetListEntryAssetEntryRelUtil;
 import com.liferay.asset.list.service.persistence.AssetListEntrySegmentsEntryRelUtil;
 import com.liferay.asset.list.util.AssetListTestUtil;
@@ -209,7 +208,6 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 		Assert.assertEquals(3, assetListEntrySegmentsEntryRel3.getPriority());
 		Assert.assertEquals(4, assetListEntrySegmentsEntryRel4.getPriority());
 	}
-
 
 	@Test
 	public void testUpdateAssetListEntrySegmentsEntryRelTypeSettings()

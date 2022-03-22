@@ -599,6 +599,32 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	@Test
+	public void testHideContentsInACategory() throws Exception {
+		_addAssetCategory("Promoted", _addGroupUser(_group, "employee"));
+
+		_setUpJournalArticles(
+			new String[] {"alpha alpha", ""},
+			new String[] {"beta alpha", "charlie alpha"});
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"asset_category_id",
+					String.valueOf(_assetCategory.getCategoryId())
+				).build()
+			},
+			new String[] {"Hide Contents in a Category"});
+
+		_keywords = "alpha";
+
+		_assertSearchIgnoreRelevance("[beta alpha]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance("[beta alpha, charlie alpha]");
+	}
+
+	@Test
 	public void testHideHiddenContents() throws Exception {
 		_setUpJournalArticles(
 			new String[] {

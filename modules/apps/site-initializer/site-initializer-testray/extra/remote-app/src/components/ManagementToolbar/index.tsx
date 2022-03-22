@@ -44,6 +44,8 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 	);
 	const [showMobile, setShowMobile] = useState(false);
 
+	const disabled = totalItems === 0;
+
 	const viewTypes = [
 		{
 			active: viewType === 'table',
@@ -131,6 +133,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 		<>
 			<ClayManagementToolbar>
 				<ManagementToolbarFilterAndOrder
+					disabled={disabled}
 					filterItems={filterItems}
 					onSelectAllRows={onSelectAllRows}
 					onSort={() =>
@@ -149,7 +152,7 @@ const ManagementToolbar: React.FC<ManagementToolbarProps> = ({
 				/>
 
 				<ManagementToolbarSearch
-					disabled={false}
+					disabled={disabled}
 					onSubmit={(searchText: string) => onSearch(searchText)}
 					searchText={keywords}
 					setShowMobile={setShowMobile}

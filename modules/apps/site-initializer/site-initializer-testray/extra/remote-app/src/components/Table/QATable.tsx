@@ -16,8 +16,8 @@ import classNames from 'classnames';
 import React, {ReactNode} from 'react';
 
 export enum Orientation {
-	HORIZONTAL,
-	VERTICAL,
+	HORIZONTAL = 'HORIZONTAL',
+	VERTICAL = 'VERTICAL',
 }
 
 type QAItem = {
@@ -28,7 +28,7 @@ type QAItem = {
 
 type QATableProps = {
 	items: QAItem[];
-	orientation?: Orientation;
+	orientation?: keyof typeof Orientation;
 };
 
 const QATable: React.FC<QATableProps> = ({

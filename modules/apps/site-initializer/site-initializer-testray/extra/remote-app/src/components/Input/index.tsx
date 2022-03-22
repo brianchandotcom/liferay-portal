@@ -45,7 +45,7 @@ const Input: React.FC<InputProps> = ({
 		{label && (
 			<label
 				className={classNames(
-					'font-weight-normal mt-3 mx-0 text-paragraph',
+					'font-weight-normal mb-1 mx-0 text-paragraph',
 					{required}
 				)}
 				htmlFor={id}

@@ -15,16 +15,34 @@
 import {useOutletContext} from 'react-router-dom';
 
 import Container from '../../components/Layout/Container';
+import QATable from '../../components/Table/QATable';
+import {TestrayProject} from '../../graphql/queries';
 import i18n from '../../i18n';
+import dayjs from '../../util/date';
 
 const Overview = () => {
-	const {testrayProject} = useOutletContext<{testrayProject: any}>();
+	const {testrayProject} = useOutletContext<{
+		testrayProject: TestrayProject;
+	}>();
 
 	return (
 		<Container title={i18n.translate('overview')}>
-			<p>{testrayProject?.name}</p>
-
-			<p>{testrayProject?.description}</p>
+			<QATable
+				items={[
+					{
+						title: i18n.translate('created-by'),
+						value: testrayProject.creator.name,
+					},
+					{
+						title: i18n.translate('date-created'),
+						value: dayjs(testrayProject.dateCreated).format('lll'),
+					},
+					{
+						title: i18n.translate('description'),
+						value: testrayProject.description,
+					},
+				]}
+			/>
 		</Container>
 	);
 };

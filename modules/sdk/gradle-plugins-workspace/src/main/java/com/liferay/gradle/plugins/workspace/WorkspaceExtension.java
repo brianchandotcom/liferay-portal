@@ -537,11 +537,11 @@ public class WorkspaceExtension {
 					}
 				}
 				catch (Exception exception1) {
-					try (InputStream resourceInputStream =
+					try (InputStream inputStream =
 							WorkspaceExtension.class.getResourceAsStream(
 								"/.product_info.json");
 						JsonReader jsonReader = new JsonReader(
-							new InputStreamReader(resourceInputStream))) {
+							new InputStreamReader(inputStream))) {
 
 						Map<String, ProductInfo> productInfos =
 							_getProductInfoFromReader(jsonReader);

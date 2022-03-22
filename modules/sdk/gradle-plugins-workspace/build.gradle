@@ -139,13 +139,9 @@ downloadPluginsSdk {
 }
 
 downloadProductInfo {
-	src "https://releases-cdn.liferay.com/tools/workspace/.product_info.json"
 	dest buildDir
 	onlyIfNewer true
-}
-
-processResources {
-	from downloadProductInfo
+	src "https://releases-cdn.liferay.com/tools/workspace/.product_info.json"
 }
 
 eclipse.classpath.file {
@@ -177,4 +173,8 @@ gradleTest {
 
 liferayOSGi {
 	expandCompileInclude = true
+}
+
+processResources {
+	from downloadProductInfo
 }

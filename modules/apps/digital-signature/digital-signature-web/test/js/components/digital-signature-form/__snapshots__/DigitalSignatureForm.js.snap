@@ -41,7 +41,7 @@ exports[`DigitalSignatureForm Validates required fields 1`] = `
                 </svg>
               </span>
               <span
-                class="hide-accessible"
+                class="hide-accessible sr-only"
               >
                 required
               </span>
@@ -109,7 +109,7 @@ exports[`DigitalSignatureForm Validates required fields 1`] = `
                       </svg>
                     </span>
                     <span
-                      class="hide-accessible"
+                      class="hide-accessible sr-only"
                     >
                       required
                     </span>
@@ -159,7 +159,7 @@ exports[`DigitalSignatureForm Validates required fields 1`] = `
                       </svg>
                     </span>
                     <span
-                      class="hide-accessible"
+                      class="hide-accessible sr-only"
                     >
                       required
                     </span>
@@ -246,7 +246,7 @@ exports[`DigitalSignatureForm Validates required fields 1`] = `
                 </svg>
               </span>
               <span
-                class="hide-accessible"
+                class="hide-accessible sr-only"
               >
                 required
               </span>

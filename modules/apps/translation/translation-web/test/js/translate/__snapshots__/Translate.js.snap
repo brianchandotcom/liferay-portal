@@ -188,7 +188,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
             >
               en-US
             </span>
-            <div
+            <hr
               class="separator"
             />
           </div>
@@ -208,7 +208,7 @@ exports[`Translate renders with auto-translate disabled 1`] = `
             >
               es-ES
             </span>
-            <div
+            <hr
               class="separator"
             />
           </div>
@@ -773,7 +773,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
             >
               en-US
             </span>
-            <div
+            <hr
               class="separator"
             />
           </div>
@@ -793,7 +793,7 @@ exports[`Translate renders with auto-translate enabled 1`] = `
             >
               es-ES
             </span>
-            <div
+            <hr
               class="separator"
             />
           </div>
@@ -1581,7 +1581,7 @@ exports[`Translate renders with experiences selector 1`] = `
             >
               en-US
             </span>
-            <div
+            <hr
               class="separator"
             />
           </div>
@@ -1601,7 +1601,7 @@ exports[`Translate renders with experiences selector 1`] = `
             >
               es-ES
             </span>
-            <div
+            <hr
               class="separator"
             />
           </div>

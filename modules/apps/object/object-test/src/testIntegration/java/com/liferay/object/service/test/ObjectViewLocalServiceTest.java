@@ -17,6 +17,7 @@ package com.liferay.object.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.exception.DefaultObjectViewException;
+import com.liferay.object.exception.ObjectViewSortColumnException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectView;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -71,28 +71,28 @@ public class ObjectViewLocalServiceTest {
 
 	@Test
 	public void testAddObjectView() throws Exception {
-		ObjectView objectView = null;
+		ObjectView objectView = _objectViewLocalService.addObjectView(
+			TestPropsValues.getUserId(),
+			_objectDefinition.getObjectDefinitionId(), true,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			Arrays.asList(
+				_createObjectViewColumn("Able", "able"),
+				_createObjectViewColumn("Baker", "baker")),
+			Arrays.asList(
+				_createObjectViewSortColumn("Charlie", "charlie", "asc"),
+				_createObjectViewSortColumn("Dog", "dog", "asc")));
 
 		try {
-			objectView = _objectViewLocalService.addObjectView(
-				TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(), true,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				Arrays.asList(
-					_createObjectViewColumn(), _createObjectViewColumn()),
-				Arrays.asList(
-					_createObjectViewSortColumn(),
-					_createObjectViewSortColumn()));
-
 			_objectViewLocalService.addObjectView(
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Arrays.asList(
-					_createObjectViewColumn(), _createObjectViewColumn()),
+					_createObjectViewColumn("Easy", "easy"),
+					_createObjectViewColumn("Fox", "fox")),
 				Arrays.asList(
-					_createObjectViewSortColumn(),
-					_createObjectViewSortColumn()));
+					_createObjectViewSortColumn("George", "george", "asc"),
+					_createObjectViewSortColumn("How", "how", "asc")));
 
 			Assert.fail();
 		}
@@ -101,6 +101,37 @@ public class ObjectViewLocalServiceTest {
 
 			Assert.assertTrue(
 				message.contains("There can only be one default object view"));
+		}
+
+		try {
+			_objectViewLocalService.addObjectView(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Arrays.asList(_createObjectViewColumn("Item", "item")),
+				Arrays.asList(
+					_createObjectViewSortColumnWithWrongObjectFieldName(
+						"Jig", "jig", "asc")));
+		}
+		catch (ObjectViewSortColumnException objectViewSortColumnException) {
+			Assert.assertEquals(
+				"There is no object field with the name: zulu",
+				objectViewSortColumnException.getMessage());
+		}
+
+		try {
+			_objectViewLocalService.addObjectView(
+				TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(), false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				Arrays.asList(_createObjectViewColumn("King", "king")),
+				Arrays.asList(
+					_createObjectViewSortColumn("Love", "love", "zulu")));
+		}
+		catch (ObjectViewSortColumnException objectViewSortColumnException) {
+			Assert.assertEquals(
+				"There is no sort order of type: zulu",
+				objectViewSortColumnException.getMessage());
 		}
 
 		_deleteObjectFields();
@@ -137,8 +168,9 @@ public class ObjectViewLocalServiceTest {
 		objectView = _objectViewLocalService.updateObjectView(
 			objectView.getObjectViewId(), objectView.isDefaultObjectView(),
 			objectView.getNameMap(),
-			Collections.singletonList(_createObjectViewColumn()),
-			Collections.singletonList(_createObjectViewSortColumn()));
+			Collections.singletonList(_createObjectViewColumn("Fox", "fox")),
+			Collections.singletonList(
+				_createObjectViewSortColumn("George", "george", "desc")));
 
 		List<ObjectViewColumn> objectViewColumns =
 			objectView.getObjectViewColumns();
@@ -152,21 +184,52 @@ public class ObjectViewLocalServiceTest {
 		Assert.assertEquals(
 			objectViewSortColumns.toString(), 1, objectViewSortColumns.size());
 
+		try {
+			_objectViewLocalService.updateObjectView(
+				objectView.getObjectViewId(), objectView.isDefaultObjectView(),
+				objectView.getNameMap(),
+				Collections.singletonList(
+					_createObjectViewColumn("Jig", "jig")),
+				Collections.singletonList(
+					_createObjectViewSortColumn("King", "king", "desc")));
+		}
+		catch (ObjectViewSortColumnException objectViewSortColumnException) {
+			Assert.assertEquals(
+				"There is no object field with the name: king",
+				objectViewSortColumnException.getMessage());
+		}
+
+		try {
+			_objectViewLocalService.updateObjectView(
+				objectView.getObjectViewId(), objectView.isDefaultObjectView(),
+				objectView.getNameMap(),
+				Collections.singletonList(
+					_createObjectViewColumn("Love", "love")),
+				Collections.singletonList(
+					_createObjectViewSortColumn("Mike", "mike", "zulu")));
+		}
+		catch (ObjectViewSortColumnException objectViewSortColumnException) {
+			Assert.assertEquals(
+				"There is no sort order of type: zulu",
+				objectViewSortColumnException.getMessage());
+		}
+
 		_deleteObjectFields();
 
 		_objectViewLocalService.deleteObjectView(objectView.getObjectViewId());
 	}
 
-	private String _addObjectField() throws Exception {
-		String name = RandomTestUtil.randomString();
+	private String _addObjectField(
+			String objectFieldLabel, String objectFieldLName)
+		throws Exception {
 
-		_objectFieldLocalService.addCustomObjectField(
+		ObjectField objectField = _objectFieldLocalService.addCustomObjectField(
 			TestPropsValues.getUserId(), 0,
 			_objectDefinition.getObjectDefinitionId(), "Text", "String", false,
-			false, null, LocalizedMapUtil.getLocalizedMap(name),
-			StringUtil.randomId(), true, Collections.emptyList());
+			false, null, LocalizedMapUtil.getLocalizedMap(objectFieldLabel),
+			objectFieldLName, true, Collections.emptyList());
 
-		return name;
+		return objectField.getName();
 	}
 
 	private ObjectView _addObjectView() throws Exception {
@@ -174,9 +237,12 @@ public class ObjectViewLocalServiceTest {
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-			Arrays.asList(_createObjectViewColumn(), _createObjectViewColumn()),
 			Arrays.asList(
-				_createObjectViewSortColumn(), _createObjectViewSortColumn()));
+				_createObjectViewColumn("Able", "able"),
+				_createObjectViewColumn("Baker", "baker")),
+			Arrays.asList(
+				_createObjectViewSortColumn("Charlie", "charlie", "asc"),
+				_createObjectViewSortColumn("Dog", "dog", "asc")));
 	}
 
 	private void _assertObjectView(ObjectView objectView) {
@@ -193,25 +259,45 @@ public class ObjectViewLocalServiceTest {
 			objectViewSortColumns.toString(), 2, objectViewSortColumns.size());
 	}
 
-	private ObjectViewColumn _createObjectViewColumn() throws Exception {
+	private ObjectViewColumn _createObjectViewColumn(
+			String objectFieldLabel, String objectFieldName)
+		throws Exception {
+
 		ObjectViewColumn objectViewColumn = _objectViewColumnPersistence.create(
 			0);
 
-		objectViewColumn.setObjectFieldName(_addObjectField());
+		objectViewColumn.setObjectFieldName(
+			_addObjectField(objectFieldLabel, objectFieldName));
 		objectViewColumn.setPriority(0);
 
 		return objectViewColumn;
 	}
 
-	private ObjectViewSortColumn _createObjectViewSortColumn()
+	private ObjectViewSortColumn _createObjectViewSortColumn(
+			String objectFieldLabel, String objectFieldName, String sortOrder)
 		throws Exception {
 
 		ObjectViewSortColumn objectViewSortColumn =
 			_objectViewSortColumnPersistence.create(0);
 
-		objectViewSortColumn.setObjectFieldName(_addObjectField());
+		objectViewSortColumn.setObjectFieldName(
+			_addObjectField(objectFieldLabel, objectFieldName));
 		objectViewSortColumn.setPriority(0);
-		objectViewSortColumn.setSortOrder("asc");
+		objectViewSortColumn.setSortOrder(sortOrder);
+
+		return objectViewSortColumn;
+	}
+
+	private ObjectViewSortColumn
+			_createObjectViewSortColumnWithWrongObjectFieldName(
+				String objectFieldLabel, String objectFieldName,
+				String sortOrder)
+		throws Exception {
+
+		ObjectViewSortColumn objectViewSortColumn = _createObjectViewSortColumn(
+			objectFieldLabel, objectFieldName, sortOrder);
+
+		objectViewSortColumn.setObjectFieldName("zulu");
 
 		return objectViewSortColumn;
 	}

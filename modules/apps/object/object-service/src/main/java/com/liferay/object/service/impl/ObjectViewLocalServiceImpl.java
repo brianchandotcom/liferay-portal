@@ -15,6 +15,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.object.exception.DefaultObjectViewException;
+import com.liferay.object.exception.ObjectViewSortColumnException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectView;
@@ -22,6 +23,7 @@ import com.liferay.object.model.ObjectViewColumn;
 import com.liferay.object.model.ObjectViewSortColumn;
 import com.liferay.object.service.base.ObjectViewLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
+import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectViewColumnPersistence;
 import com.liferay.object.service.persistence.ObjectViewSortColumnPersistence;
 import com.liferay.portal.aop.AopService;
@@ -32,8 +34,10 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -86,8 +90,7 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 			_addObjectViewColumns(
 				user, objectView.getObjectViewId(), objectViewColumns));
 		objectView.setObjectViewSortColumns(
-			_addObjectViewSortColumns(
-				user, objectView.getObjectViewId(), objectViewSortColumns));
+			_addObjectViewSortColumns(user, objectView, objectViewSortColumns));
 
 		return objectView;
 	}
@@ -208,14 +211,22 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 
 		objectView = objectViewPersistence.update(objectView);
 
+		try {
+			_validateSortColumn(objectView, objectViewSortColumns);
+		}
+		catch (ObjectViewSortColumnException objectViewSortColumnException) {
+			throw new ObjectViewSortColumnException(
+				objectViewSortColumnException.getMessage());
+		}
+
 		objectView.setObjectViewColumns(
 			_addObjectViewColumns(
 				_userLocalService.getUser(objectView.getUserId()),
 				objectView.getObjectViewId(), objectViewColumns));
 		objectView.setObjectViewSortColumns(
 			_addObjectViewSortColumns(
-				_userLocalService.getUser(objectView.getUserId()),
-				objectView.getObjectViewId(), objectViewSortColumns));
+				_userLocalService.getUser(objectView.getUserId()), objectView,
+				objectViewSortColumns));
 
 		return objectView;
 	}
@@ -245,8 +256,17 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 	}
 
 	private List<ObjectViewSortColumn> _addObjectViewSortColumns(
-		User user, long objectViewId,
-		List<ObjectViewSortColumn> objectViewSortColumns) {
+			User user, ObjectView objectView,
+			List<ObjectViewSortColumn> objectViewSortColumns)
+		throws ObjectViewSortColumnException {
+
+		try {
+			_validateSortColumn(objectView, objectViewSortColumns);
+		}
+		catch (ObjectViewSortColumnException objectViewSortColumnException) {
+			throw new ObjectViewSortColumnException(
+				objectViewSortColumnException.getMessage());
+		}
 
 		return TransformUtil.transform(
 			objectViewSortColumns,
@@ -258,7 +278,8 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 				newObjectViewSortColumn.setCompanyId(user.getCompanyId());
 				newObjectViewSortColumn.setUserId(user.getUserId());
 				newObjectViewSortColumn.setUserName(user.getFullName());
-				newObjectViewSortColumn.setObjectViewId(objectViewId);
+				newObjectViewSortColumn.setObjectViewId(
+					objectView.getObjectViewId());
 				newObjectViewSortColumn.setObjectFieldName(
 					objectViewSortColumn.getObjectFieldName());
 				newObjectViewSortColumn.setPriority(
@@ -285,8 +306,49 @@ public class ObjectViewLocalServiceImpl extends ObjectViewLocalServiceBaseImpl {
 		}
 	}
 
+	private void _validateSortColumn(
+			ObjectView objectView,
+			List<ObjectViewSortColumn> objectViewSortColumns)
+		throws ObjectViewSortColumnException {
+
+		List<ObjectField> objectFields =
+			_objectFieldPersistence.findByObjectDefinitionId(
+				objectView.getObjectDefinitionId());
+
+		List<String> objectFieldNames = new ArrayList<>();
+
+		for (ObjectField objectField : objectFields) {
+			objectFieldNames.add(objectField.getName());
+		}
+
+		for (ObjectViewSortColumn objectViewSortColumn :
+				objectViewSortColumns) {
+
+			if (!objectFieldNames.contains(
+					objectViewSortColumn.getObjectFieldName())) {
+
+				throw new ObjectViewSortColumnException(
+					"There is no object field with the name: " +
+						objectViewSortColumn.getObjectFieldName());
+			}
+
+			if (!(StringUtil.equals(
+					objectViewSortColumn.getSortOrder(), "asc") ||
+				  StringUtil.equals(
+					  objectViewSortColumn.getSortOrder(), "desc"))) {
+
+				throw new ObjectViewSortColumnException(
+					"There is no sort order of type: " +
+						objectViewSortColumn.getSortOrder());
+			}
+		}
+	}
+
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
+
+	@Reference
+	private ObjectFieldPersistence _objectFieldPersistence;
 
 	@Reference
 	private ObjectViewColumnPersistence _objectViewColumnPersistence;

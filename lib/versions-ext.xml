@@ -1675,32 +1675,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/rometools-utils.jar</file-name>
-				<version>1.16.0</version>
-				<project-name>Rome Tools</project-name>
-				<project-url>http://rometools.github.io/rome/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2004 Sun Microsystems, Inc.</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/rometools.jar</file-name>
-				<version>1.16.0</version>
-				<project-name>Rome Tools</project-name>
-				<project-url>http://rometools.github.io/rome/</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2004 Sun Microsystems, Inc.</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/saaj-api.jar</file-name>
 				<version>1.3</version>
 				<project-name>SAAJ</project-name>

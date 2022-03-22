@@ -39,19 +39,6 @@ public class PullRequestPortalTopLevelBuild
 		super(url, topLevelBuild);
 
 		setCompareToUpstream(true);
-
-		try {
-			String testSuiteName = getTestSuiteName();
-
-			if (testSuiteName.equals("relevant")) {
-				_stableJob = JobFactory.newJob(jobName, "stable", branchName);
-			}
-		}
-		catch (Exception exception) {
-			System.out.println("Unable to create stable job for " + jobName);
-
-			exception.printStackTrace();
-		}
 	}
 
 	public boolean bypassCITestRelevant() {
@@ -185,7 +172,9 @@ public class PullRequestPortalTopLevelBuild
 	}
 
 	public String getStableJobResult() {
-		if (_stableJob == null) {
+		Job stableJob = _getStableJob();
+
+		if (stableJob == null) {
 			return null;
 		}
 
@@ -202,7 +191,7 @@ public class PullRequestPortalTopLevelBuild
 		}
 
 		List<String> stableJobBatchNames = new ArrayList<>(
-			_stableJob.getBatchNames());
+			stableJob.getBatchNames());
 
 		int stableJobDownstreamBuildsCompletedCount =
 			getJobVariantsDownstreamBuildCount(
@@ -286,8 +275,14 @@ public class PullRequestPortalTopLevelBuild
 	}
 
 	protected Element getFailedStableJobSummaryElement() {
+		Job stableJob = _getStableJob();
+
+		if (stableJob == null) {
+			return Dom4JUtil.getNewElement("span");
+		}
+
 		List<String> stableJobBatchNames = new ArrayList<>(
-			_stableJob.getBatchNames());
+			stableJob.getBatchNames());
 
 		Element jobSummaryListElement = getJobSummaryListElement(
 			false, stableJobBatchNames);
@@ -313,16 +308,20 @@ public class PullRequestPortalTopLevelBuild
 	}
 
 	protected List<Build> getStableJobDownstreamBuilds() {
-		if (_stableJob != null) {
+		Job stableJob = _getStableJob();
+
+		if (stableJob != null) {
 			return getJobVariantsDownstreamBuilds(
-				_stableJob.getBatchNames(), null, null);
+				stableJob.getBatchNames(), null, null);
 		}
 
 		return Collections.emptyList();
 	}
 
 	protected Element getStableJobResultElement() {
-		if (_stableJob == null) {
+		Job stableJob = _getStableJob();
+
+		if (stableJob == null) {
 			return null;
 		}
 
@@ -341,7 +340,7 @@ public class PullRequestPortalTopLevelBuild
 
 		sb.append(
 			getJobVariantsDownstreamBuildCount(
-				new ArrayList<>(_stableJob.getBatchNames()), "SUCCESS", null));
+				new ArrayList<>(stableJob.getBatchNames()), "SUCCESS", null));
 
 		sb.append(" out of ");
 
@@ -355,8 +354,14 @@ public class PullRequestPortalTopLevelBuild
 	}
 
 	protected Element getStableJobSuccessSummaryElement() {
+		Job stableJob = _getStableJob();
+
+		if (stableJob == null) {
+			return Dom4JUtil.getNewElement("span");
+		}
+
 		List<String> stableJobBatchNames = new ArrayList<>(
-			_stableJob.getBatchNames());
+			stableJob.getBatchNames());
 
 		Element stableJobSummaryListElement = getJobSummaryListElement(
 			true, stableJobBatchNames);
@@ -377,8 +382,14 @@ public class PullRequestPortalTopLevelBuild
 	}
 
 	protected Element getStableJobSummaryElement() {
+		Job stableJob = _getStableJob();
+
+		if (stableJob == null) {
+			return Dom4JUtil.getNewElement("span");
+		}
+
 		List<String> stableJobBatchNames = new ArrayList<>(
-			_stableJob.getBatchNames());
+			stableJob.getBatchNames());
 
 		int stableJobDownstreamBuildSuccessCount =
 			getJobVariantsDownstreamBuildCount(
@@ -421,7 +432,9 @@ public class PullRequestPortalTopLevelBuild
 
 		List<Build> stableJobDownstreamBuilds = new ArrayList<>();
 
-		if (_stableJob != null) {
+		Job stableJob = _getStableJob();
+
+		if (stableJob != null) {
 			stableJobDownstreamBuilds.addAll(getStableJobDownstreamBuilds());
 		}
 
@@ -483,6 +496,31 @@ public class PullRequestPortalTopLevelBuild
 		}
 
 		return null;
+	}
+
+	private synchronized Job _getStableJob() {
+		if (_stableJob != null) {
+			return _stableJob;
+		}
+
+		String testSuiteName = getTestSuiteName();
+
+		if (!testSuiteName.equals("relevant")) {
+			return null;
+		}
+
+		try {
+			_stableJob = JobFactory.newJob(
+				getBuildProfile(), getJobName(), null, null, getBranchName(),
+				null, getBaseGitRepositoryName(), "stable", getBranchName());
+		}
+		catch (Exception exception) {
+			System.out.println("Unable to create stable job for " + jobName);
+
+			exception.printStackTrace();
+		}
+
+		return _stableJob;
 	}
 
 	private String _getUpstreamBranchSHA() {

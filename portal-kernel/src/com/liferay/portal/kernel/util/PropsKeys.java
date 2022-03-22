@@ -367,13 +367,6 @@ public interface PropsKeys {
 	public static final String BUFFERED_INCREMENT_THREADPOOL_MAX_SIZE =
 		"buffered.increment.threadpool.max.size";
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String CACHE_CLEAR_ON_CONTEXT_INITIALIZATION =
-		"cache.clear.on.context.initialization";
-
 	public static final String CACHE_CLEAR_ON_PLUGIN_UNDEPLOY =
 		"cache.clear.on.plugin.undeploy";
 
@@ -940,14 +933,6 @@ public interface PropsKeys {
 	public static final String DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH =
 		"dl.file.entry.thumbnail.max.width";
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String
-		DL_FILE_ENTRY_TYPE_IG_IMAGE_AUTO_CREATE_ON_UPGRADE =
-			"dl.file.entry.type.ig.image.auto.create.on.upgrade";
-
 	public static final String DL_FILE_EXTENSIONS_STRICT_CHECK =
 		"dl.file.extensions.strict.check";
 
@@ -1014,12 +999,6 @@ public interface PropsKeys {
 
 	public static final String DL_SUBFOLDERS_VISIBLE = "dl.subfolders.visible";
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String DL_TABS_VISIBLE = "dl.tabs.visible";
-
 	public static final String DL_WEBDAV_SUBSTITUTION_CHAR =
 		"dl.webdav.substitution.char";
 
@@ -1031,13 +1010,6 @@ public interface PropsKeys {
 
 	public static final String EDITOR_WYSIWYG_DEFAULT =
 		"editor.wysiwyg.default";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String EHCACHE_BLOCKING_CACHE_ALLOWED =
-		"ehcache.blocking.cache.allowed";
 
 	public static final String EHCACHE_MULTI_VM_CONFIG_LOCATION =
 		"ehcache.multi.vm.config.location";
@@ -1211,12 +1183,6 @@ public interface PropsKeys {
 
 	public static final String INDEX_ON_STARTUP_DELAY =
 		"index.on.startup.delay";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String INDEX_ON_UPGRADE = "index.on.upgrade";
 
 	public static final String
 		INDEX_PERMISSION_FILTER_SEARCH_AMPLIFICATION_FACTOR =
@@ -1430,52 +1396,6 @@ public interface PropsKeys {
 
 	public static final String LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN =
 		"layout.manage.pages.initial.children";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String LAYOUT_PARALLEL_RENDER_ENABLE =
-		"layout.parallel.render.enable";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String
-		LAYOUT_PARALLEL_RENDER_THREAD_POOL_CORE_THREAD_COUNT =
-			"layout.parallel.render.thread.pool.core.thread.count";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String
-		LAYOUT_PARALLEL_RENDER_THREAD_POOL_KEEP_ALIVE_TIME =
-			"layout.parallel.render.thread.pool.keep.alive.time";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String
-		LAYOUT_PARALLEL_RENDER_THREAD_POOL_MAX_QUEUE_SIZE =
-			"layout.parallel.render.thread.pool.max.queue.size";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String
-		LAYOUT_PARALLEL_RENDER_THREAD_POOL_MAX_THREAD_COUNT =
-			"layout.parallel.render.thread.pool.max.thread.count";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String LAYOUT_PARALLEL_RENDER_TIMEOUT =
-		"layout.parallel.render.timeout";
 
 	public static final String LAYOUT_PARENTABLE = "layout.parentable";
 
@@ -2232,13 +2152,6 @@ public interface PropsKeys {
 		PERMISSIONS_CUSTOM_ATTRIBUTE_WRITE_CHECK_BY_DEFAULT =
 			"permissions.custom.attribute.write.check.by.default";
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String PERMISSIONS_OBJECT_BLOCKING_CACHE =
-		"permissions.object.blocking.cache";
-
 	public static final String PERMISSIONS_PROPAGATION_ENABLED =
 		"permissions.propagation.enabled";
 
@@ -2821,20 +2734,6 @@ public interface PropsKeys {
 	public static final String SQL_DATA_MAX_PARAMETERS =
 		"sql.data.max.parameters";
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String STAGING_DELETE_TEMP_LAR_ON_FAILURE =
-		"staging.delete.temp.lar.on.failure";
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String STAGING_DELETE_TEMP_LAR_ON_SUCCESS =
-		"staging.delete.temp.lar.on.success";
-
 	public static final String
 		STAGING_DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL =
 			"staging.draft.export.import.configuration.check.interval";
@@ -3094,25 +2993,11 @@ public interface PropsKeys {
 	public static final String USERS_UPDATE_USER_NAME =
 		"users.update.user.name.";
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String VALUE_OBJECT_ENTITY_BLOCKING_CACHE =
-		"value.object.entity.blocking.cache";
-
 	public static final String VALUE_OBJECT_ENTITY_CACHE_ENABLED =
 		"value.object.entity.cache.enabled";
 
 	public static final String VALUE_OBJECT_ENTITY_THREAD_LOCAL_CACHE_MAX_SIZE =
 		"value.object.entity.thread.local.cache.max.size";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String VALUE_OBJECT_FINDER_BLOCKING_CACHE =
-		"value.object.finder.blocking.cache";
 
 	public static final String VALUE_OBJECT_FINDER_CACHE_ENABLED =
 		"value.object.finder.cache.enabled";
@@ -3130,18 +3015,6 @@ public interface PropsKeys {
 
 	public static final String VERIFY_DATABASE_TRANSACTIONS_DISABLED =
 		"verify.database.transactions.disabled";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String VERIFY_FREQUENCY = "verify.frequency";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String VERIFY_PROCESSES = "verify.processes";
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link

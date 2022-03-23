@@ -48,4 +48,8 @@
 			<finder-column name="languageId" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>PLOEntryKey</exception>
+		<exception>PLOEntryValue</exception>
+	</exceptions>
 </service-builder>

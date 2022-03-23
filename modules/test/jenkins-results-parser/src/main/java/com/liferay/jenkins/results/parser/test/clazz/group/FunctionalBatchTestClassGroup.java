@@ -177,7 +177,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 			return new ArrayList<>();
 		}
 
-		synchronized (portalTestClassJob) {
+		synchronized (_poshiTestCasePattern) {
 			PortalGitWorkingDirectory portalGitWorkingDirectory =
 				portalTestClassJob.getPortalGitWorkingDirectory();
 

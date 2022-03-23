@@ -237,6 +237,7 @@ definition {
 		MessageboardsThread.viewNoPG(threadSubject = "Thread Subject");
 	}
 
+	@description = "This ensures that the thread can be deleted, also covers LPS-82675."
 	@priority = "5"
 	@refactordone
 	test CanDeleteThread {

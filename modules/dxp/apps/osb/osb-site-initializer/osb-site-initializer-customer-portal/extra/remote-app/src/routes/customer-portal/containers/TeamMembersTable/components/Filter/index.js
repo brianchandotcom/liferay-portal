@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -20,9 +19,11 @@ import DropDownWithDrillDown from '../../../../components/DropDownWithDrillDown'
 
 import SearchBar from '../../../../components/SearchBar';
 
-import {getCurrentActiveRoles} from '../../utils/getCurrentActiveRoles';
+import {STATUS_TAG_TYPE_NAMES} from '../../../../utils/constants';
 
+import {getCurrentActiveRoles} from '../../utils/getCurrentActiveRoles';
 import {getDropDownAvailableFields} from '../../utils/getDropDownAvailableFields';
+import {getSupportSeat} from '../../utils/getSupportSeat';
 
 const MAX_UPDATE = 3;
 
@@ -34,6 +35,8 @@ const TeamMembersFilter = ({
 
 	const [availableFields, setAvailableFields] = useState({
 		roles: [],
+		status: [],
+		supportSeat: [],
 	});
 
 	useEffect(() => {
@@ -49,16 +52,20 @@ const TeamMembersFilter = ({
 					userAccounts,
 					(userAccount) => getCurrentActiveRoles(userAccount?.roles)
 				),
+				status: getAvailableFieldsCheckboxs(
+					userAccounts,
+					(userAccount) =>
+						userAccount?.lastLoginDate
+							? STATUS_TAG_TYPE_NAMES.active
+							: STATUS_TAG_TYPE_NAMES.invited
+				),
+				supportSeat: getAvailableFieldsCheckboxs(
+					userAccounts,
+					(userAccount) => getSupportSeat(userAccount?.roles)
+				),
 			}));
 		}
 	}, [userAccounts]);
-
-	console.log('🚀 ~ file: index.js ~ line 26 ~ filters', filters);
-
-	console.log(
-		'🚀 ~ file: index.js ~ line 31 ~ availableFields',
-		availableFields
-	);
 
 	return (
 		<div className="d-flex flex-column">

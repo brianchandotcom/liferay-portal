@@ -10,6 +10,7 @@
  */
 
 import {useEffect, useState} from 'react';
+import {STATUS_TAG_TYPE_NAMES} from '../../../utils/constants';
 
 // import {STATUS_TAG_TYPE_NAMES} from '../../../utils/constants';
 
@@ -20,7 +21,7 @@ export default function useFilters(setFilterTerm) {
 
 	useEffect(() => {
 		let initialFilter = '';
-		const hasFilterPill = false;
+		let hasFilterPill = false;
 
 		if (filters.searchTerm) {
 			const searchTermFilter = `(contains(givenName, '${filters.searchTerm}') or contains(familyName, '${filters.searchTerm}') or contains(emailAddress, '${filters.searchTerm}'))`;
@@ -28,25 +29,59 @@ export default function useFilters(setFilterTerm) {
 			initialFilter = initialFilter.concat(`${searchTermFilter}`);
 		}
 
-		// if (filters.status.value.length) {
-		// 	hasFilterPill = true;
+		if (filters.roles.value.length) {
+			hasFilterPill = true;
 
-		// 	const statusFilter = `(${filters.status.value.reduce(
-		// 		(accumulatorStatusFilter, status, index) => {
-		// 			let filter = '';
-		// 			if (status === STATUS_TAG_TYPE_NAMES.active) {
-		// 				filter = `(lastLoginDate ne '')`;
-		// 			}
+			const rolesFilter = `(${filters.roles.value.reduce(
+				(accumulatorRolesFilter, role, index) => {
+					return `${accumulatorRolesFilter}${
+						index > 0 ? ' or ' : ''
+					}contains(roles,'${role}')`;
+				},
+				''
+			)})`;
 
-		// 			if (status === STATUS_TAG_TYPE_NAMES.invited) {
-		// 				filter = `expirationDate lt ${now}`;
-		// 			}
-		// 		},
-		// 		''
-		// 	)})`;
+			initialFilter = initialFilter.concat(` and ${rolesFilter}`);
+		}
 
-		// 	initialFilter = initialFilter.concat(` and ${instanceSizesFilter}`);
-		// }
+		if (filters.status.value.length) {
+			hasFilterPill = true;
+
+			const statusFilter = filters.status.value.reduce(
+				(accumulatorStatusFilter, status, index) => {
+					let filter = '';
+					if (status === STATUS_TAG_TYPE_NAMES.invited) {
+						filter = `lastLoginDate eq null`;
+					}
+
+					if (status === STATUS_TAG_TYPE_NAMES.active) {
+						filter = `lastLoginDate ne null`;
+					}
+
+					return `${accumulatorStatusFilter}${
+						index > 0 ? ' or ' : ''
+					}${filter}`;
+				},
+				''
+			);
+
+			initialFilter = initialFilter.concat(` and ${statusFilter}`);
+		}
+
+		if (filters.supportSeat.value.length) {
+			hasFilterPill = true;
+
+			const supportSeatFilter = `(${filters.supportSeat.value.reduce(
+				(accumulatorSupportSeatFilterFilter, supportSeat, index) => {
+					return `${accumulatorSupportSeatFilterFilter}${
+						index > 0 ? ' or ' : ''
+					}instanceSize eq 'Sizing ${supportSeat}'`;
+				},
+				''
+			)})`;
+
+			initialFilter = initialFilter.concat(` and ${supportSeatFilter}`);
+		}
 
 		setFilters((previousFilter) => ({
 			...previousFilter,
@@ -54,12 +89,13 @@ export default function useFilters(setFilterTerm) {
 		}));
 
 		setFilterTerm(`${initialFilter}`);
-		// eslint-disable-next-line no-console
-		console.log(
-			'🚀 ~ file: useFilters.js ~ line 57 ~ useEffect ~ initialFilter',
-			initialFilter
-		);
-	}, [filters.searchTerm, setFilterTerm]);
+	}, [
+		filters.roles.value,
+		filters.searchTerm,
+		filters.status.value,
+		filters.supportSeat.value,
+		setFilterTerm,
+	]);
 
 	return [filters, setFilters];
 }

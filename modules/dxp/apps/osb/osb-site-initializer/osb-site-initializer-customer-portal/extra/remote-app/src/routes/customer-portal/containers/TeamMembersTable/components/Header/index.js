@@ -15,6 +15,7 @@ import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import {Button} from '../../../../../../common/components';
 import {ROLE_TYPES} from '../../../../../../common/utils/constants';
+import BadgeFilter from '../BadgeFilter';
 import TeamMembersFilter from '../Filter';
 import InvitesModal from '../InvitesModal';
 import PopoverIconButton from '../PopoverIconButton';
@@ -27,6 +28,7 @@ const TeamMembersTableHeader = ({
 	setAdministratorsAvailable,
 	setUserAccounts,
 	userAccounts,
+	loading,
 	filterState: [filters, setFilters],
 }) => {
 	const [visible, setVisible] = useState(false);
@@ -71,53 +73,53 @@ const TeamMembersTableHeader = ({
 	});
 
 	return (
-		<div
-			className={classNames(
-				'align-items-center bg-neutral-1 d-flex px-2 rounded mb-2',
-				{
-					'py-3': hasAdminAccess,
-					'py-4': !hasAdminAccess,
-				}
-			)}
-		>
-			<TeamMembersFilter
-				filtersState={[filters, setFilters]}
-				userAccounts={userAccounts}
-			/>
+		<div className="bg-neutral-1 d-flex flex-column pb-1 pt-3 px-3 rounded">
+			<div className="d-flex">
+				<TeamMembersFilter
+					filtersState={[filters, setFilters]}
+					userAccounts={userAccounts}
+				/>
 
-			<div className="align-items-center d-flex ml-auto">
-				{project?.maxRequestors > 0 && (
-					<>
-						<PopoverIconButton alignPosition="top" />
+				<div className="align-items-center d-flex ml-auto">
+					{project?.maxRequestors > 0 && (
+						<>
+							<PopoverIconButton alignPosition="top" />
 
-						<p className="font-weight-bold m-0">
-							Support seats: &nbsp;
-						</p>
+							<p className="font-weight-bold m-0">
+								Support seats: &nbsp;
+							</p>
 
-						<p
-							className={classNames(
-								'font-weight-semi-bold m-0 text-neutral-7',
-								{
-									'mr-4': !hasAdminAccess,
-								}
-							)}
+							<p
+								className={classNames(
+									'font-weight-semi-bold m-0 text-neutral-7',
+									{
+										'mr-4': !hasAdminAccess,
+									}
+								)}
+							>
+								{`${administratorsAvailable} of ${project.maxRequestors} available`}
+							</p>
+						</>
+					)}
+
+					{hasAdminAccess && (
+						<Button
+							className="btn-outline-primary invite-button ml-3 mr-1 px-3 py-2"
+							onClick={() => setVisible(true)}
+							prependIcon="user-plus"
+							prependIconClassName="mr-2"
 						>
-							{`${administratorsAvailable} of ${project.maxRequestors} available`}
-						</p>
-					</>
-				)}
-
-				{hasAdminAccess && (
-					<Button
-						className="btn-outline-primary invite-button ml-3 mr-1 px-3 py-2"
-						onClick={() => setVisible(true)}
-						prependIcon="user-plus"
-						prependIconClassName="mr-2"
-					>
-						Invite
-					</Button>
-				)}
+							Invite
+						</Button>
+					)}
+				</div>
 			</div>
+
+			<BadgeFilter
+				activationKeysLength={userAccounts?.length}
+				filtersState={[filters, setFilters]}
+				loading={loading}
+			/>
 
 			{visible && (
 				<InvitesModal

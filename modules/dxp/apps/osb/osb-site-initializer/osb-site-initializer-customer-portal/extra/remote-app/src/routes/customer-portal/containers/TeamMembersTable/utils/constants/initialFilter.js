@@ -10,7 +10,8 @@
  */
 
 export const INITIAL_FILTER = {
-	role: {
+	hasValue: false,
+	roles: {
 		name: 'Roles',
 		value: [],
 	},
@@ -19,6 +20,7 @@ export const INITIAL_FILTER = {
 		name: 'Status',
 		value: [],
 	},
+
 	supportSeat: {
 		name: 'Support Seat',
 		value: [],

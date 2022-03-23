@@ -38,7 +38,7 @@ export function getDropDownAvailableFields(
 				child: (
 					<CheckboxFilter
 						availableItems={availableFields.roles}
-						clearCheckboxes={!filters.roles?.length}
+						clearCheckboxes={!filters.roles.value?.length}
 						setFilters={setFilters}
 						updateFilters={(checkedItems) =>
 							setFilters((previousFilters) => ({
@@ -59,7 +59,7 @@ export function getDropDownAvailableFields(
 				child: (
 					<CheckboxFilter
 						availableItems={availableFields.status}
-						clearCheckboxes={!filters.status?.length}
+						clearCheckboxes={!filters.status.value?.length}
 						setFilters={setFilters}
 						updateFilters={(checkedItems) =>
 							setFilters((previousFilters) => ({
@@ -80,7 +80,7 @@ export function getDropDownAvailableFields(
 				child: (
 					<CheckboxFilter
 						availableItems={availableFields.supportSeat}
-						clearCheckboxes={!filters.supportSeat?.length}
+						clearCheckboxes={!filters.supportSeat.value?.length}
 						setFilters={setFilters}
 						updateFilters={(checkedItems) =>
 							setFilters((previousFilters) => ({

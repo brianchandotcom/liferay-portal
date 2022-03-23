@@ -2798,7 +2798,7 @@ definition {
 	test ViewElementsAdminBulkDeletion {
 		Blueprints.openBlueprintsAdmin();
 
-		for (var count : list "1,2,3") {
+		for (var count : list "1,2,3,4") {
 			Blueprints.createElement(title = "Test Element ${count}");
 		}
 
@@ -2818,23 +2818,31 @@ definition {
 
 		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
 
-		AssertChecked.assertCheckedNotVisible(
-			entryTitle = "Test Element 2",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
-
-		AssertChecked.assertCheckedNotVisible(
-			entryTitle = "Test Element 3",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+		for (var count : list "2,3,4") {
+			AssertChecked.assertCheckedNotVisible(
+				entryTitle = "Test Element ${count}",
+				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+		}
 
 		Uncheck.uncheckNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
 
-		AssertNotChecked.assertNotCheckedNotVisible(
-			entryTitle = "Test Element 2",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+		for (var count : list "2,3,4") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				entryTitle = "Test Element ${count}",
+				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+		}
 
-		AssertNotChecked.assertNotCheckedNotVisible(
-			entryTitle = "Test Element 3",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+		Search.searchCP(searchTerm = "2");
+
+		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
+
+		Button.clickTrash();
+
+		Blueprints.viewNoEntry(title = "Test Element 2");
+
+		Blueprints.viewEntryTitle(title = "Test Element 3");
+
+		Blueprints.viewEntryTitle(title = "Test Element 4");
 
 		Check.checkNotVisible(
 			entryTitle = "Test Element 3",
@@ -2845,20 +2853,20 @@ definition {
 			locator1 = "Link#ANY");
 
 		AssertChecked.assertCheckedNotVisible(
-			entryTitle = "Test Element 2",
+			entryTitle = "Test Element 3",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 
 		AssertChecked.assertCheckedNotVisible(
-			entryTitle = "Test Element 3",
+			entryTitle = "Test Element 4",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 
 		Button.clickTrash();
 
 		Alert.viewErrorMessage(errorMessage = "System read-only elements cannot be deleted.");
 
-		Blueprints.viewNoEntry(title = "Test Element 2");
-
 		Blueprints.viewNoEntry(title = "Test Element 3");
+
+		Blueprints.viewNoEntry(title = "Test Element 4");
 	}
 
 	test ViewElementsAdminPreview {

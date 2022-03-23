@@ -1,0 +1,23 @@
+definition {
+
+	macro _addAccountGroup {
+		Variables.assertDefined(parameterList = "${accountGroupName}");
+
+		var companyId = JSONCompany.getCompanyId();
+
+		var portalURL = JSONCompany.getPortalURL();
+
+		var userId = JSONUserSetter.setUserId(userEmailAddress = "${creatorEmailAddress}");
+
+		var curl = '''
+			${portalURL}/api/jsonws/account.accountgroup/add-account-group \
+				-u ${creatorEmailAddress}:${creatorPassword} \
+				-d userId=${userId} \
+				-d name=${accountGroupName} \
+				-d description=${accountGroupDescription}
+		''';
+
+		com.liferay.poshi.runner.util.JSONCurlUtil.post("${curl}");
+	}
+
+}

@@ -51,9 +51,9 @@ public class TemplateNameComparator extends OrderByComparator<DDMTemplate> {
 	}
 
 	@Override
-	public int compare(DDMTemplate template1, DDMTemplate template2) {
-		String name1 = StringUtil.toLowerCase(template1.getName(_locale));
-		String name2 = StringUtil.toLowerCase(template2.getName(_locale));
+	public int compare(DDMTemplate ddmTemplate1, DDMTemplate ddmTemplate2) {
+		String name1 = StringUtil.toLowerCase(ddmTemplate1.getName(_locale));
+		String name2 = StringUtil.toLowerCase(ddmTemplate2.getName(_locale));
 
 		int value = _collator.compare(name1, name2);
 

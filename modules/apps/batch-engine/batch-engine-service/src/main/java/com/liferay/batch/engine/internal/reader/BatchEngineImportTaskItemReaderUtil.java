@@ -91,26 +91,6 @@ public class BatchEngineImportTaskItemReaderUtil {
 		return item;
 	}
 
-	public static void handleMapField(
-		String fieldName, Map<String, Object> fieldNameValueMap,
-		int lastDelimiterIndex, String value) {
-
-		String key = fieldName.substring(lastDelimiterIndex + 1);
-
-		fieldName = fieldName.substring(0, lastDelimiterIndex);
-
-		Map<String, String> valueMap =
-			(Map<String, String>)fieldNameValueMap.get(fieldName);
-
-		if (valueMap == null) {
-			valueMap = new HashMap<>();
-
-			fieldNameValueMap.put(fieldName, valueMap);
-		}
-
-		valueMap.put(key, value);
-	}
-
 	public static Map<String, Object> mapFieldNames(
 		Map<String, ? extends Serializable> fieldNameMappingMap,
 		Map<String, Object> fieldNameValueMap) {

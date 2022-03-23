@@ -459,13 +459,6 @@ definition {
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 	}
 
-	macro navigateToRequestOrSuppressedOptions {
-		var key_optionName = "${optionName}";
-		var key_optionValue = "${optionValue}";
-
-		Click(locator1 = "ACDataControlAndPrivacy#REQUEST_SUPPRESSED_OPTIONS");
-	}
-
 	macro clickUsersByEmail {
 		for (var userEmail : list "${userEmail}") {
 			Click(
@@ -856,6 +849,13 @@ definition {
 
 	macro goToWorkspace {
 		ACSettings.goToSettingsNavigation(settingsNavigation = "settings/workspace");
+	}
+
+	macro navigateToRequestOrSuppressedOptions {
+		var key_optionName = "${optionName}";
+		var key_optionValue = "${optionValue}";
+
+		Click(locator1 = "ACDataControlAndPrivacy#REQUEST_SUPPRESSED_OPTIONS");
 	}
 
 	@summary = "Takes the token from Analytics Clouds to use on during the DXP connection process"

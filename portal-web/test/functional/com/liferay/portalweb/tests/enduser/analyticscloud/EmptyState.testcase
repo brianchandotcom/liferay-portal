@@ -133,7 +133,7 @@ definition {
 			SelectWindow(locator1 = "title=Block List - Settings - Analytics Cloud");
 		}
 
-		task ("Go to Definitions, then go to Interests, select the Custom Events tab and check the empty page status message then check the if the hyperlink is taking the user to the documentation") {
+		task ("Go to Definitions, then go to Interests and check the empty page status message then check if the hyperlink is taking the user to the documentation") {
 			ACSettings.goToDefinitions();
 
 			ACDefinitions.goToDefinitionType(definitionType = "Interests");

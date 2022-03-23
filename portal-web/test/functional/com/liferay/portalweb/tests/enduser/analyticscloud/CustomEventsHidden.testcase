@@ -409,7 +409,7 @@ definition {
 			if (IsElementNotPresent(locator1 = "ACLogin#EMAIL_LOGIN_FIELD")) {
 				ACWorkspace.signOut();
 			}
-			
+
 			ACUtils.launchAC(emailAddress = "corbin.murakami@faro.io");
 
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");

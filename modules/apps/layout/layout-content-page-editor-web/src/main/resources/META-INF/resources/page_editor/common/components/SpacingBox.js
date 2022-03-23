@@ -14,7 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {useId} from '../../app/utils/useId';
 
@@ -154,10 +154,17 @@ function SpacingSelectorButton({
 	value,
 }) {
 	const [active, setActive] = useState(false);
+	const itemListRef = useRef();
 	const title = `${capitalize(type)} ${capitalize(position)}: ${
 		value || defaultValue
 	}px`;
 	const triggerId = useId();
+
+	useEffect(() => {
+		if (active && itemListRef.current) {
+			itemListRef.current.querySelector('button')?.focus();
+		}
+	}, [active]);
 
 	return (
 		<ClayDropDown
@@ -181,23 +188,25 @@ function SpacingSelectorButton({
 				</ClayButton>
 			}
 		>
-			<ClayDropDown.ItemList
-				aria-labelledby={triggerId}
-				onKeyUp={(event) => event.stopPropagation()}
-			>
-				{options.map((option) => (
-					<ClayDropDown.Item
-						key={option.value}
-						onClick={() => {
-							onChange(option.value);
-							setActive(false);
-							document.getElementById(triggerId)?.focus();
-						}}
-					>
-						{option.label}
-					</ClayDropDown.Item>
-				))}
-			</ClayDropDown.ItemList>
+			<div ref={itemListRef}>
+				<ClayDropDown.ItemList
+					aria-labelledby={triggerId}
+					onKeyUp={(event) => event.stopPropagation()}
+				>
+					{options.map((option) => (
+						<ClayDropDown.Item
+							key={option.value}
+							onClick={() => {
+								onChange(option.value);
+								setActive(false);
+								document.getElementById(triggerId)?.focus();
+							}}
+						>
+							{option.label}
+						</ClayDropDown.Item>
+					))}
+				</ClayDropDown.ItemList>
+			</div>
 		</ClayDropDown>
 	);
 }

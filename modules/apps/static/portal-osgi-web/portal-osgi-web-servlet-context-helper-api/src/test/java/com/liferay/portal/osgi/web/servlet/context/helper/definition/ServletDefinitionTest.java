@@ -14,6 +14,7 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
@@ -27,8 +28,6 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Miguel Pastor
@@ -98,11 +97,11 @@ public class ServletDefinitionTest {
 
 	@Test
 	public void testSetServlet() {
-		Servlet servlet = Mockito.mock(Servlet.class);
+		Servlet servlet = ProxyFactory.newDummyInstance(Servlet.class);
 
 		_servletDefinition.setServlet(servlet);
 
-		Assert.assertEquals(servlet, _servletDefinition.getServlet());
+		Assert.assertSame(servlet, _servletDefinition.getServlet());
 	}
 
 	@Test

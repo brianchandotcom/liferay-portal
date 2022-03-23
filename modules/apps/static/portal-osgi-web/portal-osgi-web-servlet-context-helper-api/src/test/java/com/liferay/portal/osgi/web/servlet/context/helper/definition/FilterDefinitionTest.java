@@ -14,6 +14,7 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
+import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
@@ -27,8 +28,6 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Miguel Pastor
@@ -75,11 +74,11 @@ public class FilterDefinitionTest {
 
 	@Test
 	public void testSetFilter() {
-		Filter filter = Mockito.mock(Filter.class);
+		Filter filter = ProxyFactory.newDummyInstance(Filter.class);
 
 		_filterDefinition.setFilter(filter);
 
-		Assert.assertEquals(filter, _filterDefinition.getFilter());
+		Assert.assertSame(filter, _filterDefinition.getFilter());
 	}
 
 	@Test

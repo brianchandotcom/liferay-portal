@@ -76,6 +76,71 @@ definition {
 			accountGroupName = "Edited Account Group Name");
 	}
 
+	@description = "This test assert user can filter the assigned accounts in Account Group by status."
+	@priority = "3"
+	test CanFilterAccountsBelongToAccountGroupByStatus {
+		task ("Given Add a new Account Group and Accounts with different status") {
+			JSONAccountGroup.addAccountGroup(
+				accountGroupDescription = "Filter the assigned Accounts by Status.",
+				accountGroupName = "AG Filter by Status");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Inactive Business Account",
+				accountEntryStatus = "Inactive",
+				accountEntryType = "Business");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Active Person Account",
+				accountEntryType = "Person");
+		}
+
+		task ("When assign the active account to account group") {
+			AccountGroups.openAccountGroupsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AG Filter by Status");
+
+			AccountGroups.viewDefault(tabName = "Accounts");
+
+			AccountGroups.addAssignee(
+				accountGroupName = "AG Filter by Status",
+				assigneeNames = "Active Person Account");
+
+			AccountGroups.viewAssignee(assigneeName = "Active Person Account");
+
+			task ("And assign the inactive account to account group") {
+				LexiconEntry.gotoAdd();
+
+				Pause(locator1 = "3000");
+
+				SelectFrame(
+					key_title = "Assign Accounts to AG Filter by Status",
+					locator1 = "IFrame#MODAL_ANY");
+
+				ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+				Check(
+					key_tableEntry = "Inactive Business Account",
+					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+
+				SelectFrameTop();
+
+				Button.click(button = "Assign");
+
+				Alert.viewSuccessMessage();
+			}
+		}
+
+		task ("Then filter the accounts assigned to account group by Status returns proper results") {
+			ManagementBar.setFilterAndOrder(filterBy = "Inactive");
+
+			AccountGroups.viewAssignee(assigneeName = "Inactive Business Account");
+
+			ManagementBar.setFilterAndOrder(filterBy = "Active");
+
+			AccountGroups.viewAssignee(assigneeName = "Active Person Account");
+		}
+	}
+
 	@description = "This test assert user can filter the assigned accounts in Account Group by type."
 	@priority = "3"
 	test CanFilterAccountsBelongToAccountGroupByType {

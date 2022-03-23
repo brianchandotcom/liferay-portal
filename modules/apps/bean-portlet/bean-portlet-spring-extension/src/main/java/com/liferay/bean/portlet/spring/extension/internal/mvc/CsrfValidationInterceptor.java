@@ -69,9 +69,7 @@ public class CsrfValidationInterceptor extends BeanPortletMethodInterceptor {
 						csrfProtection.toString());
 				}
 				catch (IllegalArgumentException illegalArgumentException) {
-					_log.error(
-						illegalArgumentException.getMessage(),
-						illegalArgumentException);
+					_log.error(illegalArgumentException);
 				}
 			}
 		}

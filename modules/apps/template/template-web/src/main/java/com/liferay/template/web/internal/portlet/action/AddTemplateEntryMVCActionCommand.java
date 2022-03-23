@@ -154,7 +154,7 @@ public class AddTemplateEntryMVCActionCommand
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(portalException.getMessage(), portalException);
+			_log.debug(portalException);
 		}
 
 		return JSONUtil.put(

@@ -316,9 +316,7 @@ public class CustomJspBagRegistryUtil {
 							duplicateCustomJspException) {
 
 					if (_log.isWarnEnabled()) {
-						_log.warn(
-							duplicateCustomJspException.getMessage(),
-							duplicateCustomJspException);
+						_log.warn(duplicateCustomJspException);
 					}
 
 					_bundleContext.ungetService(serviceReference);
@@ -335,7 +333,7 @@ public class CustomJspBagRegistryUtil {
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
-					_log.warn(exception.getMessage(), exception);
+					_log.warn(exception);
 				}
 
 				_bundleContext.ungetService(serviceReference);

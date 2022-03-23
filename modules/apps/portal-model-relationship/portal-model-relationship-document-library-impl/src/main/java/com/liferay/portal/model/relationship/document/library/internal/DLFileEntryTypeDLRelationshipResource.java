@@ -81,8 +81,7 @@ public class DLFileEntryTypeDLRelationshipResource
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(
-							portalException.getMessage(), portalException);
+						_log.warn(portalException);
 					}
 
 					return null;
@@ -105,8 +104,7 @@ public class DLFileEntryTypeDLRelationshipResource
 				}
 				catch (PortalException portalException) {
 					if (_log.isWarnEnabled()) {
-						_log.warn(
-							portalException.getMessage(), portalException);
+						_log.warn(portalException);
 					}
 
 					return null;

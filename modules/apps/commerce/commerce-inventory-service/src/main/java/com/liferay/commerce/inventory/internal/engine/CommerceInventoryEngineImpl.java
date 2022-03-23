@@ -183,7 +183,7 @@ public class CommerceInventoryEngineImpl implements CommerceInventoryEngine {
 					commerceInventoryWarehouseItem.getMvccVersion());
 		}
 		catch (MVCCException mvccException) {
-			_log.error(mvccException.getMessage(), mvccException);
+			_log.error(mvccException);
 
 			throw mvccException;
 		}

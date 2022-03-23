@@ -117,9 +117,7 @@ public class DispatchConfigurator {
 			catch (DispatchTriggerSchedulerException
 						dispatchTriggerSchedulerException) {
 
-				_log.error(
-					dispatchTriggerSchedulerException.getMessage(),
-					dispatchTriggerSchedulerException);
+				_log.error(dispatchTriggerSchedulerException);
 			}
 		}
 	}
@@ -141,9 +139,7 @@ public class DispatchConfigurator {
 			catch (DispatchTriggerSchedulerException
 						dispatchTriggerSchedulerException) {
 
-				_log.error(
-					dispatchTriggerSchedulerException.getMessage(),
-					dispatchTriggerSchedulerException);
+				_log.error(dispatchTriggerSchedulerException);
 			}
 		}
 	}

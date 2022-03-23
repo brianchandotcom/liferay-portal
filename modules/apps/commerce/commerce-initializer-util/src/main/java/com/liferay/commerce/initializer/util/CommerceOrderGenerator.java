@@ -375,7 +375,7 @@ public class CommerceOrderGenerator {
 					retryNumber++;
 				}
 				else {
-					_log.error(portalException.getMessage(), portalException);
+					_log.error(portalException);
 				}
 			}
 		}

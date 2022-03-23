@@ -57,7 +57,7 @@ public class FieldMappingsWebCacheItem implements WebCacheItem {
 				"JSONObject/properties");
 		}
 		catch (JSONException jsonException) {
-			_log.error(jsonException.getMessage(), jsonException);
+			_log.error(jsonException);
 		}
 
 		return JSONFactoryUtil.createJSONObject();

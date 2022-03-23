@@ -211,9 +211,7 @@ public class CASFilter extends BaseFilter {
 		}
 		catch (TicketValidationException ticketValidationException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					ticketValidationException.getMessage(),
-					ticketValidationException);
+				_log.debug(ticketValidationException);
 			}
 			else if (_log.isInfoEnabled()) {
 				_log.info(ticketValidationException);

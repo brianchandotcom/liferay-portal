@@ -84,7 +84,7 @@ public class CheckCommerceSubscriptionEntryMessageListener
 					getCommerceSubscriptionEntriesToRenew());
 		}
 		catch (Exception exception) {
-			_log.error(exception.getMessage(), exception);
+			_log.error(exception);
 		}
 
 		try {
@@ -94,7 +94,7 @@ public class CheckCommerceSubscriptionEntryMessageListener
 						getCommerceDeliverySubscriptionEntriesToRenew());
 		}
 		catch (Exception exception) {
-			_log.error(exception.getMessage(), exception);
+			_log.error(exception);
 		}
 	}
 

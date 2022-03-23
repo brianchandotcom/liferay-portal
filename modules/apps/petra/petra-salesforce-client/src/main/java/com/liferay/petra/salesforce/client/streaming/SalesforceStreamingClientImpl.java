@@ -177,7 +177,7 @@ public class SalesforceStreamingClientImpl
 				new SalesforceMessageListener());
 		}
 		catch (Exception exception) {
-			_log.error(exception.getMessage(), exception);
+			_log.error(exception);
 		}
 	}
 
@@ -214,7 +214,7 @@ public class SalesforceStreamingClientImpl
 				if (message.get("exception") != null) {
 					Exception exception = (Exception)message.get("exception");
 
-					_log.error(exception.getMessage(), exception);
+					_log.error(exception);
 				}
 
 				_bayeuxClient.disconnect();

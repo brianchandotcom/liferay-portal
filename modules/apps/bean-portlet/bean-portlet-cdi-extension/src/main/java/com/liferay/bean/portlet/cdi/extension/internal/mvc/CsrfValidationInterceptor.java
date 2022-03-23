@@ -68,9 +68,7 @@ public class CsrfValidationInterceptor implements Serializable {
 						csrfProtection.toString());
 				}
 				catch (IllegalArgumentException illegalArgumentException) {
-					_log.error(
-						illegalArgumentException.getMessage(),
-						illegalArgumentException);
+					_log.error(illegalArgumentException);
 				}
 			}
 		}

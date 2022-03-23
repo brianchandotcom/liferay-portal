@@ -58,9 +58,7 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 		}
 		catch (InvalidRequestException invalidRequestException) {
 			if (_log.isInfoEnabled()) {
-				_log.info(
-					invalidRequestException.getMessage(),
-					invalidRequestException);
+				_log.info(invalidRequestException);
 			}
 
 			return HttpServletResponse.SC_BAD_REQUEST;

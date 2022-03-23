@@ -509,7 +509,7 @@ public class EditStyleBookEntryDisplayContext {
 				layoutURL, "styleBookEntryPreview", true);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException.getMessage(), portalException);
+			_log.error(portalException);
 		}
 
 		return null;
@@ -552,7 +552,7 @@ public class EditStyleBookEntryDisplayContext {
 			return _getPreviewURL(layout);
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException.getMessage(), portalException);
+			_log.error(portalException);
 		}
 
 		return null;

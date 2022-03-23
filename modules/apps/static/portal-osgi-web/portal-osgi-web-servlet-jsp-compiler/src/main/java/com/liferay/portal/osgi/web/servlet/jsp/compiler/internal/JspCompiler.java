@@ -255,7 +255,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 					StandardLocation.CLASS_PATH, _classPath);
 			}
 			catch (IOException ioException) {
-				_log.error(ioException.getMessage(), ioException);
+				_log.error(ioException);
 			}
 
 			javaFileManager = new BundleJavaFileManager(
@@ -311,7 +311,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception.getMessage(), exception);
+			_log.error(exception);
 		}
 
 		Map<String, String> map =
@@ -405,7 +405,7 @@ public class JspCompiler extends Jsr199JavaCompiler {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception.getMessage(), exception);
+			_log.error(exception);
 		}
 	}
 

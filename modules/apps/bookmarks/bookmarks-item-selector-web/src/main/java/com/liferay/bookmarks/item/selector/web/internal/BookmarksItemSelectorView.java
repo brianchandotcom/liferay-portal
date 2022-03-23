@@ -102,23 +102,6 @@ public class BookmarksItemSelectorView
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
-	@Reference(unbind = "-")
-	public void setItemSelectorReturnTypeResolverHandler(
-		ItemSelectorReturnTypeResolverHandler
-			itemSelectorReturnTypeResolverHandler) {
-
-		_itemSelectorReturnTypeResolverHandler =
-			itemSelectorReturnTypeResolverHandler;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.bookmarks.item.selector.web)",
-		unbind = "-"
-	)
-	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
 			ListUtil.fromArray(
@@ -128,12 +111,16 @@ public class BookmarksItemSelectorView
 	@Reference
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
+	@Reference
 	private ItemSelectorReturnTypeResolverHandler
 		_itemSelectorReturnTypeResolverHandler;
 
 	@Reference
 	private Language _language;
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.bookmarks.item.selector.web)"
+	)
 	private ServletContext _servletContext;
 
 }

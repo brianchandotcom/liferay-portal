@@ -202,6 +202,8 @@ public class ExportTranslationDisplayContext {
 		).put(
 			"pathModule", PortalUtil.getPathModule()
 		).put(
+			"multiplePagesSelected", _classPKs.length > 1
+		).put(
 			"redirectURL", getRedirect()
 		).build();
 	}

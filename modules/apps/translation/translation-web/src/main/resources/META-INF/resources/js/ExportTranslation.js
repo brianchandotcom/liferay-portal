@@ -186,6 +186,7 @@ const ExportTranslation = ({
 	defaultSourceLanguageId,
 	experiences,
 	exportTranslationURL: initialExportTranslationURL,
+	multiplePagesSelected,
 	portletNamespace,
 	redirectURL,
 }) => {
@@ -357,6 +358,7 @@ ExportTranslation.propTypes = {
 			value: PropTypes.string.isRequired,
 		})
 	),
+	multiplePagesSelected: PropTypes.bool.isRequired,
 };
 
 export default ExportTranslation;

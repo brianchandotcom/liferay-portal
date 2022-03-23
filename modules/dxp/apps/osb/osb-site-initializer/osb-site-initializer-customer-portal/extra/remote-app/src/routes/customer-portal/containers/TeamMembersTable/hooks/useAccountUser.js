@@ -10,13 +10,17 @@
  */
 
 import {useEffect, useState} from 'react';
-import {ROLE_TYPES} from '../../../../../common/utils/constants';
+import client from '../../../../../apolloClient';
+import {getAccountUserAccountsByExternalReferenceCode} from '../../../../../common/services/liferay/graphql/queries';
 import getProjectRoles from '../../../../../common/utils/getProjectRoles';
+
+const MAX_PAGE_SIZE = 9999;
 
 const useAccountUser = (project) => {
 	const [accountRoles, setAccountRoles] = useState([]);
-	const [accountRolesOptions, setAccountRolesOptions] = useState();
 	const [administratorsAvailable, setAdministratorsAvailable] = useState();
+	const [userAccounts, setUserAccounts] = useState([]);
+	const [isLoadingUserAccounts, setIsLoadingUserAccounts] = useState(false);
 
 	useEffect(() => {
 		const getRoles = async () => {
@@ -29,27 +33,53 @@ const useAccountUser = (project) => {
 	}, [project]);
 
 	useEffect(() => {
-		if (accountRoles.length) {
-			const filteredRoles = accountRoles.map((role) => {
-				const isAdministratorOrRequestor =
-					role.key === ROLE_TYPES.admin.key ||
-					role.key === ROLE_TYPES.requester.key;
-
-				return {
-					...role,
-					disabled:
-						isAdministratorOrRequestor &&
-						administratorsAvailable === 0,
-				};
+		setIsLoadingUserAccounts(true);
+		const getAccountUserAccounts = async () => {
+			const {data} = await client.query({
+				query: getAccountUserAccountsByExternalReferenceCode,
+				variables: {
+					externalReferenceCode: project.accountKey,
+					pageSize: MAX_PAGE_SIZE,
+				},
 			});
-			setAccountRolesOptions(filteredRoles);
-		}
-	}, [accountRoles, administratorsAvailable]);
+
+			if (data) {
+				const accountUserAccounts = data.accountUserAccountsByExternalReferenceCode?.items?.reduce(
+					(userAccountsAccumulator, userAccount) => {
+						const currentAccountBrief = userAccount.accountBriefs?.find(
+							(accountBrief) =>
+								accountBrief.externalReferenceCode ===
+								project?.accountKey
+						);
+						if (currentAccountBrief) {
+							userAccountsAccumulator.push({
+								...userAccount,
+								roles: currentAccountBrief.roleBriefs?.map(
+									({name}) => name
+								),
+							});
+						}
+
+						return userAccountsAccumulator;
+					},
+					[]
+				);
+
+				setUserAccounts(accountUserAccounts);
+			}
+
+			setIsLoadingUserAccounts(false);
+		};
+		getAccountUserAccounts();
+	}, [project.accountKey]);
 
 	return {
-		accountRoles: accountRolesOptions,
+		accountRoles,
 		administratorsAvailable,
+		isLoadingUserAccounts,
 		setAdministratorsAvailable,
+		setUserAccounts,
+		userAccounts,
 	};
 };
 

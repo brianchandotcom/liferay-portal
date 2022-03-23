@@ -17,7 +17,6 @@ import {Liferay} from '../../../../common/services/liferay';
 import {
 	associateUserAccountWithAccountAndAccountRole,
 	deleteAccountUserAccount,
-	getAccountUserAccountsByExternalReferenceCode,
 } from '../../../../common/services/liferay/graphql/queries';
 import {
 	associateContactRoleNameByEmailByProject,
@@ -42,7 +41,6 @@ import {
 import {deleteAllPreviousUserRoles} from './utils/deleteAllPreviousUserRoles';
 import {getColumnsByUserAccess} from './utils/getColumnsByUserAccess';
 
-const MAX_PAGE_SIZE = 9999;
 const ROLE_FILTER_NAME = 'contactRoleNames';
 const ALERT_TIMEOUT = 3000;
 
@@ -50,66 +48,62 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 	const {
 		accountRoles,
 		administratorsAvailable,
+		isLoadingUserAccounts,
 		setAdministratorsAvailable,
+		setUserAccounts,
+		userAccounts,
 	} = useAccountUser(project);
 
-	const [userAccounts, setUserAccounts] = useState([]);
-	const [isLoadingUserAccounts, setIsLoadingUserAccounts] = useState(false);
 	const [userAction, setUserAction] = useState();
 	const [selectedRole, setSelectedRole] = useState();
 	const [userActionStatus, setUserActionStatus] = useState();
+	const [accountRolesOptions, setAccountRolesOptions] = useState([]);
 
 	useEffect(() => {
-		setIsLoadingUserAccounts(true);
-		const getAccountUserAccounts = async () => {
-			const {data} = await client.query({
-				query: getAccountUserAccountsByExternalReferenceCode,
-				variables: {
-					externalReferenceCode: project.accountKey,
-					pageSize: MAX_PAGE_SIZE,
-				},
-			});
+		if (accountRoles.length) {
+			const currentSelectedUser = userAccounts?.find(
+				({id}) => id === userAction?.userId
+			);
 
-			if (data) {
-				const accountUserAccounts = data.accountUserAccountsByExternalReferenceCode?.items?.reduce(
-					(userAccountsAccumulator, userAccount) => {
-						const currentAccountBrief = userAccount.accountBriefs?.find(
-							(accountBrief) =>
-								accountBrief.externalReferenceCode ===
-								project?.accountKey
-						);
-						if (currentAccountBrief) {
-							userAccountsAccumulator.push({
-								...userAccount,
-								roles: currentAccountBrief.roleBriefs?.map(
-									({name}) => name
-								),
-							});
-						}
-
-						return userAccountsAccumulator;
-					},
-					[]
+			if (currentSelectedUser) {
+				const isSupportSeatRole = currentSelectedUser?.roles?.some(
+					(role) =>
+						role === ROLE_TYPES.admin.key ||
+						role === ROLE_TYPES.requester.key
 				);
+				const filteredRoles = accountRoles.map((role) => {
+					const isAdministratorOrRequestor =
+						role.key === ROLE_TYPES.admin.key ||
+						role.key === ROLE_TYPES.requester.key;
 
-				setUserAccounts(accountUserAccounts);
+					return {
+						...role,
+						disabled:
+							!isSupportSeatRole &&
+							isAdministratorOrRequestor &&
+							administratorsAvailable === 0,
+					};
+				});
+				setAccountRolesOptions(filteredRoles);
 			}
-
-			setIsLoadingUserAccounts(false);
-		};
-		getAccountUserAccounts();
-	}, [project.accountKey]);
+		}
+	}, [
+		accountRoles,
+		administratorsAvailable,
+		userAccounts,
+		userAction?.userId,
+	]);
 
 	const handleChangeUserRole = async (userAccount) => {
 		if (selectedRole) {
-			const currentRole = accountRoles?.find(
+			const currentRole = accountRolesOptions?.find(
 				(role) => role?.name === selectedRole
 			);
 
 			deleteAllPreviousUserRoles(
 				project.accountKey,
 				userAccount,
-				accountRoles
+				accountRolesOptions
 			);
 
 			client.mutate({
@@ -166,7 +160,7 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 
 			const rolesToBeRemoved = userToBeRemoved.roles.reduce(
 				(rolesAccumulator, role, index) => {
-					const raysourceRole = accountRoles.find(
+					const raysourceRole = accountRolesOptions.find(
 						(roleType) => roleType.name === role
 					);
 
@@ -255,7 +249,7 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 					),
 					role: (
 						<RoleColumnType
-							accountRoles={accountRoles}
+							accountRoles={accountRolesOptions}
 							selectedRole={selectedRole}
 							setSelectedRole={setSelectedRole}
 							userAccount={userAccount}

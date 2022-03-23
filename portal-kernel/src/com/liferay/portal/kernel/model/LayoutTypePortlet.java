@@ -123,6 +123,8 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public String getStateMin();
 
+	public List<Portlet> getStaticPortlets(String position);
+
 	public boolean hasDefaultScopePortletId(long groupId, String portletId);
 
 	public boolean hasModeAboutPortletId(String portletId);

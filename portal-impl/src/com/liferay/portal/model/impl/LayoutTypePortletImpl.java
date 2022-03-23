@@ -516,6 +516,87 @@ public class LayoutTypePortletImpl
 	}
 
 	@Override
+	public List<Portlet> getStaticPortlets(String position) {
+		String[] portletIds = getStaticPortletIds(position);
+
+		List<Portlet> portlets = new ArrayList<>();
+
+		for (String portletId : portletIds) {
+			if (Validator.isNull(portletId) ||
+				hasNonstaticPortletId(portletId)) {
+
+				continue;
+			}
+
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				getCompanyId(), portletId);
+
+			if (portlet == null) {
+				continue;
+			}
+
+			Portlet staticPortlet = portlet;
+
+			if (portlet.isInstanceable()) {
+
+				// Instanceable portlets do not need to be cloned because they
+				// are already cloned. See the method getPortletById in the
+				// class PortletLocalServiceImpl and how it references the
+				// method getClonedInstance in the class PortletImpl.
+
+			}
+			else {
+				staticPortlet = new PortletWrapper(portlet) {
+
+					@Override
+					public boolean getStatic() {
+						return _staticPortlet;
+					}
+
+					@Override
+					public boolean getStaticStart() {
+						return _staticPortletStart;
+					}
+
+					@Override
+					public boolean isStatic() {
+						return _staticPortlet;
+					}
+
+					@Override
+					public boolean isStaticStart() {
+						return _staticPortletStart;
+					}
+
+					@Override
+					public void setStatic(boolean staticPortlet) {
+						_staticPortlet = staticPortlet;
+					}
+
+					@Override
+					public void setStaticStart(boolean staticPortletStart) {
+						_staticPortletStart = staticPortletStart;
+					}
+
+					private boolean _staticPortlet;
+					private boolean _staticPortletStart;
+
+				};
+			}
+
+			staticPortlet.setStatic(true);
+
+			if (position.startsWith("layout.static.portlets.start")) {
+				staticPortlet.setStaticStart(true);
+			}
+
+			portlets.add(staticPortlet);
+		}
+
+		return portlets;
+	}
+
+	@Override
 	public boolean hasDefaultScopePortletId(long groupId, String portletId) {
 		if (hasPortletId(portletId)) {
 			long scopeGroupId = PortalUtil.getScopeGroupId(
@@ -1760,86 +1841,6 @@ public class LayoutTypePortletImpl
 		}
 
 		return portletIds;
-	}
-
-	protected List<Portlet> getStaticPortlets(String position) {
-		String[] portletIds = getStaticPortletIds(position);
-
-		List<Portlet> portlets = new ArrayList<>();
-
-		for (String portletId : portletIds) {
-			if (Validator.isNull(portletId) ||
-				hasNonstaticPortletId(portletId)) {
-
-				continue;
-			}
-
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				getCompanyId(), portletId);
-
-			if (portlet == null) {
-				continue;
-			}
-
-			Portlet staticPortlet = portlet;
-
-			if (portlet.isInstanceable()) {
-
-				// Instanceable portlets do not need to be cloned because they
-				// are already cloned. See the method getPortletById in the
-				// class PortletLocalServiceImpl and how it references the
-				// method getClonedInstance in the class PortletImpl.
-
-			}
-			else {
-				staticPortlet = new PortletWrapper(portlet) {
-
-					@Override
-					public boolean getStatic() {
-						return _staticPortlet;
-					}
-
-					@Override
-					public boolean getStaticStart() {
-						return _staticPortletStart;
-					}
-
-					@Override
-					public boolean isStatic() {
-						return _staticPortlet;
-					}
-
-					@Override
-					public boolean isStaticStart() {
-						return _staticPortletStart;
-					}
-
-					@Override
-					public void setStatic(boolean staticPortlet) {
-						_staticPortlet = staticPortlet;
-					}
-
-					@Override
-					public void setStaticStart(boolean staticPortletStart) {
-						_staticPortletStart = staticPortletStart;
-					}
-
-					private boolean _staticPortlet;
-					private boolean _staticPortletStart;
-
-				};
-			}
-
-			staticPortlet.setStatic(true);
-
-			if (position.startsWith("layout.static.portlets.start")) {
-				staticPortlet.setStaticStart(true);
-			}
-
-			portlets.add(staticPortlet);
-		}
-
-		return portlets;
 	}
 
 	protected String getThemeId() {

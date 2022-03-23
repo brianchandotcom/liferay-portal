@@ -38,11 +38,7 @@ const AlreadySubmittedFormModal = ({setVisibleModal, submittedModalTexts}) => {
 				<Button
 					className="px-3 py-2"
 					displayType="primary"
-					onClick={() => {
-						// eslint-disable-next-line no-console
-						console.log(`clickou`);
-						setVisibleModal(false);
-					}}
+					onClick={() => setVisibleModal(false)}
 				>
 					Done
 				</Button>

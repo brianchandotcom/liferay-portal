@@ -1,5 +1,86 @@
 definition {
 
+	macro _addCommerceProductsWithOptionValues {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var catalogId = CommerceJSONCatalogsAPI._getCommerceCatalogIdByName(catalogName = "${catalogName}");
+
+		var optionKey = "package-quantity";
+
+		var optionIds = CommerceJSONOptionsAPI._getCommerceOptionIdByKey(optionKey = "${optionKey}");
+
+		for (var optionId : list "${optionIds}") {
+			echo("optionId is ${optionId}");
+		}
+
+		var size = "101";
+		var i = "1";
+
+		var payload = '''
+		[
+			{
+			"productStatus": 0,
+			"productType": "simple",
+			"productTypeI18n": "Simple",
+			"catalogId" : "${catalogId}",
+			"active": true,
+			"name": {
+			"en_US": "APIProduct"
+			},
+			"productOptions": [
+				{
+				"optionId": "${optionId}",
+				"key": "${optionKey}",
+				"fieldType": "select",
+				"name": {
+				"additionalProp1": "Package Quantity"
+				},
+				"productOptionValues": [
+				''';
+
+		while ("${i}" != "${size}" && (maxIterations = "100")) {
+			var valuesArray = '''
+					{
+					"key": "optionValue${i}",
+					"name": {
+						"en_US": "optionValue${i}"
+					}
+				}''';
+			var j = ${i} + 1;
+
+			if ("${j}" == "${size}") {
+				var payload = StringUtil.replace("${payload}", "${payload}", "${payload}${valuesArray}");
+			}
+			else {
+				var valuesArray = StringUtil.replace("${valuesArray}", "${valuesArray}", "${valuesArray},");
+				var payload = StringUtil.replace("${payload}", "${payload}", "${payload}${valuesArray}");
+			}
+
+			var i = ${i} + 1;
+		}
+
+		for (var iterations : list "1,2") {
+			var payload = StringUtil.replace("${payload}", "${payload}", "${payload}]");
+			var payload = StringUtil.replace("${payload}", "${payload}", "${payload}}");
+		}
+
+		var payload = StringUtil.replace("${payload}", "${payload}", "${payload}]");
+		
+		var curl = '''
+				${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/batch \
+				-u test@liferay.com:test \
+				-H 'accept: application/json' \
+				-H 'Content-Type: application/json' \
+				-d '${payload}'
+			''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	macro _deleteAllCommerceOptions {
 		var baseURL = "${baseURL}";
 
@@ -27,6 +108,28 @@ definition {
 		else {
 			echo("No Commerce Option to be deleted");
 		}
+	}
+
+	macro _getCommerceOptionIdByKey {
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		var curl = '''
+			${baseURL}/o/headless-commerce-admin-catalog/v1.0/options?search=${optionKey} \
+			-u test@liferay.com:test \
+			-H 'accept: application/json' \
+		''';
+
+		echo("OPTION KEY: ${optionKey}");
+
+		var optionId = JSONCurlUtil.get("${curl}", "$.items[?(@['key'] == '${optionKey}')].['id']");
+		
+		echo("OPTIONID: ${optionId}");
+		
+		return "${optionId}";
 	}
 
 	macro _getCommerceOptionIds {

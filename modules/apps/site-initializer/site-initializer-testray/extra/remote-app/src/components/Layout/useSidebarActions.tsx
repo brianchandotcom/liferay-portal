@@ -148,11 +148,6 @@ const useSidebarActions = () => {
 		{
 			items: [
 				{
-					icon: 'filter',
-					label: i18n.translate('manage-indexers'),
-					path: '/',
-				},
-				{
 					icon: 'pencil',
 					label: i18n.translate('manage-server'),
 					path: LIFERAY_URLS.manage_server,

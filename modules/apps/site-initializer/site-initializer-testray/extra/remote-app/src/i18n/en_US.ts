@@ -116,7 +116,6 @@ export default {
 	'manage': 'Manage',
 	'manage-account': 'Manage Account',
 	'manage-components': 'Manage Components',
-	'manage-indexers': 'Manage Indexers',
 	'manage-product-version': 'Manage Product Version',
 	'manage-roles': 'Manage Roles',
 	'manage-server': 'Manage Server',

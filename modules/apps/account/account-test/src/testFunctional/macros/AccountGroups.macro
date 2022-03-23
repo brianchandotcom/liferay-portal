@@ -27,15 +27,6 @@ definition {
 		Button.click(button = "Assign");
 
 		Alert.viewSuccessMessage();
-
-		Refresh();
-
-		for (var assigneeName : list "${assigneeNames}") {
-			AssertTextEquals.assertPartialText(
-				key_tableEntry = "${assigneeName}",
-				locator1 = "LexiconTable#TABLE_ENTRY",
-				value1 = "${assigneeName}");
-		}
 	}
 
 	macro addCP {

@@ -101,7 +101,7 @@ public class AssignScopesMVCRenderCommand implements MVCRenderCommand {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException.getMessage(), portalException);
+				_log.debug(portalException);
 			}
 		}
 

@@ -132,7 +132,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 					resourceName);
 			}
 			catch (IOException ioException) {
-				_log.error(ioException.getMessage(), ioException);
+				_log.error(ioException);
 			}
 		}
 		else if (protocol.equals("vfs")) {
@@ -141,8 +141,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 					className, resourceURL, resourceName);
 			}
 			catch (MalformedURLException malformedURLException) {
-				_log.error(
-					malformedURLException.getMessage(), malformedURLException);
+				_log.error(malformedURLException);
 			}
 		}
 
@@ -187,7 +186,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 				}
 			}
 			catch (IOException ioException) {
-				_log.error(ioException.getMessage(), ioException);
+				_log.error(ioException);
 			}
 		}
 
@@ -253,7 +252,7 @@ public class JspJavaFileObjectResolver implements JavaFileObjectResolver {
 				}
 			}
 			catch (IOException ioException) {
-				_log.error(ioException.getMessage(), ioException);
+				_log.error(ioException);
 			}
 		}
 

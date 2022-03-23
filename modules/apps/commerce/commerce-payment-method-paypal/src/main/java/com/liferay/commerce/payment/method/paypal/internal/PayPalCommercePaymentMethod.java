@@ -240,7 +240,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 				status, true, url, null, Collections.emptyList(), success);
 		}
 		catch (IOException ioException) {
-			_log.error(ioException.getMessage(), ioException);
+			_log.error(ioException);
 
 			HttpException httpException = (HttpException)ioException;
 
@@ -384,7 +384,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 				null, Collections.emptyList(), success);
 		}
 		catch (IOException ioException) {
-			_log.error(ioException.getMessage(), ioException);
+			_log.error(ioException);
 
 			HttpException httpException = (HttpException)ioException;
 
@@ -440,7 +440,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 				messages, success);
 		}
 		catch (PayPalRESTException payPalRESTException) {
-			_log.error(payPalRESTException.getMessage(), payPalRESTException);
+			_log.error(payPalRESTException);
 
 			return new CommercePaymentResult(
 				commercePaymentRequest.getTransactionId(),
@@ -511,7 +511,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 			}
 		}
 		catch (Exception exception) {
-			_log.error(exception.getMessage(), exception);
+			_log.error(exception);
 		}
 
 		return false;
@@ -683,7 +683,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 				success);
 		}
 		catch (IOException ioException) {
-			_log.error(ioException.getMessage(), ioException);
+			_log.error(ioException);
 
 			HttpException httpException = (HttpException)ioException;
 
@@ -757,7 +757,7 @@ public class PayPalCommercePaymentMethod implements CommercePaymentMethod {
 				true, url, null, messages, success);
 		}
 		catch (PayPalRESTException payPalRESTException) {
-			_log.error(payPalRESTException.getMessage(), payPalRESTException);
+			_log.error(payPalRESTException);
 
 			return new CommercePaymentResult(
 				commercePaymentRequest.getTransactionId(),

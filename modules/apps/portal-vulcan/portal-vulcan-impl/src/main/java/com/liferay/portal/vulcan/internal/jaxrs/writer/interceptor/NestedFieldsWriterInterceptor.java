@@ -99,7 +99,7 @@ public class NestedFieldsWriterInterceptor implements WriterInterceptor {
 				nestedFieldsContext.getFieldNames(), nestedFieldsContext);
 		}
 		catch (Exception exception) {
-			_log.error(exception.getMessage(), exception);
+			_log.error(exception);
 
 			throw new WebApplicationException(exception);
 		}

@@ -80,7 +80,7 @@ public class DDMXMLImpl implements DDMXML {
 		}
 		catch (DocumentException documentException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(documentException.getMessage(), documentException);
+				_log.debug(documentException);
 			}
 
 			return null;

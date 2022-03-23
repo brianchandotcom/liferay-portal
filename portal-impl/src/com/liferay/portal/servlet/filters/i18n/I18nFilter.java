@@ -260,7 +260,7 @@ public class I18nFilter extends BasePortalFilter {
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(portalException.getMessage(), portalException);
+				_log.debug(portalException);
 			}
 
 			return StringPool.BLANK;

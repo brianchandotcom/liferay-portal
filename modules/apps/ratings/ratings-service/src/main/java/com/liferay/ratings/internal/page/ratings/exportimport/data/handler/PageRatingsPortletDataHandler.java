@@ -160,8 +160,7 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 		}
 		catch (NoSuchModelException noSuchModelException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					noSuchModelException.getMessage(), noSuchModelException);
+				_log.debug(noSuchModelException);
 			}
 
 			return GroupConstants.DEFAULT_PARENT_GROUP_ID;

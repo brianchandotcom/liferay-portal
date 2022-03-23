@@ -139,7 +139,7 @@ public class WorkflowStatusDisplayContext {
 			}
 			catch (PortalException portalException) {
 				if (_log.isDebugEnabled()) {
-					_log.debug(portalException.getMessage(), portalException);
+					_log.debug(portalException);
 				}
 			}
 		}

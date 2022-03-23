@@ -412,7 +412,7 @@ public class CommerceSubscriptionEntryDisplayContext {
 			return commercePaymentMethodGroupRel.isActive();
 		}
 		catch (PortalException portalException) {
-			_log.error(portalException.getMessage(), portalException);
+			_log.error(portalException);
 		}
 
 		return false;

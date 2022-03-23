@@ -784,7 +784,7 @@ public class JenkinsResultsParserUtil {
 		}
 		catch (IOException ioException) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ioException.getMessage(), ioException);
+				_log.debug(ioException);
 			}
 		}
 		finally {

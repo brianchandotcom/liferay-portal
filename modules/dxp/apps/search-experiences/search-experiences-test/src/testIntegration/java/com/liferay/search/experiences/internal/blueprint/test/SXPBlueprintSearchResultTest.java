@@ -703,6 +703,36 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	@Test
+	public void testFilterByExactTermsMatch() throws Exception {
+		_assetTag = AssetTestUtil.addTag(_group.getGroupId(), "Filter");
+
+		_setUpJournalArticles(
+			new String[] {"", "", ""},
+			new String[] {
+				"coca cola filter", "pepsi cola filter", "sprite cola"
+			});
+
+		_keywords = "cola";
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"field", "title_en_US"
+				).put(
+					"values", new String[] {"filter"}
+				).build()
+			},
+			new String[] {"Filter by Exact Terms Match"});
+
+		_assertSearchIgnoreRelevance("[coca cola filter, pepsi cola filter]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance(
+			"[coca cola filter, pepsi cola filter, sprite cola]");
+	}
+
+	@Test
 	public void testHideByExactTermMatch() throws Exception {
 		_assetTag = AssetTestUtil.addTag(_group.getGroupId(), "hide");
 

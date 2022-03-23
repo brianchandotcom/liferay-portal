@@ -608,9 +608,13 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 				"view-in-context")) {
 
 			try {
-				return assetRenderer.getURLViewInContext(
+				String url = assetRenderer.getURLViewInContext(
 					_portal.getLiferayPortletRequest(_renderRequest),
 					_portal.getLiferayPortletResponse(_renderResponse), null);
+
+				if (!Validator.isBlank(url)) {
+					return url;
+				}
 			}
 			catch (Exception exception) {
 				if (_log.isDebugEnabled()) {

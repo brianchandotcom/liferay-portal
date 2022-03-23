@@ -143,6 +143,50 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	@Test
+	public void testBoostAssetType() throws Exception {
+		_sxpBlueprint.setConfigurationJSON(
+			JSONUtil.put(
+				"generalConfiguration",
+				JSONUtil.put(
+					"searchableAssetTypes",
+					JSONUtil.putAll(
+						"com.liferay.journal.model.JournalArticle",
+						"com.liferay.journal.model.JournalFolder"))
+			).put(
+				"queryConfiguration", JSONUtil.put("applyIndexerClauses", true)
+			).toString());
+
+		_updateSXPBlueprint();
+
+		_journalFolder = JournalFolderServiceUtil.addFolder(
+			_group.getGroupId(), 0, "folder cola", StringPool.BLANK,
+			_serviceContext);
+
+		_setUpJournalArticles(
+			new String[] {"cola cola", ""},
+			new String[] {"coca cola", "pepsi cola"});
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"boost", 100
+				).put(
+					"entry_class_name",
+					"com.liferay.journal.model.JournalFolder"
+				).build()
+			},
+			new String[] {"Boost Asset Type"});
+
+		_keywords = "cola";
+
+		_assertSearch("[folder cola, coca cola, pepsi cola]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance("[coca cola, folder cola, pepsi cola]");
+	}
+
+	@Test
 	public void testBoostContentsInACategory() throws Exception {
 		_addAssetCategory("Important", _user);
 
@@ -784,6 +828,41 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	@Test
+	public void testLimitSearchToContentsCreatedWithinAPeriodOfTime()
+		throws Exception {
+
+		_addJournalArticleSleep = 2;
+
+		_setUpJournalArticles(
+			new String[] {"cola cola", "", ""},
+			new String[] {"Coca Cola", "Pepsi Cola", "Sprite"});
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"end_date",
+					DateUtil.getDate(
+						new Date(System.currentTimeMillis()), "yyyyMMddHHmmss",
+						LocaleUtil.US)
+				).put(
+					"start_date",
+					DateUtil.getDate(
+						new Date(System.currentTimeMillis() - 200),
+						"yyyyMMddHHmmss", LocaleUtil.US)
+				).build()
+			},
+			new String[] {
+				"Limit Search to Contents Created Within a Period of Time"
+			});
+
+		_assertSearchIgnoreRelevance("[Pepsi Cola, Sprite]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance("[Coca Cola, Pepsi Cola, Sprite]");
+	}
+
+	@Test
 	public void testLimitSearchToMyContents() throws Exception {
 		_setUpLimitSearchTest();
 
@@ -847,41 +926,6 @@ public class SXPBlueprintSearchResultTest {
 			new String[] {"Limit Search to These Sites"});
 
 		_assertSearchIgnoreRelevance("[cola coca, cola pepsi]");
-	}
-
-	@Test
-	public void testLimitSearchToContentsCreatedWithinAPeriodOfTime()
-		throws Exception {
-
-		_addJournalArticleSleep = 2;
-
-		_setUpJournalArticles(
-			new String[] {"cola cola", "", ""},
-			new String[] {"Coca Cola", "Pepsi Cola", "Sprite"});
-
-		_updateElementInstancesJSON(
-			new Object[] {
-				HashMapBuilder.<String, Object>put(
-					"end_date",
-					DateUtil.getDate(
-						new Date(System.currentTimeMillis()), "yyyyMMddHHmmss",
-						LocaleUtil.US)
-				).put(
-					"start_date",
-					DateUtil.getDate(
-						new Date(System.currentTimeMillis() - 200),
-						"yyyyMMddHHmmss", LocaleUtil.US)
-				).build()
-			},
-			new String[] {
-				"Limit Search to Contents Created Within a Period of Time"
-			});
-
-		_assertSearchIgnoreRelevance("[Pepsi Cola, Sprite]");
-
-		_updateElementInstancesJSON(null, null);
-
-		_assertSearchIgnoreRelevance("[Coca Cola, Pepsi Cola, Sprite]");
 	}
 
 	@Test

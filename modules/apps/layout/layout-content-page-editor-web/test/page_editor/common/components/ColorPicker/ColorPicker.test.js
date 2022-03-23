@@ -326,6 +326,20 @@ describe('ColorPicker', () => {
 				).toBeInTheDocument();
 			});
 
+			it('Clears an error when the clear selection button is clicked', async () => {
+				const {getByRole, getByTitle, queryByText} = renderColorPicker({
+					value: '#fff',
+				});
+
+				onTypeValue(getByRole('combobox'), 'prim');
+
+				fireEvent.click(getByTitle('clear-selection'));
+
+				expect(
+					queryByText('this-token-does-not-exist')
+				).not.toBeInTheDocument();
+			});
+
 			it('renders an error when the written token is the same that the name field', async () => {
 				const {getByRole, getByText} = renderColorPicker({
 					field: {...FIELD, name: 'orange'},

@@ -802,7 +802,7 @@ definition {
 
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
-			var dataSourceName = StringUtil.replace("${assignedPropertyName}", " Combined Property", "");
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
 		}
 
 		task ("Visit the page with the new user and get data") {

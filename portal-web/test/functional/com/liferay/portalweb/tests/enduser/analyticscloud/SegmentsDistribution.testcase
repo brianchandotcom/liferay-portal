@@ -108,23 +108,23 @@ definition {
 		}
 
 		task ("Get current date") {
-			ACSegments.generateDayMonthAndYearValues(dateDifferenceFromCurrentDate = "0");
-
+			var dayNum = DateUtil.getCurrentDate();
 			var monthNum = DateUtil.getCurrentMonth();
+			var yearNum = DateUtil.getCurrentYear();
 
 			if (("${monthNum}" != "10") && ("${monthNum}" != "11") && ("${monthNum}" != "12")) {
 				var monthNum = "0${monthNum}";
 			}
 
-			var i = ${staticDay} / 10;
+			var i = ${dayNum} / 10;
 
 			if ("${i}" == "0") {
-				var staticDay = "0${staticDay}";
+				var dayNum = "0${dayNum}";
 			}
 		}
 
 		task ("View Chart Entry") {
-			ACSegments.viewBreakdownChartsEntry(key_entry = "${staticYear}-${monthNum}-${staticDay}");
+			ACSegments.viewBreakdownChartsEntry(key_entry = "${yearNum}-${monthNum}-${dayNum}");
 
 			ACSegments.viewBreakdownChartsEntry(key_entry = "100.0%");
 		}

@@ -331,7 +331,6 @@ public class ActionUtil {
 
 				article.setNew(true);
 				article.setId(0);
-				article.setResourcePrimKey(0);
 				article.setGroupId(groupId);
 				article.setClassNameId(
 					JournalArticleConstants.CLASS_NAME_ID_DEFAULT);

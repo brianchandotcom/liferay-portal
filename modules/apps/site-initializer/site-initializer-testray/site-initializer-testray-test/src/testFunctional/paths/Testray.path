@@ -30,6 +30,16 @@
 	<td>//div[contains(@class, testray-page)]//div[contains(@class, 'pagination')]//button[contains(text(), "${key_value} Items")]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>NEXT_AND_PREVIOUS_PAGE_BUTTON</td>
+	<td>//button[contains(@class, 'page-link') and contains(@aria-label, '${key_pageDirection}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NUMBER_PAGE_BUTTON</td>
+	<td>//button[contains(@class, 'page-link') and contains(text(), "${key_pageNumber}")]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

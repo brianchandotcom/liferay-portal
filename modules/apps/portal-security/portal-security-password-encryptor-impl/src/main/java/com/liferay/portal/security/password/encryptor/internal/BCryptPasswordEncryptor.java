@@ -61,11 +61,6 @@ public class BCryptPasswordEncryptor
 		return BCrypt.hashpw(plainTextPassword, salt);
 	}
 
-	@Override
-	public String getAlgorithmType() {
-		return PasswordEncryptorUtil.TYPE_BCRYPT;
-	}
-
 	private static final int _ROUNDS = 10;
 
 	private static final Pattern _pattern = Pattern.compile(

@@ -97,11 +97,6 @@ public class PBKDF2PasswordEncryptor
 		}
 	}
 
-	@Override
-	public String getAlgorithmType() {
-		return PasswordEncryptorUtil.TYPE_PBKDF2;
-	}
-
 	private static final int _KEY_SIZE = 160;
 
 	private static final int _ROUNDS = 720000;

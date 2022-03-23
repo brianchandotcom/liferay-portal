@@ -38,9 +38,4 @@ public class DefaultPasswordEncryptor
 		return DigesterUtil.digest(algorithm, plainTextPassword);
 	}
 
-	@Override
-	public String getAlgorithmType() {
-		return PasswordEncryptorUtil.TYPE_DEFAULT;
-	}
-
 }

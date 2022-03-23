@@ -37,9 +37,4 @@ public class NullPasswordEncryptor
 		return plainTextPassword;
 	}
 
-	@Override
-	public String getAlgorithmType() {
-		return PasswordEncryptorUtil.TYPE_NONE;
-	}
-
 }

@@ -74,11 +74,6 @@ public class SSHAPasswordEncryptor
 		}
 	}
 
-	@Override
-	public String getAlgorithmType() {
-		return PasswordEncryptorUtil.TYPE_SSHA;
-	}
-
 	protected byte[] getSaltBytes(String encryptedPassword)
 		throws PwdEncryptorException {
 

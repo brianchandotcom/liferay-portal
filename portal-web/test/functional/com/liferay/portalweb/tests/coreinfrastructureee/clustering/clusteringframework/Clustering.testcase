@@ -155,6 +155,36 @@ definition {
 			searchAssetType = "Blogs Entry");
 	}
 
+	@priority = "3"
+	test CanAccessGogoShellOnAnyClusteredNode {
+		property test.name.skip.portal.instance = "Clustering#CanAccessGogoShellOnAnyClusteredNode";
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		GogoShell.executeCommand(commandName = "lb | grep Liferay");
+
+		GogoShell.viewOutput(outputContent = "Liferay Portal");
+
+		User.logoutPG();
+
+		User.loginPG(
+			nodePort = "9080",
+			password = "test",
+			userEmailAddress = "test@liferay.com");
+
+		ApplicationsMenu.gotoPortlet(
+			category = "System",
+			panel = "Control Panel",
+			portlet = "Gogo Shell");
+
+		GogoShell.executeCommand(commandName = "lb | grep Liferay");
+
+		GogoShell.viewOutput(outputContent = "Liferay Portal");
+	}
+
 	@priority = "4"
 	test CanInvokeMethods {
 		property test.name.skip.portal.instance = "Clustering#CanInvokeMethods";

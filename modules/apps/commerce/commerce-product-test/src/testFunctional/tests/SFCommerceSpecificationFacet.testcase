@@ -190,7 +190,7 @@ definition {
 			maxTerms = "100",
 			portletName = "Specification Facet");
 
-		CommerceWidget.assertSpecificationPanel2FacetsCount(value = "95");
+		CommerceWidget.assertSpecificationPanel2FacetsCount(value = "100");
 	}
 
 }

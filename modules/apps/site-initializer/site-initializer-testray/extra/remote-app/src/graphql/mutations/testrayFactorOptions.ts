@@ -22,11 +22,11 @@ export const CreateFactorOption = gql`
 	mutation createFactorOption($FactorOption: InputC_FactorOption!) {
 		createFactorOption(FactorOption: $FactorOption)
 			@rest(
-				type: "C_FactorOption"
-				path: "factoroptions"
-				method: "POST"
 				bodyKey: "FactorOption"
 				bodySerializer: "factorOption"
+				method: "POST"
+				path: "factoroptions"
+				type: "C_FactorOption"
 			) {
 			id: factorOptionId
 			name
@@ -54,11 +54,11 @@ export const UpdateFactorOption = gql`
 			FactorOption: $FactorOption
 		)
 			@rest(
-				type: "C_FactorOption"
-				path: "/factoroptions/{args.factorOptionId}"
-				method: "PUT"
 				bodyKey: "FactorOption"
 				bodySerializer: "factorOption"
+				method: "PUT"
+				path: "/factoroptions/{args.factorOptionId}"
+				type: "C_FactorOption"
 			) {
 			id: factorOptionId
 			name

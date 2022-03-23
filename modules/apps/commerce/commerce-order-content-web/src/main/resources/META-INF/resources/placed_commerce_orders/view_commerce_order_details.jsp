@@ -141,6 +141,24 @@ if (commerceOrder != null) {
 			</div>
 		</div>
 	</div>
+
+	<div class="commerce-panel__content">
+		<div class="align-items-center row">
+			<div class="col-md-3">
+				<dl class="commerce-list">
+					<dt><liferay-ui:message key="erc" /></dt>
+					<dd><%= HtmlUtil.escape(commerceOrder.getExternalReferenceCode()) %></dd>
+				</dl>
+			</div>
+
+			<div class="col-md-3">
+				<dl class="commerce-list">
+					<dt><liferay-ui:message key="order-status" /></dt>
+					<dd><%= commerceOrderContentDisplayContext.getCommerceOrderStatus(commerceOrder) %></dd>
+				</dl>
+			</div>
+		</div>
+	</div>
 </div>
 
 <c:if test="<%= commerceOrderContentDisplayContext.isShowPurchaseOrderNumber() %>">
@@ -168,6 +186,8 @@ if (commerceOrder != null) {
 			<div class="commerce-panel__title"><liferay-ui:message key="billing-address" /></div>
 			<div class="commerce-panel__content">
 				<c:if test="<%= commerceOrderContentDisplayContext.hasViewBillingAddressPermission(permissionChecker, commerceAccount) && (billingCommerceAddress != null) %>">
+					<p><%= HtmlUtil.escape(billingCommerceAddress.getName()) %></p>
+
 					<p><%= HtmlUtil.escape(billingCommerceAddress.getStreet1()) %></p>
 
 					<c:if test="<%= !Validator.isBlank(billingCommerceAddress.getStreet2()) %>">
@@ -189,6 +209,8 @@ if (commerceOrder != null) {
 			<div class="commerce-panel__title"><liferay-ui:message key="shipping-address" /></div>
 			<div class="commerce-panel__content">
 				<c:if test="<%= shippingCommerceAddress != null %>">
+					<p><%= HtmlUtil.escape(shippingCommerceAddress.getName()) %></p>
+
 					<p><%= HtmlUtil.escape(shippingCommerceAddress.getStreet1()) %></p>
 
 					<c:if test="<%= !Validator.isBlank(shippingCommerceAddress.getStreet2()) %>">

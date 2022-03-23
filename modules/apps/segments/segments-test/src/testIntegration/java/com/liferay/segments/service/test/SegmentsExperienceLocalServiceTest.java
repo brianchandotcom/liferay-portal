@@ -433,6 +433,39 @@ public class SegmentsExperienceLocalServiceTest {
 	}
 
 	@Test
+	public void testFetchDefaultSegmentsExperienceId() throws PortalException {
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.addSegmentsExperience(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				SegmentsEntryConstants.ID_DEFAULT,
+				SegmentsExperienceConstants.KEY_DEFAULT, _classNameId, _classPK,
+				RandomTestUtil.randomLocaleStringMap(), 0, true,
+				new UnicodeProperties(true),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertEquals(
+			segmentsExperience.getSegmentsExperienceId(),
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_classPK));
+	}
+
+	@Test
+	public void testFetchDefaultSegmentsExperienceIdWithNonexistingDefaultExperience() {
+		Assert.assertEquals(
+			SegmentsExperienceConstants.ID_DEFAULT,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_classPK));
+	}
+
+	@Test
+	public void testFetchDefaultSegmentsExperienceIdWithNonexistingPlid() {
+		Assert.assertEquals(
+			SegmentsExperienceConstants.ID_DEFAULT,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				0));
+	}
+
+	@Test
 	public void testFetchSegmentsExperience() throws Exception {
 		SegmentsExperience segmentsExperience =
 			SegmentsTestUtil.addSegmentsExperience(

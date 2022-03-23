@@ -60,10 +60,10 @@ const useFormModal = ({
 			observer,
 			onChange: ({form, setForm}: any) => (event: any) => {
 				const {
-					target: {checked, name, type, ...target},
+					target: {checked, name, type},
 				} = event;
 
-				let {value} = target;
+				let {value} = event.target;
 
 				if (type === 'checkbox') {
 					value = checked;

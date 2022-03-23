@@ -56,7 +56,9 @@ definition {
 		task ("Assert Export button is disabled") {
 			MastersPageTemplatesAdmin.selectMasters(masterLayoutName = "Custom Masters Page Template");
 
-			AssertElementPresent(locator1 = "Icon#EXPORT_DISABLED");
+			AssertElementPresent(
+				key_text = "upload",
+				locator1 = "Icon#ANY_DISABLED");
 		}
 	}
 

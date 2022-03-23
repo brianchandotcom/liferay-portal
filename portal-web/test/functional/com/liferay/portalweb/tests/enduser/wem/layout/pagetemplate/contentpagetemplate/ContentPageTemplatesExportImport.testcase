@@ -80,7 +80,9 @@ definition {
 		}
 
 		task ("Assert Export button is disabled") {
-			AssertElementPresent(locator1 = "Icon#EXPORT_DISABLED");
+			AssertElementPresent(
+				key_text = "upload",
+				locator1 = "Icon#ANY_DISABLED");
 		}
 	}
 
@@ -156,7 +158,9 @@ definition {
 		}
 
 		task ("Assert Export button is disabled") {
-			AssertElementPresent(locator1 = "Icon#EXPORT_DISABLED");
+			AssertElementPresent(
+				key_text = "upload",
+				locator1 = "Icon#ANY_DISABLED");
 		}
 	}
 

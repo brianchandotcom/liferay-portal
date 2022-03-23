@@ -223,9 +223,9 @@ public interface LiferaySelenium {
 
 	public String getNumberIncrement(String value);
 
-	public String getOcularResultImageDirName();
+	public String getOcularBaselineImageDirName();
 
-	public String getOcularSnapImageDirName();
+	public String getOcularResultImageDirName();
 
 	public String getOutputDirName();
 

@@ -56,6 +56,21 @@
 	<td></td>
 </tr>
 <tr>
+    <td>QUOTATION_VALUES</td>
+    <td>//div[contains(@class, 'value')]/span[contains(.,'${value}')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>PAYMENT_AMOUNT_TWO_INSTALLMENTS</td>
+    <td>//p[contains(., '${installments}')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>BILLINGS_OPTIONS_DISCOUNT</td>
+    <td>//p[contains(@class, 'text-center') and contains(., '${discount}')]</td>
+    <td></td>
+</tr>
+<tr>
 	<td>FIELD_EMAIL_PAYPAL</td>
 	<td>//input[contains(@id, 'email')]</td>
 	<td></td>

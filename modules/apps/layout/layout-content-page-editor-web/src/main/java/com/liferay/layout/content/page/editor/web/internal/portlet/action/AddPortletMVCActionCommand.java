@@ -27,10 +27,8 @@ import com.liferay.layout.content.page.editor.web.internal.util.FragmentEntryLin
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortletIdException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletItem;
 import com.liferay.portal.kernel.portlet.InvokerPortlet;
@@ -138,27 +136,13 @@ public class AddPortletMVCActionCommand
 		return jsonObject.put("layoutData", layoutDataJSONObject);
 	}
 
-	private String _getPortletInstanceId(
-			String namespace, Layout layout, String portletId,
-			long segmentsExperienceId)
+	private String _getPortletInstanceId(String namespace, String portletId)
 		throws Exception {
 
 		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
 		if (portlet.isInstanceable()) {
 			return namespace;
-		}
-
-		long count = _portletPreferencesLocalService.getPortletPreferencesCount(
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(), portletId);
-
-		if ((count > 0) &&
-			!LayoutStructureUtil.isPortletMarkedForDeletion(
-				layout.getGroupId(), layout.getPlid(), portletId,
-				segmentsExperienceId)) {
-
-			throw new PortletIdException(
-				"Unable to add uninstanceable portlet more than once");
 		}
 
 		return StringPool.BLANK;
@@ -183,9 +167,7 @@ public class AddPortletMVCActionCommand
 
 		String namespace = StringUtil.randomId();
 
-		String instanceId = _getPortletInstanceId(
-			namespace, themeDisplay.getLayout(), portletId,
-			segmentsExperienceId);
+		String instanceId = _getPortletInstanceId(namespace, portletId);
 
 		JSONObject editableValueJSONObject =
 			_fragmentEntryProcessorRegistry.getDefaultEditableValuesJSONObject(

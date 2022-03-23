@@ -66,7 +66,7 @@ definition {
 			MouseOver(locator1 = "CommerceAccelerators#MINIUM_SIDEBAR_USER_AVATAR");
 		}
 
-		ScrollBy(value1 = "0, 1000");
+		ScrollBy(value1 = "0, -1000");
 
 		Click(
 			key_menuItem = "${menuItem}",

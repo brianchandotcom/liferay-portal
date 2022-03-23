@@ -286,6 +286,28 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle addArticle(
+			long groupId, long folderId, String articleId, String title,
+			String description, String content, Double priority)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		if (priority != null) {
+			serviceContext.setAssetPriority(priority);
+		}
+
+		return addArticle(
+			groupId, folderId, JournalArticleConstants.CLASS_NAME_ID_DEFAULT,
+			articleId, false, _getLocalizedMap(title),
+			_getLocalizedMap(description), _getLocalizedMap(content), null,
+			LocaleUtil.getSiteDefault(), null, false, false, serviceContext);
+	}
+
+	public static JournalArticle addArticle(
 			long groupId, String title, String content)
 		throws Exception {
 

@@ -441,7 +441,7 @@ definition {
 	@priority = "4"
 	test SearchIndividualDetails {
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 
 			var dataSource = StringUtil.extractFirst("${propertyName}", " ");
 		}
@@ -472,7 +472,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Go to the Individual > KnownIndividual > Details") {

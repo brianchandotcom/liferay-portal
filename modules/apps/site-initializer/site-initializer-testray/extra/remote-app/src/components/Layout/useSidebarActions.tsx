@@ -128,21 +128,6 @@ const useSidebarActions = () => {
 		{
 			items: [
 				{
-					icon: 'plus',
-					label: i18n.translate('add-case'),
-					path: '/manage/addcase',
-				},
-				{
-					icon: 'plus',
-					label: i18n.translate('add-requirement'),
-					path: '/manage/requirements',
-				},
-			],
-			title: '',
-		},
-		{
-			items: [
-				{
 					icon: 'pencil',
 					label: i18n.translate('manage-users'),
 					path: '/manage/userlist',

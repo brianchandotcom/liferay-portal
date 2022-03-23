@@ -12,8 +12,11 @@
  * details.
  */
 
-import {ClayDropDownWithItems} from '@clayui/drop-down';
-import React from 'react';
+import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
+import React, {useRef, useState} from 'react';
+
+import {useId} from '../../app/utils/useId';
 
 const SPACING_TYPES = ['margin', 'padding'];
 
@@ -24,9 +27,91 @@ const SPACING_TYPES = ['margin', 'padding'];
  */
 const SPACING_POSITIONS = ['top', 'right', 'bottom', 'left'];
 
+const BUTTON_CLASSNAME = 'page-editor__spacing-selector__button';
+const DROPDOWN_CLASSNAME = 'page-editor__spacing-selector__dropdown';
+
+const HORIZONTAL_FOCUS_LIST = [
+	['margin', 'left'],
+	['padding', 'left'],
+	['padding', 'right'],
+	['margin', 'right'],
+];
+
+const VERTICAL_FOCUS_LIST = [
+	['margin', 'top'],
+	['padding', 'top'],
+	['padding', 'bottom'],
+	['margin', 'bottom'],
+];
+
 export default function SpacingBox({defaultValue, onChange, options, value}) {
+	const ref = useRef();
+
+	const focusButton = (type, position) => {
+		const button = document.querySelector(
+			`.${BUTTON_CLASSNAME}[data-type=${type}][data-position=${position}]`
+		);
+
+		button?.focus();
+	};
+
+	const handleKeyUp = (event) => {
+		if (
+			(event.key === 'Enter' || event.key === ' ') &&
+			document.activeElement === ref.current
+		) {
+			event.preventDefault();
+			focusButton('margin', 'top');
+
+			return;
+		}
+
+		if (
+			!document.activeElement?.classList.contains(BUTTON_CLASSNAME) ||
+			document.activeElement?.getAttribute('aria-expanded') === 'true' ||
+			!event.key.startsWith('Arrow')
+		) {
+			return;
+		}
+
+		const {
+			position: currentPosition,
+			type: currentType,
+		} = document.activeElement.dataset;
+
+		const focusList =
+			event.key === 'ArrowLeft' || event.key === 'ArrowRight'
+				? HORIZONTAL_FOCUS_LIST
+				: VERTICAL_FOCUS_LIST;
+
+		let nextIndex = focusList.findIndex(
+			([type, position]) =>
+				position === currentPosition && type === currentType
+		);
+
+		if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+			nextIndex =
+				nextIndex === -1
+					? Math.floor(focusList.length / 2.001)
+					: Math.max(0, nextIndex - 1);
+		}
+		else {
+			nextIndex =
+				nextIndex === -1
+					? Math.ceil(focusList.length / 2.001)
+					: Math.min(focusList.length - 1, nextIndex + 1);
+		}
+
+		focusButton(...focusList[nextIndex]);
+	};
+
 	return (
-		<div className="page-editor__spacing-selector">
+		<div
+			className="page-editor__spacing-selector w-100"
+			onKeyUp={handleKeyUp}
+			ref={ref}
+			role="grid"
+		>
 			<SpacingSelectorBackground />
 
 			{SPACING_TYPES.map((type) => (
@@ -60,26 +145,52 @@ function SpacingSelectorButton({
 	type,
 	value,
 }) {
+	const [active, setActive] = useState(false);
+	const title = `${capitalize(type)} ${capitalize(position)}: ${
+		value || defaultValue
+	}px`;
+	const triggerId = useId();
+
 	return (
-		<ClayDropDownWithItems
-			className={`page-editor__spacing-selector__dropdown  page-editor__spacing-selector__dropdown--${type} page-editor__spacing-selector__dropdown--${position}`}
-			items={options.map((option) => ({
-				label: option.label,
-				onClick: () => onChange(option.value),
-				value: option.value,
-			}))}
+		<ClayDropDown
+			active={active}
+			className={`${DROPDOWN_CLASSNAME} ${DROPDOWN_CLASSNAME}--${type}-${position} align-items-stretch d-flex text-center`}
+			onActiveChange={setActive}
 			trigger={
-				<button
-					className="page-editor__spacing-selector__button"
-					title={`${capitalize(type)} ${capitalize(position)}: ${
-						value || defaultValue
-					}`}
+				<ClayButton
+					aria-expanded={active}
+					aria-haspopup={true}
+					className={`${BUTTON_CLASSNAME} b-0 flex-grow-1 mb-0 text-center`}
+					data-position={position}
+					data-type={type}
+					displayType="unstyled"
+					id={triggerId}
+					onClick={() => setActive(!active)}
+					title={title}
 					type="button"
 				>
 					{value || defaultValue}
-				</button>
+				</ClayButton>
 			}
-		/>
+		>
+			<ClayDropDown.ItemList
+				aria-labelledby={triggerId}
+				onKeyUp={(event) => event.stopPropagation()}
+			>
+				{options.map((option) => (
+					<ClayDropDown.Item
+						key={option.value}
+						onClick={() => {
+							onChange(option.value);
+							setActive(false);
+							document.getElementById(triggerId)?.focus();
+						}}
+					>
+						{option.label}
+					</ClayDropDown.Item>
+				))}
+			</ClayDropDown.ItemList>
+		</ClayDropDown>
 	);
 }
 

@@ -16,30 +16,25 @@ html#{$cadmin-selector} {
 				#{$marginButtonHeight} #{$verticalSpacing} #{$paddingButtonHeight} auto #{$paddingButtonHeight} #{$verticalSpacing} #{$marginButtonHeight} /
 				#{$marginButtonWidth} #{$horizontalSpacing} #{$paddingButtonWidth} auto #{$paddingButtonWidth} #{$horizontalSpacing} #{$marginButtonWidth};
 			justify-items: stretch;
-			width: 100%;
 
 			svg {
 				grid-area: 1 / 1 / -1 / -1;
 			}
 
 			&__dropdown {
-				align-items: stretch;
-				display: flex;
 				font-size: 10px;
-				text-align: center;
 
-				&:hover {
+				&:hover,
+				&:focus-within {
 					background-color: #c9edd2;
 				}
 
 				& > .page-editor__spacing-selector__button {
 					background: none;
-					border: none;
-					flex-grow: 1;
 				}
 
 				&--margin {
-					&.page-editor__spacing-selector__dropdown--bottom {
+					&-bottom {
 						grid-area: 7 / 1 / 8 / 8;
 						clip-path: polygon(
 							0 #{$marginButtonHeight},
@@ -49,7 +44,7 @@ html#{$cadmin-selector} {
 						);
 					}
 
-					&.page-editor__spacing-selector__dropdown--left {
+					&-left {
 						grid-area: 1 / 1 / 8 / 2;
 						clip-path: polygon(
 							0 0,
@@ -59,7 +54,7 @@ html#{$cadmin-selector} {
 						);
 					}
 
-					&.page-editor__spacing-selector__dropdown--right {
+					&-right {
 						grid-area: 1 / 7 / 8 / 8;
 						clip-path: polygon(
 							0 #{$marginButtonHeight},
@@ -69,7 +64,7 @@ html#{$cadmin-selector} {
 						);
 					}
 
-					&.page-editor__spacing-selector__dropdown--top {
+					&-top {
 						grid-area: 1 / 1 / 2 / 8;
 						clip-path: polygon(
 							0 0,
@@ -81,7 +76,7 @@ html#{$cadmin-selector} {
 				}
 
 				&--padding {
-					&.page-editor__spacing-selector__dropdown--bottom {
+					&-bottom {
 						grid-area: 5 / 3 / 6 / 6;
 						clip-path: polygon(
 							0 #{$paddingButtonHeight},
@@ -91,7 +86,7 @@ html#{$cadmin-selector} {
 						);
 					}
 
-					&.page-editor__spacing-selector__dropdown--left {
+					&-left {
 						grid-area: 3 / 3 / 6 / 4;
 						clip-path: polygon(
 							0 0,
@@ -101,7 +96,7 @@ html#{$cadmin-selector} {
 						);
 					}
 
-					&.page-editor__spacing-selector__dropdown--right {
+					&-right {
 						grid-area: 3 / 5 / 6 / 6;
 						clip-path: polygon(
 							0 #{$paddingButtonHeight},
@@ -111,7 +106,7 @@ html#{$cadmin-selector} {
 						);
 					}
 
-					&.page-editor__spacing-selector__dropdown--top {
+					&-top {
 						grid-area: 3 / 3 / 4 / 6;
 						clip-path: polygon(
 							0 0,

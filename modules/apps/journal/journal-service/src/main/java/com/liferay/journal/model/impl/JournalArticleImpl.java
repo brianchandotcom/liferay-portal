@@ -413,7 +413,11 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public JournalFolder getFolder() throws PortalException {
 		if (getFolderId() <= 0) {
-			return new JournalFolderImpl();
+			JournalFolder journalFolder = new JournalFolderImpl();
+
+			journalFolder.setCompanyId(getCompanyId());
+
+			return journalFolder;
 		}
 
 		return JournalFolderLocalServiceUtil.getFolder(getFolderId());

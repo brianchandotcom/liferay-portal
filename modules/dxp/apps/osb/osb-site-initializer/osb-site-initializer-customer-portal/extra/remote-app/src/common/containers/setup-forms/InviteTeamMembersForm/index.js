@@ -151,8 +151,7 @@ const InviteTeamMembersPage = ({
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 			setshowEmptyEmailError(false);
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -207,8 +206,7 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({
@@ -265,7 +263,7 @@ const InviteTeamMembersPage = ({
 					<>
 						<div
 							className={classNames('overflow-auto px-3', {
-								'invites-form': project.maxRequestors !== -1,
+								'invites-form': project.maxRequestors > 0,
 							})}
 						>
 							<div className="px-3">
@@ -363,7 +361,7 @@ const InviteTeamMembersPage = ({
 								)}
 							</div>
 						</div>
-						{project.maxRequestors !== -1 && (
+						{project.maxRequestors > 0 && (
 							<div className="invites-helper px-3">
 								<div className="mx-3 pt-3">
 									<h5 className="text-neutral-7">

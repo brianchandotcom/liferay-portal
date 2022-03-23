@@ -12,12 +12,24 @@ definition {
 			locator1 = "Testray#NUMBER_PAGE_BUTTON");
 	}
 
+	macro assertShowedItems {
+		AssertElementPresent(
+			key_text = "${itemsText}",
+			locator1 = "Testray#ITEMS_PER_PAGE_DESCRIPTION");
+	}
+
 	macro changeItemsPerPage {
 		Click(locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
 
 		Click(
 			key_itemvalue = "${itemValue}",
 			locator1 = "Testray#ITEMS_PER_PAGE_BUTTON_DROPDOWN");
+	}
+
+	macro clickOnPageNumber {
+		Click(
+			key_pageNumber = "${pageNumber}",
+			locator1 = "Testray#NUMBER_PAGE_BUTTON");
 	}
 
 	macro createTestraySite {
@@ -45,6 +57,18 @@ definition {
 		Click(
 			key_pageDirection = "${pageDirection}",
 			locator1 = "Testray#NEXT_AND_PREVIOUS_PAGE_BUTTON");
+	}
+
+	macro goToProjectPage {
+		Click(
+			key_projectName = "${projectName}",
+			locator1 = "Testray#PROJECT_NAME_BUTTON");
+	}
+
+	macro projectTabNavigator {
+		Click(
+			key_navTabName = "${navTabName}",
+			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
 	}
 
 	macro tearDownCP {

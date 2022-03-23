@@ -169,7 +169,7 @@ function SpacingSelectorButton({
 	return (
 		<ClayDropDown
 			active={active}
-			className={`${DROPDOWN_CLASSNAME} ${DROPDOWN_CLASSNAME}--${type}-${position} align-items-stretch d-flex text-center`}
+			className={`${DROPDOWN_CLASSNAME} ${DROPDOWN_CLASSNAME}--${type} ${DROPDOWN_CLASSNAME}--${type}-${position} align-items-stretch d-flex text-center`}
 			onActiveChange={setActive}
 			trigger={
 				<ClayButton

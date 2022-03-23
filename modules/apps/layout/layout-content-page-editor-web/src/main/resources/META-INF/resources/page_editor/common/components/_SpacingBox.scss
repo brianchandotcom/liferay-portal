@@ -26,16 +26,16 @@ html#{$cadmin-selector} {
 			&__dropdown {
 				font-size: 10px;
 
-				&:hover,
-				&:focus-within {
-					background-color: #c9edd2;
-				}
-
 				& > .page-editor__spacing-selector__button {
 					background: none;
 				}
 
 				&--margin {
+					&:hover,
+					&:focus-within {
+						background-color: #ffe4d1;
+					}
+
 					&-bottom {
 						grid-area: 7 / 1 / 8 / 8;
 						clip-path: polygon(
@@ -78,6 +78,11 @@ html#{$cadmin-selector} {
 				}
 
 				&--padding {
+					&:hover,
+					&:focus-within {
+						background-color: #c9edd2;
+					}
+
 					&-bottom {
 						grid-area: 5 / 3 / 6 / 6;
 						clip-path: polygon(

@@ -88,6 +88,8 @@ function EditSXPBlueprintForm({
 		initialSXPElementInstances.length || 0
 	);
 
+	const controllerRef = useRef();
+
 	const [errors, setErrors] = useState([]);
 	const [previewInfo, setPreviewInfo] = useState(() => ({
 		loading: false,
@@ -538,6 +540,13 @@ function EditSXPBlueprintForm({
 	};
 
 	/**
+	 * Used by the preview sidebar to cancel any unexpectedly slow search.
+	 */
+	const _handleFetchPreviewCancel = () => {
+		controllerRef.current.abort();
+	};
+
+	/**
 	 * Used by the preview sidebar to perform searches.
 	 * @param {string} query The keyword search query
 	 * @param {number} delta The number of results to return
@@ -550,6 +559,8 @@ function EditSXPBlueprintForm({
 		page,
 		attributes
 	) => {
+		controllerRef.current = new AbortController();
+
 		setPreviewInfo((previewInfo) => ({
 			...previewInfo,
 			loading: true,
@@ -672,6 +683,7 @@ function EditSXPBlueprintForm({
 					},
 					elementInstances,
 				}),
+				signal: controllerRef.current.signal,
 			}
 		)
 			.then((response) => {
@@ -691,13 +703,14 @@ function EditSXPBlueprintForm({
 					results: parseResponseContent(responseContent),
 				});
 			})
-			.catch(() => {
-				setTimeout(() => {
-					setPreviewInfo({
-						loading: false,
-						results: getResultsError(),
-					});
-				}, 100);
+			.catch((error) => {
+				setPreviewInfo({
+					loading: false,
+					results:
+						error.name === 'AbortError'
+							? previewInfo.results
+							: getResultsError({}),
+				});
 			});
 	};
 
@@ -930,6 +943,7 @@ function EditSXPBlueprintForm({
 				hits={transformToSearchPreviewHits(previewInfo.results)}
 				loading={previewInfo.loading}
 				onClose={_handleCloseSidebar}
+				onFetchCancel={_handleFetchPreviewCancel}
 				onFetchResults={_handleFetchPreviewSearch}
 				onFocusSXPElement={_handleFocusSXPElement}
 				responseString={previewInfo.results.responseString}

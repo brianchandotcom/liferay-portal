@@ -41,6 +41,7 @@ function PreviewSidebar({
 	hits = [],
 	loading,
 	onClose,
+	onFetchCancel,
 	onFetchResults,
 	onFocusSXPElement,
 	responseString = '',
@@ -51,6 +52,7 @@ function PreviewSidebar({
 	const [activeDelta, setActiveDelta] = useState(10);
 	const [activePage, setActivePage] = useState(1);
 	const [attributes, setAttributes] = useState([]);
+	const [showCancel, setShowCancel] = useState(false);
 	const [value, setValue] = useState('');
 
 	const _handleAttributesSubmit = (attributes) => {
@@ -58,7 +60,9 @@ function PreviewSidebar({
 	};
 
 	const _handleFetch = () => {
+		setShowCancel(false);
 		onFetchResults(value, activeDelta, activePage, attributes);
+		setTimeout(() => setShowCancel(true), 10000);
 	};
 
 	useDidUpdateEffect(() => {
@@ -294,7 +298,26 @@ function PreviewSidebar({
 					</div>
 				)
 			) : (
-				<ClayLoadingIndicator />
+				<>
+					<ClayLoadingIndicator />
+
+					{showCancel && (
+						<div className="search-message">
+							{Liferay.Language.get(
+								'it-looks-like-this-is-taking-longer-than-expected'
+							)}
+
+							<ClayButton
+								className="cancel"
+								displayType="secondary"
+								onClick={onFetchCancel}
+								small
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
+						</div>
+					)}
+				</>
 			)}
 		</div>
 	);
@@ -305,6 +328,7 @@ PreviewSidebar.propTypes = {
 	hits: PropTypes.arrayOf(PropTypes.object),
 	loading: PropTypes.bool,
 	onClose: PropTypes.func,
+	onFetchCancel: PropTypes.func,
 	onFetchResults: PropTypes.func,
 	onFocusSXPElement: PropTypes.func,
 	responseString: PropTypes.string,

@@ -446,7 +446,7 @@ definition {
 		}
 
 		task ("Then the user should be able to map account fields to columns in the CSV file") {
-			ImportExport.mapImport(fieldMappings = "name:Column 1,type:Column 2,description:Column 3,externalReferenceCode:Column 4");
+			ImportExport.mapImport(fieldMappings = "name:Column 3,type:Column 4,description:Column 1,externalReferenceCode:Column 2");
 		}
 
 		task ("When the user imports the file") {

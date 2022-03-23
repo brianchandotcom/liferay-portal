@@ -556,4 +556,9 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			new Integer[] {26, 29, 41});
 	}
 
+	@Test
+	public void testLogParametersCheck() throws Exception {
+		test("LogParametersCheck.testjava");
+	}
+
 }

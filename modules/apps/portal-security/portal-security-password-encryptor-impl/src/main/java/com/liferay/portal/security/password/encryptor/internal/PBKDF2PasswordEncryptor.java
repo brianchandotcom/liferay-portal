@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
-import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -41,7 +40,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Tomas Polesovsky
  */
 @Component(
-	property = "type=" + PasswordEncryptorUtil.TYPE_PBKDF2,
+	property = "type=" + PasswordEncryptor.TYPE_PBKDF2,
 	service = PasswordEncryptor.class
 )
 public class PBKDF2PasswordEncryptor

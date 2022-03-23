@@ -15,7 +15,6 @@
 package com.liferay.portal.security.password.encryptor.internal;
 
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
-import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -25,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Tomas Polesovsky
  */
 @Component(
-	property = "type=" + PasswordEncryptorUtil.TYPE_DEFAULT,
+	property = "type=" + PasswordEncryptor.TYPE_DEFAULT,
 	service = PasswordEncryptor.class
 )
 public class DefaultPasswordEncryptor

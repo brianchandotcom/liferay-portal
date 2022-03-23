@@ -212,7 +212,6 @@ Export-Package:\
 	org.apache.xml.res.*;version='2.7.1',\
 	org.apache.xml.security.*;version='1.4.5',\
 	org.apache.xml.serialize;version='2.11.0',\
-	org.apache.xml.serializer;version='2.7.1',\
 	org.apache.xml.utils.*;version='2.7.1',\
 	org.apache.xmlcommons;version='1.4.01',\
 	org.apache.xpath.*;version='2.7.1',\

@@ -2,20 +2,11 @@ definition {
 
 	macro assertOptionFacetsCount {
 		var javaScriptCountElement = '''
-
-		let count = document.getElementById('_com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet_INSTANCE_xGyweZADwKkt_facetCPOptionsPanelContainer').getElementsByTagName('li');
-		var arr = Array.from(count);
 		
-		var j = 0;
-			for (var i = 0; i < arr.length; i += 1) {
-    			if (i in arr) {
-        			j += 1;
-    			}
-		};
+		const stringToMatch = "facetCPOptionsPanelContainer";
 
-		var len = j.toString();
-		
-		return len;
+		return document.querySelectorAll(`[id$='_${stringToMatch}'] li`).length.toString();
+
 		''';
 		var count = selenium.getEval("${javaScriptCountElement}");
 
@@ -31,19 +22,10 @@ definition {
 	macro assertSpecificationPanel2FacetsCount {
 		var javaScriptCountElement = '''
 
-		let count = document.getElementById('_com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet_INSTANCE_eLuWbptdFGON_facetCPSpecificationOptionsPanel2').getElementsByTagName('li');
-		var arr = Array.from(count);
-		
-		var j = 0;
-			for (var i = 0; i < arr.length; i += 1) {
-    			if (i in arr) {
-        			j += 1;
-    			}
-		};
+		const stringToMatch = "facetCPSpecificationOptionsPanel2";
 
-		var len = j.toString();
-		
-		return len;
+		return document.querySelectorAll(`[id$='_${stringToMatch}'] li`).length.toString();
+
 		''';
 		var count = selenium.getEval("${javaScriptCountElement}");
 

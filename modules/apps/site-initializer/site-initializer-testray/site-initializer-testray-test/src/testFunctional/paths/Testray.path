@@ -40,6 +40,16 @@
 	<td>//button[contains(@class, 'page-link') and contains(text(), "${key_pageNumber}")]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PROJECT_NAME_BUTTON</td>
+	<td>//td[contains(@class, 'text-dark cursor-pointer') and contains(text(), "${key_projectName}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECT_NAVIGATOR_TAB_BUTTON</td>
+	<td>//button[contains(@class, 'nav-link') and contains(text(), "${key_navTabName}")]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

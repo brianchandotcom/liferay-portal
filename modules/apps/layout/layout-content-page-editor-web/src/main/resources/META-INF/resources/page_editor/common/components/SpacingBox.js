@@ -18,6 +18,11 @@ import React, {useRef, useState} from 'react';
 
 import {useId} from '../../app/utils/useId';
 
+/**
+ * These elements must be sorted from the most outer circle to the most inner
+ * circle to facilitate keyboard navigation.
+ * @type {string[]}
+ */
 const SPACING_TYPES = ['margin', 'padding'];
 
 /**
@@ -27,22 +32,22 @@ const SPACING_TYPES = ['margin', 'padding'];
  */
 const SPACING_POSITIONS = ['top', 'right', 'bottom', 'left'];
 
+const ARROW_TO_POSITION = {
+	ArrowDown: 'bottom',
+	ArrowLeft: 'left',
+	ArrowRight: 'right',
+	ArrowUp: 'top',
+};
+
+const REVERSED_POSITION = {
+	bottom: 'top',
+	left: 'right',
+	right: 'left',
+	top: 'bottom',
+};
+
 const BUTTON_CLASSNAME = 'page-editor__spacing-selector__button';
 const DROPDOWN_CLASSNAME = 'page-editor__spacing-selector__dropdown';
-
-const HORIZONTAL_FOCUS_LIST = [
-	['margin', 'left'],
-	['padding', 'left'],
-	['padding', 'right'],
-	['margin', 'right'],
-];
-
-const VERTICAL_FOCUS_LIST = [
-	['margin', 'top'],
-	['padding', 'top'],
-	['padding', 'bottom'],
-	['margin', 'bottom'],
-];
 
 export default function SpacingBox({defaultValue, onChange, options, value}) {
 	const ref = useRef();
@@ -79,30 +84,33 @@ export default function SpacingBox({defaultValue, onChange, options, value}) {
 			type: currentType,
 		} = document.activeElement.dataset;
 
-		const focusList =
-			event.key === 'ArrowLeft' || event.key === 'ArrowRight'
-				? HORIZONTAL_FOCUS_LIST
-				: VERTICAL_FOCUS_LIST;
+		let nextPosition = ARROW_TO_POSITION[event.key];
+		let nextType = currentType;
 
-		let nextIndex = focusList.findIndex(
-			([type, position]) =>
-				position === currentPosition && type === currentType
-		);
+		if (nextPosition === currentPosition) {
 
-		if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
-			nextIndex =
-				nextIndex === -1
-					? Math.floor(focusList.length / 2.001)
-					: Math.max(0, nextIndex - 1);
+			// Move to the outer type.
+			// We try to update the type so we can move to the outer circle,
+			// or stay in position if it is not possible.
+
+			const currentTypeIndex = SPACING_TYPES.indexOf(currentType);
+			nextType = SPACING_TYPES[Math.max(0, currentTypeIndex - 1)];
 		}
-		else {
-			nextIndex =
-				nextIndex === -1
-					? Math.ceil(focusList.length / 2.001)
-					: Math.min(focusList.length - 1, nextIndex + 1);
+		else if (nextPosition === REVERSED_POSITION[currentPosition]) {
+
+			// Move to the inner type.
+			// We try to update the type so we can move to the inner circle,
+			// and keep currentPosition if it succeeds.
+
+			const currentTypeIndex = SPACING_TYPES.indexOf(currentType);
+
+			if (currentTypeIndex < SPACING_TYPES.length - 1) {
+				nextType = SPACING_TYPES[currentTypeIndex + 1];
+				nextPosition = currentPosition;
+			}
 		}
 
-		focusButton(...focusList[nextIndex]);
+		focusButton(nextType, nextPosition);
 	};
 
 	return (

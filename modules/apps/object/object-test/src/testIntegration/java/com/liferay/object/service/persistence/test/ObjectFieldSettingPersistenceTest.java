@@ -143,8 +143,6 @@ public class ObjectFieldSettingPersistenceTest {
 
 		newObjectFieldSetting.setName(RandomTestUtil.randomString());
 
-		newObjectFieldSetting.setRequired(RandomTestUtil.randomBoolean());
-
 		newObjectFieldSetting.setValue(RandomTestUtil.randomString());
 
 		_objectFieldSettings.add(_persistence.update(newObjectFieldSetting));
@@ -184,9 +182,6 @@ public class ObjectFieldSettingPersistenceTest {
 		Assert.assertEquals(
 			existingObjectFieldSetting.getName(),
 			newObjectFieldSetting.getName());
-		Assert.assertEquals(
-			existingObjectFieldSetting.isRequired(),
-			newObjectFieldSetting.isRequired());
 		Assert.assertEquals(
 			existingObjectFieldSetting.getValue(),
 			newObjectFieldSetting.getValue());
@@ -255,8 +250,7 @@ public class ObjectFieldSettingPersistenceTest {
 			"ObjectFieldSetting", "mvccVersion", true, "uuid", true,
 			"objectFieldSettingId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"objectFieldId", true, "name", true, "required", true, "value",
-			true);
+			"objectFieldId", true, "name", true, "value", true);
 	}
 
 	@Test
@@ -569,8 +563,6 @@ public class ObjectFieldSettingPersistenceTest {
 		objectFieldSetting.setObjectFieldId(RandomTestUtil.nextLong());
 
 		objectFieldSetting.setName(RandomTestUtil.randomString());
-
-		objectFieldSetting.setRequired(RandomTestUtil.randomBoolean());
 
 		objectFieldSetting.setValue(RandomTestUtil.randomString());
 

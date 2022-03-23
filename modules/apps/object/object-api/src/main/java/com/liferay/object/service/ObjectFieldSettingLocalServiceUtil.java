@@ -45,12 +45,11 @@ public class ObjectFieldSettingLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectFieldSettingLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectFieldSetting addObjectFieldSetting(
-			long userId, long objectFieldId, String name, boolean required,
-			String value)
+			long userId, long objectFieldId, String name, String value)
 		throws PortalException {
 
 		return getService().addObjectFieldSetting(
-			userId, objectFieldId, name, required, value);
+			userId, objectFieldId, name, value);
 	}
 
 	/**

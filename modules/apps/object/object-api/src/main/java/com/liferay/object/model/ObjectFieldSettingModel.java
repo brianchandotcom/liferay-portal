@@ -234,27 +234,6 @@ public interface ObjectFieldSettingModel
 	public void setName(String name);
 
 	/**
-	 * Returns the required of this object field setting.
-	 *
-	 * @return the required of this object field setting
-	 */
-	public boolean getRequired();
-
-	/**
-	 * Returns <code>true</code> if this object field setting is required.
-	 *
-	 * @return <code>true</code> if this object field setting is required; <code>false</code> otherwise
-	 */
-	public boolean isRequired();
-
-	/**
-	 * Sets whether this object field setting is required.
-	 *
-	 * @param required the required of this object field setting
-	 */
-	public void setRequired(boolean required);
-
-	/**
 	 * Returns the value of this object field setting.
 	 *
 	 * @return the value of this object field setting

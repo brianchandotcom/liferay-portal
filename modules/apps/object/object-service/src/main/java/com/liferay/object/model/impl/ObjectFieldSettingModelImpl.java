@@ -22,7 +22,6 @@ import com.liferay.object.model.ObjectFieldSettingModel;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -62,7 +61,6 @@ import java.util.function.Function;
  * @see ObjectFieldSettingImpl
  * @generated
  */
-@JSON(strict = true)
 public class ObjectFieldSettingModelImpl
 	extends BaseModelImpl<ObjectFieldSetting>
 	implements ObjectFieldSettingModel {
@@ -80,7 +78,7 @@ public class ObjectFieldSettingModelImpl
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
 		{"objectFieldId", Types.BIGINT}, {"name", Types.VARCHAR},
-		{"required", Types.BOOLEAN}, {"value", Types.VARCHAR}
+		{"value", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -97,12 +95,11 @@ public class ObjectFieldSettingModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("objectFieldId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("required", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectFieldSetting (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldSettingId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectFieldId LONG,name VARCHAR(75) null,required BOOLEAN,value VARCHAR(75) null)";
+		"create table ObjectFieldSetting (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,objectFieldSettingId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectFieldId LONG,name VARCHAR(75) null,value VARCHAR(75) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectFieldSetting";
 
@@ -348,12 +345,6 @@ public class ObjectFieldSettingModelImpl
 			"name",
 			(BiConsumer<ObjectFieldSetting, String>)
 				ObjectFieldSetting::setName);
-		attributeGetterFunctions.put(
-			"required", ObjectFieldSetting::getRequired);
-		attributeSetterBiConsumers.put(
-			"required",
-			(BiConsumer<ObjectFieldSetting, Boolean>)
-				ObjectFieldSetting::setRequired);
 		attributeGetterFunctions.put("value", ObjectFieldSetting::getValue);
 		attributeSetterBiConsumers.put(
 			"value",
@@ -366,7 +357,6 @@ public class ObjectFieldSettingModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
-	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -381,7 +371,6 @@ public class ObjectFieldSettingModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
-	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -410,7 +399,6 @@ public class ObjectFieldSettingModelImpl
 		return getColumnOriginalValue("uuid_");
 	}
 
-	@JSON
 	@Override
 	public long getObjectFieldSettingId() {
 		return _objectFieldSettingId;
@@ -425,7 +413,6 @@ public class ObjectFieldSettingModelImpl
 		_objectFieldSettingId = objectFieldSettingId;
 	}
 
-	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -450,7 +437,6 @@ public class ObjectFieldSettingModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
-	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -481,7 +467,6 @@ public class ObjectFieldSettingModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
-	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -501,7 +486,6 @@ public class ObjectFieldSettingModelImpl
 		_userName = userName;
 	}
 
-	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -516,7 +500,6 @@ public class ObjectFieldSettingModelImpl
 		_createDate = createDate;
 	}
 
-	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -537,7 +520,6 @@ public class ObjectFieldSettingModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
 	@Override
 	public long getObjectFieldId() {
 		return _objectFieldId;
@@ -562,7 +544,6 @@ public class ObjectFieldSettingModelImpl
 			this.<Long>getColumnOriginalValue("objectFieldId"));
 	}
 
-	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -591,28 +572,6 @@ public class ObjectFieldSettingModelImpl
 		return getColumnOriginalValue("name");
 	}
 
-	@JSON
-	@Override
-	public boolean getRequired() {
-		return _required;
-	}
-
-	@JSON
-	@Override
-	public boolean isRequired() {
-		return _required;
-	}
-
-	@Override
-	public void setRequired(boolean required) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_required = required;
-	}
-
-	@JSON
 	@Override
 	public String getValue() {
 		if (_value == null) {
@@ -707,7 +666,6 @@ public class ObjectFieldSettingModelImpl
 		objectFieldSettingImpl.setModifiedDate(getModifiedDate());
 		objectFieldSettingImpl.setObjectFieldId(getObjectFieldId());
 		objectFieldSettingImpl.setName(getName());
-		objectFieldSettingImpl.setRequired(isRequired());
 		objectFieldSettingImpl.setValue(getValue());
 
 		objectFieldSettingImpl.resetOriginalValues();
@@ -740,8 +698,6 @@ public class ObjectFieldSettingModelImpl
 			this.<Long>getColumnOriginalValue("objectFieldId"));
 		objectFieldSettingImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
-		objectFieldSettingImpl.setRequired(
-			this.<Boolean>getColumnOriginalValue("required"));
 		objectFieldSettingImpl.setValue(
 			this.<String>getColumnOriginalValue("value"));
 
@@ -875,8 +831,6 @@ public class ObjectFieldSettingModelImpl
 			objectFieldSettingCacheModel.name = null;
 		}
 
-		objectFieldSettingCacheModel.required = isRequired();
-
 		objectFieldSettingCacheModel.value = getValue();
 
 		String value = objectFieldSettingCacheModel.value;
@@ -987,7 +941,6 @@ public class ObjectFieldSettingModelImpl
 	private boolean _setModifiedDate;
 	private long _objectFieldId;
 	private String _name;
-	private boolean _required;
 	private String _value;
 
 	public <T> T getColumnValue(String columnName) {
@@ -1030,7 +983,6 @@ public class ObjectFieldSettingModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put("objectFieldId", _objectFieldId);
 		_columnOriginalValues.put("name", _name);
-		_columnOriginalValues.put("required", _required);
 		_columnOriginalValues.put("value", _value);
 	}
 
@@ -1075,9 +1027,7 @@ public class ObjectFieldSettingModelImpl
 
 		columnBitmasks.put("name", 512L);
 
-		columnBitmasks.put("required", 1024L);
-
-		columnBitmasks.put("value", 2048L);
+		columnBitmasks.put("value", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -39,12 +39,11 @@ public class ObjectFieldSettingLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectFieldSetting addObjectFieldSetting(
-			long userId, long objectFieldId, String name, boolean required,
-			String value)
+			long userId, long objectFieldId, String name, String value)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectFieldSettingLocalService.addObjectFieldSetting(
-			userId, objectFieldId, name, required, value);
+			userId, objectFieldId, name, value);
 	}
 
 	/**

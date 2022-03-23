@@ -104,7 +104,6 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="objectFieldId" type="long" />
 		<field name="name" type="String" />
-		<field name="required" type="boolean" />
 		<field name="value" type="String" />
 	</model>
 	<model name="com.liferay.object.model.ObjectLayout">

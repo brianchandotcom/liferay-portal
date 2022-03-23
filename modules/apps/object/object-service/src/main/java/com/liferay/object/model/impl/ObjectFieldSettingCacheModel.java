@@ -78,7 +78,7 @@ public class ObjectFieldSettingCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -100,8 +100,6 @@ public class ObjectFieldSettingCacheModel
 		sb.append(objectFieldId);
 		sb.append(", name=");
 		sb.append(name);
-		sb.append(", required=");
-		sb.append(required);
 		sb.append(", value=");
 		sb.append(value);
 		sb.append("}");
@@ -157,8 +155,6 @@ public class ObjectFieldSettingCacheModel
 			objectFieldSettingImpl.setName(name);
 		}
 
-		objectFieldSettingImpl.setRequired(required);
-
 		if (value == null) {
 			objectFieldSettingImpl.setValue("");
 		}
@@ -187,8 +183,6 @@ public class ObjectFieldSettingCacheModel
 
 		objectFieldId = objectInput.readLong();
 		name = objectInput.readUTF();
-
-		required = objectInput.readBoolean();
 		value = objectInput.readUTF();
 	}
 
@@ -228,8 +222,6 @@ public class ObjectFieldSettingCacheModel
 			objectOutput.writeUTF(name);
 		}
 
-		objectOutput.writeBoolean(required);
-
 		if (value == null) {
 			objectOutput.writeUTF("");
 		}
@@ -248,7 +240,6 @@ public class ObjectFieldSettingCacheModel
 	public long modifiedDate;
 	public long objectFieldId;
 	public String name;
-	public boolean required;
 	public String value;
 
 }

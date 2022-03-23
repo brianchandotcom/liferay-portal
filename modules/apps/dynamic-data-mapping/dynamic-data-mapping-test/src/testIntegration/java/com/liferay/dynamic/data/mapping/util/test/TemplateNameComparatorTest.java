@@ -61,30 +61,33 @@ public class TemplateNameComparatorTest {
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName(), defaultLocale);
 
+		long resourceClassNameId = PortalUtil.getClassNameId(
+			JournalArticle.class);
+
 		_ddmTemplate1 = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
-			PortalUtil.getClassNameId(JournalArticle.class), defaultLocale);
+			resourceClassNameId, defaultLocale);
 
 		_ddmTemplate1.setName("default name A", defaultLocale);
 		_ddmTemplate1.setName("spanish name A", _esLocale);
 
 		_ddmTemplate2 = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
-			PortalUtil.getClassNameId(JournalArticle.class), defaultLocale);
+			resourceClassNameId, defaultLocale);
 
 		_ddmTemplate2.setName("default name b", defaultLocale);
 		_ddmTemplate2.setName("spanish name B", _esLocale);
 
 		_ddmTemplate3 = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
-			PortalUtil.getClassNameId(JournalArticle.class), defaultLocale);
+			resourceClassNameId, defaultLocale);
 
 		_ddmTemplate3.setName("default name c", defaultLocale);
 		_ddmTemplate3.setName("spanish name C", _esLocale);
 
 		_ddmTemplate4 = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
-			PortalUtil.getClassNameId(JournalArticle.class), defaultLocale);
+			resourceClassNameId, defaultLocale);
 
 		_ddmTemplate4.setName("default name D", defaultLocale);
 	}

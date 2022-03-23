@@ -21,6 +21,7 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
 import com.liferay.petra.http.invoker.HttpInvoker;
+import com.liferay.petra.string.StringPool;
 
 import java.io.File;
 import java.io.InputStream;
@@ -199,6 +200,125 @@ public class Main {
 		return map;
 	}
 
+	private String _getTestrayBuildDescription(
+		Map<String, String> propertiesMap) {
+
+		StringBuilder sb = new StringBuilder(15);
+
+		if (propertiesMap.get("liferay.portal.git.id") != null) {
+			sb.append("Portal hash: ");
+			sb.append(propertiesMap.get("liferay.portal.git.id"));
+			sb.append(StringPool.SEMICOLON);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (propertiesMap.get("liferay.plugins.git.id") != null) {
+			sb.append("Plugins hash: ");
+			sb.append(propertiesMap.get("liferay.plugins.git.id"));
+			sb.append(StringPool.SEMICOLON);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (propertiesMap.get("liferay.portal.branch") != null) {
+			sb.append("Portal branch: ");
+			sb.append(propertiesMap.get("liferay.portal.branch"));
+			sb.append(StringPool.SEMICOLON);
+			sb.append(StringPool.NEW_LINE);
+		}
+
+		if (propertiesMap.get("liferay.portal.bundle") != null) {
+			sb.append("Bundle: ");
+			sb.append(propertiesMap.get("liferay.portal.bundle"));
+			sb.append(StringPool.SEMICOLON);
+		}
+
+		return sb.toString();
+	}
+
+	private long _getTestrayBuildId(
+			Map<String, String> propertiesMap, String testrayBuildName,
+			long testrayProjectId)
+		throws Exception {
+
+		long testrayBuildId = _getObjectEntryId(testrayBuildName, "builds");
+
+		if (testrayBuildId != 0) {
+			return testrayBuildId;
+		}
+
+		long testrayProductVersionId = _getTestrayProductVersionId(
+			testrayProjectId, propertiesMap.get("testray.product.version"));
+		long testrayRoutineId = _getTestrayRoutineId(
+			testrayProjectId, propertiesMap.get("testray.build.type"));
+
+		HttpInvoker.HttpResponse httpResponse = _invoke(
+			_toJSON(
+				HashMapBuilder.put(
+					"description", _getTestrayBuildDescription(propertiesMap)
+				).put(
+					"dueDate", propertiesMap.get("testray.build.time")
+				).put(
+					"gitHash", propertiesMap.get("git.id")
+				).put(
+					"githubCompareURLs",
+					propertiesMap.get("liferay.compare.urls")
+				).put(
+					"name", testrayBuildName
+				).put(
+					"r_productVersionToBuilds_c_productVersionId",
+					String.valueOf(testrayProductVersionId)
+				).put(
+					"r_projectToBuilds_c_projectId",
+					String.valueOf(testrayProjectId)
+				).put(
+					"r_routineToBuilds_c_routineId",
+					String.valueOf(testrayRoutineId)
+				).build()),
+			null, HttpInvoker.HttpMethod.POST, "builds", null);
+
+		JSONObject responseJSONObject = new JSONObject(
+			httpResponse.getContent());
+
+		testrayBuildId = responseJSONObject.getLong("id");
+
+		_objectEntryIds.put("builds#" + testrayBuildName, testrayBuildId);
+
+		return testrayBuildId;
+	}
+
+	private long _getTestrayProductVersionId(
+			long testrayProjectId, String testrayProductVersionName)
+		throws Exception {
+
+		long testrayProductVersionId = _getObjectEntryId(
+			testrayProductVersionName, "productversions");
+
+		if (testrayProductVersionId != 0) {
+			return testrayProductVersionId;
+		}
+
+		HttpInvoker.HttpResponse httpResponse = _invoke(
+			_toJSON(
+				HashMapBuilder.put(
+					"name", testrayProductVersionName
+				).put(
+					"r_projectToProductVersions_c_projectId",
+					String.valueOf(testrayProjectId)
+				).build()),
+			null, HttpInvoker.HttpMethod.POST, "productversions", null);
+
+		JSONObject responseJSONObject = new JSONObject(
+			httpResponse.getContent());
+
+		testrayProductVersionId = responseJSONObject.getLong("id");
+
+		_objectEntryIds.put(
+			"productversions#" + testrayProductVersionName,
+			testrayProductVersionId);
+
+		return testrayProductVersionId;
+	}
+
 	private long _getTestrayProjectId(String testrayProjectName)
 		throws Exception {
 
@@ -224,6 +344,37 @@ public class Main {
 		_objectEntryIds.put("projects#" + testrayProjectName, testrayProjectId);
 
 		return testrayProjectId;
+	}
+
+	private long _getTestrayRoutineId(
+			long testrayProjectId, String testrayRoutineName)
+		throws Exception {
+
+		long testrayRoutineId = _getObjectEntryId(
+			testrayRoutineName, "routines");
+
+		if (testrayRoutineId != 0) {
+			return testrayRoutineId;
+		}
+
+		HttpInvoker.HttpResponse httpResponse = _invoke(
+			_toJSON(
+				HashMapBuilder.put(
+					"name", testrayRoutineName
+				).put(
+					"r_routineToProjects_c_projectId",
+					String.valueOf(testrayProjectId)
+				).build()),
+			null, HttpInvoker.HttpMethod.POST, "routines", null);
+
+		JSONObject responseJSONObject = new JSONObject(
+			httpResponse.getContent());
+
+		testrayRoutineId = responseJSONObject.getLong("id");
+
+		_objectEntryIds.put("routines#" + testrayRoutineName, testrayRoutineId);
+
+		return testrayRoutineId;
 	}
 
 	private HttpInvoker.HttpResponse _invoke(
@@ -308,7 +459,11 @@ public class Main {
 
 		String testrayProjectName = propertiesMap.get("testray.project.name");
 
-		_getTestrayProjectId(testrayProjectName);
+		long testrayProjectId = _getTestrayProjectId(testrayProjectName);
+
+		String testrayBuildName = propertiesMap.get("testray.build.name");
+
+		_getTestrayBuildId(propertiesMap, testrayBuildName, testrayProjectId);
 	}
 
 	private String _toJSON(Map<String, String> map) {

@@ -1266,18 +1266,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/crypt.jar</file-name>
-				<version>1.0</version>
-				<project-name>Manticore UFC Crypt</project-name>
-				<project-url>http://manticore.2y.net/Java/examples/Crypt.html</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/dom4j.jar</file-name>
 				<version>2.1.3</version>
 				<project-name>dom4j</project-name>

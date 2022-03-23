@@ -78,8 +78,10 @@ definition {
 			nodeType = "task");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			newNotification = "true",
 			name = "Liferay Notification",
-			notificationTemplateValue = "Notification Template");
+			notificationTemplateValue = "Notification Template",
+			notificationTypeOption = "userNotification");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -602,11 +604,29 @@ definition {
 	}
 
 	@description = "Verify that the is able to select who receives the notification: Scripted Recipient"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanSelectScriptedRecipientAsNotificationRecipientType {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectScriptedRecipientAsNotificationRecipientType";
 
-		// TODO LRQA-73850 CanSelectScriptedRecipientAsNotificationRecipientType pending implementation
+        Workflow.openWorkflowListView();
+
+        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			newNotification = "true",
+			name = "New Notification",
+			notificationTemplateValue = '''${userName} sent you a ${entryType} for review in the workflow.''',
+			notificationTypeOption = "userNotification",
+			recipientTypeOption = "Scripted Recipient",
+			notificationScript = '''returnValue = "Transition Name";''');
+            
+        ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+  
+        ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+        ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationRecipientType = "Scripted Recipient");
 
 	}
 
@@ -1003,11 +1023,11 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillNotification();
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(newNotification = "true");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillNotification();
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(newNotification = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1020,7 +1040,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "fork");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillNotification();
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(newNotification = "true");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -1033,7 +1053,7 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "condition");
 
-		ProcessBuilderKaleoDesignerReact.viewAndFillNotification();
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(newNotification = "true");
 	}
 
 	@description = "LPS-141713 - Verify that the imported workflow definition is shown in the Process Builder"

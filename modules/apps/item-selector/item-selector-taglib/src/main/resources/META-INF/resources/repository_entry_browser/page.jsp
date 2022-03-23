@@ -27,6 +27,7 @@ List<String> extensions = (List)request.getAttribute("liferay-item-selector:repo
 String itemSelectedEventName = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:itemSelectedEventName"));
 ItemSelectorReturnTypeResolver<?, FileEntry> itemSelectorReturnTypeResolver = (ItemSelectorReturnTypeResolver<?, FileEntry>)request.getAttribute("liferay-item-selector:repository-entry-browser:itemSelectorReturnTypeResolver");
 long maxFileSize = GetterUtil.getLong(request.getAttribute("liferay-item-selector:repository-entry-browser:maxFileSize"));
+String mimeTypeRestriction = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:mimeTypeRestriction"));
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-item-selector:repository-entry-browser:portletURL");
 List<FileEntry> repositoryEntries = (List<FileEntry>)request.getAttribute("liferay-item-selector:repository-entry-browser:repositoryEntries");
 int repositoryEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-item-selector:repository-entry-browser:repositoryEntriesCount"));
@@ -137,6 +138,8 @@ SearchContainer<?> searchContainer = new SearchContainer(renderRequest, itemSele
 								"itemSelectedEventName", itemSelectedEventName
 							).put(
 								"maxFileSize", maxFileSize
+							).put(
+								"mimeTypeRestriction", mimeTypeRestriction
 							).put(
 								"uploadItemReturnType", HtmlUtil.escapeAttribute(returnType)
 							).put(

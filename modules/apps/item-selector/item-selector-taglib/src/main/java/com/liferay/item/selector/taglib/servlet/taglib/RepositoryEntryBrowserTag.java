@@ -82,6 +82,10 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		return _maxFileSize;
 	}
 
+	public String getMimeTypeRestriction() {
+		return _mimeTypeRestriction;
+	}
+
 	public PortletURL getPortletURL() {
 		return _portletURL;
 	}
@@ -170,6 +174,10 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_maxFileSize = maxFileSize;
 	}
 
+	public void setMimeTypeRestriction(String mimeTypeRestriction) {
+		_mimeTypeRestriction = mimeTypeRestriction;
+	}
+
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		super.setPageContext(pageContext);
@@ -223,6 +231,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_itemSelectedEventName = null;
 		_itemSelectorReturnTypeResolver = null;
 		_maxFileSize = UploadServletRequestConfigurationHelperUtil.getMaxSize();
+		_mimeTypeRestriction = null;
 		_portletURL = null;
 		_repositoryEntries = new ArrayList<>();
 		_repositoryEntriesCount = 0;
@@ -308,6 +317,14 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-item-selector:repository-entry-browser:extensions",
 			_extensions);
+
+		if (_mimeTypeRestriction != null) {
+			httpServletRequest.setAttribute(
+				"liferay-item-selector:repository-entry-browser:" +
+					"mimeTypeRestriction",
+				_mimeTypeRestriction);
+		}
+
 		httpServletRequest.setAttribute(
 			"liferay-item-selector:repository-entry-browser:" +
 				"itemSelectedEventName",
@@ -376,6 +393,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_itemSelectorReturnTypeResolver;
 	private long _maxFileSize =
 		UploadServletRequestConfigurationHelperUtil.getMaxSize();
+	private String _mimeTypeRestriction;
 	private PortletURL _portletURL;
 	private List<RepositoryEntry> _repositoryEntries = new ArrayList<>();
 	private int _repositoryEntriesCount;

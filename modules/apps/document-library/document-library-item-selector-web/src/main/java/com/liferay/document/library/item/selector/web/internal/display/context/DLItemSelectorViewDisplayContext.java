@@ -153,6 +153,10 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 				_itemSelectorCriterion, _dlItemSelectorView, FileEntry.class);
 	}
 
+	public String getMimeTypeRestriction() {
+		return _itemSelectorCriterion.getMimeTypeRestriction();
+	}
+
 	public PortletURL getPortletURL(
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortletException {

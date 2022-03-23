@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
@@ -124,7 +123,7 @@ public class CompositePasswordEncryptor
 	}
 
 	@Override
-	public String[] getSupportedAlgorithmTypes() {
+	public String getAlgorithmType() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -142,23 +141,8 @@ public class CompositePasswordEncryptor
 				_log.debug("Registering " + passwordEncryptor);
 			}
 
-			String[] supportedAlgorithmTypes =
-				passwordEncryptor.getSupportedAlgorithmTypes();
-
-			if (_log.isDebugEnabled()) {
-				Class<?> clazz = passwordEncryptor.getClass();
-
-				_log.debug(
-					StringBundler.concat(
-						"Registering ",
-						StringUtil.merge(supportedAlgorithmTypes), " for ",
-						clazz.getName()));
-			}
-
-			for (String supportedAlgorithmType : supportedAlgorithmTypes) {
-				_passwordEncryptors.put(
-					supportedAlgorithmType, passwordEncryptor);
-			}
+			_passwordEncryptors.put(
+				passwordEncryptor.getAlgorithmType(), passwordEncryptor);
 		}
 	}
 

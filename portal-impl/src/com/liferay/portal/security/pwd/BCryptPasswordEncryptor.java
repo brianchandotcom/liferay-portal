@@ -56,8 +56,8 @@ public class BCryptPasswordEncryptor
 	}
 
 	@Override
-	public String[] getSupportedAlgorithmTypes() {
-		return new String[] {PasswordEncryptorUtil.TYPE_BCRYPT};
+	public String getAlgorithmType() {
+		return PasswordEncryptorUtil.TYPE_BCRYPT;
 	}
 
 	private static final int _ROUNDS = 10;

@@ -28,6 +28,8 @@ public class PasswordEncryptorUtil {
 
 	public static final String TYPE_BCRYPT = "BCRYPT";
 
+	public static final String TYPE_DEFAULT = "DEFAULT";
+
 	public static final String TYPE_MD2 = "MD2";
 
 	public static final String TYPE_MD5 = "MD5";

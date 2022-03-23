@@ -15,6 +15,7 @@
 package com.liferay.portal.security.pwd;
 
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
+import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 
 /**
@@ -32,8 +33,8 @@ public class DefaultPasswordEncryptor
 	}
 
 	@Override
-	public String[] getSupportedAlgorithmTypes() {
-		return new String[0];
+	public String getAlgorithmType() {
+		return PasswordEncryptorUtil.TYPE_DEFAULT;
 	}
 
 }

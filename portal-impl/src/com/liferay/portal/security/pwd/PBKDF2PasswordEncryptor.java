@@ -92,8 +92,8 @@ public class PBKDF2PasswordEncryptor
 	}
 
 	@Override
-	public String[] getSupportedAlgorithmTypes() {
-		return new String[] {PasswordEncryptorUtil.TYPE_PBKDF2};
+	public String getAlgorithmType() {
+		return PasswordEncryptorUtil.TYPE_PBKDF2;
 	}
 
 	private static final int _KEY_SIZE = 160;

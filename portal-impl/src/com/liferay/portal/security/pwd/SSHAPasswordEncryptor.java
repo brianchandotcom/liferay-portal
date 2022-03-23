@@ -69,8 +69,8 @@ public class SSHAPasswordEncryptor
 	}
 
 	@Override
-	public String[] getSupportedAlgorithmTypes() {
-		return new String[] {PasswordEncryptorUtil.TYPE_SSHA};
+	public String getAlgorithmType() {
+		return PasswordEncryptorUtil.TYPE_SSHA;
 	}
 
 	protected byte[] getSaltBytes(String encryptedPassword)

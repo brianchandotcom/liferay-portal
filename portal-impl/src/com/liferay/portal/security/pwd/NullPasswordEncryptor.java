@@ -32,8 +32,8 @@ public class NullPasswordEncryptor
 	}
 
 	@Override
-	public String[] getSupportedAlgorithmTypes() {
-		return new String[] {PasswordEncryptorUtil.TYPE_NONE};
+	public String getAlgorithmType() {
+		return PasswordEncryptorUtil.TYPE_NONE;
 	}
 
 }

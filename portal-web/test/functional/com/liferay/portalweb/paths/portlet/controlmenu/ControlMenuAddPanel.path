@@ -47,6 +47,12 @@
 	<td>//div[contains(@class,'item-body')]//div[contains(@class,'title')][normalize-space(text())='${key_entryTitle}']</td>
 	<td></td>
 </tr>
+<!--WIDGETS-->
+<tr>
+	<td>WIDGET_CATEGORY</td>
+	<td>//div[contains(@class,'panel-group')]//*[contains(@class,'subtitle') and *[normalize-space(text())='${key_category}']]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

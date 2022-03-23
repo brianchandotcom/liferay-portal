@@ -108,18 +108,6 @@ definition {
 		selenium.assertLiferayErrors();
 	}
 
-	function clickWaitForInlineCKEditorNoMouseOver {
-		WaitForSPARefresh();
-
-		if (selenium.isElementPresent("//div[contains(@class,'cke_editable_inline')]")) {
-			selenium.waitForElementPresent("//script[contains(@src,'http://localhost:8080/o/frontend-editors-web/ckeditor/plugins/wsc/lang/en.js')]");
-		}
-
-		selenium.waitForVisible();
-
-		selenium.click();
-	}
-
 	function javaScriptClick {
 		WaitForSPARefresh();
 

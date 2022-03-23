@@ -3121,7 +3121,29 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		WebElement webElement = getWebElement(location);
 
-		webElement.sendKeys(FileUtil.getCanonicalPath(value));
+		String fileName = FileUtil.getCanonicalPath(value);
+
+		if (value.endsWith(".jar") || value.endsWith(".lar") ||
+			value.endsWith(".war") || value.endsWith(".zip")) {
+
+			File file = new File(fileName);
+
+			if (file.isDirectory()) {
+				String archiveFilePath =
+					getOutputDirName() + FileUtil.getSeparator() +
+						file.getName();
+
+				archiveFilePath = FileUtil.getCanonicalPath(archiveFilePath);
+
+				ArchiveUtil.archive(fileName, archiveFilePath);
+
+				fileName = archiveFilePath;
+			}
+		}
+
+		fileName = FileUtil.fixFilePath(fileName);
+
+		webElement.sendKeys(fileName);
 	}
 
 	@Override

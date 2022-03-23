@@ -459,7 +459,7 @@ definition {
 		Click(locator1 = "ACDXPSettings#AC_GENERIC_ADD_OR_CONFIRMATION_BUTTON");
 	}
 
-	macro clickRequestSuppressedOptions {
+	macro navigateToRequestOrSuppressedOptions {
 		var key_optionName = "${optionName}";
 		var key_optionValue = "${optionValue}";
 
@@ -486,7 +486,7 @@ definition {
 
 		ACSettings.goToDataControlAndPrivacy();
 
-		ACSettings.clickRequestSuppressedOptions(
+		ACSettings.navigateToRequestOrSuppressedOptions(
 			optionName = "Request Log",
 			optionValue = "Manage");
 

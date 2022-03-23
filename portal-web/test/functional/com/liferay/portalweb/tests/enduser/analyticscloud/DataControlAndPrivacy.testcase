@@ -101,7 +101,7 @@ definition {
 
 			ACSettings.goToDataControlAndPrivacy();
 
-			ACSettings.clickRequestSuppressedOptions(
+			ACSettings.navigateToRequestOrSuppressedOptions(
 				optionName = "Request Log",
 				optionValue = "Manage");
 
@@ -146,7 +146,7 @@ definition {
 
 			ACSettings.goToDataControlAndPrivacy();
 
-			ACSettings.clickRequestSuppressedOptions(
+			ACSettings.navigateToRequestOrSuppressedOptions(
 				optionName = "Request Log",
 				optionValue = "Manage");
 
@@ -191,7 +191,7 @@ definition {
 
 			ACSettings.goToDataControlAndPrivacy();
 
-			ACSettings.clickRequestSuppressedOptions(
+			ACSettings.navigateToRequestOrSuppressedOptions(
 				optionName = "Request Log",
 				optionValue = "Manage");
 
@@ -240,7 +240,7 @@ definition {
 		task ("Wait for the suppress request be completed") {
 			ACSettings.goToDataControlAndPrivacy();
 
-			ACSettings.clickRequestSuppressedOptions(
+			ACSettings.navigateToRequestOrSuppressedOptions(
 				optionName = "Suppressed Users",
 				optionValue = "Manage");
 
@@ -264,7 +264,7 @@ definition {
 
 			ACSettings.goToDataControlAndPrivacy();
 
-			ACSettings.clickRequestSuppressedOptions(
+			ACSettings.navigateToRequestOrSuppressedOptions(
 				optionName = "Request Log",
 				optionValue = "Manage");
 
@@ -318,7 +318,7 @@ definition {
 		task ("Assert that the user is in the suppressed user list") {
 			ACSettings.goToDataControlAndPrivacy();
 
-			ACSettings.clickRequestSuppressedOptions(
+			ACSettings.navigateToRequestOrSuppressedOptions(
 				optionName = "Suppressed Users",
 				optionValue = "Manage");
 

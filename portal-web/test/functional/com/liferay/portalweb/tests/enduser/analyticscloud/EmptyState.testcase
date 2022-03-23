@@ -152,7 +152,7 @@ definition {
 		task ("Go to Data Control and Privacy, then go to Request Log > Manage and check the empty page status message") {
 			ACSettings.goToDataControlAndPrivacy();
 
-			ACSettings.clickRequestSuppressedOptions(
+			ACSettings.navigateToRequestOrSuppressedOptions(
 				optionName = "Request Log",
 				optionValue = "Manage");
 
@@ -162,7 +162,7 @@ definition {
 		task ("Go back to Data Control and Privacy, then go to Suppressed Users > Manage, and check the empty page status message then check the if the hyperlink is taking the user to the documentation") {
 			ACSettings.goToDataControlAndPrivacy();
 
-			ACSettings.clickRequestSuppressedOptions(
+			ACSettings.navigateToRequestOrSuppressedOptions(
 				optionName = "Suppressed Users",
 				optionValue = "Manage");
 

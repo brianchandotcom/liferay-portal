@@ -10,7 +10,16 @@
 </thead>
 
 <tbody>
-
+<tr>
+	<td>TESTFLOW_SIDEBAR</td>
+	<td>//a[contains(@href, '#/testflow')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMPARE_RUNS_SIDEBAR</td>
+	<td>//a[contains(@href, '#/compare-runs')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

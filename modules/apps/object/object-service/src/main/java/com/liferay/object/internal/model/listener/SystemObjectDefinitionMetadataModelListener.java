@@ -32,12 +32,16 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 /**
@@ -149,6 +153,12 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 		return (Long)function.apply(baseModel);
 	}
 
+	private Optional<DTOConverter<T, ?>> _getDTOConverter(T baseModel) {
+		return Optional.ofNullable(
+			(DTOConverter<T, ?>)_dtoConverterRegistry.getDTOConverter(
+				baseModel.getModelClassName()));
+	}
+
 	private String _getExternalModel(T baseModel, long userId) {
 		User user = _userLocalService.fetchUser(userId);
 
@@ -156,16 +166,10 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 			return baseModel.toString();
 		}
 
-		DefaultDTOConverterContext defaultDTOConverterContext =
-			new DefaultDTOConverterContext(
-				false, Collections.emptyMap(), _dtoConverterRegistry, null,
-				user.getLocale(), null, user);
+		Optional<DTOConverter<T, ?>> dtoConverterOptional = _getDTOConverter(
+			baseModel);
 
-		DTOConverter<T, ?> dtoConverter =
-			(DTOConverter<T, ?>)_dtoConverterRegistry.getDTOConverter(
-				baseModel.getModelClassName());
-
-		if (dtoConverter == null) {
+		if (!dtoConverterOptional.isPresent()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"No DTOConverter found for " +
@@ -174,6 +178,13 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 
 			return baseModel.toString();
 		}
+
+		DefaultDTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				false, Collections.emptyMap(), _dtoConverterRegistry, null,
+				user.getLocale(), null, user);
+
+		DTOConverter<T, ?> dtoConverter = dtoConverterOptional.get();
 
 		try {
 			Object externalModel = dtoConverter.toDTO(
@@ -195,17 +206,49 @@ public class SystemObjectDefinitionMetadataModelListener<T extends BaseModel<T>>
 			long userId)
 		throws PortalException {
 
+		boolean sendInternalModel = GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.WEBHOOK_EXPOSE_INTERNAL_MODEL));
+
+		String dtoConverterType = _getDTOConverter(
+			baseModel
+		).map(
+			DTOConverter::getContentType
+		).orElse(
+			_modelClass.getSimpleName()
+		);
+
 		return JSONUtil.put(
+			StringUtil.lowerCaseFirstLetter(dtoConverterType),
+			_jsonFactory.createJSONObject(
+				_jsonFactory.serialize(_getExternalModel(baseModel, userId)))
+		).put(
 			"objectActionTriggerKey", objectActionTriggerKey
 		).put(
-			"model" + _modelClass.getSimpleName(),
-			_jsonFactory.createJSONObject(_getExternalModel(baseModel, userId))
-		).put(
-			"original" + _modelClass.getSimpleName(),
+			"previous" + dtoConverterType,
 			() -> {
 				if (originalBaseModel != null) {
 					return _jsonFactory.createJSONObject(
-						_getExternalModel(originalBaseModel, userId));
+						_jsonFactory.serialize(
+							_getExternalModel(originalBaseModel, userId)));
+				}
+
+				return null;
+			}
+		).put(
+			"model" + _modelClass.getSimpleName(),
+			() -> {
+				if (sendInternalModel) {
+					return _jsonFactory.createJSONObject(baseModel.toString());
+				}
+
+				return null;
+			}
+		).put(
+			"original" + _modelClass.getSimpleName(),
+			() -> {
+				if (sendInternalModel && (originalBaseModel != null)) {
+					return _jsonFactory.createJSONObject(
+						originalBaseModel.toString());
 				}
 
 				return null;

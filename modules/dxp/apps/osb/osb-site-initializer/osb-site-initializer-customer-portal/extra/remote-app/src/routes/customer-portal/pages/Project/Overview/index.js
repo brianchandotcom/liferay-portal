@@ -84,7 +84,14 @@ const Overview = () => {
 				setAccountSubscriptions(dataAllSubscriptions);
 
 				setSubscriptionGroupsWithSubscriptions(
-					accountSubscriptionGroups
+					accountSubscriptionGroups.sort(
+						(
+							previousAccountSubscriptionGroup,
+							nextAccountSubscriptionGroup
+						) =>
+							previousAccountSubscriptionGroup?.tabOrder -
+							nextAccountSubscriptionGroup?.tabOrder
+					)
 				);
 			}
 		};

@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -327,6 +328,39 @@ public class SXPBlueprintSearchResultTest {
 				).build()
 			},
 			new String[] {"Boost Contents in a Category for a User Segment"});
+
+		_assertSearch("[charlie alpha, beta alpha]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance("[beta alpha, charlie alpha]");
+	}
+
+	@Test
+	public void testBoostContentsInACategoryForGuestUsers() throws Exception {
+		_user = _userLocalService.getDefaultUser(_group.getCompanyId());
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group, _user.getUserId());
+
+		_addAssetCategory("Guest Users", _user);
+
+		_setUpJournalArticles(
+			new String[] {"alpha alpha", ""},
+			new String[] {"beta alpha", "charlie alpha"});
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"asset_category_id",
+					String.valueOf(_assetCategory.getCategoryId())
+				).put(
+					"boost", 100
+				).build()
+			},
+			new String[] {"Boost Contents in a Category for Guest Users"});
+
+		_keywords = "alpha";
 
 		_assertSearch("[charlie alpha, beta alpha]");
 
@@ -1725,6 +1759,9 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	private static List<SXPElement> _sxpElements;
+
+	@Inject
+	private static UserLocalService _userLocalService;
 
 	private int _addJournalArticleSleep;
 	private AssetCategory _assetCategory;

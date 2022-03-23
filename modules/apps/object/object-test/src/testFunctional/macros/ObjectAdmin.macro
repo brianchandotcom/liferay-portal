@@ -969,7 +969,7 @@ definition {
 
 	macro viewDescriptionForEachFieldType {
 		ObjectAdmin.assertRelationshipsTypeDescription(
-			description = "Add a long integer up to 19 digits.",
+			description = "Add a long integer up to 16 digits.",
 			type = "Long Integer");
 
 		ObjectAdmin.assertRelationshipsTypeDescription(

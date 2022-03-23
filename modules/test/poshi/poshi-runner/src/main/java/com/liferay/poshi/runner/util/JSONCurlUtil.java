@@ -207,7 +207,8 @@ public class JSONCurlUtil {
 			}
 
 			if (message.length() > _maxPrintLineLength) {
-				System.out.println(message.substring(0, _maxPrintLineLength));
+				System.out.println(
+					message.substring(0, _maxPrintLineLength) + "...");
 
 				return;
 			}

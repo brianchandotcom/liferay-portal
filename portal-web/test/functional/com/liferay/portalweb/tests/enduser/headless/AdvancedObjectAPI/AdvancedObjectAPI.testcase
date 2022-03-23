@@ -1,0 +1,71 @@
+@component-name = "portal-headless"
+definition {
+
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Headless";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+	}
+
+	tearDown {
+		PortalInstances.tearDownCP();
+	}
+
+	@description = "Nested fields in oneToMany relationship"
+	@priority = "5"
+	test NestedFieldsInOneToManyRelationship {
+		task ("Given active object definitions created") {
+			var objectDefinitionId1 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "Manager",
+				en_US_plural_label = "Managers",
+				name = "Manager",
+				requiredStringFieldName = "firstname");
+
+			var objectDefinitionId2 = ObjectDefinitionAPI.createAndPublishObjectDefinition(
+				en_US_label = "Employee",
+				en_US_plural_label = "Employees",
+				name = "Employee",
+				requiredStringFieldName = "firstname");
+		}
+
+		task ("Given a relationship between two object definitions created") {
+			var relationshipName = ObjectDefinitionAPI.createRelationship(
+				deletionType = "cascade",
+				en_US_label = "Supervisor",
+				name = "supervisor",
+				objectDefinitionId1 = "${objectDefinitionId1}",
+				objectDefinitionId2 = "${objectDefinitionId2}",
+				type = "oneToMany");
+		}
+
+		task ("Given manager accounts created") {
+			var managerId = ObjectDefinitionAPI.createManager(managerFirstname = "Courtney");
+		}
+
+		task ("Given employee accounts created") {
+			var employeeId = ObjectDefinitionAPI.createEmployee(
+				employeeFirstname = "Bruce",
+				managerId = "${managerId}");
+		}
+
+		task ("When calling for 'employees' with a 'manager' as nestedFields parameter") {
+			var getEmployeesWithManager = ObjectDefinitionAPI.getObjectsWithNestedField(
+				nestedObject = "manager",
+				objects = "employees");
+		}
+
+		task ("Then 'employee' information should be provided with 'manager' information nested as an object") {
+			ObjectDefinitionAPI.assertCorrectManagerInformation(
+				expectedEmployeeFirstname = "Bruce",
+				expectedManagerFirstname = "Courtney",
+				expectedManagerId = "${managerId}",
+				nestedField = "manager",
+				objectId = "${employeeId}",
+				relationshipName = "supervisor",
+				responseToParse = "${getEmployeesWithManager}");
+		}
+	}
+
+}

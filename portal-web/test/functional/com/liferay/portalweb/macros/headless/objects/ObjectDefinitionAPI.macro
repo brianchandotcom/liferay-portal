@@ -1,0 +1,316 @@
+definition {
+
+	macro _assertEmployeeFirstnameCorrect {
+		var actualEmployeeFirstname = ObjectDefinitionAPI._getObjectFirstnameById(
+			objectId = "${objectId}",
+			responseToParse = "${responseToParse}");
+
+		TestUtils.assertEquals(
+			actual = "${actualEmployeeFirstname}",
+			expected = "${expectedEmployeeFirstname}");
+	}
+
+	macro _assertManagerFirstnameCorrect {
+		var actualManagerFirstname = ObjectDefinitionAPI._getNestedObjectFirstnameByObjectId(
+			nestedField = "${nestedField}",
+			objectId = "${objectId}",
+			relationshipName = "${relationshipName}",
+			responseToParse = "${responseToParse}");
+
+		TestUtils.assertEquals(
+			actual = "${actualManagerFirstname}",
+			expected = "${expectedManagerFirstname}");
+	}
+
+	macro _assertManagerIdCorrect {
+		var actualManagerId = ObjectDefinitionAPI._getNestedObjectIdByObjectId(
+			nestedField = "${nestedField}",
+			objectId = "${objectId}",
+			relationshipName = "${relationshipName}",
+			responseToParse = "${responseToParse}");
+
+		TestUtils.assertEquals(
+			actual = "${actualManagerId}",
+			expected = "${expectedManagerId}");
+	}
+
+	macro _createEmployee {
+		var portalURL = JSONCompany.getDefaultPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/employees \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+            -d
+					{	                 
+	"firstname": "${firstname}",
+	"r_supervisor_c_managerId": "${managerId}"
+	}
+		''';
+		var employeeId = JSONCurlUtil.post("${curl}", "$.id");
+
+		return "${employeeId}";
+	}
+
+	macro _createManager {
+		var portalURL = JSONCompany.getDefaultPortalURL();
+
+		var curl = '''
+			${portalURL}/o/c/managers \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+            -d
+					{	                 
+	"firstname": "${firstname}"
+	}
+		''';
+		var managerId = JSONCurlUtil.post("${curl}", "$.id");
+
+		return "${managerId}";
+	}
+
+	macro _createObjectDefinition {
+		var portalURL = JSONCompany.getDefaultPortalURL();
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+            -d
+					{	                 
+	"active": true,
+	"label": {
+		"en_US": "${en_US_label}"
+	},
+	"name": "${name}",
+	"objectFields": [{
+		"DBType": "String",
+		"businessType": "Text",
+		"indexed": true,
+		"indexedAsKeyword": true,
+		"label": {
+			"en_US": "${requiredStringFieldName}"
+		},
+		"name": "${requiredStringFieldName}",
+		"required": true,
+		"dbtype": "String"
+	}],
+	"pluralLabel": {
+		"en_US": "${en_US_plural_label}"
+	},
+	"portlet": true,
+	"scope": "company"
+					}
+		''';
+		var objectDefinitionId = JSONCurlUtil.post("${curl}", "$.id");
+
+		return "${objectDefinitionId}";
+	}
+
+	macro _createRelationship {
+		var portalURL = JSONCompany.getDefaultPortalURL();
+
+		var curl = '''
+			${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId1}/object-relationships \
+			-u test@liferay.com:test \
+			-H Content-Type: application/json
+            -d
+					{	                 
+	"deletionType": "${deletionType}",
+  	"label": {
+    	"en_US": "${en_US_label}"
+    },
+  	"name": "${name}",
+  	"objectDefinitionId2": "${objectDefinitionId2}",
+  	"type": "${type}"
+					}
+		''';
+		var relationshipId = JSONCurlUtil.post("${curl}", "$.id");
+
+		return "${relationshipId}";
+	}
+
+	macro _getEmployeeFirstnameById {
+		var portalURL = JSONCompany.getDefaultPortalURL();
+
+		var curl = '''
+        	http://localhost:8080/o/c/employees/${employeeId} \
+			-u test@liferay.com:test
+		''';
+		var employeeFirstname = JSONCurlUtil.get("${curl}", "$.firstname");
+
+		return "${employeeFirstname}";
+	}
+
+	macro _getManagerFirstnameById {
+		var portalURL = JSONCompany.getDefaultPortalURL();
+
+		var curl = '''
+        	http://localhost:8080/o/c/managers/${managerId} \
+			-u test@liferay.com:test
+		''';
+		var managerFirstname = JSONCurlUtil.get("${curl}", "$.firstname");
+
+		return "${managerFirstname}";
+	}
+
+	macro _getNestedObjectFirstnameByObjectId {
+		var nestedObjectFirstname = JSONUtil.getWithJSONPath("${responseToParse}", "$.items[?(@.id==${objectId})].r_${relationshipName}_c_${nestedField}.firstname");
+
+		return "${nestedObjectFirstname}";
+	}
+
+	macro _getNestedObjectIdByObjectId {
+		var nestedObjectId = JSONUtil.getWithJSONPath("${responseToParse}", "$.items[?(@.id==${objectId})].r_${relationshipName}_c_${nestedField}.id");
+
+		return "${nestedObjectId}";
+	}
+
+	macro _getObjectDefinitionStatusById {
+		var portalURL = JSONCompany.getDefaultPortalURL();
+
+		var curl = '''
+        	${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId} \
+			-u test@liferay.com:test
+		''';
+		var objectDefinitionStatus = JSONCurlUtil.get("${curl}", "$.active");
+
+		return "${objectDefinitionStatus}";
+	}
+
+	macro _getObjectFirstnameById {
+		var objectFirstname = JSONUtil.getWithJSONPath("${responseToParse}", "$.items[?(@.id==${objectId})].firstname");
+
+		return "${objectFirstname}";
+	}
+
+	macro _getObjectsWithNestedField {
+		var portalURL = JSONCompany.getDefaultPortalURL();
+
+		var curl = '''
+        	${portalURL}/o/c/${objects}?nestedFields=${nestedField} \
+			-u test@liferay.com:test
+		''';
+		var json = JSONCurlUtil.get("${curl}");
+
+		return "${json}";
+	}
+
+	macro _getRelationshipNameById {
+		var portalURL = JSONCompany.getDefaultPortalURL();
+
+		var curl = '''
+        	http://localhost:8080/o/object-admin/v1.0/object-relationships/${relationshipId} \
+			-u test@liferay.com:test
+		''';
+		var relationshipName = JSONCurlUtil.get("${curl}", "$.name");
+
+		return "${relationshipName}";
+	}
+
+	macro _publishObjectDefinition {
+		var portalURL = JSONCompany.getDefaultPortalURL();
+
+		var curl = '''
+        	${portalURL}/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/publish \
+			-u test@liferay.com:test
+		''';
+		var json = JSONCurlUtil.post("${curl}");
+
+		return "${json}";
+	}
+
+	macro assertCorrectManagerInformation {
+		ObjectDefinitionAPI._assertEmployeeFirstnameCorrect(
+			expectedEmployeeFirstname = "${expectedEmployeeFirstname}",
+			objectId = "${objectId}",
+			responseToParse = "${responseToParse}");
+
+		ObjectDefinitionAPI._assertManagerFirstnameCorrect(
+			expectedManagerFirstname = "${expectedManagerFirstname}",
+			nestedField = "${nestedField}",
+			objectId = "${objectId}",
+			relationshipName = "${relationshipName}",
+			responseToParse = "${responseToParse}");
+
+		ObjectDefinitionAPI._assertManagerIdCorrect(
+			expectedManagerFirstname = "${expectedManagerFirstname}",
+			expectedManagerId = "${expectedManagerId}",
+			nestedField = "${nestedField}",
+			objectId = "${objectId}",
+			relationshipName = "${relationshipName}",
+			responseToParse = "${responseToParse}");
+	}
+
+	macro createAndPublishObjectDefinition {
+		var objectDefinitionId = ObjectDefinitionAPI._createObjectDefinition(
+			en_US_label = "${en_US_label}",
+			en_US_plural_label = "${en_US_plural_label}",
+			name = "${name}",
+			requiredStringFieldName = "${requiredStringFieldName}");
+
+		ObjectDefinitionAPI._publishObjectDefinition(objectDefinitionId = "${objectDefinitionId}");
+
+		var objectDefinitionStatus = ObjectDefinitionAPI._getObjectDefinitionStatusById(objectDefinitionId = "${objectDefinitionId}");
+
+		TestUtils.assertEquals(
+			actual = "${objectDefinitionStatus}",
+			expected = "true");
+
+		return "${objectDefinitionId}";
+	}
+
+	macro createEmployee {
+		var employeeId = ObjectDefinitionAPI._createEmployee(
+			firstname = "${employeeFirstname}",
+			managerId = "${managerId}");
+
+		var firstname = ObjectDefinitionAPI._getEmployeeFirstnameById(employeeId = "${employeeId}");
+
+		TestUtils.assertEquals(
+			actual = "${firstname}",
+			expected = "${employeeFirstname}");
+
+		return "${employeeId}";
+	}
+
+	macro createManager {
+		var managerId = ObjectDefinitionAPI._createManager(firstname = "${managerFirstname}");
+
+		var firstname = ObjectDefinitionAPI._getManagerFirstnameById(managerId = "${managerId}");
+
+		TestUtils.assertEquals(
+			actual = "${firstname}",
+			expected = "${managerFirstname}");
+
+		return "${managerId}";
+	}
+
+	macro createRelationship {
+		var relationshipId = ObjectDefinitionAPI._createRelationship(
+			deletionType = "${deletionType}",
+			en_US_label = "${en_US_label}",
+			name = "${name}",
+			objectDefinitionId1 = "${objectDefinitionId1}",
+			objectDefinitionId2 = "${objectDefinitionId2}",
+			type = "${type}");
+
+		var relationshipName = ObjectDefinitionAPI._getRelationshipNameById(relationshipId = "${relationshipId}");
+
+		TestUtils.assertEquals(
+			actual = "${relationshipName}",
+			expected = "${name}");
+
+		return "${relationshipName}";
+	}
+
+	macro getObjectsWithNestedField {
+		var getObjectsWithNestedFieldJSON = ObjectDefinitionAPI._getObjectsWithNestedField(
+			nestedField = "${nestedObject}",
+			objectId = "${objectId}",
+			objects = "${objects}");
+
+		return "${getObjectsWithNestedFieldJSON}";
+	}
+
+}

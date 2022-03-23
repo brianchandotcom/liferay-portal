@@ -15,11 +15,18 @@
 package com.liferay.commerce.shop.by.diagram.internal.search.spi.model.index.contributor;
 
 import com.liferay.commerce.product.constants.CPField;
+import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -39,6 +46,52 @@ public class CSDiagramEntryModelDocumentContributor
 		document.addText(CPField.SKU, csDiagramEntry.getSku());
 		document.addNumber("quantity", csDiagramEntry.getQuantity());
 		document.addText("sequence", csDiagramEntry.getSequence());
+
+		CPDefinition cpDefinition =
+			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
+				csDiagramEntry.getCProductId());
+
+		if (cpDefinition == null) {
+			return;
+		}
+
+		List<String> languageIds =
+			_cpDefinitionLocalService.getCPDefinitionLocalizationLanguageIds(
+				cpDefinition.getCPDefinitionId());
+
+		for (String languageId : languageIds) {
+			String description = cpDefinition.getDescription(languageId);
+			String name = cpDefinition.getName(languageId);
+			String shortDescription = cpDefinition.getShortDescription(
+				languageId);
+
+			document.addText(
+				LocalizationUtil.getLocalizedName(
+					Field.DESCRIPTION, languageId),
+				description);
+			document.addText(
+				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
+				name);
+			document.addText(
+				LocalizationUtil.getLocalizedName(
+					CPField.SHORT_DESCRIPTION, languageId),
+				shortDescription);
+		}
+
+		String cpDefinitionDefaultLanguageId =
+			LocalizationUtil.getDefaultLanguageId(cpDefinition.getName());
+
+		document.addText(
+			Field.DESCRIPTION,
+			cpDefinition.getDescription(cpDefinitionDefaultLanguageId));
+		document.addText(
+			Field.NAME, cpDefinition.getName(cpDefinitionDefaultLanguageId));
+		document.addText(
+			CPField.SHORT_DESCRIPTION,
+			cpDefinition.getShortDescription(cpDefinitionDefaultLanguageId));
 	}
+
+	@Reference
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 }

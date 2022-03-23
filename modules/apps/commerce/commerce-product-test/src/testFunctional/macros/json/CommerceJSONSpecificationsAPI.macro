@@ -12,8 +12,6 @@ definition {
 		var optionCategoryIds = CommerceJSONSpecificationsAPI._getCommerceSpecificationIdBySpecKey(specificationKey = "${specificationKey}");
 
 		for (var optionCategoryId : list "${optionCategoryIds}") {
-
-
 			echo("optionCategoryId is ${optionCategoryId}");
 		}
 

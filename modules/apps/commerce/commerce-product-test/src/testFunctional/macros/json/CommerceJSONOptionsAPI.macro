@@ -69,7 +69,7 @@ definition {
 		}
 
 		var payload = StringUtil.replace("${payload}", "${payload}", "${payload}]");
-		
+
 		var curl = '''
 				${baseURL}/o/headless-commerce-admin-catalog/v1.0/products/batch \
 				-u test@liferay.com:test \
@@ -126,9 +126,9 @@ definition {
 		echo("OPTION KEY: ${optionKey}");
 
 		var optionId = JSONCurlUtil.get("${curl}", "$.items[?(@['key'] == '${optionKey}')].['id']");
-		
+
 		echo("OPTIONID: ${optionId}");
-		
+
 		return "${optionId}";
 	}
 

@@ -602,7 +602,7 @@ definition {
 
 	}
 
-	@description = "This ensures that a wiki page can link to other wiki page."
+	@description = "This ensures that a wiki page can link to other wiki page, also covers LPS-81914."
 	@priority = "4"
 	@refactordone
 	test CanLinkWikiPageToOtherWikiPage {

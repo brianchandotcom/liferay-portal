@@ -127,12 +127,6 @@ public class CompositePasswordEncryptor
 		throw new UnsupportedOperationException();
 	}
 
-	public void setDefaultPasswordEncryptor(
-		PasswordEncryptor defaultPasswordEncryptor) {
-
-		_defaultPasswordEncryptor = defaultPasswordEncryptor;
-	}
-
 	public void setPasswordEncryptors(
 		List<PasswordEncryptor> passwordEncryptors) {
 
@@ -180,7 +174,8 @@ public class CompositePasswordEncryptor
 				_log.debug("No password encryptor found for " + algorithm);
 			}
 
-			passwordEncryptor = _defaultPasswordEncryptor;
+			passwordEncryptor = _passwordEncryptors.get(
+				PasswordEncryptorUtil.TYPE_DEFAULT);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -196,7 +191,6 @@ public class CompositePasswordEncryptor
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompositePasswordEncryptor.class);
 
-	private PasswordEncryptor _defaultPasswordEncryptor;
 	private final Map<String, PasswordEncryptor> _passwordEncryptors =
 		new HashMap<>();
 

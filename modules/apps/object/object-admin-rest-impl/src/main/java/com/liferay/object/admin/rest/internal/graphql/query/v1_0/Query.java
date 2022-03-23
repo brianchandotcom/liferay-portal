@@ -17,7 +17,6 @@ package com.liferay.object.admin.rest.internal.graphql.query.v1_0;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
-import com.liferay.object.admin.rest.dto.v1_0.ObjectFieldSetting;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutColumn;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutTab;
@@ -26,7 +25,6 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
-import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldSettingResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
@@ -87,14 +85,6 @@ public class Query {
 
 		_objectFieldResourceComponentServiceObjects =
 			objectFieldResourceComponentServiceObjects;
-	}
-
-	public static void setObjectFieldSettingResourceComponentServiceObjects(
-		ComponentServiceObjects<ObjectFieldSettingResource>
-			objectFieldSettingResourceComponentServiceObjects) {
-
-		_objectFieldSettingResourceComponentServiceObjects =
-			objectFieldSettingResourceComponentServiceObjects;
 	}
 
 	public static void setObjectLayoutResourceComponentServiceObjects(
@@ -245,45 +235,6 @@ public class Query {
 			this::_populateResourceContext,
 			objectFieldResource -> objectFieldResource.getObjectField(
 				objectFieldId));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectFieldSetting(objectFieldSettingId: ___){id, name, objectFieldId, required, value}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public ObjectFieldSetting objectFieldSetting(
-			@GraphQLName("objectFieldSettingId") Long objectFieldSettingId)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_objectFieldSettingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			objectFieldSettingResource ->
-				objectFieldSettingResource.getObjectFieldSetting(
-					objectFieldSettingId));
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectFieldObjectFieldSettings(objectFieldId: ___, page: ___, pageSize: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
-	 */
-	@GraphQLField
-	public ObjectFieldSettingPage objectFieldObjectFieldSettings(
-			@GraphQLName("objectFieldId") Long objectFieldId,
-			@GraphQLName("pageSize") int pageSize,
-			@GraphQLName("page") int page)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_objectFieldSettingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			objectFieldSettingResource -> new ObjectFieldSettingPage(
-				objectFieldSettingResource.
-					getObjectFieldObjectFieldSettingsPage(
-						objectFieldId, Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -587,44 +538,6 @@ public class Query {
 
 	}
 
-	@GraphQLName("ObjectFieldSettingPage")
-	public class ObjectFieldSettingPage {
-
-		public ObjectFieldSettingPage(Page objectFieldSettingPage) {
-			actions = objectFieldSettingPage.getActions();
-
-			facets = objectFieldSettingPage.getFacets();
-
-			items = objectFieldSettingPage.getItems();
-			lastPage = objectFieldSettingPage.getLastPage();
-			page = objectFieldSettingPage.getPage();
-			pageSize = objectFieldSettingPage.getPageSize();
-			totalCount = objectFieldSettingPage.getTotalCount();
-		}
-
-		@GraphQLField
-		protected Map<String, Map> actions;
-
-		@GraphQLField
-		protected List<Facet> facets;
-
-		@GraphQLField
-		protected java.util.Collection<ObjectFieldSetting> items;
-
-		@GraphQLField
-		protected long lastPage;
-
-		@GraphQLField
-		protected long page;
-
-		@GraphQLField
-		protected long pageSize;
-
-		@GraphQLField
-		protected long totalCount;
-
-	}
-
 	@GraphQLName("ObjectLayoutPage")
 	public class ObjectLayoutPage {
 
@@ -804,22 +717,6 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
-			ObjectFieldSettingResource objectFieldSettingResource)
-		throws Exception {
-
-		objectFieldSettingResource.setContextAcceptLanguage(_acceptLanguage);
-		objectFieldSettingResource.setContextCompany(_company);
-		objectFieldSettingResource.setContextHttpServletRequest(
-			_httpServletRequest);
-		objectFieldSettingResource.setContextHttpServletResponse(
-			_httpServletResponse);
-		objectFieldSettingResource.setContextUriInfo(_uriInfo);
-		objectFieldSettingResource.setContextUser(_user);
-		objectFieldSettingResource.setGroupLocalService(_groupLocalService);
-		objectFieldSettingResource.setRoleLocalService(_roleLocalService);
-	}
-
-	private void _populateResourceContext(
 			ObjectLayoutResource objectLayoutResource)
 		throws Exception {
 
@@ -869,8 +766,6 @@ public class Query {
 		_objectDefinitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectFieldResource>
 		_objectFieldResourceComponentServiceObjects;
-	private static ComponentServiceObjects<ObjectFieldSettingResource>
-		_objectFieldSettingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectLayoutResource>
 		_objectLayoutResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectRelationshipResource>

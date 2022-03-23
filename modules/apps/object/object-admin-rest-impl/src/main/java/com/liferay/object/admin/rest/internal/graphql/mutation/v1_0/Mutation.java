@@ -17,14 +17,12 @@ package com.liferay.object.admin.rest.internal.graphql.mutation.v1_0;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
-import com.liferay.object.admin.rest.dto.v1_0.ObjectFieldSetting;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
-import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldSettingResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
@@ -78,14 +76,6 @@ public class Mutation {
 
 		_objectFieldResourceComponentServiceObjects =
 			objectFieldResourceComponentServiceObjects;
-	}
-
-	public static void setObjectFieldSettingResourceComponentServiceObjects(
-		ComponentServiceObjects<ObjectFieldSettingResource>
-			objectFieldSettingResourceComponentServiceObjects) {
-
-		_objectFieldSettingResourceComponentServiceObjects =
-			objectFieldSettingResourceComponentServiceObjects;
 	}
 
 	public static void setObjectLayoutResourceComponentServiceObjects(
@@ -414,95 +404,6 @@ public class Mutation {
 			this::_populateResourceContext,
 			objectFieldResource -> objectFieldResource.putObjectFieldBatch(
 				callbackURL, object));
-	}
-
-	@GraphQLField
-	public boolean deleteObjectFieldSetting(
-			@GraphQLName("objectFieldSettingId") Long objectFieldSettingId)
-		throws Exception {
-
-		_applyVoidComponentServiceObjects(
-			_objectFieldSettingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			objectFieldSettingResource ->
-				objectFieldSettingResource.deleteObjectFieldSetting(
-					objectFieldSettingId));
-
-		return true;
-	}
-
-	@GraphQLField
-	public Response deleteObjectFieldSettingBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_objectFieldSettingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			objectFieldSettingResource ->
-				objectFieldSettingResource.deleteObjectFieldSettingBatch(
-					callbackURL, object));
-	}
-
-	@GraphQLField
-	public ObjectFieldSetting updateObjectFieldSetting(
-			@GraphQLName("objectFieldSettingId") Long objectFieldSettingId,
-			@GraphQLName("objectFieldSetting") ObjectFieldSetting
-				objectFieldSetting)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_objectFieldSettingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			objectFieldSettingResource ->
-				objectFieldSettingResource.putObjectFieldSetting(
-					objectFieldSettingId, objectFieldSetting));
-	}
-
-	@GraphQLField
-	public Response updateObjectFieldSettingBatch(
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_objectFieldSettingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			objectFieldSettingResource ->
-				objectFieldSettingResource.putObjectFieldSettingBatch(
-					callbackURL, object));
-	}
-
-	@GraphQLField
-	public ObjectFieldSetting createObjectFieldObjectFieldSetting(
-			@GraphQLName("objectFieldId") Long objectFieldId,
-			@GraphQLName("objectFieldSetting") ObjectFieldSetting
-				objectFieldSetting)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_objectFieldSettingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			objectFieldSettingResource ->
-				objectFieldSettingResource.postObjectFieldObjectFieldSetting(
-					objectFieldId, objectFieldSetting));
-	}
-
-	@GraphQLField
-	public Response createObjectFieldObjectFieldSettingBatch(
-			@GraphQLName("objectFieldId") Long objectFieldId,
-			@GraphQLName("callbackURL") String callbackURL,
-			@GraphQLName("object") Object object)
-		throws Exception {
-
-		return _applyComponentServiceObjects(
-			_objectFieldSettingResourceComponentServiceObjects,
-			this::_populateResourceContext,
-			objectFieldSettingResource ->
-				objectFieldSettingResource.
-					postObjectFieldObjectFieldSettingBatch(
-						objectFieldId, callbackURL, object));
 	}
 
 	@GraphQLField
@@ -844,22 +745,6 @@ public class Mutation {
 	}
 
 	private void _populateResourceContext(
-			ObjectFieldSettingResource objectFieldSettingResource)
-		throws Exception {
-
-		objectFieldSettingResource.setContextAcceptLanguage(_acceptLanguage);
-		objectFieldSettingResource.setContextCompany(_company);
-		objectFieldSettingResource.setContextHttpServletRequest(
-			_httpServletRequest);
-		objectFieldSettingResource.setContextHttpServletResponse(
-			_httpServletResponse);
-		objectFieldSettingResource.setContextUriInfo(_uriInfo);
-		objectFieldSettingResource.setContextUser(_user);
-		objectFieldSettingResource.setGroupLocalService(_groupLocalService);
-		objectFieldSettingResource.setRoleLocalService(_roleLocalService);
-	}
-
-	private void _populateResourceContext(
 			ObjectLayoutResource objectLayoutResource)
 		throws Exception {
 
@@ -909,8 +794,6 @@ public class Mutation {
 		_objectDefinitionResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectFieldResource>
 		_objectFieldResourceComponentServiceObjects;
-	private static ComponentServiceObjects<ObjectFieldSettingResource>
-		_objectFieldSettingResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectLayoutResource>
 		_objectLayoutResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectRelationshipResource>

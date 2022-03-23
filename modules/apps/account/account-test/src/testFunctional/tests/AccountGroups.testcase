@@ -76,6 +76,55 @@ definition {
 			accountGroupName = "Edited Account Group Name");
 	}
 
+	@description = "This test assert user can filter the assigned accounts in Account Group by type."
+	@priority = "3"
+	test CanFilterAccountsBelongToAccountGroupByType {
+		task ("Given Add a new Account Group and Accounts with different type") {
+			JSONAccountGroup.addAccountGroup(
+				accountGroupDescription = "Filter the assigned Accounts by Type.",
+				accountGroupName = "AG Filter by Type");
+
+			for (var accountNum : list "1,2") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "Business Account ${accountNum} for Account Group",
+					accountEntryType = "Business");
+			}
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Person Account for Account Group",
+				accountEntryType = "Person");
+		}
+
+		task ("When assign the accounts to account group") {
+			AccountGroups.openAccountGroupsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AG Filter by Type");
+
+			AccountGroups.viewDefault(tabName = "Accounts");
+
+			AccountGroups.addAssignee(
+				accountGroupName = "AG Filter by Type",
+				assigneeAll = "true",
+				assigneeNames = "Business Account 1 for Account Group,Business Account 2 for Account Group,Person Account for Account Group");
+		}
+
+		task ("Then filter the accounts assigned to account group by Type returns proper results") {
+			ManagementBar.setFilterAndOrder(filterBy = "Business");
+
+			for (var assigneeNameNum : list "1,2") {
+				AccountGroups.viewAssignee(assigneeName = "Business Account ${assigneeNameNum} for Account Group");
+			}
+
+			ManagementBar.setFilterAndOrder(filterBy = "Person");
+
+			AccountGroups.viewAssignee(assigneeName = "Person Account for Account Group");
+
+			ManagementBar.setFilterAndOrder(filterBy = "Guest");
+
+			AccountGroups.viewDefault(tabName = "Accounts");
+		}
+	}
+
 	@description = "This test assigns an account to Account Group"
 	@priority = "4"
 	test CanManuallyAssignAccountToGroup {

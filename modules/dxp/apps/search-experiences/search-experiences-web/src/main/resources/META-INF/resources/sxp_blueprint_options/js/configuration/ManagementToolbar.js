@@ -13,7 +13,7 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {ManagementToolbar as FrontendManagementToolbar, ResultsBar} from 'frontend-js-components-web';
+import {ManagementToolbar as FrontendManagementToolbar} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 import {sub} from '../../../sxp_blueprint_admin/js/utils/language';
@@ -133,8 +133,8 @@ const ManagementToolbar = ({
 			</FrontendManagementToolbar.Container>
 
 			{!!searchValue && !loading && (
-				<ResultsBar>
-					<ResultsBar.Item>
+				<FrontendManagementToolbar.ResultsBar>
+					<FrontendManagementToolbar.ResultsBarItem>
 						<span className="component-text text-truncate-inline">
 							<span className="text-truncate">
 								{sub(
@@ -147,9 +147,9 @@ const ManagementToolbar = ({
 								)}
 							</span>
 						</span>
-					</ResultsBar.Item>
+					</FrontendManagementToolbar.ResultsBarItem>
 
-					<ResultsBar.Item>
+					<FrontendManagementToolbar.ResultsBarItem>
 						<ClayButton
 							className="component-link tbar-link"
 							displayType="unstyled"
@@ -160,8 +160,8 @@ const ManagementToolbar = ({
 						>
 							{Liferay.Language.get('clear')}
 						</ClayButton>
-					</ResultsBar.Item>
-				</ResultsBar>
+					</FrontendManagementToolbar.ResultsBarItem>
+				</FrontendManagementToolbar.ResultsBar>
 			)}
 		</>
 	);

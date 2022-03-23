@@ -17,8 +17,7 @@ import ClayLabel from '@clayui/label';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
 import {
-	ManagementToolbar as FrontendManagementToolbar,
-	ResultsBar,
+	ManagementToolbar as FrontendManagementToolbar
 } from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
@@ -238,8 +237,8 @@ function ManagementToolbar({
 			</FrontendManagementToolbar.Container>
 
 			{(!!keyword || status !== ALL || category !== ALL) && (
-				<ResultsBar>
-					<ResultsBar.Item>
+				<FrontendManagementToolbar.ResultsBar>
+					<FrontendManagementToolbar.ResultsBarItem>
 						<span className="component-text text-truncate-inline">
 							<span className="text-truncate">
 								{sub(Liferay.Language.get('x-results-for-x'), [
@@ -248,9 +247,9 @@ function ManagementToolbar({
 								])}
 							</span>
 						</span>
-					</ResultsBar.Item>
+					</FrontendManagementToolbar.ResultsBarItem>
 
-					<ResultsBar.Item expand>
+					<FrontendManagementToolbar.ResultsBarItem expand>
 						{status !== ALL && (
 							<ClayLabel
 								className="component-label tbar-label"
@@ -274,9 +273,9 @@ function ManagementToolbar({
 								{category}
 							</ClayLabel>
 						)}
-					</ResultsBar.Item>
+					</FrontendManagementToolbar.ResultsBarItem>
 
-					<ResultsBar.Item>
+					<FrontendManagementToolbar.ResultsBarItem>
 						<ClayButton
 							className="component-link tbar-link"
 							displayType="unstyled"
@@ -289,8 +288,8 @@ function ManagementToolbar({
 						>
 							{Liferay.Language.get('clear')}
 						</ClayButton>
-					</ResultsBar.Item>
-				</ResultsBar>
+					</FrontendManagementToolbar.ResultsBarItem>
+				</FrontendManagementToolbar.ResultsBar>
 			)}
 		</>
 	);

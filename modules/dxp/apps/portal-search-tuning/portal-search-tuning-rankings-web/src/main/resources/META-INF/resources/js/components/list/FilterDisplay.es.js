@@ -10,7 +10,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {ResultsBar} from 'frontend-js-components-web';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import {PropTypes} from 'prop-types';
 import React, {Component} from 'react';
 
@@ -27,8 +27,8 @@ class FilterDisplay extends Component {
 		const {onClear, searchBarTerm, totalResultsCount} = this.props;
 
 		return (
-			<ResultsBar title={Liferay.Language.get('filter')}>
-				<ResultsBar.Item expand>
+			<ManagementToolbar.ResultsBar title={Liferay.Language.get('filter')}>
+				<ManagementToolbar.ResultsBarItem expand>
 					<span className="component-text text-truncate-inline">
 						<span className="text-truncate">
 							{sub(Liferay.Language.get('x-results-for-x'), [
@@ -37,9 +37,9 @@ class FilterDisplay extends Component {
 							])}
 						</span>
 					</span>
-				</ResultsBar.Item>
+				</ManagementToolbar.ResultsBarItem>
 
-				<ResultsBar.Item>
+				<ManagementToolbar.ResultsBarItem>
 					<ClayButton
 						className="component-link tbar-link"
 						displayType="unstyled"
@@ -49,8 +49,8 @@ class FilterDisplay extends Component {
 					>
 						{Liferay.Language.get('clear')}
 					</ClayButton>
-				</ResultsBar.Item>
-			</ResultsBar>
+				</ManagementToolbar.ResultsBarItem>
+			</ManagementToolbar.ResultsBar>
 		);
 	}
 }

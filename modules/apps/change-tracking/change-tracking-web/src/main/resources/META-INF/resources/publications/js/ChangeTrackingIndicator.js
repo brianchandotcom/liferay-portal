@@ -22,7 +22,7 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
-import {ManagementToolbar, ResultsBar} from 'frontend-js-components-web';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
@@ -534,8 +534,8 @@ const PublicationsSearchContainer = ({
 
 		return (
 			<div className="results-bar">
-				<ResultsBar>
-					<ResultsBar.Item expand>
+				<ManagementToolbar.ResultsBar>
+					<ManagementToolbar.ResultsBarItem expand>
 						<span className="component-text text-truncate-inline">
 							<span className="text-truncate">
 								{format(key, [count]) + ' '}
@@ -543,9 +543,9 @@ const PublicationsSearchContainer = ({
 								<strong>{resultsKeywords}</strong>
 							</span>
 						</span>
-					</ResultsBar.Item>
+					</ManagementToolbar.ResultsBarItem>
 
-					<ResultsBar.Item>
+					<ManagementToolbar.ResultsBarItem>
 						<ClayButton
 							className="component-link tbar-link"
 							displayType="unstyled"
@@ -556,8 +556,8 @@ const PublicationsSearchContainer = ({
 						>
 							{Liferay.Language.get('clear')}
 						</ClayButton>
-					</ResultsBar.Item>
-				</ResultsBar>
+					</ManagementToolbar.ResultsBarItem>
+				</ManagementToolbar.ResultsBar>
 			</div>
 		);
 	};

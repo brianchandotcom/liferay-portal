@@ -26,7 +26,7 @@ import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
 import ClayToolbar from '@clayui/toolbar';
 import classNames from 'classnames';
-import {ManagementToolbar, ResultsBar} from 'frontend-js-components-web';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {CSSTransition} from 'react-transition-group';
 
@@ -2356,7 +2356,7 @@ export default function ChangeTrackingChangesView({
 		const items = [];
 
 		items.push(
-			<ResultsBar.Item>
+			<ManagementToolbar.ResultsBarItem>
 				<span className="component-text text-truncate-inline">
 					<span className="text-truncate">
 						{Liferay.Util.sub(
@@ -2370,12 +2370,12 @@ export default function ChangeTrackingChangesView({
 						)}
 					</span>
 				</span>
-			</ResultsBar.Item>
+			</ManagementToolbar.ResultsBarItem>
 		);
 
 		if (resultsKeywords) {
 			items.push(
-				<ResultsBar.Item>
+				<ManagementToolbar.ResultsBarItem>
 					<ClayLabel
 						className="component-label tbar-label"
 						closeButtonProps={{
@@ -2391,13 +2391,13 @@ export default function ChangeTrackingChangesView({
 							': ' +
 							resultsKeywords}
 					</ClayLabel>
-				</ResultsBar.Item>
+				</ManagementToolbar.ResultsBarItem>
 			);
 		}
 
 		for (let i = 0; i < labels.length; i++) {
 			items.push(
-				<ResultsBar.Item>
+				<ManagementToolbar.ResultsBarItem>
 					<ClayLabel
 						className="component-label tbar-label"
 						closeButtonProps={{
@@ -2408,13 +2408,13 @@ export default function ChangeTrackingChangesView({
 					>
 						{labels[i].label}
 					</ClayLabel>
-				</ResultsBar.Item>
+				</ManagementToolbar.ResultsBarItem>
 			);
 		}
 
-		items.push(<ResultsBar.Item expand />);
+		items.push(<ManagementToolbar.ResultsBarItem expand />);
 		items.push(
-			<ResultsBar.Item>
+			<ManagementToolbar.ResultsBarItem>
 				<ClayButton
 					className="component-link tbar-link"
 					displayType="unstyled"
@@ -2428,10 +2428,10 @@ export default function ChangeTrackingChangesView({
 				>
 					{Liferay.Language.get('clear')}
 				</ClayButton>
-			</ResultsBar.Item>
+			</ManagementToolbar.ResultsBarItem>
 		);
 
-		return <ResultsBar>{items}</ResultsBar>;
+		return <ManagementToolbar.ResultsBar>{items}</ManagementToolbar.ResultsBar>;
 	};
 
 	const renderTableBody = () => {

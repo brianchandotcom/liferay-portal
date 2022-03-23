@@ -14,7 +14,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayLabel from '@clayui/label';
-import {ResultsBar} from 'frontend-js-components-web';
+import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useContext} from 'react';
 
 import {concatValues} from '../../utils/utils';
@@ -24,7 +24,7 @@ const FilterItem = ({filterKey, name, value}) => {
 	const [, dispatch] = useContext(SearchContext);
 
 	return (
-		<ResultsBar.Item>
+		<ManagementToolbar.ResultsBarItem>
 			<ClayLabel
 				className="tbar-label"
 				closeButtonProps={{
@@ -38,7 +38,7 @@ const FilterItem = ({filterKey, name, value}) => {
 					<span className="font-weight-normal">{value}</span>
 				</span>
 			</ClayLabel>
-		</ResultsBar.Item>
+		</ManagementToolbar.ResultsBarItem>
 	);
 };
 
@@ -81,8 +81,8 @@ export default function ManagementToolbarResultsBar({
 	return (
 		<>
 			{(keywords || selectedFilters.length > 0) && !isLoading && (
-				<ResultsBar>
-					<ResultsBar.Item>
+				<ManagementToolbar.ResultsBar>
+					<ManagementToolbar.ResultsBarItem>
 						<span className="component-text text-truncate-inline">
 							<span className="text-truncate">
 								{Liferay.Util.sub(
@@ -92,13 +92,13 @@ export default function ManagementToolbarResultsBar({
 								)}
 							</span>
 						</span>
-					</ResultsBar.Item>
+					</ManagementToolbar.ResultsBarItem>
 
 					{selectedFilters.map((filter, key) => (
 						<FilterItem key={key} {...filter} />
 					))}
 
-					<ResultsBar.Item expand>
+					<ManagementToolbar.ResultsBarItem expand>
 						<div className="tbar-section text-right">
 							<ClayButton
 								className="component-link tbar-link"
@@ -108,8 +108,8 @@ export default function ManagementToolbarResultsBar({
 								{Liferay.Language.get('clear-all')}
 							</ClayButton>
 						</div>
-					</ResultsBar.Item>
-				</ResultsBar>
+					</ManagementToolbar.ResultsBarItem>
+				</ManagementToolbar.ResultsBar>
 			)}
 		</>
 	);

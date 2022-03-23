@@ -347,14 +347,6 @@ public interface PropsKeys {
 
 	public static final String BROWSER_LAUNCHER_URL = "browser.launcher.url";
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #VIEW_COUNT_ENABLED}
-	 */
-	@Deprecated
-	public static final String BUFFERED_INCREMENT_ENABLED =
-		"buffered.increment.enabled";
-
 	public static final String BUFFERED_INCREMENT_STANDBY_QUEUE_THRESHOLD =
 		"buffered.increment.standby.queue.threshold";
 

@@ -116,6 +116,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BLUEPRINTS_ADMIN_ENTRY_ROW_NUMBER</td>
+	<td>//div[contains(@class,'dnd-tbody')]//div[contains(@class,'dnd-tr')][${rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLUEPRINTS_ADMIN_ENTRY_TITLE</td>
 	<td>//div[contains(@class,'table-list-title')]//*[normalize-space(text())='${entryTitle}']</td>
 	<td></td>

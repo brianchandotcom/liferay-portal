@@ -255,6 +255,19 @@ definition {
 		}
 	}
 
+	macro viewEntriesSpecificOrder {
+		var entryOrder = "0";
+
+		for (var entryTitle : list "${entryList}") {
+			var entryOrder = ${entryOrder} + 1;
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_ROW_NUMBER",
+				rowNumber = "${entryOrder}",
+				value1 = "${entryTitle}");
+		}
+	}
+
 	macro viewEntryTitle {
 		AssertElementPresent(
 			entryTitle = "${title}",

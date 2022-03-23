@@ -25,6 +25,11 @@
 	<td>//div[contains(@class, 'pagination')]//div[contains(@class, 'pagination-results') and contains(text(), "${key_text}")]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ITEMS_PER_PAGE_VALUE_BUTTON</td>
+	<td>//div[contains(@class, testray-page)]//div[contains(@class, 'pagination')]//button[contains(text(), "${key_value} Items")]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

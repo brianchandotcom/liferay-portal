@@ -20,6 +20,7 @@ import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentElement;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.odata.entity.EntityField;
@@ -28,7 +29,10 @@ import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
+import org.apache.commons.beanutils.BeanUtils;
+
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -44,6 +48,24 @@ public class ContentElementResourceTest
 		super.setUp();
 
 		_contentElementFieldValueMap = new IdentityHashMap<>();
+	}
+
+	@Override
+	@Test
+	public void testGetAssetLibraryContentElementsPageWithSortDouble()
+		throws Exception {
+
+		testGetAssetLibraryContentElementsPageWithSort(
+			EntityField.Type.DOUBLE, _getSortDoubleFieldsConsumer());
+	}
+
+	@Override
+	@Test
+	public void testGetSiteContentElementsPageWithSortDouble()
+		throws Exception {
+
+		testGetSiteContentElementsPageWithSort(
+			EntityField.Type.DOUBLE, _getSortDoubleFieldsConsumer());
 	}
 
 	@Override
@@ -148,6 +170,18 @@ public class ContentElementResourceTest
 		).put(
 			fieldName, fieldValue
 		);
+	}
+
+	private UnsafeTriConsumer
+		<EntityField, ContentElement, ContentElement, Exception>
+			_getSortDoubleFieldsConsumer() {
+
+		return (entityField, contentElement1, contentElement2) -> {
+			BeanUtils.setProperty(contentElement1, entityField.getName(), 0.1);
+			_assignValueInMap(contentElement1, entityField.getName(), 0.1);
+			BeanUtils.setProperty(contentElement2, entityField.getName(), 0.5);
+			_assignValueInMap(contentElement2, entityField.getName(), 0.5);
+		};
 	}
 
 	private Object _getValueFromMap(

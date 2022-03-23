@@ -46,37 +46,42 @@ public abstract class BaseLayoutTypeAccessPolicy
 			Portlet portlet)
 		throws PortalException {
 
-		if (layout.getMasterLayoutPlid() > 0) {
-			Layout masterLayout = layoutLocalService.fetchLayout(
-				layout.getMasterLayoutPlid());
+		if (layout.getMasterLayoutPlid() == 0) {
+			return super.hasAccessPermission(
+				httpServletRequest, layout, portlet);
+		}
 
-			if (masterLayout != null) {
-				PortletPreferencesIds portletPreferencesIds =
-					portletPreferencesFactory.getPortletPreferencesIds(
-						httpServletRequest, masterLayout,
-						portlet.getPortletId());
+		Layout masterLayout = layoutLocalService.fetchLayout(
+			layout.getMasterLayoutPlid());
 
-				javax.portlet.PortletPreferences jxPortletPreferences =
-					portletPreferencesLocalService.fetchPreferences(
-						portletPreferencesIds);
+		if (masterLayout == null) {
+			return super.hasAccessPermission(
+				httpServletRequest, layout, portlet);
+		}
 
-				if (jxPortletPreferences != null) {
-					String resourcePrimKey =
-						PortletPermissionUtil.getPrimaryKey(
-							masterLayout.getPlid(), portlet.getPortletId());
+		PortletPreferencesIds portletPreferencesIds =
+			portletPreferencesFactory.getPortletPreferencesIds(
+				httpServletRequest, masterLayout, portlet.getPortletId());
 
-					List<ResourcePermission> resourcePermissions =
-						resourcePermissionLocalService.
-							getResourceResourcePermissions(
-								masterLayout.getCompanyId(),
-								masterLayout.getGroupId(),
-								portlet.getPortletName(), resourcePrimKey);
+		javax.portlet.PortletPreferences jxPortletPreferences =
+			portletPreferencesLocalService.fetchPreferences(
+				portletPreferencesIds);
 
-					if (ListUtil.isNotEmpty(resourcePermissions)) {
-						layout = masterLayout;
-					}
-				}
-			}
+		if (jxPortletPreferences == null) {
+			return super.hasAccessPermission(
+				httpServletRequest, layout, portlet);
+		}
+
+		String resourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+			masterLayout.getPlid(), portlet.getPortletId());
+
+		List<ResourcePermission> resourcePermissions =
+			resourcePermissionLocalService.getResourceResourcePermissions(
+				masterLayout.getCompanyId(), masterLayout.getGroupId(),
+				portlet.getPortletName(), resourcePrimKey);
+
+		if (ListUtil.isNotEmpty(resourcePermissions)) {
+			layout = masterLayout;
 		}
 
 		return super.hasAccessPermission(httpServletRequest, layout, portlet);

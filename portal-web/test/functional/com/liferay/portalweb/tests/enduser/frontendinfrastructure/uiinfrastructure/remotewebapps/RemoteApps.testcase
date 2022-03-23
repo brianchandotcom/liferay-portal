@@ -71,8 +71,8 @@ definition {
 				value1 = "Test Remote App");
 
 			AssertElementPresent(
-				key_assetItem = "Collaboration",
-				locator1 = "ControlMenuAddPanel#ASSET_ITEM");
+				key_category = "Collaboration",
+				locator1 = "ControlMenuAddPanel#WIDGET_CATEGORY");
 		}
 	}
 

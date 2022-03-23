@@ -1302,14 +1302,13 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		return LiferaySeleniumUtil.getNumberIncrement(value);
 	}
 
-	@Override
-	public String getOcularResultImageDirName() {
-		return _OCULAR_RESULT_IMAGE_DIR_NAME;
+	public String getOcularBaselineImageDirName() {
+		return _OCULAR_BASELINE_IMAGE_DIR_NAME;
 	}
 
 	@Override
-	public String getOcularSnapImageDirName() {
-		return _OCULAR_SNAP_IMAGE_DIR_NAME;
+	public String getOcularResultImageDirName() {
+		return _OCULAR_RESULT_IMAGE_DIR_NAME;
 	}
 
 	@Override
@@ -2040,12 +2039,12 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 			String locator, String fileName, String match)
 		throws Exception {
 
-		File snapFile = new File(
-			PropsValues.TEST_BASE_DIR_NAME + getOcularSnapImageDirName() + "/" +
-				fileName);
+		File baselineFile = new File(
+			PropsValues.TEST_BASE_DIR_NAME + getOcularBaselineImageDirName() +
+				"/" + fileName);
 
-		if (!snapFile.exists()) {
-			File snapParentFile = snapFile.getParentFile();
+		if (!baselineFile.exists()) {
+			File snapParentFile = baselineFile.getParentFile();
 
 			snapParentFile.mkdirs();
 		}
@@ -4377,7 +4376,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		OcularConfiguration ocularConfiguration = Ocular.config();
 
 		ocularConfiguration = ocularConfiguration.snapshotPath(
-			Paths.get(testBaseDirName, getOcularSnapImageDirName()));
+			Paths.get(testBaseDirName, getOcularBaselineImageDirName()));
 
 		FileUtil.delete(
 			new File(testBaseDirName, getOcularResultImageDirName()));
@@ -4534,9 +4533,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	}
 
-	private static final String _OCULAR_RESULT_IMAGE_DIR_NAME;
+	private static final String _OCULAR_BASELINE_IMAGE_DIR_NAME;
 
-	private static final String _OCULAR_SNAP_IMAGE_DIR_NAME;
+	private static final String _OCULAR_RESULT_IMAGE_DIR_NAME;
 
 	private static final String _OUTPUT_DIR_NAME;
 
@@ -4576,8 +4575,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		String ocularResultImageDirName =
 			testDependenciesDirName + "//ocular//result";
-		String ocularSnapImageDirName =
-			testDependenciesDirName + "//ocular//snap";
+		String ocularBaselineImageDirName =
+			testDependenciesDirName + "//ocular//baseline";
 		String sikuliImagesDirName =
 			testDependenciesDirName + "//sikuli//linux//";
 
@@ -4590,8 +4589,8 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		else if (OSDetector.isWindows()) {
 			ocularResultImageDirName = StringUtil.replace(
 				ocularResultImageDirName, "//", "\\");
-			ocularSnapImageDirName = StringUtil.replace(
-				ocularSnapImageDirName, "//", "\\");
+			ocularBaselineImageDirName = StringUtil.replace(
+				ocularBaselineImageDirName, "//", "\\");
 			outputDirName = StringUtil.replace(outputDirName, "//", "\\");
 			sikuliImagesDirName = StringUtil.replace(
 				sikuliImagesDirName, "//", "\\");
@@ -4604,7 +4603,7 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 		_OUTPUT_DIR_NAME = outputDirName;
 		_OCULAR_RESULT_IMAGE_DIR_NAME = ocularResultImageDirName;
-		_OCULAR_SNAP_IMAGE_DIR_NAME = ocularSnapImageDirName;
+		_OCULAR_BASELINE_IMAGE_DIR_NAME = ocularBaselineImageDirName;
 		_SIKULI_IMAGES_DIR_NAME = sikuliImagesDirName;
 		_TEST_DEPENDENCIES_DIR_NAME = testDependenciesDirName;
 	}

@@ -21,6 +21,7 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
 import com.liferay.petra.http.invoker.HttpInvoker;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import java.io.File;
@@ -203,7 +204,7 @@ public class Main {
 	private String _getTestrayBuildDescription(
 		Map<String, String> propertiesMap) {
 
-		StringBuilder sb = new StringBuilder(15);
+		StringBundler sb = new StringBundler(15);
 
 		if (propertiesMap.get("liferay.portal.git.id") != null) {
 			sb.append("Portal hash: ");

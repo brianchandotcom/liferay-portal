@@ -17,6 +17,7 @@ import {BatchHttpLink} from '@apollo/client/link/batch-http';
 import {RestLink} from 'apollo-link-rest';
 
 import {Liferay} from '../services/liferay/liferay';
+import {bodySerializers} from './serializers';
 
 const liferayHost =
 	process.env.REACT_APP_LIFERAY_HOST || window.location.origin;
@@ -31,6 +32,7 @@ const httpLink = new BatchHttpLink({
 });
 
 const restLink = new RestLink({
+	bodySerializers,
 	headers: {
 		'x-csrf-token': Liferay.authToken,
 	},

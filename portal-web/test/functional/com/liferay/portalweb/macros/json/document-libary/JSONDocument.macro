@@ -79,6 +79,7 @@ definition {
 			-d sourceFileName= \
 			-d mimeType= \
 			-d title=${dmDocumentTitle} \
+			-d urlTitle= \
 		 	-d description=${dmDocumentDescription} \
 			-d changeLog= \
 			-d file=@path_to_file \
@@ -172,6 +173,7 @@ definition {
 				-F sourceFileName=${sourceFileName} \
 				-F mimeType=${mimeType} \
 				-F title=${dmDocumentTitle} \
+				-F urlTitle= \
 			 	-F description=${description} \
 				-F changeLog= \
 				-F <CURL_DATA[expirationDate=${expirationDate}]CURL_DATA> \
@@ -190,6 +192,7 @@ definition {
 				-F sourceFileName=${sourceFileName} \
 				-F mimeType=${mimeType} \
 				-F title=${dmDocumentTitle} \
+				-F urlTitle= \
 			 	-F description=${description} \
 				-F changeLog= \
 				-F file=@${filePath} \

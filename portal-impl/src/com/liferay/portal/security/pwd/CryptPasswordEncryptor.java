@@ -56,10 +56,7 @@ public class CryptPasswordEncryptor
 
 	@Override
 	public String[] getSupportedAlgorithmTypes() {
-		return new String[] {
-			PasswordEncryptorUtil.TYPE_UFC_CRYPT,
-			PasswordEncryptorUtil.TYPE_UFC_CRYPT
-		};
+		return new String[] {PasswordEncryptorUtil.TYPE_UFC_CRYPT};
 	}
 
 	protected byte[] getSalt(String encryptedPassword)

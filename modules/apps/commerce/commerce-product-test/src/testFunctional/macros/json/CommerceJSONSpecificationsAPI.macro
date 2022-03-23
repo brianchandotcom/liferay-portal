@@ -17,14 +17,12 @@ definition {
 			echo("optionCategoryId is ${optionCategoryId}");
 		}
 
-		//echo("optionCategoryId is ${optionCategoryId}");
-
 		var size = "101";
 		var i = "1";
 		var payload = "[";
 
 		while ("${i}" != "${size}" && (maxIterations = "101")) {
-			var line = '''
+			var array = '''
     		{
 				"active": true,
 				"catalogId": ${catalogId},
@@ -46,11 +44,11 @@ definition {
 			var j = ${i} + 1;
 
 			if ("${j}" == "${size}") {
-				var payload = StringUtil.replace("${payload}", "${payload}", "${payload}${line}");
+				var payload = StringUtil.replace("${payload}", "${payload}", "${payload}${array}");
 			}
 			else {
-				var line = StringUtil.replace("${line}", "${line}", "${line},");
-				var payload = StringUtil.replace("${payload}", "${payload}", "${payload}${line}");
+				var array = StringUtil.replace("${array}", "${array}", "${array},");
+				var payload = StringUtil.replace("${payload}", "${payload}", "${payload}${array}");
 			}
 
 			var i = ${i} + 1;

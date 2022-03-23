@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.pwd;
+package com.liferay.portal.security.password.encryptor.internal;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
@@ -34,10 +34,16 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  * @author Tomas Polesovsky
  */
+@Component(
+	property = "type=" + PasswordEncryptorUtil.TYPE_PBKDF2,
+	service = PasswordEncryptor.class
+)
 public class PBKDF2PasswordEncryptor
 	extends BasePasswordEncryptor implements PasswordEncryptor {
 

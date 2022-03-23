@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.pwd;
+package com.liferay.portal.security.password.encryptor.internal;
 
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.security.SecureRandom;
@@ -26,12 +26,18 @@ import java.io.UnsupportedEncodingException;
 
 import java.util.Random;
 
+import org.osgi.service.component.annotations.Component;
+
 import org.vps.crypt.Crypt;
 
 /**
  * @author Michael C. Han
  * @author Tomas Polesovsky
  */
+@Component(
+	property = "type=" + PasswordEncryptorUtil.TYPE_UFC_CRYPT,
+	service = PasswordEncryptor.class
+)
 public class CryptPasswordEncryptor
 	extends BasePasswordEncryptor implements PasswordEncryptor {
 

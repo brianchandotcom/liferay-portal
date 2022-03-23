@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.pwd;
+package com.liferay.portal.security.password.encryptor.internal;
 
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.io.BigEndianCodec;
@@ -29,10 +29,16 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  * @author Tomas Polesovsky
  */
+@Component(
+	property = "type=" + PasswordEncryptorUtil.TYPE_SSHA,
+	service = PasswordEncryptor.class
+)
 public class SSHAPasswordEncryptor
 	extends BasePasswordEncryptor implements PasswordEncryptor {
 

@@ -66,21 +66,6 @@
 		<property name="resourceActions" ref="com.liferay.portal.kernel.security.permission.ResourceActions" />
 	</bean>
 	<bean class="com.liferay.portal.security.permission.UserBagFactoryImpl" id="com.liferay.portal.kernel.security.permission.UserBagFactory" />
-	<bean class="com.liferay.portal.security.pwd.CompositePasswordEncryptor" id="com.liferay.portal.kernel.security.pwd.PasswordEncryptor">
-		<property name="passwordEncryptors">
-			<util:list>
-				<bean class="com.liferay.portal.security.pwd.BCryptPasswordEncryptor" />
-				<bean class="com.liferay.portal.security.pwd.CryptPasswordEncryptor" />
-				<bean class="com.liferay.portal.security.pwd.DefaultPasswordEncryptor" />
-				<bean class="com.liferay.portal.security.pwd.NullPasswordEncryptor" />
-				<bean class="com.liferay.portal.security.pwd.PBKDF2PasswordEncryptor" />
-				<bean class="com.liferay.portal.security.pwd.SSHAPasswordEncryptor" />
-			</util:list>
-		</property>
-	</bean>
-	<bean class="com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil" id="com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil">
-		<property name="passwordEncryptor" ref="com.liferay.portal.kernel.security.pwd.PasswordEncryptor" />
-	</bean>
 	<bean class="com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl" id="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider" />
 	<bean class="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil" id="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil">
 		<property name="secureXMLFactoryProvider" ref="com.liferay.portal.kernel.security.xml.SecureXMLFactoryProvider" />

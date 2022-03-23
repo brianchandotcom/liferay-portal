@@ -12,29 +12,34 @@
  * details.
  */
 
-package com.liferay.portal.security.pwd;
+package com.liferay.portal.security.password.encryptor.internal;
 
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
-import com.liferay.portal.kernel.util.DigesterUtil;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Michael C. Han
  * @author Tomas Polesovsky
  */
-public class DefaultPasswordEncryptor
+@Component(
+	property = "type=" + PasswordEncryptorUtil.TYPE_DEFAULT,
+	service = PasswordEncryptor.class
+)
+public class NullPasswordEncryptor
 	extends BasePasswordEncryptor implements PasswordEncryptor {
 
 	@Override
 	public String encrypt(
 		String algorithm, String plainTextPassword, String encryptedPassword) {
 
-		return DigesterUtil.digest(algorithm, plainTextPassword);
+		return plainTextPassword;
 	}
 
 	@Override
 	public String getAlgorithmType() {
-		return PasswordEncryptorUtil.TYPE_DEFAULT;
+		return PasswordEncryptorUtil.TYPE_NONE;
 	}
 
 }

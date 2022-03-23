@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -51,14 +52,14 @@ public class UserAnalyticsDXPEntityRetriever
 
 	@Override
 	public Page<DXPEntity> getDXPEntitiesPage(
-			long companyId, Pagination pagination,
+			long companyId, Filter filter, Pagination pagination,
 			UnsafeFunction<BaseModel<?>, DXPEntity, Exception>
 				transformUnsafeFunction)
 		throws Exception {
 
 		return SearchUtil.search(
 			null, booleanQuery -> booleanQuery.getPreBooleanFilter(),
-			_createBooleanFilter(companyId), User.class.getName(), null,
+			_createBooleanFilter(companyId, filter), User.class.getName(), null,
 			pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
@@ -68,8 +69,12 @@ public class UserAnalyticsDXPEntityRetriever
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
-	private BooleanFilter _createBooleanFilter(long companyId) {
+	private BooleanFilter _createBooleanFilter(long companyId, Filter filter) {
 		BooleanFilter booleanFilter = new BooleanFilter();
+
+		if (filter != null) {
+			booleanFilter.add(filter, BooleanClauseOccur.MUST);
+		}
 
 		booleanFilter.add(
 			new TermFilter(

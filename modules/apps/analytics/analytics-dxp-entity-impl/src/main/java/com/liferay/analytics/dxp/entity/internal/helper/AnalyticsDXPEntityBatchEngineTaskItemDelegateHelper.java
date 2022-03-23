@@ -45,7 +45,7 @@ public class AnalyticsDXPEntityBatchEngineTaskItemDelegateHelper {
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		AnalyticsDXPEntityRetriever dxpEntityPageRetriever =
+		AnalyticsDXPEntityRetriever analyticsDXPEntityRetriever =
 			_analyticsDXPEntityRetrieverTracker.getAnalyticsDXPEntityRetriever(
 				entryClassName);
 
@@ -54,8 +54,8 @@ public class AnalyticsDXPEntityBatchEngineTaskItemDelegateHelper {
 				pagination.getPage(), pagination.getPageSize());
 
 		com.liferay.portal.vulcan.pagination.Page<DXPEntity> dxpEntitiesPage =
-			dxpEntityPageRetriever.getDXPEntitiesPage(
-				companyId, vulcanPagination,
+			analyticsDXPEntityRetriever.getDXPEntitiesPage(
+				companyId, filter, vulcanPagination,
 				baseModel -> _dxpEntityDTOConverter.toDTO(baseModel));
 
 		return Page.of(

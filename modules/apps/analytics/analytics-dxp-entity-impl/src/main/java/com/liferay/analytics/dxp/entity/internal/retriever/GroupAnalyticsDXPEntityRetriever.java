@@ -17,10 +17,12 @@ package com.liferay.analytics.dxp.entity.internal.retriever;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetriever;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -39,24 +41,25 @@ import org.osgi.service.component.annotations.Reference;
 	service = AnalyticsDXPEntityRetriever.class
 )
 public class GroupAnalyticsDXPEntityRetriever
+	extends NoIndexedAnalyticsDXPEntityRetriever
 	implements AnalyticsDXPEntityRetriever {
 
 	@Override
 	public Page<DXPEntity> getDXPEntitiesPage(
-			long companyId, Pagination pagination,
+			long companyId, Filter filter, Pagination pagination,
 			UnsafeFunction<BaseModel<?>, DXPEntity, Exception>
 				transformUnsafeFunction)
 		throws Exception {
 
 		List<DXPEntity> dxpEntities = new ArrayList<>();
 
-		List<Group> groups = _groupLocalService.search(
-			companyId,
-			LinkedHashMapBuilder.<String, Object>put(
-				"active", true
-			).put(
-				"site", true
-			).build(),
+		DynamicQuery dynamicQuery = _groupLocalService.dynamicQuery();
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("active", true));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("site", true));
+
+		List<Group> groups = _groupLocalService.dynamicQuery(
+			buildDynamicQuery(companyId, dynamicQuery, filter),
 			pagination.getStartPosition(), pagination.getEndPosition());
 
 		for (Group group : groups) {

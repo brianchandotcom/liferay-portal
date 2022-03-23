@@ -17,6 +17,7 @@ package com.liferay.analytics.dxp.entity.retriever;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -26,7 +27,7 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 public interface AnalyticsDXPEntityRetriever {
 
 	public Page<DXPEntity> getDXPEntitiesPage(
-			long companyId, Pagination pagination,
+			long companyId, Filter filter, Pagination pagination,
 			UnsafeFunction<BaseModel<?>, DXPEntity, Exception>
 				transformUnsafeFunction)
 		throws Exception;

@@ -19,6 +19,7 @@ import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetriever;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Team;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -38,18 +39,21 @@ import org.osgi.service.component.annotations.Reference;
 	service = AnalyticsDXPEntityRetriever.class
 )
 public class TeamAnalyticsDXPEntityRetriever
+	extends NoIndexedAnalyticsDXPEntityRetriever
 	implements AnalyticsDXPEntityRetriever {
 
 	@Override
 	public Page<DXPEntity> getDXPEntitiesPage(
-			long companyId, Pagination pagination,
+			long companyId, Filter filter, Pagination pagination,
 			UnsafeFunction<BaseModel<?>, DXPEntity, Exception>
 				transformUnsafeFunction)
 		throws Exception {
 
 		List<DXPEntity> dxpEntities = new ArrayList<>();
 
-		List<Team> teams = _teamLocalService.getTeams(
+		List<Team> teams = _teamLocalService.dynamicQuery(
+			buildDynamicQuery(
+				companyId, _teamLocalService.dynamicQuery(), filter),
 			pagination.getStartPosition(), pagination.getEndPosition());
 
 		for (Team team : teams) {

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -52,16 +53,17 @@ import org.osgi.service.component.annotations.Reference;
 	service = AnalyticsDXPEntityRetriever.class
 )
 public class ExpandoColumnAnalyticsDXPEntityRetriever
+	extends NoIndexedAnalyticsDXPEntityRetriever
 	implements AnalyticsDXPEntityRetriever {
 
 	@Override
 	public Page<DXPEntity> getDXPEntitiesPage(
-			long companyId, Pagination pagination,
+			long companyId, Filter filter, Pagination pagination,
 			UnsafeFunction<BaseModel<?>, DXPEntity, Exception>
 				transformUnsafeFunction)
 		throws Exception {
 
-		DynamicQuery dynamicQuery = _buildDynamicQuery(companyId);
+		DynamicQuery dynamicQuery = _buildDynamicQuery(companyId, filter);
 
 		if (dynamicQuery == null) {
 			return Page.of(Collections.emptyList(), pagination, 0);
@@ -83,7 +85,7 @@ public class ExpandoColumnAnalyticsDXPEntityRetriever
 			_expandoColumnLocalService.dynamicQueryCount(dynamicQuery));
 	}
 
-	private DynamicQuery _buildDynamicQuery(long companyId) {
+	private DynamicQuery _buildDynamicQuery(long companyId, Filter filter) {
 		ExpandoTable organizationExpandoTable =
 			_expandoTableLocalService.fetchTable(
 				companyId,
@@ -124,7 +126,7 @@ public class ExpandoColumnAnalyticsDXPEntityRetriever
 					nameProperty.in(_getUserExpandoColumnNames(companyId))));
 		}
 
-		return dynamicQuery;
+		return buildDynamicQuery(companyId, dynamicQuery, filter);
 	}
 
 	private List<String> _getUserExpandoColumnNames(long companyId) {

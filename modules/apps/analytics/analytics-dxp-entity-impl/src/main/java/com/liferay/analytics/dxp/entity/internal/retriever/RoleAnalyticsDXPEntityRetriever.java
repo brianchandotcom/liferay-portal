@@ -18,7 +18,8 @@ import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetriever;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -54,21 +55,34 @@ public class RoleAnalyticsDXPEntityRetriever
 
 		List<DXPEntity> dxpEntities = new ArrayList<>();
 
-		DynamicQuery dynamicQuery = _roleLocalService.dynamicQuery();
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("type", RoleConstants.TYPE_REGULAR));
+		DynamicQuery dynamicQuery = _buildDynamicQuery(companyId, filter);
 
 		List<Role> roles = _roleLocalService.dynamicQuery(
-			buildDynamicQuery(companyId, dynamicQuery, filter),
-			pagination.getStartPosition(), pagination.getEndPosition());
+			dynamicQuery, pagination.getStartPosition(),
+			pagination.getEndPosition());
 
 		for (Role role : roles) {
 			dxpEntities.add(transformUnsafeFunction.apply(role));
 		}
 
 		return Page.of(
-			dxpEntities, pagination, _roleLocalService.getRolesCount());
+			dxpEntities, pagination,
+			_roleLocalService.dynamicQueryCount(dynamicQuery));
+	}
+
+	private DynamicQuery _buildDynamicQuery(long companyId, Filter filter) {
+		DynamicQuery dynamicQuery = _roleLocalService.dynamicQuery();
+
+		Property nameProperty = PropertyFactoryUtil.forName("name");
+
+		dynamicQuery.add(
+			nameProperty.ne(RoleConstants.ANALYTICS_ADMINISTRATOR));
+
+		Property typeProperty = PropertyFactoryUtil.forName("type");
+
+		dynamicQuery.add(typeProperty.eq(RoleConstants.TYPE_REGULAR));
+
+		return buildDynamicQuery(companyId, dynamicQuery, filter);
 	}
 
 	@Reference

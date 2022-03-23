@@ -104,8 +104,11 @@ definition {
 
 			AccountGroups.addAssignee(
 				accountGroupName = "AG Filter by Type",
-				assigneeAll = "true",
-				assigneeNames = "Business Account 1 for Account Group,Business Account 2 for Account Group,Person Account for Account Group");
+				assigneeAll = "true");
+
+			for (var assigneeName : list "Business Account 1 for Account Group,Business Account 2 for Account Group,Person Account for Account Group") {
+				AccountGroups.viewAssignee(assigneeName = "${assigneeName}");
+			}
 		}
 
 		task ("Then filter the accounts assigned to account group by Type returns proper results") {
@@ -193,9 +196,7 @@ definition {
 
 		AccountGroups.addAssignee(
 			accountGroupName = "Multiple Accounts AG",
-			assigneeAll = "true",
-			assigneeNames = "Accounts ${accountNumber} for AG",
-			assigneeType = "Accounts");
+			assigneeAll = "true");
 
 		AccountGroups.openAccountGroupsAdmin();
 
@@ -228,9 +229,11 @@ definition {
 
 		AccountGroups.addAssignee(
 			accountGroupName = "Remove Account AG",
-			assigneeAll = "All",
-			assigneeNames = "Delete Accounts 1 from AG,Delete Accounts 2 from AG,Delete Accounts 3 from AG",
-			assigneeType = "Accounts");
+			assigneeAll = "All");
+
+		for (var assigneeName : list "Delete Accounts 1 from AG,Delete Accounts 2 from AG,Delete Accounts 3 from AG") {
+			AccountGroups.viewAssignee(assigneeName = "${assigneeName}");
+		}
 
 		AccountGroups.openAccountGroupsAdmin();
 

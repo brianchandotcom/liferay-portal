@@ -2387,6 +2387,8 @@ definition {
 	}
 
 	test ViewBlueprintsPreviewLocalizedResults {
+		property app.server.types = "tomcat";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");

@@ -1,4 +1,4 @@
-type,name,externalReferenceCode,description
-business,Test Business Account,101,Test Business Account Description
-guest,Test Guest Account,102,Test Guest Account Description
-person,Test Person Account,103,Test Person Account Description
+description,externalReferenceCode,name,type
+Test Business Account Description,101,Test Business Account,business
+Test Guest Account Description,102,Test Guest Account,guest
+Test Person Account Description,103,Test Person Account,person

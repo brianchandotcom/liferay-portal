@@ -203,6 +203,15 @@ definition {
 		ItemSelector.viewWikiAttachment(imageFileName = "Document_1.jpg");
 	}
 
+	@description = "This is a test for LPS-95709. It ensures that an attachment for a Wiki frontpage is intact after the entry is published."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanViewAttachmentForFrontPageAfterPublish {
+
+		// TODO LPS-150069 CanViewAttachmentForFrontPageAfterPublish pending implementation
+
+	}
+
 	@description = "This ensures that the added front page can be viewed in the live site after publishing."
 	@priority = "4"
 	@refactordone

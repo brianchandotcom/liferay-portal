@@ -481,6 +481,15 @@ definition {
 			kbFolderName = "KB Folder 1");
 	}
 
+	@description = "This is a test for LPS-120917. It checks that XSS cannot be executed from the KB template name."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CannotStoreXSSInTemplateName {
+
+		// TODO LPS-149973 CannotStoreXSSInTemplateName pending implementation
+
+	}
+
 	@priority = "4"
 	@refactordone
 	test CanRemoveParentArticle {

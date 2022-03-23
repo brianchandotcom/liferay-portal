@@ -101,7 +101,13 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 						objectViewColumn.getObjectFieldName());
 				}
 				else {
-					_addObjectField(fdsTableSchemaBuilder, locale, objectField);
+					String label = objectViewColumn.getLabel(locale, true);
+
+					if (label.isEmpty()) {
+						label = objectField.getLabel(locale, true);
+					}
+
+					_addObjectField(fdsTableSchemaBuilder, label, objectField);
 				}
 			}
 		);
@@ -120,7 +126,8 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 
 		objectFields.forEach(
 			objectField -> _addObjectField(
-				fdsTableSchemaBuilder, locale, objectField));
+				fdsTableSchemaBuilder, objectField.getLabel(locale, true),
+				objectField));
 
 		_addNonobjectField(fdsTableSchemaBuilder, "status");
 		_addNonobjectField(fdsTableSchemaBuilder, "creator");
@@ -208,7 +215,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 	}
 
 	private void _addObjectField(
-		FDSTableSchemaBuilder fdsTableSchemaBuilder, Locale locale,
+		FDSTableSchemaBuilder fdsTableSchemaBuilder, String label,
 		ObjectField objectField) {
 
 		if (Validator.isNull(objectField.getRelationshipType())) {
@@ -218,7 +225,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 				_getFieldName(
 					objectField.getListTypeDefinitionId(),
 					objectField.getName()),
-				objectField.getLabel(locale, true), objectField.isIndexed());
+				label, objectField.isIndexed());
 		}
 		else if (Objects.equals(
 					objectField.getRelationshipType(),
@@ -245,8 +252,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 				_addFDSTableSchemaField(
 					objectField.getBusinessType(), null,
 					objectField.getDBType(), fdsTableSchemaBuilder,
-					objectField.getName(), objectField.getLabel(locale, true),
-					false);
+					objectField.getName(), label, false);
 			}
 			else {
 				_addFDSTableSchemaField(
@@ -258,7 +264,7 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 							StringUtil.replaceLast(
 								objectField.getName(), "Id", ""),
 							StringPool.PERIOD, titleObjectField.getName())),
-					objectField.getLabel(locale, true), false);
+					label, false);
 			}
 		}
 	}

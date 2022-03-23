@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.item.selector.criteria.image.criterion;
+package com.liferay.item.selector.constants;
 
-import com.liferay.item.selector.BaseItemSelectorCriterion;
-import com.liferay.item.selector.constants.ItemSelectorCriterionConstants;
+import com.liferay.petra.string.StringPool;
 
 /**
- * @author Roberto Díaz
+ * @author Jorge González
  */
-public class ImageItemSelectorCriterion extends BaseItemSelectorCriterion {
+public class ItemSelectorCriterionConstants {
 
-	@Override
-	public String getMimeTypeRestriction() {
-		return ItemSelectorCriterionConstants.MIME_TYPE_RESTRICTION_IMAGE;
-	}
+	public static final String MIME_TYPE_RESTRICTION_DEFAULT = StringPool.STAR;
+
+	public static final String MIME_TYPE_RESTRICTION_IMAGE = "image";
+
+	public static final String MIME_TYPE_RESTRICTION_VIDEO = "video";
 
 }

@@ -26,42 +26,41 @@ export default function () {
 	function setCookie(name, value, days = 180) {
 		var date = new Date();
 
-		date.setTime(date.getTime() + (days*24*60*60*1000));
-		expires = "; expires=" + date.toUTCString();
+		date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
 
-		document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+		var expires = '; expires=' + date.toUTCString();
+
+		document.cookie = name + '=' + (value || '') + expires + '; path=/';
 	}
 
 	function getCookie(name) {
-		var cookieName = name + "=";
+		var cookieName = name + '=';
 		var cookieSet = document.cookie.split(';');
 
-		for(var i=0;i < cookieSet.length;i++) {
+		for (var i = 0; i < cookieSet.length; i++) {
 			var c = cookieSet[i];
 
-			while (c.charAt(0)==' ') c = c.substring(1,c.length);
+			while (c.charAt(0) === ' ') {
+				c = c.substring(1, c.length);
+			}
 
-			if (c.indexOf(cookieName) == 0) return c.substring(cookieName.length,c.length);
+			if (c.indexOf(cookieName) === 0) {
+				return c.substring(cookieName.length, c.length);
+			}
 		}
 
 		return null;
 	}
 
-	if (
-		getCookie('liferay.cookie.consent.functional') === 'accepted'
-	) {
+	if (getCookie('liferay.cookie.consent.functional') === 'accepted') {
 		toggleFunctional.checked = true;
 	}
 
-	if (
-		getCookie('liferay.cookie.consent.performance') ===	'accepted'
-	) {
+	if (getCookie('liferay.cookie.consent.performance') === 'accepted') {
 		togglePerformance.checked = true;
 	}
 
-	if (
-		getCookie('liferay.cookie.consent.personalization') ===	'accepted'
-	) {
+	if (getCookie('liferay.cookie.consent.personalization') === 'accepted') {
 		togglePersonalization.checked = true;
 	}
 
@@ -69,16 +68,10 @@ export default function () {
 		'click',
 		function handletoggleFunctional() {
 			if (toggleFunctional.checked) {
-				setCookie(
-					'liferay.cookie.consent.functional',
-					'accepted'
-				);
+				setCookie('liferay.cookie.consent.functional', 'accepted');
 			}
 			else {
-				setCookie(
-					'liferay.cookie.consent.functional',
-					'decline'
-				);
+				setCookie('liferay.cookie.consent.functional', 'decline');
 			}
 		}
 	);
@@ -87,16 +80,10 @@ export default function () {
 		'click',
 		function handleTogglePerformance() {
 			if (togglePerformance.checked) {
-				setCookie(
-					'liferay.cookie.consent.performance',
-					'accepted'
-				);
+				setCookie('liferay.cookie.consent.performance', 'accepted');
 			}
 			else {
-				setCookie(
-					'liferay.cookie.consent.performance',
-					'decline'
-				);
+				setCookie('liferay.cookie.consent.performance', 'decline');
 			}
 		}
 	);
@@ -105,16 +92,10 @@ export default function () {
 		'click',
 		function handletogglePersonalization() {
 			if (togglePersonalization.checked) {
-				setCookie(
-					'liferay.cookie.consent.personalization',
-					'accepted'
-				);
+				setCookie('liferay.cookie.consent.personalization', 'accepted');
 			}
 			else {
-				setCookie(
-					'liferay.cookie.consent.personalization',
-					'decline'
-				);
+				setCookie('liferay.cookie.consent.personalization', 'decline');
 			}
 		}
 	);

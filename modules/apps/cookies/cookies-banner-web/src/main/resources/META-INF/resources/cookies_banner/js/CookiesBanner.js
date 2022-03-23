@@ -12,25 +12,30 @@
  * details.
  */
 
- function setCookie(name, value, days = 180) {
+function setCookie(name, value, days = 180) {
 	var date = new Date();
 
-	date.setTime(date.getTime() + (days*24*60*60*1000));
-	expires = "; expires=" + date.toUTCString();
+	date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
 
-	document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+	var expires = '; expires=' + date.toUTCString();
+
+	document.cookie = name + '=' + (value || '') + expires + '; path=/';
 }
 
 function getCookie(name) {
-	var cookieName = name + "=";
+	var cookieName = name + '=';
 	var cookieSet = document.cookie.split(';');
 
-	for(var i=0;i < cookieSet.length;i++) {
+	for (var i = 0; i < cookieSet.length; i++) {
 		var c = cookieSet[i];
 
-		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		while (c.charAt(0) === ' ') {
+			c = c.substring(1, c.length);
+		}
 
-		if (c.indexOf(cookieName) == 0) return c.substring(cookieName.length,c.length);
+		if (c.indexOf(cookieName) === 0) {
+			return c.substring(cookieName.length, c.length);
+		}
 	}
 
 	return null;
@@ -38,18 +43,12 @@ function getCookie(name) {
 
 function checkCookiesConsent(cookieBanner) {
 	if (
-		getCookie('liferay.cookie.consent.functional') ===
-			'accepted' ||
-		getCookie('liferay.cookie.consent.functional') ===
-			'decline' ||
-		getCookie('liferay.cookie.consent.performance') ===
-			'accepted' ||
-		getCookie('liferay.cookie.consent.performance') ===
-			'decline' ||
-		getCookie('liferay.cookie.consent.personalization') ===
-			'accepted' ||
-		getCookie('liferay.cookie.consent.personalization') ===
-			'decline'
+		getCookie('liferay.cookie.consent.functional') === 'accepted' ||
+		getCookie('liferay.cookie.consent.functional') === 'decline' ||
+		getCookie('liferay.cookie.consent.performance') === 'accepted' ||
+		getCookie('liferay.cookie.consent.performance') === 'decline' ||
+		getCookie('liferay.cookie.consent.personalization') === 'accepted' ||
+		getCookie('liferay.cookie.consent.personalization') === 'decline'
 	) {
 		cookieBanner.style.display = 'none';
 	}

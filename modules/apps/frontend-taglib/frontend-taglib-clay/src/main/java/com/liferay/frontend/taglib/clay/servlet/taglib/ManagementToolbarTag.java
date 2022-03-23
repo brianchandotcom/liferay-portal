@@ -1254,10 +1254,10 @@ public class ManagementToolbarTag extends BaseContainerTag {
 					new Object[] {getItemsTotal()}));
 
 			jspWriter.write("<strong>");
-			jspWriter.write(HtmlUtil.escape(StringPool.SPACE));
-			jspWriter.write(HtmlUtil.escape(StringPool.QUOTE));
-			jspWriter.write(HtmlUtil.escape(searchValue));
-			jspWriter.write(HtmlUtil.escape(StringPool.QUOTE));
+			jspWriter.write(StringPool.SPACE);
+			jspWriter.write(StringPool.QUOTE);
+			jspWriter.write(searchValue);
+			jspWriter.write(StringPool.QUOTE);
 
 			jspWriter.write("</strong>");
 

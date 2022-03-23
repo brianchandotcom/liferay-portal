@@ -11,6 +11,8 @@ definition {
 		User.firstLoginPG();
 
 		Testray.createTestraySite(siteName = "Testray 2");
+
+		Refresh();
 	}
 
 	tearDown {
@@ -34,9 +36,25 @@ definition {
 	@description = "LPS-149446 - Verify if user can change the items per page by clicking on 'Items per Page button'."
 	@priority = "3"
 	test CanChangeItemsShownOnPage {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		// TODO LPS-149446 - Verify if user can change the items per page by clicking on 'Items per Page' button.
+		Testray.assertItemsPerPageValue(itemValue = "20");
 
+		Testray.changeItemsPerPage(itemValue = "50");
+
+		Testray.assertItemsPerPageValue(itemValue = "50");
+
+		Testray.changeItemsPerPage(itemValue = "75");
+
+		Testray.assertItemsPerPageValue(itemValue = "75");
+
+		Testray.changeItemsPerPage(itemValue = "100");
+
+		Testray.assertItemsPerPageValue(itemValue = "100");
+
+		Testray.changeItemsPerPage(itemValue = "200");
+
+		Testray.assertItemsPerPageValue(itemValue = "200");
 	}
 
 	@description = "LPS-149446 - Verify if user can go to the next and previous page by clicking on '>' and '<' buttons."

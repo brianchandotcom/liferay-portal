@@ -14,6 +14,7 @@
 
 package com.liferay.analytics.dxp.entity.rest.internal.dto.v1_0.converter;
 
+import com.liferay.analytics.dxp.entity.rest.converter.DXPEntityDTOConverter;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.ExpandoField;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.Field;
@@ -58,8 +59,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "dto.class.name=com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity",
 	service = {DTOConverter.class, DXPEntityDTOConverter.class}
 )
-public class DXPEntityDTOConverter
-	implements DTOConverter<BaseModel<?>, DXPEntity> {
+public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 
 	@Override
 	public String getContentType() {
@@ -278,7 +278,7 @@ public class DXPEntityDTOConverter
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DXPEntityDTOConverter.class);
+		DXPEntityDTOConverterImpl.class);
 
 	@Reference
 	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;

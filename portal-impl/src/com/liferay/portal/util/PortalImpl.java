@@ -8133,6 +8133,15 @@ public class PortalImpl implements Portal {
 		return i18nErrorPath.concat(redirect);
 	}
 
+	private List<Portlet> _getAllPortlets(LayoutTypePortlet layoutTypePortlet) {
+		List<Portlet> staticPortlets = layoutTypePortlet.getStaticPortlets(
+			PropsKeys.LAYOUT_STATIC_PORTLETS_ALL);
+
+		return layoutTypePortlet.addStaticPortlets(
+			layoutTypePortlet.getExplicitlyAddedPortlets(), staticPortlets,
+			layoutTypePortlet.getEmbeddedPortlets());
+	}
+
 	private Map<Locale, String> _getAlternateURLs(
 			String canonicalURL, ThemeDisplay themeDisplay, Layout layout,
 			Set<Locale> availableLocales)
@@ -8693,7 +8702,7 @@ public class PortalImpl implements Portal {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
-		for (Portlet portlet : layoutTypePortlet.getAllPortlets()) {
+		for (Portlet portlet : _getAllPortlets(layoutTypePortlet)) {
 			if ((portletId.equals(portlet.getPortletId()) ||
 				 portletId.equals(portlet.getRootPortletId())) &&
 				!layout.isPortletEmbedded(portletId, layout.getGroupId()) &&

@@ -1112,6 +1112,15 @@ definition {
 		DMDocument.viewTagInfo(tagName = "tag name");
 	}
 
+	@description = "This test covers LPS-115949. It validates that resource allocation for forked processes can be controlled through portal.properties."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanLimitForkedProcessResourceAllocation {
+
+		// TODO LPS-150080
+
+	}
+
 	@description = "This test ensures that only the last two versions of a file are kept when the max version limit is set."
 	@priority = "5"
 	@refactordone
@@ -2082,6 +2091,15 @@ definition {
 		Search.searchCP(searchTerm = "DM");
 
 		DMDocument.viewSearchResultsCP(dmDocumentTitle = "DM Document Title");
+	}
+
+	@description = "This is a test for LPS-80857. It checks that the user will stay in the same folder context after filtering."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CanStayInFolderAfterFiltering {
+
+		// TODO LPS-150082 CanStayInFolderAfterFiltering pending implementation
+
 	}
 
 	@description = "This ensures that the user can create a document with edited display page template."

@@ -2501,4 +2501,13 @@ definition {
 			navTab = "Documents and Media");
 	}
 
+	@description = "This test covers LPS-120955. It validates that a depot cannot be connected to a staged site."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test DepotCannotBeConnectedToAStagedSite {
+
+		// TODO LPS-150073
+
+	}
+
 }

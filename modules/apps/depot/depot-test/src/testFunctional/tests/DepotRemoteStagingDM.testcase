@@ -2148,6 +2148,15 @@ definition {
 			webContentTitle = "Web Content Title");
 	}
 
+	@description = "This test covers LPS-72443. It validates that a user can navigate to the remote site using the staging toolbar."
+	@ignore = "Test Stub"
+	@priority = "5"
+	test CanNavigateToRemoteLiveViaToolbar {
+
+		// TODO LPS-150078
+
+	}
+
 	@description = "This ensures that a document pending review cannot be searched for in a staged site when enabling remote staging."
 	@priority = "5"
 	@refactordone

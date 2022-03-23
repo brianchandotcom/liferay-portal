@@ -606,12 +606,15 @@ definition {
 	@priority = "4"
 	@refactordone
 	test CanLinkWikiPageToOtherWikiPage {
+		WikiNavigator.openToWikiNode(
+			groupName = "Guest",
+			siteURLKey = "guest",
+			wikiNodeName = "Main");
+
 		for (var num : list "1,2") {
-			JSONWiki.addWikiPage(
-				groupName = "Guest",
-				wikiNodeName = "Main",
+			WikiPage.addCP(
 				wikiPageContent = "Wiki Page Content${num}",
-				wikiPageName = "Wiki Page Title${num}");
+				wikiPageTitle = "Wiki Page Title${num}");
 		}
 
 		WikiNavigator.openToWikiPage(

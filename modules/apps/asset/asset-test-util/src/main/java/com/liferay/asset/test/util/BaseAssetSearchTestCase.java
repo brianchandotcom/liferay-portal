@@ -1343,21 +1343,19 @@ public abstract class BaseAssetSearchTestCase {
 
 		searchContext.setGroupIds(assetEntryQuery.getGroupIds());
 
-		long createDate = 0;
-
 		BaseModel<?>[] baseModels = new BaseModel[titles.length];
 
 		for (int i = 0; i < titles.length; i++) {
-			long delta = 2000 - (System.currentTimeMillis() - createDate);
-
-			if (delta > 0) {
-				Thread.sleep(delta);
-			}
+			long start = System.currentTimeMillis();
 
 			baseModels[i] = addBaseModel(
 				parentBaseModel, titles[i], serviceContext);
 
-			createDate = System.currentTimeMillis();
+			long remainingMillis = 2000 - (System.currentTimeMillis() - start);
+
+			if (remainingMillis > 0) {
+				Thread.sleep(remainingMillis);
+			}
 		}
 
 		assetEntryQuery.setOrderByCol1("createDate");

@@ -88,14 +88,12 @@ const FactorCategoryFormModal: React.FC<FactorCategoryProps> = ({
 				variables.factorCategoryId = form.id;
 
 				await onUpdateFactorCategory({variables});
-			}
-			else {
+			} else {
 				await onCreateFactorCategory({variables});
 			}
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};
@@ -115,9 +113,7 @@ const FactorCategoryFormModal: React.FC<FactorCategoryProps> = ({
 			}
 			observer={observer}
 			size="lg"
-			title={i18n.translate(
-				form.id ? 'edit-factor-category' : 'new-factor-category'
-			)}
+			title={i18n.translate(form.id ? 'edit-category' : 'new-category')}
 			visible={visible}
 		>
 			<FormFactorCategory

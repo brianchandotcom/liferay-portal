@@ -14,6 +14,7 @@
 
 import ListView from '../../../components/ListView/ListView';
 import {getFactorOptions} from '../../../graphql/queries';
+import i18n from '../../../i18n';
 import FactorOptionsFormModal from './FactorOptionsFormModal';
 import useFactorOptionsActions from './useFactorOptionsActions';
 
@@ -31,11 +32,16 @@ const FactorOptionsModal = () => {
 					columns: [
 						{
 							key: 'name',
-							value: 'Name',
+							value: i18n.translate('name'),
+						},
+						{
+							key: 'factorCategory',
+							render: (factorCategory) => factorCategory?.name,
+							value: i18n.translate('category'),
 						},
 					],
 				}}
-				transformData={(data) => data?.c?.factorOptions}
+				transformData={(data) => data?.factorOptions}
 			/>
 
 			<FactorOptionsFormModal modal={formModal.modal} />

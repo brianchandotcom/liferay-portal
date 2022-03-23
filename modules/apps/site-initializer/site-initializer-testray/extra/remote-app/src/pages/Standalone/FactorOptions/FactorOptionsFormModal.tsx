@@ -32,6 +32,7 @@ import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
 type FactorOptionsForm = {
+	factorCategoryId: string;
 	id?: number;
 	name: string;
 };
@@ -69,10 +70,13 @@ const FormFactorOptions: React.FC<FactorOptionsFormProps> = ({
 
 			<ClaySelectWithOption
 				id="category-type"
+				name="factorCategoryId"
+				onChange={onChange}
 				options={factorCategories.map(({id, name}) => ({
 					label: name,
 					value: id,
 				}))}
+				value={form.factorCategoryId}
 			/>
 		</ClayForm>
 	);
@@ -85,6 +89,7 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 	modal: {modalState, observer, onChange, onClose, onError, onSave, visible},
 }) => {
 	const [form, setForm] = useState<FactorOptionsForm>({
+		factorCategoryId: '',
 		name: '',
 	});
 
@@ -102,6 +107,7 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 
 		const variables: any = {
 			FactorOption: {
+				factorCategoryId: form.factorCategoryId,
 				name: form.name,
 			},
 		};
@@ -111,14 +117,12 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 				variables.factorOptionId = form.id;
 
 				await onUpdateFactorOption({variables});
-			}
-			else {
+			} else {
 				await onCreateFactorOption({variables});
 			}
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};
@@ -138,9 +142,7 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 			}
 			observer={observer}
 			size="lg"
-			title={i18n.translate(
-				form.id ? 'edit-factor-option' : 'new-factor-option'
-			)}
+			title={i18n.translate(form.id ? 'edit-option' : 'new-option')}
 			visible={visible}
 		>
 			<FormFactorOptions

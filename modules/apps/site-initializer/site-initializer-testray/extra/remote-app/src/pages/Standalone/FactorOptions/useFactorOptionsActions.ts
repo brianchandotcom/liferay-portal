@@ -28,7 +28,11 @@ const useFactorOptionsActions = () => {
 	return {
 		actions: [
 			{
-				action: (item: TestrayFactorOptions) => modal.open(item),
+				action: (item: TestrayFactorOptions) =>
+					modal.open({
+						...item,
+						factorCategoryId: item.factorCategory?.id,
+					}),
 				disabled: true,
 				name: i18n.translate('edit'),
 			},

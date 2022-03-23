@@ -96,7 +96,11 @@ const Layout = () => {
 			{hasSideMenu && (
 				<SideMenu
 					getCurrentPage={getCurrentPage}
-					subscriptionGroups={subscriptionGroups}
+					subscriptionGroups={[...(subscriptionGroups || [])].sort(
+						(previousSubscriptionGroup, nextSubscriptionGroup) =>
+							previousSubscriptionGroup.menuOrder -
+							nextSubscriptionGroup.menuOrder
+					)}
 				/>
 			)}
 

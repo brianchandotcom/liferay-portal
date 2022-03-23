@@ -835,7 +835,7 @@ definition {
 		}
 
 		task ("Assert that the page is shown in the list") {
-			ACUtils.assertItemsName(itemList = "AC Page - Site Name - ${dataSourceName}");
+			ACUtils.viewNameList(nameList = "AC Page - Site Name - ${dataSourceName}");
 		}
 	}
 

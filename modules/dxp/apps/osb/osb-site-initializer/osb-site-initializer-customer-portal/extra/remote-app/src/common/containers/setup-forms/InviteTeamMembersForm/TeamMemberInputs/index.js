@@ -48,7 +48,8 @@ const TeamMemberInputs = ({
 					disabled:
 						administratorsAssetsAvailable === 0 &&
 						isAdministratorOrRequestorRole &&
-						!isAdministratorOrRequestorRoleSelected,
+						!isAdministratorOrRequestorRoleSelected &&
+						administratorsAssetsAvailable !== -1,
 				};
 			}),
 		[

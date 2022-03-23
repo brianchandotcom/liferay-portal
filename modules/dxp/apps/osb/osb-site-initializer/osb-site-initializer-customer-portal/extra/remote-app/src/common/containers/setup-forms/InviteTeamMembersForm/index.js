@@ -11,6 +11,7 @@
 
 import {useMutation} from '@apollo/client';
 import ClayForm from '@clayui/form';
+import classNames from 'classnames';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useState} from 'react';
 import {Badge, Button} from '../../../components';
@@ -150,8 +151,7 @@ const InviteTeamMembersPage = ({
 			setInitialError(false);
 			setBaseButtonDisabled(sucessfullyEmails !== totalEmails);
 			setshowEmptyEmailError(false);
-		}
-		else if (touched['invites']?.some((field) => field?.email)) {
+		} else if (touched['invites']?.some((field) => field?.email)) {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 		}
@@ -206,8 +206,7 @@ const InviteTeamMembersPage = ({
 				}
 				handlePage();
 			}
-		}
-		else {
+		} else {
 			setInitialError(true);
 			setBaseButtonDisabled(true);
 			setTouched({
@@ -262,7 +261,11 @@ const InviteTeamMembersPage = ({
 				name="invites"
 				render={({pop, push}) => (
 					<>
-						<div className="invites-form overflow-auto px-3">
+						<div
+							className={classNames('overflow-auto px-3', {
+								'invites-form': project.maxRequestors !== -1,
+							})}
+						>
 							<div className="px-3">
 								<label>Project Name</label>
 
@@ -358,36 +361,39 @@ const InviteTeamMembersPage = ({
 								)}
 							</div>
 						</div>
-						<div className="invites-helper px-3">
-							<div className="mx-3 pt-3">
-								<h5 className="text-neutral-7">
-									{`${
-										projectHasSLAGoldPlatinum
-											? ROLE_TYPES.requester.name
-											: ROLE_TYPES.admin.name
-									}   roles available: ${availableAdminsRoles} of ${
-										project.maxRequestors
-									}`}
-								</h5>
+						{project.maxRequestors !== -1 && (
+							<div className="invites-helper px-3">
+								<div className="mx-3 pt-3">
+									<h5 className="text-neutral-7">
+										{`${
+											projectHasSLAGoldPlatinum
+												? ROLE_TYPES.requester.name
+												: ROLE_TYPES.admin.name
+										}   roles available: ${availableAdminsRoles} of ${
+											project.maxRequestors
+										}`}
+									</h5>
 
-								<p className="mb-0 text-neutral-7 text-paragraph-sm">
-									{`Only ${project.maxRequestors} member${
-										project.maxRequestors > 1 ? 's' : ''
-									} per project (including yourself) have
+									<p className="mb-0 text-neutral-7 text-paragraph-sm">
+										{`Only ${project.maxRequestors} member${
+											project.maxRequestors > 1 ? 's' : ''
+										} per project (including yourself) have
 								   role permissions (Admins & Requestors) to open Support
 								   tickets. `}
 
-									<a
-										className="font-weight-bold text-neutral-9"
-										href={supportLink}
-										rel="noreferrer"
-										target="_blank"
-									>
-										Learn more about Customer Portal roles
-									</a>
-								</p>
+										<a
+											className="font-weight-bold text-neutral-9"
+											href={supportLink}
+											rel="noreferrer"
+											target="_blank"
+										>
+											Learn more about Customer Portal
+											roles
+										</a>
+									</p>
+								</div>
 							</div>
-						</div>
+						)}
 					</>
 				)}
 			/>

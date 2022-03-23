@@ -115,7 +115,7 @@ export default function SpacingBox({defaultValue, onChange, options, value}) {
 
 	return (
 		<div
-			className="page-editor__spacing-selector w-100"
+			className="page-editor__spacing-selector"
 			onKeyUp={handleKeyUp}
 			ref={ref}
 			role="grid"

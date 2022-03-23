@@ -16,9 +16,11 @@ html#{$cadmin-selector} {
 				#{$marginButtonHeight} #{$verticalSpacing} #{$paddingButtonHeight} auto #{$paddingButtonHeight} #{$verticalSpacing} #{$marginButtonHeight} /
 				#{$marginButtonWidth} #{$horizontalSpacing} #{$paddingButtonWidth} auto #{$paddingButtonWidth} #{$horizontalSpacing} #{$marginButtonWidth};
 			justify-items: stretch;
+			width: $selectorWidth;
 
 			svg {
 				grid-area: 1 / 1 / -1 / -1;
+				width: $selectorWidth;
 			}
 
 			&__dropdown {

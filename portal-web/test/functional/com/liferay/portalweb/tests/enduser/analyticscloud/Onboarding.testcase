@@ -123,7 +123,7 @@ definition {
 			}
 
 			task ("Check skip button is not present") {
-				ACUtils.viewGenericButton(buttonName = "Skip");
+				Button.viewNotPresent(button = "Skip");
 			}
 		}
 

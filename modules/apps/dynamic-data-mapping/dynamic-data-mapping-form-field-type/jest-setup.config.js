@@ -71,18 +71,14 @@ window.themeDisplay = {
 	isSignedIn: () => true,
 };
 
-const sub = function (string, data) {
-	if (
-		arguments.length > 2 ||
-		(typeof data !== 'object' && typeof data !== 'function')
-	) {
-		data = Array.prototype.slice.call(arguments, 1);
-	}
+function sub(key, ...params) {
+	let text = key;
+	params.forEach((param, index) => {
+		text = text.replace(`{${index}}`, param);
+	});
 
-	const REGEX_SUB = /\x$/g;
-
-	return string.replace(REGEX_SUB, data);
-};
+	return text;
+}
 
 window.util = {
 	...window.util,
@@ -103,6 +99,7 @@ const languageMap = {
 	'mmm-dd-yyyy': 'MMM DD, YYYY',
 	'mmm-dd-yyyy-lt': 'MMM DD, YYYY, LT',
 	'thousand-abbreviation': 'K',
+	'x-of-x-characters': '{0}/{1} characters',
 };
 
 window.Liferay = {

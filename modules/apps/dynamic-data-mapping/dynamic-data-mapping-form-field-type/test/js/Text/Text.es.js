@@ -415,6 +415,62 @@ describe('Field Text', () => {
 		expect(input.value).toEqual('+9 (9) 99-9999');
 	});
 
+	it('renders a counter when show counter is true, there is a maxLength and value is empty', () => {
+		const {getByText} = render(
+			<TextWithProvider
+				{...defaultTextConfig}
+				maxLength={10}
+				showCounter={true}
+				valid={true}
+				value=""
+			/>
+		);
+
+		expect(getByText('0/10 characters')).toBeInTheDocument();
+	});
+
+	it('renders a counter when show counter is true, there is a maxLength and value is different from empty', () => {
+		const {getByText} = render(
+			<TextWithProvider
+				{...defaultTextConfig}
+				maxLength={10}
+				showCounter={true}
+				valid={true}
+				value="test"
+			/>
+		);
+
+		expect(getByText('4/10 characters')).toBeInTheDocument();
+	});
+
+	it('does not render a counter when show counter is false, there is a maxLength and value is different from empty', () => {
+		const {queryByText} = render(
+			<TextWithProvider
+				{...defaultTextConfig}
+				maxLength={10}
+				value="test"
+			/>
+		);
+
+		expect(queryByText('4/10 characters')).not.toBeInTheDocument();
+	});
+
+	it('renders a counter when show counter is true, there is a maxLength and value length is greater than the maximum lenght', () => {
+		const {container} = render(
+			<TextWithProvider
+				{...defaultTextConfig}
+				maxLength={2}
+				showCounter={true}
+				valid={true}
+				value="test"
+			/>
+		);
+
+		expect(container.querySelector('.form-feedback-item').innerHTML).toBe(
+			'4/2 characters'
+		);
+	});
+
 	describe('Confirmation Field', () => {
 		it('does not show the confirmation field', () => {
 			render(<TextWithProvider {...defaultTextConfig} />);

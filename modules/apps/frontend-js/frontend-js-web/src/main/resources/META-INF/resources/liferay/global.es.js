@@ -76,6 +76,7 @@ import createPortletURL from './util/portlet_url/create_portlet_url.es';
 import createRenderURL from './util/portlet_url/create_render_url.es';
 import createResourceURL from './util/portlet_url/create_resource_url.es';
 import {getSessionValue, setSessionValue} from './util/session.es';
+import sub from './util/sub';
 import toCharCode from './util/to_char_code.es';
 import toggleDisabled from './util/toggle_disabled';
 import zIndex from './zIndex';
@@ -290,6 +291,8 @@ Liferay.Util.openToast = (...args) => {
 		}
 	);
 };
+
+Liferay.Util.sub = sub;
 
 Liferay.Util.Session = {
 	get: getSessionValue,

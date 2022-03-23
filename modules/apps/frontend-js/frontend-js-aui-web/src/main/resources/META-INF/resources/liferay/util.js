@@ -33,8 +33,6 @@
 		},
 	};
 
-	var REGEX_SUB = /\{\s*([^|}]+?)\s*(?:\|([^}]*))?\s*\}/g;
-
 	var SRC_HIDE_LINK = {
 		src: 'hideLink',
 	};
@@ -855,21 +853,6 @@
 			}
 
 			return 0;
-		},
-
-		sub(string, data) {
-			if (
-				arguments.length > 2 ||
-				(typeof data !== 'object' && typeof data !== 'function')
-			) {
-				data = Array.prototype.slice.call(arguments, 1);
-			}
-
-			return string.replace
-				? string.replace(REGEX_SUB, (match, key) => {
-						return data[key] === undefined ? match : data[key];
-				  })
-				: string;
 		},
 
 		submitCountdown: 0,

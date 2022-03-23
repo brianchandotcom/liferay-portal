@@ -18,6 +18,16 @@ definition {
 			locator1 = "ImportExport#EXECUTION_NOTIFICATION");
 	}
 
+	macro assertExportFileContent {
+		var exportFileContent = TestCase.getTempFileContent(fileName = "${exportFileName}");
+
+		var expectedFileContent = TestCase.getFileContent(fileName = "${comparisonFileName}");
+
+		if ("${exportFileContent}" != "${expectedFileContent}") {
+			fail("The exported file content does not match the expected file content.");
+		}
+	}
+
 	macro assertExportTemplate {
 		WaitForElementPresent(
 			key_title = "Field Mapping",

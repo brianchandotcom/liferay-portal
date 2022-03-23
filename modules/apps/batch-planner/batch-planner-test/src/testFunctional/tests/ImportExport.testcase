@@ -143,13 +143,9 @@ definition {
 				locator1 = "build-test.xml",
 				value1 = "unzip-temp-file -DfileName=Export.zip");
 
-			var exportFileContent = TestCase.getTempFileContent(fileName = "export.csv");
-
-			var expectedFileContent = TestCase.getFileContent(fileName = "csv_account_import_auto_map.csv");
-
-			if ("${exportFileContent}" != "${expectedFileContent}") {
-				fail("The exported file content does not match the expected file content.");
-			}
+			ImportExport.assertExportFileContent(
+				comparisonFileName = "csv_account_import_auto_map.csv",
+				exportFileName = "export.csv");
 		}
 	}
 
@@ -210,13 +206,9 @@ definition {
 				locator1 = "build-test.xml",
 				value1 = "unzip-temp-file -DfileName=Export.zip");
 
-			var exportFileContent = TestCase.getTempFileContent(fileName = "export.json");
-
-			var expectedFileContent = TestCase.getFileContent(fileName = "json_account_export.txt");
-
-			if ("${exportFileContent}" != "${expectedFileContent}") {
-				fail("The exported file content does not match the expected file content.");
-			}
+			ImportExport.assertExportFileContent(
+				comparisonFileName = "json_account_export.txt",
+				exportFileName = "export.json");
 		}
 	}
 
@@ -277,13 +269,9 @@ definition {
 				locator1 = "build-test.xml",
 				value1 = "unzip-temp-file -DfileName=Export.zip");
 
-			var exportFileContent = TestCase.getTempFileContent(fileName = "export.jsonl");
-
-			var expectedFileContent = TestCase.getFileContent(fileName = "jsonl_account_import.jsonl");
-
-			if ("${exportFileContent}" != "${expectedFileContent}") {
-				fail("The exported file content does not match the expected file content.");
-			}
+			ImportExport.assertExportFileContent(
+				comparisonFileName = "jsonl_account_export.jsonl",
+				exportFileName = "export.jsonl");
 		}
 	}
 

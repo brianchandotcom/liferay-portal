@@ -15,6 +15,7 @@
 package com.liferay.wiki.web.internal.item.selector.view.display.context;
 
 import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.document.library.kernel.util.DLValidatorUtil;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolver;
 import com.liferay.item.selector.ItemSelectorReturnTypeResolverHandler;
 import com.liferay.item.selector.taglib.servlet.taglib.util.RepositoryEntryBrowserTagUtil;
@@ -166,7 +167,9 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		WikiFileUploadConfiguration wikiFileUploadConfiguration =
 			_getWikiFileUploadsConfiguration();
 
-		return wikiFileUploadConfiguration.attachmentMaxSize();
+		return Math.min(
+			wikiFileUploadConfiguration.attachmentMaxSize(),
+			DLValidatorUtil.getMaxAllowableSize(null));
 	}
 
 	public WikiPage getWikiPage() throws PortalException {

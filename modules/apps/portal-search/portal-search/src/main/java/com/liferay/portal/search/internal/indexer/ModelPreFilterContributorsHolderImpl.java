@@ -19,7 +19,9 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.framework.BundleContext;
@@ -36,7 +38,8 @@ public class ModelPreFilterContributorsHolderImpl
 
 	@Override
 	public Stream<ModelPreFilterContributor> stream(
-		String entryClassName, boolean mandatoryOnly) {
+		String entryClassName, Collection<String> excludeIds,
+		Collection<String> includeIds, boolean mandatoryOnly) {
 
 		List<ModelPreFilterContributor> list = new ArrayList<>();
 
@@ -45,6 +48,34 @@ public class ModelPreFilterContributorsHolderImpl
 
 		if (mandatoryOnly) {
 			_retainAll(list, _getMandatoryContributors());
+		}
+		else {
+			List<String> mandatoryContributorClassNames =
+				_getMandatoryContributorNames(_getMandatoryContributors());
+
+			if ((includeIds != null) && !includeIds.isEmpty()) {
+				list.removeIf(
+					modelPreFilterContributor -> {
+						String className = _getClassName(
+							modelPreFilterContributor);
+
+						return !mandatoryContributorClassNames.contains(
+							className) &&
+							   !includeIds.contains(className);
+					});
+			}
+
+			if ((excludeIds != null) && !excludeIds.isEmpty()) {
+				list.removeIf(
+					modelPreFilterContributor -> {
+						String className = _getClassName(
+							modelPreFilterContributor);
+
+						return !mandatoryContributorClassNames.contains(
+							className) &&
+							   excludeIds.contains(className);
+					});
+			}
 		}
 
 		return list.stream();
@@ -88,6 +119,26 @@ public class ModelPreFilterContributorsHolderImpl
 		String entryClassName) {
 
 		return _classNameServiceTrackerMap.getService(entryClassName);
+	}
+
+	private String _getClassName(Object object) {
+		Class<?> clazz = object.getClass();
+
+		return clazz.getName();
+	}
+
+	private List<String> _getMandatoryContributorNames(
+		List<ModelPreFilterContributor> mandatoryContributors) {
+
+		Stream<ModelPreFilterContributor> stream =
+			mandatoryContributors.stream();
+
+		return stream.map(
+			modelPreFilterContributor -> _getClassName(
+				modelPreFilterContributor)
+		).collect(
+			Collectors.toList()
+		);
 	}
 
 	private List<ModelPreFilterContributor> _getMandatoryContributors() {

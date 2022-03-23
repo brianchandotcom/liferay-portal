@@ -28,9 +28,19 @@ definition {
 	@description = "LPS-149446 - Verify if user can change the Component Page by clicking on Page number selector."
 	@priority = "5"
 	test CanChangeComponentPageByClickingOnNumber {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		// TODO LPS-149446 - Verify if user can change the Component Page by clicking on Page number selector.
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.0");
 
+		Testray.projectTabNavigator(navTabName = "Cases");
+
+		Testray.clickOnPageNumber(pageNumber = "2");
+
+		Testray.assertShowedItems(itemsText = "Showing 21 to 40 of 56");
+
+		Testray.clickOnPageNumber(pageNumber = "1");
+
+		Testray.assertShowedItems(itemsText = "Showing 1 to 20 of 56");
 	}
 
 	@description = "LPS-149446 - Verify if user can change the items per page by clicking on 'Items per Page button'."
@@ -60,9 +70,19 @@ definition {
 	@description = "LPS-149446 - Verify if user can go to the next and previous page by clicking on '>' and '<' buttons."
 	@priority = "3"
 	test CanChangePageOnNextAndPrevioustButton {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
 
-		// TODO LPS-149446 - Verify if user can go to the next and previous page by clicking on '>' and '<' buttons.
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.0");
 
+		Testray.projectTabNavigator(navTabName = "Cases");
+
+		Testray.goToNextAndPreviousPage(pageDirection = "Next");
+
+		Testray.assertShowedItems(itemsText = "Showing 21 to 40 of 56");
+
+		Testray.goToNextAndPreviousPage(pageDirection = "Previous");
+
+		Testray.assertShowedItems(itemsText = "Showing 1 to 20 of 56");
 	}
 
 }

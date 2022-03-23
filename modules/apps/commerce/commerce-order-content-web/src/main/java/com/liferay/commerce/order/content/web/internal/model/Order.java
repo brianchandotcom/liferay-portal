@@ -21,7 +21,7 @@ public class Order {
 
 	public Order(
 		String externalReferenceCode, long orderId, String accountName,
-		String date, String author, String orderStatus,
+		String date, String author, String orderStatus, String orderType,
 		String purchaseOrderNumber, String status, String amount) {
 
 		_externalReferenceCode = externalReferenceCode;
@@ -30,6 +30,7 @@ public class Order {
 		_date = date;
 		_author = author;
 		_orderStatus = orderStatus;
+		_orderType = orderType;
 		_purchaseOrderNumber = purchaseOrderNumber;
 		_status = status;
 		_amount = amount;
@@ -65,6 +66,10 @@ public class Order {
 		return _orderStatus;
 	}
 
+	public String getOrderType() {
+		return _orderType;
+	}
+
 	public String getPurchaseOrderNumber() {
 		return _purchaseOrderNumber;
 	}
@@ -84,6 +89,7 @@ public class Order {
 	private final String _externalReferenceCode;
 	private final long _orderId;
 	private final String _orderStatus;
+	private final String _orderType;
 	private final String _purchaseOrderNumber;
 	private final String _status;
 	private final String _title;

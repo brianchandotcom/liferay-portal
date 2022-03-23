@@ -20,6 +20,8 @@ import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.model.DispatchTrigger;
 import com.liferay.dispatch.service.DispatchTriggerLocalService;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -39,9 +41,7 @@ public class AnalyticsDXPEntityDispatchTriggerHelperImpl
 	implements AnalyticsDXPEntityDispatchTriggerHelper {
 
 	@Override
-	public void createDispatchTriggersIfNotExist(long companyId)
-		throws Exception {
-
+	public void addDispatchTriggers(long companyId) throws Exception {
 		for (String dispatchTriggerName : _DISPATCH_TRIGGER_NAMES) {
 			DispatchTrigger dispatchTrigger =
 				_dispatchTriggerLocalService.fetchDispatchTrigger(
@@ -58,7 +58,7 @@ public class AnalyticsDXPEntityDispatchTriggerHelperImpl
 				_dispatchTriggerLocalService.updateDispatchTrigger(
 					dispatchTrigger.getDispatchTriggerId(), true,
 					_CRON_EXPRESSION, DispatchTaskClusterMode.NOT_APPLICABLE, 0,
-					0, 0, 0, 0, true, false, localDateTime.getMonthValue(),
+					0, 0, 0, 0, true, false, localDateTime.getMonthValue() - 1,
 					localDateTime.getDayOfMonth(), localDateTime.getYear(),
 					localDateTime.getHour(), localDateTime.getMinute());
 			}
@@ -66,13 +66,40 @@ public class AnalyticsDXPEntityDispatchTriggerHelperImpl
 	}
 
 	@Override
-	public void syncNow(long companyId) throws Exception {
+	public void deleteDispatchTriggers(long companyId) throws Exception {
 		for (String dispatchTriggerName : _DISPATCH_TRIGGER_NAMES) {
 			DispatchTrigger dispatchTrigger =
 				_dispatchTriggerLocalService.fetchDispatchTrigger(
 					companyId, dispatchTriggerName);
 
 			if (dispatchTrigger == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to find dispatch trigger with name " +
+							dispatchTriggerName);
+				}
+
+				continue;
+			}
+
+			_dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTrigger);
+		}
+	}
+
+	@Override
+	public void sync(long companyId) throws Exception {
+		for (String dispatchTriggerName : _DISPATCH_TRIGGER_NAMES) {
+			DispatchTrigger dispatchTrigger =
+				_dispatchTriggerLocalService.fetchDispatchTrigger(
+					companyId, dispatchTriggerName);
+
+			if (dispatchTrigger == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to find dispatch trigger with name " +
+							dispatchTriggerName);
+				}
+
 				return;
 			}
 
@@ -87,7 +114,7 @@ public class AnalyticsDXPEntityDispatchTriggerHelperImpl
 		}
 	}
 
-	private static final String _CRON_EXPRESSION = "0 * * * *";
+	private static final String _CRON_EXPRESSION = "0 0 * * * ?";
 
 	private static final String[] _DISPATCH_TRIGGER_NAMES = {
 		"upload-expando-column-analytics-dxp-entities",
@@ -98,6 +125,9 @@ public class AnalyticsDXPEntityDispatchTriggerHelperImpl
 		"upload-user-analytics-dxp-entities",
 		"upload-user-group-analytics-dxp-entities"
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AnalyticsDXPEntityDispatchTriggerHelperImpl.class);
 
 	@Reference(
 		target = "(destination.name=" + DispatchConstants.EXECUTOR_DESTINATION_NAME + ")"

@@ -55,8 +55,8 @@ public class XLSBatchEngineImportTaskItemReaderImplTest
 				xlsBatchEngineImportTaskItemReaderImpl =
 					_getXLSBatchEngineImportTaskItemReader(
 						new String[] {
-							"createDate1", "description1", "id1",
-							"name1_i18n_en", "name1_i18n_hr"
+							"createDate1", "underscore_field1", "id1",
+							"space name1_i18n_en", "space name1_i18n_hr"
 						},
 						new Object[][] {
 							{
@@ -70,11 +70,11 @@ public class XLSBatchEngineImportTaskItemReaderImplTest
 				HashMapBuilder.put(
 					"createDate1", "createDate"
 				).put(
-					"description1", "description"
-				).put(
 					"id1", "id"
 				).put(
-					"name1", "name"
+					"space name1", "name"
+				).put(
+					"underscore_field1", "description"
 				).build(),
 				xlsBatchEngineImportTaskItemReaderImpl.read(),
 				HashMapBuilder.put(

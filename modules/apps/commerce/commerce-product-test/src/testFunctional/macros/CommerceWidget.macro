@@ -1,9 +1,57 @@
 definition {
 
-	macro assertTextCountFromHtml {
-		var count = Page.getTextCountFromHtmlSource(text = "API Value");
+	macro assertSpecificationPanel2FacetsCount {
+		var javaScriptCountElement = '''
 
-		var count = ${count} / 2;
+		let count = document.getElementById('_com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet_INSTANCE_eLuWbptdFGON_facetCPSpecificationOptionsPanel2').getElementsByTagName('li');
+		var arr = Array.from(count);
+		
+		var j = 0;
+			for (var i = 0; i < arr.length; i += 1) {
+    			if (i in arr) {
+        			j += 1;
+    			}
+		};
+
+		var len = j.toString();
+		
+		return len;
+		''';
+
+		var count = selenium.getEval("${javaScriptCountElement}");
+
+		return "${count}";
+
+		echo("THE NUMBER OF FACETED LABELS IS ${count}");
+
+		if ("${count}" != "${value}") {
+			fail("Labels number is not correct");
+		}
+	}
+
+	macro assertOptionFacetsCount {
+		var javaScriptCountElement = '''
+
+		let count = document.getElementById('_com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet_INSTANCE_xGyweZADwKkt_facetCPOptionsPanelContainer').getElementsByTagName('li');
+		var arr = Array.from(count);
+		
+		var j = 0;
+			for (var i = 0; i < arr.length; i += 1) {
+    			if (i in arr) {
+        			j += 1;
+    			}
+		};
+
+		var len = j.toString();
+		
+		return len;
+		''';
+
+		var count = selenium.getEval("${javaScriptCountElement}");
+
+		return "${count}";
+
+		echo("THE NUMBER OF FACETED LABELS IS ${count}");
 
 		if ("${count}" != "${value}") {
 			fail("Labels number is not correct");

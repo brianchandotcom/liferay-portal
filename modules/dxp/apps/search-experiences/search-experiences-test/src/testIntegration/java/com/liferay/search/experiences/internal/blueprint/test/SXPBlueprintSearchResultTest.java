@@ -406,6 +406,35 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	@Test
+	public void testBoostContentsWithMoreVersions() throws Exception {
+		_setUpJournalArticles(
+			new String[] {"cola cola", ""},
+			new String[] {"coca cola", "pepsi cola"});
+
+		JournalTestUtil.updateArticle(_journalArticles.get(1), "pepsi cola");
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"boost", 100
+				).put(
+					"factor", 1.2
+				).put(
+					"modifier", "sqrt"
+				).build()
+			},
+			new String[] {"Boost Contents With More Versions"});
+
+		_keywords = "cola";
+
+		_assertSearch("[pepsi cola, coca cola]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance("[coca cola, pepsi cola]");
+	}
+
+	@Test
 	public void testBoostFreshness() throws Exception {
 		_addJournalArticleSleep = 3;
 

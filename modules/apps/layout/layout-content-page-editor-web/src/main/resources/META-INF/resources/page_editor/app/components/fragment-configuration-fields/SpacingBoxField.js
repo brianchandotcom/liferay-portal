@@ -31,7 +31,9 @@ export function SpacingBoxField({disabled, field, onValueSelect, value}) {
 	return (
 		<>
 			<InvisibleFieldset disabled={disabled}>
-				<h5 className="sr-only">{field.label}</h5>
+				{field.label ? (
+					<div className="sr-only">{field.label}</div>
+				) : null}
 
 				<SpacingBox
 					defaultValue={field.defaultValue}

@@ -80,21 +80,10 @@ public class CSVBatchEngineImportTaskItemReaderImpl
 				continue;
 			}
 
-			String value = values[i].trim();
+			FieldNameValueMapHandlerFactory.FieldNameValueMapHandler handler =
+				FieldNameValueMapHandlerFactory.getHandler(fieldName);
 
-			if (value.isEmpty()) {
-				value = null;
-			}
-
-			int lastDelimiterIndex = fieldName.lastIndexOf('_');
-
-			if (lastDelimiterIndex == -1) {
-				fieldNameValueMap.put(fieldName, value);
-			}
-			else {
-				BatchEngineImportTaskItemReaderUtil.handleMapField(
-					fieldName, fieldNameValueMap, lastDelimiterIndex, value);
-			}
+			handler.handle(fieldName, fieldNameValueMap, values[i]);
 		}
 
 		return fieldNameValueMap;

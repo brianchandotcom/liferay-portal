@@ -180,7 +180,7 @@ public class SpecificationResourceImpl
 				_getCPOptionCategoryId(specification),
 				LanguageUtils.getLocalizedMap(specification.getTitle()),
 				LanguageUtils.getLocalizedMap(specification.getDescription()),
-				_isFacetable(specification), specification.getKey(),
+				_isFacetable(specification), specificationKey,
 				_serviceContextHelper.getServiceContext());
 
 		return _toSpecification(

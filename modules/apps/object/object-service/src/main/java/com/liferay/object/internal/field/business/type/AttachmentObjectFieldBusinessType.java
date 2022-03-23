@@ -17,6 +17,7 @@ package com.liferay.object.internal.field.business.type;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
+import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.model.ObjectField;
@@ -34,11 +35,16 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.math.BigDecimal;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -129,6 +135,35 @@ public class AttachmentObjectFieldBusinessType
 		return properties;
 	}
 
+	@Override
+	public Set<String> getRequiredObjectFieldSettingsNames() {
+		return SetUtil.fromArray(
+			"acceptedFileExtensions", "fileSource", "maximumFileSize");
+	}
+
+	@Override
+	public void validateObjectFieldSettings(
+			String objectFieldName,
+			List<ObjectFieldSetting> objectFieldSettings)
+		throws PortalException {
+
+		ObjectFieldBusinessType.super.validateObjectFieldSettings(
+			objectFieldName, objectFieldSettings);
+
+		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
+			if (Objects.equals(objectFieldSetting.getName(), "fileSource")) {
+				_validateObjectFieldSettingFileSource(
+					objectFieldName, objectFieldSetting.getValue());
+			}
+			else if (Objects.equals(
+						objectFieldSetting.getName(), "maximumFileSize")) {
+
+				_validateObjectFieldSettingMaximumFileSize(
+					objectFieldName, objectFieldSetting.getValue());
+			}
+		}
+	}
+
 	private Folder _addFolder(
 		long userId, long repositoryId, HttpServletRequest httpServletRequest) {
 
@@ -204,6 +239,39 @@ public class AttachmentObjectFieldBusinessType
 			}
 
 			return null;
+		}
+	}
+
+	private void _validateObjectFieldSettingFileSource(
+			String objectFieldName, String objectFieldSettingValue)
+		throws PortalException {
+
+		if (!Objects.equals(objectFieldSettingValue, "documentsAndMedia") &&
+			!Objects.equals(objectFieldSettingValue, "userComputer")) {
+
+			throw new ObjectFieldSettingValueException.MustSetValidValue(
+				objectFieldName, "fileSource", objectFieldSettingValue);
+		}
+	}
+
+	private void _validateObjectFieldSettingMaximumFileSize(
+			String objectFieldName, String objectFieldSettingValue)
+		throws PortalException {
+
+		try {
+			BigDecimal maximumFileSize = new BigDecimal(
+				objectFieldSettingValue);
+
+			if (maximumFileSize.signum() == -1) {
+				throw new ObjectFieldSettingValueException.MustSetValidValue(
+					objectFieldName, "maximumFileSize",
+					objectFieldSettingValue);
+			}
+		}
+		catch (NumberFormatException numberFormatException) {
+			throw new ObjectFieldSettingValueException.MustSetValidValue(
+				objectFieldName, "maximumFileSize", objectFieldSettingValue,
+				numberFormatException);
 		}
 	}
 

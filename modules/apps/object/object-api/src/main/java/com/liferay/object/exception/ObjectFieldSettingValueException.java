@@ -56,4 +56,34 @@ public class ObjectFieldSettingValueException extends PortalException {
 
 	}
 
+	public static class MustSetValidValue
+		extends ObjectFieldSettingValueException {
+
+		public MustSetValidValue(
+			String objectFieldName, String objectFieldSettingName,
+			String objectFieldSettingValue) {
+
+			super(
+				String.format(
+					"The value %s of setting %s is not valid for object " +
+						"field %s",
+					objectFieldSettingValue, objectFieldSettingName,
+					objectFieldName));
+		}
+
+		public MustSetValidValue(
+			String objectFieldName, String objectFieldSettingName,
+			String objectFieldSettingValue, Throwable throwable) {
+
+			super(
+				String.format(
+					"The value %s of setting %s is not valid for object " +
+						"field %s",
+					objectFieldSettingValue, objectFieldSettingName,
+					objectFieldName),
+				throwable);
+		}
+
+	}
+
 }

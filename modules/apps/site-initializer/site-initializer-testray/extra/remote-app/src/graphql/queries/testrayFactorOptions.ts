@@ -15,28 +15,39 @@
 import {gql} from '@apollo/client';
 
 import {testrayFactorOptionFragment} from '../fragments';
+import {TestrayFactorCategory} from './testrayFactorCategory';
 
 export type TestrayFactorOptions = {
 	dateCreated: string;
 	dateModified: string;
+	factorCategory?: TestrayFactorCategory;
 	id: number;
 	name: string;
 };
 
 export const getFactorOptions = gql`
-	${testrayFactorOptionFragment}
-
-	query getFactorOptions {
-		c {
-			factorOptions {
-				items {
-					...FactorOptionFragment
+	query getFactorOptions(
+		$filter: String
+		$page: Int = 1
+		$pageSize: Int = 20
+	) {
+		factorOptions(filter: $filter, page: $page, pageSize: $pageSize)
+			@rest(
+				type: "C_FactorOption"
+				path: "factoroptions?page={args.page}&pageSize={args.pageSize}&nestedFields=factorCategory"
+			) {
+			items {
+				name
+				id
+				factorCategory: r_factorCategoryToOptions_c_factorCategory {
+					id
+					name
 				}
-				lastPage
-				page
-				pageSize
-				totalCount
 			}
+			lastPage
+			page
+			pageSize
+			totalCount
 		}
 	}
 `;

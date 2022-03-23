@@ -686,21 +686,23 @@ function EditSXPBlueprintForm({
 				signal: controllerRef.current.signal,
 			}
 		)
-			.then((response) => {
-				if (!response.ok) {
-					if (response.status === 400) {
-						return response.json().then((json) => {
-							return getResultsError({msg: json.title});
-						});
-					}
-				}
+			.then((response) =>
+				response.json().then((data) => ({
+					ok: response.ok,
+					responseContent: data,
+					status: response.status,
+				}))
+			)
+			.then(({ok, responseContent, status}) => {
+				const errorResponse = getResultsError(
+					status === 400 ? {msg: responseContent.title} : {}
+				);
 
-				return response.json();
-			})
-			.then((responseContent) => {
 				setPreviewInfo({
 					loading: false,
-					results: parseResponseContent(responseContent),
+					results: parseResponseContent(
+						ok ? responseContent : errorResponse
+					),
 				});
 			})
 			.catch((error) => {

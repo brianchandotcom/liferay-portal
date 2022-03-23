@@ -127,6 +127,49 @@ definition {
 		}
 	}
 
+	@description = "Verify users can export entity data via CSV files without headers"
+	@priority = "3"
+	test CanExportCSVFileWithoutHeaders {
+		property portal.acceptance = "true";
+
+		task ("Given several accounts") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryDescription = "Test Business Account Description",
+				accountEntryName = "Test Business Account",
+				accountEntryType = "Business",
+				externalReferenceCode = "101");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryDescription = "Test Guest Account Description",
+				accountEntryName = "Test Guest Account",
+				accountEntryType = "Guest",
+				externalReferenceCode = "102");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryDescription = "Test Person Account Description",
+				accountEntryName = "Test Person Account",
+				accountEntryType = "Person",
+				externalReferenceCode = "103");
+		}
+
+		task ("When the user exports the accounts in CSV format with Contains Headers not checked") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				containsHeaders = "false",
+				entityType = "Account",
+				exportFields = "name,type,description,externalReferenceCode",
+				exportFileFormat = "CSV",
+				headlessEndpoint = "/headless-admin-user");
+		}
+
+		task ("Then the generated CSV file should contains account data with no headers") {
+			ImportExport.assertExportFileContent(
+				comparisonFileName = "csv_account_import_no_headers.csv",
+				exportFileName = "export.csv");
+		}
+	}
+
 	@description = "Verify users can export entity data via JSON files"
 	@priority = "3"
 	test CanExportJSONFiles {

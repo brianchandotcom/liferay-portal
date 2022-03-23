@@ -2002,6 +2002,24 @@ definition {
 		}
 	}
 
+	macro viewThreadInRecycleBin {
+		LexiconEntry.gotoEntry(rowEntry = "${threadSubject}");
+
+		AssertTextEquals(
+			locator1 = "Message#WORKFLOW_STATUS",
+			value1 = "In Recycle Bin");
+
+		AssertTextEquals(
+			key_threadSubject = "${threadSubject}",
+			locator1 = "MessageBoardsThread#THREAD_SUBJECT",
+			value1 = "${threadSubject}");
+
+		AssertTextEquals(
+			key_threadBody = "${threadBody}",
+			locator1 = "MessageBoardsThread#THREAD_BODY",
+			value1 = "${threadBody}");
+	}
+
 	macro viewThreadSubscribeLink {
 		var key_threadSubject = "${threadSubject}";
 

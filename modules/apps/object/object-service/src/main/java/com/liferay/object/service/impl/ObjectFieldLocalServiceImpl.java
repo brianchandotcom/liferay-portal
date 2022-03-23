@@ -112,11 +112,7 @@ public class ObjectFieldLocalServiceImpl
 					dbTableName, objectField.getDBColumnName(), dbType));
 		}
 
-		for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
-			_objectFieldSettingLocalService.addObjectFieldSetting(
-				userId, objectField.getObjectFieldId(),
-				objectFieldSetting.getName(), objectFieldSetting.getValue());
-		}
+		_addOrUpdateObjectFieldSettings(objectFieldSettings, objectField);
 
 		return objectField;
 	}
@@ -268,9 +264,7 @@ public class ObjectFieldLocalServiceImpl
 		if (objectDefinition.isApproved()) {
 			objectField = objectFieldPersistence.update(objectField);
 
-			_addObjectFieldSettings(
-				objectField.getUserId(), objectField.getObjectFieldId(),
-				objectFieldSettings);
+			_addOrUpdateObjectFieldSettings(objectFieldSettings, objectField);
 
 			return objectField;
 		}
@@ -291,6 +285,8 @@ public class ObjectFieldLocalServiceImpl
 			_validateName(objectFieldId, objectDefinition, name);
 		}
 
+		String oldBusinessType = objectField.getBusinessType();
+
 		_setBusinessTypeAndDBType(businessType, dbType, objectField);
 
 		objectField.setListTypeDefinitionId(listTypeDefinitionId);
@@ -303,9 +299,11 @@ public class ObjectFieldLocalServiceImpl
 
 		objectField = objectFieldPersistence.update(objectField);
 
-		_addObjectFieldSettings(
-			objectField.getUserId(), objectField.getObjectFieldId(),
-			objectFieldSettings);
+		if (!Objects.equals(objectField.getBusinessType(), oldBusinessType)) {
+			_objectFieldSettingPersistence.removeByObjectFieldId(objectFieldId);
+		}
+
+		_addOrUpdateObjectFieldSettings(objectFieldSettings, objectField);
 
 		return objectField;
 	}
@@ -352,47 +350,30 @@ public class ObjectFieldLocalServiceImpl
 		return objectFieldPersistence.update(objectField);
 	}
 
-	private void _addObjectFieldSettings(
-			long userId, long objectFieldId,
-			List<ObjectFieldSetting> newObjectFieldSettings)
+	private void _addOrUpdateObjectFieldSettings(
+			List<ObjectFieldSetting> newObjectFieldSettings,
+			ObjectField objectField)
 		throws PortalException {
 
-		List<ObjectFieldSetting> oldObjectFieldSettings =
-			_objectFieldSettingPersistence.findByObjectFieldId(objectFieldId);
+		ObjectFieldBusinessType objectFieldBusinessType =
+			_objectFieldBusinessTypeServicesTracker.getObjectFieldBusinessType(
+				objectField.getBusinessType());
 
-		for (ObjectFieldSetting oldObjectFieldSetting :
-				oldObjectFieldSettings) {
-
-			boolean removeOldObjectFieldSetting = true;
-
-			for (ObjectFieldSetting newObjectFieldSetting :
-					newObjectFieldSettings) {
-
-				if (Objects.equals(
-						newObjectFieldSetting.getName(),
-						oldObjectFieldSetting.getName())) {
-
-					removeOldObjectFieldSetting = false;
-
-					break;
-				}
-			}
-
-			if (removeOldObjectFieldSetting) {
-				_objectFieldSettingPersistence.remove(oldObjectFieldSetting);
-			}
-		}
+		objectFieldBusinessType.validateObjectFieldSettings(
+			objectField.getName(), newObjectFieldSettings);
 
 		for (ObjectFieldSetting newObjectFieldSetting :
 				newObjectFieldSettings) {
 
 			ObjectFieldSetting oldObjectFieldSetting =
 				_objectFieldSettingPersistence.fetchByOFI_N(
-					objectFieldId, newObjectFieldSetting.getName());
+					objectField.getObjectFieldId(),
+					newObjectFieldSetting.getName());
 
 			if (oldObjectFieldSetting == null) {
 				_objectFieldSettingLocalService.addObjectFieldSetting(
-					userId, objectFieldId, newObjectFieldSetting.getName(),
+					objectField.getUserId(), objectField.getObjectFieldId(),
+					newObjectFieldSetting.getName(),
 					newObjectFieldSetting.getValue());
 			}
 			else {

@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>MAX_TERMS_ERROR_MESSAGE</td>
-	<td>//div[@role='alert'][normalize-space(text()='${errorMessage}')]</td>
+	<td>//div[@class='lfr-form-content']//div[@role='alert' and normalize-space(text()='${errorMessage}')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -14,7 +14,11 @@
 
 package com.liferay.object.exception;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Set;
 
 /**
  * @author Marco Leo
@@ -34,6 +38,22 @@ public class ObjectFieldSettingNameException extends PortalException {
 
 	public ObjectFieldSettingNameException(Throwable throwable) {
 		super(throwable);
+	}
+
+	public static class NotAllowedNames
+		extends ObjectFieldSettingNameException {
+
+		public NotAllowedNames(
+			String objectFieldName, Set<String> objectFieldSettingsNames) {
+
+			super(
+				String.format(
+					"The settings %s are not allowed for object field %s",
+					StringUtil.merge(
+						objectFieldSettingsNames, StringPool.COMMA_AND_SPACE),
+					objectFieldName));
+		}
+
 	}
 
 }

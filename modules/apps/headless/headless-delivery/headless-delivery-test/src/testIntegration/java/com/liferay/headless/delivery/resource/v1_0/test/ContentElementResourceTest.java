@@ -18,16 +18,17 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentElement;
-import com.liferay.headless.delivery.client.pagination.Page;
-import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.odata.entity.EntityField;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
+import java.util.Map;
 
-import org.junit.Test;
+import org.junit.Before;
 import org.junit.runner.RunWith;
 
 /**
@@ -37,72 +38,12 @@ import org.junit.runner.RunWith;
 public class ContentElementResourceTest
 	extends BaseContentElementResourceTestCase {
 
+	@Before
 	@Override
-	@Test
-	public void testGetAssetLibraryContentElementsPageWithSortString()
-		throws Exception {
+	public void setUp() throws Exception {
+		super.setUp();
 
-		ContentElement contentElement1 = _toContentElement(
-			JournalTestUtil.addArticle(
-				testDepotEntry.getGroupId(),
-				"a" + RandomTestUtil.randomString(),
-				RandomTestUtil.randomString()));
-		ContentElement contentElement2 = _toContentElement(
-			JournalTestUtil.addArticle(
-				testDepotEntry.getGroupId(),
-				"b" + RandomTestUtil.randomString(),
-				RandomTestUtil.randomString()));
-
-		Page<ContentElement> ascPage =
-			contentElementResource.getAssetLibraryContentElementsPage(
-				testGetAssetLibraryContentElementsPage_getAssetLibraryId(),
-				null, null, null, Pagination.of(1, 2), "title:asc");
-
-		assertEquals(
-			Arrays.asList(contentElement1, contentElement2),
-			(List<ContentElement>)ascPage.getItems());
-
-		Page<ContentElement> descPage =
-			contentElementResource.getAssetLibraryContentElementsPage(
-				testGetAssetLibraryContentElementsPage_getAssetLibraryId(),
-				null, null, null, Pagination.of(1, 2), "title:desc");
-
-		assertEquals(
-			Arrays.asList(contentElement2, contentElement1),
-			(List<ContentElement>)descPage.getItems());
-	}
-
-	@Override
-	@Test
-	public void testGetSiteContentElementsPageWithSortString()
-		throws Exception {
-
-		ContentElement contentElement1 = _toContentElement(
-			JournalTestUtil.addArticle(
-				testGroup.getGroupId(), "a" + RandomTestUtil.randomString(),
-				RandomTestUtil.randomString()));
-		ContentElement contentElement2 = _toContentElement(
-			JournalTestUtil.addArticle(
-				testGroup.getGroupId(), "b" + RandomTestUtil.randomString(),
-				RandomTestUtil.randomString()));
-
-		Page<ContentElement> ascPage =
-			contentElementResource.getSiteContentElementsPage(
-				testGroup.getGroupId(), null, null, null, Pagination.of(1, 2),
-				"title:asc");
-
-		assertEquals(
-			Arrays.asList(contentElement1, contentElement2),
-			(List<ContentElement>)ascPage.getItems());
-
-		Page<ContentElement> descPage =
-			contentElementResource.getSiteContentElementsPage(
-				testGroup.getGroupId(), null, null, null, Pagination.of(1, 2),
-				"title:desc");
-
-		assertEquals(
-			Arrays.asList(contentElement2, contentElement1),
-			(List<ContentElement>)descPage.getItems());
+		_contentElementFieldValueMap = new IdentityHashMap<>();
 	}
 
 	@Override
@@ -111,10 +52,44 @@ public class ContentElementResourceTest
 	}
 
 	@Override
+	protected String getFilterString(
+		EntityField entityField, String operator,
+		ContentElement contentElement) {
+
+		String entityFieldName = entityField.getName();
+
+		if (entityFieldName.equals("priority")) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(entityFieldName);
+			sb.append(" ");
+			sb.append(operator);
+			sb.append(" ");
+			sb.append(
+				String.valueOf(
+					_getValueFromMap(contentElement, entityFieldName)));
+
+			return sb.toString();
+		}
+
+		return super.getFilterString(entityField, operator, contentElement);
+	}
+
+	@Override
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[] {
 			"contentType", "creatorId", "dateCreated", "dateModified"
 		};
+	}
+
+	@Override
+	protected ContentElement randomContentElement() throws Exception {
+		ContentElement contentElement = super.randomContentElement();
+
+		_assignValueInMap(
+			contentElement, "priority", RandomTestUtil.randomDouble());
+
+		return contentElement;
 	}
 
 	@Override
@@ -126,7 +101,10 @@ public class ContentElementResourceTest
 		DepotEntry depotEntry = DepotEntryLocalServiceUtil.getDepotEntry(
 			assetLibraryId);
 
-		return _getContentElement(depotEntry.getGroupId());
+		return _addContentElement(
+			contentElement,
+			(Double)_getValueFromMap(contentElement, "priority"),
+			depotEntry.getGroupId());
 	}
 
 	@Override
@@ -134,18 +112,55 @@ public class ContentElementResourceTest
 			Long siteId, ContentElement contentElement)
 		throws Exception {
 
-		return _getContentElement(siteId);
+		return _addContentElement(
+			contentElement,
+			(Double)_getValueFromMap(contentElement, "priority"), siteId);
 	}
 
 	@Override
 	protected ContentElement testGraphQLContentElement_addContentElement()
 		throws Exception {
 
-		return _getContentElement(testGroup.getGroupId());
+		return _addContentElement(
+			randomContentElement(), null, testGroup.getGroupId());
 	}
 
-	private ContentElement _getContentElement(long groupId) throws Exception {
-		return _toContentElement(JournalTestUtil.addArticle(groupId, 0));
+	private ContentElement _addContentElement(
+			ContentElement contentElement, Double priority, Long siteId)
+		throws Exception {
+
+		ContentElement element = _toContentElement(
+			JournalTestUtil.addArticle(
+				siteId, 0L, String.valueOf(contentElement.getId()),
+				contentElement.getTitle(), contentElement.getTitle(),
+				contentElement.getTitle(), priority));
+
+		_assignValueInMap(element, "priority", priority);
+
+		return element;
+	}
+
+	private void _assignValueInMap(
+		ContentElement contentElement, String fieldName, Object fieldValue) {
+
+		_contentElementFieldValueMap.computeIfAbsent(
+			contentElement, k -> new HashMap<>()
+		).put(
+			fieldName, fieldValue
+		);
+	}
+
+	private Object _getValueFromMap(
+		ContentElement contentElement, String fieldName) {
+
+		Map<String, Object> fieldValueMap = _contentElementFieldValueMap.get(
+			contentElement);
+
+		if (fieldValueMap == null) {
+			return null;
+		}
+
+		return fieldValueMap.getOrDefault(fieldName, null);
 	}
 
 	private ContentElement _toContentElement(JournalArticle journalArticle) {
@@ -156,5 +171,8 @@ public class ContentElementResourceTest
 			}
 		};
 	}
+
+	private Map<ContentElement, Map<String, Object>>
+		_contentElementFieldValueMap;
 
 }

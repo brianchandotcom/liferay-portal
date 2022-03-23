@@ -207,15 +207,17 @@ public class JournalDDMStructuresDisplayContext {
 			orderByAsc = true;
 		}
 
+		String orderByCol = getOrderByCol();
+
 		OrderByComparator<DDMStructure> orderByComparator = null;
 
-		if (_orderByCol.equals("id")) {
+		if (orderByCol.equals("id")) {
 			orderByComparator = new StructureIdComparator(orderByAsc);
 		}
-		else if (_orderByCol.equals("modified-date")) {
+		else if (orderByCol.equals("modified-date")) {
 			orderByComparator = new StructureModifiedDateComparator(orderByAsc);
 		}
-		else if (_orderByCol.equals("name")) {
+		else if (orderByCol.equals("name")) {
 			orderByComparator = new StructureNameComparator(
 				orderByAsc, _themeDisplay.getLocale());
 		}

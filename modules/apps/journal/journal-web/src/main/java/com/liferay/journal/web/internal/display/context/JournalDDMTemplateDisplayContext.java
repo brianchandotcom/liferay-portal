@@ -299,15 +299,17 @@ public class JournalDDMTemplateDisplayContext {
 			orderByAsc = true;
 		}
 
+		String orderByCol = getOrderByCol();
+
 		OrderByComparator<DDMTemplate> orderByComparator = null;
 
-		if (_orderByCol.equals("id")) {
+		if (orderByCol.equals("id")) {
 			orderByComparator = new TemplateIdComparator(orderByAsc);
 		}
-		else if (_orderByCol.equals("modified-date")) {
+		else if (orderByCol.equals("modified-date")) {
 			orderByComparator = new TemplateModifiedDateComparator(orderByAsc);
 		}
-		else if (_orderByCol.equals("name")) {
+		else if (orderByCol.equals("name")) {
 			orderByComparator = new TemplateNameComparator(
 				orderByAsc, _themeDisplay.getLocale());
 		}

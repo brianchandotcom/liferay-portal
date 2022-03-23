@@ -91,40 +91,40 @@ public class TemplateNameComparatorTest {
 
 	@Test
 	public void testCompareWithDefaultLocale() {
-		List<DDMTemplate> ddmStructures = new ArrayList<>();
+		List<DDMTemplate> ddmTemplates = new ArrayList<>();
 
-		ddmStructures.add(_ddmTemplate2);
-		ddmStructures.add(_ddmTemplate1);
-		ddmStructures.add(_ddmTemplate3);
-		ddmStructures.add(_ddmTemplate4);
+		ddmTemplates.add(_ddmTemplate2);
+		ddmTemplates.add(_ddmTemplate1);
+		ddmTemplates.add(_ddmTemplate3);
+		ddmTemplates.add(_ddmTemplate4);
 
 		_templateNameComparator = new TemplateNameComparator(true);
 
-		Collections.sort(ddmStructures, _templateNameComparator);
+		Collections.sort(ddmTemplates, _templateNameComparator);
 
-		Assert.assertEquals(_ddmTemplate1, ddmStructures.get(0));
-		Assert.assertEquals(_ddmTemplate2, ddmStructures.get(1));
-		Assert.assertEquals(_ddmTemplate3, ddmStructures.get(2));
-		Assert.assertEquals(_ddmTemplate4, ddmStructures.get(3));
+		Assert.assertEquals(_ddmTemplate1, ddmTemplates.get(0));
+		Assert.assertEquals(_ddmTemplate2, ddmTemplates.get(1));
+		Assert.assertEquals(_ddmTemplate3, ddmTemplates.get(2));
+		Assert.assertEquals(_ddmTemplate4, ddmTemplates.get(3));
 	}
 
 	@Test
 	public void testCompareWithLocale() {
-		List<DDMTemplate> ddmStructures = new ArrayList<>();
+		List<DDMTemplate> ddmTemplates = new ArrayList<>();
 
-		ddmStructures.add(_ddmTemplate2);
-		ddmStructures.add(_ddmTemplate1);
-		ddmStructures.add(_ddmTemplate3);
-		ddmStructures.add(_ddmTemplate4);
+		ddmTemplates.add(_ddmTemplate2);
+		ddmTemplates.add(_ddmTemplate1);
+		ddmTemplates.add(_ddmTemplate3);
+		ddmTemplates.add(_ddmTemplate4);
 
 		_templateNameComparator = new TemplateNameComparator(true, _esLocale);
 
-		Collections.sort(ddmStructures, _templateNameComparator);
+		Collections.sort(ddmTemplates, _templateNameComparator);
 
-		Assert.assertEquals(_ddmTemplate4, ddmStructures.get(0));
-		Assert.assertEquals(_ddmTemplate1, ddmStructures.get(1));
-		Assert.assertEquals(_ddmTemplate2, ddmStructures.get(2));
-		Assert.assertEquals(_ddmTemplate3, ddmStructures.get(3));
+		Assert.assertEquals(_ddmTemplate4, ddmTemplates.get(0));
+		Assert.assertEquals(_ddmTemplate1, ddmTemplates.get(1));
+		Assert.assertEquals(_ddmTemplate2, ddmTemplates.get(2));
+		Assert.assertEquals(_ddmTemplate3, ddmTemplates.get(3));
 	}
 
 	private DDMTemplate _ddmTemplate1;

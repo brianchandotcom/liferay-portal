@@ -6,6 +6,12 @@ definition {
 			locator1 = "Testray#ITEMS_PER_PAGE_VALUE_BUTTON");
 	}
 
+	macro assertPageNumber {
+		AssertElementPresent(
+			key_pageNumber = "${pageNumber}",
+			locator1 = "Testray#NUMBER_PAGE_BUTTON");
+	}
+
 	macro changeItemsPerPage {
 		Click(locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
 
@@ -33,6 +39,12 @@ definition {
 		Click(locator1 = "Button#ADD");
 
 		Alert.viewSuccessMessage();
+	}
+
+	macro goToNextAndPreviousPage {
+		Click(
+			key_pageDirection = "${pageDirection}",
+			locator1 = "Testray#NEXT_AND_PREVIOUS_PAGE_BUTTON");
 	}
 
 	macro tearDownCP {

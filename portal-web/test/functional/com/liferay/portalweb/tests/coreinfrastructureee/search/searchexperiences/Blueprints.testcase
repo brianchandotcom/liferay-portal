@@ -2092,7 +2092,7 @@ definition {
 	test ViewBlueprintsAdminBulkDeletion {
 		Blueprints.openBlueprintsAdmin();
 
-		for (var count : list "1,2,3") {
+		for (var count : list "1,2,3,4") {
 			Blueprints.createBlueprint(title = "Test Blueprint ${count}");
 
 			PortletEntry.save();
@@ -2114,23 +2114,31 @@ definition {
 
 		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
 
-		AssertChecked.assertCheckedNotVisible(
-			entryTitle = "Test Blueprint 2",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
-
-		AssertChecked.assertCheckedNotVisible(
-			entryTitle = "Test Blueprint 3",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+		for (var count : list "2,3,4") {
+			AssertChecked.assertCheckedNotVisible(
+				entryTitle = "Test Blueprint ${count}",
+				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+		}
 
 		Uncheck.uncheckNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
 
-		AssertNotChecked.assertNotCheckedNotVisible(
-			entryTitle = "Test Blueprint 2",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+		for (var count : list "2,3,4") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				entryTitle = "Test Blueprint ${count}",
+				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+		}
 
-		AssertNotChecked.assertNotCheckedNotVisible(
-			entryTitle = "Test Blueprint 3",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+		Search.searchCP(searchTerm = "2");
+
+		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
+
+		Button.clickTrash();
+
+		Blueprints.viewNoEntry(title = "Test Blueprint 2");
+
+		Blueprints.viewEntryTitle(title = "Test Blueprint 3");
+
+		Blueprints.viewEntryTitle(title = "Test Blueprint 4");
 
 		Check.checkNotVisible(
 			entryTitle = "Test Blueprint 3",
@@ -2141,18 +2149,18 @@ definition {
 			locator1 = "Link#ANY");
 
 		AssertChecked.assertCheckedNotVisible(
-			entryTitle = "Test Blueprint 2",
+			entryTitle = "Test Blueprint 3",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 
 		AssertChecked.assertCheckedNotVisible(
-			entryTitle = "Test Blueprint 3",
+			entryTitle = "Test Blueprint 4",
 			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 
 		Button.clickTrash();
 
-		Blueprints.viewNoEntry(title = "Test Blueprint 2");
-
 		Blueprints.viewNoEntry(title = "Test Blueprint 3");
+
+		Blueprints.viewNoEntry(title = "Test Blueprint 4");
 	}
 
 	test ViewBlueprintsAdminTableValues {

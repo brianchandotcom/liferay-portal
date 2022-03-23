@@ -146,14 +146,15 @@ public class JSONCurlUtil {
 
 			String response = ExecUtil.readInputStream(inputStream, true);
 
-			System.out.println("Response: " + response);
+			_log(response);
 
 			if (process.exitValue() != 0) {
 				inputStream = process.getErrorStream();
 
-				System.out.println(
-					"Error stream: " +
-						ExecUtil.readInputStream(inputStream, true));
+				String errorString = ExecUtil.readInputStream(
+					inputStream, true);
+
+				_log(errorString);
 
 				throw new RuntimeException(
 					"Command finished with exit value: " + process.exitValue());
@@ -198,6 +199,20 @@ public class JSONCurlUtil {
 			sb.append("' is an invalid URL.");
 
 			throw new IllegalArgumentException(sb.toString());
+		}
+
+		private void _log(String message) {
+			if (message == null) {
+				message = "";
+			}
+
+			if (message.length() > _maxPrintLineLength) {
+				System.out.println(message.substring(0, _maxPrintLineLength));
+
+				return;
+			}
+
+			System.out.println(message);
 		}
 
 		private void _setRequestOptions(List<String> tokens) {
@@ -272,6 +287,7 @@ public class JSONCurlUtil {
 				"(\\s+|\\Z)");
 
 		private Map<String, String> _curlDataMap = new HashMap<>();
+		private final int _maxPrintLineLength = 2500;
 		private final String _requestMethod;
 		private List<RequestOption> _requestOptions = new ArrayList<>();
 		private final String _requestURL;

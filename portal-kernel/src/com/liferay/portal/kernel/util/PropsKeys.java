@@ -305,19 +305,6 @@ public interface PropsKeys {
 		BLOGS_ENTRY_PREVIOUS_AND_NEXT_NAVIGATION_ENABLED =
 			"blogs.entry.previous.and.next.navigation.enabled";
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String BLOGS_IMAGE_EXTENSIONS =
-		"blogs.image.extensions";
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String BLOGS_IMAGE_MAX_SIZE = "blogs.image.max.size";
-
 	public static final String BLOGS_LINKBACK_EXCERPT_LENGTH =
 		"blogs.linkback.excerpt.length";
 
@@ -721,26 +708,6 @@ public interface PropsKeys {
 
 	public static final String DISCUSSION_COMMENTS_FORMAT =
 		"discussion.comments.format";
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String DISCUSSION_EMAIL_BODY = "discussion.email.body";
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED =
-		"discussion.email.comments.added.enabled";
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static final String DISCUSSION_EMAIL_SUBJECT =
-		"discussion.email.subject";
 
 	public static final String DISCUSSION_MAX_COMMENTS =
 		"discussion.max.comments";
@@ -3007,14 +2974,6 @@ public interface PropsKeys {
 
 	public static final String VERIFY_DATABASE_TRANSACTIONS_DISABLED =
 		"verify.database.transactions.disabled";
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             com.liferay.view.count.configuration.ViewCountsConfiguration
-	 *             #enabled()}
-	 */
-	@Deprecated
-	public static final String VIEW_COUNT_ENABLED = "view.count.enabled";
 
 	public static final String VIRTUAL_HOSTS_DEFAULT_SITE_NAME =
 		"virtual.hosts.default.site.name";

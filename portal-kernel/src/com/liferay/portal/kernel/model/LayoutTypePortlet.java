@@ -83,6 +83,9 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public List<Portlet> getExplicitlyAddedPortlets();
 
+	public List<Portlet> getExplicitlyAddedPortlets(
+		boolean includeCustomizableColumns);
+
 	public Layout getLayoutSetPrototypeLayout();
 
 	public String getLayoutSetPrototypeLayoutProperty(String key);

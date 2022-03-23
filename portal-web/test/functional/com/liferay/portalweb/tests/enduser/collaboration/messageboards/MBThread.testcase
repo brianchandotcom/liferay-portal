@@ -251,6 +251,12 @@ definition {
 
 		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
 
+		MessageboardsThread.viewThreadInRecycleBin(
+			threadBody = "MB Thread Message Body",
+			threadSubject = "MB Thread Message Subject");
+
+		RecycleBin.openRecycleBinAdmin(siteURLKey = "guest");
+
 		RecycleBin.deleteCP(
 			assetName = "MB Thread Message Subject",
 			assetType = "Message Boards Thread");

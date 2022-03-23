@@ -55,8 +55,8 @@ public class XLSBatchEngineImportTaskItemReaderImplTest
 				xlsBatchEngineImportTaskItemReaderImpl =
 					_getXLSBatchEngineImportTaskItemReader(
 						new String[] {
-							"createDate1", "description1", "id1", "name1_en",
-							"name1_hr"
+							"createDate1", "description1", "id1",
+							"name1_i18n_en", "name1_i18n_hr"
 						},
 						new Object[][] {
 							{
@@ -91,8 +91,8 @@ public class XLSBatchEngineImportTaskItemReaderImplTest
 				xlsBatchEngineImportTaskItemReaderImpl =
 					_getXLSBatchEngineImportTaskItemReader(
 						new String[] {
-							"createDate1", "description1", "id1", "name1_en",
-							"name1_hr"
+							"createDate1", "description1", "id1",
+							"name1_i18n_en", "name1_i18n_hr"
 						},
 						new Object[][] {
 							{
@@ -120,8 +120,8 @@ public class XLSBatchEngineImportTaskItemReaderImplTest
 				xlsBatchEngineImportTaskItemReaderImpl =
 					_getXLSBatchEngineImportTaskItemReader(
 						new String[] {
-							"createDate1", "description1", "id1", "name1_en",
-							"name1_hr"
+							"createDate1", "description1", "id1",
+							"name1_i18n_en", "name1_i18n_hr"
 						},
 						new Object[][] {
 							{
@@ -150,8 +150,8 @@ public class XLSBatchEngineImportTaskItemReaderImplTest
 				xlsBatchEngineImportTaskItemReaderImpl =
 					_getXLSBatchEngineImportTaskItemReader(
 						new String[] {
-							"createDate1", "description1", "id1", "name1_en",
-							"name1_hr"
+							"createDate1", "description1", "id1",
+							"name1_i18n_en", "name1_i18n_hr"
 						},
 						new Object[][] {
 							{

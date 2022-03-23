@@ -101,7 +101,7 @@ public abstract class BaseBatchEngineImportTaskItemReaderImplTestCase {
 	}
 
 	protected static final String[] FIELD_NAMES = {
-		"createDate", "description", "id", "name_en", "name_hr"
+		"createDate", "description", "id", "name_i18n_en", "name_i18n_hr"
 	};
 
 	protected Date createDate;

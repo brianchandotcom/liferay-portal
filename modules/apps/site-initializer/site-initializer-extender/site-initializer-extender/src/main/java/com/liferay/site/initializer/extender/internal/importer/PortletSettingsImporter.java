@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Andrea Di Giorgi
  */
-@Component(enabled = false, service = PortletSettingsImporter.class)
+@Component(enabled = true, service = PortletSettingsImporter.class)
 public class PortletSettingsImporter {
 
 	public void importPortletSettings(

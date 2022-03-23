@@ -11,6 +11,7 @@ definition {
 		User.firstLoginPG();
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
+
 	}
 
 	tearDown {
@@ -121,8 +122,8 @@ definition {
 			portletName = "Option Facet");
 
 		AssertElementPresent(
-			locator1 = "CommerceWidget#MAX_TERMS_ERROR_MESSAGE",
-			errorMessage = "Maximum terms cannot exceed 100.");
+			errorMessage = "Maximum terms cannot exceed 100.",
+			locator1 = "CommerceWidget#MAX_TERMS_ERROR_MESSAGE");
 	}
 
 	@description = "[Please Update]"
@@ -158,6 +159,20 @@ definition {
 		AssertElementPresent(
 			key_fieldName = "frequencyThreshold",
 			locator1 = "FormFields#TEXT_FIELD");
+	}
+
+	test View100Terms {
+		CommerceJSONOptionsAPI._addCommerceProductsWithOptionValues(
+			catalogName = "Minium",
+			optionKey = "package-quantity");
+
+		ApplicationsMenu.gotoSite(site = "Minium");
+
+		CommerceWidget.updateFacetConfiguration(
+			maxTerms = "100",
+			portletName = "Option Facet");
+
+		CommerceWidget.assertOptionFacetsCount(value = "100");
 	}
 
 }

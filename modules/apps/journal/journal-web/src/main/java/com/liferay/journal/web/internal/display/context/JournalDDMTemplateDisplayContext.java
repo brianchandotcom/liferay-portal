@@ -141,26 +141,28 @@ public class JournalDDMTemplateDisplayContext {
 		if (Validator.isNotNull(_getKeywords())) {
 			ddmTemplateSearch.setResultsAndTotal(
 				() -> {
-					List<DDMTemplate> results = DDMTemplateServiceUtil.search(
-						_themeDisplay.getCompanyId(), templateGroupIds,
-						new long[] {
-							PortalUtil.getClassNameId(DDMStructure.class)
-						},
-						_getDDMTemplateClassPKs(),
-						PortalUtil.getClassNameId(JournalArticle.class),
-						_getKeywords(), StringPool.BLANK, StringPool.BLANK,
-						WorkflowConstants.STATUS_ANY,
-						ddmTemplateSearch.getStart(),
-						ddmTemplateSearch.getEnd(),
-						ddmTemplateSearch.getOrderByComparator());
+					List<DDMTemplate> ddmTemplates =
+						DDMTemplateServiceUtil.search(
+							_themeDisplay.getCompanyId(), templateGroupIds,
+							new long[] {
+								PortalUtil.getClassNameId(DDMStructure.class)
+							},
+							_getDDMTemplateClassPKs(),
+							PortalUtil.getClassNameId(JournalArticle.class),
+							_getKeywords(), StringPool.BLANK, StringPool.BLANK,
+							WorkflowConstants.STATUS_ANY,
+							ddmTemplateSearch.getStart(),
+							ddmTemplateSearch.getEnd(),
+							ddmTemplateSearch.getOrderByComparator());
 
-					List<DDMTemplate> sortedResults = new ArrayList<>(results);
+					List<DDMTemplate> sortedDDMTemplates = new ArrayList<>(
+						ddmTemplates);
 
 					Collections.sort(
-						sortedResults,
+						sortedDDMTemplates,
 						ddmTemplateSearch.getOrderByComparator());
 
-					return sortedResults;
+					return sortedDDMTemplates;
 				},
 				DDMTemplateServiceUtil.searchCount(
 					_themeDisplay.getCompanyId(), templateGroupIds,
@@ -173,7 +175,7 @@ public class JournalDDMTemplateDisplayContext {
 		else {
 			ddmTemplateSearch.setResultsAndTotal(
 				() -> {
-					List<DDMTemplate> results =
+					List<DDMTemplate> ddmTemplates =
 						DDMTemplateServiceUtil.getTemplates(
 							_themeDisplay.getCompanyId(), templateGroupIds,
 							new long[] {
@@ -185,13 +187,14 @@ public class JournalDDMTemplateDisplayContext {
 							ddmTemplateSearch.getEnd(),
 							ddmTemplateSearch.getOrderByComparator());
 
-					List<DDMTemplate> sortedResults = new ArrayList<>(results);
+					List<DDMTemplate> sortedDDMTemplates = new ArrayList<>(
+						ddmTemplates);
 
 					Collections.sort(
-						sortedResults,
+						sortedDDMTemplates,
 						ddmTemplateSearch.getOrderByComparator());
 
-					return sortedResults;
+					return sortedDDMTemplates;
 				},
 				DDMTemplateServiceUtil.getTemplatesCount(
 					_themeDisplay.getCompanyId(), templateGroupIds,

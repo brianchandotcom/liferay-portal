@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -82,11 +81,7 @@ public class SegmentsExperienceLocalServiceTest {
 		_classNameId = _classNameLocalService.getClassNameId(
 			Layout.class.getName());
 
-		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
-
-		layout.setType(LayoutConstants.TYPE_CONTENT);
-
-		layout = _layoutLocalService.updateLayout(layout);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		_classPK = layout.getPlid();
 

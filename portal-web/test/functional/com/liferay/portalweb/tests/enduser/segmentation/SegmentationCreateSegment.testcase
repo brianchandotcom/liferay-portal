@@ -2035,6 +2035,52 @@ definition {
 		}
 	}
 
+	@description = "LPS-146550 Bug: Apostrophe in segment property value breaks filter"
+	@priority = "4"
+	test AddSegmentWithApostrophe {
+		task ("Create an User with an apostrophe") {
+			JSONUser.addUser(
+				userEmailAddress = "shaquille@liferay.com",
+				userFirstName = "Shaquille",
+				userLastName = "O'Neal",
+				userScreenName = "shaquille");
+		}
+
+		task ("Create a Segment that includes user created") {
+			LexiconEntry.gotoAdd();
+
+			Segmentation.fillTitle(titleField = "Segment with Apostrophe");
+
+			Segmentation.addProperties(propertyOption = "Last Name");
+
+			Segmentation.fillProperty(propertyField = "O'Neal");
+		}
+
+		task ("Check that segment includes user") {
+			AssertTextEquals(
+				locator1 = "Segmentation#MEMBERS_MATCHED",
+				value1 = "1 Member");
+
+			Segmentation.viewMembers(memberName = "Shaquille O'Neal");
+		}
+
+		task ("Save segment") {
+			Button.clickSave();
+		}
+
+		task ("Go to edit segment") {
+			Segmentation.editSegment(entry = "Segment with Apostrophe");
+		}
+
+		task ("Check that segment still includes user") {
+			AssertTextEquals(
+				locator1 = "Segmentation#MEMBERS_MATCHED",
+				value1 = "1 Member");
+
+			Segmentation.viewMembers(memberName = "Shaquille O'Neal");
+		}
+	}
+
 	@description = "LPS-135495 Validate if, The criteria default language must be tagged as such in the language selection dropdown."
 	@priority = "3"
 	test CheckDefaultLanguageTag {

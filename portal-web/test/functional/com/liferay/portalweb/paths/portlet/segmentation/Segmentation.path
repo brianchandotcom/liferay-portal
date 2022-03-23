@@ -112,7 +112,7 @@
 </tr>
 <tr>
 	<td>MEMBER_NAME_LISTED</td>
-	<td>//*[contains(@class,'table-title') and contains(text(),'${key_memberName}')]</td>
+	<td>//*[contains(@class,'table-title') and contains(text(),"${key_memberName}")]</td>
 	<td></td>
 </tr>
 <tr>

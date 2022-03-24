@@ -40,12 +40,6 @@ public class LogParameters {
 		catch (Exception exception) {
 			_log.error(exception);
 		}
-
-		try {
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LogParameters.class);

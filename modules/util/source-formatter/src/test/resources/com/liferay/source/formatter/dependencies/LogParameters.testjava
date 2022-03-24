@@ -38,12 +38,6 @@ public class LogParameters {
 		try {
 		}
 		catch (Exception exception) {
-			_log.error(exception.getMessage());
-		}
-
-		try {
-		}
-		catch (Exception exception) {
 			_log.error(exception.getMessage(), exception);
 		}
 	}

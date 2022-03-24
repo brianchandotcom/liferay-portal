@@ -557,8 +557,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testLogParametersCheck() throws Exception {
-		test("LogParametersCheck.testjava");
+	public void testLogParameters() throws Exception {
+		test("LogParameters.testjava");
 	}
 
 }

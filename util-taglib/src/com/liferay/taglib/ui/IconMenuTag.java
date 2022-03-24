@@ -480,8 +480,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		httpServletRequest.setAttribute("liferay-ui:icon-menu:data", _data);
 		httpServletRequest.setAttribute(
 			"liferay-ui:icon-menu:direction", _direction);
-		httpServletRequest.setAttribute(
-			"liferay-ui:icon-menu:dropdownCssClass", _dropdownCssClass);
+		httpServletRequest.setAttribute("liferay-ui:icon-menu:dropdownCssClass", _dropdownCssClass);
 		httpServletRequest.setAttribute("liferay-ui:icon-menu:icon", _icon);
 		httpServletRequest.setAttribute("liferay-ui:icon-menu:id", _id);
 

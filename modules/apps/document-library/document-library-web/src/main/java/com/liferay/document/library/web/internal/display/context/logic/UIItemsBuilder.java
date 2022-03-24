@@ -741,8 +741,8 @@ public class UIItemsBuilder {
 		}
 
 		URLMenuItem urlMenuItem = _addURLUIItem(
-			new URLMenuItem(), menuItems, "password-policies",
-			DLUIItemKeys.PERMISSIONS, "permissions", url);
+			new URLMenuItem(), menuItems, "password-policies", DLUIItemKeys.PERMISSIONS,
+			"permissions", url);
 
 		urlMenuItem.setMethod("get");
 		urlMenuItem.setUseDialog(true);

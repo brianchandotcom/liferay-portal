@@ -114,7 +114,8 @@ public class CPCategoryContentPortletDisplayTemplateHandler
 	@Override
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/commerce/product/content/category/web/internal" +
-			"/portlet/template/dependencies/portlet-display-templates.xml";
+			"/portlet/display/template/dependencies/portlet-display-" +
+				"templates.xml";
 	}
 
 	@Reference

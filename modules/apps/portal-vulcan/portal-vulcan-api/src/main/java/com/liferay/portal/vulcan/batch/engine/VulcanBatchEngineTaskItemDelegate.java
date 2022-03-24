@@ -49,6 +49,14 @@ public interface VulcanBatchEngineTaskItemDelegate<T> {
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
 		throws Exception;
 
+	public default Class<?> getResourceClass() {
+		return getClass();
+	}
+
+	public default String getVersion() {
+		return "v1.0";
+	}
+
 	public Page<T> read(
 			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)

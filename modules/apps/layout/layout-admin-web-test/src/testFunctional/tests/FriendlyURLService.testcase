@@ -475,9 +475,7 @@ definition {
 
 		Navigator.openWithAppendToBaseURL(urlAppend = "es/web/test-site-name/test-source-page");
 
-		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/p%C3%A1gina-de-prueba");
-
-		AssertTextNotPresent(value1 = "The requested resource could not be found");
+		AssertLocation(value1 = "${portalURL}/es/web/test-site-name/%5E_%5E");
 	}
 
 	@description = "This ensures that both the localized active URL and old friendlyURL can be viewed from the history."

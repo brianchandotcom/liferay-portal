@@ -1019,6 +1019,40 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-135881. View the order of fieldsets in Asset Selection settings when selection style is dynamic."
+	@priority = "4"
+	@uitest
+	test ViewOrderOfFieldsetsInAssetSelectionWhenSelectionStyleIsDynamic {
+		property asset.publisher.selection.style = "asset-list";
+
+		task ("Navigate to Asset Selection panel of Asset Publisher") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.gotoConfigurationPG();
+		}
+
+		task ("Change the selection style to Dynamic") {
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_DYNAMIC");
+
+			Alert.viewSuccessMessage();
+		}
+
+		task ("View the order of fieldsets") {
+			var i = "1";
+
+			for (var fieldset : list "Asset Selection,Scope,Source,Filter,Custom User Attributes,Ordering") {
+				AssertVisible(
+					index = "${i}",
+					key_panel = "${fieldset}",
+					locator1 = "Panel#PANEL_BY_INDEX");
+
+				var i = ${i} + 1;
+			}
+		}
+	}
+
 	@description = "LPS-135554 This test asserts that the Web Content Article Structures should appear after uncheck Search With Index configuration."
 	@priority = "4"
 	test WebContentArticleStructuresCanAppearAfterUncheckingSearchWithIndexConfiguration {

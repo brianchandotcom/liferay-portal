@@ -31,6 +31,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -106,6 +108,13 @@ public class BatchPlannerPlanManagementToolbarDisplayContext
 	@Override
 	public String getFilterNavigationDropdownItemsLabel() {
 		return LanguageUtil.get(httpServletRequest, "filter-by-action");
+	}
+
+	@Override
+	public String getSearchActionURL() {
+		PortletURL searchActionURL = getPortletURL();
+
+		return searchActionURL.toString();
 	}
 
 	@Override

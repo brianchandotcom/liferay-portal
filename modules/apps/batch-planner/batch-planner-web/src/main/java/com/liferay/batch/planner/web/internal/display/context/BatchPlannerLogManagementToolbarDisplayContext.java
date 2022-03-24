@@ -14,11 +14,6 @@
 
 package com.liferay.batch.planner.web.internal.display.context;
 
-import com.liferay.batch.planner.model.BatchPlannerPlanTable;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
@@ -50,27 +45,6 @@ public class BatchPlannerLogManagementToolbarDisplayContext
 		super(
 			httpServletRequest, liferayPortletRequest, liferayPortletResponse,
 			searchContainer);
-	}
-
-	@Override
-	public List<DropdownItem> getFilterDropdownItems() {
-		List<DropdownItem> searchByDropdownItems = _getSearchByDropdownItems();
-
-		DropdownItemList filterDropdownItems = DropdownItemListBuilder.addAll(
-			super.getFilterDropdownItems()
-		).addGroup(
-			() -> searchByDropdownItems != null,
-			dropdownGroupItem -> {
-				dropdownGroupItem.setDropdownItems(searchByDropdownItems);
-				dropdownGroupItem.setLabel(_getSearchByDropdownItemsLabel());
-			}
-		).build();
-
-		if (filterDropdownItems.isEmpty()) {
-			return null;
-		}
-
-		return filterDropdownItems;
 	}
 
 	@Override
@@ -133,39 +107,6 @@ public class BatchPlannerLogManagementToolbarDisplayContext
 	@Override
 	protected String[] getOrderByKeys() {
 		return new String[] {"createDate"};
-	}
-
-	private DropdownItem _getSearchByDropdownItem(
-		String fieldName, String label) {
-
-		return DropdownItemBuilder.setActive(
-			Objects.equals(_getSearchByField(), fieldName)
-		).setHref(
-			getPortletURL(), "searchByField", fieldName
-		).setLabel(
-			LanguageUtil.get(httpServletRequest, label)
-		).build();
-	}
-
-	private List<DropdownItem> _getSearchByDropdownItems() {
-		return DropdownItemListBuilder.add(
-			_getSearchByDropdownItem(
-				BatchPlannerPlanTable.INSTANCE.name.getName(), "name")
-		).add(
-			_getSearchByDropdownItem(
-				BatchPlannerPlanTable.INSTANCE.internalClassName.getName(),
-				"entity")
-		).build();
-	}
-
-	private String _getSearchByDropdownItemsLabel() {
-		return LanguageUtil.get(httpServletRequest, "search-by");
-	}
-
-	private String _getSearchByField() {
-		return ParamUtil.getString(
-			liferayPortletRequest, "searchByField",
-			BatchPlannerPlanTable.INSTANCE.name.getName());
 	}
 
 }

@@ -74,31 +74,35 @@ public class BatchPlannerPlanDisplayContext extends BaseDisplayContext {
 		String navigation = ParamUtil.getString(
 			renderRequest, "navigation", "all");
 
+		String searchByField = ParamUtil.getString(
+			renderRequest, "searchByField", "name");
+		String searchByKeyword = ParamUtil.getString(renderRequest, "keywords");
+
 		if (navigation.equals("all")) {
 			_searchContainer.setResultsAndTotal(
 				() -> BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
-					companyId, true, _searchContainer.getStart(),
-					_searchContainer.getEnd(),
+					companyId, true, searchByField, searchByKeyword,
+					_searchContainer.getStart(), _searchContainer.getEnd(),
 					OrderByComparatorFactoryUtil.create(
 						"BatchPlannerPlan", _searchContainer.getOrderByCol(),
 						Objects.equals(
 							_searchContainer.getOrderByType(), "asc"))),
 				BatchPlannerPlanServiceUtil.getBatchPlannerPlansCount(
-					companyId, true));
+					companyId, true, searchByField, searchByKeyword));
 		}
 		else {
 			boolean export = isExport(navigation);
 
 			_searchContainer.setResultsAndTotal(
 				() -> BatchPlannerPlanServiceUtil.getBatchPlannerPlans(
-					companyId, export, true, _searchContainer.getStart(),
-					_searchContainer.getEnd(),
+					companyId, export, true, searchByField, searchByKeyword,
+					_searchContainer.getStart(), _searchContainer.getEnd(),
 					OrderByComparatorFactoryUtil.create(
 						"BatchPlannerPlan", _searchContainer.getOrderByCol(),
 						Objects.equals(
 							_searchContainer.getOrderByType(), "asc"))),
 				BatchPlannerPlanServiceUtil.getBatchPlannerPlansCount(
-					companyId, export, true));
+					companyId, export, true, searchByField, searchByKeyword));
 		}
 
 		_searchContainer.setRowChecker(

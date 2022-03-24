@@ -37,21 +37,22 @@ import javax.servlet.http.HttpServletRequest;
 public class BookmarksItemSelectorViewDisplayContext {
 
 	public BookmarksItemSelectorViewDisplayContext(
+		BookmarksEntryLocalService bookmarksEntryLocalService,
 		BookmarksItemSelectorCriterion bookmarksItemSelectorCriterion,
 		BookmarksItemSelectorView bookmarksItemSelectorView,
-		BookmarksEntryLocalService bookmarksEntryLocalService,
+		String itemSelectedEventName,
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler,
-		String itemSelectedEventName, boolean search, PortletURL portletURL) {
+		PortletURL portletURL, boolean search) {
 
+		_bookmarksEntryLocalService = bookmarksEntryLocalService;
 		_bookmarksItemSelectorCriterion = bookmarksItemSelectorCriterion;
 		_bookmarksItemSelectorView = bookmarksItemSelectorView;
-		_bookmarksEntryLocalService = bookmarksEntryLocalService;
+		_itemSelectedEventName = itemSelectedEventName;
 		_itemSelectorReturnTypeResolverHandler =
 			itemSelectorReturnTypeResolverHandler;
-		_itemSelectedEventName = itemSelectedEventName;
-		_search = search;
 		_portletURL = portletURL;
+		_search = search;
 	}
 
 	public BookmarksItemSelectorCriterion getBookmarksItemSelectorCriterion() {

@@ -1327,6 +1327,110 @@ definition {
 
 	}
 
+	@description = "This test covers LPS-133714. The blog entry creator receives a notification of its own blog"
+	@priority = "3"
+	test NewEntryCreatorReceivesNotificationItsOwnBlog {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "false";
+
+		task ("Enable Send Notifications to Blogs Entry Creator") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			Click(
+				key_itemName = "Blogs",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			Click(
+				key_fieldLabel = "Send Notifications to Blogs Entry Creator",
+				locator1 = "Blogs#BLOG_SERVICE_LABEL");
+
+			if (IsElementPresent(locator1 = "Blogs#SAVE_BUTTON_BLOG_SERVICE")) {
+				Click(locator1 = "Blogs#SAVE_BUTTON_BLOG_SERVICE");
+			}
+			else {
+				Click(locator1 = "Blogs#UPDATE_BUTTON_BLOG_SERVICE");
+			}
+		}
+
+		task ("Check no notifications are pending") {
+			Notifications.viewBadgeCount(notificationCount = "0");
+		}
+
+		task ("Create a Blog Page and Suscribe to receive notifications") {
+			JSONLayout.addPublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page Admin");
+
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Guest",
+				layoutName = "Blogs Page Admin",
+				widgetName = "Blogs");
+
+			Navigator.gotoPage(pageName = "Blogs Page Admin");
+
+			if (IsElementPresent(locator1 = "Blogs#UNSUBSCRIBE_LINK", value1 = "Unsubscribe")) {
+				AssertClick(
+					locator1 = "Blogs#UNSUBSCRIBE_LINK",
+					value1 = "Unsubscribe");
+			}
+
+			Blogs.subscribePG();
+		}
+
+		task ("Add blog entry") {
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title",
+				userEmailAddress = "test@liferay.com",
+				userPassword = "test");
+		}
+
+		task ("Check entry creator has a notification") {
+			Navigator.gotoPage(pageName = "Blogs Page Admin");
+
+			Notifications.viewBadgeCount(notificationCount = "1");
+		}
+
+		task ("See notification") {
+			Notifications.gotoNotifications();
+
+			Notifications.navigateToContent(contentBody = "Blogs Entry Title");
+
+			BlogsEntry.viewEntryPG(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
+
+			Notifications.viewBadgeCount(notificationCount = "0");
+		}
+
+		task ("Disable Send Notifications to Blogs Entry Creator") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Configuration",
+				panel = "Control Panel",
+				portlet = "Instance Settings");
+
+			Click(
+				key_itemName = "Blogs",
+				locator1 = "ListGroupItem#ITEM_TEXT");
+
+			Click(
+				key_fieldLabel = "Send Notifications to Blogs Entry Creator",
+				locator1 = "Blogs#BLOG_SERVICE_LABEL");
+
+			Click(locator1 = "Blogs#UPDATE_BUTTON_BLOG_SERVICE");
+		}
+
+		task ("Delete Blogs Page admin created for this test") {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Blogs Page Admin");
+		}
+	}
+
 	@description = "This is a use case for LPS-69240. It checks that when blog entries are duplicated their custom URL's are unique."
 	@priority = "4"
 	@refactordone

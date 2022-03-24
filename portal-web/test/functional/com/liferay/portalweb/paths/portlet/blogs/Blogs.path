@@ -124,6 +124,22 @@
 	<td>//tr[contains(.,'${key_entryTitle}')]/td//span[@class='workflow-status']/strong</td>
 	<td></td>
 </tr>
+	<!--BLOG INSTANCE SETTINGS-->
+	<tr>
+		<td>BLOG_SERVICE_LABEL</td>
+		<td>//span[contains(@class,'custom-control-label-text') and contains(.,'${key_fieldLabel}')]</td>
+		<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON_BLOG_SERVICE</td>
+	<td>//div[contains(@class,'button-holder')]//*[@class = 'lfr-btn-label' and text()='Save']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPDATE_BUTTON_BLOG_SERVICE</td>
+	<td>//div[contains(@class,'button-holder')]//*[@class = 'lfr-btn-label' and text()='Update']</td>
+	<td></td>
+</tr>
 <tr>
 	<td></td>
 	<td></td>

@@ -202,7 +202,14 @@ public class ExportTranslationDisplayContext {
 		).put(
 			"multipleExperiences", true
 		).put(
-			"multiplePagesSelected", _classPKs.length > 1
+			"multiplePagesSelected",
+			() -> {
+				if (_classPKs.length > 1) {
+					return true;
+				}
+
+				return false;
+			}
 		).put(
 			"pathModule", PortalUtil.getPathModule()
 		).put(

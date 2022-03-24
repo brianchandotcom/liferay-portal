@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
  * @author Attila Bakay
  */
 @RunWith(Arquillian.class)
-public class TemplateNameComparatorTest {
+public class DDMTemplateNameComparatorTest {
 
 	@ClassRule
 	@Rule

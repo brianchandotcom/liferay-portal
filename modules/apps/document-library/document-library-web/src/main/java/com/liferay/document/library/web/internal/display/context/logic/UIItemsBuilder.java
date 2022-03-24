@@ -401,16 +401,6 @@ public class UIItemsBuilder {
 			deleteMenuItem.setTrash(true);
 		}
 
-		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146954"))) {
-			String icon = "times";
-
-			if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				icon = "trash";
-			}
-
-			deleteMenuItem.setIcon(icon);
-		}
-
 		String mvcActionCommandName = "/document_library/edit_file_entry";
 
 		if (_fileShortcut != null) {

@@ -14,6 +14,8 @@
 
 package com.liferay.batch.planner.web.internal.display;
 
+import com.liferay.batch.planner.constants.BatchPlannerLogConstants;
+
 import java.util.Date;
 
 /**
@@ -75,6 +77,14 @@ public class BatchPlannerLogDisplay {
 
 	public boolean isExport() {
 		return _export;
+	}
+
+	public boolean isStatusCompleted() {
+		if (_status == BatchPlannerLogConstants.STATUS_COMPLETED) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public static class Builder {

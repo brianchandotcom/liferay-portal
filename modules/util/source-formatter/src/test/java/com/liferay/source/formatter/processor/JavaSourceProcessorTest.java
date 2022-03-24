@@ -338,6 +338,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testLogParameters() throws Exception {
+		test("LogParameters.testjava");
+	}
+
+	@Test
 	public void testMissingAuthor() throws Exception {
 		test("MissingAuthor.testjava", "Missing author", 20);
 	}
@@ -554,11 +559,6 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 				"Variable '_s' is unused"
 			},
 			new Integer[] {26, 29, 41});
-	}
-
-	@Test
-	public void testLogParameters() throws Exception {
-		test("LogParameters.testjava");
 	}
 
 }

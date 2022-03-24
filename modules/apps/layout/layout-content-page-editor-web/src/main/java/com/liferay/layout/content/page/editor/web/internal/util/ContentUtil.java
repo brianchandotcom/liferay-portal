@@ -552,11 +552,8 @@ public class ContentUtil {
 
 			if (!(layoutStructureItem instanceof
 					ContainerStyledLayoutStructureItem) ||
-				ListUtil.exists(
-					layoutStructure.getDeletedLayoutStructureItems(),
-					deletedLayoutStructureItem ->
-						deletedLayoutStructureItem.containsItemId(
-							layoutStructureItem.getItemId()))) {
+				layoutStructure.isItemMarkedForDeletion(
+					layoutStructureItem.getItemId())) {
 
 				continue;
 			}

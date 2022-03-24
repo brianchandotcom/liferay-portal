@@ -64,6 +64,15 @@ definition {
 			searchAssetType = "Document");
 	}
 
+	@description = "This test covers LPS-91749. It ensures that a user can edit tags by using the bulk append action for checked out document files."
+	@ignore = "Test Stub"
+	@priority = "4"
+	test CanEditAndAppendTagForCheckedOutFiles {
+
+		// TODO LPS-149965 CanEditAndAppendTagsForCheckedOutFiles pending implementation
+
+	}
+
 	@description = "This test covers LPS-94956. It ensures that users can delete common category tags by using the bulk append action."
 	@priority = "5"
 	test DeleteCommonCategoryTags {

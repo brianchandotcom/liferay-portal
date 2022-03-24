@@ -114,7 +114,7 @@ public class CheckboxTag extends BaseContainerTag {
 
 	@Override
 	protected String getHydratedModuleName() {
-		return "frontend-taglib-clay/Checkbox";
+		return "{Checkbox} from frontend-taglib-clay";
 	}
 
 	@Override

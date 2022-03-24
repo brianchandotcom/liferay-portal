@@ -15,9 +15,7 @@
 package com.liferay.frontend.taglib.clay.internal.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolvedPackageNameUtil;
-import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.js.module.launcher.JSModuleResolver;
-import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.clay.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.taglib.clay.internal.util.ServicesProvider;
 import com.liferay.petra.string.CharPool;
@@ -338,11 +336,6 @@ public class BaseContainerTag extends AttributesTagSupport {
 		String hydratedModuleName = getHydratedModuleName();
 
 		if (hydratedModuleName != null) {
-			NPMResolver npmResolver = NPMResolverProvider.getNPMResolver();
-
-			String moduleName = npmResolver.resolveModuleName(
-				hydratedModuleName);
-
 			String propsTransformer = null;
 
 			if (Validator.isNotNull(_propsTransformer)) {
@@ -370,13 +363,13 @@ public class BaseContainerTag extends AttributesTagSupport {
 					resolvedPackageName + "/" + _propsTransformer;
 			}
 			else if (Validator.isNotNull(getDefaultEventHandler())) {
-				propsTransformer = npmResolver.resolveModuleName(
-					"frontend-taglib-clay" +
-						"/DefaultEventHandlersPropsTransformer");
+				propsTransformer =
+					"{DefaultEventHandlersPropsTransformer} from " +
+						"frontend-taglib-clay";
 			}
 
 			ComponentDescriptor componentDescriptor = new ComponentDescriptor(
-				moduleName, getId(), new LinkedHashSet<>(), false,
+				hydratedModuleName, getId(), new LinkedHashSet<>(), false,
 				propsTransformer);
 
 			ReactRenderer reactRenderer = ServicesProvider.getReactRenderer();

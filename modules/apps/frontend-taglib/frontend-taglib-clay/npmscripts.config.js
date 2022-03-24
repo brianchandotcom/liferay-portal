@@ -89,5 +89,6 @@ module.exports = {
 			'clay-table',
 			'clay-tooltip',
 		],
+		main: 'src/main/resources/META-INF/resources/index.js',
 	},
 };

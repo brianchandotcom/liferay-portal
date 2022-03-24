@@ -174,7 +174,7 @@ public class PaginationBarTag extends BaseContainerTag {
 
 	@Override
 	protected String getHydratedModuleName() {
-		return "frontend-taglib-clay/PaginationBar";
+		return "{PaginationBar} from frontend-taglib-clay";
 	}
 
 	@Override

@@ -631,7 +631,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 
 	@Override
 	protected String getHydratedModuleName() {
-		return "frontend-taglib-clay/management_toolbar/ManagementToolbar";
+		return "{ManagementToolbar} from frontend-taglib-clay";
 	}
 
 	@Override

@@ -7645,19 +7645,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/xbean.jar</file-name>
-				<version>3.0.2</version>
-				<project-name>XMLBeans</project-name>
-				<project-url>http://xmlbeans.apache.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2004-2009 The Apache Software Foundation</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/xercesImpl.jar</file-name>
 				<version>2.12.1</version>
 				<project-name>Xerces</project-name>

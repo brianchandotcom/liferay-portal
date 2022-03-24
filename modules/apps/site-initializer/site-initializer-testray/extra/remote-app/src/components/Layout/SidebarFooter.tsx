@@ -14,7 +14,9 @@
 
 import {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {useContext} from 'react';
 
+import {AccountContext} from '../../context/AccountContext';
 import i18n from '../../i18n';
 import {Liferay} from '../../services/liferay/liferay';
 import {Avatar} from '../Avatar';
@@ -22,6 +24,7 @@ import DropDown from '../DropDown';
 import useSidebarActions from './useSidebarActions';
 
 const SidebarFooter = () => {
+	const [{myUserAccount}] = useContext(AccountContext);
 	const MANAGE_DROPDOWN = useSidebarActions();
 
 	return (
@@ -49,7 +52,7 @@ const SidebarFooter = () => {
 							{
 								icon: 'user',
 								label: i18n.translate('manage-account'),
-								path: '/manage/user',
+								path: '/manage/user/me',
 							},
 							{
 								icon: 'logout',
@@ -66,7 +69,7 @@ const SidebarFooter = () => {
 						<Avatar
 							displayName
 							name={Liferay.ThemeDisplay.getUserName()}
-							url="https://clayui.com/images/long_user_image.png"
+							url={myUserAccount?.image}
 						/>
 					</div>
 				}

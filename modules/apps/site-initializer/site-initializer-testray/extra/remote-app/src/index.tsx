@@ -16,6 +16,7 @@ import {ApolloProvider} from '@apollo/client';
 import ReactDOM from 'react-dom';
 
 import TestrayRouter from './TestrayRouter';
+import AccountContextProvider from './context/AccountContext';
 import ClayIconProvider from './context/ClayIconProvider';
 import apolloClient from './graphql/apolloClient';
 
@@ -25,9 +26,11 @@ class WebComponent extends HTMLElement {
 	connectedCallback() {
 		ReactDOM.render(
 			<ApolloProvider client={apolloClient}>
-				<ClayIconProvider>
-					<TestrayRouter />
-				</ClayIconProvider>
+				<AccountContextProvider>
+					<ClayIconProvider>
+						<TestrayRouter />
+					</ClayIconProvider>
+				</AccountContextProvider>
 			</ApolloProvider>,
 			this
 		);

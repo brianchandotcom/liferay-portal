@@ -130,7 +130,7 @@ const useSidebarActions = () => {
 				{
 					icon: 'pencil',
 					label: i18n.translate('manage-users'),
-					path: '/manage/userlist',
+					path: '/manage/user',
 				},
 				{
 					icon: 'pencil',

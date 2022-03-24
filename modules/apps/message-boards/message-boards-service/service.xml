@@ -355,6 +355,12 @@
 			<finder-column name="classPK" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="C_C_G_ERC" return-type="MBMessage" unique="true">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="externalReferenceCode" />
+		</finder>
 		<finder name="G_C_T_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="categoryId" />

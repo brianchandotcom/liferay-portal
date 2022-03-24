@@ -55,39 +55,65 @@ public class JournalDDMTemplateActionDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
-		return DropdownItemListBuilder.add(
-			() -> DDMTemplatePermission.contains(
-				_themeDisplay.getPermissionChecker(), _ddmTemplate,
-				ActionKeys.UPDATE),
-			_getEditDDMTemplateActionUnsafeConsumer()
-		).add(
-			() -> DDMTemplatePermission.contains(
-				_themeDisplay.getPermissionChecker(), _ddmTemplate,
-				ActionKeys.PERMISSIONS),
-			_getPermissionsDDMTemplateActionUnsafeConsumer()
-		).add(
-			() -> {
-				Group scopeGroup = _themeDisplay.getScopeGroup();
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> DDMTemplatePermission.contains(
+							_themeDisplay.getPermissionChecker(), _ddmTemplate,
+							ActionKeys.UPDATE),
+						_getEditDDMTemplateActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> {
+							Group scopeGroup = _themeDisplay.getScopeGroup();
 
-				if ((!scopeGroup.hasLocalOrRemoteStagingGroup() ||
-					 scopeGroup.isStagingGroup()) &&
-					DDMTemplatePermission.containsAddTemplatePermission(
-						_themeDisplay.getPermissionChecker(),
-						_themeDisplay.getScopeGroupId(),
-						_ddmTemplate.getClassNameId(),
-						_ddmTemplate.getResourceClassNameId())) {
+							if ((!scopeGroup.hasLocalOrRemoteStagingGroup() ||
+								 scopeGroup.isStagingGroup()) &&
+								DDMTemplatePermission.
+									containsAddTemplatePermission(
+										_themeDisplay.getPermissionChecker(),
+										_themeDisplay.getScopeGroupId(),
+										_ddmTemplate.getClassNameId(),
+										_ddmTemplate.
+											getResourceClassNameId())) {
 
-					return true;
-				}
+								return true;
+							}
 
-				return false;
-			},
-			_getCopyDDMTemplateActionUnsafeConsumer()
-		).add(
-			() -> DDMTemplatePermission.contains(
-				_themeDisplay.getPermissionChecker(), _ddmTemplate,
-				ActionKeys.DELETE),
-			_getDeleteDDMTemplateActionUnsafeConsumer()
+							return false;
+						},
+						_getCopyDDMTemplateActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> DDMTemplatePermission.contains(
+							_themeDisplay.getPermissionChecker(), _ddmTemplate,
+							ActionKeys.PERMISSIONS),
+						_getPermissionsDDMTemplateActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> DDMTemplatePermission.contains(
+							_themeDisplay.getPermissionChecker(), _ddmTemplate,
+							ActionKeys.DELETE),
+						_getDeleteDDMTemplateActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
 		).build();
 	}
 

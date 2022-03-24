@@ -268,35 +268,62 @@ public class JournalArticleActionDropdownItemsProvider {
 			_article.getArticleId() + JournalPortlet.VERSION_SEPARATOR +
 				_article.getVersion();
 
-		return DropdownItemListBuilder.add(
-			() ->
-				JournalArticlePermission.contains(
-					_themeDisplay.getPermissionChecker(), _article,
-					ActionKeys.VIEW) &&
-				(previewContentArticleAction != null),
-			previewContentArticleAction
-		).add(
-			() -> JournalFolderPermission.contains(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(), _article.getFolderId(),
-				ActionKeys.ADD_ARTICLE),
-			_getAutoCopyArticleActionUnsafeConsumer()
-		).add(
-			() ->
-				JournalArticlePermission.contains(
-					_themeDisplay.getPermissionChecker(), _article,
-					ActionKeys.EXPIRE) &&
-				((_article.getStatus() == WorkflowConstants.STATUS_APPROVED) ||
-				 (_article.getStatus() == WorkflowConstants.STATUS_SCHEDULED)),
-			_getExpireArticleActionConsumer(
-				articleId, _themeDisplay.getURLCurrent())
-		).add(
-			_getCompareArticleVersionsActionUnsafeConsumer()
-		).add(
-			() -> JournalArticlePermission.contains(
-				_themeDisplay.getPermissionChecker(), _article,
-				ActionKeys.DELETE),
-			_getDeleteArticleAction(articleId, _themeDisplay.getURLCurrent())
+		return DropdownItemListBuilder.addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() ->
+							JournalArticlePermission.contains(
+								_themeDisplay.getPermissionChecker(), _article,
+								ActionKeys.VIEW) &&
+							(previewContentArticleAction != null),
+						previewContentArticleAction
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						_getCompareArticleVersionsActionUnsafeConsumer()
+					).add(
+						() ->
+							JournalArticlePermission.contains(
+								_themeDisplay.getPermissionChecker(), _article,
+								ActionKeys.EXPIRE) &&
+							((_article.getStatus() ==
+								WorkflowConstants.STATUS_APPROVED) ||
+							 (_article.getStatus() ==
+								 WorkflowConstants.STATUS_SCHEDULED)),
+						_getExpireArticleActionConsumer(
+							articleId, _themeDisplay.getURLCurrent())
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> JournalFolderPermission.contains(
+							_themeDisplay.getPermissionChecker(),
+							_themeDisplay.getScopeGroupId(),
+							_article.getFolderId(), ActionKeys.ADD_ARTICLE),
+						_getAutoCopyArticleActionUnsafeConsumer()
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
+		).addGroup(
+			dropdownGroupItem -> {
+				dropdownGroupItem.setDropdownItems(
+					DropdownItemListBuilder.add(
+						() -> JournalArticlePermission.contains(
+							_themeDisplay.getPermissionChecker(), _article,
+							ActionKeys.DELETE),
+						_getDeleteArticleAction(
+							articleId, _themeDisplay.getURLCurrent())
+					).build());
+				dropdownGroupItem.setSeparator(true);
+			}
 		).build();
 	}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.address.content.web.internal.portlet.template;
+package com.liferay.commerce.address.content.web.internal.portlet.display.template;
 
 import com.liferay.commerce.address.content.web.internal.display.context.CommerceAddressDisplayContext;
 import com.liferay.commerce.address.content.web.internal.portlet.CommerceAddressContentPortlet;

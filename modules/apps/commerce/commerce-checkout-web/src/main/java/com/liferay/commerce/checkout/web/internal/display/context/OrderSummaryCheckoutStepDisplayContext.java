@@ -95,8 +95,7 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		CommerceTermEntryLocalService commerceTermEntryLocalService,
 		CPInstanceHelper cpInstanceHelper,
 		HttpServletRequest httpServletRequest,
-		PercentageFormatter percentageFormatter,
-		Portal portal,
+		PercentageFormatter percentageFormatter, Portal portal,
 		PortletResourcePermission portletResourcePermission) {
 
 		_commerceChannelLocalService = commerceChannelLocalService;

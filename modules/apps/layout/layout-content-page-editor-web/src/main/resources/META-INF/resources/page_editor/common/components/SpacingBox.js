@@ -60,7 +60,7 @@ export default function SpacingBox({defaultValue, onChange, options, value}) {
 		button?.focus();
 	};
 
-	const handleKeyUp = (event) => {
+	const handleKeyDown = (event) => {
 		if (
 			(event.key === 'Enter' || event.key === ' ') &&
 			document.activeElement === ref.current
@@ -78,6 +78,8 @@ export default function SpacingBox({defaultValue, onChange, options, value}) {
 		) {
 			return;
 		}
+
+		event.preventDefault();
 
 		const {
 			position: currentPosition,
@@ -116,7 +118,7 @@ export default function SpacingBox({defaultValue, onChange, options, value}) {
 	return (
 		<div
 			className="page-editor__spacing-selector"
-			onKeyUp={handleKeyUp}
+			onKeyDownCapture={handleKeyDown}
 			ref={ref}
 			role="grid"
 		>
@@ -189,10 +191,7 @@ function SpacingSelectorButton({
 			}
 		>
 			<div ref={itemListRef}>
-				<ClayDropDown.ItemList
-					aria-labelledby={triggerId}
-					onKeyUp={(event) => event.stopPropagation()}
-				>
+				<ClayDropDown.ItemList aria-labelledby={triggerId}>
 					{options.map((option) => (
 						<ClayDropDown.Item
 							key={option.value}

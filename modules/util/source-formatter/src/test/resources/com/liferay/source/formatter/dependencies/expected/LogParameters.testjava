@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 /**
  * @author Qi Zhang
  */
-public class LogParametersCheck {
+public class LogParameters {
 
 	public void method() {
 		try {
@@ -48,7 +48,6 @@ public class LogParametersCheck {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		LogParametersCheck.class);
+	private static final Log _log = LogFactoryUtil.getLog(LogParameters.class);
 
 }

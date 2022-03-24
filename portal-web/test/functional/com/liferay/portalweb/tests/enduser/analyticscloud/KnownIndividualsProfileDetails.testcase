@@ -31,7 +31,8 @@ definition {
 				userEmailAddress = "user1@liferay.com",
 				userFirstName = "user1",
 				userLastName = "user1",
-				userScreenName = "user1");
+				userScreenName = "user1",
+				jobTitle = "lawyer");
 		}
 
 		task ("Connect the DXP to AC") {
@@ -208,7 +209,7 @@ definition {
 			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
-		task ("Go to the Individual > KnownIndividual > Details") {
+		task ("Go to the Individual > Known Individual > Details") {
 			ACNavigation.goToIndividuals();
 
 			ACIndividualsDashboard.goToKnownIndividualsTab();

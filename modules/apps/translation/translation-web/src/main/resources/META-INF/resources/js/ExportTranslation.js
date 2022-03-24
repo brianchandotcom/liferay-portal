@@ -27,9 +27,9 @@ import {addParams} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-const EXPORT_DEFAULT = 'default';
+const EXPORT_DEFAULT = 0;
 
-const EXPORT_ALL = 'all';
+const EXPORT_ALL = -1;
 
 const Experiences = ({
 	experiences,
@@ -147,7 +147,7 @@ const MultiplePagesExperiences = ({
 				</label>
 
 				<ClayRadioGroup
-					name={`${portletNamespace}exportExperience`}
+					name={`${portletNamespace}segmentsExperienceIds`}
 					onSelectedValueChange={onChangeExperience}
 					selectedValue={selectedExperienceValue}
 				>

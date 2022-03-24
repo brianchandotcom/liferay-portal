@@ -34,6 +34,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.asset.kernel.model.AssetRenderer" %><%@
 page import="com.liferay.asset.kernel.model.AssetVocabularyConstants" %><%@
 page import="com.liferay.commerce.constants.CPDefinitionInventoryConstants" %><%@
+page import="com.liferay.commerce.constants.CommercePriceConstants" %><%@
 page import="com.liferay.commerce.constants.CommerceWebKeys" %><%@
 page import="com.liferay.commerce.context.CommerceContext" %><%@
 page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
@@ -76,6 +77,7 @@ page import="com.liferay.commerce.product.exception.CPDefinitionProductTypeNameE
 page import="com.liferay.commerce.product.exception.CPDisplayLayoutEntryException" %><%@
 page import="com.liferay.commerce.product.exception.CPDisplayLayoutLayoutUuidException" %><%@
 page import="com.liferay.commerce.product.exception.CPInstanceJsonException" %><%@
+page import="com.liferay.commerce.product.exception.CPInstanceMaxPriceValueException" %><%@
 page import="com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUuidException" %><%@
 page import="com.liferay.commerce.product.exception.CPInstanceSkuException" %><%@
 page import="com.liferay.commerce.product.exception.DuplicateCPAttachmentFileEntryException" %><%@

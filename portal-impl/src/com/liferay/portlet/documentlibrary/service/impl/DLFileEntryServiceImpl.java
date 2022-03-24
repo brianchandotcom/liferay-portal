@@ -211,6 +211,23 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	}
 
 	@Override
+	public DLFileEntry fetchFileEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry =
+			dlFileEntryLocalService.fetchFileEntryByExternalReferenceCode(
+				groupId, externalReferenceCode);
+
+		if (dlFileEntry != null) {
+			_dlFileEntryModelResourcePermission.check(
+				getPermissionChecker(), dlFileEntry, ActionKeys.VIEW);
+		}
+
+		return dlFileEntry;
+	}
+
+	@Override
 	public DLFileEntry fetchFileEntryByImageId(long imageId)
 		throws PortalException {
 

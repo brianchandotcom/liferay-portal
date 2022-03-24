@@ -174,8 +174,8 @@ definition {
 		IFrame.closeFrame();
 
 		CommerceWidget.assertOptionFacetsCount(
-			optionName = "Package Quantity",
-			expectedLabels = "100");
+			expectedLabels = "100",
+			optionName = "Package Quantity");
 	}
 
 }

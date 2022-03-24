@@ -16,6 +16,8 @@ import {ClayModalProvider} from '@clayui/modal';
 import {HashRouter, Route, Routes} from 'react-router-dom';
 
 import Layout from './components/Layout/Layout';
+import Users from './pages/Manage/User';
+import UserManagement from './pages/Manage/User/User';
 import OutletBridge from './pages/OutletBridge';
 import Projects from './pages/Project';
 import Cases from './pages/Project/Cases';
@@ -47,8 +49,6 @@ import Subtasks from './pages/Testflow/Subtask';
 import TestflowArchived from './pages/Testflow/TestflowArchived';
 import TestflowOutlet from './pages/Testflow/TestflowOutlet';
 import TestFlowTasks from './pages/Testflow/TestflowTasks';
-import UserManagement from './pages/UserManagement';
-import UserList from './pages/UserManagement/UsersList';
 
 const TestrayRoute = () => (
 	<HashRouter>
@@ -154,9 +154,9 @@ const TestrayRoute = () => (
 					</Route>
 
 					<Route element={<OutletBridge />} path="manage">
-						<Route element={<UserManagement />} path="user" />
+						<Route element={<Users />} path="user" />
 
-						<Route element={<UserList />} path="userlist" />
+						<Route element={<UserManagement />} path="user/me" />
 					</Route>
 
 					<Route element={<TestflowOutlet />} path="testflow">

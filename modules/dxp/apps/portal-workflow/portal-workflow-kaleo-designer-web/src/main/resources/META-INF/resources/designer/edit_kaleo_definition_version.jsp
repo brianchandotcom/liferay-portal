@@ -663,18 +663,18 @@ String successMessageKey = KaleoDesignerPortletKeys.KALEO_DESIGNER + "requestPro
 
 									<c:choose>
 										<c:when test="<%= kaleoDefinitionVersion == null %>">
-											var titleComponent = Liferay.component('<portlet:namespace />title');
+											Liferay.componentReady('<portlet:namespace />title').then((titleComponent) => {
+												var titlePlaceholderInput = titleComponent.get('inputPlaceholder');
 
-											var titlePlaceholderInput = titleComponent.get('inputPlaceholder');
-
-											if (titlePlaceholderInput) {
-												titlePlaceholderInput.after('change', (event) => {
-													<portlet:namespace />kaleoDesigner.set(
-														'definitionName',
-														titleComponent.getValue()
-													);
-												});
-											}
+												if (titlePlaceholderInput) {
+													titlePlaceholderInput.after('change', (event) => {
+														<portlet:namespace />kaleoDesigner.set(
+															'definitionName',
+															titleComponent.getValue()
+														);
+													});
+												}
+											});
 										</c:when>
 									</c:choose>
 

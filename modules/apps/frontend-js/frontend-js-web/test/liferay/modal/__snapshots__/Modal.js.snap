@@ -34,6 +34,7 @@ exports[`Modal renders markup based on given configuration 1`] = `
             >
               <div
                 class="modal-title"
+                id="clay-modal-label-1"
               >
                 My Modal
               </div>

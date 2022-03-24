@@ -47,7 +47,7 @@ const ActivationStatusAnalyticsCloud = ({
 	] = useState(subscriptionGroupAnalyticsCloud?.activationStatus);
 
 	const onCloseSetupModal = async (isSuccess) => {
-		onClose(false);
+		onClose();
 
 		if (isSuccess) {
 			const getSubscriptionGroups = async (accountKey) => {

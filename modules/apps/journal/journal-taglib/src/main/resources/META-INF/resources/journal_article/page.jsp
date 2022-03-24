@@ -23,10 +23,12 @@ JournalArticle article = (JournalArticle)request.getAttribute("liferay-journal:j
 JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute("liferay-journal:journal-article:articleDisplay");
 boolean dataAnalyticsTrackingEnabled = GetterUtil.getBoolean(request.getAttribute("liferay-journal:journal-article:dataAnalyticsTrackingEnabled"));
 String wrapperCssClass = (String)request.getAttribute("liferay-journal:journal-article:wrapperCssClass");
+
+String mode = ParamUtil.getString(PortalUtil.getOriginalServletRequest(request), "p_l_mode", Constants.VIEW);
 %>
 
 <c:choose>
-	<c:when test="<%= (article != null) && article.isExpired() %>">
+	<c:when test="<%= (article != null) && article.isExpired() && Constants.EDIT.equals(mode) %>">
 		<div class="alert alert-warning">
 			<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-expired" />
 		</div>
@@ -37,20 +39,22 @@ String wrapperCssClass = (String)request.getAttribute("liferay-journal:journal-a
 		</div>
 	</c:when>
 	<c:otherwise>
-		<div class="journal-content-article <%= Validator.isNotNull(wrapperCssClass) ? wrapperCssClass : StringPool.BLANK %>" <%= dataAnalyticsTrackingEnabled ? String.format("data-analytics-asset-id=\"%s\" data-analytics-asset-title=\"%s\" data-analytics-asset-type=\"web-content\"", articleDisplay.getArticleId(), HtmlUtil.escapeAttribute(articleDisplay.getTitle())) : "" %>>
-			<c:if test='<%= GetterUtil.getBoolean((String)request.getAttribute("liferay-journal:journal-article:showTitle")) %>'>
-				<%= HtmlUtil.escape(articleDisplay.getTitle()) %>
-			</c:if>
+		<c:if test="<%= !article.isExpired() %>">
+			<div class="journal-content-article <%= Validator.isNotNull(wrapperCssClass) ? wrapperCssClass : StringPool.BLANK %>" <%= dataAnalyticsTrackingEnabled ? String.format("data-analytics-asset-id=\"%s\" data-analytics-asset-title=\"%s\" data-analytics-asset-type=\"web-content\"", articleDisplay.getArticleId(), HtmlUtil.escapeAttribute(articleDisplay.getTitle())) : "" %>>
+				<c:if test='<%= GetterUtil.getBoolean((String)request.getAttribute("liferay-journal:journal-article:showTitle")) %>'>
+					<%= HtmlUtil.escape(articleDisplay.getTitle()) %>
+				</c:if>
 
-			<%= articleDisplay.getContent() %>
-		</div>
+				<%= articleDisplay.getContent() %>
+			</div>
 
-		<%
-		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(JournalArticleDisplay.class.getName(), articleDisplay.getResourcePrimKey());
+			<%
+			List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(JournalArticleDisplay.class.getName(), articleDisplay.getResourcePrimKey());
 
-		PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
-		%>
+			PortalUtil.setPageKeywords(ListUtil.toString(assetTags, AssetTag.NAME_ACCESSOR), request);
+			%>
 
+		</c:if>
 	</c:otherwise>
 </c:choose>
 

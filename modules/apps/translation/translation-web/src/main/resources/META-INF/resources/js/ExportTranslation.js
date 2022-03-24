@@ -13,7 +13,13 @@
  */
 
 import ClayButton from '@clayui/button';
-import ClayForm, {ClayCheckbox, ClayInput, ClayRadio, ClayRadioGroup, ClaySelect} from '@clayui/form';
+import ClayForm, {
+	ClayCheckbox,
+	ClayInput,
+	ClayRadio,
+	ClayRadioGroup,
+	ClaySelect,
+} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
@@ -21,9 +27,9 @@ import {addParams} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
-const EXPORT_DEFAULT="default";
+const EXPORT_DEFAULT = 'default';
 
-const EXPORT_ALL="all";
+const EXPORT_ALL = 'all';
 
 const Experiences = ({
 	experiences,
@@ -377,7 +383,7 @@ const ExportTranslation = ({
 					onChangeExperience={onChangeExperience}
 					selectedExperiencesIds={selectedExperiencesIds}
 				/>
-			) }
+			)}
 
 			<ClayButton.Group spaced>
 				<ClayButton

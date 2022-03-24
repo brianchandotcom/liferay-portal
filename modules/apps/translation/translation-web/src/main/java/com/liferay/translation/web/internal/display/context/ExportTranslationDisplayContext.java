@@ -200,11 +200,11 @@ public class ExportTranslationDisplayContext {
 		).put(
 			"exportTranslationURL", _getExportTranslationURLString()
 		).put(
-			"pathModule", PortalUtil.getPathModule()
-		).put(
 			"multipleExperiences", true
 		).put(
 			"multiplePagesSelected", _classPKs.length > 1
+		).put(
+			"pathModule", PortalUtil.getPathModule()
 		).put(
 			"redirectURL", getRedirect()
 		).build();

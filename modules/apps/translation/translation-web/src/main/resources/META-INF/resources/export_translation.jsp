@@ -66,8 +66,8 @@ Map<String, Object> exportTranslationData = exportTranslationDisplayContext.getE
 				</div>
 
 				<c:choose>
-					<c:when test="<%= (boolean) exportTranslationData.get("multiplePagesSelected") %>">
-						<c:if test="<%= (boolean) exportTranslationData.get("multipleExperiences") %>">
+					<c:when test='<%= (boolean)exportTranslationData.get("multiplePagesSelected") %>'>
+						<c:if test='<%= (boolean)exportTranslationData.get("multipleExperiences") %>'>
 							<div class="form-group">
 								<label class="mb-2"><liferay-ui:message key="export-experiences" /></label>
 
@@ -99,6 +99,7 @@ Map<String, Object> exportTranslationData = exportTranslationDisplayContext.getE
 						</c:if>
 					</c:when>
 					<c:otherwise>
+
 						<%
 						List<Map<String, String>> experiences = exportTranslationDisplayContext.getExperiences();
 						%>
@@ -159,7 +160,6 @@ Map<String, Object> exportTranslationData = exportTranslationDisplayContext.getE
 						</c:if>
 					</c:otherwise>
 				</c:choose>
-
 
 				<div class="btn-group">
 					<div class="btn-group-item">

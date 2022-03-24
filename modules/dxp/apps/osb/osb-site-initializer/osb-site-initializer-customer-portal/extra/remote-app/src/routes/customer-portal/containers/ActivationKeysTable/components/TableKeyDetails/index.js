@@ -13,11 +13,12 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import getCurrentEndDate from '../../../../../../common/utils/getCurrentEndDate';
+import {PRODUCT_TYPES} from '../../../../utils/constants';
 import {
+	getEnvironmentType,
 	getFormatedProductName,
 	getInstanceSize,
 	getProductDescription,
-	getProductName,
 	getStatusActivationTag,
 	hasVirtualCluster,
 } from '../../utils/index';
@@ -25,7 +26,6 @@ import {
 const HOST_NAME = 'Host Name';
 const IP_ADDRESSES = 'IP Addresses';
 const MAC_ADDRESSES = 'Mac Addresses';
-const SUBSCRIPTION_IMAGE_FILE = 'dxp_icon.svg';
 
 const NO_EXPIRATION_DATE = 100;
 
@@ -48,6 +48,10 @@ const TableKeyDetails = ({
 		now.getFullYear() + NO_EXPIRATION_DATE
 	);
 
+	const formatedProductName = getFormatedProductName(
+		currentActivationKey?.productName
+	);
+
 	const handleExpiredDate =
 		new Date(currentActivationKey.expirationDate) >=
 		new Date(unlimitedLicenseDate)
@@ -62,6 +66,14 @@ const TableKeyDetails = ({
 
 	const handleCopyToClipboard = (value) => {
 		setValueToCopyToClipboard(value);
+	};
+
+	const getLogo = () => {
+		if (formatedProductName === PRODUCT_TYPES.portal) {
+			return 'portal_icon.svg';
+		}
+
+		return 'dxp_icon.svg';
 	};
 
 	return (
@@ -112,12 +124,10 @@ const TableKeyDetails = ({
 						<p className="align-items-center bg-brand-primary-lighten-5 cp-key-details-paragraph d-flex px-3 py-2 rounded">
 							<img
 								className="mr-2"
-								src={`${assetsPath}/assets/navigation-menu/${SUBSCRIPTION_IMAGE_FILE}`}
+								src={`${assetsPath}/assets/navigation-menu/${getLogo()}`}
 							/>
 
-							{getFormatedProductName(
-								currentActivationKey?.productName
-							)}
+							{formatedProductName}
 						</p>
 					</div>
 
@@ -169,7 +179,9 @@ const TableKeyDetails = ({
 				<div className="row">
 					<div className="col-2">
 						<p className="bg-brand-primary-lighten-5 cp-key-details-paragraph px-3 py-2 rounded">
-							{getProductName(currentActivationKey)}
+							{getEnvironmentType(
+								currentActivationKey.productName
+							)}
 						</p>
 					</div>
 
@@ -217,9 +229,11 @@ const TableKeyDetails = ({
 					})}
 				>
 					<div className="col-5">
-						<p className="text-neutral-8 text-paragraph-sm">
-							Instance Size
-						</p>
+						{!!currentActivationKey.sizing && (
+							<p className="text-neutral-8 text-paragraph-sm">
+								Instance Size
+							</p>
+						)}
 					</div>
 
 					{!hasVirtualClusterForActivationKeys && (
@@ -243,9 +257,11 @@ const TableKeyDetails = ({
 					})}
 				>
 					<div className="col-5">
-						<p className="bg-brand-primary-lighten-5 cp-key-details-paragraph px-3 py-2 rounded">
-							{instanceSizeFormated}
-						</p>
+						{!!currentActivationKey.sizing && (
+							<p className="bg-brand-primary-lighten-5 cp-key-details-paragraph px-3 py-2 rounded">
+								{instanceSizeFormated}
+							</p>
+						)}
 					</div>
 
 					{!hasVirtualClusterForActivationKeys && (

@@ -10,5 +10,5 @@
  */
 
 export function getInstanceSize(instaceSize) {
-	return instaceSize.replace('Sizing ', '');
+	return instaceSize?.replace('Sizing ', '');
 }

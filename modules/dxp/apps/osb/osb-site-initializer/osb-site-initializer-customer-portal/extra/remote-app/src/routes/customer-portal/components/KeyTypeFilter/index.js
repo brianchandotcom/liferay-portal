@@ -108,22 +108,23 @@ const KeyTypeFilter = ({
 				/>
 			</div>
 
-			<div
-				className={classNames('py-2 px-3', {
-					'bg-brand-primary-lighten-5': clusterChecked,
-				})}
-			>
-				<ClayCheckbox
-					checked={clusterChecked}
-					label="Virtual Cluster"
-					onChange={() =>
-						setClusterChecked(
-							(previousClusterChecked) => !previousClusterChecked
-						)
-					}
-				/>
+			{(hasVirtualCluster || hasCluster) && (
+				<div
+					className={classNames('py-2 px-3', {
+						'bg-brand-primary-lighten-5': clusterChecked,
+					})}
+				>
+					<ClayCheckbox
+						checked={clusterChecked}
+						label="Virtual Cluster"
+						onChange={() =>
+							setClusterChecked(
+								(previousClusterChecked) =>
+									!previousClusterChecked
+							)
+						}
+					/>
 
-				{(hasVirtualCluster || hasCluster) && (
 					<div className="d-flex ml-4">
 						<div className="mr-2">
 							<ClayInput
@@ -176,17 +177,17 @@ const KeyTypeFilter = ({
 							)}
 						</div>
 					</div>
-				)}
 
-				{errorMessage && (
-					<ClayAlert
-						className="mx-0 p-2 text-paragraph-xs"
-						displayType="danger"
-					>
-						{errorMessage}
-					</ClayAlert>
-				)}
-			</div>
+					{errorMessage && (
+						<ClayAlert
+							className="mx-0 p-2 text-paragraph-xs"
+							displayType="danger"
+						>
+							{errorMessage}
+						</ClayAlert>
+					)}
+				</div>
+			)}
 
 			<div className="mb-3 mt-2 mx-3">
 				<ClayButton

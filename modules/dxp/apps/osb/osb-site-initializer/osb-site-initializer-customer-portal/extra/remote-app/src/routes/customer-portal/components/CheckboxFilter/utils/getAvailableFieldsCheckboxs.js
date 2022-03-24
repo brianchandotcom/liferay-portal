@@ -14,7 +14,7 @@ export default function getAvailableFieldsCheckboxs(items, getItem) {
 		?.reduce((accumulatorItems, currentItem) => {
 			const item = getItem(currentItem);
 
-			if (accumulatorItems.includes(item)) {
+			if (!item || accumulatorItems.includes(item)) {
 				return accumulatorItems;
 			}
 

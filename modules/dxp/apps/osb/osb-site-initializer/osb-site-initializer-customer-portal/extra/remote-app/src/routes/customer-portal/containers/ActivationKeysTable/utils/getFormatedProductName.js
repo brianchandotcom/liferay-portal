@@ -10,7 +10,5 @@
  */
 
 export function getFormatedProductName(productName) {
-	const productNameFormated = productName?.slice(0, 4);
-
-	return productNameFormated;
+	return productName?.split(' ')[0];
 }

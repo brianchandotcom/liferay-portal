@@ -175,15 +175,15 @@ public class ResponsiveLayoutStructureUtil {
 		}
 
 		for (ViewportSize viewportSize : _sortedViewportSizes) {
-			viewportConfigurationJSONObject =
-				viewportConfigurations.getOrDefault(
-					viewportSize.getViewportSizeId(),
-					JSONFactoryUtil.createJSONObject());
+			if (viewportSize.getOrder() < currentViewportSize.getOrder()) {
+				viewportConfigurationJSONObject =
+					viewportConfigurations.getOrDefault(
+						viewportSize.getViewportSizeId(),
+						JSONFactoryUtil.createJSONObject());
 
-			if (viewportConfigurationJSONObject.has(propertyName) &&
-				(viewportSize.getOrder() < currentViewportSize.getOrder())) {
-
-				return viewportConfigurationJSONObject.get(propertyName);
+				if (viewportConfigurationJSONObject.has(propertyName)) {
+					return viewportConfigurationJSONObject.get(propertyName);
+				}
 			}
 		}
 

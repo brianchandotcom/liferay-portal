@@ -40,6 +40,8 @@ definition {
 			displayFrequencies = "disable",
 			portletName = "Specification Facet");
 
+		IFrame.closeFrame();
+
 		for (var facetValueName : list "${facetValueNameList}") {
 			AssertElementNotPresent(
 				facetValueName = "${facetValueName}",
@@ -61,6 +63,8 @@ definition {
 			displayTemplate = "Cloud Layout",
 			portletName = "Specification Facet");
 
+		IFrame.closeFrame();
+
 		for (var tagName : list "${warrantyTagNameList}") {
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_CLOUD_LAYOUT",
@@ -77,6 +81,8 @@ definition {
 			displayTemplate = "Compact Layout",
 			portletName = "Specification Facet");
 
+		IFrame.closeFrame();
+
 		for (var tagName : list "${warrantyTagNameList}") {
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
@@ -92,6 +98,8 @@ definition {
 		CommerceWidget.updateFacetConfiguration(
 			displayTemplate = "Label Layout",
 			portletName = "Specification Facet");
+
+		IFrame.closeFrame();
 
 		for (var tagName : list "${warrantyTagNameList}") {
 			AssertElementPresent(
@@ -118,6 +126,8 @@ definition {
 		CommerceWidget.updateFacetConfiguration(
 			frequencyThreshold = "30",
 			portletName = "Specification Facet");
+
+		IFrame.closeFrame();
 
 		AssertElementPresent(
 			key_facetLabel = "1 Year Unlimited Mileage Warranty",
@@ -177,6 +187,8 @@ definition {
 		AssertElementPresent(
 			key_fieldName = "frequencyThreshold",
 			locator1 = "FormFields#TEXT_FIELD");
+
+		IFrame.closeFrame();
 	}
 
 	test View100Terms {

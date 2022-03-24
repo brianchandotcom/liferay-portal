@@ -40,6 +40,8 @@ definition {
 			displayFrequencies = "disable",
 			portletName = "Option Facet");
 
+		IFrame.closeFrame();
+
 		for (var facetValueName : list "${facetValueNameList}") {
 			AssertElementNotPresent(
 				facetValueName = "${facetValueName}",
@@ -60,6 +62,8 @@ definition {
 			displayTemplate = "Cloud Layout",
 			portletName = "Option Facet");
 
+		IFrame.closeFrame();
+
 		for (var tagName : list "${packageQuantityTagNameList}") {
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_CLOUD_LAYOUT",
@@ -70,6 +74,8 @@ definition {
 			displayTemplate = "Compact Layout",
 			portletName = "Option Facet");
 
+		IFrame.closeFrame();
+
 		for (var tagName : list "${packageQuantityTagNameList}") {
 			AssertElementPresent(
 				locator1 = "CommerceWidget#TAG_FACET_COMPACT_LAYOUT",
@@ -79,6 +85,8 @@ definition {
 		CommerceWidget.updateFacetConfiguration(
 			displayTemplate = "Label Layout",
 			portletName = "Option Facet");
+
+		IFrame.closeFrame();
 
 		for (var tagName : list "${packageQuantityTagNameList}") {
 			AssertElementPresent(
@@ -99,6 +107,8 @@ definition {
 		CommerceWidget.updateFacetConfiguration(
 			frequencyThreshold = "2",
 			portletName = "Option Facet");
+
+		IFrame.closeFrame();
 
 		AssertElementPresent(
 			key_facetLabel = "48",
@@ -143,8 +153,6 @@ definition {
 			portletName = "Option Facet",
 			portletOption = "Configuration");
 
-		IFrame.selectModalFrame();
-
 		AssertElementPresent(
 			key_navItem = "Setup",
 			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
@@ -158,6 +166,8 @@ definition {
 		AssertElementPresent(
 			key_fieldName = "frequencyThreshold",
 			locator1 = "FormFields#TEXT_FIELD");
+
+		IFrame.closeFrame();
 	}
 
 	test View100Terms {

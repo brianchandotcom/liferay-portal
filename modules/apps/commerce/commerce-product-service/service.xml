@@ -1073,6 +1073,7 @@
 		<exception>CPOptionKey</exception>
 		<exception>CPOptionSKUContributor</exception>
 		<exception>CPOptionValueKey</exception>
+		<exception>CPPriceMaxValue</exception>
 		<exception>CPSpecificationOptionKey</exception>
 		<exception>CPSpecificationOptionTitle</exception>
 		<exception>CPTaxCategoryName</exception>

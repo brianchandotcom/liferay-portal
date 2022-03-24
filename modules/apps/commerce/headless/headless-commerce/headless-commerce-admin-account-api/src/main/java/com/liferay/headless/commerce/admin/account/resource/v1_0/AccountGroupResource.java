@@ -92,6 +92,15 @@ public interface AccountGroupResource {
 	public Response patchAccountGroup(Long id, AccountGroup accountGroup)
 		throws Exception;
 
+	public Page<AccountGroup>
+			getAccountByExternalReferenceCodeAccountGroupsPage(
+				String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
+	public Page<AccountGroup> getAccountIdAccountGroupsPage(
+			Long id, Pagination pagination)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

@@ -225,13 +225,14 @@ public class CommerceAccountGroupLocalServiceImpl
 
 	@Override
 	public List<CommerceAccountGroup>
-		getCommerceAccountGroupsByCommerceAccountId(long commerceAccountId) {
+		getCommerceAccountGroupsByCommerceAccountId(
+			long commerceAccountId, int start, int end) {
 
 		List<CommerceAccountGroupCommerceAccountRel>
 			commerceAccountGroupCommerceAccountRels =
 				commerceAccountGroupCommerceAccountRelLocalService.
-					getCommerceAccountGroupCommerceAccountRels(
-						commerceAccountId);
+					getCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
+						commerceAccountId, start, end);
 
 		if (commerceAccountGroupCommerceAccountRels.isEmpty()) {
 			return new ArrayList<>();
@@ -248,6 +249,15 @@ public class CommerceAccountGroupLocalServiceImpl
 			_accountGroupLocalService.getAccountGroupsByAccountGroupId(
 				commerceAccountGroupIds),
 			CommerceAccountGroupImpl::fromAccountGroup);
+	}
+
+	@Override
+	public int getCommerceAccountGroupsByCommerceAccountIdCount(
+		long commerceAccountId) {
+
+		return commerceAccountGroupCommerceAccountRelLocalService.
+			getCommerceAccountGroupCommerceAccountRelsByCommerceAccountIdCount(
+				commerceAccountId);
 	}
 
 	@Override

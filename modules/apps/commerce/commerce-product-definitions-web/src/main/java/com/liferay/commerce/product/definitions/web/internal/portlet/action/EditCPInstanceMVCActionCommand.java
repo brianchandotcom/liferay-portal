@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.definitions.web.internal.portlet.action;
 
+import com.liferay.commerce.exception.MaxPriceValueException;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -124,6 +125,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				throwable instanceof
 					CPInstanceReplacementCPInstanceUuidException ||
 				throwable instanceof CPInstanceSkuException ||
+				throwable instanceof MaxPriceValueException ||
 				throwable instanceof
 					NoSuchSkuContributorCPDefinitionOptionRelException) {
 
@@ -434,6 +436,15 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "promoPrice", BigDecimal.ZERO);
 		BigDecimal cost = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "cost", BigDecimal.ZERO);
+
+		BigDecimal maxValue = BigDecimal.valueOf(999999999.99);
+
+		if ((price.compareTo(maxValue) > 0) ||
+			(promoPrice.compareTo(maxValue) > 0) ||
+			(cost.compareTo(maxValue) > 0)) {
+
+			throw new MaxPriceValueException();
+		}
 
 		cpInstance = _cpInstanceService.updatePricingInfo(
 			cpInstance.getCPInstanceId(), price, promoPrice, cost,

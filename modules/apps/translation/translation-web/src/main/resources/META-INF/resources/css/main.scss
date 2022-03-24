@@ -167,11 +167,16 @@ $productMenuWidth: 320px;
 	}
 
 	&-export {
-		.custom-radio .form-text {
-			font-weight: normal;
-			margin-bottom: 1rem;
-			margin-top: 0.25rem;
-			padding-left: 1.5rem;
+		.custom-radio {
+			.custom-control {
+				margin-bottom: 0;
+			}
+
+			.form-text {
+				font-weight: normal;
+				margin-bottom: 1rem;
+				padding-left: 1.5rem;
+			}
 		}
 
 		.translation-experiences-wrapper {

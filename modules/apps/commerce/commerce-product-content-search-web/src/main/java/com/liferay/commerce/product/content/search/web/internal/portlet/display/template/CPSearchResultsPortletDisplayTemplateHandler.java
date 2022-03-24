@@ -12,11 +12,16 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.search.web.internal.portlet.template;
+package com.liferay.commerce.product.content.search.web.internal.portlet.display.template;
 
+import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetDisplayContext;
-import com.liferay.commerce.product.content.search.web.internal.display.context.CPSpecificationOptionsSearchFacetTermDisplayContext;
+import com.liferay.commerce.product.content.search.web.internal.display.context.CPSearchResultsDisplayContext;
+import com.liferay.commerce.product.content.search.web.internal.portlet.CPSearchResultsPortlet;
+import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPDefinitionService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -31,42 +36,44 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Crescenzo Rega
+ * @author Alessio Antonio Rendina
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.web.internal.category.facet.configuration.SearchFacetsWebTemplateConfiguration",
-	configurationPolicy = ConfigurationPolicy.OPTIONAL, enabled = false,
-	immediate = true,
-	property = "javax.portlet.name=" + CPPortletKeys.CP_SPECIFICATION_OPTION_FACETS,
+	enabled = false, immediate = true,
+	property = "javax.portlet.name=" + CPPortletKeys.CP_SEARCH_RESULTS,
 	service = TemplateHandler.class
 )
-public class CPSpecificationOptionFacetsPortletDisplayTemplateHandler
+public class CPSearchResultsPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
 	@Override
 	public String getClassName() {
-		return CPSpecificationOptionsSearchFacetTermDisplayContext.class.
-			getName();
+		return CPSearchResultsPortlet.class.getName();
 	}
 
 	@Override
 	public String getName(Locale locale) {
+		StringBundler sb = new StringBundler(3);
+
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		String portletTitle = _portal.getPortletTitle(
-			CPPortletKeys.CP_SPECIFICATION_OPTION_FACETS, resourceBundle);
+		sb.append(
+			_portal.getPortletTitle(
+				CPPortletKeys.CP_SEARCH_RESULTS, resourceBundle));
 
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		sb.append(StringPool.SPACE);
+		sb.append(LanguageUtil.get(locale, "template"));
+
+		return sb.toString();
 	}
 
 	@Override
 	public String getResourceName() {
-		return CPPortletKeys.CP_SPECIFICATION_OPTION_FACETS;
+		return CPPortletKeys.CP_SEARCH_RESULTS;
 	}
 
 	@Override
@@ -83,31 +90,27 @@ public class CPSpecificationOptionFacetsPortletDisplayTemplateHandler
 		templateVariableGroup.empty();
 
 		templateVariableGroup.addVariable(
-			"cp-specification-option-facet-display-context",
-			CPSpecificationOptionsSearchFacetDisplayContext.class,
-			"cpSpecificationOptionsSearchFacetDisplayContext");
-		templateVariableGroup.addVariable(
-			"term-frequency", Integer.class,
-			PortletDisplayTemplateConstants.ENTRY, "getFrequency()");
-		templateVariableGroup.addVariable(
-			"term-name", String.class, PortletDisplayTemplateConstants.ENTRY,
-			"getDisplayName()");
+			"cp-search-results-display-context",
+			CPSearchResultsDisplayContext.class,
+			"cpSearchResultsDisplayContext");
 		templateVariableGroup.addCollectionVariable(
-			"terms", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"term", CPSpecificationOptionsSearchFacetTermDisplayContext.class,
-			PortletDisplayTemplateConstants.ENTRY, "getDisplayName()");
+			"cp-catalog-entries", List.class,
+			PortletDisplayTemplateConstants.ENTRIES, "cp-catalog-entry",
+			CPCatalogEntry.class, "curCPCatalogEntry", "CPDefinitionId");
 
-		TemplateVariableGroup
-			cpSpecificationOptionsServicesTemplateVariableGroup =
-				new TemplateVariableGroup(
-					"category-services", getRestrictedVariables(language));
+		TemplateVariableGroup cpDefinitionsServicesTemplateVariableGroup =
+			new TemplateVariableGroup(
+				"cp-definition-services", getRestrictedVariables(language));
 
-		cpSpecificationOptionsServicesTemplateVariableGroup.
-			setAutocompleteEnabled(false);
+		cpDefinitionsServicesTemplateVariableGroup.setAutocompleteEnabled(
+			false);
+
+		cpDefinitionsServicesTemplateVariableGroup.addServiceLocatorVariables(
+			CPDefinitionLocalService.class, CPDefinitionService.class);
 
 		templateVariableGroups.put(
-			cpSpecificationOptionsServicesTemplateVariableGroup.getLabel(),
-			cpSpecificationOptionsServicesTemplateVariableGroup);
+			cpDefinitionsServicesTemplateVariableGroup.getLabel(),
+			cpDefinitionsServicesTemplateVariableGroup);
 
 		return templateVariableGroups;
 	}
@@ -115,7 +118,7 @@ public class CPSpecificationOptionFacetsPortletDisplayTemplateHandler
 	@Override
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/commerce/product/content/search/web/internal" +
-			"/portlet/template/dependencies/specification_option_facets" +
+			"/portlet/template/dependencies/search_results" +
 				"/portlet-display-templates.xml";
 	}
 

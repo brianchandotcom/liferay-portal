@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -46,13 +47,11 @@ import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.util.HttpImpl;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
-import java.io.IOException;
-
 import java.util.Collections;
+import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -219,15 +218,18 @@ public class SXPBlueprintSearchRequestContributorTest {
 			).build());
 	}
 
-	private Http _getHttp(String urlResponse) throws Exception {
-		return new HttpImpl() {
+	private Http _getHttp(String urlResponse) {
+		return (Http)ProxyUtil.newProxyInstance(
+			Http.class.getClassLoader(), new Class<?>[] {Http.class},
+			(proxy, method, args) -> {
+				if (!Objects.equals("URLtoString", method.getName()) ||
+					(args.length != 1) || !(args[0] instanceof String)) {
 
-			@Override
-			public String URLtoString(String url) throws IOException {
+					return method.invoke(_http, args);
+				}
+
 				return urlResponse;
-			}
-
-		};
+			});
 	}
 
 	private void _test(

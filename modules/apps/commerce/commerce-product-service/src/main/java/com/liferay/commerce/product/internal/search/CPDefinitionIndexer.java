@@ -422,36 +422,19 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 		for (String languageId : languageIds) {
 			String description = cpDefinition.getDescription(languageId);
-			String name = cpDefinition.getName(languageId);
-			String urlTitle = languageIdToUrlTitleMap.get(languageId);
 			String metaDescription = cpDefinition.getMetaDescription(
 				languageId);
 			String metaKeywords = cpDefinition.getMetaKeywords(languageId);
 			String metaTitle = cpDefinition.getMetaTitle(languageId);
+			String name = cpDefinition.getName(languageId);
 			String shortDescription = cpDefinition.getShortDescription(
 				languageId);
+			String urlTitle = languageIdToUrlTitleMap.get(languageId);
 
-			if (languageId.equals(cpDefinitionDefaultLanguageId)) {
-				document.addText(Field.DESCRIPTION, description);
-				document.addText(Field.NAME, name);
-				document.addText(Field.URL, urlTitle);
-				document.addText(CPField.META_DESCRIPTION, metaDescription);
-				document.addText(CPField.META_KEYWORDS, metaKeywords);
-				document.addText(CPField.META_TITLE, metaTitle);
-				document.addText(CPField.SHORT_DESCRIPTION, shortDescription);
-				document.addText("defaultLanguageId", languageId);
-			}
-
-			document.addText(
-				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
-				name);
 			document.addText(
 				LocalizationUtil.getLocalizedName(
 					Field.DESCRIPTION, languageId),
 				description);
-			document.addText(
-				LocalizationUtil.getLocalizedName(Field.URL, languageId),
-				urlTitle);
 			document.addText(
 				LocalizationUtil.getLocalizedName(
 					CPField.META_DESCRIPTION, languageId),
@@ -465,24 +448,40 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 					CPField.META_TITLE, languageId),
 				metaTitle);
 			document.addText(
+				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
+				name);
+			document.addText(
 				LocalizationUtil.getLocalizedName(
 					CPField.SHORT_DESCRIPTION, languageId),
 				shortDescription);
+			document.addText(
+				LocalizationUtil.getLocalizedName(Field.URL, languageId),
+				urlTitle);
 
 			document.addText(Field.CONTENT, description);
 		}
 
-		document.addText(
-			Field.NAME, cpDefinition.getName(cpDefinitionDefaultLanguageId));
+		document.addText("defaultLanguageId", cpDefinitionDefaultLanguageId);
 		document.addText(
 			Field.DESCRIPTION,
 			cpDefinition.getDescription(cpDefinitionDefaultLanguageId));
 		document.addText(
-			Field.URL,
-			languageIdToUrlTitleMap.get(cpDefinitionDefaultLanguageId));
+			CPField.META_DESCRIPTION,
+			cpDefinition.getMetaDescription(cpDefinitionDefaultLanguageId));
+		document.addText(
+			CPField.META_KEYWORDS,
+			cpDefinition.getMetaKeywords(cpDefinitionDefaultLanguageId));
+		document.addText(
+			CPField.META_TITLE,
+			cpDefinition.getMetaTitle(cpDefinitionDefaultLanguageId));
+		document.addText(
+			Field.NAME, cpDefinition.getName(cpDefinitionDefaultLanguageId));
 		document.addText(
 			CPField.SHORT_DESCRIPTION,
 			cpDefinition.getShortDescription(cpDefinitionDefaultLanguageId));
+		document.addText(
+			Field.URL,
+			languageIdToUrlTitleMap.get(cpDefinitionDefaultLanguageId));
 
 		List<Long> commerceChannelGroupIds = new ArrayList<>();
 

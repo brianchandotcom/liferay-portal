@@ -26,6 +26,7 @@ boolean discountDiscovery = BeanParamUtil.getBoolean(commerceTierPriceEntry, req
 
 <aui:input label="tier-price" name="price" suffix="<%= HtmlUtil.escape(commerceCurrency.getCode()) %>" type="text" value="<%= commerceCurrency.round(price) %>">
 	<aui:validator name="number" />
+	<aui:validator name="max">999999999.99</aui:validator>
 </aui:input>
 
 <c:if test="<%= commercePriceEntry.isBulkPricing() %>">

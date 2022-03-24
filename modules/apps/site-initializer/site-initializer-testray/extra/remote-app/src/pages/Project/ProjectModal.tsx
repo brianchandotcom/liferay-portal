@@ -101,15 +101,13 @@ const ProjectModal: React.FC<NewProjectProps> = ({
 			if (form.id) {
 				variables.projectId = form.id;
 
-				onUpdateProject({variables});
-			}
-			else {
+				await onUpdateProject({variables});
+			} else {
 				await onCreateProject({variables});
 			}
 
 			onSave();
-		}
-		catch (error) {
+		} catch (error) {
 			onError(error);
 		}
 	};

@@ -88,6 +88,7 @@ export default {
 	'edit-category': 'Edit Category',
 	'edit-option': 'Edit Option',
 	'edit-project': 'Edit Project',
+	'edit-user-account': 'Edit User Account',
 	'email-address': 'Email Address',
 	'enter-the-case-name': 'Enter the Case Name',
 	'environment': 'Environment',

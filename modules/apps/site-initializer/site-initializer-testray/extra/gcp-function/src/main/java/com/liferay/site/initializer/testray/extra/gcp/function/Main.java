@@ -23,6 +23,7 @@ import com.google.cloud.storage.StorageOptions;
 import com.liferay.petra.http.invoker.HttpInvoker;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.site.initializer.testray.extra.gcp.function.constants.TestrayConstants;
 
 import java.io.File;
 import java.io.InputStream;
@@ -424,6 +425,46 @@ public class Main {
 		return String.valueOf(testrayFactorsString.hashCode());
 	}
 
+	private long _getTestrayRunId(
+			Element element, Map<String, String> propertiesMap,
+			long testrayBuildId, String testrayRunName)
+		throws Exception {
+
+		long testrayRunId = _getObjectEntryId(testrayRunName, "runs");
+
+		if (testrayRunId != 0) {
+			return testrayRunId;
+		}
+
+		testrayRunId = _postObjectEntry(
+			HashMapBuilder.put(
+				"externalReferencePK", propertiesMap.get("testray.run.id")
+			).put(
+				"externalReferenceType",
+				String.valueOf(
+					TestrayConstants.TESTRAY_RUN_EXTERNAL_REFERENCE_TYPE_POSHI)
+			).put(
+				"jenkinsJobKey", propertiesMap.get("jenkins.job.id")
+			).put(
+				"name", testrayRunName
+			).put(
+				"r_buildToRuns_c_buildId", String.valueOf(testrayBuildId)
+			).build(),
+			testrayRunName, "runs");
+
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put(
+			"environmentHash",
+			_getTestrayRunEnvironmentHash(element, testrayRunId));
+
+		_invoke(
+			jsonObject.toString(), null, HttpInvoker.HttpMethod.PATCH,
+			"runs/" + testrayRunId, null);
+
+		return testrayRunId;
+	}
+
 	private HttpInvoker.HttpResponse _invoke(
 			String body, Map<String, String> headers,
 			HttpInvoker.HttpMethod httpMethod, String objectDefinitionShortName,
@@ -537,7 +578,13 @@ public class Main {
 
 		String testrayBuildName = propertiesMap.get("testray.build.name");
 
-		_getTestrayBuildId(propertiesMap, testrayBuildName, testrayProjectId);
+		long testrayBuildId = _getTestrayBuildId(
+			propertiesMap, testrayBuildName, testrayProjectId);
+
+		String testrayRunName = propertiesMap.get("testray.run.id");
+
+		_getTestrayRunId(
+			element, propertiesMap, testrayBuildId, testrayRunName);
 	}
 
 	private final String _liferayLogin;

@@ -28,6 +28,8 @@ import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -128,17 +130,20 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 					resourcePrimKey);
 
 				if (rootFolder == null) {
-					throw new PortletDataException(
-						StringBundler.concat(
-							"KB Display portlet with ID ",
-							portletDataContext.getPortletId(),
-							" refers to an inexistent root folder: ",
-							resourcePrimKey));
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"KB Display portlet with ID ",
+								portletDataContext.getPortletId(),
+								" refers to an inexistent root folder: ",
+								resourcePrimKey));
+					}
 				}
-
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, portletDataContext.getPortletId(),
-					rootFolder);
+				else {
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
+						portletDataContext, portletDataContext.getPortletId(),
+						rootFolder);
+				}
 			}
 		}
 
@@ -220,6 +225,9 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 
 		_kbFolderLocalService = kbFolderLocalService;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KBDisplayExportImportPortletPreferencesProcessor.class);
 
 	@Reference(target = "(name=ReferencedStagedModelImporter)")
 	private Capability _capability;

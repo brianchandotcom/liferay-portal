@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.web.internal.portlet.template;
+package com.liferay.commerce.product.content.web.internal.portlet.display.template;
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
-import com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentMiniDisplayContext;
-import com.liferay.commerce.product.content.web.internal.portlet.CPCompareContentMiniPortlet;
+import com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentDisplayContext;
+import com.liferay.commerce.product.content.web.internal.portlet.CPCompareContentPortlet;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -42,15 +42,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "javax.portlet.name=" + CPPortletKeys.CP_COMPARE_CONTENT_MINI_WEB,
+	property = "javax.portlet.name=" + CPPortletKeys.CP_COMPARE_CONTENT_WEB,
 	service = TemplateHandler.class
 )
-public class CPCompareContentMiniPortletDisplayTemplateHandler
+public class CPCompareContentPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
 	@Override
 	public String getClassName() {
-		return CPCompareContentMiniPortlet.class.getName();
+		return CPCompareContentPortlet.class.getName();
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class CPCompareContentMiniPortletDisplayTemplateHandler
 
 		sb.append(
 			_portal.getPortletTitle(
-				CPPortletKeys.CP_COMPARE_CONTENT_MINI_WEB, resourceBundle));
+				CPPortletKeys.CP_COMPARE_CONTENT_WEB, resourceBundle));
 
 		sb.append(StringPool.SPACE);
 		sb.append(LanguageUtil.get(locale, "template"));
@@ -72,7 +72,7 @@ public class CPCompareContentMiniPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return CPPortletKeys.CP_COMPARE_CONTENT_MINI_WEB;
+		return CPPortletKeys.CP_COMPARE_CONTENT_WEB;
 	}
 
 	@Override
@@ -93,9 +93,9 @@ public class CPCompareContentMiniPortletDisplayTemplateHandler
 			PortletDisplayTemplateConstants.ENTRIES, "cp-catalog-entry",
 			CPCatalogEntry.class, "curCPCatalogEntry", "CPDefinitionId");
 		templateVariableGroup.addVariable(
-			"cp-compare-content-mini-display-context",
-			CPCompareContentMiniDisplayContext.class,
-			"cpCompareContentMiniDisplayContext");
+			"cp-compare-content-display-context",
+			CPCompareContentDisplayContext.class,
+			"cpCompareContentDisplayContext");
 
 		TemplateVariableGroup cpDefinitionsServicesTemplateVariableGroup =
 			new TemplateVariableGroup(

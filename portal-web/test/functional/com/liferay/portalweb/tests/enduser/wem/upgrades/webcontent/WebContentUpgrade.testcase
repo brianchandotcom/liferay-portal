@@ -1103,6 +1103,22 @@ definition {
 			webContentTitle = "WC WebContent Title");
 	}
 
+	@description = "This is a use case for LPS-147234. View web content with image field after upgrade from 7.1.10 GA1."
+	@priority = "4"
+	test ViewWebContentWithImageArchive7110 {
+		property data.archive.type = "data-archive-web-content-with-image";
+		property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.version = "7.1.10";
+
+		task ("View image is shown in field after upgrade") {
+			WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+			WebContentUpgrade.viewWithStructureCP(
+				webContentImage = "Document_2.png",
+				webContentTitle = "Web Content Title");
+		}
+	}
+
 	@description = "This is a use case for LPS-98619."
 	@priority = "3"
 	test ViewWebContentWithImageArchive70106 {

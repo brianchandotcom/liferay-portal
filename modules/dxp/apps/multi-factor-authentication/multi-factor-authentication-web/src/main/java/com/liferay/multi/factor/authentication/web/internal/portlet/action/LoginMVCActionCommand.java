@@ -97,23 +97,32 @@ public class LoginMVCActionCommand extends BaseMVCActionCommand {
 		String password = ParamUtil.getString(actionRequest, "password");
 
 		if (!Validator.isBlank(login) && !Validator.isBlank(password)) {
-			HttpServletRequest httpServletRequest =
-				_portal.getOriginalServletRequest(
-					_portal.getHttpServletRequest(actionRequest));
+			try {
+				HttpServletRequest httpServletRequest =
+					_portal.getOriginalServletRequest(
+						_portal.getHttpServletRequest(actionRequest));
 
-			long userId =
-				AuthenticatedSessionManagerUtil.getAuthenticatedUserId(
-					httpServletRequest, login, password, null);
+				long userId =
+					AuthenticatedSessionManagerUtil.getAuthenticatedUserId(
+						httpServletRequest, login, password, null);
 
-			if (_mfaPolicy.isSatisfied(companyId, httpServletRequest, userId)) {
-				_loginMVCActionCommand.processAction(
-					actionRequest, actionResponse);
+				if (_mfaPolicy.isSatisfied(
+						companyId, httpServletRequest, userId)) {
 
-				return;
+					_loginMVCActionCommand.processAction(
+						actionRequest, actionResponse);
+
+					return;
+				}
+
+				if (userId > 0) {
+					_redirectToVerify(actionRequest, actionResponse, userId);
+				}
 			}
+			catch (Exception exception) {
+				hideDefaultErrorMessage(actionRequest);
 
-			if (userId > 0) {
-				_redirectToVerify(actionRequest, actionResponse, userId);
+				throw exception;
 			}
 		}
 	}

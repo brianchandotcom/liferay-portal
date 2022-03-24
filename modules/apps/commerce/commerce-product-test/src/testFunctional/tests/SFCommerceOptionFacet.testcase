@@ -175,7 +175,7 @@ definition {
 
 		CommerceWidget.assertOptionFacetsCount(
 			optionName = "Package Quantity",
-			value = "100");
+			expectedLabels = "100");
 	}
 
 }

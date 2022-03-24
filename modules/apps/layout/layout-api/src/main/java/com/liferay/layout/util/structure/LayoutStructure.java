@@ -728,6 +728,12 @@ public class LayoutStructure {
 
 		columnLayoutStructureItem.setSize(size);
 
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-119551"))) {
+			columnLayoutStructureItem.setViewportConfiguration(
+				ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId(),
+				JSONUtil.put("size", 12));
+		}
+
 		_updateLayoutStructure(columnLayoutStructureItem, position);
 	}
 

@@ -191,8 +191,8 @@ public class UIItemsBuilder {
 		}
 
 		JavaScriptToolbarItem javaScriptToolbarItem = _addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, "", DLUIItemKeys.CHECKIN,
-			LanguageUtil.get(_resourceBundle, "checkin"),
+			new JavaScriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKIN,
+			LanguageUtil.get(_resourceBundle, "checkin"), "",
 			StringBundler.concat(
 				_getNamespace(), "showVersionDetailsDialog('",
 				HtmlUtil.escapeJS(
@@ -534,8 +534,8 @@ public class UIItemsBuilder {
 			appendVersion, true);
 
 		URLMenuItem urlMenuItem = _addURLUIItem(
-			new URLMenuItem(), menuItems, "download", DLUIItemKeys.DOWNLOAD,
-			label, url);
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.DOWNLOAD, label,
+			url);
 
 		urlMenuItem.setData(
 			HashMapBuilder.<String, Object>put(
@@ -617,7 +617,7 @@ public class UIItemsBuilder {
 		portletURL.setParameter("backURL", _getCurrentURL());
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, "pencil", DLUIItemKeys.EDIT, "edit",
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.EDIT, "edit",
 			portletURL.toString());
 	}
 
@@ -648,8 +648,8 @@ public class UIItemsBuilder {
 		}
 
 		_addJavaScriptUIItem(
-			new JavaScriptMenuItem(), menuItems, "move-folder",
-			DLUIItemKeys.MOVE, LanguageUtil.get(_resourceBundle, "move"),
+			new JavaScriptMenuItem(), menuItems, "", DLUIItemKeys.MOVE,
+			LanguageUtil.get(_resourceBundle, "move"),
 			_getMoveEntryOnClickJavaScript());
 	}
 
@@ -739,7 +739,7 @@ public class UIItemsBuilder {
 		}
 
 		URLMenuItem urlMenuItem = _addURLUIItem(
-			new URLMenuItem(), menuItems, "password-policies", DLUIItemKeys.PERMISSIONS,
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.PERMISSIONS,
 			"permissions", url);
 
 		urlMenuItem.setMethod("get");

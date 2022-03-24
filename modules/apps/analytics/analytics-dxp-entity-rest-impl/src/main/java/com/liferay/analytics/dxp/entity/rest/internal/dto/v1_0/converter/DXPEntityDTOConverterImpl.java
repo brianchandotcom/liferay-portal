@@ -92,8 +92,8 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 				add(
 					new Field() {
 						{
-							name = "companyId";
-							value = expandoColumn.getCompanyId();
+							name = "columnId";
+							value = expandoColumn.getColumnId();
 						}
 					});
 				add(
@@ -106,13 +106,8 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 				add(
 					new Field() {
 						{
-							name = "displayType";
-							value =
-								ExpandoColumnConstants.
-									getDefaultDisplayTypeProperty(
-										expandoColumn.getType(),
-										expandoColumn.
-											getTypeSettingsProperties());
+							name = "modifiedDate";
+							value = expandoColumn.getModifiedDate();
 						}
 					});
 				add(
@@ -120,14 +115,6 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 						{
 							name = "name";
 							value = expandoColumn.getName() + "-" + dataType;
-						}
-					});
-				add(
-					new Field() {
-						{
-							name = "typeLabel";
-							value = ExpandoColumnConstants.getTypeLabel(
-								expandoColumn.getType());
 						}
 					});
 			}

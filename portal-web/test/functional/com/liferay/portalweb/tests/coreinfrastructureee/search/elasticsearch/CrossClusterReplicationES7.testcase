@@ -70,7 +70,6 @@ definition {
 
 	@priority = "3"
 	test BreakWorkflowSLA {
-		property portal.upstream = "false";
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#BreakWorkflowSLA";
 
 		CrossClusterReplication.setupCrossClusterReplication();

@@ -115,8 +115,8 @@ public class CPSpecificationOptionFacetsPortletDisplayTemplateHandler
 	@Override
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/commerce/product/content/search/web/internal" +
-			"/portlet/template/dependencies/specification_option_facets" +
-				"/portlet-display-templates.xml";
+			"/portlet/display/template/dependencies" +
+				"/specification_option_facets/portlet-display-templates.xml";
 	}
 
 	@Reference

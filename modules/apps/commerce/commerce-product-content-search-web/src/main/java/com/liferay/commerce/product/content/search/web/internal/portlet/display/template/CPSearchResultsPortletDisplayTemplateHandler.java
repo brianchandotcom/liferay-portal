@@ -118,7 +118,7 @@ public class CPSearchResultsPortletDisplayTemplateHandler
 	@Override
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/commerce/product/content/search/web/internal" +
-			"/portlet/template/dependencies/search_results" +
+			"/portlet/display/template/dependencies/search_results" +
 				"/portlet-display-templates.xml";
 	}
 

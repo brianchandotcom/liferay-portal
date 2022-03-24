@@ -22,6 +22,10 @@ module.exports = {
 		'uuid',
 	],
 	build: {
+		customBridges: {
+			'bridge/frontend-js-web/index':
+				'../../../../../frontend-js-web/__liferay__/index.js',
+		},
 		main: 'src/main/resources/META-INF/resources/index.es.js',
 	},
 };

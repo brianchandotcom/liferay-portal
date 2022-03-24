@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.commerce.order.content.web.internal.portlet.template;
+package com.liferay.commerce.order.content.web.internal.portlet.display.template;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.display.context.CommerceOrderContentDisplayContext;
-import com.liferay.commerce.order.content.web.internal.portlet.CommerceOpenOrderContentPortlet;
+import com.liferay.commerce.order.content.web.internal.portlet.CommerceOrderContentPortlet;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.petra.string.StringBundler;
@@ -43,15 +43,15 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	enabled = false, immediate = true,
-	property = "javax.portlet.name=" + CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
+	property = "javax.portlet.name=" + CommercePortletKeys.COMMERCE_ORDER_CONTENT,
 	service = TemplateHandler.class
 )
-public class CommerceOpenOrderContentPortletDisplayTemplateHandler
+public class CommerceOrderContentPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
 	@Override
 	public String getClassName() {
-		return CommerceOpenOrderContentPortlet.class.getName();
+		return CommerceOrderContentPortlet.class.getName();
 	}
 
 	@Override
@@ -63,8 +63,7 @@ public class CommerceOpenOrderContentPortletDisplayTemplateHandler
 
 		sb.append(
 			_portal.getPortletTitle(
-				CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
-				resourceBundle));
+				CommercePortletKeys.COMMERCE_ORDER_CONTENT, resourceBundle));
 
 		sb.append(StringPool.SPACE);
 		sb.append(LanguageUtil.get(locale, "template"));
@@ -74,7 +73,7 @@ public class CommerceOpenOrderContentPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT;
+		return CommercePortletKeys.COMMERCE_ORDER_CONTENT;
 	}
 
 	@Override

@@ -50,6 +50,15 @@ public class CommerceAccountGroupServiceWrapper
 	}
 
 	@Override
+	public int countCommerceAccountGroupsByCommerceAccountId(
+			long commerceAccountId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAccountGroupService.
+			countCommerceAccountGroupsByCommerceAccountId(commerceAccountId);
+	}
+
+	@Override
 	public void deleteCommerceAccountGroup(long commerceAccountGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -88,6 +97,18 @@ public class CommerceAccountGroupServiceWrapper
 
 		return _commerceAccountGroupService.getCommerceAccountGroups(
 			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.account.model.CommerceAccountGroup>
+				getCommerceAccountGroupsByCommerceAccountId(
+					long commerceAccountId, int start, int end)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceAccountGroupService.
+			getCommerceAccountGroupsByCommerceAccountId(
+				commerceAccountId, start, end);
 	}
 
 	@Override

@@ -64,6 +64,15 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static int
+		countCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
+			long commerceAccountId) {
+
+		return getService().
+			countCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
+				commerceAccountId);
+	}
+
 	public static CommerceAccountGroupCommerceAccountRel
 			deleteCommerceAccountGroupCommerceAccountRel(
 				CommerceAccountGroupCommerceAccountRel
@@ -126,6 +135,15 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceUtil {
 
 		return getService().getCommerceAccountGroupCommerceAccountRels(
 			commerceAccountGroupId, start, end);
+	}
+
+	public static List<CommerceAccountGroupCommerceAccountRel>
+		getCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
+			long commerceAccountId, int start, int end) {
+
+		return getService().
+			getCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
+				commerceAccountId, start, end);
 	}
 
 	public static int getCommerceAccountGroupCommerceAccountRelsCount(

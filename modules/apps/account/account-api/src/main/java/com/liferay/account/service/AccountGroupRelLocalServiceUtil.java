@@ -76,6 +76,10 @@ public class AccountGroupRelLocalServiceUtil {
 		getService().addAccountGroupRels(accountGroupId, className, classPKs);
 	}
 
+	public static int countAccountGroupRels(String className, long classPK) {
+		return getService().countAccountGroupRels(className, classPK);
+	}
+
 	/**
 	 * Creates a new account group rel with the primary key. Does not add the account group rel to the database.
 	 *

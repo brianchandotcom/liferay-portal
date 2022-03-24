@@ -77,6 +77,15 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceWrapper
 	}
 
 	@Override
+	public int countCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
+		long commerceAccountId) {
+
+		return _commerceAccountGroupCommerceAccountRelLocalService.
+			countCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
+				commerceAccountId);
+	}
+
+	@Override
 	public
 		com.liferay.commerce.account.model.
 			CommerceAccountGroupCommerceAccountRel
@@ -163,6 +172,18 @@ public class CommerceAccountGroupCommerceAccountRelLocalServiceWrapper
 		return _commerceAccountGroupCommerceAccountRelLocalService.
 			getCommerceAccountGroupCommerceAccountRels(
 				commerceAccountGroupId, start, end);
+	}
+
+	@Override
+	public java.util.List
+		<com.liferay.commerce.account.model.
+			CommerceAccountGroupCommerceAccountRel>
+				getCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
+					long commerceAccountId, int start, int end) {
+
+		return _commerceAccountGroupCommerceAccountRelLocalService.
+			getCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
+				commerceAccountId, start, end);
 	}
 
 	@Override

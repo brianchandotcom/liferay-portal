@@ -56,6 +56,13 @@ public class CommerceAccountGroupLocalServiceUtil {
 		getService().checkGuestCommerceAccountGroup(companyId);
 	}
 
+	public static int countCommerceAccountGroupsByCommerceAccountId(
+		long commerceAccountId) {
+
+		return getService().countCommerceAccountGroupsByCommerceAccountId(
+			commerceAccountId);
+	}
+
 	public static CommerceAccountGroup deleteCommerceAccountGroup(
 			CommerceAccountGroup commerceAccountGroup)
 		throws PortalException {
@@ -99,10 +106,11 @@ public class CommerceAccountGroupLocalServiceUtil {
 	}
 
 	public static List<CommerceAccountGroup>
-		getCommerceAccountGroupsByCommerceAccountId(long commerceAccountId) {
+		getCommerceAccountGroupsByCommerceAccountId(
+			long commerceAccountId, int start, int end) {
 
 		return getService().getCommerceAccountGroupsByCommerceAccountId(
-			commerceAccountId);
+			commerceAccountId, start, end);
 	}
 
 	public static int getCommerceAccountGroupsCount(long companyId) {

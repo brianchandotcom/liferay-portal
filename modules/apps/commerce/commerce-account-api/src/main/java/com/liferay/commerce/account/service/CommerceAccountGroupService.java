@@ -67,6 +67,10 @@ public interface CommerceAccountGroupService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public int countCommerceAccountGroupsByCommerceAccountId(
+			long commerceAccountId)
+		throws PortalException;
+
 	public void deleteCommerceAccountGroup(long commerceAccountGroupId)
 		throws PortalException;
 
@@ -84,6 +88,12 @@ public interface CommerceAccountGroupService extends BaseService {
 	public List<CommerceAccountGroup> getCommerceAccountGroups(
 			long companyId, int start, int end,
 			OrderByComparator<CommerceAccountGroup> orderByComparator)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceAccountGroup>
+			getCommerceAccountGroupsByCommerceAccountId(
+				long commerceAccountId, int start, int end)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

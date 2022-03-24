@@ -64,6 +64,9 @@ public interface CommerceAccountGroupLocalService extends BaseLocalService {
 	public void checkGuestCommerceAccountGroup(long companyId)
 		throws PortalException;
 
+	public int countCommerceAccountGroupsByCommerceAccountId(
+		long commerceAccountId);
+
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceAccountGroup deleteCommerceAccountGroup(
@@ -94,7 +97,8 @@ public interface CommerceAccountGroupLocalService extends BaseLocalService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAccountGroup>
-		getCommerceAccountGroupsByCommerceAccountId(long commerceAccountId);
+		getCommerceAccountGroupsByCommerceAccountId(
+			long commerceAccountId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceAccountGroupsCount(long companyId);

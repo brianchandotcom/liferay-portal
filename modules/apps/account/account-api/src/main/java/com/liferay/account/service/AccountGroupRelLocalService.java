@@ -83,6 +83,8 @@ public interface AccountGroupRelLocalService
 			long accountGroupId, String className, long[] classPKs)
 		throws PortalException;
 
+	public int countAccountGroupRels(String className, long classPK);
+
 	/**
 	 * Creates a new account group rel with the primary key. Does not add the account group rel to the database.
 	 *

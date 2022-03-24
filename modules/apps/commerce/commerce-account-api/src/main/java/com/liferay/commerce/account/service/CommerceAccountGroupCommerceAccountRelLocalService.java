@@ -66,6 +66,9 @@ public interface CommerceAccountGroupCommerceAccountRelLocalService
 				String externalReferenceCode, ServiceContext serviceContext)
 		throws PortalException;
 
+	public int countCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
+		long commerceAccountId);
+
 	public CommerceAccountGroupCommerceAccountRel
 			deleteCommerceAccountGroupCommerceAccountRel(
 				CommerceAccountGroupCommerceAccountRel
@@ -104,6 +107,11 @@ public interface CommerceAccountGroupCommerceAccountRelLocalService
 	public List<CommerceAccountGroupCommerceAccountRel>
 		getCommerceAccountGroupCommerceAccountRels(
 			long commerceAccountGroupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceAccountGroupCommerceAccountRel>
+		getCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
+			long commerceAccountId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceAccountGroupCommerceAccountRelsCount(

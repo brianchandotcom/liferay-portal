@@ -48,6 +48,14 @@ public class CommerceAccountGroupServiceUtil {
 			companyId, name, type, externalReferenceCode, serviceContext);
 	}
 
+	public static int countCommerceAccountGroupsByCommerceAccountId(
+			long commerceAccountId)
+		throws PortalException {
+
+		return getService().countCommerceAccountGroupsByCommerceAccountId(
+			commerceAccountId);
+	}
+
 	public static void deleteCommerceAccountGroup(long commerceAccountGroupId)
 		throws PortalException {
 
@@ -76,6 +84,15 @@ public class CommerceAccountGroupServiceUtil {
 
 		return getService().getCommerceAccountGroups(
 			companyId, start, end, orderByComparator);
+	}
+
+	public static List<CommerceAccountGroup>
+			getCommerceAccountGroupsByCommerceAccountId(
+				long commerceAccountId, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceAccountGroupsByCommerceAccountId(
+			commerceAccountId, start, end);
 	}
 
 	public static int getCommerceAccountGroupsCount(long companyId)

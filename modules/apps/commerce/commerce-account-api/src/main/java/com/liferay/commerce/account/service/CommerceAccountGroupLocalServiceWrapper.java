@@ -59,6 +59,14 @@ public class CommerceAccountGroupLocalServiceWrapper
 	}
 
 	@Override
+	public int countCommerceAccountGroupsByCommerceAccountId(
+		long commerceAccountId) {
+
+		return _commerceAccountGroupLocalService.
+			countCommerceAccountGroupsByCommerceAccountId(commerceAccountId);
+	}
+
+	@Override
 	public com.liferay.commerce.account.model.CommerceAccountGroup
 			deleteCommerceAccountGroup(
 				com.liferay.commerce.account.model.CommerceAccountGroup
@@ -121,10 +129,11 @@ public class CommerceAccountGroupLocalServiceWrapper
 	public java.util.List
 		<com.liferay.commerce.account.model.CommerceAccountGroup>
 			getCommerceAccountGroupsByCommerceAccountId(
-				long commerceAccountId) {
+				long commerceAccountId, int start, int end) {
 
 		return _commerceAccountGroupLocalService.
-			getCommerceAccountGroupsByCommerceAccountId(commerceAccountId);
+			getCommerceAccountGroupsByCommerceAccountId(
+				commerceAccountId, start, end);
 	}
 
 	@Override

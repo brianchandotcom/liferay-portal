@@ -72,6 +72,12 @@ public class AccountGroupRelLocalServiceWrapper
 			accountGroupId, className, classPKs);
 	}
 
+	@Override
+	public int countAccountGroupRels(String className, long classPK) {
+		return _accountGroupRelLocalService.countAccountGroupRels(
+			className, classPK);
+	}
+
 	/**
 	 * Creates a new account group rel with the primary key. Does not add the account group rel to the database.
 	 *

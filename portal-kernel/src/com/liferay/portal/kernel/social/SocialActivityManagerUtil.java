@@ -77,17 +77,6 @@ public class SocialActivityManagerUtil {
 			userId, classedModel, type, createDate);
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public <T extends ClassedModel & GroupedModel> void
-		setSocialActivityManager(
-			SocialActivityManager<T> socialActivityManager) {
-
-		_socialActivityManager = socialActivityManager;
-	}
-
 	private static volatile SocialActivityManager<?> _socialActivityManager =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			SocialActivityManager.class, SocialActivityManagerUtil.class,

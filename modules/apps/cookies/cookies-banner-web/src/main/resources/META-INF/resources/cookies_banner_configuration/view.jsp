@@ -24,13 +24,9 @@
 			cssClass="mb-3"
 			size="12"
 		>
-			<p>When you visit any web site, it may store or retrieve information on your browser, mostly in the form of cookies. This information might be about you, your preferences or your device and is mostly used to make the site work as you expect it to. The information does not usually directly identify you, but it can give you a more personalized web experience.</p>
-			<p>You can choose not to allow some types of cookies. Click on the different category headings to find out more and change our default settings. However, blocking some types of cookies may impact your experience of the site and the services we are able to offer.
-				<clay:link
-					href="#"
-					label="Visit our Cookie Policy"
-				/>
-			for more information.</p>
+			<p>
+				<%= LanguageUtil.get(request, "cookies-banner-configuration-message") %>
+			</p>
 		</clay:col>
 
 		<clay:col
@@ -43,18 +39,18 @@
 				<clay:content-col
 					expand="<%= true %>"
 				>
-					<h2>Strictly Necessary Cookies</h2>
+					<h2><%= LanguageUtil.get(request, "strictly-necessary-cookies") %></h2>
 				</clay:content-col>
 
 				<clay:content-col>
-					<span class="pr-2 text-primary">Always Active</span>
+					<span class="pr-2 text-primary"><%= LanguageUtil.get(request, "always-active") %></span>
 				</clay:content-col>
 			</clay:content-row>
 
 			<clay:content-row
 				cssClass="mb-3"
 			>
-				<p>These cookies are necessary for the website to function and cannot be switched off in our systems. They are usually only set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in or filling in forms. You can set your browser to block or alert you about these cookies, but some parts of the site will not then work. These cookies do not store any personally identifiable information.</p>
+				<p><%= LanguageUtil.get(request, "strictly-necessary-cookies-description") %></p>
 			</clay:content-row>
 
 			<clay:content-row
@@ -64,7 +60,7 @@
 				<clay:content-col
 					expand="<%= true %>"
 				>
-					<h2>Performance Cookies</h2>
+					<h2><%= LanguageUtil.get(request, "performance-cookies") %></h2>
 				</clay:content-col>
 
 				<clay:content-col>
@@ -83,7 +79,7 @@
 			<clay:content-row
 				cssClass="mb-3"
 			>
-				<p>These cookies allow us to count visits and traffic sources, so we can measure and improve the performance of our site. They help us know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies, we will not know when you have visited our site.</p>
+				<p><%= LanguageUtil.get(request, "performance-cookies-description") %></p>
 			</clay:content-row>
 
 			<clay:content-row
@@ -93,7 +89,7 @@
 				<clay:content-col
 					expand="<%= true %>"
 				>
-					<h2>Functional Cookies</h2>
+					<h2><%= LanguageUtil.get(request, "functional-cookies") %></h2>
 				</clay:content-col>
 
 				<clay:content-col>
@@ -112,7 +108,7 @@
 			<clay:content-row
 				cssClass="mb-3"
 			>
-				<p>These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages. If you do not allow these cookies then some or all of these services may not function properly.</p>
+				<p><%= LanguageUtil.get(request, "functional-cookies-description") %></p>
 			</clay:content-row>
 
 			<clay:content-row
@@ -122,7 +118,7 @@
 				<clay:content-col
 					expand="<%= true %>"
 				>
-					<h2>Personalization Cookies</h2>
+					<h2><%= LanguageUtil.get(request, "personalization-cookies") %></h2>
 				</clay:content-col>
 
 				<clay:content-col>
@@ -141,7 +137,7 @@
 			<clay:content-row
 				cssClass="mb-3"
 			>
-				<p>These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and internet device. If you do not allow these cookies, you will experience less targeted advertising.</p>
+				<p><%= LanguageUtil.get(request, "personalization-cookies-description") %></p>
 			</clay:content-row>
 		</clay:col>
 	</clay:row>

@@ -31,7 +31,7 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 			<clay:content-col
 				expand="<%= true %>"
 			>
-				<span>We use cookies to deliver personalized content, analyze trends, administer the site, track user movements on the site, and collect demographic information about our user base as a whole. Accept all cookies for the best possible experience on our website or manage your preferences. Visit our Privacy Policy.</span>
+				<span><%= LanguageUtil.get(request, "cookies-banner-message") %></span>
 			</clay:content-col>
 
 			<clay:content-col>

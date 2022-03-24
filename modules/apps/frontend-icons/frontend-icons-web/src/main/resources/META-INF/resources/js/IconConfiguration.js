@@ -174,21 +174,28 @@ export default function IconConfiguration({
 												key={icon.name}
 											>
 												<ClayButton
+													disabled={
+														!filteredIcons[
+															iconPackName
+														].editable
+													}
 													displayType={null}
-													onClick={() => {
-														if (
-															filteredIcons[
-																iconPackName
-															].editable
-														) {
-															setDeleteModal({
-																iconPackName,
-																selectedIcon:
-																	icon.name,
-																visible: true,
-															});
-														}
-													}}
+													onClick={() =>
+														setDeleteModal({
+															iconPackName,
+															selectedIcon:
+																icon.name,
+															visible: true,
+														})
+													}
+													title={
+														!filteredIcons[
+															iconPackName
+														].editable &&
+														Liferay.Language.get(
+															'system-icon-not-editable'
+														)
+													}
 												>
 													<ClayIcon
 														spritemap={`/o/icons/${iconPackName}.svg?${referenceTime}`}
@@ -221,6 +228,12 @@ export default function IconConfiguration({
 							onClick={() => handleDelete(iconPackName)}
 							small
 							symbol="times-circle"
+							title={
+								!filteredIcons[iconPackName].editable &&
+								Liferay.Language.get(
+									'system-icons-not-removable'
+								)
+							}
 						/>
 					</div>
 				))}

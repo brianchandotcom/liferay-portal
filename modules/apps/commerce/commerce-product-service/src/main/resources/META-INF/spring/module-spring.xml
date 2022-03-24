@@ -34,9 +34,9 @@
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionLinkServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionLinkService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLinkModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLinkModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLinkPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionLinkPersistence" />
-	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionLocalizationCTServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionLocalizationCTService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLocalizationModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLocalizationModelArgumentsResolver" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionLocalizationPersistenceImpl" id="com.liferay.commerce.product.service.persistence.CPDefinitionLocalizationPersistence" />
+	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionLocalizationCTServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionLocalizationCTService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionRelLocalServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionRelLocalService" />
 	<bean class="com.liferay.commerce.product.service.impl.CPDefinitionOptionRelServiceImpl" id="com.liferay.commerce.product.service.CPDefinitionOptionRelService" />
 	<bean class="com.liferay.commerce.product.service.persistence.impl.CPDefinitionOptionRelModelArgumentsResolver" id="com.liferay.commerce.product.service.persistence.impl.CPDefinitionOptionRelModelArgumentsResolver" />

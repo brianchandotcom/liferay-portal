@@ -85,15 +85,9 @@ definition {
 
 			ACNavigation.switchTab(tabName = "Details");
 
-			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "ac@liferay.com");
+			ACUtils.viewNameList(nameList = "ac@liferay.com");
 
-			ACIndividualsDashboard.assertIndividualAttributeNotPresent(individualAttribute = "Farmer");
-		}
-
-		task ("Add a CSV Data Source") {
-			ACSettings.addCSVDataSource(
-				dataSourceName = "CSV Job Title",
-				sourceFileName = "jobTitle.csv");
+			ACUtils.viewNameListIsNotPresent(nameList = "Farmer");
 		}
 
 		task ("Exit Settings") {
@@ -111,9 +105,7 @@ definition {
 
 			ACNavigation.switchTab(tabName = "Details");
 
-			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "ac@liferay.com");
-
-			ACIndividualsDashboard.assertIndividualAttribute(individualAttribute = "Farmer");
+			ACUtils.viewNameList(nameList = "ac@liferay.com,Farmer");
 		}
 	}
 

@@ -146,8 +146,8 @@ public class UIItemsBuilder {
 		}
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, StringPool.BLANK,
-			DLUIItemKeys.CANCEL_CHECKOUT, "cancel-checkout[document]",
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.CANCEL_CHECKOUT,
+			"cancel-checkout[document]",
 			PortletURLBuilder.create(
 				_getActionURL(
 					"/document_library/edit_file_entry",
@@ -167,7 +167,7 @@ public class UIItemsBuilder {
 		}
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, StringPool.BLANK,
+			new JavaScriptToolbarItem(), toolbarItems, "",
 			DLUIItemKeys.CANCEL_CHECKOUT,
 			LanguageUtil.get(_resourceBundle, "cancel-checkout[document]"),
 			_getSubmitFormJavaScript(Constants.CANCEL_CHECKOUT, null));
@@ -193,8 +193,8 @@ public class UIItemsBuilder {
 		}
 
 		JavaScriptToolbarItem javaScriptToolbarItem = _addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, StringPool.BLANK,
-			DLUIItemKeys.CHECKIN, LanguageUtil.get(_resourceBundle, "checkin"),
+			new JavaScriptToolbarItem(), toolbarItems, "", DLUIItemKeys.CHECKIN,
+			LanguageUtil.get(_resourceBundle, "checkin"),
 			StringBundler.concat(
 				_getNamespace(), "showVersionDetailsDialog('",
 				HtmlUtil.escapeJS(
@@ -239,8 +239,8 @@ public class UIItemsBuilder {
 		}
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, StringPool.BLANK,
-			DLUIItemKeys.CHECKOUT, "checkout[document]",
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.CHECKOUT,
+			"checkout[document]",
 			PortletURLBuilder.create(
 				_getActionURL(
 					"/document_library/edit_file_entry", Constants.CHECKOUT)
@@ -259,7 +259,7 @@ public class UIItemsBuilder {
 		}
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, StringPool.BLANK,
+			new JavaScriptToolbarItem(), toolbarItems, "",
 			DLUIItemKeys.CHECKOUT,
 			LanguageUtil.get(_resourceBundle, "checkout[document]"),
 			_getSubmitFormJavaScript(Constants.CHECKOUT, null));
@@ -282,7 +282,7 @@ public class UIItemsBuilder {
 			RequestBackedPortletURLFactoryUtil.create(_httpServletRequest);
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, StringPool.BLANK,
+			new URLMenuItem(), menuItems, "",
 			DLUIItemKeys.COLLECT_DIGITAL_SIGNATURE,
 			LanguageUtil.get(_resourceBundle, "collect-digital-signature"),
 			PortletURLBuilder.create(
@@ -300,7 +300,7 @@ public class UIItemsBuilder {
 		throws PortalException {
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, StringPool.BLANK,
+			new JavaScriptToolbarItem(), toolbarItems, "",
 			DLUIItemKeys.COLLECT_DIGITAL_SIGNATURE,
 			LanguageUtil.get(_resourceBundle, "collect-digital-signature"),
 			null);
@@ -338,8 +338,8 @@ public class UIItemsBuilder {
 		String jsNamespace = _getNamespace() + _fileVersion.getFileVersionId();
 
 		JavaScriptMenuItem javaScriptMenuItem = _addJavaScriptUIItem(
-			new JavaScriptMenuItem(), menuItems, StringPool.BLANK,
-			DLUIItemKeys.COMPARE_TO, "compare-to",
+			new JavaScriptMenuItem(), menuItems, "", DLUIItemKeys.COMPARE_TO,
+			"compare-to",
 			StringBundler.concat(
 				jsNamespace, "compareVersionDialog('",
 				HtmlUtil.escapeJS(selectFileVersionURL.toString()), "');"));
@@ -463,9 +463,8 @@ public class UIItemsBuilder {
 		sb.append("}");
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, StringPool.BLANK,
-			DLUIItemKeys.DELETE, LanguageUtil.get(_resourceBundle, "delete"),
-			sb.toString());
+			new JavaScriptToolbarItem(), toolbarItems, "", DLUIItemKeys.DELETE,
+			LanguageUtil.get(_resourceBundle, "delete"), sb.toString());
 	}
 
 	public void addDeleteVersionMenuItem(List<MenuItem> menuItems)
@@ -568,8 +567,7 @@ public class UIItemsBuilder {
 			).build());
 
 		_addURLUIItem(
-			urlToolbarItem, toolbarItems, StringPool.BLANK,
-			DLUIItemKeys.DOWNLOAD,
+			urlToolbarItem, toolbarItems, "", DLUIItemKeys.DOWNLOAD,
 			StringBundler.concat(
 				LanguageUtil.get(_resourceBundle, "download"), " (", label,
 				")"),
@@ -591,8 +589,7 @@ public class UIItemsBuilder {
 		}
 
 		_addJavaScriptUIItem(
-			new JavaScriptMenuItem(), menuItems, StringPool.BLANK,
-			DLUIItemKeys.EDIT_IMAGE,
+			new JavaScriptMenuItem(), menuItems, "", DLUIItemKeys.EDIT_IMAGE,
 			LanguageUtil.get(_resourceBundle, "edit-image"),
 			_getEditImageOnClickJavaScript());
 	}
@@ -637,9 +634,8 @@ public class UIItemsBuilder {
 			"/document_library/edit_file_entry");
 
 		_addURLUIItem(
-			new URLToolbarItem(), toolbarItems, StringPool.BLANK,
-			DLUIItemKeys.EDIT, LanguageUtil.get(_resourceBundle, "edit"),
-			portletURL.toString());
+			new URLToolbarItem(), toolbarItems, "", DLUIItemKeys.EDIT,
+			LanguageUtil.get(_resourceBundle, "edit"), portletURL.toString());
 	}
 
 	public void addMoveMenuItem(List<MenuItem> menuItems)
@@ -667,8 +663,8 @@ public class UIItemsBuilder {
 		}
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, StringPool.BLANK,
-			DLUIItemKeys.MOVE, LanguageUtil.get(_resourceBundle, "move"),
+			new JavaScriptToolbarItem(), toolbarItems, "", DLUIItemKeys.MOVE,
+			LanguageUtil.get(_resourceBundle, "move"),
 			_getMoveEntryOnClickJavaScript());
 	}
 
@@ -701,7 +697,7 @@ public class UIItemsBuilder {
 			"folderId", String.valueOf(_fileEntry.getFolderId()));
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, StringPool.BLANK,
+			new JavaScriptToolbarItem(), toolbarItems, "",
 			DLUIItemKeys.MOVE_TO_THE_RECYCLE_BIN,
 			LanguageUtil.get(_resourceBundle, "move-to-recycle-bin"),
 			_getSubmitFormJavaScript(
@@ -775,7 +771,7 @@ public class UIItemsBuilder {
 		}
 
 		_addJavaScriptUIItem(
-			new JavaScriptToolbarItem(), toolbarItems, StringPool.BLANK,
+			new JavaScriptToolbarItem(), toolbarItems, "",
 			DLUIItemKeys.PERMISSIONS,
 			LanguageUtil.get(_resourceBundle, "permissions"),
 			StringBundler.concat(
@@ -854,8 +850,8 @@ public class UIItemsBuilder {
 		sb.append("';}");
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, StringPool.BLANK,
-			DLUIItemKeys.PUBLISH, "publish-to-live", sb.toString());
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.PUBLISH,
+			"publish-to-live", sb.toString());
 	}
 
 	public void addRevertToVersionMenuItem(List<MenuItem> menuItems)
@@ -879,8 +875,7 @@ public class UIItemsBuilder {
 			"/document_library/view_file_entry", _getRedirect());
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, StringPool.BLANK, DLUIItemKeys.REVERT,
-			"revert",
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.REVERT, "revert",
 			PortletURLBuilder.create(
 				_getActionURL(
 					"/document_library/edit_file_entry", Constants.REVERT,
@@ -898,8 +893,8 @@ public class UIItemsBuilder {
 		}
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, StringPool.BLANK,
-			DLUIItemKeys.VIEW_ORIGINAL_FILE, "view-original-file",
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.VIEW_ORIGINAL_FILE,
+			"view-original-file",
 			PortletURLBuilder.create(
 				_getRenderURL("/document_library/view_file_entry")
 			).setParameter(
@@ -913,8 +908,8 @@ public class UIItemsBuilder {
 		}
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, StringPool.BLANK,
-			DLUIItemKeys.VIEW_VERSION, "view[action]",
+			new URLMenuItem(), menuItems, "", DLUIItemKeys.VIEW_VERSION,
+			"view[action]",
 			PortletURLBuilder.create(
 				_getRenderURL(
 					"/document_library/view_file_entry", _getRedirect())

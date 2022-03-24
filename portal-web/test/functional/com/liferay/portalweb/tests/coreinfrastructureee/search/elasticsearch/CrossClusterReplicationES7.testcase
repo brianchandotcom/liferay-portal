@@ -35,7 +35,6 @@ definition {
 
 	@priority = "4"
 	test AssertReplicationAfterReindex {
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#AssertReplicationAfterReindex";
 
 		JSONDocument.addFile(
@@ -554,7 +553,6 @@ definition {
 	test Smoke {
 		property osgi.module.configuration.file.names = "com.liferay.portal.bundle.blacklist.internal.configuration.BundleBlacklistConfiguration.config";
 		property osgi.module.configurations = "blacklistBundleSymbolicNames=&quot;com.liferay.portal.search.tuning.rankings.web&quot;";
-		property portal.upstream = "quarantine";
 		property test.name.skip.portal.instance = "CrossClusterReplicationES7#Smoke";
 
 		JSONDocument.addFile(

@@ -30,13 +30,8 @@ import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.velocity.configuration.VelocityEngineConfiguration;
 import com.liferay.portal.template.velocity.internal.helper.VelocityTemplateContextHelper;
-import com.liferay.taglib.util.VelocityTaglib;
-import com.liferay.taglib.util.VelocityTaglibImpl;
 
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.ExtendedProperties;
 import org.apache.velocity.app.VelocityEngine;
@@ -59,27 +54,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = TemplateManager.class
 )
 public class VelocityManager extends BaseTemplateManager {
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public void addTaglibSupport(
-		Map<String, Object> contextObjects,
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
-
-		VelocityTaglib velocityTaglib = new VelocityTaglibImpl(
-			httpServletRequest.getServletContext(), httpServletRequest,
-			httpServletResponse, contextObjects);
-
-		contextObjects.put("taglibLiferay", velocityTaglib);
-
-		// Legacy support
-
-		contextObjects.put("theme", velocityTaglib);
-	}
 
 	@Override
 	public void destroy() {

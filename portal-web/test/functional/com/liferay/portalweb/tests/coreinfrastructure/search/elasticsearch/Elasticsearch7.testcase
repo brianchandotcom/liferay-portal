@@ -353,7 +353,6 @@ definition {
 		property elasticsearch.cluster.size = "2";
 		property minimum.slave.ram = "24";
 		property portal.acceptance = "true";
-		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7#ElasticsearchClusteringSmokeTest";
 
@@ -410,7 +409,6 @@ definition {
 	@priority = "5"
 	test MultipleConnectionsSmokeTest {
 		property elasticsearch.multiple.connections = "true";
-		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
 
 		SearchAdministration.openSearchAdmin();

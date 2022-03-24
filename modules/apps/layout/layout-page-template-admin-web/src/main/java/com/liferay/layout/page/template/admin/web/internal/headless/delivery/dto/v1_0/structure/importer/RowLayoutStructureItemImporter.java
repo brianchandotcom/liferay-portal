@@ -70,11 +70,9 @@ public class RowLayoutStructureItemImporter
 		rowStyledLayoutStructureItem.setNumberOfColumns(
 			(Integer)definitionMap.get("numberOfColumns"));
 
-		boolean nonindexable = GetterUtil.getBoolean(
-			definitionMap.get("nonindexable"));
-
-		if (nonindexable) {
-			rowStyledLayoutStructureItem.setNonindexed(nonindexable);
+		if (definitionMap.containsKey("indexed")) {
+			rowStyledLayoutStructureItem.setIndexed(
+				GetterUtil.getBoolean(definitionMap.get("indexed")));
 		}
 
 		if (definitionMap.containsKey("reverseOrder")) {

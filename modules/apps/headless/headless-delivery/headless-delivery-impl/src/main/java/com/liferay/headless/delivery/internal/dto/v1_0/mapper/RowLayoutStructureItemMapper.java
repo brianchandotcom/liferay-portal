@@ -55,10 +55,9 @@ public class RowLayoutStructureItemMapper
 				definition = new PageRowDefinition() {
 					{
 						gutters = rowStyledLayoutStructureItem.isGutters();
+						indexed = rowStyledLayoutStructureItem.isIndexed();
 						modulesPerRow =
 							rowStyledLayoutStructureItem.getModulesPerRow();
-						nonindexable =
-							rowStyledLayoutStructureItem.isNonindexed();
 						numberOfColumns =
 							rowStyledLayoutStructureItem.getNumberOfColumns();
 						reverseOrder =

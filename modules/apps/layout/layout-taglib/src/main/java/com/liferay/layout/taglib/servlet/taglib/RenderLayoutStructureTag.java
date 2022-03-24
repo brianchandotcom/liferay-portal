@@ -696,7 +696,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 						(ContainerStyledLayoutStructureItem)layoutStructureItem;
 
 				if (Objects.equals(_getLayoutMode(), Constants.SEARCH) &&
-					containerStyledLayoutStructureItem.isNonindexed()) {
+					!containerStyledLayoutStructureItem.isIndexed()) {
 
 					continue;
 				}
@@ -718,7 +718,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 						(FragmentStyledLayoutStructureItem)layoutStructureItem;
 
 				if (Objects.equals(_getLayoutMode(), Constants.SEARCH) &&
-					fragmentStyledLayoutStructureItem.isNonindexed()) {
+					!fragmentStyledLayoutStructureItem.isIndexed()) {
 
 					continue;
 				}
@@ -734,7 +734,7 @@ public class RenderLayoutStructureTag extends IncludeTag {
 					(RowStyledLayoutStructureItem)layoutStructureItem;
 
 				if (Objects.equals(_getLayoutMode(), Constants.SEARCH) &&
-					rowStyledLayoutStructureItem.isNonindexed()) {
+					!rowStyledLayoutStructureItem.isIndexed()) {
 
 					continue;
 				}

@@ -163,7 +163,7 @@ const SetupAnalyticsCloudPage = ({
 				});
 
 				await Promise.all(
-					analyticsCloud?.incidentReportContact.map(({email}) => {
+					analyticsCloud?.incidentReportContact?.map(({email}) => {
 						return client.mutate({
 							mutation: addIncidentReportAnalyticsCloud,
 							variables: {

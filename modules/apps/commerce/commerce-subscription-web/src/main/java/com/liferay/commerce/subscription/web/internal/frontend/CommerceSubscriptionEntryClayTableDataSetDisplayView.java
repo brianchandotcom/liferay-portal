@@ -60,11 +60,11 @@ public class CommerceSubscriptionEntryClayTableDataSetDisplayView
 
 		orderIdClayTableSchemaField.setContentRenderer("link");
 
-		ClayTableSchemaField accountIdField =
+		ClayTableSchemaField commerceAccountIdClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField(
 				"commerceAccountId", "account-id");
 
-		accountIdField.setContentRenderer("link");
+		commerceAccountIdClayTableSchemaField.setContentRenderer("link");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"commerceAccountName", "account-name");

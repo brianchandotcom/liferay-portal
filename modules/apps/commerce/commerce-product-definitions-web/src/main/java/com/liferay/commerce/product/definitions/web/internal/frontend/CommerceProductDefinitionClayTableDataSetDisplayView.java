@@ -41,16 +41,16 @@ public class CommerceProductDefinitionClayTableDataSetDisplayView
 		ClayTableSchemaBuilder clayTableSchemaBuilder =
 			_clayTableSchemaBuilderFactory.create();
 
-		ClayTableSchemaField imageclayTableSchemaField =
+		ClayTableSchemaField thumbnailClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("thumbnail", "");
 
-		imageclayTableSchemaField.setContentRenderer("image");
+		thumbnailClayTableSchemaField.setContentRenderer("image");
 
-		ClayTableSchemaField nameField =
+		ClayTableSchemaField nameLangClayTableSchemaField =
 			clayTableSchemaBuilder.addClayTableSchemaField("name.LANG", "name");
 
-		nameField.setSortable(true);
-		nameField.setContentRenderer("actionLink");
+		nameLangClayTableSchemaField.setSortable(true);
+		nameLangClayTableSchemaField.setContentRenderer("actionLink");
 
 		clayTableSchemaBuilder.addClayTableSchemaField(
 			"catalog.name", "catalog");

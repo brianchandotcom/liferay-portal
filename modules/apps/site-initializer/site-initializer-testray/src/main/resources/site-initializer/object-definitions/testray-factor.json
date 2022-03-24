@@ -25,28 +25,6 @@
 			"name": "classPK",
 			"required": false,
 			"type": "Long"
-		},
-		{
-			"DBType": "String",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Testray Factor Category Name"
-			},
-			"name": "factorCategoryName",
-			"required": false,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Testray Factor Option Name"
-			},
-			"name": "factorOptionName",
-			"required": false,
-			"type": "String"
 		}
 	],
 	"pluralLabel": {

@@ -264,7 +264,10 @@ const SetupDXPCloudPage = ({
 							<Button
 								className="ml-3 my-2 text-brandy-secondary"
 								displayType="secondary"
-								onClick={() => pop()}
+								onClick={() => {
+									pop();
+									setBaseButtonDisabled(false);
+								}}
 								prependIcon="hr"
 								small
 							>

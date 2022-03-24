@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.content.category.web.internal.portlet.template;
+package com.liferay.commerce.product.content.category.web.internal.portlet.display.template;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;

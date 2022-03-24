@@ -287,6 +287,25 @@ public class Main {
 			null, testrayFactorCategoryName, "factorcategories");
 	}
 
+	private long _getTestrayFactorOptionId(
+			String testrayFactorOptionName, long testrayFactorCategoryId)
+		throws Exception {
+
+		long testrayFactorOptionId = _getObjectEntryId(
+			testrayFactorOptionName, "factoroptions");
+
+		if (testrayFactorOptionId != 0) {
+			return testrayFactorOptionId;
+		}
+
+		return _postObjectEntry(
+			HashMapBuilder.put(
+				"r_factorCategoryToOptions_c_factorCategoryId",
+				String.valueOf(testrayFactorCategoryId)
+			).build(),
+			testrayFactorOptionName, "factoroptions");
+	}
+
 	private long _getTestrayProductVersionId(
 			long testrayProjectId, String testrayProductVersionName)
 		throws Exception {

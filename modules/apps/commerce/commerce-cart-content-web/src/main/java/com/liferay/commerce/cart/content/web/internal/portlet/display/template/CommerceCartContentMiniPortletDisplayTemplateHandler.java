@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.cart.content.web.internal.portlet.template;
+package com.liferay.commerce.cart.content.web.internal.portlet.display.template;
 
 import com.liferay.commerce.cart.content.web.internal.display.context.CommerceCartContentMiniDisplayContext;
 import com.liferay.commerce.cart.content.web.internal.portlet.CommerceCartContentMiniPortlet;
@@ -120,7 +120,8 @@ public class CommerceCartContentMiniPortletDisplayTemplateHandler
 	@Override
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/commerce/cart/content/web/internal/portlet" +
-			"/template/dependencies/cart_mini/portlet-display-templates.xml";
+			"/display/template/dependencies/cart_mini/portlet-display-" +
+				"templates.xml";
 	}
 
 	@Reference

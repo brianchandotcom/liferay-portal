@@ -120,7 +120,8 @@ public class CommerceCartContentTotalPortletDisplayTemplateHandler
 	@Override
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/commerce/cart/content/web/internal/portlet" +
-			"/template/dependencies/cart_total/portlet-display-templates.xml";
+			"/display/template/dependencies/cart_total/portlet-display-" +
+				"templates.xml";
 	}
 
 	@Reference

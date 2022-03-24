@@ -6,7 +6,7 @@
 		<name>portlet-display-template-name-basic</name>
 		<description>portlet-display-template-description-basic</description>
 		<language>ftl</language>
-		<script-file>com/liferay/commerce/cart/content/web/internal/portlet/template/dependencies/cart_mini/portlet_display_template_basic.ftl</script-file>
+		<script-file>com/liferay/commerce/cart/content/web/internal/portlet/display/template/dependencies/cart_mini/portlet_display_template_basic.ftl</script-file>
 		<cacheable>false</cacheable>
 	</template>
 </root>

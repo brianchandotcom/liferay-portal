@@ -24,11 +24,9 @@
 			<package-name>org.apache.commons.fileupload.*</package-name>
 			<package-name>org.apache.commons.io.*</package-name>
 			<package-name>org.apache.commons.lang.*</package-name>
-			<package-name>org.apache.xmlbeans.*</package-name>
 			<package-name>org.mozilla.*</package-name>
 			<package-name>org.objectweb.asm.*</package-name>
 			<package-name>org.xmlpull.*</package-name>
-			<package-name>schemaorg_apache_xmlbeans.*</package-name>
 		</prefer-application-packages>
 		<prefer-application-resources>
 			<resource-name>META-INF/services/com.sun.xml.ws.*</resource-name>

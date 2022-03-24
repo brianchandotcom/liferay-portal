@@ -37,6 +37,9 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
+			icon="pencil"
+			linkCssClass="ddm-structure-action"
+			markupView="lexicon"
 			message="edit"
 			url="<%= ediDDMStructuretURL %>"
 		/>
@@ -53,6 +56,7 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE) %>">
 		<liferay-ui:icon
+			cssClass="ddm-structure-action-no-icon"
 			message="edit-default-values"
 			url="<%= editDDMStructureDefaultValuesURL %>"
 		/>
@@ -68,6 +72,7 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
+			cssClass="ddm-structure-action-no-icon"
 			message="manage-templates"
 			url="<%= manageViewURL %>"
 		/>
@@ -87,6 +92,9 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
+			icon="copy"
+			linkCssClass="ddm-structure-action"
+			markupView="lexicon"
 			message="copy"
 			url="<%= copyDDMStructureURL %>"
 		/>
@@ -97,6 +105,9 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 	</liferay-portlet:resourceURL>
 
 	<liferay-ui:icon
+		icon="upload"
+		linkCssClass="ddm-structure-action"
+		markupView="lexicon"
 		message="export-as-json"
 		url="<%= exportDataDefinitionURL %>"
 	/>
@@ -113,6 +124,9 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 		/>
 
 		<liferay-ui:icon
+			icon="password-policies"
+			linkCssClass="ddm-structure-action"
+			markupView="lexicon"
 			message="permissions"
 			method="get"
 			url="<%= permissionsURL %>"
@@ -130,6 +144,9 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
+			icon="trash"
+			linkCssClass="ddm-structure-action"
+			showIcon="<%= true %>"
 			url="<%= deleteURL %>"
 		/>
 	</c:if>

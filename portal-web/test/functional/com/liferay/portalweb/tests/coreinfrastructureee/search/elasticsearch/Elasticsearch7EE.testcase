@@ -206,7 +206,6 @@ definition {
 		property elastic.pki.authentication.enabled = "true";
 		property elastic.xpack.enabled = "true";
 		property environment.acceptance = "false";
-		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackPkiAuthenticationSmokeTest";
 
@@ -257,7 +256,6 @@ definition {
 	test XPackSmokeTest {
 		property elastic.xpack.enabled = "true";
 		property environment.acceptance = "false";
-		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#XPackSmokeTest";
 

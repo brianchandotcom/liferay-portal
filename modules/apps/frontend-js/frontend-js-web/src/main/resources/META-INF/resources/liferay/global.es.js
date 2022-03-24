@@ -54,6 +54,7 @@ import formatXML from './util/format_xml.es';
 import getCropRegion from './util/get_crop_region.es';
 import getDOM from './util/get_dom';
 import getElement from './util/get_element';
+import getGeolocation from './util/get_geolocation';
 import getLexiconIcon from './util/get_lexicon_icon';
 import getPortletId from './util/get_portlet_id';
 import getPortletNamespace from './util/get_portlet_namespace.es';
@@ -194,6 +195,7 @@ Liferay.Util.getDOM = getDOM;
  */
 Liferay.Util.getElement = getElement;
 
+Liferay.Util.getGeolocation = getGeolocation;
 Liferay.Util.getFormElement = getFormElement;
 Liferay.Util.getLexiconIcon = getLexiconIcon;
 

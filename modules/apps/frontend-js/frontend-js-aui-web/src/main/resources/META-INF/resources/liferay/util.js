@@ -435,25 +435,6 @@
 			return columnId;
 		},
 
-		getGeolocation(success, fallback, options) {
-			if (success && navigator.geolocation) {
-				navigator.geolocation.getCurrentPosition(
-					(position) => {
-						success(
-							position.coords.latitude,
-							position.coords.longitude,
-							position
-						);
-					},
-					fallback,
-					options
-				);
-			}
-			else if (fallback) {
-				fallback();
-			}
-		},
-
 		getLexiconIconTpl(icon, cssClass) {
 			return Liferay.Util.sub(TPL_LEXICON_ICON, icon, cssClass || '');
 		},

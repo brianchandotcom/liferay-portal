@@ -45,4 +45,25 @@ BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)resultRo
 			module="js/DownloadErrorReport"
 		/>
 	</c:if>
+
+	<%
+	String batchPlannerLogDisplayAction = batchPlannerLogDisplay.getAction();
+	%>
+
+	<c:if test='<%= (batchPlannerLogDisplay.getStatus() == 3) && batchPlannerLogDisplayAction.equals("Import") %>'>
+		<liferay-ui:icon
+			id='<%= "downloadImportFile" + batchPlannerLogDisplay.getBatchEngineImportTaskERC() %>'
+			message="download-import-file"
+			url="#"
+		/>
+
+		<liferay-frontend:component
+			context='<%=
+				HashMapBuilder.<String, Object>put(
+					"batchEngineImportTaskId", batchPlannerLogDisplay.getBatchEngineImportTaskERC()
+				).build()
+			%>'
+			module="js/DownloadImportFile"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

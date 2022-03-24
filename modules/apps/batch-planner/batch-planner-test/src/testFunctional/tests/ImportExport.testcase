@@ -866,7 +866,55 @@ definition {
 				headlessEndpoint = "/headless-admin-user");
 		}
 
-		task ("Then The fields are automatically mapped") {
+		task ("Then the fields are automatically mapped") {
+			ImportExport.assertImportMappings(fieldMappings = "name:name,type:type,description:description");
+		}
+	}
+
+	@description = "Verify JSON fields are automatically mapped to fields in Liferay when the names are the same"
+	@priority = "3"
+	test JSONFieldsAreAutoMapped {
+		property portal.acceptance = "true";
+
+		task ("Given a JSON file with field names that are the same as fields in Liferay is being imported") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			UploadDependencyFile.uploadFile(fileName = "json_account_import.json");
+		}
+
+		task ("When I select the entity type") {
+			ImportExport.selectEntity(
+				entityType = "Account",
+				headlessEndpoint = "/headless-admin-user");
+		}
+
+		task ("Then the fields are automatically mapped") {
+			ImportExport.assertImportMappings(fieldMappings = "name:name,type:type,description:description");
+		}
+	}
+
+	@description = "Verify JSONL fields are automatically mapped to fields in Liferay when the names are the same"
+	@priority = "3"
+	test JSONLFieldsAreAutoMapped {
+		property portal.acceptance = "true";
+
+		task ("Given a JSONL file with field names that are the same as fields in Liferay is being imported") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			UploadDependencyFile.uploadFile(fileName = "jsonl_account_import.jsonl");
+		}
+
+		task ("When I select the entity type") {
+			ImportExport.selectEntity(
+				entityType = "Account",
+				headlessEndpoint = "/headless-admin-user");
+		}
+
+		task ("Then the fields are automatically mapped") {
 			ImportExport.assertImportMappings(fieldMappings = "name:name,type:type,description:description");
 		}
 	}

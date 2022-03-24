@@ -22,7 +22,11 @@ import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.renderer.FragmentPortletRenderer;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -252,18 +256,36 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private boolean _checkNoninstanceablePortletUsed(
-		FragmentEntryLink currentFragmentEntryLink, String currentPortletName) {
+			FragmentEntryLink currentFragmentEntryLink,
+			String currentPortletName)
+		throws PortalException {
+
+		if ((currentFragmentEntryLink.getFragmentEntryLinkId() <= 0) ||
+			(currentFragmentEntryLink.getPlid() <= 0)) {
+
+			return false;
+		}
 
 		List<FragmentEntryLink> fragmentEntryLinks =
-			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
-				currentFragmentEntryLink.getGroupId(),
-				currentFragmentEntryLink.getPlid());
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					currentFragmentEntryLink.getGroupId(),
+					currentFragmentEntryLink.getSegmentsExperienceId(),
+					currentFragmentEntryLink.getPlid());
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					currentFragmentEntryLink.getGroupId(),
+					currentFragmentEntryLink.getPlid(), true);
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructure.getData(
+				currentFragmentEntryLink.getSegmentsExperienceId()));
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-			if ((currentFragmentEntryLink.getFragmentEntryLinkId() ==
-					fragmentEntryLink.getFragmentEntryLinkId()) ||
-				(currentFragmentEntryLink.getSegmentsExperienceId() !=
-					fragmentEntryLink.getSegmentsExperienceId())) {
+			if (currentFragmentEntryLink.getFragmentEntryLinkId() ==
+					fragmentEntryLink.getFragmentEntryLinkId()) {
 
 				continue;
 			}
@@ -281,7 +303,17 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 				Collectors.toList()
 			);
 
-			if (portletNames.contains(currentPortletName)) {
+			if (!portletNames.contains(currentPortletName)) {
+				continue;
+			}
+
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+					fragmentEntryLink.getFragmentEntryLinkId());
+
+			if (!layoutStructure.isItemMarkedForDeletion(
+					layoutStructureItem.getItemId())) {
+
 				return true;
 			}
 		}
@@ -551,6 +583,10 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutPageTemplateStructureLocalService
+		_layoutPageTemplateStructureLocalService;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

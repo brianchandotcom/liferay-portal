@@ -1,7 +1,5 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*",
-		"react": "16.12.0"
 	},
 	"name": "@liferay/frontend-icon-admin-web",
 	"scripts": {

@@ -105,9 +105,10 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 
 			iconNames.forEach(
 				iconName -> {
-					Optional<FrontendIconsResource> frontendIconsResourceOptional =
-						existingIconsResourcePack.getFrontendIconsResource(
-							iconName);
+					Optional<FrontendIconsResource>
+						frontendIconsResourceOptional =
+							existingIconsResourcePack.getFrontendIconsResource(
+								iconName);
 
 					frontendIconsResourceOptional.ifPresent(
 						frontendIconsResourcePack::addFrontendIconResource);

@@ -17,8 +17,8 @@ import {
 	addAnalyticsCloudWorkspace,
 	addIncidentReportAnalyticsCloud,
 	getAnalyticsCloudPageInfo,
-	updateAccountSubscriptionGroups,
 	getAnalyticsCloudWorkspace,
+	updateAccountSubscriptionGroups,
 } from '../../../../common/services/liferay/graphql/queries';
 import {
 	isLowercaseAndNumbers,
@@ -45,8 +45,8 @@ const SetupAnalyticsCloudPage = ({
 	onClose,
 	project,
 	setFieldValue,
-	subscriptionGroupId,
 	setFormAlreadySubmitted,
+	subscriptionGroupId,
 	touched,
 	values,
 }) => {
@@ -189,7 +189,7 @@ const SetupAnalyticsCloudPage = ({
 					<Button
 						borderless
 						className="text-neutral-10"
-						onClick={onClose}
+						onClick={() => onClose()}
 					>
 						{leftButton}
 					</Button>

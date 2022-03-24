@@ -34,7 +34,7 @@ const ConfirmationMessageModal = ({handlePage}) => {
 			</div>
 
 			<div className="d-flex justify-content-center mb-1">
-				<Button onClick={handlePage}>Done</Button>
+				<Button onClick={() => handlePage(true)}>Done</Button>
 			</div>
 		</div>
 	);

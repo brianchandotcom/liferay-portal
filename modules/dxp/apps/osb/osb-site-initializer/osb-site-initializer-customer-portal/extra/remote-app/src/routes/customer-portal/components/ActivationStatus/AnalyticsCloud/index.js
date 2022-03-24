@@ -14,10 +14,14 @@ import {useModal} from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 import client from '../../../../../apolloClient';
 import {Button} from '../../../../../common/components';
-import {getAccountSubscriptionsTerms} from '../../../../../common/services/liferay/graphql/queries';
+import {
+	getAccountSubscriptionGroups,
+	getAccountSubscriptionsTerms,
+} from '../../../../../common/services/liferay/graphql/queries';
 import getActivationStatusDateRange from '../../../../../common/utils/getActivationStatusDateRange';
 import AnalyticsCloudModal from '../../../components/AnalyticsCloudModal';
 import {useCustomerPortal} from '../../../context';
+import {actionTypes} from '../../../context/reducer';
 import {
 	STATUS_TAG_TYPES,
 	STATUS_TAG_TYPE_NAMES,
@@ -30,15 +34,48 @@ const ActivationStatusAnalyticsCloud = ({
 	subscriptionGroupAnalyticsCloud,
 	userAccount,
 }) => {
-	const [{assetsPath}] = useCustomerPortal();
+	const [{assetsPath}, dispatch] = useCustomerPortal();
 	const [activationStatusDate, setActivationStatusDate] = useState('');
 	const [isVisible, setIsVisible] = useState(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setIsVisible(false),
 	});
 
-	const subscriptionGroupActivationStatus =
-		subscriptionGroupAnalyticsCloud?.activationStatus;
+	const [
+		subscriptionGroupActivationStatus,
+		setSubscriptionGroupActivationStatus,
+	] = useState(subscriptionGroupAnalyticsCloud?.activationStatus);
+
+	const onCloseSetupModal = async (isSuccess) => {
+		onClose(false);
+
+		if (isSuccess) {
+			const getSubscriptionGroups = async (accountKey) => {
+				const {data: dataSubscriptionGroups} = await client.query({
+					query: getAccountSubscriptionGroups,
+					variables: {
+						filter: `accountKey eq '${accountKey}' and hasActivation eq true`,
+					},
+				});
+
+				if (dataSubscriptionGroups) {
+					const items =
+						dataSubscriptionGroups?.c?.accountSubscriptionGroups
+							?.items;
+					dispatch({
+						payload: items,
+						type: actionTypes.UPDATE_SUBSCRIPTION_GROUPS,
+					});
+
+					setSubscriptionGroupActivationStatus(
+						STATUS_TAG_TYPE_NAMES.inProgress
+					);
+				}
+			};
+
+			getSubscriptionGroups(project.accountKey);
+		}
+	};
 
 	const currentActivationStatus = {
 		[STATUS_TAG_TYPE_NAMES.active]: {
@@ -114,7 +151,7 @@ const ActivationStatusAnalyticsCloud = ({
 			{isVisible && (
 				<AnalyticsCloudModal
 					observer={observer}
-					onClose={onClose}
+					onClose={onCloseSetupModal}
 					project={project}
 					subscriptionGroupId={
 						subscriptionGroupAnalyticsCloud.accountSubscriptionGroupId

@@ -127,7 +127,7 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 	public JSONObject getItemConfigJSONObject() {
 		JSONObject jsonObject = JSONUtil.put("styles", stylesJSONObject);
 
-		for (ViewportSize viewportSize : ViewportSize.values()) {
+		for (ViewportSize viewportSize : _viewportSizes) {
 			if (viewportSize.equals(ViewportSize.DESKTOP)) {
 				continue;
 			}
@@ -241,7 +241,7 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 				_updateItemConfigValues(stylesJSONObject, newStylesJSONObject);
 			}
 
-			for (ViewportSize viewportSize : ViewportSize.values()) {
+			for (ViewportSize viewportSize : _viewportSizes) {
 				if (viewportSize.equals(ViewportSize.DESKTOP)) {
 					continue;
 				}
@@ -412,5 +412,7 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StyledLayoutStructureItem.class);
+
+	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
 
 }

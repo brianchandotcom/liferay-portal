@@ -58,7 +58,7 @@ public class ColumnLayoutStructureItem extends LayoutStructureItem {
 	public JSONObject getItemConfigJSONObject() {
 		JSONObject jsonObject = JSONUtil.put("size", _size);
 
-		for (ViewportSize viewportSize : ViewportSize.values()) {
+		for (ViewportSize viewportSize : _viewportSizes) {
 			if (viewportSize.equals(ViewportSize.DESKTOP)) {
 				continue;
 			}
@@ -127,7 +127,7 @@ public class ColumnLayoutStructureItem extends LayoutStructureItem {
 			setSize(itemConfigJSONObject.getInt("size"));
 		}
 
-		for (ViewportSize viewportSize : ViewportSize.values()) {
+		for (ViewportSize viewportSize : _viewportSizes) {
 			if (viewportSize.equals(ViewportSize.DESKTOP)) {
 				continue;
 			}
@@ -140,6 +140,8 @@ public class ColumnLayoutStructureItem extends LayoutStructureItem {
 			}
 		}
 	}
+
+	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
 
 	private int _size;
 	private final Map<String, JSONObject> _viewportConfigurations =

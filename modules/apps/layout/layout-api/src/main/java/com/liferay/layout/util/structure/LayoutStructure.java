@@ -598,7 +598,7 @@ public class LayoutStructure {
 					true);
 			}
 
-			for (ViewportSize viewportSize : ViewportSize.values()) {
+			for (ViewportSize viewportSize : _viewportSizes) {
 				if (viewportSize.equals(ViewportSize.DESKTOP) ||
 					!itemConfigJSONObject.has(
 						viewportSize.getViewportSizeId())) {
@@ -646,7 +646,7 @@ public class LayoutStructure {
 		rowStyledLayoutStructureItem.setModulesPerRow(numberOfColumns);
 		rowStyledLayoutStructureItem.setNumberOfColumns(numberOfColumns);
 
-		for (ViewportSize viewportSize : ViewportSize.values()) {
+		for (ViewportSize viewportSize : _viewportSizes) {
 			if (viewportSize.equals(ViewportSize.DESKTOP)) {
 				continue;
 			}
@@ -895,6 +895,8 @@ public class LayoutStructure {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutStructure.class);
+
+	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
 
 	private final Map<String, DeletedLayoutStructureItem>
 		_deletedLayoutStructureItems;

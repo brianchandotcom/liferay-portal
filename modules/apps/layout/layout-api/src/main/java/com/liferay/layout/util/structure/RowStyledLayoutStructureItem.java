@@ -81,7 +81,7 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			"verticalAlignment", _verticalAlignment
 		);
 
-		for (ViewportSize viewportSize : ViewportSize.values()) {
+		for (ViewportSize viewportSize : _viewportSizes) {
 			if (viewportSize.equals(ViewportSize.DESKTOP)) {
 				continue;
 			}
@@ -251,7 +251,7 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 				itemConfigJSONObject.getString("verticalAlignment"));
 		}
 
-		for (ViewportSize viewportSize : ViewportSize.values()) {
+		for (ViewportSize viewportSize : _viewportSizes) {
 			if (viewportSize.equals(ViewportSize.DESKTOP)) {
 				continue;
 			}
@@ -264,6 +264,8 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			}
 		}
 	}
+
+	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
 
 	private boolean _gutters = true;
 	private Integer _modulesPerRow;

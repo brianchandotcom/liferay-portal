@@ -147,7 +147,7 @@ const MultiplePagesExperiences = ({
 				</label>
 
 				<ClayRadioGroup
-					name={`${portletNamespace}segmentsExperienceIds`}
+					name={`${portletNamespace}exportExperience`}
 					onSelectedValueChange={onChangeExperience}
 					selectedValue={selectedExperienceValue}
 				>
@@ -308,7 +308,10 @@ const ExportTranslation = ({
 					targetLanguageIds: selectedTargetLanguageIds.join(','),
 				};
 
-				if (selectedExperiencesIds.length) {
+				if (multiplePagesSelected) {
+					params.segmentsExperienceIds = selectedExperienceValue;
+				}
+				else if (selectedExperiencesIds.length) {
 					params.segmentsExperienceIds = selectedExperiencesIds.join(
 						','
 					);

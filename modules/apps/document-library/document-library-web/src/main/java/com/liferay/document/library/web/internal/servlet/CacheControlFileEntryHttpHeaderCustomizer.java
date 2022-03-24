@@ -16,7 +16,7 @@ package com.liferay.document.library.web.internal.servlet;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.web.internal.configuration.CacheControlConfiguration;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.document.library.web.internal.configuration.admin.service.CacheControlConfigurationManagedServiceFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,11 +30,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -60,18 +56,15 @@ public class CacheControlFileEntryHttpHeaderCustomizer
 		}
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_cacheControlConfiguration = ConfigurableUtil.createConfigurable(
-			CacheControlConfiguration.class, properties);
-	}
-
 	private String _getHttpHeaderValue(FileEntry fileEntry, String currentValue)
 		throws PortalException {
 
+		CacheControlConfiguration cacheControlConfiguration =
+			_cacheControlConfigurationManagedServiceFactory.
+				getCompanyCacheControlConfiguration(fileEntry.getCompanyId());
+
 		if (ArrayUtil.contains(
-				_cacheControlConfiguration.notCacheableMimeTypes(),
+				cacheControlConfiguration.notCacheableMimeTypes(),
 				fileEntry.getMimeType())) {
 
 			return HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE;
@@ -87,19 +80,21 @@ public class CacheControlFileEntryHttpHeaderCustomizer
 			return currentValue;
 		}
 
-		if (_cacheControlConfiguration.maxAge() <= 0) {
-			return _cacheControlConfiguration.cacheControl();
+		if (cacheControlConfiguration.maxAge() <= 0) {
+			return cacheControlConfiguration.cacheControl();
 		}
 
 		return String.format(
-			"%s, max-age: %d", _cacheControlConfiguration.cacheControl(),
-			_cacheControlConfiguration.maxAge());
+			"%s, max-age: %d", cacheControlConfiguration.cacheControl(),
+			cacheControlConfiguration.maxAge());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CacheControlFileEntryHttpHeaderCustomizer.class);
 
-	private volatile CacheControlConfiguration _cacheControlConfiguration;
+	@Reference
+	private CacheControlConfigurationManagedServiceFactory
+		_cacheControlConfigurationManagedServiceFactory;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

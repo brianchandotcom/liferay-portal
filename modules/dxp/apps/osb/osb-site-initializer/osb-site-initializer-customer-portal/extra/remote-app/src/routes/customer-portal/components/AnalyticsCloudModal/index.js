@@ -15,6 +15,15 @@ import ConfirmationMessageModal from '../../../../common/containers/setup-forms/
 import {ANALYTICS_STEPS_TYPES} from '../../utils/constants';
 import AlreadySubmittedFormModal from '../ActivationStatus/AlreadySubmittedModal';
 
+const submittedModalTexts = {
+	paragraph:
+		'Return to the product activation page to view the current Activation Status',
+	subtitle: `We'll need a few details to finish building your Analytics Cloud workspace(s).`,
+	text:
+		'Another user already submitted the Analytics Cloud activation request.',
+	title: 'Set up Analytics Cloud',
+};
+
 const AnalyticsCloudModal = ({
 	observer,
 	onClose,
@@ -48,15 +57,6 @@ const AnalyticsCloudModal = ({
 		}),
 		[onClose, project, setFormAlreadySubmitted, subscriptionGroupId]
 	);
-
-	const submittedModalTexts = {
-		paragraph:
-			'Return to the product activation page to view the current Activation Status',
-		subtitle: `We'll need a few details to finish building your Analytics Cloud workspace(s).`,
-		text:
-			'Another user already submitted the Analytics Cloud activation request.',
-		title: 'Set up Analytics Cloud',
-	};
 
 	return (
 		<ClayModal center observer={observer}>

@@ -35,6 +35,15 @@ import ModalDXPCActivationStatus from '../../ModalDXPCActivationStatus';
 import AlreadySubmittedFormModal from '../AlreadySubmittedModal';
 import ActivationStatusLayout from '../Layout';
 
+const submittedModalTexts = {
+	paragraph:
+		'Return to the product activation page to view the current Activation Status',
+	subtitle: `We'll need a few details to finish building your DXP
+	environment(s).`,
+	text: 'Another user already submitted the DXP Cloud activation request.',
+	title: 'Set up DXP Cloud',
+};
+
 const SetupDXPCloudModal = ({
 	observer,
 	onClose,
@@ -43,16 +52,6 @@ const SetupDXPCloudModal = ({
 	subscriptionGroupId,
 }) => {
 	const [formAlreadySubmitted, setFormAlreadySubmitted] = useState(false);
-
-	const submittedModalTexts = {
-		paragraph:
-			'Return to the product activation page to view the current Activation Status',
-		subtitle: `We'll need a few details to finish building your DXP
-		environment(s).`,
-		text:
-			'Another user already submitted the DXP Cloud activation request.',
-		title: 'Set up DXP Cloud',
-	};
 
 	return (
 		<ClayModal center observer={observer}>

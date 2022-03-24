@@ -32,7 +32,6 @@ definition {
 	test LearningToRankSmoke {
 		property elastic.override.version = "7.13.4";
 		property elasticsearch.ltr.enabled = "true";
-		property portal.upstream = "quarantine";
 		property remote.elasticsearch.enabled = "true";
 		property test.name.skip.portal.instance = "Elasticsearch7EE#LearningToRankSmoke";
 

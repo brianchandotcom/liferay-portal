@@ -100,6 +100,12 @@ public class AccountGroupRelLocalServiceImpl
 	}
 
 	@Override
+	public int countAccountGroupRels(String className, long classPK) {
+		return accountGroupRelPersistence.countByC_C(
+			_classNameLocalService.getClassNameId(className), classPK);
+	}
+
+	@Override
 	public void deleteAccountGroupRels(
 			long accountGroupId, String className, long[] classPKs)
 		throws PortalException {

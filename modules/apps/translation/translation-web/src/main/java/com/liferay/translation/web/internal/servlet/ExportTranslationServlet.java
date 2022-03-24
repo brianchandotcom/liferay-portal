@@ -83,7 +83,8 @@ public class ExportTranslationServlet extends HttpServlet {
 
 			TranslationRequestHelper translationRequestHelper =
 				new TranslationRequestHelper(
-					httpServletRequest, _infoItemServiceTracker);
+					httpServletRequest, _infoItemServiceTracker,
+					_segmentsExperienceLocalService);
 
 			String className = translationRequestHelper.getClassName(
 				segmentsExperienceIds);

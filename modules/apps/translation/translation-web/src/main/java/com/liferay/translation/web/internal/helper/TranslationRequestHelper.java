@@ -20,10 +20,16 @@ import com.liferay.info.item.InfoItemServiceTracker;
 import com.liferay.info.item.translator.InfoItemIdentifierTranslator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.model.SegmentsExperienceModel;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.PortletRequest;
 
@@ -36,19 +42,22 @@ public class TranslationRequestHelper {
 
 	public TranslationRequestHelper(
 		HttpServletRequest httpServletRequest,
-		InfoItemServiceTracker infoItemServiceTracker) {
+		InfoItemServiceTracker infoItemServiceTracker,
+		SegmentsExperienceLocalService segmentsExperienceLocalService) {
 
 		_httpServletRequest = httpServletRequest;
 		_infoItemServiceTracker = infoItemServiceTracker;
+		_segmentsExperienceLocalService = segmentsExperienceLocalService;
 	}
 
 	public TranslationRequestHelper(
 		InfoItemServiceTracker infoItemServiceTracker,
-		PortletRequest portletRequest) {
+		PortletRequest portletRequest,
+		SegmentsExperienceLocalService segmentsExperienceLocalService) {
 
 		this(
 			PortalUtil.getHttpServletRequest(portletRequest),
-			infoItemServiceTracker);
+			infoItemServiceTracker, segmentsExperienceLocalService);
 	}
 
 	public String getClassName(long segmentsExperienceId) {
@@ -98,6 +107,10 @@ public class TranslationRequestHelper {
 				 SegmentsExperienceConstants.ID_DEFAULT))) {
 
 			return getModelClassPKs();
+		}
+
+		if (_isExportAllSegmentsExperiences(segmentsExperienceIds)) {
+			return _getSegmentsExperienceIds(getModelClassPKs());
 		}
 
 		return segmentsExperienceIds;
@@ -168,11 +181,39 @@ public class TranslationRequestHelper {
 		return _modelClassPKs;
 	}
 
+	private long[] _getSegmentsExperienceIds(long[] classPKs) {
+		List<SegmentsExperience> segmentsExperiences = new ArrayList<>();
+
+		for (long classPK : classPKs) {
+			segmentsExperiences.addAll(
+				_segmentsExperienceLocalService.getSegmentsExperiences(
+					_groupId, getClassNameId(), classPK));
+		}
+
+		return ListUtil.toLongArray(
+			segmentsExperiences,
+			SegmentsExperienceModel::getSegmentsExperienceId);
+	}
+
+	private boolean _isExportAllSegmentsExperiences(
+		long[] segmentsExperienceIds) {
+
+		if ((segmentsExperienceIds.length == 1) &&
+			(segmentsExperienceIds[0] == -1)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private Long _classNameId;
 	private Long _groupId;
 	private final HttpServletRequest _httpServletRequest;
 	private final InfoItemServiceTracker _infoItemServiceTracker;
 	private String _modelClassName;
 	private long[] _modelClassPKs;
+	private final SegmentsExperienceLocalService
+		_segmentsExperienceLocalService;
 
 }

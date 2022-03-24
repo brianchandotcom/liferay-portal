@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.translation.constants.TranslationPortletKeys;
 import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.web.internal.configuration.FFBulkTranslationConfiguration;
@@ -69,7 +70,8 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 
 			TranslationRequestHelper translationRequestHelper =
 				new TranslationRequestHelper(
-					_infoItemServiceTracker, renderRequest);
+					_infoItemServiceTracker, renderRequest,
+					_segmentsExperienceLocalService);
 
 			renderRequest.setAttribute(
 				ImportTranslationDisplayContext.class.getName(),
@@ -151,6 +153,9 @@ public class ImportTranslationMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
 	private TranslationEntryLocalService _translationEntryLocalService;

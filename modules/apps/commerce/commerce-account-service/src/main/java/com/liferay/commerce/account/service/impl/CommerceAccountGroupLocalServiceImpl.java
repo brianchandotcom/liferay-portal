@@ -126,6 +126,15 @@ public class CommerceAccountGroupLocalServiceImpl
 				CommerceAccountConstants.ACCOUNT_ID_GUEST, serviceContext);
 	}
 
+	@Override
+	public int countCommerceAccountGroupsByCommerceAccountId(
+		long commerceAccountId) {
+
+		return commerceAccountGroupCommerceAccountRelLocalService.
+			countCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
+				commerceAccountId);
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
@@ -225,13 +234,14 @@ public class CommerceAccountGroupLocalServiceImpl
 
 	@Override
 	public List<CommerceAccountGroup>
-		getCommerceAccountGroupsByCommerceAccountId(long commerceAccountId) {
+		getCommerceAccountGroupsByCommerceAccountId(
+			long commerceAccountId, int start, int end) {
 
 		List<CommerceAccountGroupCommerceAccountRel>
 			commerceAccountGroupCommerceAccountRels =
 				commerceAccountGroupCommerceAccountRelLocalService.
-					getCommerceAccountGroupCommerceAccountRels(
-						commerceAccountId);
+					getCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
+						commerceAccountId, start, end);
 
 		if (commerceAccountGroupCommerceAccountRels.isEmpty()) {
 			return new ArrayList<>();

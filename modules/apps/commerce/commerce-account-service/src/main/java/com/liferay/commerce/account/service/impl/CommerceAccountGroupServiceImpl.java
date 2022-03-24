@@ -55,6 +55,23 @@ public class CommerceAccountGroupServiceImpl
 	}
 
 	@Override
+	public int countCommerceAccountGroupsByCommerceAccountId(
+			long commerceAccountId)
+		throws PortalException {
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceAccountGroupModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null,
+			CommerceAccountActionKeys.VIEW_COMMERCE_ACCOUNT_GROUPS);
+
+		return commerceAccountGroupLocalService.
+			countCommerceAccountGroupsByCommerceAccountId(commerceAccountId);
+	}
+
+	@Override
 	public void deleteCommerceAccountGroup(long commerceAccountGroupId)
 		throws PortalException {
 
@@ -110,6 +127,25 @@ public class CommerceAccountGroupServiceImpl
 
 		return commerceAccountGroupLocalService.getCommerceAccountGroups(
 			companyId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommerceAccountGroup>
+			getCommerceAccountGroupsByCommerceAccountId(
+				long commerceAccountId, int start, int end)
+		throws PortalException {
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceAccountGroupModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null,
+			CommerceAccountActionKeys.VIEW_COMMERCE_ACCOUNT_GROUPS);
+
+		return commerceAccountGroupLocalService.
+			getCommerceAccountGroupsByCommerceAccountId(
+				commerceAccountId, start, end);
 	}
 
 	@Override

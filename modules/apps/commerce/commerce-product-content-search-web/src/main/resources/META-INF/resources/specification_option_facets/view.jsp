@@ -84,7 +84,7 @@ CPSpecificationOptionFacetsDisplayContext cpSpecificationOptionFacetsDisplayCont
 							title="<%= panelTitle %>"
 						>
 							<aui:fieldset>
-								<ul class="list-unstyled">
+								<ul class="list-unstyled" data-qa-id="<%= panelTitle %>">
 
 									<%
 									int i = 0;

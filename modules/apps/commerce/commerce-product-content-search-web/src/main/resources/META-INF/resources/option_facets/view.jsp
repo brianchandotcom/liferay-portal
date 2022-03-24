@@ -95,7 +95,7 @@ CPOptionsSearchFacetDisplayContext cpOptionsSearchFacetDisplayContext = (CPOptio
 							>
 
 							<aui:fieldset>
-								<ul class="list-unstyled">
+								<ul class="list-unstyled" data-qa-id="<%= HtmlUtil.escape(cpOptionsSearchFacetDisplayContext.getCPOptionName(companyId, facet.getFieldId())) %>">
 
 								<%
 								int i = 0;

@@ -20,18 +20,12 @@
 Menu menu = (Menu)request.getAttribute("liferay-ui:menu:menu");
 
 List<MenuItem> menuItems = menu.getMenuItems();
-
-Optional<MenuItem> itemWithIcon = menuItems.stream(
-).filter(
-	menuItem -> menuItem.getIcon() != null
-).findFirst();
 %>
 
 <liferay-ui:icon-menu
 	cssClass="<%= menu.getCssClass() %>"
 	data="<%= menu.getData() %>"
 	direction="<%= menu.getDirection() %>"
-	dropdownCssClass='<%= itemWithIcon.isPresent() ? "dropdown-menu-indicator-start" : StringPool.BLANK %>'
 	extended="<%= menu.isExtended() %>"
 	icon="<%= menu.getIcon() %>"
 	markupView="<%= menu.getMarkupView() %>"

@@ -91,7 +91,6 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 			_cssClass = null;
 			_data = null;
 			_direction = "left";
-			_dropdownCssClass = null;
 			_endPage = null;
 			_extended = true;
 			_icon = null;
@@ -174,10 +173,6 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
 	public void setDisabled(boolean disabled) {
 		_disabled = disabled;
-	}
-
-	public void setDropdownCssClass(String dropdownCssClass) {
-		_dropdownCssClass = dropdownCssClass;
 	}
 
 	public void setEndPage(String endPage) {
@@ -480,7 +475,6 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		httpServletRequest.setAttribute("liferay-ui:icon-menu:data", _data);
 		httpServletRequest.setAttribute(
 			"liferay-ui:icon-menu:direction", _direction);
-		httpServletRequest.setAttribute("liferay-ui:icon-menu:dropdownCssClass", _dropdownCssClass);
 		httpServletRequest.setAttribute("liferay-ui:icon-menu:icon", _icon);
 		httpServletRequest.setAttribute("liferay-ui:icon-menu:id", _id);
 
@@ -514,7 +508,6 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 	private Map<String, Object> _data;
 	private String _direction = "left";
 	private boolean _disabled;
-	private String _dropdownCssClass;
 	private String _endPage;
 	private boolean _extended = true;
 	private String _icon;

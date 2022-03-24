@@ -17,5 +17,3 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.Menu" %>
-
-<%@ page import="java.util.Optional" %>

@@ -20,7 +20,6 @@
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:cssClass"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:icon-menu:data");
 String direction = (String)request.getAttribute("liferay-ui:icon-menu:direction");
-String dropdownCssClass = (String)request.getAttribute("liferay-ui:icon-menu:dropdownCssClass");
 String icon = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:icon"));
 String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon-menu:id"));
 String message = (String)request.getAttribute("liferay-ui:icon-menu:message");
@@ -58,10 +57,10 @@ if (Validator.isNull(icon)) {
 
 	<c:choose>
 		<c:when test="<%= scroll %>">
-			<div class="dropdown-menu dropdown-menu-<%= direction %> <%= dropdownCssClass %>">
+			<div class="dropdown-menu dropdown-menu-<%= direction %>">
 				<ul class="inline-scroller">
 		</c:when>
 		<c:otherwise>
-			<ul class="dropdown-menu dropdown-menu-<%= direction %> <%= dropdownCssClass %>">
+			<ul class="dropdown-menu dropdown-menu-<%= direction %>">
 		</c:otherwise>
 	</c:choose>

@@ -36,7 +36,7 @@ export default function useFilters(setFilterTerm, productName) {
 				(accumulatorInstanceSizesFilter, instanceSize, index) => {
 					return `${accumulatorInstanceSizesFilter}${
 						index > 0 ? ' or ' : ''
-					}instanceSize eq 'Sizing ${instanceSize}'`;
+					}contains(sizing,'${instanceSize}')`;
 				},
 				''
 			)})`;
@@ -169,27 +169,43 @@ export default function useFilters(setFilterTerm, productName) {
 			const filtersKeyType = [];
 
 			if (
-				!isNaN(filters.keyType.value.hasOnPremise) &&
-				filters.keyType.value.hasOnPremise
+				!filters.keyType.value.hasOnPremise ||
+				!(
+					filters.keyType.value.hasVirtualCluster ||
+					filters.keyType.value.hasCluster
+				)
 			) {
-				hasFilterPill = true;
-				filtersKeyType.push("licenseEntryType ne 'virtual-cluster'");
-			}
+				if (
+					!isNaN(filters.keyType.value.hasOnPremise) &&
+					filters.keyType.value.hasOnPremise
+				) {
+					hasFilterPill = true;
+					filtersKeyType.push(
+						"not contains(licenseEntryType, 'cluster')"
+					);
+				}
 
-			if (
-				!isNaN(filters.keyType.value.hasVirtualCluster) &&
-				filters.keyType.value.hasVirtualCluster
-			) {
-				hasFilterPill = true;
-				filtersKeyType.push("licenseEntryType eq 'virtual-cluster'");
-			}
+				if (
+					!isNaN(filters.keyType.value.hasVirtualCluster) &&
+					filters.keyType.value.hasVirtualCluster
+				) {
+					hasFilterPill = true;
+					filtersKeyType.push(
+						"contains(licenseEntryType, 'virtual')"
+					);
+				}
 
-			if (
-				!isNaN(filters.keyType.value.hasCluster) &&
-				filters.keyType.value.hasCluster
-			) {
+				if (
+					!isNaN(filters.keyType.value.hasCluster) &&
+					filters.keyType.value.hasCluster
+				) {
+					hasFilterPill = true;
+					filtersKeyType.push(
+						"contains(licenseEntryType, 'cluster')"
+					);
+				}
+			} else {
 				hasFilterPill = true;
-				filtersKeyType.push("licenseEntryType eq 'cluster'");
 			}
 
 			if (filters.keyType.value.maxNodes) {

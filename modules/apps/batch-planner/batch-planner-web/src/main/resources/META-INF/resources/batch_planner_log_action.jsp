@@ -46,11 +46,7 @@ BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)resultRo
 		/>
 	</c:if>
 
-	<%
-	String batchPlannerLogDisplayAction = batchPlannerLogDisplay.getAction();
-	%>
-
-	<c:if test='<%= (batchPlannerLogDisplay.getStatus() == 3) && batchPlannerLogDisplayAction.equals("Import") %>'>
+	<c:if test="<%= batchPlannerLogDisplay.isStatusCompleted() && !batchPlannerLogDisplay.isExport() %>">
 		<liferay-ui:icon
 			id='<%= "downloadImportFile" + batchPlannerLogDisplay.getBatchEngineImportTaskERC() %>'
 			message="download-import-file"

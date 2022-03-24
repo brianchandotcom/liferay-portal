@@ -492,7 +492,7 @@ public class PortletPreferencesFactoryImpl
 			ownerId = PortletIdCodec.decodeUserId(originalPortletId);
 			ownerType = PortletKeys.PREFS_OWNER_TYPE_USER;
 		}
-		else if (portlet.isPreferencesUniquePerLayout()) {
+		else if (portlet.isPreferencesUniquePerLayout() && plid != 0) {
 			ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
 		}
 		else if (portlet.isPreferencesOwnedByGroup()) {

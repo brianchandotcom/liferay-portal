@@ -133,9 +133,8 @@ public class KBDisplayExportImportPortletPreferencesProcessor
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							StringBundler.concat(
-								"KB Display portlet with ID ",
-								portletDataContext.getPortletId(),
-								" refers to an inexistent root folder: ",
+								"Portlet ", portletDataContext.getPortletId(),
+								" refers to an invalid root folder ID ",
 								resourcePrimKey));
 					}
 				}

@@ -118,6 +118,32 @@ public class Main {
 		}
 	}
 
+	private void _addTestrayFactor(
+			long testrayRunId, long testrayCategoryId,
+			String testrayFactorCategoryName, String testrayFactorOptionName,
+			long testrayOptionId)
+		throws Exception {
+
+		_postObjectEntry(
+			HashMapBuilder.put(
+				"classNameId", String.valueOf(testrayRunId)
+			).put(
+				"classPK", String.valueOf(testrayRunId)
+			).put(
+				"r_factorCategoryToFactors_c_factorCategoryId",
+				String.valueOf(testrayCategoryId)
+			).put(
+				"r_factorOptionToFactors_c_factorOptionId",
+				String.valueOf(testrayOptionId)
+			).put(
+				"testrayFactorCategoryName", testrayFactorCategoryName
+			).put(
+				"testrayFactorOptionName",
+				String.valueOf(testrayFactorOptionName)
+			).build(),
+			null, "factors");
+	}
+
 	private String _getAttributeValue(String attributeName, Node node) {
 		NamedNodeMap namedNodeMap = node.getAttributes();
 

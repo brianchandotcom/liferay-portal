@@ -28,11 +28,11 @@ definition {
 				birthdayDay = "10",
 				birthdayMonth = "10",
 				birthdayYear = "2020",
+				jobTitle = "lawyer",
 				userEmailAddress = "user1@liferay.com",
 				userFirstName = "user1",
 				userLastName = "user1",
-				userScreenName = "user1",
-				jobTitle = "lawyer");
+				userScreenName = "user1");
 		}
 
 		task ("Connect the DXP to AC") {
@@ -187,8 +187,6 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8938 | Test Summary: Order an Individual's Details"
 	@priority = "3"
 	test OrderIndividualDetails {
-		property portal.upstream = "quarantine";
-
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "user1@liferay.com",

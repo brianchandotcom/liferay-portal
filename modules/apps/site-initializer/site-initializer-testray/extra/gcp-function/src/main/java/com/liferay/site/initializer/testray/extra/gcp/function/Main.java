@@ -273,6 +273,20 @@ public class Main {
 			testrayBuildName, "builds");
 	}
 
+	private long _getTestrayFactorCategoryId(String testrayFactorCategoryName)
+		throws Exception {
+
+		long testrayFactorCategoryId = _getObjectEntryId(
+			testrayFactorCategoryName, "factorcategories");
+
+		if (testrayFactorCategoryId != 0) {
+			return testrayFactorCategoryId;
+		}
+
+		return _postObjectEntry(
+			null, testrayFactorCategoryName, "factorcategories");
+	}
+
 	private long _getTestrayProductVersionId(
 			long testrayProjectId, String testrayProductVersionName)
 		throws Exception {

@@ -16,11 +16,10 @@ package com.liferay.analytics.reports.web.internal.portlet.action.test.util;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.util.HttpImpl;
-
-import java.io.IOException;
+import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Cristina González
@@ -30,10 +29,17 @@ public class MockHttpUtil {
 	public static Http geHttp(
 		Map<String, UnsafeSupplier<String, Exception>> mockRequest) {
 
-		return new HttpImpl() {
+		return (Http)ProxyUtil.newProxyInstance(
+			Http.class.getClassLoader(), new Class<?>[] {Http.class},
+			(proxy, method, args) -> {
+				if (!Objects.equals("URLtoString", method.getName()) ||
+					(args.length != 1) || !(args[0] instanceof Http.Options)) {
 
-			@Override
-			public String URLtoString(Options options) throws IOException {
+					return null;
+				}
+
+				Http.Options options = (Http.Options)args[0];
+
 				try {
 					String location = options.getLocation();
 
@@ -42,7 +48,7 @@ public class MockHttpUtil {
 						_getLastPosition(location));
 
 					if (mockRequest.containsKey(endpoint)) {
-						Response httpResponse = new Response();
+						Http.Response httpResponse = new Http.Response();
 
 						httpResponse.setResponseCode(200);
 
@@ -54,7 +60,7 @@ public class MockHttpUtil {
 						return unsafeSupplier.get();
 					}
 
-					Response httpResponse = new Response();
+					Http.Response httpResponse = new Http.Response();
 
 					httpResponse.setResponseCode(400);
 
@@ -63,7 +69,7 @@ public class MockHttpUtil {
 					return "error";
 				}
 				catch (Throwable throwable) {
-					Response httpResponse = new Response();
+					Http.Response httpResponse = new Http.Response();
 
 					httpResponse.setResponseCode(400);
 
@@ -71,9 +77,7 @@ public class MockHttpUtil {
 
 					throw new RuntimeException(throwable);
 				}
-			}
-
-		};
+			});
 	}
 
 	private static int _getLastPosition(String location) {

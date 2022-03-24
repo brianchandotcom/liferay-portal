@@ -3,9 +3,30 @@ definition {
 	macro assertNavTabVisualContent {
 		Navigator.gotoNavTab(navTab = "${tab}");
 
-		OcularAssertElementImage(
-			locator1 = "ClaySamplePortlet#CLAY_SECTION",
-			value1 = "ClaySmoke/CanRenderUI/${tab}.png");
+		if ("${tab}" == "Navigation Bars") {
+			OcularAssertElementImage(
+				locator1 = "ClaySamplePortlet#CLAY_SECTION",
+				value1 = "ClaySmoke/CanRenderUI/NavigationBars.png",
+				value2 = "70");
+		}
+		else if ("${tab}" == "Pagination Bars") {
+			OcularAssertElementImage(
+				locator1 = "ClaySamplePortlet#CLAY_SECTION",
+				value1 = "ClaySmoke/CanRenderUI/PaginationBars.png",
+				value2 = "70");
+		}
+		else if ("${tab}" == "Progress Bars") {
+			OcularAssertElementImage(
+				locator1 = "ClaySamplePortlet#CLAY_SECTION",
+				value1 = "ClaySmoke/CanRenderUI/ProgressBars.png",
+				value2 = "80");
+		}
+		else {
+			OcularAssertElementImage(
+				locator1 = "ClaySamplePortlet#CLAY_SECTION",
+				value1 = "ClaySmoke/CanRenderUI/${tab}.png",
+				value2 = "80");
+		}
 	}
 
 }

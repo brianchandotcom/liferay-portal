@@ -67,6 +67,8 @@ public class LayoutStructure {
 			Map<String, LayoutStructureItem> layoutStructureItems =
 				new HashMap<>(itemsJSONObject.length());
 
+			Set<String> deletedItemIds = new HashSet<>();
+
 			for (String key : itemsJSONObject.keySet()) {
 				LayoutStructureItem layoutStructureItem =
 					LayoutStructureItem.of(itemsJSONObject.getJSONObject(key));
@@ -104,14 +106,19 @@ public class LayoutStructure {
 						DeletedLayoutStructureItem.of(
 							(JSONObject)deletedLayoutStructureItemJSONObject);
 
+					deletedItemIds.add(deletedLayoutStructureItem.getItemId());
+					deletedItemIds.addAll(
+						deletedLayoutStructureItem.getChildrenItemIds());
+
 					deletedLayoutStructureItems.put(
 						deletedLayoutStructureItem.getItemId(),
 						deletedLayoutStructureItem);
 				});
 
 			return new LayoutStructure(
-				deletedLayoutStructureItems, fragmentLayoutStructureItems,
-				layoutStructureItems, rootItemsJSONObject.getString("main"));
+				deletedItemIds, deletedLayoutStructureItems,
+				fragmentLayoutStructureItems, layoutStructureItems,
+				rootItemsJSONObject.getString("main"));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -127,6 +134,7 @@ public class LayoutStructure {
 		_deletedLayoutStructureItems = new HashMap<>();
 		_layoutStructureItems = new HashMap<>();
 		_mainItemId = StringPool.BLANK;
+		_deletedItemIds = new HashSet<>();
 	}
 
 	public LayoutStructureItem addCollectionItemLayoutStructureItem(
@@ -441,6 +449,10 @@ public class LayoutStructure {
 		return HashUtil.hash(0, getMainItemId());
 	}
 
+	public boolean isItemMarkedForDeletion(String itemId) {
+		return _deletedItemIds.contains(itemId);
+	}
+
 	public void markLayoutStructureItemForDeletion(
 		String itemId, List<String> portletIds) {
 
@@ -451,6 +463,8 @@ public class LayoutStructure {
 			throw new UnsupportedOperationException(
 				"Removing the drop zone of a layout structure is not allowed");
 		}
+
+		DeletedLayoutStructureItem deletedLayoutStructureItem = null;
 
 		if (Validator.isNotNull(layoutStructureItem.getParentItemId())) {
 			LayoutStructureItem parentLayoutStructureItem =
@@ -464,17 +478,18 @@ public class LayoutStructure {
 
 			childrenItemIds.remove(itemId);
 
-			_deletedLayoutStructureItems.put(
-				itemId,
-				new DeletedLayoutStructureItem(
-					itemId, portletIds, position, _getChildrenItemIds(itemId)));
+			deletedLayoutStructureItem = new DeletedLayoutStructureItem(
+				itemId, portletIds, position, _getChildrenItemIds(itemId));
 		}
 		else {
-			_deletedLayoutStructureItems.put(
-				itemId,
-				new DeletedLayoutStructureItem(
-					itemId, portletIds, 0, _getChildrenItemIds(itemId)));
+			deletedLayoutStructureItem = new DeletedLayoutStructureItem(
+				itemId, portletIds, 0, _getChildrenItemIds(itemId));
 		}
+
+		_deletedLayoutStructureItems.put(itemId, deletedLayoutStructureItem);
+
+		_deletedItemIds.add(itemId);
+		_deletedItemIds.addAll(deletedLayoutStructureItem.getChildrenItemIds());
 	}
 
 	public LayoutStructureItem moveLayoutStructureItem(
@@ -577,6 +592,10 @@ public class LayoutStructure {
 			deletedLayoutStructureItem.getItemId());
 
 		_deletedLayoutStructureItems.remove(itemId);
+
+		_deletedItemIds.remove(itemId);
+		_deletedItemIds.removeAll(
+			deletedLayoutStructureItem.getChildrenItemIds());
 	}
 
 	public LayoutStructureItem updateItemConfig(
@@ -709,11 +728,13 @@ public class LayoutStructure {
 	}
 
 	private LayoutStructure(
+		Set<String> deletedItemIds,
 		Map<String, DeletedLayoutStructureItem> deletedLayoutStructureItems,
 		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems,
 		Map<String, LayoutStructureItem> layoutStructureItems,
 		String mainItemId) {
 
+		_deletedItemIds = deletedItemIds;
 		_deletedLayoutStructureItems = deletedLayoutStructureItems;
 		_fragmentLayoutStructureItems = fragmentLayoutStructureItems;
 		_layoutStructureItems = layoutStructureItems;
@@ -948,6 +969,7 @@ public class LayoutStructure {
 
 	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
 
+	private final Set<String> _deletedItemIds;
 	private final Map<String, DeletedLayoutStructureItem>
 		_deletedLayoutStructureItems;
 	private final Map<Long, LayoutStructureItem> _fragmentLayoutStructureItems;

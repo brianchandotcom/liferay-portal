@@ -56,6 +56,8 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 			message="edit-default-values"
 			url="<%= editDDMStructureDefaultValuesURL %>"
 		/>
+
+		<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
 	</c:if>
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.VIEW) %>">
@@ -69,7 +71,37 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 			message="manage-templates"
 			url="<%= manageViewURL %>"
 		/>
+
+		<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
 	</c:if>
+
+	<%
+	Group scopeGroup = themeDisplay.getScopeGroup();
+	%>
+
+	<c:if test="<%= (!scopeGroup.hasLocalOrRemoteStagingGroup() || scopeGroup.isStagingGroup()) && DDMStructurePermission.containsAddDDMStructurePermission(permissionChecker, scopeGroupId, ddmStructure.getClassNameId()) %>">
+		<portlet:renderURL var="copyDDMStructureURL">
+			<portlet:param name="mvcPath" value="/copy_data_definition.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			message="copy"
+			url="<%= copyDDMStructureURL %>"
+		/>
+	</c:if>
+
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/journal/export_data_definition" var="exportDataDefinitionURL">
+		<portlet:param name="dataDefinitionId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
+	</liferay-portlet:resourceURL>
+
+	<liferay-ui:icon
+		message="export-as-json"
+		url="<%= exportDataDefinitionURL %>"
+	/>
+
+	<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
@@ -88,31 +120,7 @@ DDMStructure ddmStructure = (DDMStructure)row.getObject();
 		/>
 	</c:if>
 
-	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="/journal/export_data_definition" var="exportDataDefinitionURL">
-		<portlet:param name="dataDefinitionId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
-	</liferay-portlet:resourceURL>
-
-	<liferay-ui:icon
-		message="export-as-json"
-		url="<%= exportDataDefinitionURL %>"
-	/>
-
-	<%
-	Group scopeGroup = themeDisplay.getScopeGroup();
-	%>
-
-	<c:if test="<%= (!scopeGroup.hasLocalOrRemoteStagingGroup() || scopeGroup.isStagingGroup()) && DDMStructurePermission.containsAddDDMStructurePermission(permissionChecker, scopeGroupId, ddmStructure.getClassNameId()) %>">
-		<portlet:renderURL var="copyDDMStructureURL">
-			<portlet:param name="mvcPath" value="/copy_data_definition.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructure.getStructureId()) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon
-			message="copy"
-			url="<%= copyDDMStructureURL %>"
-		/>
-	</c:if>
+	<li aria-hidden="true" class="dropdown-divider" role="presentation"></li>
 
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.DELETE) %>">
 		<portlet:actionURL copyCurrentRenderParameters="<%= true %>" name="/journal/delete_data_definition" var="deleteURL">

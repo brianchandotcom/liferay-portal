@@ -25,6 +25,7 @@ import com.liferay.commerce.pricing.exception.CommerceUndefinedBasePriceListExce
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsException;
 import com.liferay.commerce.product.exception.CPInstanceJsonException;
+import com.liferay.commerce.product.exception.CPInstanceMaxPriceValueException;
 import com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUuidException;
 import com.liferay.commerce.product.exception.CPInstanceSkuException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
@@ -122,6 +123,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				throwable instanceof
 					CPDefinitionIgnoreSKUCombinationsException ||
 				throwable instanceof CPInstanceJsonException ||
+				throwable instanceof CPInstanceMaxPriceValueException ||
 				throwable instanceof
 					CPInstanceReplacementCPInstanceUuidException ||
 				throwable instanceof CPInstanceSkuException ||
@@ -441,6 +443,21 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				replacementCProductId, discontinuedDateMonth,
 				discontinuedDateDay, discontinuedDateYear, serviceContext);
 		}
+
+		// Update pricing info
+
+		BigDecimal maxValue = BigDecimal.valueOf(999999999.99);
+
+		if ((price.compareTo(maxValue) > 0) ||
+			(promoPrice.compareTo(maxValue) > 0) ||
+			(cost.compareTo(maxValue) > 0)) {
+
+			throw new CPInstanceMaxPriceValueException();
+		}
+
+		cpInstance = _cpInstanceService.updatePricingInfo(
+			cpInstance.getCPInstanceId(), price, promoPrice, cost,
+			serviceContext);
 
 		if (Objects.equals(
 				_getCommercePricingConfigurationKey(),

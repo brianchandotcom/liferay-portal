@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.type.virtual.order.content.web.internal.portlet.template;
+package com.liferay.commerce.product.type.virtual.order.content.web.internal.portlet.display.template;
 
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.type.virtual.order.constants.CommerceVirtualOrderPortletKeys;

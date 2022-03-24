@@ -448,7 +448,11 @@ public class GetCollectionFieldMVCResourceCommand
 
 			InfoField infoField = infoFieldValue.getInfoField();
 
-			displayObjectJSONObject.put(infoField.getName(), value);
+			displayObjectJSONObject.put(
+				infoField.getName(), value
+			).put(
+				infoField.getUniqueId(), value
+			);
 		}
 
 		InfoItemReference infoItemReference =

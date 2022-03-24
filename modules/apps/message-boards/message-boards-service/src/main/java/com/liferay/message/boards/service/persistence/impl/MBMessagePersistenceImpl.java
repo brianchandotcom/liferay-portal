@@ -18352,6 +18352,331 @@ public class MBMessagePersistenceImpl
 	private static final String _FINDER_COLUMN_C_C_S_STATUS_2 =
 		"mbMessage.status = ?";
 
+	private FinderPath _finderPathFetchByC_C_G_ERC;
+	private FinderPath _finderPathCountByC_C_G_ERC;
+
+	/**
+	 * Returns the message-boards message where groupId = &#63; and classNameId = &#63; and classPK = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching message-boards message
+	 * @throws NoSuchMessageException if a matching message-boards message could not be found
+	 */
+	@Override
+	public MBMessage findByC_C_G_ERC(
+			long groupId, long classNameId, long classPK,
+			String externalReferenceCode)
+		throws NoSuchMessageException {
+
+		MBMessage mbMessage = fetchByC_C_G_ERC(
+			groupId, classNameId, classPK, externalReferenceCode);
+
+		if (mbMessage == null) {
+			StringBundler sb = new StringBundler(10);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("groupId=");
+			sb.append(groupId);
+
+			sb.append(", classNameId=");
+			sb.append(classNameId);
+
+			sb.append(", classPK=");
+			sb.append(classPK);
+
+			sb.append(", externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchMessageException(sb.toString());
+		}
+
+		return mbMessage;
+	}
+
+	/**
+	 * Returns the message-boards message where groupId = &#63; and classNameId = &#63; and classPK = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
+	 */
+	@Override
+	public MBMessage fetchByC_C_G_ERC(
+		long groupId, long classNameId, long classPK,
+		String externalReferenceCode) {
+
+		return fetchByC_C_G_ERC(
+			groupId, classNameId, classPK, externalReferenceCode, true);
+	}
+
+	/**
+	 * Returns the message-boards message where groupId = &#63; and classNameId = &#63; and classPK = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
+	 */
+	@Override
+	public MBMessage fetchByC_C_G_ERC(
+		long groupId, long classNameId, long classPK,
+		String externalReferenceCode, boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			MBMessage.class);
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache && productionMode) {
+			finderArgs = new Object[] {
+				groupId, classNameId, classPK, externalReferenceCode
+			};
+		}
+
+		Object result = null;
+
+		if (useFinderCache && productionMode) {
+			result = finderCache.getResult(
+				_finderPathFetchByC_C_G_ERC, finderArgs);
+		}
+
+		if (result instanceof MBMessage) {
+			MBMessage mbMessage = (MBMessage)result;
+
+			if ((groupId != mbMessage.getGroupId()) ||
+				(classNameId != mbMessage.getClassNameId()) ||
+				(classPK != mbMessage.getClassPK()) ||
+				!Objects.equals(
+					externalReferenceCode,
+					mbMessage.getExternalReferenceCode())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_SQL_SELECT_MBMESSAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_G_ERC_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_G_ERC_CLASSNAMEID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_G_ERC_CLASSPK_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_C_G_ERC_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_C_C_G_ERC_EXTERNALREFERENCECODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(classNameId);
+
+				queryPos.add(classPK);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				List<MBMessage> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache && productionMode) {
+						finderCache.putResult(
+							_finderPathFetchByC_C_G_ERC, finderArgs, list);
+					}
+				}
+				else {
+					MBMessage mbMessage = list.get(0);
+
+					result = mbMessage;
+
+					cacheResult(mbMessage);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (MBMessage)result;
+		}
+	}
+
+	/**
+	 * Removes the message-boards message where groupId = &#63; and classNameId = &#63; and classPK = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param externalReferenceCode the external reference code
+	 * @return the message-boards message that was removed
+	 */
+	@Override
+	public MBMessage removeByC_C_G_ERC(
+			long groupId, long classNameId, long classPK,
+			String externalReferenceCode)
+		throws NoSuchMessageException {
+
+		MBMessage mbMessage = findByC_C_G_ERC(
+			groupId, classNameId, classPK, externalReferenceCode);
+
+		return remove(mbMessage);
+	}
+
+	/**
+	 * Returns the number of message-boards messages where groupId = &#63; and classNameId = &#63; and classPK = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching message-boards messages
+	 */
+	@Override
+	public int countByC_C_G_ERC(
+		long groupId, long classNameId, long classPK,
+		String externalReferenceCode) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		boolean productionMode = ctPersistenceHelper.isProductionMode(
+			MBMessage.class);
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		Long count = null;
+
+		if (productionMode) {
+			finderPath = _finderPathCountByC_C_G_ERC;
+
+			finderArgs = new Object[] {
+				groupId, classNameId, classPK, externalReferenceCode
+			};
+
+			count = (Long)finderCache.getResult(finderPath, finderArgs);
+		}
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_COUNT_MBMESSAGE_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_G_ERC_GROUPID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_G_ERC_CLASSNAMEID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_G_ERC_CLASSPK_2);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_C_G_ERC_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_C_C_G_ERC_EXTERNALREFERENCECODE_2);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(groupId);
+
+				queryPos.add(classNameId);
+
+				queryPos.add(classPK);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				count = (Long)query.uniqueResult();
+
+				if (productionMode) {
+					finderCache.putResult(finderPath, finderArgs, count);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_C_G_ERC_GROUPID_2 =
+		"mbMessage.groupId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_G_ERC_CLASSNAMEID_2 =
+		"mbMessage.classNameId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_G_ERC_CLASSPK_2 =
+		"mbMessage.classPK = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_C_C_G_ERC_EXTERNALREFERENCECODE_2 =
+			"mbMessage.externalReferenceCode = ?";
+
+	private static final String
+		_FINDER_COLUMN_C_C_G_ERC_EXTERNALREFERENCECODE_3 =
+			"(mbMessage.externalReferenceCode IS NULL OR mbMessage.externalReferenceCode = '')";
+
 	private FinderPath _finderPathWithPaginationFindByG_C_T_A;
 	private FinderPath _finderPathWithoutPaginationFindByG_C_T_A;
 	private FinderPath _finderPathCountByG_C_T_A;
@@ -21447,6 +21772,14 @@ public class MBMessagePersistenceImpl
 			mbMessage);
 
 		finderCache.putResult(
+			_finderPathFetchByC_C_G_ERC,
+			new Object[] {
+				mbMessage.getGroupId(), mbMessage.getClassNameId(),
+				mbMessage.getClassPK(), mbMessage.getExternalReferenceCode()
+			},
+			mbMessage);
+
+		finderCache.putResult(
 			_finderPathFetchByG_ERC,
 			new Object[] {
 				mbMessage.getGroupId(), mbMessage.getExternalReferenceCode()
@@ -21542,6 +21875,18 @@ public class MBMessagePersistenceImpl
 
 		finderCache.putResult(_finderPathCountByG_US, args, Long.valueOf(1));
 		finderCache.putResult(_finderPathFetchByG_US, args, mbMessageModelImpl);
+
+		args = new Object[] {
+			mbMessageModelImpl.getGroupId(),
+			mbMessageModelImpl.getClassNameId(),
+			mbMessageModelImpl.getClassPK(),
+			mbMessageModelImpl.getExternalReferenceCode()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByC_C_G_ERC, args, Long.valueOf(1));
+		finderCache.putResult(
+			_finderPathFetchByC_C_G_ERC, args, mbMessageModelImpl);
 
 		args = new Object[] {
 			mbMessageModelImpl.getGroupId(),
@@ -22255,6 +22600,11 @@ public class MBMessagePersistenceImpl
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
 
 		_uniqueIndexColumnNames.add(new String[] {"groupId", "urlSubject"});
+
+		_uniqueIndexColumnNames.add(
+			new String[] {
+				"groupId", "classNameId", "classPK", "externalReferenceCode"
+			});
 	}
 
 	/**
@@ -22822,6 +23172,28 @@ public class MBMessagePersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"classNameId", "classPK", "status"}, false);
+
+		_finderPathFetchByC_C_G_ERC = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_G_ERC",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), String.class.getName()
+			},
+			new String[] {
+				"groupId", "classNameId", "classPK", "externalReferenceCode"
+			},
+			true);
+
+		_finderPathCountByC_C_G_ERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C_G_ERC",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), String.class.getName()
+			},
+			new String[] {
+				"groupId", "classNameId", "classPK", "externalReferenceCode"
+			},
+			false);
 
 		_finderPathWithPaginationFindByG_C_T_A = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_T_A",

@@ -140,6 +140,15 @@ public class DLFileEntryServiceWrapper
 	}
 
 	@Override
+	public DLFileEntry fetchFileEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _dlFileEntryService.fetchFileEntryByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
+	@Override
 	public DLFileEntry fetchFileEntryByImageId(long imageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

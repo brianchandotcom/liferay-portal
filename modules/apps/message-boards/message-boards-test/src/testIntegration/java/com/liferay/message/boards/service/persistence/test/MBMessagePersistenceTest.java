@@ -509,6 +509,17 @@ public class MBMessagePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_C_G_ERC() throws Exception {
+		_persistence.countByC_C_G_ERC(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), "");
+
+		_persistence.countByC_C_G_ERC(0L, 0L, 0L, "null");
+
+		_persistence.countByC_C_G_ERC(0L, 0L, 0L, (String)null);
+	}
+
+	@Test
 	public void testCountByG_C_T_A() throws Exception {
 		_persistence.countByG_C_T_A(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
@@ -865,6 +876,27 @@ public class MBMessagePersistenceTest {
 			ReflectionTestUtil.invoke(
 				mbMessage, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "urlSubject"));
+
+		Assert.assertEquals(
+			Long.valueOf(mbMessage.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				mbMessage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
+		Assert.assertEquals(
+			Long.valueOf(mbMessage.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(
+				mbMessage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classNameId"));
+		Assert.assertEquals(
+			Long.valueOf(mbMessage.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(
+				mbMessage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "classPK"));
+		Assert.assertEquals(
+			mbMessage.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				mbMessage, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
 
 		Assert.assertEquals(
 			Long.valueOf(mbMessage.getGroupId()),

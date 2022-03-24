@@ -116,6 +116,7 @@
 			<hint name="max-length">4000</hint>
 		</field>
 		<field name="subject" type="String">
+			<hint name="max-length">255</hint>
 			<sanitize content-type="text/plain" modes="ALL" />
 			<validator name="required" />
 		</field>

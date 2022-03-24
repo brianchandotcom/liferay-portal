@@ -44,6 +44,11 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8849 | Test Summary: Add a CSV data source with an individual whose email matches another individual that already has activities and check that the indiviual details are updated"
 	@priority = "5"
 	test AddCSVWithIndividualWhoseEmailMatchesAnotherIndividualAlreadyHasActivitiesCheckIndividualDetailsUpdated {
+		property portal.upstream = "quarantine";
+
+		// AC Quarantine reason: CSV data source takes too long to update individual details
+		// AC Quarantine: Maybe it is possible to validate in personas
+
 		task ("Add user") {
 			JSONUser.addUser(
 				userEmailAddress = "ac@liferay.com",
@@ -88,6 +93,12 @@ definition {
 			ACUtils.viewNameList(nameList = "ac@liferay.com");
 
 			ACUtils.viewNameListIsNotPresent(nameList = "Farmer");
+		}
+
+		task ("Add a CSV Data Source") {
+			ACSettings.addCSVDataSource(
+				dataSourceName = "CSV Job Title",
+				sourceFileName = "jobTitle.csv");
 		}
 
 		task ("Exit Settings") {

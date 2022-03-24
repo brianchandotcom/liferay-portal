@@ -20,7 +20,7 @@ import com.liferay.portal.configuration.persistence.listener.ConfigurationModelL
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration;
+import com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyCompanyConfiguration;
 
 import java.util.Dictionary;
 import java.util.Locale;
@@ -35,14 +35,14 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Cristina González
+ * @author Yurena Cabrera
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyConfiguration",
+	property = "model.class.name=com.liferay.segments.context.vocabulary.internal.configuration.SegmentsContextVocabularyCompanyConfiguration",
 	service = ConfigurationModelListener.class
 )
-public class SegmentsContextVocabularyConfigurationModelListener
+public class SegmentsContextVocabularyCompanyConfigurationModelListener
 	implements ConfigurationModelListener {
 
 	@Override
@@ -56,7 +56,7 @@ public class SegmentsContextVocabularyConfigurationModelListener
 				ResourceBundleUtil.getString(
 					_getResourceBundle(),
 					"please-enter-a-valid-session-property-name"),
-				SegmentsContextVocabularyConfiguration.class, getClass(),
+				SegmentsContextVocabularyCompanyConfiguration.class, getClass(),
 				properties);
 		}
 
@@ -68,7 +68,7 @@ public class SegmentsContextVocabularyConfigurationModelListener
 				ResourceBundleUtil.getString(
 					_getResourceBundle(),
 					"this-field-is-already-linked-to-one-vocabulary"),
-				SegmentsContextVocabularyConfiguration.class, getClass(),
+				SegmentsContextVocabularyCompanyConfiguration.class, getClass(),
 				properties);
 		}
 	}
@@ -113,7 +113,7 @@ public class SegmentsContextVocabularyConfigurationModelListener
 					_configurationAdmin.listConfigurations(
 						StringBundler.concat(
 							"(", ConfigurationAdmin.SERVICE_FACTORYPID, "=",
-							SegmentsContextVocabularyConfiguration.class.
+							SegmentsContextVocabularyCompanyConfiguration.class.
 								getCanonicalName(),
 							")"))
 				).orElse(
@@ -124,7 +124,7 @@ public class SegmentsContextVocabularyConfigurationModelListener
 					_configurationAdmin.listConfigurations(
 						StringBundler.concat(
 							"(", ConfigurationAdmin.SERVICE_FACTORYPID, "=",
-							SegmentsContextVocabularyConfiguration.class.
+							SegmentsContextVocabularyCompanyConfiguration.class.
 								getCanonicalName(),
 							")"))
 				).orElse(
@@ -142,7 +142,8 @@ public class SegmentsContextVocabularyConfigurationModelListener
 		catch (Exception exception) {
 			throw new ConfigurationModelListenerException(
 				exception.getMessage(),
-				SegmentsContextVocabularyConfiguration.class, getClass(), null);
+				SegmentsContextVocabularyCompanyConfiguration.class, getClass(),
+				null);
 		}
 	}
 

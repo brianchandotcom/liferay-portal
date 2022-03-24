@@ -13,6 +13,7 @@
  */
 
 import {ChangeEventHandler, FormEventHandler} from 'react';
+export declare function invalidateRequired(text: string | void): boolean;
 export default function useForm<T, P = {}, K extends Partial<T> = Partial<T>>({
 	initialValues,
 	onSubmit,

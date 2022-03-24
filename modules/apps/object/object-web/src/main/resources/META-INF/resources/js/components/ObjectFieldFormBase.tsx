@@ -16,7 +16,7 @@ import {ClayToggle} from '@clayui/form';
 import {fetch} from 'frontend-js-web';
 import React, {ChangeEventHandler, ReactNode, useMemo, useState} from 'react';
 
-import useForm, {FormError} from '../hooks/useForm';
+import useForm, {FormError, invalidateRequired} from '../hooks/useForm';
 import {toCamelCase} from '../utils/string';
 import CustomSelect from './Form/CustomSelect/CustomSelect';
 import Input from './Form/Input';
@@ -123,7 +123,7 @@ export default function ObjectFieldFormBase({
 		<>
 			<Input
 				disabled={disabled}
-				error={errors.name || errors.label}
+				error={errors.name}
 				label={Liferay.Language.get('field-name')}
 				name="name"
 				onChange={handleChange}
@@ -187,13 +187,13 @@ export function useObjectFieldForm({
 	const validate = (field: Partial<ObjectField>) => {
 		const errors: ObjectFieldErrors = {};
 
-		const label = field.label?.[defaultLanguageId]?.trim();
+		const label = field.label?.[defaultLanguageId];
 
-		if (!label) {
+		if (invalidateRequired(label)) {
 			errors.label = REQUIRED_MSG;
 		}
 
-		if (!(field.name?.trim() ?? label)) {
+		if (invalidateRequired(field.name ?? label)) {
 			errors.name = REQUIRED_MSG;
 		}
 
@@ -209,7 +209,11 @@ export function useObjectFieldForm({
 				settings[name] = value;
 			});
 
-			if (!settings.acceptedFileExtensions) {
+			if (
+				invalidateRequired(
+					settings.acceptedFileExtensions as string | undefined
+				)
+			) {
 				errors.acceptedFileExtensions = REQUIRED_MSG;
 			}
 			if (!settings.fileSource) {

@@ -137,10 +137,10 @@ SearchContainer<Role> roleSearchContainer = selectRoleManagementToolbarDisplayCo
 				/>
 			</liferay-ui:search-container>
 
-			<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
-				var form = document.<portlet:namespace />selectSiteRoleFm;
+			<aui:script require="frontend-js-web/index as frontendJsWeb">
+				var {delegate} = frontendJsWeb;
 
-				var delegate = delegateModule.default;
+				var form = document.<portlet:namespace />selectSiteRoleFm;
 
 				delegate(form, 'click', '.group-selector-button', (event) => {
 					Liferay.Util.postForm(form, {

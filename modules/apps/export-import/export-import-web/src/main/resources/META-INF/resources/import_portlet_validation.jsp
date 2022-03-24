@@ -123,7 +123,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 	</aui:script>
 </aui:form>
 
-<aui:script require="frontend-js-web/liferay/util/run_scripts_in_element.es as runScriptsInElement">
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	var {runScriptsInElement} = frontendJsWeb;
+
 	var continueButton = document.getElementById(
 		'<portlet:namespace />continueButton'
 	);
@@ -144,7 +146,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 				.then((response) => {
 					exportImportOptions.innerHTML = response;
 
-					runScriptsInElement.default(exportImportOptions);
+					runScriptsInElement(exportImportOptions);
 				});
 		});
 	}

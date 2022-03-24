@@ -183,7 +183,9 @@ if (portletTitleBasedNavigation) {
 	</liferay-ui:search-container>
 </aui:fieldset>
 
-<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	var {delegate} = frontendJsWeb;
+
 	var compareVersionsButton = document.getElementById(
 		'<portlet:namespace />compare'
 	);
@@ -248,8 +250,6 @@ if (portletTitleBasedNavigation) {
 	}
 
 	<portlet:namespace />initRowsChecked();
-
-	var delegate = delegateModule.default;
 
 	delegate(
 		document.body,

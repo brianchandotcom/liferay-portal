@@ -16,7 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:script require="frontend-js-web/liferay/util/run_scripts_in_element.es as runScriptsInElement">
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	var {runScriptsInElement} = frontendJsWeb;
+
 	function handleIframeMessage(event) {
 		if (event.data) {
 			var virtualDocument = document.createElement('html');
@@ -30,7 +32,7 @@
 					virtualBody.innerHTML;
 			}
 
-			runScriptsInElement.default(virtualBody);
+			runScriptsInElement(virtualBody);
 		}
 	}
 

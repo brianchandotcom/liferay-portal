@@ -107,12 +107,12 @@ Hits hits = searchDisplayContext.getHits();
 	</clay:col>
 </clay:row>
 
-<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	var {delegate} = frontendJsWeb;
+
 	var facetNavigation = document.getElementById(
 		'<portlet:namespace />facetNavigation'
 	);
-
-	var delegate = delegateModule.default;
 
 	if (facetNavigation) {
 		delegate(facetNavigation, 'click', '.facet-value a', (event) => {

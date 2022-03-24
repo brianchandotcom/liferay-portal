@@ -209,14 +209,14 @@ else {
 
 					</c:if>
 
-					<aui:script position="inline" require="frontend-js-web/liferay/delegate/delegate.es as delegateModule,frontend-js-web/liferay/util/run_scripts_in_element.es as runScriptsInElement">
+					<aui:script position="inline" require="frontend-js-web/index as frontendJsWeb">
+						var {delegate, runScriptsInElement} = frontendJsWeb;
+
 						var documentTypeMenuList = document.querySelector(
 							'#<portlet:namespace />documentTypeSelector .lfr-menu-list'
 						);
 
 						if (documentTypeMenuList) {
-							var delegate = delegateModule.default;
-
 							delegate(documentTypeMenuList, 'click', 'li a', (event) => {
 								event.preventDefault();
 
@@ -232,7 +232,7 @@ else {
 										if (commonFileMetadataContainer) {
 											commonFileMetadataContainer.innerHTML = response;
 
-											runScriptsInElement.default(commonFileMetadataContainer);
+											runScriptsInElement(commonFileMetadataContainer);
 										}
 
 										var fileNodes = document.querySelectorAll(

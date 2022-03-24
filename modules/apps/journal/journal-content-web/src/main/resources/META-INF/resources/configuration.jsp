@@ -50,15 +50,15 @@
 	</liferay-frontend:edit-form-footer>
 </liferay-frontend:edit-form>
 
-<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	var {delegate} = frontendJsWeb;
+
 	var articlePreview = document.getElementById(
 		'<portlet:namespace />articlePreview'
 	);
 	var assetEntryIdInput = document.getElementById(
 		'<portlet:namespace />assetEntryId'
 	);
-
-	var delegate = delegateModule.default;
 
 	delegate(articlePreview, 'click', '.web-content-selector', (event) => {
 		event.preventDefault();

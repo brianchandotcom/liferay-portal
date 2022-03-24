@@ -19,7 +19,9 @@ String rememberMe = CookieKeys.getCookie(request, CookieKeys.REMEMBER_ME);
 %>
 
 <c:if test="<%= !themeDisplay.isSignedIn() || Validator.isNull(rememberMe) %>">
-	<aui:script require="frontend-js-web/liferay/toast/commands/OpenToast.es as toastCommands">
+	<aui:script require="frontend-js-web/index as frontendJsWeb">
+		var {openToast} = frontendJsWeb;
+
 		AUI().use(
 			'liferay-session',
 			function() {
@@ -38,7 +40,7 @@ String rememberMe = CookieKeys.getCookie(request, CookieKeys.REMEMBER_ME);
 					Liferay.Session.plug(
 						Liferay.SessionDisplay,
 						{
-							openToast: toastCommands.openToast,
+							openToast,
 						}
 					);
 				</c:if>

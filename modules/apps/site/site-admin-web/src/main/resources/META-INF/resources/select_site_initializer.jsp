@@ -54,8 +54,8 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-site-template"));
 		<portlet:param name="parentGroupId" value="<%= String.valueOf(selectSiteInitializerDisplayContext.getParentGroupId()) %>" />
 	</portlet:actionURL>
 
-	<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule,frontend-js-web/liferay/modal/commands/OpenSimpleInputModal.es as openSimpleInputModal">
-		var delegate = delegateModule.default;
+	<aui:script require="frontend-js-web/index as frontendJsWeb">
+		var {delegate, openSimpleInputModal} = frontendJsWeb;
 
 		var addSiteActionOptionQueryClickHandler = delegate(
 			document.body,

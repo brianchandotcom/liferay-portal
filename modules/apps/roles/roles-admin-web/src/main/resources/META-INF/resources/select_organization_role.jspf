@@ -160,10 +160,10 @@ else {
 				/>
 			</liferay-ui:search-container>
 
-			<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
-				var form = document.<portlet:namespace />selectOrganizationRoleFm;
+			<aui:script require="frontend-js-web/index as frontendJsWeb">
+				var {delegate} = frontendJsWeb;
 
-				var delegate = delegateModule.default;
+				var form = document.<portlet:namespace />selectOrganizationRoleFm;
 
 				delegate(form, 'click', '.organization-selector-button', (event) => {
 					Liferay.Util.postForm(form, {

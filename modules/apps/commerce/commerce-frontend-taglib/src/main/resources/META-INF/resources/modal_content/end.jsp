@@ -33,7 +33,9 @@
 	</c:if>
 </div>
 
-<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, frontend-js-web/liferay/debounce/debounce.es as debounce">
+<aui:script require="commerce-frontend-js/utilities/eventsDefinitions as events, frontend-js-web/index as frontendJsWeb">
+	var {debounce} = frontendJsWeb;
+
 	function closeModal(isSuccessful) {
 		var eventDetail = {};
 

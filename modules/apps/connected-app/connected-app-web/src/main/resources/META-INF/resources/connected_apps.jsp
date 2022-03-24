@@ -85,12 +85,12 @@
 	</div>
 </div>
 
-<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	var {delegate} = frontendJsWeb;
+
 	var connectedAppKeyInput = document.querySelector(
 		'[name=<portlet:namespace />connectedAppKey]'
 	);
-
-	var delegate = delegateModule.default;
 
 	delegate(
 		document.getElementById('<portlet:namespace />connectedApp'),

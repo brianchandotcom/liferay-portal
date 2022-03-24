@@ -41,9 +41,9 @@ DLOpenerGoogleDriveFileReference dlOpenerGoogleDriveFileReference = (DLOpenerGoo
 			var url;
 
 			showStatusMessage = Liferay.lazyLoad(
-				'frontend-js-web/liferay/toast/commands/OpenToast.es',
-				(toastCommands, data) => {
-					toastCommands.openToast(data);
+				'frontend-js-web',
+				({openToast}, data) => {
+					openToast(data);
 				}
 			);
 

@@ -95,7 +95,9 @@ Country country = CountryLocalServiceUtil.fetchCountry(countryId);
 </liferay-frontend:edit-form>
 
 <c:if test="<%= country == null %>">
-	<aui:script require="frontend-js-web/liferay/debounce/debounce.es as debounceModule">
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+		var {debounce} = frontendJsWeb;
+
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		if (form) {
@@ -103,8 +105,6 @@ Country country = CountryLocalServiceUtil.fetchCountry(countryId);
 			var titleInput = form.querySelector('#<portlet:namespace />title');
 
 			if (nameInput && titleInput) {
-				var debounce = debounceModule.default;
-
 				var handleOnTitleInput = function (event) {
 					var value = event.target.value;
 

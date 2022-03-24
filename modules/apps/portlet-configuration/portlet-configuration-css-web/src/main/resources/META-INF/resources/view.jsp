@@ -44,8 +44,8 @@
 			</liferay-frontend:edit-form-footer>
 		</liferay-frontend:edit-form>
 
-		<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
-			var delegate = delegateModule.default;
+		<aui:script require="frontend-js-web/index as frontendJsWeb">
+			var {delegate} = frontendJsWeb;
 
 			delegate(
 				document.getElementById('<portlet:namespace />fm'),

@@ -62,7 +62,9 @@ if (commerceShippingFixedOption != null) {
 </aui:form>
 
 <c:if test="<%= commerceShippingFixedOption == null %>">
-	<aui:script require="frontend-js-web/liferay/debounce/debounce.es as debounce">
+	<aui:script require="frontend-js-web/index as frontendJsWeb">
+		var {debounce} = frontendJsWeb;
+
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		var keyInput = form.querySelector('#<portlet:namespace />key');
@@ -72,6 +74,6 @@ if (commerceShippingFixedOption != null) {
 			keyInput.value = titleInput.value;
 		};
 
-		titleInput.addEventListener('input', debounce.default(handleOnTitleInput, 200));
+		titleInput.addEventListener('input', debounce(handleOnTitleInput, 200));
 	</aui:script>
 </c:if>

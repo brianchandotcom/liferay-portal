@@ -358,10 +358,12 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 </c:if>
 
 <c:if test="<%= pages > initialPages %>">
-	<aui:script require="frontend-js-web/liferay/DynamicInlineScroll.es as DynamicInlineScroll">
+	<aui:script require="frontend-js-web/index as frontendJsWeb">
+		var {DynamicInlineScroll} = frontendJsWeb;
+
 		Liferay.component(
 			'<%= randomNamespace %>dynamicInlineScroll',
-			new DynamicInlineScroll.default(
+			new DynamicInlineScroll(
 				{
 					cur: '<%= cur %>',
 					curParam: '<%= curParam %>',

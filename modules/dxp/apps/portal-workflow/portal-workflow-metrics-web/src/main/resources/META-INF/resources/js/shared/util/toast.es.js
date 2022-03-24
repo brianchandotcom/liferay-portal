@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-import liferayToast from 'frontend-js-web/liferay/toast/commands/OpenToast.es';
+import {openToast as liferayToast} from 'frontend-js-web';
 
 export function openErrorToast({message}) {
 	openToast(message, Liferay.Language.get('error'), 'danger');

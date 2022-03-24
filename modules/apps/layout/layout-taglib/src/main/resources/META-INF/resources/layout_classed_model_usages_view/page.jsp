@@ -73,12 +73,12 @@ LayoutClassedModelUsagesDisplayContext layoutClassedModelUsagesDisplayContext = 
 	</liferay-ui:search-container>
 </div>
 
-<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	var {delegate} = frontendJsWeb;
+
 	if (
 		document.querySelector('#<portlet:namespace />layoutClassedModelUsagesList')
 	) {
-		var delegate = delegateModule.default;
-
 		var previewLayoutClassedModelUsagesList = delegate(
 			document.querySelector(
 				'#<portlet:namespace />layoutClassedModelUsagesList'

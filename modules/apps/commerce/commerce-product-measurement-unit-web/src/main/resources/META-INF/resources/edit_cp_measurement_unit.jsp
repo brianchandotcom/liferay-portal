@@ -90,7 +90,9 @@ else {
 </aui:form>
 
 <c:if test="<%= cpMeasurementUnit == null %>">
-	<aui:script require="frontend-js-web/liferay/debounce/debounce.es as debounce, commerce-frontend-js/utilities/slugify as slugify">
+<aui:script require="frontend-js-web/index as frontendJsWeb, commerce-frontend-js/utilities/slugify as slugify">
+		var {debounce} = frontendJsWeb;
+
 		var form = document.getElementById('<portlet:namespace />fm');
 
 		var keyInput = form.querySelector('#<portlet:namespace />key');
@@ -100,7 +102,7 @@ else {
 			keyInput.value = slugify.default(nameInput.value);
 		};
 
-		nameInput.addEventListener('input', debounce.default(handleOnNameInput, 200));
+		nameInput.addEventListener('input', debounce(handleOnNameInput, 200));
 	</aui:script>
 </c:if>
 

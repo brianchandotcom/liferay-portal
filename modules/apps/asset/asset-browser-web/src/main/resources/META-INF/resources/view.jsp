@@ -227,8 +227,8 @@
 
 <c:choose>
 	<c:when test="<%= !assetBrowserDisplayContext.isMultipleSelection() %>">
-		<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
-			var delegate = delegateModule.default;
+		<aui:script require="frontend-js-web/index as frontendJsWeb">
+			var {delegate} = frontendJsWeb;
 
 			var delegateHandler = delegate(
 				document.querySelector('#<portlet:namespace />selectAssetFm'),

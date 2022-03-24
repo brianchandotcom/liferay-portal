@@ -166,12 +166,12 @@ request.setAttribute("view.jsp-eventName", eventName);
 	<aui:input name="siteRoleIds" type="hidden" />
 </aui:form>
 
-<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	var {delegate} = frontendJsWeb;
+
 	var form = document.getElementById(
 		'<portlet:namespace />updateSegmentsEntrySiteRolesFm'
 	);
-
-	var delegate = delegateModule.default;
 
 	var delegateHandler = delegate(
 		document,

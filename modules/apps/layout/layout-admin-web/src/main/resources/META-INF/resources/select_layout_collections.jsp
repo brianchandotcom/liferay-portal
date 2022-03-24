@@ -53,10 +53,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-collection"));
 	</c:choose>
 </clay:container-fluid>
 
-<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
-	var collections = document.getElementById('<portlet:namespace />collections');
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	var {delegate} = frontendJsWeb;
 
-	var delegate = delegateModule.default;
+	var collections = document.getElementById('<portlet:namespace />collections');
 
 	var selectLayoutMasterLayoutActionOptionQueryClickHandler = delegate(
 		collections,

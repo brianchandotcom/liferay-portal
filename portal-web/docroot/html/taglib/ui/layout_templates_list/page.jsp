@@ -69,8 +69,8 @@ List<LayoutTemplate> layoutTemplates = (List<LayoutTemplate>)request.getAttribut
 	</ul>
 </div>
 
-<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
-	const delegate = delegateModule.default;
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	const {delegate} = frontendJsWeb;
 
 	const delegateHandler = delegate(document.querySelector('.<portlet:namespace />layout-template-list.lfr-page-layouts'), 'click', '.lfr-layout-template', (event) => {
 		const layoutTemplateInput = event.delegateTarget.querySelector('input');

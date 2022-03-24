@@ -160,21 +160,15 @@ Liferay.Portlet = Liferay.Portlet || {};
 Liferay.Portlet.minimize = minimizePortlet;
 
 Liferay.Portlet.openModal = (...args) => {
-	Liferay.Loader.require(
-		'frontend-js-web/liferay/modal/Modal',
-		(commands) => {
-			commands.openPortletModal(...args);
-		}
-	);
+	Liferay.Loader.require('frontend-js-web/index', ({openPortletModal}) => {
+		openPortletModal(...args);
+	});
 };
 
 Liferay.Portlet.openWindow = (...args) => {
-	Liferay.Loader.require(
-		'frontend-js-web/liferay/modal/Modal',
-		(commands) => {
-			commands.openPortletWindow(...args);
-		}
-	);
+	Liferay.Loader.require('frontend-js-web/index', ({openPortletWindow}) => {
+		openPortletWindow(...args);
+	});
 };
 
 Liferay.SideNavigation = SideNavigation;
@@ -190,9 +184,9 @@ Liferay.Util.addParams = addParams;
 
 Liferay.Util.openAlertModal = (...args) => {
 	Liferay.Loader.require(
-		'frontend-js-web/liferay/modal/commands/open_alert_modal',
-		(commands) => {
-			commands.default(...args);
+		'frontend-js-web/index',
+		({openAlertModal}) => {
+			openAlertModal(...args);
 		}
 	);
 };
@@ -295,38 +289,29 @@ Liferay.Util.toggleDisabled = toggleDisabled;
 
 Liferay.Util.openConfirmModal = (...args) => {
 	Liferay.Loader.require(
-		'frontend-js-web/liferay/modal/commands/open_confirm_modal',
-		(commands) => {
-			commands.default(...args);
+		'frontend-js-web/index',
+		({openConfirmModal}) => {
+			openConfirmModal(...args);
 		}
 	);
 };
 
 Liferay.Util.openModal = (...args) => {
-	Liferay.Loader.require(
-		'frontend-js-web/liferay/modal/Modal',
-		(commands) => {
-			commands.openModal(...args);
-		}
-	);
+	Liferay.Loader.require('frontend-js-web/index', ({openModal}) => {
+		openModal(...args);
+	});
 };
 
 Liferay.Util.openSelectionModal = (...args) => {
-	Liferay.Loader.require(
-		'frontend-js-web/liferay/modal/Modal',
-		(commands) => {
-			commands.openSelectionModal(...args);
-		}
-	);
+	Liferay.Loader.require('frontend-js-web/index', ({openSelectionModal}) => {
+		openSelectionModal(...args);
+	});
 };
 
 Liferay.Util.openToast = (...args) => {
-	Liferay.Loader.require(
-		'frontend-js-web/liferay/toast/commands/OpenToast.es',
-		(commands) => {
-			commands.openToast(...args);
-		}
-	);
+	Liferay.Loader.require('frontend-js-web/index', ({openToast}) => {
+		openToast(...args);
+	});
 };
 
 Liferay.Util.openWindow = openWindow;

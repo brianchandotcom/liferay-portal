@@ -227,12 +227,12 @@ renderResponse.setTitle(StringBundler.concat(selectedUser.getFullName(), " - ", 
 	<portlet:param name="scope" value="<%= scope %>" />
 </portlet:renderURL>
 
-<aui:script require="frontend-js-web/liferay/delegate/delegate.es as delegateModule">
+<aui:script require="frontend-js-web/index as frontendJsWeb">
+	var {delegate} = frontendJsWeb;
+
 	var baseURL = '<%= reviewUADDataURL %>';
 
 	var clickListeners = [];
-
-	var delegate = delegateModule.default;
 
 	var registerClickHandler = function (element, clickHandlerFn) {
 		clickListeners.push(delegate(element, 'click', 'input', clickHandlerFn));

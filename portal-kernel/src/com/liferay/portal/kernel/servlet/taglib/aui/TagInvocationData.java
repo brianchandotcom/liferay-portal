@@ -42,26 +42,6 @@ public class TagInvocationData implements Serializable {
 		_initModulesAndVariableAliases(require);
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             #TagInvocationData(StringBundler, String)}
-	 */
-	@Deprecated
-	public TagInvocationData(
-		com.liferay.portal.kernel.util.StringBundler contentSB,
-		String require) {
-
-		StringBundler sb = new StringBundler();
-
-		for (int i = 0; i < contentSB.index(); i++) {
-			sb.append(contentSB.stringAt(0));
-		}
-
-		_contentSB.append(sb);
-
-		_initModulesAndVariableAliases(require);
-	}
-
 	public String getContent(List<String> variables) {
 		StringBundler sb = new StringBundler();
 

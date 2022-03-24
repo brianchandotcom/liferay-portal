@@ -167,6 +167,13 @@ $productMenuWidth: 320px;
 	}
 
 	&-export {
+		.custom-radio .form-text {
+			font-weight: normal;
+			margin-bottom: 1rem;
+			margin-top: 0.25rem;
+			padding-left: 1.5rem;
+		}
+
 		.translation-experiences-wrapper {
 			margin-bottom: 1.5rem;
 			max-height: 40rem;

@@ -22,7 +22,9 @@ import com.liferay.commerce.product.content.web.internal.helper.CPPublisherWebHe
 import com.liferay.commerce.product.data.source.CPDataSourceRegistry;
 import com.liferay.commerce.product.service.CPDefinitionService;
 import com.liferay.commerce.product.type.CPTypeServicesTracker;
+import com.liferay.commerce.product.url.CPFriendlyURL;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
+import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -61,8 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.init-param.view-template=/product_publisher/view.jsp",
 		"javax.portlet.name=" + CPPortletKeys.CP_PUBLISHER_WEB,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user",
-		"javax.portlet.version=3.0"
+		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = {CPPublisherPortlet.class, Portlet.class}
 )
@@ -79,7 +80,8 @@ public class CPPublisherPortlet extends MVCPortlet {
 					_cpContentListEntryRendererRegistry,
 					_cpContentListRendererRegistry, _cpDataSourceRegistry,
 					_cpDefinitionHelper, _cpPublisherWebHelper,
-					_cpTypeServicesTracker,
+					_cpTypeServicesTracker, _friendlyURLEntryLocalService,
+					_cpFriendlyURL,
 					_portal.getHttpServletRequest(renderRequest));
 
 			renderRequest.setAttribute(
@@ -112,10 +114,16 @@ public class CPPublisherPortlet extends MVCPortlet {
 	private CPDefinitionService _cpDefinitionService;
 
 	@Reference
+	private CPFriendlyURL _cpFriendlyURL;
+
+	@Reference
 	private CPPublisherWebHelper _cpPublisherWebHelper;
 
 	@Reference
 	private CPTypeServicesTracker _cpTypeServicesTracker;
+
+	@Reference
+	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
 	private Portal _portal;

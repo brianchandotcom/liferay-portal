@@ -1177,8 +1177,8 @@
 					"title": "The fragmentViewports Schema",
 					"type": "array"
 				},
-				"nonindexable": {
-					"title": "The nonindexable Schema",
+				"indexed": {
+					"title": "The indexed Schema",
 					"type": "boolean"
 				},
 				"widgetInstances": {
@@ -1214,13 +1214,13 @@
 					"title": "The gutters Schema",
 					"type": "boolean"
 				},
+				"indexed": {
+					"title": "The indexed Schema",
+					"type": "boolean"
+				},
 				"modulesPerRow": {
 					"title": "The modulesPerRow Schema",
 					"type": "integer"
-				},
-				"nonindexable": {
-					"title": "The nonindexable Schema",
-					"type": "boolean"
 				},
 				"numberOfColumns": {
 					"maximum": 6,
@@ -1364,6 +1364,10 @@
 					},
 					"title": "The fragmentViewports Schema",
 					"type": "array"
+				},
+				"indexed": {
+					"title": "The indexed Schema",
+					"type": "boolean"
 				},
 				"layout": {
 					"additionalProperties": false,
@@ -1606,10 +1610,6 @@
 					},
 					"title": "The layout Schema",
 					"type": "object"
-				},
-				"nonindexable": {
-					"title": "The nonindexable Schema",
-					"type": "boolean"
 				}
 			},
 			"title": "The PageSectionDefinition Schema",

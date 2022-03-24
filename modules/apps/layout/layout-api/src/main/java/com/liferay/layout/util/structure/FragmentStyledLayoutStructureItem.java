@@ -75,7 +75,7 @@ public class FragmentStyledLayoutStructureItem
 		return jsonObject.put(
 			"fragmentEntryLinkId", String.valueOf(_fragmentEntryLinkId)
 		).put(
-			"nonindexed", _nonindexed
+			"indexed", _indexed
 		).put(
 			"styles", stylesJSONObject
 		);
@@ -91,8 +91,8 @@ public class FragmentStyledLayoutStructureItem
 		return HashUtil.hash(0, getItemId());
 	}
 
-	public boolean isNonindexed() {
-		return _nonindexed;
+	public boolean isIndexed() {
+		return _indexed;
 	}
 
 	public void setFragmentEntryLinkId(long fragmentEntryLinkId) {
@@ -119,16 +119,16 @@ public class FragmentStyledLayoutStructureItem
 		}
 	}
 
-	public void setNonindexed(boolean nonindexed) {
-		_nonindexed = nonindexed;
+	public void setIndexed(boolean indexed) {
+		_indexed = indexed;
 	}
 
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
 		super.updateItemConfig(itemConfigJSONObject);
 
-		if (itemConfigJSONObject.has("nonindexed")) {
-			setNonindexed(itemConfigJSONObject.getBoolean("nonindexed"));
+		if (itemConfigJSONObject.has("indexed")) {
+			setIndexed(itemConfigJSONObject.getBoolean("indexed"));
 		}
 
 		if (itemConfigJSONObject.has("fragmentEntryLinkId")) {
@@ -142,6 +142,6 @@ public class FragmentStyledLayoutStructureItem
 
 	private JSONObject _fragmentConfigurationJSONObject;
 	private long _fragmentEntryLinkId;
-	private boolean _nonindexed;
+	private boolean _indexed = true;
 
 }

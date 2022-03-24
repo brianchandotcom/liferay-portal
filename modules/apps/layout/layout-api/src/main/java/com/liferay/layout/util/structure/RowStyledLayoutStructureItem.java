@@ -72,9 +72,9 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		jsonObject.put(
 			"gutters", _gutters
 		).put(
-			"modulesPerRow", getModulesPerRow()
+			"indexed", _indexed
 		).put(
-			"nonindexed", _nonindexed
+			"modulesPerRow", getModulesPerRow()
 		).put(
 			"numberOfColumns", _numberOfColumns
 		).put(
@@ -165,8 +165,8 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		return _gutters;
 	}
 
-	public boolean isNonindexed() {
-		return _nonindexed;
+	public boolean isIndexed() {
+		return _indexed;
 	}
 
 	public boolean isReverseOrder() {
@@ -177,12 +177,12 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 		_gutters = gutters;
 	}
 
-	public void setModulesPerRow(int modulesPerRow) {
-		_modulesPerRow = modulesPerRow;
+	public void setIndexed(boolean indexed) {
+		_indexed = indexed;
 	}
 
-	public void setNonindexed(boolean nonindexed) {
-		_nonindexed = nonindexed;
+	public void setModulesPerRow(int modulesPerRow) {
+		_modulesPerRow = modulesPerRow;
 	}
 
 	public void setNumberOfColumns(int numberOfColumns) {
@@ -248,8 +248,8 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 			setModulesPerRow(itemConfigJSONObject.getInt("modulesPerRow"));
 		}
 
-		if (itemConfigJSONObject.has("nonindexed")) {
-			setNonindexed(itemConfigJSONObject.getBoolean("nonindexed"));
+		if (itemConfigJSONObject.has("indexed")) {
+			setIndexed(itemConfigJSONObject.getBoolean("indexed"));
 		}
 
 		if (itemConfigJSONObject.has("numberOfColumns")) {
@@ -282,8 +282,8 @@ public class RowStyledLayoutStructureItem extends StyledLayoutStructureItem {
 	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
 
 	private boolean _gutters = true;
+	private boolean _indexed = true;
 	private Integer _modulesPerRow;
-	private boolean _nonindexed;
 	private int _numberOfColumns;
 	private boolean _reverseOrder;
 	private String _verticalAlignment = "top";

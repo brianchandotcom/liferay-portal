@@ -91,6 +91,20 @@ public class BatchPlannerPlanServiceWrapper
 	@Override
 	public java.util.List<com.liferay.batch.planner.model.BatchPlannerPlan>
 		getBatchPlannerPlans(
+			long companyId, boolean export, boolean template,
+			String searchByField, String searchByKeyword, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.batch.planner.model.BatchPlannerPlan>
+					orderByComparator) {
+
+		return _batchPlannerPlanService.getBatchPlannerPlans(
+			companyId, export, template, searchByField, searchByKeyword, start,
+			end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.batch.planner.model.BatchPlannerPlan>
+		getBatchPlannerPlans(
 			long companyId, boolean template, int start, int end,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.batch.planner.model.BatchPlannerPlan>
@@ -98,6 +112,20 @@ public class BatchPlannerPlanServiceWrapper
 
 		return _batchPlannerPlanService.getBatchPlannerPlans(
 			companyId, template, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.batch.planner.model.BatchPlannerPlan>
+		getBatchPlannerPlans(
+			long companyId, boolean template, String searchByField,
+			String searchByKeyword, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<com.liferay.batch.planner.model.BatchPlannerPlan>
+					orderByComparator) {
+
+		return _batchPlannerPlanService.getBatchPlannerPlans(
+			companyId, template, searchByField, searchByKeyword, start, end,
+			orderByComparator);
 	}
 
 	@Override
@@ -137,6 +165,24 @@ public class BatchPlannerPlanServiceWrapper
 
 		return _batchPlannerPlanService.getBatchPlannerPlansCount(
 			companyId, export, template);
+	}
+
+	@Override
+	public int getBatchPlannerPlansCount(
+		long companyId, boolean export, boolean template, String searchByField,
+		String searchByKeyword) {
+
+		return _batchPlannerPlanService.getBatchPlannerPlansCount(
+			companyId, export, template, searchByField, searchByKeyword);
+	}
+
+	@Override
+	public int getBatchPlannerPlansCount(
+		long companyId, boolean template, String searchByField,
+		String searchByKeyword) {
+
+		return _batchPlannerPlanService.getBatchPlannerPlansCount(
+			companyId, template, searchByField, searchByKeyword);
 	}
 
 	/**

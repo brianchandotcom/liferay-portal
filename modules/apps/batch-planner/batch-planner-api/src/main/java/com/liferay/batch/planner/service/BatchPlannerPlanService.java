@@ -76,7 +76,19 @@ public interface BatchPlannerPlanService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<BatchPlannerPlan> getBatchPlannerPlans(
+		long companyId, boolean export, boolean template, String searchByField,
+		String searchByKeyword, int start, int end,
+		OrderByComparator<BatchPlannerPlan> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerPlan> getBatchPlannerPlans(
 		long companyId, boolean template, int start, int end,
+		OrderByComparator<BatchPlannerPlan> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<BatchPlannerPlan> getBatchPlannerPlans(
+		long companyId, boolean template, String searchByField,
+		String searchByKeyword, int start, int end,
 		OrderByComparator<BatchPlannerPlan> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -97,6 +109,16 @@ public interface BatchPlannerPlanService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBatchPlannerPlansCount(
 		long companyId, boolean export, boolean template);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBatchPlannerPlansCount(
+		long companyId, boolean export, boolean template, String searchByField,
+		String searchByKeyword);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBatchPlannerPlansCount(
+		long companyId, boolean template, String searchByField,
+		String searchByKeyword);
 
 	/**
 	 * Returns the OSGi service identifier.

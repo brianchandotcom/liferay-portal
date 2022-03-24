@@ -383,6 +383,47 @@ public class Main {
 			testrayRoutineName, "routines");
 	}
 
+	private String _getTestrayRunEnvironmentHash(
+			Element element, long testrayRunId)
+		throws Exception {
+
+		StringBundler sb = new StringBundler();
+
+		NodeList environmentNodeList = element.getElementsByTagName(
+			"environment");
+
+		for (int i = 0; i < environmentNodeList.getLength(); i++) {
+			Node node = environmentNodeList.item(i);
+
+			if (!node.hasAttributes()) {
+				continue;
+			}
+
+			String testrayFactorCategoryName = _getAttributeValue("type", node);
+
+			long testrayFactorCategoryId = _getTestrayFactorCategoryId(
+				testrayFactorCategoryName);
+
+			String testrayFactorOptionName = _getAttributeValue("option", node);
+
+			long testrayFactorOptionId = _getTestrayFactorOptionId(
+				testrayFactorOptionName, testrayFactorCategoryId);
+
+			_addTestrayFactor(
+				testrayRunId, testrayFactorCategoryId,
+				testrayFactorCategoryName, testrayFactorOptionName,
+				testrayFactorOptionId);
+
+			sb.append(testrayFactorCategoryId);
+
+			sb.append(testrayFactorOptionId);
+		}
+
+		String testrayFactorsString = sb.toString();
+
+		return String.valueOf(testrayFactorsString.hashCode());
+	}
+
 	private HttpInvoker.HttpResponse _invoke(
 			String body, Map<String, String> headers,
 			HttpInvoker.HttpMethod httpMethod, String objectDefinitionShortName,

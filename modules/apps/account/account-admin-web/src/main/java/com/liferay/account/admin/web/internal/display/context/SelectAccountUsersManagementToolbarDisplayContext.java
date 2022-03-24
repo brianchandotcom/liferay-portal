@@ -33,6 +33,10 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -114,6 +118,9 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 			return new String[0];
 		}
 
+		List<String> navigationKeys = new ArrayList<>(
+			Arrays.asList("all-users", "account-users", "company-users"));
+
 		try {
 			AccountEntryEmailDomainsConfiguration
 				accountEntryEmailDomainsConfiguration =
@@ -124,7 +131,7 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 			if (accountEntryEmailDomainsConfiguration.
 					enableEmailDomainValidation()) {
 
-				return new String[] {"valid-domain-users", "all-users"};
+				navigationKeys.add(0, "valid-domain-users");
 			}
 		}
 		catch (ConfigurationException configurationException) {
@@ -133,7 +140,7 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 			}
 		}
 
-		return new String[] {"all-users"};
+		return ArrayUtil.toStringArray(navigationKeys);
 	}
 
 	@Override

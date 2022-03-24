@@ -143,6 +143,14 @@ definition {
 		PortletEntry.inputTitle(title = "${title}");
 	}
 
+	macro gotoNotification {
+		ProcessBuilderKaleoDesignerReact.viewNotificationPresent(notificationsName = "${notificationName}");
+
+		Click(
+			key_nodeNotificationName = "${notificationName}",
+			locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_VALUE_NODE_SIDEBAR");
+	}
+
 	macro selectConnector {
 		Click(
 			key_connectorLabel = "${connectorLabel}",
@@ -349,7 +357,7 @@ definition {
 					value1 = "${notificationScript}");
 			}
 		}
-	}	
+	}
 
 	macro viewConnectorNotPresent {
 		AssertElementNotPresent(
@@ -551,13 +559,5 @@ definition {
 			key_translationStatus = "${translationStatus}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL");
 	}
-    
-    macro gotoNotification {
-        ProcessBuilderKaleoDesignerReact.viewNotificationPresent(notificationsName = "${notificationName}");
-
-        Click(
-            key_nodeNotificationName = "${notificationName}",
-            locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATION_VALUE_NODE_SIDEBAR");
-    }
 
 }

@@ -78,8 +78,8 @@ definition {
 			nodeType = "task");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
-			newNotification = "true",
 			name = "Liferay Notification",
+			newNotification = "true",
 			notificationTemplateValue = "Notification Template",
 			notificationTypeOption = "userNotification");
 
@@ -608,26 +608,25 @@ definition {
 	test CanSelectScriptedRecipientAsNotificationRecipientType {
 		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectScriptedRecipientAsNotificationRecipientType";
 
-        Workflow.openWorkflowListView();
+		Workflow.openWorkflowListView();
 
-        Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
-			newNotification = "true",
 			name = "New Notification",
+			newNotification = "true",
+			notificationScript = '''returnValue = "Transition Name";''',
 			notificationTemplateValue = '''${userName} sent you a ${entryType} for review in the workflow.''',
 			notificationTypeOption = "userNotification",
-			recipientTypeOption = "Scripted Recipient",
-			notificationScript = '''returnValue = "Transition Name";''');
-            
-        ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
-  
-        ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+			recipientTypeOption = "Scripted Recipient");
 
-        ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationRecipientType = "Scripted Recipient");
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationRecipientType = "Scripted Recipient");
 	}
 
 	@description = "Verify that the is able to select who receives the notification: Task Assignees"

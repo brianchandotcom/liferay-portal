@@ -177,14 +177,14 @@
 	<td></td>
 </tr>
 <tr>
-    <td>NOTIFICATION_VALUE_NODE_SIDEBAR</td>
-    <td>//div[contains(@class, 'sheet-subtitle') and contains(., 'Notifications')]//..//*[contains(@class, 'link-secondary') and contains(., '${key_nodeNotificationName}')]</td>
-    <td></td>
+	<td>NOTIFICATION_VALUE_NODE_SIDEBAR</td>
+	<td>//div[contains(@class, 'sheet-subtitle') and contains(., 'Notifications')]//..//*[contains(@class, 'link-secondary') and contains(., '${key_nodeNotificationName}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>NOTIFICATIONS_RECIPIENT_ROLE_TYPE_AUTOCREATE</td>
-    <td>//div[contains(@class, 'recipient-type')]//input[contains(@type, 'checkbox')]</td>
-    <td></td>
+	<td>NOTIFICATIONS_RECIPIENT_ROLE_TYPE_AUTOCREATE</td>
+	<td>//div[contains(@class, 'recipient-type')]//input[contains(@type, 'checkbox')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>RECIPIENT_TYPE_NAME_OPTIONS</td>

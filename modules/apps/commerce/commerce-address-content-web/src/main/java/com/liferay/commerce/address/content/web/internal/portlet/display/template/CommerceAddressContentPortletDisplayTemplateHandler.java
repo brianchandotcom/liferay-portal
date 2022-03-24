@@ -118,7 +118,7 @@ public class CommerceAddressContentPortletDisplayTemplateHandler
 	@Override
 	protected String getTemplatesConfigPath() {
 		return "com/liferay/commerce/address/content/web/internal/portlet" +
-			"/template/dependencies/portlet-display-templates.xml";
+			"/display/template/dependencies/portlet-display-templates.xml";
 	}
 
 	@Reference

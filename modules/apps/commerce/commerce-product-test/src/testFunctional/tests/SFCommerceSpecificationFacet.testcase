@@ -154,16 +154,6 @@ definition {
 			locator1 = "CommerceWidget#MAX_TERMS_ERROR_MESSAGE");
 	}
 
-	@description = "[Please Update]"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test VerifySpecificationFacetCanShowAllPossibleEntries {
-		property portal.acceptance = "false";
-
-		// TODO COMMERCE-8400 VerifySpecificationFacetCanShowAllPossibleEntries pending implementation
-
-	}
-
 	@description = "This is for COMMERCE-8384."
 	test VerifySpecificationFacetSetupTab {
 		ApplicationsMenu.gotoSite(site = "Minium");

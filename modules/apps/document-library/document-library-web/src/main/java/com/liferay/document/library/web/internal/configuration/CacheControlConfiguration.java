@@ -21,7 +21,10 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Adolfo Pérez
  */
-@ExtendedObjectClassDefinition(category = "documents-and-media")
+@ExtendedObjectClassDefinition(
+	category = "documents-and-media",
+	scope = ExtendedObjectClassDefinition.Scope.COMPANY
+)
 @Meta.OCD(
 	id = "com.liferay.document.library.web.internal.configuration.CacheControlConfiguration",
 	localization = "content/Language", name = "cache-control-configuration-name"

@@ -78,6 +78,23 @@ public class CommerceAccountGroupServiceUtil {
 			companyId, start, end, orderByComparator);
 	}
 
+	public static List<CommerceAccountGroup>
+			getCommerceAccountGroupsByCommerceAccountId(
+				long commerceAccountId, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceAccountGroupsByCommerceAccountId(
+			commerceAccountId, start, end);
+	}
+
+	public static int getCommerceAccountGroupsByCommerceAccountIdCount(
+			long commerceAccountId)
+		throws PortalException {
+
+		return getService().getCommerceAccountGroupsByCommerceAccountIdCount(
+			commerceAccountId);
+	}
+
 	public static int getCommerceAccountGroupsCount(long companyId)
 		throws PortalException {
 

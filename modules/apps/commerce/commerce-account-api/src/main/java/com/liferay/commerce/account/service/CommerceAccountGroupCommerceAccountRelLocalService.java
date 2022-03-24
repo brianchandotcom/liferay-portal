@@ -106,6 +106,16 @@ public interface CommerceAccountGroupCommerceAccountRelLocalService
 			long commerceAccountGroupId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceAccountGroupCommerceAccountRel>
+		getCommerceAccountGroupCommerceAccountRelsByCommerceAccountId(
+			long commerceAccountId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int
+		getCommerceAccountGroupCommerceAccountRelsByCommerceAccountIdCount(
+			long commerceAccountId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceAccountGroupCommerceAccountRelsCount(
 		long commerceAccountGroupId);
 

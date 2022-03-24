@@ -1279,7 +1279,7 @@ definition {
 
 		LexiconEntry.gotoEntry(rowEntry = "Account with Role");
 
-		for (var accountRoleNumber : list "1,2,3") {
+		for (var accountRoleNumber : list "1,2,3,4") {
 			Accounts.addOwnedAccountRole(accountRoleTitle = "Account Role ${accountRoleNumber}");
 
 			Navigator.gotoBack();
@@ -1297,23 +1297,19 @@ definition {
 			LexiconEntry.viewEntryName(rowEntry = "${accountRoleName}");
 		}
 
-		for (var accountRoleName : list "Buyer,Order Manager") {
-			LexiconEntry.viewNoEntry(rowEntry = "${accountRoleName}");
-		}
+		LexiconEntry.viewNoEntry(rowEntry = "Account Role 4");
 
-		Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
+		Pagination.viewResults(results = "Showing 1 to 4 of 5 entries.");
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
-		for (var accountRoleName : list "Buyer,Order Manager") {
-			LexiconEntry.viewEntryName(rowEntry = "${accountRoleName}");
-		}
+		LexiconEntry.viewEntryName(rowEntry = "${accountRoleName}");
 
 		for (var accountRoleName : list "Account Administrator,Account Role 1,Account Role 2,Account Role 3") {
 			LexiconEntry.viewNoEntry(rowEntry = "${accountRoleName}");
 		}
 
-		Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
+		Pagination.viewResults(results = "Showing 5 to 5 of 5 entries.");
 	}
 
 	@description = "This test deactivates an active account and asserts account displays in correct filter."

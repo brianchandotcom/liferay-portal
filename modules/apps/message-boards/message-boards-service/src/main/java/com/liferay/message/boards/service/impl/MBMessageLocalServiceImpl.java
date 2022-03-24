@@ -976,6 +976,16 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public MBMessage fetchMBMessage(
+		String className, long classPK, String externalReferenceCode,
+		long groupId) {
+
+		return mbMessagePersistence.fetchByC_C_G_ERC(
+			groupId, _classNameLocalService.getClassNameId(className), classPK,
+			externalReferenceCode);
+	}
+
+	@Override
 	public MBMessage fetchMBMessageByUrlSubject(
 		long groupId, String urlSubject) {
 
@@ -1292,6 +1302,17 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		throws PortalException {
 
 		return mbMessagePersistence.findByT_S_Last(threadId, status, null);
+	}
+
+	@Override
+	public MBMessage getMBMessage(
+			String className, long classPK, String externalReferenceCode,
+			long groupId)
+		throws PortalException {
+
+		return mbMessagePersistence.findByC_C_G_ERC(
+			groupId, _classNameLocalService.getClassNameId(className), classPK,
+			externalReferenceCode);
 	}
 
 	@Override

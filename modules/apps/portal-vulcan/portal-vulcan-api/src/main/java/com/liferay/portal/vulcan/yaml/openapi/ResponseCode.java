@@ -19,9 +19,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author     Javier de Arcos
- * @deprecated As of Athanasius (7.3.x)
  */
-@Deprecated
 public class ResponseCode {
 
 	public ResponseCode(String code) {

@@ -149,7 +149,7 @@ const SetupAnalyticsCloudPage = ({
 
 			if (data) {
 				const analyticsCloudWorkspaceId =
-					data?.c?.createAnalyticsCloudWorkspace
+					data.c?.createAnalyticsCloudWorkspace
 						?.analyticsCloudWorkspaceId;
 
 				await client.mutate({

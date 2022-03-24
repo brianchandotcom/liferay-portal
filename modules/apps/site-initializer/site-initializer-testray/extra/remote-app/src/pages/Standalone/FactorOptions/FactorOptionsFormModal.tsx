@@ -117,12 +117,14 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 				variables.factorOptionId = form.id;
 
 				await onUpdateFactorOption({variables});
-			} else {
+			}
+			else {
 				await onCreateFactorOption({variables});
 			}
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 		}
 	};

@@ -1,4 +1,3 @@
-/* eslint-disable no-case-declarations */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -31,11 +30,11 @@ export enum AccountTypes {
 	SET_MY_USER_ACCOUNT = 'SET_MY_USER_ACCOUNT',
 }
 
-type ListViewPayload = {
+type AccountPayload = {
 	[AccountTypes.SET_MY_USER_ACCOUNT]: UserAccount;
 };
 
-type AppActions = ActionMap<ListViewPayload>[keyof ActionMap<ListViewPayload>];
+type AppActions = ActionMap<AccountPayload>[keyof ActionMap<AccountPayload>];
 
 export const AccountContext = createContext<
 	[InitialState, (param: AppActions) => void]

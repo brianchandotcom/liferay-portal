@@ -239,7 +239,7 @@ definition {
 
 		task ("When the user selects JSONL as Export File Format and exports the accounts") {
 			ImportExport.openImportExportAdmin();
-			
+
 			ImportExport.exportFile(
 				entityType = "Account",
 				exportFields = "name,type,description,externalReferenceCode",

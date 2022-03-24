@@ -60,6 +60,8 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 
 	<aui:model-context bean="<%= commerceDiscount %>" model="<%= CommerceDiscount.class %>" />
 
+	<liferay-ui:error exception="<%= CommerceDiscountMaxPriceValueException.class %>" message="price-length-exceed-limit" />
+
 	<div class="row">
 		<div class="col-12 col-xl-8">
 			<commerce-ui:panel
@@ -116,6 +118,7 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 					<div class="<%= colCssClass %>">
 						<aui:input ignoreRequestValue="<%= true %>" name="amount" suffix="<%= amountSuffix %>" type="text" value="<%= commerceDiscountDisplayContext.getCommerceDiscountAmount(locale) %>">
 							<aui:validator name="min">0</aui:validator>
+							<aui:validator name="max">999999999.99</aui:validator>
 							<aui:validator name="number" />
 						</aui:input>
 					</div>
@@ -124,6 +127,7 @@ boolean hasPermission = commerceDiscountDisplayContext.hasPermission(ActionKeys.
 						<div class="<%= colCssClass %>">
 							<aui:input ignoreRequestValue="<%= true %>" name="maximumDiscountAmount" suffix="<%= HtmlUtil.escape(commerceDiscountDisplayContext.getDefaultCommerceCurrencyCode()) %>" type="text" value="<%= (commerceDiscount == null) ? BigDecimal.ZERO : commerceDiscountDisplayContext.round(commerceDiscount.getMaximumDiscountAmount()) %>">
 								<aui:validator name="min">0</aui:validator>
+								<aui:validator name="max">999999999.99</aui:validator>
 								<aui:validator name="number" />
 							</aui:input>
 						</div>

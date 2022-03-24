@@ -18,7 +18,6 @@
 			"src/main/resources/META-INF/resources/js/**/*.es.js"
 		],
 		"moduleNameMapper": {
-			"frontend-js-web/liferay/toast/commands/OpenToast.es": "<rootDir>/test/mock/openToast.es.js",
 			"react-text-mask": "<rootDir>/test/mock/reactTextMask.es.js"
 		},
 		"setupFiles": [

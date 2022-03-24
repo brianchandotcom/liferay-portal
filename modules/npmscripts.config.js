@@ -397,7 +397,7 @@ module.exports = {
 		],
 		imports: {
 			'@liferay/frontend-js-state-web': [],
-			'frontend-js-react-web': [
+			'@liferay/frontend-js-react-web': [
 				'classnames',
 				'formik',
 				'prop-types',

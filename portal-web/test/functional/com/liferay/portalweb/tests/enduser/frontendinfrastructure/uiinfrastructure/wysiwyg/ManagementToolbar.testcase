@@ -103,7 +103,7 @@ definition {
 		}
 	}
 
-	@description = "LPS-147850. Assert the view button displays a double caret icon"
+	@description = "LPS-147850. Assert the order button can sort results"
 	@priority = "5"
 	test OrderButtonCanSortOptions {
 		task ("When the user opens any section with the management toolbar") {

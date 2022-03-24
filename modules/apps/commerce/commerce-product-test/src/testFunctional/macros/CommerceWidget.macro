@@ -1,11 +1,13 @@
 definition {
 
 	macro assertOptionFacetsCount {
+		var optionName = "${optionName}";
+
 		var javaScriptCountElement = '''
 		
-		const stringToMatch = "facetCPOptionsPanelContainer";
+		const stringToMatch = "${optionName}";
 
-		return document.querySelectorAll(`[id$='_${stringToMatch}'] li`).length.toString();
+		return document.querySelectorAll(`[data-qa-id='${stringToMatch}'] li`).length.toString();
 
 		''';
 		var count = selenium.getEval("${javaScriptCountElement}");
@@ -14,17 +16,19 @@ definition {
 
 		echo("THE NUMBER OF FACETED LABELS IS ${count}");
 
-		if ("${count}" != "${value}") {
+		if ("${count}" != "${expectedLabels}") {
 			fail("Labels number is not correct");
 		}
 	}
 
 	macro assertSpecificationPanel2FacetsCount {
+		var specificationGroup = "${specificationGroup}";
+
 		var javaScriptCountElement = '''
 
-		const stringToMatch = "facetCPSpecificationOptionsPanel2";
+		const stringToMatch = "${specificationGroup}";
 
-		return document.querySelectorAll(`[id$='_${stringToMatch}'] li`).length.toString();
+		return document.querySelectorAll(`[data-qa-id='${stringToMatch}'] li`).length.toString();
 
 		''';
 		var count = selenium.getEval("${javaScriptCountElement}");
@@ -33,7 +37,7 @@ definition {
 
 		echo("THE NUMBER OF FACETED LABELS IS ${count}");
 
-		if ("${count}" != "${value}") {
+		if ("${count}" != "${expectedLabels}") {
 			fail("Labels number is not correct");
 		}
 	}

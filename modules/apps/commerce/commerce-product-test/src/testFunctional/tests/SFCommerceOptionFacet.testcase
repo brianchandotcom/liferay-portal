@@ -171,7 +171,11 @@ definition {
 			maxTerms = "100",
 			portletName = "Option Facet");
 
-		CommerceWidget.assertOptionFacetsCount(value = "100");
+		IFrame.closeFrame();
+
+		CommerceWidget.assertOptionFacetsCount(
+			optionName = "Package Quantity",
+			value = "100");
 	}
 
 }

@@ -162,8 +162,6 @@ definition {
 			portletName = "Specification Facet",
 			portletOption = "Configuration");
 
-		IFrame.selectModalFrame();
-
 		AssertElementPresent(
 			key_navItem = "Setup",
 			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");
@@ -192,7 +190,11 @@ definition {
 			maxTerms = "100",
 			portletName = "Specification Facet");
 
-		CommerceWidget.assertSpecificationPanel2FacetsCount(value = "100");
+		IFrame.closeFrame();
+
+		CommerceWidget.assertSpecificationPanel2FacetsCount(
+			expectedLabels = "100",
+			specificationGroup = "Material");
 	}
 
 }

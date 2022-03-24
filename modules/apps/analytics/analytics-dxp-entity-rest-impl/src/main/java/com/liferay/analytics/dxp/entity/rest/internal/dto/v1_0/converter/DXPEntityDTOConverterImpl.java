@@ -14,10 +14,10 @@
 
 package com.liferay.analytics.dxp.entity.rest.internal.dto.v1_0.converter;
 
-import com.liferay.analytics.dxp.entity.rest.converter.DXPEntityDTOConverter;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.ExpandoField;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.Field;
+import com.liferay.analytics.dxp.entity.rest.dto.v1_0.converter.DXPEntityDTOConverter;
 import com.liferay.analytics.message.sender.util.AnalyticsExpandoBridgeUtil;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;

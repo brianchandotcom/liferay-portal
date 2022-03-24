@@ -29,7 +29,7 @@ import java.util.Date;
 /**
  * @author Marcos Martins
  */
-public abstract class NoIndexedAnalyticsDXPEntityRetriever {
+public abstract class NonIndexedAnalyticsDXPEntityRetriever {
 
 	protected DynamicQuery buildDynamicQuery(
 		long companyId, DynamicQuery dynamicQuery, Filter filter) {

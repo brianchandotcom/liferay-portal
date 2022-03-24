@@ -14,8 +14,8 @@
 
 package com.liferay.analytics.dxp.entity.internal.helper;
 
-import com.liferay.analytics.dxp.entity.rest.converter.DXPEntityDTOConverter;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
+import com.liferay.analytics.dxp.entity.rest.dto.v1_0.converter.DXPEntityDTOConverter;
 import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetriever;
 import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetrieverTracker;
 import com.liferay.batch.engine.pagination.Page;

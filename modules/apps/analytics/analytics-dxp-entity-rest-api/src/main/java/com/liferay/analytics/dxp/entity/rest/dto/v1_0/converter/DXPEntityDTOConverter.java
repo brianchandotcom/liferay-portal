@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.analytics.dxp.entity.rest.converter;
+package com.liferay.analytics.dxp.entity.rest.dto.v1_0.converter;
 
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.portal.kernel.model.BaseModel;

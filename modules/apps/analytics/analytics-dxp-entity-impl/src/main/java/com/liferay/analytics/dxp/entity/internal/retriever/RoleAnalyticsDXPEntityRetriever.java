@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = AnalyticsDXPEntityRetriever.class
 )
 public class RoleAnalyticsDXPEntityRetriever
-	extends NoIndexedAnalyticsDXPEntityRetriever
+	extends NonIndexedAnalyticsDXPEntityRetriever
 	implements AnalyticsDXPEntityRetriever {
 
 	@Override

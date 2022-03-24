@@ -63,7 +63,7 @@ public class ResponsiveLayoutStructureUtil {
 		Map<String, JSONObject> columnViewportConfigurations =
 			columnLayoutStructureItem.getViewportConfigurations();
 
-		for (ViewportSize viewportSize : ViewportSize.values()) {
+		for (ViewportSize viewportSize : _viewportSizes) {
 			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
 				continue;
 			}
@@ -100,14 +100,7 @@ public class ResponsiveLayoutStructureUtil {
 		JSONObject itemConfigJSONObject =
 			styledLayoutStructureItem.getItemConfigJSONObject();
 
-		ViewportSize[] viewportSizes = ViewportSize.values();
-
-		Comparator<ViewportSize> comparator = Comparator.comparingInt(
-			ViewportSize::getOrder);
-
-		Arrays.sort(viewportSizes, comparator.reversed());
-
-		for (ViewportSize viewportSize : viewportSizes) {
+		for (ViewportSize viewportSize : _sortedViewportSizes) {
 			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
 				continue;
 			}
@@ -181,14 +174,7 @@ public class ResponsiveLayoutStructureUtil {
 			return viewportConfigurationJSONObject.get(propertyName);
 		}
 
-		ViewportSize[] viewportSizes = ViewportSize.values();
-
-		Comparator<ViewportSize> comparator = Comparator.comparingInt(
-			ViewportSize::getOrder);
-
-		Arrays.sort(viewportSizes, comparator.reversed());
-
-		for (ViewportSize viewportSize : viewportSizes) {
+		for (ViewportSize viewportSize : _sortedViewportSizes) {
 			viewportConfigurationJSONObject =
 				viewportConfigurations.getOrDefault(
 					viewportSize.getViewportSizeId(),
@@ -217,7 +203,7 @@ public class ResponsiveLayoutStructureUtil {
 		Map<String, JSONObject> rowViewportConfigurations =
 			rowStyledLayoutStructureItem.getViewportConfigurations();
 
-		for (ViewportSize viewportSize : ViewportSize.values()) {
+		for (ViewportSize viewportSize : _viewportSizes) {
 			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
 				continue;
 			}
@@ -249,7 +235,7 @@ public class ResponsiveLayoutStructureUtil {
 			sb.append("flex-lg-row");
 		}
 
-		for (ViewportSize viewportSize : ViewportSize.values()) {
+		for (ViewportSize viewportSize : _viewportSizes) {
 			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
 				continue;
 			}
@@ -296,14 +282,7 @@ public class ResponsiveLayoutStructureUtil {
 
 		JSONObject stylesJSONObject = JSONFactoryUtil.createJSONObject();
 
-		ViewportSize[] viewportSizes = ViewportSize.values();
-
-		Comparator<ViewportSize> comparator = Comparator.comparingInt(
-			ViewportSize::getOrder);
-
-		Arrays.sort(viewportSizes, comparator.reversed());
-
-		for (ViewportSize viewportSize : viewportSizes) {
+		for (ViewportSize viewportSize : _sortedViewportSizes) {
 			if (viewportSize.getOrder() > currentViewportSize.getOrder()) {
 				continue;
 			}
@@ -351,6 +330,17 @@ public class ResponsiveLayoutStructureUtil {
 		}
 
 		return "start";
+	}
+
+	private static final ViewportSize[] _sortedViewportSizes =
+		ViewportSize.values();
+	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
+
+	static {
+		Comparator<ViewportSize> comparator = Comparator.comparingInt(
+			ViewportSize::getOrder);
+
+		Arrays.sort(_sortedViewportSizes, comparator.reversed());
 	}
 
 }

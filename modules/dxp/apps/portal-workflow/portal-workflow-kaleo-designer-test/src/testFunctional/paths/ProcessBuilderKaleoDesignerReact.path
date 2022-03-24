@@ -167,22 +167,17 @@
 	<td></td>
 </tr>
 <tr>
-    <td>NOTIFICATIONS_NODE_RECIPIENT_TYPE</td>
-    <td>//select[contains(@id, 'recipient-type')]</td>
-    <td></td>
+	<td>RECIPIENT_TYPE_NAME_FIELD</td>
+	<td>//input[contains(@id,'role-name')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>NOTIFICATION_RECIPIENT_ROLE_NAME_FIELD</td>
-    <td>//input[contains(@id,'role-name')]</td>
-    <td></td>
+	<td>ROLE_TYPE_FIELD</td>
+	<td>//input[contains(@id,'role-type')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>NOTIFICATION_RECIPIENT_ROLE_TYPE</td>
-    <td>//input[contains(@id,'role-type')]</td>
-    <td></td>
-</tr>
-<tr>
-    <td>NOTIFICATIONS_NODE_NAME</td>
+    <td>NOTIFICATION_VALUE_NODE_SIDEBAR</td>
     <td>//div[contains(@class, 'sheet-subtitle') and contains(., 'Notifications')]//..//*[contains(@class, 'link-secondary') and contains(., '${key_nodeNotificationName}')]</td>
     <td></td>
 </tr>
@@ -192,17 +187,15 @@
     <td></td>
 </tr>
 <tr>
-    <td>NOTIFICATION_RECIPIENT_ROLE_NAME_OPTION</td>
-    <td>//div[contains(@class, 'dropdown-menu')]//span[contains(@class, 'dropdown-item') and contains(., '${key_optionRoleName}')]</td>
-    <td></td>
+	<td>RECIPIENT_TYPE_NAME_OPTIONS</td>
+	<td>//div[contains(@class, 'dropdown-menu')]//span[contains(@class, 'dropdown-item') and contains(., '${key_optionRoleName}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>NOTIFICATIONS_SCRIPT_RECIPIENT_VALUE</td>
-    <td>//textarea[contains(@id, 'nodeScript')]</td>
-    <td></td>
+	<td>NOTIFICATIONS_SCRIPTED_RECIPIENT_VALUE</td>
+	<td>//textarea[contains(@id, 'nodeScript')]</td>
+	<td></td>
 </tr>
-
-
 </tbody>
 </table>
 </body>

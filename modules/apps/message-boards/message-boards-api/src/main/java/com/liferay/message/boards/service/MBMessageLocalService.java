@@ -87,9 +87,10 @@ public interface MBMessageLocalService
 		throws PortalException;
 
 	public MBMessage addDiscussionMessage(
-			long userId, String userName, long groupId, String className,
-			long classPK, long threadId, long parentMessageId, String subject,
-			String body, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, String userName,
+			long groupId, String className, long classPK, long threadId,
+			long parentMessageId, String subject, String body,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

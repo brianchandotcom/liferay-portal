@@ -110,6 +110,11 @@ public interface DLFileEntryService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DLFileEntry fetchFileEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DLFileEntry fetchFileEntryByImageId(long imageId)
 		throws PortalException;
 

@@ -56,15 +56,15 @@ public class MBMessageLocalServiceUtil {
 	}
 
 	public static MBMessage addDiscussionMessage(
-			long userId, String userName, long groupId, String className,
-			long classPK, long threadId, long parentMessageId, String subject,
-			String body,
+			String externalReferenceCode, long userId, String userName,
+			long groupId, String className, long classPK, long threadId,
+			long parentMessageId, String subject, String body,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addDiscussionMessage(
-			userId, userName, groupId, className, classPK, threadId,
-			parentMessageId, subject, body, serviceContext);
+			externalReferenceCode, userId, userName, groupId, className,
+			classPK, threadId, parentMessageId, subject, body, serviceContext);
 	}
 
 	/**

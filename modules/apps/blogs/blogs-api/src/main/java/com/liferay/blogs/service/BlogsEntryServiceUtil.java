@@ -92,6 +92,14 @@ public class BlogsEntryServiceUtil {
 		getService().deleteEntry(entryId);
 	}
 
+	public static BlogsEntry fetchBlogsEntryByExternalReferenceCode(
+			long groupId, String externalReferenceCode)
+		throws PortalException {
+
+		return getService().fetchBlogsEntryByExternalReferenceCode(
+			groupId, externalReferenceCode);
+	}
+
 	public static List<BlogsEntry> getCompanyEntries(
 			long companyId, java.util.Date displayDate, int status, int max)
 		throws PortalException {

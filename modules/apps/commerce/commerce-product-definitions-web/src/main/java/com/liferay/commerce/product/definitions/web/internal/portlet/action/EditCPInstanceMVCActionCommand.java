@@ -27,6 +27,7 @@ import com.liferay.commerce.product.exception.CPDefinitionIgnoreSKUCombinationsE
 import com.liferay.commerce.product.exception.CPInstanceJsonException;
 import com.liferay.commerce.product.exception.CPInstanceReplacementCPInstanceUuidException;
 import com.liferay.commerce.product.exception.CPInstanceSkuException;
+import com.liferay.commerce.product.exception.CPPriceMaxValueException;
 import com.liferay.commerce.product.exception.NoSuchSkuContributorCPDefinitionOptionRelException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
@@ -124,6 +125,7 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				throwable instanceof
 					CPInstanceReplacementCPInstanceUuidException ||
 				throwable instanceof CPInstanceSkuException ||
+				throwable instanceof CPPriceMaxValueException ||
 				throwable instanceof
 					NoSuchSkuContributorCPDefinitionOptionRelException) {
 
@@ -434,6 +436,15 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "promoPrice", BigDecimal.ZERO);
 		BigDecimal cost = (BigDecimal)ParamUtil.getNumber(
 			actionRequest, "cost", BigDecimal.ZERO);
+
+		BigDecimal maxValue = BigDecimal.valueOf(999999999.99);
+
+		if ((price.compareTo(maxValue) > 0) ||
+			(promoPrice.compareTo(maxValue) > 0) ||
+			(cost.compareTo(maxValue) > 0)) {
+
+			throw new CPPriceMaxValueException();
+		}
 
 		cpInstance = _cpInstanceService.updatePricingInfo(
 			cpInstance.getCPInstanceId(), price, promoPrice, cost,

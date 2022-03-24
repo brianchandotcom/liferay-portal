@@ -150,7 +150,16 @@ public class XMLSpringFileCheck extends BaseFileCheck {
 				_beanObjectName = StringPool.BLANK;
 				_type = -1;
 
-				Matcher matcher = _localServicePattern.matcher(name);
+				Matcher matcher = _ctServicePattern.matcher(name);
+
+				if (matcher.find()) {
+					_beanObjectName = matcher.group(1);
+					_type = _CT_SERVICE;
+
+					return;
+				}
+
+				matcher = _localServicePattern.matcher(name);
 
 				if (matcher.find()) {
 					_beanObjectName = matcher.group(1);
@@ -220,17 +229,21 @@ public class XMLSpringFileCheck extends BaseFileCheck {
 				return _type;
 			}
 
-			private static final int _FINDER = 5;
+			private static final int _CT_SERVICE = 1;
 
-			private static final int _LOCAL_SERVICE = 1;
+			private static final int _FINDER = 6;
 
-			private static final int _MODEL_ARGUMENTS_RESOLVER = 3;
+			private static final int _LOCAL_SERVICE = 2;
 
-			private static final int _PERSISTENCE = 4;
+			private static final int _MODEL_ARGUMENTS_RESOLVER = 4;
 
-			private static final int _SERVICE = 2;
+			private static final int _PERSISTENCE = 5;
+
+			private static final int _SERVICE = 3;
 
 			private String _beanObjectName;
+			private final Pattern _ctServicePattern = Pattern.compile(
+				"\\.service\\.(\\w+)CTService");
 			private final Pattern _finderPattern = Pattern.compile(
 				"\\.service\\.persistence\\.(\\w+)Finder");
 			private final Pattern _localServicePattern = Pattern.compile(

@@ -331,7 +331,7 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-145650. The user could continue publish process in style book editor if link invalid color token."
+	@description = "This is a test for LPS-145650 and LPS-149218. The user could continue publish process in style book editor if link invalid color token. The tokens groups should be collapsed by default except the first one."
 	@priority = "5"
 	test ContinuePublishProcessInStyleBookEditorIfLinkInvalidColorToken {
 		property portal.acceptance = "true";
@@ -342,13 +342,27 @@ definition {
 				styleBookEntryName = "Test Style Book Name");
 		}
 
-		task ("Change the Brand Color 1 to an invalid color token") {
+		task ("View only the first tokens group is expanded by default") {
 			StyleBooksAdmin.openStyleBooksAdmin(siteURLKey = "test-site-name");
 
 			StyleBooksAdmin.gotoStyleBookEllipsisItem(
 				item = "Edit",
 				styleBookName = "Test Style Book Name");
 
+			AssertElementPresent(
+				key_sectionName = "Brand Colors",
+				locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_EXPANDED");
+
+			AssertElementPresent(
+				key_sectionName = "Grays",
+				locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_COLLAPSED");
+
+			AssertElementPresent(
+				key_sectionName = "Theme Colors",
+				locator1 = "StyleBookEditor#STYLE_BOOK_EDITOR_SIDEBAR_COLLAPSED");
+		}
+
+		task ("Change the Brand Color 1 to an invalid color token") {
 			Type(
 				key_text = "Brand Color 1",
 				locator1 = "TextInput#ANY",

@@ -128,12 +128,12 @@ const ExportFileFormats = ({
 };
 
 const MultiplePagesExperiences = ({
-	experiences,
+	multipleExperiences,
 	onChangeExperience,
 	portletNamespace,
 	selectedExperienceValue,
 }) => {
-	//if (experiences?.length > 1) {
+	if (multipleExperiences) {
 		return (
 			<div className="mb-5">
 				<label className="mb-2">
@@ -169,9 +169,9 @@ const MultiplePagesExperiences = ({
 				</ClayRadioGroup>
 			</div>
 		);
-	//}
+	}
 
-	//return null;
+	return null;
 };
 
 const SourceLocales = ({
@@ -237,6 +237,7 @@ const ExportTranslation = ({
 	defaultSourceLanguageId,
 	experiences,
 	exportTranslationURL: initialExportTranslationURL,
+	multipleExperiences,
 	multiplePagesSelected,
 	portletNamespace,
 	redirectURL,
@@ -365,7 +366,7 @@ const ExportTranslation = ({
 
 			{multiplePagesSelected ? (
 				<MultiplePagesExperiences
-					experiences={experiences}
+					multipleExperiences={multipleExperiences}
 					onChangeExperience={onChangeExperienceValue}
 					portletNamespace={portletNamespace}
 					selectedExperienceValue={selectedExperienceValue}
@@ -426,7 +427,8 @@ ExportTranslation.propTypes = {
 			value: PropTypes.string.isRequired,
 		})
 	),
-	multiplePagesSelected: PropTypes.bool.isRequired,
+	multipleExperiences: PropTypes.bool,
+	multiplePagesSelected: PropTypes.bool,
 };
 
 export default ExportTranslation;

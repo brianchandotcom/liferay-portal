@@ -126,6 +126,7 @@ public class JournalDDMTemplateActionDropdownItemsProvider {
 				"/copy_ddm_template.jsp", "redirect",
 				_themeDisplay.getURLCurrent(), "ddmTemplateId",
 				_ddmTemplate.getTemplateId());
+			dropdownItem.setIcon("copy");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "copy"));
 		};
@@ -149,6 +150,7 @@ public class JournalDDMTemplateActionDropdownItemsProvider {
 				).setParameter(
 					"ddmTemplateId", _ddmTemplate.getTemplateId()
 				).buildString());
+			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
@@ -163,6 +165,7 @@ public class JournalDDMTemplateActionDropdownItemsProvider {
 				"/edit_ddm_template.jsp", "redirect",
 				_themeDisplay.getURLCurrent(), "ddmTemplateId",
 				_ddmTemplate.getTemplateId());
+			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
@@ -184,6 +187,7 @@ public class JournalDDMTemplateActionDropdownItemsProvider {
 			dropdownItem.putData("action", "permissionsDDMTemplate");
 			dropdownItem.putData(
 				"permissionsDDMTemplateURL", permissionsDDMTemplateURL);
+			dropdownItem.setIcon("password-policies");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};

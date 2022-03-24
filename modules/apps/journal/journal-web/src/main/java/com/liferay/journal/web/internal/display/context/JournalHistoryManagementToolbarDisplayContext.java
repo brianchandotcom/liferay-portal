@@ -84,7 +84,7 @@ public class JournalHistoryManagementToolbarDisplayContext
 									).setRedirect(
 										themeDisplay.getURLCurrent()
 									).buildString());
-								dropdownItem.setIcon("times-circle");
+								dropdownItem.setIcon("trash");
 								dropdownItem.setLabel(
 									LanguageUtil.get(
 										httpServletRequest, "delete"));

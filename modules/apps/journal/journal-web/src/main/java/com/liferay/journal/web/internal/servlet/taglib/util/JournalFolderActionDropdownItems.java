@@ -274,6 +274,7 @@ public class JournalFolderActionDropdownItems {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "delete");
 			dropdownItem.putData("deleteURL", deleteURL);
+			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(label);
 		};
 	}
@@ -286,6 +287,7 @@ public class JournalFolderActionDropdownItems {
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
 				"/edit_folder.jsp", "redirect", _getRedirect(), "groupId",
 				_folder.getGroupId(), "folderId", _folder.getFolderId());
+			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
@@ -301,6 +303,7 @@ public class JournalFolderActionDropdownItems {
 				_themeDisplay.getScopeGroupId(), "folderId",
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "rootFolder",
 				true);
+			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
@@ -314,6 +317,7 @@ public class JournalFolderActionDropdownItems {
 				_liferayPortletResponse.createRenderURL(), "mvcPath",
 				"/move_articles_and_folders.jsp", "redirect", _getRedirect(),
 				"rowIdsJournalFolder", _folder.getFolderId());
+			dropdownItem.setIcon("move-folder");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "move"));
 		};
@@ -331,6 +335,7 @@ public class JournalFolderActionDropdownItems {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissions");
 			dropdownItem.putData("permissionsURL", permissionsURL);
+			dropdownItem.setIcon("password-policies");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
@@ -349,6 +354,7 @@ public class JournalFolderActionDropdownItems {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissions");
 			dropdownItem.putData("permissionsURL", permissionsURL);
+			dropdownItem.setIcon("password-policies");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
@@ -377,6 +383,7 @@ public class JournalFolderActionDropdownItems {
 						return null;
 					}
 				).buildString());
+			dropdownItem.setIcon("live");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "publish-to-live"));
 		};

@@ -132,7 +132,7 @@ public class JournalManagementToolbarDisplayContext
 						_ffBulkTranslationConfiguration::bulkTranslationEnabled,
 						dropdownItem -> {
 							dropdownItem.putData("action", "exportTranslation");
-							dropdownItem.setIcon("import-export");
+							dropdownItem.setIcon("upload");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									httpServletRequest,
@@ -151,8 +151,7 @@ public class JournalManagementToolbarDisplayContext
 
 							boolean trashEnabled = _isTrashEnabled();
 
-							dropdownItem.setIcon(
-								trashEnabled ? "trash" : "times-circle");
+							dropdownItem.setIcon("trash");
 
 							String label = "delete";
 
@@ -548,6 +547,7 @@ public class JournalManagementToolbarDisplayContext
 								label = "subfolder";
 							}
 
+							dropdownItem.setIcon("folder");
 							dropdownItem.setLabel(
 								LanguageUtil.get(httpServletRequest, label));
 						});

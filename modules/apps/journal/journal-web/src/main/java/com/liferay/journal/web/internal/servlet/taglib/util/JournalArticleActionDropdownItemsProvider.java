@@ -351,6 +351,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				"/copy_article.jsp", "redirect", _getRedirect(), "groupId",
 				_article.getGroupId(), "oldArticleId", _article.getArticleId(),
 				"version", _article.getVersion());
+			dropdownItem.setIcon("copy");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "copy"));
 		};
@@ -418,6 +419,7 @@ public class JournalArticleActionDropdownItemsProvider {
 					).setParameter(
 						"version", _article.getVersion()
 					).buildString());
+				dropdownItem.setIcon("copy");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "copy"));
 			};
@@ -450,6 +452,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				).setParameter(
 					"groupId", _article.getGroupId()
 				).buildString());
+			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
@@ -532,7 +535,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				"groupId", _article.getGroupId(), "folderId",
 				_article.getFolderId(), "articleId", _article.getArticleId(),
 				"version", _article.getVersion());
-			dropdownItem.setIcon("edit");
+			dropdownItem.setIcon("pencil");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "edit"));
 		};
@@ -562,6 +565,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				).setParameter(
 					"groupId", _article.getGroupId()
 				).buildString());
+			dropdownItem.setIcon("time");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "expire"));
 		};
@@ -589,6 +593,7 @@ public class JournalArticleActionDropdownItemsProvider {
 						return portletDisplay.getId();
 					}
 				).build());
+			dropdownItem.setIcon("upload");
 			dropdownItem.setLabel(
 				LanguageUtil.get(
 					_httpServletRequest, "export-for-translation"));
@@ -617,6 +622,7 @@ public class JournalArticleActionDropdownItemsProvider {
 						return portletDisplay.getId();
 					}
 				).buildPortletURL());
+			dropdownItem.setIcon("download");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "import-translation"));
 		};
@@ -631,7 +637,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				"/move_articles_and_folders.jsp", "redirect", _getRedirect(),
 				"referringPortletResource", _getReferringPortletResource(),
 				"rowIdsJournalArticle", _article.getArticleId());
-			dropdownItem.setIcon("move");
+			dropdownItem.setIcon("move-folder");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "move"));
 		};
@@ -655,6 +661,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				).setParameter(
 					"groupId", _article.getGroupId()
 				).buildString());
+			dropdownItem.setIcon("trash");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "move-to-recycle-bin"));
 		};
@@ -673,6 +680,7 @@ public class JournalArticleActionDropdownItemsProvider {
 		return dropdownItem -> {
 			dropdownItem.putData("action", "permissions");
 			dropdownItem.putData("permissionsURL", permissionsURL);
+			dropdownItem.setIcon("password-policies");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "permissions"));
 		};
@@ -701,6 +709,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				status = "preview-draft";
 			}
 
+			dropdownItem.setIcon("view");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, status));
 		};
@@ -770,6 +779,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				).setParameter(
 					"groupId", _article.getGroupId()
 				).buildString());
+			dropdownItem.setIcon("live");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "publish-to-live"));
 		};
@@ -817,6 +827,7 @@ public class JournalArticleActionDropdownItemsProvider {
 					).setParameter(
 						"articleId", _article.getResourcePrimKey()
 					).buildString());
+				dropdownItem.setIcon("bell-off");
 				dropdownItem.setLabel(
 					LanguageUtil.get(_httpServletRequest, "unsubscribe"));
 			};
@@ -835,6 +846,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				).setParameter(
 					"articleId", _article.getResourcePrimKey()
 				).buildString());
+			dropdownItem.setIcon("bell-on");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "subscribe"));
 		};
@@ -856,6 +868,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				"redirect", _getRedirect(), "portletResource",
 				portletDisplay.getId());
 
+			dropdownItem.setIcon("automatic-translate");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "translate"));
 		};
@@ -873,6 +886,7 @@ public class JournalArticleActionDropdownItemsProvider {
 
 		return dropdownItem -> {
 			dropdownItem.setHref(viewContentURL);
+			dropdownItem.setIcon("view");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "view-content"));
 		};
@@ -917,6 +931,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				"backURL", _getRedirect(), "referringPortletResource",
 				_getReferringPortletResource(), "articleId",
 				_article.getArticleId());
+			dropdownItem.setIcon("date-time");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "view-history"));
 		};
@@ -931,6 +946,7 @@ public class JournalArticleActionDropdownItemsProvider {
 				"/view_asset_entry_usages.jsp", "redirect", _getRedirect(),
 				"groupId", _article.getGroupId(), "articleId",
 				_article.getArticleId());
+			dropdownItem.setIcon("list-ul");
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "view-usages"));
 		};

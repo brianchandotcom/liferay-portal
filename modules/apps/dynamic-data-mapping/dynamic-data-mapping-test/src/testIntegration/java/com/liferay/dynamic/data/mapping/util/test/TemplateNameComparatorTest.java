@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
-import com.liferay.dynamic.data.mapping.util.comparator.TemplateNameComparator;
+import com.liferay.dynamic.data.mapping.util.comparator.DDMTemplateNameComparator;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -101,9 +101,9 @@ public class TemplateNameComparatorTest {
 		ddmTemplates.add(_ddmTemplate3);
 		ddmTemplates.add(_ddmTemplate4);
 
-		_templateNameComparator = new TemplateNameComparator(true);
+		_ddmTemplateNameComparator = new DDMTemplateNameComparator(true);
 
-		Collections.sort(ddmTemplates, _templateNameComparator);
+		Collections.sort(ddmTemplates, _ddmTemplateNameComparator);
 
 		Assert.assertEquals(_ddmTemplate1, ddmTemplates.get(0));
 		Assert.assertEquals(_ddmTemplate2, ddmTemplates.get(1));
@@ -120,9 +120,10 @@ public class TemplateNameComparatorTest {
 		ddmTemplates.add(_ddmTemplate3);
 		ddmTemplates.add(_ddmTemplate4);
 
-		_templateNameComparator = new TemplateNameComparator(true, _esLocale);
+		_ddmTemplateNameComparator = new DDMTemplateNameComparator(
+			true, _esLocale);
 
-		Collections.sort(ddmTemplates, _templateNameComparator);
+		Collections.sort(ddmTemplates, _ddmTemplateNameComparator);
 
 		Assert.assertEquals(_ddmTemplate4, ddmTemplates.get(0));
 		Assert.assertEquals(_ddmTemplate1, ddmTemplates.get(1));
@@ -134,11 +135,10 @@ public class TemplateNameComparatorTest {
 	private DDMTemplate _ddmTemplate2;
 	private DDMTemplate _ddmTemplate3;
 	private DDMTemplate _ddmTemplate4;
+	private DDMTemplateNameComparator _ddmTemplateNameComparator;
 	private final Locale _esLocale = LocaleUtil.SPAIN;
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	private TemplateNameComparator _templateNameComparator;
 
 }

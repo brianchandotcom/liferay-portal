@@ -27,7 +27,7 @@ import java.util.Locale;
 /**
  * @author Attila Bakay
  */
-public class TemplateNameComparator extends OrderByComparator<DDMTemplate> {
+public class DDMTemplateNameComparator extends OrderByComparator<DDMTemplate> {
 
 	public static final String ORDER_BY_ASC = "DDMTemplate.name ASC";
 
@@ -35,15 +35,15 @@ public class TemplateNameComparator extends OrderByComparator<DDMTemplate> {
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 
-	public TemplateNameComparator() {
+	public DDMTemplateNameComparator() {
 		this(false);
 	}
 
-	public TemplateNameComparator(boolean ascending) {
+	public DDMTemplateNameComparator(boolean ascending) {
 		this(ascending, LocaleUtil.getDefault());
 	}
 
-	public TemplateNameComparator(boolean ascending, Locale locale) {
+	public DDMTemplateNameComparator(boolean ascending, Locale locale) {
 		_ascending = ascending;
 		_locale = locale;
 

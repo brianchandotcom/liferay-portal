@@ -19,9 +19,9 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil;
+import com.liferay.dynamic.data.mapping.util.comparator.DDMTemplateNameComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.TemplateIdComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.TemplateModifiedDateComparator;
-import com.liferay.dynamic.data.mapping.util.comparator.TemplateNameComparator;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -310,7 +310,7 @@ public class JournalDDMTemplateDisplayContext {
 			orderByComparator = new TemplateModifiedDateComparator(orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
-			orderByComparator = new TemplateNameComparator(
+			orderByComparator = new DDMTemplateNameComparator(
 				orderByAsc, _themeDisplay.getLocale());
 		}
 

@@ -36,6 +36,8 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import org.mockito.Mockito;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
@@ -650,27 +652,32 @@ public class PortalImplUnitTest {
 	public void testUpdateRedirectRemoveLayoutURL() {
 		HttpUtil httpUtil = new HttpUtil();
 
-		httpUtil.setHttp(
-			new HttpImpl() {
+		HttpImpl httpImpl = Mockito.mock(HttpImpl.class);
 
-				@Override
-				public String getParameter(
-					String url, String name, boolean escaped) {
+		Mockito.when(
+			httpImpl.getParameter(
+				Mockito.anyString(), Mockito.anyString(), Mockito.anyBoolean())
+		).thenReturn(
+			StringPool.BLANK
+		);
 
-					return StringPool.BLANK;
-				}
+		Mockito.when(
+			httpImpl.getPath(Mockito.anyString())
+		).thenAnswer(
+			invocation -> {
+				Object[] args = invocation.getArguments();
 
-				@Override
-				public String getPath(String url) {
-					return url;
-				}
+				return args[0];
+			}
+		);
 
-				@Override
-				public String getQueryString(String url) {
-					return StringPool.BLANK;
-				}
+		Mockito.when(
+			httpImpl.getQueryString(Mockito.anyString())
+		).thenReturn(
+			StringPool.BLANK
+		);
 
-			});
+		httpUtil.setHttp(httpImpl);
 
 		Assert.assertEquals(
 			"/web/group",

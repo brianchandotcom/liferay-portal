@@ -34,6 +34,8 @@ export type CTypePagination<ObjectKey extends string, Query = any> = {
 	c: TypePagination<ObjectKey, Query>;
 };
 
+export * from './liferayRole';
+export * from './liferayUserAccount';
 export * from './testrayBuild';
 export * from './testrayCase';
 export * from './testrayCaseResult';

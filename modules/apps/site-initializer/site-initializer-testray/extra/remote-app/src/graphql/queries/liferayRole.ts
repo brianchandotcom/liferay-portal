@@ -12,12 +12,27 @@
  * details.
  */
 
-export * from './liferayUserAccount';
-export * from './testrayCase';
-export * from './testrayCaseType';
-export * from './testrayFactorCategory';
-export * from './testrayFactorOptions';
-export * from './testrayProject';
-export * from './testrayRequirement';
-export * from './testrayRoutine';
-export * from './testraySuite';
+import {gql} from '@apollo/client';
+
+import {liferayRoleFragment} from '../fragments';
+
+export type Role = {
+	id: number;
+	name: string;
+};
+
+export const getLiferayRoles = gql`
+	${liferayRoleFragment}
+
+	query getLiferayRoles($page: Int = 1, $pageSize: Int = 20) {
+		roles(page: $page, pageSize: $pageSize) {
+			items {
+				...LiferayRoleFragment
+			}
+			lastPage
+			page
+			pageSize
+			totalCount
+		}
+	}
+`;

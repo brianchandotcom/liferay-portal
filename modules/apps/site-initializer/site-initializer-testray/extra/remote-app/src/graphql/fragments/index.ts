@@ -12,6 +12,7 @@
  * details.
  */
 
+export * from './liferayRole';
 export * from './liferayUserAccount';
 export * from './testrayCase';
 export * from './testrayCaseType';

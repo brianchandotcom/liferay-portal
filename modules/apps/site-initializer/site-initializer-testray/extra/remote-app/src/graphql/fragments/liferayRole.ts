@@ -12,12 +12,11 @@
  * details.
  */
 
-export * from './liferayUserAccount';
-export * from './testrayCase';
-export * from './testrayCaseType';
-export * from './testrayFactorCategory';
-export * from './testrayFactorOptions';
-export * from './testrayProject';
-export * from './testrayRequirement';
-export * from './testrayRoutine';
-export * from './testraySuite';
+import {gql} from '@apollo/client';
+
+export const liferayRoleFragment = gql`
+	fragment LiferayRoleFragment on com_liferay_headless_admin_user_dto_v1_0_Role {
+		id
+		name
+	}
+`;

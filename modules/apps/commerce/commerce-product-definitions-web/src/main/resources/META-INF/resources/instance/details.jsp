@@ -113,7 +113,7 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 			<div class="col-4">
 				<aui:input label="base-price" name="price" suffix="<%= HtmlUtil.escape(commerceCurrencyCode) %>" type="text" value="<%= cpInstanceDisplayContext.getPrice() %>">
 					<aui:validator name="min">0</aui:validator>
-					<aui:validator name="max">99999999.99</aui:validator>
+					<aui:validator name="max">999999999.99</aui:validator>
 					<aui:validator name="number" />
 				</aui:input>
 			</div>
@@ -121,7 +121,7 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 			<div class="col-4">
 				<aui:input label="sale-price" name="promoPrice" suffix="<%= HtmlUtil.escape(commerceCurrencyCode) %>" type="text" value="<%= cpInstanceDisplayContext.getPromoPrice() %>">
 					<aui:validator name="min">0</aui:validator>
-					<aui:validator name="max">99999999.99</aui:validator>
+					<aui:validator name="max">999999999.99</aui:validator>
 					<aui:validator name="number" />
 				</aui:input>
 			</div>
@@ -129,7 +129,7 @@ boolean discontinued = BeanParamUtil.getBoolean(cpInstance, request, "discontinu
 			<div class="col-4">
 				<aui:input name="cost" suffix="<%= HtmlUtil.escape(commerceCurrencyCode) %>" type="text" value="<%= (cpInstance == null) ? StringPool.BLANK : cpInstanceDisplayContext.round(cpInstance.getCost()) %>">
 					<aui:validator name="min">0</aui:validator>
-					<aui:validator name="max">99999999.99</aui:validator>
+					<aui:validator name="max">999999999.99</aui:validator>
 					<aui:validator name="number" />
 				</aui:input>
 			</div>

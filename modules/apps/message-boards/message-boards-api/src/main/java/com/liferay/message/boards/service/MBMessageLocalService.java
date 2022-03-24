@@ -92,6 +92,13 @@ public interface MBMessageLocalService
 			String body, ServiceContext serviceContext)
 		throws PortalException;
 
+	public MBMessage addDiscussionMessage(
+			String externalReferenceCode, long userId, String userName,
+			long groupId, String className, long classPK, long threadId,
+			long parentMessageId, String subject, String body,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Adds the message-boards message to the database. Also notifies the appropriate model listeners.
 	 *
@@ -356,6 +363,11 @@ public interface MBMessageLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMessage fetchMBMessage(long messageId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessage fetchMBMessage(
+		String className, long classPK, String externalReferenceCode,
+		long groupId);
+
 	/**
 	 * Returns the message-boards message with the matching external reference code and group.
 	 *
@@ -506,6 +518,12 @@ public interface MBMessageLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBMessage getMBMessage(long messageId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBMessage getMBMessage(
+			String className, long classPK, String externalReferenceCode,
+			long groupId)
+		throws PortalException;
 
 	/**
 	 * Returns the message-boards message with the matching external reference code and group.

@@ -31,6 +31,7 @@ create index IX_161C8ED8 on MBMailingList (uuid_[$COLUMN_LENGTH:75$], ctCollecti
 create unique index IX_212E7CE on MBMailingList (uuid_[$COLUMN_LENGTH:75$], groupId, ctCollectionId);
 
 create index IX_860370AB on MBMessage (classNameId, classPK, ctCollectionId);
+create unique index IX_61FCCFFE on MBMessage (classNameId, classPK, groupId, externalReferenceCode[$COLUMN_LENGTH:75$], ctCollectionId);
 create index IX_19FE8691 on MBMessage (classNameId, classPK, status, ctCollectionId);
 create index IX_5C8DA38E on MBMessage (companyId, ctCollectionId);
 create index IX_9CE52674 on MBMessage (companyId, status, ctCollectionId);

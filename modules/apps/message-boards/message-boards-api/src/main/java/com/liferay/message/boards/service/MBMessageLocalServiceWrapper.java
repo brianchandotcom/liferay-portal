@@ -62,6 +62,19 @@ public class MBMessageLocalServiceWrapper
 			parentMessageId, subject, body, serviceContext);
 	}
 
+	@Override
+	public MBMessage addDiscussionMessage(
+			String externalReferenceCode, long userId, String userName,
+			long groupId, String className, long classPK, long threadId,
+			long parentMessageId, String subject, String body,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _mbMessageLocalService.addDiscussionMessage(
+			externalReferenceCode, userId, userName, groupId, className,
+			classPK, threadId, parentMessageId, subject, body, serviceContext);
+	}
+
 	/**
 	 * Adds the message-boards message to the database. Also notifies the appropriate model listeners.
 	 *
@@ -493,6 +506,15 @@ public class MBMessageLocalServiceWrapper
 		return _mbMessageLocalService.fetchMBMessage(messageId);
 	}
 
+	@Override
+	public MBMessage fetchMBMessage(
+		String className, long classPK, String externalReferenceCode,
+		long groupId) {
+
+		return _mbMessageLocalService.fetchMBMessage(
+			className, classPK, externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the message-boards message with the matching external reference code and group.
 	 *
@@ -770,6 +792,16 @@ public class MBMessageLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _mbMessageLocalService.getMBMessage(messageId);
+	}
+
+	@Override
+	public MBMessage getMBMessage(
+			String className, long classPK, String externalReferenceCode,
+			long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _mbMessageLocalService.getMBMessage(
+			className, classPK, externalReferenceCode, groupId);
 	}
 
 	/**

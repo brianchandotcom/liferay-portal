@@ -5823,6 +5823,96 @@ public class MBMessageUtil {
 	}
 
 	/**
+	 * Returns the message-boards message where groupId = &#63; and classNameId = &#63; and classPK = &#63; and externalReferenceCode = &#63; or throws a <code>NoSuchMessageException</code> if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching message-boards message
+	 * @throws NoSuchMessageException if a matching message-boards message could not be found
+	 */
+	public static MBMessage findByC_C_G_ERC(
+			long groupId, long classNameId, long classPK,
+			String externalReferenceCode)
+		throws com.liferay.message.boards.exception.NoSuchMessageException {
+
+		return getPersistence().findByC_C_G_ERC(
+			groupId, classNameId, classPK, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the message-boards message where groupId = &#63; and classNameId = &#63; and classPK = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param externalReferenceCode the external reference code
+	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
+	 */
+	public static MBMessage fetchByC_C_G_ERC(
+		long groupId, long classNameId, long classPK,
+		String externalReferenceCode) {
+
+		return getPersistence().fetchByC_C_G_ERC(
+			groupId, classNameId, classPK, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the message-boards message where groupId = &#63; and classNameId = &#63; and classPK = &#63; and externalReferenceCode = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param externalReferenceCode the external reference code
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
+	 */
+	public static MBMessage fetchByC_C_G_ERC(
+		long groupId, long classNameId, long classPK,
+		String externalReferenceCode, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_C_G_ERC(
+			groupId, classNameId, classPK, externalReferenceCode,
+			useFinderCache);
+	}
+
+	/**
+	 * Removes the message-boards message where groupId = &#63; and classNameId = &#63; and classPK = &#63; and externalReferenceCode = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param externalReferenceCode the external reference code
+	 * @return the message-boards message that was removed
+	 */
+	public static MBMessage removeByC_C_G_ERC(
+			long groupId, long classNameId, long classPK,
+			String externalReferenceCode)
+		throws com.liferay.message.boards.exception.NoSuchMessageException {
+
+		return getPersistence().removeByC_C_G_ERC(
+			groupId, classNameId, classPK, externalReferenceCode);
+	}
+
+	/**
+	 * Returns the number of message-boards messages where groupId = &#63; and classNameId = &#63; and classPK = &#63; and externalReferenceCode = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param externalReferenceCode the external reference code
+	 * @return the number of matching message-boards messages
+	 */
+	public static int countByC_C_G_ERC(
+		long groupId, long classNameId, long classPK,
+		String externalReferenceCode) {
+
+		return getPersistence().countByC_C_G_ERC(
+			groupId, classNameId, classPK, externalReferenceCode);
+	}
+
+	/**
 	 * Returns all the message-boards messages where groupId = &#63; and categoryId = &#63; and threadId = &#63; and answer = &#63;.
 	 *
 	 * @param groupId the group ID

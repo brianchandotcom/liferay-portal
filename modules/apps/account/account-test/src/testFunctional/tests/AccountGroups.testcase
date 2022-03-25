@@ -145,6 +145,53 @@ definition {
 			accountGroupName = "Edited Account Group Name");
 	}
 
+	@description = "This test assert user can filter the assigned accounts in Account Group by name."
+	@priority = "3"
+	test CanFilterAccountsBelongToAccountGroupByName {
+		task ("Given Add a new Account Group and Accounts with different name not in alphabetical order") {
+			JSONAccountGroup.addAccountGroup(
+				accountGroupDescription = "Filter the assigned Accounts by .",
+				accountGroupName = "AG Filter by Name");
+
+			for (var accountEntryName : list "Liferay Account,Account Name for Test,Filter By Name,Banana Account") {
+				JSONAccountEntry.addAccountEntry(
+					accountEntryName = "${accountEntryName}",
+					accountEntryType = "Business");
+			}
+		}
+
+		task ("When assign the accounts to account group") {
+			AccountGroups.openAccountGroupsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AG Filter by Name");
+
+			AccountGroups.viewDefault(tabName = "Accounts");
+
+			AccountGroups.addAssignee(
+				accountGroupName = "AG Filter by Name",
+				assigneeAll = "true");
+
+			for (var assigneeName : list "Liferay Account,Account Name for Test,Filter By Name,Banana Account") {
+				AccountGroups.viewAssignee(assigneeName = "${assigneeName}");
+			}
+		}
+
+		task ("Then filter the accounts assigned to account group by Name returns proper results") {
+			ManagementBar.viewFilterAndOrderSelectedItem(menuItem = "Name");
+
+			var index = "1";
+
+			for (var assigneeName : list "Account Name for Test,Banana Account,Filter By Name,Liferay Account") {
+				AssertTextEquals.assertPartialText(
+					key_rowNumber = "${index}",
+					locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+					value1 = "${assigneeName}");
+
+				var index = ${index} + 1;
+			}
+		}
+	}
+
 	@description = "This test assert user can filter the assigned accounts in Account Group by status."
 	@priority = "3"
 	test CanFilterAccountsBelongToAccountGroupByStatus {

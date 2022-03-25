@@ -480,7 +480,7 @@ public interface CPDefinitionInfoItemFields {
 			"shipSeperately"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
-				CPDefinitionInfoItemFields.class, "ship-seperately")
+				CPDefinitionInfoItemFields.class, "ship-separately")
 		).build();
 	public static final InfoField<TextInfoFieldType> shortDescriptionInfoField =
 		InfoField.builder(

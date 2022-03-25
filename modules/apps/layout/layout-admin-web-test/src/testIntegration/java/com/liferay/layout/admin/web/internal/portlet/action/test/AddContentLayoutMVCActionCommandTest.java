@@ -88,10 +88,9 @@ public class AddContentLayoutMVCActionCommandTest {
 			_getMockLiferayPortletActionRequest(),
 			new MockLiferayPortletActionResponse());
 
-		List<Layout> layouts = _layoutLocalService.getLayouts(
-			_group.getGroupId(), false);
-
-		Layout layout = layouts.get(0);
+		Layout layout = _layoutLocalService.fetchFirstLayout(
+			_group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		List<PortletPreferences> portletPreferences =
 			_portletPreferencesLocalService.getPortletPreferences(

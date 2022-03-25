@@ -16,8 +16,6 @@ package com.liferay.taglib.portletext;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,9 +25,9 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletWrapper;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.portlet.PortletJSONUtil;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletParameterUtil;
+import com.liferay.portal.kernel.portlet.PortletPathsUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -302,7 +300,7 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			httpServletRequest.setAttribute(
 				WebKeys.SETTINGS_SCOPE, settingsScope);
 
-			JSONObject jsonObject = null;
+			Map<String, Object> paths = null;
 
 			boolean writeObject = false;
 
@@ -346,15 +344,14 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			}
 
 			if (writeObject) {
-				jsonObject = JSONFactoryUtil.createJSONObject();
+				paths = new HashMap<>();
 
-				PortletJSONUtil.populatePortletJSONObject(
-					httpServletRequest, StringPool.BLANK, portlet, jsonObject);
+				PortletPathsUtil.populatePortletPaths(
+					httpServletRequest, StringPool.BLANK, portlet, paths);
 			}
 
-			if (jsonObject != null) {
-				PortletJSONUtil.writeHeaderPaths(
-					httpServletResponse, jsonObject);
+			if (paths != null) {
+				PortletPathsUtil.writeHeaderPaths(httpServletResponse, paths);
 			}
 
 			embeddedPortletIds.push(rootPortletId);
@@ -377,9 +374,8 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 
 			embeddedPortletIds.pop();
 
-			if (jsonObject != null) {
-				PortletJSONUtil.writeFooterPaths(
-					httpServletResponse, jsonObject);
+			if (paths != null) {
+				PortletPathsUtil.writeFooterPaths(httpServletResponse, paths);
 			}
 		}
 		finally {

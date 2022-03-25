@@ -16,13 +16,11 @@ package com.liferay.layout.type.controller.content.internal.display.context;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
-import com.liferay.portal.kernel.portlet.PortletJSONUtil;
+import com.liferay.portal.kernel.portlet.PortletPathsUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
@@ -31,8 +29,10 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,14 +61,13 @@ public class RenderContentLayoutDisplayContext {
 			_httpServletResponse, unsyncStringWriter);
 
 		for (Portlet portlet : _getPortlets()) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			Map<String, Object> paths = new HashMap<>();
 
 			try {
-				PortletJSONUtil.populatePortletJSONObject(
-					_httpServletRequest, StringPool.BLANK, portlet, jsonObject);
+				PortletPathsUtil.populatePortletPaths(
+					_httpServletRequest, StringPool.BLANK, portlet, paths);
 
-				PortletJSONUtil.writeFooterPaths(
-					pipingServletResponse, jsonObject);
+				PortletPathsUtil.writeFooterPaths(pipingServletResponse, paths);
 			}
 			catch (Exception exception) {
 				_log.error(
@@ -88,14 +87,13 @@ public class RenderContentLayoutDisplayContext {
 			_httpServletResponse, unsyncStringWriter);
 
 		for (Portlet portlet : _getPortlets()) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+			Map<String, Object> paths = new HashMap<>();
 
 			try {
-				PortletJSONUtil.populatePortletJSONObject(
-					_httpServletRequest, StringPool.BLANK, portlet, jsonObject);
+				PortletPathsUtil.populatePortletPaths(
+					_httpServletRequest, StringPool.BLANK, portlet, paths);
 
-				PortletJSONUtil.writeHeaderPaths(
-					pipingServletResponse, jsonObject);
+				PortletPathsUtil.writeHeaderPaths(pipingServletResponse, paths);
 			}
 			catch (Exception exception) {
 				_log.error(

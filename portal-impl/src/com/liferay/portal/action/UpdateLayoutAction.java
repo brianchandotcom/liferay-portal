@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
-import com.liferay.portal.kernel.portlet.PortletJSONUtil;
+import com.liferay.portal.kernel.portlet.PortletPathsUtil;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
@@ -57,6 +57,10 @@ import com.liferay.portal.struts.Action;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -301,8 +305,24 @@ public class UpdateLayoutAction extends JSONAction {
 
 			portletHTML = portletHTML.trim();
 
-			PortletJSONUtil.populatePortletJSONObject(
-				httpServletRequest, portletHTML, portlet, jsonObject);
+			Map<String, Object> paths = new HashMap<>();
+
+			PortletPathsUtil.populatePortletPaths(
+				httpServletRequest, portletHTML, portlet, paths);
+
+			for (Map.Entry<String, Object> entry : paths.entrySet()) {
+				Object value = entry.getValue();
+
+				if (value instanceof Collection) {
+					jsonObject.put(
+						entry.getKey(),
+						JSONFactoryUtil.createJSONArray(
+							(Collection<String>)value));
+				}
+				else {
+					jsonObject.put(entry.getKey(), value);
+				}
+			}
 
 			httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 

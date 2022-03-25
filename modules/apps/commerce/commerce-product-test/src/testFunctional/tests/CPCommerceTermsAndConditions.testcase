@@ -50,7 +50,7 @@ definition {
 	test RemoveADeliveryTermLinkedToAnAccountAsDefaultOne {
 		property portal.acceptance = "false";
 
-		task ("Given the Sales Manager created two delivery terms entries with different priority into "Terms and Conditions".") {
+		task ("Given two Delivery Terms and Condition entries with different priorities.") {
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
 				portlet = "Terms and Conditions");
@@ -70,7 +70,7 @@ definition {
 				valuePosition = "2");
 		}
 
-		task ("Given the Sales Manager created an account with a specific default delivery term already selected.") {
+		task ("And given I create an account with a specific default delivery term already selected.") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account Name",
 				accountEntryType = "Business");
@@ -88,7 +88,7 @@ definition {
 			Accounts.viewDefaultDeliveryCommerceTermsEntry(termEntry = "terms-and-condition-entry-1");
 		}
 
-		task ("When the Sales Manager delete the delivery term that was linked to an Account as a default") {
+		task ("When I delete the default delivery term that was linked to an account") {
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
 				portlet = "Terms and Conditions");
@@ -100,7 +100,7 @@ definition {
 			CommercePaymentTerms.viewDeleteTermsAndConditionEntry(termsAndConditionName = "Terms and Condition Entry 1");
 		}
 
-		task ("And go into the account edit page") {
+		task ("And I edit the account") {
 			Accounts.openAccountsAdmin();
 
 			Accounts.goToEntryMenuItem(
@@ -120,7 +120,7 @@ definition {
 	test RemoveAPaymentTermLinkedToAnAccountAsDefaultOne {
 		property portal.acceptance = "false";
 
-		task ("Given the Sales Manager created two payment terms entries with different priority into "Terms and Conditions".") {
+		task ("Given that I create two Terms and Conditions Payment Terms entries with different priorities.") {
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
 				portlet = "Terms and Conditions");
@@ -140,7 +140,7 @@ definition {
 				valuePosition = "2");
 		}
 
-		task ("Given the Sales Manager created an account with a specific default payment term already selected.") {
+		task ("And given I create an account with a specific default payment term already selected.") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account Name",
 				accountEntryType = "Business");
@@ -158,7 +158,7 @@ definition {
 			Accounts.viewDefaultPaymentCommerceTermsEntry(termEntry = "terms-and-condition-entry-1");
 		}
 
-		task ("When the Sales Manager delete the payment term that was linked to an Account as a default") {
+		task ("When I delete the default payment term that was linked to an account") {
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
 				portlet = "Terms and Conditions");
@@ -170,7 +170,7 @@ definition {
 			CommercePaymentTerms.viewDeleteTermsAndConditionEntry(termsAndConditionName = "Terms and Condition Entry 1");
 		}
 
-		task ("And go into the account edit page") {
+		task ("And when I edit the account") {
 			Accounts.openAccountsAdmin();
 
 			Accounts.goToEntryMenuItem(
@@ -190,7 +190,7 @@ definition {
 	test SetAnInactiveDeliveryTermLinkedToAnAccountAsDefaultOne {
 		property portal.acceptance = "false";
 
-		task ("Given a new entry into the "Terms and Conditions" with status to "Active".") {
+		task ("Given a new "Terms and Conditions" entry with the status to "Active".") {
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
 				portlet = "Terms and Conditions");
@@ -204,7 +204,7 @@ definition {
 			Click(locator1 = "Button#BACK");
 		}
 
-		task ("Given an account with a specific default delivery term already selected.") {
+		task ("And given an account with a specific default delivery term already selected.") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account Name",
 				accountEntryType = "Business");
@@ -218,7 +218,7 @@ definition {
 			Accounts.setDefaultDeliveryCommerceTermsEntry(termEntry = "terms-and-condition-entry-1");
 		}
 
-		task ("When the Sales Manager set the delivery term that was linked to an account as "inactive".") {
+		task ("When I set the delivery term that was linked to an account as "inactive".") {
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
 				portlet = "Terms and Conditions");
@@ -244,13 +244,13 @@ definition {
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 		}
 
-		task ("Then near the default delivery appear an orange triangle") {
+		task ("Then the inactive icon should appear") {
 			Accounts.viewDefaultDeliveryCommerceTermsEntry(
 				inactive = "true",
 				termEntry = "terms-and-condition-entry-1");
 		}
 
-		task ("And if we move the mouse over the triangle the word "Inactive" appears.") {
+		task ("And when I move the mouse over the icon the word "Inactive" should appear.") {
 			MouseOver(
 				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_DELIVERY_ENTRY_INACTIVE_ICON",
 				value1 = "Inactive term");
@@ -262,7 +262,7 @@ definition {
 	test SetAnInactivePaymentTermLinkedToAnAccountAsDefaultOne {
 		property portal.acceptance = "false";
 
-		task ("Given a new entry into the "Terms and Conditions" with status to "Active".") {
+		task ("Given a new "Terms and Conditions" entry with status to "Active".") {
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
 				portlet = "Terms and Conditions");
@@ -276,7 +276,7 @@ definition {
 			Click(locator1 = "Button#BACK");
 		}
 
-		task ("Given an account with a specific default payment term already selected.") {
+		task ("And given an account with a specific default payment term already selected.") {
 			JSONAccountEntry.addAccountEntry(
 				accountEntryName = "Account Name",
 				accountEntryType = "Business");
@@ -290,7 +290,7 @@ definition {
 			Accounts.setDefaultPaymentCommerceTermsEntry(termEntry = "terms-and-condition-entry-1");
 		}
 
-		task ("When the Sales Manager set the payment term that was linked to an account as "inactive".") {
+		task ("When I set the payment term that was linked to an account as "inactive".") {
 			CommerceNavigator.gotoPortlet(
 				category = "Order Management",
 				portlet = "Terms and Conditions");
@@ -306,7 +306,7 @@ definition {
 			Alert.viewSuccessMessage();
 		}
 
-		task ("And go into the account edit order page") {
+		task ("And I go into the account edit order page") {
 			Accounts.openAccountsAdmin();
 
 			Accounts.goToEntryMenuItem(
@@ -316,13 +316,13 @@ definition {
 			Accounts.gotoAssigneeTab(assigneeTab = "Order Defaults");
 		}
 
-		task ("Then near the default payment appear an orange triangle") {
+		task ("Then the inactive icon should appear") {
 			Accounts.viewDefaultPaymentCommerceTermsEntry(
 				inactive = "true",
 				termEntry = "terms-and-condition-entry-1");
 		}
 
-		task ("And if we move the mouse over the triangle the word "Inactive" appears.") {
+		task ("And when I move the mouse over the icon the word "Inactive" should appear.") {
 			MouseOver(
 				locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_DEFAULT_PAYMENT_ENTRY_INACTIVE_ICON",
 				value1 = "Inactive term");

@@ -1714,17 +1714,4 @@
 	// 200-400: Portlet Developer
 	// 400+: Liferay
 
-	Liferay.zIndex = {
-		ALERT: 430,
-		DOCK: 10,
-		DOCK_PARENT: 20,
-		DRAG_ITEM: 460,
-		DROP_AREA: 440,
-		DROP_POSITION: 450,
-		MENU: 5000,
-		OVERLAY: 1000,
-		POPOVER: 1600,
-		TOOLTIP: 10000,
-		WINDOW: 1200,
-	};
 })(AUI());

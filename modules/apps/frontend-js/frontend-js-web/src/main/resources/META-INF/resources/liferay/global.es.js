@@ -76,6 +76,7 @@ import createResourceURL from './util/portlet_url/create_resource_url.es';
 import {getSessionValue, setSessionValue} from './util/session.es';
 import toCharCode from './util/to_char_code.es';
 import toggleDisabled from './util/toggle_disabled';
+import zIndex from './zIndex';
 
 Liferay = window.Liferay || {};
 
@@ -83,6 +84,8 @@ Liferay = window.Liferay || {};
  * @deprecated As of Athanasius (7.3.x), replaced by `import {BREAKPOINTS} from 'frontend-js-web'`
  */
 Liferay.BREAKPOINTS = BREAKPOINTS;
+
+Liferay.zIndex = zIndex;
 
 Liferay.component = component;
 Liferay.componentReady = componentReady;

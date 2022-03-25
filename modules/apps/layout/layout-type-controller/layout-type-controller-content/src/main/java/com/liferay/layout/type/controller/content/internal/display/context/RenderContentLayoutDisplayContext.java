@@ -61,11 +61,8 @@ public class RenderContentLayoutDisplayContext {
 			_httpServletResponse, unsyncStringWriter);
 
 		for (Portlet portlet : _getPortlets()) {
-			Map<String, Object> paths = new HashMap<>();
-
 			try {
-				PortletPathsUtil.populatePortletPaths(
-					_httpServletRequest, StringPool.BLANK, portlet, paths);
+				Map<String, Object> paths = _populatePortletPaths(portlet);
 
 				PortletPathsUtil.writeFooterPaths(pipingServletResponse, paths);
 			}
@@ -87,11 +84,8 @@ public class RenderContentLayoutDisplayContext {
 			_httpServletResponse, unsyncStringWriter);
 
 		for (Portlet portlet : _getPortlets()) {
-			Map<String, Object> paths = new HashMap<>();
-
 			try {
-				PortletPathsUtil.populatePortletPaths(
-					_httpServletRequest, StringPool.BLANK, portlet, paths);
+				Map<String, Object> paths = _populatePortletPaths(portlet);
 
 				PortletPathsUtil.writeHeaderPaths(pipingServletResponse, paths);
 			}
@@ -139,11 +133,34 @@ public class RenderContentLayoutDisplayContext {
 		return _portlets;
 	}
 
+	private Map<String, Object> _populatePortletPaths(Portlet portlet)
+		throws Exception {
+
+		String portletId = portlet.getPortletId();
+
+		Map<String, Object> portletIdPath = _portletIdPaths.get(portletId);
+
+		if (portletIdPath == null) {
+			Map<String, Object> paths = new HashMap<>();
+
+			PortletPathsUtil.populatePortletPaths(
+				_httpServletRequest, StringPool.BLANK, portlet, paths);
+
+			_portletIdPaths.put(portletId, paths);
+
+			return paths;
+		}
+
+		return portletIdPath;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		RenderContentLayoutDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
+	private final Map<String, Map<String, Object>> _portletIdPaths =
+		new HashMap<>();
 	private List<Portlet> _portlets;
 	private final ThemeDisplay _themeDisplay;
 

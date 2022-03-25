@@ -37,7 +37,7 @@
 				{
 					doc: document,
 					win: window,
-					windowName: Liferay.Util.getWindowName()
+					windowName: window.name
 				}
 			);
 		</c:when>

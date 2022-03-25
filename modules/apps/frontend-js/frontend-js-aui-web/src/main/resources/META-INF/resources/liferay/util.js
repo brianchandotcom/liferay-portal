@@ -464,7 +464,7 @@
 			if (!openingWindow) {
 				var topUtil = Liferay.Util.getTop().Liferay.Util;
 
-				var windowName = Liferay.Util.getWindowName();
+				var windowName = window.name;
 
 				var dialog = topUtil.Window.getById(windowName);
 
@@ -571,8 +571,11 @@
 			return Util.getTop().Liferay.Util.Window.getById(id);
 		},
 
+		/**
+		 * @deprecated As of Athanasius (7.3.x), replaced by `window.innerWidth`
+		 */
 		getWindowName() {
-			return window.name || Window._name || '';
+			return window.name || '';
 		},
 
 		/**

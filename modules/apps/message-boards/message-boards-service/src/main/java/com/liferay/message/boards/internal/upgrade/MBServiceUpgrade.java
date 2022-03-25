@@ -118,7 +118,10 @@ public class MBServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register("6.0.0", "6.1.0", new MBThreadTableUpgradeProcess());
 
-		registry.register("6.1.0", "6.1.1", new MBMessageTableUpgradeProcess());
+		registry.register(
+			"6.1.0", "6.1.1", new MBMessageTableUpgradeProcess(),
+			new com.liferay.message.boards.internal.upgrade.v6_1_1.
+				MBThreadTableUpgradeProcess());
 	}
 
 	@Reference

@@ -14,7 +14,7 @@
 
 package com.liferay.batch.planner.internal.notification;
 
-import com.liferay.batch.engine.constants.BatchEnginePortletKeys;
+import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
@@ -29,14 +29,14 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + BatchEnginePortletKeys.BATCH_ENGINE,
+	property = "javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER,
 	service = UserNotificationHandler.class
 )
-public class BatchEngineUserNotificationHandler
+public class BatchPlannerUserNotificationHandler
 	extends BaseUserNotificationHandler {
 
-	public BatchEngineUserNotificationHandler() {
-		setPortletId(BatchEnginePortletKeys.BATCH_ENGINE);
+	public BatchPlannerUserNotificationHandler() {
+		setPortletId(BatchPlannerPortletKeys.BATCH_PLANNER);
 	}
 
 	@Override
@@ -55,9 +55,9 @@ public class BatchEngineUserNotificationHandler
 
 		return String.format(
 			"<h2 class=\"title\">%s</h2><div class=\"body\">%s</div>",
-			serviceContext.translate("x-batch-engine-task-x", taskType, status),
+			serviceContext.translate("x-batch-plan-task-x", taskType, status),
 			serviceContext.translate(
-				"x-batch-engine-task-for-x-x", taskType,
+				"x-batch-plan-task-for-x-x", taskType,
 				jsonObject.getString("className"), status));
 	}
 

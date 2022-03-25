@@ -24,9 +24,13 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 /**
  * @author Igor Beslic
  */
-public abstract class BatchEngineNotificationSender {
+public class BatchPlannerNotificationSender {
 
-	protected JSONObject getNotificationEventJSONObject(
+	public BatchPlannerNotificationSender(String taskType) {
+		_taskType = taskType;
+	}
+
+	public JSONObject getNotificationEventJSONObject(
 		BatchEngineTaskExecuteStatus batchEngineTaskExecuteStatus,
 		String className) {
 
@@ -38,13 +42,11 @@ public abstract class BatchEngineNotificationSender {
 		).put(
 			"status", batchEngineTaskExecuteStatus.name()
 		).put(
-			"taskType", getTaskType()
+			"taskType", _taskType
 		);
 	}
 
-	protected abstract String getTaskType();
-
-	protected void sendUserNotificationEvents(
+	public void sendUserNotificationEvents(
 		long userId, String portletId, int notificationType,
 		JSONObject jsonObject) {
 
@@ -57,15 +59,16 @@ public abstract class BatchEngineNotificationSender {
 		}
 	}
 
-	protected void setUserNotificationEventLocalService(
+	public void setUserNotificationEventLocalService(
 		UserNotificationEventLocalService userNotificationEventLocalService) {
 
 		_userNotificationEventLocalService = userNotificationEventLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BatchEngineNotificationSender.class);
+		BatchPlannerNotificationSender.class);
 
+	private final String _taskType;
 	private UserNotificationEventLocalService
 		_userNotificationEventLocalService;
 

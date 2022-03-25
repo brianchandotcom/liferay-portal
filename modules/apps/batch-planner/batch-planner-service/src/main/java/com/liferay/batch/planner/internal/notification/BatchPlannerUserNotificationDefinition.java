@@ -14,7 +14,7 @@
 
 package com.liferay.batch.planner.internal.notification;
 
-import com.liferay.batch.engine.constants.BatchEnginePortletKeys;
+import com.liferay.batch.planner.constants.BatchPlannerPortletKeys;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
@@ -26,17 +26,17 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = "javax.portlet.name=" + BatchEnginePortletKeys.BATCH_ENGINE,
+	property = "javax.portlet.name=" + BatchPlannerPortletKeys.BATCH_PLANNER,
 	service = UserNotificationDefinition.class
 )
-public class BatchEngineUserNotificationDefinition
+public class BatchPlannerUserNotificationDefinition
 	extends UserNotificationDefinition {
 
-	public BatchEngineUserNotificationDefinition() {
+	public BatchPlannerUserNotificationDefinition() {
 		super(
-			BatchEnginePortletKeys.BATCH_ENGINE, 0,
+			BatchPlannerPortletKeys.BATCH_PLANNER, 0,
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
-			"receive-a-notification-when-batch-engine-task-finishes");
+			"receive-a-notification-when-batch-plan-finishes");
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(

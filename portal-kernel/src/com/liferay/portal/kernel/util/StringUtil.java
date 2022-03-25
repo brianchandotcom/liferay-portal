@@ -4671,21 +4671,17 @@ public class StringUtil {
 	 * @return the string, with its first character converted to upper-case
 	 */
 	public static String upperCaseFirstLetter(String s) {
-		if (s == null) {
-			return null;
+		if ((s == null) || s.isEmpty()) {
+			return s;
 		}
 
-		if (!s.isEmpty()) {
-			char[] chars = s.toCharArray();
+		char[] chars = s.toCharArray();
 
-			if ((chars[0] >= 97) && (chars[0] <= 122)) {
-				chars[0] = (char)(chars[0] - 32);
-			}
-
-			return new String(chars);
+		if ((chars[0] >= 97) && (chars[0] <= 122)) {
+			chars[0] = (char)(chars[0] - 32);
 		}
 
-		return s;
+		return new String(chars);
 	}
 
 	/**

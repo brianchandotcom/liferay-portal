@@ -44,9 +44,8 @@ import javax.servlet.http.HttpServletResponse;
 public class PortletPathsUtil {
 
 	public static void populatePortletPaths(
-			HttpServletRequest httpServletRequest, String portletHTML,
-			Portlet portlet, Map<String, Object> paths)
-		throws Exception {
+		HttpServletRequest httpServletRequest, String portletHTML,
+		Portlet portlet, Map<String, Object> paths) {
 
 		boolean portletOnLayout = false;
 
@@ -130,9 +129,8 @@ public class PortletPathsUtil {
 	}
 
 	private static void _populatePortletPaths(
-			HttpServletRequest httpServletRequest, String portletHTML,
-			Portlet portlet, boolean portletOnLayout, Map<String, Object> paths)
-		throws Exception {
+		HttpServletRequest httpServletRequest, String portletHTML,
+		Portlet portlet, boolean portletOnLayout, Map<String, Object> paths) {
 
 		Set<String> footerCssSet = new LinkedHashSet<>();
 		Set<String> footerJavaScriptSet = new LinkedHashSet<>();

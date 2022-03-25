@@ -1,0 +1,69 @@
+@component-name = "portal-frontend-infrastructure"
+definition {
+
+	property osgi.modules.includes = "frontend-data-set-taglib,frontend-data-set-sample-web";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "User Interface";
+	property testray.component.names = "Frontend Dataset";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		JSONLayout.addPublicLayout(
+			groupName = "Guest",
+			layoutName = "Frontend Data Set Test Page");
+
+		JSONLayout.updateLayoutTemplateOfPublicLayout(
+			groupName = "Guest",
+			layoutName = "Frontend Data Set Test Page",
+			layoutTemplate = "1 Column");
+
+		JSONLayout.addWidgetToPublicLayout(
+			groupName = "Guest",
+			layoutName = "Frontend Data Set Test Page",
+			widgetName = "Frontend Data Set Sample");
+
+		Navigator.gotoPage(pageName = "Frontend Data Set Test Page");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			JSONLayout.deletePublicLayout(
+				groupName = "Guest",
+				layoutName = "Frontend Data Set Test Page");
+		}
+	}
+
+	@description = "LPS-147914: Verify alert message is present when action button is clicked"
+	@priority = "4"
+	test ActionsCanBeCustomized {
+		task ("When Click on 1st action button in FDS sample, assert the alert message") {
+				ClickNoError(
+					key_title = "Sample1",
+					locator1 = "FrontendDataSet#VIEW_ACTION_BUTTON");
+
+				AssertConfirm.assertConfirmationNoError(value1 = "Hello Sample1!");
+
+				Alert.viewSuccessMessage();
+		}
+
+		task ("When Click on 2st action button in FDS sample, assert the alert message") {
+				ClickNoError(
+					key_title = "Sample2",
+					locator1 = "FrontendDataSet#VIEW_ACTION_BUTTON");
+
+				AssertConfirm.assertConfirmationNoError(value1 = "Hello Sample2!");
+
+				Alert.viewSuccessMessage();
+		}
+	}
+
+}

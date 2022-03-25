@@ -280,7 +280,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 	private void _setImageConfiguration(
 		Element element, JSONObject imageConfigurationJSONObject) {
 
-		for (ViewportSize viewportSize : ViewportSize.values()) {
+		for (ViewportSize viewportSize : _viewportSizes) {
 			String imageConfiguration = imageConfigurationJSONObject.getString(
 				viewportSize.getViewportSizeId());
 
@@ -301,6 +301,7 @@ public class ImageEditableElementParser implements EditableElementParser {
 
 	private static final Pattern _pattern = Pattern.compile(
 		"\\[resources:(.+?)\\]");
+	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;

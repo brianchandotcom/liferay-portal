@@ -67,7 +67,7 @@ public class LayoutAdaptiveMediaProcessorImpl
 		Document document = Jsoup.parse(processedContent);
 
 		try {
-			for (ViewportSize viewportSize : ViewportSize.values()) {
+			for (ViewportSize viewportSize : _viewportSizes) {
 				Elements elements = document.getElementsByAttribute(
 					"data-" + viewportSize.getViewportSizeId() +
 						"-configuration");
@@ -237,6 +237,7 @@ public class LayoutAdaptiveMediaProcessorImpl
 
 	private static final Pattern _cssPropertyPattern = Pattern.compile(
 		"--background-image-file-entry-id:\\s*(\\d+);");
+	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
 
 	@Reference
 	private AMImageConfigurationHelper _amImageConfigurationHelper;

@@ -13,4 +13,6 @@ Import-Package:\
 	\
 	org.apache.pdfbox.*,\
 	\
+	org.jdom2.*,\
+	\
 	*;resolution:=optional

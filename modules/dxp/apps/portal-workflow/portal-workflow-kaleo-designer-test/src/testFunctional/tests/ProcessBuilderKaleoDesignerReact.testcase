@@ -224,6 +224,10 @@ definition {
 
 		Workflow.saveDefinition(newKaleoDesigner = "True");
 
+		Alert.viewSuccessMessageText(successMessage = "Workflow saved.");
+
+		Workflow.openWorkflowListView();
+
 		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition");
 
 		Workflow.deleteWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
@@ -491,6 +495,10 @@ definition {
 
 		PortletEntry.publish();
 
+		Alert.viewSuccessMessageText(successMessage = "Workflow published successfully.");
+
+		Workflow.openWorkflowListView();
+
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "New Workflow Definition");
 	}
 
@@ -504,6 +512,10 @@ definition {
 		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition Title");
 
 		Workflow.saveDefinition(newKaleoDesigner = "True");
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow saved.");
+
+		Workflow.openWorkflowListView();
 
 		Workflow.viewDefinitionUnpublished(workflowDefinitionTitle = "New Workflow Definition Title");
 	}
@@ -796,6 +808,10 @@ definition {
 		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "EDITEDCONNECTOR");
 
 		Workflow.saveDefinition(newKaleoDesigner = "True");
+
+		Alert.viewSuccessMessageText(successMessage = "Workflow saved.");
+
+		Workflow.openWorkflowListView();
 
 		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "New Workflow Definition");
 

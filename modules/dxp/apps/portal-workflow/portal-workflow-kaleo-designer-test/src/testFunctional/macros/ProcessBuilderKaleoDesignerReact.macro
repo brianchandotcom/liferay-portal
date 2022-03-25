@@ -535,7 +535,7 @@ definition {
 		if (isSet(save)) {
 			Workflow.saveDefinition(newKaleoDesigner = "True");
 
-			Alert.viewErrorMessage(errorMessage = "Some fields need to be filled.Please fill out the fields before saving or publishing.");
+			Alert.viewErrorMessage(errorMessage = "Some fields need to be filled.:Please fill out the fields before saving or publishing.");
 		}
 	}
 

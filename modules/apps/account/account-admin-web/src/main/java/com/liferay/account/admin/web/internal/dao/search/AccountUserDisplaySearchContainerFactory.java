@@ -71,9 +71,7 @@ public class AccountUserDisplaySearchContainerFactory {
 				liferayPortletRequest, "accountEntryIds");
 		}
 		else if (accountEntriesNavigation.equals("no-assigned-account")) {
-			accountEntryIds = new long[] {
-				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT
-			};
+			accountEntryIds = new long[0];
 		}
 
 		return _create(

@@ -179,6 +179,18 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
+	public void testImportExportLayoutPageTemplateEntryContainerComplete()
+		throws Exception {
+
+		File expectedFile = _generateZipFile(
+			"container/complete/expected", null, null);
+		File inputFile = _generateZipFile(
+			"container/complete/input", null, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
 	public void testImportExportLayoutPageTemplateEntryContainerDefault()
 		throws Exception {
 

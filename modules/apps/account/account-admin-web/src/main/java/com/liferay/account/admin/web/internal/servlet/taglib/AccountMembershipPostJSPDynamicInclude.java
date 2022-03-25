@@ -14,20 +14,12 @@
 
 package com.liferay.account.admin.web.internal.servlet.taglib;
 
-import com.liferay.account.service.AccountEntryUserRelLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.util.Portal;
-
-import java.io.IOException;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,26 +30,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(service = DynamicInclude.class)
 public class AccountMembershipPostJSPDynamicInclude
 	extends BaseJSPDynamicInclude {
-
-	@Override
-	public void include(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String key)
-		throws IOException {
-
-		try {
-			User user = _portal.getSelectedUser(httpServletRequest);
-
-			if (_accountEntryUserRelLocalService.isAccountEntryUser(
-					user.getUserId())) {
-
-				super.include(httpServletRequest, httpServletResponse, key);
-			}
-		}
-		catch (PortalException portalException) {
-			throw new IOException(portalException);
-		}
-	}
 
 	@Override
 	public void register(
@@ -89,11 +61,5 @@ public class AccountMembershipPostJSPDynamicInclude
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountMembershipPostJSPDynamicInclude.class);
-
-	@Reference
-	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
-
-	@Reference
-	private Portal _portal;
 
 }

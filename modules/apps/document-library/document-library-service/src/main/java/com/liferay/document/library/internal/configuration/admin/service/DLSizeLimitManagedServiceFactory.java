@@ -16,6 +16,8 @@ package com.liferay.document.library.internal.configuration.admin.service;
 
 import com.liferay.document.library.internal.configuration.DLSizeLimitConfiguration;
 import com.liferay.document.library.internal.util.MimeTypeSizeLimitUtil;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -31,7 +34,7 @@ import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedServiceFactory;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Adolfo Pérez
@@ -66,7 +69,15 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 		Map<String, Long> map = _mimeTypeSizeLimitsMap.computeIfAbsent(
 			companyId, this::_computeCompanyMimeTypeSizeLimit);
 
-		return map.getOrDefault(mimeType, 0L);
+		long sizeLimit = map.getOrDefault(mimeType, 0L);
+
+		if (sizeLimit != 0) {
+			return sizeLimit;
+		}
+
+		List<String> parts = StringUtil.split(mimeType, CharPool.SLASH);
+
+		return map.getOrDefault(String.format("%s/*", parts.get(0)), 0L);
 	}
 
 	@Override
@@ -95,15 +106,11 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 	}
 
 	@Activate
+	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_mimeTypeSizeLimitsMap = new ConcurrentHashMap<>();
 		_systemDLSizeLimitConfiguration = ConfigurableUtil.createConfigurable(
 			DLSizeLimitConfiguration.class, properties);
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_mimeTypeSizeLimitsMap = null;
 	}
 
 	private Map<String, Long> _computeCompanyMimeTypeSizeLimit(long companyId) {
@@ -144,7 +151,7 @@ public class DLSizeLimitManagedServiceFactory implements ManagedServiceFactory {
 	private final Map<Long, DLSizeLimitConfiguration>
 		_companyConfigurationBeans = new ConcurrentHashMap<>();
 	private final Map<String, Long> _companyIds = new ConcurrentHashMap<>();
-	private Map<Long, Map<String, Long>> _mimeTypeSizeLimitsMap;
+	private volatile Map<Long, Map<String, Long>> _mimeTypeSizeLimitsMap;
 	private volatile DLSizeLimitConfiguration _systemDLSizeLimitConfiguration;
 
 }

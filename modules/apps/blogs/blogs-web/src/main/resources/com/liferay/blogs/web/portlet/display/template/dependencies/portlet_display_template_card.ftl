@@ -1,4 +1,5 @@
 <div class="row widget-mode-card">
+	<ul class="card-page">
 	<#if entries?has_content>
 		<#list entries as curBlogEntry>
 			<#if curBlogEntry.getCoverImageURL(themeDisplay)??>
@@ -7,12 +8,10 @@
 				<#assign cardImage = false />
 			</#if>
 
-			<div class="col-lg-4">
-				<div class="card">
-					<div class="card-header">
-						<div class="aspect-ratio aspect-ratio-8-to-3">
+			<li class="card-page-item card-page-item-asset">
+				<div class="card card-type-asset file-card">
+					<div class="aspect-ratio card-item-first">
 							<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="${cardImage?then(curBlogEntry.getCoverImageURL(themeDisplay), portalUtil.getPathContext(renderRequest) + "/images/cover_image_placeholder.jpg")}">
-						</div>
 					</div>
 
 					<div class="card-body widget-topbar">
@@ -161,7 +160,8 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</li>
 		</#list>
 	</#if>
+	</ul>
 </div>

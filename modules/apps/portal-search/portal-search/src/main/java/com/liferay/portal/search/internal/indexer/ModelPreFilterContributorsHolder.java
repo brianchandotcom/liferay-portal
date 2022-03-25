@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 public interface ModelPreFilterContributorsHolder {
 
 	public Stream<ModelPreFilterContributor> stream(
-		String entryClassName, Collection<String> excludeIds,
-		Collection<String> includeIds, boolean mandatoryOnly);
+		String entryClassName, Collection<String> excludes,
+		Collection<String> includes, boolean mandatoryOnly);
 
 }

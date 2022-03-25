@@ -38,8 +38,8 @@ public class ModelPreFilterContributorsHolderImpl
 
 	@Override
 	public Stream<ModelPreFilterContributor> stream(
-		String entryClassName, Collection<String> excludeIds,
-		Collection<String> includeIds, boolean mandatoryOnly) {
+		String entryClassName, Collection<String> excludes,
+		Collection<String> includes, boolean mandatoryOnly) {
 
 		List<ModelPreFilterContributor> list = new ArrayList<>();
 
@@ -53,7 +53,7 @@ public class ModelPreFilterContributorsHolderImpl
 			List<String> mandatoryContributorClassNames =
 				_getMandatoryContributorNames(_getMandatoryContributors());
 
-			if ((includeIds != null) && !includeIds.isEmpty()) {
+			if ((includes != null) && !includes.isEmpty()) {
 				list.removeIf(
 					modelPreFilterContributor -> {
 						String className = _getClassName(
@@ -61,11 +61,11 @@ public class ModelPreFilterContributorsHolderImpl
 
 						return !mandatoryContributorClassNames.contains(
 							className) &&
-							   !includeIds.contains(className);
+							   !includes.contains(className);
 					});
 			}
 
-			if ((excludeIds != null) && !excludeIds.isEmpty()) {
+			if ((excludes != null) && !excludes.isEmpty()) {
 				list.removeIf(
 					modelPreFilterContributor -> {
 						String className = _getClassName(
@@ -73,7 +73,7 @@ public class ModelPreFilterContributorsHolderImpl
 
 						return !mandatoryContributorClassNames.contains(
 							className) &&
-							   excludeIds.contains(className);
+							   excludes.contains(className);
 					});
 			}
 		}

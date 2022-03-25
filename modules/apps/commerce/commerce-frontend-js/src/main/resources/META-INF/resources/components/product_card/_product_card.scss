@@ -48,6 +48,14 @@
 		object-position: center;
 		width: 100%;
 	}
+
+	.two-lined-description {
+		display: -webkit-box;
+		height: 44px;
+		overflow: hidden;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+	}
 }
 
 .products-comparison-table {

@@ -58,15 +58,14 @@ public class LayoutPageTemplateStructureStagedModelRepository
 			serviceContext.setUuid(layoutPageTemplateStructure.getUuid());
 		}
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layoutPageTemplateStructure.getPlid());
-
 		return _layoutPageTemplateStructureLocalService.
 			addLayoutPageTemplateStructure(
 				userId, serviceContext.getScopeGroupId(),
 				layoutPageTemplateStructure.getPlid(),
-				defaultSegmentsExperienceId, null, serviceContext);
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(
+						layoutPageTemplateStructure.getPlid()),
+				null, serviceContext);
 	}
 
 	@Override

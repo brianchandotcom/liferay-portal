@@ -102,16 +102,14 @@ public class LayoutColumn {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		long defaultSegmentsExperienceId =
-			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
-
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 				serviceContext.getUserId(), serviceContext.getScopeGroupId(), 0,
-				0, defaultSegmentsExperienceId, _layout.getPlid(),
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK,
+				0,
+				SegmentsExperienceLocalServiceUtil.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK,
 				JSONUtil.put(
 					"instanceId", PortletIdCodec.decodeInstanceId(portletId)
 				).put(

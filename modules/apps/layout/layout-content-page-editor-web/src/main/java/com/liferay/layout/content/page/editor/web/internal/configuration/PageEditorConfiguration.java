@@ -40,7 +40,7 @@ public interface PageEditorConfiguration {
 	@Meta.AD(
 		deflt = "20",
 		description = "page-editor-max-number-of-items-edit-mode-description",
-		name = "max-number-of-items-edit-mode", required = false
+		name = "max-number-of-items-in-edit-mode", required = false
 	)
 	public int maxNumberOfItemsEditMode();
 

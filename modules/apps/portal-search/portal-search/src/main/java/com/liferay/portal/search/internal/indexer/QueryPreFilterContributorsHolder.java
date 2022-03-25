@@ -25,6 +25,6 @@ import java.util.stream.Stream;
 public interface QueryPreFilterContributorsHolder {
 
 	public Stream<QueryPreFilterContributor> stream(
-		Collection<String> includeIds, Collection<String> excludeIds);
+		Collection<String> excludes, Collection<String> includes);
 
 }

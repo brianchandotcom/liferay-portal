@@ -36,13 +36,13 @@ public class QueryPreFilterContributorsHolderImpl
 
 	@Override
 	public Stream<QueryPreFilterContributor> stream(
-		Collection<String> includeIds, Collection<String> excludeIds) {
+		Collection<String> excludes, Collection<String> includes) {
 
 		Stream<QueryPreFilterContributor> stream = StreamSupport.stream(
 			_serviceTrackerList.spliterator(), false);
 
 		return IncludeExcludeUtil.stream(
-			stream, includeIds, excludeIds, object -> getClassName(object));
+			stream, includes, excludes, object -> getClassName(object));
 	}
 
 	@Activate

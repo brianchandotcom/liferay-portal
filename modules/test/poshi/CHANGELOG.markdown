@@ -1,5 +1,25 @@
 # Poshi Runner Change Log
 
+## 1.0.344
+
+### Other
+
+* [LPS-147241](https://issues.liferay.com/browse/LPS-147241) - Tests Automation
+* [LPS-149663](https://issues.liferay.com/browse/LPS-149663) - StringUtil.upperCaseFirstLetter can cause ArrayIndexOutOfBoundsException
+
+### Script
+
+* [POSHI-318](https://issues.liferay.com/browse/POSHI-318) - Sort properties in Poshi Script
+
+### Utils
+
+* [POSHI-320](https://issues.liferay.com/browse/POSHI-320) - Truncate JSON responses to max 2,500 chars
+
+### WebDriver
+
+* [POSHI-312](https://issues.liferay.com/browse/POSHI-312) - Add javaScriptMouseOver method
+* [POSHI-319](https://issues.liferay.com/browse/POSHI-319) - Change baseline image folder in Ocular from "snap" to "baseline"
+
 ## 1.0.342
 
 ### Core

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -80,6 +81,20 @@ public class CollectionLayoutStructureItemImporter
 		if (collectionConfig != null) {
 			collectionStyledLayoutStructureItem.setCollectionJSONObject(
 				_getCollectionConfigAsJSONObject(collectionConfig));
+		}
+
+		if (definitionMap.containsKey("collectionViewports")) {
+			List<Map<String, Object>> collectionViewports =
+				(List<Map<String, Object>>)definitionMap.get(
+					"collectionViewports");
+
+			for (Map<String, Object> collectionViewport : collectionViewports) {
+				_processCollectionViewportDefinition(
+					collectionStyledLayoutStructureItem,
+					(Map<String, Object>)collectionViewport.get(
+						"collectionViewportDefinition"),
+					(String)collectionViewport.get("id"));
+			}
 		}
 
 		collectionStyledLayoutStructureItem.setDisplayAllItems(
@@ -281,6 +296,28 @@ public class CollectionLayoutStructureItemImporter
 		}
 
 		return null;
+	}
+
+	private void _processCollectionViewportDefinition(
+		CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem,
+		Map<String, Object> collectionViewportDefinitionMap,
+		String collectionViewportId) {
+
+		collectionStyledLayoutStructureItem.setViewportConfiguration(
+			collectionViewportId,
+			JSONUtil.put(
+				"numberOfColumns",
+				() -> {
+					if (collectionViewportDefinitionMap.containsKey(
+							"numberOfColumns")) {
+
+						return GetterUtil.getInteger(
+							collectionViewportDefinitionMap.get(
+								"numberOfColumns"));
+					}
+
+					return null;
+				}));
 	}
 
 	private Long _toClassPK(String classPKString) {

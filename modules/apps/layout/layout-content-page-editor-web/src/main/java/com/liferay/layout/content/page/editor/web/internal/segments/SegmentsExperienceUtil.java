@@ -43,14 +43,12 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
@@ -182,27 +180,6 @@ public class SegmentsExperienceUtil {
 		).put(
 			"value", status.getValue()
 		).build();
-	}
-
-	public static boolean hasDefaultSegmentsExperienceLockedSegmentsExperiment(
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		Optional<SegmentsExperiment> segmentsExperimentOptional =
-			_getSegmentsExperimentOptional(
-				themeDisplay, SegmentsExperienceConstants.ID_DEFAULT);
-
-		if (!segmentsExperimentOptional.isPresent()) {
-			return false;
-		}
-
-		SegmentsExperiment segmentsExperiment =
-			segmentsExperimentOptional.get();
-
-		List<Integer> lockedStatusValuesList = ListUtil.fromArray(
-			SegmentsExperimentConstants.Status.getLockedStatusValues());
-
-		return lockedStatusValuesList.contains(segmentsExperiment.getStatus());
 	}
 
 	private static void _copyLayoutData(

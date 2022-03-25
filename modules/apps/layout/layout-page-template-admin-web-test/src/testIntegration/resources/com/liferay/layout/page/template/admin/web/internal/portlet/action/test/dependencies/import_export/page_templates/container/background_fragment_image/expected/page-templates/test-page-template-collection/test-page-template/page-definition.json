@@ -21,6 +21,7 @@
 						"textAlign": "none",
 						"width": "w-auto"
 					},
+					"indexed": true,
 					"layout": {
 						"borderWidth": 0,
 						"htmlTag": "Div",
@@ -63,6 +64,7 @@
 								"textAlign": "none",
 								"width": "w-auto"
 							},
+							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
 								"htmlTag": "Div",
@@ -112,6 +114,7 @@
 								"textAlign": "none",
 								"width": "w-auto"
 							},
+							"indexed": true,
 							"layout": {
 								"borderWidth": 0,
 								"htmlTag": "Div",

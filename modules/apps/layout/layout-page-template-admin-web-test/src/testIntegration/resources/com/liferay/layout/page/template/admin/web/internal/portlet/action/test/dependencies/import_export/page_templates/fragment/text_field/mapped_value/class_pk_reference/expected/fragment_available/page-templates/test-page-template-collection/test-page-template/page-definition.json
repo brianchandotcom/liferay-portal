@@ -44,7 +44,8 @@
 						"shadow": "shadow-none",
 						"textAlign": "none",
 						"width": "w-auto"
-					}
+					},
+					"indexed": true
 				},
 				"type": "Fragment"
 			}

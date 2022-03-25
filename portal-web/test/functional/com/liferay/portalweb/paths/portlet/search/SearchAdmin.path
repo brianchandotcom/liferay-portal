@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>SELECTED_INSTANCE_INDEX_CHECKBOX</td>
-	<td>//label/input[@aria-label='toggle-${key_instanceId}']</td>
+	<td>//li/div[contains(.,'${key_executionScope}')]/preceding-sibling::div//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

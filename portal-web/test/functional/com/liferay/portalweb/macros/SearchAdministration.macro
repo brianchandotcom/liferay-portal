@@ -19,22 +19,28 @@ definition {
 	macro executeReindex {
 		SearchAdministration.openIndexActions();
 
-		if (isSet(scope)) {
+		AssertTextEquals(
+			locator1 = "Portlet#HEADER",
+			value1 = "Search");
+
+		if ("${executionScope}" == "All Instances") {
 			Check.checkNotVisible(
 				locator1 = "Radio#ANY",
-				radioLabel = "${scope}");
+				radioLabel = "${executionScope}");
+
+			AssertElementNotPresent(
+				key_executionScope = "System",
+				locator1 = "SearchAdmin#SELECTED_INSTANCE_INDEX_CHECKBOX");
 		}
-		else if (isSet(key_instanceId)) {
+		else if (isSet(executionScope)) {
 			Check.checkNotVisible(
 				locator1 = "Radio#ANY",
 				radioLabel = "Selected Instances");
 
-			Check.checkNotVisible(locator1 = "SearchAdmin#SELECTED_INSTANCE_INDEX_CHECKBOX");
+			Check.checkNotVisible(
+				key_executionScope = "${executionScope}",
+				locator1 = "SearchAdmin#SELECTED_INSTANCE_INDEX_CHECKBOX");
 		}
-
-		AssertTextEquals(
-			locator1 = "Portlet#HEADER",
-			value1 = "Search");
 
 		var port = Elasticsearch.getServerPort();
 

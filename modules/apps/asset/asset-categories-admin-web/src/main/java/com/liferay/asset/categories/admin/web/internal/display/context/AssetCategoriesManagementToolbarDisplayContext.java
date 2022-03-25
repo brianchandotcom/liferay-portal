@@ -110,7 +110,7 @@ public class AssetCategoriesManagementToolbarDisplayContext
 						dropdownItem -> {
 							dropdownItem.putData(
 								"action", "deleteSelectedCategories");
-							dropdownItem.setIcon("times-circle");
+							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(httpServletRequest, "delete"));
 							dropdownItem.setQuickAction(true);

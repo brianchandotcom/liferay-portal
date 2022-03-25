@@ -94,6 +94,7 @@ public class AssetCategoryActionDropdownItemsProvider {
 									"vocabularyId", category.getVocabularyId()
 								).buildString());
 
+							dropdownItem.setIcon("pencil");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "edit"));
 						}
@@ -126,6 +127,7 @@ public class AssetCategoryActionDropdownItemsProvider {
 						() -> _getDisplayPageURL(category) != null,
 						dropdownItem -> {
 							dropdownItem.setHref(_getDisplayPageURL(category));
+							dropdownItem.setIcon("view");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "view-display-page"));
@@ -152,6 +154,7 @@ public class AssetCategoryActionDropdownItemsProvider {
 								"moveCategoryURL",
 								_getSelectCategoryURL(
 									category.getVocabularyId()));
+							dropdownItem.setIcon("move-folder");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "move"));
 						}
@@ -177,6 +180,7 @@ public class AssetCategoryActionDropdownItemsProvider {
 									String.valueOf(category.getCategoryId()),
 									LiferayWindowState.POP_UP.toString(), null,
 									_httpServletRequest));
+							dropdownItem.setIcon("password-policies");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "permissions"));
@@ -203,6 +207,8 @@ public class AssetCategoryActionDropdownItemsProvider {
 								).setParameter(
 									"categoryId", category.getCategoryId()
 								).buildString());
+
+							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "delete"));

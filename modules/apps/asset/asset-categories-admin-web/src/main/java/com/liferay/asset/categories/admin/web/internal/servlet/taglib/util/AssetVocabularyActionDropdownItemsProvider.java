@@ -67,6 +67,7 @@ public class AssetVocabularyActionDropdownItemsProvider {
 								).setParameter(
 									"vocabularyId", vocabulary.getVocabularyId()
 								).buildString());
+							dropdownItem.setIcon("pencil");
 							dropdownItem.setLabel(
 								LanguageUtil.get(_httpServletRequest, "edit"));
 						}
@@ -94,6 +95,7 @@ public class AssetVocabularyActionDropdownItemsProvider {
 										vocabulary.getVocabularyId()),
 									LiferayWindowState.POP_UP.toString(), null,
 									_httpServletRequest));
+							dropdownItem.setIcon("password-policies");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "permissions"));
@@ -119,6 +121,7 @@ public class AssetVocabularyActionDropdownItemsProvider {
 								).setParameter(
 									"vocabularyId", vocabulary.getVocabularyId()
 								).buildString());
+							dropdownItem.setIcon("trash");
 							dropdownItem.setLabel(
 								LanguageUtil.get(
 									_httpServletRequest, "delete"));

@@ -44,7 +44,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.InputStream;
@@ -132,8 +131,7 @@ public class UpdateItemConfigMVCActionCommandTest {
 					_layout.getGroupId(), _layout.getPlid());
 
 		return LayoutStructure.of(
-			layoutPageTemplateStructure.getData(
-				SegmentsExperienceConstants.ID_DEFAULT));
+			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
 	}
 
 	private MockActionRequest _getMockActionrequest() {

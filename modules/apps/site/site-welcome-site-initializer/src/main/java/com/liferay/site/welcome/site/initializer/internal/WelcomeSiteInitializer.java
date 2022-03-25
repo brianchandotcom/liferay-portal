@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
@@ -292,8 +291,7 @@ public class WelcomeSiteInitializer implements SiteInitializer {
 						layout.getGroupId(), layout.getPlid(), true);
 
 			LayoutStructure layoutStructure = LayoutStructure.of(
-				layoutPageTemplateStructure.getData(
-					SegmentsExperienceConstants.ID_DEFAULT));
+				layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
 
 			Class<?> clazz = getClass();
 

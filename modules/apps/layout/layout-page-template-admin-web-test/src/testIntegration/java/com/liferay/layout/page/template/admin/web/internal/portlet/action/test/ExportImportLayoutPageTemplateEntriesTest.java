@@ -233,9 +233,9 @@ public class ExportImportLayoutPageTemplateEntriesTest {
 					layoutPageTemplateEntry2.getPlid());
 
 		LayoutStructure layoutStructure1 = LayoutStructure.of(
-			layoutPageTemplateStructure1.getData(0));
+			layoutPageTemplateStructure1.getDefaultSegmentsExperienceData());
 		LayoutStructure layoutStructure2 = LayoutStructure.of(
-			layoutPageTemplateStructure2.getData(0));
+			layoutPageTemplateStructure2.getDefaultSegmentsExperienceData());
 
 		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem1 =
 			_getContainerLayoutStructureItem(layoutStructure1);

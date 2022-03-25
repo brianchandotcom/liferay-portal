@@ -141,7 +141,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.service.RemoteAppEntryLocalService;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.extender.internal.util.SiteInitializerUtil;
@@ -1275,8 +1274,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 							true);
 
 				LayoutStructure layoutStructure = LayoutStructure.of(
-					layoutPageTemplateStructure.getData(
-						SegmentsExperienceConstants.ID_DEFAULT));
+					layoutPageTemplateStructure.
+						getDefaultSegmentsExperienceData());
 
 				JSONArray jsonArray = pageElementJSONObject.getJSONArray(
 					"pageElements");

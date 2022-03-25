@@ -115,7 +115,8 @@ public class DisplayPageTemplateDTOConverter
 						}
 
 						LayoutStructure layoutStructure = LayoutStructure.of(
-							layoutPageTemplateStructure.getData(0L));
+							layoutPageTemplateStructure.
+								getDefaultSegmentsExperienceData());
 
 						return dtoConverter.toDTO(
 							dtoConverterContext, layoutStructure);

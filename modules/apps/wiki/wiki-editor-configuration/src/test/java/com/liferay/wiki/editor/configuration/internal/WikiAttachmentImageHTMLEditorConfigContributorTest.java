@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,28 +45,28 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import org.powermock.api.mockito.PowerMockito;
-
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Sergio González
  */
-public class WikiAttachmentImageHTMLEditorConfigContributorTest
-	extends PowerMockito {
+public class WikiAttachmentImageHTMLEditorConfigContributorTest {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
-
+	@BeforeClass
+	public static void setUpClass() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		languageUtil.setLanguage(new LanguageImpl());
+	}
+
+	@Before
+	public void setUp() {
+		MockitoAnnotations.initMocks(this);
 
 		_inputEditorTaglibAttributes.put(
 			"liferay-ui:input-editor:name", "testEditor");
@@ -78,7 +79,7 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 		setAllowBrowseDocuments(true);
 		setWikiPageResourcePrimKey(0);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class),
@@ -131,7 +132,7 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 		setAllowBrowseDocuments(true);
 		setWikiPageResourcePrimKey(1);
 
-		when(
+		Mockito.when(
 			_itemSelector.getItemSelectorURL(
 				Mockito.any(RequestBackedPortletURLFactory.class),
 				Mockito.anyString(), Mockito.any(ItemSelectorCriterion.class),
@@ -150,10 +151,10 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 			}
 		);
 
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory = mock(
-			RequestBackedPortletURLFactory.class);
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			Mockito.mock(RequestBackedPortletURLFactory.class);
 
-		when(
+		Mockito.when(
 			requestBackedPortletURLFactory.createActionURL(WikiPortletKeys.WIKI)
 		).thenReturn(
 			ProxyFactory.newDummyInstance(LiferayPortletURL.class)
@@ -265,9 +266,7 @@ public class WikiAttachmentImageHTMLEditorConfigContributorTest
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
 	}
 
-	protected JSONObject getJSONObjectWithDefaultItemSelectorURL()
-		throws Exception {
-
+	protected JSONObject getJSONObjectWithDefaultItemSelectorURL() {
 		return JSONUtil.put(
 			"filebrowserImageBrowseLinkUrl", "defaultItemSelectorPortletURL"
 		).put(

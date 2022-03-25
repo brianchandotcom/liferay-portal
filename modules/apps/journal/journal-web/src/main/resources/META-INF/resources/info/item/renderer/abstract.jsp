@@ -21,25 +21,34 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 AssetRenderer<?> assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASSET_RENDERER);
 %>
 
-<div class="asset-summary">
-	<c:if test="<%= article.isSmallImage() %>">
-		<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image mb-4" style="background-image: url(<%= article.getArticleImageURL(themeDisplay) %>);"></div>
-	</c:if>
-
-	<%
-	String summary = assetRenderer.getSummary(renderRequest, renderResponse);
-	%>
-
-	<c:choose>
-		<c:when test="<%= Validator.isNull(summary) %>">
+<c:choose>
+	<c:when test="<%= (article != null) && article.isExpired() %>">
+		<div class="alert alert-warning">
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-expired" />
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="asset-summary">
+			<c:if test="<%= article.isSmallImage() %>">
+				<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image mb-4" style="background-image: url(<%= article.getArticleImageURL(themeDisplay) %>);"></div>
+			</c:if>
 
 			<%
-			assetRenderer.include(request, response, "abstract");
+			String summary = assetRenderer.getSummary(renderRequest, renderResponse);
 			%>
 
-		</c:when>
-		<c:otherwise>
-			<%= summary %>
-		</c:otherwise>
-	</c:choose>
-</div>
+			<c:choose>
+				<c:when test="<%= Validator.isNull(summary) %>">
+
+					<%
+					assetRenderer.include(request, response, "abstract");
+					%>
+
+				</c:when>
+				<c:otherwise>
+					<%= summary %>
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</c:otherwise>
+</c:choose>

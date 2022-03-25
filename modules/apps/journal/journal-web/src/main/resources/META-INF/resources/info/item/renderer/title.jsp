@@ -20,6 +20,15 @@
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 %>
 
-<div class="asset-summary">
-	<%= HtmlUtil.escape(article.getTitle(locale)) %>
-</div>
+<c:choose>
+	<c:when test="<%= (article != null) && article.isExpired() %>">
+		<div class="alert alert-warning">
+			<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-expired" />
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="asset-summary">
+			<%= HtmlUtil.escape(article.getTitle(locale)) %>
+		</div>
+	</c:otherwise>
+</c:choose>

@@ -63,6 +63,22 @@ public class LayoutPageTemplateStructureImpl
 	}
 
 	@Override
+	public String getDefaultSegmentsExperienceData() {
+		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
+			LayoutPageTemplateStructureRelLocalServiceUtil.
+				fetchLayoutPageTemplateStructureRel(
+					getLayoutPageTemplateStructureId(),
+					SegmentsExperienceLocalServiceUtil.
+						fetchDefaultSegmentsExperienceId(getPlid()));
+
+		if (layoutPageTemplateStructureRel != null) {
+			return layoutPageTemplateStructureRel.getData();
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public long getPlid() {
 		return getClassPK();
 	}

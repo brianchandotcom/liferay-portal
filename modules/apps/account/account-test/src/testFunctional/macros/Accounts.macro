@@ -1212,7 +1212,7 @@ definition {
 			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_SET_DEFAULT_DELIVERY",
 			value1 = "Set Default Delivery Commerce Terms Entry");
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 
@@ -1248,7 +1248,7 @@ definition {
 			locator1 = "Account#DEFAULT_ACCOUNT_TERMS_AND_CONDITION_SET_DEFAULT_PAYMENT",
 			value1 = "Set Default Payment Commerce Terms Entry");
 
-		Pause(locator1 = "3000");
+		WaitForElementPresent(locator1 = "IFrame#MODAL_BODY");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

@@ -153,6 +153,7 @@
 		<field name="rootMessageId" type="long" />
 		<field name="rootMessageUserId" type="long" />
 		<field name="title" type="String">
+			<hint name="max-length">255</hint>
 			<sanitize content-type="text/plain" modes="ALL" />
 			<validator name="required" />
 		</field>

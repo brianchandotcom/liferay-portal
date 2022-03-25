@@ -20,11 +20,11 @@ const Container = ({active = false, children, className, ...otherProps}) => (
 	<nav
 		{...otherProps}
 		className={classNames(
-			'management-toolbar-container navbar navbar-expand-md',
+			'management-bar navbar navbar-expand-md',
 			className,
 			{
-				'management-toolbar-container-light': !active,
-				'management-toolbar-container-primary navbar-nowrap': active,
+				'management-bar-light': !active,
+				'management-bar-primary navbar-nowrap': active,
 			}
 		)}
 	>

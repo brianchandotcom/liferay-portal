@@ -1,6 +1,6 @@
 @import 'atlas-variables';
 
-$management-toolbar-container-base: (
+$management-bar-base: (
 	border-color: transparent,
 	border-style: solid,
 	media-breakpoint-down: (),
@@ -20,7 +20,7 @@ $management-toolbar-container-base: (
 	),
 );
 
-$management-toolbar-container-size: (
+$management-bar-size: (
 	scaling-navbar: true,
 	border-bottom-width: 0.0625rem,
 	font-size: $navbar-font-size,
@@ -42,7 +42,7 @@ $management-toolbar-container-size: (
 	nav-item-dropdown-margin-top: 0,
 );
 
-$management-toolbar-container-light: (
+$management-bar-light: (
 	background-color: $white,
 	navbar-nav: (
 		nav-link: (
@@ -71,7 +71,7 @@ $management-toolbar-container-light: (
 	media-breakpoint-up: (),
 );
 
-$management-toolbar-container-primary: (
+$management-bar-primary: (
 	background-color: $primary-l3,
 	border-color: $primary,
 	color: $navbar-light-color,
@@ -102,9 +102,9 @@ $management-toolbar-container-primary: (
 	media-breakpoint-up: (),
 );
 
-.management-toolbar-container {
-	@include clay-navbar-size($management-toolbar-container-size);
-	@include clay-navbar-variant($management-toolbar-container-base);
+.management-bar {
+	@include clay-navbar-size($management-bar-size);
+	@include clay-navbar-variant($management-bar-base);
 
 	&.navbar-nowrap {
 		.navbar-text {
@@ -114,10 +114,10 @@ $management-toolbar-container-primary: (
 	}
 }
 
-.management-toolbar-container-light {
-	@include clay-navbar-variant($management-toolbar-container-light);
+.management-bar-light {
+	@include clay-navbar-variant($management-bar-light);
 }
 
-.management-toolbar-container-primary {
-	@include clay-navbar-variant($management-toolbar-container-primary);
+.management-bar-primary {
+	@include clay-navbar-variant($management-bar-primary);
 }

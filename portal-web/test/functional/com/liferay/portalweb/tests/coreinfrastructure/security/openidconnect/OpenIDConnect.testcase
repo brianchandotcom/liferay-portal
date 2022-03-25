@@ -455,6 +455,70 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-148619. User could log in and log out using Google as OpenID Connect provider, using custom parameters for the connection."
+	test OpenIDConnectWithGoogleCustomParameters {
+		property dummy.socket.proxy.disabled = "true";
+		property test.name.skip.portal.instance = "OpenIDConnect#EnabledOpenIDConnectOnSystemLevel";
+
+		var customTokenRequestParameters = "resource=https://contacts.google.com";
+		var customAuthorizationRequestParameters = "access_type=offline";
+		var openIdConnectClientId = PropsUtil.get("google.client.id.2");
+		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.2");
+		var userEmailAddress = PropsUtil.get("email.address.2");
+		var userPassword = PropsUtil.get("email.password.2");
+
+		task ("Given the correct log levels are set to DEBUG") {
+			OpenIDConnect.enableOpenIDConnectDebugLogs();
+
+			OpenIDConnect.enableOpenIDConnectCustomParametersDebugLogs();
+		}
+
+		task ("When OpenID Connect provider is set to Google and the connection is established with custom parameters") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "SSO",
+				configurationName = "OpenID Connect",
+				configurationScope = "System Scope");
+
+			PortalSettings.enableOpenIDConnectCP(systemLevel = "true");
+
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "SSO",
+				configurationName = "OpenID Connect Provider Connection",
+				configurationScope = "Virtual Instance Scope");
+
+			OpenIDConnect.addProvider(
+				customAuthorizationRequestParameters = "${customAuthorizationRequestParameters}",
+				customTokenRequestParameters = "${customTokenRequestParameters}",
+				openIdConnectClientId = "${openIdConnectClientId}",
+				openIdConnectClientSecret = "${openIdConnectClientSecret}",
+				providerName = "Google");
+		}
+
+		task ("Then the user can log in and log out through the provider and the correct parameters are shown in the console") {
+			UserBar.signOut();
+
+			User.loginUserWithOpenIDConnectEnabledPG(
+				userEmailAddress = "${userEmailAddress}",
+				userPassword = "${userPassword}");
+
+			AssertConsoleTextPresent(value1 = "${customAuthorizationRequestParameters}");
+
+			AssertConsoleTextPresent(value1 = "resource");
+		}
+
+		task (" And the user is still logged in after the first access token's lifetime is over and they receive a new access token in the background") {
+			Pause(locator1 = "65000");
+
+			Refresh();
+
+			User.viewLoggedInPG();
+		}
+	}
+
 	@description = "This is a use case for LPS-124898 TC-1: Verify Instance admin can set the token refresh offset via System settings."
 	@priority = "4"
 	test TokenRefreshOffsetCanBeSetAtSystemLevel {

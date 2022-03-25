@@ -218,6 +218,7 @@ const MillerColumnsItem = ({
 								ACTIONS[action](child.data, namespace);
 							}
 						},
+						symbolLeft: child.icon,
 					};
 				}),
 			};

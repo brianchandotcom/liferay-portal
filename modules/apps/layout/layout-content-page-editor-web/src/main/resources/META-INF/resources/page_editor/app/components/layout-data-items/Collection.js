@@ -99,7 +99,7 @@ const EditModeMaxItemsAlert = () => (
 				Liferay.Language.get(
 					'in-edit-mode,-the-number-of-elements-displayed-is-limited-to-x-due-to-performance'
 				),
-				config.maxNumberOfItemsEditMode
+				config.maxNumberOfItemsInEditMode
 			)}
 		</div>
 	</div>
@@ -121,7 +121,7 @@ const Grid = ({
 
 	const numberOfItemsToDisplay = Math.min(
 		maxNumberOfItems,
-		config.maxNumberOfItemsEditMode
+		config.maxNumberOfItemsInEditMode
 	);
 
 	const numberOfRows = Math.ceil(
@@ -168,7 +168,7 @@ const Grid = ({
 					)}
 				</ClayLayout.Row>
 			))}
-			{maxNumberOfItems > config.maxNumberOfItemsEditMode && (
+			{maxNumberOfItems > config.maxNumberOfItemsInEditMode && (
 				<EditModeMaxItemsAlert />
 			)}
 		</>

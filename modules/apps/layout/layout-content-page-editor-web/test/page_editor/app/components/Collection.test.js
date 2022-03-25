@@ -41,7 +41,7 @@ jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
-			maxNumberOfItemsEditMode: 2,
+			maxNumberOfItemsInEditMode: 2,
 			searchContainerPageMaxDelta: 10,
 		},
 	})

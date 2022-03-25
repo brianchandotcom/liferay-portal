@@ -503,7 +503,7 @@ public class ContentPageEditorDisplayContext {
 			).put(
 				"masterUsed", _isMasterUsed()
 			).put(
-				"maxNumberOfItemsEditMode",
+				"maxNumberOfItemsInEditMode",
 				_pageEditorConfiguration.maxNumberOfItemsInEditMode()
 			).put(
 				"moveItemURL",

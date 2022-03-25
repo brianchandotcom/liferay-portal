@@ -217,6 +217,11 @@ public class LayoutPageTemplateStructureWrapper
 		return model.getData(segmentsExperienceKey);
 	}
 
+	@Override
+	public String getDefaultSegmentsExperienceData() {
+		return model.getDefaultSegmentsExperienceData();
+	}
+
 	/**
 	 * Returns the group ID of this layout page template structure.
 	 *

@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.layout.admin.web.internal.portlet.constants.LayoutAdminWebPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -48,7 +49,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuPortletKeys;
 
 import java.util.List;
 
@@ -103,16 +103,18 @@ public class AddContentLayoutMVCActionCommandTest {
 
 	private void _addEmbeddedPortlet(long companyId, long groupId, long plid) {
 		Portlet portlet = _portletLocalService.fetchPortletById(
-			companyId, _PORTLET_ID);
+			companyId, LayoutAdminWebPortletKeys.LAYOUT_ADMIN_WEB_TEST_PORTLET);
 
 		_portletPreferencesLocalService.addPortletPreferences(
 			companyId, groupId, PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-			PortletKeys.PREFS_PLID_SHARED, _PORTLET_ID, portlet,
+			PortletKeys.PREFS_PLID_SHARED,
+			LayoutAdminWebPortletKeys.LAYOUT_ADMIN_WEB_TEST_PORTLET, portlet,
 			PortletConstants.DEFAULT_PREFERENCES);
 
 		_portletPreferencesLocalService.addPortletPreferences(
 			companyId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
-			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, _PORTLET_ID, portlet,
+			PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid,
+			LayoutAdminWebPortletKeys.LAYOUT_ADMIN_WEB_TEST_PORTLET, portlet,
 			PortletConstants.DEFAULT_PREFERENCES);
 	}
 
@@ -176,9 +178,6 @@ public class AddContentLayoutMVCActionCommandTest {
 
 		return themeDisplay;
 	}
-
-	private static final String _PORTLET_ID =
-		ProductNavigationProductMenuPortletKeys.PRODUCT_NAVIGATION_PRODUCT_MENU;
 
 	private Company _company;
 

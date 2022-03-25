@@ -696,6 +696,8 @@ definition {
 	@description = "LPS-102664 - Verify that the Bulk Reassign is letting the user reassign only pending tasks assigned to the user's role"
 	@priority = "5"
 	test UserCanReassignOnlyTasksAssignedToHisRole {
+		property portal.upstream = "quarantine";
+
 		JSONUser.addUser(
 			userEmailAddress = "user1@liferay.com",
 			userFirstName = "user1",

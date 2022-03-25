@@ -48,8 +48,6 @@ import java.util.Locale;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
@@ -325,13 +323,6 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 	@Override
 	public boolean isRatable() {
 		return true;
-	}
-
-	public String renderActions(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws Exception {
-
-		return null;
 	}
 
 	public void setAssetRendererType(int assetRendererType) {

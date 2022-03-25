@@ -11,7 +11,7 @@
 
 import {useEffect, useState} from 'react';
 
-import {fetchData} from './fetch';
+import {fetchData} from '../utils/fetch';
 
 /**
  * Hook for fetching data from a resource and providing the function to refetch.

@@ -12,7 +12,7 @@
 import ClipboardJS from 'clipboard';
 import {useEffect} from 'react';
 
-import {openErrorToast, openSuccessToast} from './toasts';
+import {openErrorToast, openSuccessToast} from '../utils/toasts';
 
 /**
  * This only should be used once per page since this will enable the clipboard

@@ -27,6 +27,7 @@ import React, {
 	useState,
 } from 'react';
 
+import useShouldConfirmBeforeNavigate from '../hooks/useShouldConfirmBeforeNavigate';
 import CodeMirrorEditor from '../shared/CodeMirrorEditor';
 import ErrorBoundary from '../shared/ErrorBoundary';
 import LearnMessage from '../shared/LearnMessage';
@@ -39,7 +40,6 @@ import SXPElement from '../shared/sxp_element/index';
 import {CONFIG_PREFIX, DEFAULT_ERROR} from '../utils/constants';
 import {sub} from '../utils/language';
 import {openErrorToast, setInitialSuccessToast} from '../utils/toasts';
-import useShouldConfirmBeforeNavigate from '../utils/useShouldConfirmBeforeNavigate';
 import {getUIConfigurationValues} from '../utils/utils';
 import SidebarPanel from './SidebarPanel';
 

@@ -11,13 +11,13 @@
 
 import React, {useEffect, useState} from 'react';
 
+import useClipboardJS from '../hooks/useClipboardJS';
 import ErrorBoundary from '../shared/ErrorBoundary';
 import ThemeContext from '../shared/ThemeContext';
 import {COPY_BUTTON_CSS_CLASS} from '../utils/constants';
 import {fetchData} from '../utils/fetch';
 import {renameKeys} from '../utils/language';
 import {openInitialSuccessToast} from '../utils/toasts';
-import useClipboardJS from '../utils/useClipboardJS';
 import EditSXPElementForm from './EditSXPElementForm';
 
 /**

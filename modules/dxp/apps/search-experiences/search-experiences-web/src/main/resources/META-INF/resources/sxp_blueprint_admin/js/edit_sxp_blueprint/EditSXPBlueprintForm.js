@@ -23,6 +23,8 @@ import React, {
 	useState,
 } from 'react';
 
+import useFetchData from '../hooks/useFetchData';
+import useShouldConfirmBeforeNavigate from '../hooks/useShouldConfirmBeforeNavigate';
 import LearnMessage from '../shared/LearnMessage';
 import PageToolbar from '../shared/PageToolbar';
 import Sidebar from '../shared/Sidebar';
@@ -39,8 +41,6 @@ import {
 	openSuccessToast,
 	setInitialSuccessToast,
 } from '../utils/toasts';
-import useFetchData from '../utils/useFetchData';
-import useShouldConfirmBeforeNavigate from '../utils/useShouldConfirmBeforeNavigate';
 import {
 	cleanUIConfiguration,
 	filterAndSortClassNames,

@@ -15,9 +15,6 @@
 package com.liferay.portal.kernel.portlet;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -33,6 +30,7 @@ import java.io.PrintWriter;
 
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.MimeResponse;
@@ -43,11 +41,11 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Raymond Augé
  */
-public class PortletJSONUtil {
+public class PortletPathsUtil {
 
-	public static void populatePortletJSONObject(
+	public static void populatePortletPaths(
 			HttpServletRequest httpServletRequest, String portletHTML,
-			Portlet portlet, JSONObject jsonObject)
+			Portlet portlet, Map<String, Object> paths)
 		throws Exception {
 
 		boolean portletOnLayout = false;
@@ -74,27 +72,26 @@ public class PortletJSONUtil {
 			}
 		}
 
-		_populatePortletJSONObject(
-			httpServletRequest, portletHTML, portlet, portletOnLayout,
-			jsonObject);
+		_populatePortletPaths(
+			httpServletRequest, portletHTML, portlet, portletOnLayout, paths);
 	}
 
 	public static void writeFooterPaths(
-			HttpServletResponse httpServletResponse, JSONObject jsonObject)
+			HttpServletResponse httpServletResponse, Map<String, Object> paths)
 		throws IOException {
 
 		_writePaths(
-			httpServletResponse, jsonObject.getJSONArray("footerCssPaths"),
-			jsonObject.getJSONArray("footerJavaScriptPaths"));
+			httpServletResponse, (Set<String>)paths.get("footerCssPaths"),
+			(Set<String>)paths.get("footerJavaScriptPaths"));
 	}
 
 	public static void writeHeaderPaths(
-			HttpServletResponse httpServletResponse, JSONObject jsonObject)
+			HttpServletResponse httpServletResponse, Map<String, Object> paths)
 		throws IOException {
 
 		_writePaths(
-			httpServletResponse, jsonObject.getJSONArray("headerCssPaths"),
-			jsonObject.getJSONArray("headerJavaScriptPaths"));
+			httpServletResponse, (Set<String>)paths.get("headerCssPaths"),
+			(Set<String>)paths.get("headerJavaScriptPaths"));
 	}
 
 	private static List<Portlet> _getAllPortlets(
@@ -132,9 +129,9 @@ public class PortletJSONUtil {
 		return rootPortlet.getPortletId();
 	}
 
-	private static void _populatePortletJSONObject(
+	private static void _populatePortletPaths(
 			HttpServletRequest httpServletRequest, String portletHTML,
-			Portlet portlet, boolean portletOnLayout, JSONObject jsonObject)
+			Portlet portlet, boolean portletOnLayout, Map<String, Object> paths)
 		throws Exception {
 
 		Set<String> footerCssSet = new LinkedHashSet<>();
@@ -260,59 +257,46 @@ public class PortletJSONUtil {
 			}
 		}
 
-		jsonObject.put(
-			"footerCssPaths", JSONFactoryUtil.createJSONArray(footerCssSet)
-		).put(
-			"footerJavaScriptPaths",
-			JSONFactoryUtil.createJSONArray(footerJavaScriptSet)
-		).put(
-			"headerCssPaths", JSONFactoryUtil.createJSONArray(headerCssSet)
-		).put(
-			"headerJavaScriptPaths",
-			JSONFactoryUtil.createJSONArray(headerJavaScriptSet)
-		).put(
-			"portletHTML", portletHTML
-		).put(
-			"refresh", !portlet.isAjaxable()
-		);
+		paths.put("footerCssPaths", footerCssSet);
+		paths.put("footerJavaScriptPaths", footerJavaScriptSet);
+		paths.put("headerCssPaths", headerCssSet);
+		paths.put("headerJavaScriptPaths", headerJavaScriptSet);
+		paths.put("portletHTML", portletHTML);
+		paths.put("refresh", !portlet.isAjaxable());
 
 		List<String> markupHeadElements =
 			(List<String>)httpServletRequest.getAttribute(
 				MimeResponse.MARKUP_HEAD_ELEMENT);
 
 		if (markupHeadElements != null) {
-			jsonObject.put(
+			paths.put(
 				"markupHeadElements",
 				StringUtil.merge(markupHeadElements, StringPool.BLANK));
 		}
 	}
 
 	private static void _writePaths(
-			HttpServletResponse httpServletResponse,
-			JSONArray cssPathsJSONArray, JSONArray javaScriptPathsJSONArray)
+			HttpServletResponse httpServletResponse, Set<String> cssPathsSet,
+			Set<String> javaScriptPathsSet)
 		throws IOException {
 
-		if ((cssPathsJSONArray.length() == 0) &&
-			(javaScriptPathsJSONArray.length() == 0)) {
+		if ((cssPathsSet == null) || (javaScriptPathsSet == null) ||
+			(cssPathsSet.isEmpty() && javaScriptPathsSet.isEmpty())) {
 
 			return;
 		}
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		for (int i = 0; i < cssPathsJSONArray.length(); i++) {
-			String value = cssPathsJSONArray.getString(i);
-
+		for (String cssPathSet : cssPathsSet) {
 			printWriter.print("<link href=\"");
-			printWriter.print(HtmlUtil.escape(value));
+			printWriter.print(HtmlUtil.escape(cssPathSet));
 			printWriter.println("\" rel=\"stylesheet\" type=\"text/css\" />");
 		}
 
-		for (int i = 0; i < javaScriptPathsJSONArray.length(); i++) {
-			String value = javaScriptPathsJSONArray.getString(i);
-
+		for (String javaScriptPathSet : javaScriptPathsSet) {
 			printWriter.print("<script src=\"");
-			printWriter.print(HtmlUtil.escape(value));
+			printWriter.print(HtmlUtil.escape(javaScriptPathSet));
 			printWriter.println("\" type=\"text/javascript\"></script>");
 		}
 	}

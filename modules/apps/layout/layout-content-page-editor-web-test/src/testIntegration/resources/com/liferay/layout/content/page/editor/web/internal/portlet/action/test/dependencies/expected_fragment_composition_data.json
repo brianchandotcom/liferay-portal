@@ -1,5 +1,6 @@
 {
 	"definition": {
+		"indexed": true,
 		"layout": {
 			"borderWidth": 0,
 			"htmlTag": "Div",
@@ -63,7 +64,8 @@
 							}
 						}
 					}
-				]
+				],
+				"indexed": true
 			},
 			"type": "Fragment"
 		}

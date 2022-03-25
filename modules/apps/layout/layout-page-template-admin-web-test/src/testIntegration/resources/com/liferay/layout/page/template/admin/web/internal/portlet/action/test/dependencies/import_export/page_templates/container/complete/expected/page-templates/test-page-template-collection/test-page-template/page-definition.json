@@ -21,6 +21,7 @@
 						"textAlign": "none",
 						"width": "w-auto"
 					},
+					"indexed": true,
 					"layout": {
 						"align": "Stretch",
 						"borderWidth": 0,

@@ -22,6 +22,7 @@
 						"width": "w-auto"
 					},
 					"gutters": true,
+					"indexed": true,
 					"modulesPerRow": 1,
 					"numberOfColumns": 1,
 					"reverseOrder": false,
@@ -87,6 +88,7 @@
 										"textAlign": "none",
 										"width": "w-auto"
 									},
+									"indexed": true,
 									"layout": {
 										"borderWidth": 0,
 										"htmlTag": "Div",
@@ -144,7 +146,8 @@
 												"shadow": "shadow-none",
 												"textAlign": "none",
 												"width": "w-auto"
-											}
+											},
+											"indexed": true
 										},
 										"type": "Fragment"
 									}

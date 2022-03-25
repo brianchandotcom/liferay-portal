@@ -48,6 +48,12 @@ public class JournalArticleFullContentInfoItemRenderer
 		JournalArticle article, HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
+		if (!JournalArticleRendererUtil.isShowArticle(
+				httpServletRequest, article)) {
+
+			return;
+		}
+
 		try {
 			httpServletRequest.setAttribute(WebKeys.JOURNAL_ARTICLE, article);
 

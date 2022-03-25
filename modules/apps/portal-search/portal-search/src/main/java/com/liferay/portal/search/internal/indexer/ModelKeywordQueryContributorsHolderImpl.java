@@ -34,12 +34,12 @@ public class ModelKeywordQueryContributorsHolderImpl
 
 	@Override
 	public Stream<KeywordQueryContributor> stream(
-		Collection<String> includeIds, Collection<String> excludeIds) {
+		Collection<String> excludes, Collection<String> includes) {
 
 		return IncludeExcludeUtil.stream(
 			StreamSupport.stream(
 				_keywordQueryContributors.spliterator(), false),
-			includeIds, excludeIds, object -> getClassName(object));
+			includes, excludes, object -> getClassName(object));
 	}
 
 	protected String getClassName(Object object) {

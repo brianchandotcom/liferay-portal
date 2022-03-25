@@ -25,6 +25,6 @@ import java.util.stream.Stream;
 public interface ModelKeywordQueryContributorsHolder {
 
 	public Stream<KeywordQueryContributor> stream(
-		Collection<String> includeIds, Collection<String> excludeIds);
+		Collection<String> excludes, Collection<String> includes);
 
 }

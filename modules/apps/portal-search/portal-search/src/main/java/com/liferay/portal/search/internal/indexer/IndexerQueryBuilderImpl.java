@@ -138,10 +138,10 @@ public class IndexerQueryBuilderImpl<T extends BaseModel<?>>
 		contribute(
 			_modelKeywordQueryContributorsHolder.stream(
 				_getStrings(
-					"search.full.query.clause.contributors.includes",
+					"search.full.query.clause.contributors.excludes",
 					searchContext),
 				_getStrings(
-					"search.full.query.clause.contributors.excludes",
+					"search.full.query.clause.contributors.includes",
 					searchContext)),
 			booleanQuery, searchContext);
 	}

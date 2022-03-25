@@ -89,10 +89,9 @@ public class JournalArticleTag extends IncludeTag {
 					httpServletRequest, "p_l_mode", Constants.VIEW),
 				getLanguageId(), 1, portletRequestModel, themeDisplay);
 		}
-		catch (PortalException portalException) {
+		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get journal article display", portalException);
+				_log.debug("Unable to get journal article display", exception);
 			}
 
 			return SKIP_BODY;

@@ -174,14 +174,12 @@ public class WidgetLayoutStructureItemImporter
 			PortletIdCodec.encode(widgetName, widgetInstanceId),
 			warningMessages, widgetPermissionsMaps);
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
-
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			layout.getUserId(), layout.getGroupId(), 0, 0,
-			defaultSegmentsExperienceId, layout.getPlid(), StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()),
+			layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK,
 			editableValueJSONObject.toString(), widgetInstanceId, 0, null,
 			ServiceContextThreadLocal.getServiceContext());
 	}

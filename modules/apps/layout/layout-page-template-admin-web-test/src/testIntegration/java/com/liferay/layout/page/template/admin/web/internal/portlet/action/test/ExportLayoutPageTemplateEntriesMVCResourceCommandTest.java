@@ -291,14 +291,13 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 				LayoutPageTemplateEntryTypeConstants.TYPE_BASIC, 0, status,
 				_serviceContext);
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layoutPageTemplateEntry.getPlid());
-
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
 				_group.getGroupId(), layoutPageTemplateEntry.getPlid(),
-				defaultSegmentsExperienceId, _read("layout_data.json"));
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(
+						layoutPageTemplateEntry.getPlid()),
+				_read("layout_data.json"));
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
 			_group.getGroupId(), RandomTestUtil.randomString(),

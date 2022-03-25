@@ -1287,13 +1287,11 @@ public class LayoutPageTemplatesImporterImpl
 				deleteLayoutPageTemplateStructure(layoutPageTemplateStructure);
 		}
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
-
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			layout.getUserId(), layout.getGroupId(), layout.getPlid(),
-			defaultSegmentsExperienceId, jsonObject.toString(),
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()),
+			jsonObject.toString(),
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

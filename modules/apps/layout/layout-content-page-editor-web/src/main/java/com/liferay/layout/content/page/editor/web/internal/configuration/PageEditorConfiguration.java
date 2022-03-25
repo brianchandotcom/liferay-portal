@@ -42,6 +42,6 @@ public interface PageEditorConfiguration {
 		description = "page-editor-max-number-of-items-edit-mode-description",
 		name = "max-number-of-items-in-edit-mode", required = false
 	)
-	public int maxNumberOfItemsEditMode();
+	public int maxNumberOfItemsInEditMode();
 
 }

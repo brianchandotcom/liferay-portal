@@ -86,10 +86,10 @@ public class AddSearchKeywordsQueryContributorHelperImpl
 		Stream<KeywordQueryContributor> stream =
 			keywordQueryContributorsHolder.stream(
 				getStrings(
-					"search.full.query.clause.contributors.includes",
+					"search.full.query.clause.contributors.excludes",
 					searchContext),
 				getStrings(
-					"search.full.query.clause.contributors.excludes",
+					"search.full.query.clause.contributors.includes",
 					searchContext));
 
 		stream.forEach(

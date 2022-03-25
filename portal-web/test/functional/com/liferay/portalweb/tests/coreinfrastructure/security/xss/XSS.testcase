@@ -517,14 +517,12 @@ definition {
 	@description = "This is a use case for LPS-71236 and LPS-71307. View web content."
 	@priority = "5"
 	test NoXSSVulnerabilityInWebContent {
-		task ("Add CP") {
+		task ("Given: A Web Content is created with a script in the title") {
 			JSONWebcontent.addWebContent(
 				content = "WC WebContent Content",
 				groupName = "Guest",
 				title = '''<script>alert(123);</script>''');
-		}
 
-		task ("Assert correct title") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 			WebContent.viewTitle(
@@ -532,13 +530,11 @@ definition {
 				webContentTitleEscapeCharacter = '''&lt;script&gt;alert(123);&lt;/script&gt;''');
 		}
 
-		task ("Add Web Content Display Page") {
+		task ("And: The created Web Content is added to the Display Page") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
 				layoutName = "Web Content Display Page");
-		}
 
-		task ("Add WC display widget") {
 			JSONLayout.addWidgetToPublicLayout(
 				groupName = "Guest",
 				layoutName = "Web Content Display Page",
@@ -551,7 +547,7 @@ definition {
 			WebContentDisplayPortlet.selectWebContent(webContentTitle = '''<script>alert(123);</script>''');
 		}
 
-		task ("Assert can change WC name") {
+		task ("When: The WC name is changed") {
 			WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 			WebContentNavigator.gotoEditCP(
@@ -561,17 +557,17 @@ definition {
 			WebContent.editCP(
 				webContentTitle = '''<script>alert(123);</script>''',
 				webContentTitleEdit = "WC WebContent Title");
-
-			WebContentNavigator.gotoEditCP(webContentTitle = "WebContent Title");
 		}
 
-		task ("Publish a non-existing image URL") {
+		task ("And: The WC is published with a non-existing image URL") {
+			WebContentNavigator.gotoEditCP(webContentTitle = "WC WebContent Title");
+
 			WebContent.addFeaturedImageFromURL(imageSourceURL = '''<img src="http://url.to.file.which/not.exist" onerror=alert(123);>''');
 
 			PortletEntry.publish();
 		}
 
-		task ("Change display style and assert alert was not triggered") {
+		task ("Then: It should be possible to change the display style without seeing any alert") {
 			LexiconEntry.changeDisplayStyle(displayStyle = "cards");
 
 			AssertAlertNotPresent();

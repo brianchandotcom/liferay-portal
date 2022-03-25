@@ -791,7 +791,7 @@ definition {
 
 		Click(
 			key_pageNumber = "2",
-			locator1 = "Pagination#ANY_PAGE");
+			locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
 
 		var iterator = "1";
 

@@ -471,7 +471,7 @@ definition {
 			if ("${isLessThan21}" == "false") {
 				Click(
 					key_pageNumber = "2",
-					locator1 = "Pagination#ANY_PAGE");
+					locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
 
 				WaitForElementPresent(
 					key_index = "${aux_iterator}",
@@ -480,7 +480,7 @@ definition {
 			else if ("${isLessThan41}" == "false") {
 				Click(
 					key_pageNumber = "3",
-					locator1 = "Pagination#ANY_PAGE");
+					locator1 = "CommerceNavigation#PAGINATION_ANY_PAGE");
 
 				WaitForElementPresent(
 					key_index = "${aux_iterator}",

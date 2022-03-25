@@ -22,6 +22,75 @@ definition {
 		}
 	}
 
+	@description = "This test asserts the account group name not clickable when user only have the update permission."
+	@priority = "3"
+	test AccountGroupNameLinkNotClickableWithOnlyUpdatePermission {
+		task ("Given A new User and a new Account Group exists") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+
+			task ("Add A new Account Group exists") {
+				JSONAccountGroup.addAccountGroup(
+					accountGroupDescription = "This is an Account Group.",
+					accountGroupName = "AG Name not Clickable");
+			}
+
+			task ("Add A new Regular role with Update permission exists") {
+				JSONRole.addRegularRole(roleTitle = "Only Update Permission");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "VIEW_CONTROL_PANEL",
+					resourceName = "90",
+					roleTitle = "Only Update Permission");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "ACCESS_IN_CONTROL_PANEL",
+					resourceName = "com_liferay_account_admin_web_internal_portlet_AccountGroupsAdminPortlet",
+					roleTitle = "Only Update Permission");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "UPDATE",
+					resourceName = "com.liferay.account.model.AccountGroup",
+					roleTitle = "Only Update Permission");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "VIEW",
+					resourceName = "com.liferay.account.model.AccountGroup",
+					roleTitle = "Only Update Permission");
+			}
+		}
+
+		task ("When assign the user with regular role only have update Account Group permission") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Only Update Permission",
+				userEmailAddress = "userea1@liferay.com");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+		}
+
+		task ("Then filter the accounts assigned to account group by Status returns proper results") {
+			AccountGroups.openAccountGroupsAdmin();
+
+			AssertVisible(
+				key_rowEntry = "AG Name not Clickable",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
+
+			AssertElementNotPresent(
+				key_rowEntry = "AG Name not Clickable",
+				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
+		}
+	}
+
 	@description = "This test deletes an account group."
 	@priority = "4"
 	test CanDeleteAnAccountGroup {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.batch.engine.internal.notification;
+package com.liferay.batch.planner.internal.notification;
 
 import com.liferay.batch.engine.constants.BatchEnginePortletKeys;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;

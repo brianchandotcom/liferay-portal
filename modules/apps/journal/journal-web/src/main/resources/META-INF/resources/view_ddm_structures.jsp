@@ -117,9 +117,17 @@ JournalDDMStructuresManagementToolbarDisplayContext journalDDMStructuresManageme
 				value="<%= ddmStructure.getModifiedDate() %>"
 			/>
 
-			<liferay-ui:search-container-column-jsp
-				path="/ddm_structure_action.jsp"
-			/>
+			<liferay-ui:search-container-column-text>
+
+				<%
+				DDMStructureActionDropdownItemsProvider ddmStructureActionDropdownItemsProvider = new DDMStructureActionDropdownItemsProvider(ddmStructure, liferayPortletRequest, liferayPortletResponse);
+				%>
+
+				<clay:dropdown-actions
+					dropdownItems="<%= ddmStructureActionDropdownItemsProvider.getActionDropdownItems() %>"
+					propsTransformer="js/DDMStructrureElementsDefaultPropsTransformer"
+				/>
+			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator

@@ -150,6 +150,7 @@ page import="com.liferay.journal.web.internal.servlet.taglib.clay.JournalArticle
 page import="com.liferay.journal.web.internal.servlet.taglib.clay.JournalDDMTemplateVerticalCard" %><%@
 page import="com.liferay.journal.web.internal.servlet.taglib.clay.JournalFolderHorizontalCard" %><%@
 page import="com.liferay.journal.web.internal.servlet.taglib.clay.JournalSelectDDMTemplateVerticalCard" %><%@
+page import="com.liferay.journal.web.internal.servlet.taglib.util.DDMStructureActionDropdownItemsProvider" %><%@
 page import="com.liferay.journal.web.internal.util.JournalHelperUtil" %><%@
 page import="com.liferay.journal.web.internal.util.JournalPortletUtil" %><%@
 page import="com.liferay.journal.web.internal.util.JournalUtil" %><%@

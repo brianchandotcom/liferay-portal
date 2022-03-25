@@ -16,23 +16,6 @@ $portletLayoutMargin: 35px;
 $productMenuTransitionDuration: 0.5s;
 $productMenuWidth: 320px;
 
-.ddm-structure-action {
-	display: flex;
-
-	.c-inner {
-		display: block;
-		flex-grow: 0;
-	}
-
-	.taglib-text-icon {
-		margin-left: 18px;
-	}
-
-	&-no-icon {
-		padding-left: 32px;
-	}
-}
-
 .portlet-journal {
 	.article-content-content {
 		word-wrap: break-word;

@@ -97,6 +97,33 @@
 			"title": "The ClassPKReference Schema",
 			"type": "object"
 		},
+		"CollectionViewport": {
+			"additionalProperties": false,
+			"properties": {
+				"collectionViewportDefinition": {
+					"additionalProperties": false,
+					"properties": {
+						"numberOfColumns": {
+							"minimum": 0,
+							"title": "The numberOfColumns Schema",
+							"type": "integer"
+						}
+					},
+					"title": "The collectionViewportDefinition Schema",
+					"type": "object"
+				},
+				"id": {
+					"title": "The id Schema",
+					"type": "string"
+				}
+			},
+			"required": [
+				"id",
+				"collectionViewportDefinition"
+			],
+			"title": "The CollectionViewport Schema",
+			"type": "object"
+		},
 		"ColumnViewport": {
 			"additionalProperties": false,
 			"properties": {
@@ -774,6 +801,13 @@
 					],
 					"title": "The collectionConfig Schema",
 					"type": "object"
+				},
+				"collectionViewports": {
+					"items": {
+						"$ref": "#/definitions/CollectionViewport"
+					},
+					"title": "The collectionViewports Schema",
+					"type": "array"
 				},
 				"displayAllItems": {
 					"title": "The displayAllItems Schema",

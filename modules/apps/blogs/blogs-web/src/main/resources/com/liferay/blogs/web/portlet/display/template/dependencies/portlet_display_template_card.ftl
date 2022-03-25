@@ -9,8 +9,8 @@
 				</#if>
 
 				<li class="card-page-item card-page-item-asset">
-					<div class="card card-type-asset file-card">
-						<div class="aspect-ratio card-item-first">
+					<div class="card">
+						<div class="aspect-ratio aspect-ratio-8-to-3 card-item-first">
 								<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="${cardImage?then(curBlogEntry.getCoverImageURL(themeDisplay), portalUtil.getPathContext(renderRequest) + "/images/cover_image_placeholder.jpg")}">
 						</div>
 

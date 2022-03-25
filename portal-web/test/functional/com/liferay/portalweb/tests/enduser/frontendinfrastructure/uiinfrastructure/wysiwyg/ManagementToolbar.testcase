@@ -103,9 +103,9 @@ definition {
 		}
 	}
 
-	@description = "LPS-147850. Assert the order button can sort results"
+	@description = "LPS-147850. Assert the order button can sort results by descending order"
 	@priority = "5"
-	test OrderButtonCanSortOptions {
+	test OrderButtonCanSortOptionsByDescending {
 		task ("When the user opens any section with the management toolbar") {
 
 			// Using tags as workaround until LPS-150056

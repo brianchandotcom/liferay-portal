@@ -47,7 +47,7 @@ SelectAccountUsersManagementToolbarDisplayContext selectAccountUsersManagementTo
 <clay:container-fluid
 	id='<%= liferayPortletResponse.getNamespace() + "selectAccountUser" %>'
 >
-	<c:if test='<%= !Objects.equals(selectAccountUsersManagementToolbarDisplayContext.getNavigation(), "all-users") %>'>
+	<c:if test='<%= Objects.equals(selectAccountUsersManagementToolbarDisplayContext.getNavigation(), "valid-domain-users") %>'>
 		<clay:alert
 			message="showing-users-with-valid-domains-only"
 		/>

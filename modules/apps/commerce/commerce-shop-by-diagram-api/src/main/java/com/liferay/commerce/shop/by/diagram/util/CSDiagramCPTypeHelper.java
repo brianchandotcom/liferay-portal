@@ -20,13 +20,22 @@ import com.liferay.commerce.account.model.CommerceAccount;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramSetting;
 import com.liferay.commerce.shop.by.diagram.type.CSDiagramType;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Danny Situ
+ * @author Crescenzo Rega
  */
 @ProviderType
 public interface CSDiagramCPTypeHelper {
+
+	public FileVersion getCPDiagramImageFileVersion(
+			long cpDefinitionId, CSDiagramSetting csDiagramSetting,
+			HttpServletRequest httpServletRequest)
+		throws Exception;
 
 	public CSDiagramSetting getCSDiagramSetting(
 			CommerceAccount commerceAccount, long cpDefinitionId,

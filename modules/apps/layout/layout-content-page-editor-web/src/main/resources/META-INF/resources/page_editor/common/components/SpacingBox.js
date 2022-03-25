@@ -159,7 +159,7 @@ function SpacingSelectorButton({
 	const itemListRef = useRef();
 	const title = `${capitalize(type)} ${capitalize(position)}: ${
 		value || defaultValue
-	}px`;
+	}`;
 	const triggerId = useId();
 
 	useEffect(() => {

@@ -19,38 +19,26 @@ import {
 	PARSE_FILE_CHUNK_SIZE,
 } from './constants';
 
-export function parseCSV(content, separator) {
-	const objPattern = new RegExp(
-		'(\\' +
-			separator +
-			'|\\r?\\n|\\r|^)' +
-			'(?:"([^"]*(?:""[^"]*)*)"|' +
-			'([^"\\' +
-			separator +
-			'\\r\\n]*))',
-		'gi'
-	);
+export function parseCSV(content, separator, delimiter) {
+	const rows = content.split(/\r?\n/);
 
-	const arrData = [[]];
-	let arrMatches = objPattern.exec(content);
+	const formattedRows = rows.map((row) => {
+		const columns = row.split(separator);
 
-	while (arrMatches) {
-		const strMatchedDelimiter = arrMatches[1];
+		const formattedColumns = delimiter
+			? columns.map((column) => {
+					if (column.charAt(0) === delimiter) {
+						return column.substring(1, column.length - 1);
+					}
 
-		if (strMatchedDelimiter.length && strMatchedDelimiter !== separator) {
-			arrData.push([]);
-		}
+					return column;
+			  })
+			: columns;
 
-		const strMatchedValue = arrMatches[2]
-			? arrMatches[2].replace(new RegExp('""', 'g'), '"')
-			: arrMatches[3];
+		return formattedColumns;
+	});
 
-		arrData[arrData.length - 1].push(strMatchedValue);
-
-		arrMatches = objPattern.exec(content);
-	}
-
-	return arrData;
+	return formattedRows;
 }
 
 export function getItemDetails(itemData, headers) {
@@ -65,7 +53,7 @@ export function getItemDetails(itemData, headers) {
 
 export function extractFieldsFromCSV(
 	content,
-	{csvContainsHeaders, csvSeparator}
+	{csvContainsHeaders, csvDelimiter, csvSeparator}
 ) {
 	const splitLines = content.split('\n');
 	const newLineFound = content.indexOf('\n') > -1;

@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECTED_INSTANCE_INDEX_CHECKBOX</td>
+	<td>//label/input[@aria-label='toggle-${key_instanceId}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SERVER_VERSION</td>
 	<td>//td[contains(@class,'lfr-version-column')]</td>
 	<td></td>

@@ -19,6 +19,8 @@ import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -83,6 +85,40 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 				dropdownItem.putData("action", "addAccountEntryUser");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "new-user"));
+			}
+		).build();
+	}
+
+	@Override
+	public List<LabelItem> getFilterLabelItems() {
+		return LabelItemListBuilder.add(
+			() -> {
+				String navigation = getNavigation();
+
+				if (navigation.equals("account-users") ||
+					navigation.equals("company-users")) {
+
+					return true;
+				}
+
+				return false;
+			},
+			labelItem -> {
+				labelItem.putData(
+					"removeLabelURL",
+					PortletURLBuilder.create(
+						getPortletURL()
+					).setNavigation(
+						(String)null
+					).buildString());
+
+				labelItem.setCloseable(true);
+
+				String label = String.format(
+					"%s: %s", LanguageUtil.get(httpServletRequest, "filter-by"),
+					LanguageUtil.get(httpServletRequest, getNavigation()));
+
+				labelItem.setLabel(label);
 			}
 		).build();
 	}

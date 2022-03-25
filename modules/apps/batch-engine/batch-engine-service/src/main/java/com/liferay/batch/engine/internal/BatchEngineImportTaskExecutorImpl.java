@@ -20,10 +20,8 @@ import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.configuration.BatchEngineTaskConfiguration;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
-import com.liferay.batch.engine.constants.BatchEnginePortletKeys;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutor;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutorFactory;
-import com.liferay.batch.engine.internal.notification.BatchEngineNotificationSender;
 import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReader;
 import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReaderFactory;
 import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReaderUtil;
@@ -35,14 +33,10 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -69,7 +63,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = BatchEngineImportTaskExecutor.class
 )
 public class BatchEngineImportTaskExecutorImpl
-	extends BatchEngineNotificationSender
 	implements BatchEngineImportTaskExecutor {
 
 	@Override
@@ -99,14 +92,6 @@ public class BatchEngineImportTaskExecutorImpl
 			_updateBatchEngineImportTask(
 				BatchEngineTaskExecuteStatus.COMPLETED, batchEngineImportTask,
 				null);
-
-			sendUserNotificationEvents(
-				batchEngineImportTask.getUserId(),
-				BatchEnginePortletKeys.BATCH_ENGINE,
-				UserNotificationDeliveryConstants.TYPE_WEBSITE,
-				getNotificationEventJSONObject(
-					BatchEngineTaskExecuteStatus.COMPLETED,
-					batchEngineImportTask.getClassName()));
 		}
 		catch (Throwable throwable) {
 			_log.error(
@@ -117,14 +102,6 @@ public class BatchEngineImportTaskExecutorImpl
 			_updateBatchEngineImportTask(
 				BatchEngineTaskExecuteStatus.FAILED, batchEngineImportTask,
 				throwable.getMessage());
-
-			sendUserNotificationEvents(
-				batchEngineImportTask.getUserId(),
-				BatchEnginePortletKeys.BATCH_ENGINE,
-				UserNotificationDeliveryConstants.TYPE_WEBSITE,
-				getNotificationEventJSONObject(
-					BatchEngineTaskExecuteStatus.FAILED,
-					batchEngineImportTask.getClassName()));
 		}
 	}
 
@@ -147,25 +124,6 @@ public class BatchEngineImportTaskExecutorImpl
 		_batchEngineTaskItemDelegateExecutorFactory =
 			new BatchEngineTaskItemDelegateExecutorFactory(
 				_batchEngineTaskMethodRegistry, null, null, null);
-
-		setUserNotificationEventLocalService(
-			_userNotificationEventLocalService);
-	}
-
-	@Override
-	protected String getTaskType() {
-		return "import";
-	}
-
-	protected JSONObject populateNotificationEventJSONObject(String className) {
-		JSONObject notificationEventJSONObject =
-			JSONFactoryUtil.createJSONObject();
-
-		return notificationEventJSONObject.put(
-			"batchEngineTaskType", "import"
-		).put(
-			"className", className
-		);
 	}
 
 	private void _commitItems(
@@ -374,9 +332,5 @@ public class BatchEngineImportTaskExecutorImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	@Reference
-	private UserNotificationEventLocalService
-		_userNotificationEventLocalService;
 
 }

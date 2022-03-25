@@ -104,7 +104,7 @@ definition {
 			portletName = "Account Management",
 			searchTerm = "Account Name");
 
-		Accounts.goToEntryMenuItem(
+		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "Account Name");
 
@@ -162,7 +162,7 @@ definition {
 			portletName = "Account Management",
 			searchTerm = "Account Name");
 
-		Accounts.goToEntryMenuItem(
+		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "Account Name");
 
@@ -239,7 +239,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 
-		Accounts.goToEntryMenuItem(
+		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Deactivate",
 			rowEntry = "Account Name");
 
@@ -263,7 +263,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 
-		Accounts.goToEntryMenuItem(
+		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Delete",
 			rowEntry = "Account Name");
 
@@ -277,7 +277,7 @@ definition {
 	test AccountAdminCanEditAccount {
 		property portal.acceptance = "true";
 
-		Accounts.goToEntryMenuItem(
+		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "Account Name");
 
@@ -380,7 +380,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 		}
@@ -397,7 +397,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 
@@ -423,7 +423,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
 				rowEntry = "Account Name");
 
@@ -461,7 +461,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 
@@ -483,7 +483,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 
@@ -498,7 +498,7 @@ definition {
 			portletName = "Account Management",
 			searchTerm = "Account Name");
 
-		Accounts.goToEntryMenuItem(
+		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "Account Name");
 
@@ -539,7 +539,7 @@ definition {
 			portletName = "Account Management",
 			searchTerm = "Account Name");
 
-		Accounts.goToEntryMenuItem(
+		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
 			rowEntry = "Account Name");
 
@@ -736,7 +736,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 		}
@@ -826,7 +826,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 		}
@@ -913,7 +913,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 
@@ -1106,7 +1106,7 @@ definition {
 
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Manage Users",
 				rowEntry = "Account Name");
 		}
@@ -1397,7 +1397,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 
-		Accounts.goToEntryMenuItem(
+		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Manage Users",
 			rowEntry = "Account Name");
 
@@ -1406,7 +1406,7 @@ definition {
 			locator1 = "NavTab#ACTIVE_TAB_LINK");
 
 		for (var users : list "user1 user1,user2 user2") {
-			Accounts.goToEntryMenuItem(
+			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Remove",
 				rowEntry = "${users}");
 
@@ -1419,7 +1419,7 @@ definition {
 			portletName = "Account Management",
 			searchTerm = "Account Name");
 
-		Accounts.goToEntryMenuItem(
+		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Manage Users",
 			rowEntry = "Account Name");
 
@@ -1458,7 +1458,7 @@ definition {
 		task ("Select new account to be main active account, denoted by a checkmark, and assert that previous account is no longer selected") {
 			Navigator.gotoPage(pageName = "2B Account Page");
 
-			Accounts.goToEntryMenuItem(
+			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Select Account",
 				rowEntry = "New Selection for Test");
 
@@ -1511,7 +1511,7 @@ definition {
 
 		Navigator.gotoPage(pageName = "2B Account Page");
 
-		Accounts.goToEntryMenuItem(
+		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Deactivate",
 			rowEntry = "Account Name");
 

@@ -72,7 +72,7 @@ definition {
 
 		CommerceNavigator.gotoSpeedwellDashboardItem(dashboardItem = "Login & Security");
 
-		Accounts.goToEntryMenuItem(
+		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Select Account",
 			rowEntry = "Buyer User");
 

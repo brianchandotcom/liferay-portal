@@ -572,10 +572,10 @@
 		},
 
 		/**
-		 * @deprecated As of Athanasius (7.3.x), replaced by `window.innerWidth`
+		 * @deprecated As of Cavanaugh (7.4.x), replaced by `window.name`
 		 */
 		getWindowName() {
-			return window.name || '';
+			return window.name || Window._name || '';
 		},
 
 		/**

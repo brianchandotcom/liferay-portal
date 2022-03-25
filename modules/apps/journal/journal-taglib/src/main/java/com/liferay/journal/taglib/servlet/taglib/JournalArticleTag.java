@@ -18,7 +18,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,10 +26,13 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.Objects;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -43,6 +45,15 @@ import javax.servlet.jsp.PageContext;
  * @author Eudaldo Alonso
  */
 public class JournalArticleTag extends IncludeTag {
+
+	@Override
+	public int doEndTag() throws JspException {
+		if (!_isShowArticle()) {
+			return SKIP_PAGE;
+		}
+
+		return super.doEndTag();
+	}
 
 	@Override
 	public int doStartTag() throws JspException {
@@ -206,6 +217,29 @@ public class JournalArticleTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-journal:journal-article:wrapperCssClass",
 			_wrapperCssClass);
+	}
+
+	private boolean _isShowArticle() {
+		HttpServletRequest httpServletRequest = getRequest();
+
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(httpServletRequest);
+
+		String mode = ParamUtil.getString(
+			PortalUtil.getOriginalServletRequest(originalHttpServletRequest),
+			"p_l_mode", Constants.VIEW);
+
+		if (Objects.equals(Constants.EDIT, mode)) {
+			return true;
+		}
+
+		if ((_article == null) || (_articleDisplay == null) ||
+			_article.isExpired()) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final String _PAGE = "/journal_article/page.jsp";

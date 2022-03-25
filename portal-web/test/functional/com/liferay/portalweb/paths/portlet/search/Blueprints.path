@@ -311,6 +311,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ELEMENTS_EDIT_PAGE_PREDEFINED_VARIABLES_SHOW_HIDE_BUTTON</td>
+	<td>//button[@title='Predefined Variables']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ELEMENTS_EDIT_PAGE_PREDEFINED_VARIABLES_SIDEBAR</td>
+	<td>//div[contains(@class,'sidebar') and contains(.,'Predefined Variables')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ELEMENTS_EDIT_PAGE_PREDEFINED_VARIABLES_SIDEBAR_ITEM</td>
 	<td>//dl[contains(@class,'sidebar-dl')]//button[contains(.,'${item}')]</td>
 	<td></td>

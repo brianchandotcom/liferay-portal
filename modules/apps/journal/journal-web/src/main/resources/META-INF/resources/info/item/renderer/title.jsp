@@ -17,9 +17,9 @@
 <%@ include file="/info/item/renderer/init.jsp" %>
 
 <%
-AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.ASSET_RENDERER);
+JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 %>
 
 <div class="asset-summary">
-	<%= assetRenderer.getTitle(locale) %>
+	<%= HtmlUtil.escape(article.getTitle(locale)) %>
 </div>

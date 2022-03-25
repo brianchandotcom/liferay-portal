@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Batch Engine Web
-Bundle-SymbolicName: com.liferay.batch.engine.web
-Bundle-Version: 1.0.9
-Web-ContextPath: /batch-engine-web

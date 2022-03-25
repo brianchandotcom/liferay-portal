@@ -70,7 +70,7 @@
 <!--FIELD_SET_PAGINATION-->
 <tr>
 	<td>FIELD_SET_PAGINATION_SELECTOR_BUTTON</td>
-	<td>//div[@class='dropdown pagination-items-per-page']//a[@role='button']</td>
+	<td>//div[@class='dropdown pagination-items-per-page']</td>
 	<td></td>
 </tr>
 <tr>

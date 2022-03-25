@@ -3957,12 +3957,12 @@ components:
                 id:
                     # @review
                     description:
-                        The row vieport's ID.
+                        The row viewport's ID.
                     type: string
                 rowViewportDefinition:
                     # @review
                     description:
-                        The definition of the row vieport.
+                        The definition of the row viewport.
                     properties:
                         modulesPerRow:
                             # @review

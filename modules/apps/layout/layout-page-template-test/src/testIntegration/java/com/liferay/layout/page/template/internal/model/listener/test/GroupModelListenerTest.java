@@ -188,13 +188,11 @@ public class GroupModelListenerTest {
 				StringPool.BLANK, null, 0, FragmentConstants.TYPE_SECTION,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				plid);
-
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			TestPropsValues.getUserId(), groupId, 0,
-			fragmentEntry.getFragmentEntryId(), defaultSegmentsExperienceId,
+			fragmentEntry.getFragmentEntryId(),
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				plid),
 			plid, fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 			StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);

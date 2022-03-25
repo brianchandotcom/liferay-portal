@@ -136,17 +136,16 @@ public class WidgetInstanceDefinitionDTOConverterTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				layout.getPlid());
-
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				_serviceContext.getUserId(), _serviceContext.getScopeGroupId(),
-				0, 0, defaultSegmentsExperienceId, layout.getPlid(),
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, editableValueJSONObject.toString(), namespace,
-				0, null, _serviceContext);
+				0, 0,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(layout.getPlid()),
+				layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK,
+				editableValueJSONObject.toString(), namespace, 0, null,
+				_serviceContext);
 
 		String testPortletId = PortletIdCodec.encode(
 			_testPortletName, instanceId);

@@ -681,14 +681,13 @@ public class PageDefinitionDTOConverterTest {
 				configuration, null, 0, FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layoutPageTemplateEntry.getPlid());
-
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(), defaultSegmentsExperienceId,
+				fragmentEntry.getFragmentEntryId(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(
+						_layoutPageTemplateEntry.getPlid()),
 				layout.getPlid(), StringPool.BLANK, html, StringPool.BLANK,
 				configuration, _read(editableValuesFileName), StringPool.BLANK,
 				0, null, _serviceContext);

@@ -90,7 +90,13 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 
 		long[] accountEntryIds = null;
 
-		if (navigation.equals("account-users")) {
+		long accountRoleId = ParamUtil.getLong(
+			liferayPortletRequest, "accountRoleId");
+
+		if ((accountEntryId > 0) && (accountRoleId > 0)) {
+			accountEntryIds = new long[] {accountEntryId};
+		}
+		else if (navigation.equals("account-users")) {
 			accountEntryIds = new long[] {
 				AccountConstants.ACCOUNT_ENTRY_ID_ANY
 			};

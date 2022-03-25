@@ -103,7 +103,7 @@ definition {
 		task ("And I edit the account") {
 			Accounts.openAccountsAdmin();
 
-			Accounts.goToEntryMenuItem(
+			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
 				rowEntry = "Account Name");
 
@@ -173,7 +173,7 @@ definition {
 		task ("And when I edit the account") {
 			Accounts.openAccountsAdmin();
 
-			Accounts.goToEntryMenuItem(
+			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
 				rowEntry = "Account Name");
 
@@ -237,7 +237,7 @@ definition {
 		task ("And go into the account edit order page") {
 			Accounts.openAccountsAdmin();
 
-			Accounts.goToEntryMenuItem(
+			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
 				rowEntry = "Account Name");
 
@@ -309,7 +309,7 @@ definition {
 		task ("And I go into the account edit order page") {
 			Accounts.openAccountsAdmin();
 
-			Accounts.goToEntryMenuItem(
+			LexiconEntry.gotoEntryMenuItem(
 				menuItem = "Edit",
 				rowEntry = "Account Name");
 

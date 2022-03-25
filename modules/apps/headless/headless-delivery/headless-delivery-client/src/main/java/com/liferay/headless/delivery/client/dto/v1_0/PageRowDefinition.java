@@ -98,6 +98,27 @@ public class PageRowDefinition implements Cloneable, Serializable {
 
 	protected Boolean gutters;
 
+	public Boolean getIndexed() {
+		return indexed;
+	}
+
+	public void setIndexed(Boolean indexed) {
+		this.indexed = indexed;
+	}
+
+	public void setIndexed(
+		UnsafeSupplier<Boolean, Exception> indexedUnsafeSupplier) {
+
+		try {
+			indexed = indexedUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean indexed;
+
 	public Integer getModulesPerRow() {
 		return modulesPerRow;
 	}

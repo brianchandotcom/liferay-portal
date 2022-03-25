@@ -102,6 +102,16 @@ public class PageRowDefinitionSerDes {
 			sb.append(pageRowDefinition.getGutters());
 		}
 
+		if (pageRowDefinition.getIndexed() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"indexed\": ");
+
+			sb.append(pageRowDefinition.getIndexed());
+		}
+
 		if (pageRowDefinition.getModulesPerRow() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -225,6 +235,13 @@ public class PageRowDefinitionSerDes {
 			map.put("gutters", String.valueOf(pageRowDefinition.getGutters()));
 		}
 
+		if (pageRowDefinition.getIndexed() == null) {
+			map.put("indexed", null);
+		}
+		else {
+			map.put("indexed", String.valueOf(pageRowDefinition.getIndexed()));
+		}
+
 		if (pageRowDefinition.getModulesPerRow() == null) {
 			map.put("modulesPerRow", null);
 		}
@@ -323,6 +340,11 @@ public class PageRowDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "gutters")) {
 				if (jsonParserFieldValue != null) {
 					pageRowDefinition.setGutters((Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "indexed")) {
+				if (jsonParserFieldValue != null) {
+					pageRowDefinition.setIndexed((Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "modulesPerRow")) {

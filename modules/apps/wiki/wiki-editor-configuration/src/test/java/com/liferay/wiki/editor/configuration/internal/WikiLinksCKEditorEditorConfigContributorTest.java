@@ -98,9 +98,9 @@ public class WikiLinksCKEditorEditorConfigContributorTest {
 	}
 
 	@Before
-	public void setUp(){
+	public void setUp() {
 		_inputEditorTaglibAttributes.put(
-				"liferay-ui:input-editor:name", "testEditor");
+			"liferay-ui:input-editor:name", "testEditor");
 	}
 
 	@Test
@@ -197,9 +197,10 @@ public class WikiLinksCKEditorEditorConfigContributorTest {
 			).build());
 	}
 
-	private final Map<String, Object> _inputEditorTaglibAttributes =
-		new HashMap<>();
 	private static WikiLinksCKEditorConfigContributor
 		_wikiLinksCKEditorEditorConfigContributor;
+
+	private final Map<String, Object> _inputEditorTaglibAttributes =
+		new HashMap<>();
 
 }

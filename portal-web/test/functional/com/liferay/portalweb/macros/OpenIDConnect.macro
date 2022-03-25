@@ -90,6 +90,18 @@ definition {
 				fieldValue = "https://accounts.google.com/.well-known/openid-configuration");
 		}
 
+		if (isSet(customAuthorizationRequestParameters)) {
+			FormFields.editTextMultiline(
+				fieldName = "customAuthorizationRequestParameters",
+				fieldValue = "${customAuthorizationRequestParameters}");
+		}
+
+		if (isSet(customTokenRequestParameters)) {
+			FormFields.editTextMultiline(
+				fieldName = "customTokenRequestParameters",
+				fieldValue = "${customTokenRequestParameters}");
+		}
+
 		FormFields.editTextMultiline(
 			fieldName = "registeredIdTokenSigningAlg",
 			fieldValue = "RS256");
@@ -115,6 +127,24 @@ definition {
 			value1 = "Save");
 
 		WaitForElementPresent(locator1 = "Button#UPDATE");
+	}
+
+	macro enableOpenIDConnectCustomParametersDebugLogs {
+		ServerAdministration.addCategoryLogLevels(
+			categoryLevel = "DEBUG",
+			categoryName = "com.liferay.portal.security.sso.openid.connect.internal.OpenIdConnectAuthenticationHandlerImpl");
+
+		ServerAdministration.addCategoryLogLevels(
+			categoryLevel = "DEBUG",
+			categoryName = "com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectTokenRequestUtil");
+	}
+
+	macro enableOpenIDConnectDebugLogs {
+		ServerAdministration.openServerAdmin();
+
+		ServerAdministration.addCategoryLogLevels(
+			categoryLevel = "DEBUG",
+			categoryName = "com.liferay.login.authentication.openid.connect.web");
 	}
 
 	macro setTokenRefreshOffset {

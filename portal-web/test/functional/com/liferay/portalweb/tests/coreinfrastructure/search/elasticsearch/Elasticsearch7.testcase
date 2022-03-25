@@ -351,33 +351,30 @@ definition {
 	}
 
 	@priority = "4"
-	test CanReindexASelectedInstance {
-		property remote.elasticsearch.enabled = "true";
-		property test.name.skip.portal.instance = "Elasticsearch7#CanReindexASelectedInstance";
+	test CanReindexSelectedInstance {
+		property test.name.skip.portal.instance = "Elasticsearch7#CanReindexSelectedInstance";
 
-		SearchAdministration.executeReindex(key_instanceId = "0");
+		var baseURL = PropsUtil.get("portal.url");
 
-		var logSnippet = Elasticsearch.getElasticsearchLogEntry();
+		ServerAdministration.openServerAdmin();
 
-		if (!(contains("${logSnippet}", "liferay-0 update_mapping [LiferayDocumentType]"))) {
-			echo("${logSnippet}");
+		ServerAdministration.addCategoryLogLevels(
+			categoryLevel = "DEBUG",
+			categoryName = "com.liferay.portal.search.internal.background.task");
 
-			fail("The log snippet does not contain the expected message: liferay-0 update_mapping [LiferayDocumentType].");
-		}
+		SearchAdministration.executeReindex(executionScope = "System");
 
 		var companyId = JSONCompany.getCompanyId();
 
-		SearchAdministration.executeReindex(key_instanceId = "${companyId}");
+		AssertConsoleTextNotPresent(value1 = "phase=portalStart, defaultLocale=en_US, companyId=${companyId}");
 
-		var logSnippet = Elasticsearch.getElasticsearchLogEntry();
+		AssertConsoleTextPresent(value1 = "phase=portalStart, defaultLocale=en_US, companyId=0");
 
-		if (!(contains("${logSnippet}", "liferay-${companyId} update_mapping [LiferayDocumentType]"))) {
-			echo("${logSnippet}");
+		SearchAdministration.executeReindex(executionScope = "liferay.com");
 
-			fail("The log snippet does not contain the expected message: liferay-${companyId} update_mapping [LiferayDocumentType].");
-		}
+		AssertConsoleTextPresent(value1 = "phase=portalStart, defaultLocale=en_US, companyId=${companyId}");
 
-		SearchAdministration.executeReindex(scope = "All Instances");
+		SearchAdministration.executeReindex(executionScope = "All Instances");
 	}
 
 	@priority = "5"

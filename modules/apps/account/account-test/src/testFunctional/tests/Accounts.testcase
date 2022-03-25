@@ -2783,6 +2783,37 @@ definition {
 			value1 = "");
 	}
 
+	@description = "This test view the account user via Manage Users in account list view"
+	@priority = "3"
+	test CanViewAccountUsersViaManageUsersInAccountsListView {
+		task ("Given A new Account and add new Account User to it") {
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account Name",
+				accountEntryType = "Business");
+
+			JSONAccountEntryUser.addAccountEntryUser(
+				accountEntryName = "Account Name",
+				userEmailAddress = "userfn@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		task ("When Navigate to the account menu item Manage Users") {
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Manage Users",
+				rowEntry = "Account Name");
+		}
+
+		task ("Then the assigned account user displays") {
+			Navigator.viewActivatedNavTab(navTab = "Users");
+
+			Accounts.viewAssignee(assigneeName = "userfn");
+		}
+	}
+
 	@description = "This tests canceling account creation will not save it."
 	@priority = "3"
 	test ClickingCancelOrBackWillNotSaveAccount {

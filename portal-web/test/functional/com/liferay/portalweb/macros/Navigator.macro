@@ -366,6 +366,12 @@ definition {
 		SelectWindow(locator1 = "title=${windowTitle}");
 	}
 
+	macro viewActivatedNavTab {
+		AssertElementPresent(
+			key_tab = "${navTab}",
+			locator1 = "NavTab#ACTIVE_TAB_LINK");
+	}
+
 	macro viewNoNavTab {
 		AssertElementNotPresent(
 			key_tab = "${navTab}",

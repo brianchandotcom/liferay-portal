@@ -19,6 +19,19 @@ definition {
 	macro executeReindex {
 		SearchAdministration.openIndexActions();
 
+		if (isSet(scope)) {
+			Check.checkNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "${scope}");
+		}
+		else if (isSet(key_instanceId)) {
+			Check.checkNotVisible(
+				locator1 = "Radio#ANY",
+				radioLabel = "Selected Instances");
+
+			Check.checkNotVisible(locator1 = "SearchAdmin#SELECTED_INSTANCE_INDEX_CHECKBOX");
+		}
+
 		AssertTextEquals(
 			locator1 = "Portlet#HEADER",
 			value1 = "Search");

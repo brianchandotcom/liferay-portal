@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>FrontendDataSet</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">FrontendDataSet</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>VIEW_ACTION_BUTTON</td>
+	<td>//div[contains(@class,'dnd-td') and text()='${key_title}']//..//*[*[name()='svg'][contains(@class,'lexicon-icon-view')]]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -44,6 +44,95 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LPS-134847. The user can access to an associated display page template via Asset Publisher widget in live site."
+	@priority = "4"
+	test AccessToAssociatedDisplayPageTemplateInLiveSite {
+		task ("Add a display page template for Document and Basic Document") {
+			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
+				contentType = "Document",
+				displayPageTemplateEntryName = "Document DPT",
+				groupName = "Test Site Name-staging",
+				site = "false",
+				subType = "Basic Document");
+		}
+
+		task ("Add a Display Page Content fragment to display page template") {
+			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
+
+			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Document DPT");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Display Page Content");
+
+			PageEditor.clickPublish();
+		}
+
+		task ("Add a document with an image") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document Title",
+				groupName = "Test Site Name-staging",
+				mimeType = "image/jpeg",
+				site = "false",
+				sourceFileName = "Document_1.jpg");
+		}
+
+		task ("Select the display page template as Specific") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name-staging");
+
+			LexiconEntry.gotoEntryMenuItem(
+				menuItem = "Edit",
+				rowEntry = "Document Title");
+
+			WebContent.editDisplayPage(
+				pageName = "Document DPT",
+				pageType = "Display Page Templates");
+
+			PortletEntry.publish();
+		}
+
+		task ("Add an Asset Publisher to widget page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false");
+
+			JSONLayout.addWidgetToPublicLayout(
+				groupName = "Test Site Name (Staging)",
+				layoutName = "Test Page Name",
+				site = "false",
+				widgetName = "Asset Publisher");
+		}
+
+		task ("View document is shown in Asset Publisher in staging site") {
+			Navigator.gotoStagedSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.viewAssetPG(assetTitle = "Document Title");
+		}
+
+		task ("Publish to live") {
+			Staging.gotoPublishToLive();
+
+			Staging.publishToLive();
+		}
+
+		task ("Access to associated display page template via Asset Publisher in live site") {
+			Navigator.gotoSitePage(
+				pageName = "Test Page Name",
+				siteName = "Test Site Name");
+
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Document Title");
+
+			ControlMenu.viewHeaderTitle(headerTitle = "Document DPT");
+
+			AssertVisible(
+				key_imageFileName = "Document_1.jpg",
+				locator1 = "PageEditor#ENTRY_COVER_IMAGE");
+		}
+	}
+
 	@description = "This is a test for LPS-133767. The user can bulk assign categories to display page template in staging site but cannot in live site."
 	@priority = "4"
 	@uitest
@@ -617,95 +706,6 @@ definition {
 				fragmentName = "paragraph",
 				id = "element-text",
 				text = "Webcontent Content");
-		}
-	}
-
-	@description = "This is a test for LPS-134847. The user can access an associated display page template via Asset Publisher widget in live."
-	@priority = "4"
-	test ViewAssociatedDisplayPageTemplateInLive {
-		task ("Add a display page template for Document and Basic Document") {
-			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
-				contentType = "Document",
-				displayPageTemplateEntryName = "Document DPT",
-				groupName = "Test Site Name-staging",
-				site = "false",
-				subType = "Basic Document");
-		}
-
-		task ("Add a Display Page Content fragment to display page template") {
-			DisplayPageTemplatesAdmin.openDisplayPagesAdmin(siteURLKey = "test-site-name-staging");
-
-			DisplayPageTemplatesAdmin.gotoDisplayPage(displayPageName = "Document DPT");
-
-			PageEditor.addFragment(
-				collectionName = "Content Display",
-				fragmentName = "Display Page Content");
-
-			PageEditor.clickPublish();
-		}
-
-		task ("Add a document with an image") {
-			JSONDocument.addFileWithUploadedFile(
-				dmDocumentTitle = "Document Title",
-				groupName = "Test Site Name-staging",
-				mimeType = "image/jpeg",
-				site = "false",
-				sourceFileName = "Document_1.jpg");
-		}
-
-		task ("Select the display page template as Specific") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "test-site-name-staging");
-
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Edit",
-				rowEntry = "Document Title");
-
-			WebContent.editDisplayPage(
-				pageName = "Document DPT",
-				pageType = "Display Page Templates");
-
-			PortletEntry.publish();
-		}
-
-		task ("Add an Asset Publisher to widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
-				layoutName = "Test Page Name",
-				site = "false");
-
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name (Staging)",
-				layoutName = "Test Page Name",
-				site = "false",
-				widgetName = "Asset Publisher");
-		}
-
-		task ("View document is shown in staging") {
-			Navigator.gotoStagedSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			AssetPublisherPortlet.viewAssetPG(assetTitle = "Document Title");
-		}
-
-		task ("Publish to live") {
-			Staging.gotoPublishToLive();
-
-			Staging.publishToLive();
-		}
-
-		task ("View associated display page template via Asset Publisher in live") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			AssetPublisherPortlet.clickAssetTitle(assetTitle = "Document Title");
-
-			ControlMenu.viewHeaderTitle(headerTitle = "Document DPT");
-
-			AssertVisible(
-				key_imageFileName = "Document_1.jpg",
-				locator1 = "PageEditor#ENTRY_COVER_IMAGE");
 		}
 	}
 

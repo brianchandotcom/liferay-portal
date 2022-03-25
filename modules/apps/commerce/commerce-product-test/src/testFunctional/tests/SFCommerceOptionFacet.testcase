@@ -142,6 +142,8 @@ definition {
 		Portlet.gotoPortletOptions(
 			portletName = "Option Facet",
 			portletOption = "Configuration");
+		
+		IFrame.selectModalFrame();
 
 		AssertElementPresent(
 			key_navItem = "Setup",

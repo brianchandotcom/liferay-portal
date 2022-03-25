@@ -162,6 +162,8 @@ definition {
 			portletName = "Specification Facet",
 			portletOption = "Configuration");
 
+		IFrame.selectModalFrame();
+
 		AssertElementPresent(
 			key_navItem = "Setup",
 			locator1 = "NavBar#ACTIVE_NAV_ITEM_LINK");

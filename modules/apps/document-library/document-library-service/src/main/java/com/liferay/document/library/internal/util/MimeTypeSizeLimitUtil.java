@@ -16,8 +16,10 @@ package com.liferay.document.library.internal.util;
 
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,6 +56,10 @@ public class MimeTypeSizeLimitUtil {
 
 		if (!typeMatcher.matches()) {
 			return null;
+		}
+
+		if (Objects.equals(parts[1], StringPool.STAR)) {
+			return mimeType;
 		}
 
 		Matcher subtypeMatcher = _pattern.matcher(parts[1]);

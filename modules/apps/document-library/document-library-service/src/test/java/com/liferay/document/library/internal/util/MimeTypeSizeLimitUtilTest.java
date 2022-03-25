@@ -75,4 +75,11 @@ public class MimeTypeSizeLimitUtilTest {
 			});
 	}
 
+	@Test
+	public void testParseWildcardMimeType() {
+		MimeTypeSizeLimitUtil.parseMimeTypeSizeLimit(
+			"type/*:12345",
+			(mimeType, sizeLimit) -> Assert.assertEquals("type/*", mimeType));
+	}
+
 }

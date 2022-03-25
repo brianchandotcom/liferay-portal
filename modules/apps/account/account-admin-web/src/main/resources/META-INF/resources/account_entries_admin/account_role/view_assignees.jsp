@@ -40,6 +40,7 @@ SearchContainer<AccountUserDisplay> accountRoleUserDisplaySearchContainer = Acco
 	<portlet:param name="mvcPath" value="/account_entries_admin/select_account_users.jsp" />
 	<portlet:param name="accountEntryId" value="<%= String.valueOf(accountEntryId) %>" />
 	<portlet:param name="accountRoleId" value="<%= String.valueOf(accountRoleId) %>" />
+	<portlet:param name="showFilter" value="<%= Boolean.FALSE.toString() %>" />
 </portlet:renderURL>
 
 <clay:management-toolbar

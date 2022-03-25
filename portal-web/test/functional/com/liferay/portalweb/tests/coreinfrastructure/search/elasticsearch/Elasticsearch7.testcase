@@ -350,6 +350,36 @@ definition {
 			searchAssetType = "Web Content Article");
 	}
 
+	@priority = "4"
+	test CanReindexASelectedInstance {
+		property remote.elasticsearch.enabled = "true";
+		property test.name.skip.portal.instance = "Elasticsearch7#CanReindexASelectedInstance";
+
+		SearchAdministration.executeReindex(key_instanceId = "0");
+
+		var logSnippet = Elasticsearch.getElasticsearchLogEntry();
+
+		if (!(contains("${logSnippet}", "liferay-0 update_mapping [LiferayDocumentType]"))) {
+			echo("${logSnippet}");
+
+			fail("The log snippet does not contain the expected message: liferay-0 update_mapping [LiferayDocumentType].");
+		}
+
+		var companyId = JSONCompany.getCompanyId();
+
+		SearchAdministration.executeReindex(key_instanceId = "${companyId}");
+
+		var logSnippet = Elasticsearch.getElasticsearchLogEntry();
+
+		if (!(contains("${logSnippet}", "liferay-${companyId} update_mapping [LiferayDocumentType]"))) {
+			echo("${logSnippet}");
+
+			fail("The log snippet does not contain the expected message: liferay-${companyId} update_mapping [LiferayDocumentType].");
+		}
+
+		SearchAdministration.executeReindex(scope = "All Instances");
+	}
+
 	@priority = "5"
 	test ElasticsearchClusteringSmokeTest {
 		property elasticsearch.cluster.size = "2";

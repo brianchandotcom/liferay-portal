@@ -14,7 +14,7 @@
 
 import getGeolocation from '../../../src/main/resources/META-INF/resources/liferay/util/get_geolocation';
 
-describe('Liferay.Util.getCropRegion', () => {
+describe('Liferay.Util.getGeolocation', () => {
 	it('calls navigator.geolocation.getCurrentPosition if location is enabled', () => {
 		const success = jest.fn();
 		const fallback = jest.fn();

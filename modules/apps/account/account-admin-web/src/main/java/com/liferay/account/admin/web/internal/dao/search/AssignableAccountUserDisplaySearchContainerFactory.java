@@ -88,9 +88,20 @@ public class AssignableAccountUserDisplaySearchContainerFactory {
 		String keywords = ParamUtil.getString(
 			liferayPortletRequest, "keywords", null);
 
+		long[] accountEntryIds = null;
+
+		if (navigation.equals("account-users")) {
+			accountEntryIds = new long[] {
+				AccountConstants.ACCOUNT_ENTRY_ID_ANY
+			};
+		}
+		else if (navigation.equals("company-users")) {
+			accountEntryIds = new long[0];
+		}
+
 		BaseModelSearchResult<User> baseModelSearchResult =
 			_accountUserRetriever.searchAccountUsers(
-				AccountConstants.ACCOUNT_ENTRY_ID_ANY,
+				accountEntryIds,
 				_getEmailAddressDomains(accountEntryId, navigation), keywords,
 				WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(),
 				searchContainer.getDelta(), searchContainer.getOrderByCol(),

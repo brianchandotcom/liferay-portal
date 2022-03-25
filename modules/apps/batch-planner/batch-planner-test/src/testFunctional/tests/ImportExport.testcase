@@ -249,7 +249,7 @@ definition {
 
 		task ("Then a JSONL file should be generated for download which contains account data") {
 			ImportExport.assertExportFileContent(
-				comparisonFileName = "jsonl_account_export.jsonl",
+				comparisonFileName = "jsonl_account_import.jsonl",
 				exportFileName = "export.jsonl");
 		}
 	}

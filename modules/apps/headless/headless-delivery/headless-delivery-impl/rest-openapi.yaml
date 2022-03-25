@@ -308,6 +308,31 @@ components:
                 - className
                 - classPK
             type: object
+        CollectionViewport:
+            # @review
+            description:
+                Represents a collection viewport.
+            properties:
+                collectionViewportDefinition:
+                    # @review
+                    description:
+                        The definition of the collection viewport.
+                    properties:
+                        numberOfColumns:
+                            # @review
+                            description:
+                                The number of columns of the collection viewport.
+                            type: integer
+                    type: object
+                id:
+                    # @review
+                    description:
+                        The collection viewport's ID.
+                    type: string
+            required:
+                - id
+                - collectionViewportDefinition
+            type: object
         ColumnViewport:
             properties:
                 columnViewportDefinition:
@@ -3088,6 +3113,13 @@ components:
                         - collectionReference
                         - collectionType
                     type: object
+                collectionViewports:
+                    # @review
+                    description:
+                        A list of viewports of the page collection.
+                    items:
+                        $ref: "#/components/schemas/CollectionViewport"
+                    type: array
                 displayAllItems:
                     # @review
                     description:

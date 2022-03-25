@@ -15,10 +15,14 @@
 package com.liferay.layout.util.structure;
 
 import com.liferay.layout.helper.CollectionPaginationHelper;
+import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -94,7 +98,7 @@ public class CollectionStyledLayoutStructureItem
 	public JSONObject getItemConfigJSONObject() {
 		JSONObject jsonObject = super.getItemConfigJSONObject();
 
-		return jsonObject.put(
+		jsonObject = jsonObject.put(
 			"collection", _collectionJSONObject
 		).put(
 			"displayAllItems", _displayAllItems
@@ -123,6 +127,35 @@ public class CollectionStyledLayoutStructureItem
 		).put(
 			"verticalAlignment", _verticalAlignment
 		);
+
+		for (ViewportSize viewportSize : ViewportSize.values()) {
+			if (viewportSize.equals(ViewportSize.DESKTOP)) {
+				continue;
+			}
+
+			JSONObject currentViewportConfigurationJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			if (jsonObject.has(viewportSize.getViewportSizeId())) {
+				currentViewportConfigurationJSONObject =
+					jsonObject.getJSONObject(viewportSize.getViewportSizeId());
+			}
+
+			JSONObject viewportConfigurationJSONObject =
+				_viewportConfigurations.getOrDefault(
+					viewportSize.getViewportSizeId(),
+					JSONFactoryUtil.createJSONObject());
+
+			currentViewportConfigurationJSONObject.put(
+				"numberOfColumns",
+				viewportConfigurationJSONObject.get("numberOfColumns"));
+
+			jsonObject.put(
+				viewportSize.getViewportSizeId(),
+				currentViewportConfigurationJSONObject);
+		}
+
+		return jsonObject;
 	}
 
 	@Override
@@ -164,6 +197,10 @@ public class CollectionStyledLayoutStructureItem
 
 	public String getVerticalAlignment() {
 		return _verticalAlignment;
+	}
+
+	public Map<String, JSONObject> getViewportConfigurations() {
+		return _viewportConfigurations;
 	}
 
 	@Override
@@ -268,6 +305,26 @@ public class CollectionStyledLayoutStructureItem
 		_verticalAlignment = verticalAlignment;
 	}
 
+	public void setViewportConfiguration(
+		String viewportSizeId, JSONObject configurationJSONObject) {
+
+		_viewportConfigurations.put(
+			viewportSizeId,
+			_viewportConfigurations.getOrDefault(
+				viewportSizeId, JSONFactoryUtil.createJSONObject()
+			).put(
+				"numberOfColumns",
+				() -> {
+					if (configurationJSONObject.has("numberOfColumns")) {
+						return configurationJSONObject.getInt(
+							"numberOfColumns");
+					}
+
+					return null;
+				}
+			));
+	}
+
 	@Override
 	public void updateItemConfig(JSONObject itemConfigJSONObject) {
 		super.updateItemConfig(itemConfigJSONObject);
@@ -332,6 +389,19 @@ public class CollectionStyledLayoutStructureItem
 			setVerticalAlignment(
 				itemConfigJSONObject.getString("verticalAlignment"));
 		}
+
+		for (ViewportSize viewportSize : ViewportSize.values()) {
+			if (viewportSize.equals(ViewportSize.DESKTOP)) {
+				continue;
+			}
+
+			if (itemConfigJSONObject.has(viewportSize.getViewportSizeId())) {
+				setViewportConfiguration(
+					viewportSize.getViewportSizeId(),
+					itemConfigJSONObject.getJSONObject(
+						viewportSize.getViewportSizeId()));
+			}
+		}
 	}
 
 	private JSONObject _collectionJSONObject;
@@ -349,5 +419,7 @@ public class CollectionStyledLayoutStructureItem
 	private boolean _showAllItems;
 	private String _templateKey;
 	private String _verticalAlignment = "start";
+	private final Map<String, JSONObject> _viewportConfigurations =
+		new HashMap<>();
 
 }

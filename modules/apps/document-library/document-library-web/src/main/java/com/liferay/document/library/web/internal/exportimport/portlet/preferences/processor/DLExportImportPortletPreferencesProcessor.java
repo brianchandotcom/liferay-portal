@@ -112,21 +112,24 @@ public class DLExportImportPortletPreferencesProcessor
 			try {
 				Folder folder = _getFolder(rootFolderId, portletDataContext);
 
-				portletPreferences.setValue(
-					"selectedRepositoryId",
-					String.valueOf(folder.getRepositoryId()));
+				if (folder != null) {
+					portletPreferences.setValue(
+						"selectedRepositoryId",
+						String.valueOf(folder.getRepositoryId()));
 
-				if ((folder.getGroupId() == portletDataContext.getGroupId()) ||
-					!ExportImportThreadLocal.isStagingInProcess()) {
+					if ((folder.getGroupId() ==
+							portletDataContext.getGroupId()) ||
+						!ExportImportThreadLocal.isStagingInProcess()) {
 
-					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						portletDataContext, portletDataContext.getPortletId(),
-						folder);
-				}
-				else {
-					_saveStagingPreferencesMapping(
-						folder.getRepositoryId(), folder.getUuid(),
-						portletDataContext);
+						StagedModelDataHandlerUtil.exportReferenceStagedModel(
+							portletDataContext,
+							portletDataContext.getPortletId(), folder);
+					}
+					else {
+						_saveStagingPreferencesMapping(
+							folder.getRepositoryId(), folder.getUuid(),
+							portletDataContext);
+					}
 				}
 
 				return portletPreferences;
@@ -369,9 +372,11 @@ public class DLExportImportPortletPreferencesProcessor
 					Folder folder = _getFolder(
 						importedRootFolderId, portletDataContext);
 
-					portletPreferences.setValue(
-						"selectedRepositoryId",
-						String.valueOf(folder.getRepositoryId()));
+					if (folder != null) {
+						portletPreferences.setValue(
+							"selectedRepositoryId",
+							String.valueOf(folder.getRepositoryId()));
+					}
 
 					return portletPreferences;
 				}
@@ -512,18 +517,22 @@ public class DLExportImportPortletPreferencesProcessor
 			long folderId, PortletDataContext portletDataContext)
 		throws PortletDataException {
 
+		Folder folder = null;
+
 		try {
-			return _dlAppLocalService.getFolder(folderId);
+			folder = _dlAppLocalService.getFolder(folderId);
 		}
 		catch (PortalException portalException) {
-			String errorMessage = StringBundler.concat(
-				"Portlet ", portletDataContext.getPortletId(),
-				" refers to an invalid root folder ID ", folderId);
+			if (_log.isWarnEnabled()) {
+				String warnMessage = StringBundler.concat(
+					"Portlet ", portletDataContext.getPortletId(),
+					" refers to an invalid root folder ID ", folderId);
 
-			_log.error(errorMessage);
-
-			throw new PortletDataException(errorMessage, portalException);
+				_log.warn(warnMessage, portalException);
+			}
 		}
+
+		return folder;
 	}
 
 	private long _getMirrorRepositoryId(long repositoryId) {

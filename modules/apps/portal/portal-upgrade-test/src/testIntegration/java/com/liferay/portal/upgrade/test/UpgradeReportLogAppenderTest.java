@@ -76,8 +76,8 @@ public class UpgradeReportLogAppenderTest {
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		_db.runSQL("drop table if exists UpgradeReportTable1");
-		_db.runSQL("drop table if exists UpgradeReportTable2");
+		_db.runSQL("DROP_TABLE_IF_EXISTS(UpgradeReportTable1)");
+		_db.runSQL("DROP_TABLE_IF_EXISTS(UpgradeReportTable2)");
 	}
 
 	@After

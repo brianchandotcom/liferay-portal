@@ -24,42 +24,42 @@ import com.liferay.portal.kernel.portlet.PortletURLWrapper;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.Mockito;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Roberto Díaz
  */
-@RunWith(PowerMockRunner.class)
-public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
+public class WikiLinksCKEditorEditorConfigContributorTest {
 
-	@Before
-	public void setUp() {
-		MockitoAnnotations.initMocks(this);
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
 
+	@BeforeClass
+	public static void setUpClass() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 
-		_inputEditorTaglibAttributes.put(
-			"liferay-ui:input-editor:name", "testEditor");
+		ItemSelector itemSelector = Mockito.mock(ItemSelector.class);
 
-		when(
-			_itemSelector.getItemSelectorURL(
+		Mockito.when(
+			itemSelector.getItemSelectorURL(
 				Matchers.any(RequestBackedPortletURLFactory.class),
 				Matchers.anyString(), Matchers.any(ItemSelectorCriterion.class))
 		).thenReturn(
@@ -73,8 +73,8 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 			}
 		);
 
-		when(
-			_itemSelector.getItemSelectorURL(
+		Mockito.when(
+			itemSelector.getItemSelectorURL(
 				Matchers.any(RequestBackedPortletURLFactory.class),
 				Matchers.anyString(), Matchers.any(ItemSelectorCriterion.class),
 				Matchers.any(ItemSelectorCriterion.class))
@@ -94,7 +94,13 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 
 		ReflectionTestUtil.setFieldValue(
 			_wikiLinksCKEditorEditorConfigContributor, "itemSelector",
-			_itemSelector);
+			itemSelector);
+	}
+
+	@Before
+	public void setUp(){
+		_inputEditorTaglibAttributes.put(
+				"liferay-ui:input-editor:name", "testEditor");
 	}
 
 	@Test
@@ -170,9 +176,7 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 			expectedJSONObject.toJSONString(), jsonObject.toJSONString(), true);
 	}
 
-	protected JSONObject getJSONObjectWithDefaultItemSelectorURL()
-		throws Exception {
-
+	protected JSONObject getJSONObjectWithDefaultItemSelectorURL() {
 		return JSONUtil.put(
 			"filebrowserBrowseUrl", "defaultItemSelectorPortletURL"
 		).put(
@@ -195,11 +199,7 @@ public class WikiLinksCKEditorEditorConfigContributorTest extends PowerMockito {
 
 	private final Map<String, Object> _inputEditorTaglibAttributes =
 		new HashMap<>();
-
-	@Mock
-	private ItemSelector _itemSelector;
-
-	private WikiLinksCKEditorConfigContributor
+	private static WikiLinksCKEditorConfigContributor
 		_wikiLinksCKEditorEditorConfigContributor;
 
 }

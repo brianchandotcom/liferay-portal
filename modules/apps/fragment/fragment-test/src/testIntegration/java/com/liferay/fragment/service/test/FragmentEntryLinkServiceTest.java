@@ -90,16 +90,13 @@ public class FragmentEntryLinkServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
-
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				_group.getGroupId(), 0, _fragmentEntry.getFragmentEntryId(),
-				defaultSegmentsExperienceId, _layout.getPlid(), css, html, js,
-				configuration, StringPool.BLANK, StringPool.BLANK, 0, null,
-				serviceContext);
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				_layout.getPlid(), css, html, js, configuration,
+				StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
 
 		FragmentEntryLink persistedFragmentEntryLink =
 			_fragmentEntryLinkPersistence.findByPrimaryKey(

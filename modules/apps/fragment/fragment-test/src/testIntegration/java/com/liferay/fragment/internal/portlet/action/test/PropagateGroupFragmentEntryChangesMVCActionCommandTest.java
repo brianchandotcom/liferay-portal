@@ -101,17 +101,15 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
 
-		long defaultSegmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
-
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				_fragmentEntry.getFragmentEntryId(),
-				defaultSegmentsExperienceId, _layout.getPlid(), "css value",
-				"<div>HTML value</div>", "js value", "{fieldSets: []}",
-				StringPool.BLANK, StringPool.BLANK, 0, null, serviceContext);
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				_layout.getPlid(), "css value", "<div>HTML value</div>",
+				"js value", "{fieldSets: []}", StringPool.BLANK,
+				StringPool.BLANK, 0, null, serviceContext);
 
 		_fragmentEntry.setCss("new css value");
 		_fragmentEntry.setHtml("<div>new updated HTML value</div>");

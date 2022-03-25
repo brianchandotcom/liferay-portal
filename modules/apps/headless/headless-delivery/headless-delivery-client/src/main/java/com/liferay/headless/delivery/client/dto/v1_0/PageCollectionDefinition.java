@@ -56,6 +56,30 @@ public class PageCollectionDefinition implements Cloneable, Serializable {
 
 	protected CollectionConfig collectionConfig;
 
+	public CollectionViewport[] getCollectionViewports() {
+		return collectionViewports;
+	}
+
+	public void setCollectionViewports(
+		CollectionViewport[] collectionViewports) {
+
+		this.collectionViewports = collectionViewports;
+	}
+
+	public void setCollectionViewports(
+		UnsafeSupplier<CollectionViewport[], Exception>
+			collectionViewportsUnsafeSupplier) {
+
+		try {
+			collectionViewports = collectionViewportsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected CollectionViewport[] collectionViewports;
+
 	public Boolean getDisplayAllItems() {
 		return displayAllItems;
 	}

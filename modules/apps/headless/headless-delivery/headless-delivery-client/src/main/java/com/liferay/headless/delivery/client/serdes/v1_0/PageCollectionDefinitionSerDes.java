@@ -14,6 +14,7 @@
 
 package com.liferay.headless.delivery.client.serdes.v1_0;
 
+import com.liferay.headless.delivery.client.dto.v1_0.CollectionViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.FragmentViewport;
 import com.liferay.headless.delivery.client.dto.v1_0.PageCollectionDefinition;
 import com.liferay.headless.delivery.client.json.BaseJSONParser;
@@ -68,6 +69,34 @@ public class PageCollectionDefinitionSerDes {
 
 			sb.append(
 				String.valueOf(pageCollectionDefinition.getCollectionConfig()));
+		}
+
+		if (pageCollectionDefinition.getCollectionViewports() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"collectionViewports\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < pageCollectionDefinition.getCollectionViewports().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						pageCollectionDefinition.getCollectionViewports()[i]));
+
+				if ((i + 1) <
+						pageCollectionDefinition.
+							getCollectionViewports().length) {
+
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (pageCollectionDefinition.getDisplayAllItems() != null) {
@@ -265,6 +294,16 @@ public class PageCollectionDefinitionSerDes {
 				String.valueOf(pageCollectionDefinition.getCollectionConfig()));
 		}
 
+		if (pageCollectionDefinition.getCollectionViewports() == null) {
+			map.put("collectionViewports", null);
+		}
+		else {
+			map.put(
+				"collectionViewports",
+				String.valueOf(
+					pageCollectionDefinition.getCollectionViewports()));
+		}
+
 		if (pageCollectionDefinition.getDisplayAllItems() == null) {
 			map.put("displayAllItems", null);
 		}
@@ -410,6 +449,21 @@ public class PageCollectionDefinitionSerDes {
 					pageCollectionDefinition.setCollectionConfig(
 						CollectionConfigSerDes.toDTO(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "collectionViewports")) {
+
+				if (jsonParserFieldValue != null) {
+					pageCollectionDefinition.setCollectionViewports(
+						Stream.of(
+							toStrings((Object[])jsonParserFieldValue)
+						).map(
+							object -> CollectionViewportSerDes.toDTO(
+								(String)object)
+						).toArray(
+							size -> new CollectionViewport[size]
+						));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "displayAllItems")) {

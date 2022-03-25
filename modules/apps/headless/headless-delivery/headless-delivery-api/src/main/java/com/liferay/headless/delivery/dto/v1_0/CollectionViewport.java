@@ -47,24 +47,61 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @generated
  */
 @Generated("")
-@GraphQLName(description = "Represents a row viewport.", value = "RowViewport")
+@GraphQLName(
+	description = "Represents a collection viewport.",
+	value = "CollectionViewport"
+)
 @JsonFilter("Liferay.Vulcan")
 @Schema(
-	description = "Represents a row viewport.",
-	requiredProperties = {"id", "rowViewportDefinition"}
+	description = "Represents a collection viewport.",
+	requiredProperties = {"id", "collectionViewportDefinition"}
 )
-@XmlRootElement(name = "RowViewport")
-public class RowViewport implements Serializable {
+@XmlRootElement(name = "CollectionViewport")
+public class CollectionViewport implements Serializable {
 
-	public static RowViewport toDTO(String json) {
-		return ObjectMapperUtil.readValue(RowViewport.class, json);
+	public static CollectionViewport toDTO(String json) {
+		return ObjectMapperUtil.readValue(CollectionViewport.class, json);
 	}
 
-	public static RowViewport unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(RowViewport.class, json);
+	public static CollectionViewport unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(CollectionViewport.class, json);
 	}
 
-	@Schema(description = "The row viewport's ID.")
+	@Schema(description = "The definition of the collection viewport.")
+	@Valid
+	public CollectionViewportDefinition getCollectionViewportDefinition() {
+		return collectionViewportDefinition;
+	}
+
+	public void setCollectionViewportDefinition(
+		CollectionViewportDefinition collectionViewportDefinition) {
+
+		this.collectionViewportDefinition = collectionViewportDefinition;
+	}
+
+	@JsonIgnore
+	public void setCollectionViewportDefinition(
+		UnsafeSupplier<CollectionViewportDefinition, Exception>
+			collectionViewportDefinitionUnsafeSupplier) {
+
+		try {
+			collectionViewportDefinition =
+				collectionViewportDefinitionUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The definition of the collection viewport.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
+	protected CollectionViewportDefinition collectionViewportDefinition;
+
+	@Schema(description = "The collection viewport's ID.")
 	public String getId() {
 		return id;
 	}
@@ -86,43 +123,10 @@ public class RowViewport implements Serializable {
 		}
 	}
 
-	@GraphQLField(description = "The row viewport's ID.")
+	@GraphQLField(description = "The collection viewport's ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@NotEmpty
 	protected String id;
-
-	@Schema(description = "The definition of the row viewport.")
-	@Valid
-	public RowViewportDefinition getRowViewportDefinition() {
-		return rowViewportDefinition;
-	}
-
-	public void setRowViewportDefinition(
-		RowViewportDefinition rowViewportDefinition) {
-
-		this.rowViewportDefinition = rowViewportDefinition;
-	}
-
-	@JsonIgnore
-	public void setRowViewportDefinition(
-		UnsafeSupplier<RowViewportDefinition, Exception>
-			rowViewportDefinitionUnsafeSupplier) {
-
-		try {
-			rowViewportDefinition = rowViewportDefinitionUnsafeSupplier.get();
-		}
-		catch (RuntimeException re) {
-			throw re;
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	@GraphQLField(description = "The definition of the row viewport.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
-	protected RowViewportDefinition rowViewportDefinition;
 
 	@Override
 	public boolean equals(Object object) {
@@ -130,13 +134,13 @@ public class RowViewport implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof RowViewport)) {
+		if (!(object instanceof CollectionViewport)) {
 			return false;
 		}
 
-		RowViewport rowViewport = (RowViewport)object;
+		CollectionViewport collectionViewport = (CollectionViewport)object;
 
-		return Objects.equals(toString(), rowViewport.toString());
+		return Objects.equals(toString(), collectionViewport.toString());
 	}
 
 	@Override
@@ -150,6 +154,16 @@ public class RowViewport implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		if (collectionViewportDefinition != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"collectionViewportDefinition\": ");
+
+			sb.append(String.valueOf(collectionViewportDefinition));
+		}
 
 		if (id != null) {
 			if (sb.length() > 1) {
@@ -165,16 +179,6 @@ public class RowViewport implements Serializable {
 			sb.append("\"");
 		}
 
-		if (rowViewportDefinition != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"rowViewportDefinition\": ");
-
-			sb.append(String.valueOf(rowViewportDefinition));
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -182,7 +186,7 @@ public class RowViewport implements Serializable {
 
 	@Schema(
 		accessMode = Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.delivery.dto.v1_0.RowViewport",
+		defaultValue = "com.liferay.headless.delivery.dto.v1_0.CollectionViewport",
 		name = "x-class-name"
 	)
 	public String xClassName;

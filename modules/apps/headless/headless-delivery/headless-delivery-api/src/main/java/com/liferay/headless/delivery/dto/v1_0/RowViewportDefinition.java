@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Generated("")
 @GraphQLName(
-	description = "The definition of the row vieport.",
+	description = "The definition of the row viewport.",
 	value = "RowViewportDefinition"
 )
 @JsonFilter("Liferay.Vulcan")

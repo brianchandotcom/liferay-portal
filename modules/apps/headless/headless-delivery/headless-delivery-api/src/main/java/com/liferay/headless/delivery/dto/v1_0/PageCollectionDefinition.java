@@ -94,6 +94,38 @@ public class PageCollectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected CollectionConfig collectionConfig;
 
+	@Schema(description = "A list of viewports of the page collection.")
+	@Valid
+	public CollectionViewport[] getCollectionViewports() {
+		return collectionViewports;
+	}
+
+	public void setCollectionViewports(
+		CollectionViewport[] collectionViewports) {
+
+		this.collectionViewports = collectionViewports;
+	}
+
+	@JsonIgnore
+	public void setCollectionViewports(
+		UnsafeSupplier<CollectionViewport[], Exception>
+			collectionViewportsUnsafeSupplier) {
+
+		try {
+			collectionViewports = collectionViewportsUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "A list of viewports of the page collection.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected CollectionViewport[] collectionViewports;
+
 	@Schema(
 		description = "Whether to show all items when pagination is disabled."
 	)
@@ -540,6 +572,26 @@ public class PageCollectionDefinition implements Serializable {
 			sb.append("\"collectionConfig\": ");
 
 			sb.append(String.valueOf(collectionConfig));
+		}
+
+		if (collectionViewports != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"collectionViewports\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < collectionViewports.length; i++) {
+				sb.append(String.valueOf(collectionViewports[i]));
+
+				if ((i + 1) < collectionViewports.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (displayAllItems != null) {

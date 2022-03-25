@@ -136,7 +136,7 @@ create table MBThread (
 	categoryId LONG,
 	rootMessageId LONG,
 	rootMessageUserId LONG,
-	title VARCHAR(75) null,
+	title VARCHAR(255) null,
 	lastPostByUserId LONG,
 	lastPostDate DATE null,
 	priority DOUBLE,

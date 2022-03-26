@@ -734,4 +734,87 @@ definition {
 			value1 = "Similar Results WC Title 2");
 	}
 
+	@priority = "4"
+	test ViewSimilarResultsWithDifferentScope {
+		JSONWebcontent.addWebContent(
+			content = "WC Content",
+			groupName = "Guest",
+			title = "WC Title");
+
+		JSONDocument.addFile(
+			dmDocumentDescription = "DM Document Description",
+			dmDocumentTitle = "DM Document Title",
+			groupName = "Guest");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		JSONWiki.addWikiPage(
+			groupName = "Guest",
+			wikiNodeName = "Main",
+			wikiPageContent = "Wiki Page Content",
+			wikiPageName = "Wiki Page Title");
+
+		for (var count : list "1,2,3") {
+			JSONGroup.addGroup(groupName = "Site Name ${count}");
+
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "Site Name ${count}",
+				title = "WC Title ${count}");
+
+			JSONDocument.addFile(
+				dmDocumentDescription = "DM Document Description ${count}",
+				dmDocumentTitle = "DM Document Title ${count}",
+				groupName = "Site Name ${count}");
+
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title ${count}",
+				groupName = "Site Name ${count}");
+
+			JSONWiki.addWikiPage(
+				groupName = "Site Name ${count}",
+				wikiNodeName = "Main",
+				wikiPageContent = "Wiki Page Content",
+				wikiPageName = "Wiki Page Title ${count}");
+		}
+
+		SearchPortlets.setupSimilarResultsPage();
+
+		SearchPortlets.configureSimilarResults(
+			displayTemplate = "Compact Layout",
+			fields = "localized_title_en_US",
+			minimumDocumentFrequency = "1",
+			minimumTermFrequency = "1",
+			searchScope = "Everything");
+
+		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
+
+		Navigator.gotoPage(pageName = "Similar Results Page");
+
+		var index = "0";
+		var list1 = ListUtil.newListFromString("WC Title,DM Document Title,Blogs Entry Title,Wiki Page Title");
+		var list2 = ListUtil.newListFromString("1,2,3");
+
+		for (var list1item : list "${list1}") {
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "${list1item}");
+
+			var list2item = ListUtil.get("${list2}", "${index}");
+
+			AssertElementPresent(
+				key_linkResultTitle = "${list1item} ${list2item}",
+				locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+			AssertElementPresent(
+				key_linkResultTitle = "${list1item} ${list2item}",
+				locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+
+			var index = ${index} + 1;
+
+			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
+		}
+	}
+
 }

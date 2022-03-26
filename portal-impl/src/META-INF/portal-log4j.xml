@@ -245,7 +245,6 @@
 		<Logger level="ERROR" name="com.liferay.util.JNDIUtil" />
 		<Logger level="ERROR" name="com.liferay.util.dao" />
 		<Logger level="INFO" name="com.liferay.util.dao.orm.CustomSQLUtil" />
-		<Logger level="WARN" name="com.mchange" />
 		<Logger level="ERROR" name="com.opensymphony.oscache" />
 		<Logger level="ERROR" name="com.opensymphony.oscache.plugins.clustersupport.JavaGroupsBroadcastingListener" />
 		<Logger level="INFO" name="com.sample" />

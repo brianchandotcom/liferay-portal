@@ -46,10 +46,6 @@ public abstract class BaseConnectionPoolMetrics
 	protected void initializeConnectionPool() {
 		Object dataSource = getDataSource();
 
-		if (dataSource == null) {
-			return;
-		}
-
 		LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy =
 			(LazyConnectionDataSourceProxy)PortalBeanLocatorUtil.locate(
 				"counterDataSource");

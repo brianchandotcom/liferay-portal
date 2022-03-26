@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.analytics.dxp.entity.internal.helper;
+package com.liferay.analytics.dxp.entity.internal.exporter.dispatch.executor;
 
 import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImportManager;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
+import com.liferay.dispatch.executor.BaseDispatchTaskExecutor;
 import com.liferay.dispatch.executor.DispatchTaskExecutorOutput;
 import com.liferay.dispatch.executor.DispatchTaskStatus;
 import com.liferay.dispatch.model.DispatchLog;
@@ -32,20 +33,16 @@ import java.text.SimpleDateFormat;
 
 import java.util.Date;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcos Martins
  */
-@Component(
-	immediate = true,
-	service = UploadAnalyticsDXPEntityDispatchTaskExecutorHelper.class
-)
-public class UploadAnalyticsDXPEntityDispatchTaskExecutorHelper {
+public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
+	extends BaseDispatchTaskExecutor {
 
+	@Override
 	public void doExecute(
-			String batchEngineExportTaskItemDelegateName,
 			DispatchTrigger dispatchTrigger,
 			DispatchTaskExecutorOutput dispatchTaskExecutorOutput)
 		throws IOException, PortalException {
@@ -68,7 +65,7 @@ public class UploadAnalyticsDXPEntityDispatchTaskExecutorHelper {
 
 		try {
 			_analyticsBatchExportImportManager.exportToAnalyticsCloud(
-				batchEngineExportTaskItemDelegateName,
+				getBatchEngineExportTaskItemDelegateName(),
 				dispatchTrigger.getCompanyId(), null,
 				message -> _updateDispatchLog(
 					dispatchLog.getDispatchLogId(), dispatchTaskExecutorOutput,
@@ -80,6 +77,8 @@ public class UploadAnalyticsDXPEntityDispatchTaskExecutorHelper {
 			throw new PortalException(exception);
 		}
 	}
+
+	protected abstract String getBatchEngineExportTaskItemDelegateName();
 
 	private void _updateDispatchLog(
 			long dispatchLogId,

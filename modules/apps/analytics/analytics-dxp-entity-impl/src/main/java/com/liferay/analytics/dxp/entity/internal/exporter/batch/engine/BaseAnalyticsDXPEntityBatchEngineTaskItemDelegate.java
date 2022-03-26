@@ -12,8 +12,11 @@
  * details.
  */
 
-package com.liferay.analytics.dxp.entity.internal.retriever;
+package com.liferay.analytics.dxp.entity.internal.exporter.batch.engine;
 
+import com.liferay.analytics.dxp.entity.internal.exporter.odata.entity.AnalyticsDXPEntityEntityModel;
+import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
+import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.search.Query;
@@ -23,13 +26,24 @@ import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.entity.EntityModel;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Marcos Martins
  */
-public abstract class NonIndexedAnalyticsDXPEntityRetriever {
+public abstract class BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate
+	extends BaseBatchEngineTaskItemDelegate<DXPEntity> {
+
+	@Override
+	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
+		throws Exception {
+
+		return new AnalyticsDXPEntityEntityModel();
+	}
 
 	protected DynamicQuery buildDynamicQuery(
 		long companyId, DynamicQuery dynamicQuery, Filter filter) {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.analytics.dxp.entity.internal.odata.entity;
+package com.liferay.analytics.dxp.entity.internal.exporter.odata.entity;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.odata.entity.DateTimeEntityField;

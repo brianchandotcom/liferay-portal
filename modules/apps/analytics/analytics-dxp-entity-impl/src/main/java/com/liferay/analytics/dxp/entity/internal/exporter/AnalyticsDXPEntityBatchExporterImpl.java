@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.analytics.message.sender.internal.helper;
+package com.liferay.analytics.dxp.entity.internal.exporter;
 
-import com.liferay.analytics.message.sender.helper.AnalyticsDXPEntityDispatchTriggerHelper;
+import com.liferay.analytics.dxp.entity.exporter.AnalyticsDXPEntityBatchExporter;
 import com.liferay.dispatch.constants.DispatchConstants;
 import com.liferay.dispatch.executor.DispatchTaskClusterMode;
 import com.liferay.dispatch.model.DispatchTrigger;
@@ -34,60 +34,12 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcos Martins
  */
-@Component(
-	immediate = true, service = AnalyticsDXPEntityDispatchTriggerHelper.class
-)
-public class AnalyticsDXPEntityDispatchTriggerHelperImpl
-	implements AnalyticsDXPEntityDispatchTriggerHelper {
+@Component(immediate = true, service = AnalyticsDXPEntityBatchExporter.class)
+public class AnalyticsDXPEntityBatchExporterImpl
+	implements AnalyticsDXPEntityBatchExporter {
 
 	@Override
-	public void addDispatchTriggers(long companyId) throws Exception {
-		for (String dispatchTriggerName : _DISPATCH_TRIGGER_NAMES) {
-			DispatchTrigger dispatchTrigger =
-				_dispatchTriggerLocalService.fetchDispatchTrigger(
-					companyId, dispatchTriggerName);
-
-			if (dispatchTrigger == null) {
-				dispatchTrigger =
-					_dispatchTriggerLocalService.addDispatchTrigger(
-						_userLocalService.getDefaultUserId(companyId),
-						dispatchTriggerName, null, dispatchTriggerName, false);
-
-				LocalDateTime localDateTime = LocalDateTime.now();
-
-				_dispatchTriggerLocalService.updateDispatchTrigger(
-					dispatchTrigger.getDispatchTriggerId(), true,
-					_CRON_EXPRESSION, DispatchTaskClusterMode.NOT_APPLICABLE, 0,
-					0, 0, 0, 0, true, false, localDateTime.getMonthValue() - 1,
-					localDateTime.getDayOfMonth(), localDateTime.getYear(),
-					localDateTime.getHour(), localDateTime.getMinute());
-			}
-		}
-	}
-
-	@Override
-	public void deleteDispatchTriggers(long companyId) throws Exception {
-		for (String dispatchTriggerName : _DISPATCH_TRIGGER_NAMES) {
-			DispatchTrigger dispatchTrigger =
-				_dispatchTriggerLocalService.fetchDispatchTrigger(
-					companyId, dispatchTriggerName);
-
-			if (dispatchTrigger == null) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Unable to find dispatch trigger with name " +
-							dispatchTriggerName);
-				}
-
-				continue;
-			}
-
-			_dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTrigger);
-		}
-	}
-
-	@Override
-	public void sync(long companyId) throws Exception {
+	public void export(long companyId) throws Exception {
 		for (String dispatchTriggerName : _DISPATCH_TRIGGER_NAMES) {
 			DispatchTrigger dispatchTrigger =
 				_dispatchTriggerLocalService.fetchDispatchTrigger(
@@ -114,20 +66,67 @@ public class AnalyticsDXPEntityDispatchTriggerHelperImpl
 		}
 	}
 
+	@Override
+	public void scheduleExportTriggers(long companyId) throws Exception {
+		for (String dispatchTriggerName : _DISPATCH_TRIGGER_NAMES) {
+			DispatchTrigger dispatchTrigger =
+				_dispatchTriggerLocalService.fetchDispatchTrigger(
+					companyId, dispatchTriggerName);
+
+			if (dispatchTrigger != null) {
+				continue;
+			}
+
+			dispatchTrigger = _dispatchTriggerLocalService.addDispatchTrigger(
+				_userLocalService.getDefaultUserId(companyId),
+				dispatchTriggerName, null, dispatchTriggerName, false);
+
+			LocalDateTime localDateTime = LocalDateTime.now();
+
+			_dispatchTriggerLocalService.updateDispatchTrigger(
+				dispatchTrigger.getDispatchTriggerId(), true, _CRON_EXPRESSION,
+				DispatchTaskClusterMode.NOT_APPLICABLE, 0, 0, 0, 0, 0, true,
+				false, localDateTime.getMonthValue() - 1,
+				localDateTime.getDayOfMonth(), localDateTime.getYear(),
+				localDateTime.getHour(), localDateTime.getMinute());
+		}
+	}
+
+	@Override
+	public void unscheduleExportTriggers(long companyId) throws Exception {
+		for (String dispatchTriggerName : _DISPATCH_TRIGGER_NAMES) {
+			DispatchTrigger dispatchTrigger =
+				_dispatchTriggerLocalService.fetchDispatchTrigger(
+					companyId, dispatchTriggerName);
+
+			if (dispatchTrigger == null) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to find dispatch trigger with name " +
+							dispatchTriggerName);
+				}
+
+				continue;
+			}
+
+			_dispatchTriggerLocalService.deleteDispatchTrigger(dispatchTrigger);
+		}
+	}
+
 	private static final String _CRON_EXPRESSION = "0 0 * * * ?";
 
 	private static final String[] _DISPATCH_TRIGGER_NAMES = {
-		"upload-expando-column-analytics-dxp-entities",
-		"upload-group-analytics-dxp-entities",
-		"upload-organization-analytics-dxp-entities",
-		"upload-role-analytics-dxp-entities",
-		"upload-team-analytics-dxp-entities",
-		"upload-user-analytics-dxp-entities",
-		"upload-user-group-analytics-dxp-entities"
+		"export-expando-column-analytics-dxp-entities",
+		"export-group-analytics-dxp-entities",
+		"export-organization-analytics-dxp-entities",
+		"export-role-analytics-dxp-entities",
+		"export-team-analytics-dxp-entities",
+		"export-user-analytics-dxp-entities",
+		"export-user-group-analytics-dxp-entities"
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AnalyticsDXPEntityDispatchTriggerHelperImpl.class);
+		AnalyticsDXPEntityBatchExporterImpl.class);
 
 	@Reference(
 		target = "(destination.name=" + DispatchConstants.EXECUTOR_DESTINATION_NAME + ")"

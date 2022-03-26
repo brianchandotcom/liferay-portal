@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.analytics.message.sender.helper;
+package com.liferay.analytics.dxp.entity.exporter;
 
 /**
  * @author Marcos Martins
  */
-public interface AnalyticsDXPEntityDispatchTriggerHelper {
+public interface AnalyticsDXPEntityBatchExporter {
 
-	public void addDispatchTriggers(long companyId) throws Exception;
+	public void scheduleExportTriggers(long companyId) throws Exception;
 
-	public void deleteDispatchTriggers(long companyId) throws Exception;
+	public void unscheduleExportTriggers(long companyId) throws Exception;
 
-	public void sync(long companyId) throws Exception;
+	public void export(long companyId) throws Exception;
 
 }

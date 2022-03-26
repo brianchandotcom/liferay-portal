@@ -352,8 +352,9 @@ public class JavaPackagePathCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaClass javaClass,
 		String className, String packageName) {
 
-		if (className.endsWith("Constants") &&
-			absolutePath.contains("/portal-kernel/")) {
+		if ((className.endsWith("Constants") &&
+			 absolutePath.contains("/portal-kernel/")) ||
+			absolutePath.contains("/test/")) {
 
 			return;
 		}

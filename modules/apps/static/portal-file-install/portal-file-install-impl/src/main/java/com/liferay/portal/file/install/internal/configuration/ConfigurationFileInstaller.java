@@ -35,6 +35,7 @@ import java.net.URL;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.framework.Constants;
 import org.osgi.service.cm.Configuration;
@@ -90,6 +91,16 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		Configuration configuration = _getConfiguration(
 			_toConfigKey(file), pid[0], pid[1]);
 
+		Set<Configuration.ConfigurationAttribute> configurationAttributes =
+			configuration.getAttributes();
+
+		if (configurationAttributes.contains(
+				Configuration.ConfigurationAttribute.READ_ONLY)) {
+
+			configuration.removeAttributes(
+				Configuration.ConfigurationAttribute.READ_ONLY);
+		}
+
 		Dictionary<String, Object> properties = configuration.getProperties();
 
 		Dictionary<String, Object> old = null;
@@ -128,7 +139,10 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		String currentFileName = _toConfigKey(file);
 
 		if (!_equals(dictionary, old) ||
-			!Objects.equals(oldFileName, currentFileName)) {
+			!Objects.equals(oldFileName, currentFileName) ||
+			configurationAttributes.contains(
+				Configuration.ConfigurationAttribute.READ_ONLY) ||
+			!file.canWrite()) {
 
 			dictionary.put(
 				FileInstallConstants.FELIX_FILE_INSTALL_FILENAME,
@@ -157,7 +171,17 @@ public class ConfigurationFileInstaller implements FileInstaller {
 				}
 			}
 
-			configuration.update(dictionary);
+			configuration.updateIfDifferent(dictionary);
+
+			if (!file.canWrite()) {
+				try {
+					configuration.addAttributes(
+						Configuration.ConfigurationAttribute.READ_ONLY);
+				}
+				catch (Throwable throwable) {
+					_log.error("ERROR ", throwable);
+				}
+			}
 		}
 
 		return null;

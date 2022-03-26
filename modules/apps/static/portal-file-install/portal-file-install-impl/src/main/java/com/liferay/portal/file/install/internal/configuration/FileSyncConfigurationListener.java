@@ -14,6 +14,7 @@
 
 package com.liferay.portal.file.install.internal.configuration;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.file.install.constants.FileInstallConstants;
 import com.liferay.portal.file.install.internal.activator.FileInstallImplBundleActivator;
@@ -115,6 +116,20 @@ public class FileSyncConfigurationListener implements ConfigurationListener {
 				}
 
 				if ((file != null) && file.isFile()) {
+					if (!file.canWrite()) {
+						if (_log.isInfoEnabled()) {
+							_log.info(
+								StringBundler.concat(
+									"Unable to save configuration because the ",
+									"file ", file.getAbsolutePath(),
+									" is not writable"));
+						}
+
+						_pidToFile.remove(configuration.getPid(), fileName);
+
+						return;
+					}
+
 					_pidToFile.put(configuration.getPid(), fileName);
 
 					ConfigurationProperties configurationProperties =

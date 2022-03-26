@@ -33,7 +33,7 @@ public abstract class BaseConnectionPoolMetrics
 	@Override
 	public String getConnectionPoolName() {
 		if (_name == null) {
-			initializeConnectionPool();
+			_name = _getConnectionPoolName();
 		}
 
 		return _name;
@@ -43,7 +43,7 @@ public abstract class BaseConnectionPoolMetrics
 
 	protected abstract String getPoolName();
 
-	protected void initializeConnectionPool() {
+	private String _getConnectionPoolName() {
 		Object dataSource = getDataSource();
 
 		LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy =
@@ -53,9 +53,7 @@ public abstract class BaseConnectionPoolMetrics
 		if (dataSource.equals(
 				lazyConnectionDataSourceProxy.getTargetDataSource())) {
 
-			_name = "counterDataSource";
-
-			return;
+			return "counterDataSource";
 		}
 
 		lazyConnectionDataSourceProxy =
@@ -66,9 +64,7 @@ public abstract class BaseConnectionPoolMetrics
 			lazyConnectionDataSourceProxy.getTargetDataSource();
 
 		if (dataSource.equals(targetDataSource)) {
-			_name = "liferayDataSource";
-
-			return;
+			return "liferayDataSource";
 		}
 		else if (AopUtils.isAopProxy(targetDataSource) &&
 				 (targetDataSource instanceof Advised)) {
@@ -90,18 +86,14 @@ public abstract class BaseConnectionPoolMetrics
 							defaultDynamicDataSourceTargetSource.
 								getReadDataSource())) {
 
-						_name = "readDataSource";
-
-						return;
+						return "readDataSource";
 					}
 
 					if (dataSource.equals(
 							defaultDynamicDataSourceTargetSource.
 								getWriteDataSource())) {
 
-						_name = "writeDataSource";
-
-						return;
+						return "writeDataSource";
 					}
 				}
 				catch (Exception exception) {
@@ -112,7 +104,7 @@ public abstract class BaseConnectionPoolMetrics
 			}
 		}
 
-		_name = getPoolName();
+		return getPoolName();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

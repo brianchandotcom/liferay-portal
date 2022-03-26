@@ -319,11 +319,17 @@ public class ExportConfigurationMVCResourceCommand
 		if (Validator.isNotNull(factoryPid) && !factoryPid.equals(pid)) {
 			String factoryInstanceId = pid.substring(factoryPid.length() + 1);
 
-			if (factoryInstanceId.startsWith("scoped")) {
+			if (factoryInstanceId.startsWith("scoped.")) {
 				factoryPid = factoryPid + ".scoped";
 
 				factoryInstanceId = StringUtil.removeSubstring(
 					factoryInstanceId, "scoped.");
+			}
+			else if (factoryInstanceId.startsWith("scoped~")) {
+				factoryPid = factoryPid + ".scoped";
+
+				factoryInstanceId = StringUtil.removeSubstring(
+					factoryInstanceId, "scoped~");
 			}
 
 			fileName = factoryPid + StringPool.TILDE + factoryInstanceId;

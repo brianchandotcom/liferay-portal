@@ -19,10 +19,10 @@ package com.liferay.analytics.dxp.entity.exporter;
  */
 public interface AnalyticsDXPEntityBatchExporter {
 
+	public void export(long companyId) throws Exception;
+
 	public void scheduleExportTriggers(long companyId) throws Exception;
 
 	public void unscheduleExportTriggers(long companyId) throws Exception;
-
-	public void export(long companyId) throws Exception;
 
 }

@@ -322,10 +322,13 @@ public class SegmentsExperienceLocalServiceImpl
 
 		// Segments experiments
 
+		long defaultSegmentsExperienceId = fetchDefaultSegmentsExperienceId(
+			classPK);
+
 		for (SegmentsExperiment segmentsExperiment :
-			segmentsExperimentPersistence.findByS_C_C(
-				SegmentsExperienceConstants.ID_DEFAULT, classNameId,
-				_getPublishedLayoutClassPK(classPK))) {
+				segmentsExperimentPersistence.findByS_C_C(
+					defaultSegmentsExperienceId, classNameId,
+					_getPublishedLayoutClassPK(classPK))) {
 
 			_deleteSegmentsExperiment(segmentsExperiment);
 		}

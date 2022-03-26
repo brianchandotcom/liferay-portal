@@ -7352,7 +7352,16 @@ tar --extract --file=liferay-portal-source.tar.gz modules/core/portal-bootstrap/
 
 				<echo file="build.${user.name}.properties">baseline.jar.report.level=persist</echo>
 
-				<prepare-test-build />
+				<antcall inheritAll="false" target="compile" />
+
+				<prepare-test-bundles unit="false" />
+
+				<antcall inheritAll="false" target="compile-test" />
+
+				<echo if:set="env.JENKINS_HOME">ANT_OPTS=${env.ANT_OPTS}</echo>
+
+				<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-db2-processes" />
+				<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="clean-up-java-processes" />
 			</test-set-up>
 		</run-batch-test>
 	</target>

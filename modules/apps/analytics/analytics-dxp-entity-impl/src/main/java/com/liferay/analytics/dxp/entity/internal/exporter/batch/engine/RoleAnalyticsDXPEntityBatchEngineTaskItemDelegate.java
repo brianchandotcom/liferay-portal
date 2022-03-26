@@ -12,24 +12,27 @@
  * details.
  */
 
-package com.liferay.analytics.dxp.entity.internal.retriever;
+package com.liferay.analytics.dxp.entity.internal.exporter.batch.engine;
 
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
-import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetriever;
-import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.analytics.dxp.entity.rest.dto.v1_0.converter.DXPEntityDTOConverter;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
+import com.liferay.batch.engine.pagination.Page;
+import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,30 +42,29 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "analytics.dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.Role",
-	service = AnalyticsDXPEntityRetriever.class
+	property = "batch.engine.task.item.delegate.name=role-analytics-dxp-entities",
+	service = BatchEngineTaskItemDelegate.class
 )
-public class RoleAnalyticsDXPEntityRetriever
-	extends NonIndexedAnalyticsDXPEntityRetriever
-	implements AnalyticsDXPEntityRetriever {
+public class RoleAnalyticsDXPEntityBatchEngineTaskItemDelegate
+	extends BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate {
 
 	@Override
-	public Page<DXPEntity> getDXPEntitiesPage(
-			long companyId, Filter filter, Pagination pagination,
-			UnsafeFunction<BaseModel<?>, DXPEntity, Exception>
-				transformUnsafeFunction)
+	public Page<DXPEntity> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
 		List<DXPEntity> dxpEntities = new ArrayList<>();
 
-		DynamicQuery dynamicQuery = _buildDynamicQuery(companyId, filter);
+		DynamicQuery dynamicQuery = _buildDynamicQuery(
+			contextCompany.getCompanyId(), filter);
 
 		List<Role> roles = _roleLocalService.dynamicQuery(
 			dynamicQuery, pagination.getStartPosition(),
 			pagination.getEndPosition());
 
 		for (Role role : roles) {
-			dxpEntities.add(transformUnsafeFunction.apply(role));
+			dxpEntities.add(_dxpEntityDTOConverter.toDTO(role));
 		}
 
 		return Page.of(
@@ -84,6 +86,9 @@ public class RoleAnalyticsDXPEntityRetriever
 
 		return buildDynamicQuery(companyId, dynamicQuery, filter);
 	}
+
+	@Reference
+	private DXPEntityDTOConverter _dxpEntityDTOConverter;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

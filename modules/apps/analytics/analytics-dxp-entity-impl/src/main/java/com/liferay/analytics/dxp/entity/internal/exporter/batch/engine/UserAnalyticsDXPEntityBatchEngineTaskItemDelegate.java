@@ -12,18 +12,20 @@
  * details.
  */
 
-package com.liferay.analytics.dxp.entity.internal.retriever;
+package com.liferay.analytics.dxp.entity.internal.exporter.batch.engine;
 
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
-import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetriever;
+import com.liferay.analytics.dxp.entity.rest.dto.v1_0.converter.DXPEntityDTOConverter;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationTracker;
 import com.liferay.analytics.settings.security.constants.AnalyticsSecurityConstants;
-import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
+import com.liferay.batch.engine.pagination.Page;
+import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
@@ -32,9 +34,11 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.vulcan.pagination.Page;
-import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
+
+import java.io.Serializable;
+
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,29 +48,41 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "analytics.dxp.entity.retriever.class.name=com.liferay.portal.kernel.model.User",
-	service = AnalyticsDXPEntityRetriever.class
+	property = "batch.engine.task.item.delegate.name=user-analytics-dxp-entities",
+	service = BatchEngineTaskItemDelegate.class
 )
-public class UserAnalyticsDXPEntityRetriever
-	implements AnalyticsDXPEntityRetriever {
+public class UserAnalyticsDXPEntityBatchEngineTaskItemDelegate
+	extends BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate {
 
 	@Override
-	public Page<DXPEntity> getDXPEntitiesPage(
-			long companyId, Filter filter, Pagination pagination,
-			UnsafeFunction<BaseModel<?>, DXPEntity, Exception>
-				transformUnsafeFunction)
+	public Page<DXPEntity> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
+			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return SearchUtil.search(
-			null, booleanQuery -> booleanQuery.getPreBooleanFilter(),
-			_createBooleanFilter(companyId, filter), User.class.getName(), null,
-			pagination,
-			queryConfig -> queryConfig.setSelectedFieldNames(
-				Field.ENTRY_CLASS_PK),
-			searchContext -> searchContext.setCompanyId(companyId), null,
-			document -> transformUnsafeFunction.apply(
-				_userLocalService.getUser(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+		com.liferay.portal.vulcan.pagination.Pagination vulcanPagination =
+			com.liferay.portal.vulcan.pagination.Pagination.of(
+				pagination.getPage(), pagination.getPageSize());
+
+		com.liferay.portal.vulcan.pagination.Page<DXPEntity> dxpEntitiesPage =
+			SearchUtil.search(
+				null, booleanQuery -> booleanQuery.getPreBooleanFilter(),
+				_createBooleanFilter(contextCompany.getCompanyId(), filter),
+				User.class.getName(), null, vulcanPagination,
+				queryConfig -> queryConfig.setSelectedFieldNames(
+					Field.ENTRY_CLASS_PK),
+				searchContext -> searchContext.setCompanyId(
+					contextCompany.getCompanyId()),
+				null,
+				document -> _dxpEntityDTOConverter.toDTO(
+					_userLocalService.getUser(
+						GetterUtil.getLong(
+							document.get(Field.ENTRY_CLASS_PK)))));
+
+		return Page.of(
+			dxpEntitiesPage.getItems(),
+			Pagination.of(pagination.getPage(), pagination.getPageSize()),
+			dxpEntitiesPage.getTotalCount());
 	}
 
 	private BooleanFilter _createBooleanFilter(long companyId, Filter filter) {
@@ -123,6 +139,9 @@ public class UserAnalyticsDXPEntityRetriever
 
 	@Reference
 	private AnalyticsConfigurationTracker _analyticsConfigurationTracker;
+
+	@Reference
+	private DXPEntityDTOConverter _dxpEntityDTOConverter;
 
 	@Reference
 	private UserLocalService _userLocalService;

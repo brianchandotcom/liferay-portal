@@ -12,16 +12,20 @@
  * details.
  */
 
-package com.liferay.analytics.dxp.entity.internal.helper;
+package com.liferay.analytics.dxp.entity.internal.exporter.batch.engine;
 
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.converter.DXPEntityDTOConverter;
-import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetriever;
-import com.liferay.analytics.dxp.entity.retriever.AnalyticsDXPEntityRetrieverTracker;
+import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
+import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.io.Serializable;
 
@@ -35,40 +39,46 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	service = AnalyticsDXPEntityBatchEngineTaskItemDelegateHelper.class
+	property = "batch.engine.task.item.delegate.name=user-group-analytics-dxp-entities",
+	service = BatchEngineTaskItemDelegate.class
 )
-public class AnalyticsDXPEntityBatchEngineTaskItemDelegateHelper {
+public class UserGroupAnalyticsDXPEntityBatchEngineTaskItemDelegate
+	extends BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate {
 
-	public Page<DXPEntity> getDXPEntities(
-			String entryClassName, long companyId, Filter filter,
-			Pagination pagination, Sort[] sorts,
+	@Override
+	public Page<DXPEntity> read(
+			Filter filter, Pagination pagination, Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
-
-		AnalyticsDXPEntityRetriever analyticsDXPEntityRetriever =
-			_analyticsDXPEntityRetrieverTracker.getAnalyticsDXPEntityRetriever(
-				entryClassName);
 
 		com.liferay.portal.vulcan.pagination.Pagination vulcanPagination =
 			com.liferay.portal.vulcan.pagination.Pagination.of(
 				pagination.getPage(), pagination.getPageSize());
 
 		com.liferay.portal.vulcan.pagination.Page<DXPEntity> dxpEntitiesPage =
-			analyticsDXPEntityRetriever.getDXPEntitiesPage(
-				companyId, filter, vulcanPagination,
-				baseModel -> _dxpEntityDTOConverter.toDTO(baseModel));
+			SearchUtil.search(
+				null, booleanQuery -> booleanQuery.getPreBooleanFilter(),
+				filter, UserGroup.class.getName(), null, vulcanPagination,
+				queryConfig -> queryConfig.setSelectedFieldNames(
+					Field.ENTRY_CLASS_PK),
+				searchContext -> searchContext.setCompanyId(
+					contextCompany.getCompanyId()),
+				null,
+				document -> _dxpEntityDTOConverter.toDTO(
+					_userGroupLocalService.getUserGroup(
+						GetterUtil.getLong(
+							document.get(Field.ENTRY_CLASS_PK)))));
 
 		return Page.of(
 			dxpEntitiesPage.getItems(),
-			Pagination.of(pagination.getPage(), (int)pagination.getPageSize()),
+			Pagination.of(pagination.getPage(), pagination.getPageSize()),
 			dxpEntitiesPage.getTotalCount());
 	}
 
 	@Reference
-	private AnalyticsDXPEntityRetrieverTracker
-		_analyticsDXPEntityRetrieverTracker;
+	private DXPEntityDTOConverter _dxpEntityDTOConverter;
 
 	@Reference
-	private DXPEntityDTOConverter _dxpEntityDTOConverter;
+	private UserGroupLocalService _userGroupLocalService;
 
 }

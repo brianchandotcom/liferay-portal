@@ -12,22 +12,23 @@
  * details.
  */
 
-package com.liferay.analytics.dxp.entity.internal.batch;
+package com.liferay.analytics.dxp.entity.internal.exporter.batch.engine;
 
-import com.liferay.analytics.dxp.entity.internal.helper.AnalyticsDXPEntityBatchEngineTaskItemDelegateHelper;
-import com.liferay.analytics.dxp.entity.internal.odata.entity.AnalyticsDXPEntityEntityModel;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
-import com.liferay.batch.engine.BaseBatchEngineTaskItemDelegate;
+import com.liferay.analytics.dxp.entity.rest.dto.v1_0.converter.DXPEntityDTOConverter;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
 import com.liferay.batch.engine.pagination.Pagination;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.odata.entity.EntityModel;
+import com.liferay.portal.kernel.service.GroupLocalService;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,18 +40,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "batch.engine.task.item.delegate.name=group-dxp-entities",
+	property = "batch.engine.task.item.delegate.name=group-analytics-dxp-entities",
 	service = BatchEngineTaskItemDelegate.class
 )
 public class GroupAnalyticsDXPEntityBatchEngineTaskItemDelegate
-	extends BaseBatchEngineTaskItemDelegate<DXPEntity> {
-
-	@Override
-	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)
-		throws Exception {
-
-		return new AnalyticsDXPEntityEntityModel();
-	}
+	extends BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate {
 
 	@Override
 	public Page<DXPEntity> read(
@@ -58,14 +52,33 @@ public class GroupAnalyticsDXPEntityBatchEngineTaskItemDelegate
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return _analyticsDXPEntityBatchEngineTaskItemDelegateHelper.
-			getDXPEntities(
-				Group.class.getName(), contextCompany.getCompanyId(), filter,
-				pagination, sorts, parameters, search);
+		List<DXPEntity> dxpEntities = new ArrayList<>();
+
+		DynamicQuery dynamicQuery = _groupLocalService.dynamicQuery();
+
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("active", true));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("site", true));
+
+		dynamicQuery = buildDynamicQuery(
+			contextCompany.getCompanyId(), dynamicQuery, filter);
+
+		List<Group> groups = _groupLocalService.dynamicQuery(
+			dynamicQuery, pagination.getStartPosition(),
+			pagination.getEndPosition());
+
+		for (Group group : groups) {
+			dxpEntities.add(_dxpEntityDTOConverter.toDTO(group));
+		}
+
+		return Page.of(
+			dxpEntities, pagination,
+			_groupLocalService.dynamicQueryCount(dynamicQuery));
 	}
 
 	@Reference
-	private AnalyticsDXPEntityBatchEngineTaskItemDelegateHelper
-		_analyticsDXPEntityBatchEngineTaskItemDelegateHelper;
+	private DXPEntityDTOConverter _dxpEntityDTOConverter;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

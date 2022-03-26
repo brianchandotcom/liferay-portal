@@ -75,6 +75,10 @@ public interface SegmentsExperienceLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.segments.service.impl.SegmentsExperienceLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the segments experience local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SegmentsExperienceLocalServiceUtil} if injection and service tracking are not available.
 	 */
+	public SegmentsExperience addDefaultSegmentsExperience(
+			long userId, long plid, ServiceContext serviceContext)
+		throws PortalException;
+
 	public SegmentsExperience addSegmentsExperience(
 			long userId, long groupId, long segmentsEntryId, long classNameId,
 			long classPK, Map<Locale, String> nameMap, boolean active,

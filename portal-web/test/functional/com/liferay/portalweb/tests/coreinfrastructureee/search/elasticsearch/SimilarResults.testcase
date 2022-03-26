@@ -736,49 +736,33 @@ definition {
 
 	@priority = "4"
 	test ViewSimilarResultsWithDifferentScope {
-		JSONWebcontent.addWebContent(
-			content = "WC Content",
-			groupName = "Guest",
-			title = "WC Title");
+		var count = "";
 
-		JSONDocument.addFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest");
-
-		JSONBlog.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
-
-		JSONWiki.addWikiPage(
-			groupName = "Guest",
-			wikiNodeName = "Main",
-			wikiPageContent = "Wiki Page Content",
-			wikiPageName = "Wiki Page Title");
-
-		for (var count : list "1,2,3") {
-			JSONGroup.addGroup(groupName = "Site Name ${count}");
+		for (var siteName : list "Guest,Site Name 1,Site Name 2,Site Name 3") {
+			JSONGroup.addGroup(groupName = "${siteName}");
 
 			JSONWebcontent.addWebContent(
 				content = "WC Content",
-				groupName = "Site Name ${count}",
+				groupName = "${siteName}",
 				title = "WC Title ${count}");
 
 			JSONDocument.addFile(
 				dmDocumentDescription = "DM Document Description ${count}",
 				dmDocumentTitle = "DM Document Title ${count}",
-				groupName = "Site Name ${count}");
+				groupName = "${siteName}");
 
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",
 				entryTitle = "Blogs Entry Title ${count}",
-				groupName = "Site Name ${count}");
+				groupName = "${siteName}");
 
 			JSONWiki.addWikiPage(
-				groupName = "Site Name ${count}",
+				groupName = "${siteName}",
 				wikiNodeName = "Main",
 				wikiPageContent = "Wiki Page Content",
 				wikiPageName = "Wiki Page Title ${count}");
+
+			var count = ${count} + 1;
 		}
 
 		SearchPortlets.setupSimilarResultsPage();
@@ -791,8 +775,6 @@ definition {
 			searchScope = "Everything");
 
 		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
-
-		Navigator.gotoPage(pageName = "Similar Results Page");
 
 		var index = "0";
 		var list1 = ListUtil.newListFromString("WC Title,DM Document Title,Blogs Entry Title,Wiki Page Title");

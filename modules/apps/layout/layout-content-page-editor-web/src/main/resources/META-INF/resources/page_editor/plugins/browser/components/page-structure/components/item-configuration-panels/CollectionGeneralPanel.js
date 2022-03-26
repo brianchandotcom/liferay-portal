@@ -422,7 +422,11 @@ export function CollectionGeneralPanel({item}) {
 												})
 											}
 											options={LAYOUT_OPTIONS}
-											value={numberOfColumns}
+											value={
+												config.featureFlagLps119551
+													? collectionConfig.numberOfColumns
+													: numberOfColumns
+											}
 										/>
 									</ClayForm.Group>
 

@@ -1472,7 +1472,7 @@ public class PoshiValidation {
 				new PoshiElementException(
 					poshiElement, "Expected ", seleniumParameterCount,
 					" parameter(s) for method \"", seleniumMethodName,
-					"\" but found ", seleniumParameterCount));
+					"\" but found ", methodParameterValues.size()));
 		}
 
 		for (String methodParameterValue : methodParameterValues) {

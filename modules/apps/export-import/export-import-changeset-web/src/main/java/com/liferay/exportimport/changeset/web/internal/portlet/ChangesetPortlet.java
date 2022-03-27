@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.display-name=Changeset",
 		"javax.portlet.name=" + ChangesetPortletKeys.CHANGESET,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
+		"javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.version=3.0"
 	},
 	service = Portlet.class
 )

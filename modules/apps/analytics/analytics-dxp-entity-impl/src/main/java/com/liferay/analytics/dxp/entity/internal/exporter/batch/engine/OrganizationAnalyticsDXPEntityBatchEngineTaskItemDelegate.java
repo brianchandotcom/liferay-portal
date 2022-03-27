@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = BatchEngineTaskItemDelegate.class
 )
 public class OrganizationAnalyticsDXPEntityBatchEngineTaskItemDelegate
-	extends BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate {
+	extends BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate<DXPEntity> {
 
 	@Override
 	public Page<DXPEntity> read(

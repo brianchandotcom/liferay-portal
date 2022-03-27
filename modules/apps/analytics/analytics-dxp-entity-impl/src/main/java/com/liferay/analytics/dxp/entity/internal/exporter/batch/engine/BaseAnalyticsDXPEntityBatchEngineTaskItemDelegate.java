@@ -36,7 +36,8 @@ import java.util.Map;
  * @author Marcos Martins
  */
 public abstract class BaseAnalyticsDXPEntityBatchEngineTaskItemDelegate
-	extends BaseBatchEngineTaskItemDelegate<DXPEntity> {
+	<DXPEntity>
+		extends BaseBatchEngineTaskItemDelegate<DXPEntity> {
 
 	@Override
 	public EntityModel getEntityModel(Map<String, List<String>> multivaluedMap)

@@ -48,12 +48,12 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 		throws IOException, PortalException {
 
 		DispatchLog dispatchLog =
-			_dispatchLogLocalService.fetchLatestDispatchLog(
+			dispatchLogLocalService.fetchLatestDispatchLog(
 				dispatchTrigger.getDispatchTriggerId(),
 				DispatchTaskStatus.IN_PROGRESS);
 
 		DispatchLog latestSuccessfulDispatchLog =
-			_dispatchLogLocalService.fetchLatestDispatchLog(
+			dispatchLogLocalService.fetchLatestDispatchLog(
 				dispatchTrigger.getDispatchTriggerId(),
 				DispatchTaskStatus.SUCCESSFUL);
 
@@ -64,7 +64,7 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 		}
 
 		try {
-			_analyticsBatchExportImportManager.exportToAnalyticsCloud(
+			analyticsBatchExportImportManager.exportToAnalyticsCloud(
 				getBatchEngineExportTaskItemDelegateName(),
 				dispatchTrigger.getCompanyId(), null,
 				message -> _updateDispatchLog(
@@ -79,6 +79,13 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 	}
 
 	protected abstract String getBatchEngineExportTaskItemDelegateName();
+
+	@Reference
+	protected AnalyticsBatchExportImportManager
+		analyticsBatchExportImportManager;
+
+	@Reference
+	protected DispatchLogLocalService dispatchLogLocalService;
 
 	private void _updateDispatchLog(
 			long dispatchLogId,
@@ -99,7 +106,7 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 
 		dispatchTaskExecutorOutput.setOutput(sb.toString());
 
-		_dispatchLogLocalService.updateDispatchLog(
+		dispatchLogLocalService.updateDispatchLog(
 			dispatchLogId, new Date(), dispatchTaskExecutorOutput.getError(),
 			dispatchTaskExecutorOutput.getOutput(),
 			DispatchTaskStatus.IN_PROGRESS);
@@ -107,12 +114,5 @@ public abstract class BaseAnalyticsDXPEntityExportDispatchTaskExecutor
 
 	private static final DateFormat _dateFormat = new SimpleDateFormat(
 		"yyyy-MM-dd'T'HH:mm:ss.SSSZ");
-
-	@Reference
-	private AnalyticsBatchExportImportManager
-		_analyticsBatchExportImportManager;
-
-	@Reference
-	private DispatchLogLocalService _dispatchLogLocalService;
 
 }

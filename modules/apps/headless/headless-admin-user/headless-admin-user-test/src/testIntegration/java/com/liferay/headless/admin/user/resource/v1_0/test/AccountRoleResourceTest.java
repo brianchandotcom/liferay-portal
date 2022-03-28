@@ -354,6 +354,13 @@ public class AccountRoleResourceTest extends BaseAccountRoleResourceTestCase {
 
 		Assert.assertEquals(1, page.getTotalCount());
 		Assert.assertEquals(accountRole3, page.fetchFirstItem());
+
+		page = accountRoleResource.getAccountAccountRolesPage(
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, null, null,
+			Pagination.of(1, _sharedAccountRoles.size()), null);
+
+		assertEqualsIgnoringOrder(
+			_sharedAccountRoles, (List<AccountRole>)page.getItems());
 	}
 
 	@Override

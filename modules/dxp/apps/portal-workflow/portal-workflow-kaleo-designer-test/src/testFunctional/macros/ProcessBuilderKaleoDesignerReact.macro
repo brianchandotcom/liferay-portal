@@ -523,6 +523,10 @@ definition {
 			value1 = "${propertyValue}");
 	}
 
+	macro viewPublishButtonNotPresent {
+		Button.viewNotPresent(button = "Publish");
+	}
+
 	macro viewRequiredField {
 		AssertElementPresent(
 			key_requiredField = "${requiredField}",
@@ -558,9 +562,6 @@ definition {
 			key_translationOption = "${newTranslationOption}",
 			key_translationStatus = "${translationStatus}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL");
-	}
-	macro viewPublishButtonNotPresent {
-		Button.viewNotPresent(button = "Publish");
 	}
 
 }

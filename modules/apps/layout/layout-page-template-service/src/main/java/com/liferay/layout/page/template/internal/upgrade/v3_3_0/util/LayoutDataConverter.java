@@ -83,10 +83,11 @@ public class LayoutDataConverter {
 				ContainerStyledLayoutStructureItem
 					innerContainerStyledLayoutStructureItem =
 						(ContainerStyledLayoutStructureItem)
-							layoutStructure.addContainerLayoutStructureItem(
-								outerContainerStyledLayoutStructureItem.
-									getItemId(),
-								0);
+							layoutStructure.
+								addContainerStyledLayoutStructureItem(
+									outerContainerStyledLayoutStructureItem.
+										getItemId(),
+									0);
 
 				JSONObject inputRowConfigJSONObject =
 					inputRowJSONObject.getJSONObject("config");

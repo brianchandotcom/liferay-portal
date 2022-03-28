@@ -78,6 +78,14 @@ public class FragmentCollectionServiceUtil {
 		return getService().fetchFragmentCollection(fragmentCollectionId);
 	}
 
+	public static List<com.liferay.portal.kernel.repository.model.FileEntry>
+			getFragmentCollectionResources(long fragmentCollectionId)
+		throws PortalException {
+
+		return getService().getFragmentCollectionResources(
+			fragmentCollectionId);
+	}
+
 	public static List<FragmentCollection> getFragmentCollections(
 		long groupId) {
 

@@ -404,12 +404,12 @@ public class InputAssetLinksDisplayContext {
 		ResourceBundle resourceBundle = TagResourceBundleUtil.getResourceBundle(
 			_pageContext);
 
-		String typeName = assetRendererFactory.getTypeName(
-			_themeDisplay.getLocale());
-
 		selectorEntryData.put(
 			"title",
-			LanguageUtil.format(resourceBundle, "select-x", typeName, false));
+			LanguageUtil.format(
+				resourceBundle, "select-x",
+				assetRendererFactory.getTypeName(_themeDisplay.getLocale()),
+				false));
 
 		selectorEntryData.put("type", assetRendererFactory.getClassName());
 

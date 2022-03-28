@@ -194,13 +194,12 @@ public class AssetEntryUsagesDisplayContext {
 			(assetEntryUsage.getContainerType() != PortalUtil.getClassNameId(
 				LayoutPageTemplateStructure.class))) {
 
-			String portletTitle = PortalUtil.getPortletTitle(
-				PortletIdCodec.decodePortletName(
-					assetEntryUsage.getContainerKey()),
-				_themeDisplay.getLocale());
-
 			return LanguageUtil.format(
-				_resourceBundle, "x-widget", portletTitle);
+				_resourceBundle, "x-widget",
+				PortalUtil.getPortletTitle(
+					PortletIdCodec.decodePortletName(
+						assetEntryUsage.getContainerKey()),
+					_themeDisplay.getLocale()));
 		}
 
 		if (assetEntryUsage.getContainerType() == PortalUtil.getClassNameId(
@@ -280,10 +279,9 @@ public class AssetEntryUsagesDisplayContext {
 				(ThemeDisplay)_renderRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(
-				assetEntryUsage.getPlid());
-
-			layoutURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
+			layoutURL = PortalUtil.getLayoutFriendlyURL(
+				LayoutLocalServiceUtil.fetchLayout(assetEntryUsage.getPlid()),
+				themeDisplay);
 
 			layoutURL = HttpUtil.setParameter(
 				layoutURL, "previewAssetEntryId",

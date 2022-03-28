@@ -69,15 +69,14 @@ public class SyncDLFileVersionDiffLocalServiceImpl
 		Company company = _companyLocalService.getCompanyById(
 			fileEntry.getCompanyId());
 
-		String dataFileName = getDataFileName(
-			fileEntryId, sourceFileVersionId, targetFileVersionId);
-
 		FileEntry dataFileEntry = _portletFileRepository.addPortletFileEntry(
 			company.getGroupId(), fileEntry.getUserId(),
 			SyncDLFileVersionDiff.class.getName(),
 			syncDLFileVersionDiff.getSyncDLFileVersionDiffId(),
 			PortletKeys.DOCUMENT_LIBRARY,
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, file, dataFileName,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, file,
+			getDataFileName(
+				fileEntryId, sourceFileVersionId, targetFileVersionId),
 			fileEntry.getMimeType(), false);
 
 		syncDLFileVersionDiff.setDataFileEntryId(

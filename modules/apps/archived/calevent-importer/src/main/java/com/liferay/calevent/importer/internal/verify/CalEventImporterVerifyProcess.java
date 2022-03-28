@@ -1195,9 +1195,8 @@ public class CalEventImporterVerifyProcess extends VerifyProcess {
 	private long _importMBThread(long threadId, long calendarBookingId)
 		throws Exception {
 
-		MBThread mbThread = _mbThreadLocalService.fetchMBThread(threadId);
-
-		return _importMBThread(mbThread, calendarBookingId);
+		return _importMBThread(
+			_mbThreadLocalService.fetchMBThread(threadId), calendarBookingId);
 	}
 
 	private long _importMBThread(MBThread mbThread, long calendarBookingId)

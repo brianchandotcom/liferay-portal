@@ -423,12 +423,13 @@ public class WebFormPortlet extends MVCPortlet {
 
 			for (ExpandoRow row : rows) {
 				for (String fieldName : fieldLabels) {
-					String data = _expandoValueLocalService.getData(
-						themeDisplay.getCompanyId(),
-						WebFormUtil.class.getName(), databaseTableName,
-						fieldName, row.getClassPK(), StringPool.BLANK);
-
-					sb.append(_getCSVFormattedValue(data));
+					sb.append(
+						_getCSVFormattedValue(
+							_expandoValueLocalService.getData(
+								themeDisplay.getCompanyId(),
+								WebFormUtil.class.getName(), databaseTableName,
+								fieldName, row.getClassPK(),
+								StringPool.BLANK)));
 
 					sb.append(csvSeparator);
 				}

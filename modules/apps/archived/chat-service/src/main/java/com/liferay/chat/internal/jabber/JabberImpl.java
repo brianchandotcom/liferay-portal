@@ -144,10 +144,11 @@ public class JabberImpl implements Jabber {
 					String middleName = (String)buddy[5];
 					String lastName = (String)buddy[3];
 
-					String fullName = ContactConstants.getFullName(
-						firstName, middleName, lastName);
-
-					roster.createEntry(jabberId, fullName, null);
+					roster.createEntry(
+						jabberId,
+						ContactConstants.getFullName(
+							firstName, middleName, lastName),
+						null);
 				}
 			}
 

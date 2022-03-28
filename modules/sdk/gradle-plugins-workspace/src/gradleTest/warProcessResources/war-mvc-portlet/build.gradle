@@ -1,6 +1,6 @@
 buildscript {
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.css.builder", version: "3.0.3"
+		classpath group: "com.liferay", name: "com.liferay.css.builder", version: "3.1.0"
 		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.css.builder", version: "5.0.3"
 	}
 
@@ -18,7 +18,7 @@ dependencies {
 	compileOnly group: "javax.portlet", name: "portlet-api"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api"
 
-	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "3.0.3"
+	cssBuilder group: "com.liferay", name: "com.liferay.css.builder", version: "3.1.0"
 
 	portalCommonCSS group: "com.liferay", name: "com.liferay.frontend.css.common"
 }

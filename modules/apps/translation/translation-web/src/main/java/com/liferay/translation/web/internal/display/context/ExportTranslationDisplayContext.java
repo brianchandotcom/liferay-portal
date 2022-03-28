@@ -28,11 +28,13 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
@@ -368,7 +370,9 @@ public class ExportTranslationDisplayContext {
 	}
 
 	private boolean _isMultipleExperiences() {
-		if (!_className.equals(Layout.class.getName())) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-142736")) ||
+			!_className.equals(Layout.class.getName())) {
+
 			return false;
 		}
 

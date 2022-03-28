@@ -75,8 +75,7 @@ public class FriendlyURLDLAppLocalServiceWrapperTest extends BaseDLAppTestCase {
 				parentFolder.getFolderId(), RandomTestUtil.randomString(),
 				ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 				"urltitle", StringPool.BLANK, StringPool.BLANK,
-				TestDataConstants.TEST_BYTE_ARRAY, null,
-				null, serviceContext);
+				TestDataConstants.TEST_BYTE_ARRAY, null, null, serviceContext);
 
 			FriendlyURLEntry friendlyURLEntry =
 				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
@@ -106,9 +105,10 @@ public class FriendlyURLDLAppLocalServiceWrapperTest extends BaseDLAppTestCase {
 				parentFolder.getFolderId(), RandomTestUtil.randomString(),
 				ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 				"urltitle", StringPool.BLANK, StringPool.BLANK,
-				FileUtil.createTempFile(new UnsyncByteArrayInputStream(
-				TestDataConstants.TEST_BYTE_ARRAY)), null,
-				null, serviceContext);
+				FileUtil.createTempFile(
+					new UnsyncByteArrayInputStream(
+						TestDataConstants.TEST_BYTE_ARRAY)),
+				null, null, serviceContext);
 
 			FriendlyURLEntry friendlyURLEntry =
 				_friendlyURLEntryLocalService.getMainFriendlyURLEntry(
@@ -141,7 +141,7 @@ public class FriendlyURLDLAppLocalServiceWrapperTest extends BaseDLAppTestCase {
 				ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
 				"urltitle", StringPool.BLANK, StringPool.BLANK,
 				new UnsyncByteArrayInputStream(
-				TestDataConstants.TEST_BYTE_ARRAY),
+					TestDataConstants.TEST_BYTE_ARRAY),
 				0, null, null, serviceContext);
 
 			FriendlyURLEntry friendlyURLEntry =
@@ -207,7 +207,7 @@ public class FriendlyURLDLAppLocalServiceWrapperTest extends BaseDLAppTestCase {
 
 			File file = FileUtil.createTempFile(
 				new UnsyncByteArrayInputStream(
-				TestDataConstants.TEST_BYTE_ARRAY));
+					TestDataConstants.TEST_BYTE_ARRAY));
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(

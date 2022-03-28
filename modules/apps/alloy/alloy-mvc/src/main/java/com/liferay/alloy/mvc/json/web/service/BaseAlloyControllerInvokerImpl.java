@@ -72,10 +72,8 @@ public abstract class BaseAlloyControllerInvokerImpl
 			lifecycle, parameters);
 		HttpServletResponse httpServletResponse = createResponse();
 
-		PageContext pageContext = createPageContext(
-			httpServletRequest, httpServletResponse);
-
-		alloyController.setPageContext(pageContext);
+		alloyController.setPageContext(
+			createPageContext(httpServletRequest, httpServletResponse));
 
 		alloyController.afterPropertiesSet();
 

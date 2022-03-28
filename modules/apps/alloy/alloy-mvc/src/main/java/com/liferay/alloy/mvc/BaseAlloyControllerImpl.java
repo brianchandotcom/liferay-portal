@@ -957,10 +957,9 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		Method[] methods = clazz.getMethods();
 
 		for (Method method : methods) {
-			String methodKey = getMethodKey(
-				method.getName(), method.getParameterTypes());
-
-			methodsMap.put(methodKey, method);
+			methodsMap.put(
+				getMethodKey(method.getName(), method.getParameterTypes()),
+				method);
 		}
 	}
 

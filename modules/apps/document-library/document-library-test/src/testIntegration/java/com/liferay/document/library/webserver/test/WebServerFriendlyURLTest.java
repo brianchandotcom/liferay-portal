@@ -18,16 +18,16 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.test.util.BaseWebServerTestCase;
-import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.repository.friendly.url.resolver.FileEntryFriendlyURLResolver;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.methods.Method;
@@ -39,7 +39,6 @@ import java.util.Collections;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -59,13 +58,6 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@After
-	public void tearDown() throws Exception {
-		_friendlyURLEntryLocalService.deleteGroupFriendlyURLEntries(
-			group.getGroupId(),
-			_portal.getClassNameId(FileEntry.class.getName()));
-	}
 
 	@Test
 	public void testExistingFileEntryFriendlyURLHasFiles() throws Exception {
@@ -120,17 +112,24 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 	}
 
 	private void _addFileEntry(String urlTitle) throws Exception {
-		FileEntry fileEntry = _dlAppLocalService.addFileEntry(
-			null, TestPropsValues.getUserId(), group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString(),
-			ContentTypes.APPLICATION_OCTET_STREAM, null, null, null,
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.document.library.configuration." +
+						"FFFriendlyURLEntryFileEntryConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"enabled", true
+					).build())) {
 
-		_friendlyURLEntryLocalService.addFriendlyURLEntry(
-			fileEntry.getGroupId(), FileEntry.class, fileEntry.getFileEntryId(),
-			urlTitle,
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+			_dlAppLocalService.addFileEntry(
+				null, TestPropsValues.getUserId(), group.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString(),
+				ContentTypes.APPLICATION_OCTET_STREAM,
+				RandomTestUtil.randomString(), urlTitle,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				(byte[])null, null, null,
+				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+		}
 	}
 
 	private MockHttpServletRequest _createMockHttpServletRequest(String path)
@@ -159,9 +158,6 @@ public class WebServerFriendlyURLTest extends BaseWebServerTestCase {
 
 	@Inject
 	private FileEntryFriendlyURLResolver _fileEntryFriendlyURLResolver;
-
-	@Inject
-	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Inject
 	private Portal _portal;

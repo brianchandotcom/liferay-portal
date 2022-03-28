@@ -24,6 +24,7 @@ import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -118,6 +119,22 @@ public class FragmentCollectionServiceImpl
 
 		return fragmentCollectionLocalService.fetchFragmentCollection(
 			fragmentCollectionId);
+	}
+
+	@Override
+	public List<FileEntry> getFragmentCollectionResources(
+			long fragmentCollectionId)
+		throws PortalException {
+
+		FragmentCollection fragmentCollection =
+			fragmentCollectionLocalService.getFragmentCollection(
+				fragmentCollectionId);
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), fragmentCollection.getGroupId(),
+			FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES);
+
+		return fragmentCollection.getResources();
 	}
 
 	@Override

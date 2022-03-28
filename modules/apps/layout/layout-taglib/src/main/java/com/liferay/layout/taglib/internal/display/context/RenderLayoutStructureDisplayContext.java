@@ -60,6 +60,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -507,6 +508,12 @@ public class RenderLayoutStructureDisplayContext {
 		return _layoutStructure;
 	}
 
+	public String getLayoutStructureItemCssClass(
+		LayoutStructureItem layoutStructureItem) {
+
+		return "lfr-layout-structure-item-" + layoutStructureItem.getItemId();
+	}
+
 	public List<String> getMainChildrenItemIds() {
 		LayoutStructure layoutStructure = getLayoutStructure();
 
@@ -732,6 +739,14 @@ public class RenderLayoutStructureDisplayContext {
 			FrontendTokenMapping.TYPE_CSS_VARIABLE);
 
 		return "var(--" + cssVariable + ")";
+	}
+
+	public boolean isCommonStylesFFEnabled() {
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-132571"))) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private String _getBackgroundImage(JSONObject jsonObject) throws Exception {

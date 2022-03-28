@@ -1384,29 +1384,6 @@ definition {
 
 			Notifications.viewBadgeCount(notificationCount = "1");
 		}
-
-		task ("Disable Send Notifications to Blogs Entry Creator") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			Click(
-				key_itemName = "Blogs",
-				locator1 = "ListGroupItem#ITEM_TEXT");
-
-			Click(
-				key_fieldLabel = "Send Notifications to Blogs Entry Creator",
-				locator1 = "Blogs#BLOG_SERVICE_LABEL");
-
-			Click(locator1 = "Blogs#UPDATE_BUTTON_BLOG_SERVICE");
-		}
-
-		task ("Delete Blogs Page admin created for this test") {
-			JSONLayout.deletePublicLayout(
-				groupName = "Guest",
-				layoutName = "Blogs Page Admin");
-		}
 	}
 
 	@description = "This is a use case for LPS-69240. It checks that when blog entries are duplicated their custom URL's are unique."

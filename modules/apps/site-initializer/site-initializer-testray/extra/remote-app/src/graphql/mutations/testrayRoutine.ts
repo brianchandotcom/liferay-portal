@@ -35,3 +35,15 @@ export const DeleteRoutine = gql`
 		}
 	}
 `;
+
+export const UpdateRoutine = gql`
+	${testrayRoutineFragment}
+
+	mutation UpdateRoutine($routineId: Long!, $Routine: InputC_Routine!) {
+		c {
+			updateRoutine(routineId: $routineId, Routine: $Routine) {
+				...RoutineFragment
+			}
+		}
+	}
+`;

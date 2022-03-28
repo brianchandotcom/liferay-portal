@@ -65,19 +65,26 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePath}) => {
 	useEffect(() => {
 		if (testrayBuild) {
 			setTimeout(() => {
-				setHeading(
-					[
-						{
-							category: 'BUILD',
-							path: basePath,
-							title: testrayBuild.name,
-						},
-					],
-					true
-				);
-			}, 0);
+				setHeading([
+					{
+						category: i18n.translate('project').toUpperCase(),
+						path: `/project/${testrayProject.id}/routines`,
+						title: testrayProject.name,
+					},
+					{
+						category: i18n.translate('routine').toUpperCase(),
+						path: `/project/${testrayProject.id}/routines/${testrayRoutine.id}`,
+						title: testrayRoutine.name,
+					},
+					{
+						category: i18n.translate('build').toUpperCase(),
+						path: basePath,
+						title: testrayBuild.name,
+					},
+				]);
+			});
 		}
-	}, [basePath, setHeading, testrayBuild]);
+	}, [basePath, setHeading, testrayBuild, testrayProject, testrayRoutine]);
 
 	useEffect(() => {
 		if (!isCurrentPathIgnored) {
@@ -113,7 +120,7 @@ const BuildOutlet: React.FC<BuildOutletProps> = ({ignorePath}) => {
 		}
 	}, [basePath, isCurrentPathIgnored, pathname, setTabs]);
 
-	if (testrayProject && testrayRoutine && testrayBuild) {
+	if (testrayBuild) {
 		return (
 			<>
 				{!isCurrentPathIgnored && (

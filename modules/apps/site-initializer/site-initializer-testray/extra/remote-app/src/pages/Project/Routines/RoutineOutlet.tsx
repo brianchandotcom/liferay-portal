@@ -27,7 +27,7 @@ import i18n from '../../../i18n';
 
 const RoutineOutlet = () => {
 	const {pathname} = useLocation();
-	const {projectId, routineId} = useParams();
+	const {projectId, routineId, ...otherParams} = useParams();
 	const {testrayProject}: any = useOutletContext();
 	const {data} = useQuery<CType<'routine', TestrayRoutine>>(getRoutine, {
 		variables: {
@@ -39,7 +39,10 @@ const RoutineOutlet = () => {
 
 	const basePath = `/project/${projectId}/routines/${routineId}`;
 
+	const hasOtherParams = !!Object.values(otherParams).length;
+
 	const {setHeading} = useHeader({
+		shouldUpdate: false,
 		useTabs: [
 			{
 				active: pathname === basePath,
@@ -59,15 +62,17 @@ const RoutineOutlet = () => {
 			setHeading([
 				{
 					category: i18n.translate('project').toUpperCase(),
+					path: `/project/${testrayProject.id}/routines`,
 					title: testrayProject.name,
 				},
 				{
 					category: i18n.translate('routine').toUpperCase(),
+					path: `/project/${testrayProject.id}/routines/${testrayRoutine.id}`,
 					title: testrayRoutine.name,
 				},
 			]);
 		}
-	}, [setHeading, testrayProject, testrayRoutine]);
+	}, [setHeading, testrayProject, testrayRoutine, hasOtherParams]);
 
 	if (testrayProject && testrayRoutine) {
 		return <Outlet context={{testrayProject, testrayRoutine}} />;

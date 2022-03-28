@@ -13,11 +13,76 @@
  */
 
 import Container from '../../../../../components/Layout/Container';
+import ListView from '../../../../../components/ListView/ListView';
+import {APIResponse, CTypePagination} from '../../../../../graphql/queries';
+import {TestrayRun, getRuns} from '../../../../../graphql/queries/testrayRun';
 import i18n from '../../../../../i18n';
+
+const transformData = (
+	data: CTypePagination<'runs', TestrayRun>
+): APIResponse<TestrayRun> => {
+	const runsPagination = data?.c?.runs || {};
+
+	return {
+		...runsPagination,
+		items: runsPagination.items?.map((run) => {
+			const environmentValues = run.name.split('|');
+
+			const [
+				applicationServer,
+				browser,
+				database,
+				javaJDK,
+				operatingSystem,
+			] = environmentValues;
+
+			return {
+				...run,
+				applicationServer,
+				browser,
+				database,
+				javaJDK,
+				operatingSystem,
+			};
+		}),
+	};
+};
 
 const Runs = () => (
 	<Container className="mt-4" title={i18n.translate('runs')}>
-		Run
+		<ListView
+			query={getRuns}
+			tableProps={{
+				columns: [
+					{
+						key: 'number',
+						render: (_, {rowIndex}) => rowIndex + 1,
+						value: i18n.translate('run'),
+					},
+					{
+						key: 'applicationServer',
+						value: i18n.translate('application-server'),
+					},
+					{
+						key: 'browser',
+						value: i18n.translate('browser'),
+					},
+					{
+						key: 'database',
+						value: i18n.translate('database'),
+					},
+					{
+						key: 'javaJDK',
+						value: 'javaJDK',
+					},
+					{
+						key: 'operatingSystem',
+						value: i18n.translate('operating-system'),
+					},
+				],
+			}}
+			transformData={transformData}
+		/>
 	</Container>
 );
 

@@ -18,28 +18,40 @@ import Code from '../../../../components/Code';
 import Container from '../../../../components/Layout/Container';
 import ListView from '../../../../components/ListView/ListView';
 import StatusBadge from '../../../../components/StatusBadge';
-import {getCases} from '../../../../graphql/queries';
+import {TestrayCaseResult, getCaseResults} from '../../../../graphql/queries';
 import i18n from '../../../../i18n';
 import {getStatusLabel} from '../../../../util/constants';
 
 const Build = () => (
 	<Container className="mt-4" title={i18n.translate('tests')}>
 		<ListView
-			query={getCases}
+			query={getCaseResults}
 			tableProps={{
 				columns: [
 					{
 						clickable: true,
 						key: 'priority',
+						render: (
+							_: any,
+							{case: testrayCase}: TestrayCaseResult
+						) => testrayCase?.priority,
 						value: i18n.translate('priority'),
 					},
 					{
 						key: 'component',
+						render: (
+							_: any,
+							{case: testrayCase}: TestrayCaseResult
+						) => testrayCase?.component?.name,
 						value: i18n.translate('component'),
 					},
 					{
 						clickable: true,
 						key: 'name',
+						render: (
+							_: any,
+							{case: testrayCase}: TestrayCaseResult
+						) => testrayCase?.name,
 						value: i18n.translate('case'),
 					},
 					{
@@ -58,15 +70,15 @@ const Build = () => (
 						value: i18n.translate('assignee'),
 					},
 					{
-						key: 'status',
-						render: (_: any, {caseResult}: any) =>
-							caseResult?.dueStatus && (
+						key: 'dueStatus',
+						render: (dueStatus: any) =>
+							dueStatus && (
 								<StatusBadge
 									type={getStatusLabel(
-										caseResult?.dueStatus
+										dueStatus
 									)?.toLowerCase()}
 								>
-									{getStatusLabel(caseResult?.dueStatus)}
+									{getStatusLabel(dueStatus)}
 								</StatusBadge>
 							),
 						value: i18n.translate('status'),
@@ -76,17 +88,15 @@ const Build = () => (
 						value: i18n.translate('issues'),
 					},
 					{
-						key: 'error',
-						render: (_: any, {caseResult}: any) =>
-							caseResult?.errors && (
-								<Code>{caseResult.errors}</Code>
-							),
+						key: 'errors',
+						render: (errors: string) =>
+							errors && <Code>{errors}</Code>,
 						value: i18n.translate('errors'),
 					},
 				],
 				navigateTo: ({id}) => `case-result/${id}`,
 			}}
-			transformData={(data) => data?.c?.cases}
+			transformData={(data) => data?.caseResults}
 		/>
 	</Container>
 );

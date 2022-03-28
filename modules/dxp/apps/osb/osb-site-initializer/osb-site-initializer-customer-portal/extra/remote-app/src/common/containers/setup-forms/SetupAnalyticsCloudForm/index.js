@@ -34,6 +34,7 @@ import Layout from '../Layout';
 
 import IncidentReportInput from './IncidentReportInput';
 
+const INITIAL_SETUP_ADMIN_COUNT = 1;
 const FETCH_DELAY_AFTER_TYPING = 500;
 const MAX_LENGTH = 255;
 
@@ -182,117 +183,141 @@ const SetupAnalyticsCloudPage = ({
 			}}
 		>
 			<FieldArray
-				name="activations"
-				render={() => (
-					<ClayForm.Group className="pb-1">
-						<Input
-							groupStyle="pb-1"
-							helper="This user will create and manage the Analytics Cloud Workspace and must have a liferay.com account. The owner Email can be updated vis Support ticket if needed."
-							label="Owner Email"
-							name="activations.ownerEmailAddress"
-							placeholder="user@company.com"
-							required
-							type="email"
-							validations={[
-								(value) =>
-									isValidEmail(
-										value,
-										bannedDomainsOwnerEmail
-									),
-							]}
-						/>
+				name="activations.incidentReportContact"
+				render={({pop, push}) => (
+					<>
+						<ClayForm.Group className="pb-1">
+							<Input
+								groupStyle="pb-1"
+								helper="This user will create and manage the Analytics Cloud Workspace and must have a liferay.com account. The owner Email can be updated vis Support ticket if needed."
+								label="Owner Email"
+								name="activations.ownerEmailAddress"
+								placeholder="user@company.com"
+								required
+								type="email"
+								validations={[
+									(value) =>
+										isValidEmail(
+											value,
+											bannedDomainsOwnerEmail
+										),
+								]}
+							/>
 
-						<Input
-							groupStyle="pb-1"
-							helper="Lowercase letters and numbers only. Project IDs cannot be changed."
-							label="Workspace Name"
-							name="activations.workspaceName"
-							placeholder="superbank1"
-							required
-							type="text"
-							validations={[
-								(value) => maxLength(value, MAX_LENGTH),
-								(value) => isLowercaseAndNumbers(value),
-							]}
-						/>
+							<Input
+								groupStyle="pb-1"
+								helper="Lowercase letters and numbers only. Project IDs cannot be changed."
+								label="Workspace Name"
+								name="activations.workspaceName"
+								placeholder="superbank1"
+								required
+								type="text"
+								validations={[
+									(value) => maxLength(value, MAX_LENGTH),
+									(value) => isLowercaseAndNumbers(value),
+								]}
+							/>
 
-						<Select
-							groupStyle="pb-1"
-							helper="Select a server location for your data to be stored."
-							key={analyticsDataCenterLocations}
-							label="Data Center Location"
-							name="activations.dataCenterLocation"
-							options={analyticsDataCenterLocations}
-							required
-						/>
-
-						{hasDisasterRecovery && (
 							<Select
-								groupStyle="mb-0 pt-2"
-								label="Disaster Recovery Data Center Location"
-								name="activations.disasterDataCenterLocation"
+								groupStyle="pb-1"
+								helper="Select a server location for your data to be stored."
+								key={analyticsDataCenterLocations}
+								label="Data Center Location"
+								name="activations.dataCenterLocation"
 								options={analyticsDataCenterLocations}
 								required
 							/>
+
+							{hasDisasterRecovery && (
+								<Select
+									groupStyle="mb-0 pt-2"
+									label="Disaster Recovery Data Center Location"
+									name="activations.disasterDataCenterLocation"
+									options={analyticsDataCenterLocations}
+									required
+								/>
+							)}
+
+							<Input
+								groupStyle="pb-1"
+								helper="Please note that the friendly URL cannot be changed once added."
+								label="Workspace Friendly URL"
+								name="activations.workspaceURL"
+								placeholder="/myurl"
+								type="text"
+								validations={[
+									(value) => isValidFriendlyURL(value),
+								]}
+							/>
+
+							<Input
+								groupStyle="pb-1"
+								helper="Anyone with an email address at the provided domains can request access to your Workspace. If multiple, separate domains by commas."
+								label="Allowed Email Domains"
+								name="activations.allowedEmailDomains"
+								placeholder="@mycompany.com"
+								type="text"
+								validations={[
+									() =>
+										isValidEmailDomain(
+											bannedDomainsAllowedDomains
+										),
+								]}
+							/>
+
+							<Input
+								groupStyle="pb-1"
+								helper="Enter the timezone to be used for all data reporting in your Workspace."
+								label="Time Zone"
+								name="activations.timeZone"
+								placeholder="UTC-04:00"
+								type="text"
+							/>
+
+							<ClayForm.Group>
+								{values?.activations?.incidentReportContact?.map(
+									(activation, index) => (
+										<IncidentReportInput
+											activation={activation}
+											id={index}
+											key={index}
+										/>
+									)
+								)}
+							</ClayForm.Group>
+						</ClayForm.Group>
+
+						{values?.activations?.incidentReportContact.length >
+							INITIAL_SETUP_ADMIN_COUNT && (
+							<Button
+								className="ml-3 my-2 text-brandy-secondary"
+								displayType="secondary"
+								onClick={() => pop()}
+								prependIcon="hr"
+								small
+							>
+								Remove Incident Report Contact
+							</Button>
 						)}
 
-						<Input
-							groupStyle="pb-1"
-							helper="Please note that the friendly URL cannot be changed once added."
-							label="Workspace Friendly URL"
-							name="activations.workspaceURL"
-							placeholder="/myurl"
-							type="text"
-							validations={[(value) => isValidFriendlyURL(value)]}
-						/>
-
-						<Input
-							groupStyle="pb-1"
-							helper="Anyone with an email address at the provided domains can request access to your Workspace. If multiple, separate domains by commas."
-							label="Allowed Email Domains"
-							name="activations.allowedEmailDomains"
-							placeholder="@mycompany.com"
-							type="text"
-							validations={[
-								() =>
-									isValidEmailDomain(
-										bannedDomainsAllowedDomains
-									),
-							]}
-						/>
-
-						<Input
-							groupStyle="pb-1"
-							helper="Enter the timezone to be used for all data reporting in your Workspace."
-							label="Time Zone"
-							name="activations.timeZone"
-							placeholder="UTC-04:00"
-							type="text"
-						/>
-
-						<ClayForm.Group>
-							{values?.activations?.incidentReportContact?.map(
-								(activation, index) => (
-									<IncidentReportInput
-										activation={activation}
-										id={index}
-										key={index}
-									/>
-								)
-							)}
-						</ClayForm.Group>
-					</ClayForm.Group>
+						<Button
+							className="btn-outline-primary ml-3 my-2 rounded-xs"
+							onClick={() => {
+								push(
+									getInitialAnalyticsInvite(
+										values?.activations
+											?.incidentReportContact
+									)
+								);
+							}}
+							prependIcon="plus"
+							small
+						>
+							Add Incident Report Contact
+						</Button>
+					</>
 				)}
 			/>
-
-			<Button
-				className="btn-outline-primary ml-3 my-2 rounded-xs"
-				onClick={() => setBaseButtonDisabled(true)}
-				prependIcon="plus"
-				small
-			>
-				Add Incident Report Contact
-			</Button>
 		</Layout>
 	);
 };

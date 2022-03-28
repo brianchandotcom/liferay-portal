@@ -56,6 +56,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REQUIRED_IMPORT_FIELD_ERROR</td>
+	<td>//div[contains(@class,'has-error')]/select[contains(@aria-required,'true')][contains(@id,'${key_destinationField}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT</td>
 	<td>//div[not(contains(@class,'hide'))]/div[label[contains(.,'${key_selectFieldLabel}')]]/select[not(@disabled)]</td>
 	<td></td>

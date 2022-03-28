@@ -1129,10 +1129,10 @@ public class AssetPublisherExportImportTest
 			assetEntries = addAssetEntries(
 				scopeGroup, 3, assetEntries, serviceContext);
 
-			String scopeId = _assetPublisherHelper.getScopeId(
-				scopeGroup, group.getGroupId());
-
-			scopeIds = ArrayUtil.append(scopeIds, scopeId);
+			scopeIds = ArrayUtil.append(
+				scopeIds,
+				_assetPublisherHelper.getScopeId(
+					scopeGroup, group.getGroupId()));
 		}
 
 		PortletPreferences importedPortletPreferences =

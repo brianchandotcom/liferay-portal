@@ -133,22 +133,22 @@ public class DisplayPageFriendlyURLResolverTest {
 
 	@Test
 	public void testJournalArticleFriendlyURL() throws Exception {
-		String actualURL = PortalUtil.getActualURL(
-			_group.getGroupId(), false, Portal.PATH_MAIN,
-			"/-/test-journal-article", new HashMap<>(), _getRequestContext());
-
-		Assert.assertNotNull(actualURL);
+		Assert.assertNotNull(
+			PortalUtil.getActualURL(
+				_group.getGroupId(), false, Portal.PATH_MAIN,
+				"/-/test-journal-article", new HashMap<>(),
+				_getRequestContext()));
 	}
 
 	@Test
 	public void testJournalArticleFriendlyURLWithEndingSlash()
 		throws Exception {
 
-		String actualURL = PortalUtil.getActualURL(
-			_group.getGroupId(), false, Portal.PATH_MAIN,
-			"/-/test-journal-article/", new HashMap<>(), _getRequestContext());
-
-		Assert.assertNotNull(actualURL);
+		Assert.assertNotNull(
+			PortalUtil.getActualURL(
+				_group.getGroupId(), false, Portal.PATH_MAIN,
+				"/-/test-journal-article/", new HashMap<>(),
+				_getRequestContext()));
 	}
 
 	@Test

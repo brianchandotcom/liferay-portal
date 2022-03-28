@@ -174,16 +174,15 @@ const ActivationKeysInputs = ({
 	);
 
 	const currentEnterpriseMessage = useMemo(() => {
-		const isAdminOrRequester = accountBrief.roleBriefs?.some(
-			({name}) =>
-				name === ROLE_TYPES.admin.key ||
-				name === ROLE_TYPES.requestor.key
+		const isRequester = accountBrief?.roleBriefs?.some(
+			({name}) => name === ROLE_TYPES.requester.key
 		);
+		if (userAccount.isAdmin || isRequester) {
+			return errorDownloadMessage.messageRequestersAdministrators;
+		}
 
-		return isAdminOrRequester
-			? errorDownloadMessage.messageRequestersAdministrators
-			: errorDownloadMessage.messageUsers;
-	}, [accountBrief.roleBriefs, errorDownloadMessage]);
+		return errorDownloadMessage.messageUsers;
+	}, [accountBrief, errorDownloadMessage, userAccount]);
 
 	return (
 		<div className="mt-3">

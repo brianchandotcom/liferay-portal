@@ -135,6 +135,35 @@ definition {
 		}
 	}
 
+	macro configureImport {
+		UploadDependencyFile.uploadFile(fileName = "${fileName}");
+
+		if (isSet(csvSeparator)) {
+			Type(
+				key_text = "CSV Separator",
+				locator1 = "TextInput#ANY",
+				value1 = "${csvSeparator}");
+		}
+
+		if ("${containsHeaders}" == "false") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "Headers",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		ImportExport.selectEntity(
+			entityType = "${entityType}",
+			headlessEndpoint = "${headlessEndpoint}");
+
+		if ("${stopImportOnError}" == "false") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "Stop the Import on Error",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		ImportExport.mapImport(fieldMappings = "${fieldMappings}");
+	}
+
 	macro exportFile {
 		Click(locator1 = "Button#PLUS");
 

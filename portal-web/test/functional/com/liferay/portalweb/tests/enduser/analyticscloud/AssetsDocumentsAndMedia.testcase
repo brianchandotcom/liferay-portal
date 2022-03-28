@@ -706,6 +706,192 @@ definition {
 		}
 	}
 
+	@description = "Bug: ACP-274 | Automation ID: LRAC-10672 | Test Summary: Download a document by download button (enabled through show actions portlet configuration)"
+	@priority = "4"
+	test DownloadDocumentByDownloadButton {
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Go to AC Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Enable show actions option") {
+			DMDocument.enableActionsMenuOnPortlet();
+		}
+
+		task ("Download the documents and media") {
+			PortletEntry.selectAll();
+
+			Click.clickNoMouseOver(locator1 = "Icon#DOWNLOAD");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to documents and media assets list") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Documents and Media");
+		}
+
+		task ("Change the time filter") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Check the number of downloads and previews in the documents and media assets list") {
+			ACUtils.viewTableInformation(
+				nameList = "DM AC Title",
+				numberValueList = "1");
+		}
+
+		task ("Navigate to the overview tab in document report entry") {
+			ACNavigation.openItem(itemName = "DM AC Title");
+		}
+
+		task ("Check the number of downloads and previews in the overview tab") {
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Downloads",
+				metricValue = "1");
+		}
+	}
+
+	@description = "Bug: ACP-274 | Automation ID: LRAC-10671 | Test Summary: Download a document by info button"
+	@priority = "4"
+	test DownloadDocumentByInfoButton {
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Go to AC Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Download the documents and media") {
+			PortletEntry.selectAll();
+
+			ManagementBar.clickInfo();
+
+			AssertClick.assertPartialTextClickAt(
+				locator1 = "Button#DOWNLOAD_SIDEBAR",
+				value1 = "Download");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to documents and media assets list") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Documents and Media");
+		}
+
+		task ("Change the time filter") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Check the number of downloads and previews in the documents and media assets list") {
+			ACUtils.viewTableInformation(
+				nameList = "DM AC Title",
+				numberValueList = "1");
+		}
+
+		task ("Navigate to the overview tab in document report entry") {
+			ACNavigation.openItem(itemName = "DM AC Title");
+		}
+
+		task ("Check the number of downloads and previews in the overview tab") {
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Downloads",
+				metricValue = "1");
+		}
+	}
+
+	@description = "Bug: ACP-274 | Automation ID: LRAC-10673 | Test Summary: Download a document by the three dots (enabled through show actions portlet configuration)"
+	@priority = "4"
+	test DownloadDocumentByThreeDots {
+		task ("Connect the DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
+		task ("Go to AC Page") {
+			ACUtils.navigateToSitePage(
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Enable show actions option") {
+			DMDocument.enableActionsMenuOnPortlet();
+		}
+
+		task ("Download the documents and media") {
+			for (var n : list "1,2") {
+				DMDocument.downloadCP(dmDocumentTitle = "DM AC Title");
+			}
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
+		}
+
+		task ("Switch to new property in AC") {
+			ACUtils.launchAC();
+
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
+		}
+
+		task ("Navigate to documents and media assets list") {
+			ACNavigation.goToAssets();
+
+			ACNavigation.switchTab(tabName = "Documents and Media");
+		}
+
+		task ("Change the time filter") {
+			ACTimeFilter.clickTimeFilterButton();
+
+			ACTimeFilter.setLast24Hours();
+		}
+
+		task ("Check the number of downloads and previews in the documents and media assets list") {
+			ACUtils.viewTableInformation(
+				nameList = "DM AC Title",
+				numberValueList = "2");
+		}
+
+		task ("Navigate to the overview tab in document report entry") {
+			ACNavigation.openItem(itemName = "DM AC Title");
+		}
+
+		task ("Check the number of downloads and previews in the overview tab") {
+			ACAssets.viewVisitorsBehaviorMetric(
+				metricTitle = "Downloads",
+				metricValue = "2");
+		}
+	}
+
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8118 | Test Summary: Document known individuals list shows the individuals who have viewed the documents"
 	@priority = "5"
 	test KnownIndividualsListShowsIndividualsWhoHaveViewedDocuments {
@@ -876,192 +1062,6 @@ definition {
 				metricTitle = "Previews",
 				metricValue = "3");
 
-			ACAssets.viewVisitorsBehaviorMetric(
-				metricTitle = "Downloads",
-				metricValue = "2");
-		}
-	}
-
-	@description = "Bug: ACP-274 | Automation ID: LRAC-10671 | Test Summary: Download a document by info button"
-	@priority = "4"
-	test DownloadDocumentByInfoButton {
-		task ("Connect the DXP to AC") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Go to AC Page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Download the documents and media") {
-			PortletEntry.selectAll();
-
-			ManagementBar.clickInfo();
-
-			AssertClick.assertPartialTextClickAt(
-				locator1 = "Button#DOWNLOAD_SIDEBAR",
-				value1 = "Download");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch to new property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-		}
-
-		task ("Navigate to documents and media assets list") {
-			ACNavigation.goToAssets();
-
-			ACNavigation.switchTab(tabName = "Documents and Media");
-		}
-
-		task ("Change the time filter") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-		}
-
-		task ("Check the number of downloads and previews in the documents and media assets list") {
-			ACUtils.viewTableInformation(
-				nameList = "DM AC Title",
-				numberValueList = "1");
-		}
-
-		task ("Navigate to the overview tab in document report entry") {
-			ACNavigation.openItem(itemName = "DM AC Title");
-		}
-
-		task ("Check the number of downloads and previews in the overview tab") {
-			ACAssets.viewVisitorsBehaviorMetric(
-				metricTitle = "Downloads",
-				metricValue = "1");
-		}
-	}
-
-	@description = "Bug: ACP-274 | Automation ID: LRAC-10672 | Test Summary: Download a document by download button (enabled through show actions portlet configuration)"
-	@priority = "4"
-	test DownloadDocumentByDownloadButton {
-		task ("Connect the DXP to AC") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Go to AC Page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Enable show actions option") {
-			DMDocument.enableActionsMenuOnPortlet();
-		}
-
-		task ("Download the documents and media") {
-			PortletEntry.selectAll();
-
-			Click.clickNoMouseOver(locator1 = "Icon#DOWNLOAD");
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch to new property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-		}
-
-		task ("Navigate to documents and media assets list") {
-			ACNavigation.goToAssets();
-
-			ACNavigation.switchTab(tabName = "Documents and Media");
-		}
-
-		task ("Change the time filter") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-		}
-
-		task ("Check the number of downloads and previews in the documents and media assets list") {
-			ACUtils.viewTableInformation(
-				nameList = "DM AC Title",
-				numberValueList = "1");
-		}
-
-		task ("Navigate to the overview tab in document report entry") {
-			ACNavigation.openItem(itemName = "DM AC Title");
-		}
-
-		task ("Check the number of downloads and previews in the overview tab") {
-			ACAssets.viewVisitorsBehaviorMetric(
-				metricTitle = "Downloads",
-				metricValue = "1");
-		}
-	}
-
-	@description = "Bug: ACP-274 | Automation ID: LRAC-10673 | Test Summary: Download a document by the three dots (enabled through show actions portlet configuration)"
-	@priority = "4"
-	test DownloadDocumentByThreeDots {
-		task ("Connect the DXP to AC") {
-			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-		}
-
-		task ("Go to AC Page") {
-			ACUtils.navigateToSitePage(
-				pageName = "AC Page",
-				siteName = "Site Name");
-		}
-
-		task ("Enable show actions option") {
-			DMDocument.enableActionsMenuOnPortlet();
-		}
-
-		task ("Download the documents and media") {
-			for (var n : list "1,2") {
-				DMDocument.downloadCP(dmDocumentTitle = "DM AC Title");
-			}
-		}
-
-		task ("Close sessions") {
-			ACUtils.closeAllSessionsAndWait();
-		}
-
-		task ("Switch to new property in AC") {
-			ACUtils.launchAC();
-
-			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
-		}
-
-		task ("Navigate to documents and media assets list") {
-			ACNavigation.goToAssets();
-
-			ACNavigation.switchTab(tabName = "Documents and Media");
-		}
-
-		task ("Change the time filter") {
-			ACTimeFilter.clickTimeFilterButton();
-
-			ACTimeFilter.setLast24Hours();
-		}
-
-		task ("Check the number of downloads and previews in the documents and media assets list") {
-			ACUtils.viewTableInformation(
-				nameList = "DM AC Title",
-				numberValueList = "2");
-		}
-
-		task ("Navigate to the overview tab in document report entry") {
-			ACNavigation.openItem(itemName = "DM AC Title");
-		}
-
-		task ("Check the number of downloads and previews in the overview tab") {
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Downloads",
 				metricValue = "2");

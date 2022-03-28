@@ -378,9 +378,9 @@ definition {
 	Then the user can see both listed"
 	@priority = "5"
 	test BlogsFromDifferentSitesAreListed {
-		property portal.acceptance = "true";
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Create another site") {
 			JSONGroup.addGroup(groupName = "Test Site Name 2");
@@ -1491,9 +1491,9 @@ definition {
 	@priority = "4"
 	@uitest
 	test ClickTitleBlogDPTWithNoPermissions {
-		property portal.acceptance = "true";
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Add Display Page and mark it as default") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -1590,9 +1590,9 @@ definition {
 	@priority = "4"
 	@uitest
 	test ClickTitleBlogDPTWithPermissions {
-		property portal.acceptance = "true";
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Add Display Page and mark it as default") {
 			JSONLayoutpagetemplate.addDisplayPageTemplateEntry(
@@ -1640,9 +1640,9 @@ definition {
 	@priority = "4"
 	@uitest
 	test ClickTitleBlogNoDPTWithNoPermissions {
-		property portal.acceptance = "true";
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Create a blog") {
 			JSONBlog.addEntry(
@@ -1714,9 +1714,9 @@ definition {
 	@priority = "4"
 	@uitest
 	test ClickTitleBlogNoDPTWithPermissions {
-		property portal.acceptance = "true";
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Create a blog") {
 			JSONBlog.addEntry(

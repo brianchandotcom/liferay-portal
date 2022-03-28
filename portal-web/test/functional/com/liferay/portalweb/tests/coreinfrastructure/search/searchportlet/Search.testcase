@@ -1712,6 +1712,22 @@ definition {
 			siteName = "${siteName}",
 			userScreenName = "usersn");
 
+		Navigator.gotoBack();
+
+		Search.searchCP(searchTerm = "userfn");
+
+		User.viewUserTableName(
+			key_userScreenName = "usersn",
+			userfn = "userfn",
+			userln = "userln");
+
+		Search.searchCP(searchTerm = "userln");
+
+		User.viewUserTableName(
+			key_userScreenName = "usersn",
+			userfn = "userfn",
+			userln = "userln");
+
 		Navigator.openURL();
 
 		SearchPortlets.searchEmbedded(searchTerm = "userfn userln");

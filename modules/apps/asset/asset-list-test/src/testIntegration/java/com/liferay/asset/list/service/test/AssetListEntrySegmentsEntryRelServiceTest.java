@@ -105,12 +105,11 @@ public class AssetListEntrySegmentsEntryRelServiceTest {
 		AssetListTestUtil.addAssetListEntrySegmentsEntryRel(
 			_group.getGroupId(), assetListEntry);
 
-		int assetListEntrySegmentsEntryRelsCount =
+		Assert.assertEquals(
+			3,
 			_assetListEntrySegmentsEntryRelLocalService.
 				getAssetListEntrySegmentsEntryRelsCount(
-					assetListEntry.getAssetListEntryId());
-
-		Assert.assertEquals(3, assetListEntrySegmentsEntryRelsCount);
+					assetListEntry.getAssetListEntryId()));
 	}
 
 	@Test

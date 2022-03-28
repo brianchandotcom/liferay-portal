@@ -339,12 +339,10 @@ public class AssetListEntryServiceTest {
 	private AssetListEntry _addAssetListEntry(String title)
 		throws PortalException {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		return _assetListEntryService.addAssetListEntry(
-			_group.getGroupId(), title, 0, serviceContext);
+			_group.getGroupId(), title, 0,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	@Inject

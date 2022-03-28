@@ -882,13 +882,11 @@ public class AssetListAssetEntryProviderTest {
 			long[] assetCategories, long userId)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), userId, assetCategories);
-
 		return JournalTestUtil.addArticle(
 			_group.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), userId, assetCategories));
 	}
 
 	private SegmentsEntry _addSegmentsEntryByFirstName(long groupId, User user)

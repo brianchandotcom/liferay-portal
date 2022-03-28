@@ -16,7 +16,6 @@ package com.liferay.asset.list.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
 import com.liferay.asset.list.util.AssetListTestUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -69,13 +68,11 @@ public class SegmentsEntryModelListenerTest {
 		_segmentsEntryLocalService.deleteSegmentsEntry(
 			segmentsEntry.getSegmentsEntryId());
 
-		AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel =
+		Assert.assertNull(
 			_assetListEntrySegmentsEntryRelLocalService.
 				fetchAssetListEntrySegmentsEntryRel(
 					assetListEntry.getAssetListEntryId(),
-					segmentsEntry.getSegmentsEntryId());
-
-		Assert.assertNull(assetListEntrySegmentsEntryRel);
+					segmentsEntry.getSegmentsEntryId()));
 	}
 
 	@Inject

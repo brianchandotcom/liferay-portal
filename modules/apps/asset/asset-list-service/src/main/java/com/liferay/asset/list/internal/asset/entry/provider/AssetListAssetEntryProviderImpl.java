@@ -401,15 +401,13 @@ public class AssetListAssetEntryProviderImpl
 
 		assetEntryQuery.setOrderByCol2(orderByColumn2);
 
-		String orderByType1 = GetterUtil.getString(
-			unicodeProperties.getProperty("orderByType1", "ASC"));
+		assetEntryQuery.setOrderByType1(
+			GetterUtil.getString(
+				unicodeProperties.getProperty("orderByType1", "ASC")));
 
-		assetEntryQuery.setOrderByType1(orderByType1);
-
-		String orderByType2 = GetterUtil.getString(
-			unicodeProperties.getProperty("orderByType2", "ASC"));
-
-		assetEntryQuery.setOrderByType2(orderByType2);
+		assetEntryQuery.setOrderByType2(
+			GetterUtil.getString(
+				unicodeProperties.getProperty("orderByType2", "ASC")));
 
 		_processAssetEntryQuery(
 			assetListEntry.getCompanyId(), userId, unicodeProperties,

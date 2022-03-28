@@ -260,7 +260,7 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "MessageBoardsThread#MESSAGE_ATTACHMENT_INVALID_SIZE_ERROR",
-			value1 = "Request is larger than ${maxFileSize}KB and could not be processed.");
+			value1 = "Please enter a file with a valid file size no larger than ${maxFileSize}KB.");
 
 		PortletEntry.publish();
 	}

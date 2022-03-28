@@ -49,11 +49,8 @@ public class JWTAssertionUtil {
 
 		jwsHeaders.setKeyId(_KEY_ID);
 
-		JwtToken jwtToken = new JwtToken(
-			jwsHeaders, _getJWTClaims(issuer, subject, audience));
-
 		JwsJwtCompactProducer jwsJwtCompactProducer = new JwsJwtCompactProducer(
-			jwtToken);
+			new JwtToken(jwsHeaders, _getJWTClaims(issuer, subject, audience)));
 
 		JsonWebKeys jsonWebKeys = JwkUtils.readJwkSet(JWKS);
 

@@ -573,7 +573,7 @@ definition {
 
 			PageEditor.editCollectionDisplay(
 				fragmentName = "Collection Display",
-				maxNumberOfItems = "5",
+				maxNumberOfItemsToDisplay = "5",
 				selectedName = "Blog Entries");
 		}
 

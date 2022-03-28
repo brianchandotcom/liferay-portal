@@ -24,11 +24,10 @@ public class TestClientPasswordClientAuthentication
 	implements TestClientAuthentication {
 
 	public TestClientPasswordClientAuthentication(
-		String clientId, String clientPassword) {
+		String clientId, String clientSecret) {
 
 		_clientAuthenticationData.add("client_id", clientId);
-
-		_clientAuthenticationData.add("client_secret", clientPassword);
+		_clientAuthenticationData.add("client_secret", clientSecret);
 	}
 
 	@Override

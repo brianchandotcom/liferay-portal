@@ -96,7 +96,7 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 				String navigation = getNavigation();
 
 				if (navigation.equals("account-users") ||
-					navigation.equals("company-users")) {
+					navigation.equals("no-assigned-account")) {
 
 					return true;
 				}
@@ -155,7 +155,7 @@ public class SelectAccountUsersManagementToolbarDisplayContext
 		}
 
 		List<String> navigationKeys = new ArrayList<>(
-			Arrays.asList("all-users", "account-users", "company-users"));
+			Arrays.asList("all-users", "account-users", "no-assigned-account"));
 
 		try {
 			AccountEntryEmailDomainsConfiguration

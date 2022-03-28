@@ -56,6 +56,7 @@ import getDOM from './util/get_dom';
 import getElement from './util/get_element';
 import getGeolocation from './util/get_geolocation';
 import getLexiconIcon from './util/get_lexicon_icon';
+import getOpener from './util/get_opener';
 import getPortletId from './util/get_portlet_id';
 import getPortletNamespace from './util/get_portlet_namespace.es';
 import getURLWithSessionId from './util/get_url_with_session_id';
@@ -202,6 +203,7 @@ Liferay.Util.getElement = getElement;
 Liferay.Util.getGeolocation = getGeolocation;
 Liferay.Util.getFormElement = getFormElement;
 Liferay.Util.getLexiconIcon = getLexiconIcon;
+Liferay.Util.getOpener = getOpener;
 
 /**
  * @deprecated As of Athanasius (7.3.x), replaced by `import {getPortletId} from 'frontend-js-web'`

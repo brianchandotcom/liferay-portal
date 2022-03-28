@@ -439,26 +439,6 @@
 			return Liferay.Util.sub(TPL_LEXICON_ICON, icon, cssClass || '');
 		},
 
-		getOpener() {
-			var openingWindow = Window._opener;
-
-			if (!openingWindow) {
-				var topUtil = Liferay.Util.getTop().Liferay.Util;
-
-				var windowName = window.name;
-
-				var dialog = topUtil.Window.getById(windowName);
-
-				if (dialog) {
-					openingWindow = dialog._opener;
-
-					Window._opener = openingWindow;
-				}
-			}
-
-			return openingWindow || window.opener || window.parent;
-		},
-
 		getTop() {
 			var topWindow = Util._topWindow;
 

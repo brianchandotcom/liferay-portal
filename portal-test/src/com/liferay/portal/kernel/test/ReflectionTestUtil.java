@@ -192,6 +192,16 @@ public class ReflectionTestUtil {
 					" and parameter types ", Arrays.toString(parameterTypes))));
 	}
 
+	public static boolean hasMethod(Class<?> clazz, String name) {
+		for (Method method : clazz.getMethods()) {
+			if (name.equals(method.getName())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static <T> T invoke(
 		Class<?> clazz, String methodName, Class<?>[] parameterTypes,
 		Object... parameters) {

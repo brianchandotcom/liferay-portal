@@ -18,6 +18,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			CommerceJSONChannelsAPI._deleteAllCommerceChannels();
+
 			JSONAccountEntryAPI._deleteAllAccountEntries();
 
 			BatchPlanner.batchPlannerTearDown();
@@ -577,6 +579,68 @@ definition {
 				accountName = "Test Person Account",
 				accountType = "Person",
 				externalReferenceCode = "103");
+		}
+	}
+
+	@description = "Verify users cannot import an entity without mapping the required fields."
+	@priority = "3"
+	test CannotImportWithoutRequiredFields {
+		property portal.acceptance = "true";
+
+		task ("Given the user is configuring an import") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			UploadDependencyFile.uploadFile(fileName = "csv_channel_import.csv");
+
+			ImportExport.selectEntity(
+				entityType = "Channel",
+				headlessEndpoint = "/headless-commerce-admin-channel");
+
+			ImportExport.mapImport(fieldMappings = "name:Channel Name,type:Channel Type");
+		}
+
+		task ("When the user tries to import a file without mapping all the required fields") {
+			Button.click(button = "Import");
+		}
+
+		task ("Then the import should fail and the missing field should be highlighted red") {
+			AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
+
+			AssertElementPresent(
+				key_destinationField = "currencyCode",
+				locator1 = "ImportExport#REQUIRED_IMPORT_FIELD_ERROR");
+		}
+
+		task ("When the user maps the missing required field and imports the file") {
+			ImportExport.mapImport(fieldMappings = "currencyCode:Currency Code");
+
+			Button.click(button = "Import");
+		}
+
+		task ("Then the file should be imported successfully") {
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+
+			Button.clickDone();
+
+			CommerceChannels.openChannelsAdmin();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Channel 1");
+
+			CommerceEntry.viewChannelsEntry(
+				channelCurrency = "US Dollar",
+				channelName = "Test Channel 1",
+				channelType = "Site");
+
+			Navigator.gotoBack();
+
+			CommerceNavigator.gotoEntry(entryName = "Test Channel 2");
+
+			CommerceEntry.viewChannelsEntry(
+				channelCurrency = "Canadian Dollar",
+				channelName = "Test Channel 2",
+				channelType = "Site");
 		}
 	}
 

@@ -42,12 +42,12 @@ public class AnnouncementsEntryUADDisplay
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			AnnouncementsEntry.class.getName(), PortletProvider.Action.VIEW);
-
 		return PortletURLBuilder.createLiferayPortletURL(
 			liferayPortletResponse,
-			portal.getControlPanelPlid(liferayPortletRequest), portletId,
+			portal.getControlPanelPlid(liferayPortletRequest),
+			PortletProviderUtil.getPortletId(
+				AnnouncementsEntry.class.getName(),
+				PortletProvider.Action.VIEW),
 			PortletRequest.RENDER_PHASE
 		).setMVCRenderCommandName(
 			"/announcements/edit_entry"

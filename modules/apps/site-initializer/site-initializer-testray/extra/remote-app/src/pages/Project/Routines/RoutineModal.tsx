@@ -90,12 +90,14 @@ const RoutineModal: React.FC<RoutineModalProps> = ({
 				variables.routineId = form.id;
 
 				await onUpdateRoutine({variables});
-			} else {
+			}
+			else {
 				await onCreateRoutine({variables});
 			}
 
 			onSave();
-		} catch (error) {
+		}
+		catch (error) {
 			onError(error);
 		}
 	};

@@ -23,10 +23,10 @@ export const testrayRunFragment = gql`
 		externalReferenceCode
 		externalReferencePK
 		externalReferenceType
+		id: runId
 		jenkinsJobKey
 		name
 		number
-		id: runId
 		status
 	}
 `;

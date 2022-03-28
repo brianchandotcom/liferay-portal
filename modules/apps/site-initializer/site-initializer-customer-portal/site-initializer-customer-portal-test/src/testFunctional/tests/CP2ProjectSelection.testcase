@@ -1,0 +1,252 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Customer Portal";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+        CustomerPortal.setUpForCP20();
+
+		CustomerPortal.createCPSite(siteName = "Customer Portal");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+            CustomerPortal.tearDownForOktaAndSAML();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "LPS-143790 - Assert if the project card contains Project name."
+	@priority = "4"
+	test AssertCardProjectNameLessThan5 {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		Click(
+			locator1 = "CP2LiferayContact#DELETE_PROJECT",
+			project = "PROJECT03",
+			value1 = "Delete");
+
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		AssertElementPresent(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			title = "Test Account 01");
+	}
+
+	@description = "LPS-143778 - Assert the name of the project card."
+	@priority = "4"
+	test AssertCardProjectNameMoreThan5 {
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		AssertElementPresent(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			title = "Test Account 01");
+	}
+
+	@description = "LPS-143791 - Assert if the project card contains Status."
+	@priority = "4"
+	test AssertCardStatusLessThan5 {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		Click(
+			locator1 = "CP2LiferayContact#DELETE_PROJECT",
+			project = "PROJECT04",
+			value1 = "Delete");
+
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		AssertElementPresent(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			status = "Active",
+			title = "Test Account 01");
+	}
+
+	@description = "LPS-143779 - Assert if the project card contains Status."
+	@priority = "4"
+	test AssertCardStatusMoreThan5 {
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		AssertElementPresent(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			status = "Active",
+			title = "Test Account 01");
+	}
+
+	@description = "LPS-143792 - Assert if the project card contains Subscription End Date."
+	@priority = "4"
+	test AssertCardSubscriptionEndDateLessThan5 {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		Click(
+			locator1 = "CP2LiferayContact#DELETE_PROJECT",
+			project = "PROJECT04",
+			value1 = "Delete");
+
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		AssertElementPresent(
+			date = "Jan 11, 2022",
+			locator1 = "CP2LiferayContact#PROJECT_EXPIRATION_DATE");
+	}
+
+	@description = "LPS-143780 - Assert if the project card contains Subscription End Date."
+	@priority = "4"
+	test AssertCardSubscriptionEndDateMoreThan5 {
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		AssertElementPresent(
+			date = "Jan 11, 2022",
+			locator1 = "CP2LiferayContact#PROJECT_EXPIRATION_DATE");
+	}
+
+	@description = "LPS-143797 - Verify if for less than 5 projects the search bar it's not visible."
+	@priority = "2"
+	test AssertSearchBarNotVisible {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		Click(
+			locator1 = "CP2LiferayContact#DELETE_PROJECT",
+			project = "PROJECT04",
+			value1 = "Delete");
+
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		AssertElementNotPresent(locator1 = "CP2LiferayContact#SEARCH_PROJECT");
+	}
+
+	@description = "LPS-143785 - Check if when the user clicks on the card he is directed to another page."
+	@priority = "5"
+	test VerifyCardDirectsToAnotherPageMoreThan5 {
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		Click(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			title = "Test Account 01");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+        SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "CP2LiferayContact#SUBSCRIPTIONS_PAGE");
+	}
+
+	@description = "LPS-143781 - Verify if the projects are displayed as a list."
+	@priority = "5"
+	test VerifyIfProjectsDisplayedAsAList {
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		AssertElementPresent(locator1 = "CP2ProjectSelection#MORE_FIVE_PROJECTS");
+	}
+
+	@description = "LPS-143793 - Verify if the projects are displayed as cards."
+	@priority = "5"
+	test VerifyIfProjectsDisplayedAsCards {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		Click(
+			locator1 = "CP2LiferayContact#DELETE_PROJECT",
+			project = "PROJECT04",
+			value1 = "Delete");
+
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		AssertElementPresent(locator1 = "CP2ProjectSelection#LESS_FIVE_PROJECTS");
+	}
+
+	@description = "LPS-143782 - Verify if when more than 5 projects are chosen the search bar will be visible."
+	@priority = "3"
+	test VerifyIfSearchIsVisible {
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		AssertElementPresent(locator1 = "CP2LiferayContact#SEARCH_PROJECT");
+	}
+
+	@description = "LPS-143784 - Verify if the number of projects is being showed by side of the search bar."
+	@priority = "3"
+	test VerifyProjectsNumberBySideOfSearchBar {
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		AssertElementPresent(
+			locator1 = "CP2LiferayContact#NUMBER_PROJECTS",
+			number = "8");
+	}
+
+	@description = "LPS-143795 - Assert the name of the project card."
+	@priority = "2"
+	test VerifyUserName {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		Click(
+			locator1 = "CP2LiferayContact#DELETE_PROJECT",
+			project = "PROJECT04",
+			value1 = "Delete");
+
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		AssertElementPresent(
+			locator1 = "CP2LiferayContact#WELCOME_BANNER",
+			value1 = "Welcome, Test!");
+	}
+
+	@description = "LPS-143794 - Check if when the user clicks on the card he is directed to another page."
+	@priority = "4"
+	test VerifyWhenCardIsClickedGoesAnotherPage {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Koroneiki Accounts");
+
+		Click(
+			locator1 = "CP2LiferayContact#DELETE_PROJECT",
+			project = "PROJECT04",
+			value1 = "Delete");
+
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		Click(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			title = "Test Account 01");
+
+        CustomerPortal.loginOktaToUpdateCP();
+
+        SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "CP2LiferayContact#SUBSCRIPTIONS_PAGE");
+	}
+
+}

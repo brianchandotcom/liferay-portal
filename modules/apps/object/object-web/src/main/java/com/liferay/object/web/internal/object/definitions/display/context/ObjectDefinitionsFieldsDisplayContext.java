@@ -21,7 +21,6 @@ import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.web.internal.configuration.FFBusinessTypeAttachmentConfiguration;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
 import com.liferay.object.web.internal.util.ObjectFieldBusinessTypeUtil;
@@ -58,16 +57,12 @@ import javax.servlet.http.HttpServletRequest;
 public class ObjectDefinitionsFieldsDisplayContext {
 
 	public ObjectDefinitionsFieldsDisplayContext(
-		FFBusinessTypeAttachmentConfiguration
-			ffBusinessTypeAttachmentConfiguration,
 		HttpServletRequest httpServletRequest,
 		ModelResourcePermission<ObjectDefinition>
 			objectDefinitionModelResourcePermission,
 		ObjectFieldBusinessTypeServicesTracker
 			objectFieldBusinessTypeServicesTracker) {
 
-		_ffBusinessTypeAttachmentConfiguration =
-			ffBusinessTypeAttachmentConfiguration;
 		_objectDefinitionModelResourcePermission =
 			objectDefinitionModelResourcePermission;
 		_objectFieldBusinessTypeServicesTracker =
@@ -155,10 +150,6 @@ public class ObjectDefinitionsFieldsDisplayContext {
 					objectFieldBusinessType.isVisible() &&
 					(!StringUtil.equals(
 						objectFieldBusinessType.getName(),
-						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT) ||
-					 _ffBusinessTypeAttachmentConfiguration.enabled()) &&
-					(!StringUtil.equals(
-						objectFieldBusinessType.getName(),
 						ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP) ||
 					 includeRelationshipObjectFieldBusinessType)
 			).collect(
@@ -231,8 +222,6 @@ public class ObjectDefinitionsFieldsDisplayContext {
 		return jsonArray;
 	}
 
-	private final FFBusinessTypeAttachmentConfiguration
-		_ffBusinessTypeAttachmentConfiguration;
 	private final ModelResourcePermission<ObjectDefinition>
 		_objectDefinitionModelResourcePermission;
 	private final ObjectFieldBusinessTypeServicesTracker

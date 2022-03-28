@@ -20,10 +20,8 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.web.internal.configuration.FFBusinessTypeAttachmentConfiguration;
 import com.liferay.object.web.internal.constants.ObjectWebKeys;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsFieldsDisplayContext;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -32,13 +30,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Map;
-
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -47,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gabriel Albuquerque
  */
 @Component(
-	configurationPid = "com.liferay.object.web.internal.configuration.FFBusinessTypeAttachmentConfiguration",
 	property = {
 		"javax.portlet.name=" + ObjectPortletKeys.OBJECT_DEFINITIONS,
 		"mvc.command.name=/object_definitions/edit_object_field"
@@ -74,7 +68,6 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new ObjectDefinitionsFieldsDisplayContext(
-					_ffBusinessTypeAttachmentConfiguration,
 					_portal.getHttpServletRequest(renderRequest),
 					_objectDefinitionModelResourcePermission,
 					_objectFieldBusinessTypeServicesTracker));
@@ -85,16 +78,6 @@ public class EditObjectFieldMVCRenderCommand implements MVCRenderCommand {
 
 		return "/object_definitions/edit_object_field.jsp";
 	}
-
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_ffBusinessTypeAttachmentConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFBusinessTypeAttachmentConfiguration.class, properties);
-	}
-
-	private FFBusinessTypeAttachmentConfiguration
-		_ffBusinessTypeAttachmentConfiguration;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

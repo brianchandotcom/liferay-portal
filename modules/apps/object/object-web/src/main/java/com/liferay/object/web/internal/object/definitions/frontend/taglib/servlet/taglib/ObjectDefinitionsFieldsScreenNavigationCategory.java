@@ -18,10 +18,8 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.web.internal.configuration.FFBusinessTypeAttachmentConfiguration;
 import com.liferay.object.web.internal.object.definitions.constants.ObjectDefinitionsScreenNavigationEntryConstants;
 import com.liferay.object.web.internal.object.definitions.display.context.ObjectDefinitionsFieldsDisplayContext;
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -29,12 +27,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 
 import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -43,7 +39,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gabriel Albuquerque
  */
 @Component(
-	configurationPid = "com.liferay.object.web.internal.configuration.FFBusinessTypeAttachmentConfiguration",
 	property = {
 		"screen.navigation.category.order:Integer=20",
 		"screen.navigation.entry.order:Integer=10"
@@ -84,22 +79,11 @@ public class ObjectDefinitionsFieldsScreenNavigationCategory
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectDefinitionsFieldsDisplayContext(
-				_ffBusinessTypeAttachmentConfiguration, httpServletRequest,
-				_objectDefinitionModelResourcePermission,
+				httpServletRequest, _objectDefinitionModelResourcePermission,
 				_objectFieldBusinessTypeServicesTracker));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
-
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_ffBusinessTypeAttachmentConfiguration =
-			ConfigurableUtil.createConfigurable(
-				FFBusinessTypeAttachmentConfiguration.class, properties);
-	}
-
-	private FFBusinessTypeAttachmentConfiguration
-		_ffBusinessTypeAttachmentConfiguration;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.object.model.ObjectDefinition)"

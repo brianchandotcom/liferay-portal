@@ -54,12 +54,20 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 	public boolean isLayoutTranslatedLanguagesEnabled(Group group)
 		throws PortalException {
 
-		if (!isOpenGraphEnabled(group)) {
+		Company company = _companyLocalService.getCompany(group.getCompanyId());
+
+		LayoutSEOCompanyConfiguration layoutSEOCompanyConfiguration =
+			_configurationProvider.getCompanyConfiguration(
+				LayoutSEOCompanyConfiguration.class, company.getCompanyId());
+
+		if (!_isOpenGraphEnabled(layoutSEOCompanyConfiguration) ||
+			!_isOpenGraphEnabled(group)) {
+
 			return false;
 		}
 
-		if (isLayoutTranslatedLanguagesEnabled(
-				_companyLocalService.getCompany(group.getCompanyId()))) {
+		if (_isLayoutTranslatedLanguagesEnabled(
+				layoutSEOCompanyConfiguration)) {
 
 			return true;
 		}

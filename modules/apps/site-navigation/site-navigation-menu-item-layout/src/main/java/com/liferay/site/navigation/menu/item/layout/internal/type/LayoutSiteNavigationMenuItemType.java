@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -499,34 +501,47 @@ public class LayoutSiteNavigationMenuItemType
 		boolean privateLayout = GetterUtil.getBoolean(
 			typeSettingsUnicodeProperties.get("privateLayout"));
 
-		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
-
-		if ((layout == null) && ExportImportThreadLocal.isImportInProcess()) {
-			layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-				layoutUuid, siteNavigationMenuItem.getGroupId(),
-				!privateLayout);
+		if (privateLayout != portletDataContext.isPrivateLayout()) {
+			ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
 		}
 
-		if (layout == null) {
-			Element layoutElement = portletDataContext.getImportDataElement(
-				siteNavigationMenuItem);
+		try {
+			Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+				layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
 
-			String friendlyURL = layoutElement.attributeValue(
-				"layout-friendly-url");
+			if ((layout == null) &&
+				ExportImportThreadLocal.isImportInProcess()) {
 
-			LayoutFriendlyURL layoutFriendlyURL =
-				_layoutFriendlyURLLocalService.fetchFirstLayoutFriendlyURL(
-					siteNavigationMenuItem.getGroupId(), privateLayout,
-					friendlyURL);
+				layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+					layoutUuid, siteNavigationMenuItem.getGroupId(),
+					!privateLayout);
+			}
 
-			if (layoutFriendlyURL != null) {
-				layout = _layoutLocalService.fetchLayout(
-					layoutFriendlyURL.getPlid());
+			if (layout == null) {
+				Element layoutElement = portletDataContext.getImportDataElement(
+					siteNavigationMenuItem);
+
+				String friendlyURL = layoutElement.attributeValue(
+					"layout-friendly-url");
+
+				LayoutFriendlyURL layoutFriendlyURL =
+					_layoutFriendlyURLLocalService.fetchFirstLayoutFriendlyURL(
+						siteNavigationMenuItem.getGroupId(), privateLayout,
+						friendlyURL);
+
+				if (layoutFriendlyURL != null) {
+					layout = _layoutLocalService.fetchLayout(
+						layoutFriendlyURL.getPlid());
+				}
+			}
+
+			return layout;
+		}
+		finally {
+			if (privateLayout != portletDataContext.isPrivateLayout()) {
+				ServiceContextThreadLocal.popServiceContext();
 			}
 		}
-
-		return layout;
 	}
 
 	private boolean _isAncestor(

@@ -123,6 +123,10 @@ public abstract class BasePunchOutSessionResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<PunchOutSession> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

@@ -194,6 +194,10 @@ public abstract class BaseSubscriptionResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<Subscription> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

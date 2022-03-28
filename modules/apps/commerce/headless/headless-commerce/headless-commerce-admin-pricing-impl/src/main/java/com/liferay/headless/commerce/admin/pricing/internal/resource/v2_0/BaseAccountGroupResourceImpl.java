@@ -161,6 +161,10 @@ public abstract class BaseAccountGroupResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v2.0";
+	}
+
 	@Override
 	public Page<AccountGroup> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

@@ -257,6 +257,10 @@ public abstract class BaseDiagramResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<Diagram> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

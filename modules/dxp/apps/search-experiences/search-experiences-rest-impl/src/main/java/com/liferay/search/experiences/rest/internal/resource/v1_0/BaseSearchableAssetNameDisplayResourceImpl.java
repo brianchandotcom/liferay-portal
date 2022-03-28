@@ -135,6 +135,10 @@ public abstract class BaseSearchableAssetNameDisplayResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<SearchableAssetNameDisplay> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

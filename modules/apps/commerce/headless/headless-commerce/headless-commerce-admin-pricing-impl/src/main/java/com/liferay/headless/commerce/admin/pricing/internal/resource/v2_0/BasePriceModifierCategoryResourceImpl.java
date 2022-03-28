@@ -423,6 +423,10 @@ public abstract class BasePriceModifierCategoryResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v2.0";
+	}
+
 	@Override
 	public Page<PriceModifierCategory> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

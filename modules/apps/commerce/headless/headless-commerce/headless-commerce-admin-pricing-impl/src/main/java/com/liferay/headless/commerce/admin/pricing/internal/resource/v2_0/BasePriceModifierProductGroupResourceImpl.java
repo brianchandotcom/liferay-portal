@@ -429,6 +429,10 @@ public abstract class BasePriceModifierProductGroupResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v2.0";
+	}
+
 	@Override
 	public Page<PriceModifierProductGroup> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

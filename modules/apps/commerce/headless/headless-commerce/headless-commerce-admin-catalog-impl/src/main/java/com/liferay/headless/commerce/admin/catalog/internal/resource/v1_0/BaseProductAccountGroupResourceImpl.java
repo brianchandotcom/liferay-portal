@@ -310,6 +310,10 @@ public abstract class BaseProductAccountGroupResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<ProductAccountGroup> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

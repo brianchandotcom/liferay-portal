@@ -403,6 +403,10 @@ public abstract class BaseDiscountOrderTypeResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v2.0";
+	}
+
 	@Override
 	public Page<DiscountOrderType> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

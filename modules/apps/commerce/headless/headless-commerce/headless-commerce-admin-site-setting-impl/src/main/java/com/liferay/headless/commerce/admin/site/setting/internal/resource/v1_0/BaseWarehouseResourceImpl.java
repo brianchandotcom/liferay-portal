@@ -376,6 +376,10 @@ public abstract class BaseWarehouseResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<Warehouse> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

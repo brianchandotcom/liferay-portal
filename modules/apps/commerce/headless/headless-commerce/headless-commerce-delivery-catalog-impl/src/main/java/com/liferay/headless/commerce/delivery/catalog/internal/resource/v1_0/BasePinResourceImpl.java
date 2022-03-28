@@ -164,6 +164,10 @@ public abstract class BasePinResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<Pin> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

@@ -492,6 +492,10 @@ public abstract class BaseAccountOrganizationResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<AccountOrganization> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

@@ -385,6 +385,10 @@ public abstract class BaseSpecificationResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<Specification> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

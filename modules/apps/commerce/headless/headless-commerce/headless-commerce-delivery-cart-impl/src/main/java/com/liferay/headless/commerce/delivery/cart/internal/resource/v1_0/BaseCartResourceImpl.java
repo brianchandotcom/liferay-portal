@@ -619,6 +619,10 @@ public abstract class BaseCartResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<Cart> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

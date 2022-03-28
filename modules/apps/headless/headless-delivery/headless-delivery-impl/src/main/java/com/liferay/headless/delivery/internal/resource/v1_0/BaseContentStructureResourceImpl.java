@@ -639,6 +639,10 @@ public abstract class BaseContentStructureResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<ContentStructure> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

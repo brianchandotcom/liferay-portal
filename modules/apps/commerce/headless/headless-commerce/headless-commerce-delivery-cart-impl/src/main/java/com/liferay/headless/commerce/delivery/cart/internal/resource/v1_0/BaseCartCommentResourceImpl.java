@@ -408,6 +408,10 @@ public abstract class BaseCartCommentResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<CartComment> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

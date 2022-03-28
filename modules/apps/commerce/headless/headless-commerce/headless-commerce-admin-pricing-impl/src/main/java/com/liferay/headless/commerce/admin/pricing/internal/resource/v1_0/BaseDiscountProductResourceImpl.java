@@ -395,6 +395,10 @@ public abstract class BaseDiscountProductResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<DiscountProduct> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

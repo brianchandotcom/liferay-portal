@@ -197,6 +197,10 @@ public abstract class BaseWebUrlResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<WebUrl> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

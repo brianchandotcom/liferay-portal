@@ -147,6 +147,10 @@ public abstract class BaseAssigneeMetricResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<AssigneeMetric> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

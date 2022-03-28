@@ -459,6 +459,10 @@ public abstract class BaseOrderRuleResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<OrderRule> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

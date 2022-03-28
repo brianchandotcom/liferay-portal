@@ -448,6 +448,10 @@ public abstract class BaseSXPElementResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<SXPElement> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

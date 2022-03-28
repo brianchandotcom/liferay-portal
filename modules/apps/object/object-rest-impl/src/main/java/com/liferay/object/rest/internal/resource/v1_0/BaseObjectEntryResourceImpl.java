@@ -694,6 +694,10 @@ public abstract class BaseObjectEntryResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<ObjectEntry> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

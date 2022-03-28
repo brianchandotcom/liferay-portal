@@ -479,6 +479,10 @@ public abstract class BaseShipmentItemResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<ShipmentItem> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

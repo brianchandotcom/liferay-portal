@@ -258,6 +258,10 @@ public abstract class BaseContentTemplateResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<ContentTemplate> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

@@ -452,6 +452,10 @@ public abstract class BaseSXPBlueprintResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<SXPBlueprint> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

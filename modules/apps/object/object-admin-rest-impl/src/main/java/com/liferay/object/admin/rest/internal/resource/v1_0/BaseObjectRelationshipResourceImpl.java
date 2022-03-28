@@ -455,6 +455,10 @@ public abstract class BaseObjectRelationshipResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<ObjectRelationship> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

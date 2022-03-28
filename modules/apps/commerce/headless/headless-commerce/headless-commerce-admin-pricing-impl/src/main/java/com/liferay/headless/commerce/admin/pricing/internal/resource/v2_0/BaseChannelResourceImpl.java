@@ -157,6 +157,10 @@ public abstract class BaseChannelResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v2.0";
+	}
+
 	@Override
 	public Page<Channel> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

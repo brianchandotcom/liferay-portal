@@ -162,6 +162,10 @@ public abstract class BaseAccountForecastResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<AccountForecast> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

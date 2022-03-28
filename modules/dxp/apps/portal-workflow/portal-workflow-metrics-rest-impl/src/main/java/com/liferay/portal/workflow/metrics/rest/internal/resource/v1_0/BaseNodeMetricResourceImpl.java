@@ -177,6 +177,10 @@ public abstract class BaseNodeMetricResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<NodeMetric> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

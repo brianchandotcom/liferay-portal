@@ -830,6 +830,10 @@ public abstract class BaseWikiPageResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<WikiPage> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

@@ -461,6 +461,10 @@ public abstract class BaseDataListViewResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v2.0";
+	}
+
 	@Override
 	public Page<DataListView> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

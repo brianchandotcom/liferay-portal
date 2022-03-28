@@ -157,6 +157,10 @@ public abstract class BaseSkuResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v2.0";
+	}
+
 	@Override
 	public Page<Sku> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

@@ -409,6 +409,10 @@ public abstract class BaseOrderRuleAccountGroupResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<OrderRuleAccountGroup> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

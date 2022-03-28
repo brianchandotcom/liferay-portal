@@ -544,6 +544,10 @@ public abstract class BaseOrderItemResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<OrderItem> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

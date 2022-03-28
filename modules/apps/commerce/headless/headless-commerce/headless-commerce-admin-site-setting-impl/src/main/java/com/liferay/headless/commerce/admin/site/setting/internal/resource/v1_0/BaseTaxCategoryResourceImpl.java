@@ -369,6 +369,10 @@ public abstract class BaseTaxCategoryResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<TaxCategory> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

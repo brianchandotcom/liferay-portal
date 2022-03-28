@@ -443,6 +443,10 @@ public abstract class BaseDiscountRuleResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<DiscountRule> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

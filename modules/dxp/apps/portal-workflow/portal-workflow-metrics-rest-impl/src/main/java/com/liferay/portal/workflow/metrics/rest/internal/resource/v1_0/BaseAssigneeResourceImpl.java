@@ -131,6 +131,10 @@ public abstract class BaseAssigneeResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<Assignee> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

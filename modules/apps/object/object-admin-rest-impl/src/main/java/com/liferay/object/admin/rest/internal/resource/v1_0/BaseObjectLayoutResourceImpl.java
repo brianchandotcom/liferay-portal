@@ -428,6 +428,10 @@ public abstract class BaseObjectLayoutResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<ObjectLayout> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

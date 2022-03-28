@@ -881,6 +881,10 @@ public abstract class BaseWikiNodeResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<WikiNode> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

@@ -164,6 +164,10 @@ public abstract class BaseLanguageResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<Language> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

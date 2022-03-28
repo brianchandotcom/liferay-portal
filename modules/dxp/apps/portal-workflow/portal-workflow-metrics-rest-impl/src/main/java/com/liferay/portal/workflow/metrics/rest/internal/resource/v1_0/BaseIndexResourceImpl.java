@@ -146,6 +146,10 @@ public abstract class BaseIndexResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<Index> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

@@ -442,6 +442,10 @@ public abstract class BaseSLAResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<SLA> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

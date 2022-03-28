@@ -450,6 +450,10 @@ public abstract class BaseRoleResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<Role> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

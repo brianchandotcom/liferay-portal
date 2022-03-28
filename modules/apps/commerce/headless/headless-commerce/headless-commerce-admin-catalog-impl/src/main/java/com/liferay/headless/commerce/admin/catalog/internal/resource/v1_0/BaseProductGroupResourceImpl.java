@@ -465,6 +465,10 @@ public abstract class BaseProductGroupResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<ProductGroup> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

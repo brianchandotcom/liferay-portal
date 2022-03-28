@@ -490,6 +490,10 @@ public abstract class BaseListTypeDefinitionResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<ListTypeDefinition> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

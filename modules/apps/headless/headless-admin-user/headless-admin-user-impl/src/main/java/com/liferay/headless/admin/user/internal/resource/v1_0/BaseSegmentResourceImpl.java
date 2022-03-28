@@ -181,6 +181,10 @@ public abstract class BaseSegmentResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<Segment> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

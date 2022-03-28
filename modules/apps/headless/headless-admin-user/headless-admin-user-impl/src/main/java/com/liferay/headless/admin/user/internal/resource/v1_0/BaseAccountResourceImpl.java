@@ -943,6 +943,10 @@ public abstract class BaseAccountResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<Account> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

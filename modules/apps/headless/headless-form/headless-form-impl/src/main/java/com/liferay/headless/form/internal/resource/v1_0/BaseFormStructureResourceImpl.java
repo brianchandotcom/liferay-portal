@@ -175,6 +175,10 @@ public abstract class BaseFormStructureResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<FormStructure> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

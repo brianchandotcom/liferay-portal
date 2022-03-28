@@ -409,6 +409,10 @@ public abstract class BasePriceListAccountGroupResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v2.0";
+	}
+
 	@Override
 	public Page<PriceListAccountGroup> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

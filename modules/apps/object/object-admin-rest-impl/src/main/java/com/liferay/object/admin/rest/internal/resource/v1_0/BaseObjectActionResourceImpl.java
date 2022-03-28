@@ -499,6 +499,10 @@ public abstract class BaseObjectActionResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<ObjectAction> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

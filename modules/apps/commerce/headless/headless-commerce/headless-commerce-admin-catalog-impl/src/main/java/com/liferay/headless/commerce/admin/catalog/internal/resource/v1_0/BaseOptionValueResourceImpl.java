@@ -568,6 +568,10 @@ public abstract class BaseOptionValueResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<OptionValue> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

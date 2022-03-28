@@ -163,6 +163,10 @@ public abstract class BaseAddressResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<Address> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

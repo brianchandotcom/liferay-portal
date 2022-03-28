@@ -386,6 +386,10 @@ public abstract class BasePriceListDiscountResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v2.0";
+	}
+
 	@Override
 	public Page<PriceListDiscount> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

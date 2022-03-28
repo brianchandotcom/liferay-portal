@@ -300,6 +300,10 @@ public abstract class BaseProductChannelResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<ProductChannel> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

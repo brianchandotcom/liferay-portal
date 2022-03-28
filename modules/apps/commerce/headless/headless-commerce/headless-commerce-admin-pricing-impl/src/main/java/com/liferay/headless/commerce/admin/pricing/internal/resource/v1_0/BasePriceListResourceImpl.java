@@ -464,6 +464,10 @@ public abstract class BasePriceListResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<PriceList> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

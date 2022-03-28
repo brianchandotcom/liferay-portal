@@ -700,6 +700,10 @@ public abstract class BaseAttachmentResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<Attachment> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

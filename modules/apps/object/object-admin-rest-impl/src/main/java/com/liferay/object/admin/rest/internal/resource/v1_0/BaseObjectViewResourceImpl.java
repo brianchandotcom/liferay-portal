@@ -458,6 +458,10 @@ public abstract class BaseObjectViewResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<ObjectView> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

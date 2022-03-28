@@ -539,6 +539,10 @@ public abstract class BaseTierPriceResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v2.0";
+	}
+
 	@Override
 	public Page<TierPrice> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

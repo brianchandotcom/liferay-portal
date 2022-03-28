@@ -677,6 +677,10 @@ public abstract class BaseUserGroupResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<UserGroup> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

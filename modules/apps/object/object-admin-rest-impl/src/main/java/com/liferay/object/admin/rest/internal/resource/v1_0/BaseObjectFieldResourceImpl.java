@@ -516,6 +516,10 @@ public abstract class BaseObjectFieldResourceImpl
 		return null;
 	}
 
+	public String getVersion() {
+		return "v1.0";
+	}
+
 	@Override
 	public Page<ObjectField> read(
 			Filter filter, Pagination pagination, Sort[] sorts,

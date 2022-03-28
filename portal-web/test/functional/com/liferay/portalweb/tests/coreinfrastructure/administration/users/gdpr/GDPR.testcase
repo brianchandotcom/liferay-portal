@@ -315,8 +315,8 @@ definition {
 			applications = "Documents and Media",
 			totalItemsCount = "6");
 
-		for (var n : list "1,2,3") {
-			GDPR.anonymizeStagedDatainApplicationCP(rowIndexNumber = "${n}");
+		for (var rowIndexNum : list "1,2,3") {
+			GDPR.anonymizeStagedDatainApplicationCP(rowIndexNumber = "${rowIndexNum}");
 		}
 
 		for (var entryTitle : list "Document_1,Document_2,Document_3") {

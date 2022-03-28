@@ -376,6 +376,8 @@ definition {
 
 		Button.clickSave();
 
+		SelectFrame(locator1 = "Message#ERROR");
+
 		Alert.viewErrorMessage(errorMessage = "There can only be one default object view");
 	}
 

@@ -87,6 +87,8 @@ definition {
 
 		Button.clickSave();
 
+		SelectFrame(locator1 = "Message#ERROR");
+
 		AssertTextEquals(
 			locator1 = "Message#ERROR",
 			value1 = "Error:There can only be one default object layout");

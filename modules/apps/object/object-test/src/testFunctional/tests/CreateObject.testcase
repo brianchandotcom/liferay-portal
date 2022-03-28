@@ -2163,6 +2163,8 @@ definition {
 
 		Button.clickSave();
 
+		SelectFrame(locator1 = "Message#ERROR");
+
 		AssertTextEquals.assertPartialText(
 			locator1 = "Message#ERROR",
 			value1 = "All required object fields must be associated to the first tab of a default object layout");

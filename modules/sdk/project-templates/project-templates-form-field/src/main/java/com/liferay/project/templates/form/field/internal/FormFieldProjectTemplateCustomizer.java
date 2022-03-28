@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -192,15 +193,14 @@ public class FormFieldProjectTemplateCustomizer
 		Path packageJsonPath = projectPath.resolve("package.json");
 
 		if (Files.exists(packageJsonPath)) {
-			File packageJsonFile = packageJsonPath.toFile();
-
-			String packageJsonContent = FileUtils.readFileToString(
-				packageJsonFile);
+			String packageJsonContent = new String(
+				Files.readAllBytes(packageJsonPath), StandardCharsets.UTF_8);
 
 			String newContent = packageJsonContent.replaceAll(
 				"../../node_modules/", nodeModulesPath + "node_modules/");
 
-			FileUtils.writeStringToFile(packageJsonFile, newContent, "UTF-8");
+			FileUtils.writeStringToFile(
+				packageJsonPath.toFile(), newContent, "UTF-8", false);
 		}
 	}
 

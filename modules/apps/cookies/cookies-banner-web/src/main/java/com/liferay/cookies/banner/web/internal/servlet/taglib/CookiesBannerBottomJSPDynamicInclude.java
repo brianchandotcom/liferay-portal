@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -59,7 +61,9 @@ public class CookiesBannerBottomJSPDynamicInclude
 			return;
 		}
 
-		super.include(httpServletRequest, httpServletResponse, key);
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-142518"))) {
+			super.include(httpServletRequest, httpServletResponse, key);
+		}
 	}
 
 	@Override

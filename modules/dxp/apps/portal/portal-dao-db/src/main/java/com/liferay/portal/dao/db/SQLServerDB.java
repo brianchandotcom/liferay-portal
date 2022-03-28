@@ -158,7 +158,7 @@ public class SQLServerDB extends BaseDB {
 
 	@Override
 	public void removePrimaryKey(Connection connection, String tableName)
-		throws SQLException {
+		throws Exception {
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -167,11 +167,17 @@ public class SQLServerDB extends BaseDB {
 		String normalizedTableName = dbInspector.normalizeName(
 			tableName, databaseMetaData);
 
+		if (!dbInspector.hasTable(normalizedTableName)) {
+			throw new SQLException(
+				StringBundler.concat(
+					"Table ", normalizedTableName, " does not exist"));
+		}
+
 		String primaryKeyConstraintName = null;
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select name from sys.key_constraints where type = 'PK' and " +
-					"OBJECT_NAME(parent_object_id) = '?'")) {
+					"OBJECT_NAME(parent_object_id) = ?")) {
 
 			preparedStatement.setString(1, normalizedTableName);
 
@@ -187,13 +193,19 @@ public class SQLServerDB extends BaseDB {
 				"No primary key constraint found for " + normalizedTableName);
 		}
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"alter table ? drop constraint ?")) {
+		if (dbInspector.hasIndex(
+				normalizedTableName, primaryKeyConstraintName)) {
 
-			preparedStatement.setString(1, normalizedTableName);
-			preparedStatement.setString(2, primaryKeyConstraintName);
-
-			preparedStatement.executeUpdate();
+			runSQL(
+				StringBundler.concat(
+					"alter table ", normalizedTableName, " drop constraint ",
+					primaryKeyConstraintName));
+		}
+		else {
+			throw new SQLException(
+				StringBundler.concat(
+					"Primary key with name", primaryKeyConstraintName,
+					" does not exist"));
 		}
 	}
 

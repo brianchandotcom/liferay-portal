@@ -426,7 +426,7 @@ public abstract class BaseDB implements DB {
 
 	@Override
 	public void removePrimaryKey(Connection connection, String tableName)
-		throws IOException, SQLException {
+		throws Exception {
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 

@@ -343,6 +343,10 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                label:
+                    additionalProperties:
+                        type: string
+                    type: object
                 objectFieldName:
                     type: string
                 priority:

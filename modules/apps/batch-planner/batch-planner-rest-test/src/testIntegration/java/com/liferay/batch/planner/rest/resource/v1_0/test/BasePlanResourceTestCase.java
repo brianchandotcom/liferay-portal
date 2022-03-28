@@ -278,6 +278,11 @@ public abstract class BasePlanResourceTestCase {
 	}
 
 	@Test
+	public void testGetPlanTemplate() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testDeletePlan() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Plan plan = testDeletePlan_addPlan();

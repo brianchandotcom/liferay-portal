@@ -42,6 +42,7 @@ import javax.annotation.Generated;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -98,6 +99,38 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 	@Override
 	public Plan postPlan(Plan plan) throws Exception {
 		return new Plan();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/batch-planner/v1.0/plans/{internalClassName}/template'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "internalClassName"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Plan")}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/plans/{internalClassName}/template")
+	@javax.ws.rs.Produces("application/octet-stream")
+	@Override
+	public Response getPlanTemplate(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("internalClassName")
+			String internalClassName)
+		throws Exception {
+
+		Response.ResponseBuilder responseBuilder = Response.ok();
+
+		return responseBuilder.build();
 	}
 
 	/**

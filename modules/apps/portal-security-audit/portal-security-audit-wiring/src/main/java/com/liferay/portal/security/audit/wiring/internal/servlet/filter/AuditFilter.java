@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.security.audit.wiring.internal.configuration.AuditLogContextConfiguration;
 
 import java.util.HashMap;
@@ -116,7 +116,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 		}
 
 		if (!_isValidXRequestId(xRequestId)) {
-			xRequestId = PortalUUIDUtil.generate();
+			xRequestId = _portalUUID.generate();
 		}
 
 		httpServletResponse.setHeader(HttpHeaders.X_REQUEST_ID, xRequestId);
@@ -210,6 +210,9 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	private ServiceRegistration<LogContext> _serviceRegistration;
 

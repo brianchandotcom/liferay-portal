@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 
 import java.io.ByteArrayInputStream;
@@ -83,7 +83,7 @@ public class RenderFragmentEntryLinkMVCResourceCommand
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 		fragmentEntryLink.setJs(fragmentEntry.getJs());
 		fragmentEntryLink.setConfiguration(fragmentEntry.getConfiguration());
-		fragmentEntryLink.setNamespace(PortalUUIDUtil.generate());
+		fragmentEntryLink.setNamespace(_portalUUID.generate());
 
 		String configurationValues = ParamUtil.get(
 			resourceRequest, "configurationValues", StringPool.BLANK);
@@ -176,5 +176,8 @@ public class RenderFragmentEntryLinkMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 }

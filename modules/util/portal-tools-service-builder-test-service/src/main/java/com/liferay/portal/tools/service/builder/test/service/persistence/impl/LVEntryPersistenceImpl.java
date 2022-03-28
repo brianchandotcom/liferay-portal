@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchLVEntryException;
 import com.liferay.portal.tools.service.builder.test.model.LVEntry;
@@ -6101,7 +6101,7 @@ public class LVEntryPersistenceImpl
 		lvEntry.setNew(true);
 		lvEntry.setPrimaryKey(lvEntryId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		lvEntry.setUuid(uuid);
 
@@ -6222,7 +6222,7 @@ public class LVEntryPersistenceImpl
 		LVEntryModelImpl lvEntryModelImpl = (LVEntryModelImpl)lvEntry;
 
 		if (Validator.isNull(lvEntry.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			lvEntry.setUuid(uuid);
 		}
@@ -7161,5 +7161,8 @@ public class LVEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@ServiceReference(type = PortalUUID.class)
+	private PortalUUID _portalUUID;
 
 }

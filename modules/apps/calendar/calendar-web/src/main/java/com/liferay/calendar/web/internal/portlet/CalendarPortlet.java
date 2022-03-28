@@ -122,7 +122,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.rss.util.RSSUtil;
 
@@ -492,8 +492,8 @@ public class CalendarPortlet extends MVCPortlet {
 			_calendarResourceService.addCalendarResource(
 				serviceContext.getScopeGroupId(),
 				_portal.getClassNameId(CalendarResource.class), 0,
-				PortalUUIDUtil.generate(), code, nameMap, descriptionMap,
-				active, serviceContext);
+				_portalUUID.generate(), code, nameMap, descriptionMap, active,
+				serviceContext);
 		}
 		else {
 			_calendarResourceService.updateCalendarResource(
@@ -1861,6 +1861,9 @@ public class CalendarPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference(
 		target = "(&(release.bundle.symbolic.name=com.liferay.calendar.web)(&(release.schema.version>=1.1.0)(!(release.schema.version>=2.0.0))))"

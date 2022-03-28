@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.lock.exception.NoSuchLockException;
 import com.liferay.portal.lock.model.Lock;
 import com.liferay.portal.lock.model.LockTable;
@@ -2647,7 +2647,7 @@ public class LockPersistenceImpl
 		lock.setNew(true);
 		lock.setPrimaryKey(lockId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		lock.setUuid(uuid);
 
@@ -2759,7 +2759,7 @@ public class LockPersistenceImpl
 		LockModelImpl lockModelImpl = (LockModelImpl)lock;
 
 		if (Validator.isNull(lock.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			lock.setUuid(uuid);
 		}
@@ -3252,6 +3252,9 @@ public class LockPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private LockModelArgumentsResolver _lockModelArgumentsResolver;

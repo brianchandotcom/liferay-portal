@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
@@ -4986,7 +4986,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 		layoutClassedModelUsage.setNew(true);
 		layoutClassedModelUsage.setPrimaryKey(layoutClassedModelUsageId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		layoutClassedModelUsage.setUuid(uuid);
 
@@ -5115,7 +5115,7 @@ public class LayoutClassedModelUsagePersistenceImpl
 			(LayoutClassedModelUsageModelImpl)layoutClassedModelUsage;
 
 		if (Validator.isNull(layoutClassedModelUsage.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			layoutClassedModelUsage.setUuid(uuid);
 		}
@@ -5970,6 +5970,9 @@ public class LayoutClassedModelUsagePersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private LayoutClassedModelUsageModelArgumentsResolver

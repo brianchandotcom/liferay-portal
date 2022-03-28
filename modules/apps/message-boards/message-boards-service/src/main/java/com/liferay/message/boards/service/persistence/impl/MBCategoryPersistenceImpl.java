@@ -52,7 +52,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
@@ -11712,7 +11712,7 @@ public class MBCategoryPersistenceImpl
 		mbCategory.setNew(true);
 		mbCategory.setPrimaryKey(categoryId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		mbCategory.setUuid(uuid);
 
@@ -11830,7 +11830,7 @@ public class MBCategoryPersistenceImpl
 			(MBCategoryModelImpl)mbCategory;
 
 		if (Validator.isNull(mbCategory.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			mbCategory.setUuid(uuid);
 		}
@@ -12735,6 +12735,9 @@ public class MBCategoryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private MBCategoryModelArgumentsResolver _mbCategoryModelArgumentsResolver;

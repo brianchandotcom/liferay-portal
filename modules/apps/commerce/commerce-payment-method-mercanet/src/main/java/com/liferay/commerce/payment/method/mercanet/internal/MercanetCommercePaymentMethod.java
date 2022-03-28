@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import com.worldline.sips.model.CaptureMode;
 import com.worldline.sips.model.Currency;
@@ -214,7 +214,7 @@ public class MercanetCommercePaymentMethod implements CommercePaymentMethod {
 		paymentRequest.setOrderId(
 			String.valueOf(commerceOrder.getCommerceOrderId()));
 
-		String transactionUuid = PortalUUIDUtil.generate();
+		String transactionUuid = _portalUUID.generate();
 
 		String transactionId = StringUtil.replace(
 			transactionUuid, CharPool.DASH, StringPool.BLANK);
@@ -300,5 +300,8 @@ public class MercanetCommercePaymentMethod implements CommercePaymentMethod {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 }

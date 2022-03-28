@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.reports.engine.console.exception.NoSuchSourceException;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.model.SourceTable;
@@ -2912,7 +2912,7 @@ public class SourcePersistenceImpl
 		source.setNew(true);
 		source.setPrimaryKey(sourceId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		source.setUuid(uuid);
 
@@ -3024,7 +3024,7 @@ public class SourcePersistenceImpl
 		SourceModelImpl sourceModelImpl = (SourceModelImpl)source;
 
 		if (Validator.isNull(source.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			source.setUuid(uuid);
 		}
@@ -3548,6 +3548,9 @@ public class SourcePersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private SourceModelArgumentsResolver _sourceModelArgumentsResolver;

@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
@@ -1930,7 +1930,7 @@ public class LayoutSEOEntryPersistenceImpl
 		layoutSEOEntry.setNew(true);
 		layoutSEOEntry.setPrimaryKey(layoutSEOEntryId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		layoutSEOEntry.setUuid(uuid);
 
@@ -2052,7 +2052,7 @@ public class LayoutSEOEntryPersistenceImpl
 			(LayoutSEOEntryModelImpl)layoutSEOEntry;
 
 		if (Validator.isNull(layoutSEOEntry.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			layoutSEOEntry.setUuid(uuid);
 		}
@@ -2775,6 +2775,9 @@ public class LayoutSEOEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private LayoutSEOEntryModelArgumentsResolver

@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
@@ -1837,7 +1837,7 @@ public class ObjectLayoutBoxPersistenceImpl
 		objectLayoutBox.setNew(true);
 		objectLayoutBox.setPrimaryKey(objectLayoutBoxId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		objectLayoutBox.setUuid(uuid);
 
@@ -1957,7 +1957,7 @@ public class ObjectLayoutBoxPersistenceImpl
 			(ObjectLayoutBoxModelImpl)objectLayoutBox;
 
 		if (Validator.isNull(objectLayoutBox.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			objectLayoutBox.setUuid(uuid);
 		}
@@ -2438,6 +2438,9 @@ public class ObjectLayoutBoxPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private ObjectLayoutBoxModelArgumentsResolver

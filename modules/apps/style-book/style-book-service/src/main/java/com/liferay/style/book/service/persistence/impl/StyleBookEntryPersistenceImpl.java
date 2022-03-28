@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.style.book.exception.NoSuchEntryException;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.model.StyleBookEntryTable;
@@ -8074,7 +8074,7 @@ public class StyleBookEntryPersistenceImpl
 		styleBookEntry.setNew(true);
 		styleBookEntry.setPrimaryKey(styleBookEntryId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		styleBookEntry.setUuid(uuid);
 
@@ -8196,7 +8196,7 @@ public class StyleBookEntryPersistenceImpl
 			(StyleBookEntryModelImpl)styleBookEntry;
 
 		if (Validator.isNull(styleBookEntry.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			styleBookEntry.setUuid(uuid);
 		}
@@ -9124,6 +9124,9 @@ public class StyleBookEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private StyleBookEntryModelArgumentsResolver

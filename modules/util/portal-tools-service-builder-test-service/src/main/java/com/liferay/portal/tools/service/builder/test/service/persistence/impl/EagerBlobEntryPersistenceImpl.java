@@ -32,7 +32,8 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.tools.service.builder.test.exception.NoSuchEagerBlobEntryException;
 import com.liferay.portal.tools.service.builder.test.model.EagerBlobEntry;
 import com.liferay.portal.tools.service.builder.test.model.EagerBlobEntryTable;
@@ -995,7 +996,7 @@ public class EagerBlobEntryPersistenceImpl
 		eagerBlobEntry.setNew(true);
 		eagerBlobEntry.setPrimaryKey(eagerBlobEntryId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		eagerBlobEntry.setUuid(uuid);
 
@@ -1113,7 +1114,7 @@ public class EagerBlobEntryPersistenceImpl
 			(EagerBlobEntryModelImpl)eagerBlobEntry;
 
 		if (Validator.isNull(eagerBlobEntry.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			eagerBlobEntry.setUuid(uuid);
 		}
@@ -1508,5 +1509,8 @@ public class EagerBlobEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return dummyFinderCache;
 	}
+
+	@ServiceReference(type = PortalUUID.class)
+	private PortalUUID _portalUUID;
 
 }

@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.search.experiences.exception.NoSuchSXPBlueprintException;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.model.SXPBlueprintTable;
@@ -3062,7 +3062,7 @@ public class SXPBlueprintPersistenceImpl
 		sxpBlueprint.setNew(true);
 		sxpBlueprint.setPrimaryKey(sxpBlueprintId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		sxpBlueprint.setUuid(uuid);
 
@@ -3181,7 +3181,7 @@ public class SXPBlueprintPersistenceImpl
 			(SXPBlueprintModelImpl)sxpBlueprint;
 
 		if (Validator.isNull(sxpBlueprint.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			sxpBlueprint.setUuid(uuid);
 		}
@@ -3707,6 +3707,9 @@ public class SXPBlueprintPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private SXPBlueprintModelArgumentsResolver

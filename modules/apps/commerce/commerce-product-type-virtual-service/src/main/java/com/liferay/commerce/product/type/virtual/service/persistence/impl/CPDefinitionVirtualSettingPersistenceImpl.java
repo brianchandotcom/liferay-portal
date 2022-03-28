@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -1874,7 +1874,7 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 		cpDefinitionVirtualSetting.setNew(true);
 		cpDefinitionVirtualSetting.setPrimaryKey(CPDefinitionVirtualSettingId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		cpDefinitionVirtualSetting.setUuid(uuid);
 
@@ -2006,7 +2006,7 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 				(CPDefinitionVirtualSettingModelImpl)cpDefinitionVirtualSetting;
 
 		if (Validator.isNull(cpDefinitionVirtualSetting.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			cpDefinitionVirtualSetting.setUuid(uuid);
 		}
@@ -2475,5 +2475,8 @@ public class CPDefinitionVirtualSettingPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@ServiceReference(type = PortalUUID.class)
+	private PortalUUID _portalUUID;
 
 }

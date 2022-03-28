@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -4272,7 +4272,7 @@ public class CommerceWishListPersistenceImpl
 		commerceWishList.setNew(true);
 		commerceWishList.setPrimaryKey(commerceWishListId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		commerceWishList.setUuid(uuid);
 
@@ -4392,7 +4392,7 @@ public class CommerceWishListPersistenceImpl
 			(CommerceWishListModelImpl)commerceWishList;
 
 		if (Validator.isNull(commerceWishList.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			commerceWishList.setUuid(uuid);
 		}
@@ -4940,5 +4940,8 @@ public class CommerceWishListPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@ServiceReference(type = PortalUUID.class)
+	private PortalUUID _portalUUID;
 
 }

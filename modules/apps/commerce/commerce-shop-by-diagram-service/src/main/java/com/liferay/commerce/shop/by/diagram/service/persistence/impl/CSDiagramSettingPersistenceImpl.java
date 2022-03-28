@@ -48,7 +48,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
@@ -1605,7 +1605,7 @@ public class CSDiagramSettingPersistenceImpl
 		csDiagramSetting.setNew(true);
 		csDiagramSetting.setPrimaryKey(CSDiagramSettingId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		csDiagramSetting.setUuid(uuid);
 
@@ -1727,7 +1727,7 @@ public class CSDiagramSettingPersistenceImpl
 			(CSDiagramSettingModelImpl)csDiagramSetting;
 
 		if (Validator.isNull(csDiagramSetting.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			csDiagramSetting.setUuid(uuid);
 		}
@@ -2425,6 +2425,9 @@ public class CSDiagramSettingPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private CSDiagramSettingModelArgumentsResolver

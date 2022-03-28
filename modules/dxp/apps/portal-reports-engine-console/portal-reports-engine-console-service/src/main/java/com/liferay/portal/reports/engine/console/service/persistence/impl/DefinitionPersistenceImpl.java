@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.reports.engine.console.exception.NoSuchDefinitionException;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.model.DefinitionTable;
@@ -2936,7 +2936,7 @@ public class DefinitionPersistenceImpl
 		definition.setNew(true);
 		definition.setPrimaryKey(definitionId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		definition.setUuid(uuid);
 
@@ -3054,7 +3054,7 @@ public class DefinitionPersistenceImpl
 			(DefinitionModelImpl)definition;
 
 		if (Validator.isNull(definition.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			definition.setUuid(uuid);
 		}
@@ -3583,6 +3583,9 @@ public class DefinitionPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private DefinitionModelArgumentsResolver _definitionModelArgumentsResolver;

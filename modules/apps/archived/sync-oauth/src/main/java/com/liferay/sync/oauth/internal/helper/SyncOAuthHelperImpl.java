@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.sync.constants.SyncConstants;
 import com.liferay.sync.exception.OAuthPortletUndeployedException;
 import com.liferay.sync.oauth.helper.SyncOAuthHelper;
@@ -69,7 +69,7 @@ public class SyncOAuthHelperImpl implements SyncOAuthHelper {
 		String consumerKey = serviceContext.getUuid();
 
 		if (Validator.isNull(consumerKey)) {
-			consumerKey = PortalUUIDUtil.generate();
+			consumerKey = _portalUUID.generate();
 		}
 
 		oAuthApplication = _oAuthApplicationLocalService.addOAuthApplication(
@@ -158,5 +158,8 @@ public class SyncOAuthHelperImpl implements SyncOAuthHelper {
 
 	@Reference
 	private OAuth _oAuth;
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 }

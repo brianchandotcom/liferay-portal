@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageTable;
@@ -23650,7 +23650,7 @@ public class WikiPagePersistenceImpl
 		wikiPage.setNew(true);
 		wikiPage.setPrimaryKey(pageId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		wikiPage.setUuid(uuid);
 
@@ -23763,7 +23763,7 @@ public class WikiPagePersistenceImpl
 		WikiPageModelImpl wikiPageModelImpl = (WikiPageModelImpl)wikiPage;
 
 		if (Validator.isNull(wikiPage.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			wikiPage.setUuid(uuid);
 		}
@@ -25014,6 +25014,9 @@ public class WikiPagePersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private WikiPageModelArgumentsResolver _wikiPageModelArgumentsResolver;

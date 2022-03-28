@@ -50,7 +50,7 @@ import com.liferay.portal.kernel.util.PwdGenerator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.sync.SyncSiteUnavailableException;
 import com.liferay.sync.constants.SyncConstants;
 import com.liferay.sync.constants.SyncDLObjectConstants;
@@ -242,7 +242,7 @@ public class SyncHelperImpl implements SyncHelper {
 			return;
 		}
 
-		lanServerUuid = PortalUUIDUtil.generate();
+		lanServerUuid = _portalUUID.generate();
 
 		X500Name x500Name = new X500Name("CN=" + lanServerUuid);
 
@@ -731,6 +731,10 @@ public class SyncHelperImpl implements SyncHelper {
 	private DLFileVersionLocalService _dlFileVersionLocalService;
 	private GroupLocalService _groupLocalService;
 	private final Map<String, String> _lanTokenKeys = new ConcurrentHashMap<>();
+
+	@Reference
+	private PortalUUID _portalUUID;
+
 	private final Provider _provider = new BouncyCastleProvider();
 
 }

@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
@@ -1322,7 +1322,7 @@ public class FVSCustomEntryPersistenceImpl
 		fvsCustomEntry.setNew(true);
 		fvsCustomEntry.setPrimaryKey(fvsCustomEntryId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		fvsCustomEntry.setUuid(uuid);
 
@@ -1442,7 +1442,7 @@ public class FVSCustomEntryPersistenceImpl
 			(FVSCustomEntryModelImpl)fvsCustomEntry;
 
 		if (Validator.isNull(fvsCustomEntry.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			fvsCustomEntry.setUuid(uuid);
 		}
@@ -1903,6 +1903,9 @@ public class FVSCustomEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private FVSCustomEntryModelArgumentsResolver

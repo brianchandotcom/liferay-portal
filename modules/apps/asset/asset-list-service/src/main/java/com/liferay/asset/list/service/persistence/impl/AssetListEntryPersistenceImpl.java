@@ -52,7 +52,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
@@ -13694,7 +13694,7 @@ public class AssetListEntryPersistenceImpl
 		assetListEntry.setNew(true);
 		assetListEntry.setPrimaryKey(assetListEntryId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		assetListEntry.setUuid(uuid);
 
@@ -13816,7 +13816,7 @@ public class AssetListEntryPersistenceImpl
 			(AssetListEntryModelImpl)assetListEntry;
 
 		if (Validator.isNull(assetListEntry.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			assetListEntry.setUuid(uuid);
 		}
@@ -14720,6 +14720,9 @@ public class AssetListEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private AssetListEntryModelArgumentsResolver

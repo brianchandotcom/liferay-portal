@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
@@ -2482,7 +2482,7 @@ public class JournalArticleResourcePersistenceImpl
 		journalArticleResource.setNew(true);
 		journalArticleResource.setPrimaryKey(resourcePrimKey);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		journalArticleResource.setUuid(uuid);
 
@@ -2611,7 +2611,7 @@ public class JournalArticleResourcePersistenceImpl
 			(JournalArticleResourceModelImpl)journalArticleResource;
 
 		if (Validator.isNull(journalArticleResource.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			journalArticleResource.setUuid(uuid);
 		}
@@ -3315,6 +3315,9 @@ public class JournalArticleResourcePersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private JournalArticleResourceModelArgumentsResolver

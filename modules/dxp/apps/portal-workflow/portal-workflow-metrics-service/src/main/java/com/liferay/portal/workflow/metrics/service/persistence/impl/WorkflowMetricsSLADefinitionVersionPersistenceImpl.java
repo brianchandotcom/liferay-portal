@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.workflow.metrics.exception.NoSuchSLADefinitionVersionException;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersion;
 import com.liferay.portal.workflow.metrics.model.WorkflowMetricsSLADefinitionVersionTable;
@@ -2583,7 +2583,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 		workflowMetricsSLADefinitionVersion.setPrimaryKey(
 			workflowMetricsSLADefinitionVersionId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		workflowMetricsSLADefinitionVersion.setUuid(uuid);
 
@@ -2721,7 +2721,7 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 					workflowMetricsSLADefinitionVersion;
 
 		if (Validator.isNull(workflowMetricsSLADefinitionVersion.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			workflowMetricsSLADefinitionVersion.setUuid(uuid);
 		}
@@ -3262,6 +3262,9 @@ public class WorkflowMetricsSLADefinitionVersionPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private WorkflowMetricsSLADefinitionVersionModelArgumentsResolver

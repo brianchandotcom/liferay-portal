@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.Serializable;
 
@@ -2703,7 +2703,7 @@ public class BatchEngineExportTaskPersistenceImpl
 		batchEngineExportTask.setNew(true);
 		batchEngineExportTask.setPrimaryKey(batchEngineExportTaskId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		batchEngineExportTask.setUuid(uuid);
 
@@ -2830,7 +2830,7 @@ public class BatchEngineExportTaskPersistenceImpl
 			(BatchEngineExportTaskModelImpl)batchEngineExportTask;
 
 		if (Validator.isNull(batchEngineExportTask.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			batchEngineExportTask.setUuid(uuid);
 		}
@@ -3353,6 +3353,9 @@ public class BatchEngineExportTaskPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private BatchEngineExportTaskModelArgumentsResolver

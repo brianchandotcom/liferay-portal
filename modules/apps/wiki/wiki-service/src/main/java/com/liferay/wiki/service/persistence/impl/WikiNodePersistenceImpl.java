@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiNodeTable;
@@ -4924,7 +4924,7 @@ public class WikiNodePersistenceImpl
 		wikiNode.setNew(true);
 		wikiNode.setPrimaryKey(nodeId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		wikiNode.setUuid(uuid);
 
@@ -5037,7 +5037,7 @@ public class WikiNodePersistenceImpl
 		WikiNodeModelImpl wikiNodeModelImpl = (WikiNodeModelImpl)wikiNode;
 
 		if (Validator.isNull(wikiNode.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			wikiNode.setUuid(uuid);
 		}
@@ -5621,6 +5621,9 @@ public class WikiNodePersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private WikiNodeModelArgumentsResolver _wikiNodeModelArgumentsResolver;

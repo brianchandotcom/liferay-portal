@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -6727,7 +6727,7 @@ public class CommerceDiscountPersistenceImpl
 		commerceDiscount.setNew(true);
 		commerceDiscount.setPrimaryKey(commerceDiscountId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		commerceDiscount.setUuid(uuid);
 
@@ -6847,7 +6847,7 @@ public class CommerceDiscountPersistenceImpl
 			(CommerceDiscountModelImpl)commerceDiscount;
 
 		if (Validator.isNull(commerceDiscount.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			commerceDiscount.setUuid(uuid);
 		}
@@ -7406,5 +7406,8 @@ public class CommerceDiscountPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@ServiceReference(type = PortalUUID.class)
+	private PortalUUID _portalUUID;
 
 }

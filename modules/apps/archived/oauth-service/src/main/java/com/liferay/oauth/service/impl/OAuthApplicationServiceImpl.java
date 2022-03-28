@@ -24,7 +24,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 
 import java.io.InputStream;
 
@@ -58,7 +58,7 @@ public class OAuthApplicationServiceImpl
 		String consumerKey = serviceContext.getUuid();
 
 		if (Validator.isNull(consumerKey)) {
-			consumerKey = PortalUUIDUtil.generate();
+			consumerKey = _portalUUID.generate();
 		}
 
 		return oAuthApplicationLocalService.addOAuthApplication(
@@ -118,5 +118,8 @@ public class OAuthApplicationServiceImpl
 
 	@Reference
 	private OAuth _oAuth;
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 }

@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.sync.exception.NoSuchDeviceException;
 import com.liferay.sync.model.SyncDevice;
 import com.liferay.sync.model.SyncDeviceTable;
@@ -2372,7 +2372,7 @@ public class SyncDevicePersistenceImpl
 		syncDevice.setNew(true);
 		syncDevice.setPrimaryKey(syncDeviceId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		syncDevice.setUuid(uuid);
 
@@ -2488,7 +2488,7 @@ public class SyncDevicePersistenceImpl
 			(SyncDeviceModelImpl)syncDevice;
 
 		if (Validator.isNull(syncDevice.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			syncDevice.setUuid(uuid);
 		}
@@ -2977,6 +2977,9 @@ public class SyncDevicePersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private SyncDeviceModelArgumentsResolver _syncDeviceModelArgumentsResolver;

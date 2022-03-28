@@ -47,7 +47,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.remote.app.exception.NoSuchRemoteAppEntryException;
 import com.liferay.remote.app.model.RemoteAppEntry;
 import com.liferay.remote.app.model.RemoteAppEntryTable;
@@ -2496,7 +2496,7 @@ public class RemoteAppEntryPersistenceImpl
 		remoteAppEntry.setNew(true);
 		remoteAppEntry.setPrimaryKey(remoteAppEntryId);
 
-		String uuid = PortalUUIDUtil.generate();
+		String uuid = _portalUUID.generate();
 
 		remoteAppEntry.setUuid(uuid);
 
@@ -2616,7 +2616,7 @@ public class RemoteAppEntryPersistenceImpl
 			(RemoteAppEntryModelImpl)remoteAppEntry;
 
 		if (Validator.isNull(remoteAppEntry.getUuid())) {
-			String uuid = PortalUUIDUtil.generate();
+			String uuid = _portalUUID.generate();
 
 			remoteAppEntry.setUuid(uuid);
 		}
@@ -3138,6 +3138,9 @@ public class RemoteAppEntryPersistenceImpl
 	protected FinderCache getFinderCache() {
 		return finderCache;
 	}
+
+	@Reference
+	private PortalUUID _portalUUID;
 
 	@Reference
 	private RemoteAppEntryModelArgumentsResolver

@@ -87,6 +87,7 @@ const renderComponent = ({
 				fragmentEntryLinks,
 				layoutData,
 				segmentsExperienceId: '0',
+				selectedViewportSize: 'desktop',
 			})}
 		>
 			<CollectionGeneralPanel

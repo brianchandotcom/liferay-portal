@@ -103,6 +103,14 @@ public class WorkflowTaskManagerUtil {
 			companyId, userId, workflowTaskId);
 	}
 
+	public static List<User> getNotifiableUsers(
+			long companyId, long workflowTaskId)
+		throws WorkflowException {
+
+		return _workflowTaskManager.getNotifiableUsers(
+			companyId, workflowTaskId);
+	}
+
 	public static WorkflowTask getWorkflowTask(
 			long companyId, long workflowTaskId)
 		throws WorkflowException {

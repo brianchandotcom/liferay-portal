@@ -40,6 +40,36 @@
 	<td>//div[contains(@class, 'rounded-sm') and contains(., '${title}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>DELETE_PROJECT</td>
+	<td>//span[normalize-space()='${project}']/../parent::div//button[contains(@class, 'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_PROJECT</td>
+	<td>//input[contains(@class, 'search-project')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROJECT_EXPIRATION_DATE</td>
+	<td>//div[contains(@class, 'card-body') and contains (., '${date}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WELCOME_BANNER</td>
+	<td>//div[@id='welcome-user']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIPTIONS_PAGE</td>
+	<td>//h3[contains(text(),'Subscriptions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NUMBER_PROJECTS</td>
+	<td>//h5[contains(text(),'${number}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

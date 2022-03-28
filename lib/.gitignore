@@ -95,18 +95,15 @@
 /portal/asm-tree.jar
 /portal/asm-util.jar
 /portal/asm.jar
-/portal/c3p0.jar
 /portal/commons-beanutils.jar
 /portal/commons-codec.jar
 /portal/commons-collections.jar
 /portal/commons-compress.jar
 /portal/commons-configuration.jar
-/portal/commons-dbcp.jar
 /portal/commons-fileupload.jar
 /portal/commons-io.jar
 /portal/commons-lang.jar
 /portal/commons-logging.jar
-/portal/commons-pool.jar
 /portal/dom4j.jar
 /portal/hibernate-core.jar
 /portal/hikaricp.jar
@@ -138,7 +135,6 @@
 /portal/log4j-1.2-api.jar
 /portal/log4j-api.jar
 /portal/log4j-core.jar
-/portal/mchange-commons-java.jar
 /portal/mimepull.jar
 /portal/persistence.jar
 /portal/portlet.jar
@@ -165,8 +161,6 @@
 /portal/stax-ex.jar
 /portal/stax.jar
 /portal/streambuffer.jar
-/portal/tomcat-jdbc.jar
-/portal/tomcat-juli.jar
 /portal/transaction.jar
 /portal/wstx.jar
 /portal/xercesImpl.jar

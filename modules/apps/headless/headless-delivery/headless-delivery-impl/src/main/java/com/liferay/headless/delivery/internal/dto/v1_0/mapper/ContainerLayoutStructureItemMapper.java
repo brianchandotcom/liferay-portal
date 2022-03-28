@@ -16,6 +16,7 @@ package com.liferay.headless.delivery.internal.dto.v1_0.mapper;
 
 import com.liferay.headless.delivery.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.delivery.dto.v1_0.FragmentLink;
+import com.liferay.headless.delivery.dto.v1_0.HtmlProperties;
 import com.liferay.headless.delivery.dto.v1_0.Layout;
 import com.liferay.headless.delivery.dto.v1_0.PageElement;
 import com.liferay.headless.delivery.dto.v1_0.PageSectionDefinition;
@@ -67,6 +68,8 @@ public class ContainerLayoutStructureItemMapper
 							containerStyledLayoutStructureItem.
 								getLinkJSONObject(),
 							saveMappingConfiguration);
+						htmlProperties = _toHtmlProperties(
+							containerStyledLayoutStructureItem);
 						indexed =
 							containerStyledLayoutStructureItem.isIndexed();
 						layout = _toLayout(containerStyledLayoutStructureItem);
@@ -154,6 +157,27 @@ public class ContainerLayoutStructureItemMapper
 		};
 	}
 
+	private HtmlProperties _toHtmlProperties(
+		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem) {
+
+		return new HtmlProperties() {
+			{
+				setHtmlTag(
+					() -> {
+						String htmlTag =
+							containerStyledLayoutStructureItem.getHtmlTag();
+
+						if (Validator.isNull(htmlTag)) {
+							return null;
+						}
+
+						return HtmlTag.create(
+							HtmlTagConverter.convertToExternalValue(htmlTag));
+					});
+			}
+		};
+	}
+
 	private Layout _toLayout(
 		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem) {
 
@@ -232,18 +256,6 @@ public class ContainerLayoutStructureItemMapper
 
 						return FlexWrap.create(
 							FlexWrapConverter.convertToExternalValue(flexWrap));
-					});
-				setHtmlTag(
-					() -> {
-						String htmlTag =
-							containerStyledLayoutStructureItem.getHtmlTag();
-
-						if (Validator.isNull(htmlTag)) {
-							return null;
-						}
-
-						return HtmlTag.create(
-							HtmlTagConverter.convertToExternalValue(htmlTag));
 					});
 				setJustify(
 					() -> {

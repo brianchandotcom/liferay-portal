@@ -108,6 +108,20 @@ public class ContainerLayoutStructureItemImporter
 			stylesJSONObject.put("backgroundImage", jsonObject);
 		}
 
+		Map<String, Object> containerHtmlProperties =
+			(Map<String, Object>)definitionMap.get("htmlProperties");
+
+		if (containerHtmlProperties != null) {
+			String htmlTag = String.valueOf(
+				containerHtmlProperties.getOrDefault(
+					"htmlTag", StringPool.BLANK));
+
+			if (Validator.isNotNull(htmlTag)) {
+				containerStyledLayoutStructureItem.setHtmlTag(
+					HtmlTagConverter.convertToInternalValue(htmlTag));
+			}
+		}
+
 		Map<String, Object> containerLayout =
 			(Map<String, Object>)definitionMap.get("layout");
 
@@ -151,14 +165,6 @@ public class ContainerLayoutStructureItemImporter
 			if (Validator.isNotNull(flexWrap)) {
 				containerStyledLayoutStructureItem.setFlexWrap(
 					FlexWrapConverter.convertToInternalValue(flexWrap));
-			}
-
-			String htmlTag = String.valueOf(
-				containerLayout.getOrDefault("htmlTag", StringPool.BLANK));
-
-			if (Validator.isNotNull(htmlTag)) {
-				containerStyledLayoutStructureItem.setHtmlTag(
-					HtmlTagConverter.convertToInternalValue(htmlTag));
 			}
 
 			String justify = String.valueOf(

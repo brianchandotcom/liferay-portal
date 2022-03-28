@@ -71,9 +71,23 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 									cssClass="link-primary single-link"
 									disabled="<%= true %>"
 									href="#"
+									id='<%= liferayPortletResponse.getNamespace() + "downloadBatchPlannerPlanTemplate" %>'
 									label="download"
 								/>
 							</clay:alert>
+
+							<liferay-frontend:component
+								context='<%=
+									HashMapBuilder.<String, Object>put(
+										"externalReferenceCode", liferayPortletResponse.getNamespace() + "internalClassName"
+									).put(
+										"HTMLElementId", liferayPortletResponse.getNamespace() + "downloadBatchPlannerPlanTemplate"
+									).put(
+										"type", "batchPlannerTemplate"
+									).build()
+								%>'
+								module="js/DownloadHelper"
+							/>
 
 							<div class="mt-2">
 								<clay:checkbox

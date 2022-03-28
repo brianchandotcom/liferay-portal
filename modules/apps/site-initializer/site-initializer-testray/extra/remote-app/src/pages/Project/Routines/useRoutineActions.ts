@@ -15,6 +15,7 @@
 import {useMutation} from '@apollo/client';
 
 import {DeleteRoutine} from '../../../graphql/mutations';
+import {TestrayRoutine} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
@@ -35,8 +36,8 @@ const useRoutineActions = () => {
 				name: i18n.translate('select-default-environment-factors'),
 			},
 			{
-				action: ({id: testrayRoutineId}: any) =>
-					onDeleteRoutine({variables: {testrayRoutineId}})
+				action: ({id: routineId}: TestrayRoutine) =>
+					onDeleteRoutine({variables: {routineId}})
 						.then(() => modal.onSave())
 						.catch(modal.onError),
 				name: i18n.translate('delete'),
@@ -56,8 +57,8 @@ const useRoutineActions = () => {
 				name: i18n.translate('promote'),
 			},
 			{
-				action: ({id: testrayRoutineId}: any) =>
-					onDeleteRoutine({variables: {testrayRoutineId}})
+				action: ({id: routineId}: any) =>
+					onDeleteRoutine({variables: {routineId}})
 						.then(() => modal.onSave())
 						.catch(modal.onError),
 				name: i18n.translate('delete'),

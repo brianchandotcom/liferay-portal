@@ -62,9 +62,8 @@ public class RenderContentLayoutDisplayContext {
 
 		for (Portlet portlet : _getPortlets()) {
 			try {
-				Map<String, Object> paths = _populatePortletPaths(portlet);
-
-				PortletPathsUtil.writeFooterPaths(pipingServletResponse, paths);
+				PortletPathsUtil.writeFooterPaths(
+					pipingServletResponse, _getPortletPaths(portlet));
 			}
 			catch (Exception exception) {
 				_log.error(
@@ -85,9 +84,8 @@ public class RenderContentLayoutDisplayContext {
 
 		for (Portlet portlet : _getPortlets()) {
 			try {
-				Map<String, Object> paths = _populatePortletPaths(portlet);
-
-				PortletPathsUtil.writeHeaderPaths(pipingServletResponse, paths);
+				PortletPathsUtil.writeHeaderPaths(
+					pipingServletResponse, _getPortletPaths(portlet));
 			}
 			catch (Exception exception) {
 				_log.error(
@@ -98,6 +96,23 @@ public class RenderContentLayoutDisplayContext {
 		}
 
 		return unsyncStringWriter.toString();
+	}
+
+	private Map<String, Object> _getPortletPaths(Portlet portlet) {
+		String portletId = portlet.getPortletId();
+
+		Map<String, Object> portletIdPath = _portletIdPaths.get(portletId);
+
+		if (portletIdPath == null) {
+			Map<String, Object> paths = PortletPathsUtil.getPortletPaths(
+				_httpServletRequest, StringPool.BLANK, portlet);
+
+			_portletIdPaths.put(portletId, paths);
+
+			return paths;
+		}
+
+		return portletIdPath;
 	}
 
 	private List<Portlet> _getPortlets() {
@@ -131,25 +146,6 @@ public class RenderContentLayoutDisplayContext {
 		}
 
 		return _portlets;
-	}
-
-	private Map<String, Object> _populatePortletPaths(Portlet portlet)
-		throws Exception {
-
-		String portletId = portlet.getPortletId();
-
-		Map<String, Object> portletIdPath = _portletIdPaths.get(portletId);
-
-		if (portletIdPath == null) {
-			Map<String, Object> paths = PortletPathsUtil.getPortletPaths(
-				_httpServletRequest, StringPool.BLANK, portlet);
-
-			_portletIdPaths.put(portletId, paths);
-
-			return paths;
-		}
-
-		return portletIdPath;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

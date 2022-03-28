@@ -40,6 +40,10 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8433 | Test Summary: Form appears on card shows the pages that the form appears on"
 	@priority = "5"
 	test AssertAppearsOnListShowsPagesFormsExists {
+		task ("Connect DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		}
+
 		task ("Submit the form") {
 			ACUtils.navigateToSitePage(
 				actionType = "Submit Form",
@@ -55,7 +59,7 @@ definition {
 		task ("Switch to new property in AC and go to forms tab") {
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 
 			ACNavigation.goToAssets();
 

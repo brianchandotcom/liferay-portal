@@ -45,7 +45,7 @@ definition {
 		}
 
 		task ("Connect DXP to AC") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Create New User and Sync New Contact Data") {
@@ -54,6 +54,11 @@ definition {
 				userFirstName = "ac",
 				userLastName = "ac",
 				userScreenName = "ac");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea@liferay.com");
 
 			ACDXPSettings.syncNewContactData();
 		}
@@ -73,7 +78,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Go to Sites > Pages > Set 24 hours on Time Filter") {
@@ -84,9 +89,6 @@ definition {
 			ACTimeFilter.clickTimeFilterButton();
 
 			ACTimeFilter.setLast24Hours();
-
-			// It is not possible to validade the data because of timing issues.
-
 		}
 
 		task ("Navigate to AC Page > Overview > Displayed Assets") {

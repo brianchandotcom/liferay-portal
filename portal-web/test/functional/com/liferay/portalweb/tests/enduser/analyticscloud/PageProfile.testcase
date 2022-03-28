@@ -39,7 +39,7 @@ definition {
 	@priority = "5"
 	test ClickOnPageInPagesListsNavigatesToPageProfile {
 		task ("Connect DXP to Analytics Cloud and get the property name") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("View the blog") {
@@ -59,7 +59,7 @@ definition {
 		}
 
 		task ("Navigate to Pages tab in Sites") {
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 
 			ACNavigation.goToSites();
 

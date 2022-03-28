@@ -68,8 +68,8 @@ const Table: React.FC<TableProps> = ({
 			</Head>
 
 			<Body>
-				{items.map((item, index) => (
-					<Row key={index}>
+				{items.map((item, rowIndex) => (
+					<Row key={rowIndex}>
 						{rowSelectable && onSelectRow && (
 							<Cell>
 								<ClayCheckbox
@@ -99,18 +99,17 @@ const Table: React.FC<TableProps> = ({
 								}}
 							>
 								{column.render
-									? column.render(item[column.key], item)
+									? column.render(item[column.key], {
+											...item,
+											rowIndex,
+									  })
 									: item[column.key]}
 							</Cell>
 						))}
 
 						{actions && (
 							<Cell align="right">
-								<DropDown
-									actions={actions}
-									item={item}
-									noActionsMessage="Bla"
-								/>
+								<DropDown actions={actions} item={item} />
 							</Cell>
 						)}
 					</Row>

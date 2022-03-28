@@ -23,7 +23,7 @@ const {ItemList} = ClayDropDown;
 type DropDownProps = {
 	actions: any[];
 	item: any;
-	noActionsMessage: string;
+	noActionsMessage?: string;
 };
 
 const DropDown: React.FC<DropDownProps> = ({

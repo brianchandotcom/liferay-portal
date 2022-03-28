@@ -539,8 +539,8 @@ definition {
 
 	@priority = "5"
 	test OSGiConfigSmokeTest {
-		property environment.acceptance = "false";
 		property embedded.elasticsearch.only = "true";
+		property environment.acceptance = "false";
 		property osgi.module.configuration.file.names = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config";
 		property osgi.module.configurations = "clusterName=&quot;LiferayElasticsearchCluster1&quot;";
 		property portal.acceptance = "true";
@@ -554,8 +554,8 @@ definition {
 
 	@priority = "5"
 	test SearchWithNonLiferayIndex {
-		property environment.acceptance = "false";
 		property embedded.elasticsearch.only = "true";
+		property environment.acceptance = "false";
 		property test.name.skip.portal.instance = "Elasticsearch7#SearchWithNonLiferayIndex";
 
 		var portalHostname = PropsUtil.get("portal.hostname");
@@ -610,8 +610,8 @@ definition {
 
 	@priority = "4"
 	test SwitchSidecarToRemote {
-		property environment.acceptance = "false";
 		property embedded.elasticsearch.only = "true";
+		property environment.acceptance = "false";
 		property test.name.skip.portal.instance = "Elasticsearch7#SwitchSidecarToRemote";
 
 		JSONWebcontent.addWebContent(

@@ -1522,13 +1522,17 @@ public abstract class Base${schemaName}ResourceTestCase {
 			}
 		</#if>
 
+		<#assign generateTestGraphQLAddMethod = false />
+
 		<#if configYAML.generateGraphQL && freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete") && stringUtil.equals(freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures), "delete" + schemaName)>
+
 			@Test
 			public void testGraphQL${javaMethodSignature.methodName?cap_first}() throws Exception {
 				<#if !properties?keys?seq_contains("id")>
 					Assert.assertTrue(false);
 				<#else>
-					${schemaName} ${schemaVarName} = testGraphQL${schemaName}_add${schemaName}();
+					<#assign generateTestGraphQLAddMethod = true />
+					${schemaName} ${schemaVarName} = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
 					Assert.assertTrue(
 						JSONUtil.getValueAsBoolean(
@@ -1582,6 +1586,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					</#if>
 				</#if>
 			}
+
 		<#elseif configYAML.generateGraphQL && freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?contains("Page<") && stringUtil.equals(freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures), schemaVarNames)>
 			@Test
 			public void testGraphQL${javaMethodSignature.methodName?cap_first}() throws Exception {
@@ -1635,8 +1640,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 						Assert.assertEquals(0, ${schemaVarNames}JSONObject.get("totalCount"));
 					</#if>
 
-					${schemaName} ${schemaVarName}1 = testGraphQL${schemaName}_add${schemaName}();
-					${schemaName} ${schemaVarName}2 = testGraphQL${schemaName}_add${schemaName}();
+					<#assign generateTestGraphQLAddMethod = true />
+					${schemaName} ${schemaVarName}1 = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+					${schemaName} ${schemaVarName}2 = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
 					${schemaVarNames}JSONObject = JSONUtil.getValueAsJSONObject(
 						invokeGraphQLQuery(graphQLField),
@@ -1659,7 +1665,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 			@Test
 			public void testGraphQL${javaMethodSignature.methodName?cap_first}() throws Exception {
 				<#if properties?keys?seq_contains("id")>
-					${schemaName} ${schemaVarName} = testGraphQL${schemaName}_add${schemaName}();
+					<#assign generateTestGraphQLAddMethod = true />
+					${schemaName} ${schemaVarName} = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
 					Assert.assertTrue(
 						equals(${schemaVarName},
@@ -1779,6 +1786,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 				${schemaName} ${schemaVarName} = testGraphQL${schemaName}_add${schemaName}(random${schemaName});
 
 				Assert.assertTrue(equals(random${schemaName}, ${schemaVarName}));
+			}
+		</#if>
+
+		<#if generateTestGraphQLAddMethod>
+			protected ${schemaName} testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
+				return testGraphQL${schemaName}_add${schemaName}();
 			}
 		</#if>
 	</#list>

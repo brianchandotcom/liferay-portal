@@ -1365,6 +1365,24 @@
 					"title": "The fragmentViewports Schema",
 					"type": "array"
 				},
+				"htmlProperties": {
+					"properties": {
+						"htmlTag": {
+							"enum": [
+								"Article",
+								"Aside",
+								"Div",
+								"Footer",
+								"Header",
+								"Main",
+								"Nav",
+								"Section"
+							],
+							"title": "The htmlTag Schema",
+							"type": "string"
+						}
+					}
+				},
 				"indexed": {
 					"title": "The indexed Schema",
 					"type": "boolean"
@@ -1428,20 +1446,6 @@
 								"WrapReverse"
 							],
 							"title": "The flexWrap Schema",
-							"type": "string"
-						},
-						"htmlTag": {
-							"enum": [
-								"Article",
-								"Aside",
-								"Div",
-								"Footer",
-								"Header",
-								"Main",
-								"Nav",
-								"Section"
-							],
-							"title": "The htmlTag Schema",
 							"type": "string"
 						},
 						"justify": {

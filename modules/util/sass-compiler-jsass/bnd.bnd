@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Sass Compiler JSass
-Bundle-SymbolicName: com.liferay.sass.compiler.jsass
-Bundle-Version: 1.0.2
-Main-Class: com.liferay.sass.compiler.jsass.internal.SassCompiler

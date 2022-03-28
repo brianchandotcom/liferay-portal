@@ -73,11 +73,11 @@ const PartialResults: React.FC<IProps> = ({reportDataURL}) => {
 								{totalItems === 1
 									? Liferay.Util.sub(
 											Liferay.Language.get('x-entry'),
-											totalItems
+											[totalItems]
 									  )
 									: Liferay.Util.sub(
 											Liferay.Language.get('x-entries'),
-											totalItems
+											[totalItems]
 									  )}
 							</span>
 						</div>

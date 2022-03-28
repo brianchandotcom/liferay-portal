@@ -23,6 +23,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapListene
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
@@ -80,6 +81,32 @@ public class PanelAppRegistry {
 		}
 
 		return null;
+	}
+
+	public List<PanelApp> getPanelApps(
+		long companyId, PanelCategory parentPanelCategory) {
+
+		return getPanelApps(companyId, parentPanelCategory.getKey());
+	}
+
+	public List<PanelApp> getPanelApps(
+		long companyId, String parentPanelCategoryKey) {
+
+		return ListUtil.filter(
+			getPanelApps(parentPanelCategoryKey),
+			panelApp -> {
+				Portlet portlet = panelApp.getPortlet();
+
+				long portletCompanyId = portlet.getCompanyId();
+
+				if ((portletCompanyId != CompanyConstants.SYSTEM) &&
+					(portletCompanyId != companyId)) {
+
+					return false;
+				}
+
+				return true;
+			});
 	}
 
 	public List<PanelApp> getPanelApps(PanelCategory parentPanelCategory) {

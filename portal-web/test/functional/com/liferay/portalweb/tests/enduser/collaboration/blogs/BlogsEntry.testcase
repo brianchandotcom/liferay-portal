@@ -1333,14 +1333,7 @@ definition {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
 
 		task ("Enable Send Notifications to Blogs Entry Creator") {
-			ApplicationsMenu.gotoPortlet(
-				category = "Configuration",
-				panel = "Control Panel",
-				portlet = "Instance Settings");
-
-			Click(
-				key_itemName = "Blogs",
-				locator1 = "ListGroupItem#ITEM_TEXT");
+			BlogsNavigator.openToConfigInInstanceSettings(portlet = "Blogs Service");
 
 			Click(
 				key_fieldLabel = "Send Notifications to Blogs Entry Creator",

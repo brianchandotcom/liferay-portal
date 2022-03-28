@@ -179,6 +179,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INLINE_PERMISSIONS_ADD_WEB_CONTENT_CHECKBOX</td>
+	<td>//input[@id='${key_roleTitle}_ACTION_ADD_ARTICLE']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

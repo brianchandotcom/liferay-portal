@@ -1058,11 +1058,10 @@ public abstract class BaseAssetSearchTestCase {
 			serviceContext.setScopeGroupId(group.getGroupId());
 			serviceContext.setUserId(user.getUserId());
 
-			BaseModel<?> parentBaseModel = getParentBaseModel(
-				group, serviceContext);
-
 			baseModels.add(
-				addBaseModel(parentBaseModel, keywords, serviceContext));
+				addBaseModel(
+					getParentBaseModel(group, serviceContext), keywords,
+					serviceContext));
 		}
 
 		return baseModels;

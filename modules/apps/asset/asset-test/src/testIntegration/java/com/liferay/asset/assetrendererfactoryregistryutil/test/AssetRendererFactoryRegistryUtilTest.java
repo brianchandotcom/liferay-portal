@@ -77,12 +77,10 @@ public class AssetRendererFactoryRegistryUtilTest {
 	public void testGetAssetRendererFactoryByClassNameId() {
 		PortalImpl portalImpl = new PortalImpl();
 
-		long classNameId = portalImpl.getClassNameId(
-			TestAssetRendererFactory.class);
-
 		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.
-				getAssetRendererFactoryByClassNameId(classNameId);
+				getAssetRendererFactoryByClassNameId(
+					portalImpl.getClassNameId(TestAssetRendererFactory.class));
 
 		Assert.assertEquals(
 			TestAssetRendererFactory.class.getName(),
@@ -102,10 +100,8 @@ public class AssetRendererFactoryRegistryUtilTest {
 
 	@Test
 	public void testGetClassNameIds1() {
-		long[] classNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(
-			1);
-
-		List<Long> classNameIdsList = ListUtil.fromArray(classNameIds);
+		List<Long> classNameIdsList = ListUtil.fromArray(
+			AssetRendererFactoryRegistryUtil.getClassNameIds(1));
 
 		Assert.assertTrue(
 			classNameIdsList.toString(),
@@ -114,10 +110,8 @@ public class AssetRendererFactoryRegistryUtilTest {
 
 	@Test
 	public void testGetClassNameIds2() {
-		long[] classNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(
-			1, true);
-
-		List<Long> classNameIdsList = ListUtil.fromArray(classNameIds);
+		List<Long> classNameIdsList = ListUtil.fromArray(
+			AssetRendererFactoryRegistryUtil.getClassNameIds(1, true));
 
 		Assert.assertTrue(
 			classNameIdsList.toString(),
@@ -126,10 +120,8 @@ public class AssetRendererFactoryRegistryUtilTest {
 
 	@Test
 	public void testGetClassNameIds3() {
-		long[] classNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(
-			1, false);
-
-		List<Long> classNameIdsList = ListUtil.fromArray(classNameIds);
+		List<Long> classNameIdsList = ListUtil.fromArray(
+			AssetRendererFactoryRegistryUtil.getClassNameIds(1, false));
 
 		Assert.assertTrue(
 			classNameIdsList.toString(),

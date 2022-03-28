@@ -21,8 +21,6 @@ import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 
@@ -70,14 +68,11 @@ public class PanelTag extends BasePanelTag {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		List<PanelCategory> childPanelCategories =
-			panelCategoryRegistry.getChildPanelCategories(
-				_panelCategory, themeDisplay.getPermissionChecker(),
-				getGroup());
-
 		httpServletRequest.setAttribute(
 			"liferay-application-list:panel:childPanelCategories",
-			childPanelCategories);
+			panelCategoryRegistry.getChildPanelCategories(
+				_panelCategory, themeDisplay.getPermissionChecker(),
+				getGroup()));
 
 		httpServletRequest.setAttribute(
 			"liferay-application-list:panel:panelCategory", _panelCategory);

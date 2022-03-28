@@ -70,11 +70,10 @@ public class LegacyPortletPanelAppHotDeployListenerTest {
 		int initialServiceRegistrationsSize =
 			_hotDeployListener.getServiceRegistrationsSize();
 
-		HotDeployEvent hotDeployEvent = getHotDeployEvent(
-			"classpath:/com/liferay/application/list/deploy/hot/test" +
-				"/dependencies/control-panel-entry-liferay-portlet.xml");
-
-		_hotDeployListener.invokeDeploy(hotDeployEvent);
+		_hotDeployListener.invokeDeploy(
+			getHotDeployEvent(
+				"classpath:/com/liferay/application/list/deploy/hot/test" +
+					"/dependencies/control-panel-entry-liferay-portlet.xml"));
 
 		Assert.assertEquals(
 			initialServiceRegistrationsSize + 1,
@@ -86,11 +85,11 @@ public class LegacyPortletPanelAppHotDeployListenerTest {
 		int initialServiceRegistrationsSize =
 			_hotDeployListener.getServiceRegistrationsSize();
 
-		HotDeployEvent hotDeployEvent = getHotDeployEvent(
-			"classpath:/com/liferay/application/list/deploy/hot/test" +
-				"/dependencies/no-control-panel-entry-liferay-portlet.xml");
-
-		_hotDeployListener.invokeDeploy(hotDeployEvent);
+		_hotDeployListener.invokeDeploy(
+			getHotDeployEvent(
+				"classpath:/com/liferay/application/list/deploy/hot/test" +
+					"/dependencies/no-control-panel-entry-liferay-portlet." +
+						"xml"));
 
 		Assert.assertEquals(
 			initialServiceRegistrationsSize,

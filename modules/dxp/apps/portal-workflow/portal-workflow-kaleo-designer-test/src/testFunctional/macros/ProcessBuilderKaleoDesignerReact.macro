@@ -559,5 +559,8 @@ definition {
 			key_translationStatus = "${translationStatus}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL");
 	}
+	macro viewPublishButtonNotPresent {
+		Button.viewNotPresent(button = "Publish");
+	}
 
 }

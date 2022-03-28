@@ -1106,12 +1106,23 @@ definition {
 	}
 
 	@description = "LPS-129928 - Verify that the Publish button turns unavailable after the Workflow is published"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test PublishButtonTurnsUnavailableAfterPublish {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#PublishButtonTurnsUnavailableAfterPublish";
 
-		// TODO LRQA-73001 PublishButtonTurnsUnavailableAfterPublish pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start Task Connector",
+			connectorOut = "start",
+			key_direction = "top");
+
+		PortletEntry.publish();
+
+		ProcessBuilderKaleoDesignerReact.viewPublishButtonNotPresent();
 	}
 
 	@description = "LPS-129928 - Verify that when hovering the Source button the text Source view is displayed"

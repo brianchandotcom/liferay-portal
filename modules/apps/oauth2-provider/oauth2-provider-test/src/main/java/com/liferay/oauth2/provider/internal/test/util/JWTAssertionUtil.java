@@ -39,7 +39,7 @@ public class JWTAssertionUtil {
 		"keys", JSONUtil.put(_createTestRSAKeyPairJSONWebKey01())
 	).toString();
 
-	public static final String KID_01 = "_createTestRSAKeyPairJSONWebKey01";
+	private static final String KID_01 = "_createTestRSAKeyPairJSONWebKey01";
 
 	public static String getJWTAssertion(
 		String issuer, String subject, URI audience) {

@@ -1,0 +1,44 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"collectionConfig": {
+						"collectionReference": {
+							"className": "com.liferay.asset.list.model.AssetListEntry",
+							"classPK": "${CLASS_PK}"
+						},
+						"collectionType": "Collection"
+					},
+					"displayAllItems": false,
+					"displayAllPages": false,
+					"listItemStyle": "com.liferay.blogs.web.internal.info.item.renderer.BlogsEntryAbstractInfoItemRenderer",
+					"listStyle": "com.liferay.blogs.web.internal.info.list.renderer.BlogsEntryBorderedBasicInfoListRenderer",
+					"numberOfColumns": 1,
+					"numberOfItems": 5,
+					"numberOfItemsPerPage": 10,
+					"numberOfPages": 25,
+					"paginationType": "Simple",
+					"showAllItems": false,
+					"templateKey": ""
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"collectionItemConfig": {
+							}
+						},
+						"type": "CollectionItem"
+					}
+				],
+				"type": "Collection"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"themeName": "Classic"
+	},
+	"version": 1.1
+}

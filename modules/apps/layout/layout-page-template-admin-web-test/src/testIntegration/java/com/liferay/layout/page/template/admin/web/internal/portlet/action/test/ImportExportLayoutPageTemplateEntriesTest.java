@@ -162,6 +162,28 @@ public class ImportExportLayoutPageTemplateEntriesTest {
 	}
 
 	@Test
+	public void testImportExportLayoutPageTemplateEntryCollectionDisplayComplete()
+		throws Exception {
+
+		Map<String, String> numberValuesMap = HashMapBuilder.put(
+			"CLASS_PK",
+			() -> {
+				AssetListEntry assetListEntry = _addAssetListEntry(
+					_group1.getGroupId());
+
+				return String.valueOf(assetListEntry.getAssetListEntryId());
+			}
+		).build();
+
+		File expectedFile = _generateZipFile(
+			"collection_display/complete/expected", numberValuesMap, null);
+		File inputFile = _generateZipFile(
+			"collection_display/complete/input", numberValuesMap, null);
+
+		_validateImportExport(expectedFile, inputFile);
+	}
+
+	@Test
 	public void testImportExportLayoutPageTemplateEntryCollectionDisplayDefault()
 		throws Exception {
 

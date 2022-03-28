@@ -132,18 +132,15 @@
 	<classpathentry kind="lib" path="lib/portal/asm-tree.jar"/>
 	<classpathentry kind="lib" path="lib/portal/asm-util.jar"/>
 	<classpathentry kind="lib" path="lib/portal/asm.jar"/>
-	<classpathentry kind="lib" path="lib/portal/c3p0.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-codec.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-collections.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-compress.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-configuration.jar"/>
-	<classpathentry kind="lib" path="lib/portal/commons-dbcp.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-fileupload.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-io.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-lang.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-logging.jar"/>
-	<classpathentry kind="lib" path="lib/portal/commons-pool.jar"/>
 	<classpathentry kind="lib" path="lib/portal/dom4j.jar"/>
 	<classpathentry kind="lib" path="lib/portal/hibernate-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/hikaricp.jar"/>
@@ -170,7 +167,6 @@
 	<classpathentry kind="lib" path="lib/portal/log4j-1.2-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/log4j-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/log4j-core.jar"/>
-	<classpathentry kind="lib" path="lib/portal/mchange-commons-java.jar"/>
 	<classpathentry kind="lib" path="lib/portal/mimepull.jar"/>
 	<classpathentry kind="lib" path="lib/portal/persistence.jar"/>
 	<classpathentry kind="lib" path="lib/portal/portlet.jar"/>
@@ -196,8 +192,6 @@
 	<classpathentry kind="lib" path="lib/portal/stax.jar"/>
 	<classpathentry kind="lib" path="lib/portal/stax-ex.jar"/>
 	<classpathentry kind="lib" path="lib/portal/streambuffer.jar"/>
-	<classpathentry kind="lib" path="lib/portal/tomcat-jdbc.jar"/>
-	<classpathentry kind="lib" path="lib/portal/tomcat-juli.jar"/>
 	<classpathentry kind="lib" path="lib/portal/transaction.jar"/>
 	<classpathentry kind="lib" path="lib/portal/wstx.jar"/>
 	<classpathentry kind="lib" path="lib/portal/xercesImpl.jar"/>

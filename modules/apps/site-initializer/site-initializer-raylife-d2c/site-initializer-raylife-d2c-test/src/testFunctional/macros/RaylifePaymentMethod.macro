@@ -14,17 +14,17 @@ definition {
 		Type(
 			key_text = "Client ID",
 			locator1 = "TextInput#ANY",
-			value1 = "${clientID}");
+			value1 = "AbYFv5Emsgk85LbhRSu3Hp4ur-9YJdTBz27bWRYD0EnrGxN4BZxWD77upJ8tTQ2W2dbJ-Ln0CdVFaPXj");
 
 		Type(
 			key_text = "Client Secret",
 			locator1 = "TextInput#ANY",
-			value1 = "${clientSecret}");
+			value1 = "EMiMaIJKB121Z_bYFDOxLPe0kkIQMkhUuKf_v9uOUFQ2tqyauoxdwwwb8ZNAQlYM_ns7sBGIP-GDgJKI");
 
 		Select(
 			key_fieldLabel = "Mode",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = "${mode}");
+			value1 = "Sandbox");
 
 		Button.clickSave();
 
@@ -43,10 +43,7 @@ definition {
 
 		Refresh();
 
-		RaylifePaymentMethod.configurationPaypal(
-			clientID = "AbYFv5Emsgk85LbhRSu3Hp4ur-9YJdTBz27bWRYD0EnrGxN4BZxWD77upJ8tTQ2W2dbJ-Ln0CdVFaPXj",
-			clientSecret = "EMiMaIJKB121Z_bYFDOxLPe0kkIQMkhUuKf_v9uOUFQ2tqyauoxdwwwb8ZNAQlYM_ns7sBGIP-GDgJKI",
-			mode = "Sandbox");
+		CommerceChannels.configurationPaypal(mode = "Sandbox");
 
 		Refresh();
 	}

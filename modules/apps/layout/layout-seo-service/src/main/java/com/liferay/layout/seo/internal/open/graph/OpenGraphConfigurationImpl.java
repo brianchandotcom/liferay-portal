@@ -42,11 +42,12 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 			_configurationProvider.getCompanyConfiguration(
 				LayoutSEOCompanyConfiguration.class, company.getCompanyId());
 
-		if (!layoutSEOCompanyConfiguration.enableOpenGraph()) {
+		if (!_isOpenGraphEnabled(layoutSEOCompanyConfiguration)) {
 			return false;
 		}
 
-		return layoutSEOCompanyConfiguration.enableLayoutTranslatedLanguages();
+		return _isLayoutTranslatedLanguagesEnabled(
+			layoutSEOCompanyConfiguration);
 	}
 
 	@Override
@@ -76,7 +77,7 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 			_configurationProvider.getCompanyConfiguration(
 				LayoutSEOCompanyConfiguration.class, company.getCompanyId());
 
-		return layoutSEOCompanyConfiguration.enableOpenGraph();
+		return _isOpenGraphEnabled(layoutSEOCompanyConfiguration);
 	}
 
 	@Override
@@ -87,6 +88,16 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 			return false;
 		}
 
+		return _isOpenGraphEnabled(group);
+	}
+
+	private boolean _isLayoutTranslatedLanguagesEnabled(
+		LayoutSEOCompanyConfiguration layoutSEOCompanyConfiguration) {
+
+		return layoutSEOCompanyConfiguration.enableLayoutTranslatedLanguages();
+	}
+
+	private boolean _isOpenGraphEnabled(Group group) {
 		LayoutSEOSite layoutSEOSite =
 			_layoutSEOSiteLocalService.fetchLayoutSEOSiteByGroupId(
 				group.getGroupId());
@@ -96,6 +107,12 @@ public class OpenGraphConfigurationImpl implements OpenGraphConfiguration {
 		}
 
 		return false;
+	}
+
+	private boolean _isOpenGraphEnabled(
+		LayoutSEOCompanyConfiguration layoutSEOCompanyConfiguration) {
+
+		return layoutSEOCompanyConfiguration.enableOpenGraph();
 	}
 
 	@Reference

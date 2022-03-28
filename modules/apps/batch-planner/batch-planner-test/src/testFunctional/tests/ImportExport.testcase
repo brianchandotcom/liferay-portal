@@ -340,30 +340,19 @@ definition {
 
 			ImportExport.gotoImport();
 
-			UploadDependencyFile.uploadFile(fileName = "csv_account_import.csv");
+			ImportExport.configureImport(
+				entityType = "Account",
+				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
+				fileName = "csv_account_import.csv",
+				headlessEndpoint = "/headless-admin-user");
 		}
 
 		task ("When the user imports the file") {
-			ImportExport.selectEntity(
-				entityType = "Account",
-				headlessEndpoint = "/headless-admin-user");
-
-			ImportExport.mapImport(fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code");
-
 			Button.click(button = "Import");
 		}
 
 		task ("Then the accounts should be imported successfully") {
 			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
-
-			Button.clickDone();
-
-			Button.clickCancel();
-
-			ImportExport.assertExecutionEntry(
-				entityType = "Account",
-				executionAction = "Import",
-				executionStatus = "Completed");
 
 			Accounts.openAccountsAdmin();
 
@@ -405,7 +394,7 @@ definition {
 		}
 
 		task ("When the user unchecks "Contains Headers" and selects Account as Entity Type") {
-			Click.clickAtNotVisible(
+			Uncheck.uncheckNotVisible(
 				checkboxName = "Headers",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
@@ -424,15 +413,6 @@ definition {
 
 		task ("Then the accounts in the file should be imported successfully") {
 			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
-
-			Button.clickDone();
-
-			Button.clickCancel();
-
-			ImportExport.assertExecutionEntry(
-				entityType = "Account",
-				executionAction = "Import",
-				executionStatus = "Completed");
 
 			Accounts.openAccountsAdmin();
 
@@ -470,30 +450,19 @@ definition {
 
 			ImportExport.gotoImport();
 
-			UploadDependencyFile.uploadFile(fileName = "json_account_import.json");
+			ImportExport.configureImport(
+				entityType = "Account",
+				fieldMappings = "name:name,type:type,description:description,externalReferenceCode:externalReferenceCode",
+				fileName = "json_account_import.json",
+				headlessEndpoint = "/headless-admin-user");
 		}
 
 		task ("When the user imports the file") {
-			ImportExport.selectEntity(
-				entityType = "Account",
-				headlessEndpoint = "/headless-admin-user");
-
-			ImportExport.mapImport(fieldMappings = "name:name,type:type,description:description,externalReferenceCode:externalReferenceCode");
-
 			Button.click(button = "Import");
 		}
 
 		task ("Then the accounts should be imported successfully") {
 			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
-
-			Button.clickDone();
-
-			Button.clickCancel();
-
-			ImportExport.assertExecutionEntry(
-				entityType = "Account",
-				executionAction = "Import",
-				executionStatus = "Completed");
 
 			Accounts.openAccountsAdmin();
 
@@ -531,30 +500,19 @@ definition {
 
 			ImportExport.gotoImport();
 
-			UploadDependencyFile.uploadFile(fileName = "jsonl_account_import.jsonl");
+			ImportExport.configureImport(
+				entityType = "Account",
+				fieldMappings = "name:name,type:type,description:description,externalReferenceCode:externalReferenceCode",
+				fileName = "jsonl_account_import.jsonl",
+				headlessEndpoint = "/headless-admin-user");
 		}
 
 		task ("When the user imports the file") {
-			ImportExport.selectEntity(
-				entityType = "Account",
-				headlessEndpoint = "/headless-admin-user");
-
-			ImportExport.mapImport(fieldMappings = "name:name,type:type,description:description,externalReferenceCode:externalReferenceCode");
-
 			Button.click(button = "Import");
 		}
 
 		task ("Then the accounts should be imported successfully") {
 			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
-
-			Button.clickDone();
-
-			Button.clickCancel();
-
-			ImportExport.assertExecutionEntry(
-				entityType = "Account",
-				executionAction = "Import",
-				executionStatus = "Completed");
 
 			Accounts.openAccountsAdmin();
 
@@ -592,13 +550,11 @@ definition {
 
 			ImportExport.gotoImport();
 
-			UploadDependencyFile.uploadFile(fileName = "csv_channel_import.csv");
-
-			ImportExport.selectEntity(
+			ImportExport.configureImport(
 				entityType = "Channel",
+				fieldMappings = "name:Channel Name,type:Channel Type",
+				fileName = "csv_channel_import.csv",
 				headlessEndpoint = "/headless-commerce-admin-channel");
-
-			ImportExport.mapImport(fieldMappings = "name:Channel Name,type:Channel Type");
 		}
 
 		task ("When the user tries to import a file without mapping all the required fields") {
@@ -712,16 +668,11 @@ definition {
 
 			ImportExport.gotoExport();
 
-			ImportExport.selectEntity(
+			ImportExport.configureExport(
 				entityType = "Account",
+				exportFields = "name,type,description,externalReferenceCode",
+				exportFileFormat = "JSON",
 				headlessEndpoint = "/headless-admin-user");
-
-			Select(
-				key_selectFieldLabel = "Export File Format",
-				locator1 = "ImportExport#SELECT",
-				value1 = "JSON");
-
-			ImportExport.mapExport(exportFields = "name,type,description,externalReferenceCode");
 		}
 
 		task ("When the user saves the configuration as a template") {
@@ -754,13 +705,11 @@ definition {
 
 			ImportExport.gotoImport();
 
-			UploadDependencyFile.uploadFile(fileName = "csv_account_import.csv");
-
-			ImportExport.selectEntity(
+			ImportExport.configureImport(
 				entityType = "Account",
+				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
+				fileName = "csv_account_import.csv",
 				headlessEndpoint = "/headless-admin-user");
-
-			ImportExport.mapImport(fieldMappings = "name:Account Name,type:Account Type,externalReferenceCode:External Reference Code");
 		}
 
 		task ("When the user saves the configuration as a template") {
@@ -791,13 +740,11 @@ definition {
 
 			ImportExport.gotoExport();
 
-			ImportExport.selectEntity(
+			ImportExport.configureExport(
 				entityType = "Account",
+				exportFields = "accountUserAccounts",
+				exportFileFormat = "CSV",
 				headlessEndpoint = "/headless-admin-user");
-
-			Uncheck.uncheckNotVisible(
-				key_checkboxOption = "Attribute Code",
-				locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
 
 			Button.click(button = "Export");
 
@@ -855,13 +802,11 @@ definition {
 
 			ImportExport.gotoImport();
 
-			UploadDependencyFile.uploadFile(fileName = "csv_account_import.csv");
-
-			ImportExport.selectEntity(
+			ImportExport.configureImport(
 				entityType = "Account",
+				fieldMappings = "description:Account Description,type:Account Type",
+				fileName = "csv_account_import.csv",
 				headlessEndpoint = "/headless-admin-user");
-
-			ImportExport.mapImport(fieldMappings = "name:Account Name,type:Account Description");
 
 			Button.click(button = "Import");
 
@@ -871,7 +816,7 @@ definition {
 		task ("And given a succesful import") {
 			Button.clickCancel();
 
-			ImportExport.mapImport(fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code");
+			ImportExport.mapImport(fieldMappings = "name:Account Name");
 
 			Button.click(button = "Import");
 

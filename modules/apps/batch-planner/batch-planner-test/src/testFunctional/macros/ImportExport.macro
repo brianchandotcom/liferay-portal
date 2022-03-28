@@ -135,6 +135,25 @@ definition {
 		}
 	}
 
+	macro configureExport {
+		ImportExport.selectEntity(
+			entityType = "${entityType}",
+			headlessEndpoint = "${headlessEndpoint}");
+
+		Select(
+			key_selectFieldLabel = "Export File Format",
+			locator1 = "ImportExport#SELECT",
+			value1 = "${exportFileFormat}");
+
+		if ("${containsHeaders}" == "false") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "Headers",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+		}
+
+		ImportExport.mapExport(exportFields = "${exportFields}");
+	}
+
 	macro configureImport {
 		UploadDependencyFile.uploadFile(fileName = "${fileName}");
 
@@ -253,6 +272,10 @@ definition {
 	}
 
 	macro mapExport {
+		Check.checkNotVisible(
+			key_checkboxOption = "Attribute Code",
+			locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");
+
 		Uncheck.uncheckNotVisible(
 			key_checkboxOption = "Attribute Code",
 			locator1 = "Checkbox#SPECIFIC_CHECKBOX_IN_TABLE");

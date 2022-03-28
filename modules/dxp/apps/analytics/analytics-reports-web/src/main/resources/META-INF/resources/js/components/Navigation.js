@@ -113,17 +113,25 @@ export default function Navigation({
 	]);
 
 	const updateTrafficSourcesAndCurrentPage = useCallback(
-		(trafficSources, trafficSourceName) => {
-			setTrafficSources(trafficSources);
+		(trafficSourceEndpointURL, trafficSourceName) => {
 			setTrafficSourceName(trafficSourceName);
 
-			const trafficSource = trafficSources.find((trafficSource) => {
-				return trafficSource.name === trafficSourceName;
-			});
+			const partsArray = trafficSourceEndpointURL.split('/');
+			const localtrafficSourceEndpontURL =
+				'http://localhost:8080/home?p_p_id=com_liferay_analytics_reports_web_internal_portlet_AnalyticsReportsPortlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=%2Fanalytics_reports%2F' +
+				partsArray[2] +
+				'&p_p_cacheability=cacheLevelPage&_com_liferay_analytics_reports_web_internal_portlet_AnalyticsReportsPortlet_languageId=en_US&_com_liferay_analytics_reports_web_internal_portlet_AnalyticsReportsPortlet_canonicalURL=http%3A%2F%2Flocalhost%3A8080%2F';
 
-			setCurrentPage({
-				data: trafficSource,
-				view: trafficSource.name,
+			APIService.getTrafficSources(localtrafficSourceEndpontURL, {
+				namespace,
+				plid: page.plid,
+				timeSpanKey,
+				timeSpanOffset,
+			}).then((response) => {
+				setCurrentPage({
+					data: response,
+					view: trafficSourceName,
+				});
 			});
 		},
 		[]

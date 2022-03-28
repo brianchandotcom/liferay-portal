@@ -18,6 +18,7 @@ import {HEADLESS_BATCH_ENGINE_URL} from './constants';
 
 const getEndpoint = (type, externalReferenceCode) => {
 	const endpoints = {
+		batchPlannerTemplate: `/o/batch-planner/v1.0/plans/${externalReferenceCode}/template`,
 		errorReport: `${HEADLESS_BATCH_ENGINE_URL}/import-task/by-external-reference-code/${externalReferenceCode}/failed-items/report`,
 		importFile: `${HEADLESS_BATCH_ENGINE_URL}/import-task/by-external-reference-code/${externalReferenceCode}/content`,
 	};
@@ -30,6 +31,16 @@ export default function ({HTMLElementId, externalReferenceCode, type}) {
 		.getElementById(HTMLElementId)
 		.addEventListener('click', (event) => {
 			event.preventDefault();
+
+			if (type === 'batchPlannerTemplate') {
+				const valueElement = document.getElementById(
+					externalReferenceCode
+				);
+
+				externalReferenceCode =
+					valueElement.options[valueElement.options.selectedIndex]
+						.value;
+			}
 
 			fetch(getEndpoint(type, externalReferenceCode)).then((response) => {
 				response.blob().then((blob) => {

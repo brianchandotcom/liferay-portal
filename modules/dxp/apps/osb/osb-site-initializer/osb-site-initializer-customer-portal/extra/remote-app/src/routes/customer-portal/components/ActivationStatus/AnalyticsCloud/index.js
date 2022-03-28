@@ -24,7 +24,7 @@ import {
 } from '../../../../../common/services/liferay/graphql/queries';
 import getActivationStatusDateRange from '../../../../../common/utils/getActivationStatusDateRange';
 import AnalyticsCloudModal from '../../../components/AnalyticsCloudModal';
-import {ALERT_UPDATE_ANALYTICS_CLOUD_STATUS} from '../../../containers/DXPActivationKeysTable/utils/constants/alertUpdateAnalyticsCloudStatus';
+import {ALERT_UPDATE_ANALYTICS_CLOUD_STATUS} from '../../../containers/ActivationKeysTable/utils/constants/alertUpdateAnalyticsCloudStatus';
 import {useCustomerPortal} from '../../../context';
 import {
 	AUTO_CLOSE_ALERT_TIME,

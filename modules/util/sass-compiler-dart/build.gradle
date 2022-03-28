@@ -9,7 +9,3 @@ dependencies {
 liferayOSGi {
 	expandCompileInclude = true
 }
-
-processTestResources {
-	dependsOn ":util:sass-compiler-jni:processTestResources"
-}

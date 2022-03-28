@@ -85,6 +85,12 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		Layout layout = themeDisplay.getLayout();
+
+		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
+			return;
+		}
+
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
 		printWriter.print("<style id=\"layout-common-styles\"");

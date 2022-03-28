@@ -11,7 +11,7 @@ definition {
 
 		User.firstLoginPG();
 
-        CustomerPortal.setUpForCP20();
+		CustomerPortal.setUpForCP20();
 
 		CustomerPortal.createCPSite(siteName = "Customer Portal");
 	}
@@ -23,7 +23,7 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
-            CustomerPortal.tearDownForOktaAndSAML();
+			CustomerPortal.tearDownForOktaAndSAML();
 
 			User.logoutPG();
 		}
@@ -124,19 +124,9 @@ definition {
 	@description = "LPS-143797 - Verify if for less than 5 projects the search bar it's not visible."
 	@priority = "2"
 	test AssertSearchBarNotVisible {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Koroneiki Accounts");
 
-		Click(
-			locator1 = "CP2LiferayContact#DELETE_PROJECT",
-			project = "PROJECT04",
-			value1 = "Delete");
+		// TODO LPS-143797 Verify if for less than 5 projects the search bar it's not visible.
 
-		ApplicationsMenu.gotoSite(site = "Customer Portal");
-
-		AssertElementNotPresent(locator1 = "CP2LiferayContact#SEARCH_PROJECT");
 	}
 
 	@description = "LPS-143785 - Check if when the user clicks on the card he is directed to another page."
@@ -150,7 +140,7 @@ definition {
 
 		CustomerPortal.loginOktaToUpdateCP();
 
-        SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
 
 		Refresh();
 
@@ -240,9 +230,9 @@ definition {
 			locator1 = "CP2LiferayContact#PROJECT_CARD",
 			title = "Test Account 01");
 
-        CustomerPortal.loginOktaToUpdateCP();
+		CustomerPortal.loginOktaToUpdateCP();
 
-        SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
 
 		Refresh();
 

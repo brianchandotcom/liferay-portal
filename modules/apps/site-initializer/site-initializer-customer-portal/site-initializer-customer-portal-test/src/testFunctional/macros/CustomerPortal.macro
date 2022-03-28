@@ -148,6 +148,8 @@ definition {
 			value1 = "${userPassword}");
 
 		Click(locator1 = "CustomerPortalSite#OKTA_SUBMIT");
+
+		OpenIDConnect.acceptConditions();
 	}
 
 	macro replaceCertificateAndPrivateKey {
@@ -217,6 +219,10 @@ definition {
 					certificateUsage = "SIGNING",
 					samlKeyPassword = "QATEST");
 
+				if (IsElementPresent(locator1 = "CPSAMLAdmin#DELETE_CERTIFICATE")) {
+					SAMLRole.deleteCertificate();
+				}
+
 				SAMLRole.configureCertificateAndPrivateKey(
 					certificateUsage = "ENCRYPTION",
 					samlKeyPassword = "QATEST");
@@ -265,6 +271,23 @@ definition {
 		}
 	}
 
+	macro showCPObject {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Objects");
+
+		ObjectPortlet.selectCustomObject(label = "Koroneiki Account");
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CustomerPortal.checkToggleHideWidget();
+
+		CreateObject.saveObject();
+	}
+
 	macro tearDownForOktaAndSAML {
 		task ("Teardown") {
 			var entityId = "http://www.okta.com/exk158id544C4j3KK0h8";
@@ -303,20 +326,4 @@ definition {
 		MenuItem.click(menuItem = "View");
 	}
 
-	macro showCPObject {
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Objects");
-
-		ObjectPortlet.selectCustomObject(label = "Koroneiki Account");
-
-		CreateObject.checkToggleActive();
-
-		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
-
-		CustomerPortal.checkToggleHideWidget();
-
-		CreateObject.saveObject();
-	}
 }

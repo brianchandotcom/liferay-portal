@@ -273,9 +273,9 @@ definition {
 		}
 	}
 
-	@description = "This test anonymizes all staged data from an application"
+	@description = "This test anonymizes all staged data from an application, test with DM entries."
 	@priority = "3"
-	test CanAnonymizeAllStagedDataFromAnApplication {
+	test CanAnonymizeAllStagedDataFromDM {
 		User.logoutPG();
 
 		User.firstLoginUI(

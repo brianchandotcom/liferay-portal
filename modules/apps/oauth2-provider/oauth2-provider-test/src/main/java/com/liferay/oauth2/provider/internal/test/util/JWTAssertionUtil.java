@@ -39,7 +39,7 @@ public class JWTAssertionUtil {
 		"keys", JSONUtil.put(_createTestRSAKeyPairJSONWebKey01())
 	).toString();
 
-	private static final String KID_01 = "_createTestRSAKeyPairJSONWebKey01";
+	private static final String _KEY_ID = "_createTestRSAKeyPairJSONWebKey01";
 
 	public static String getJWTAssertion(
 		String issuer, String subject, URI audience) {
@@ -47,7 +47,7 @@ public class JWTAssertionUtil {
 		JwsHeaders jwsHeaders = new JwsHeaders(
 			JoseType.JWT, SignatureAlgorithm.RS256);
 
-		jwsHeaders.setKeyId(KID_01);
+		jwsHeaders.setKeyId(_KEY_ID);
 
 		JwtToken jwtToken = new JwtToken(
 			jwsHeaders, _getJWTClaims(issuer, subject, audience));
@@ -129,7 +129,7 @@ public class JWTAssertionUtil {
 
 	private static JSONObject _createTestRSAKeyPairJSONWebKey01() {
 		return _createRSAKeyPairJSONObject(
-			"RSA", "AQAB", "sig", KID_01, "RS256",
+			"RSA", "AQAB", "sig", _KEY_ID, "RS256",
 			StringBundler.concat(
 				"37P2B_RQiNP4M-khV2Z0qTlkfcrFy02v2xko6xqqYqxJTnD2eM0_WGqKQVTBb",
 				"q2thTPkw44Kw18jhqYcVm7jyQcN4zcYKEAElQ3jztJOWKLkTOiuu5D-DXuF3P",

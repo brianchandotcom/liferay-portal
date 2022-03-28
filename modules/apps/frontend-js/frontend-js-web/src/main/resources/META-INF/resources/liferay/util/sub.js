@@ -12,13 +12,9 @@
  * details.
  */
 
+const REGEX_SUB = /\{\s*([^|}]+?)\s*(?:\|([^}]*))?\s*\}/g;
+
 export default function sub(string, data) {
-	const REGEX_SUB = /\{\s*([^|}]+?)\s*(?:\|([^}]*))?\s*\}/g;
-
-	if (typeof string !== 'string') {
-		throw new TypeError('the first argument must be a string');
-	}
-
 	if (
 		arguments.length > 2 ||
 		(typeof data !== 'object' && typeof data !== 'function')

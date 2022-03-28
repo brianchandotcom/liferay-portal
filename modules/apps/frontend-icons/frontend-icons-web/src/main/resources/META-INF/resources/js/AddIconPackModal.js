@@ -54,7 +54,7 @@ export default function AddIconPackModal({
 			portletNamespace + 'svgFile',
 			svgFileInputRef.current.files[0]
 		);
-		formData.append(portletNamespace + 'iconPack', iconPackName);
+		formData.append(portletNamespace + 'iconPackName', iconPackName);
 
 		return fetch(saveFromSpritemapActionURL, {
 			body: formData,
@@ -137,12 +137,12 @@ export default function AddIconPackModal({
 						}}
 					>
 						<ClayForm.Group>
-							<label htmlFor={portletNamespace + 'iconPack'}>
+							<label htmlFor={portletNamespace + 'iconPackName'}>
 								{Liferay.Language.get('pack-name')}
 							</label>
 
 							<ClayInput
-								name={portletNamespace + 'iconPack'}
+								name={portletNamespace + 'iconPackName'}
 								onChange={(event) =>
 									setIconPackName(event.target.value)
 								}

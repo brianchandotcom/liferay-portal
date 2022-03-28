@@ -34,7 +34,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -143,10 +142,9 @@ public class AssetHelperImpl implements AssetHelper {
 		}
 
 		if (groupId > 0) {
-			Group group = _groupLocalService.fetchGroup(groupId);
-
 			liferayPortletRequest.setAttribute(
-				WebKeys.ASSET_RENDERER_FACTORY_GROUP, group);
+				WebKeys.ASSET_RENDERER_FACTORY_GROUP,
+				_groupLocalService.fetchGroup(groupId));
 		}
 
 		PortletURL addPortletURL = assetRendererFactory.getURLAdd(

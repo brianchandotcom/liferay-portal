@@ -130,10 +130,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 				itemClassName);
 
 		try {
-			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
-				itemClassName, itemClassPK);
-
-			return getInfoFieldValues(assetEntry);
+			return getInfoFieldValues(
+				assetRendererFactory.getAssetEntry(itemClassName, itemClassPK));
 		}
 		catch (NoSuchEntryException noSuchEntryException) {
 			throw new NoSuchInfoItemException(

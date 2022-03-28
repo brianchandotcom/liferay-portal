@@ -118,12 +118,10 @@ public class AssetCategoryLayoutDisplayPageMultiSelectionProvider
 			for (InfoItemReference infoItemReference :
 					categoryIdInfoItemReferences.values()) {
 
-				AssetCategory assetCategory =
-					_assetCategoryLocalService.fetchAssetCategory(
-						_getClassPK(infoItemReference));
-
 				long parentCategoryId = _getNearestAncestorCategoryId(
-					assetCategory, categoryIds);
+					_assetCategoryLocalService.fetchAssetCategory(
+						_getClassPK(infoItemReference)),
+					categoryIds);
 
 				List<InfoItemReference> parentCategoryIdInfoItemReferences =
 					parentCategoryIdInfoItemReferencesMap.get(parentCategoryId);

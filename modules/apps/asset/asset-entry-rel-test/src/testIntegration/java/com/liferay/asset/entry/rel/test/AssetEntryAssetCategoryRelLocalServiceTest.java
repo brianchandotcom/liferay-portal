@@ -220,12 +220,10 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 
 	@Test
 	public void testFetchAssetEntryAssetCategoryRelWithInvalidAssetEntryId() {
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel =
+		Assert.assertNull(
 			_assetEntryAssetCategoryRelLocalService.
 				fetchAssetEntryAssetCategoryRel(
-					RandomTestUtil.randomLong(), RandomTestUtil.randomLong());
-
-		Assert.assertNull(assetEntryAssetCategoryRel);
+					RandomTestUtil.randomLong(), RandomTestUtil.randomLong()));
 	}
 
 	@Test
@@ -315,11 +313,10 @@ public class AssetEntryAssetCategoryRelLocalServiceTest {
 		_addAssetEntryAssetCategoryRel(
 			assetEntryId, RandomTestUtil.randomLong());
 
-		int assetEntryAssetCategoryRelsCount =
+		Assert.assertEquals(
+			2,
 			_assetEntryAssetCategoryRelLocalService.
-				getAssetEntryAssetCategoryRelsCount(assetEntryId);
-
-		Assert.assertEquals(2, assetEntryAssetCategoryRelsCount);
+				getAssetEntryAssetCategoryRelsCount(assetEntryId));
 	}
 
 	@Test

@@ -137,11 +137,10 @@ public class AssetBrowserManagementToolbarDisplayContext
 
 				labelItem.setCloseable(true);
 
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(httpServletRequest, "scope"),
-					_getScopeLabel(scope));
-
-				labelItem.setLabel(label);
+				labelItem.setLabel(
+					String.format(
+						"%s: %s", LanguageUtil.get(httpServletRequest, "scope"),
+						_getScopeLabel(scope)));
 			}
 		).build();
 	}

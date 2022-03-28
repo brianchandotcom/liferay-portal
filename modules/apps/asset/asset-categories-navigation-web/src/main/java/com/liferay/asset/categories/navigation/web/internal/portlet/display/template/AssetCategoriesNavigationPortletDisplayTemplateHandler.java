@@ -59,11 +59,13 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		String portletTitle = _portal.getPortletTitle(
-			AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION,
-			resourceBundle);
-
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return LanguageUtil.format(
+			locale, "x-template",
+			_portal.getPortletTitle(
+				AssetCategoriesNavigationPortletKeys.
+					ASSET_CATEGORIES_NAVIGATION,
+				resourceBundle),
+			false);
 	}
 
 	@Override

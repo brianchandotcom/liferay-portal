@@ -18,6 +18,7 @@ import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortlet
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -90,6 +91,27 @@ public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, actionResponse, jsonObject);
 	}
 
+	private LayoutStructureItem _addCollectionStyledLayoutStructureItem(
+		LayoutStructure layoutStructure, String parentItemId, int position) {
+
+		if (GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-119551"))) {
+			CollectionStyledLayoutStructureItem
+				collectionStyledLayoutStructureItem =
+					(CollectionStyledLayoutStructureItem)
+						layoutStructure.addCollectionStyledLayoutStructureItem(
+							parentItemId, position);
+
+			collectionStyledLayoutStructureItem.setViewportConfiguration(
+				ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId(),
+				JSONUtil.put("numberOfColumns", 1));
+
+			return collectionStyledLayoutStructureItem;
+		}
+
+		return layoutStructure.addCollectionStyledLayoutStructureItem(
+			parentItemId, position);
+	}
+
 	private JSONObject _addItemToLayoutData(ActionRequest actionRequest)
 		throws PortalException {
 
@@ -116,9 +138,8 @@ public class AddItemMVCActionCommand extends BaseMVCActionCommand {
 					themeDisplay.getPlid(),
 					layoutStructure -> {
 						LayoutStructureItem layoutStructureItem =
-							layoutStructure.
-								addCollectionStyledLayoutStructureItem(
-									parentItemId, position);
+							_addCollectionStyledLayoutStructureItem(
+								layoutStructure, parentItemId, position);
 
 						jsonObject.put(
 							"addedItemId", layoutStructureItem.getItemId());

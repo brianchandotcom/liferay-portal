@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.RequestDispatcherUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -57,6 +58,8 @@ import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -402,6 +405,21 @@ public class ComboServlet extends HttpServlet {
 					stringFileContent = MinifierUtil.minifyJavaScript(
 						resourcePath, stringFileContent);
 
+					Matcher matcher = _esModulePattern.matcher(
+						stringFileContent);
+
+					if (matcher.matches()) {
+						stringFileContent =
+							matcher.group(1) + "../o/" + matcher.group(3);
+
+						String identifier =
+							StringPool.UNDERLINE +
+								DigesterUtil.digestHex(modulePath);
+
+						stringFileContent = stringFileContent.replaceAll(
+							"esModule", identifier);
+					}
+
 					stringFileContent = stringFileContent.concat(
 						StringPool.NEW_LINE);
 				}
@@ -527,6 +545,9 @@ public class ComboServlet extends HttpServlet {
 	private static final PortalCache<String, byte[][]> _bytesArrayPortalCache =
 		PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.SINGLE_VM, ComboServlet.class.getName());
+	private static final Pattern _esModulePattern = Pattern.compile(
+		"(import\\s*\\*\\s*as\\s*esModule\\s*from\\s*[\"'])((?:\\.\\./)+)(.*)",
+		Pattern.DOTALL);
 	private static final PortalCache<String, FileContentBag>
 		_fileContentBagPortalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.SINGLE_VM, FileContentBag.class.getName());

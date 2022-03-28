@@ -99,11 +99,9 @@ public class AMImageProcessorTest {
 				amImageConfigurationEntry.getUUID());
 		}
 
-		ServiceContext serviceContext =
+		FileEntry fileEntry = _addNonimageFileEntry(
 			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
-		FileEntry fileEntry = _addNonimageFileEntry(serviceContext);
+				_group, TestPropsValues.getUserId()));
 
 		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
 			_amImageFinder.getAdaptiveMediaStream(
@@ -116,11 +114,9 @@ public class AMImageProcessorTest {
 
 	@Test
 	public void testAddingFileEntryWithImageCreatesMedia() throws Exception {
-		ServiceContext serviceContext =
+		FileEntry fileEntry = _addImageFileEntry(
 			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
-		FileEntry fileEntry = _addImageFileEntry(serviceContext);
+				_group, TestPropsValues.getUserId()));
 
 		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
 			_amImageFinder.getAdaptiveMediaStream(
@@ -135,11 +131,9 @@ public class AMImageProcessorTest {
 	public void testAddingFileEntryWithNoImageCreatesNoMedia()
 		throws Exception {
 
-		ServiceContext serviceContext =
+		FileEntry fileEntry = _addNonimageFileEntry(
 			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
-		FileEntry fileEntry = _addNonimageFileEntry(serviceContext);
+				_group, TestPropsValues.getUserId()));
 
 		Stream<AdaptiveMedia<AMImageProcessor>> adaptiveMediaStream =
 			_amImageFinder.getAdaptiveMediaStream(
@@ -152,11 +146,9 @@ public class AMImageProcessorTest {
 
 	@Test
 	public void testCleaningFileEntryWithImageRemovesMedia() throws Exception {
-		ServiceContext serviceContext =
+		FileEntry fileEntry = _addImageFileEntry(
 			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
-		FileEntry fileEntry = _addImageFileEntry(serviceContext);
+				_group, TestPropsValues.getUserId()));
 
 		_amImageProcessor.cleanUp(fileEntry.getLatestFileVersion(true));
 
@@ -171,11 +163,9 @@ public class AMImageProcessorTest {
 
 	@Test
 	public void testCleaningFileEntryWithNoImageDoesNothing() throws Exception {
-		ServiceContext serviceContext =
+		FileEntry fileEntry = _addNonimageFileEntry(
 			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
-		FileEntry fileEntry = _addNonimageFileEntry(serviceContext);
+				_group, TestPropsValues.getUserId()));
 
 		_amImageProcessor.cleanUp(fileEntry.getLatestFileVersion(true));
 

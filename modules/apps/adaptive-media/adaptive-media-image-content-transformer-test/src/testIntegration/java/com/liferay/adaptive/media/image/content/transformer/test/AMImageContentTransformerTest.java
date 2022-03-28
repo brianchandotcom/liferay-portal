@@ -82,11 +82,9 @@ public class AMImageContentTransformerTest {
 
 	@Test
 	public void testTransformASingleImage() throws Exception {
-		ServiceContext serviceContext =
+		FileEntry fileEntry = _addImageFileEntry(
 			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
-
-		FileEntry fileEntry = _addImageFileEntry(serviceContext);
+				_group, TestPropsValues.getUserId()));
 
 		String rawHTML = String.format(
 			"<img data-fileentryid=\"%s\" src=\"%s\" />",

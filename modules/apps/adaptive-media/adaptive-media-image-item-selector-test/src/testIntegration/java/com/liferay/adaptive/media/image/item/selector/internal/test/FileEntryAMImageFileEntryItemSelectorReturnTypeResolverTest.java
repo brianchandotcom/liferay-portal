@@ -64,16 +64,12 @@ public class FileEntryAMImageFileEntryItemSelectorReturnTypeResolverTest {
 
 	@Test
 	public void testAddingFileEntryWithImageCreatesMedia() throws Exception {
-		ServiceContext serviceContext =
+		FileEntry fileEntry = _addImageFileEntry(
 			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId());
+				_group, TestPropsValues.getUserId()));
 
-		FileEntry fileEntry = _addImageFileEntry(serviceContext);
-
-		String value = _itemSelectorReturnTypeResolver.getValue(
-			fileEntry, null);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(value);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			_itemSelectorReturnTypeResolver.getValue(fileEntry, null));
 
 		String url = jsonObject.getString("url");
 		long fileEntryId = jsonObject.getLong("fileEntryId");

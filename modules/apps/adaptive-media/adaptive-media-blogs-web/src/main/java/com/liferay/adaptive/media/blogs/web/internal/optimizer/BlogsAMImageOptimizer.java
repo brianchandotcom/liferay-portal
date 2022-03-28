@@ -105,10 +105,10 @@ public class BlogsAMImageOptimizer implements AMImageOptimizer {
 				Property classNameIdProperty = PropertyFactoryUtil.forName(
 					"classNameId");
 
-				long classNameId = _classNameLocalService.getClassNameId(
-					BlogsEntry.class.getName());
-
-				dynamicQuery.add(classNameIdProperty.eq(classNameId));
+				dynamicQuery.add(
+					classNameIdProperty.eq(
+						_classNameLocalService.getClassNameId(
+							BlogsEntry.class.getName())));
 
 				Property mimeTypeProperty = PropertyFactoryUtil.forName(
 					"mimeType");

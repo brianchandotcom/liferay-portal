@@ -212,13 +212,10 @@ public class AMImageConfigurationEntryParserTest extends PowerMockito {
 				).build(),
 				true);
 
-		String configurationString =
-			_amImageConfigurationEntryParser.getConfigurationString(
-				amImageConfigurationEntry);
-
 		Assert.assertEquals(
 			"test:desc:12345:max-height=100;max-width=200:enabled=true",
-			configurationString);
+			_amImageConfigurationEntryParser.getConfigurationString(
+				amImageConfigurationEntry));
 	}
 
 	@Test
@@ -231,12 +228,10 @@ public class AMImageConfigurationEntryParserTest extends PowerMockito {
 				).build(),
 				true);
 
-		String configurationString =
-			_amImageConfigurationEntryParser.getConfigurationString(
-				amImageConfigurationEntry);
-
 		Assert.assertEquals(
-			"test:desc:12345:max-width=200:enabled=true", configurationString);
+			"test:desc:12345:max-width=200:enabled=true",
+			_amImageConfigurationEntryParser.getConfigurationString(
+				amImageConfigurationEntry));
 	}
 
 	@Test
@@ -245,12 +240,10 @@ public class AMImageConfigurationEntryParserTest extends PowerMockito {
 			new AMImageConfigurationEntryImpl(
 				"test", "desc", "12345", Collections.emptyMap(), true);
 
-		String configurationString =
-			_amImageConfigurationEntryParser.getConfigurationString(
-				amImageConfigurationEntry);
-
 		Assert.assertEquals(
-			"test:desc:12345::enabled=true", configurationString);
+			"test:desc:12345::enabled=true",
+			_amImageConfigurationEntryParser.getConfigurationString(
+				amImageConfigurationEntry));
 	}
 
 	@Test
@@ -263,13 +256,10 @@ public class AMImageConfigurationEntryParserTest extends PowerMockito {
 				).build(),
 				false);
 
-		String configurationString =
-			_amImageConfigurationEntryParser.getConfigurationString(
-				amImageConfigurationEntry);
-
 		Assert.assertEquals(
 			"test:desc:12345:max-height=100:enabled=false",
-			configurationString);
+			_amImageConfigurationEntryParser.getConfigurationString(
+				amImageConfigurationEntry));
 	}
 
 	@Test
@@ -284,13 +274,10 @@ public class AMImageConfigurationEntryParserTest extends PowerMockito {
 				).build(),
 				false);
 
-		String configurationString =
-			_amImageConfigurationEntryParser.getConfigurationString(
-				amImageConfigurationEntry);
-
 		Assert.assertEquals(
 			"test:desc:12345:max-height=100;max-width=200:enabled=false",
-			configurationString);
+			_amImageConfigurationEntryParser.getConfigurationString(
+				amImageConfigurationEntry));
 	}
 
 	@Test
@@ -303,12 +290,10 @@ public class AMImageConfigurationEntryParserTest extends PowerMockito {
 				).build(),
 				false);
 
-		String configurationString =
-			_amImageConfigurationEntryParser.getConfigurationString(
-				amImageConfigurationEntry);
-
 		Assert.assertEquals(
-			"test:desc:12345:max-width=200:enabled=false", configurationString);
+			"test:desc:12345:max-width=200:enabled=false",
+			_amImageConfigurationEntryParser.getConfigurationString(
+				amImageConfigurationEntry));
 	}
 
 	@Test(expected = IllegalArgumentException.class)

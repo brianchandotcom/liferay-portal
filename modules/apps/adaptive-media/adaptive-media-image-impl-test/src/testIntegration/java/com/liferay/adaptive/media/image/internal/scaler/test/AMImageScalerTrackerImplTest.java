@@ -124,20 +124,18 @@ public class AMImageScalerTrackerImplTest {
 	public void testAMImageScalerTrackerReturnsAMDefaultImageScalerWhenAsteriskMimeType()
 		throws Exception {
 
-		AMImageScaler amImageScaler = _amImageScalerTracker.getAMImageScaler(
-			"*");
-
-		Assert.assertEquals(_amDefaultImageScaler, amImageScaler);
+		Assert.assertEquals(
+			_amDefaultImageScaler, _amImageScalerTracker.getAMImageScaler("*"));
 	}
 
 	@Test
 	public void testAMImageScalerTrackerReturnsAMDefaultImageScalerWhenRandomMimeType()
 		throws Exception {
 
-		AMImageScaler amImageScaler = _amImageScalerTracker.getAMImageScaler(
-			RandomTestUtil.randomString());
-
-		Assert.assertEquals(_amDefaultImageScaler, amImageScaler);
+		Assert.assertEquals(
+			_amDefaultImageScaler,
+			_amImageScalerTracker.getAMImageScaler(
+				RandomTestUtil.randomString()));
 	}
 
 	@Test
@@ -245,11 +243,9 @@ public class AMImageScalerTrackerImplTest {
 		try {
 			_disableAMDefaultImageScaler();
 
-			AMImageScaler amImageScaler =
+			Assert.assertNull(
 				_amImageScalerTracker.getAMImageScaler(
-					RandomTestUtil.randomString());
-
-			Assert.assertNull(amImageScaler);
+					RandomTestUtil.randomString()));
 		}
 		finally {
 			_enableAMDefaultImageScaler();
@@ -271,11 +267,9 @@ public class AMImageScalerTrackerImplTest {
 			amImageScalerServiceRegistration = _registerAMImageScaler(
 				disabledAMImageScaler, "*", 10);
 
-			AMImageScaler amImageScaler =
+			Assert.assertNull(
 				_amImageScalerTracker.getAMImageScaler(
-					RandomTestUtil.randomString());
-
-			Assert.assertNull(amImageScaler);
+					RandomTestUtil.randomString()));
 		}
 		finally {
 			_unregisterAMImageScaler(amImageScalerServiceRegistration);

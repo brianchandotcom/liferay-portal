@@ -128,7 +128,6 @@
 /portal/jaxrpc.jar
 /portal/jaxrs-api.jar
 /portal/jaxws-api.jar
-/portal/jaxws-rt.jar
 /portal/jcl-over-slf4j.jar
 /portal/jersey-common.jar
 /portal/jhlabs-filters.jar

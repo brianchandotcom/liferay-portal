@@ -1385,18 +1385,6 @@ definition {
 			Notifications.viewBadgeCount(notificationCount = "1");
 		}
 
-		task ("See notification") {
-			Notifications.gotoNotifications();
-
-			Notifications.navigateToContent(contentBody = "Blogs Entry Title");
-
-			BlogsEntry.viewEntryPG(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title");
-
-			Notifications.viewBadgeCount(notificationCount = "0");
-		}
-
 		task ("Disable Send Notifications to Blogs Entry Creator") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Configuration",

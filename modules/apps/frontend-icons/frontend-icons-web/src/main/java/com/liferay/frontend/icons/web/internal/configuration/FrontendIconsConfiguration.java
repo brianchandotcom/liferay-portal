@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.icons.web.internal.portal.settings.configuration.admin.category;
+package com.liferay.frontend.icons.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.frontend.icons.web.internal.portal.settings.configuration.admin.category.FrontendIconsConfiguration",
+	id = "com.liferay.frontend.icons.web.internal.configuration.FrontendIconsConfiguration",
 	localization = "content/Language",
 	name = "frontend-icons-configuration-name"
 )

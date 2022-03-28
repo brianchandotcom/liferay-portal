@@ -79,7 +79,8 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 			return;
 		}
 
-		String iconPackName = ParamUtil.getString(actionRequest, "iconPackName");
+		String iconPackName = ParamUtil.getString(
+			actionRequest, "iconPackName");
 
 		String icons = ParamUtil.getString(actionRequest, "icons");
 

@@ -911,6 +911,57 @@ definition {
 		}
 	}
 
+	@description = "Verify import rows with errors are skipped during an import if 'Stop the Import on Error' is no checked."
+	@priority = "3"
+	test ContinueImportOnError {
+		property portal.acceptance = "true";
+
+		task ("Given the user is importing a file with an invalid field in one of the rows") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			ImportExport.configureImport(
+				entityType = "Account",
+				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
+				fileName = "csv_account_import_error.csv",
+				headlessEndpoint = "/headless-admin-user",
+				stopImportOnError = "true");
+		}
+
+		task ("When the user unchecks 'Stop the Import on Error' and imports the file") {
+			Uncheck.uncheckNotVisible(
+				checkboxName = "Stop the Import on Error",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Button.click(button = "Import");
+		}
+
+		task ("Then the only the rows without error should be imported") {
+			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
+
+			Button.clickDone();
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.viewNoEntry(rowEntry = "Test Guest Account");
+
+			Accounts.viewAccountDetails(
+				accountDescription = "Test Business Account Description",
+				accountName = "Test Business Account",
+				accountType = "Business",
+				externalReferenceCode = "101");
+
+			Navigator.gotoBack();
+
+			Accounts.viewAccountDetails(
+				accountDescription = "Test Person Account Description",
+				accountName = "Test Person Account",
+				accountType = "Person",
+				externalReferenceCode = "103");
+		}
+	}
+
 	@description = "Verify CSV fields are automatically mapped to fields in Liferay when the names are the same"
 	@priority = "3"
 	test CSVFieldsAreAutoMapped {
@@ -980,6 +1031,45 @@ definition {
 
 		task ("Then the fields are automatically mapped") {
 			ImportExport.assertImportMappings(fieldMappings = "name:name,type:type,description:description");
+		}
+	}
+
+	@description = "Verify imports are stopped if 'Stop the Import on Error' is checked when importing a file with an error in any of the rows."
+	@priority = "3"
+	test StopImportOnError {
+		property portal.acceptance = "true";
+
+		task ("Given the user is importing a file with an invalid field in one of the rows") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.gotoImport();
+
+			ImportExport.configureImport(
+				entityType = "Account",
+				fieldMappings = "name:Account Name,type:Account Type,description:Account Description,externalReferenceCode:External Reference Code",
+				fileName = "csv_account_import_error.csv",
+				headlessEndpoint = "/headless-admin-user",
+				stopImportOnError = "true");
+		}
+
+		task ("When the user checks 'Stop the Import on Error' and imports the file") {
+			Check.checkNotVisible(
+				checkboxName = "Stop the Import on Error",
+				locator1 = "Checkbox#ANY_CHECKBOX");
+
+			Button.click(button = "Import");
+		}
+
+		task ("Then the import should be stopped and no entity should be imported") {
+			AssertElementPresent(locator1 = "Message#ERROR_MODAL_CONTENT");
+
+			Accounts.openAccountsAdmin();
+
+			LexiconEntry.viewNoEntry(rowEntry = "Test Business Account");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Test Guest Account");
+
+			LexiconEntry.viewNoEntry(rowEntry = "Test Person Account");
 		}
 	}
 

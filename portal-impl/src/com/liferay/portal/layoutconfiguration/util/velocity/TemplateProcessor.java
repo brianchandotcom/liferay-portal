@@ -43,7 +43,6 @@ import com.liferay.portal.layoutconfiguration.util.PortletRenderer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -274,10 +273,8 @@ public class TemplateProcessor implements ColumnProcessor {
 		BufferCacheServletResponse bufferCacheServletResponse =
 			new BufferCacheServletResponse(_httpServletResponse);
 
-		Map<String, Object> paths = new HashMap<>();
-
-		PortletPathsUtil.populatePortletPaths(
-			_httpServletRequest, StringPool.BLANK, portlet, paths);
+		Map<String, Object> paths = PortletPathsUtil.getPortletPaths(
+			_httpServletRequest, StringPool.BLANK, portlet);
 
 		try {
 			PortletPathsUtil.writeHeaderPaths(_httpServletResponse, paths);

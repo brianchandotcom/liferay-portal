@@ -141,10 +141,8 @@ public class RenderContentLayoutDisplayContext {
 		Map<String, Object> portletIdPath = _portletIdPaths.get(portletId);
 
 		if (portletIdPath == null) {
-			Map<String, Object> paths = new HashMap<>();
-
-			PortletPathsUtil.populatePortletPaths(
-				_httpServletRequest, StringPool.BLANK, portlet, paths);
+			Map<String, Object> paths = PortletPathsUtil.getPortletPaths(
+				_httpServletRequest, StringPool.BLANK, portlet);
 
 			_portletIdPaths.put(portletId, paths);
 

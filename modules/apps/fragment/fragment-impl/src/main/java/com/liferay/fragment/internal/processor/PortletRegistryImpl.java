@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -165,11 +164,9 @@ public class PortletRegistryImpl implements PortletRegistry {
 		);
 
 		for (Portlet portlet : portlets) {
-			Map<String, Object> paths = new HashMap<>();
-
 			try {
-				PortletPathsUtil.populatePortletPaths(
-					httpServletRequest, StringPool.BLANK, portlet, paths);
+				Map<String, Object> paths = PortletPathsUtil.getPortletPaths(
+					httpServletRequest, StringPool.BLANK, portlet);
 
 				PortletPathsUtil.writeHeaderPaths(httpServletResponse, paths);
 

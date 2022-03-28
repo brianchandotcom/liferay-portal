@@ -59,7 +59,6 @@ import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -305,10 +304,8 @@ public class UpdateLayoutAction extends JSONAction {
 
 			portletHTML = portletHTML.trim();
 
-			Map<String, Object> paths = new HashMap<>();
-
-			PortletPathsUtil.populatePortletPaths(
-				httpServletRequest, portletHTML, portlet, paths);
+			Map<String, Object> paths = PortletPathsUtil.getPortletPaths(
+				httpServletRequest, portletHTML, portlet);
 
 			for (Map.Entry<String, Object> entry : paths.entrySet()) {
 				Object value = entry.getValue();

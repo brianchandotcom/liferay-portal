@@ -344,10 +344,8 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			}
 
 			if (writeObject) {
-				paths = new HashMap<>();
-
-				PortletPathsUtil.populatePortletPaths(
-					httpServletRequest, StringPool.BLANK, portlet, paths);
+				paths = PortletPathsUtil.getPortletPaths(
+					httpServletRequest, StringPool.BLANK, portlet);
 			}
 
 			if (paths != null) {

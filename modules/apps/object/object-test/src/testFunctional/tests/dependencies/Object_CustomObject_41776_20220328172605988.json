@@ -1,1 +1,48 @@
-{"active":true,"objectActions":[],"label":{"en_US":"Custom Object"},"panelCategoryKey":"control_panel.object","pluralLabel":{"en_US":"Custom Objects"},"objectLayouts":[],"system":false,"objectViews":[],"objectFields":[{"indexedAsKeyword":true,"indexed":true,"indexedLanguageId":"","name":"customObjectField","DBType":"String","label":{"en_US":"Custom Field"},"businessType":"Text","type":"String","required":false}],"scope":"company","name":"CustomObject","portlet":false,"actions":{"permissions":{},"get":{},"update":{}},"status":{"label_i18n":"Approved","code":0,"label":"approved"}}
+{
+	"actions": {
+		"get": {
+		},
+		"permissions": {
+		},
+		"update": {
+		}
+	},
+	"active": true,
+	"label": {
+		"en_US": "Custom Object"
+	},
+	"name": "CustomObject",
+	"objectActions": [
+	],
+	"objectFields": [
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"indexed": true,
+			"indexedAsKeyword": true,
+			"indexedLanguageId": "",
+			"label": {
+				"en_US": "Custom Field"
+			},
+			"name": "customObjectField",
+			"required": false,
+			"type": "String"
+		}
+	],
+	"objectLayouts": [
+	],
+	"objectViews": [
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Custom Objects"
+	},
+	"portlet": false,
+	"scope": "company",
+	"status": {
+		"code": 0,
+		"label": "approved",
+		"label_i18n": "Approved"
+	},
+	"system": false
+}

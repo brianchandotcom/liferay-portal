@@ -42,10 +42,4 @@ describe('sub', () => {
 			'<a href="" target="_blank">Learn how</a> to tailor categories to your needs'
 		);
 	});
-
-	it('throws an error if the first argument is not a string', () => {
-		expect(() => sub(1)).toThrow(
-			new TypeError('the first argument must be a string')
-		);
-	});
 });

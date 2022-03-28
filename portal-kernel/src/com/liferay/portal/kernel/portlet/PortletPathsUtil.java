@@ -18,6 +18,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -43,9 +44,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class PortletPathsUtil {
 
-	public static void populatePortletPaths(
+	public static Map<String, Object> getPortletPaths(
 		HttpServletRequest httpServletRequest, String portletHTML,
-		Portlet portlet, Map<String, Object> paths) {
+		Portlet portlet) {
 
 		boolean portletOnLayout = false;
 
@@ -71,8 +72,8 @@ public class PortletPathsUtil {
 			}
 		}
 
-		_populatePortletPaths(
-			httpServletRequest, portletHTML, portlet, portletOnLayout, paths);
+		return _getPortletPaths(
+			httpServletRequest, portletHTML, portlet, portletOnLayout);
 	}
 
 	public static void writeFooterPaths(
@@ -118,19 +119,9 @@ public class PortletPathsUtil {
 		return allPortlets;
 	}
 
-	private static String _getRootPortletId(Portlet portlet) {
-
-		// Workaround for portlet#getRootPortletId because that does not return
-		// the proper root portlet ID for OpenSocial and WSRP portlets
-
-		Portlet rootPortlet = portlet.getRootPortlet();
-
-		return rootPortlet.getPortletId();
-	}
-
-	private static void _populatePortletPaths(
+	private static Map<String, Object> _getPortletPaths(
 		HttpServletRequest httpServletRequest, String portletHTML,
-		Portlet portlet, boolean portletOnLayout, Map<String, Object> paths) {
+		Portlet portlet, boolean portletOnLayout) {
 
 		Set<String> footerCssSet = new LinkedHashSet<>();
 		Set<String> footerJavaScriptSet = new LinkedHashSet<>();
@@ -255,22 +246,43 @@ public class PortletPathsUtil {
 			}
 		}
 
-		paths.put("footerCssPaths", footerCssSet);
-		paths.put("footerJavaScriptPaths", footerJavaScriptSet);
-		paths.put("headerCssPaths", headerCssSet);
-		paths.put("headerJavaScriptPaths", headerJavaScriptSet);
-		paths.put("portletHTML", portletHTML);
-		paths.put("refresh", !portlet.isAjaxable());
+		return HashMapBuilder.<String, Object>put(
+			"footerCssPaths", footerCssSet
+		).put(
+			"footerJavaScriptPaths", footerJavaScriptSet
+		).put(
+			"headerCssPaths", headerCssSet
+		).put(
+			"headerJavaScriptPaths", headerJavaScriptSet
+		).put(
+			"markupHeadElements",
+			() -> {
+				List<String> markupHeadElements =
+					(List<String>)httpServletRequest.getAttribute(
+						MimeResponse.MARKUP_HEAD_ELEMENT);
 
-		List<String> markupHeadElements =
-			(List<String>)httpServletRequest.getAttribute(
-				MimeResponse.MARKUP_HEAD_ELEMENT);
+				if (markupHeadElements != null) {
+					return StringUtil.merge(
+						markupHeadElements, StringPool.BLANK);
+				}
 
-		if (markupHeadElements != null) {
-			paths.put(
-				"markupHeadElements",
-				StringUtil.merge(markupHeadElements, StringPool.BLANK));
-		}
+				return null;
+			}
+		).put(
+			"portletHTML", portletHTML
+		).put(
+			"refresh", !portlet.isAjaxable()
+		).build();
+	}
+
+	private static String _getRootPortletId(Portlet portlet) {
+
+		// Workaround for portlet#getRootPortletId because that does not return
+		// the proper root portlet ID for OpenSocial and WSRP portlets
+
+		Portlet rootPortlet = portlet.getRootPortlet();
+
+		return rootPortlet.getPortletId();
 	}
 
 	private static void _writePaths(

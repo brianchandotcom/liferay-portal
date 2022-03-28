@@ -40,9 +40,11 @@ BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)resultRo
 			context='<%=
 				HashMapBuilder.<String, Object>put(
 					"batchEngineImportTaskId", batchPlannerLogDisplay.getBatchEngineImportTaskERC()
+				).put(
+					"type", "errorReport"
 				).build()
 			%>'
-			module="js/DownloadErrorReport"
+			module="js/DownloadHelper"
 		/>
 	</c:if>
 
@@ -57,9 +59,11 @@ BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)resultRo
 			context='<%=
 				HashMapBuilder.<String, Object>put(
 					"batchEngineImportTaskId", batchPlannerLogDisplay.getBatchEngineImportTaskERC()
+				).put(
+					"type", "importFile"
 				).build()
 			%>'
-			module="js/DownloadImportFile"
+			module="js/DownloadHelper"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

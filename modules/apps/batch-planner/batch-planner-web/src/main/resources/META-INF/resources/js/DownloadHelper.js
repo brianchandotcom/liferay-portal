@@ -14,15 +14,25 @@
 
 import {fetch} from 'frontend-js-web';
 
-export default function ({batchEngineImportTaskId, namespace}) {
+const getEndpoint = (type, taskId) => {
+	const endpoints = {
+		errorReport: `/o/headless-batch-engine/v1.0/import-task/${taskId}/failed-items/report`,
+		importFile: `/o/headless-batch-engine/v1.0/import-task/${taskId}/content`
+	} 
+
+	return endpoints[type]
+}
+
+export default function ({batchEngineImportTaskId, namespace, type}) {
 	document
 		.getElementById(
 			`${namespace}downloadErrorReport${batchEngineImportTaskId}`
 		)
 		.addEventListener('click', (event) => {
 			event.preventDefault();
+
 			fetch(
-				`/o/headless-batch-engine/v1.0/import-task/${batchEngineImportTaskId}/failed-items/report`
+				getEndpoint(type, batchEngineImportTaskId)
 			).then((response) => {
 				response.blob().then((blob) => {
 					const LinkElement = document.createElement('a');

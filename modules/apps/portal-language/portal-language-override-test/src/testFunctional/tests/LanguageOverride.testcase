@@ -182,7 +182,7 @@ definition {
 		task ("Then the language key can be viewed in the View page and there is results message") {
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Results for 2-synced-contact-data");
+				value1 = "1 Results for &quot;2-synced-contact-data&quot;");
 
 			AssertTextEquals(
 				key_languageKey = "2-synced-contact-data",
@@ -219,7 +219,7 @@ definition {
 		task ("Then the language key can be viewed in the View page and there is results message and search for translations") {
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Results for O texto contÃƒÂ©m erro");
+				value1 = "1 Results for &quot;O texto contÃƒÂ©m erro&quot;");
 
 			AssertTextEquals(
 				key_languageKey = "text-contains-error",
@@ -239,7 +239,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Results for Le texte contient une erreur");
+				value1 = "1 Results for &quot;Le texte contient une erreur&quot;");
 
 			AssertTextEquals(
 				key_languageKey = "text-contains-error",

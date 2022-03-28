@@ -103,17 +103,16 @@ public class AssetDisplayPageStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Layout.class);
 
-		long plid = MapUtil.getLong(
-			plids, assetDisplayPageEntry.getPlid(),
-			assetDisplayPageEntry.getPlid());
-
 		importedAssetDisplayPageEntry.setGroupId(
 			portletDataContext.getScopeGroupId());
 		importedAssetDisplayPageEntry.setCompanyId(
 			portletDataContext.getCompanyId());
 		importedAssetDisplayPageEntry.setLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId);
-		importedAssetDisplayPageEntry.setPlid(plid);
+		importedAssetDisplayPageEntry.setPlid(
+			MapUtil.getLong(
+				plids, assetDisplayPageEntry.getPlid(),
+				assetDisplayPageEntry.getPlid()));
 
 		Map<Long, Long> newClassPKsMap =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

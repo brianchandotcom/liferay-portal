@@ -94,10 +94,8 @@ public class AssetDisplayPageEntryLocalServiceImpl
 			layoutPageTemplateEntryId);
 		assetDisplayPageEntry.setType(type);
 
-		long plid = _getPlid(
-			groupId, classNameId, classPK, layoutPageTemplateEntryId);
-
-		assetDisplayPageEntry.setPlid(plid);
+		assetDisplayPageEntry.setPlid(
+			_getPlid(groupId, classNameId, classPK, layoutPageTemplateEntryId));
 
 		assetDisplayPageEntry = assetDisplayPageEntryPersistence.update(
 			assetDisplayPageEntry);

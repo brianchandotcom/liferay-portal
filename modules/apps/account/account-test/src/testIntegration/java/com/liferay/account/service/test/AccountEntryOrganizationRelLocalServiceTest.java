@@ -98,13 +98,10 @@ public class AccountEntryOrganizationRelLocalServiceTest {
 				getAccountEntryOrganizationRelsCount(
 					_accountEntry.getAccountEntryId()));
 
-		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
+		long[] accountEntryOrganizationIds = ListUtil.toLongArray(
 			_accountEntryOrganizationRelLocalService.
 				getAccountEntryOrganizationRels(
-					_accountEntry.getAccountEntryId());
-
-		long[] accountEntryOrganizationIds = ListUtil.toLongArray(
-			accountEntryOrganizationRels,
+					_accountEntry.getAccountEntryId()),
 			AccountEntryOrganizationRelModel::getOrganizationId);
 
 		Assert.assertTrue(

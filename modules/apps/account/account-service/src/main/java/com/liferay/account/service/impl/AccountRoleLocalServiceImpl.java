@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
@@ -230,13 +229,10 @@ public class AccountRoleLocalServiceImpl
 		AccountEntry accountEntry = _accountEntryPersistence.findByPrimaryKey(
 			accountEntryId);
 
-		List<UserGroupRole> userGroupRoles =
-			_userGroupRoleLocalService.getUserGroupRoles(
-				userId, accountEntry.getAccountEntryGroupId());
-
 		return TransformUtil.transform(
 			ListUtil.filter(
-				userGroupRoles,
+				_userGroupRoleLocalService.getUserGroupRoles(
+					userId, accountEntry.getAccountEntryGroupId()),
 				userGroupRole -> {
 					try {
 						Role role = userGroupRole.getRole();

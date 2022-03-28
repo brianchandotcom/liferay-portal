@@ -91,10 +91,10 @@ public class AccountRoleContributorTest {
 		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
 			user);
 
-		long[] roleIds = permissionChecker.getRoleIds(
-			user.getUserId(), TestPropsValues.getGroupId());
-
-		Assert.assertNotSame(PermissionChecker.DEFAULT_ROLE_IDS, roleIds);
+		Assert.assertNotSame(
+			PermissionChecker.DEFAULT_ROLE_IDS,
+			permissionChecker.getRoleIds(
+				user.getUserId(), TestPropsValues.getGroupId()));
 	}
 
 	@Test

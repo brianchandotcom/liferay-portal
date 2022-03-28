@@ -231,11 +231,11 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 				labelItem.setCloseable(true);
 
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(httpServletRequest, "status"),
-					LanguageUtil.get(httpServletRequest, getNavigation()));
-
-				labelItem.setLabel(label);
+				labelItem.setLabel(
+					String.format(
+						"%s: %s",
+						LanguageUtil.get(httpServletRequest, "status"),
+						LanguageUtil.get(httpServletRequest, getNavigation())));
 			}
 		).add(
 			() -> !Objects.equals(_getType(), "all"),
@@ -250,11 +250,10 @@ public class ViewAccountEntriesManagementToolbarDisplayContext
 
 				labelItem.setCloseable(true);
 
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(httpServletRequest, "type"),
-					LanguageUtil.get(httpServletRequest, _getType()));
-
-				labelItem.setLabel(label);
+				labelItem.setLabel(
+					String.format(
+						"%s: %s", LanguageUtil.get(httpServletRequest, "type"),
+						LanguageUtil.get(httpServletRequest, _getType())));
 			}
 		).build();
 	}

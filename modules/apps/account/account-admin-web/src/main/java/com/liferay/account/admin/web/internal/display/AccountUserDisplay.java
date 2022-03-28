@@ -19,7 +19,6 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.model.AccountEntryUserRelModel;
-import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountEntryLocalServiceUtil;
 import com.liferay.account.service.AccountEntryUserRelLocalServiceUtil;
 import com.liferay.account.service.AccountRoleLocalServiceUtil;
@@ -118,12 +117,9 @@ public class AccountUserDisplay {
 	public String getAccountRoleNamesString(long accountEntryId, Locale locale)
 		throws PortalException {
 
-		List<AccountRole> accountRoles =
-			AccountRoleLocalServiceUtil.getAccountRoles(
-				accountEntryId, getUserId());
-
 		List<String> accountRoleNames = TransformUtil.transform(
-			accountRoles,
+			AccountRoleLocalServiceUtil.getAccountRoles(
+				accountEntryId, getUserId()),
 			accountRole -> {
 				Role role = accountRole.getRole();
 

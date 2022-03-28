@@ -119,10 +119,9 @@ public class AccountEntryLocalServiceTest {
 
 		Assert.assertNotNull(group);
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			AccountEntry.class);
-
-		Assert.assertEquals(classNameId, group.getClassNameId());
+		Assert.assertEquals(
+			_classNameLocalService.getClassNameId(AccountEntry.class),
+			group.getClassNameId());
 
 		Assert.assertEquals(
 			accountEntry.getAccountEntryId(), group.getClassPK());
@@ -196,13 +195,12 @@ public class AccountEntryLocalServiceTest {
 			_accountEntryLocalService.fetchAccountEntry(
 				accountEntry.getAccountEntryId()));
 
-		int resourcePermissionsCount =
+		Assert.assertEquals(
+			1,
 			_resourcePermissionLocalService.getResourcePermissionsCount(
 				TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(accountEntry.getAccountEntryId()));
-
-		Assert.assertEquals(1, resourcePermissionsCount);
+				String.valueOf(accountEntry.getAccountEntryId())));
 	}
 
 	@Test
@@ -1045,13 +1043,12 @@ public class AccountEntryLocalServiceTest {
 		Assert.assertNull(
 			_accountEntryLocalService.fetchAccountEntry(accountEntryId));
 
-		int resourcePermissionsCount =
+		Assert.assertEquals(
+			0,
 			_resourcePermissionLocalService.getResourcePermissionsCount(
 				TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(accountEntryId));
-
-		Assert.assertEquals(0, resourcePermissionsCount);
+				String.valueOf(accountEntryId)));
 	}
 
 	private void _assertGetUserAccountEntriesWithKeywords(

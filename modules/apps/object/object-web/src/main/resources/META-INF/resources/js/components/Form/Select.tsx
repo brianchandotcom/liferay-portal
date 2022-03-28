@@ -12,13 +12,10 @@
  * details.
  */
 
-import ClayForm, {ClaySelect} from '@clayui/form';
-import classNames from 'classnames';
+import {ClaySelect} from '@clayui/form';
 import React from 'react';
 
-import ErrorFeedback from './ErrorFeedback';
-import FeedbackMessage from './FeedbackMessage';
-import RequiredMask from './RequiredMask';
+import FieldBase from './FieldBase';
 
 interface ISelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 	disabled?: boolean;
@@ -31,24 +28,26 @@ interface ISelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 
 export default function Select({
 	className,
-	disabled = false,
+	disabled,
 	error,
 	feedbackMessage,
 	id,
 	label,
 	onChange,
 	options,
-	required = false,
+	required,
 	...otherProps
 }: ISelectProps) {
 	return (
-		<ClayForm.Group className={classNames(className, {'has-error': error})}>
-			<label className={classNames({disabled})} htmlFor={id}>
-				{label}
-
-				{required && <RequiredMask />}
-			</label>
-
+		<FieldBase
+			className={className}
+			disabled={disabled}
+			error={error}
+			feedbackMessage={feedbackMessage}
+			id={id}
+			label={label}
+			required={required}
+		>
 			<ClaySelect
 				{...otherProps}
 				disabled={disabled}
@@ -67,12 +66,6 @@ export default function Select({
 					/>
 				))}
 			</ClaySelect>
-
-			{error && <ErrorFeedback error={error} />}
-
-			{feedbackMessage && (
-				<FeedbackMessage feedbackMessage={feedbackMessage} />
-			)}
-		</ClayForm.Group>
+		</FieldBase>
 	);
 }

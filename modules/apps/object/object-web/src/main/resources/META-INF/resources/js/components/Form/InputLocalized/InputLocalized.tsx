@@ -12,19 +12,15 @@
  * details.
  */
 
-import ClayForm from '@clayui/form';
 import ClayLocalizedInput from '@clayui/localized-input';
-import classNames from 'classnames';
 import React from 'react';
 
-import ErrorFeedback from '../ErrorFeedback';
-import RequiredMask from '../RequiredMask';
+import FieldBase from '../FieldBase';
 
 import './InputLocalized.scss';
 
 export default function InputLocalized({
-	className,
-	disabled = false,
+	disabled,
 	error,
 	id,
 	label,
@@ -32,27 +28,23 @@ export default function InputLocalized({
 	name,
 	onSelectedLocaleChange,
 	onTranslationsChange,
-	required = false,
+	required,
 	selectedLocale,
 	translations,
 	...otherProps
 }: IProps) {
 	return (
-		<ClayForm.Group
-			className={classNames(
-				'lfr-objects__input-localized',
-				{'has-error': error},
-				className
-			)}
+		<FieldBase
+			className="lfr-objects__input-localized"
+			disabled={disabled}
+			error={error}
+			id={id}
+			label={label}
+			required={required}
 		>
-			<label className={classNames({disabled})} htmlFor={id}>
-				{label}
-
-				{required && <RequiredMask />}
-			</label>
-
 			<ClayLocalizedInput
 				{...otherProps}
+				disabled={disabled}
 				id={id}
 				label=""
 				locales={locales}
@@ -62,9 +54,7 @@ export default function InputLocalized({
 				selectedLocale={selectedLocale}
 				translations={translations}
 			/>
-
-			{error && <ErrorFeedback error={error} />}
-		</ClayForm.Group>
+		</FieldBase>
 	);
 }
 

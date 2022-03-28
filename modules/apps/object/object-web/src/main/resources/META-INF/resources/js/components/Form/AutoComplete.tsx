@@ -13,14 +13,10 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
-import ClayForm from '@clayui/form';
-import classNames from 'classnames';
 import React, {useState} from 'react';
 
 import CustomSelect from '../CustomSelect/CustomSelect';
-import ErrorFeedback from './ErrorFeedback';
-import FeedbackMessage from './FeedbackMessage';
-import RequiredMask from './RequiredMask';
+import FieldBase from './FieldBase';
 
 import './AutoComplete.scss';
 
@@ -46,6 +42,7 @@ const AutoComplete: React.FC<IAutoCompleteProps> = ({
 	emptyStateMessage,
 	error,
 	feedbackMessage,
+	id,
 	items,
 	label,
 	onChangeQuery,
@@ -57,17 +54,14 @@ const AutoComplete: React.FC<IAutoCompleteProps> = ({
 	const [active, setActive] = useState<boolean>(false);
 
 	return (
-		<ClayForm.Group
-			className={classNames(className, {
-				'has-error': error,
-			})}
+		<FieldBase
+			className={className}
+			error={error}
+			feedbackMessage={feedbackMessage}
+			id={id}
+			label={label}
+			required={required}
 		>
-			<label>
-				{label}
-
-				{required && <RequiredMask />}
-			</label>
-
 			<ClayDropDown
 				active={active}
 				onActiveChange={(value) => setActive(value)}
@@ -109,13 +103,7 @@ const AutoComplete: React.FC<IAutoCompleteProps> = ({
 					</ClayDropDown.ItemList>
 				)}
 			</ClayDropDown>
-
-			{error && <ErrorFeedback error={error} />}
-
-			{feedbackMessage && (
-				<FeedbackMessage feedbackMessage={feedbackMessage} />
-			)}
-		</ClayForm.Group>
+		</FieldBase>
 	);
 };
 

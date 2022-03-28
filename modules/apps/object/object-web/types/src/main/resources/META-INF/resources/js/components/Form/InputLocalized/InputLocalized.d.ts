@@ -16,7 +16,6 @@
 
 import './InputLocalized.scss';
 export default function InputLocalized({
-	className,
 	disabled,
 	error,
 	id,

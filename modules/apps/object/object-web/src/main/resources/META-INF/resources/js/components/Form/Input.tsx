@@ -12,41 +12,36 @@
  * details.
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
-import classNames from 'classnames';
+import {ClayInput} from '@clayui/form';
 import React from 'react';
 
-import ErrorFeedback from './ErrorFeedback';
-import FeedbackMessage from './FeedbackMessage';
-import RequiredMask from './RequiredMask';
+import FieldBase from './FieldBase';
 
 export default function Input({
 	className,
 	component,
-	disabled = false,
+	disabled,
 	error,
 	feedbackMessage,
 	id,
 	label,
 	name,
 	onChange,
-	required = false,
+	required,
 	type,
 	value,
 	...otherProps
 }: IProps) {
 	return (
-		<ClayForm.Group
-			className={classNames(className, {
-				'has-error': error,
-			})}
+		<FieldBase
+			className={className}
+			disabled={disabled}
+			error={error}
+			feedbackMessage={feedbackMessage}
+			id={id}
+			label={label}
+			required={required}
 		>
-			<label className={classNames({disabled})} htmlFor={id}>
-				{label}
-
-				{required && <RequiredMask />}
-			</label>
-
 			<ClayInput
 				{...otherProps}
 				component={component}
@@ -57,13 +52,7 @@ export default function Input({
 				type={type}
 				value={value}
 			/>
-
-			{error && <ErrorFeedback error={error} />}
-
-			{feedbackMessage && (
-				<FeedbackMessage feedbackMessage={feedbackMessage} />
-			)}
-		</ClayForm.Group>
+		</FieldBase>
 	);
 }
 

@@ -14,18 +14,15 @@
 
 import ClayAutocomplete from '@clayui/autocomplete';
 import ClayDropDown from '@clayui/drop-down';
-import ClayForm from '@clayui/form';
-import classNames from 'classnames';
 import React, {ReactNode, useRef, useState} from 'react';
 
+import FieldBase from '../FieldBase';
+
 import './CustomSelect.scss';
-import ErrorFeedback from '../ErrorFeedback';
-import FeedbackMessage from '../FeedbackMessage';
-import RequiredMask from '../RequiredMask';
 
 export default function CustomSelect<T extends IItem = IItem>({
 	className,
-	disabled = false,
+	disabled,
 	error,
 	feedbackMessage,
 	id,
@@ -39,17 +36,15 @@ export default function CustomSelect<T extends IItem = IItem>({
 	const inputRef = useRef(null);
 
 	return (
-		<ClayForm.Group
-			className={classNames('object__custom-select', className, {
-				'has-error': error,
-			})}
+		<FieldBase
+			className={className}
+			disabled={disabled}
+			error={error}
+			feedbackMessage={feedbackMessage}
+			id={id}
+			label={label}
+			required={required}
 		>
-			<label className={classNames({disabled})} htmlFor={id}>
-				{label}
-
-				{required && <RequiredMask />}
-			</label>
-
 			<ClayAutocomplete>
 				<ClayAutocomplete.Input
 					className="object__custom-select-input"
@@ -85,13 +80,7 @@ export default function CustomSelect<T extends IItem = IItem>({
 					</ClayDropDown.ItemList>
 				</ClayAutocomplete.DropDown>
 			</ClayAutocomplete>
-
-			{error && <ErrorFeedback error={error} />}
-
-			{feedbackMessage && (
-				<FeedbackMessage feedbackMessage={feedbackMessage} />
-			)}
-		</ClayForm.Group>
+		</FieldBase>
 	);
 }
 

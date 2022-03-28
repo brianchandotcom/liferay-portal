@@ -12,9 +12,25 @@
  * details.
  */
 
-import React from 'react';
-interface IErrorFeedbackProps extends React.HTMLAttributes<HTMLElement> {
-	error: string;
+import {ReactNode} from 'react';
+export default function FieldBase({
+	children,
+	className,
+	disabled,
+	error,
+	feedbackMessage,
+	id,
+	label,
+	required,
+}: IProps): JSX.Element;
+interface IProps {
+	children: ReactNode;
+	className?: string;
+	disabled?: boolean;
+	error?: string;
+	feedbackMessage?: string;
+	id?: string;
+	label: string;
+	required?: boolean;
 }
-declare const ErrorFeedback: React.FC<IErrorFeedbackProps>;
-export default ErrorFeedback;
+export {};

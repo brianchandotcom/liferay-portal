@@ -1335,15 +1335,13 @@ definition {
 		task ("Enable Send Notifications to Blogs Entry Creator") {
 			BlogsNavigator.openToConfigInInstanceSettings(portlet = "Blogs Service");
 
-			Click(
-				key_fieldLabel = "Send Notifications to Blogs Entry Creator",
-				locator1 = "Blogs#BLOG_SERVICE_LABEL");
+			FormFields.enableCheckbox(fieldName = "Send Notifications to Blogs Entry Creator");
 
-			if (IsElementPresent(locator1 = "Blogs#SAVE_BUTTON_BLOG_SERVICE")) {
-				Click(locator1 = "Blogs#SAVE_BUTTON_BLOG_SERVICE");
+			if (IsElementPresent(key_text = "Save", locator1 = "Button#ANY")) {
+				Button.clickSave();
 			}
 			else {
-				Click(locator1 = "Blogs#UPDATE_BUTTON_BLOG_SERVICE");
+				Button.clickUpdate();
 			}
 		}
 

@@ -143,12 +143,12 @@ definition {
 		DERenderer.inputDataInColorField(
 			fieldLabel = "Color",
 			index = "1",
-			value = "006EF8");
+			value = "006ef8");
 
 		DERenderer.inputDataInColorField(
 			fieldLabel = "Color",
 			index = "2",
-			value = "FF21A0");
+			value = "ff21a0");
 
 		Button.clickPublish();
 
@@ -157,12 +157,12 @@ definition {
 		DERenderer.assertDataInColorField(
 			fieldLabel = "Color",
 			index = "1",
-			value = "006EF8");
+			value = "006ef8");
 
 		DERenderer.assertDataInColorField(
 			fieldLabel = "Color",
 			index = "2",
-			value = "FF21A0");
+			value = "ff21a0");
 	}
 
 	@description = "This is a test for LRQA-69447. This test verifies that is possible to remove a duplicated field (repeatable)."
@@ -224,7 +224,7 @@ definition {
 
 		DERenderer.inputDataInColorField(
 			fieldLabel = "Color",
-			value = "006EF8");
+			value = "006ef8");
 
 		Button.clickPublish();
 
@@ -232,7 +232,7 @@ definition {
 
 		DERenderer.assertDataInColorField(
 			fieldLabel = "Color",
-			value = "006EF8");
+			value = "006ef8");
 	}
 
 	@description = "This is a test for LRQA-69447. This test verifies that is possible to choose color by HEX."

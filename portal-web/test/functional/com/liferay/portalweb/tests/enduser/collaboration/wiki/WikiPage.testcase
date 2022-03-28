@@ -687,6 +687,15 @@ definition {
 			wikiPageTitle = "FrontPage");
 	}
 
+	@description = "This test covers LPS-67282. It ensures that a user cannot rename the draft wiki page."
+	@ignore = "Test Stub"
+	@priority = "3"
+	test CannotRenameDraftPage {
+
+		// TODO LPS-150264 CannotRenameDraftPage pending implementation
+
+	}
+
 	@description = "This ensures that javascript can not be viewed in wiki page content."
 	@priority = "4"
 	@refactordone

@@ -48,6 +48,17 @@ public class BeanTestUtil {
 		}
 	}
 
+	public static boolean hasProperty(Object bean, String name) {
+		if (ReflectionTestUtil.hasMethod(
+				bean.getClass(),
+				"set" + StringUtil.upperCaseFirstLetter(name))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static void setProperty(Object bean, String name, Object value)
 		throws Exception {
 

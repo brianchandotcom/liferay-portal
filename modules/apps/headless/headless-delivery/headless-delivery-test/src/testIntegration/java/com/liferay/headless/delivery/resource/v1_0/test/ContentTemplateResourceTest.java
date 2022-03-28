@@ -32,11 +32,13 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.test.BeanTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
 import java.io.InputStream;
@@ -60,10 +62,57 @@ public class ContentTemplateResourceTest
 	public void testGetAssetLibraryContentTemplatesPageWithFilterStringEquals() {
 	}
 
+	@Override
+	@Test
+	public void testGetAssetLibraryContentTemplatesPageWithSortInteger()
+		throws Exception {
+
+		testGetAssetLibraryContentTemplatesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, contentTemplate1, contentTemplate2) -> {
+				if (BeanTestUtil.hasProperty(
+						contentTemplate1, entityField.getName())) {
+
+					BeanTestUtil.setProperty(
+						contentTemplate1, entityField.getName(), 0);
+				}
+
+				if (BeanTestUtil.hasProperty(
+						contentTemplate2, entityField.getName())) {
+
+					BeanTestUtil.setProperty(
+						contentTemplate2, entityField.getName(), 1);
+				}
+			});
+	}
+
 	@Ignore
 	@Override
 	@Test
 	public void testGetSiteContentTemplatesPageWithFilterStringEquals() {
+	}
+
+	@Test
+	public void testGetSiteContentTemplatesPageWithSortInteger()
+		throws Exception {
+
+		testGetSiteContentTemplatesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, contentTemplate1, contentTemplate2) -> {
+				if (BeanTestUtil.hasProperty(
+						contentTemplate1, entityField.getName())) {
+
+					BeanTestUtil.setProperty(
+						contentTemplate1, entityField.getName(), 0);
+				}
+
+				if (BeanTestUtil.hasProperty(
+						contentTemplate2, entityField.getName())) {
+
+					BeanTestUtil.setProperty(
+						contentTemplate2, entityField.getName(), 1);
+				}
+			});
 	}
 
 	@Override

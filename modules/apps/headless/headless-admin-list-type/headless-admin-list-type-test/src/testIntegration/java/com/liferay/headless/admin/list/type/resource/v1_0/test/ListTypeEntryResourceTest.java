@@ -18,10 +18,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.list.type.client.dto.v1_0.ListTypeEntry;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalServiceUtil;
+import com.liferay.portal.kernel.test.BeanTestUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.odata.entity.EntityField;
 
 import java.util.Collections;
 
@@ -46,6 +48,30 @@ public class ListTypeEntryResourceTest
 			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
 				TestPropsValues.getUserId(),
 				Collections.singletonMap(LocaleUtil.getDefault(), "test"));
+	}
+
+	@Override
+	@Test
+	public void testGetListTypeDefinitionListTypeEntriesPageWithSortInteger()
+		throws Exception {
+
+		testGetListTypeDefinitionListTypeEntriesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, listTypeEntry1, listTypeEntry2) -> {
+				if (BeanTestUtil.hasProperty(
+						listTypeEntry1, entityField.getName())) {
+
+					BeanTestUtil.setProperty(
+						listTypeEntry1, entityField.getName(), 0);
+				}
+
+				if (BeanTestUtil.hasProperty(
+						listTypeEntry2, entityField.getName())) {
+
+					BeanTestUtil.setProperty(
+						listTypeEntry2, entityField.getName(), 1);
+				}
+			});
 	}
 
 	@Ignore

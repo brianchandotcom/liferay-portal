@@ -14,7 +14,6 @@
 
 package com.liferay.account.internal.model.listener.test;
 
-import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryLocalService;
@@ -88,29 +87,6 @@ public class AccountEntryUserRelModelListenerTest {
 	}
 
 	@Test
-	public void testAddAccountEntryUserRelsForUserWithDefaultAccountEntry()
-		throws Exception {
-
-		AccountEntry accountEntry = AccountEntryTestUtil.addAccountEntry(
-			_accountEntryLocalService);
-
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry.getAccountEntryId(), _user.getUserId());
-
-		_accountEntryUserRelLocalService.deleteAccountEntryUserRels(
-			accountEntry.getAccountEntryId(), new long[] {_user.getUserId()});
-
-		_assertGetAccountEntryUserRelByAccountUserId(
-			_user.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
-
-		_accountEntryUserRelLocalService.addAccountEntryUserRel(
-			accountEntry.getAccountEntryId(), _user.getUserId());
-
-		_assertGetAccountEntryUserRelByAccountUserId(
-			_user.getUserId(), accountEntry.getAccountEntryId());
-	}
-
-	@Test
 	public void testDeleteAccountEntryUserRelsForUserWithMultipleAccountEntries()
 		throws Exception {
 
@@ -161,8 +137,13 @@ public class AccountEntryUserRelModelListenerTest {
 		_accountEntryUserRelLocalService.deleteAccountEntryUserRels(
 			accountEntry.getAccountEntryId(), new long[] {_user.getUserId()});
 
-		_assertGetAccountEntryUserRelByAccountUserId(
-			_user.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT);
+		userAccountEntryUserRels =
+			_accountEntryUserRelLocalService.
+				getAccountEntryUserRelsByAccountUserId(_user.getUserId());
+
+		Assert.assertEquals(
+			userAccountEntryUserRels.toString(), 0,
+			userAccountEntryUserRels.size());
 	}
 
 	private void _assertGetAccountEntryUserRelByAccountUserId(

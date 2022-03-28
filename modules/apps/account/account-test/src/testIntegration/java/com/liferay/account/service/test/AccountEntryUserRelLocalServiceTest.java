@@ -644,14 +644,7 @@ public class AccountEntryUserRelLocalServiceTest {
 			_accountEntryUserRelLocalService.
 				getAccountEntryUserRelsByAccountUserId(userId);
 
-		Assert.assertEquals(
-			accountEntryUserRels.toString(), 1, accountEntryUserRels.size());
-
-		AccountEntryUserRel accountEntryUserRel = accountEntryUserRels.get(0);
-
-		Assert.assertEquals(
-			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
-			accountEntryUserRel.getAccountEntryId());
+		Assert.assertTrue(accountEntryUserRels.isEmpty());
 	}
 
 	@Test(expected = DuplicateAccountEntryIdException.class)

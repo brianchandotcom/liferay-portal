@@ -116,7 +116,9 @@ public class AccountRoleResourceImpl extends BaseAccountRoleResourceImpl {
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		_accountEntryLocalService.getAccountEntry(accountId);
+		if (accountId > 0) {
+			_accountEntryLocalService.getAccountEntry(accountId);
+		}
 
 		try (SafeCloseable safeCloseable =
 				AccountRolePermissionThreadLocal.setWithSafeCloseable(

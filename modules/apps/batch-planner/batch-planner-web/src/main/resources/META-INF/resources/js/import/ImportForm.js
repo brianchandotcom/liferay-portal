@@ -14,8 +14,9 @@
 
 import ClayLink from '@clayui/link';
 import ClayTable from '@clayui/table';
+import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import SaveTemplate from '../SaveTemplate';
 import {
@@ -222,6 +223,20 @@ function ImportForm({
 		dbFields.optional.length + dbFields.required.length
 	);
 
+	const handleEvaluateForm = useCallback(() => {
+		if (!formIsValid) {
+			openToast({
+				message: Liferay.Language.get(
+					'you-must-map-all-required-fields-before-continuing'
+				),
+				title: Liferay.Language.get('error'),
+				type: 'danger',
+			});
+		}
+
+		setFormEvaluated(true);
+	}, [formIsValid]);
+
 	return (
 		<>
 			{formIsVisible && (
@@ -348,7 +363,7 @@ function ImportForm({
 				</ClayLink>
 
 				<SaveTemplate
-					evaluateForm={() => setFormEvaluated(true)}
+					evaluateForm={handleEvaluateForm}
 					formIsValid={formIsValid}
 					formIsVisible={formIsVisible}
 					formSaveAsTemplateDataQuerySelector={formDataQuerySelector}
@@ -359,7 +374,7 @@ function ImportForm({
 
 				<ImportSubmit
 					disabled={!formIsValid}
-					evaluateForm={() => setFormEvaluated(true)}
+					evaluateForm={handleEvaluateForm}
 					fieldsSelections={fieldsSelections}
 					fileContentPreview={fileContentPreview}
 					formDataQuerySelector={formDataQuerySelector}

@@ -711,9 +711,9 @@ definition {
 	Then the document is counted as an asset in the graph"
 	@priority = "4"
 	test BlogWithOneCategory {
-		property portal.acceptance = "true";
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
+		property portal.acceptance = "true";
 
 		task ("Add a vocabulary for Test Site Name") {
 			JSONCategory.addVocabulary(

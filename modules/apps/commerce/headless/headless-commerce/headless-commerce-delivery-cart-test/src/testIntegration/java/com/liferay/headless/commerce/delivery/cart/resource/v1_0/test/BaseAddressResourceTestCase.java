@@ -237,7 +237,7 @@ public abstract class BaseAddressResourceTestCase {
 
 	@Test
 	public void testGraphQLGetCartBillingAddres() throws Exception {
-		Address address = testGraphQLAddress_addAddress();
+		Address address = testGraphQLGetCartBillingAddres_addAddress();
 
 		Assert.assertTrue(
 			equals(
@@ -285,6 +285,12 @@ public abstract class BaseAddressResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Address testGraphQLGetCartBillingAddres_addAddress()
+		throws Exception {
+
+		return testGraphQLAddress_addAddress();
+	}
+
 	@Test
 	public void testGetCartShippingAddres() throws Exception {
 		Address postAddress = testGetCartShippingAddres_addAddress();
@@ -308,7 +314,7 @@ public abstract class BaseAddressResourceTestCase {
 
 	@Test
 	public void testGraphQLGetCartShippingAddres() throws Exception {
-		Address address = testGraphQLAddress_addAddress();
+		Address address = testGraphQLGetCartShippingAddres_addAddress();
 
 		Assert.assertTrue(
 			equals(
@@ -354,6 +360,12 @@ public abstract class BaseAddressResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Address testGraphQLGetCartShippingAddres_addAddress()
+		throws Exception {
+
+		return testGraphQLAddress_addAddress();
 	}
 
 	protected Address testGraphQLAddress_addAddress() throws Exception {

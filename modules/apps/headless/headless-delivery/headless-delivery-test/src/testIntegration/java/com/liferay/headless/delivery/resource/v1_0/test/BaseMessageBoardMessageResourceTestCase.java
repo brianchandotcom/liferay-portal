@@ -246,7 +246,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	@Test
 	public void testGraphQLDeleteMessageBoardMessage() throws Exception {
 		MessageBoardMessage messageBoardMessage =
-			testGraphQLMessageBoardMessage_addMessageBoardMessage();
+			testGraphQLDeleteMessageBoardMessage_addMessageBoardMessage();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -279,6 +279,13 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected MessageBoardMessage
+			testGraphQLDeleteMessageBoardMessage_addMessageBoardMessage()
+		throws Exception {
+
+		return testGraphQLMessageBoardMessage_addMessageBoardMessage();
+	}
+
 	@Test
 	public void testGetMessageBoardMessage() throws Exception {
 		MessageBoardMessage postMessageBoardMessage =
@@ -303,7 +310,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	@Test
 	public void testGraphQLGetMessageBoardMessage() throws Exception {
 		MessageBoardMessage messageBoardMessage =
-			testGraphQLMessageBoardMessage_addMessageBoardMessage();
+			testGraphQLGetMessageBoardMessage_addMessageBoardMessage();
 
 		Assert.assertTrue(
 			equals(
@@ -344,6 +351,13 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected MessageBoardMessage
+			testGraphQLGetMessageBoardMessage_addMessageBoardMessage()
+		throws Exception {
+
+		return testGraphQLMessageBoardMessage_addMessageBoardMessage();
 	}
 
 	@Test
@@ -1835,9 +1849,9 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			0, messageBoardMessagesJSONObject.get("totalCount"));
 
 		MessageBoardMessage messageBoardMessage1 =
-			testGraphQLMessageBoardMessage_addMessageBoardMessage();
+			testGraphQLGetSiteMessageBoardMessagesPage_addMessageBoardMessage();
 		MessageBoardMessage messageBoardMessage2 =
-			testGraphQLMessageBoardMessage_addMessageBoardMessage();
+			testGraphQLGetSiteMessageBoardMessagesPage_addMessageBoardMessage();
 
 		messageBoardMessagesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1851,6 +1865,13 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			Arrays.asList(
 				MessageBoardMessageSerDes.toDTOs(
 					messageBoardMessagesJSONObject.getString("items"))));
+	}
+
+	protected MessageBoardMessage
+			testGraphQLGetSiteMessageBoardMessagesPage_addMessageBoardMessage()
+		throws Exception {
+
+		return testGraphQLMessageBoardMessage_addMessageBoardMessage();
 	}
 
 	@Test
@@ -1921,7 +1942,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		throws Exception {
 
 		MessageBoardMessage messageBoardMessage =
-			testGraphQLMessageBoardMessage_addMessageBoardMessage();
+			testGraphQLGetSiteMessageBoardMessageByExternalReferenceCode_addMessageBoardMessage();
 
 		Assert.assertTrue(
 			equals(
@@ -1977,6 +1998,13 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected MessageBoardMessage
+			testGraphQLGetSiteMessageBoardMessageByExternalReferenceCode_addMessageBoardMessage()
+		throws Exception {
+
+		return testGraphQLMessageBoardMessage_addMessageBoardMessage();
 	}
 
 	@Test
@@ -2079,7 +2107,7 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 		throws Exception {
 
 		MessageBoardMessage messageBoardMessage =
-			testGraphQLMessageBoardMessage_addMessageBoardMessage();
+			testGraphQLGetSiteMessageBoardMessageByFriendlyUrlPath_addMessageBoardMessage();
 
 		Assert.assertTrue(
 			equals(
@@ -2135,6 +2163,13 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected MessageBoardMessage
+			testGraphQLGetSiteMessageBoardMessageByFriendlyUrlPath_addMessageBoardMessage()
+		throws Exception {
+
+		return testGraphQLMessageBoardMessage_addMessageBoardMessage();
 	}
 
 	@Test

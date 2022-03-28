@@ -530,7 +530,7 @@ public abstract class BaseRelatedProductResourceTestCase {
 	@Test
 	public void testGraphQLDeleteRelatedProduct() throws Exception {
 		RelatedProduct relatedProduct =
-			testGraphQLRelatedProduct_addRelatedProduct();
+			testGraphQLDeleteRelatedProduct_addRelatedProduct();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -559,6 +559,12 @@ public abstract class BaseRelatedProductResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected RelatedProduct testGraphQLDeleteRelatedProduct_addRelatedProduct()
+		throws Exception {
+
+		return testGraphQLRelatedProduct_addRelatedProduct();
+	}
+
 	@Test
 	public void testGetRelatedProduct() throws Exception {
 		RelatedProduct postRelatedProduct =
@@ -582,7 +588,7 @@ public abstract class BaseRelatedProductResourceTestCase {
 	@Test
 	public void testGraphQLGetRelatedProduct() throws Exception {
 		RelatedProduct relatedProduct =
-			testGraphQLRelatedProduct_addRelatedProduct();
+			testGraphQLGetRelatedProduct_addRelatedProduct();
 
 		Assert.assertTrue(
 			equals(
@@ -619,6 +625,12 @@ public abstract class BaseRelatedProductResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected RelatedProduct testGraphQLGetRelatedProduct_addRelatedProduct()
+		throws Exception {
+
+		return testGraphQLRelatedProduct_addRelatedProduct();
 	}
 
 	protected RelatedProduct testGraphQLRelatedProduct_addRelatedProduct()

@@ -221,7 +221,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 	public void testGraphQLGetDiscountAccountGroupAccountGroup()
 		throws Exception {
 
-		AccountGroup accountGroup = testGraphQLAccountGroup_addAccountGroup();
+		AccountGroup accountGroup =
+			testGraphQLGetDiscountAccountGroupAccountGroup_addAccountGroup();
 
 		Assert.assertTrue(
 			equals(
@@ -275,6 +276,13 @@ public abstract class BaseAccountGroupResourceTestCase {
 				"Object/code"));
 	}
 
+	protected AccountGroup
+			testGraphQLGetDiscountAccountGroupAccountGroup_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
+	}
+
 	@Test
 	public void testGetPriceListAccountGroupAccountGroup() throws Exception {
 		AccountGroup postAccountGroup =
@@ -308,7 +316,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 	public void testGraphQLGetPriceListAccountGroupAccountGroup()
 		throws Exception {
 
-		AccountGroup accountGroup = testGraphQLAccountGroup_addAccountGroup();
+		AccountGroup accountGroup =
+			testGraphQLGetPriceListAccountGroupAccountGroup_addAccountGroup();
 
 		Assert.assertTrue(
 			equals(
@@ -360,6 +369,13 @@ public abstract class BaseAccountGroupResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected AccountGroup
+			testGraphQLGetPriceListAccountGroupAccountGroup_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
 	}
 
 	protected AccountGroup testGraphQLAccountGroup_addAccountGroup()

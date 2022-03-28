@@ -214,7 +214,7 @@ public abstract class BaseFormStructureResourceTestCase {
 	@Test
 	public void testGraphQLGetFormStructure() throws Exception {
 		FormStructure formStructure =
-			testGraphQLFormStructure_addFormStructure();
+			testGraphQLGetFormStructure_addFormStructure();
 
 		Assert.assertTrue(
 			equals(
@@ -255,6 +255,12 @@ public abstract class BaseFormStructureResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected FormStructure testGraphQLGetFormStructure_addFormStructure()
+		throws Exception {
+
+		return testGraphQLFormStructure_addFormStructure();
 	}
 
 	@Test
@@ -393,9 +399,9 @@ public abstract class BaseFormStructureResourceTestCase {
 		Assert.assertEquals(0, formStructuresJSONObject.get("totalCount"));
 
 		FormStructure formStructure1 =
-			testGraphQLFormStructure_addFormStructure();
+			testGraphQLGetSiteFormStructuresPage_addFormStructure();
 		FormStructure formStructure2 =
-			testGraphQLFormStructure_addFormStructure();
+			testGraphQLGetSiteFormStructuresPage_addFormStructure();
 
 		formStructuresJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -408,6 +414,13 @@ public abstract class BaseFormStructureResourceTestCase {
 			Arrays.asList(
 				FormStructureSerDes.toDTOs(
 					formStructuresJSONObject.getString("items"))));
+	}
+
+	protected FormStructure
+			testGraphQLGetSiteFormStructuresPage_addFormStructure()
+		throws Exception {
+
+		return testGraphQLFormStructure_addFormStructure();
 	}
 
 	protected FormStructure testGraphQLFormStructure_addFormStructure()

@@ -333,7 +333,7 @@ public abstract class BaseWorkflowLogResourceTestCase {
 
 	@Test
 	public void testGraphQLGetWorkflowLog() throws Exception {
-		WorkflowLog workflowLog = testGraphQLWorkflowLog_addWorkflowLog();
+		WorkflowLog workflowLog = testGraphQLGetWorkflowLog_addWorkflowLog();
 
 		Assert.assertTrue(
 			equals(
@@ -372,6 +372,12 @@ public abstract class BaseWorkflowLogResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected WorkflowLog testGraphQLGetWorkflowLog_addWorkflowLog()
+		throws Exception {
+
+		return testGraphQLWorkflowLog_addWorkflowLog();
 	}
 
 	@Test

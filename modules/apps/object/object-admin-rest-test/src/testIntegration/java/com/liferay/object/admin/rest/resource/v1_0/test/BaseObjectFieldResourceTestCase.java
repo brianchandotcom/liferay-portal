@@ -364,7 +364,7 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteObjectField() throws Exception {
-		ObjectField objectField = testGraphQLObjectField_addObjectField();
+		ObjectField objectField = testGraphQLDeleteObjectField_addObjectField();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -393,6 +393,12 @@ public abstract class BaseObjectFieldResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected ObjectField testGraphQLDeleteObjectField_addObjectField()
+		throws Exception {
+
+		return testGraphQLObjectField_addObjectField();
+	}
+
 	@Test
 	public void testGetObjectField() throws Exception {
 		ObjectField postObjectField = testGetObjectField_addObjectField();
@@ -411,7 +417,7 @@ public abstract class BaseObjectFieldResourceTestCase {
 
 	@Test
 	public void testGraphQLGetObjectField() throws Exception {
-		ObjectField objectField = testGraphQLObjectField_addObjectField();
+		ObjectField objectField = testGraphQLGetObjectField_addObjectField();
 
 		Assert.assertTrue(
 			equals(
@@ -450,6 +456,12 @@ public abstract class BaseObjectFieldResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ObjectField testGraphQLGetObjectField_addObjectField()
+		throws Exception {
+
+		return testGraphQLObjectField_addObjectField();
 	}
 
 	@Test

@@ -330,7 +330,8 @@ public abstract class BaseSubscriptionResourceTestCase {
 
 	@Test
 	public void testGraphQLGetMyUserAccountSubscription() throws Exception {
-		Subscription subscription = testGraphQLSubscription_addSubscription();
+		Subscription subscription =
+			testGraphQLGetMyUserAccountSubscription_addSubscription();
 
 		Assert.assertTrue(
 			equals(
@@ -372,6 +373,13 @@ public abstract class BaseSubscriptionResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Subscription
+			testGraphQLGetMyUserAccountSubscription_addSubscription()
+		throws Exception {
+
+		return testGraphQLSubscription_addSubscription();
 	}
 
 	protected Subscription testGraphQLSubscription_addSubscription()

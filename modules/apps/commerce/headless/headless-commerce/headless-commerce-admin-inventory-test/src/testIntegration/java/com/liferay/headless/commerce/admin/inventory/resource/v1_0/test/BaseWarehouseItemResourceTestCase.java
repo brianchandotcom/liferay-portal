@@ -258,7 +258,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		throws Exception {
 
 		WarehouseItem warehouseItem =
-			testGraphQLWarehouseItem_addWarehouseItem();
+			testGraphQLGetWarehouseItemByExternalReferenceCode_addWarehouseItem();
 
 		Assert.assertTrue(
 			equals(
@@ -306,6 +306,13 @@ public abstract class BaseWarehouseItemResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected WarehouseItem
+			testGraphQLGetWarehouseItemByExternalReferenceCode_addWarehouseItem()
+		throws Exception {
+
+		return testGraphQLWarehouseItem_addWarehouseItem();
 	}
 
 	@Test
@@ -370,7 +377,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 	@Test
 	public void testGraphQLDeleteWarehouseItem() throws Exception {
 		WarehouseItem warehouseItem =
-			testGraphQLWarehouseItem_addWarehouseItem();
+			testGraphQLDeleteWarehouseItem_addWarehouseItem();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -399,6 +406,12 @@ public abstract class BaseWarehouseItemResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected WarehouseItem testGraphQLDeleteWarehouseItem_addWarehouseItem()
+		throws Exception {
+
+		return testGraphQLWarehouseItem_addWarehouseItem();
+	}
+
 	@Test
 	public void testGetWarehouseItem() throws Exception {
 		WarehouseItem postWarehouseItem =
@@ -421,7 +434,7 @@ public abstract class BaseWarehouseItemResourceTestCase {
 	@Test
 	public void testGraphQLGetWarehouseItem() throws Exception {
 		WarehouseItem warehouseItem =
-			testGraphQLWarehouseItem_addWarehouseItem();
+			testGraphQLGetWarehouseItem_addWarehouseItem();
 
 		Assert.assertTrue(
 			equals(
@@ -458,6 +471,12 @@ public abstract class BaseWarehouseItemResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected WarehouseItem testGraphQLGetWarehouseItem_addWarehouseItem()
+		throws Exception {
+
+		return testGraphQLWarehouseItem_addWarehouseItem();
 	}
 
 	@Test

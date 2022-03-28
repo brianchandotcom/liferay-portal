@@ -601,9 +601,9 @@ public abstract class BaseStructuredContentResourceTestCase {
 		Assert.assertEquals(0, structuredContentsJSONObject.get("totalCount"));
 
 		StructuredContent structuredContent1 =
-			testGraphQLStructuredContent_addStructuredContent();
+			testGraphQLGetSiteStructuredContentsPage_addStructuredContent();
 		StructuredContent structuredContent2 =
-			testGraphQLStructuredContent_addStructuredContent();
+			testGraphQLGetSiteStructuredContentsPage_addStructuredContent();
 
 		structuredContentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -617,6 +617,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 			Arrays.asList(
 				StructuredContentSerDes.toDTOs(
 					structuredContentsJSONObject.getString("items"))));
+	}
+
+	protected StructuredContent
+			testGraphQLGetSiteStructuredContentsPage_addStructuredContent()
+		throws Exception {
+
+		return testGraphQLStructuredContent_addStructuredContent();
 	}
 
 	@Test
@@ -712,7 +719,7 @@ public abstract class BaseStructuredContentResourceTestCase {
 	@Test
 	public void testGraphQLGetStructuredContentByVersion() throws Exception {
 		StructuredContent structuredContent =
-			testGraphQLStructuredContent_addStructuredContent();
+			testGraphQLGetStructuredContentByVersion_addStructuredContent();
 
 		Assert.assertTrue(
 			equals(
@@ -768,6 +775,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected StructuredContent
+			testGraphQLGetStructuredContentByVersion_addStructuredContent()
+		throws Exception {
+
+		return testGraphQLStructuredContent_addStructuredContent();
 	}
 
 	@Test

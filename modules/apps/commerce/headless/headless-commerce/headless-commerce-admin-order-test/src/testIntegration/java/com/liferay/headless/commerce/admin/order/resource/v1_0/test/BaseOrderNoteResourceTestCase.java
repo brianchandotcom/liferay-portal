@@ -251,7 +251,8 @@ public abstract class BaseOrderNoteResourceTestCase {
 	public void testGraphQLGetOrderNoteByExternalReferenceCode()
 		throws Exception {
 
-		OrderNote orderNote = testGraphQLOrderNote_addOrderNote();
+		OrderNote orderNote =
+			testGraphQLGetOrderNoteByExternalReferenceCode_addOrderNote();
 
 		Assert.assertTrue(
 			equals(
@@ -301,6 +302,13 @@ public abstract class BaseOrderNoteResourceTestCase {
 				"Object/code"));
 	}
 
+	protected OrderNote
+			testGraphQLGetOrderNoteByExternalReferenceCode_addOrderNote()
+		throws Exception {
+
+		return testGraphQLOrderNote_addOrderNote();
+	}
+
 	@Test
 	public void testPatchOrderNoteByExternalReferenceCode() throws Exception {
 		Assert.assertTrue(false);
@@ -329,7 +337,7 @@ public abstract class BaseOrderNoteResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteOrderNote() throws Exception {
-		OrderNote orderNote = testGraphQLOrderNote_addOrderNote();
+		OrderNote orderNote = testGraphQLDeleteOrderNote_addOrderNote();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -358,6 +366,12 @@ public abstract class BaseOrderNoteResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected OrderNote testGraphQLDeleteOrderNote_addOrderNote()
+		throws Exception {
+
+		return testGraphQLOrderNote_addOrderNote();
+	}
+
 	@Test
 	public void testGetOrderNote() throws Exception {
 		OrderNote postOrderNote = testGetOrderNote_addOrderNote();
@@ -376,7 +390,7 @@ public abstract class BaseOrderNoteResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOrderNote() throws Exception {
-		OrderNote orderNote = testGraphQLOrderNote_addOrderNote();
+		OrderNote orderNote = testGraphQLGetOrderNote_addOrderNote();
 
 		Assert.assertTrue(
 			equals(
@@ -413,6 +427,12 @@ public abstract class BaseOrderNoteResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected OrderNote testGraphQLGetOrderNote_addOrderNote()
+		throws Exception {
+
+		return testGraphQLOrderNote_addOrderNote();
 	}
 
 	@Test

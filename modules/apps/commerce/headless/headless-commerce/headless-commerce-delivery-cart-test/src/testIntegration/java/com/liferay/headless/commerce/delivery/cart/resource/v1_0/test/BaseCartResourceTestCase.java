@@ -238,7 +238,7 @@ public abstract class BaseCartResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteCart() throws Exception {
-		Cart cart = testGraphQLCart_addCart();
+		Cart cart = testGraphQLDeleteCart_addCart();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -267,6 +267,10 @@ public abstract class BaseCartResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected Cart testGraphQLDeleteCart_addCart() throws Exception {
+		return testGraphQLCart_addCart();
+	}
+
 	@Test
 	public void testGetCart() throws Exception {
 		Cart postCart = testGetCart_addCart();
@@ -284,7 +288,7 @@ public abstract class BaseCartResourceTestCase {
 
 	@Test
 	public void testGraphQLGetCart() throws Exception {
-		Cart cart = testGraphQLCart_addCart();
+		Cart cart = testGraphQLGetCart_addCart();
 
 		Assert.assertTrue(
 			equals(
@@ -321,6 +325,10 @@ public abstract class BaseCartResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Cart testGraphQLGetCart_addCart() throws Exception {
+		return testGraphQLCart_addCart();
 	}
 
 	@Test

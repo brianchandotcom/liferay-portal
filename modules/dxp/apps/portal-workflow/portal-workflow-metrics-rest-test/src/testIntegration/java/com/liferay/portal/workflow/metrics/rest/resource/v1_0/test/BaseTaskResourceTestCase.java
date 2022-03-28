@@ -310,7 +310,7 @@ public abstract class BaseTaskResourceTestCase {
 
 	@Test
 	public void testGraphQLGetProcessTask() throws Exception {
-		Task task = testGraphQLTask_addTask();
+		Task task = testGraphQLGetProcessTask_addTask();
 
 		Assert.assertTrue(
 			equals(
@@ -350,6 +350,10 @@ public abstract class BaseTaskResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Task testGraphQLGetProcessTask_addTask() throws Exception {
+		return testGraphQLTask_addTask();
 	}
 
 	@Test

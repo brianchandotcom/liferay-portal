@@ -1385,8 +1385,10 @@ public abstract class BaseOrganizationResourceTestCase {
 
 		long totalCount = organizationsJSONObject.getLong("totalCount");
 
-		Organization organization1 = testGraphQLOrganization_addOrganization();
-		Organization organization2 = testGraphQLOrganization_addOrganization();
+		Organization organization1 =
+			testGraphQLGetOrganizationsPage_addOrganization();
+		Organization organization2 =
+			testGraphQLGetOrganizationsPage_addOrganization();
 
 		organizationsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1405,6 +1407,12 @@ public abstract class BaseOrganizationResourceTestCase {
 			Arrays.asList(
 				OrganizationSerDes.toDTOs(
 					organizationsJSONObject.getString("items"))));
+	}
+
+	protected Organization testGraphQLGetOrganizationsPage_addOrganization()
+		throws Exception {
+
+		return testGraphQLOrganization_addOrganization();
 	}
 
 	@Test
@@ -1486,7 +1494,8 @@ public abstract class BaseOrganizationResourceTestCase {
 	public void testGraphQLGetOrganizationByExternalReferenceCode()
 		throws Exception {
 
-		Organization organization = testGraphQLOrganization_addOrganization();
+		Organization organization =
+			testGraphQLGetOrganizationByExternalReferenceCode_addOrganization();
 
 		Assert.assertTrue(
 			equals(
@@ -1534,6 +1543,13 @@ public abstract class BaseOrganizationResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Organization
+			testGraphQLGetOrganizationByExternalReferenceCode_addOrganization()
+		throws Exception {
+
+		return testGraphQLOrganization_addOrganization();
 	}
 
 	@Test
@@ -1658,7 +1674,8 @@ public abstract class BaseOrganizationResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteOrganization() throws Exception {
-		Organization organization = testGraphQLOrganization_addOrganization();
+		Organization organization =
+			testGraphQLDeleteOrganization_addOrganization();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -1691,6 +1708,12 @@ public abstract class BaseOrganizationResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected Organization testGraphQLDeleteOrganization_addOrganization()
+		throws Exception {
+
+		return testGraphQLOrganization_addOrganization();
+	}
+
 	@Test
 	public void testGetOrganization() throws Exception {
 		Organization postOrganization = testGetOrganization_addOrganization();
@@ -1711,7 +1734,8 @@ public abstract class BaseOrganizationResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOrganization() throws Exception {
-		Organization organization = testGraphQLOrganization_addOrganization();
+		Organization organization =
+			testGraphQLGetOrganization_addOrganization();
 
 		Assert.assertTrue(
 			equals(
@@ -1751,6 +1775,12 @@ public abstract class BaseOrganizationResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Organization testGraphQLGetOrganization_addOrganization()
+		throws Exception {
+
+		return testGraphQLOrganization_addOrganization();
 	}
 
 	@Test

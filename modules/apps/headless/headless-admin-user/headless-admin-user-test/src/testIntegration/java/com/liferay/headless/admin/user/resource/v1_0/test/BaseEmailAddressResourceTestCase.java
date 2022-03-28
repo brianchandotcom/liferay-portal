@@ -210,7 +210,8 @@ public abstract class BaseEmailAddressResourceTestCase {
 
 	@Test
 	public void testGraphQLGetEmailAddress() throws Exception {
-		EmailAddress emailAddress = testGraphQLEmailAddress_addEmailAddress();
+		EmailAddress emailAddress =
+			testGraphQLGetEmailAddress_addEmailAddress();
 
 		Assert.assertTrue(
 			equals(
@@ -249,6 +250,12 @@ public abstract class BaseEmailAddressResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected EmailAddress testGraphQLGetEmailAddress_addEmailAddress()
+		throws Exception {
+
+		return testGraphQLEmailAddress_addEmailAddress();
 	}
 
 	@Test

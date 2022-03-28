@@ -277,8 +277,10 @@ public abstract class BaseTaxCategoryResourceTestCase {
 
 		long totalCount = taxCategoriesJSONObject.getLong("totalCount");
 
-		TaxCategory taxCategory1 = testGraphQLTaxCategory_addTaxCategory();
-		TaxCategory taxCategory2 = testGraphQLTaxCategory_addTaxCategory();
+		TaxCategory taxCategory1 =
+			testGraphQLGetTaxCategoriesPage_addTaxCategory();
+		TaxCategory taxCategory2 =
+			testGraphQLGetTaxCategoriesPage_addTaxCategory();
 
 		taxCategoriesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -299,6 +301,12 @@ public abstract class BaseTaxCategoryResourceTestCase {
 					taxCategoriesJSONObject.getString("items"))));
 	}
 
+	protected TaxCategory testGraphQLGetTaxCategoriesPage_addTaxCategory()
+		throws Exception {
+
+		return testGraphQLTaxCategory_addTaxCategory();
+	}
+
 	@Test
 	public void testGetTaxCategory() throws Exception {
 		TaxCategory postTaxCategory = testGetTaxCategory_addTaxCategory();
@@ -317,7 +325,7 @@ public abstract class BaseTaxCategoryResourceTestCase {
 
 	@Test
 	public void testGraphQLGetTaxCategory() throws Exception {
-		TaxCategory taxCategory = testGraphQLTaxCategory_addTaxCategory();
+		TaxCategory taxCategory = testGraphQLGetTaxCategory_addTaxCategory();
 
 		Assert.assertTrue(
 			equals(
@@ -354,6 +362,12 @@ public abstract class BaseTaxCategoryResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected TaxCategory testGraphQLGetTaxCategory_addTaxCategory()
+		throws Exception {
+
+		return testGraphQLTaxCategory_addTaxCategory();
 	}
 
 	protected TaxCategory testGraphQLTaxCategory_addTaxCategory()

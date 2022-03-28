@@ -541,8 +541,8 @@ public abstract class BaseOrderResourceTestCase {
 
 		long totalCount = ordersJSONObject.getLong("totalCount");
 
-		Order order1 = testGraphQLOrder_addOrder();
-		Order order2 = testGraphQLOrder_addOrder();
+		Order order1 = testGraphQLGetOrdersPage_addOrder();
+		Order order2 = testGraphQLGetOrdersPage_addOrder();
 
 		ordersJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -559,6 +559,10 @@ public abstract class BaseOrderResourceTestCase {
 			order2,
 			Arrays.asList(
 				OrderSerDes.toDTOs(ordersJSONObject.getString("items"))));
+	}
+
+	protected Order testGraphQLGetOrdersPage_addOrder() throws Exception {
+		return testGraphQLOrder_addOrder();
 	}
 
 	@Test
@@ -624,7 +628,7 @@ public abstract class BaseOrderResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOrderByExternalReferenceCode() throws Exception {
-		Order order = testGraphQLOrder_addOrder();
+		Order order = testGraphQLGetOrderByExternalReferenceCode_addOrder();
 
 		Assert.assertTrue(
 			equals(
@@ -674,6 +678,12 @@ public abstract class BaseOrderResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Order testGraphQLGetOrderByExternalReferenceCode_addOrder()
+		throws Exception {
+
+		return testGraphQLOrder_addOrder();
+	}
+
 	@Test
 	public void testPatchOrderByExternalReferenceCode() throws Exception {
 		Assert.assertTrue(false);
@@ -701,7 +711,7 @@ public abstract class BaseOrderResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteOrder() throws Exception {
-		Order order = testGraphQLOrder_addOrder();
+		Order order = testGraphQLDeleteOrder_addOrder();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -730,6 +740,10 @@ public abstract class BaseOrderResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected Order testGraphQLDeleteOrder_addOrder() throws Exception {
+		return testGraphQLOrder_addOrder();
+	}
+
 	@Test
 	public void testGetOrder() throws Exception {
 		Order postOrder = testGetOrder_addOrder();
@@ -747,7 +761,7 @@ public abstract class BaseOrderResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOrder() throws Exception {
-		Order order = testGraphQLOrder_addOrder();
+		Order order = testGraphQLGetOrder_addOrder();
 
 		Assert.assertTrue(
 			equals(
@@ -784,6 +798,10 @@ public abstract class BaseOrderResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Order testGraphQLGetOrder_addOrder() throws Exception {
+		return testGraphQLOrder_addOrder();
 	}
 
 	@Test

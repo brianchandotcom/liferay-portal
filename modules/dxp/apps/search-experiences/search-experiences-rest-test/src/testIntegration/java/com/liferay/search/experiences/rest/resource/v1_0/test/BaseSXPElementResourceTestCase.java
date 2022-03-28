@@ -550,7 +550,7 @@ public abstract class BaseSXPElementResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteSXPElement() throws Exception {
-		SXPElement sxpElement = testGraphQLSXPElement_addSXPElement();
+		SXPElement sxpElement = testGraphQLDeleteSXPElement_addSXPElement();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -579,6 +579,12 @@ public abstract class BaseSXPElementResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected SXPElement testGraphQLDeleteSXPElement_addSXPElement()
+		throws Exception {
+
+		return testGraphQLSXPElement_addSXPElement();
+	}
+
 	@Test
 	public void testGetSXPElement() throws Exception {
 		SXPElement postSXPElement = testGetSXPElement_addSXPElement();
@@ -597,7 +603,7 @@ public abstract class BaseSXPElementResourceTestCase {
 
 	@Test
 	public void testGraphQLGetSXPElement() throws Exception {
-		SXPElement sxpElement = testGraphQLSXPElement_addSXPElement();
+		SXPElement sxpElement = testGraphQLGetSXPElement_addSXPElement();
 
 		Assert.assertTrue(
 			equals(
@@ -634,6 +640,12 @@ public abstract class BaseSXPElementResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected SXPElement testGraphQLGetSXPElement_addSXPElement()
+		throws Exception {
+
+		return testGraphQLSXPElement_addSXPElement();
 	}
 
 	@Test

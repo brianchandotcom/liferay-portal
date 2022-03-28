@@ -229,7 +229,7 @@ public abstract class BaseProductChannelResourceTestCase {
 	@Test
 	public void testGraphQLDeleteProductChannel() throws Exception {
 		ProductChannel productChannel =
-			testGraphQLProductChannel_addProductChannel();
+			testGraphQLDeleteProductChannel_addProductChannel();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -258,6 +258,12 @@ public abstract class BaseProductChannelResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected ProductChannel testGraphQLDeleteProductChannel_addProductChannel()
+		throws Exception {
+
+		return testGraphQLProductChannel_addProductChannel();
+	}
+
 	@Test
 	public void testGetProductChannel() throws Exception {
 		ProductChannel postProductChannel =
@@ -281,7 +287,7 @@ public abstract class BaseProductChannelResourceTestCase {
 	@Test
 	public void testGraphQLGetProductChannel() throws Exception {
 		ProductChannel productChannel =
-			testGraphQLProductChannel_addProductChannel();
+			testGraphQLGetProductChannel_addProductChannel();
 
 		Assert.assertTrue(
 			equals(
@@ -318,6 +324,12 @@ public abstract class BaseProductChannelResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ProductChannel testGraphQLGetProductChannel_addProductChannel()
+		throws Exception {
+
+		return testGraphQLProductChannel_addProductChannel();
 	}
 
 	@Test

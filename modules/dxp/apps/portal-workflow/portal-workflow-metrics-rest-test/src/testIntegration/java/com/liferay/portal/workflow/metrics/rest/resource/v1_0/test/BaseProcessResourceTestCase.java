@@ -235,7 +235,7 @@ public abstract class BaseProcessResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteProcess() throws Exception {
-		Process process = testGraphQLProcess_addProcess();
+		Process process = testGraphQLDeleteProcess_addProcess();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -264,6 +264,10 @@ public abstract class BaseProcessResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected Process testGraphQLDeleteProcess_addProcess() throws Exception {
+		return testGraphQLProcess_addProcess();
+	}
+
 	@Test
 	public void testGetProcess() throws Exception {
 		Process postProcess = testGetProcess_addProcess();
@@ -281,7 +285,7 @@ public abstract class BaseProcessResourceTestCase {
 
 	@Test
 	public void testGraphQLGetProcess() throws Exception {
-		Process process = testGraphQLProcess_addProcess();
+		Process process = testGraphQLGetProcess_addProcess();
 
 		Assert.assertTrue(
 			equals(
@@ -318,6 +322,10 @@ public abstract class BaseProcessResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Process testGraphQLGetProcess_addProcess() throws Exception {
+		return testGraphQLProcess_addProcess();
 	}
 
 	@Test

@@ -229,7 +229,7 @@ public abstract class BaseProductOptionResourceTestCase {
 	@Test
 	public void testGraphQLDeleteProductOption() throws Exception {
 		ProductOption productOption =
-			testGraphQLProductOption_addProductOption();
+			testGraphQLDeleteProductOption_addProductOption();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -258,6 +258,12 @@ public abstract class BaseProductOptionResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected ProductOption testGraphQLDeleteProductOption_addProductOption()
+		throws Exception {
+
+		return testGraphQLProductOption_addProductOption();
+	}
+
 	@Test
 	public void testGetProductOption() throws Exception {
 		ProductOption postProductOption =
@@ -280,7 +286,7 @@ public abstract class BaseProductOptionResourceTestCase {
 	@Test
 	public void testGraphQLGetProductOption() throws Exception {
 		ProductOption productOption =
-			testGraphQLProductOption_addProductOption();
+			testGraphQLGetProductOption_addProductOption();
 
 		Assert.assertTrue(
 			equals(
@@ -317,6 +323,12 @@ public abstract class BaseProductOptionResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ProductOption testGraphQLGetProductOption_addProductOption()
+		throws Exception {
+
+		return testGraphQLProductOption_addProductOption();
 	}
 
 	@Test

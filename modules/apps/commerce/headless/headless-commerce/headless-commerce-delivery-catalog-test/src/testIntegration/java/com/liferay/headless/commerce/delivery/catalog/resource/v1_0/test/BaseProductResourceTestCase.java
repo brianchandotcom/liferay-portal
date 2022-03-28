@@ -549,7 +549,7 @@ public abstract class BaseProductResourceTestCase {
 
 	@Test
 	public void testGraphQLGetChannelProduct() throws Exception {
-		Product product = testGraphQLProduct_addProduct();
+		Product product = testGraphQLGetChannelProduct_addProduct();
 
 		Assert.assertTrue(
 			equals(
@@ -598,6 +598,12 @@ public abstract class BaseProductResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Product testGraphQLGetChannelProduct_addProduct()
+		throws Exception {
+
+		return testGraphQLProduct_addProduct();
 	}
 
 	@Rule

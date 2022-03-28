@@ -552,9 +552,9 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		long totalCount = objectDefinitionsJSONObject.getLong("totalCount");
 
 		ObjectDefinition objectDefinition1 =
-			testGraphQLObjectDefinition_addObjectDefinition();
+			testGraphQLGetObjectDefinitionsPage_addObjectDefinition();
 		ObjectDefinition objectDefinition2 =
-			testGraphQLObjectDefinition_addObjectDefinition();
+			testGraphQLGetObjectDefinitionsPage_addObjectDefinition();
 
 		objectDefinitionsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -573,6 +573,13 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			Arrays.asList(
 				ObjectDefinitionSerDes.toDTOs(
 					objectDefinitionsJSONObject.getString("items"))));
+	}
+
+	protected ObjectDefinition
+			testGraphQLGetObjectDefinitionsPage_addObjectDefinition()
+		throws Exception {
+
+		return testGraphQLObjectDefinition_addObjectDefinition();
 	}
 
 	@Test
@@ -625,7 +632,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	@Test
 	public void testGraphQLDeleteObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
-			testGraphQLObjectDefinition_addObjectDefinition();
+			testGraphQLDeleteObjectDefinition_addObjectDefinition();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -656,6 +663,13 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected ObjectDefinition
+			testGraphQLDeleteObjectDefinition_addObjectDefinition()
+		throws Exception {
+
+		return testGraphQLObjectDefinition_addObjectDefinition();
+	}
+
 	@Test
 	public void testGetObjectDefinition() throws Exception {
 		ObjectDefinition postObjectDefinition =
@@ -679,7 +693,7 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 	@Test
 	public void testGraphQLGetObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
-			testGraphQLObjectDefinition_addObjectDefinition();
+			testGraphQLGetObjectDefinition_addObjectDefinition();
 
 		Assert.assertTrue(
 			equals(
@@ -720,6 +734,13 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ObjectDefinition
+			testGraphQLGetObjectDefinition_addObjectDefinition()
+		throws Exception {
+
+		return testGraphQLObjectDefinition_addObjectDefinition();
 	}
 
 	@Test

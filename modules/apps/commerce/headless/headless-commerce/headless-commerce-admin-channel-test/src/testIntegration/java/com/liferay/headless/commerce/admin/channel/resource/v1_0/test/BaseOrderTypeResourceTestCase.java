@@ -218,7 +218,8 @@ public abstract class BaseOrderTypeResourceTestCase {
 	public void testGraphQLGetPaymentMethodGroupRelOrderTypeOrderType()
 		throws Exception {
 
-		OrderType orderType = testGraphQLOrderType_addOrderType();
+		OrderType orderType =
+			testGraphQLGetPaymentMethodGroupRelOrderTypeOrderType_addOrderType();
 
 		Assert.assertTrue(
 			equals(
@@ -273,6 +274,13 @@ public abstract class BaseOrderTypeResourceTestCase {
 				"Object/code"));
 	}
 
+	protected OrderType
+			testGraphQLGetPaymentMethodGroupRelOrderTypeOrderType_addOrderType()
+		throws Exception {
+
+		return testGraphQLOrderType_addOrderType();
+	}
+
 	@Test
 	public void testGetShippingFixedOptionOrderTypeOrderType()
 		throws Exception {
@@ -308,7 +316,8 @@ public abstract class BaseOrderTypeResourceTestCase {
 	public void testGraphQLGetShippingFixedOptionOrderTypeOrderType()
 		throws Exception {
 
-		OrderType orderType = testGraphQLOrderType_addOrderType();
+		OrderType orderType =
+			testGraphQLGetShippingFixedOptionOrderTypeOrderType_addOrderType();
 
 		Assert.assertTrue(
 			equals(
@@ -361,6 +370,13 @@ public abstract class BaseOrderTypeResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected OrderType
+			testGraphQLGetShippingFixedOptionOrderTypeOrderType_addOrderType()
+		throws Exception {
+
+		return testGraphQLOrderType_addOrderType();
 	}
 
 	protected OrderType testGraphQLOrderType_addOrderType() throws Exception {

@@ -217,7 +217,7 @@ public abstract class BaseProductResourceTestCase {
 
 	@Test
 	public void testGraphQLGetDiscountProductProduct() throws Exception {
-		Product product = testGraphQLProduct_addProduct();
+		Product product = testGraphQLGetDiscountProductProduct_addProduct();
 
 		Assert.assertTrue(
 			equals(
@@ -269,6 +269,12 @@ public abstract class BaseProductResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Product testGraphQLGetDiscountProductProduct_addProduct()
+		throws Exception {
+
+		return testGraphQLProduct_addProduct();
+	}
+
 	@Test
 	public void testGetPriceEntryIdProduct() throws Exception {
 		Product postProduct = testGetPriceEntryIdProduct_addProduct();
@@ -294,7 +300,7 @@ public abstract class BaseProductResourceTestCase {
 
 	@Test
 	public void testGraphQLGetPriceEntryIdProduct() throws Exception {
-		Product product = testGraphQLProduct_addProduct();
+		Product product = testGraphQLGetPriceEntryIdProduct_addProduct();
 
 		Assert.assertTrue(
 			equals(
@@ -342,6 +348,12 @@ public abstract class BaseProductResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Product testGraphQLGetPriceEntryIdProduct_addProduct()
+		throws Exception {
+
+		return testGraphQLProduct_addProduct();
+	}
+
 	@Test
 	public void testGetPriceModifierProductProduct() throws Exception {
 		Product postProduct = testGetPriceModifierProductProduct_addProduct();
@@ -370,7 +382,8 @@ public abstract class BaseProductResourceTestCase {
 
 	@Test
 	public void testGraphQLGetPriceModifierProductProduct() throws Exception {
-		Product product = testGraphQLProduct_addProduct();
+		Product product =
+			testGraphQLGetPriceModifierProductProduct_addProduct();
 
 		Assert.assertTrue(
 			equals(
@@ -422,6 +435,12 @@ public abstract class BaseProductResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Product testGraphQLGetPriceModifierProductProduct_addProduct()
+		throws Exception {
+
+		return testGraphQLProduct_addProduct();
 	}
 
 	protected Product testGraphQLProduct_addProduct() throws Exception {

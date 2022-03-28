@@ -203,7 +203,7 @@ public abstract class BaseFormRecordResourceTestCase {
 
 	@Test
 	public void testGraphQLGetFormRecord() throws Exception {
-		FormRecord formRecord = testGraphQLFormRecord_addFormRecord();
+		FormRecord formRecord = testGraphQLGetFormRecord_addFormRecord();
 
 		Assert.assertTrue(
 			equals(
@@ -240,6 +240,12 @@ public abstract class BaseFormRecordResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected FormRecord testGraphQLGetFormRecord_addFormRecord()
+		throws Exception {
+
+		return testGraphQLFormRecord_addFormRecord();
 	}
 
 	@Test
@@ -406,7 +412,8 @@ public abstract class BaseFormRecordResourceTestCase {
 
 	@Test
 	public void testGraphQLGetFormFormRecordByLatestDraft() throws Exception {
-		FormRecord formRecord = testGraphQLFormRecord_addFormRecord();
+		FormRecord formRecord =
+			testGraphQLGetFormFormRecordByLatestDraft_addFormRecord();
 
 		Assert.assertTrue(
 			equals(
@@ -446,6 +453,13 @@ public abstract class BaseFormRecordResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected FormRecord
+			testGraphQLGetFormFormRecordByLatestDraft_addFormRecord()
+		throws Exception {
+
+		return testGraphQLFormRecord_addFormRecord();
 	}
 
 	protected FormRecord testGraphQLFormRecord_addFormRecord()

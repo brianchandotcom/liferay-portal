@@ -523,7 +523,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteDataLayout() throws Exception {
-		DataLayout dataLayout = testGraphQLDataLayout_addDataLayout();
+		DataLayout dataLayout = testGraphQLDeleteDataLayout_addDataLayout();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -552,6 +552,12 @@ public abstract class BaseDataLayoutResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected DataLayout testGraphQLDeleteDataLayout_addDataLayout()
+		throws Exception {
+
+		return testGraphQLDataLayout_addDataLayout();
+	}
+
 	@Test
 	public void testGetDataLayout() throws Exception {
 		DataLayout postDataLayout = testGetDataLayout_addDataLayout();
@@ -570,7 +576,7 @@ public abstract class BaseDataLayoutResourceTestCase {
 
 	@Test
 	public void testGraphQLGetDataLayout() throws Exception {
-		DataLayout dataLayout = testGraphQLDataLayout_addDataLayout();
+		DataLayout dataLayout = testGraphQLGetDataLayout_addDataLayout();
 
 		Assert.assertTrue(
 			equals(
@@ -607,6 +613,12 @@ public abstract class BaseDataLayoutResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected DataLayout testGraphQLGetDataLayout_addDataLayout()
+		throws Exception {
+
+		return testGraphQLDataLayout_addDataLayout();
 	}
 
 	@Test
@@ -666,7 +678,8 @@ public abstract class BaseDataLayoutResourceTestCase {
 	public void testGraphQLGetSiteDataLayoutByContentTypeByDataLayoutKey()
 		throws Exception {
 
-		DataLayout dataLayout = testGraphQLDataLayout_addDataLayout();
+		DataLayout dataLayout =
+			testGraphQLGetSiteDataLayoutByContentTypeByDataLayoutKey_addDataLayout();
 
 		Assert.assertTrue(
 			equals(
@@ -725,6 +738,13 @@ public abstract class BaseDataLayoutResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected DataLayout
+			testGraphQLGetSiteDataLayoutByContentTypeByDataLayoutKey_addDataLayout()
+		throws Exception {
+
+		return testGraphQLDataLayout_addDataLayout();
 	}
 
 	protected DataLayout testGraphQLDataLayout_addDataLayout()

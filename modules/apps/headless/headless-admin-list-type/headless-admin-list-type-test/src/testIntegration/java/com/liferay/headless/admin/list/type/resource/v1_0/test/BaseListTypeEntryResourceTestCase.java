@@ -637,7 +637,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 	@Test
 	public void testGraphQLDeleteListTypeEntry() throws Exception {
 		ListTypeEntry listTypeEntry =
-			testGraphQLListTypeEntry_addListTypeEntry();
+			testGraphQLDeleteListTypeEntry_addListTypeEntry();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -666,6 +666,12 @@ public abstract class BaseListTypeEntryResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected ListTypeEntry testGraphQLDeleteListTypeEntry_addListTypeEntry()
+		throws Exception {
+
+		return testGraphQLListTypeEntry_addListTypeEntry();
+	}
+
 	@Test
 	public void testGetListTypeEntry() throws Exception {
 		ListTypeEntry postListTypeEntry =
@@ -688,7 +694,7 @@ public abstract class BaseListTypeEntryResourceTestCase {
 	@Test
 	public void testGraphQLGetListTypeEntry() throws Exception {
 		ListTypeEntry listTypeEntry =
-			testGraphQLListTypeEntry_addListTypeEntry();
+			testGraphQLGetListTypeEntry_addListTypeEntry();
 
 		Assert.assertTrue(
 			equals(
@@ -729,6 +735,12 @@ public abstract class BaseListTypeEntryResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ListTypeEntry testGraphQLGetListTypeEntry_addListTypeEntry()
+		throws Exception {
+
+		return testGraphQLListTypeEntry_addListTypeEntry();
 	}
 
 	@Test

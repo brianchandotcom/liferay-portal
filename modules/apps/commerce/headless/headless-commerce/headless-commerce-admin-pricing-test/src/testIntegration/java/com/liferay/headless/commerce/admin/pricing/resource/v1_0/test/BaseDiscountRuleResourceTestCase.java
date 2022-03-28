@@ -382,7 +382,8 @@ public abstract class BaseDiscountRuleResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteDiscountRule() throws Exception {
-		DiscountRule discountRule = testGraphQLDiscountRule_addDiscountRule();
+		DiscountRule discountRule =
+			testGraphQLDeleteDiscountRule_addDiscountRule();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -411,6 +412,12 @@ public abstract class BaseDiscountRuleResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected DiscountRule testGraphQLDeleteDiscountRule_addDiscountRule()
+		throws Exception {
+
+		return testGraphQLDiscountRule_addDiscountRule();
+	}
+
 	@Test
 	public void testGetDiscountRule() throws Exception {
 		DiscountRule postDiscountRule = testGetDiscountRule_addDiscountRule();
@@ -431,7 +438,8 @@ public abstract class BaseDiscountRuleResourceTestCase {
 
 	@Test
 	public void testGraphQLGetDiscountRule() throws Exception {
-		DiscountRule discountRule = testGraphQLDiscountRule_addDiscountRule();
+		DiscountRule discountRule =
+			testGraphQLGetDiscountRule_addDiscountRule();
 
 		Assert.assertTrue(
 			equals(
@@ -468,6 +476,12 @@ public abstract class BaseDiscountRuleResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected DiscountRule testGraphQLGetDiscountRule_addDiscountRule()
+		throws Exception {
+
+		return testGraphQLDiscountRule_addDiscountRule();
 	}
 
 	@Test

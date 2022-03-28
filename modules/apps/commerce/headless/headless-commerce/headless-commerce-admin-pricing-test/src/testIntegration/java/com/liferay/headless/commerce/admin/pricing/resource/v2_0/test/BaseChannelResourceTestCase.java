@@ -221,7 +221,7 @@ public abstract class BaseChannelResourceTestCase {
 
 	@Test
 	public void testGraphQLGetDiscountChannelChannel() throws Exception {
-		Channel channel = testGraphQLChannel_addChannel();
+		Channel channel = testGraphQLGetDiscountChannelChannel_addChannel();
 
 		Assert.assertTrue(
 			equals(
@@ -273,6 +273,12 @@ public abstract class BaseChannelResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Channel testGraphQLGetDiscountChannelChannel_addChannel()
+		throws Exception {
+
+		return testGraphQLChannel_addChannel();
+	}
+
 	@Test
 	public void testGetPriceListChannelChannel() throws Exception {
 		Channel postChannel = testGetPriceListChannelChannel_addChannel();
@@ -300,7 +306,7 @@ public abstract class BaseChannelResourceTestCase {
 
 	@Test
 	public void testGraphQLGetPriceListChannelChannel() throws Exception {
-		Channel channel = testGraphQLChannel_addChannel();
+		Channel channel = testGraphQLGetPriceListChannelChannel_addChannel();
 
 		Assert.assertTrue(
 			equals(
@@ -350,6 +356,12 @@ public abstract class BaseChannelResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Channel testGraphQLGetPriceListChannelChannel_addChannel()
+		throws Exception {
+
+		return testGraphQLChannel_addChannel();
 	}
 
 	protected Channel testGraphQLChannel_addChannel() throws Exception {

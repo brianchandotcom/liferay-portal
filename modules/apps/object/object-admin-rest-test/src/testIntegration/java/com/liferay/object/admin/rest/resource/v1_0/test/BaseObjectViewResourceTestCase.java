@@ -352,7 +352,7 @@ public abstract class BaseObjectViewResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteObjectView() throws Exception {
-		ObjectView objectView = testGraphQLObjectView_addObjectView();
+		ObjectView objectView = testGraphQLDeleteObjectView_addObjectView();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -381,6 +381,12 @@ public abstract class BaseObjectViewResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected ObjectView testGraphQLDeleteObjectView_addObjectView()
+		throws Exception {
+
+		return testGraphQLObjectView_addObjectView();
+	}
+
 	@Test
 	public void testGetObjectView() throws Exception {
 		ObjectView postObjectView = testGetObjectView_addObjectView();
@@ -399,7 +405,7 @@ public abstract class BaseObjectViewResourceTestCase {
 
 	@Test
 	public void testGraphQLGetObjectView() throws Exception {
-		ObjectView objectView = testGraphQLObjectView_addObjectView();
+		ObjectView objectView = testGraphQLGetObjectView_addObjectView();
 
 		Assert.assertTrue(
 			equals(
@@ -436,6 +442,12 @@ public abstract class BaseObjectViewResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ObjectView testGraphQLGetObjectView_addObjectView()
+		throws Exception {
+
+		return testGraphQLObjectView_addObjectView();
 	}
 
 	@Test

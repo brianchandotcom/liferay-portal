@@ -324,7 +324,7 @@ public abstract class BaseSLAResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteSLA() throws Exception {
-		SLA sla = testGraphQLSLA_addSLA();
+		SLA sla = testGraphQLDeleteSLA_addSLA();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -353,6 +353,10 @@ public abstract class BaseSLAResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected SLA testGraphQLDeleteSLA_addSLA() throws Exception {
+		return testGraphQLSLA_addSLA();
+	}
+
 	@Test
 	public void testGetSLA() throws Exception {
 		SLA postSLA = testGetSLA_addSLA();
@@ -370,7 +374,7 @@ public abstract class BaseSLAResourceTestCase {
 
 	@Test
 	public void testGraphQLGetSLA() throws Exception {
-		SLA sla = testGraphQLSLA_addSLA();
+		SLA sla = testGraphQLGetSLA_addSLA();
 
 		Assert.assertTrue(
 			equals(
@@ -407,6 +411,10 @@ public abstract class BaseSLAResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected SLA testGraphQLGetSLA_addSLA() throws Exception {
+		return testGraphQLSLA_addSLA();
 	}
 
 	@Test

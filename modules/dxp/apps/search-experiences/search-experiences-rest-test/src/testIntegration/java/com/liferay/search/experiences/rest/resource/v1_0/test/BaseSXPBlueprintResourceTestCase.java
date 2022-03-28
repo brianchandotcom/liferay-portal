@@ -562,7 +562,8 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteSXPBlueprint() throws Exception {
-		SXPBlueprint sxpBlueprint = testGraphQLSXPBlueprint_addSXPBlueprint();
+		SXPBlueprint sxpBlueprint =
+			testGraphQLDeleteSXPBlueprint_addSXPBlueprint();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -591,6 +592,12 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected SXPBlueprint testGraphQLDeleteSXPBlueprint_addSXPBlueprint()
+		throws Exception {
+
+		return testGraphQLSXPBlueprint_addSXPBlueprint();
+	}
+
 	@Test
 	public void testGetSXPBlueprint() throws Exception {
 		SXPBlueprint postSXPBlueprint = testGetSXPBlueprint_addSXPBlueprint();
@@ -611,7 +618,8 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 
 	@Test
 	public void testGraphQLGetSXPBlueprint() throws Exception {
-		SXPBlueprint sxpBlueprint = testGraphQLSXPBlueprint_addSXPBlueprint();
+		SXPBlueprint sxpBlueprint =
+			testGraphQLGetSXPBlueprint_addSXPBlueprint();
 
 		Assert.assertTrue(
 			equals(
@@ -650,6 +658,12 @@ public abstract class BaseSXPBlueprintResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected SXPBlueprint testGraphQLGetSXPBlueprint_addSXPBlueprint()
+		throws Exception {
+
+		return testGraphQLSXPBlueprint_addSXPBlueprint();
 	}
 
 	@Test

@@ -213,7 +213,7 @@ public abstract class BaseFormResourceTestCase {
 
 	@Test
 	public void testGraphQLGetForm() throws Exception {
-		Form form = testGraphQLForm_addForm();
+		Form form = testGraphQLGetForm_addForm();
 
 		Assert.assertTrue(
 			equals(
@@ -250,6 +250,10 @@ public abstract class BaseFormResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Form testGraphQLGetForm_addForm() throws Exception {
+		return testGraphQLForm_addForm();
 	}
 
 	@Test
@@ -360,8 +364,8 @@ public abstract class BaseFormResourceTestCase {
 
 		Assert.assertEquals(0, formsJSONObject.get("totalCount"));
 
-		Form form1 = testGraphQLForm_addForm();
-		Form form2 = testGraphQLForm_addForm();
+		Form form1 = testGraphQLGetSiteFormsPage_addForm();
+		Form form2 = testGraphQLGetSiteFormsPage_addForm();
 
 		formsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -373,6 +377,10 @@ public abstract class BaseFormResourceTestCase {
 			Arrays.asList(form1, form2),
 			Arrays.asList(
 				FormSerDes.toDTOs(formsJSONObject.getString("items"))));
+	}
+
+	protected Form testGraphQLGetSiteFormsPage_addForm() throws Exception {
+		return testGraphQLForm_addForm();
 	}
 
 	@Test

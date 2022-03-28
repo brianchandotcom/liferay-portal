@@ -233,7 +233,8 @@ public abstract class BaseDiagramResourceTestCase {
 	public void testGraphQLGetProductByExternalReferenceCodeDiagram()
 		throws Exception {
 
-		Diagram diagram = testGraphQLDiagram_addDiagram();
+		Diagram diagram =
+			testGraphQLGetProductByExternalReferenceCodeDiagram_addDiagram();
 
 		Assert.assertTrue(
 			equals(
@@ -290,6 +291,13 @@ public abstract class BaseDiagramResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Diagram
+			testGraphQLGetProductByExternalReferenceCodeDiagram_addDiagram()
+		throws Exception {
+
+		return testGraphQLDiagram_addDiagram();
+	}
+
 	@Test
 	public void testPostProductByExternalReferenceCodeDiagram()
 		throws Exception {
@@ -330,7 +338,7 @@ public abstract class BaseDiagramResourceTestCase {
 
 	@Test
 	public void testGraphQLGetProductIdDiagram() throws Exception {
-		Diagram diagram = testGraphQLDiagram_addDiagram();
+		Diagram diagram = testGraphQLGetProductIdDiagram_addDiagram();
 
 		Assert.assertTrue(
 			equals(
@@ -369,6 +377,12 @@ public abstract class BaseDiagramResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Diagram testGraphQLGetProductIdDiagram_addDiagram()
+		throws Exception {
+
+		return testGraphQLDiagram_addDiagram();
 	}
 
 	@Test

@@ -269,7 +269,8 @@ public abstract class BaseWarehouseResourceTestCase {
 	public void testGraphQLGetWarehousByExternalReferenceCode()
 		throws Exception {
 
-		Warehouse warehouse = testGraphQLWarehouse_addWarehouse();
+		Warehouse warehouse =
+			testGraphQLGetWarehousByExternalReferenceCode_addWarehouse();
 
 		Assert.assertTrue(
 			equals(
@@ -319,6 +320,13 @@ public abstract class BaseWarehouseResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Warehouse
+			testGraphQLGetWarehousByExternalReferenceCode_addWarehouse()
+		throws Exception {
+
+		return testGraphQLWarehouse_addWarehouse();
+	}
+
 	@Test
 	public void testPatchWarehousByExternalReferenceCode() throws Exception {
 		Assert.assertTrue(false);
@@ -365,7 +373,7 @@ public abstract class BaseWarehouseResourceTestCase {
 
 	@Test
 	public void testGraphQLGetWarehousId() throws Exception {
-		Warehouse warehouse = testGraphQLWarehouse_addWarehouse();
+		Warehouse warehouse = testGraphQLGetWarehousId_addWarehouse();
 
 		Assert.assertTrue(
 			equals(
@@ -402,6 +410,12 @@ public abstract class BaseWarehouseResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Warehouse testGraphQLGetWarehousId_addWarehouse()
+		throws Exception {
+
+		return testGraphQLWarehouse_addWarehouse();
 	}
 
 	@Test
@@ -701,8 +715,8 @@ public abstract class BaseWarehouseResourceTestCase {
 
 		long totalCount = warehousesJSONObject.getLong("totalCount");
 
-		Warehouse warehouse1 = testGraphQLWarehouse_addWarehouse();
-		Warehouse warehouse2 = testGraphQLWarehouse_addWarehouse();
+		Warehouse warehouse1 = testGraphQLGetWarehousesPage_addWarehouse();
+		Warehouse warehouse2 = testGraphQLGetWarehousesPage_addWarehouse();
 
 		warehousesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -721,6 +735,12 @@ public abstract class BaseWarehouseResourceTestCase {
 			Arrays.asList(
 				WarehouseSerDes.toDTOs(
 					warehousesJSONObject.getString("items"))));
+	}
+
+	protected Warehouse testGraphQLGetWarehousesPage_addWarehouse()
+		throws Exception {
+
+		return testGraphQLWarehouse_addWarehouse();
 	}
 
 	@Test

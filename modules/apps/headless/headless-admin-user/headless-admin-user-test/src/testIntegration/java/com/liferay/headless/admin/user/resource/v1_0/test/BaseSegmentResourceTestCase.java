@@ -313,8 +313,8 @@ public abstract class BaseSegmentResourceTestCase {
 
 		Assert.assertEquals(0, segmentsJSONObject.get("totalCount"));
 
-		Segment segment1 = testGraphQLSegment_addSegment();
-		Segment segment2 = testGraphQLSegment_addSegment();
+		Segment segment1 = testGraphQLGetSiteSegmentsPage_addSegment();
+		Segment segment2 = testGraphQLGetSiteSegmentsPage_addSegment();
 
 		segmentsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -326,6 +326,12 @@ public abstract class BaseSegmentResourceTestCase {
 			Arrays.asList(segment1, segment2),
 			Arrays.asList(
 				SegmentSerDes.toDTOs(segmentsJSONObject.getString("items"))));
+	}
+
+	protected Segment testGraphQLGetSiteSegmentsPage_addSegment()
+		throws Exception {
+
+		return testGraphQLSegment_addSegment();
 	}
 
 	@Test

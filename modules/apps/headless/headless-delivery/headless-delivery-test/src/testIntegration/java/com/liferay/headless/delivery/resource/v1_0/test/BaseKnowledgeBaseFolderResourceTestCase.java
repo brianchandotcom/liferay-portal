@@ -235,7 +235,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	@Test
 	public void testGraphQLDeleteKnowledgeBaseFolder() throws Exception {
 		KnowledgeBaseFolder knowledgeBaseFolder =
-			testGraphQLKnowledgeBaseFolder_addKnowledgeBaseFolder();
+			testGraphQLDeleteKnowledgeBaseFolder_addKnowledgeBaseFolder();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -268,6 +268,13 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected KnowledgeBaseFolder
+			testGraphQLDeleteKnowledgeBaseFolder_addKnowledgeBaseFolder()
+		throws Exception {
+
+		return testGraphQLKnowledgeBaseFolder_addKnowledgeBaseFolder();
+	}
+
 	@Test
 	public void testGetKnowledgeBaseFolder() throws Exception {
 		KnowledgeBaseFolder postKnowledgeBaseFolder =
@@ -292,7 +299,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	@Test
 	public void testGraphQLGetKnowledgeBaseFolder() throws Exception {
 		KnowledgeBaseFolder knowledgeBaseFolder =
-			testGraphQLKnowledgeBaseFolder_addKnowledgeBaseFolder();
+			testGraphQLGetKnowledgeBaseFolder_addKnowledgeBaseFolder();
 
 		Assert.assertTrue(
 			equals(
@@ -333,6 +340,13 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected KnowledgeBaseFolder
+			testGraphQLGetKnowledgeBaseFolder_addKnowledgeBaseFolder()
+		throws Exception {
+
+		return testGraphQLKnowledgeBaseFolder_addKnowledgeBaseFolder();
 	}
 
 	@Test
@@ -790,9 +804,9 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			0, knowledgeBaseFoldersJSONObject.get("totalCount"));
 
 		KnowledgeBaseFolder knowledgeBaseFolder1 =
-			testGraphQLKnowledgeBaseFolder_addKnowledgeBaseFolder();
+			testGraphQLGetSiteKnowledgeBaseFoldersPage_addKnowledgeBaseFolder();
 		KnowledgeBaseFolder knowledgeBaseFolder2 =
-			testGraphQLKnowledgeBaseFolder_addKnowledgeBaseFolder();
+			testGraphQLGetSiteKnowledgeBaseFoldersPage_addKnowledgeBaseFolder();
 
 		knowledgeBaseFoldersJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -806,6 +820,13 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			Arrays.asList(
 				KnowledgeBaseFolderSerDes.toDTOs(
 					knowledgeBaseFoldersJSONObject.getString("items"))));
+	}
+
+	protected KnowledgeBaseFolder
+			testGraphQLGetSiteKnowledgeBaseFoldersPage_addKnowledgeBaseFolder()
+		throws Exception {
+
+		return testGraphQLKnowledgeBaseFolder_addKnowledgeBaseFolder();
 	}
 
 	@Test
@@ -912,7 +933,7 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 		throws Exception {
 
 		KnowledgeBaseFolder knowledgeBaseFolder =
-			testGraphQLKnowledgeBaseFolder_addKnowledgeBaseFolder();
+			testGraphQLGetSiteKnowledgeBaseFolderByExternalReferenceCode_addKnowledgeBaseFolder();
 
 		Assert.assertTrue(
 			equals(
@@ -968,6 +989,13 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected KnowledgeBaseFolder
+			testGraphQLGetSiteKnowledgeBaseFolderByExternalReferenceCode_addKnowledgeBaseFolder()
+		throws Exception {
+
+		return testGraphQLKnowledgeBaseFolder_addKnowledgeBaseFolder();
 	}
 
 	@Test

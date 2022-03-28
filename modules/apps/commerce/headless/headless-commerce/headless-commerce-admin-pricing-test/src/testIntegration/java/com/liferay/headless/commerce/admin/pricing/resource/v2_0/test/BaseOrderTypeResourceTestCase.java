@@ -212,7 +212,8 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 	@Test
 	public void testGraphQLGetDiscountOrderTypeOrderType() throws Exception {
-		OrderType orderType = testGraphQLOrderType_addOrderType();
+		OrderType orderType =
+			testGraphQLGetDiscountOrderTypeOrderType_addOrderType();
 
 		Assert.assertTrue(
 			equals(
@@ -266,6 +267,12 @@ public abstract class BaseOrderTypeResourceTestCase {
 				"Object/code"));
 	}
 
+	protected OrderType testGraphQLGetDiscountOrderTypeOrderType_addOrderType()
+		throws Exception {
+
+		return testGraphQLOrderType_addOrderType();
+	}
+
 	@Test
 	public void testGetPriceListOrderTypeOrderType() throws Exception {
 		OrderType postOrderType =
@@ -295,7 +302,8 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 	@Test
 	public void testGraphQLGetPriceListOrderTypeOrderType() throws Exception {
-		OrderType orderType = testGraphQLOrderType_addOrderType();
+		OrderType orderType =
+			testGraphQLGetPriceListOrderTypeOrderType_addOrderType();
 
 		Assert.assertTrue(
 			equals(
@@ -347,6 +355,12 @@ public abstract class BaseOrderTypeResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected OrderType testGraphQLGetPriceListOrderTypeOrderType_addOrderType()
+		throws Exception {
+
+		return testGraphQLOrderType_addOrderType();
 	}
 
 	protected OrderType testGraphQLOrderType_addOrderType() throws Exception {

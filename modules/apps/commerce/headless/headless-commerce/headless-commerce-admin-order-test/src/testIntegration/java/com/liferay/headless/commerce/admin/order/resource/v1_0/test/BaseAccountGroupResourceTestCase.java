@@ -221,7 +221,8 @@ public abstract class BaseAccountGroupResourceTestCase {
 	public void testGraphQLGetOrderRuleAccountGroupAccountGroup()
 		throws Exception {
 
-		AccountGroup accountGroup = testGraphQLAccountGroup_addAccountGroup();
+		AccountGroup accountGroup =
+			testGraphQLGetOrderRuleAccountGroupAccountGroup_addAccountGroup();
 
 		Assert.assertTrue(
 			equals(
@@ -273,6 +274,13 @@ public abstract class BaseAccountGroupResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected AccountGroup
+			testGraphQLGetOrderRuleAccountGroupAccountGroup_addAccountGroup()
+		throws Exception {
+
+		return testGraphQLAccountGroup_addAccountGroup();
 	}
 
 	protected AccountGroup testGraphQLAccountGroup_addAccountGroup()

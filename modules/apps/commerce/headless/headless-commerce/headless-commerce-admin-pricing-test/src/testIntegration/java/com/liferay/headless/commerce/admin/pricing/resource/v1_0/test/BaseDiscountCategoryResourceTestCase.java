@@ -216,7 +216,7 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 	@Test
 	public void testGraphQLDeleteDiscountCategory() throws Exception {
 		DiscountCategory discountCategory =
-			testGraphQLDiscountCategory_addDiscountCategory();
+			testGraphQLDeleteDiscountCategory_addDiscountCategory();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -229,6 +229,13 @@ public abstract class BaseDiscountCategoryResourceTestCase {
 							}
 						})),
 				"JSONObject/data", "Object/deleteDiscountCategory"));
+	}
+
+	protected DiscountCategory
+			testGraphQLDeleteDiscountCategory_addDiscountCategory()
+		throws Exception {
+
+		return testGraphQLDiscountCategory_addDiscountCategory();
 	}
 
 	@Test

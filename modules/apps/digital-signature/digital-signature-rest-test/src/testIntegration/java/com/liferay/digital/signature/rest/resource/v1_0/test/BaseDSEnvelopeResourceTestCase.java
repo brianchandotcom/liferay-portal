@@ -348,7 +348,7 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 
 	@Test
 	public void testGraphQLGetSiteDSEnvelope() throws Exception {
-		DSEnvelope dsEnvelope = testGraphQLDSEnvelope_addDSEnvelope();
+		DSEnvelope dsEnvelope = testGraphQLGetSiteDSEnvelope_addDSEnvelope();
 
 		Assert.assertTrue(
 			equals(
@@ -395,6 +395,12 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected DSEnvelope testGraphQLGetSiteDSEnvelope_addDSEnvelope()
+		throws Exception {
+
+		return testGraphQLDSEnvelope_addDSEnvelope();
 	}
 
 	protected void appendGraphQLFieldValue(StringBuilder sb, Object value)

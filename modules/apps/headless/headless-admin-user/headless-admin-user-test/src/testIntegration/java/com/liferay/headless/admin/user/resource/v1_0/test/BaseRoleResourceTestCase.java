@@ -274,8 +274,8 @@ public abstract class BaseRoleResourceTestCase {
 
 		long totalCount = rolesJSONObject.getLong("totalCount");
 
-		Role role1 = testGraphQLRole_addRole();
-		Role role2 = testGraphQLRole_addRole();
+		Role role1 = testGraphQLGetRolesPage_addRole();
+		Role role2 = testGraphQLGetRolesPage_addRole();
 
 		rolesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -292,6 +292,10 @@ public abstract class BaseRoleResourceTestCase {
 			role2,
 			Arrays.asList(
 				RoleSerDes.toDTOs(rolesJSONObject.getString("items"))));
+	}
+
+	protected Role testGraphQLGetRolesPage_addRole() throws Exception {
+		return testGraphQLRole_addRole();
 	}
 
 	@Test
@@ -311,7 +315,7 @@ public abstract class BaseRoleResourceTestCase {
 
 	@Test
 	public void testGraphQLGetRole() throws Exception {
-		Role role = testGraphQLRole_addRole();
+		Role role = testGraphQLGetRole_addRole();
 
 		Assert.assertTrue(
 			equals(
@@ -348,6 +352,10 @@ public abstract class BaseRoleResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Role testGraphQLGetRole_addRole() throws Exception {
+		return testGraphQLRole_addRole();
 	}
 
 	@Test

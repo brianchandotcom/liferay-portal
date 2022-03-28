@@ -226,7 +226,8 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOrderRuleOrderTypeOrderType() throws Exception {
-		OrderType orderType = testGraphQLOrderType_addOrderType();
+		OrderType orderType =
+			testGraphQLGetOrderRuleOrderTypeOrderType_addOrderType();
 
 		Assert.assertTrue(
 			equals(
@@ -278,6 +279,12 @@ public abstract class BaseOrderTypeResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected OrderType testGraphQLGetOrderRuleOrderTypeOrderType_addOrderType()
+		throws Exception {
+
+		return testGraphQLOrderType_addOrderType();
 	}
 
 	@Test
@@ -578,8 +585,8 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 		long totalCount = orderTypesJSONObject.getLong("totalCount");
 
-		OrderType orderType1 = testGraphQLOrderType_addOrderType();
-		OrderType orderType2 = testGraphQLOrderType_addOrderType();
+		OrderType orderType1 = testGraphQLGetOrderTypesPage_addOrderType();
+		OrderType orderType2 = testGraphQLGetOrderTypesPage_addOrderType();
 
 		orderTypesJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -598,6 +605,12 @@ public abstract class BaseOrderTypeResourceTestCase {
 			Arrays.asList(
 				OrderTypeSerDes.toDTOs(
 					orderTypesJSONObject.getString("items"))));
+	}
+
+	protected OrderType testGraphQLGetOrderTypesPage_addOrderType()
+		throws Exception {
+
+		return testGraphQLOrderType_addOrderType();
 	}
 
 	@Test
@@ -673,7 +686,8 @@ public abstract class BaseOrderTypeResourceTestCase {
 	public void testGraphQLGetOrderTypeByExternalReferenceCode()
 		throws Exception {
 
-		OrderType orderType = testGraphQLOrderType_addOrderType();
+		OrderType orderType =
+			testGraphQLGetOrderTypeByExternalReferenceCode_addOrderType();
 
 		Assert.assertTrue(
 			equals(
@@ -721,6 +735,13 @@ public abstract class BaseOrderTypeResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected OrderType
+			testGraphQLGetOrderTypeByExternalReferenceCode_addOrderType()
+		throws Exception {
+
+		return testGraphQLOrderType_addOrderType();
 	}
 
 	@Test
@@ -778,7 +799,7 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteOrderType() throws Exception {
-		OrderType orderType = testGraphQLOrderType_addOrderType();
+		OrderType orderType = testGraphQLDeleteOrderType_addOrderType();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -807,6 +828,12 @@ public abstract class BaseOrderTypeResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected OrderType testGraphQLDeleteOrderType_addOrderType()
+		throws Exception {
+
+		return testGraphQLOrderType_addOrderType();
+	}
+
 	@Test
 	public void testGetOrderType() throws Exception {
 		OrderType postOrderType = testGetOrderType_addOrderType();
@@ -825,7 +852,7 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 	@Test
 	public void testGraphQLGetOrderType() throws Exception {
-		OrderType orderType = testGraphQLOrderType_addOrderType();
+		OrderType orderType = testGraphQLGetOrderType_addOrderType();
 
 		Assert.assertTrue(
 			equals(
@@ -862,6 +889,12 @@ public abstract class BaseOrderTypeResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected OrderType testGraphQLGetOrderType_addOrderType()
+		throws Exception {
+
+		return testGraphQLOrderType_addOrderType();
 	}
 
 	@Test
@@ -918,7 +951,8 @@ public abstract class BaseOrderTypeResourceTestCase {
 
 	@Test
 	public void testGraphQLGetTermOrderTypeOrderType() throws Exception {
-		OrderType orderType = testGraphQLOrderType_addOrderType();
+		OrderType orderType =
+			testGraphQLGetTermOrderTypeOrderType_addOrderType();
 
 		Assert.assertTrue(
 			equals(
@@ -968,6 +1002,12 @@ public abstract class BaseOrderTypeResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected OrderType testGraphQLGetTermOrderTypeOrderType_addOrderType()
+		throws Exception {
+
+		return testGraphQLOrderType_addOrderType();
 	}
 
 	@Rule

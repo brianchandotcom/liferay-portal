@@ -223,7 +223,7 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 	@Test
 	public void testGraphQLDeleteAvailabilityEstimate() throws Exception {
 		AvailabilityEstimate availabilityEstimate =
-			testGraphQLAvailabilityEstimate_addAvailabilityEstimate();
+			testGraphQLDeleteAvailabilityEstimate_addAvailabilityEstimate();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -252,6 +252,13 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected AvailabilityEstimate
+			testGraphQLDeleteAvailabilityEstimate_addAvailabilityEstimate()
+		throws Exception {
+
+		return testGraphQLAvailabilityEstimate_addAvailabilityEstimate();
+	}
+
 	@Test
 	public void testGetAvailabilityEstimate() throws Exception {
 		AvailabilityEstimate postAvailabilityEstimate =
@@ -276,7 +283,7 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 	@Test
 	public void testGraphQLGetAvailabilityEstimate() throws Exception {
 		AvailabilityEstimate availabilityEstimate =
-			testGraphQLAvailabilityEstimate_addAvailabilityEstimate();
+			testGraphQLGetAvailabilityEstimate_addAvailabilityEstimate();
 
 		Assert.assertTrue(
 			equals(
@@ -313,6 +320,13 @@ public abstract class BaseAvailabilityEstimateResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected AvailabilityEstimate
+			testGraphQLGetAvailabilityEstimate_addAvailabilityEstimate()
+		throws Exception {
+
+		return testGraphQLAvailabilityEstimate_addAvailabilityEstimate();
 	}
 
 	@Test

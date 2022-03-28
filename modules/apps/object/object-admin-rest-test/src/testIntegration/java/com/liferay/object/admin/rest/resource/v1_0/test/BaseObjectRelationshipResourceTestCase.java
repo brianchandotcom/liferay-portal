@@ -504,7 +504,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	@Test
 	public void testGraphQLDeleteObjectRelationship() throws Exception {
 		ObjectRelationship objectRelationship =
-			testGraphQLObjectRelationship_addObjectRelationship();
+			testGraphQLDeleteObjectRelationship_addObjectRelationship();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -537,6 +537,13 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected ObjectRelationship
+			testGraphQLDeleteObjectRelationship_addObjectRelationship()
+		throws Exception {
+
+		return testGraphQLObjectRelationship_addObjectRelationship();
+	}
+
 	@Test
 	public void testGetObjectRelationship() throws Exception {
 		ObjectRelationship postObjectRelationship =
@@ -561,7 +568,7 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 	@Test
 	public void testGraphQLGetObjectRelationship() throws Exception {
 		ObjectRelationship objectRelationship =
-			testGraphQLObjectRelationship_addObjectRelationship();
+			testGraphQLGetObjectRelationship_addObjectRelationship();
 
 		Assert.assertTrue(
 			equals(
@@ -602,6 +609,13 @@ public abstract class BaseObjectRelationshipResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected ObjectRelationship
+			testGraphQLGetObjectRelationship_addObjectRelationship()
+		throws Exception {
+
+		return testGraphQLObjectRelationship_addObjectRelationship();
 	}
 
 	@Test

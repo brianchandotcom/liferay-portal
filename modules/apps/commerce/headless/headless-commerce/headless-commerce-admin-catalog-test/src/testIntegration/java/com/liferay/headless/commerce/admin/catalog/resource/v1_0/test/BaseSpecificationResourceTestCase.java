@@ -517,9 +517,9 @@ public abstract class BaseSpecificationResourceTestCase {
 		long totalCount = specificationsJSONObject.getLong("totalCount");
 
 		Specification specification1 =
-			testGraphQLSpecification_addSpecification();
+			testGraphQLGetSpecificationsPage_addSpecification();
 		Specification specification2 =
-			testGraphQLSpecification_addSpecification();
+			testGraphQLGetSpecificationsPage_addSpecification();
 
 		specificationsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -538,6 +538,12 @@ public abstract class BaseSpecificationResourceTestCase {
 			Arrays.asList(
 				SpecificationSerDes.toDTOs(
 					specificationsJSONObject.getString("items"))));
+	}
+
+	protected Specification testGraphQLGetSpecificationsPage_addSpecification()
+		throws Exception {
+
+		return testGraphQLSpecification_addSpecification();
 	}
 
 	@Test
@@ -591,7 +597,7 @@ public abstract class BaseSpecificationResourceTestCase {
 	@Test
 	public void testGraphQLDeleteSpecification() throws Exception {
 		Specification specification =
-			testGraphQLSpecification_addSpecification();
+			testGraphQLDeleteSpecification_addSpecification();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -620,6 +626,12 @@ public abstract class BaseSpecificationResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected Specification testGraphQLDeleteSpecification_addSpecification()
+		throws Exception {
+
+		return testGraphQLSpecification_addSpecification();
+	}
+
 	@Test
 	public void testGetSpecification() throws Exception {
 		Specification postSpecification =
@@ -642,7 +654,7 @@ public abstract class BaseSpecificationResourceTestCase {
 	@Test
 	public void testGraphQLGetSpecification() throws Exception {
 		Specification specification =
-			testGraphQLSpecification_addSpecification();
+			testGraphQLGetSpecification_addSpecification();
 
 		Assert.assertTrue(
 			equals(
@@ -679,6 +691,12 @@ public abstract class BaseSpecificationResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Specification testGraphQLGetSpecification_addSpecification()
+		throws Exception {
+
+		return testGraphQLSpecification_addSpecification();
 	}
 
 	@Test

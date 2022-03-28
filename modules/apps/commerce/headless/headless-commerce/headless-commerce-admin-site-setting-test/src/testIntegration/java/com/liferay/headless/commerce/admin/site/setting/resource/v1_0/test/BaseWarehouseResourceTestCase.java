@@ -373,7 +373,7 @@ public abstract class BaseWarehouseResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteWarehouse() throws Exception {
-		Warehouse warehouse = testGraphQLWarehouse_addWarehouse();
+		Warehouse warehouse = testGraphQLDeleteWarehouse_addWarehouse();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -402,6 +402,12 @@ public abstract class BaseWarehouseResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected Warehouse testGraphQLDeleteWarehouse_addWarehouse()
+		throws Exception {
+
+		return testGraphQLWarehouse_addWarehouse();
+	}
+
 	@Test
 	public void testGetWarehouse() throws Exception {
 		Warehouse postWarehouse = testGetWarehouse_addWarehouse();
@@ -420,7 +426,7 @@ public abstract class BaseWarehouseResourceTestCase {
 
 	@Test
 	public void testGraphQLGetWarehouse() throws Exception {
-		Warehouse warehouse = testGraphQLWarehouse_addWarehouse();
+		Warehouse warehouse = testGraphQLGetWarehouse_addWarehouse();
 
 		Assert.assertTrue(
 			equals(
@@ -457,6 +463,12 @@ public abstract class BaseWarehouseResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Warehouse testGraphQLGetWarehouse_addWarehouse()
+		throws Exception {
+
+		return testGraphQLWarehouse_addWarehouse();
 	}
 
 	@Test

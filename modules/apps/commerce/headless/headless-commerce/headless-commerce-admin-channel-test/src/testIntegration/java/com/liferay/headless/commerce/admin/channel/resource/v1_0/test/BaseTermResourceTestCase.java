@@ -216,7 +216,7 @@ public abstract class BaseTermResourceTestCase {
 
 	@Test
 	public void testGraphQLGetPaymentMethodGroupRelTermTerm() throws Exception {
-		Term term = testGraphQLTerm_addTerm();
+		Term term = testGraphQLGetPaymentMethodGroupRelTermTerm_addTerm();
 
 		Assert.assertTrue(
 			equals(
@@ -271,6 +271,12 @@ public abstract class BaseTermResourceTestCase {
 				"Object/code"));
 	}
 
+	protected Term testGraphQLGetPaymentMethodGroupRelTermTerm_addTerm()
+		throws Exception {
+
+		return testGraphQLTerm_addTerm();
+	}
+
 	@Test
 	public void testGetShippingFixedOptionTermTerm() throws Exception {
 		Term postTerm = testGetShippingFixedOptionTermTerm_addTerm();
@@ -299,7 +305,7 @@ public abstract class BaseTermResourceTestCase {
 
 	@Test
 	public void testGraphQLGetShippingFixedOptionTermTerm() throws Exception {
-		Term term = testGraphQLTerm_addTerm();
+		Term term = testGraphQLGetShippingFixedOptionTermTerm_addTerm();
 
 		Assert.assertTrue(
 			equals(
@@ -351,6 +357,12 @@ public abstract class BaseTermResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Term testGraphQLGetShippingFixedOptionTermTerm_addTerm()
+		throws Exception {
+
+		return testGraphQLTerm_addTerm();
 	}
 
 	protected Term testGraphQLTerm_addTerm() throws Exception {

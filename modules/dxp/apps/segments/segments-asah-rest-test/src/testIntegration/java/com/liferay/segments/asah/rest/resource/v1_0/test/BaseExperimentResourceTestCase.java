@@ -221,7 +221,7 @@ public abstract class BaseExperimentResourceTestCase {
 
 	@Test
 	public void testGraphQLDeleteExperiment() throws Exception {
-		Experiment experiment = testGraphQLExperiment_addExperiment();
+		Experiment experiment = testGraphQLDeleteExperiment_addExperiment();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -254,6 +254,12 @@ public abstract class BaseExperimentResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected Experiment testGraphQLDeleteExperiment_addExperiment()
+		throws Exception {
+
+		return testGraphQLExperiment_addExperiment();
+	}
+
 	@Test
 	public void testGetExperiment() throws Exception {
 		Experiment postExperiment = testGetExperiment_addExperiment();
@@ -272,7 +278,7 @@ public abstract class BaseExperimentResourceTestCase {
 
 	@Test
 	public void testGraphQLGetExperiment() throws Exception {
-		Experiment experiment = testGraphQLExperiment_addExperiment();
+		Experiment experiment = testGraphQLGetExperiment_addExperiment();
 
 		Assert.assertTrue(
 			equals(
@@ -312,6 +318,12 @@ public abstract class BaseExperimentResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected Experiment testGraphQLGetExperiment_addExperiment()
+		throws Exception {
+
+		return testGraphQLExperiment_addExperiment();
 	}
 
 	protected Experiment testGraphQLExperiment_addExperiment()

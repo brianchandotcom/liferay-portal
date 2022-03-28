@@ -227,7 +227,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	@Test
 	public void testGraphQLDeleteNavigationMenu() throws Exception {
 		NavigationMenu navigationMenu =
-			testGraphQLNavigationMenu_addNavigationMenu();
+			testGraphQLDeleteNavigationMenu_addNavigationMenu();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -256,6 +256,12 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected NavigationMenu testGraphQLDeleteNavigationMenu_addNavigationMenu()
+		throws Exception {
+
+		return testGraphQLNavigationMenu_addNavigationMenu();
+	}
+
 	@Test
 	public void testGetNavigationMenu() throws Exception {
 		NavigationMenu postNavigationMenu =
@@ -279,7 +285,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	@Test
 	public void testGraphQLGetNavigationMenu() throws Exception {
 		NavigationMenu navigationMenu =
-			testGraphQLNavigationMenu_addNavigationMenu();
+			testGraphQLGetNavigationMenu_addNavigationMenu();
 
 		Assert.assertTrue(
 			equals(
@@ -320,6 +326,12 @@ public abstract class BaseNavigationMenuResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected NavigationMenu testGraphQLGetNavigationMenu_addNavigationMenu()
+		throws Exception {
+
+		return testGraphQLNavigationMenu_addNavigationMenu();
 	}
 
 	@Test
@@ -557,9 +569,9 @@ public abstract class BaseNavigationMenuResourceTestCase {
 		Assert.assertEquals(0, navigationMenusJSONObject.get("totalCount"));
 
 		NavigationMenu navigationMenu1 =
-			testGraphQLNavigationMenu_addNavigationMenu();
+			testGraphQLGetSiteNavigationMenusPage_addNavigationMenu();
 		NavigationMenu navigationMenu2 =
-			testGraphQLNavigationMenu_addNavigationMenu();
+			testGraphQLGetSiteNavigationMenusPage_addNavigationMenu();
 
 		navigationMenusJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -572,6 +584,13 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			Arrays.asList(
 				NavigationMenuSerDes.toDTOs(
 					navigationMenusJSONObject.getString("items"))));
+	}
+
+	protected NavigationMenu
+			testGraphQLGetSiteNavigationMenusPage_addNavigationMenu()
+		throws Exception {
+
+		return testGraphQLNavigationMenu_addNavigationMenu();
 	}
 
 	@Test

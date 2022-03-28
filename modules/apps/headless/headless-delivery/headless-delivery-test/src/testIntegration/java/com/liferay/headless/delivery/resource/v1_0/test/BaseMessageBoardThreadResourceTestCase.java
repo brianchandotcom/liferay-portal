@@ -924,7 +924,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	@Test
 	public void testGraphQLDeleteMessageBoardThread() throws Exception {
 		MessageBoardThread messageBoardThread =
-			testGraphQLMessageBoardThread_addMessageBoardThread();
+			testGraphQLDeleteMessageBoardThread_addMessageBoardThread();
 
 		Assert.assertTrue(
 			JSONUtil.getValueAsBoolean(
@@ -957,6 +957,13 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Assert.assertTrue(errorsJSONArray.length() > 0);
 	}
 
+	protected MessageBoardThread
+			testGraphQLDeleteMessageBoardThread_addMessageBoardThread()
+		throws Exception {
+
+		return testGraphQLMessageBoardThread_addMessageBoardThread();
+	}
+
 	@Test
 	public void testGetMessageBoardThread() throws Exception {
 		MessageBoardThread postMessageBoardThread =
@@ -981,7 +988,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	@Test
 	public void testGraphQLGetMessageBoardThread() throws Exception {
 		MessageBoardThread messageBoardThread =
-			testGraphQLMessageBoardThread_addMessageBoardThread();
+			testGraphQLGetMessageBoardThread_addMessageBoardThread();
 
 		Assert.assertTrue(
 			equals(
@@ -1022,6 +1029,13 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected MessageBoardThread
+			testGraphQLGetMessageBoardThread_addMessageBoardThread()
+		throws Exception {
+
+		return testGraphQLMessageBoardThread_addMessageBoardThread();
 	}
 
 	@Test
@@ -1640,9 +1654,9 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		Assert.assertEquals(0, messageBoardThreadsJSONObject.get("totalCount"));
 
 		MessageBoardThread messageBoardThread1 =
-			testGraphQLMessageBoardThread_addMessageBoardThread();
+			testGraphQLGetSiteMessageBoardThreadsPage_addMessageBoardThread();
 		MessageBoardThread messageBoardThread2 =
-			testGraphQLMessageBoardThread_addMessageBoardThread();
+			testGraphQLGetSiteMessageBoardThreadsPage_addMessageBoardThread();
 
 		messageBoardThreadsJSONObject = JSONUtil.getValueAsJSONObject(
 			invokeGraphQLQuery(graphQLField), "JSONObject/data",
@@ -1656,6 +1670,13 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 			Arrays.asList(
 				MessageBoardThreadSerDes.toDTOs(
 					messageBoardThreadsJSONObject.getString("items"))));
+	}
+
+	protected MessageBoardThread
+			testGraphQLGetSiteMessageBoardThreadsPage_addMessageBoardThread()
+		throws Exception {
+
+		return testGraphQLMessageBoardThread_addMessageBoardThread();
 	}
 
 	@Test
@@ -1722,7 +1743,7 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 		throws Exception {
 
 		MessageBoardThread messageBoardThread =
-			testGraphQLMessageBoardThread_addMessageBoardThread();
+			testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath_addMessageBoardThread();
 
 		Assert.assertTrue(
 			equals(
@@ -1778,6 +1799,13 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected MessageBoardThread
+			testGraphQLGetSiteMessageBoardThreadByFriendlyUrlPath_addMessageBoardThread()
+		throws Exception {
+
+		return testGraphQLMessageBoardThread_addMessageBoardThread();
 	}
 
 	@Test

@@ -214,7 +214,7 @@ public abstract class BaseSLAResultResourceTestCase {
 
 	@Test
 	public void testGraphQLGetProcessLastSLAResult() throws Exception {
-		SLAResult slaResult = testGraphQLSLAResult_addSLAResult();
+		SLAResult slaResult = testGraphQLGetProcessLastSLAResult_addSLAResult();
 
 		Assert.assertTrue(
 			equals(
@@ -260,6 +260,12 @@ public abstract class BaseSLAResultResourceTestCase {
 						getGraphQLFields())),
 				"JSONArray/errors", "Object/0", "JSONObject/extensions",
 				"Object/code"));
+	}
+
+	protected SLAResult testGraphQLGetProcessLastSLAResult_addSLAResult()
+		throws Exception {
+
+		return testGraphQLSLAResult_addSLAResult();
 	}
 
 	protected SLAResult testGraphQLSLAResult_addSLAResult() throws Exception {

@@ -146,6 +146,20 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro anonymizeStagedDatainApplicationCP {
+		for (var rowIndexNumber : list "${rowIndexNumber}") {
+			Click(
+				key_rowIndexNumber = "${rowIndexNumber}",
+				locator1 = "Icon#ROW_VERTICAL_ELLIPSIS_N");
+
+			MenuItem.clickNoError(menuItem = "Anonymize");
+
+			AssertConfirm(value1 = "Are you sure you want to anonymize this entity?");
+
+			Alert.viewSuccessMessage();
+		}
+	}
+
 	macro deleteAllEntriesCP {
 		PortletEntry.selectAll();
 

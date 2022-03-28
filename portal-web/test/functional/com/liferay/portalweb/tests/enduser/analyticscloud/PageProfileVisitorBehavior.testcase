@@ -97,7 +97,9 @@ definition {
 		}
 
 		task ("Navigate to page report entry") {
-			ACNavigation.openItem(itemName = "AC Page - Site Name - Liferay DXP");
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+			ACNavigation.openItem(itemName = "AC Page - Site Name - ${dataSourceName}");
 		}
 
 		task ("Navigate to the Overview tab in Pages dashboard") {

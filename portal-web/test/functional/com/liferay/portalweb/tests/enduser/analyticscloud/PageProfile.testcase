@@ -73,14 +73,13 @@ definition {
 		}
 
 		task ("Navigate to page report entry") {
-			ACNavigation.openItem(itemName = "AC Page - Site Name - Liferay DXP");
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
 
-			// Unable to perform the declaration because the data does not appear at the time
-
+			ACNavigation.openItem(itemName = "AC Page - Site Name - ${dataSourceName}");
 		}
 
 		task ("Assert Page Profile") {
-			ACUtils.assertPageTitle(pageTitle = "AC Page - Site Name - Liferay DXP");
+			ACUtils.assertPageTitle(pageTitle = "AC Page - Site Name - ${dataSourceName}");
 
 			for (var cardTitle : list "Visitors Behavior,Audience,Views by Location,Views by Technology,Displayed Assets") {
 				ACCards.viewCards(cardTitle = "${cardTitle}");

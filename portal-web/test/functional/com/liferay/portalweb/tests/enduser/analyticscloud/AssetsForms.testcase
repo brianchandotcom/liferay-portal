@@ -71,17 +71,13 @@ definition {
 		}
 
 		task ("Assert appears on metric") {
-
-			// This data takes too long to appear
-
 			var portalURL = PropsUtil.get("portal.url");
-
-			var siteName = TestCase.getSiteName(siteName = "${siteName}");
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
 
 			ACAssets.viewAssetAppearsOnMetric(
 				canonicalURL = "${portalURL}/web/site-name",
 				cardTitle = "Asset Appears On",
-				pageNmae = "AC Page - Site Name - ${siteName}");
+				pageNmae = "AC Page - Site Name - ${dataSourceName}");
 		}
 	}
 

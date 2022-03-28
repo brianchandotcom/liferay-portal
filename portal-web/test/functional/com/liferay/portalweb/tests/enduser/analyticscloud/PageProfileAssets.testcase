@@ -90,7 +90,9 @@ definition {
 		}
 
 		task ("Navigate to AC Page > Overview > Displayed Assets") {
-			ACNavigation.openItem(itemName = "AC Page - Site Name - Liferay DXP");
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+			ACNavigation.openItem(itemName = "AC Page - Site Name - ${dataSourceName}");
 
 			ACNavigation.viewActiveSwitchTab(tabName = "Overview");
 

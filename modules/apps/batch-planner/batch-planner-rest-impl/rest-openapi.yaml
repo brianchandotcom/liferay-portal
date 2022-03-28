@@ -127,6 +127,23 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Plan"
             tags: ["Plan"]
+    /plans/{internalClassName}/template:
+        get:
+            operationId: getPlanTemplate
+            parameters:
+                - in: path
+                  name: internalClassName
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/octet-stream:
+                            schema:
+                                format: binary
+                                type: string
+            tags: ["Plan"]
     /plans/{planId}:
         delete:
             operationId: deletePlan

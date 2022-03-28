@@ -128,7 +128,7 @@ public class CollectionStyledLayoutStructureItem
 			"verticalAlignment", _verticalAlignment
 		);
 
-		for (ViewportSize viewportSize : ViewportSize.values()) {
+		for (ViewportSize viewportSize : _viewportSizes) {
 			if (viewportSize.equals(ViewportSize.DESKTOP)) {
 				continue;
 			}
@@ -390,7 +390,7 @@ public class CollectionStyledLayoutStructureItem
 				itemConfigJSONObject.getString("verticalAlignment"));
 		}
 
-		for (ViewportSize viewportSize : ViewportSize.values()) {
+		for (ViewportSize viewportSize : _viewportSizes) {
 			if (viewportSize.equals(ViewportSize.DESKTOP)) {
 				continue;
 			}
@@ -403,6 +403,8 @@ public class CollectionStyledLayoutStructureItem
 			}
 		}
 	}
+
+	private static final ViewportSize[] _viewportSizes = ViewportSize.values();
 
 	private JSONObject _collectionJSONObject;
 	private boolean _displayAllItems;

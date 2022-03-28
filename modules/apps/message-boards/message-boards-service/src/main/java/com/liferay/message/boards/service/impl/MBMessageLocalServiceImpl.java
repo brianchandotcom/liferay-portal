@@ -216,9 +216,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public MBMessage addDiscussionMessage(
-			long userId, String userName, long groupId, String className,
-			long classPK, long threadId, long parentMessageId, String subject,
-			String body, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, String userName,
+			long groupId, String className, long classPK, long threadId,
+			long parentMessageId, String subject, String body,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Message
@@ -249,10 +250,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		MBMessage message = addMessage(
-			userId, userName, groupId, categoryId, threadId, parentMessageId,
-			subject, body, PropsValues.DISCUSSION_COMMENTS_FORMAT,
-			inputStreamOVPs, anonymous, priority, allowPingbacks,
-			serviceContext);
+			externalReferenceCode, userId, userName, groupId, categoryId,
+			threadId, parentMessageId, subject, body,
+			PropsValues.DISCUSSION_COMMENTS_FORMAT, inputStreamOVPs, anonymous,
+			priority, allowPingbacks, serviceContext);
 
 		// Discussion
 

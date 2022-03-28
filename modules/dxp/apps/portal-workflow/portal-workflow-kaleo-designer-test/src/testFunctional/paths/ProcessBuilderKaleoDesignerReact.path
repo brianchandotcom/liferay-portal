@@ -196,6 +196,12 @@
 	<td>//textarea[contains(@id, 'nodeScript')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>BUTTON_DIAGRAM_SOURCE_SWITCH</td>
+	<td>//*[not(self::div)][contains(@class,'btn-secondary')][normalize-space()=''][not(contains(@class,'navbar'))]</td>
+	<td></td>
+</tr>
+
 </tbody>
 </table>
 </body>

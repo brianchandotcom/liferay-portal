@@ -1115,11 +1115,16 @@ definition {
 	}
 
 	@description = "LPS-129928 - Verify that when hovering the Source button the text Source view is displayed"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test SourceViewToolTipIsDisplayed {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#SourceViewToolTipIsDisplayed";
 
-		// TODO LRQA-72996 SourceViewToolTipIsDisplayed pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.viewSourceDiagramToolTipDisplayed(content = "Source View");
+
 
 	}
 

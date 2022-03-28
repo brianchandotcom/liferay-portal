@@ -2784,6 +2784,66 @@ definition {
 		}
 	}
 
+	@description = "LPS-146550 Bug: Filter by extension does not shown any result after duplicate a MIME type"
+	@priority = "4"
+	test FilterByDuplicatedMimeType {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "ContentDashboard#FilterByDuplicatedMimeType";
+
+		task ("Add documents with different mime types") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_Audio",
+				groupName = "Test Site Name",
+				mimeType = "audio/mp3",
+				sourceFileName = "Document_1.mp3");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_Code",
+				groupName = "Test Site Name",
+				mimeType = "code/html",
+				sourceFileName = "fragment_freemarker_basic.html");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_Presentation",
+				groupName = "Test Site Name",
+				mimeType = "application/powerpoint",
+				sourceFileName = "Document_1.pptx");
+
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_Text",
+				groupName = "Test Site Name",
+				mimeType = "text/txt",
+				sourceFileName = "Document_1.txt");
+		}
+
+		task ("Check, in Content Dashboard, that types are correctly displayed in filter") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.openFilterModal(filterOption = "Extension");
+
+			ContentDashboard.checkMimeExtensionDisplayed(typeNameList = "Audio,Code,Presentation,Text");
+		}
+
+		task ("Add new duplicated extention") {
+			SystemSettings.openSystemSettingsAdmin();
+
+			SystemSettings.gotoConfiguration(
+				configurationCategory = "Documents and Media",
+				configurationName = "Service",
+				configurationScope = "System Scope");
+
+			ContentDashboard.addMimeType(typeName = "text/html");
+		}
+
+		task ("Check that types are still displayed correctly") {
+			ContentDashboard.goToContentDashboard();
+
+			ContentDashboard.openFilterModal(filterOption = "Extension");
+
+			ContentDashboard.checkMimeExtensionDisplayed(typeNameList = "Audio,Code,Presentation,Text");
+		}
+	}
+
 	@description = "Validate if the user can filter by multiple tags"
 	@priority = "5"
 	test FilterByMultipleTags {

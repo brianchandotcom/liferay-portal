@@ -1,5 +1,38 @@
 definition {
 
+	macro addMimeType {
+		Click(
+			ariaLabel = "Add Duplicate Field Code File MIME types",
+			locator1 = "Button#ANY_WITH_ARIA_LABEL");
+
+		Type(
+			key_indexNumber = "2",
+			key_label = "Code File MIME types",
+			locator1 = "TextArea#ANY_LABELED_N",
+			value1 = "${typeName}");
+
+		Button.clickSave();
+	}
+
+	macro checkMimeExtensionDisplayed {
+		if (isSet(typeName)) {
+			AssertVisible(
+				key_nodeName = "${typeName}",
+				locator1 = "Treeview#NODE_ITEM");
+		}
+		else {
+			for (var typeName : list "${typeNameList}") {
+				AssertVisible(
+					key_nodeName = "${typeName}",
+					locator1 = "Treeview#NODE_ITEM");
+			}
+		}
+
+		SelectFrame(value1 = "relative=top");
+
+		Button.clickCancel();
+	}
+
 	macro clearFilters {
 		Click(locator1 = "ContentDashboard#CLEAR_FILTERS_BUTTON");
 	}
@@ -456,6 +489,18 @@ definition {
 		Click(locator1 = "ContentDashboard#AUDIT_GRAPH_CONFIGURATION_BUTTON");
 
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+	}
+
+	macro openFilterModal {
+		AssertClickNoError(
+			locator1 = "ContentDashboard#FILTER_AND_ORDER_DROPDOWN",
+			value1 = "Filter and Order");
+
+		Click(locator1 = "ContentDashboard#FILTER_BY_OPTION");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+
+		WaitForLiferayEvent.initializeLiferayEventLog();
 	}
 
 	macro openInfoPanelByDropdownMenu {

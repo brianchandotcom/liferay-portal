@@ -44,10 +44,9 @@ public class TranslatorWebCacheItem implements WebCacheItem {
 			MicrosoftTranslator microsoftTranslator =
 				MicrosoftTranslatorFactoryUtil.getMicrosoftTranslator();
 
-			String toText = microsoftTranslator.translate(
-				_fromLanguageId, _toLanguageId, _fromText);
-
-			translation.setToText(toText);
+			translation.setToText(
+				microsoftTranslator.translate(
+					_fromLanguageId, _toLanguageId, _fromText));
 		}
 		catch (Exception exception) {
 			throw new WebCacheException(exception);

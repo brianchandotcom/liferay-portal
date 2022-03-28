@@ -1038,6 +1038,15 @@ public class LiferayOAuthDataProvider
 
 				clientGrantTypes.add(OAuthConstants.CLIENT_CREDENTIALS_GRANT);
 			}
+			else if (_oAuth2ProviderConfiguration.allowJWTBearerGrant() &&
+					 (allowedGrantType == GrantType.JWT_BEARER)) {
+
+				clientGrantTypes.add(Constants.JWT_BEARER_GRANT);
+				clientGrantTypes.add(
+					HttpUtils.urlEncode(
+						Constants.JWT_BEARER_GRANT,
+						StandardCharsets.UTF_8.name()));
+			}
 			else if (_oAuth2ProviderConfiguration.
 						allowResourceOwnerPasswordCredentialsGrant() &&
 					 (allowedGrantType == GrantType.RESOURCE_OWNER_PASSWORD)) {

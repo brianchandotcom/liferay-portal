@@ -115,6 +115,89 @@ definition {
 		}
 	}
 
+	@description = "This is a use case for LPS-145190 TC-5 TC-6 TC-7 Request the liferay access token for OAuth2 application with invalid JWTs."
+	@priority = "3"
+	test ApplicationCannotBeAuthorizedWithInvalidJWT {
+		property test.name.skip.portal.instance = "OAuth2#ApplicationCannotBeAuthorizedWithInvalidJWT";
+
+		task ("Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance.config");
+		}
+
+		task ("Add a new OAuth2 application") {
+			OAuth2.openOAuth2Admin();
+
+			OAuth2.addApplication(
+				applicationName = "OAuth2 Application",
+				checkboxUncheckList = "Authorization Code");
+		}
+
+		task ("Input OAuth2 valuies") {
+			OAuth2.inputApplicationValues(
+				clientId = "abc123",
+				clientSecret = "abc123");
+		}
+
+		task ("Edit OAuth2 scopes") {
+			Navigator.gotoBack();
+
+			OAuth2.editScopes(
+				applicationName = "OAuth2 Application",
+				resourceCheckList = "analytics.read,analytics.write",
+				resourcePanels = "Analytics");
+		}
+
+		task ("Authorize application with the JWT which lack the kid confirmation method value.") {
+			OAuth2.requestAccessTokenWithJWTViaCurl(
+				clientId = "abc123",
+				clientSecret = "abc123",
+				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				jwtFileName = "JWT_Lack_Kid.txt",
+				noResponse = "true",
+				scopes = "");
+		}
+
+		task ("Verify that there is no granted authorization via admin ") {
+			OAuth2.viewGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				noAuthorizations = "true");
+		}
+
+		task ("Authorize application with an expired JWT.") {
+			OAuth2.requestAccessTokenWithJWTViaCurl(
+				clientId = "abc123",
+				clientSecret = "abc123",
+				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				jwtFileName = "JWT_Expired.txt",
+				noResponse = "true",
+				scopes = "");
+		}
+
+		task ("Verify that there is no granted authorization via admin ") {
+			OAuth2.viewGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				noAuthorizations = "true");
+		}
+
+		task ("Authorize application with the JWT which includes a non-existent user in liferay.") {
+			OAuth2.requestAccessTokenWithJWTViaCurl(
+				clientId = "abc123",
+				clientSecret = "abc123",
+				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				jwtFileName = "JWT_Nonexistent_User.txt",
+				noResponse = "true",
+				scopes = "");
+		}
+
+		task ("Verify that there is no granted authorization via admin ") {
+			OAuth2.viewGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				noAuthorizations = "true");
+		}
+	}
+
 	@description = "This is a use case for OAUTH2-242. Verify that 2 portals and an external application authorization works in a clustered environment."
 	@priority = "5"
 	test AuthCodeShouldWorkWithClusteredPortals {
@@ -182,6 +265,92 @@ definition {
 			var authorizationCode = OAuth2.getAuthorizationCode();
 
 			OAuth2.assertOAuthAuthorizationIsWorkingInCluster(authorizationCode = "${authorizationCode}");
+		}
+	}
+
+	@description = "This is a use case for LPS-145190 TC-3 Liferay will issue the access token when the token issuer matches any of configurations in system settings and instance settings."
+	@priority = "5"
+	test AuthorizationCanBeIssuedWhenTokenIssuerMatchesWithSystemLevelOrInstanceLevel {
+		property custom.properties = "jsonws.web.service.paths.excludes=";
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "OAuth2#AuthorizationCanBeIssuedWhenTokenIssuerMatchesWithSystemLevelOrInstanceLevel";
+
+		task ("Add the OSGI configuration file to configure System Settings") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~default.config");
+		}
+
+		task ("Add the OSGI configuration file to configure Instance Settings") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance~SSO.config");
+		}
+
+		task ("Add a new user") {
+			JSONUser.addUser(
+				userEmailAddress = "test1@liferay.com",
+				userFirstName = "Test",
+				userLastName = "One",
+				userScreenName = "test1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "test1@liferay.com");
+		}
+
+		task ("Add a new OAuth2 application") {
+			OAuth2.openOAuth2Admin();
+
+			OAuth2.addApplication(
+				applicationName = "OAuth2 Application",
+				checkboxUncheckList = "Authorization Code");
+		}
+
+		task ("Input OAuth2 valuies") {
+			OAuth2.inputApplicationValues(
+				clientId = "abc123",
+				clientSecret = "abc123");
+		}
+
+		task ("Edit OAuth2 scopes") {
+			Navigator.gotoBack();
+
+			OAuth2.editScopes(
+				applicationName = "OAuth2 Application",
+				resourceCheckList = "analytics.read,analytics.write",
+				resourcePanels = "Analytics");
+		}
+
+		task ("Authorize application with the localhost issuer.") {
+			var scopeList = OAuth2.requestAccessTokenWithJWTViaCurl(
+				clientId = "abc123",
+				clientSecret = "abc123",
+				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				jwtFileName = "JWT_Email_Test.txt",
+				scopes = "");
+		}
+
+		task ("Verify granted authorization via admin") {
+			OAuth2.viewGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				userName = "Test Test");
+		}
+
+		task ("Authorize application with the sso issuer.") {
+			var scopeList = OAuth2.requestAccessTokenWithJWTViaCurl(
+				clientId = "abc123",
+				clientSecret = "abc123",
+				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				jwtFileName = "JWT_Email_Test1_SSO.txt",
+				scopes = "");
+		}
+
+		task ("Verify granted authorization via admin") {
+			OAuth2.viewGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				userName = "Test One");
 		}
 	}
 
@@ -981,6 +1150,255 @@ definition {
 
 		task ("Verify that there is no granted authorization via user ") {
 			OAuth2.viewGrantedAuthViaUser(noAuthorizations = "true");
+		}
+	}
+
+	@description = "This is a use case for LPS-145190 TC-4 The system configuration will be ignored and the instance configuration will be used for token validation when the same JWT issuer is configured at both system and instance configuration scopes."
+	@priority = "5"
+	test InstanceLevelConfigurationWillCoverSystemLevelWhenTheyConfiguredWithSameIssuer {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "OAuth2#InstanceLevelConfigurationWillCoverSystemLevelWhenTheyConfiguredWithSameIssuer";
+
+		task ("Add the OSGI configuration file to configure System Settings") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~default.config");
+		}
+
+		task ("Add the OSGI configuration file to configure Instance Settings") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance~screenName.config");
+		}
+
+		task ("Add a new OAuth2 application") {
+			OAuth2.openOAuth2Admin();
+
+			OAuth2.addApplication(
+				applicationName = "OAuth2 Application",
+				checkboxUncheckList = "Authorization Code");
+		}
+
+		task ("Input OAuth2 valuies") {
+			OAuth2.inputApplicationValues(
+				clientId = "abc123",
+				clientSecret = "abc123");
+		}
+
+		task ("Edit OAuth2 scopes") {
+			Navigator.gotoBack();
+
+			OAuth2.editScopes(
+				applicationName = "OAuth2 Application",
+				resourceCheckList = "analytics.read,analytics.write",
+				resourcePanels = "Analytics");
+		}
+
+		task ("Authorize application with the JWT which includes email as its subject value.") {
+			OAuth2.requestAccessTokenWithJWTViaCurl(
+				clientId = "abc123",
+				clientSecret = "abc123",
+				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				jwtFileName = "JWT_Email_Test.txt",
+				noResponse = "true",
+				scopes = "");
+		}
+
+		task ("Verify that there is no granted authorization via admin ") {
+			OAuth2.viewGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				noAuthorizations = "true");
+		}
+
+		task ("Authorize application with the JWT which includes screen name as its subject value.") {
+			var scopeList = OAuth2.requestAccessTokenWithJWTViaCurl(
+				clientId = "abc123",
+				clientSecret = "abc123",
+				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				jwtFileName = "JWT_Screenname_Test.txt",
+				scopes = "");
+		}
+
+		task ("Verify granted authorization via admin") {
+			OAuth2.viewGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				userName = "Test Test");
+		}
+	}
+
+	@description = "This is a use case for LPS-145190 TC-1 TC-8 TC-9 Liferay is able to accept JWT assertion as grant type to issue access token with email address as user authentication type."
+	@priority = "5"
+	test JWTAssertionCanBeAcceptedAsGrantTypeWithEmailAddressAsUserAuthenticationType {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "OAuth2#ApplicationCanBeAuthorizedWithJWTBearerAsGrantTypeAndEmailAddressAsUserAuthenticationType";
+
+		task ("Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance.config");
+		}
+
+		task ("Add a new OAuth2 application") {
+			OAuth2.openOAuth2Admin();
+
+			OAuth2.addApplication(
+				applicationName = "OAuth2 Application",
+				checkboxUncheckList = "Authorization Code");
+		}
+
+		task ("Input OAuth2 valuies") {
+			OAuth2.inputApplicationValues(
+				clientId = "abc123",
+				clientSecret = "abc123");
+		}
+
+		task ("Edit OAuth2 scopes") {
+			Navigator.gotoBack();
+
+			OAuth2.editScopes(
+				applicationName = "OAuth2 Application",
+				resourceCheckList = "analytics.read,analytics.write",
+				resourcePanels = "Analytics");
+		}
+
+		task ("Authorize application and scope parameter is ignored.") {
+			var scopeList = OAuth2.requestAccessTokenWithJWTViaCurl(
+				clientId = "abc123",
+				clientSecret = "abc123",
+				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				jwtFileName = "JWT_Email_Test.txt",
+				scopes = "");
+		}
+
+		task ("Verify the issued access token grant all the OAuth2 scopes that are configured.") {
+			if ("${scopeList}" == "analytics.read analytics.write") {
+				echo("The issued access token grant all the OAuth2 scopes that are configured.");
+			}
+			else {
+				fail("FAIL. Scopes aren't matched.");
+			}
+		}
+
+		task ("Verify granted authorization via admin") {
+			OAuth2.viewGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				userName = "Test Test");
+		}
+
+		task ("Revoke granted authorization via admin") {
+			OAuth2.revokeGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				userName = "Test Test");
+
+			Refresh();
+		}
+
+		task ("Authorize application and scope parameter contains subset of configured scopes.") {
+			var scopeList = OAuth2.requestAccessTokenWithJWTViaCurl(
+				clientId = "abc123",
+				clientSecret = "abc123",
+				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				jwtFileName = "JWT_Email_Test.txt",
+				scopes = "analytics.read");
+		}
+
+		task ("Verify the issued access token grant all the OAuth2 scopes that are configured.") {
+			if ("${scopeList}" == "analytics.read") {
+				echo("The issued access token grant the subset of configured scopes.");
+			}
+			else {
+				fail("FAIL. Scopes aren't matched.");
+			}
+		}
+
+		task ("Verify granted authorization via admin") {
+			OAuth2.viewGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				userName = "Test Test");
+		}
+
+		task ("Revoke granted authorization via admin") {
+			OAuth2.revokeGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				userName = "Test Test");
+
+			Refresh();
+		}
+
+		task ("Authorize application and scope paramter contains scopes that were not configured.") {
+			OAuth2.requestAccessTokenWithJWTViaCurl(
+				clientId = "abc123",
+				clientSecret = "abc123",
+				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				jwtFileName = "JWT_Email_Test.txt",
+				noResponse = "true",
+				scopes = "liferay-json-web-services.userprofile");
+		}
+
+		task ("Verify that there is no granted authorization via admin ") {
+			OAuth2.viewGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				noAuthorizations = "true");
+		}
+	}
+
+	@description = "This is a use case for LPS-145190 TC-2 Liferay is able to accept JWT assertion as grant type to issue access token with screen name as user authentication type."
+	@priority = "5"
+	test JWTAssertionCanBeAcceptedAsGrantTypeWithScreenNameAsUserAuthenticationType {
+		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "OAuth2#JWTAssertionCanBeAcceptedAsGrantTypeWithScreenNameAsUserAuthenticationType";
+
+		task ("Add the OSGI configuration file") {
+			OSGiConfig.copyOSGiConfigFile(
+				osgiConfigFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				osgiConfigFileName = "com.liferay.oauth2.provider.rest.internal.configuration.OAuth2InAssertionConfiguration~instance~screenName.config");
+		}
+
+		task ("Add a new OAuth2 application") {
+			OAuth2.openOAuth2Admin();
+
+			OAuth2.addApplication(
+				applicationName = "OAuth2 Application",
+				checkboxUncheckList = "Authorization Code");
+		}
+
+		task ("Input OAuth2 valuies") {
+			OAuth2.inputApplicationValues(
+				clientId = "abc123",
+				clientSecret = "abc123");
+		}
+
+		task ("Edit OAuth2 scopes") {
+			Navigator.gotoBack();
+
+			OAuth2.editScopes(
+				applicationName = "OAuth2 Application",
+				resourceCheckList = "analytics.read,analytics.write",
+				resourcePanels = "Analytics");
+		}
+
+		task ("Authorize application and scope parameter is ignored.") {
+			var scopeList = OAuth2.requestAccessTokenWithJWTViaCurl(
+				clientId = "abc123",
+				clientSecret = "abc123",
+				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
+				jwtFileName = "JWT_Screenname_Test.txt",
+				scopes = "");
+		}
+
+		task ("Verify the issued access token grant all the OAuth2 scopes that are configured.") {
+			if ("${scopeList}" == "analytics.read analytics.write") {
+				echo("The issued access token grant all the OAuth2 scopes that are configured.");
+			}
+			else {
+				fail("FAIL. Scopes aren't matched.");
+			}
+		}
+
+		task ("Verify granted authorization via admin") {
+			OAuth2.viewGrantedAuthViaAdmin(
+				applicationName = "OAuth2 Application",
+				userName = "Test Test");
 		}
 	}
 

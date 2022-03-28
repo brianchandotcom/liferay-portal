@@ -52,6 +52,14 @@ public interface OAuth2ProviderConfiguration {
 
 	@Meta.AD(
 		deflt = "true",
+		description = "oauth2-allow-jwt-bearer-grant-description",
+		id = "oauth2.allow.jwt.bearer.grant",
+		name = "oauth2-allow-jwt-bearer-grant", required = false
+	)
+	public boolean allowJWTBearerGrant();
+
+	@Meta.AD(
+		deflt = "true",
 		description = "oauth2-allow-resource-owner-password-credentials-grant-description",
 		id = "oauth2.allow.resource.owner.password.credentials.grant",
 		name = "oauth2-allow-resource-owner-password-credentials-grant",

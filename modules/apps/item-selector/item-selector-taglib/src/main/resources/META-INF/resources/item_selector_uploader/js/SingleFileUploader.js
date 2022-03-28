@@ -23,7 +23,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {ErrorCode, useDropzone} from 'react-dropzone';
 
 import ItemSelectorPreview from '../../item_selector_preview/js/ItemSelectorPreview.es';
-import DragFileIcon from './components/DragFileIcon';
+import DragFileBackground from './components/DragFilePlaceholder';
 import getPreviewProps from './utils/getPreviewProps';
 import getUploadErrorMessage from './utils/getUploadErrorMessage';
 import sendFile from './utils/sendFile';
@@ -34,6 +34,7 @@ function SingleFileUploader({
 	itemSelectedEventName,
 	maxFileSize: initialMaxFileSizeString = Liferay.PropsValues
 		.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE,
+	mimeTypeRestriction,
 	uploadItemReturnType,
 	uploadItemURL,
 	validExtensions = '*',
@@ -176,15 +177,9 @@ function SingleFileUploader({
 							</ClayLayout.ContentCol>
 						</ClayLayout.ContentRow>
 					) : (
-						<div>
-							<div className="dropzone-drag-file-icon-wrapper">
-								<DragFileIcon />
-							</div>
-
-							{Liferay.Language.get(
-								'drag-and-drop-or-click-to-upload'
-							)}
-						</div>
+						<DragFileBackground
+							mimeTypeRestriction={mimeTypeRestriction}
+						/>
 					)}
 				</div>
 

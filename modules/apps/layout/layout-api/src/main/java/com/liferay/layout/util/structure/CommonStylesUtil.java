@@ -131,6 +131,21 @@ public class CommonStylesUtil {
 		return jsonArray;
 	}
 
+	public static String getCSSTemplate(String propertyKey) {
+		if (_cssTemplates != null) {
+			return _cssTemplates.get(propertyKey);
+		}
+
+		try {
+			_loadCSSTemplates();
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
+
+		return _cssTemplates.get(propertyKey);
+	}
+
 	public static Object getDefaultStyleValue(String name) {
 		if (_defaultValues != null) {
 			return _defaultValues.get(name);
@@ -216,6 +231,30 @@ public class CommonStylesUtil {
 		return Validator.isNotNull(_responsiveTemplates.get(propertyKey));
 	}
 
+	private static void _loadCSSTemplates() throws Exception {
+		Map<String, String> cssTemplates = new HashMap<>();
+
+		JSONArray jsonArray = getCommonStylesJSONArray(null);
+
+		Iterator<JSONObject> iterator = jsonArray.iterator();
+
+		iterator.forEachRemaining(
+			jsonObject -> {
+				JSONArray stylesJSONArray = jsonObject.getJSONArray("styles");
+
+				Iterator<JSONObject> stylesIterator =
+					stylesJSONArray.iterator();
+
+				stylesIterator.forEachRemaining(
+					styleJSONObject -> cssTemplates.put(
+						styleJSONObject.getString("name"),
+						styleJSONObject.getString(
+							"cssTemplate", StringPool.BLANK)));
+			});
+
+		_cssTemplates = cssTemplates;
+	}
+
 	private static void _loadResponsiveTemplates() throws Exception {
 		Map<String, String> responsiveTemplates = new HashMap<>();
 
@@ -249,6 +288,7 @@ public class CommonStylesUtil {
 
 	private static List<String> _availableStyleNames;
 	private static final Map<Locale, JSONArray> _commonStyles = new HashMap<>();
+	private static Map<String, String> _cssTemplates;
 	private static Map<String, Object> _defaultValues;
 	private static List<String> _responsiveStyleNames;
 	private static Map<String, String> _responsiveTemplates;

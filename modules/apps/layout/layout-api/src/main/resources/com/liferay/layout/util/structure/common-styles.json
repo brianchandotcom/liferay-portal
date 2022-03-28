@@ -3,6 +3,7 @@
 		"label": "margin",
 		"styles": [
 			{
+				"cssTemplate": "margin-top: {value};",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -59,6 +60,7 @@
 				]
 			},
 			{
+				"cssTemplate": "margin-bottom: {value};",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -115,6 +117,7 @@
 				]
 			},
 			{
+				"cssTemplate": "margin-left: {value};",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -171,6 +174,7 @@
 				]
 			},
 			{
+				"cssTemplate": "margin-right: {value};",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -232,6 +236,7 @@
 		"label": "padding",
 		"styles": [
 			{
+				"cssTemplate": "padding-top: {value};",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -288,6 +293,7 @@
 				]
 			},
 			{
+				"cssTemplate": "padding-bottom: {value};",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -344,6 +350,7 @@
 				]
 			},
 			{
+				"cssTemplate": "padding-left: {value};",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -400,6 +407,7 @@
 				]
 			},
 			{
+				"cssTemplate": "padding-right: {value};",
 				"dataType": "string",
 				"defaultValue": "0",
 				"displaySize": "small",
@@ -462,6 +470,7 @@
 		"label": "frame",
 		"styles": [
 			{
+				"cssTemplate": "width: {value};",
 				"dataType": "string",
 				"defaultValue": "",
 				"displaySize": "small",
@@ -471,6 +480,7 @@
 				"type": "text"
 			},
 			{
+				"cssTemplate": "height: {value};",
 				"dataType": "string",
 				"defaultValue": "",
 				"displaySize": "small",
@@ -480,6 +490,7 @@
 				"type": "text"
 			},
 			{
+				"cssTemplate": "min-width: {value};",
 				"dataType": "string",
 				"defaultValue": "",
 				"displaySize": "small",
@@ -489,6 +500,7 @@
 				"type": "text"
 			},
 			{
+				"cssTemplate": "max-width: {value};",
 				"dataType": "string",
 				"defaultValue": "",
 				"displaySize": "small",
@@ -498,6 +510,7 @@
 				"type": "text"
 			},
 			{
+				"cssTemplate": "min-height: {value};",
 				"dataType": "string",
 				"defaultValue": "",
 				"displaySize": "small",
@@ -507,6 +520,7 @@
 				"type": "text"
 			},
 			{
+				"cssTemplate": "max-height: {value};",
 				"dataType": "string",
 				"defaultValue": "",
 				"displaySize": "small",
@@ -516,6 +530,7 @@
 				"type": "text"
 			},
 			{
+				"cssTemplate": "overflow: {value};",
 				"dataType": "string",
 				"defaultValue": "",
 				"label": "overflow",
@@ -546,6 +561,7 @@
 				]
 			},
 			{
+				"cssTemplate": "display: {value};",
 				"dataType": "string",
 				"defaultValue": "block",
 				"label": "hide-fragment",
@@ -566,6 +582,7 @@
 		"label": "text",
 		"styles": [
 			{
+				"cssTemplate": "font-family: {value};",
 				"dataType": "string",
 				"defaultValue": "",
 				"label": "font-family",
@@ -595,6 +612,7 @@
 				]
 			},
 			{
+				"cssTemplate": "font-weight: {value};",
 				"dataType": "string",
 				"defaultValue": "",
 				"label": "font-weight",
@@ -634,6 +652,7 @@
 				]
 			},
 			{
+				"cssTemplate": "font-size: {value};",
 				"dataType": "string",
 				"defaultValue": "",
 				"label": "font-size",
@@ -663,6 +682,7 @@
 				]
 			},
 			{
+				"cssTemplate": "color: {value};",
 				"dataType": "string",
 				"label": "text-color",
 				"name": "textColor",
@@ -670,6 +690,7 @@
 				"type": "colorPicker"
 			},
 			{
+				"cssTemplate": "text-align: {value};",
 				"dataType": "string",
 				"defaultValue": "left",
 				"label": "text-align",
@@ -702,6 +723,7 @@
 		"label": "background",
 		"styles": [
 			{
+				"cssTemplate": "background-color: {value};",
 				"dataType": "string",
 				"label": "background-color",
 				"name": "backgroundColor",
@@ -709,6 +731,7 @@
 				"type": "colorPicker"
 			},
 			{
+				"cssTemplate": "background-position: 50% 50%; background-repeat:no-repeat; background-size: cover; background-image: {value};",
 				"dataType": "object",
 				"defaultValue": {
 				},
@@ -723,6 +746,7 @@
 		"label": "borders",
 		"styles": [
 			{
+				"cssTemplate": "border-style: solid; border-width: {value}px;",
 				"dataType": "number",
 				"defaultValue": 0,
 				"label": "border-width",
@@ -736,6 +760,7 @@
 				}
 			},
 			{
+				"cssTemplate": "border-radius: {value};",
 				"dataType": "string",
 				"defaultValue": "",
 				"label": "border-radius",
@@ -770,6 +795,7 @@
 				]
 			},
 			{
+				"cssTemplate": "border-color: {value};",
 				"dataType": "string",
 				"label": "border-color",
 				"name": "borderColor",
@@ -782,6 +808,7 @@
 		"label": "effects",
 		"styles": [
 			{
+				"cssTemplate": "opacity: {value};",
 				"dataType": "number",
 				"defaultValue": "",
 				"label": "opacity",
@@ -795,6 +822,7 @@
 				}
 			},
 			{
+				"cssTemplate": "box-shadow: {value};",
 				"dataType": "object",
 				"defaultValue": "",
 				"label": "shadow",

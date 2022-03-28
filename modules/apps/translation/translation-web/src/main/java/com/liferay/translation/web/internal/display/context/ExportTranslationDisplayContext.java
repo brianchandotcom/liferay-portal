@@ -40,6 +40,7 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporterTracker;
@@ -200,7 +201,7 @@ public class ExportTranslationDisplayContext {
 		).put(
 			"exportTranslationURL", _getExportTranslationURLString()
 		).put(
-			"multipleExperiences", true
+			"multipleExperiences", _isMultipleExperiences()
 		).put(
 			"multiplePagesSelected",
 			() -> {
@@ -364,6 +365,24 @@ public class ExportTranslationDisplayContext {
 		else {
 			list1.retainAll(list2);
 		}
+	}
+
+	private boolean _isMultipleExperiences() {
+		if (!_className.equals(Layout.class.getName())) {
+			return false;
+		}
+
+		for (long classPK : _classPKs) {
+			int segmentsExperiencesCount =
+				SegmentsExperienceLocalServiceUtil.getSegmentsExperiencesCount(
+					_groupId, _classNameId, classPK);
+
+			if (segmentsExperiencesCount >= 1) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private final String _className;

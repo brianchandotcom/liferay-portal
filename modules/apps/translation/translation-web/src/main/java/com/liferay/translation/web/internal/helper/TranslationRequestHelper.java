@@ -187,7 +187,7 @@ public class TranslationRequestHelper {
 		for (long classPK : classPKs) {
 			segmentsExperiences.addAll(
 				_segmentsExperienceLocalService.getSegmentsExperiences(
-					_groupId, getClassNameId(), classPK));
+					getGroupId(), getClassNameId(), classPK));
 		}
 
 		return ListUtil.toLongArray(

@@ -100,15 +100,28 @@ public class InfoCollectionProviderItemSelectorView
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
 
+	private List<InfoCollectionProvider<?>> _getAllInfoCollectionProviders() {
+		return ListUtil.filter(
+			_infoItemServiceTracker.getAllInfoItemServices(
+				(Class<InfoCollectionProvider<?>>)
+					(Class<?>)InfoCollectionProvider.class),
+			InfoCollectionProvider::isAvailable);
+	}
+
 	private List<InfoCollectionProvider<?>> _getInfoCollectionProviders(
 		InfoCollectionProviderItemSelectorCriterion
 			infoCollectionProviderItemSelectorCriterion) {
 
-		List<InfoCollectionProvider<?>> infoCollectionProviders =
-			new ArrayList<>();
-
 		List<String> itemTypes =
 			infoCollectionProviderItemSelectorCriterion.getItemTypes();
+
+		if (ListUtil.isEmpty(itemTypes)) {
+			return Collections.unmodifiableList(
+				_getAllInfoCollectionProviders());
+		}
+
+		List<InfoCollectionProvider<?>> infoCollectionProviders =
+			new ArrayList<>();
 
 		for (String itemType : itemTypes) {
 			infoCollectionProviders.addAll(

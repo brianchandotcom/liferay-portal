@@ -1,4 +1,4 @@
 Bundle-Name: Liferay Analytics DXP Entity API
 Bundle-SymbolicName: com.liferay.analytics.dxp.entity.api
-Bundle-Version: 1.0.2
+Bundle-Version: 2.0.0
 Export-Package: com.liferay.analytics.dxp.entity.exporter

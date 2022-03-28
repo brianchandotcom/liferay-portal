@@ -45,24 +45,24 @@ definition {
 	@description = "LPS-147914: Verify alert message is present when action button is clicked"
 	@priority = "4"
 	test ActionsCanBeCustomized {
-		task ("When Click on 1st action button in FDS sample, assert the alert message") {
+		task ("When Click on 1st action button in FDS sample") {
 			ClickNoError(
 				key_title = "Sample1",
 				locator1 = "FrontendDataSet#VIEW_ACTION_BUTTON");
-
-			AssertConfirm.assertConfirmationNoError(value1 = "Hello Sample1!");
-
-			Alert.viewSuccessMessage();
 		}
 
-		task ("When Click on 2st action button in FDS sample, assert the alert message") {
+		task ("Then 1st alert message is present") {
+			AssertConfirm.assertConfirmationNoError(value1 = "Hello Sample1!");
+		}
+
+		task ("When Click on 2st action button in FDS sample") {
 			ClickNoError(
 				key_title = "Sample2",
 				locator1 = "FrontendDataSet#VIEW_ACTION_BUTTON");
+		}
 
+		task ("Then 2st alert message is present") {
 			AssertConfirm.assertConfirmationNoError(value1 = "Hello Sample2!");
-
-			Alert.viewSuccessMessage();
 		}
 	}
 

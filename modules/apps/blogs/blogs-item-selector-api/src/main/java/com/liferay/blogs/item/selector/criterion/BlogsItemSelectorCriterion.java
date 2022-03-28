@@ -15,9 +15,16 @@
 package com.liferay.blogs.item.selector.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
+import com.liferay.item.selector.constants.ItemSelectorCriterionConstants;
 
 /**
  * @author Roberto Díaz
  */
 public class BlogsItemSelectorCriterion extends BaseItemSelectorCriterion {
+
+	@Override
+	public String getMimeTypeRestriction() {
+		return ItemSelectorCriterionConstants.MIME_TYPE_RESTRICTION_IMAGE;
+	}
+
 }

@@ -110,6 +110,10 @@ public class BlogsItemSelectorViewDisplayContext {
 				FileEntry.class);
 	}
 
+	public String getMimeTypeRestriction() {
+		return _blogsItemSelectorCriterion.getMimeTypeRestriction();
+	}
+
 	public OrderByComparator<FileEntry> getOrderByComparator() {
 		return DLUtil.getRepositoryModelOrderByComparator(
 			RepositoryEntryBrowserTagUtil.getOrderByCol(

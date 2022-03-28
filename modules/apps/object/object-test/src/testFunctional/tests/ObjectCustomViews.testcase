@@ -515,8 +515,8 @@ definition {
 			ObjectAdmin.addObjectRelationshipViaAPI(
 				objectName_1 = "CustomObject${letter}149238",
 				objectName_2 = "CustomObjectC149238",
-				relationshipLabel = "Relationship",
-				relationshipName = "relationship",
+				relationshipLabel = "Relationship ${letter}",
+				relationshipName = "relationship${letter}",
 				relationshipType = "oneToMany");
 		}
 
@@ -556,7 +556,7 @@ definition {
 
 			ObjectPortlet.chooseEntryOnRelationshipFieldSpecific(
 				entryOption = "Entry ${letter}",
-				relationshipFieldLabel = "Custom Object ${letter} 149238");
+				relationshipFieldLabel = "Relationship ${letter}");
 		}
 
 		ObjectAdmin.openObjectAdmin();
@@ -573,13 +573,11 @@ definition {
 
 		ObjectCustomViews.goToViewsBuilderTab();
 
-		ObjectCustomViews.addColumnsViaUI(
-			columnOption = "Custom Object A 149238",
-			viewLabel = "Custom Views");
-
-		ObjectCustomViews.addColumnsViaUI(
-			columnOption = "Custom Object B 149238",
-			viewLabel = "Custom Views");
+		for (var letter : list "A,B") {
+			ObjectCustomViews.addColumnsViaUI(
+				columnOption = "Relationship ${letter}",
+				viewLabel = "Custom Views");
+		}
 
 		Button.clickSave();
 

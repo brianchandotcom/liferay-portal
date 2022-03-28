@@ -528,26 +528,8 @@ public class RenderLayoutStructureDisplayContext {
 
 		StringBundler styleSB = new StringBundler(59);
 
-		String backgroundColor = styledLayoutStructureItem.getBackgroundColor();
-
-		if (Validator.isNotNull(backgroundColor)) {
-			styleSB.append("background-color: ");
-			styleSB.append(getStyleFromStyleBookEntry(backgroundColor));
-			styleSB.append(StringPool.SEMICOLON);
-		}
-
 		JSONObject backgroundImageJSONObject =
 			styledLayoutStructureItem.getBackgroundImageJSONObject();
-
-		String backgroundImage = _getBackgroundImage(backgroundImageJSONObject);
-
-		if (Validator.isNotNull(backgroundImage)) {
-			styleSB.append("background-position: 50% 50%; background-repeat: ");
-			styleSB.append("no-repeat; background-size: cover; ");
-			styleSB.append("background-image: url(");
-			styleSB.append(backgroundImage);
-			styleSB.append(");");
-		}
 
 		long fileEntryId = 0;
 
@@ -586,6 +568,37 @@ public class RenderLayoutStructureDisplayContext {
 		if (fileEntryId != 0) {
 			styleSB.append("--background-image-file-entry-id:");
 			styleSB.append(fileEntryId);
+			styleSB.append(StringPool.SEMICOLON);
+		}
+
+		String backgroundImageURL = _getBackgroundImage(
+			backgroundImageJSONObject);
+
+		if (isCommonStylesFFEnabled()) {
+			if (Validator.isNotNull(backgroundImageURL)) {
+				styleSB.append("--lfr-");
+				styleSB.append(styledLayoutStructureItem.getItemId());
+				styleSB.append("-background-image: url(");
+				styleSB.append(backgroundImageURL);
+				styleSB.append(");");
+			}
+
+			return styleSB.toString();
+		}
+
+		if (Validator.isNotNull(backgroundImageURL)) {
+			styleSB.append("background-position: 50% 50%; background-repeat: ");
+			styleSB.append("no-repeat; background-size: cover; ");
+			styleSB.append("background-image: url(");
+			styleSB.append(backgroundImageURL);
+			styleSB.append(");");
+		}
+
+		String backgroundColor = styledLayoutStructureItem.getBackgroundColor();
+
+		if (Validator.isNotNull(backgroundColor)) {
+			styleSB.append("background-color: ");
+			styleSB.append(getStyleFromStyleBookEntry(backgroundColor));
 			styleSB.append(StringPool.SEMICOLON);
 		}
 

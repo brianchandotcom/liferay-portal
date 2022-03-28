@@ -1394,7 +1394,7 @@ definition {
 		ObjectAdmin.addTabFieldsOnLayout(
 			blockName = "Block 1",
 			columnsNumber = "1",
-			fieldList = "Custom Field,Custom Object 141661",
+			fieldList = "Custom Field,Relationship",
 			tabName = "Field Tab");
 
 		ObjectAdmin.addTabFieldsOnLayout(tabName = "Field Tab");

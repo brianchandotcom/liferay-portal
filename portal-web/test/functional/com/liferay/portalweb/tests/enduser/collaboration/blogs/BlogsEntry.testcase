@@ -1331,7 +1331,6 @@ definition {
 	@priority = "3"
 	test NewEntryCreatorReceivesNotificationItsOwnBlog {
 		property custom.properties = "jsonws.web.service.paths.excludes=";
-		property portal.acceptance = "false";
 
 		task ("Enable Send Notifications to Blogs Entry Creator") {
 			ApplicationsMenu.gotoPortlet(

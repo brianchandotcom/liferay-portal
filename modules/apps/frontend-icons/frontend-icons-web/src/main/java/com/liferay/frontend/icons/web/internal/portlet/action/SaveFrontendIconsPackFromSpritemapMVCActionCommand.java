@@ -92,15 +92,15 @@ public class SaveFrontendIconsPackFromSpritemapMVCActionCommand
 		InputStream inputStream = uploadPortletRequest.getFileAsStream(
 			"svgFile");
 
-		String iconPack = ParamUtil.getString(actionRequest, "iconPack");
+		String iconPackName = ParamUtil.getString(actionRequest, "iconPackName");
 
 		Optional<FrontendIconsResourcePack> frontendIconsResourcePackOptional =
 			_frontendIconsResourcePackRepository.getFrontendIconsResourcePack(
-				themeDisplay.getCompanyId(), iconPack);
+				themeDisplay.getCompanyId(), iconPackName);
 
 		FrontendIconsResourcePack frontendIconsResourcePack =
 			frontendIconsResourcePackOptional.orElse(
-				new FrontendIconsResourcePack(iconPack));
+				new FrontendIconsResourcePack(iconPackName));
 
 		frontendIconsResourcePack.addFrontendIconsResources(
 			SVGUtil.getFrontendIconsResources(StringUtil.read(inputStream)));

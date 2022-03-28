@@ -119,6 +119,22 @@ definition {
 			locator1 = "ImportExport#EXECUTION_ENTRY");
 	}
 
+	macro assertOptionalImportFields {
+		for (var optionalField : list "${optionalFields}") {
+			AssertElementPresent(
+				key_destinationField = "${optionalField}",
+				locator1 = "ImportExport#OPTIONAL_IMPORT_FIELD");
+		}
+	}
+
+	macro assertRequiredImportFields {
+		for (var requiredField : list "${requiredFields}") {
+			AssertElementPresent(
+				key_destinationField = "${requiredField}",
+				locator1 = "ImportExport#REQUIRED_IMPORT_FIELD");
+		}
+	}
+
 	macro exportFile {
 		Click(locator1 = "Button#PLUS");
 

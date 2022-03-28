@@ -13,7 +13,7 @@
 <!--DDM_STRUCTURE_TABLE-->
 <tr>
 	<td>DDM_STRUCTURE_ELLIPSIS</td>
-	<td>//tr[contains(.,'${key_ddlDataDefinitionName}')]//td[contains(@class,'entry-action')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td>//tr[contains(.,'${key_ddlDataDefinitionName}')]//td[contains(@class,'entry-action')]//*[self::a or self::button][span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

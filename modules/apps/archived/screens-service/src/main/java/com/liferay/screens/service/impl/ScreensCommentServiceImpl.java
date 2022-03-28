@@ -74,9 +74,8 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 			getUser().getFullName(), StringPool.BLANK, body,
 			createServiceContextFunction());
 
-		Comment comment = commentManager.fetchComment(commentId);
-
-		return toJSONObject(comment, discussionPermission);
+		return toJSONObject(
+			commentManager.fetchComment(commentId), discussionPermission);
 	}
 
 	@Override
@@ -192,9 +191,8 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 			commentId, StringPool.BLANK, body,
 			createServiceContextFunction(WorkflowConstants.ACTION_PUBLISH));
 
-		comment = commentManager.fetchComment(commentId);
-
-		return toJSONObject(comment, discussionPermission);
+		return toJSONObject(
+			commentManager.fetchComment(commentId), discussionPermission);
 	}
 
 	protected Function<String, ServiceContext> createServiceContextFunction() {

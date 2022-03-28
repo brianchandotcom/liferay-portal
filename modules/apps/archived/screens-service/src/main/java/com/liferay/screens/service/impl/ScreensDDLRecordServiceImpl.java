@@ -179,10 +179,7 @@ public class ScreensDDLRecordServiceImpl
 		JSONArray ddlRecordsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (DDLRecord ddlRecord : ddlRecords) {
-			JSONObject ddlRecordJSONObject = getDDLRecordJSONObject(
-				ddlRecord, locale);
-
-			ddlRecordsJSONArray.put(ddlRecordJSONObject);
+			ddlRecordsJSONArray.put(getDDLRecordJSONObject(ddlRecord, locale));
 		}
 
 		return ddlRecordsJSONArray;

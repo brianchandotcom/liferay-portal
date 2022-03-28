@@ -545,6 +545,16 @@ definition {
 			locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_NODE");
 	}
 
+	macro viewSourceDiagramToolTipDisplayed {
+		MouseOver(
+			locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DIAGRAM_SOURCE_SWITCH",
+			value1 = "");
+
+		AssertElementPresent(
+			key_content = "${content}",
+			locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+	}
+
 	macro viewSpecificNodeLabel {
 		AssertTextEquals(
 			key_nodeLabel = "${nodeLabel}",
@@ -558,16 +568,6 @@ definition {
 			key_translationOption = "${newTranslationOption}",
 			key_translationStatus = "${translationStatus}",
 			locator1 = "ProcessBuilderKaleoDesignerReact#TRANSLATION_COUNTRY_LABEL");
-	}
-
-	macro viewSourceDiagramToolTipDisplayed {
-		MouseOver(
-			value1 = "",
-			locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DIAGRAM_SOURCE_SWITCH");
-
-		AssertElementPresent(
-			key_content = "${content}",
-			locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 	}
 
 }

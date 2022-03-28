@@ -59,23 +59,6 @@ public class CookiesBannerBottomJSPDynamicInclude
 			return;
 		}
 
-		// TODO
-
-		/*
-		CookiesBannerConfiguration cookiesBannerConfiguration =
-			getCookiesBannerConfiguration(group);
-
-		if ((cookiesBannerConfiguration == null) ||
-			!cookiesBannerConfiguration.enabled()) {
-
-			return;
-		}
-
-		httpServletRequest.setAttribute(
-			CookiesBannerWebKeys.SOME_ATTRIBUTE,
-			cookiesBannerConfiguration.someConfiguration());
-		*/
-
 		super.include(httpServletRequest, httpServletResponse, key);
 	}
 

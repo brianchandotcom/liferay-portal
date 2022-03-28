@@ -97,18 +97,7 @@ definition {
 			locator1 = "SitesEditSite#DETAILS_NAME",
 			value1 = "${siteName}");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Object",
-			panel = "Control Panel",
-			portlet = "Objects");
-
-		ObjectPortlet.selectCustomObject(label = "Koroneiki Account");
-
-		CreateObject.checkToggleActive();
-
-		CustomerPortal.checkToggleHideWidget();
-
-		CreateObject.saveObject();
+		CustomerPortal.showCPObject();
 	}
 
 	macro customerPortalApisTearDown {
@@ -140,6 +129,25 @@ definition {
 		Alert.viewSuccessMessage();
 
 		CustomerPortal.customerPortalApisTearDown();
+	}
+
+	macro loginOktaToUpdateCP {
+		var userEmailAddress = "garrettz@mbopartners.com.broken";
+		var userPassword = "q4F63ZEH3njnnA34S761";
+
+		Open.openInTheNewTab(locator1 = "https://login-dev.liferay.com/");
+
+		SelectWindow(locator1 = "title=Liferay-sandbox - Sign In");
+
+		Type(
+			locator1 = "CustomerPortalSite#OKTA_USERNAME",
+			value1 = "${userEmailAddress}");
+
+		Type(
+			locator1 = "CustomerPortalSite#OKTA_PASSWORD",
+			value1 = "${userPassword}");
+
+		Click(locator1 = "CustomerPortalSite#OKTA_SUBMIT");
 	}
 
 	macro replaceCertificateAndPrivateKey {
@@ -194,29 +202,6 @@ definition {
 	}
 
 	macro setUpForCP20 {
-		task ("Login in Okta") {
-
-			//var userEmailAddress = PropsUtil.get("okta.cp.email");
-			//var userPassword = PropsUtil.get("okta.cp.password");
-
-			var userEmailAddress = "garrettz@mbopartners.com.broken";
-			var userPassword = "q4F63ZEH3njnnA34S761";
-
-			Navigator.openSpecificURL(url = "https://login-dev.liferay.com/");
-
-			Type(
-				locator1 = "CustomerPortalSite#OKTA_USERNAME",
-				value1 = "${userEmailAddress}");
-
-			Type(
-				locator1 = "CustomerPortalSite#OKTA_PASSWORD",
-				value1 = "${userPassword}");
-
-			Click(locator1 = "CustomerPortalSite#OKTA_SUBMIT");
-		}
-
-		Navigator.openURL();
-
 		task ("Configure SAML Admin general info") {
 			ApplicationsMenu.gotoPortlet(
 				category = "Security",
@@ -237,6 +222,10 @@ definition {
 					samlKeyPassword = "QATEST");
 
 				Click(locator1 = "CPSAMLAdmin#SAML_ENABLED_CHECKBOX");
+
+				AssertClick(
+					locator1 = "Button#SAVE",
+					value1 = "Save");
 			}
 			else {
 				SAMLRole.configureCertificateAndPrivateKey(
@@ -248,6 +237,10 @@ definition {
 					samlKeyPassword = "QATEST");
 
 				Click(locator1 = "CPSAMLAdmin#SAML_ENABLED_CHECKBOX");
+
+				AssertClick(
+					locator1 = "Button#SAVE",
+					value1 = "Save");
 			}
 		}
 
@@ -274,6 +267,8 @@ definition {
 
 	macro tearDownForOktaAndSAML {
 		task ("Teardown") {
+			var entityId = "http://www.okta.com/exk158id544C4j3KK0h8";
+
 			ApplicationsMenu.gotoPortlet(
 				category = "Security",
 				panel = "Control Panel",
@@ -290,6 +285,10 @@ definition {
 
 			Click(locator1 = "CPSAMLAdmin#SAML_ENABLED_CHECKBOX");
 
+			AssertClick(
+				locator1 = "Button#SAVE",
+				value1 = "Save");
+
 			SAMLRole.deleteCertificate();
 
 			CustomerPortal.customerPortalTearDown();
@@ -304,4 +303,20 @@ definition {
 		MenuItem.click(menuItem = "View");
 	}
 
+	macro showCPObject {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Objects");
+
+		ObjectPortlet.selectCustomObject(label = "Koroneiki Account");
+
+		CreateObject.checkToggleActive();
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CustomerPortal.checkToggleHideWidget();
+
+		CreateObject.saveObject();
+	}
 }

@@ -100,10 +100,10 @@ public class AssetVocabularySettingsImportHelper
 
 			long oldClassTypePK = getClassTypePK(classNameIdAndClassTypePK);
 
-			long newClassTypePK = _getNewClassTypePK(
-				oldClassNameId, newClassNameId, oldClassTypePK);
-
-			_classTypePKs = ArrayUtil.append(_classTypePKs, newClassTypePK);
+			_classTypePKs = ArrayUtil.append(
+				_classTypePKs,
+				_getNewClassTypePK(
+					oldClassNameId, newClassNameId, oldClassTypePK));
 
 			_requireds = ArrayUtil.append(_requireds, required);
 		}

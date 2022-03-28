@@ -74,13 +74,10 @@ public class AssetVocabularySettingsExportHelper
 					continue;
 				}
 
-				long classTypePK = getClassTypePK(classNameIdAndClassTypePK);
-
-				JSONObject classTypeJSONObject = _getClassTypeJSONObject(
-					settingsMetadataJSONObject, classNameId);
-
 				_putClassTypeJSONObject(
-					classTypeJSONObject, classNameId, classTypePK);
+					_getClassTypeJSONObject(
+						settingsMetadataJSONObject, classNameId),
+					classNameId, getClassTypePK(classNameIdAndClassTypePK));
 			}
 		}
 

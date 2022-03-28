@@ -195,11 +195,9 @@ public class AssetEntriesWithSameAssetCategoryRelatedInfoItemCollectionProvider
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		long[] classNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(
-			serviceContext.getCompanyId(), true);
-
 		return ArrayUtil.filter(
-			classNameIds,
+			AssetRendererFactoryRegistryUtil.getClassNameIds(
+				serviceContext.getCompanyId(), true),
 			classNameId -> {
 				Indexer<?> indexer = IndexerRegistryUtil.getIndexer(
 					_portal.getClassName(classNameId));

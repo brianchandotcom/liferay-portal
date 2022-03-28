@@ -202,12 +202,9 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 
 			// Update category
 
-			List<AssetCategoryProperty> categoryProperties =
-				_assetCategoryPropertyLocalService.getCategoryProperties(
-					categoryId);
-
 			String[] categoryPropertiesArray = _getCategoryProperties(
-				categoryProperties);
+				_assetCategoryPropertyLocalService.getCategoryProperties(
+					categoryId));
 
 			category = _assetCategoryService.updateCategory(
 				categoryId, parentCategoryId, titleMap, descriptionMap,
@@ -514,10 +511,8 @@ public class AssetCategoryAdminPortlet extends MVCPortlet {
 		vocabularySettingsHelper.setClassNameIdsAndClassTypePKs(
 			classNameIds, classTypePKs, requireds);
 
-		boolean multiValued = ParamUtil.getBoolean(
-			actionRequest, "multiValued");
-
-		vocabularySettingsHelper.setMultiValued(multiValued);
+		vocabularySettingsHelper.setMultiValued(
+			ParamUtil.getBoolean(actionRequest, "multiValued"));
 
 		return vocabularySettingsHelper.toString();
 	}

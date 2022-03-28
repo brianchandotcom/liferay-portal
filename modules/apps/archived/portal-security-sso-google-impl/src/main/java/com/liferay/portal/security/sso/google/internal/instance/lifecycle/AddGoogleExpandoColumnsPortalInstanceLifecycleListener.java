@@ -46,11 +46,9 @@ public class AddGoogleExpandoColumnsPortalInstanceLifecycleListener
 	public void portalInstancePreunregistered(Company company)
 		throws Exception {
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			User.class.getName());
-
 		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
-			company.getCompanyId(), classNameId,
+			company.getCompanyId(),
+			_classNameLocalService.getClassNameId(User.class.getName()),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
 		_expandoColumnLocalService.deleteColumn(

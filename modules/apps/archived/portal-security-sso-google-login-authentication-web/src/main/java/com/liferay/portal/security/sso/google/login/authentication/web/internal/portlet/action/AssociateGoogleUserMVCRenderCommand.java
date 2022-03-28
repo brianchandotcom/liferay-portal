@@ -69,9 +69,9 @@ public class AssociateGoogleUserMVCRenderCommand implements MVCRenderCommand {
 			renderRequest, "userId");
 
 		if (googleIncompleteUserId != 0) {
-			User user = _userLocalService.fetchUser(googleIncompleteUserId);
-
-			return _renderUpdateAccount(renderRequest, user);
+			return _renderUpdateAccount(
+				renderRequest,
+				_userLocalService.fetchUser(googleIncompleteUserId));
 		}
 
 		// This return statement may be used if the user presses the browser's

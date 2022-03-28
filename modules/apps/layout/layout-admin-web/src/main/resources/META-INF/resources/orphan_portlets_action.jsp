@@ -29,7 +29,7 @@ Portlet portlet = (Portlet)row.getObject();
 </portlet:actionURL>
 
 <liferay-ui:icon
-	icon="times-circle"
+	icon="trash"
 	linkCssClass="icon-monospaced text-default"
 	markupView="lexicon"
 	url="<%= deleteOrphanPortletsURL %>"

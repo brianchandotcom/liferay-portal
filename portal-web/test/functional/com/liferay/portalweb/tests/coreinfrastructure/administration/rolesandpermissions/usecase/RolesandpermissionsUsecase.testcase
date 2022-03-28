@@ -1793,4 +1793,139 @@ definition {
 		WebContent.viewWCViewableByPermissions();
 	}
 
+	@description = "This is a use case for LPS-115692."
+	@priority = "4"
+	test ViewTeamUserOnStagingSite {
+		task ("Add new Site Role") {
+			JSONRole.addSiteRole(
+				roleKey = "Roles Siterole Name",
+				roleTitle = "Roles Siterole Name");
+		}
+
+		task ("Define permission to new Site Role") {
+			for (var resourceActionIndex : list "VIEW_SITE_ADMINISTRATION,VIEW_STAGING") {
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "${resourceActionIndex}",
+					resourceName = "com.liferay.portal.kernel.model.Group",
+					roleTitle = "Roles Siterole Name",
+					roleType = "site");
+			}
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.journal",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_journal_web_portlet_JournalPortlet",
+				roleTitle = "Roles Siterole Name",
+				roleType = "site");
+		}
+
+		task ("Add new User") {
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		task ("Assgin Default Site to new user") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.editUserSiteCP(
+				siteName = "${siteName}",
+				userScreenName = "usersn");
+		}
+
+		task ("Assgin New Site Role to new user") {
+			ApplicationsMenu.gotoPortlet(
+				category = "Users",
+				panel = "Control Panel",
+				portlet = "Users and Organizations");
+
+			User.assignSiteRoleCP(
+				siteRoleName = "Roles Siterole Name",
+				userScreenName = "usersn");
+		}
+
+		task ("Add New team and assign new user to team") {
+			Navigator.openURL();
+
+			ProductMenu.gotoPortlet(
+				category = "People",
+				portlet = "Teams");
+
+			PortletEntry.viewEmptyMessage(entity = "Teams");
+
+			ProductMenu.gotoPortlet(
+				category = "People",
+				portlet = "Teams");
+
+			Team.addCP(
+				teamDescription = "Site Team Description",
+				teamName = "Site Team Name");
+
+			Team.assignMembersCP(
+				teamName = "Site Team Name",
+				userScreenName = "usersn");
+		}
+
+		task ("Add a new web content folder") {
+			JSONWebcontent.addFolder(
+				folderName = "WC Folder Name",
+				groupName = "Guest");
+		}
+
+		task ("Add a permission for new site role") {
+			ProductMenu.gotoPortlet(
+				category = "Content & Data",
+				portlet = "Web Content");
+
+			Click.waitForMenuToggleJSClick(
+				key_webContentTitle = "WC Folder Name",
+				locator1 = "WC#ENTRY_LIST_MENULIST_ICON");
+
+			MenuItem.click(menuItem = "Permissions");
+
+			Role.definePermissionPG(
+				permissionDefinitionKey = "INLINE_PERMISSIONS_ADD_WEB_CONTENT_CHECKBOX",
+				roleTitle = "Roles Siterole Name");
+
+			Refresh();
+		}
+
+		var siteName = TestCase.getSiteName(siteName = "${siteName}");
+
+		task ("Activate Staging of Default site") {
+			ProductMenu.gotoPortlet(
+				category = "Publishing",
+				portlet = "Staging",
+				site = "Guest");
+
+			Staging.activateStagingCP(siteName = "${siteName}");
+		}
+
+		task ("Assert team user on staging site") {
+			ProductMenu.gotoStagingSite(site = "${siteName}");
+
+			ProductMenu.gotoPortlet(
+				category = "People",
+				portlet = "Teams");
+
+			Team.viewMemberCP(
+				membershipType = "User",
+				teamName = "Site Team Name",
+				userFirstName = "userfn",
+				userLastName = "userln");
+		}
+	}
+
 }

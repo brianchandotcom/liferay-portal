@@ -32,7 +32,6 @@ export type TestrayCase = {
 	priority: number;
 	steps: string;
 	stepsType: string;
-	testrayCaseResult: number;
 };
 
 export const getCases = gql`
@@ -40,17 +39,17 @@ export const getCases = gql`
 		cases(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
 				type: "C_Case"
-				path: "cases?page={args.page}&pageSize={args.pageSize}&nestedFields=Component.Team,CaseType"
+				path: "cases?page={args.page}&pageSize={args.pageSize}&nestedFields=component.team,caseType"
 			) {
 			items {
 				caseNumber
 				caseResult
-				caseType: r_caseCaseType_c_CaseType {
+				caseType: r_caseTypeToCases_c_caseType {
 					name
 				}
-				component: r_casesComponents_c_Component {
+				component: r_componentToCases_c_component {
 					name
-					team: r_componentTeam_c_Team {
+					team: r_teamToComponents_c_team {
 						name
 					}
 				}

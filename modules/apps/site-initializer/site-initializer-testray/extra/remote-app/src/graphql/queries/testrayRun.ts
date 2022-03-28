@@ -14,35 +14,39 @@
 
 import {gql} from '@apollo/client';
 
-import {testrayProjectFragment} from '../fragments';
+import {testrayRunFragment} from '../fragments';
 
-export const CreateProject = gql`
-	${testrayProjectFragment}
+export type TestrayRun = {
+	dateCreated: string;
+	id: number;
+	name: string;
+};
 
-	mutation CreateProject($Project: InputC_Project!) {
+export const getRuns = gql`
+	${testrayRunFragment}
+
+	query getRuns($filter: String, $page: Int = 1, $pageSize: Int = 20) {
 		c {
-			createProject(Project: $Project) {
-				...ProjectFragment
+			runs(filter: $filter, page: $page, pageSize: $pageSize) {
+				items {
+					...RunFragment
+				}
+				lastPage
+				page
+				pageSize
+				totalCount
 			}
 		}
 	}
 `;
 
-export const DeleteProject = gql`
-	mutation deleteProject($projectId: Long) {
-		c {
-			deleteProject(projectId: $projectId)
-		}
-	}
-`;
+export const getRun = gql`
+	${testrayRunFragment}
 
-export const UpdateProject = gql`
-	${testrayProjectFragment}
-
-	mutation updateProject($projectId: Long!, $Project: InputC_Project!) {
+	query getRun($runId: Long!) {
 		c {
-			updateProject(projectId: $projectId, Project: $Project) {
-				...ProjectFragment
+			run(runId: $runId) {
+				...RunFragment
 			}
 		}
 	}

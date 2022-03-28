@@ -14,9 +14,12 @@
 
 import {gql} from '@apollo/client';
 
+import {TestrayCase} from './testrayCase';
+
 export type TestrayCaseResult = {
 	assignedUserId: string;
 	attachments: string;
+	case: TestrayCase;
 	closedDate: string;
 	commentMBMessageId: string;
 	dateCreated: string;
@@ -31,7 +34,7 @@ export const getCaseResults = gql`
 		caseResults(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
 				type: "C_CaseResult"
-				path: "caseresults?page={args.page}&pageSize={args.pageSize}&nestedFields=component,build.productVersion,build.routine,run"
+				path: "caseresults?page={args.page}&pageSize={args.pageSize}&nestedFields=case,component,build.productVersion,build.routine,run"
 			) {
 			items {
 				assignedUserId
@@ -44,6 +47,16 @@ export const getCaseResults = gql`
 					productVersion: r_productVersionToBuilds_c_productVersion {
 						name
 					}
+				}
+				case: r_caseToCaseResult_c_case {
+					caseType: r_caseTypeToCases_c_caseType {
+						name
+					}
+					component: r_componentToCases_c_component {
+						name
+					}
+					name
+					priority
 				}
 				closedDate
 				commentMBMessageId

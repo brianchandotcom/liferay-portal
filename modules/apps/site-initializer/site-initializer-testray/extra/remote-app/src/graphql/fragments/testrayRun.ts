@@ -14,36 +14,19 @@
 
 import {gql} from '@apollo/client';
 
-import {testrayProjectFragment} from '../fragments';
-
-export const CreateProject = gql`
-	${testrayProjectFragment}
-
-	mutation CreateProject($Project: InputC_Project!) {
-		c {
-			createProject(Project: $Project) {
-				...ProjectFragment
-			}
-		}
-	}
-`;
-
-export const DeleteProject = gql`
-	mutation deleteProject($projectId: Long) {
-		c {
-			deleteProject(projectId: $projectId)
-		}
-	}
-`;
-
-export const UpdateProject = gql`
-	${testrayProjectFragment}
-
-	mutation updateProject($projectId: Long!, $Project: InputC_Project!) {
-		c {
-			updateProject(projectId: $projectId, Project: $Project) {
-				...ProjectFragment
-			}
-		}
+export const testrayRunFragment = gql`
+	fragment RunFragment on C_Run {
+		dateCreated
+		dateModified
+		description
+		environmentHash
+		externalReferenceCode
+		externalReferencePK
+		externalReferenceType
+		jenkinsJobKey
+		name
+		number
+		id: runId
+		status
 	}
 `;

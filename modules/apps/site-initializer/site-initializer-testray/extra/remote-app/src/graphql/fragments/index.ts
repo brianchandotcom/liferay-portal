@@ -23,6 +23,7 @@ export * from './testrayProductVersion';
 export * from './testrayProject';
 export * from './testrayRequirement';
 export * from './testrayRoutine';
+export * from './testrayRun';
 export * from './testraySubTask';
 export * from './testraySuite';
 export * from './testrayTask';

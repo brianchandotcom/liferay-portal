@@ -221,6 +221,19 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String body, ServiceContext serviceContext)
 		throws PortalException {
 
+		return addDiscussionMessage(
+			null, userId, userName, groupId, className, classPK, threadId,
+			parentMessageId, subject, body, serviceContext);
+	}
+
+	@Override
+	public MBMessage addDiscussionMessage(
+			String externalReferenceCode, long userId, String userName,
+			long groupId, String className, long classPK, long threadId,
+			long parentMessageId, String subject, String body,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		// Message
 
 		validateDiscussionMaxComments(className, classPK);
@@ -249,10 +262,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		MBMessage message = addMessage(
-			userId, userName, groupId, categoryId, threadId, parentMessageId,
-			subject, body, PropsValues.DISCUSSION_COMMENTS_FORMAT,
-			inputStreamOVPs, anonymous, priority, allowPingbacks,
-			serviceContext);
+			externalReferenceCode, userId, userName, groupId, categoryId,
+			threadId, parentMessageId, subject, body,
+			PropsValues.DISCUSSION_COMMENTS_FORMAT, inputStreamOVPs, anonymous,
+			priority, allowPingbacks, serviceContext);
 
 		// Discussion
 

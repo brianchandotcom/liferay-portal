@@ -438,6 +438,18 @@ definition {
 		property osgi.module.configuration.file.names = "com.liferay.content.dashboard.web.internal.configuration.FFBlogsEntryContentDashboardItemConfiguration.config";
 		property osgi.module.configurations = "blogsEntryEnabled=B&quot;true&quot;";
 
+		task ("Create a category for Audiente and Staged") {
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Category1",
+				vocabularyName = "Audience");
+
+			JSONCategory.addCategory(
+				groupName = "Global",
+				title = "Category2",
+				vocabularyName = "Stage");
+		}
+
 		task ("Create a blog") {
 			JSONBlog.addEntry(
 				entryContent = "Blogs Entry Content",

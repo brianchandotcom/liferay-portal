@@ -234,7 +234,7 @@ public class CommerceTermEntryLocalServiceImpl
 	public List<CommerceTermEntry> getCommerceTermEntries(
 		long companyId, String type) {
 
-		return commerceTermEntryPersistence.filterFindByC_A_LikeType(
+		return commerceTermEntryPersistence.findByC_A_LikeType(
 			companyId, true, type);
 	}
 

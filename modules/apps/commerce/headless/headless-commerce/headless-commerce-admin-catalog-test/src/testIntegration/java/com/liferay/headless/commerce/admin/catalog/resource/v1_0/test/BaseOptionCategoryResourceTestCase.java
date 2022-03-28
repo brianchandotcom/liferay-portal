@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.test.BeanTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -52,8 +53,6 @@ import com.liferay.portal.search.test.util.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-
-import java.lang.reflect.InvocationTargetException;
 
 import java.text.DateFormat;
 
@@ -72,8 +71,6 @@ import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.lang.time.DateUtils;
 
 import org.junit.After;
@@ -376,7 +373,7 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		testGetOptionCategoriesPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, optionCategory1, optionCategory2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					optionCategory1, entityField.getName(),
 					DateUtils.addMinutes(new Date(), -2));
 			});
@@ -387,9 +384,9 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		testGetOptionCategoriesPageWithSort(
 			EntityField.Type.DOUBLE,
 			(entityField, optionCategory1, optionCategory2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					optionCategory1, entityField.getName(), 0.1);
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					optionCategory2, entityField.getName(), 0.5);
 			});
 	}
@@ -399,9 +396,9 @@ public abstract class BaseOptionCategoryResourceTestCase {
 		testGetOptionCategoriesPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, optionCategory1, optionCategory2) -> {
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					optionCategory1, entityField.getName(), 0);
-				BeanUtils.setProperty(
+				BeanTestUtil.setProperty(
 					optionCategory2, entityField.getName(), 1);
 			});
 	}
@@ -421,21 +418,21 @@ public abstract class BaseOptionCategoryResourceTestCase {
 				Class<?> returnType = method.getReturnType();
 
 				if (returnType.isAssignableFrom(Map.class)) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						optionCategory1, entityFieldName,
 						Collections.singletonMap("Aaa", "Aaa"));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						optionCategory2, entityFieldName,
 						Collections.singletonMap("Bbb", "Bbb"));
 				}
 				else if (entityFieldName.contains("email")) {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						optionCategory1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()) +
 									"@liferay.com");
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						optionCategory2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -443,12 +440,12 @@ public abstract class BaseOptionCategoryResourceTestCase {
 									"@liferay.com");
 				}
 				else {
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						optionCategory1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()));
-					BeanUtils.setProperty(
+					BeanTestUtil.setProperty(
 						optionCategory2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
@@ -1254,18 +1251,6 @@ public abstract class BaseOptionCategoryResourceTestCase {
 	private static final com.liferay.portal.kernel.log.Log _log =
 		LogFactoryUtil.getLog(BaseOptionCategoryResourceTestCase.class);
 
-	private static BeanUtilsBean _beanUtilsBean = new BeanUtilsBean() {
-
-		@Override
-		public void copyProperty(Object bean, String name, Object value)
-			throws IllegalAccessException, InvocationTargetException {
-
-			if (value != null) {
-				super.copyProperty(bean, name, value);
-			}
-		}
-
-	};
 	private static DateFormat _dateFormat;
 
 	@Inject

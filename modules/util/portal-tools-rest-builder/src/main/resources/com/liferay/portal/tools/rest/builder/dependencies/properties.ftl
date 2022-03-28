@@ -9,6 +9,7 @@ api.version=${openAPIYAML.info.version}
 	generateBatch = configYAML.generateBatch && javaDataType?has_content
 />
 <#if !stringUtil.equals(schemaName, "openapi") && generateBatch>
+batch.engine.entity.class.name=${javaDataType}
 batch.engine.task.item.delegate=true
 </#if>
 <#if configYAML.resourceApplicationSelect??>

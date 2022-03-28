@@ -147,17 +147,6 @@ public class LayoutStructure {
 		return collectionItemLayoutStructureItem;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addCollectionStyledLayoutStructureItem(String, int)}
-	 */
-	@Deprecated
-	public LayoutStructureItem addCollectionLayoutStructureItem(
-		String parentItemId, int position) {
-
-		return addCollectionStyledLayoutStructureItem(parentItemId, position);
-	}
-
 	public LayoutStructureItem addCollectionStyledLayoutStructureItem(
 		String parentItemId, int position) {
 
@@ -184,17 +173,6 @@ public class LayoutStructure {
 		_updateLayoutStructure(columnLayoutStructureItem, position);
 
 		return columnLayoutStructureItem;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addContainerStyledLayoutStructureItem(String, int)}
-	 */
-	@Deprecated
-	public LayoutStructureItem addContainerLayoutStructureItem(
-		String parentItemId, int position) {
-
-		return addContainerStyledLayoutStructureItem(parentItemId, position);
 	}
 
 	public LayoutStructureItem addContainerStyledLayoutStructureItem(
@@ -229,18 +207,6 @@ public class LayoutStructure {
 		_updateLayoutStructure(fragmentDropZoneLayoutStructureItem, position);
 
 		return fragmentDropZoneLayoutStructureItem;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addFragmentStyledLayoutStructureItem(long, String, int)}
-	 */
-	@Deprecated
-	public LayoutStructureItem addFragmentLayoutStructureItem(
-		long fragmentEntryLinkId, String parentItemId, int position) {
-
-		return addFragmentStyledLayoutStructureItem(
-			fragmentEntryLinkId, parentItemId, position);
 	}
 
 	public LayoutStructureItem addFragmentStyledLayoutStructureItem(
@@ -288,18 +254,6 @@ public class LayoutStructure {
 		}
 
 		return rootLayoutStructureItem;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 #addRowStyledLayoutStructureItem(String, int, int)}
-	 */
-	@Deprecated
-	public LayoutStructureItem addRowLayoutStructureItem(
-		String parentItemId, int position, int numberOfColumns) {
-
-		return addRowStyledLayoutStructureItem(
-			parentItemId, position, numberOfColumns);
 	}
 
 	public LayoutStructureItem addRowStyledLayoutStructureItem(
@@ -391,14 +345,6 @@ public class LayoutStructure {
 		}
 
 		return false;
-	}
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public int getColumnSize(int size, int column) {
-		return LayoutStructureConstants.COLUMN_SIZES[size][column];
 	}
 
 	public List<DeletedLayoutStructureItem> getDeletedLayoutStructureItems() {

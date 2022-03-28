@@ -110,6 +110,31 @@ public class MBCommentManagerImpl implements CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
+		return addComment(
+			null, userId, groupId, className, classPK, userName, subject, body,
+			serviceContextFunction);
+	}
+
+	@Override
+	public long addComment(
+			long userId, String className, long classPK, String userName,
+			long parentCommentId, String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException {
+
+		return addComment(
+			null, userId, className, classPK, userName, parentCommentId,
+			subject, body, serviceContextFunction);
+	}
+
+	@Override
+	public long addComment(
+			String externalReferenceCode, long userId, long groupId,
+			String className, long classPK, String userName, String subject,
+			String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException {
+
 		MBMessageDisplay mbMessageDisplay =
 			_mbMessageLocalService.getDiscussionMessageDisplay(
 				userId, groupId, className, classPK,
@@ -121,17 +146,18 @@ public class MBCommentManagerImpl implements CommentManager {
 			MBMessage.class.getName());
 
 		MBMessage mbMessage = _mbMessageLocalService.addDiscussionMessage(
-			userId, userName, groupId, className, classPK,
-			mbThread.getThreadId(), mbThread.getRootMessageId(), subject, body,
-			serviceContext);
+			externalReferenceCode, userId, userName, groupId, className,
+			classPK, mbThread.getThreadId(), mbThread.getRootMessageId(),
+			subject, body, serviceContext);
 
 		return mbMessage.getMessageId();
 	}
 
 	@Override
 	public long addComment(
-			long userId, String className, long classPK, String userName,
-			long parentCommentId, String subject, String body,
+			String externalReferenceCode, long userId, String className,
+			long classPK, String userName, long parentCommentId, String subject,
+			String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
@@ -142,9 +168,9 @@ public class MBCommentManagerImpl implements CommentManager {
 			MBMessage.class.getName());
 
 		MBMessage mbMessage = _mbMessageLocalService.addDiscussionMessage(
-			userId, userName, parentMessage.getGroupId(), className, classPK,
-			parentMessage.getThreadId(), parentCommentId, subject, body,
-			serviceContext);
+			externalReferenceCode, userId, userName, parentMessage.getGroupId(),
+			className, classPK, parentMessage.getThreadId(), parentCommentId,
+			subject, body, serviceContext);
 
 		return mbMessage.getMessageId();
 	}

@@ -47,6 +47,20 @@ public interface CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 
+	public long addComment(
+			String externalReferenceCode, long userId, long groupId,
+			String className, long classPK, String userName, String subject,
+			String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException;
+
+	public long addComment(
+			String externalReferenceCode, long userId, String className,
+			long classPK, String userName, long parentCommentId, String subject,
+			String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException;
+
 	public void addDiscussion(
 			long userId, long groupId, String className, long classPK,
 			String userName)
@@ -105,7 +119,6 @@ public interface CommentManager {
 	 * @return the number of matching comments
 	 */
 	public int getChildCommentsCount(long parentCommentId, int status);
-
 
 	/**
 	 * Returns a comment matching with the class name, class pk, external

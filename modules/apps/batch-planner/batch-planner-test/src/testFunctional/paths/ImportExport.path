@@ -1,13 +1,13 @@
 <html>
 <head>
 <title>ImportExport</title>
-</head>//div[not(contains(@class,'hide'))]/div[label[contains(.,'${key_selectFieldLabel}')]]/select
+</head>
 
 <body>
 <table border="1" cellpadding="1" cellspacing="1">
 <thead>
 <tr><td rowspan="1" colspan="3">ImportExport</td></tr>
-</thead>//div[not(contains(@class,'hide'))]/div[label[contains(.,'Headless Endpoint')]]/select
+</thead>
 
 <tbody>
 <tr>
@@ -43,6 +43,16 @@
 <tr>
 	<td>IMPORT_PREVIEW</td>
 	<td>//div[contains(@class,'import-mapping-table')]//tr[@class]/td[@class]/label[contains(text(),'${key_destinationField}')]/parent::td//following-sibling::td[2][contains(text(),'${key_previewField}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONAL_IMPORT_FIELD</td>
+	<td>//select[contains(@aria-required,'false')][contains(@id,'${key_destinationField}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUIRED_IMPORT_FIELD</td>
+	<td>//select[contains(@aria-required,'true')][contains(@id,'${key_destinationField}')]</td>
 	<td></td>
 </tr>
 <tr>

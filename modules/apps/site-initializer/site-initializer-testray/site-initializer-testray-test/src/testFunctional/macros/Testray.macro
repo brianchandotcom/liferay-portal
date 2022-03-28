@@ -53,6 +53,25 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
+	macro enableTestrayTasksInPortlet {
+		Refresh();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Objects");
+
+		Click(
+			key_pageNumber = "2",
+			locator1 = "Pagination#ANY_PAGE");
+
+		ObjectPortlet.selectCustomObject(label = "Testray Task");
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CreateObject.saveObject();
+	}
+
 	macro goToNextAndPreviousPage {
 		Click(
 			key_pageDirection = "${pageDirection}",
@@ -69,6 +88,23 @@ definition {
 		Click(
 			key_navTabName = "${navTabName}",
 			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
+	}
+
+	macro statusChangeTestray {
+		ApplicationsMenu.gotoPortlet(
+			category = "Object",
+			panel = "Control Panel",
+			portlet = "Testray Tasks");
+
+		Click(locator1 = "CommerceEntry#DROPDOWN");
+
+		MenuItem.click(menuItem = "View");
+
+		Type(
+			locator1 = "Testflow#STATUS_EDIT",
+			value1 = "${value}");
+
+		Click(locator1 = "Button#SAVE");
 	}
 
 	macro tearDownCP {

@@ -1649,7 +1649,7 @@ public class VerifyProperties extends VerifyProcess {
 		"dl.file.entry.thumbnail.video.frame.percentage",
 		"dl.file.entry.type.ig.image.auto.create.on.upgrade",
 		"dl.file.entry.version.policy", "dl.file.extensions",
-		"dl.file.max.size", "dl.file.rank.enabled",
+		"dl.file.indexing.interval", "dl.file.max.size", "dl.file.rank.enabled",
 		"dl.folder.icon.check.count", "dl.folder.menu.visible",
 		"dl.hook.cmis.credentials.password",
 		"dl.hook.cmis.credentials.username", "dl.hook.cmis.repository.url",

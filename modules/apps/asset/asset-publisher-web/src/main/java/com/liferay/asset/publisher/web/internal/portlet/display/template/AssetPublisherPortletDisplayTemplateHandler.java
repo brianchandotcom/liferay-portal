@@ -70,10 +70,11 @@ public class AssetPublisherPortletDisplayTemplateHandler
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		String portletTitle = portal.getPortletTitle(
-			AssetPublisherPortletKeys.ASSET_PUBLISHER, resourceBundle);
-
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return LanguageUtil.format(
+			locale, "x-template",
+			portal.getPortletTitle(
+				AssetPublisherPortletKeys.ASSET_PUBLISHER, resourceBundle),
+			false);
 	}
 
 	@Override

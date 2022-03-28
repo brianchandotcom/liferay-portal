@@ -39,7 +39,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Enumeration;
-import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -164,12 +163,11 @@ public class AddAssetListMVCActionCommand extends BaseMVCActionCommand {
 			portletPreferences, themeDisplay.getScopeGroupId(),
 			themeDisplay.getLayout());
 
-		List<AssetEntry> assetEntries = _assetPublisherHelper.getAssetEntries(
-			actionRequest, portletPreferences,
-			themeDisplay.getPermissionChecker(), groupIds, true, true);
-
 		long[] assetEntryIds = ListUtil.toLongArray(
-			assetEntries, AssetEntry::getEntryId);
+			_assetPublisherHelper.getAssetEntries(
+				actionRequest, portletPreferences,
+				themeDisplay.getPermissionChecker(), groupIds, true, true),
+			AssetEntry::getEntryId);
 
 		_assetListEntryService.addManualAssetListEntry(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), title,

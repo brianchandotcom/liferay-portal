@@ -224,11 +224,10 @@ public class AssetPublisherPortletToolbarContributor
 				themeDisplay.getLayout(), portletDisplay.getId(),
 				assetPublisherDisplayContext.getPortletResource());
 
-		String url = _assetHelper.getAddURLPopUp(
-			curGroupId, themeDisplay.getPlid(), portletURL,
-			addDisplayPageParameter, themeDisplay.getLayout());
-
-		urlMenuItem.setURL(url);
+		urlMenuItem.setURL(
+			_assetHelper.getAddURLPopUp(
+				curGroupId, themeDisplay.getPlid(), portletURL,
+				addDisplayPageParameter, themeDisplay.getLayout()));
 
 		return urlMenuItem;
 	}

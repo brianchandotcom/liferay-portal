@@ -154,11 +154,10 @@ public class DefaultAssetPublisherCustomizer
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long[] groupIds = assetPublisherHelper.getGroupIds(
-			getPortletPreferences(httpServletRequest),
-			themeDisplay.getScopeGroupId(), themeDisplay.getLayout());
-
-		assetEntryQuery.setGroupIds(groupIds);
+		assetEntryQuery.setGroupIds(
+			assetPublisherHelper.getGroupIds(
+				getPortletPreferences(httpServletRequest),
+				themeDisplay.getScopeGroupId(), themeDisplay.getLayout()));
 	}
 
 	@Activate

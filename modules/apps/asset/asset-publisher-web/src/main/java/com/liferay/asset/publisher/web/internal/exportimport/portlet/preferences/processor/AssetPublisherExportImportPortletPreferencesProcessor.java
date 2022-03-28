@@ -566,11 +566,11 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			assetPublisherHelper.getAssetEntryQuery(
 				portletPreferences, groupId, layout, null, null);
 
-		long[] classNameIds = assetPublisherHelper.getClassNameIds(
-			portletPreferences,
-			AssetRendererFactoryRegistryUtil.getClassNameIds(companyId, true));
-
-		assetEntryQuery.setClassNameIds(classNameIds);
+		assetEntryQuery.setClassNameIds(
+			assetPublisherHelper.getClassNameIds(
+				portletPreferences,
+				AssetRendererFactoryRegistryUtil.getClassNameIds(
+					companyId, true)));
 
 		assetEntryQuery.setEnablePermissions(false);
 
@@ -822,12 +822,10 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		Layout layout = layoutLocalService.getLayout(
-			portletDataContext.getPlid());
-
 		PortletPreferences originalPortletPreferences =
 			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-				layout, portletDataContext.getPortletId());
+				layoutLocalService.getLayout(portletDataContext.getPlid()),
+				portletDataContext.getPortletId());
 
 		String[] values = originalPortletPreferences.getValues(
 			name, new String[] {StringPool.BLANK});

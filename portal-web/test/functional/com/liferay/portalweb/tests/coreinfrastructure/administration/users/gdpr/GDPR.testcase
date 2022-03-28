@@ -274,12 +274,74 @@ definition {
 	}
 
 	@description = "This test anonymizes all staged data from an application"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanAnonymizeAllStagedDataFromAnApplication {
+		User.logoutPG();
 
-		// TODO LRQA-50755 Anonymize all staged data from an Application
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page");
+
+		JSONUser.addUserToSite(
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3");
+
+		Staging.publishToLiveNowViaPortletCP();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		User.openUsersAdmin();
+
+		User.deletePersonalDataCP(
+			userFirstName = "userfn",
+			userLastName = "userln");
+
+		GDPR.filterByApplications(
+			applicationItemsCount = "6",
+			applications = "Documents and Media",
+			totalItemsCount = "6");
+
+		for (var n : list "1,2,3") {
+			GDPR.anonymizeStagedDatainApplicationCP(rowIndexNumber = "${n}");
+		}
+
+		for (var entryTitle : list "Document_1,Document_2,Document_3") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "${entryTitle}");
+
+			DMDocument.expandInfo();
+
+			AssertTextEquals(
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADER_NO_PROFILE",
+				value1 = "Anonymous Anonymous");
+		}
+
+		for (var entryTitle : list "Document_1,Document_2,Document_3") {
+			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+			DMNavigator.gotoDocumentCP(dmDocumentTitle = "${entryTitle}");
+
+			DMDocument.expandInfo();
+
+			AssertTextEquals(
+				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADER_NO_PROFILE",
+				value1 = "userfn userln");
+		}
 	}
 
 	@description = "This test asserts a related asset can be anonymized from an application."

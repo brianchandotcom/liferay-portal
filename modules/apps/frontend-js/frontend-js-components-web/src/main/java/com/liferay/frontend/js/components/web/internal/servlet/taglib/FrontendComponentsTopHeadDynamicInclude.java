@@ -16,9 +16,12 @@ package com.liferay.frontend.js.components.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.components.web.internal.configuration.FFFrontendJSComponentsConfiguration;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -53,10 +56,17 @@ public class FrontendComponentsTopHeadDynamicInclude
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("<script>var Liferay = window.Liferay || {};");
+
 		sb.append("Liferay.__FF__ = Liferay.__FF__ || {};");
-		sb.append("Liferay.__FF__.enableClayTreeView = ");
-		sb.append(_ffFrontendJSComponentsConfiguration.enableClayTreeView());
-		sb.append(";</script>");
+
+		_createRuntimeFeatureFlag(
+			sb, "enableClayTreeView",
+			_ffFrontendJSComponentsConfiguration.enableClayTreeView());
+
+		_createRuntimeFeatureFlag(
+			sb, "enableCustomDialogs", _shouldEnableCustomDialogs());
+
+		sb.append("</script>");
 
 		printWriter.println(sb);
 	}
@@ -72,6 +82,26 @@ public class FrontendComponentsTopHeadDynamicInclude
 		_ffFrontendJSComponentsConfiguration =
 			ConfigurableUtil.createConfigurable(
 				FFFrontendJSComponentsConfiguration.class, properties);
+	}
+
+	private void _createRuntimeFeatureFlag(
+		StringBundler sb, String featureFlagName, boolean validator) {
+
+		sb.append("Liferay.__FF__.");
+		sb.append(featureFlagName);
+		sb.append(" = ");
+		sb.append(validator);
+		sb.append(StringPool.SEMICOLON);
+	}
+
+	private boolean _shouldEnableCustomDialogs() {
+		if (GetterUtil.getBoolean(
+				PropsUtil.get("feature.flag.enableCustomDialogs"))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private volatile FFFrontendJSComponentsConfiguration

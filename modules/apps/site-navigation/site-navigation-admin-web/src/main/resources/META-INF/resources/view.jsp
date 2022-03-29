@@ -92,9 +92,17 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 						</span>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
-						path="/site_navigation_menu_action.jsp"
-					/>
+					<liferay-ui:search-container-column-text>
+
+						<%
+						SiteNavigationMenuActionDropdownItemsProvider siteNavigationMenuActionDropdownItemsProvider = new SiteNavigationMenuActionDropdownItemsProvider(siteNavigationAdminDisplayContext.hasEditPermission(), liferayPortletRequest, liferayPortletResponse, siteNavigationAdminDisplayContext.getPrimarySiteNavigationMenu(), siteNavigationMenu);
+						%>
+
+						<clay:dropdown-actions
+							dropdownItems="<%= siteNavigationMenuActionDropdownItemsProvider.getActionDropdownItems() %>"
+							propsTransformer="js/SiteNavigationMenuDropdownDefaultPropsTransformer"
+						/>
+					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>
 					<liferay-ui:search-container-column-text
@@ -134,9 +142,17 @@ SiteNavigationAdminManagementToolbarDisplayContext siteNavigationAdminManagement
 						property="createDate"
 					/>
 
-					<liferay-ui:search-container-column-jsp
-						path="/site_navigation_menu_action.jsp"
-					/>
+					<liferay-ui:search-container-column-text>
+
+						<%
+						SiteNavigationMenuActionDropdownItemsProvider siteNavigationMenuActionDropdownItemsProvider = new SiteNavigationMenuActionDropdownItemsProvider(siteNavigationAdminDisplayContext.hasEditPermission(), liferayPortletRequest, liferayPortletResponse, siteNavigationAdminDisplayContext.getPrimarySiteNavigationMenu(), siteNavigationMenu);
+						%>
+
+						<clay:dropdown-actions
+							dropdownItems="<%= siteNavigationMenuActionDropdownItemsProvider.getActionDropdownItems() %>"
+							propsTransformer="js/SiteNavigationMenuDropdownDefaultPropsTransformer"
+						/>
+					</liferay-ui:search-container-column-text>
 				</c:otherwise>
 			</c:choose>
 		</liferay-ui:search-container-row>

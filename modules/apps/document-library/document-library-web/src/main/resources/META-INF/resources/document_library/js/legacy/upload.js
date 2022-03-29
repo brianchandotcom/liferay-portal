@@ -133,6 +133,16 @@ AUI.add(
 
 		var STR_THUMBNAIL_PATH = PATH_THEME_IMAGES + '/file_system/large/';
 
+		var STR_ICON_DEFAULT = 'document-default';
+
+		var STR_ICON_PDF = 'document-vector';
+
+		var STR_ICON_IMAGE = 'document-image';
+
+		var STR_ICON_COMPRESSED = 'document-compressed';
+
+		var STR_ICON_MULTIMEDIA = 'document-multimedia';
+
 		var TPL_ENTRIES_CONTAINER = '<dl class="{cssClass}"></dl>';
 
 		var TPL_ENTRY_ROW_TITLE =
@@ -911,6 +921,33 @@ AUI.add(
 					return folderEntry;
 				},
 
+				_getMediaIcon(fileName) {
+					var iconName = STR_ICON_DEFAULT;
+
+					if (REGEX_IMAGE.test(fileName)) {
+						iconName = STR_ICON_IMAGE;
+					}
+					else if (
+						LString.endsWith(
+							fileName.toLowerCase(),
+							STR_EXTENSION_PDF
+						)
+					) {
+						iconName = STR_ICON_PDF;
+					}
+					else if (
+						REGEX_AUDIO.test(fileName) ||
+						REGEX_VIDEO.test(fileName)
+					) {
+						iconName = STR_ICON_MULTIMEDIA;
+					}
+					else if (REGEX_COMPRESSED.test(fileName)) {
+						iconName = STR_ICON_COMPRESSED;
+					}
+
+					return iconName;
+				},
+
 				_getMediaThumbnail(fileName) {
 					var instance = this;
 
@@ -1236,7 +1273,7 @@ AUI.add(
 								.fileEntryId;
 
 							if (!displayStyleList) {
-								instance._updateThumbnail(fileNode, file.name);
+								instance._updateEntryUI(fileNode, file.name);
 							}
 
 							instance._updateFileLink(
@@ -1391,6 +1428,25 @@ AUI.add(
 					}
 				},
 
+				_updateEntryIcon(node, fileName) {
+					var instance = this;
+
+					var stickerNode = node.one('.sticker-overlay');
+					var mediaIcon = instance._getMediaIcon(fileName);
+
+					stickerNode.html(Liferay.Util.getLexiconIconTpl(mediaIcon));
+				},
+
+				_updateEntryUI(node, fileName) {
+					var instance = this;
+
+					instance._updateEntryIcon(node, fileName);
+
+					if (REGEX_IMAGE.test(fileName)) {
+						instance._updateThumbnail(node, fileName);
+					}
+				},
+
 				_updateFileHiddenInput(node, id) {
 					var inputNode = node.one('input');
 
@@ -1492,20 +1548,25 @@ AUI.add(
 					var instance = this;
 
 					var imageNode = node.one('img');
-
 					var thumbnailPath = instance._getMediaThumbnail(fileName);
 
-					imageNode.attr('src', thumbnailPath);
-
-					if (instance._getDisplayStyle() === CSS_ICON) {
-						var divNode = imageNode.ancestor('div');
-
-						divNode.setStyle(
-							'backgroundImage',
-							'url("' + thumbnailPath + '")'
+					if (!imageNode) {
+						var svgContainerNode = node.one(
+							'.card-type-asset-icon'
 						);
-						divNode.setStyle('backgroundPosition', 'center');
-						divNode.setStyle('backgroundRepeat', 'no-repeat');
+
+						imageNode = A.Node.create(
+							'<img alt="" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="' +
+								thumbnailPath +
+								'" />'
+						);
+
+						svgContainerNode
+							.get('parentNode')
+							.replaceChild(imageNode, svgContainerNode);
+					}
+					else {
+						imageNode.attr('src', thumbnailPath);
 					}
 				},
 

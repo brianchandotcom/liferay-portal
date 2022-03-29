@@ -169,21 +169,23 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 							</c:choose>
 
 							<div class="d-none" id="<portlet:namespace />appViewEntryTemplates">
-
-								<%
-								String thumbnailSrc = themeDisplay.getPathThemeImages() + "/file_system/large/default.png";
-								%>
-
-								<liferay-frontend:vertical-card
+								<liferay-frontend:icon-vertical-card
 									cssClass="card-type-asset display-icon entry-display-style file-card form-check form-check-card"
-									imageUrl="<%= thumbnailSrc %>"
+									icon="documents-and-media"
 									title="{title}"
 									url="<%= dlViewDisplayContext.getUploadURL() %>"
 								>
+									<liferay-frontend:vertical-card-sticker-bottom>
+										<clay:sticker
+											cssClass="file-icon-color-0 sticker-bottom-left sticker-document"
+											icon="document-default"
+										/>
+									</liferay-frontend:vertical-card-sticker-bottom>
+
 									<liferay-frontend:vertical-card-header>
 										<liferay-ui:message arguments="<%= HtmlUtil.escape(user.getFullName()) %>" key="right-now-by-x" />
 									</liferay-frontend:vertical-card-header>
-								</liferay-frontend:vertical-card>
+								</liferay-frontend:icon-vertical-card>
 
 								<dd class="display-descriptive entry-display-style list-group-item list-group-item-flex">
 									<div class="autofit-col"></div>
@@ -191,7 +193,7 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 									<div class="autofit-col">
 										<div class="click-selector sticker">
 											<div class="sticker-overlay">
-												<img alt="thumbnail" class="sticker-img" src="<%= thumbnailSrc %>" />
+												<img alt="thumbnail" class="sticker-img" src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/default.png" %>" />
 											</div>
 										</div>
 									</div>

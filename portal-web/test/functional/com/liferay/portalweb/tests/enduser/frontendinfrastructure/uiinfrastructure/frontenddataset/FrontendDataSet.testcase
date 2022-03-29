@@ -1,7 +1,7 @@
 @component-name = "portal-frontend-infrastructure"
 definition {
 
-	property osgi.modules.includes = "frontend-data-set-taglib,frontend-data-set-sample-web";
+	property osgi.modules.includes = "frontend-data-set-sample-web";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property testray.main.component.name = "User Interface";

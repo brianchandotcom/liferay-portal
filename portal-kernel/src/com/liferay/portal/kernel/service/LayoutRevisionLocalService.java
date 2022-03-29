@@ -338,6 +338,9 @@ public interface LayoutRevisionLocalService
 	public int getLayoutRevisionsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutRevisionsCount(long plid);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getLayoutRevisionsCount(
 		long layoutSetBranchId, long layoutBranchId, long plid);
 

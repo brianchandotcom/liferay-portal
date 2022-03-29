@@ -508,6 +508,11 @@ public class LayoutRevisionLocalServiceWrapper
 	}
 
 	@Override
+	public int getLayoutRevisionsCount(long plid) {
+		return _layoutRevisionLocalService.getLayoutRevisionsCount(plid);
+	}
+
+	@Override
 	public int getLayoutRevisionsCount(
 		long layoutSetBranchId, long layoutBranchId, long plid) {
 

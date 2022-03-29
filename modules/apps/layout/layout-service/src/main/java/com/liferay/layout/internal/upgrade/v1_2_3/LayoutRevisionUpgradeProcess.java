@@ -64,9 +64,7 @@ public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 		try {
 			StagingAdvicesThreadLocal.setEnabled(false);
 
-			List<Group> groups = _getStagingGroups();
-
-			for (Group group : groups) {
+			for (Group group : _getStagingGroups()) {
 				if (!_isBranchingEnabledInStagingGroup(group)) {
 					continue;
 				}

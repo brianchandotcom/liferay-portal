@@ -37,7 +37,7 @@ public class FrontendIconsResourcePack {
 	public void addFrontendIconResource(
 		FrontendIconsResource frontendIconsResource) {
 
-		_iconResources.put(
+		_frontendIconsResources.put(
 			frontendIconsResource.getId(), frontendIconsResource);
 	}
 
@@ -50,11 +50,11 @@ public class FrontendIconsResourcePack {
 	public Optional<FrontendIconsResource> getFrontendIconsResource(
 		String iconName) {
 
-		return Optional.ofNullable(_iconResources.get(iconName));
+		return Optional.ofNullable(_frontendIconsResources.get(iconName));
 	}
 
 	public Collection<FrontendIconsResource> getFrontendIconsResources() {
-		return _iconResources.values();
+		return _frontendIconsResources.values();
 	}
 
 	public String getName() {
@@ -66,11 +66,11 @@ public class FrontendIconsResourcePack {
 	}
 
 	public void removeFrontendIconsResource(String iconName) {
-		_iconResources.remove(iconName);
+		_frontendIconsResources.remove(iconName);
 	}
 
 	private final boolean _editable;
-	private final Map<String, FrontendIconsResource> _iconResources =
+	private final Map<String, FrontendIconsResource> _frontendIconsResources =
 		new HashMap<>();
 	private final String _name;
 

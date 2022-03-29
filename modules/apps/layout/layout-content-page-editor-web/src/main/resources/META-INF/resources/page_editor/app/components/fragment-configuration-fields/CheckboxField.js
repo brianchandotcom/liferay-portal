@@ -22,7 +22,7 @@ import {ConfigurationFieldPropTypes} from '../../../prop-types/index';
 import {VIEWPORT_SIZES} from '../../config/constants/viewportSizes';
 import {useSelector} from '../../contexts/StoreContext';
 
-export function CheckboxField({disabled, field, onValueSelect, value}) {
+export function CheckboxField({disabled, field, onValueSelect, title, value}) {
 	const [nextValue, setNextValue] = useControlledState(value || false);
 
 	const selectedViewportSize = useSelector(
@@ -33,7 +33,11 @@ export function CheckboxField({disabled, field, onValueSelect, value}) {
 
 	return (
 		<ClayForm.Group className="mt-1">
-			<div className="align-items-center d-flex justify-content-between page-editor__sidebar__fieldset__field-checkbox">
+			<div
+				className="align-items-center d-flex justify-content-between page-editor__sidebar__fieldset__field-checkbox"
+				data-tooltip-align="bottom"
+				title={title}
+			>
 				<ClayCheckbox
 					aria-label={field.label}
 					checked={

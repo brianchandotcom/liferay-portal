@@ -30,6 +30,7 @@ import com.liferay.batch.engine.internal.reader.BatchEngineImportTaskItemReaderU
 import com.liferay.batch.engine.internal.strategy.BatchEngineImportStrategyFactory;
 import com.liferay.batch.engine.internal.task.progress.BatchEngineTaskProgress;
 import com.liferay.batch.engine.internal.task.progress.BatchEngineTaskProgressFactory;
+import com.liferay.batch.engine.internal.util.ItemIndexThreadLocal;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
@@ -186,8 +187,7 @@ public class BatchEngineImportTaskExecutorImpl
 					items);
 
 				batchEngineImportTask.setProcessedItemsCount(
-					batchEngineImportTask.getProcessedItemsCount() +
-						processedItemsCount);
+					processedItemsCount);
 
 				_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
 					batchEngineImportTask);
@@ -205,16 +205,12 @@ public class BatchEngineImportTaskExecutorImpl
 			batchEngineImportTask.getCompanyId(),
 			batchEngineImportTask.getUserId(),
 			batchEngineImportTask.getBatchEngineImportTaskId(), null,
-			batchEngineImportTask.getProcessedItemsCount() +
-				processedItemsCount,
-			exception.getMessage());
+			processedItemsCount, exception.getMessage());
 
 		if (batchEngineImportTask.getImportStrategy() ==
 				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL) {
 
-			batchEngineImportTask.setProcessedItemsCount(
-				batchEngineImportTask.getProcessedItemsCount() +
-					processedItemsCount);
+			batchEngineImportTask.setProcessedItemsCount(processedItemsCount);
 
 			_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
 				batchEngineImportTask);
@@ -275,6 +271,8 @@ public class BatchEngineImportTaskExecutorImpl
 					items.add(item);
 
 					processedItemsCount++;
+
+					ItemIndexThreadLocal.set(item, processedItemsCount);
 				}
 				catch (Exception exception) {
 					processedItemsCount++;
@@ -289,7 +287,7 @@ public class BatchEngineImportTaskExecutorImpl
 						batchEngineTaskItemDelegateExecutor, items,
 						processedItemsCount);
 
-					processedItemsCount = 0;
+					ItemIndexThreadLocal.remove();
 
 					items.clear();
 				}

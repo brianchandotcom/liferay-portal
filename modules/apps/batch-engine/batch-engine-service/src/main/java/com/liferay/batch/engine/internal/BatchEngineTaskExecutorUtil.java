@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.internal;
 
+import com.liferay.batch.engine.internal.util.ItemIndexThreadLocal;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
@@ -46,6 +47,7 @@ public class BatchEngineTaskExecutorUtil {
 		finally {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 			PrincipalThreadLocal.setName(name);
+			ItemIndexThreadLocal.remove();
 		}
 	}
 

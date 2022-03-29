@@ -192,10 +192,9 @@ public class CommerceSearchResource {
 
 		searchItemModel.setSubtitle(subtitle);
 
-		String url = _cpDefinitionHelper.getFriendlyURL(
-			cpCatalogEntry.getCPDefinitionId(), themeDisplay);
-
-		searchItemModel.setUrl(url);
+		searchItemModel.setUrl(
+			_cpDefinitionHelper.getFriendlyURL(
+				cpCatalogEntry.getCPDefinitionId(), themeDisplay));
 
 		return searchItemModel;
 	}

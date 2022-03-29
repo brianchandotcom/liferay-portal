@@ -67,10 +67,11 @@ public class BingCommerceGeocoder implements CommerceGeocoder {
 			Country country = _countryLocalService.getCountryByA2(
 				group.getCompanyId(), countryA2);
 
-			Region region = _regionLocalService.getRegion(
-				country.getCountryId(), regionCode);
-
-			return _getCoordinates(street, city, zip, region, country);
+			return _getCoordinates(
+				street, city, zip,
+				_regionLocalService.getRegion(
+					country.getCountryId(), regionCode),
+				country);
 		}
 		catch (CommerceGeocoderException commerceGeocoderException) {
 			throw commerceGeocoderException;

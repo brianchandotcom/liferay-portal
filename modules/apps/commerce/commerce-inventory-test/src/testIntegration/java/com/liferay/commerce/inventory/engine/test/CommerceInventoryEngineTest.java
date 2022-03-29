@@ -346,13 +346,11 @@ public class CommerceInventoryEngineTest {
 			commerceBookedQuantity.getCommerceInventoryBookedQuantityId(),
 			Collections.emptyMap());
 
-		stockQuantity = _commerceInventoryEngine.getStockQuantity(
-			_group.getCompanyId(), _commerceChannel.getGroupId(),
-			_cpInstance1.getSku());
-
 		Assert.assertEquals(
 			_commerceInventoryWarehouseItem1.getQuantity() - bookQuantity,
-			stockQuantity);
+			_commerceInventoryEngine.getStockQuantity(
+				_group.getCompanyId(), _commerceChannel.getGroupId(),
+				_cpInstance1.getSku()));
 
 		_commerceBookedQuantityLocalService.getCommerceInventoryBookedQuantity(
 			commerceBookedQuantity.getCommerceInventoryBookedQuantityId());
@@ -635,10 +633,10 @@ public class CommerceInventoryEngineTest {
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), quantity);
 
-		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
-			_group.getCompanyId(), _cpInstance1.getSku());
-
-		Assert.assertEquals(0, stockQuantity);
+		Assert.assertEquals(
+			0,
+			_commerceInventoryEngine.getStockQuantity(
+				_group.getCompanyId(), _cpInstance1.getSku()));
 	}
 
 	@Test
@@ -674,11 +672,11 @@ public class CommerceInventoryEngineTest {
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), quantity);
 
-		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
-			_group.getCompanyId(), _commerceChannel.getGroupId(),
-			_cpInstance1.getSku());
-
-		Assert.assertEquals(0, stockQuantity);
+		Assert.assertEquals(
+			0,
+			_commerceInventoryEngine.getStockQuantity(
+				_group.getCompanyId(), _commerceChannel.getGroupId(),
+				_cpInstance1.getSku()));
 	}
 
 	@Test
@@ -713,11 +711,11 @@ public class CommerceInventoryEngineTest {
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
 				_cpInstance1.getSku(), quantity);
 
-		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
-			_group.getCompanyId(), _commerceChannel.getGroupId(),
-			_cpInstance1.getSku());
-
-		Assert.assertEquals(0, stockQuantity);
+		Assert.assertEquals(
+			0,
+			_commerceInventoryEngine.getStockQuantity(
+				_group.getCompanyId(), _commerceChannel.getGroupId(),
+				_cpInstance1.getSku()));
 	}
 
 	@Test
@@ -738,12 +736,11 @@ public class CommerceInventoryEngineTest {
 				_commerceChannel.getCommerceChannelId(), _cpInstance1.getSku(),
 				10, _serviceContext);
 
-		int stockQuantity = _commerceInventoryEngine.getStockQuantity(
-			_group.getCompanyId(), _commerceChannel.getGroupId(),
-			_cpInstance1.getSku());
-
 		Assert.assertEquals(
-			_commerceInventoryWarehouseItem1.getQuantity(), stockQuantity);
+			_commerceInventoryWarehouseItem1.getQuantity(),
+			_commerceInventoryEngine.getStockQuantity(
+				_group.getCompanyId(), _commerceChannel.getGroupId(),
+				_cpInstance1.getSku()));
 	}
 
 	@Test

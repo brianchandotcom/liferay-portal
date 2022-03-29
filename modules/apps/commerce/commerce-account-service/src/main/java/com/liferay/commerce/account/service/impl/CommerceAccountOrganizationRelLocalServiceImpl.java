@@ -175,12 +175,9 @@ public class CommerceAccountOrganizationRelLocalServiceImpl
 	public List<CommerceAccountOrganizationRel>
 		getCommerceAccountOrganizationRels(int start, int end) {
 
-		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
-			_accountEntryOrganizationRelLocalService.
-				getAccountEntryOrganizationRels(start, end);
-
 		return TransformUtil.transform(
-			accountEntryOrganizationRels,
+			_accountEntryOrganizationRelLocalService.
+				getAccountEntryOrganizationRels(start, end),
 			CommerceAccountOrganizationRelImpl::
 				fromAccountEntryOrganizationRel);
 	}

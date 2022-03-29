@@ -172,10 +172,6 @@ public class CommerceMediaResolverTest {
 				RandomTestUtil.randomLocaleStringMap(), null, 0D,
 				CPAttachmentFileEntryConstants.TYPE_IMAGE, _serviceContext);
 
-		String url = _commerceMediaResolver.getURL(
-			_commerceAccount.getCommerceAccountId(),
-			cpAttachmentFileEntry.getCPAttachmentFileEntryId());
-
 		Assert.assertEquals(
 			StringBundler.concat(
 				PortalUtil.getPathModule(), StringPool.SLASH,
@@ -183,7 +179,9 @@ public class CommerceMediaResolverTest {
 				_commerceAccount.getCommerceAccountId(), "/images/",
 				cpAttachmentFileEntry.getCPAttachmentFileEntryId(),
 				"?download=false"),
-			url);
+			_commerceMediaResolver.getURL(
+				_commerceAccount.getCommerceAccountId(),
+				cpAttachmentFileEntry.getCPAttachmentFileEntryId()));
 	}
 
 	@Rule

@@ -189,8 +189,8 @@ public class JWTAssertionUtil {
 		JwtClaims jwtClaims = new JwtClaims();
 
 		jwtClaims.setAudience(audienceURI.toString());
-		jwtClaims.setExpiryTime(jwtClaims.getIssuedAt() + 3600L);
 		jwtClaims.setIssuedAt(OAuthUtils.getIssuedAt());
+		jwtClaims.setExpiryTime(jwtClaims.getIssuedAt() + 3600L);
 		jwtClaims.setIssuer(issuer);
 		jwtClaims.setSubject(subject);
 

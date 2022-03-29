@@ -47,7 +47,7 @@ export default function Detail({
 
 	return (
 		<>
-			{loadingData ? (
+			{loadingData && !currentPage.data ? (
 				<ClayLoadingIndicator
 					className="chart-loading-indicator"
 					small

@@ -212,7 +212,8 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 													onClick={() =>
 														onTrafficSourceClick(
 															entry.endpointURL,
-															entry.name
+															entry.name,
+															false
 														)
 													}
 													small

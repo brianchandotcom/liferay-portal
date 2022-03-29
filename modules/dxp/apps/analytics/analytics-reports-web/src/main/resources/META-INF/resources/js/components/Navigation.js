@@ -115,10 +115,13 @@ export default function Navigation({
 	]);
 
 	const updateTrafficSourcesAndCurrentPage = useCallback(
-		(trafficSourceEndpointURL, trafficSourceName) => {
+		(trafficSourceEndpointURL, trafficSourceName, sameTrafficSource) => {
 			setTrafficSourceName(trafficSourceName);
-			setLoadingDetailView(true);
+			if (!sameTrafficSource) {
+				setLoadingDetailView(true);
+			}
 			setCurrentPage({
+				data: sameTrafficSource ? currentPage.data : null,
 				view: trafficSourceName,
 			});
 
@@ -130,12 +133,15 @@ export default function Navigation({
 			}).then((response) => {
 				setCurrentPage({
 					data: response,
+					trafficSourceEndpointURL,
 					view: trafficSourceName,
 				});
-				setLoadingDetailView(false);
+				if (!sameTrafficSource) {
+					setLoadingDetailView(false);
+				}
 			});
 		},
-		[]
+		[namespace, page.plid, timeSpanKey, timeSpanOffset]
 	);
 
 	const handleTrafficSourceName = (trafficSourceName) =>

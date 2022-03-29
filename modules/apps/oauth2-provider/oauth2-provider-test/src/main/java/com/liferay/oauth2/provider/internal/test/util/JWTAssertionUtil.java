@@ -48,7 +48,7 @@ public class JWTAssertionUtil {
 		jwsHeaders.setKeyId(_KEY_ID);
 
 		JwsJwtCompactProducer jwsJwtCompactProducer = new JwsJwtCompactProducer(
-			new JwtToken(jwsHeaders, _getJWTClaims(issuer, subject, audience)));
+			new JwtToken(jwsHeaders, _getJWTClaims(audience, issuer, subject)));
 
 		JsonWebKeys jsonWebKeys = JwkUtils.readJwkSet(JWKS);
 
@@ -183,18 +183,14 @@ public class JWTAssertionUtil {
 	}
 
 	private static JwtClaims _getJWTClaims(
-		String issuer, String subject, URI accessTokenEndpoint) {
+		URI accessTokenEndpoint, String issuer, String subject) {
 
 		JwtClaims jwtClaims = new JwtClaims();
 
-		jwtClaims.setIssuer(issuer);
-
-		jwtClaims.setIssuedAt(OAuthUtils.getIssuedAt());
-
-		jwtClaims.setExpiryTime(jwtClaims.getIssuedAt() + 3600L);
-
 		jwtClaims.setAudience(accessTokenEndpoint.toString());
-
+		jwtClaims.setExpiryTime(jwtClaims.getIssuedAt() + 3600L);
+		jwtClaims.setIssuedAt(OAuthUtils.getIssuedAt());
+		jwtClaims.setIssuer(issuer);
 		jwtClaims.setSubject(subject);
 
 		return jwtClaims;

@@ -977,4 +977,54 @@ definition {
 		}
 	}
 
+	@description = "Verify that default language inputted data are displayed for untranslated languages"
+	@priority = "4"
+	test CanDefaultDatabeShown {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Numeric",
+			fieldName = "Numeric");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Numeric",
+			fieldFieldLabelEdit = "数字");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		WebContent.addWithStructureCP(
+			webContentNumeric = "12345",
+			webContentTitle = "Test");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "Numeric",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "12345");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals.assertValue(
+			key_fieldFieldLabel = "数字",
+			locator1 = "WCEditWebContent#TEXT_INPUT",
+			value1 = "12345");
+	}
+
 }

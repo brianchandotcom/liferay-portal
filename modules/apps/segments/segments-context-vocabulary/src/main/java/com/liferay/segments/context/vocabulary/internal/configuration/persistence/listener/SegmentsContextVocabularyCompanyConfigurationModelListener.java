@@ -85,7 +85,7 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 	}
 
 	private boolean _isDefined(
-		String assetVocabulary, Configuration configuration, String companyId,
+		String assetVocabulary, String companyId, Configuration configuration,
 		String entityField) {
 
 		Dictionary<String, Object> properties = configuration.getProperties();
@@ -135,7 +135,7 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 				companyConfigurationStream, configurationStream
 			).filter(
 				configuration -> _isDefined(
-					assetVocabulary, configuration, companyId, entityField)
+					assetVocabulary, companyId, configuration, entityField)
 			).findFirst(
 			).isPresent();
 		}

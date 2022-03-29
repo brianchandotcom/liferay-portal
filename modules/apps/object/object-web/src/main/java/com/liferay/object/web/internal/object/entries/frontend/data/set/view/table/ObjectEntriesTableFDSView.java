@@ -35,6 +35,8 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -101,13 +103,23 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 						objectViewColumn.getObjectFieldName());
 				}
 				else {
-					String label = objectViewColumn.getLabel(locale, true);
+					if (GetterUtil.getBoolean(
+							PropsUtil.get("feature.flag.LPS-149120"))) {
 
-					if (label.isEmpty()) {
-						label = objectField.getLabel(locale, true);
+						String label = objectViewColumn.getLabel(locale, true);
+
+						if (label.isEmpty()) {
+							label = objectField.getLabel(locale, true);
+						}
+
+						_addObjectField(
+							fdsTableSchemaBuilder, label, objectField);
 					}
-
-					_addObjectField(fdsTableSchemaBuilder, label, objectField);
+					else {
+						_addObjectField(
+							fdsTableSchemaBuilder,
+							objectField.getLabel(locale, true), objectField);
+					}
 				}
 			}
 		);

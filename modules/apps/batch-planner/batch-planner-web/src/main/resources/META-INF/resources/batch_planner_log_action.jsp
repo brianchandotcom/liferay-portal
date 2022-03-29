@@ -39,6 +39,8 @@ BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)resultRo
 		<liferay-frontend:component
 			context='<%=
 				HashMapBuilder.<String, Object>put(
+					"HTMLElementId", liferayPortletResponse.getNamespace() + "downloadErrorReport" + batchPlannerLogDisplay.getBatchEngineImportTaskERC()
+				).put(
 					"batchEngineImportTaskId", batchPlannerLogDisplay.getBatchEngineImportTaskERC()
 				).put(
 					"type", "errorReport"
@@ -58,6 +60,8 @@ BatchPlannerLogDisplay batchPlannerLogDisplay = (BatchPlannerLogDisplay)resultRo
 		<liferay-frontend:component
 			context='<%=
 				HashMapBuilder.<String, Object>put(
+					"HTMLElementId", liferayPortletResponse.getNamespace() + "downloadImportFile" + batchPlannerLogDisplay.getBatchEngineImportTaskERC()
+				).put(
 					"batchEngineImportTaskId", batchPlannerLogDisplay.getBatchEngineImportTaskERC()
 				).put(
 					"type", "importFile"

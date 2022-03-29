@@ -23,11 +23,9 @@ const getEndpoint = (type, taskId) => {
 	return endpoints[type];
 };
 
-export default function ({batchEngineImportTaskId, namespace, type}) {
+export default function ({HTMLElementId, batchEngineImportTaskId, type}) {
 	document
-		.getElementById(
-			`${namespace}downloadErrorReport${batchEngineImportTaskId}`
-		)
+		.getElementById(HTMLElementId)
 		.addEventListener('click', (event) => {
 			event.preventDefault();
 

@@ -39,31 +39,6 @@ import java.util.Set;
  */
 public abstract class BaseLocalizedColumnUpgradeProcess extends UpgradeProcess {
 
-	/**
-	 *   @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *          #upgradeLocalizedColumn(
-	 *          	ResourceBundleLoader, String, String, String, String,
-	 *          	String, long[])}
-	 */
-	@Deprecated
-	protected void upgradeLocalizedColumn(
-			ResourceBundleLoader resourceBundleLoader, Class<?> tableClass,
-			String columnName, String originalContent,
-			String localizationMapKey, String localizationXMLKey,
-			long[] companyIds)
-		throws SQLException {
-
-		try {
-			upgradeLocalizedColumn(
-				resourceBundleLoader, getTableName(tableClass), columnName,
-				originalContent, localizationMapKey, localizationXMLKey,
-				companyIds);
-		}
-		catch (Exception exception) {
-			throw new SQLException(exception);
-		}
-	}
-
 	protected void upgradeLocalizedColumn(
 			ResourceBundleLoader resourceBundleLoader, String tableName,
 			String columnName, String originalContent,
@@ -97,21 +72,6 @@ public abstract class BaseLocalizedColumnUpgradeProcess extends UpgradeProcess {
 		catch (Exception exception) {
 			throw new SQLException(exception);
 		}
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #upgradeLocalizedColumn(ResourceBundleLoader, Class, String,
-	 *             String, String, String, long[])}
-	 */
-	@Deprecated
-	protected void upgradeLocalizedColumn(
-			com.liferay.portal.kernel.util.ResourceBundleLoader
-				resourceBundleLoader,
-			Class<?> tableClass, String columnName, String originalContent,
-			String localizationMapKey, String localizationXMLKey,
-			long[] companyIds)
-		throws SQLException {
 	}
 
 	private String _getLocalizationXML(

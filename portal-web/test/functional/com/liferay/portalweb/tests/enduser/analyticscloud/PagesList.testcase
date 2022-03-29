@@ -44,16 +44,22 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8336 | Test Summary: Search for a Page in Pages list"
 	@priority = "5"
 	test CanSearchPageInPagesList {
-		var pageNameList = "AC Page - Site Name - Liferay DXP,AC Page 2 - Site Name - Liferay DXP,AC Page 3 - Site Name - Liferay DXP";
-
 		task ("Add pages") {
 			for (var layoutName : list "AC Page 2,AC Page 3") {
 				ACUtils.addPage(layoutName = "${layoutName}");
+
+				Navigator.gotoSitePage(
+					pageName = "${layoutName}",
+					siteName = "Site Name");
+
+				ACUtils.addWidgetToPage(
+					layoutName = "${layoutName}",
+					widgetName = "Blogs");
 			}
 		}
 
 		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Add a new user in DXP") {
@@ -62,6 +68,11 @@ definition {
 				userFirstName = "ac",
 				userLastName = "ac",
 				userScreenName = "ac");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "ac@liferay.com");
 		}
 
 		task ("Sync the Contact Data") {
@@ -75,6 +86,8 @@ definition {
 
 			for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
 				ACUtils.navigateToSitePage(
+					actionType = "View Blog",
+					documentTitleList = "Blogs AC Title",
 					pageName = "${pageName}",
 					siteName = "Site Name");
 			}
@@ -85,7 +98,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Go to sites pages tab") {
@@ -101,19 +114,20 @@ definition {
 		}
 
 		task ("Search the Pages") {
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
+			var pageNameList = "AC Page - Site Name - ${dataSourceName},AC Page 2 - Site Name - ${dataSourceName},AC Page 3 - Site Name - ${dataSourceName}";
+
 			ACUtils.searchBar(searchItem = "AC Page");
 
 			ACUtils.viewNameList(nameList = "${pageNameList}");
 
-			// It is not possible to view the data because of timing problems
-
 			ACUtils.searchBar(searchItem = "2");
 
-			ACUtils.viewNameList(nameList = "AC Page 2 - Site Name - Liferay DXP");
+			ACUtils.viewNameList(nameList = "AC Page 2 - Site Name - ${dataSourceName}");
 
 			ACUtils.searchBar(searchItem = "3");
 
-			ACUtils.viewNameList(nameList = "AC Page 3 - Site Name - Liferay DXP");
+			ACUtils.viewNameList(nameList = "AC Page 3 - Site Name - ${dataSourceName}");
 		}
 	}
 

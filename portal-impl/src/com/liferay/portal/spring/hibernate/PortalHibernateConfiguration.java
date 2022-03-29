@@ -58,7 +58,6 @@ import org.hibernate.EntityMode;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.cfg.Environment;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.engine.SessionFactoryImplementor;
 import org.hibernate.engine.query.QueryPlanCache;
@@ -319,23 +318,6 @@ public class PortalHibernateConfiguration extends LocalSessionFactoryBean {
 		}
 
 		return sessionFactory;
-	}
-
-	@Override
-	protected void postProcessConfiguration(Configuration configuration) {
-
-		// Make sure that the Hibernate settings from PropsUtil are set. See the
-		// buildSessionFactory implementation in the LocalSessionFactoryBean
-		// class to understand how Spring automates a lot of configuration for
-		// Hibernate.
-
-		String connectionReleaseMode = PropsUtil.get(
-			Environment.RELEASE_CONNECTIONS);
-
-		if (Validator.isNotNull(connectionReleaseMode)) {
-			configuration.setProperty(
-				Environment.RELEASE_CONNECTIONS, connectionReleaseMode);
-		}
 	}
 
 	protected void readResource(

@@ -15,7 +15,6 @@
 package com.liferay.commerce.payment.method.authorize.net.internal.servlet;
 
 import com.liferay.commerce.payment.method.authorize.net.internal.constants.AuthorizeNetCommercePaymentMethodConstants;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
@@ -60,11 +59,9 @@ public class StartPaymentAuthorizeNetServlet extends HttpServlet {
 					httpServletRequest.getSession());
 			}
 
-			PermissionChecker permissionChecker =
+			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(
-					_portal.getUser(httpServletRequest));
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+					_portal.getUser(httpServletRequest)));
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(

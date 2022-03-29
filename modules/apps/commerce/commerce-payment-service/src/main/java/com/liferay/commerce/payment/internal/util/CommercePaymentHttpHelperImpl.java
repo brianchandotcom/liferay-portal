@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -84,11 +83,9 @@ public class CommercePaymentHttpHelperImpl
 				PermissionCheckerFactoryUtil.create(defaultUser));
 		}
 		else {
-			PermissionChecker permissionChecker =
+			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(
-					_portal.getUser(httpServletRequest));
-
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+					_portal.getUser(httpServletRequest)));
 
 			commerceOrder =
 				_commerceOrderService.getCommerceOrderByUuidAndGroupId(

@@ -182,12 +182,11 @@ public class AuthorizeNetCommercePaymentMethod
 		getHostedPaymentPageRequest.setTransactionRequest(
 			_getTransactionRequestType(commerceOrder));
 
-		ArrayOfSetting arrayOfSetting = _getArrayOfSetting(
-			commerceOrder.getGroupId(),
-			authorizeNetCommercePaymentRequest.getCancelUrl(),
-			authorizeNetCommercePaymentRequest.getReturnUrl());
-
-		getHostedPaymentPageRequest.setHostedPaymentSettings(arrayOfSetting);
+		getHostedPaymentPageRequest.setHostedPaymentSettings(
+			_getArrayOfSetting(
+				commerceOrder.getGroupId(),
+				authorizeNetCommercePaymentRequest.getCancelUrl(),
+				authorizeNetCommercePaymentRequest.getReturnUrl()));
 
 		GetHostedPaymentPageController controller =
 			new GetHostedPaymentPageController(getHostedPaymentPageRequest);

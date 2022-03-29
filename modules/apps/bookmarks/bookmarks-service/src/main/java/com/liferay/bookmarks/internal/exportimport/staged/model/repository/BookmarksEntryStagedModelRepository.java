@@ -160,11 +160,9 @@ public class BookmarksEntryStagedModelRepository
 			if (trashHandler.isRestorable(
 					existingBookmarksEntry.getEntryId())) {
 
-				long userId = portletDataContext.getUserId(
-					bookmarksEntry.getUserUuid());
-
 				trashHandler.restoreTrashEntry(
-					userId, existingBookmarksEntry.getEntryId());
+					portletDataContext.getUserId(bookmarksEntry.getUserUuid()),
+					existingBookmarksEntry.getEntryId());
 			}
 		}
 		catch (PortalException portalException) {

@@ -180,11 +180,11 @@ public class BookmarksManagementToolbarDisplayContext {
 
 				User user = _themeDisplay.getUser();
 
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(_httpServletRequest, "owner"),
-					user.getFullName());
-
-				labelItem.setLabel(label);
+				labelItem.setLabel(
+					String.format(
+						"%s: %s",
+						LanguageUtil.get(_httpServletRequest, "owner"),
+						user.getFullName()));
 			}
 		).add(
 			() -> navigation.equals("recent"),

@@ -441,12 +441,10 @@ public class BookmarksFolderLocalServiceImpl
 
 			// Folders and entries
 
-			List<Object> foldersAndEntries =
+			restoreDependentsFromTrash(
 				bookmarksFolderLocalService.getFoldersAndEntries(
 					folder.getGroupId(), folder.getFolderId(),
-					WorkflowConstants.STATUS_IN_TRASH);
-
-			restoreDependentsFromTrash(foldersAndEntries);
+					WorkflowConstants.STATUS_IN_TRASH));
 		}
 
 		return bookmarksFolderLocalService.moveFolder(folderId, parentFolderId);
@@ -480,11 +478,10 @@ public class BookmarksFolderLocalServiceImpl
 
 		// Folders and entries
 
-		List<Object> foldersAndEntries =
+		moveDependentsToTrash(
 			bookmarksFolderLocalService.getFoldersAndEntries(
-				folder.getGroupId(), folder.getFolderId());
-
-		moveDependentsToTrash(foldersAndEntries, trashEntry.getEntryId());
+				folder.getGroupId(), folder.getFolderId()),
+			trashEntry.getEntryId());
 
 		// Social
 
@@ -561,12 +558,10 @@ public class BookmarksFolderLocalServiceImpl
 
 		// Folders and entries
 
-		List<Object> foldersAndEntries =
+		restoreDependentsFromTrash(
 			bookmarksFolderLocalService.getFoldersAndEntries(
 				folder.getGroupId(), folder.getFolderId(),
-				WorkflowConstants.STATUS_IN_TRASH);
-
-		restoreDependentsFromTrash(foldersAndEntries);
+				WorkflowConstants.STATUS_IN_TRASH));
 
 		// Trash
 

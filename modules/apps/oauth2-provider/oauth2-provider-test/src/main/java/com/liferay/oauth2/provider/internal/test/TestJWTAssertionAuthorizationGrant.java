@@ -31,13 +31,13 @@ public class TestJWTAssertionAuthorizationGrant
 	implements TestAuthorizationGrant {
 
 	public TestJWTAssertionAuthorizationGrant(
-		String issuer, String subject, WebTarget audience,
+		String issuer, String subject, WebTarget audienceWebTarget,
 		List<String> scopes) {
 
 		_authorizationGrantData.add(
 			"assertion",
 			JWTAssertionUtil.getJWTAssertion(
-				audience.getUri(), issuer, subject));
+				audienceWebTarget.getUri(), issuer, subject));
 		_authorizationGrantData.add("grant_type", Constants.JWT_BEARER_GRANT);
 
 		if (scopes != null) {

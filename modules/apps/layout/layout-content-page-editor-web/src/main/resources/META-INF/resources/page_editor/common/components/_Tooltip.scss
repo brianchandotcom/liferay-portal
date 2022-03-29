@@ -1,0 +1,8 @@
+html#{$cadmin-selector} {
+	.cadmin {
+		.page-editor__tooltip {
+			pointer-events: none;
+			transform: translateX(-50%) translateY(-100%);
+		}
+	}
+}

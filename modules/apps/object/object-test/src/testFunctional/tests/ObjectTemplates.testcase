@@ -224,12 +224,80 @@ definition {
 	}
 
 	@description = "LPS-148544 - Verify it's possible to map an integer field for a template on the content page and view the entries"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanMapAndViewIntegerField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 149242",
+			objectName = "CustomObject149242",
+			pluralLabelName = "Custom Objects 149242");
 
-		// TODO LPS-149242 CanMapAndViewIntegerField pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Integer",
+			fieldLabelName = "Integer",
+			fieldName = "customObjectField",
+			fieldType = "Integer",
+			isRequired = "false",
+			objectName = "CustomObject149242");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject149242");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 149242");
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject149242",
+			value = "149242");
+
+		InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "guest");
+
+		InformationTemplates.addCP(
+			informationTemplateName = "Test Information Template",
+			itemType = "Custom Object 149242");
+
+		InformationTemplates.inputScript(scriptContent = "");
+
+		InformationTemplates.addField(
+			fieldName = "Integer",
+			panelTitle = "Custom Object 149242");
+
+		PortletEntry.save();
+
+		InformationTemplates.viewTemplate(informationTemplateName = "Test Information Template");
+
+		Navigator.openURL();
+
+		WaitForPageLoad();
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		VisualizeObjectCollectionDisplay.openHeading();
+
+		VisualizeObjectDisplayPage.addItem(
+			frameTitle = "Select",
+			pluralLabelName = "Custom Objects 149242");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Test Information Template");
+
+		PageEditor.clickPublish();
+
+		Navigator.gotoPage(pageName = "Test Content Page Name");
+
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "149242");
 	}
 
 	@description = "LPS-148544 - Verify it's possible to map a Long text field for a template on the content page and view the entries"

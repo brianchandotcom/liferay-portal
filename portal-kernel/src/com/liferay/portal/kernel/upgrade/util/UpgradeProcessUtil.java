@@ -144,19 +144,6 @@ public class UpgradeProcessUtil {
 		return ranUpgradeProcess;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #upgradeProcess(int, List)} ()}
-	 */
-	@Deprecated
-	public static boolean upgradeProcess(
-			int buildNumber, List<UpgradeProcess> upgradeProcesses,
-			boolean indexOnUpgrade)
-		throws UpgradeException {
-
-		return upgradeProcess(buildNumber, upgradeProcesses);
-	}
-
 	private static boolean _upgradeProcess(
 			int buildNumber, UpgradeProcess upgradeProcess)
 		throws UpgradeException {

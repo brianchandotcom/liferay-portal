@@ -299,6 +299,45 @@ components:
                 type:
                     enum: [oneToMany, oneToOne, manyToMany]
                     type: string
+        ObjectValidationRule:
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    readOnly: true
+                    type: object
+                active:
+                    type: boolean
+                dateCreated:
+                    format: date
+                    readOnly: true
+                    type: string
+                dateModified:
+                    format: date
+                    readOnly: true
+                    type: string
+                engine:
+                    type: string
+                errorLabel:
+                    additionalProperties:
+                        type: string
+                    type: object
+                id:
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    additionalProperties:
+                        type: string
+                    type: object
+                objectDefinitionId:
+                    format: int64
+                    type: integer
+                script:
+                    type: string
+            type: object
         ObjectView:
             properties:
                 actions:
@@ -894,6 +933,73 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectRelationship"
             tags: ["ObjectRelationship"]
+    "/object-definitions/{objectDefinitionId}/object-validation-rules":
+        get:
+            operationId: getObjectDefinitionObjectValidationRulesPage
+            parameters:
+                - in: path
+                  name: objectDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: header
+                  name: Accept-Language
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectValidationRule"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/ObjectValidationRule"
+                                type: array
+            tags: ["ObjectValidationRule"]
+        post:
+            operationId: postObjectDefinitionObjectValidationRule
+            parameters:
+                - in: path
+                  name: objectDefinitionId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectValidationRule"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectValidationRule"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectValidationRule"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectValidationRule"
+            tags: ["ObjectValidationRule"]
     "/object-definitions/{objectDefinitionId}/object-views":
         get:
             operationId: getObjectDefinitionObjectViewsPage
@@ -1190,6 +1296,95 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ObjectRelationship"
             tags: ["ObjectRelationship"]
+    "/object-validation-rules/{objectValidationRuleId}":
+        delete:
+            operationId: deleteObjectValidationRule
+            parameters:
+                - in: path
+                  name: objectValidationRuleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["ObjectValidationRule"]
+        get:
+            operationId: getObjectValidationRule
+            parameters:
+                - in: path
+                  name: objectValidationRuleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectValidationRule"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectValidationRule"
+            tags: ["ObjectValidationRule"]
+        patch:
+            operationId: patchObjectValidationRule
+            parameters:
+                - in: path
+                  name: objectValidationRuleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectValidationRule"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectValidationRule"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectValidationRule"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectValidationRule"
+            tags: ["ObjectValidationRule"]
+        put:
+            operationId: putObjectValidationRule
+            parameters:
+                - in: path
+                  name: objectValidationRuleId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectValidationRule"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectValidationRule"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectValidationRule"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectValidationRule"
+            tags: ["ObjectValidationRule"]
     "/object-views/{objectViewId}":
         delete:
             operationId: deleteObjectView

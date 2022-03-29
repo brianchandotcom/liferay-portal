@@ -17,6 +17,7 @@ import ClayDropDown from '@clayui/drop-down';
 import React, {useEffect, useRef, useState} from 'react';
 
 import {useId} from '../../app/utils/useId';
+import {Tooltip} from './Tooltip';
 
 /**
  * These elements must be sorted from the most outer circle to the most inner
@@ -157,10 +158,10 @@ function SpacingSelectorButton({
 }) {
 	const [active, setActive] = useState(false);
 	const itemListRef = useRef();
-	const title = `${capitalize(type)} ${capitalize(position)}: ${
-		value || defaultValue
-	}`;
+	const [labelElement, setLabelElement] = useState(null);
+	const tooltipId = useId();
 	const triggerId = useId();
+	const [triggerElement, setTriggerElement] = useState(null);
 
 	useEffect(() => {
 		if (active && itemListRef.current) {
@@ -175,6 +176,7 @@ function SpacingSelectorButton({
 			onActiveChange={setActive}
 			trigger={
 				<ClayButton
+					aria-describedby={tooltipId}
 					aria-expanded={active}
 					aria-haspopup={true}
 					className={`${BUTTON_CLASSNAME} b-0 flex-grow-1 mb-0 text-center`}
@@ -183,10 +185,19 @@ function SpacingSelectorButton({
 					displayType="unstyled"
 					id={triggerId}
 					onClick={() => setActive(!active)}
-					title={title}
+					ref={setTriggerElement}
 					type="button"
 				>
-					{value || defaultValue}
+					<Tooltip
+						hoverElement={triggerElement}
+						id={tooltipId}
+						label={`${capitalize(type)} ${capitalize(position)}: ${
+							value || defaultValue
+						}`}
+						positionElement={labelElement}
+					/>
+
+					<span ref={setLabelElement}>{value || defaultValue}</span>
 				</ClayButton>
 			}
 		>

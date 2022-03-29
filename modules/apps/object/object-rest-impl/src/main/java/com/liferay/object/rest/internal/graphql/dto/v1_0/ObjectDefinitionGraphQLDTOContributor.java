@@ -14,6 +14,7 @@
 
 package com.liferay.object.rest.internal.graphql.dto.v1_0;
 
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -21,7 +22,6 @@ import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.internal.odata.entity.v1_0.ObjectEntryEntityModel;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProvider;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -85,29 +85,22 @@ public class ObjectDefinitionGraphQLDTOContributor
 					GraphQLDTOProperty.of(
 						objectField.getName(), ListEntry.class));
 			}
-			else if (Objects.equals(
-						objectField.getRelationshipType(), "oneToMany")) {
-
-				String objectFieldName = objectField.getName();
-
-				String relationshipIdName = objectFieldName.substring(
-					objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1);
-
-				graphQLDTOProperties.add(
-					GraphQLDTOProperty.of(relationshipIdName, Long.class));
-
-				String relationshipName = StringUtil.replaceLast(
-					relationshipIdName, "Id", "");
-
-				relationshipGraphQLDTOProperties.add(
-					GraphQLDTOProperty.of(relationshipName, Map.class));
-			}
 			else {
 				graphQLDTOProperties.add(
 					GraphQLDTOProperty.of(
 						objectField.getName(),
 						_typedClasses.getOrDefault(
 							objectField.getDBType(), Object.class)));
+			}
+
+			if (Objects.equals(
+					objectField.getRelationshipType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+				relationshipGraphQLDTOProperties.add(
+					GraphQLDTOProperty.of(
+						StringUtil.replaceLast(objectField.getName(), "Id", ""),
+						Map.class));
 			}
 		}
 

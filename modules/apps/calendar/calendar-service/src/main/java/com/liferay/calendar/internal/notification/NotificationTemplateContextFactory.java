@@ -18,7 +18,6 @@ import com.liferay.calendar.configuration.CalendarServiceConfigurationValues;
 import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.notification.NotificationTemplateContext;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
@@ -80,14 +79,11 @@ public class NotificationTemplateContextFactory {
 				CalendarServiceConfigurationValues.
 					CALENDAR_NOTIFICATION_DEFAULT_TYPE);
 
-		CalendarNotificationTemplate calendarNotificationTemplate =
+		notificationTemplateContext.setCalendarNotificationTemplate(
 			CalendarNotificationTemplateLocalServiceUtil.
 				fetchCalendarNotificationTemplate(
 					calendar.getCalendarId(), notificationType,
-					notificationTemplateType);
-
-		notificationTemplateContext.setCalendarNotificationTemplate(
-			calendarNotificationTemplate);
+					notificationTemplateType));
 
 		notificationTemplateContext.setCompanyId(
 			calendarBooking.getCompanyId());

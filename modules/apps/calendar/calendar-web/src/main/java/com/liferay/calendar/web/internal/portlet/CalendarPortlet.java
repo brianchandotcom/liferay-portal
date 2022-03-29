@@ -1086,10 +1086,9 @@ public class CalendarPortlet extends MVCPortlet {
 			java.util.Calendar startTimeJCalendar = _getJCalendar(
 				actionRequest, "startTime");
 
-			untilJCalendar = JCalendarUtil.mergeJCalendar(
-				untilJCalendar, startTimeJCalendar, timeZone);
-
-			recurrence.setUntilJCalendar(untilJCalendar);
+			recurrence.setUntilJCalendar(
+				JCalendarUtil.mergeJCalendar(
+					untilJCalendar, startTimeJCalendar, timeZone));
 		}
 
 		List<PositionalWeekday> positionalWeekdays = new ArrayList<>();
@@ -1133,10 +1132,10 @@ public class CalendarPortlet extends MVCPortlet {
 					new PositionalWeekday(weekday, position));
 
 				if (frequency == Frequency.YEARLY) {
-					List<Integer> months = Arrays.asList(
-						ParamUtil.getInteger(actionRequest, "startTimeMonth"));
-
-					recurrence.setMonths(months);
+					recurrence.setMonths(
+						Arrays.asList(
+							ParamUtil.getInteger(
+								actionRequest, "startTimeMonth")));
 				}
 			}
 		}
@@ -1302,12 +1301,10 @@ public class CalendarPortlet extends MVCPortlet {
 
 		Group group = themeDisplay.getScopeGroup();
 
-		List<CalendarBooking> childCalendarBookings =
-			_calendarBookingService.getChildCalendarBookings(
-				parentCalendarBookingId, group.isStagingGroup());
-
 		Collection<CalendarResource> calendarResources =
-			CalendarUtil.getCalendarResources(childCalendarBookings);
+			CalendarUtil.getCalendarResources(
+				_calendarBookingService.getChildCalendarBookings(
+					parentCalendarBookingId, group.isStagingGroup()));
 
 		for (CalendarResource calendarResource : calendarResources) {
 			JSONObject jsonObject = CalendarUtil.toCalendarResourceJSONObject(

@@ -2211,11 +2211,10 @@ public class CalendarBookingLocalServiceImpl
 		if (Validator.isNull(calendarBooking.getRecurrence())) {
 			singleInstance = true;
 
-			TimeZone timeZone = getTimeZone(
-				calendarBooking.getCalendar(), calendarBooking.isAllDay());
-
 			splitJCalendar = JCalendarUtil.getJCalendar(
-				calendarBooking.getStartTime(), timeZone);
+				calendarBooking.getStartTime(),
+				getTimeZone(
+					calendarBooking.getCalendar(), calendarBooking.isAllDay()));
 
 			splitJCalendar.add(java.util.Calendar.DATE, 1);
 		}

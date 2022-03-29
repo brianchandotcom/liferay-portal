@@ -274,11 +274,10 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			long calendarId, int[] statuses)
 		throws PortalException {
 
-		List<CalendarBooking> calendarBookings =
+		return filterCalendarBookings(
 			calendarBookingLocalService.getCalendarBookings(
-				calendarId, statuses);
-
-		return filterCalendarBookings(calendarBookings, ActionKeys.VIEW);
+				calendarId, statuses),
+			ActionKeys.VIEW);
 	}
 
 	@Override
@@ -824,10 +823,8 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 
 			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
 
-			String value = _getContent(
-				calendarBooking, displayStyle, themeDisplay);
-
-			syndContent.setValue(value);
+			syndContent.setValue(
+				_getContent(calendarBooking, displayStyle, themeDisplay));
 
 			syndEntry.setDescription(syndContent);
 

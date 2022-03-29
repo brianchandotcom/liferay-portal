@@ -333,11 +333,9 @@ public class CalendarBookingStagedModelDataHandler
 			CalendarBooking.class.getName());
 
 		if (trashHandler.isRestorable(existingBooking.getCalendarBookingId())) {
-			long userId = portletDataContext.getUserId(
-				calendarBooking.getUserUuid());
-
 			trashHandler.restoreTrashEntry(
-				userId, existingBooking.getCalendarBookingId());
+				portletDataContext.getUserId(calendarBooking.getUserUuid()),
+				existingBooking.getCalendarBookingId());
 		}
 	}
 

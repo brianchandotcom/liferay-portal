@@ -27,7 +27,6 @@ import java.util.Objects;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 
 /**
  * @author Adam Brandizzi
@@ -40,13 +39,10 @@ public class CheckBookingsMessageListenerTestUtil {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		ServiceReference<?> serviceReference =
+		_checkBookingMessageListener = bundleContext.getService(
 			bundleContext.getServiceReference(
 				"com.liferay.calendar.web.internal.messaging." +
-					"CheckBookingsMessageListener");
-
-		_checkBookingMessageListener = bundleContext.getService(
-			serviceReference);
+					"CheckBookingsMessageListener"));
 
 		ReflectionTestUtil.setFieldValue(
 			_checkBookingMessageListener, "_calendarBookingLocalService",

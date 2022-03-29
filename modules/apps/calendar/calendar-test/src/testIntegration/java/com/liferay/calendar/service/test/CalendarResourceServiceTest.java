@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -79,10 +78,9 @@ public class CalendarResourceServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), user.getUserId());
 
-		ModelPermissions modelPermissions = ModelPermissionsFactory.create(
-			_CALENDAR_RESOURCE_GROUP_PERMISSIONS, null);
-
-		serviceContext.setModelPermissions(modelPermissions);
+		serviceContext.setModelPermissions(
+			ModelPermissionsFactory.create(
+				_CALENDAR_RESOURCE_GROUP_PERMISSIONS, null));
 
 		CalendarResource calendarResource =
 			_calendarResourceLocalService.addCalendarResource(

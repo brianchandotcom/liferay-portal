@@ -19,12 +19,14 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectValidationRuleResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -92,6 +94,14 @@ public class Mutation {
 
 		_objectRelationshipResourceComponentServiceObjects =
 			objectRelationshipResourceComponentServiceObjects;
+	}
+
+	public static void setObjectValidationRuleResourceComponentServiceObjects(
+		ComponentServiceObjects<ObjectValidationRuleResource>
+			objectValidationRuleResourceComponentServiceObjects) {
+
+		_objectValidationRuleResourceComponentServiceObjects =
+			objectValidationRuleResourceComponentServiceObjects;
 	}
 
 	public static void setObjectViewResourceComponentServiceObjects(
@@ -580,6 +590,111 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public ObjectValidationRule createObjectDefinitionObjectValidationRule(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("objectValidationRule") ObjectValidationRule
+				objectValidationRule)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectValidationRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectValidationRuleResource ->
+				objectValidationRuleResource.
+					postObjectDefinitionObjectValidationRule(
+						objectDefinitionId, objectValidationRule));
+	}
+
+	@GraphQLField
+	public Response createObjectDefinitionObjectValidationRuleBatch(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectValidationRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectValidationRuleResource ->
+				objectValidationRuleResource.
+					postObjectDefinitionObjectValidationRuleBatch(
+						objectDefinitionId, callbackURL, object));
+	}
+
+	@GraphQLField
+	public boolean deleteObjectValidationRule(
+			@GraphQLName("objectValidationRuleId") Long objectValidationRuleId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_objectValidationRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectValidationRuleResource ->
+				objectValidationRuleResource.deleteObjectValidationRule(
+					objectValidationRuleId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteObjectValidationRuleBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectValidationRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectValidationRuleResource ->
+				objectValidationRuleResource.deleteObjectValidationRuleBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
+	public ObjectValidationRule patchObjectValidationRule(
+			@GraphQLName("objectValidationRuleId") Long objectValidationRuleId,
+			@GraphQLName("objectValidationRule") ObjectValidationRule
+				objectValidationRule)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectValidationRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectValidationRuleResource ->
+				objectValidationRuleResource.patchObjectValidationRule(
+					objectValidationRuleId, objectValidationRule));
+	}
+
+	@GraphQLField
+	public ObjectValidationRule updateObjectValidationRule(
+			@GraphQLName("objectValidationRuleId") Long objectValidationRuleId,
+			@GraphQLName("objectValidationRule") ObjectValidationRule
+				objectValidationRule)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectValidationRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectValidationRuleResource ->
+				objectValidationRuleResource.putObjectValidationRule(
+					objectValidationRuleId, objectValidationRule));
+	}
+
+	@GraphQLField
+	public Response updateObjectValidationRuleBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectValidationRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectValidationRuleResource ->
+				objectValidationRuleResource.putObjectValidationRuleBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField
 	public ObjectView createObjectDefinitionObjectView(
 			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
 			@GraphQLName("objectView") ObjectView objectView)
@@ -787,6 +902,22 @@ public class Mutation {
 		objectRelationshipResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			ObjectValidationRuleResource objectValidationRuleResource)
+		throws Exception {
+
+		objectValidationRuleResource.setContextAcceptLanguage(_acceptLanguage);
+		objectValidationRuleResource.setContextCompany(_company);
+		objectValidationRuleResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		objectValidationRuleResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		objectValidationRuleResource.setContextUriInfo(_uriInfo);
+		objectValidationRuleResource.setContextUser(_user);
+		objectValidationRuleResource.setGroupLocalService(_groupLocalService);
+		objectValidationRuleResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(ObjectViewResource objectViewResource)
 		throws Exception {
 
@@ -810,6 +941,8 @@ public class Mutation {
 		_objectLayoutResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectRelationshipResource>
 		_objectRelationshipResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ObjectValidationRuleResource>
+		_objectValidationRuleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectViewResource>
 		_objectViewResourceComponentServiceObjects;
 

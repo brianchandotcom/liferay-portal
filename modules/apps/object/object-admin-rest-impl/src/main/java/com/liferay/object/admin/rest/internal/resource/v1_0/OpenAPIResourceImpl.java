@@ -90,6 +90,8 @@ public class OpenAPIResourceImpl {
 
 			add(ObjectRelationshipResourceImpl.class);
 
+			add(ObjectValidationRuleResourceImpl.class);
+
 			add(ObjectViewResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);

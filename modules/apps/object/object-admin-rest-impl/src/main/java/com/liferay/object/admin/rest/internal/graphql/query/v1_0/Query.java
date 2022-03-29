@@ -21,12 +21,14 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectLayout;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutColumn;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectLayoutTab;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectActionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectValidationRuleResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -101,6 +103,14 @@ public class Query {
 
 		_objectRelationshipResourceComponentServiceObjects =
 			objectRelationshipResourceComponentServiceObjects;
+	}
+
+	public static void setObjectValidationRuleResourceComponentServiceObjects(
+		ComponentServiceObjects<ObjectValidationRuleResource>
+			objectValidationRuleResourceComponentServiceObjects) {
+
+		_objectValidationRuleResourceComponentServiceObjects =
+			objectValidationRuleResourceComponentServiceObjects;
 	}
 
 	public static void setObjectViewResourceComponentServiceObjects(
@@ -323,6 +333,47 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionObjectValidationRules(objectDefinitionId: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ObjectValidationRulePage objectDefinitionObjectValidationRules(
+			@GraphQLName("objectDefinitionId") Long objectDefinitionId,
+			@GraphQLName("search") String search,
+			@GraphQLName("pageSize") int pageSize,
+			@GraphQLName("page") int page)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectValidationRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectValidationRuleResource -> new ObjectValidationRulePage(
+				objectValidationRuleResource.
+					getObjectDefinitionObjectValidationRulesPage(
+						objectDefinitionId, search,
+						Pagination.of(page, pageSize))));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectValidationRule(objectValidationRuleId: ___){actions, active, dateCreated, dateModified, engine, errorLabel, id, name, objectDefinitionId, script}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public ObjectValidationRule objectValidationRule(
+			@GraphQLName("objectValidationRuleId") Long objectValidationRuleId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectValidationRuleResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectValidationRuleResource ->
+				objectValidationRuleResource.getObjectValidationRule(
+					objectValidationRuleId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectDefinitionObjectViews(objectDefinitionId: ___, page: ___, pageSize: ___, search: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -421,6 +472,36 @@ public class Query {
 		}
 
 		private ObjectLayoutColumn _objectLayoutColumn;
+
+	}
+
+	@GraphQLTypeExtension(ObjectDefinition.class)
+	public class GetObjectDefinitionObjectValidationRulesPageTypeExtension {
+
+		public GetObjectDefinitionObjectValidationRulesPageTypeExtension(
+			ObjectDefinition objectDefinition) {
+
+			_objectDefinition = objectDefinition;
+		}
+
+		@GraphQLField
+		public ObjectValidationRulePage objectValidationRules(
+				@GraphQLName("search") String search,
+				@GraphQLName("pageSize") int pageSize,
+				@GraphQLName("page") int page)
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_objectValidationRuleResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				objectValidationRuleResource -> new ObjectValidationRulePage(
+					objectValidationRuleResource.
+						getObjectDefinitionObjectValidationRulesPage(
+							_objectDefinition.getId(), search,
+							Pagination.of(page, pageSize))));
+		}
+
+		private ObjectDefinition _objectDefinition;
 
 	}
 
@@ -614,6 +695,44 @@ public class Query {
 
 	}
 
+	@GraphQLName("ObjectValidationRulePage")
+	public class ObjectValidationRulePage {
+
+		public ObjectValidationRulePage(Page objectValidationRulePage) {
+			actions = objectValidationRulePage.getActions();
+
+			facets = objectValidationRulePage.getFacets();
+
+			items = objectValidationRulePage.getItems();
+			lastPage = objectValidationRulePage.getLastPage();
+			page = objectValidationRulePage.getPage();
+			pageSize = objectValidationRulePage.getPageSize();
+			totalCount = objectValidationRulePage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map> actions;
+
+		@GraphQLField
+		protected List<Facet> facets;
+
+		@GraphQLField
+		protected java.util.Collection<ObjectValidationRule> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
 	@GraphQLName("ObjectViewPage")
 	public class ObjectViewPage {
 
@@ -747,6 +866,22 @@ public class Query {
 		objectRelationshipResource.setRoleLocalService(_roleLocalService);
 	}
 
+	private void _populateResourceContext(
+			ObjectValidationRuleResource objectValidationRuleResource)
+		throws Exception {
+
+		objectValidationRuleResource.setContextAcceptLanguage(_acceptLanguage);
+		objectValidationRuleResource.setContextCompany(_company);
+		objectValidationRuleResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		objectValidationRuleResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		objectValidationRuleResource.setContextUriInfo(_uriInfo);
+		objectValidationRuleResource.setContextUser(_user);
+		objectValidationRuleResource.setGroupLocalService(_groupLocalService);
+		objectValidationRuleResource.setRoleLocalService(_roleLocalService);
+	}
+
 	private void _populateResourceContext(ObjectViewResource objectViewResource)
 		throws Exception {
 
@@ -770,6 +905,8 @@ public class Query {
 		_objectLayoutResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectRelationshipResource>
 		_objectRelationshipResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ObjectValidationRuleResource>
+		_objectValidationRuleResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ObjectViewResource>
 		_objectViewResourceComponentServiceObjects;
 

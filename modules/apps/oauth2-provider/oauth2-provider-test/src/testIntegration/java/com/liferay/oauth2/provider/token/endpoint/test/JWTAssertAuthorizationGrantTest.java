@@ -55,7 +55,7 @@ public class JWTAssertAuthorizationGrantTest extends BaseTokenEndpointTestCase {
 
 		TestJWTAssertionAuthorizationGrant jwtAssertionAuthorizationGrant =
 			new TestJWTAssertionAuthorizationGrant(
-				TEST_CLIENT_ID_01, user.getUuid(), getTokenWebTarget(), null);
+				TEST_CLIENT_ID_01, null, user.getUuid(), getTokenWebTarget());
 
 		Assert.assertTrue(
 			Validator.isNotNull(getToken(jwtAssertionAuthorizationGrant)));
@@ -67,8 +67,8 @@ public class JWTAssertAuthorizationGrantTest extends BaseTokenEndpointTestCase {
 
 		TestJWTAssertionAuthorizationGrant jwtAssertionAuthorizationGrant =
 			new TestJWTAssertionAuthorizationGrant(
-				TEST_CLIENT_ID_01, user.getUuid(),
-				getJsonWebTarget("wrongPath"), null);
+				TEST_CLIENT_ID_01, null, user.getUuid(),
+				getJsonWebTarget("wrongPath"));
 
 		Assert.assertTrue(
 			Validator.isNull(getToken(jwtAssertionAuthorizationGrant)));
@@ -87,7 +87,7 @@ public class JWTAssertAuthorizationGrantTest extends BaseTokenEndpointTestCase {
 			user = UserTestUtil.getAdminUser(PortalUtil.getDefaultCompanyId());
 
 			return new TestJWTAssertionAuthorizationGrant(
-				TEST_CLIENT_ID_01, user.getUuid(), getTokenWebTarget(), null);
+				TEST_CLIENT_ID_01, null, user.getUuid(), getTokenWebTarget());
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

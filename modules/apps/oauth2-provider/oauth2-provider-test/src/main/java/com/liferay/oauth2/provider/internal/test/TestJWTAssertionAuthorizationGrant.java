@@ -31,8 +31,8 @@ public class TestJWTAssertionAuthorizationGrant
 	implements TestAuthorizationGrant {
 
 	public TestJWTAssertionAuthorizationGrant(
-		String issuer, String subject, WebTarget audienceWebTarget,
-		List<String> scopes) {
+		String issuer, List<String> scopes, String subject,
+		WebTarget audienceWebTarget) {
 
 		_authorizationGrantData.add(
 			"assertion",

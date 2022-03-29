@@ -46,7 +46,9 @@ definition {
 		task ("When the user maps only specific fields and imports the file") {
 			ImportExport.mapImport(fieldMappings = "name:Account Name,type:Account Type,externalReferenceCode:External Reference Code");
 
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 		}
 
 		task ("Then only those fields should be imported") {
@@ -348,7 +350,9 @@ definition {
 		}
 
 		task ("When the user imports the file") {
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 		}
 
 		task ("Then the accounts should be imported successfully") {
@@ -408,7 +412,9 @@ definition {
 		}
 
 		task ("When the user imports the file") {
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 		}
 
 		task ("Then the accounts in the file should be imported successfully") {
@@ -458,7 +464,9 @@ definition {
 		}
 
 		task ("When the user imports the file") {
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 		}
 
 		task ("Then the accounts should be imported successfully") {
@@ -508,7 +516,9 @@ definition {
 		}
 
 		task ("When the user imports the file") {
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 		}
 
 		task ("Then the accounts should be imported successfully") {
@@ -558,7 +568,9 @@ definition {
 		}
 
 		task ("When the user tries to import a file without mapping all the required fields") {
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 		}
 
 		task ("Then the import should fail and the missing field should be highlighted red") {
@@ -572,7 +584,9 @@ definition {
 		task ("When the user maps the missing required field and imports the file") {
 			ImportExport.mapImport(fieldMappings = "currencyCode:Currency Code");
 
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 		}
 
 		task ("Then the file should be imported successfully") {
@@ -808,7 +822,9 @@ definition {
 				fileName = "csv_account_import.csv",
 				headlessEndpoint = "/headless-admin-user");
 
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 
 			WaitForElementPresent(locator1 = "Message#ERROR_FORM_FIELD_REQUIRED");
 		}
@@ -818,7 +834,9 @@ definition {
 
 			ImportExport.mapImport(fieldMappings = "name:Account Name");
 
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 
 			WaitForElementPresent(locator1 = "ImportExport#EXECUTION_SUCCESS");
 		}
@@ -879,7 +897,9 @@ definition {
 				checkboxName = "Stop the Import on Error",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 		}
 
 		task ("Then the only the rows without error should be imported") {
@@ -1002,7 +1022,9 @@ definition {
 				checkboxName = "Stop the Import on Error",
 				locator1 = "Checkbox#ANY_CHECKBOX");
 
-			Button.click(button = "Import");
+			Button.click(button = "Next");
+
+			Button.click(button = "Start Import");
 		}
 
 		task ("Then the import should be stopped and no entity should be imported") {

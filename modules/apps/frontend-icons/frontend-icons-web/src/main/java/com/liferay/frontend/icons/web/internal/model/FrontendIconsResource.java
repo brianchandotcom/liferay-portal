@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class FrontendIconsResource {
 
-	public FrontendIconsResource(String id, String content, String viewBox) {
-		_id = id;
+	public FrontendIconsResource(String content, String id, String viewBox) {
 		_content = content;
+		_id = id;
 		_viewBox = viewBox;
 	}
 

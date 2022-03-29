@@ -59,29 +59,28 @@ public class JWTAssertionUtil {
 	private static JSONObject _createAsymmetricPrivateKeyJSONObject(
 		String alg, String d, String kid, String kty, String use) {
 
-		JSONObject keyJSONObject = _createKeyJSONObject(alg, kid, kty, use);
+		JSONObject jsonObject = _createKeyJSONObject(alg, kid, kty, use);
 
-		keyJSONObject.put("d", d);
+		jsonObject.put("d", d);
 
-		return keyJSONObject;
+		return jsonObject;
 	}
 
 	private static JSONObject _createKeyJSONObject(
 		String alg, String kid, String kty, String use) {
 
-		JSONObject keyJSONObject = JSONUtil.put(
+		JSONObject jsonObject = JSONUtil.put(
 			"alg", alg
+		).put(
+			"kid",
+			() -> kid
 		).put(
 			"kty", kty
 		).put(
 			"use", use
 		);
 
-		if (kid != null) {
-			keyJSONObject.put("kid", kid);
-		}
-
-		return keyJSONObject;
+		return jsonObject;
 	}
 
 	private static JSONObject _createRSAKeyPairJSONObject(

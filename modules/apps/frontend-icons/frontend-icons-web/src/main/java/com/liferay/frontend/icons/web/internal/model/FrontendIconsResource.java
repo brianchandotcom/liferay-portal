@@ -30,8 +30,8 @@ public class FrontendIconsResource {
 	public String asSymbol() {
 		return StringUtil.replace(
 			_SYMBOL_TMPL,
-			new String[] {"[$NAME$]", "[$CONTENT$]", "[$VIEW_BOX$]"},
-			new String[] {_id, _content, _viewBox});
+			new String[] {"[$CONTENT$]", "[$NAME$]", "[$VIEW_BOX$]"},
+			new String[] {_content, _id, _viewBox});
 	}
 
 	public String getId() {

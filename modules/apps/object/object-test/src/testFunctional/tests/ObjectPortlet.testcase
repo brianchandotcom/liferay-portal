@@ -1436,7 +1436,9 @@ definition {
 
 		ObjectAdmin.goToCustomObject(objectName = "CustomObject");
 
-		ObjectPortlet.assertUserCanNotUpdateEntryWithoutPermission();
+		ObjectPortlet.viewEntryDetails(entry = "Text test");
+
+		ObjectAdmin.viewFieldValueDisabled(fieldValue = "Text test");
 	}
 
 	@description = "LPS-135390 - Verify it is not possible to view other user's Object entry with only the Add Object Entry permission"

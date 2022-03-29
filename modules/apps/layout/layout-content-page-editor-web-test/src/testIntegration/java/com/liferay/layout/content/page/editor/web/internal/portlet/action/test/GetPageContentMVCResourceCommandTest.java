@@ -276,11 +276,14 @@ public class GetPageContentMVCResourceCommandTest {
 				0, FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
+
 		_fragmentEntryLinkService.addFragmentEntryLink(
 			_group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid()),
-			_layout.getPlid(), fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			defaultSegmentsExperienceId, _layout.getPlid(),
+			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 			JSONUtil.put(
 				"com.liferay.fragment.entry.processor.editable." +
@@ -297,8 +300,7 @@ public class GetPageContentMVCResourceCommandTest {
 			StringPool.BLANK, 0, null, _serviceContext);
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
-			_getMockLiferayPortletResourceRequest(
-				SegmentsExperienceConstants.ID_DEFAULT);
+			_getMockLiferayPortletResourceRequest(defaultSegmentsExperienceId);
 
 		JSONArray jsonArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPageContentsJSONArray",
@@ -331,9 +333,13 @@ public class GetPageContentMVCResourceCommandTest {
 				0, FragmentConstants.TYPE_COMPONENT,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
+
 		_fragmentEntryLinkService.addFragmentEntryLink(
 			_group.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
-			SegmentsExperienceConstants.ID_DEFAULT, _layout.getPlid(),
+			defaultSegmentsExperienceId, _layout.getPlid(),
 			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 			JSONUtil.put(
@@ -353,8 +359,7 @@ public class GetPageContentMVCResourceCommandTest {
 		JSONArray jsonArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPageContentsJSONArray",
 			new Class<?>[] {ResourceRequest.class, ResourceResponse.class},
-			_getMockLiferayPortletResourceRequest(
-				SegmentsExperienceConstants.ID_DEFAULT),
+			_getMockLiferayPortletResourceRequest(defaultSegmentsExperienceId),
 			new MockLiferayResourceResponse());
 
 		Assert.assertEquals(1, jsonArray.length());

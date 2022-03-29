@@ -12,6 +12,16 @@
 <tbody>
 
 <tr>
+	<td>BUTTON_DIAGRAM_SOURCE_SWITCH</td>
+	<td>//*[not(self::div)][contains(@class,'btn-secondary')][normalize-space()=''][not(contains(@class,'navbar'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_EDITOR</td>
+	<td>//div[@class='CodeMirror-lines']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ICON_COUNTRY</td>
 	<td>//button[contains(@class,'btn')]//*[contains(@class,'lexicon-icon-${key_translationOptionSelected}')]</td>
 	<td></td>
@@ -47,7 +57,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VIEW_DELETE_MODAL</td>
+	<td>DELETE_MODAL</td>
 	<td>//div[contains(@class, 'modal-content') and contains(.,'${key_title}')]</td>
 	<td></td>
 </tr>
@@ -197,11 +207,20 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BUTTON_DIAGRAM_SOURCE_SWITCH</td>
-	<td>//*[not(self::div)][contains(@class,'btn-secondary')][normalize-space()=''][not(contains(@class,'navbar'))]</td>
+	<td>RESOURCE_ACTIONS_TEXTAREA</td>
+	<td>//label[@for='resource-actions']/..//textarea[@type='text']</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>ASSIGNMENT_TYPE_USER_SELECT_OPTION</td>
+	<td>//*[contains(@class,'autocomplete-dropdown-menu')]//..//button[contains(@class,'dropdown-item')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECTED_ASSIGNMENTS_VALUE</td>
+	<td>//*[contains(@class,'d-flex')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -46,21 +46,28 @@ definition {
 	}
 
 	@description = "Verify that Assignment can be added"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddAssignment {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddAssignment";
 
-		// TODO LRQA-72955 CanAddAssignment pending implementation
+		Workflow.openWorkflowListView();
 
-	}
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
 
-	@description = "Verify that Assignment can be added"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CanAddMultipleAssignment {
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-100",
+			nodeType = "task");
 
-		// TODO LRQA-72956 CanAddMultipleAssignment pending implementation
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
 
+		ProcessBuilderKaleoDesignerReact.viewAndFillAssignments(
+			assignmentType = "Resource Actions",
+			resourceActionsText = "Test");
+
+		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Resource Actions: Test");
+
+		
 	}
 
 	@description = "Verify that Notification can be added"
@@ -724,12 +731,17 @@ definition {
 	}
 
 	@description = "LPS-129928 - Verify that when the user clicks on the Source button the Source editor appears"
-	@ignore = "Test Stub"
 	@priority = "4"
-	test CanViewSorceEditor {
+	test CanViewSourceEditor {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewSourceEditor";
 
-		// TODO LRQA-72995 CanViewSorceEditor pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		ProcessBuilderKaleoDesignerReact.viewSourceEditor();
 	}
 
 	@description = "LPS-129928 - Verify that when the user makes changes to the Process Builder these changes are reflected in the XML code"

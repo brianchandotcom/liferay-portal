@@ -93,9 +93,13 @@ definition {
 
 		AssertElementPresent(
 			key_title = "${title}",
-			locator1 = "ProcessBuilderKaleoDesignerReact#VIEW_DELETE_MODAL");
+			locator1 = "ProcessBuilderKaleoDesignerReact#DELETE_MODAL");
 
 		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DELETE_MODAL");
+	}
+
+	macro diagramSourceSwitchView {
+		Click(locator1 = "ProcessBuilderKaleoDesignerReact#BUTTON_DIAGRAM_SOURCE_SWITCH");
 	}
 
 	macro dragAndDropDiagramNode {
@@ -235,6 +239,73 @@ definition {
 				key_inputOption = "Priority",
 				locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_INPUT",
 				value1 = "${priorityValue}");
+		}
+	}
+
+	macro viewAndFillAssignments {
+		Click(locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_ASSIGNMENTS_VALUE");
+
+		Select(
+			key_selectorField = "Assignment Type",
+			locator1 = "ProcessBuilderKaleoDesignerReact#PROPERTIES_SELECTORS",
+			value1 = "${assignmentType}");
+
+		if ("${assignmentType}" == "Asset Creator") {
+			ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+		}
+
+		if ("${assignmentType}" == "Resource Actions") {
+			Type(
+				locator1 = "ProcessBuilderKaleoDesignerReact#RESOURCE_ACTIONS_TEXTAREA",
+				value1 = "${resourceActionsText}");
+
+			ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+		}
+
+		if ("${assignmentTypeOption}" == "Role") {
+			Type(
+				locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_FIELD",
+				value1 = "${roleName}");
+
+			Click.mouseOverClick(
+				key_optionRoleName = "${roleName}",
+				locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
+
+			ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+		}
+
+		if ("${assignmentTypeOption}" == "Role Type") {
+			Type(
+				locator1 = "ProcessBuilderKaleoDesignerReact#ROLE_TYPE_FIELD",
+				value1 = "${roleTypeName}");
+
+			Click.mouseOverClick(
+				key_optionRoleName = "${roleTypeName}",
+				locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
+
+			Type(
+				locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_FIELD",
+				value1 = "${roleTypeRoleName}");
+
+			Click.mouseOverClick(
+				key_optionRoleName = "${roleTypeRoleName}",
+				locator1 = "ProcessBuilderKaleoDesignerReact#RECIPIENT_TYPE_NAME_OPTIONS");
+
+			if ("${autoCreate}" == "true") {
+				Click(locator1 = "ProcessBuilderKaleoDesignerReact#NOTIFICATIONS_RECIPIENT_ROLE_TYPE_AUTOCREATE");
+			}
+
+			ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+		}
+
+		if ("${assignmentType}" == "User") {
+			Type(
+				locator1 = "TextInput#INPUT_ID",
+				value1 = "${userScreenName}");
+
+			Click(locator1 = "ProcessBuilderKaleoDesignerReact#ASSIGNMENT_TYPE_USER_SELECT_OPTION");
+
+			ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 		}
 	}
 
@@ -543,6 +614,12 @@ definition {
 		}
 	}
 
+	macro viewSelectedAssignments {
+		AssertTextEquals(
+			locator1 = "ProcessBuilderKaleoDesignerReact#SELECTED_ASSIGNMENTS_VALUE",
+			value1 = "${selectedAssignments}");
+	}
+
 	macro viewSelectedNode {
 		AssertElementPresent(
 			key_nodeType = "${nodeType}",
@@ -557,6 +634,10 @@ definition {
 		AssertElementPresent(
 			key_content = "${content}",
 			locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
+	}
+	
+	macro viewSourceEditor {
+		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#SOURCE_EDITOR");
 	}
 
 	macro viewSpecificNodeLabel {

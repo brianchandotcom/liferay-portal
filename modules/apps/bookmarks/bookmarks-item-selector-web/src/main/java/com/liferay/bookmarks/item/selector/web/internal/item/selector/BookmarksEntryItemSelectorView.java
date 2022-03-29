@@ -117,7 +117,7 @@ public class BookmarksEntryItemSelectorView
 	@Reference
 	private Language _language;
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.bookmarks.web)")
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.bookmarks.item.selector.web)")
 	private ServletContext _servletContext;
 
 }

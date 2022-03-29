@@ -33,14 +33,12 @@ public class BatchEngineImportStrategyFactory {
 			return new OnErrorContinueBatchEngineImportStrategy(
 				batchEngineImportTask.getBatchEngineImportTaskId(),
 				batchEngineImportTask.getCompanyId(),
-				batchEngineImportTask.getProcessedItemsCount(),
 				batchEngineImportTask.getUserId());
 		}
 
 		return new OnErrorFailBatchEngineImportStrategy(
 			batchEngineImportTask.getBatchEngineImportTaskId(),
 			batchEngineImportTask.getCompanyId(),
-			batchEngineImportTask.getProcessedItemsCount(),
 			batchEngineImportTask.getUserId());
 	}
 

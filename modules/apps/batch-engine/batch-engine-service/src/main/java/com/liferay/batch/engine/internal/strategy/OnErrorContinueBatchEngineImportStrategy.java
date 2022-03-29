@@ -28,12 +28,10 @@ public class OnErrorContinueBatchEngineImportStrategy
 	extends BaseBatchEngineImportStrategy {
 
 	public OnErrorContinueBatchEngineImportStrategy(
-		long batchEngineImportTaskId, long companyId, int processedItemsCount,
-		long userId) {
+		long batchEngineImportTaskId, long companyId, long userId) {
 
 		_batchEngineImportTaskId = batchEngineImportTaskId;
 		_companyId = companyId;
-		_processedItemsCount = processedItemsCount;
 		_userId = userId;
 	}
 
@@ -65,7 +63,6 @@ public class OnErrorContinueBatchEngineImportStrategy
 
 	private final long _batchEngineImportTaskId;
 	private final long _companyId;
-	private final int _processedItemsCount;
 	private final long _userId;
 
 }

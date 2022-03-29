@@ -14,10 +14,12 @@
 
 package com.liferay.layout.internal.upgrade.v1_2_3;
 
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -117,15 +119,19 @@ public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 	}
 
 	private List<Group> _getStagingGroups() {
-		DynamicQuery dynamicQuery = _groupLocalService.dynamicQuery();
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.or(
-				RestrictionsFactoryUtil.gt("liveGroupId", 0L),
-				RestrictionsFactoryUtil.like(
-					"typeSettings", "%stagedRemotely=true%")));
-
-		return _groupLocalService.dynamicQuery(dynamicQuery);
+		return _groupLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				GroupTable.INSTANCE
+			).from(
+				GroupTable.INSTANCE
+			).where(
+				GroupTable.INSTANCE.liveGroupId.eq(
+					0L
+				).or(
+					GroupTable.INSTANCE.typeSettings.like(
+						"%stagedRemotely=true%")
+				)
+			));
 	}
 
 	private boolean _isBranchingEnabledInStagingGroup(Group group) {

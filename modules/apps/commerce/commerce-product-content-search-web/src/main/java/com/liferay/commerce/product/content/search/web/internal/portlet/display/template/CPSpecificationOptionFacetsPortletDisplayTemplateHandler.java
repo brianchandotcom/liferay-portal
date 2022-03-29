@@ -58,10 +58,11 @@ public class CPSpecificationOptionFacetsPortletDisplayTemplateHandler
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		String portletTitle = _portal.getPortletTitle(
-			CPPortletKeys.CP_SPECIFICATION_OPTION_FACETS, resourceBundle);
-
-		return LanguageUtil.format(locale, "x-template", portletTitle, false);
+		return LanguageUtil.format(
+			locale, "x-template",
+			_portal.getPortletTitle(
+				CPPortletKeys.CP_SPECIFICATION_OPTION_FACETS, resourceBundle),
+			false);
 	}
 
 	@Override

@@ -138,12 +138,10 @@ public class CPSearchResultsPortletSharedSearchContributor
 					_portal.getHttpServletRequest(renderRequest));
 
 			if (commerceAccount != null) {
-				long[] commerceAccountGroupIds =
-					_commerceAccountHelper.getCommerceAccountGroupIds(
-						commerceAccount.getCommerceAccountId());
-
 				searchContext.setAttribute(
-					"commerceAccountGroupIds", commerceAccountGroupIds);
+					"commerceAccountGroupIds",
+					_commerceAccountHelper.getCommerceAccountGroupIds(
+						commerceAccount.getCommerceAccountId()));
 			}
 		}
 
@@ -208,10 +206,8 @@ public class CPSearchResultsPortletSharedSearchContributor
 				portletPreferences.getValue("paginationDelta", null));
 		}
 
-		int paginationDelta = paginationDeltaOptional.orElse(
-			configurationPaginationDelta);
-
-		portletSharedSearchSettings.setPaginationDelta(paginationDelta);
+		portletSharedSearchSettings.setPaginationDelta(
+			paginationDeltaOptional.orElse(configurationPaginationDelta));
 	}
 
 	@Reference

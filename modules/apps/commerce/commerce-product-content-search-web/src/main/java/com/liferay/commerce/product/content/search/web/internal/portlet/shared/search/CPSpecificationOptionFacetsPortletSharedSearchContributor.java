@@ -177,12 +177,10 @@ public class CPSpecificationOptionFacetsPortletSharedSearchContributor
 					_portal.getHttpServletRequest(renderRequest));
 
 			if (commerceAccount != null) {
-				long[] commerceAccountGroupIds =
-					_commerceAccountHelper.getCommerceAccountGroupIds(
-						commerceAccount.getCommerceAccountId());
-
 				searchContext.setAttribute(
-					"commerceAccountGroupIds", commerceAccountGroupIds);
+					"commerceAccountGroupIds",
+					_commerceAccountHelper.getCommerceAccountGroupIds(
+						commerceAccount.getCommerceAccountId()));
 			}
 		}
 

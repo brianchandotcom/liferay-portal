@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
@@ -783,16 +782,13 @@ public class CPFileImporterImpl implements CPFileImporter {
 			return;
 		}
 
-		PortletPreferencesIds portletPreferencesIds =
-			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				layout.getCompanyId(), layout.getGroupId(), layout.getPlid(),
-				portletId,
-				PortletPreferencesFactoryConstants.
-					SETTINGS_SCOPE_PORTLET_INSTANCE);
-
 		PortletPreferences portletPreferences =
 			_portletPreferencesLocalService.getPreferences(
-				portletPreferencesIds);
+				PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+					layout.getCompanyId(), layout.getGroupId(),
+					layout.getPlid(), portletId,
+					PortletPreferencesFactoryConstants.
+						SETTINGS_SCOPE_PORTLET_INSTANCE));
 
 		ResourceBundleLoader resourceBundleLoader =
 			new AggregateResourceBundleLoader(
@@ -828,13 +824,10 @@ public class CPFileImporterImpl implements CPFileImporter {
 			return;
 		}
 
-		PortletPreferencesIds portletPreferencesIds =
-			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
-				layout.getGroupId(), 0, layout, portletId, false);
-
 		PortletPreferences portletPreferences =
 			_portletPreferencesLocalService.getPreferences(
-				portletPreferencesIds);
+				PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+					layout.getGroupId(), 0, layout, portletId, false));
 
 		Iterator<String> iterator = jsonObject.keys();
 

@@ -236,11 +236,11 @@ public class CommerceChannelLocalServiceImpl
 		CommerceChannel commerceChannel =
 			commerceChannelLocalService.getCommerceChannel(commerceChannelId);
 
-		long classNameId = classNameLocalService.getClassNameId(
-			CommerceChannel.class.getName());
-
 		return _groupLocalService.fetchGroup(
-			commerceChannel.getCompanyId(), classNameId, commerceChannelId);
+			commerceChannel.getCompanyId(),
+			classNameLocalService.getClassNameId(
+				CommerceChannel.class.getName()),
+			commerceChannelId);
 	}
 
 	@Override

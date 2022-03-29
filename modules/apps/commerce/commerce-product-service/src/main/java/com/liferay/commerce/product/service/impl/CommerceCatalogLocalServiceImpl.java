@@ -252,11 +252,11 @@ public class CommerceCatalogLocalServiceImpl
 		CommerceCatalog commerceCatalog =
 			commerceCatalogLocalService.getCommerceCatalog(commerceCatalogId);
 
-		long classNameId = classNameLocalService.getClassNameId(
-			CommerceCatalog.class.getName());
-
 		Group group = _groupLocalService.fetchGroup(
-			commerceCatalog.getCompanyId(), classNameId, commerceCatalogId);
+			commerceCatalog.getCompanyId(),
+			classNameLocalService.getClassNameId(
+				CommerceCatalog.class.getName()),
+			commerceCatalogId);
 
 		if (group != null) {
 			return group;

@@ -1298,13 +1298,10 @@ public class CPDefinitionLocalServiceImpl
 			long cpDefinitionId)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(
-			CPDefinition.class);
-
 		List<CPAttachmentFileEntry> cpAttachmentFileEntries =
 			cpAttachmentFileEntryLocalService.getCPAttachmentFileEntries(
-				classNameId, cpDefinitionId,
-				CPAttachmentFileEntryConstants.TYPE_IMAGE,
+				classNameLocalService.getClassNameId(CPDefinition.class),
+				cpDefinitionId, CPAttachmentFileEntryConstants.TYPE_IMAGE,
 				WorkflowConstants.STATUS_APPROVED, 0, 1);
 
 		if (cpAttachmentFileEntries.isEmpty()) {
@@ -2202,12 +2199,11 @@ public class CPDefinitionLocalServiceImpl
 				new HashMap<String, Serializable>());
 
 			if (cpDefinition.isApproved()) {
-				long classNameId = classNameLocalService.getClassNameId(
-					cpDefinition.getModelClassName());
-
 				cpAttachmentFileEntryLocalService.
 					checkCPAttachmentFileEntriesByDisplayDate(
-						classNameId, cpDefinition.getCPDefinitionId());
+						classNameLocalService.getClassNameId(
+							cpDefinition.getModelClassName()),
+						cpDefinition.getCPDefinitionId());
 
 				cpInstanceLocalService.checkCPInstancesByDisplayDate(
 					cpDefinition.getCPDefinitionId());
@@ -2390,12 +2386,12 @@ public class CPDefinitionLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNotNull(ddmStructureKey)) {
-			long classNameId = classNameLocalService.getClassNameId(
-				CPDefinition.class.getName());
-
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchStructure(
-					groupId, classNameId, ddmStructureKey, true);
+					groupId,
+					classNameLocalService.getClassNameId(
+						CPDefinition.class.getName()),
+					ddmStructureKey, true);
 
 			if (ddmStructure == null) {
 				throw new NoSuchStructureException();

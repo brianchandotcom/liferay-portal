@@ -611,10 +611,9 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		document.addNumber(
 			CPField.OPTION_IDS, ArrayUtil.toLongArray(optionIds));
 
-		String[] skus = _cpInstanceLocalService.getSKUs(
-			cpDefinition.getCPDefinitionId());
-
-		document.addText(CPField.SKUS, skus);
+		document.addText(
+			CPField.SKUS,
+			_cpInstanceLocalService.getSKUs(cpDefinition.getCPDefinitionId()));
 
 		List<String> specificationOptionNames = new ArrayList<>();
 		List<Long> specificationOptionIds = new ArrayList<>();

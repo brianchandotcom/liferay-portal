@@ -37,19 +37,21 @@ public class CPDefinitionTrashEntriesUpgradeProcess extends UpgradeProcess {
 
 		String template = "DELETE FROM TrashEntry WHERE classNameId = '%s';";
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			CPDefinition.class.getName());
-
 		runSQLTemplateString(
-			String.format(template, classNameId), false, false);
+			String.format(
+				template,
+				_classNameLocalService.getClassNameId(
+					CPDefinition.class.getName())),
+			false, false);
 
 		// CPInstance
 
-		classNameId = _classNameLocalService.getClassNameId(
-			CPInstance.class.getName());
-
 		runSQLTemplateString(
-			String.format(template, classNameId), false, false);
+			String.format(
+				template,
+				_classNameLocalService.getClassNameId(
+					CPInstance.class.getName())),
+			false, false);
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

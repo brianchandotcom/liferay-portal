@@ -50,11 +50,9 @@ public class CheckoutRedirectMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-
 		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(httpServletRequest);
+			_portal.getOriginalServletRequest(
+				_portal.getHttpServletRequest(renderRequest));
 
 		HttpServletResponse originalHttpServletResponse =
 			_portal.getHttpServletResponse(renderResponse);

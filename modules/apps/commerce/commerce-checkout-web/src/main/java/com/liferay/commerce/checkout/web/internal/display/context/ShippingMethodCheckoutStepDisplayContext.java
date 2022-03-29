@@ -137,13 +137,10 @@ public class ShippingMethodCheckoutStepDisplayContext {
 			_commerceShippingEngineRegistry.getCommerceShippingEngine(
 				commerceShippingMethod.getEngineKey());
 
-		List<CommerceShippingOption> commerceShippingOptions =
+		return ListUtil.sort(
 			commerceShippingEngine.getCommerceShippingOptions(
 				_getCommerceContext(), _commerceOrder,
-				themeDisplay.getLocale());
-
-		return ListUtil.sort(
-			commerceShippingOptions,
+				themeDisplay.getLocale()),
 			new CommerceShippingOptionLabelComparator());
 	}
 

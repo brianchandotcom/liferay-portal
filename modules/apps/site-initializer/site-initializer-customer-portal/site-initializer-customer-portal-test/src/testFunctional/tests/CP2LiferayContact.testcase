@@ -1,14 +1,19 @@
 @component-name = "portal-solutions"
 definition {
 
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
 	property portal.release = "false";
-	property portal.upstream = "false";
+	property portal.upstream = "true";
 	property testray.main.component.name = "Customer Portal";
 
 	setUp {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		CustomerPortal.setUpForCP20();
+
+		CustomerPortal.createCPSite(siteName = "Customer Portal");
 	}
 
 	tearDown {
@@ -17,30 +22,72 @@ definition {
 		if ("${testPortalInstance}" == "true") {
 			PortalInstances.tearDownCP();
 		}
+		else {
+			CustomerPortal.tearDownForOktaAndSAML();
+		}
 	}
 
 	@description = "LPS-143375 - Verify if Liferay Contact displays Liferay Contact's email."
 	@priority = "4"
 	test IsContactEmailDisplayed {
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
 
-		// TODO LPS-143375 Verify if Liferay Contact displays Liferay Contact's email.
+		Click(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			status = "Active",
+			title = "Test Account 01");
 
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		AssertTextEquals(
+			locator1 = "CP2LiferayContact#DISPLAY_CONTACT",
+			title = "customer-service@liferay.com",
+			value1 = "customer-service@liferay.com");
 	}
 
 	@description = "LPS-143373 - Verify if Liferay Contact displays Liferay Contact's name."
 	@priority = "4"
 	test IsContactNameDisplayed {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-		// TODO LPS-143373 Verify if Liferay Contact displays Liferay Contact's name.
+		Click(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			status = "Active",
+			title = "Test Account 01");
 
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "CP2LiferayContact#CONTACT_NAME");
 	}
 
 	@description = "LPS-143374 - Verify if Liferay Contact displays Liferay Contact's role."
 	@priority = "3"
 	test IsContactRoleDisplayed {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
 
-		// TODO LPS-143374 Verify if Liferay Contact displays Liferay Contact's role.
+		Click(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			status = "Active",
+			title = "Test Account 01");
 
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		AssertTextEquals(
+			locator1 = "CP2LiferayContact#DISPLAY_CONTACT",
+			title = "Liferay Support",
+			value1 = "Liferay Support");
 	}
 
 }

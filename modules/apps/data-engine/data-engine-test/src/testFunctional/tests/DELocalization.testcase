@@ -703,4 +703,76 @@ definition {
 			optionValue = "Option 2");
 	}
 
+	@description = "Verify that is possible to choose different options for Single Selection field for a translated language"
+	@priority = "5"
+	test CanChooseDifferentOptionsFromSingleSelectionField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DEBuilder.addField(
+			fieldLabel = "Single Selection",
+			fieldName = "Single Selection");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Single Selection",
+			optionValueList = "Option 1,Option 2");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Single Selection",
+			fieldFieldLabelEdit = "单选列表框");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		PortletEntry.inputTitle(title = "Test");
+
+		DERenderer.inputDataInSingleSelectionField(
+			fieldLabel = "Single Selection",
+			optionValue = "Option 1");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "测试");
+
+		DERenderer.inputDataInSingleSelectionField(
+			fieldLabel = "单选列表框",
+			optionValue = "Option 2");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test");
+
+		DERenderer.assertDataInSingleSelectionField(
+			fieldLabel = "Single Selection",
+			optionValue = "Option 1");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		DERenderer.assertDataInSingleSelectionField(
+			fieldLabel = "单选列表框",
+			optionValue = "Option 2");
+	}
+
 }

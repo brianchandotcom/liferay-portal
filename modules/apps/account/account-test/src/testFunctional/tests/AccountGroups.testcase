@@ -37,13 +37,13 @@ definition {
 				requireReset = "false",
 				userEmailAddress = "userea1@liferay.com");
 
-			task ("Add A new Account Group exists") {
+			task ("And A new Account Group exists") {
 				JSONAccountGroup.addAccountGroup(
 					accountGroupDescription = "This is an Account Group.",
 					accountGroupName = "AG Name not Clickable");
 			}
 
-			task ("Add A new Regular role with Update permission exists") {
+			task ("And A new Regular role with Update permission exists") {
 				JSONRole.addRegularRole(roleTitle = "Only Update Permission");
 
 				Permissions.definePermissionViaJSONAPI(

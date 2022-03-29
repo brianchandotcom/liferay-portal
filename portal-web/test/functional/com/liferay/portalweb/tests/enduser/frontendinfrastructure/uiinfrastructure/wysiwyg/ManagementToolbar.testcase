@@ -51,6 +51,40 @@ definition {
 		}
 	}
 
+	@description = "LPS-147854. Assert the info button remains displayed on the right after clicking an action"
+	@priority = "5"
+	test InfoButtonAndActionsRender {
+		task ("Given window size is set") {
+			SetWindowSize(value1 = "800,800");
+		}
+
+		task ("Then the info button is displayed on the right") {
+			OcularAssertElementImage(
+				locator1 = "ClaySamplePortlet#DISPLAY_CONTEXT_CONTAINER",
+				value1 = "ManagementToolbar/InfoButtonAndActionsRender/InfoButtonBefore.png",
+				value2 = "80");
+		}
+
+		task ("And when clicking on an action item") {
+			Check.checkNotVisibleNoErrors(locator1 = "ClaySamplePortlet#DISPLAY_CONTEXT_CHECKBOX");
+
+			AssertConfirm(value1 = "Select all checkbox changed");
+		}
+
+		task ("Then the info button remains displayed in the same initial position") {
+			ScrollBy(value1 = "0, 250");
+
+			OcularAssertElementImage(
+				locator1 = "ClaySamplePortlet#DISPLAY_CONTEXT_CONTAINER",
+				value1 = "ManagementToolbar/InfoButtonAndActionsRender/InfoButtonAfter.png",
+				value2 = "80");
+		}
+
+		task ("And there is a separator between info and action buttons") {
+			AssertElementPresent(locator1 = "ManagementBar#ACTION_INFO_BUTTON_SEPARATOR");
+		}
+	}
+
 	@description = "LPS-147404. Assert the more actions button is displayed"
 	@priority = "5"
 	test MoreActionsButtonCanRender {

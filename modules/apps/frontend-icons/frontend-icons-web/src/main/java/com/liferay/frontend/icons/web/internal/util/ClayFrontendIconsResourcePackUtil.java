@@ -36,7 +36,7 @@ public class ClayFrontendIconsResourcePackUtil {
 			SVGUtil.getFrontendIconsResources(getSpritemap());
 
 		FrontendIconsResourcePack frontendIconsResourcePack =
-			new FrontendIconsResourcePack(CLAY_FRONTEND_ICONS_PACK_NAME, false);
+			new FrontendIconsResourcePack(false, CLAY_FRONTEND_ICONS_PACK_NAME);
 
 		frontendIconsResourcePack.addFrontendIconsResources(
 			frontendIconsResources);

@@ -29,9 +29,9 @@ public class FrontendIconsResourcePack {
 		this(name, true);
 	}
 
-	public FrontendIconsResourcePack(String name, boolean editable) {
-		_name = name;
+	public FrontendIconsResourcePack(boolean editable, String name) {
 		_editable = editable;
+		_name = name;
 	}
 
 	public void addFrontendIconResource(

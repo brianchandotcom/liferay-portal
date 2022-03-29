@@ -512,13 +512,6 @@ public class GetPageContentMVCResourceCommandTest {
 
 		mockLiferayResourceRequest.setAttribute(
 			PortletServlet.PORTLET_SERVLET_REQUEST, mockHttpServletRequest);
-
-		mockLiferayResourceRequest.addParameter(
-			"segmentsExperienceId",
-			String.valueOf(
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid())));
-
 		mockLiferayResourceRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
 

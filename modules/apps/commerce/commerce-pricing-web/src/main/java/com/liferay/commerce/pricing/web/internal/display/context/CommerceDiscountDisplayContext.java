@@ -533,13 +533,11 @@ public class CommerceDiscountDisplayContext extends BasePricingDisplayContext {
 			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
 				commercePricingRequestHelper.getCompanyId());
 
-		String localizedPercentage =
+		return StringUtil.removeSubstring(
 			_percentageFormatter.getLocalizedPercentage(
 				locale, commerceCurrency.getMaxFractionDigits(),
-				commerceCurrency.getMinFractionDigits(), percentage);
-
-		return StringUtil.removeSubstring(
-			localizedPercentage, StringPool.PERCENT);
+				commerceCurrency.getMinFractionDigits(), percentage),
+			StringPool.PERCENT);
 	}
 
 	public PortletURL getPortletDiscountRuleURL() {

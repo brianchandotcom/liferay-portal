@@ -103,10 +103,10 @@ public class CommerceDiscountRuleCPDefinitionFDSDataProvider
 			_commerceDiscountRuleService.getCommerceDiscountRule(
 				commerceDiscountRuleId);
 
-		String settingsProperty = commerceDiscountRule.getSettingsProperty(
-			commerceDiscountRule.getType());
-
-		long[] cpDefinitionIds = StringUtil.split(settingsProperty, 0L);
+		long[] cpDefinitionIds = StringUtil.split(
+			commerceDiscountRule.getSettingsProperty(
+				commerceDiscountRule.getType()),
+			0L);
 
 		if (cpDefinitionIds == null) {
 			return Collections.emptyList();

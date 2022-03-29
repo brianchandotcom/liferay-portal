@@ -49,15 +49,15 @@ public class SVGUtil {
 				for (Element symbol : symbols) {
 					frontendIconsResources.add(
 						new FrontendIconsResource(
-							symbol.attributeValue("id"), _getInnerSVG(symbol),
+							_getInnerSVG(symbol), symbol.attributeValue("id"),
 							symbol.attributeValue("viewBox")));
 				}
 			}
 			else {
 				return Collections.singletonList(
 					new FrontendIconsResource(
-						rootElement.attributeValue("id"),
 						_getInnerSVG(rootElement),
+						rootElement.attributeValue("id"),
 						rootElement.attributeValue("viewBox")));
 			}
 		}

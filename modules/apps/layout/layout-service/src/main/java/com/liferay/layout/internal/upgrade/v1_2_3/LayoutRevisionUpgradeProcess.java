@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutRevisionConstants;
 import com.liferay.portal.kernel.model.LayoutSetBranchTable;
 import com.liferay.portal.kernel.model.LayoutTable;
@@ -92,10 +91,11 @@ public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 	private void _createInitialContentLayoutRevisions(Layout layout)
 		throws PortalException {
 
-		List<LayoutRevision> layoutRevisions =
-			_layoutRevisionLocalService.getLayoutRevisions(layout.getPlid());
+		int layoutRevisionsCount =
+			_layoutRevisionLocalService.getLayoutRevisionsCount(
+				layout.getPlid());
 
-		if (!layoutRevisions.isEmpty()) {
+		if (layoutRevisionsCount > 0) {
 			return;
 		}
 

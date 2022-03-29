@@ -57,6 +57,13 @@ export function HideFromSearchField({item}) {
 					})
 				);
 			}}
+			title={
+				hiddenAncestor
+					? Liferay.Language.get(
+							'configuration-inherited-from-parent-fragment'
+					  )
+					: null
+			}
 			value={hiddenAncestor || item.config.indexed === false}
 		/>
 	);

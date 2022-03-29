@@ -1284,7 +1284,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 				<configure-elasticsearch-discovery-type-single-node />
 
-				<antcall target="start-elasticsearch-node" />
+				<antcall target="start-elasticsearch-node" unless:true="${skip.server.startup}" />
 			</default>
 		</switch>
 
@@ -1341,6 +1341,12 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 		<configure-kibana-x-pack-security-properties if:true="${elastic.xpack.enabled}" />
 
+		<antcall target="start-kibana-server" unless:true="${skip.server.startup}" />
+
+		<lstopwatch action="total" name="start.kibana" />
+	</target>
+
+	<target name="start-kibana-server">
 		<exec dir="${elastic.kibana.dir}/bin" executable="/bin/bash" osfamily="unix">
 			<arg value="-c" />
 			<arg value="./kibana --allow-root &gt; kibana.log 2&gt;&amp;1 &amp;" />
@@ -1355,9 +1361,14 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<socket port="5601" server="localhost" />
 		</waitfor>
 
-		<lstopwatch action="total" name="start.kibana" />
+		<if>
+			<isset property="kibana.server.not.started" />
+			<then>
+				<lstopwatch action="total" name="start.kibana" />
 
-		<fail if="kibana.server.not.started" message="Kibana failed to start on port 5601." />
+				<fail message="Kibana failed to start on port 5601." />
+			</then>
+		</if>
 	</target>
 
 	<target name="stop-elasticsearch">

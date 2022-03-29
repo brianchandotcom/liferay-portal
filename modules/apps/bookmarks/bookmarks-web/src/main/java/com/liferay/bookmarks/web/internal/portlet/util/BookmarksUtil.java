@@ -19,11 +19,6 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.bookmarks.util.comparator.EntryCreateDateComparator;
-import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
-import com.liferay.bookmarks.util.comparator.EntryNameComparator;
-import com.liferay.bookmarks.util.comparator.EntryPriorityComparator;
-import com.liferay.bookmarks.util.comparator.EntryURLComparator;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,7 +32,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -235,36 +229,6 @@ public class BookmarksUtil {
 		}
 
 		return entries;
-	}
-
-	public static OrderByComparator<BookmarksEntry> getEntryOrderByComparator(
-		String orderByCol, String orderByType) {
-
-		boolean orderByAsc = false;
-
-		if (orderByType.equals("asc")) {
-			orderByAsc = true;
-		}
-
-		OrderByComparator<BookmarksEntry> orderByComparator = null;
-
-		if (orderByCol.equals("create-date")) {
-			orderByComparator = new EntryCreateDateComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("modified-date")) {
-			orderByComparator = new EntryModifiedDateComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("name")) {
-			orderByComparator = new EntryNameComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("priority")) {
-			orderByComparator = new EntryPriorityComparator(orderByAsc);
-		}
-		else if (orderByCol.equals("url")) {
-			orderByComparator = new EntryURLComparator(orderByAsc);
-		}
-
-		return orderByComparator;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(BookmarksUtil.class);

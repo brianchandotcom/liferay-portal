@@ -61,12 +61,80 @@ definition {
 	}
 
 	@description = "LPS-148544 - Verify it's possible to map a boolean field for a template on the content page and view the entries"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanMapAndViewBooleanField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 149241",
+			objectName = "CustomObject149241",
+			pluralLabelName = "Custom Objects 149241");
 
-		// TODO LPS-149241 CanMapAndViewBooleanField pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "Boolean",
+			isRequired = "false",
+			objectName = "CustomObject149241");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject149241");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 149241");
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject149241",
+			value = "149241");
+
+		InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "guest");
+
+		InformationTemplates.addCP(
+			informationTemplateName = "Test Information Template",
+			itemType = "Custom Object 149241");
+
+		InformationTemplates.inputScript(scriptContent = "");
+
+		InformationTemplates.addField(
+			fieldName = "Custom Field",
+			panelTitle = "Custom Object 149241");
+
+		PortletEntry.save();
+
+		InformationTemplates.viewTemplate(informationTemplateName = "Test Information Template");
+
+		Navigator.openURL();
+
+		WaitForPageLoad();
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		VisualizeObjectCollectionDisplay.openHeading();
+
+		VisualizeObjectDisplayPage.addItem(
+			frameTitle = "Select",
+			pluralLabelName = "Custom Objects 149241");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Test Information Template");
+
+		PageEditor.clickPublish();
+
+		Navigator.gotoPage(pageName = "Test Content Page Name");
+
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "149241");
 	}
 
 	@description = "LPS-148544 - Verify it's possible to map a Date field for a template on the content page and view the entries"

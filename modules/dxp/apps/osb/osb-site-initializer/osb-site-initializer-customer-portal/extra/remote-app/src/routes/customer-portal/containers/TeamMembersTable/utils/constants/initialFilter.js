@@ -11,18 +11,5 @@
 
 export const INITIAL_FILTER = {
 	hasValue: false,
-	roles: {
-		name: 'Roles',
-		value: [],
-	},
 	searchTerm: '',
-	status: {
-		name: 'Status',
-		value: [],
-	},
-
-	supportSeat: {
-		name: 'Support Seat',
-		value: [],
-	},
 };

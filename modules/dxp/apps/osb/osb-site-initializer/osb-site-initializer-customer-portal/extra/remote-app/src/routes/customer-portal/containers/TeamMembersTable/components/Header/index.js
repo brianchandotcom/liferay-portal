@@ -72,10 +72,10 @@ const TeamMembersTableHeader = ({
 	});
 
 	return (
-		<div className="bg-neutral-1 d-flex flex-column pb-1 pt-3 px-3 rounded">
+		<div className="bg-neutral-1 d-flex flex-column pt-3 px-3 py-3 rounded">
 			<div className="d-flex">
 				<TeamMembersFilter
-					filtersState={[filters, setFilters]}
+					filtersState={[setFilters]}
 					userAccounts={userAccounts}
 				/>
 
@@ -116,7 +116,7 @@ const TeamMembersTableHeader = ({
 
 			<BadgeFilter
 				activationKeysLength={userAccounts?.length}
-				filtersState={[filters, setFilters]}
+				filtersState={[filters]}
 				loading={loading}
 			/>
 

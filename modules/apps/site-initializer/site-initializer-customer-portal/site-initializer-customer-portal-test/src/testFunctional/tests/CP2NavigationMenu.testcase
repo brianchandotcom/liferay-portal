@@ -1,0 +1,223 @@
+@component-name = "portal-solutions"
+definition {
+
+	property custom.properties = "javascript.single.page.application.enabled=false${line.separator}jsonws.web.service.paths.excludes=";
+	property portal.release = "true";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Customer Portal";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		CustomerPortal.setUpForCP20();
+
+		CustomerPortal.createCPSite(siteName = "Customer Portal");
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+		else {
+			CustomerPortal.tearDownForOktaAndSAML();
+
+			User.logoutPG();
+		}
+	}
+
+	@description = "LPS-143811 - Verify if Analytics Cloud option is showing under Product Activation."
+	@priority = "3"
+	test IsAnalyticsCloudOptionAvailable {
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		Click(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			title = "Test Account 03");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+
+		AssertElementPresent(
+			field = "Analytics Cloud",
+			locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+	}
+
+	@description = "LPS-143813 - Verify if Commerce option is showing under Product Activation."
+	@priority = "3"
+	test IsCommerceOptionAvailable {
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		Click(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			title = "Test Account 04");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+
+		AssertElementPresent(
+			field = "Commerce",
+			locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+	}
+
+	@description = "LPS-143815 - Verify if DXP Cloud option is showing under Product Activation."
+	@priority = "3"
+	test IsDXPCloudOptionAvailable {
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		Click(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			title = "Test Account 01");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+
+		AssertElementPresent(
+			field = "DXP Cloud",
+			locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+	}
+
+	@description = "LPS-143814 - Verify if DXP option is showing under Product Activation."
+	@priority = "3"
+	test IsDXPOptionAvailable {
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		Click(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			title = "Test Account 02");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+
+		AssertElementPresent(
+			field = "DXP",
+			locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+	}
+
+	@description = "LPS-143816 - Verify if Enterprise Search option is showing under Product Activation."
+	@priority = "3"
+	test IsEnterpriseSearchOptionAvailable {
+		CP2NavigationMenu.addProducts();
+
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		Click(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			title = "Test Account 01");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+
+		AssertElementPresent(
+			field = "Enterprise Search",
+			locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+	}
+
+	@description = "LPS-143801 - Verify if Overview is displayed on Navigation Menu."
+	@priority = "4"
+	test IsOverviewMenuDisplayed {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		Click(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			status = "Active",
+			title = "Test Account 01");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "CP2NavigationMenu#OVERVIEW");
+	}
+
+	@description = "LPS-143817 - Verify if Portal option is showing under Product Activation."
+	@priority = "3"
+	test IsPortalOptionAvailable {
+		ApplicationsMenu.gotoSite(site = "Customer Portal");
+
+		Click(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			title = "Test Account 01");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		Click(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+
+		AssertElementPresent(
+			field = "Portal",
+			locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+	}
+
+	@description = "LPS-143373 - Verify if Product Activation is displayed on Navigation Menu."
+	@priority = "4"
+	test IsProductActivationMenuDisplayed {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		Click(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			status = "Active",
+			title = "Test Account 01");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "CP2NavigationMenu#PRODUCT_ACTIVATION");
+	}
+
+	@description = "LPS-143809 - Verify if Team Members is displayed on Navigation Menu."
+	@priority = "4"
+	test IsTeamMembersMenuDisplayed {
+		ApplicationsMenu.gotoSite(key_site = "Customer Portal");
+
+		Click(
+			locator1 = "CP2LiferayContact#PROJECT_CARD",
+			status = "Active",
+			title = "Test Account 01");
+
+		CustomerPortal.loginOktaToUpdateCP();
+
+		SelectWindow(locator1 = "title=Project - Customer Portal - Liferay DXP");
+
+		Refresh();
+
+		AssertElementPresent(locator1 = "CP2NavigationMenu#TEAM_MEMBERS");
+	}
+
+}

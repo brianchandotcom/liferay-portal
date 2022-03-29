@@ -108,7 +108,7 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 		throws ConfigurationModelListenerException {
 
 		try {
-			Stream<Configuration> configurationStream = Stream.of(
+			Stream<Configuration> companyConfigurationStream = Stream.of(
 				Optional.ofNullable(
 					_configurationAdmin.listConfigurations(
 						StringBundler.concat(
@@ -119,7 +119,7 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 				).orElse(
 					new Configuration[0]
 				));
-			Stream<Configuration> companyConfigurationStream = Stream.of(
+			Stream<Configuration> configurationStream = Stream.of(
 				Optional.ofNullable(
 					_configurationAdmin.listConfigurations(
 						StringBundler.concat(

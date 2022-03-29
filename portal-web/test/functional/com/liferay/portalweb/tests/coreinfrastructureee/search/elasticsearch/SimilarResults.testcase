@@ -782,25 +782,27 @@ definition {
 
 	@priority = "4"
 	test ViewSimilarResultsWithDifferentScope {
-		var count = "";
+		for (var siteName : list "Site Name 1,Site Name 2,Site Name 3") {
+			JSONGroup.addGroup(groupName = "${siteName}");
+		}
+
+		var count = "0";
 
 		for (var siteName : list "Guest,Site Name 1,Site Name 2,Site Name 3") {
-			JSONGroup.addGroup(groupName = "${siteName}");
-
-			JSONWebcontent.addWebContent(
-				content = "WC Content",
-				groupName = "${siteName}",
-				title = "WC Title ${count}");
+			JSONBlog.addEntry(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title ${count}",
+				groupName = "${siteName}");
 
 			JSONDocument.addFile(
 				dmDocumentDescription = "DM Document Description ${count}",
 				dmDocumentTitle = "DM Document Title ${count}",
 				groupName = "${siteName}");
 
-			JSONBlog.addEntry(
-				entryContent = "Blogs Entry Content",
-				entryTitle = "Blogs Entry Title ${count}",
-				groupName = "${siteName}");
+			JSONWebcontent.addWebContent(
+				content = "WC Content",
+				groupName = "${siteName}",
+				title = "WC Title ${count}");
 
 			JSONWiki.addWikiPage(
 				groupName = "${siteName}",

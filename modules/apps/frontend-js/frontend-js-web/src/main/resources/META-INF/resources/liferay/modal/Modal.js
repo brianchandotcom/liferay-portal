@@ -43,7 +43,6 @@ const openAlertModal = ({message}) => {
 const Modal = ({
 	bodyHTML,
 	buttons,
-	center,
 	containerProps = {
 		className: 'cadmin',
 	},
@@ -193,7 +192,6 @@ const Modal = ({
 		<>
 			{visible && (
 				<ClayModal
-					center={center}
 					className="liferay-modal"
 					containerProps={{...containerProps}}
 					disableAutoClose={disableAutoClose}

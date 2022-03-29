@@ -531,4 +531,80 @@ definition {
 		}
 	}
 
+	@description = "This test asserts the user with View Account permission can view account in account group."
+	@priority = "3"
+	test CanViewAccountsAssignedToAccountGroupWithPermissions {
+		task ("Given A new User/Accounts/Account Groups exists") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account for Account Group",
+				accountEntryType = "Business");
+
+			JSONAccountGroup.addAccountGroup(
+				accountGroupDescription = "This is an Account Group assigned with Accounts.",
+				accountGroupName = "AG Name with Accounts");
+
+			task ("And A new Regular role with view account permission exists") {
+				JSONRole.addRegularRole(roleTitle = "View Account Reg Role");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "VIEW_CONTROL_PANEL",
+					resourceName = "90",
+					roleTitle = "View Account Reg Role");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "ACCESS_IN_CONTROL_PANEL",
+					resourceName = "com_liferay_account_admin_web_internal_portlet_AccountGroupsAdminPortlet",
+					roleTitle = "View Account Reg Role");
+
+				for (var resourceAction : list "VIEW,VIEW_ACCOUNTS") {
+					Permissions.definePermissionViaJSONAPI(
+						resourceAction = "${resourceAction}",
+						resourceName = "com.liferay.account.model.AccountGroup",
+						roleTitle = "View Account Reg Role");
+				}
+			}
+		}
+
+		task ("When Assign the user with regular role") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "View Account Reg Role",
+				userEmailAddress = "userea1@liferay.com");
+
+			task ("And Assign the account to account group") {
+				AccountGroups.openAccountGroupsAdmin();
+
+				LexiconEntry.gotoEntry(rowEntry = "AG Name with Accounts");
+
+				AccountGroups.viewDefault(tabName = "Accounts");
+
+				AccountGroups.addAssignee(
+					accountGroupName = "AG Name with Accounts",
+					assigneeNames = "Account for Account Group");
+			}
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+		}
+
+		task ("Then The new User can view the Account assigned to Account group") {
+			AccountGroups.openAccountGroupsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AG Name with Accounts");
+
+			AccountGroups.viewAssignee(assigneeName = "Account for Account Group");
+		}
+	}
+
 }

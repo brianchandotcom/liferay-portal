@@ -430,10 +430,10 @@ public class KaleoFormsAdminPortlet extends MVCPortlet {
 
 		KaleoFormsAdminDisplayContext kaleoFormsAdminDisplayContext =
 			new KaleoFormsAdminDisplayContext(
-				renderRequest, renderResponse, _ddlRecordLocalService,
-				_ddmDisplayRegistry, _htmlParser,
+				_ddlRecordLocalService, _ddmDisplayRegistry, _htmlParser,
 				_kaleoDefinitionVersionLocalService,
-				_kaleoFormsWebConfiguration, storageEngine);
+				_kaleoFormsWebConfiguration, renderRequest, renderResponse,
+				storageEngine);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, kaleoFormsAdminDisplayContext);

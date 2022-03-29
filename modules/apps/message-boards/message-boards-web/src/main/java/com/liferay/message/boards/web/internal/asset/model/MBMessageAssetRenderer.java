@@ -63,13 +63,12 @@ public class MBMessageAssetRenderer
 	extends BaseJSPAssetRenderer<MBMessage> implements TrashRenderer {
 
 	public MBMessageAssetRenderer(
-		MBMessage message,
-		ModelResourcePermission<MBMessage> messageModelResourcePermission,
-		HtmlParser htmlParser) {
+		HtmlParser htmlParser, MBMessage message,
+		ModelResourcePermission<MBMessage> messageModelResourcePermission) {
 
+		_htmlParser = htmlParser;
 		_message = message;
 		_messageModelResourcePermission = messageModelResourcePermission;
-		_htmlParser = htmlParser;
 	}
 
 	@Override

@@ -50,9 +50,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class KBArticleAssetRenderer extends BaseJSPAssetRenderer<KBArticle> {
 
-	public KBArticleAssetRenderer(KBArticle kbArticle, HtmlParser htmlParser) {
-		_kbArticle = kbArticle;
+	public KBArticleAssetRenderer(HtmlParser htmlParser, KBArticle kbArticle) {
 		_htmlParser = htmlParser;
+		_kbArticle = kbArticle;
 	}
 
 	@Override

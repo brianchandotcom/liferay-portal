@@ -80,13 +80,13 @@ public class WikiPageAssetRenderer
 	}
 
 	public WikiPageAssetRenderer(
-		WikiPage page, WikiEngineRenderer wikiEngineRenderer,
-		HtmlParser htmlParser, TrashHelper trashHelper) {
+		HtmlParser htmlParser, TrashHelper trashHelper,
+		WikiEngineRenderer wikiEngineRenderer, WikiPage page) {
 
-		_page = page;
-		_wikiEngineRenderer = wikiEngineRenderer;
 		_htmlParser = htmlParser;
 		_trashHelper = trashHelper;
+		_wikiEngineRenderer = wikiEngineRenderer;
+		_page = page;
 	}
 
 	@Override

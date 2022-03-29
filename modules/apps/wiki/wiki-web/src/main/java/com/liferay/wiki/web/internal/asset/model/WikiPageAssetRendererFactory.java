@@ -97,7 +97,7 @@ public class WikiPageAssetRendererFactory
 		}
 
 		WikiPageAssetRenderer wikiPageAssetRenderer = new WikiPageAssetRenderer(
-			page, _wikiEngineRenderer, _htmlParser, _trashHelper);
+			_htmlParser, _trashHelper, _wikiEngineRenderer, page);
 
 		wikiPageAssetRenderer.setAssetDisplayPageFriendlyURLProvider(
 			_assetDisplayPageFriendlyURLProvider);

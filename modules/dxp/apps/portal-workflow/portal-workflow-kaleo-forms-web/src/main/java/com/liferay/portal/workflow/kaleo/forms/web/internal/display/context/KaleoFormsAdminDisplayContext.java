@@ -83,21 +83,21 @@ import javax.servlet.http.HttpServletRequest;
 public class KaleoFormsAdminDisplayContext {
 
 	public KaleoFormsAdminDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
 		DDLRecordLocalService ddlRecordLocalService,
 		DDMDisplayRegistry ddmDisplayRegistry, HtmlParser htmlParser,
 		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
 		KaleoFormsWebConfiguration kaleoFormsWebConfiguration,
+		RenderRequest renderRequest, RenderResponse renderResponse,
 		StorageEngine storageEngine) {
 
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
 		_ddlRecordLocalService = ddlRecordLocalService;
 		_ddmDisplayRegistry = ddmDisplayRegistry;
 		_htmlParser = htmlParser;
 		_kaleoDefinitionVersionLocalService =
 			kaleoDefinitionVersionLocalService;
 		_kaleoFormsWebConfiguration = kaleoFormsWebConfiguration;
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 		_storageEngine = storageEngine;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
@@ -223,8 +223,8 @@ public class KaleoFormsAdminDisplayContext {
 		throws PortalException {
 
 		return new KaleoFormsViewRecordsDisplayContext(
-			_renderRequest, _renderResponse, _ddlRecordLocalService,
-			_htmlParser);
+			_ddlRecordLocalService, _htmlParser, _renderRequest,
+			_renderResponse);
 	}
 
 	public long getKaleoProcessId() {

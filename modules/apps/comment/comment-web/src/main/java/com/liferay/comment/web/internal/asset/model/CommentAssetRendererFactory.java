@@ -75,7 +75,7 @@ public class CommentAssetRendererFactory
 		WorkflowableComment workflowableComment = (WorkflowableComment)comment;
 
 		CommentAssetRenderer commentAssetRenderer = new CommentAssetRenderer(
-			workflowableComment, this, _htmlParser);
+			this, _htmlParser, workflowableComment);
 
 		commentAssetRenderer.setAssetRendererType(type);
 		commentAssetRenderer.setServletContext(_servletContext);

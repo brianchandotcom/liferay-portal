@@ -76,14 +76,14 @@ import javax.servlet.http.HttpServletRequest;
 public class KaleoFormsViewRecordsDisplayContext {
 
 	public KaleoFormsViewRecordsDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			DDLRecordLocalService ddlRecordLocalService, HtmlParser htmlParser)
+			DDLRecordLocalService ddlRecordLocalService, HtmlParser htmlParser,
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
 		_ddlRecordLocalService = ddlRecordLocalService;
 		_htmlParser = htmlParser;
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 
 		_kaleoProcess = (KaleoProcess)_renderRequest.getAttribute(
 			KaleoFormsWebKeys.KALEO_PROCESS);

@@ -81,23 +81,22 @@ import javax.servlet.http.HttpServletRequest;
 public class BlogEntriesDisplayContext {
 
 	public BlogEntriesDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		HtmlParser htmlParser, Portal portal, TrashHelper trashHelper) {
+		HtmlParser htmlParser, Portal portal, RenderRequest renderRequest,
+		RenderResponse renderResponse, TrashHelper trashHelper) {
 
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
 		_htmlParser = htmlParser;
 		_portal = portal;
+		_renderRequest = renderRequest;
+		_renderResponse = renderResponse;
 		_trashHelper = trashHelper;
 
 		_liferayPortletRequest = portal.getLiferayPortletRequest(renderRequest);
 		_liferayPortletResponse = portal.getLiferayPortletResponse(
 			renderResponse);
 
+		_httpServletRequest = _liferayPortletRequest.getHttpServletRequest();
 		_portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(
 			_liferayPortletRequest);
-
-		_httpServletRequest = _liferayPortletRequest.getHttpServletRequest();
 	}
 
 	public List<String> getAvailableActions(BlogsEntry blogsEntry)
@@ -126,9 +125,9 @@ public class BlogEntriesDisplayContext {
 				WebKeys.THEME_DISPLAY);
 
 		return new BlogsEntryVerticalCard(
-			blogsEntry, _htmlParser, _renderRequest, _renderResponse,
-			rowChecker, _trashHelper, rowURL,
-			themeDisplay.getPermissionChecker(), resourceBundle);
+			blogsEntry, rowURL, _htmlParser,
+			themeDisplay.getPermissionChecker(), _renderRequest,
+			_renderResponse, resourceBundle, rowChecker, _trashHelper);
 	}
 
 	public Map<String, Object> getComponentContext() throws PortalException {

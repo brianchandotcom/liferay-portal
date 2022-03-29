@@ -88,7 +88,7 @@ public class KBArticleAssetRendererFactory
 		}
 
 		KBArticleAssetRenderer kbArticleAssetRenderer =
-			new KBArticleAssetRenderer(kbArticle, _htmlParser);
+			new KBArticleAssetRenderer(_htmlParser, kbArticle);
 
 		kbArticleAssetRenderer.setAssetRendererType(type);
 		kbArticleAssetRenderer.setServletContext(_servletContext);

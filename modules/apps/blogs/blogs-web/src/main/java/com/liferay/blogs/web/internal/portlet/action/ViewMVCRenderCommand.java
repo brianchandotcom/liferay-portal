@@ -61,7 +61,7 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			BlogsWebKeys.BLOG_ENTRIES_DISPLAY_CONTEXT,
 			new BlogEntriesDisplayContext(
-				renderRequest, renderResponse, _htmlParser, _portal,
+				_htmlParser, _portal, renderRequest, renderResponse,
 				_trashHelper));
 
 		return "/blogs_admin/view.jsp";

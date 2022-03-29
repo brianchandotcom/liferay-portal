@@ -46,20 +46,20 @@ import javax.portlet.RenderResponse;
 public class BlogsEntryVerticalCard extends BaseVerticalCard {
 
 	public BlogsEntryVerticalCard(
-		BlogsEntry blogsEntry, HtmlParser htmlParser,
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		RowChecker rowChecker, TrashHelper trashHelper, String blogsEntryURL,
-		PermissionChecker permissionChecker, ResourceBundle resourceBundle) {
+		BlogsEntry blogsEntry, String blogsEntryURL, HtmlParser htmlParser,
+		PermissionChecker permissionChecker, RenderRequest renderRequest,
+		RenderResponse renderResponse, ResourceBundle resourceBundle,
+		RowChecker rowChecker, TrashHelper trashHelper) {
 
 		super(blogsEntry, renderRequest, rowChecker);
 
 		_blogsEntry = blogsEntry;
-		_htmlParser = htmlParser;
-		_renderResponse = renderResponse;
-		_trashHelper = trashHelper;
 		_blogsEntryURL = blogsEntryURL;
+		_htmlParser = htmlParser;
 		_permissionChecker = permissionChecker;
+		_renderResponse = renderResponse;
 		_resourceBundle = resourceBundle;
+		_trashHelper = trashHelper;
 	}
 
 	@Override

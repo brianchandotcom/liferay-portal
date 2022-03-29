@@ -57,13 +57,12 @@ public class CommentAssetRenderer
 	extends BaseJSPAssetRenderer<WorkflowableComment> implements TrashRenderer {
 
 	public CommentAssetRenderer(
-		WorkflowableComment workflowableComment,
 		AssetRendererFactory<WorkflowableComment> assetRendererFactory,
-		HtmlParser htmlParser) {
+		HtmlParser htmlParser, WorkflowableComment workflowableComment) {
 
-		_workflowableComment = workflowableComment;
 		_assetRendererFactory = assetRendererFactory;
 		_htmlParser = htmlParser;
+		_workflowableComment = workflowableComment;
 	}
 
 	@Override

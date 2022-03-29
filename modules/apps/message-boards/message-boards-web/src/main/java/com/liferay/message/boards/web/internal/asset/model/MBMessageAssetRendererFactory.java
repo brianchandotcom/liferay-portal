@@ -66,8 +66,8 @@ public class MBMessageAssetRendererFactory
 
 		MBMessageAssetRenderer mbMessageAssetRenderer =
 			new MBMessageAssetRenderer(
-				_mbMessageLocalService.getMessage(classPK),
-				_messageModelResourcePermission, _htmlParser);
+				_htmlParser, _mbMessageLocalService.getMessage(classPK),
+				_messageModelResourcePermission);
 
 		mbMessageAssetRenderer.setAssetDisplayPageFriendlyURLProvider(
 			_assetDisplayPageFriendlyURLProvider);

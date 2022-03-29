@@ -282,7 +282,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			classPK, WorkflowConstants.STATUS_ANY, false);
 
 		return new WikiPageAssetRenderer(
-			page, _wikiEngineRenderer, _htmlParser, _trashHelper);
+			_htmlParser, _trashHelper, _wikiEngineRenderer, page);
 	}
 
 	@Override

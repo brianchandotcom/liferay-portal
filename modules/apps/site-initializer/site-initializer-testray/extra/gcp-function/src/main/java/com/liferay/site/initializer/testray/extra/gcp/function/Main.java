@@ -118,6 +118,61 @@ public class Main {
 		}
 	}
 
+	private void _addTestrayCase(
+			Node testcaseNode, long testrayBuildId, long testrayProjectId,
+			long testrayRunId, Map<String, Object> testrayCasePropertiesMap)
+		throws Exception {
+
+		long testrayCaseTypeId = _getTestrayCaseTypeId(
+			(String)testrayCasePropertiesMap.get("testray.case.type.name"));
+
+		long testrayTeamId = _getTestrayTeamId(
+			testrayProjectId,
+			(String)testrayCasePropertiesMap.get("testray.team.name"));
+
+		long testrayComponentId = _getTestrayComponentId(
+			(String)testrayCasePropertiesMap.get("testray.main.component.name"),
+			testrayProjectId, testrayTeamId);
+
+		long testrayCaseId = _postObjectEntry(
+			HashMapBuilder.put(
+				"description",
+				(String)testrayCasePropertiesMap.get(
+					"testray.testcase.description")
+			).put(
+				"priority",
+				(String)testrayCasePropertiesMap.get(
+					"testray.testcase.priority")
+			).put(
+				"r_caseTypeToCases_c_caseTypeId",
+				String.valueOf(testrayCaseTypeId)
+			).put(
+				"r_componentToCases_componentId",
+				String.valueOf(testrayComponentId)
+			).put(
+				"r_projectToCases_c_projectId", String.valueOf(testrayProjectId)
+			).put(
+				"r_teamToCases_teamId", String.valueOf(testrayTeamId)
+			).build(),
+			(String)testrayCasePropertiesMap.get("testray.testcase.name"),
+			"cases");
+
+		// long testrayCaseResultId = _addTestrayCaseResult(
+		// 	testrayBuildId, testrayCaseId, testrayComponentId, testrayRunId,
+		// 	testrayCasePropertiesMap, testcaseNode);
+
+		// _addTestrayAttachments(testcaseNode, testrayCaseResultId);
+
+		// _addTestrayIssue(
+		// 	(String)testrayCasePropertiesMap.get("testray.case.issue"),
+		// 	testrayCaseResultId);
+		// _addTestrayIssue(
+		// 	(String)testrayCasePropertiesMap.get("testray.case.defect"),
+		// 	testrayCaseResultId);
+		// _addTestrayWarnings(testrayCasePropertiesMap, testrayCaseResultId);
+
+	}
+
 	private void _addTestrayFactor(
 			long testrayFactorCategoryId, String testrayFactorCategoryName,
 			long testrayFactorOptionId, String testrayFactorOptionName,

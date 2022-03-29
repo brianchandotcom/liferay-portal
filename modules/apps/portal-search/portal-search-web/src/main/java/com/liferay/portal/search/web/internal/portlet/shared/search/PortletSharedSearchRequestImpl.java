@@ -47,6 +47,7 @@ import com.liferay.portal.search.web.portlet.shared.task.PortletSharedTaskExecut
 import com.liferay.portal.search.web.search.request.SearchSettings;
 import com.liferay.portal.search.web.search.request.SearchSettingsContributor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -186,7 +187,7 @@ public class PortletSharedSearchRequestImpl
 			searchRequestBuilderFactory);
 	}
 
-	private Stream<Portlet> _getInstantiatedPortletsStream(
+	private List<Portlet> _getInstantiatedPortlets(
 		Layout layout, long companyId) {
 
 		List<com.liferay.portal.kernel.model.PortletPreferences>
@@ -195,17 +196,22 @@ public class PortletSharedSearchRequestImpl
 					PortletKeys.PREFS_OWNER_ID_DEFAULT,
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid());
 
-		Stream<com.liferay.portal.kernel.model.PortletPreferences> stream =
-			portletPreferencesList.stream();
+		List<Portlet> portletList = new ArrayList<>();
 
-		return stream.map(
-			portletPreferences -> portletLocalService.getPortletById(
-				companyId, portletPreferences.getPortletId())
-		).filter(
-			portlet ->
-				portlet.isInstanceable() &&
-				Validator.isNotNull(portlet.getInstanceId())
-		);
+		for (com.liferay.portal.kernel.model.PortletPreferences
+				portletPreferences : portletPreferencesList) {
+
+			Portlet portlet = portletLocalService.getPortletById(
+				companyId, portletPreferences.getPortletId());
+
+			if (portlet.isInstanceable() &&
+				Validator.isNotNull(portlet.getInstanceId())) {
+
+				portletList.add(portlet);
+			}
+		}
+
+		return portletList;
 	}
 
 	private Stream<Portlet> _getPortletsStream(Layout layout, long companyId) {
@@ -218,8 +224,11 @@ public class PortletSharedSearchRequestImpl
 			return portlets.stream();
 		}
 
+		List<Portlet> instantiatedPortlets = _getInstantiatedPortlets(
+			layout, companyId);
+
 		return Stream.concat(
-			portlets.stream(), _getInstantiatedPortletsStream(layout, companyId)
+			portlets.stream(), instantiatedPortlets.stream()
 		).distinct();
 	}
 

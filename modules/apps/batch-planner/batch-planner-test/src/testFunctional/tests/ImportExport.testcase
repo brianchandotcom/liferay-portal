@@ -125,6 +125,42 @@ definition {
 		}
 	}
 
+	@description = "Verify users can exclude fields from being exported in JSON format"
+	@priority = "3"
+	test CanExcludeJSONFieldsFromExport {
+		property portal.acceptance = "true";
+
+		task ("Given several channels") {
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = "Test Channel 1",
+				channelType = "site",
+				currencyCode = "USD",
+				externalReferenceCode = "101");
+
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = "Test Channel 2",
+				channelType = "site",
+				currencyCode = "CAD",
+				externalReferenceCode = "102");
+		}
+
+		task ("When the user selects specific channel fields for export and exports the channels in JSON format") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "Channel",
+				exportFields = "name,type,currencyCode",
+				exportFileFormat = "JSON",
+				headlessEndpoint = "/headless-commerce-admin-channel");
+		}
+
+		task ("Then only those fields should be imported") {
+			ImportExport.assertExportFileContent(
+				comparisonFileName = "json_channel_import.txt",
+				exportFileName = "export.json");
+		}
+	}
+
 	@description = "Verify users can export entity data via CSV files"
 	@priority = "3"
 	test CanExportCSVFiles {

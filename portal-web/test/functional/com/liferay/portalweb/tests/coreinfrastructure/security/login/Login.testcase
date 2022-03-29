@@ -6,7 +6,9 @@ definition {
 	property testray.main.component.name = "Login";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Setup: Setup portal instance") {
+			TestCase.setUpPortalInstance();
+		}
 	}
 
 	@description = "This is a use case for LPS-39744 and LPS-78508. Default landing page could be set by property and user is redirected to the changed landing page."
@@ -138,6 +140,62 @@ definition {
 				category = "Users",
 				panel = "Control Panel",
 				portlet = "Roles");
+		}
+	}
+
+	@description = "This is a use case for LPS-150234. Login page not breaks visually when user enters his credentials incorrectly."
+	@priority = "5"
+	test LoginWithUIUsingWrongCredentials {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property test.name.skip.portal.instance = "Login#LoginWithUIUsingWrongCredentials";
+
+		task ("When: User tries to login with wrong credential") {
+			User.firstLoginUI(userEmailAddress = "wrong@liferay.com");
+		}
+
+		task ("Then: Regular UI is present with site logo") {
+			WaitForElementPresent(locator1 = "Home#SITE_NAME_LOGO");
+		}
+
+		task ("And: Error message is present") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Authentication failed. Please try again.");
+		}
+	}
+
+	@description = "This is a use case for LPS-150234. Login page not breaks visually when user enters his credentials incorrectly and one MFA verifier is enabled. Blocked by LPS-150234."
+	@priority = "5"
+	test LoginWithUIUsingWrongCredentialsAndMFAIsEnabled {
+		property app.server.types = "jboss,tcserver,tomcat,weblogic,websphere,wildfly";
+		property database.types = "db2,hypersonic,mariadb,mysql,oracle,postgresql,sqlserver,sybase";
+		property portal.release = "false";
+		property portal.upstream = "quarantine";
+		property test.name.skip.portal.instance = "Login#LoginWithUIUsingWrongCredentialsAndMFAIsEnabled";
+
+		task ("Given: Login and enable OTP and Sign Out as Instance Admin") {
+			User.firstLoginUI();
+
+			MultiFactorAuthentication.openToConfigInInstanceSettings();
+
+			MultiFactorAuthentication.configureOTP(enableOtp = "true");
+
+			SignOut.signOut();
+		}
+
+		task ("When: User tries to login with wrong credential") {
+			User.firstLoginUI(userEmailAddress = "wrong@liferay.com");
+		}
+
+		task ("Then: Regular UI is present with site logo") {
+			WaitForElementPresent(locator1 = "Home#SITE_NAME_LOGO");
+		}
+
+		task ("And: Error message is present") {
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_DISMISSIBLE",
+				value1 = "Authentication failed. Please try again.");
 		}
 	}
 

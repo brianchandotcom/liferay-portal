@@ -29,6 +29,8 @@ definition {
 			PortalInstances.tearDownCP();
 		}
 		else {
+			JSONGroup.deleteGroupByName(groupName = "Test Site Name");
+
 			User.logoutPG();
 		}
 	}
@@ -957,7 +959,7 @@ definition {
 
 		FormFields.enableCheckbox(fieldName = "enabled");
 
-		PortletEntry.save();
+		SystemSettings.saveConfiguration();
 
 		JSONLayout.addPublicLayout(
 			groupName = "Test Site Name",
@@ -981,6 +983,8 @@ definition {
 
 		Redirect.open404URLsAdmin(siteURLKey = "test-site-name");
 
+		TestUtils.hardRefresh();
+
 		Redirect.view404URLs(
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page1",
 			requestNumber = "1");
@@ -989,15 +993,11 @@ definition {
 			ignoreURL = "${portalURL}/web/test-site-name/test-destination-page2",
 			requestNumber = "2");
 
+		Click(locator1 = "ManagementBar#ORDER_ICON_GENERIC");
+
 		Redirect.viewOrderedURLs(
 			entry1 = "1",
 			entry2 = "2");
-
-		Click(locator1 = "ContentDashboard#REVERSE_SORT_DIRECTION_BUTTON");
-
-		Redirect.viewOrderedURLs(
-			entry1 = "2",
-			entry2 = "1");
 	}
 
 	@description = "This ensures that accessing a nonexistent URL redirects the user to the home of the current site."

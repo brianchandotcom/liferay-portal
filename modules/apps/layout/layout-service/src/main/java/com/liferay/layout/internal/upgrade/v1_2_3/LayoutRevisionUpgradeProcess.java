@@ -16,8 +16,6 @@ package com.liferay.layout.internal.upgrade.v1_2_3;
 
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.Layout;
@@ -26,6 +24,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutRevisionConstants;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -154,15 +153,22 @@ public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeContentLayouts(long groupId) throws PortalException {
-		DynamicQuery dynamicQuery = _layoutLocalService.dynamicQuery();
-
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("type", LayoutConstants.TYPE_CONTENT));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("hidden", false));
-		dynamicQuery.add(RestrictionsFactoryUtil.eq("system", false));
-
-		List<Layout> layouts = _layoutLocalService.dynamicQuery(dynamicQuery);
+		List<Layout> layouts = _layoutLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				LayoutTable.INSTANCE
+			).from(
+				LayoutTable.INSTANCE
+			).where(
+				LayoutTable.INSTANCE.groupId.eq(
+					groupId
+				).and(
+					LayoutTable.INSTANCE.hidden.eq(false)
+				).and(
+					LayoutTable.INSTANCE.system.eq(false)
+				).and(
+					LayoutTable.INSTANCE.type.eq(LayoutConstants.TYPE_CONTENT)
+				)
+			));
 
 		for (Layout layout : layouts) {
 			_createInitialContentLayoutRevisions(layout);

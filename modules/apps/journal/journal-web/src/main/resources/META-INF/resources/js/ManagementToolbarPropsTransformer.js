@@ -137,7 +137,9 @@ export default function propsTransformer({
 					onSelect: (selectedItem) => {
 						navigate(
 							addParams(
-								`${portletNamespace}ddmStructureKey=${selectedItem.ddmstructurekey}`,
+								{
+									[`${portletNamespace}ddmStructureKey`]: selectedItem.ddmstructurekey,
+								},
 								viewDDMStructureArticlesURL
 							)
 						);
@@ -163,7 +165,9 @@ export default function propsTransformer({
 
 						navigate(
 							addParams(
-								`${portletNamespace}ddmStructureKey=${selectedItem.ddmstructurekey}`,
+								{
+									[`${portletNamespace}ddmStructureKey`]: selectedItem.ddmstructurekey,
+								},
 								addArticleURL
 							)
 						);

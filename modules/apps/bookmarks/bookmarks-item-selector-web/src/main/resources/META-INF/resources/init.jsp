@@ -16,8 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.bookmarks.web.internal.display.context.BookmarkEntriesItemSelectorDisplayContext" %><%@
-page import="com.liferay.bookmarks.web.internal.display.context.BookmarkEntriesItemSelectorManagementToolbarDisplayContext" %><%@
+<%@ page import="com.liferay.bookmarks.item.selector.web.internal.display.context.BookmarkEntriesItemSelectorDisplayContext" %><%@
+page import="com.liferay.bookmarks.item.selector.web.internal.display.context.BookmarkEntriesItemSelectorManagementToolbarDisplayContext" %><%@
 page import="com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.json.JSONUtil" %>

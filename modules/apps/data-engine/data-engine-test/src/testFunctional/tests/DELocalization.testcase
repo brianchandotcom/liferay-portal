@@ -629,4 +629,78 @@ definition {
 			linkToPageFieldLabel = "网页链接");
 	}
 
+	@description = "Verify that is possible to choose different options for Select From List field for a translated language"
+	@priority = "5"
+	test CanChooseDifferentOptionsFromSelectFromListField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		
+		
+		
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DEBuilder.addField(
+			fieldLabel = "Select from List",
+			fieldName = "Select from List");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Select from List",
+			optionValueList = "Option 1,Option 2");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Select from List",
+			fieldFieldLabelEdit = "下拉列表");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		PortletEntry.inputTitle(title = "Test");
+
+		DERenderer.inputDataInSelectFromListField(
+			fieldLabel = "Select from List",
+			optionValue = "Option 1");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "测试");
+
+		DERenderer.inputDataInSelectFromListField(
+			fieldLabel = "下拉列表",
+			optionValue = "Option 2");
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test");
+
+		DERenderer.assertDataInSelectFromListField(
+			fieldLabel = "Select from List",
+			optionValue = "Option 1");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		DERenderer.assertDataInSelectFromListField(
+			fieldLabel = "下拉列表",
+			optionValue = "Option 2");
+	}
+
 }

@@ -104,8 +104,7 @@ public class BookmarksEntryItemSelectorView
 		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(
-				"/select_entries.jsp");
+			servletContext.getRequestDispatcher("/select_entries.jsp");
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}
@@ -117,7 +116,9 @@ public class BookmarksEntryItemSelectorView
 	@Reference
 	private Language _language;
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.bookmarks.item.selector.web)")
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.bookmarks.item.selector.web)"
+	)
 	private ServletContext _servletContext;
 
 }

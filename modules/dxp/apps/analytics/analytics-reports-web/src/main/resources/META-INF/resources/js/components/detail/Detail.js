@@ -11,6 +11,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import PropTypes from 'prop-types';
 import React, {useContext} from 'react';
 
@@ -31,6 +32,7 @@ const TRAFFIC_CHANNELS = {
 export default function Detail({
 	currentPage,
 	handleDetailPeriodChange,
+	loadingData,
 	onCurrentPageChange,
 	onTrafficSourceNameChange,
 	refProp,
@@ -45,58 +47,79 @@ export default function Detail({
 
 	return (
 		<>
-			<div className="c-pt-3 c-px-3 d-flex" ref={refProp}>
-				<ClayButton
-					displayType="unstyled"
-					onClick={() => {
-						onCurrentPageChange({view: 'main'});
-						onTrafficSourceNameChange('');
-						chartDispatch({type: 'SET_LOADING'});
-						storeDispatch({
-							selectedTrafficSourceName: '',
-							type: 'SET_SELECTED_TRAFFIC_SOURCE_NAME',
-						});
-					}}
-					small={true}
-				>
-					<ClayIcon symbol="angle-left-small" />
-				</ClayButton>
-
-				<div className="align-self-center flex-grow-1 mx-2">
-					<strong>{currentPage.data.title}</strong>
-				</div>
-			</div>
-
-			{(currentPage.view === TRAFFIC_CHANNELS.ORGANIC ||
-				currentPage.view === TRAFFIC_CHANNELS.PAID) &&
-				currentPage.data.countryKeywords.length > 0 && (
-					<KeywordsDetail
-						currentPage={currentPage}
-						trafficShareDataProvider={trafficShareDataProvider}
-						trafficVolumeDataProvider={trafficVolumeDataProvider}
-					/>
-				)}
-
-			{currentPage.view === TRAFFIC_CHANNELS.REFERRAL && (
-				<ReferralDetail
-					currentPage={currentPage}
-					handleDetailPeriodChange={handleDetailPeriodChange}
-					timeSpanOptions={timeSpanOptions}
-					trafficShareDataProvider={trafficShareDataProvider}
-					trafficSourcesDataProvider={trafficSourcesDataProvider}
-					trafficVolumeDataProvider={trafficVolumeDataProvider}
+			{loadingData ? (
+				<ClayLoadingIndicator
+					className="chart-loading-indicator"
+					small
 				/>
-			)}
+			) : (
+				<>
+					<div className="c-pt-3 c-px-3 d-flex" ref={refProp}>
+						<ClayButton
+							displayType="unstyled"
+							onClick={() => {
+								onCurrentPageChange({view: 'main'});
+								onTrafficSourceNameChange('');
+								chartDispatch({type: 'SET_LOADING'});
+								storeDispatch({
+									selectedTrafficSourceName: '',
+									type: 'SET_SELECTED_TRAFFIC_SOURCE_NAME',
+								});
+							}}
+							small={true}
+						>
+							<ClayIcon symbol="angle-left-small" />
+						</ClayButton>
 
-			{currentPage.view === TRAFFIC_CHANNELS.SOCIAL && (
-				<SocialDetail
-					currentPage={currentPage}
-					handleDetailPeriodChange={handleDetailPeriodChange}
-					timeSpanOptions={timeSpanOptions}
-					trafficShareDataProvider={trafficShareDataProvider}
-					trafficSourcesDataProvider={trafficSourcesDataProvider}
-					trafficVolumeDataProvider={trafficVolumeDataProvider}
-				/>
+						<div className="align-self-center flex-grow-1 mx-2">
+							<strong>{currentPage.data?.title}</strong>
+						</div>
+					</div>
+
+					{(currentPage.view === TRAFFIC_CHANNELS.ORGANIC ||
+						currentPage.view === TRAFFIC_CHANNELS.PAID) &&
+						currentPage.data.countryKeywords.length > 0 && (
+							<KeywordsDetail
+								currentPage={currentPage}
+								trafficShareDataProvider={
+									trafficShareDataProvider
+								}
+								trafficVolumeDataProvider={
+									trafficVolumeDataProvider
+								}
+							/>
+						)}
+
+					{currentPage.view === TRAFFIC_CHANNELS.REFERRAL && (
+						<ReferralDetail
+							currentPage={currentPage}
+							handleDetailPeriodChange={handleDetailPeriodChange}
+							timeSpanOptions={timeSpanOptions}
+							trafficShareDataProvider={trafficShareDataProvider}
+							trafficSourcesDataProvider={
+								trafficSourcesDataProvider
+							}
+							trafficVolumeDataProvider={
+								trafficVolumeDataProvider
+							}
+						/>
+					)}
+
+					{currentPage.view === TRAFFIC_CHANNELS.SOCIAL && (
+						<SocialDetail
+							currentPage={currentPage}
+							handleDetailPeriodChange={handleDetailPeriodChange}
+							timeSpanOptions={timeSpanOptions}
+							trafficShareDataProvider={trafficShareDataProvider}
+							trafficSourcesDataProvider={
+								trafficSourcesDataProvider
+							}
+							trafficVolumeDataProvider={
+								trafficVolumeDataProvider
+							}
+						/>
+					)}
+				</>
 			)}
 		</>
 	);
@@ -104,6 +127,7 @@ export default function Detail({
 
 Detail.propTypes = {
 	currentPage: PropTypes.object.isRequired,
+	loadingData: PropTypes.bool,
 	onCurrentPageChange: PropTypes.func.isRequired,
 	onTrafficSourceNameChange: PropTypes.func.isRequired,
 	refProp: PropTypes.oneOfType([

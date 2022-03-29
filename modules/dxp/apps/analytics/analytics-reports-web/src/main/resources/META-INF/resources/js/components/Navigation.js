@@ -47,6 +47,8 @@ export default function Navigation({
 
 	const [currentPage, setCurrentPage] = useState({view: 'main'});
 
+	const [loadingDetailView, setLoadingDetailView] = useState(false);
+
 	const [trafficSources, setTrafficSources] = useState([]);
 
 	const [trafficSourceName, setTrafficSourceName] = useState('');
@@ -115,14 +117,12 @@ export default function Navigation({
 	const updateTrafficSourcesAndCurrentPage = useCallback(
 		(trafficSourceEndpointURL, trafficSourceName) => {
 			setTrafficSourceName(trafficSourceName);
+			setLoadingDetailView(true);
+			setCurrentPage({
+				view: trafficSourceName,
+			});
 
-			const partsArray = trafficSourceEndpointURL.split('/');
-			const localtrafficSourceEndpontURL =
-				'http://localhost:8080/home?p_p_id=com_liferay_analytics_reports_web_internal_portlet_AnalyticsReportsPortlet&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=%2Fanalytics_reports%2F' +
-				partsArray[2] +
-				'&p_p_cacheability=cacheLevelPage&_com_liferay_analytics_reports_web_internal_portlet_AnalyticsReportsPortlet_languageId=en_US&_com_liferay_analytics_reports_web_internal_portlet_AnalyticsReportsPortlet_canonicalURL=http%3A%2F%2Flocalhost%3A8080%2F';
-
-			APIService.getTrafficSources(localtrafficSourceEndpontURL, {
+			APIService.getTrafficSources(trafficSourceEndpointURL, {
 				namespace,
 				plid: page.plid,
 				timeSpanKey,
@@ -132,6 +132,7 @@ export default function Navigation({
 					data: response,
 					view: trafficSourceName,
 				});
+				setLoadingDetailView(false);
 			});
 		},
 		[]
@@ -159,10 +160,10 @@ export default function Navigation({
 	const showDetail = currentPage.view !== 'main';
 
 	useEffect(() => {
-		if (showDetail) {
+		if (showDetail && !loadingDetailView) {
 			detailRef.current.scrollIntoView();
 		}
-	}, [showDetail]);
+	}, [showDetail, loadingDetailView]);
 
 	return (
 		<>
@@ -230,6 +231,7 @@ export default function Navigation({
 						handleDetailPeriodChange={
 							updateTrafficSourcesAndCurrentPage
 						}
+						loadingData={loadingDetailView}
 						onCurrentPageChange={handleCurrentPage}
 						onTrafficSourceNameChange={handleTrafficSourceName}
 						refProp={detailRef}

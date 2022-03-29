@@ -154,7 +154,7 @@ definition {
 				clientId = "abc123",
 				clientSecret = "abc123",
 				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				jwtFileName = "JWT_Lack_Kid.txt",
+				jwtFileName = "jwt_lack_kid.txt",
 				noResponse = "true",
 				scopes = "");
 		}
@@ -170,7 +170,7 @@ definition {
 				clientId = "abc123",
 				clientSecret = "abc123",
 				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				jwtFileName = "JWT_Expired.txt",
+				jwtFileName = "jwt_expired.txt",
 				noResponse = "true",
 				scopes = "");
 		}
@@ -186,7 +186,7 @@ definition {
 				clientId = "abc123",
 				clientSecret = "abc123",
 				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				jwtFileName = "JWT_Nonexistent_User.txt",
+				jwtFileName = "jwt_nonexistent_user.txt",
 				noResponse = "true",
 				scopes = "");
 		}
@@ -328,7 +328,7 @@ definition {
 				clientId = "abc123",
 				clientSecret = "abc123",
 				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				jwtFileName = "JWT_Email_Test.txt",
+				jwtFileName = "jwt_email_test.txt",
 				scopes = "");
 		}
 
@@ -343,7 +343,7 @@ definition {
 				clientId = "abc123",
 				clientSecret = "abc123",
 				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				jwtFileName = "JWT_Email_Test1_SSO.txt",
+				jwtFileName = "jwt_email_test1_sso.txt",
 				scopes = "");
 		}
 
@@ -1199,7 +1199,7 @@ definition {
 				clientId = "abc123",
 				clientSecret = "abc123",
 				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				jwtFileName = "JWT_Email_Test.txt",
+				jwtFileName = "jwt_email_test.txt",
 				noResponse = "true",
 				scopes = "");
 		}
@@ -1215,7 +1215,7 @@ definition {
 				clientId = "abc123",
 				clientSecret = "abc123",
 				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				jwtFileName = "JWT_Screenname_Test.txt",
+				jwtFileName = "jwt_screenname_test.txt",
 				scopes = "");
 		}
 
@@ -1266,7 +1266,7 @@ definition {
 				clientId = "abc123",
 				clientSecret = "abc123",
 				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				jwtFileName = "JWT_Email_Test.txt",
+				jwtFileName = "jwt_email_test.txt",
 				scopes = "");
 		}
 
@@ -1298,7 +1298,7 @@ definition {
 				clientId = "abc123",
 				clientSecret = "abc123",
 				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				jwtFileName = "JWT_Email_Test.txt",
+				jwtFileName = "jwt_email_test.txt",
 				scopes = "analytics.read");
 		}
 
@@ -1330,7 +1330,7 @@ definition {
 				clientId = "abc123",
 				clientSecret = "abc123",
 				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				jwtFileName = "JWT_Email_Test.txt",
+				jwtFileName = "jwt_email_test.txt",
 				noResponse = "true",
 				scopes = "liferay-json-web-services.userprofile");
 		}
@@ -1382,7 +1382,7 @@ definition {
 				clientId = "abc123",
 				clientSecret = "abc123",
 				jwtFileBaseDir = "test/functional/com/liferay/portalweb/tests/coreinfrastructure/security/oauth2/dependencies",
-				jwtFileName = "JWT_Screenname_Test.txt",
+				jwtFileName = "jwt_screenname_test.txt",
 				scopes = "");
 		}
 

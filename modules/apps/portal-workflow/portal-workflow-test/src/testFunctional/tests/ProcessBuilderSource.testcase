@@ -436,9 +436,7 @@ definition {
 			panel = "Applications",
 			portlet = "Process Builder");
 
-		Click(
-			key_workflowResourceValue = "Single Approver",
-			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
+		Workflow.gotoEditWorkflowDefinition(workflowDefinitionTitle = "Single Approver");
 
 		Click.clickAt(locator1 = "Icon#INFO");
 

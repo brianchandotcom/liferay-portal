@@ -256,14 +256,13 @@ public class DDMFormImporter {
 
 		defaultDDMFormLayout.setPaginationMode(StringPool.BLANK);
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			DDLRecordSet.class);
 		long userId = serviceContext.getUserId();
 		long groupId = serviceContext.getScopeGroupId();
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
 			userId, groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
-			classNameId, StringPool.BLANK, nameMap, descriptionMap, ddmForm,
+			_classNameLocalService.getClassNameId(DDLRecordSet.class),
+			StringPool.BLANK, nameMap, descriptionMap, ddmForm,
 			defaultDDMFormLayout, StorageType.DEFAULT.toString(),
 			DDMStructureConstants.TYPE_AUTO, serviceContext);
 

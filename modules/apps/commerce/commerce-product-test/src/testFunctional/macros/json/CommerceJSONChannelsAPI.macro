@@ -1,5 +1,32 @@
 definition {
 
+	macro _addChannel {
+		Variables.assertDefined(parameterList = "${channelName},${channelType},${currencyCode}");
+
+		var baseURL = "${baseURL}";
+
+		if (!(isSet(baseURL))) {
+			var baseURL = PropsUtil.get("portal.url");
+		}
+
+		if (!(isSet(externalReferenceCode))) {
+			var externalReferenceCode = "";
+		}
+
+		var curl = '''
+			${baseURL}/api/jsonws/commerce.commercechannel/add-commerce-channel \
+			-u test@liferay.com:test \
+			-d externalReferenceCode=${externalReferenceCode} \
+			-d siteGroupId=0 \
+			-d name=${channelName} \
+			-d type=${channelType} \
+			-d -typeSettingsUnicodeProperties= \
+			-d commerceCurrencyCode=${currencyCode}
+		''';
+
+		JSONCurlUtil.post("${curl}");
+	}
+
 	macro _deleteAllCommerceChannels {
 		var baseURL = "${baseURL}";
 

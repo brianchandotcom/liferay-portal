@@ -16,16 +16,16 @@ import '@testing-library/jest-dom/extend-expect';
 import {act, fireEvent, render, screen} from '@testing-library/react';
 import React, {useEffect} from 'react';
 
-import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/collectionFilterFragmentEntryKey';
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
-import {StoreAPIContextProvider} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
-import updateItemConfig from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
-import CollectionSelector from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/CollectionSelector';
-import {CollectionGeneralPanel} from '../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page-structure/components/item-configuration-panels/CollectionGeneralPanel';
+import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/collectionFilterFragmentEntryKey';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/freemarkerFragmentEntryProcessor';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
+import {StoreAPIContextProvider} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import updateItemConfig from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig';
+import CollectionSelector from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/CollectionSelector';
+import {CollectionGeneralPanel} from '../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/browser/components/page-structure/components/item-configuration-panels/collection-general-panel/CollectionGeneralPanel';
 
 jest.mock(
-	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
+	'../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/config',
 	() => ({
 		config: {
 			commonStyles: [],
@@ -35,7 +35,7 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/CollectionService',
+	'../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/services/CollectionService',
 	() => ({
 		getCollectionItemCount: jest.fn(() =>
 			Promise.resolve({
@@ -46,12 +46,12 @@ jest.mock(
 );
 
 jest.mock(
-	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/CollectionSelector',
+	'../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/common/components/CollectionSelector',
 	() => jest.fn(() => null)
 );
 
 jest.mock(
-	'../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
+	'../../../../../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/updateItemConfig',
 	() => jest.fn()
 );
 

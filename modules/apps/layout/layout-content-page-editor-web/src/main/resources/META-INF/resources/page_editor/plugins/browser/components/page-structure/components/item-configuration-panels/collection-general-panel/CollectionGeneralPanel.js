@@ -25,28 +25,28 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
-import {COLLECTION_APPLIED_FILTERS_FRAGMENT_ENTRY_KEY} from '../../../../../../app/config/constants/collectionAppliedFiltersFragmentKey';
-import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../../app/config/constants/collectionFilterFragmentEntryKey';
-import {COMMON_STYLES_ROLES} from '../../../../../../app/config/constants/commonStylesRoles';
-import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
-import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../app/config/constants/layoutDataItemTypes';
-import {VIEWPORT_SIZES} from '../../../../../../app/config/constants/viewportSizes';
-import {config} from '../../../../../../app/config/index';
+import {COLLECTION_APPLIED_FILTERS_FRAGMENT_ENTRY_KEY} from '../../../../../../../app/config/constants/collectionAppliedFiltersFragmentKey';
+import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../../../app/config/constants/collectionFilterFragmentEntryKey';
+import {COMMON_STYLES_ROLES} from '../../../../../../../app/config/constants/commonStylesRoles';
+import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../app/config/constants/layoutDataItemTypes';
+import {VIEWPORT_SIZES} from '../../../../../../../app/config/constants/viewportSizes';
+import {config} from '../../../../../../../app/config/index';
 import {
 	useDispatch,
 	useGetState,
 	useSelector,
-} from '../../../../../../app/contexts/StoreContext';
-import selectSegmentsExperienceId from '../../../../../../app/selectors/selectSegmentsExperienceId';
-import CollectionService from '../../../../../../app/services/CollectionService';
-import InfoItemService from '../../../../../../app/services/InfoItemService';
-import updateCollectionDisplayCollection from '../../../../../../app/thunks/updateCollectionDisplayCollection';
-import updateItemConfig from '../../../../../../app/thunks/updateItemConfig';
-import {getResponsiveConfig} from '../../../../../../app/utils/getResponsiveConfig';
-import {useId} from '../../../../../../app/utils/useId';
-import Collapse from '../../../../../../common/components/Collapse';
-import CollectionSelector from '../../../../../../common/components/CollectionSelector';
-import useControlledState from '../../../../../../core/hooks/useControlledState';
+} from '../../../../../../../app/contexts/StoreContext';
+import selectSegmentsExperienceId from '../../../../../../../app/selectors/selectSegmentsExperienceId';
+import CollectionService from '../../../../../../../app/services/CollectionService';
+import InfoItemService from '../../../../../../../app/services/InfoItemService';
+import updateCollectionDisplayCollection from '../../../../../../../app/thunks/updateCollectionDisplayCollection';
+import updateItemConfig from '../../../../../../../app/thunks/updateItemConfig';
+import {getResponsiveConfig} from '../../../../../../../app/utils/getResponsiveConfig';
+import {useId} from '../../../../../../../app/utils/useId';
+import Collapse from '../../../../../../../common/components/Collapse';
+import CollectionSelector from '../../../../../../../common/components/CollectionSelector';
+import useControlledState from '../../../../../../../core/hooks/useControlledState';
 import CollectionFilterConfigurationModal from '../CollectionFilterConfigurationModal';
 import {CommonStyles} from './CommonStyles';
 

@@ -299,7 +299,7 @@ public class Main {
 			testrayBuildName, "builds");
 	}
 
-	private long _getTestrayCaseType(String testrayCaseTypeName)
+	private long _getTestrayCaseTypeId(String testrayCaseTypeName)
 		throws Exception {
 
 		long testrayCaseTypeId = _getObjectEntryId(
@@ -472,6 +472,23 @@ public class Main {
 			"runs/" + testrayRunId, null);
 
 		return testrayRunId;
+	}
+
+	private long _getTestrayTeamId(
+			long testrayProjectId, String testrayTeamName)
+		throws Exception {
+
+		long testrayTeamId = _getObjectEntryId(testrayTeamName, "teams");
+
+		if (testrayTeamId != 0) {
+			return testrayTeamId;
+		}
+
+		return _postObjectEntry(
+			HashMapBuilder.put(
+				"r_projectToTeams_c_projectId", String.valueOf(testrayProjectId)
+			).build(),
+			testrayTeamName, "teams");
 	}
 
 	private HttpInvoker.HttpResponse _invoke(

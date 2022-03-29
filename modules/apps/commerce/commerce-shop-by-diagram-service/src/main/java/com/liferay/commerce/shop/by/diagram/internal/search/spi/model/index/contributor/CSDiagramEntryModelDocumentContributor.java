@@ -60,11 +60,16 @@ public class CSDiagramEntryModelDocumentContributor
 				cpDefinition.getCPDefinitionId());
 
 		for (String languageId : languageIds) {
-			String description = cpDefinition.getDescription(languageId);
-			String name = cpDefinition.getName(languageId);
 			String shortDescription = cpDefinition.getShortDescription(
 				languageId);
 
+			String description = cpDefinition.getDescription(languageId);
+			String name = cpDefinition.getName(languageId);
+
+			document.addText(
+				LocalizationUtil.getLocalizedName(
+					CPField.SHORT_DESCRIPTION, languageId),
+				shortDescription);
 			document.addText(
 				LocalizationUtil.getLocalizedName(
 					Field.DESCRIPTION, languageId),
@@ -72,23 +77,19 @@ public class CSDiagramEntryModelDocumentContributor
 			document.addText(
 				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
 				name);
-			document.addText(
-				LocalizationUtil.getLocalizedName(
-					CPField.SHORT_DESCRIPTION, languageId),
-				shortDescription);
 		}
 
 		String cpDefinitionDefaultLanguageId =
 			LocalizationUtil.getDefaultLanguageId(cpDefinition.getName());
 
 		document.addText(
+			CPField.SHORT_DESCRIPTION,
+			cpDefinition.getShortDescription(cpDefinitionDefaultLanguageId));
+		document.addText(
 			Field.DESCRIPTION,
 			cpDefinition.getDescription(cpDefinitionDefaultLanguageId));
 		document.addText(
 			Field.NAME, cpDefinition.getName(cpDefinitionDefaultLanguageId));
-		document.addText(
-			CPField.SHORT_DESCRIPTION,
-			cpDefinition.getShortDescription(cpDefinitionDefaultLanguageId));
 	}
 
 	@Reference

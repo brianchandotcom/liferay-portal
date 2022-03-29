@@ -433,10 +433,6 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 			document.addText(
 				LocalizationUtil.getLocalizedName(
-					Field.DESCRIPTION, languageId),
-				description);
-			document.addText(
-				LocalizationUtil.getLocalizedName(
 					CPField.META_DESCRIPTION, languageId),
 				metaDescription);
 			document.addText(
@@ -448,12 +444,16 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 					CPField.META_TITLE, languageId),
 				metaTitle);
 			document.addText(
-				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
-				name);
-			document.addText(
 				LocalizationUtil.getLocalizedName(
 					CPField.SHORT_DESCRIPTION, languageId),
 				shortDescription);
+			document.addText(
+				LocalizationUtil.getLocalizedName(
+					Field.DESCRIPTION, languageId),
+				description);
+			document.addText(
+				LocalizationUtil.getLocalizedName(Field.NAME, languageId),
+				name);
 			document.addText(
 				LocalizationUtil.getLocalizedName(Field.URL, languageId),
 				urlTitle);
@@ -461,10 +461,6 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			document.addText(Field.CONTENT, description);
 		}
 
-		document.addText("defaultLanguageId", cpDefinitionDefaultLanguageId);
-		document.addText(
-			Field.DESCRIPTION,
-			cpDefinition.getDescription(cpDefinitionDefaultLanguageId));
 		document.addText(
 			CPField.META_DESCRIPTION,
 			cpDefinition.getMetaDescription(cpDefinitionDefaultLanguageId));
@@ -480,8 +476,12 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 			CPField.SHORT_DESCRIPTION,
 			cpDefinition.getShortDescription(cpDefinitionDefaultLanguageId));
 		document.addText(
+			Field.DESCRIPTION,
+			cpDefinition.getDescription(cpDefinitionDefaultLanguageId));
+		document.addText(
 			Field.URL,
 			languageIdToUrlTitleMap.get(cpDefinitionDefaultLanguageId));
+		document.addText("defaultLanguageId", cpDefinitionDefaultLanguageId);
 
 		List<Long> commerceChannelGroupIds = new ArrayList<>();
 

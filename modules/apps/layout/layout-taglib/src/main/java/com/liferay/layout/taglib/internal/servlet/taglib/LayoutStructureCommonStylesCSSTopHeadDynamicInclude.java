@@ -138,6 +138,41 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 		}
 	}
 
+	private boolean _includeStyles(
+		StyledLayoutStructureItem styledLayoutStructureItem, String styleName,
+		String value) {
+
+		if (Validator.isNull(value) ||
+			Objects.equals(
+				value, CommonStylesUtil.getDefaultStyleValue(styleName))) {
+
+			return false;
+		}
+
+		if (!(styledLayoutStructureItem instanceof
+			ContainerStyledLayoutStructureItem)) {
+
+			return true;
+		}
+
+		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem =
+			(ContainerStyledLayoutStructureItem)styledLayoutStructureItem;
+
+		if (!Objects.equals(
+			containerStyledLayoutStructureItem.getWidthType(), "fixed")) {
+
+			return true;
+		}
+
+		if (Objects.equals(styleName, "marginLeft") ||
+			Objects.equals(styleName, "marginRight")) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private List<String> _getAvailableStyleNames() {
 		try {
 			return CommonStylesUtil.getAvailableStyleNames();
@@ -282,6 +317,12 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 
 		for (String styleName : availableStyleNames) {
 			String value = stylesJSONObject.getString(styleName);
+
+			if (!_includeStyles(
+					styledLayoutStructureItem, styleName, value)) {
+
+				continue;
+			}
 
 			cssSB.append(
 				StringUtil.replace(

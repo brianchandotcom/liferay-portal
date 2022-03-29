@@ -91,6 +91,74 @@ definition {
 		}
 	}
 
+	@description = "This test asserts the user with Assign Account permission can assign account to account group."
+	@priority = "3"
+	test CanAssignAccountFromAccountGroupWithPermissions {
+		task ("Given A new User/Accounts/Account Groups exists") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Account for Account Group",
+				accountEntryType = "Business");
+
+			JSONAccountGroup.addAccountGroup(
+				accountGroupDescription = "This is an Account Group assigned with Accounts.",
+				accountGroupName = "AG Name with Accounts");
+
+			task ("And A new Regular role with assign account permission exists") {
+				JSONRole.addRegularRole(roleTitle = "Assign Account Reg Role");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "VIEW_CONTROL_PANEL",
+					resourceName = "90",
+					roleTitle = "Assign Account Reg Role");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "ACCESS_IN_CONTROL_PANEL",
+					resourceName = "com_liferay_account_admin_web_internal_portlet_AccountGroupsAdminPortlet",
+					roleTitle = "Assign Account Reg Role");
+
+				for (var resourceAction : list "VIEW,VIEW_ACCOUNTS,ASSIGN_ACCOUNTS") {
+					Permissions.definePermissionViaJSONAPI(
+						resourceAction = "${resourceAction}",
+						resourceName = "com.liferay.account.model.AccountGroup",
+						roleTitle = "Assign Account Reg Role");
+				}
+			}
+		}
+
+		task ("When Assign the user with regular role") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "Assign Account Reg Role",
+				userEmailAddress = "userea1@liferay.com");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+		}
+
+		task ("Then The new User can assign Account to Account group") {
+			AccountGroups.openAccountGroupsAdmin();
+
+			LexiconEntry.gotoEntry(rowEntry = "AG Name with Accounts");
+
+			AccountGroups.viewDefault(tabName = "Accounts");
+
+			AccountGroups.addAssignee(
+				accountGroupName = "AG Name with Accounts",
+				assigneeNames = "Account for Account Group");
+		}
+	}
+
 	@description = "This test deletes an account group."
 	@priority = "4"
 	test CanDeleteAnAccountGroup {

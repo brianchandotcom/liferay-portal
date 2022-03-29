@@ -214,22 +214,32 @@ public class PortletSharedSearchRequestImpl
 		return portletList;
 	}
 
-	private Stream<Portlet> _getPortletsStream(Layout layout, long companyId) {
+	private List<Portlet> _getPortlets(Layout layout, long companyId) {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
 		List<Portlet> portlets = layoutTypePortlet.getAllPortlets(false);
 
 		if (Objects.equals(layout.getType(), LayoutConstants.TYPE_PORTLET)) {
-			return portlets.stream();
+			return portlets;
 		}
 
 		List<Portlet> instantiatedPortlets = _getInstantiatedPortlets(
 			layout, companyId);
 
-		return Stream.concat(
-			portlets.stream(), instantiatedPortlets.stream()
-		).distinct();
+		List<Portlet> mergedPortlets = new ArrayList<>();
+
+		for (Portlet portlet : portlets) {
+			mergedPortlets.add(portlet);
+
+			for (Portlet instantiatedPortlet : instantiatedPortlets) {
+				if (instantiatedPortlet.equals(portlet)) {
+					mergedPortlets.add(instantiatedPortlet);
+				}
+			}
+		}
+
+		return mergedPortlets;
 	}
 
 	private SearchSettingsContributor _getSearchSettingsContributor(
@@ -266,8 +276,10 @@ public class PortletSharedSearchRequestImpl
 		_getSearchSettingsContributorsStream(
 			ThemeDisplay themeDisplay, RenderRequest renderRequest) {
 
-		Stream<Portlet> portletsStream = _getPortletsStream(
+		List<Portlet> portlets = _getPortlets(
 			themeDisplay.getLayout(), themeDisplay.getCompanyId());
+
+		Stream<Portlet> portletsStream = portlets.stream();
 
 		return portletsStream.map(
 			portlet -> _getSearchSettingsContributorOptional(

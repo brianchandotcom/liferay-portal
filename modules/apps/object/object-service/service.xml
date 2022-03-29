@@ -602,6 +602,7 @@
 		<exception>ObjectValidationRuleEngine</exception>
 		<exception>ObjectValidationRuleName</exception>
 		<exception>ObjectValidationRuleScript</exception>
+		<exception>ObjectViewColumnFieldName</exception>
 		<exception>ObjectViewSortColumn</exception>
 		<exception>RequiredObjectDefinition</exception>
 		<exception>RequiredObjectField</exception>

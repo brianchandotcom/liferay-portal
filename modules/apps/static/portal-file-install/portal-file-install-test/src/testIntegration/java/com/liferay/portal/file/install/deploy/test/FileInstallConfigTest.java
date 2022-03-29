@@ -30,6 +30,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 
+import java.io.File;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -38,6 +39,7 @@ import java.nio.file.Paths;
 
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 import org.junit.After;
@@ -55,6 +57,7 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.Configuration.ConfigurationAttribute;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ManagedService;
 import org.osgi.service.cm.ManagedServiceFactory;
@@ -313,6 +316,27 @@ public class FileInstallConfigTest {
 		_testFactoryConfiguration(CharPool.UNDERLINE);
 	}
 
+	@Test
+	public void testReadOnlyConfiguration() throws Exception {
+		String configurationPid = _CONFIGURATION_PID_PREFIX.concat(
+			".testReadOnlyConfiguration");
+
+		_configurationPath = Paths.get(
+			PropsValues.MODULE_FRAMEWORK_CONFIGS_DIR,
+			configurationPid.concat(".config"));
+
+		_configuration = _createConfiguration(
+			configurationPid, "testKey=\"testValue\"", Charset.defaultCharset(),
+			true);
+
+		Set<ConfigurationAttribute> configurationAttributes =
+			_configuration.getAttributes();
+
+		Assert.assertTrue(
+			"Configuration is not READ_ONLY",
+			configurationAttributes.contains(ConfigurationAttribute.READ_ONLY));
+	}
+
 	private Configuration _createConfiguration(
 			String configurationPid, String content)
 		throws Exception {
@@ -325,6 +349,23 @@ public class FileInstallConfigTest {
 			String configurationPid, String content, Charset charset)
 		throws Exception {
 
+		return _createConfiguration(configurationPid, content, charset, false);
+	}
+
+	private Configuration _createConfiguration(
+			String configurationPid, String content, Charset charset,
+			boolean readOnly)
+		throws Exception {
+
+		Path configurationFilePath = Files.write(
+			_configurationPath, content.getBytes(charset));
+
+		File configurationFile = configurationFilePath.toFile();
+
+		if (readOnly) {
+			configurationFile.setReadOnly();
+		}
+
 		CountDownLatch countDownLatch = new CountDownLatch(2);
 
 		ServiceRegistration<ManagedService> serviceRegistration =
@@ -334,16 +375,21 @@ public class FileInstallConfigTest {
 					Constants.SERVICE_PID, configurationPid));
 
 		try {
-			Files.write(_configurationPath, content.getBytes(charset));
-
 			countDownLatch.await();
 		}
 		finally {
 			serviceRegistration.unregister();
 		}
 
-		return _configurationAdmin.getConfiguration(
-			configurationPid, StringPool.QUESTION);
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			StringBundler.concat(
+				"(", Constants.SERVICE_PID, "=", configurationPid, ")"));
+
+		if (configurations == null) {
+			return null;
+		}
+
+		return configurations[0];
 	}
 
 	private void _createFacotryConfiguration(

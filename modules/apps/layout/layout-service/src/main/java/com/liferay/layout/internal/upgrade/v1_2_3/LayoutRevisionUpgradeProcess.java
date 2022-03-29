@@ -64,7 +64,27 @@ public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 		try {
 			StagingAdvicesThreadLocal.setEnabled(false);
 
-			_upgradeContentLayouts();
+			for (Layout layout :
+					(List<Layout>)_layoutLocalService.dslQuery(
+						DSLQueryFactoryUtil.select(
+							LayoutTable.INSTANCE
+						).from(
+							LayoutTable.INSTANCE
+						).where(
+							LayoutTable.INSTANCE.groupId.in(
+								_getBranchingEnabledStagingGroupIdsDSLQuery()
+							).and(
+								LayoutTable.INSTANCE.hidden.eq(false)
+							).and(
+								LayoutTable.INSTANCE.system.eq(false)
+							).and(
+								LayoutTable.INSTANCE.type.eq(
+									LayoutConstants.TYPE_CONTENT)
+							)
+						))) {
+
+				_createInitialContentLayoutRevisions(layout);
+			}
 		}
 		finally {
 			StagingAdvicesThreadLocal.setEnabled(
@@ -148,30 +168,6 @@ public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 				)
 			)
 		);
-	}
-
-	private void _upgradeContentLayouts() throws PortalException {
-		for (Layout layout :
-				(List<Layout>)_layoutLocalService.dslQuery(
-					DSLQueryFactoryUtil.select(
-						LayoutTable.INSTANCE
-					).from(
-						LayoutTable.INSTANCE
-					).where(
-						LayoutTable.INSTANCE.groupId.in(
-							_getBranchingEnabledStagingGroupIdsDSLQuery()
-						).and(
-							LayoutTable.INSTANCE.hidden.eq(false)
-						).and(
-							LayoutTable.INSTANCE.system.eq(false)
-						).and(
-							LayoutTable.INSTANCE.type.eq(
-								LayoutConstants.TYPE_CONTENT)
-						)
-					))) {
-
-			_createInitialContentLayoutRevisions(layout);
-		}
 	}
 
 	private final GroupLocalService _groupLocalService;

@@ -590,7 +590,7 @@ definition {
 			tabName = "Field Tab");
 
 		ObjectAdmin.addTabRelationshipsOnLayout(
-			relationshipsLabelName = "Relationship Label",
+			relationshipsLabelName = "Relationship",
 			tabName = "Relationship Tab");
 
 		Button.clickSave();

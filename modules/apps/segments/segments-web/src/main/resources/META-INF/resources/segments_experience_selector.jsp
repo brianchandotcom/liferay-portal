@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SegmentsExperienceSelectorDisplayContext segmentsExperienceSelectorDisplayContext = new SegmentsExperienceSelectorDisplayContext(request);
+SegmentsExperienceSelectorDisplayContext segmentsExperienceSelectorDisplayContext = (SegmentsExperienceSelectorDisplayContext)request.getAttribute(SegmentsExperienceSelectorDisplayContext.class.getName());
 %>
 
 <li class="border-left border-secondary control-menu-nav-item ml-3 pl-3">

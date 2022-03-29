@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -41,10 +40,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
-import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.experiment.web.internal.configuration.SegmentsExperimentConfiguration;
 import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
 import com.liferay.segments.experiment.web.internal.util.comparator.SegmentsExperimentModifiedDateComparator;
+import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
@@ -58,7 +57,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 import javax.portlet.RenderResponse;
@@ -77,6 +75,7 @@ public class SegmentsExperimentDisplayContext {
 		RenderResponse renderResponse,
 		SegmentsExperienceService segmentsExperienceService,
 		SegmentsExperimentConfiguration segmentsExperimentConfiguration,
+		SegmentsExperienceManager segmentsExperienceManager,
 		SegmentsExperimentRelService segmentsExperimentRelService,
 		SegmentsExperimentService segmentsExperimentService) {
 
@@ -86,6 +85,7 @@ public class SegmentsExperimentDisplayContext {
 		_renderResponse = renderResponse;
 		_segmentsExperienceService = segmentsExperienceService;
 		_segmentsExperimentConfiguration = segmentsExperimentConfiguration;
+		_segmentsExperienceManager = segmentsExperienceManager;
 		_segmentsExperimentRelService = segmentsExperimentRelService;
 		_segmentsExperimentService = segmentsExperimentService;
 
@@ -495,15 +495,9 @@ public class SegmentsExperimentDisplayContext {
 			_segmentsExperienceId = selectedSegmentsExperienceId;
 		}
 		else {
-			LongStream longStream = Arrays.stream(
-				GetterUtil.getLongValues(
-					_httpServletRequest.getAttribute(
-						SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS)));
-
-			_segmentsExperienceId = longStream.findFirst(
-			).orElse(
-				SegmentsExperienceConstants.ID_DEFAULT
-			);
+			_segmentsExperienceId =
+				_segmentsExperienceManager.getSegmentsExperienceId(
+					_httpServletRequest);
 		}
 
 		return _segmentsExperienceId;
@@ -530,6 +524,7 @@ public class SegmentsExperimentDisplayContext {
 	private final Portal _portal;
 	private final RenderResponse _renderResponse;
 	private Long _segmentsExperienceId;
+	private final SegmentsExperienceManager _segmentsExperienceManager;
 	private final SegmentsExperienceService _segmentsExperienceService;
 	private SegmentsExperiment _segmentsExperiment;
 	private final SegmentsExperimentConfiguration

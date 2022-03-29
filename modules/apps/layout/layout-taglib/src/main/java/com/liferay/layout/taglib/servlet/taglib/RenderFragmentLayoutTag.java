@@ -29,12 +29,10 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.impl.VirtualLayout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.constants.SegmentsWebKeys;
+import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -228,12 +226,12 @@ public class RenderFragmentLayoutTag extends IncludeTag {
 			return selectedSegmentsExperienceId;
 		}
 
-		long[] segmentsExperienceIds = GetterUtil.getLongValues(
-			httpServletRequest.getAttribute(
-				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS),
-			new long[] {SegmentsExperienceConstants.ID_DEFAULT});
+		SegmentsExperienceManager segmentsExperienceManager =
+			new SegmentsExperienceManager(
+				ServletContextUtil.getSegmentsExperienceLocalService());
 
-		return segmentsExperienceIds[0];
+		return segmentsExperienceManager.getSegmentsExperienceId(
+			httpServletRequest);
 	}
 
 	private LayoutStructure _mergeLayoutStructure(

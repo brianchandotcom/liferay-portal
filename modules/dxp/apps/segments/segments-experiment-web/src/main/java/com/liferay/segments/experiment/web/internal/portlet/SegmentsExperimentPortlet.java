@@ -25,6 +25,8 @@ import com.liferay.segments.experiment.web.internal.configuration.SegmentsExperi
 import com.liferay.segments.experiment.web.internal.constants.SegmentsExperimentWebKeys;
 import com.liferay.segments.experiment.web.internal.display.context.SegmentsExperimentDisplayContext;
 import com.liferay.segments.experiment.web.internal.product.navigation.control.menu.SegmentsExperimentProductNavigationControlMenuEntry;
+import com.liferay.segments.manager.SegmentsExperienceManager;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.service.SegmentsExperimentRelService;
 import com.liferay.segments.service.SegmentsExperimentService;
@@ -98,8 +100,9 @@ public class SegmentsExperimentPortlet extends MVCPortlet {
 			new SegmentsExperimentDisplayContext(
 				httpServletRequest, _layoutLocalService, _portal,
 				renderResponse, _segmentsExperienceService,
-				_segmentsExperimentConfiguration, _segmentsExperimentRelService,
-				_segmentsExperimentService);
+				_segmentsExperimentConfiguration,
+				new SegmentsExperienceManager(_segmentsExperienceLocalService),
+				_segmentsExperimentRelService, _segmentsExperimentService);
 
 		renderRequest.setAttribute(
 			SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT_DISPLAY_CONTEXT,
@@ -118,6 +121,9 @@ public class SegmentsExperimentPortlet extends MVCPortlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
 	private SegmentsExperienceService _segmentsExperienceService;

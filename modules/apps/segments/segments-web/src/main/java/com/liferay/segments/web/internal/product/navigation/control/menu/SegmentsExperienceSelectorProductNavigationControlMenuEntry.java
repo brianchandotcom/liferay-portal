@@ -34,13 +34,18 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.segments.web.internal.display.context.SegmentsExperienceSelectorDisplayContext;
 import com.liferay.sites.kernel.util.SitesUtil;
+
+import java.io.IOException;
 
 import java.util.Objects;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -149,6 +154,22 @@ public class SegmentsExperienceSelectorProductNavigationControlMenuEntry
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
+	}
+
+	@Override
+	protected boolean include(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String jspPath)
+		throws IOException {
+
+		httpServletRequest.setAttribute(
+			SegmentsExperienceSelectorDisplayContext.class.getName(),
+			new SegmentsExperienceSelectorDisplayContext(
+				httpServletRequest,
+				new SegmentsExperienceManager(
+					_segmentsExperienceLocalService)));
+
+		return super.include(httpServletRequest, httpServletResponse, jspPath);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

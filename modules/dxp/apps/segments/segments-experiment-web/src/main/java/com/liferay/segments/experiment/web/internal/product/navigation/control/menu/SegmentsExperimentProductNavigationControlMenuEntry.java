@@ -42,10 +42,10 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
-import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
+import com.liferay.segments.manager.SegmentsExperienceManager;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.taglib.aui.IconTag;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.util.BodyBottomTag;
@@ -53,13 +53,11 @@ import com.liferay.taglib.util.BodyBottomTag;
 import java.io.IOException;
 import java.io.Writer;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.stream.LongStream;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -154,9 +152,13 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 				ReflectionUtil.throwException(windowStateException);
 			}
 
+			SegmentsExperienceManager segmentsExperienceManager =
+				new SegmentsExperienceManager(_segmentsExperienceLocalService);
+
 			String dataURL = _http.setParameter(
 				portletURL.toString(), "segmentsExperienceId",
-				_getSegmentsExperienceId(httpServletRequest));
+				segmentsExperienceManager.getSegmentsExperienceId(
+					httpServletRequest));
 
 			values.put("dataURL", "data-url='" + dataURL + "'");
 		}
@@ -273,20 +275,6 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			SegmentsPortletKeys.SEGMENTS_EXPERIMENT);
 	}
 
-	private long _getSegmentsExperienceId(
-		HttpServletRequest httpServletRequest) {
-
-		LongStream longStream = Arrays.stream(
-			GetterUtil.getLongValues(
-				httpServletRequest.getAttribute(
-					SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS)));
-
-		return longStream.findFirst(
-		).orElse(
-			SegmentsExperienceConstants.ID_DEFAULT
-		);
-	}
-
 	private void _processBodyBottomTagBody(PageContext pageContext) {
 		try {
 			HttpServletRequest httpServletRequest =
@@ -357,5 +345,8 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

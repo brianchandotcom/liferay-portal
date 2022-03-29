@@ -18,13 +18,12 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
-import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.experiment.web.internal.constants.SegmentsExperimentWebKeys;
 import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
+import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -66,15 +65,17 @@ public class SegmentsExperimentAnalyticsTopHeadDynamicInclude
 		SegmentsExperiment segmentsExperiment =
 			(SegmentsExperiment)httpServletRequest.getAttribute(
 				SegmentsExperimentWebKeys.SEGMENTS_EXPERIMENT);
-		long[] segmentsExperienceIds = GetterUtil.getLongValues(
-			httpServletRequest.getAttribute(
-				SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS));
+
+		SegmentsExperienceManager segmentsExperienceManager =
+			new SegmentsExperienceManager(_segmentsExperienceLocalService);
 
 		StringBundler sb = StringUtil.replaceToStringBundler(
 			_TMPL_CONTENT, "${", "}",
 			_getValues(
 				segmentsExperiment,
-				_getSegmentsExperienceKey(segmentsExperienceIds)));
+				_getSegmentsExperienceKey(
+					segmentsExperienceManager.getSegmentsExperienceId(
+						httpServletRequest))));
 
 		sb.writeTo(httpServletResponse.getWriter());
 	}
@@ -85,15 +86,13 @@ public class SegmentsExperimentAnalyticsTopHeadDynamicInclude
 			"/dynamic_include/top_head.jsp#analytics");
 	}
 
-	private String _getSegmentsExperienceKey(long[] segmentsExperienceIds) {
-		if (segmentsExperienceIds.length > 0) {
-			SegmentsExperience segmentsExperience =
-				_segmentsExperienceLocalService.fetchSegmentsExperience(
-					segmentsExperienceIds[0]);
+	private String _getSegmentsExperienceKey(long segmentsExperienceId) {
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperienceId);
 
-			if (segmentsExperience != null) {
-				return segmentsExperience.getSegmentsExperienceKey();
-			}
+		if (segmentsExperience != null) {
+			return segmentsExperience.getSegmentsExperienceKey();
 		}
 
 		return SegmentsExperienceConstants.KEY_DEFAULT;

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.RequestContextMapper;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -132,6 +133,12 @@ public class ServletContextUtil {
 
 	public static SegmentsEntryRetriever getSegmentsEntryRetriever() {
 		return _segmentsEntryRetriever;
+	}
+
+	public static SegmentsExperienceLocalService
+		getSegmentsExperienceLocalService() {
+
+		return _segmentsExperienceLocalService;
 	}
 
 	public static ServletContext getServletContext() {
@@ -279,6 +286,13 @@ public class ServletContextUtil {
 		_segmentsEntryRetriever = segmentsEntryRetriever;
 	}
 
+	@Reference(unbind = "-")
+	protected void setSegmentsExperienceLocalService(
+		SegmentsExperienceLocalService segmentsExperienceLocalService) {
+
+		_segmentsExperienceLocalService = segmentsExperienceLocalService;
+	}
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.taglib)",
 		unbind = "-"
@@ -309,6 +323,8 @@ public class ServletContextUtil {
 		_listObjectReferenceFactoryTracker;
 	private static RequestContextMapper _requestContextMapper;
 	private static SegmentsEntryRetriever _segmentsEntryRetriever;
+	private static SegmentsExperienceLocalService
+		_segmentsExperienceLocalService;
 	private static ServletContext _servletContext;
 
 }

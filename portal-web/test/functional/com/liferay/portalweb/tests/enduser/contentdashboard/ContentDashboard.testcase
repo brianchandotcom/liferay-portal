@@ -3018,6 +3018,34 @@ definition {
 		}
 	}
 
+	@description = "LPS-150510 Bug: Basic document cannot be selected in the subtype filter"
+	@priority = "4"
+	test FilterBySubtypeBasicDocument {
+		property portal.acceptance = "true";
+
+		task ("Create a Basic Document") {
+			JSONDocument.addFileWithUploadedFile(
+				dmDocumentTitle = "Document_1",
+				groupName = "Test Site Name",
+				mimeType = "application/doc",
+				sourceFileName = "Document_1.doc");
+		}
+
+		task ("Navigate to the content Dashboard") {
+			ContentDashboard.goToContentDashboard();
+		}
+
+		task ("Filter by Type: Basic Document") {
+			ContentDashboard.filterByType(typeNameList = "Basic Document");
+		}
+
+		task ("Assert that the web content and filter label are present") {
+			AssertTextPresent(
+				locator1 = "ContentDashboard#FILTER_TEXT",
+				value1 = "Subtype: Basic Document");
+		}
+	}
+
 	@description = "Validate if the user can filter by tag"
 	@priority = "5"
 	test FilterByTag {

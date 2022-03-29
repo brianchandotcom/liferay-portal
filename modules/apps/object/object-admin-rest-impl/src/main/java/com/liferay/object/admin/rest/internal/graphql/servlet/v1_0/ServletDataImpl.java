@@ -21,6 +21,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectLayoutResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectValidationRuleResource;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectViewResource;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
@@ -53,6 +54,8 @@ public class ServletDataImpl implements ServletData {
 			_objectLayoutResourceComponentServiceObjects);
 		Mutation.setObjectRelationshipResourceComponentServiceObjects(
 			_objectRelationshipResourceComponentServiceObjects);
+		Mutation.setObjectValidationRuleResourceComponentServiceObjects(
+			_objectValidationRuleResourceComponentServiceObjects);
 		Mutation.setObjectViewResourceComponentServiceObjects(
 			_objectViewResourceComponentServiceObjects);
 
@@ -66,6 +69,8 @@ public class ServletDataImpl implements ServletData {
 			_objectLayoutResourceComponentServiceObjects);
 		Query.setObjectRelationshipResourceComponentServiceObjects(
 			_objectRelationshipResourceComponentServiceObjects);
+		Query.setObjectValidationRuleResourceComponentServiceObjects(
+			_objectValidationRuleResourceComponentServiceObjects);
 		Query.setObjectViewResourceComponentServiceObjects(
 			_objectViewResourceComponentServiceObjects);
 	}
@@ -104,6 +109,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ObjectRelationshipResource>
 		_objectRelationshipResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ObjectValidationRuleResource>
+		_objectValidationRuleResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ObjectViewResource>

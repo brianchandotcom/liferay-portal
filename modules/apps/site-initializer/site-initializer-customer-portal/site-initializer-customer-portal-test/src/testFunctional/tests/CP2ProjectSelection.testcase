@@ -188,7 +188,7 @@ definition {
 
 		AssertElementPresent(
 			locator1 = "CP2LiferayContact#NUMBER_PROJECTS",
-			number = "8");
+			number = "9");
 	}
 
 	@description = "LPS-143795 - Assert the name of the project card."

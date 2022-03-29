@@ -148,10 +148,6 @@ definition {
 			value1 = "${userPassword}");
 
 		Click(locator1 = "CustomerPortalSite#OKTA_SUBMIT");
-
-		if (IsElementPresent(locator1 = "CustomerPortalSite#OKTA_COOKIES")) {
-			Click(locator1 = "CustomerPortalSite#OKTA_ACCEPT_COOKIES");
-		}
 	}
 
 	macro replaceCertificateAndPrivateKey {

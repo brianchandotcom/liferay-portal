@@ -36,6 +36,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SKIP_TO_CONTENT</td>
+	<td>//*[contains(text(),'Skip to Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OKTA_COOKIES</td>
+	<td>//div[@class='banner-content']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OKTA_SUBMIT</td>
 	<td>//input[contains(@id, 'okta-signin-submit')]</td>
 	<td></td>

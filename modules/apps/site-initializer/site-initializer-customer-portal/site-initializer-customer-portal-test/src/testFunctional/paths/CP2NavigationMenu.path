@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>PRODUCT_ACTIVATION</td>
-	<td>//button[@id='customer-portal-toggle-products']</td>
+	<td>//button[contains(text(),'Product Activation')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -2243,6 +2243,42 @@ definition {
 		}
 	}
 
+	@description = "LPS-150511 Bug: Can't scroll down in segments editor sidebar"
+	@priority = "4"
+	test ScrollDownSegmentsEditor {
+		property portal.acceptance = "true";
+
+		task ("Go to segments editor page") {
+			ProductMenu.gotoPortlet(
+				category = "People",
+				portlet = "Segments");
+
+			LexiconEntry.gotoAdd();
+		}
+
+		task ("Scroll down User session") {
+			ScrollWebElementIntoView(
+				key_propertyOption = "User Name",
+				locator1 = "Segmentation#ADD_FIELD_TYPE");
+		}
+
+		task ("Scroll down Organization session") {
+			Segmentation.gotoSidebar(fieldType = "Organization");
+
+			ScrollWebElementIntoView(
+				key_propertyOption = "Type",
+				locator1 = "Segmentation#ADD_FIELD_TYPE");
+		}
+
+		task ("Scroll down Session session") {
+			Segmentation.gotoSidebar(fieldType = "Session");
+
+			ScrollWebElementIntoView(
+				key_propertyOption = "User Agent",
+				locator1 = "Segmentation#ADD_FIELD_TYPE");
+		}
+	}
+
 	@description = "Validate if the members are assigned correctly depending on the criteria selected"
 	@priority = "5"
 	@uitest

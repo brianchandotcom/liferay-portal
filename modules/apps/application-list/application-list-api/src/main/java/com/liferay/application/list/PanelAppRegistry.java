@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -83,32 +84,6 @@ public class PanelAppRegistry {
 		return null;
 	}
 
-	public List<PanelApp> getPanelApps(
-		long companyId, PanelCategory parentPanelCategory) {
-
-		return getPanelApps(companyId, parentPanelCategory.getKey());
-	}
-
-	public List<PanelApp> getPanelApps(
-		long companyId, String parentPanelCategoryKey) {
-
-		return ListUtil.filter(
-			getPanelApps(parentPanelCategoryKey),
-			panelApp -> {
-				Portlet portlet = panelApp.getPortlet();
-
-				long portletCompanyId = portlet.getCompanyId();
-
-				if ((portletCompanyId != CompanyConstants.SYSTEM) &&
-					(portletCompanyId != companyId)) {
-
-					return false;
-				}
-
-				return true;
-			});
-	}
-
 	public List<PanelApp> getPanelApps(PanelCategory parentPanelCategory) {
 		return getPanelApps(parentPanelCategory.getKey());
 	}
@@ -129,7 +104,23 @@ public class PanelAppRegistry {
 			return Collections.emptyList();
 		}
 
-		return panelApps;
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		return ListUtil.filter(
+			panelApps,
+			panelApp -> {
+				Portlet portlet = panelApp.getPortlet();
+
+				long portletCompanyId = portlet.getCompanyId();
+
+				if ((portletCompanyId != CompanyConstants.SYSTEM) &&
+					(portletCompanyId != companyId)) {
+
+					return false;
+				}
+
+				return true;
+			});
 	}
 
 	public List<PanelApp> getPanelApps(

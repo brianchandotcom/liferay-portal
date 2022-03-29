@@ -71,9 +71,8 @@ public class LayoutServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"1.2.2", "1.2.3",
 			new LayoutRevisionUpgradeProcess(
-				_groupLocalService, _layoutLocalService,
-				_layoutBranchLocalService, _layoutRevisionLocalService,
-				_layoutSetBranchLocalService));
+				_layoutLocalService, _layoutBranchLocalService,
+				_layoutRevisionLocalService, _layoutSetBranchLocalService));
 	}
 
 	@Reference

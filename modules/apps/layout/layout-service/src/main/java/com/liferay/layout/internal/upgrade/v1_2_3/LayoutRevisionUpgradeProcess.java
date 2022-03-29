@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutRevisionConstants;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutTable;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
@@ -43,13 +42,11 @@ import java.util.List;
 public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 
 	public LayoutRevisionUpgradeProcess(
-		GroupLocalService groupLocalService,
 		LayoutLocalService layoutLocalService,
 		LayoutBranchLocalService layoutBranchLocalService,
 		LayoutRevisionLocalService layoutRevisionLocalService,
 		LayoutSetBranchLocalService layoutSetBranchLocalService) {
 
-		_groupLocalService = groupLocalService;
 		_layoutLocalService = layoutLocalService;
 		_layoutBranchLocalService = layoutBranchLocalService;
 		_layoutRevisionLocalService = layoutRevisionLocalService;
@@ -170,7 +167,6 @@ public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 		);
 	}
 
-	private final GroupLocalService _groupLocalService;
 	private final LayoutBranchLocalService _layoutBranchLocalService;
 	private final LayoutLocalService _layoutLocalService;
 	private final LayoutRevisionLocalService _layoutRevisionLocalService;

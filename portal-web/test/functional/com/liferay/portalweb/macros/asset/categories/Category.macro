@@ -283,7 +283,7 @@ definition {
 		LexiconEntry.selectEntry(key_rowEntry = "${rowEntry}");
 
 		AssertElementPresent(
-			key_text = "times-circle",
+			key_text = "trash",
 			locator1 = "Icon#ANY_DISABLED");
 	}
 

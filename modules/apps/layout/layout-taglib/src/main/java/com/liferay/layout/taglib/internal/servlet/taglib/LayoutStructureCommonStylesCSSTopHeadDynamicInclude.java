@@ -17,6 +17,7 @@ package com.liferay.layout.taglib.internal.servlet.taglib;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.frontend.token.definition.FrontendTokenMapping;
+import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.taglib.internal.util.LayoutStructureUtil;
 import com.liferay.layout.util.structure.CommonStylesUtil;
@@ -52,11 +53,14 @@ import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -113,12 +117,28 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 		List<LayoutStructureItem> layoutStructureItems =
 			layoutStructure.getLayoutStructureItems();
 
-		for (LayoutStructureItem layoutStructureItem : layoutStructureItems) {
-			String css = _getLayoutStructureItemCSS(
-				frontendTokensJSONObject, layoutStructureItem);
+		for (ViewportSize viewportSize : _sortedViewportSizes) {
+			StringBundler cssSB = new StringBundler();
 
-			if (Validator.isNotNull(css)) {
-				printWriter.print(css);
+			for (LayoutStructureItem layoutStructureItem :
+					layoutStructureItems) {
+
+				cssSB.append(
+					_getLayoutStructureItemCSS(
+						frontendTokensJSONObject, layoutStructureItem,
+						viewportSize));
+			}
+
+			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
+				printWriter.print(cssSB);
+			}
+			else {
+				printWriter.print("@media screen and (max-width: ");
+				printWriter.print(viewportSize.getMaxWidth());
+				printWriter.print("px) {");
+
+				printWriter.print(cssSB);
+				printWriter.print(StringPool.CLOSE_CURLY_BRACE);
 			}
 		}
 
@@ -302,24 +322,25 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 
 	private String _getLayoutStructureItemCSS(
 		JSONObject frontendTokensJSONObject,
-		LayoutStructureItem layoutStructureItem) {
+		LayoutStructureItem layoutStructureItem, ViewportSize viewportSize) {
 
 		if (!(layoutStructureItem instanceof StyledLayoutStructureItem)) {
 			return StringPool.BLANK;
 		}
 
-		StringBundler cssSB = new StringBundler(74);
-
 		StyledLayoutStructureItem styledLayoutStructureItem =
 			(StyledLayoutStructureItem)layoutStructureItem;
 
+		JSONObject stylesJSONObject = _getStylesJSONObject(
+			styledLayoutStructureItem.getItemConfigJSONObject(), viewportSize);
+
+		if (stylesJSONObject.length() == 0) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler cssSB = new StringBundler(74);
+
 		List<String> availableStyleNames = _getAvailableStyleNames();
-
-		JSONObject itemConfigJSONObject =
-			styledLayoutStructureItem.getItemConfigJSONObject();
-
-		JSONObject stylesJSONObject = itemConfigJSONObject.getJSONObject(
-			"styles");
 
 		for (String styleName : availableStyleNames) {
 			String value = stylesJSONObject.getString(styleName);
@@ -372,6 +393,22 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 		return "var(--" + cssVariable + ")";
 	}
 
+	private JSONObject _getStylesJSONObject(
+		JSONObject itemConfigJSONObject, ViewportSize viewportSize) {
+
+		if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {
+			return itemConfigJSONObject.getJSONObject("styles");
+		}
+
+		return Optional.ofNullable(
+			itemConfigJSONObject.getJSONObject(viewportSize.getViewportSizeId())
+		).map(
+			viewportJSONObject -> viewportJSONObject.getJSONObject("styles")
+		).orElse(
+			JSONFactoryUtil.createJSONObject()
+		);
+	}
+
 	private String _getStyleValue(
 		JSONObject frontendTokensJSONObject,
 		StyledLayoutStructureItem styledLayoutStructureItem, String styleName,
@@ -404,6 +441,8 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutStructureCommonStylesCSSTopHeadDynamicInclude.class);
 
+	private static final ViewportSize[] _sortedViewportSizes =
+		ViewportSize.values();
 	private static final Map<String, String> _spacings = HashMapBuilder.put(
 		"0", "0"
 	).put(
@@ -427,6 +466,12 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 	).put(
 		"10", "10"
 	).build();
+
+	static {
+		Arrays.sort(
+			_sortedViewportSizes,
+			Comparator.comparingInt(ViewportSize::getOrder));
+	}
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

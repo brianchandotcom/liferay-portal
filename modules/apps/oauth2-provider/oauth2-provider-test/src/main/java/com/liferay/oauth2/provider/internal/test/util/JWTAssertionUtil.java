@@ -121,40 +121,61 @@ public class JWTAssertionUtil {
 	private static JSONObject _createTestRSAKeyPairJSONWebKey01() {
 		return _createRSAKeyPairJSONObject(
 			"RS256",
-			StringBundler.concat(//d
+
+			// d
+
+			StringBundler.concat(
 				"iNf_TOwPcGZyxldVnEXEJOzkjX1IVAp2RJF9Z6LMDLiJ",
 				"P2HaeWQ1pJHmV_KaTAX-QQs-_9yIym0Y_7ybmFMF3IKd5rSdWUgDopiluH7lj",
 				"B-ed_9grsRWHFkIctlNDzmVba-kCYEdLyZ43xDSFwVeNosQh3FnqMRl2xnbJt",
 				"p43PiSZS6Gf_2hE189uA4sGLNbkFTyZ2Y61w550aHbGACZqgG1gY2SToYJxeD",
 				"M08bwbgCfgv1dR1OrQCNBLkUluWoUfrm7kBpkWrEugOmtGlZ0vynbFMoXMaRs",
 				"NySxUWfwA1xd49NjC0nXVGJKggLbYTyHqyA5eJNAX8IM7LBfGRENyQ"),
-			StringBundler.concat(//dp
+
+			// dp
+
+			StringBundler.concat(
 				"M9QuHImuXwU9bEmHQAis3sg9UCe6y--j3s9le5MiBtqD",
 				"4XiqojJrisCkZ56Lcmkq2sG7LtOqCrnwMTIrPptSizDnNs18-1ZZuW8OaMyw-",
 				"jhDTM5cLXjaY6VKznh2qg4QR6gOle9SxdVoNNKAhLlQlC3noVSaFoGBXgFkFf",
 				"8WdOE"),
-			StringBundler.concat(//dq
+
+			// dq
+
+			StringBundler.concat(
 				"DRR9MXaoj29ycKzBTL-NZK8yLMChLh5lJjimxuSn9zEx",
 				"qygSDToPPg_1SU2gQxeE_iKEj5rkC0Ckzk3rDopNTWid1F0sMaAl2sbVr7NsS",
 				"7tAXsVrno_m-laDun84JMXOj86nJxTjq6taaZhVZVfCFUnVsUGFZK1FHLEjKz",
 				"iSskE"),
 			"AQAB", _KEY_ID, "RSA",
-			StringBundler.concat(//n
+
+			// n
+
+			StringBundler.concat(
 				"n8lN23sleK5k1Lhp3r8xhdmJ3qFezuT3xZ30bdmfISXo",
 				"MyvYVVdMoA41Fx_cPB3NqylbBYDLWL6YknRi_38dHHx0pF_t0ay6V2Hut_zju",
 				"KuCNBrp20m04c5oCa1vUM_Jqj9TKIoj4PJSR6Tknnxw7pr0PUFMBTfYHZdMAS",
 				"zPtZNqsqkT4scEsAy3fsE9twiG3S9u4tmKOEQqX7wLtL1kwBig_Hh5_RXPQfI",
 				"4MoV3iMzw-k-urHJQ5cRJxzYOxNqoj1oDJxWCDXmrm9idFH0Lrs6rb0rQ6jCk",
 				"BjEM9Q_rM0ZzoiB0NXbaQTrgxlHGUrpTDlEukKGQObWyYNvktv-OYw"),
-			StringBundler.concat(//p
+
+			// p
+
+			StringBundler.concat(
 				"37P2B_RQiNP4M-khV2Z0qTlkfcrFy02v2xko6xqqYqxJTnD2eM0_WGqKQVTBb",
 				"q2thTPkw44Kw18jhqYcVm7jyQcN4zcYKEAElQ3jztJOWKLkTOiuu5D-DXuF3P",
 				"yUaL7klMbqp8EGBYh23abM3i0jkNWT0HWJfnEpQ8FzlLChptc"),
-			StringBundler.concat(//q
+
+			// q
+
+			StringBundler.concat(
 				"ttr9tDJZc8Swf4TpzV7qY2r36k9lSH7eLVA35KpQJ9FNj9JqAminUvWyvqFJb",
 				"oN_3zVxsxUrJdNxhrOfsogSxOkF8364ShECWBCgP2fBC8U_dIVfc_XRYNiTts",
 				"S7MbCsbe_HhXaKFArRFt3eq_erFn5qU2W28ip5Hgw5d3eV_1U"),
-			StringBundler.concat(//qi
+
+			// qi
+
+			StringBundler.concat(
 				"olPn50M0v0XPWrJKy_e34C5GRilM5fHZgI89MYKnvSWw",
 				"WwPlqKvvMxRamTxlzofXMex52zYyfI-AWJhCW2djpX-wU7ifWyAx7VLiPDfMq",
 				"ljb2eeolRKoywK3zu4EU_OI8doOG3kAyjunNOU96tfy4XbLuUM0Cr_BRlDp4c",

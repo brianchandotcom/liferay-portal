@@ -48,9 +48,9 @@ public class FrontendIconsResourcePack {
 	}
 
 	public Optional<FrontendIconsResource> getFrontendIconsResource(
-		String iconName) {
+		String id) {
 
-		return Optional.ofNullable(_frontendIconsResources.get(iconName));
+		return Optional.ofNullable(_frontendIconsResources.get(id));
 	}
 
 	public Collection<FrontendIconsResource> getFrontendIconsResources() {
@@ -65,8 +65,8 @@ public class FrontendIconsResourcePack {
 		return _editable;
 	}
 
-	public void removeFrontendIconsResource(String iconName) {
-		_frontendIconsResources.remove(iconName);
+	public void removeFrontendIconsResource(String id) {
+		_frontendIconsResources.remove(id);
 	}
 
 	private final boolean _editable;

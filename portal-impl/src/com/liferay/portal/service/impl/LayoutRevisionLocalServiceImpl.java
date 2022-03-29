@@ -424,6 +424,11 @@ public class LayoutRevisionLocalServiceImpl
 	}
 
 	@Override
+	public int getLayoutRevisionsCount(long plid) {
+		return layoutRevisionPersistence.countByPlid(plid);
+	}
+
+	@Override
 	public int getLayoutRevisionsCount(
 		long layoutSetBranchId, long layoutBranchId, long plid) {
 

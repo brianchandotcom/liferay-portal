@@ -66,8 +66,6 @@ definition {
 			resourceActionsText = "Test");
 
 		ProcessBuilderKaleoDesignerReact.viewSelectedAssignments(selectedAssignments = "Resource Actions: Test");
-
-		
 	}
 
 	@description = "Verify that Notification can be added"

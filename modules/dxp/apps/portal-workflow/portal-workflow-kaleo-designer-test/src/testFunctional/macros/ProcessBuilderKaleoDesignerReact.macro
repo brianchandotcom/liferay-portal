@@ -635,7 +635,7 @@ definition {
 			key_content = "${content}",
 			locator1 = "Tooltip#FLOATING_TOOLTIP_CONTENT");
 	}
-	
+
 	macro viewSourceEditor {
 		AssertElementPresent(locator1 = "ProcessBuilderKaleoDesignerReact#SOURCE_EDITOR");
 	}

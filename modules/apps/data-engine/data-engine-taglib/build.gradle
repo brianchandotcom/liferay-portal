@@ -30,9 +30,9 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 
-	testCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.12.4"
-	testCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.12.4"
-	testCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.12.4"
+	testCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.2"
+	testCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.2"
+	testCompile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.13.2.2"
 	testCompile project(":apps:portal-odata:portal-odata-api")
 	testCompile project(":apps:portal-vulcan:portal-vulcan-api")
 }

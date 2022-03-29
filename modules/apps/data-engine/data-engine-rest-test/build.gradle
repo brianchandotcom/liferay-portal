@@ -1,6 +1,6 @@
 dependencies {
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.12.4"
-	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.12.4"
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.2"
+	testIntegrationCompile group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.13.2"
 	testIntegrationCompile project(":apps:data-engine:data-engine-api")
 	testIntegrationCompile project(":apps:data-engine:data-engine-rest-api")
 	testIntegrationCompile project(":apps:data-engine:data-engine-rest-client")

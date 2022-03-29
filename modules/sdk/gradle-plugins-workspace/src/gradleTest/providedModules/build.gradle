@@ -1,7 +1,7 @@
 task runGradleTest
 
 dependencies {
-	providedModules group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.12.4"
+	providedModules group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.13.2"
 	providedModules group: "com.thoughtworks.qdox", name: "qdox"
 }
 

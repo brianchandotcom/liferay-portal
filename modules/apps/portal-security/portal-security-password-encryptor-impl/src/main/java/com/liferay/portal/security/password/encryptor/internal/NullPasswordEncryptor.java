@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Tomas Polesovsky
  */
 @Component(
-	property = "type=" + PasswordEncryptor.TYPE_DEFAULT,
+	property = "type=" + PasswordEncryptor.TYPE_NONE,
 	service = PasswordEncryptor.class
 )
 public class NullPasswordEncryptor

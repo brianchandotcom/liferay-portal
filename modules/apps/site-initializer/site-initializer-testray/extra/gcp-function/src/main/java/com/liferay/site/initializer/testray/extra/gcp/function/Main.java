@@ -299,6 +299,19 @@ public class Main {
 			testrayBuildName, "builds");
 	}
 
+	private long _getTestrayCaseType(String testrayCaseTypeName)
+		throws Exception {
+
+		long testrayCaseTypeId = _getObjectEntryId(
+			testrayCaseTypeName, "casetypes");
+
+		if (testrayCaseTypeId != 0) {
+			return testrayCaseTypeId;
+		}
+
+		return _postObjectEntry(null, testrayCaseTypeName, "casetypes");
+	}
+
 	private long _getTestrayFactorCategoryId(String testrayFactorCategoryName)
 		throws Exception {
 

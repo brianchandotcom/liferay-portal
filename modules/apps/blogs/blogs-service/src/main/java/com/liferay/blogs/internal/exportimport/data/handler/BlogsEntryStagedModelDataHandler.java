@@ -297,10 +297,9 @@ public class BlogsEntryStagedModelDataHandler
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 					FileEntry.class);
 
-			long coverImageFileEntryId = MapUtil.getLong(
-				fileEntryIds, entry.getCoverImageFileEntryId(), 0);
-
-			importedEntry.setCoverImageFileEntryId(coverImageFileEntryId);
+			importedEntry.setCoverImageFileEntryId(
+				MapUtil.getLong(
+					fileEntryIds, entry.getCoverImageFileEntryId(), 0));
 
 			importedEntry = _blogsEntryLocalService.updateBlogsEntry(
 				importedEntry);

@@ -274,10 +274,9 @@ public class PingbackMethodImpl implements Method {
 		FriendlyURLMapperThreadLocal.setPRPIdentifiers(
 			new HashMap<String, String>());
 
-		String portletId = _getPortletId(
-			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
-
-		Portlet portlet = _portletLocalService.getPortletById(portletId);
+		Portlet portlet = _portletLocalService.getPortletById(
+			_getPortletId(
+				BlogsEntry.class.getName(), PortletProvider.Action.VIEW));
 
 		FriendlyURLMapper friendlyURLMapper =
 			portlet.getFriendlyURLMapperInstance();
@@ -371,10 +370,9 @@ public class PingbackMethodImpl implements Method {
 		String[] paramArray = params.get(name);
 
 		if (paramArray == null) {
-			String portletId = _getPortletId(
-				BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
-
-			String namespace = _portal.getPortletNamespace(portletId);
+			String namespace = _portal.getPortletNamespace(
+				_getPortletId(
+					BlogsEntry.class.getName(), PortletProvider.Action.VIEW));
 
 			paramArray = params.get(namespace + name);
 		}

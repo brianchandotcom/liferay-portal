@@ -101,11 +101,9 @@ public class BlogsEntryUpgradeProcess extends UpgradeProcess {
 				BlogsEntry.class.getName(), "urlTitle", urlTitle);
 		}
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			BlogsEntry.class);
-
 		return _friendlyURLEntryLocalService.getUniqueUrlTitle(
-			groupId, classNameId, entryId, urlTitle, null);
+			groupId, _classNameLocalService.getClassNameId(BlogsEntry.class),
+			entryId, urlTitle, null);
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

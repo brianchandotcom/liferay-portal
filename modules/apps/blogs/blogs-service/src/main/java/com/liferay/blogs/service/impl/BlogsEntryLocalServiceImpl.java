@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -598,10 +597,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
 
 			if (Validator.isNotNull(portletId)) {
-				String layoutFullURL = _portal.getLayoutFullURL(
-					entry.getGroupId(), portletId);
-
-				serviceContext.setLayoutFullURL(layoutFullURL);
+				serviceContext.setLayoutFullURL(
+					_portal.getLayoutFullURL(entry.getGroupId(), portletId));
 			}
 
 			serviceContext.setScopeGroupId(entry.getGroupId());
@@ -1783,10 +1780,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return _portal.getLayoutFullURL(themeDisplay);
 		}
 
-		Layout layout = _layoutLocalService.getLayout(
-			themeDisplay.getRefererPlid());
-
-		return _portal.getLayoutFullURL(layout, themeDisplay);
+		return _portal.getLayoutFullURL(
+			_layoutLocalService.getLayout(themeDisplay.getRefererPlid()),
+			themeDisplay);
 	}
 
 	private String _getUniqueFileName(
@@ -1828,12 +1824,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				BlogsEntry.class.getName(), "urlTitle", urlTitle);
 		}
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			BlogsEntry.class);
-
 		return _friendlyURLEntryLocalService.getUniqueUrlTitle(
-			entry.getGroupId(), classNameId, entry.getEntryId(), urlTitle,
-			null);
+			entry.getGroupId(),
+			_classNameLocalService.getClassNameId(BlogsEntry.class),
+			entry.getEntryId(), urlTitle, null);
 	}
 
 	private String _getURLTitle(long entryId) {
@@ -2017,10 +2011,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		subscriptionSender.setNotificationType(notificationType);
 
-		String portletId = PortletProviderUtil.getPortletId(
-			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
-
-		subscriptionSender.setPortletId(portletId);
+		subscriptionSender.setPortletId(
+			PortletProviderUtil.getPortletId(
+				BlogsEntry.class.getName(), PortletProvider.Action.VIEW));
 
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());

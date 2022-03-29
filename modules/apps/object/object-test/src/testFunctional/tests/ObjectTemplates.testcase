@@ -458,12 +458,80 @@ definition {
 	}
 
 	@description = "LPS-148544 - Verify it's possible to map a text field for a template on the content page and view the entries"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanMapAndViewTextField {
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 149240",
+			objectName = "CustomObject149240",
+			pluralLabelName = "Custom Objects 149240");
 
-		// TODO LPS-149240 CanMapAndViewTextField pending implementation
+		ObjectAdmin.addObjectFieldViaAPI(
+			fieldBusinessType = "Text",
+			fieldLabelName = "Custom Field",
+			fieldName = "customObjectField",
+			fieldType = "String",
+			isRequired = "false",
+			objectName = "CustomObject149240");
 
+		ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject149240");
+
+		Navigator.openURL();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectPortlet.selectCustomObject(label = "Custom Object 149240");
+
+		CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
+
+		CreateObject.saveObject();
+
+		ObjectAdmin.addObjectSingleFieldEntryViaAPI(
+			fieldName = "customObjectField",
+			objectName = "CustomObject149240",
+			value = "Custom Entry A");
+
+		InformationTemplates.openInformationTemplatesAdmin(siteURLKey = "guest");
+
+		InformationTemplates.addCP(
+			informationTemplateName = "Test Information Template",
+			itemType = "Custom Object 149240");
+
+		InformationTemplates.inputScript(scriptContent = "");
+
+		InformationTemplates.addField(
+			fieldName = "Custom Field",
+			panelTitle = "Custom Object 149240");
+
+		PortletEntry.save();
+
+		InformationTemplates.viewTemplate(informationTemplateName = "Test Information Template");
+
+		Navigator.openURL();
+
+		WaitForPageLoad();
+
+		ContentPages.addPage(pageName = "Test Content Page Name");
+
+		PageEditor.addFragment(
+			collectionName = "Basic Components",
+			fragmentName = "Heading");
+
+		VisualizeObjectCollectionDisplay.openHeading();
+
+		VisualizeObjectDisplayPage.addItem(
+			frameTitle = "Select",
+			pluralLabelName = "Custom Objects 149240");
+
+		Select(
+			key_fieldLabel = "Field",
+			locator1 = "Select#GENERIC_SELECT_FIELD",
+			value1 = "Test Information Template");
+
+		PageEditor.clickPublish();
+
+		Navigator.gotoPage(pageName = "Test Content Page Name");
+
+		VisualizeObjectDisplayPage.assertDisplayEntry(entry = "Custom Entry A");
 	}
 
 }

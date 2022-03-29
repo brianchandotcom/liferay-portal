@@ -53,10 +53,13 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 				"SegmentsContextVocabularyConfiguration";
 
 		Dictionary<String, Object> properties =
-			HashMapDictionaryBuilder.<String, Object>put("assetVocabulary", "topic")
-			.put("companyId", "123")
-			.put("entityField", Context.BROWSER)
-			.build();
+			HashMapDictionaryBuilder.<String, Object>put(
+				"assetVocabulary", "topic"
+			).put(
+				"companyId", "123"
+			).put(
+				"entityField", Context.BROWSER
+			).build();
 
 		Configuration configuration = Mockito.mock(Configuration.class);
 
@@ -102,10 +105,13 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 				"SegmentsContextVocabularyConfiguration";
 
 		Dictionary<String, Object> properties =
-			HashMapDictionaryBuilder.<String, Object>put("assetVocabulary", "topic")
-				.put("companyId", "123")
-				.put("entityField", Context.BROWSER)
-				.build();
+			HashMapDictionaryBuilder.<String, Object>put(
+				"assetVocabulary", "topic"
+			).put(
+				"companyId", "123"
+			).put(
+				"entityField", Context.BROWSER
+			).build();
 
 		Dictionary<String, Object> propertiesConfiguration = new Hashtable<>();
 
@@ -155,10 +161,13 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 				"SegmentsContextVocabularyCompanyConfiguration";
 
 		Dictionary<String, Object> properties =
-			HashMapDictionaryBuilder.<String, Object>put("assetVocabulary", "topic")
-				.put("companyId", "123")
-				.put("entityField", Context.BROWSER)
-				.build();
+			HashMapDictionaryBuilder.<String, Object>put(
+				"assetVocabulary", "topic"
+			).put(
+				"companyId", "123"
+			).put(
+				"entityField", Context.BROWSER
+			).build();
 
 		Dictionary<String, Object> propertiesConfiguration = new Hashtable<>();
 

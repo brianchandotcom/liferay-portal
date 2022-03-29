@@ -17,6 +17,7 @@ package com.liferay.search.experiences.internal.upgrade;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.search.experiences.internal.model.listener.CompanyModelListener;
+import com.liferay.search.experiences.internal.search.SXPElementSearchRegistrar;
 import com.liferay.search.experiences.internal.upgrade.v1_0_0.SXPElementUpgradeProcess;
 import com.liferay.search.experiences.service.SXPElementLocalService;
 
@@ -47,5 +48,8 @@ public class SXPUpgradeStepRegistrator implements UpgradeStepRegistrator {
 
 	@Reference
 	private SXPElementLocalService _sxpElementLocalService;
+
+	@Reference
+	private SXPElementSearchRegistrar _sxpElementSearchRegistrar;
 
 }

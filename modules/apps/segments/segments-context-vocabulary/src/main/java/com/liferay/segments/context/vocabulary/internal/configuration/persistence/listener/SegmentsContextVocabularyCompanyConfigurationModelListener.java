@@ -61,8 +61,8 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 		}
 
 		if (_isDefined(
-				String.valueOf(properties.get("assetVocabulary")), entityField,
-				String.valueOf(properties.get("companyId")))) {
+				String.valueOf(properties.get("assetVocabulary")),
+				String.valueOf(properties.get("companyId")), entityField)) {
 
 			throw new DuplicatedSegmentsContextVocabularyConfigurationModelListenerException(
 				ResourceBundleUtil.getString(
@@ -85,17 +85,17 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 	}
 
 	private boolean _isDefined(
-		String assetVocabulary, Configuration configuration, String entityField,
-		String companyId) {
+		String assetVocabulary, Configuration configuration, String companyId,
+		String entityField) {
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
-		if ((Objects.equals(entityField, properties.get("entityField")) &&
-			 Objects.equals(
-				 assetVocabulary, properties.get("assetVocabulary"))) ||
-			(Objects.equals(entityField, properties.get("entityField")) &&
-			 Objects.equals(
-				 companyId, String.valueOf(properties.get("companyId"))))) {
+		if ((Objects.equals(
+				assetVocabulary, properties.get("assetVocabulary")) &&
+			 Objects.equals(entityField, properties.get("entityField"))) ||
+			(Objects.equals(
+				companyId, String.valueOf(properties.get("companyId"))) &&
+			 Objects.equals(entityField, properties.get("entityField")))) {
 
 			return true;
 		}
@@ -104,7 +104,7 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 	}
 
 	private boolean _isDefined(
-			String assetVocabulary, String entityField, String companyId)
+			String assetVocabulary, String companyId, String entityField)
 		throws ConfigurationModelListenerException {
 
 		try {
@@ -135,7 +135,7 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 				companyConfigurationStream, configurationStream
 			).filter(
 				configuration -> _isDefined(
-					assetVocabulary, configuration, entityField, companyId)
+					assetVocabulary, configuration, companyId, entityField)
 			).findFirst(
 			).isPresent();
 		}

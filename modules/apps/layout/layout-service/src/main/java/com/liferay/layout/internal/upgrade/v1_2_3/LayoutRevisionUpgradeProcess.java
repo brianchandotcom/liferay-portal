@@ -103,11 +103,9 @@ public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 
 		serviceContext.setUserId(layout.getUserId());
 
-		List<LayoutSetBranch> layoutSetBranches =
-			_layoutSetBranchLocalService.getLayoutSetBranches(
-				layout.getGroupId(), layout.isPrivateLayout());
-
-		for (LayoutSetBranch layoutSetBranch : layoutSetBranches) {
+		for (LayoutSetBranch layoutSetBranch :
+				_layoutSetBranchLocalService.getLayoutSetBranches(
+					layout.getGroupId(), layout.isPrivateLayout())) {
 
 			LayoutBranch layoutBranch =
 				_layoutBranchLocalService.getMasterLayoutBranch(

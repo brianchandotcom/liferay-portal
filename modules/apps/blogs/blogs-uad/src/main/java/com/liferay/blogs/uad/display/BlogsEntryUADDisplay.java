@@ -50,12 +50,11 @@ public class BlogsEntryUADDisplay extends BaseBlogsEntryUADDisplay {
 			return StringPool.BLANK;
 		}
 
-		String portletId = PortletProviderUtil.getPortletId(
-			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
-
 		return PortletURLBuilder.createLiferayPortletURL(
 			liferayPortletResponse,
-			portal.getControlPanelPlid(liferayPortletRequest), portletId,
+			portal.getControlPanelPlid(liferayPortletRequest),
+			PortletProviderUtil.getPortletId(
+				BlogsEntry.class.getName(), PortletProvider.Action.VIEW),
 			PortletRequest.RENDER_PHASE
 		).setMVCRenderCommandName(
 			"/blogs/edit_entry"

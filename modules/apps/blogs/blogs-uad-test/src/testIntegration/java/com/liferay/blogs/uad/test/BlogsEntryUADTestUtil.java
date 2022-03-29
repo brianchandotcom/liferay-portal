@@ -16,7 +16,6 @@ package com.liferay.blogs.uad.test;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -41,13 +40,11 @@ public class BlogsEntryUADTestUtil {
 
 		calendar.add(Calendar.DATE, 1);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId());
-
 		return blogsEntryLocalService.addEntry(
 			userId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), calendar.getTime(), serviceContext);
+			RandomTestUtil.randomString(), calendar.getTime(),
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId()));
 	}
 
 	public static BlogsEntry addBlogsEntryWithStatusByUserId(
@@ -57,13 +54,11 @@ public class BlogsEntryUADTestUtil {
 
 		BlogsEntry blogsEntry = addBlogsEntry(blogsEntryLocalService, userId);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId());
-
 		return blogsEntryLocalService.updateStatus(
 			statusByUserId, blogsEntry.getEntryId(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId()),
 			new HashMap<String, Serializable>());
 	}
 

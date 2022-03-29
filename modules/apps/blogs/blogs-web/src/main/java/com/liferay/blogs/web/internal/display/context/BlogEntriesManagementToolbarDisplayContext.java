@@ -169,26 +169,22 @@ public class BlogEntriesManagementToolbarDisplayContext
 
 				User user = _themeDisplay.getUser();
 
-				String label = String.format(
-					"%s: %s", LanguageUtil.get(httpServletRequest, "owner"),
-					user.getFullName());
-
-				labelItem.setLabel(label);
+				labelItem.setLabel(
+					String.format(
+						"%s: %s", LanguageUtil.get(httpServletRequest, "owner"),
+						user.getFullName()));
 			}
 		).build();
 	}
 
 	@Override
 	public String getSearchActionURL() {
-		String navigation = ParamUtil.getString(
-			httpServletRequest, "navigation", "entries");
-
 		return PortletURLBuilder.createRenderURL(
 			liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/blogs/search"
 		).setNavigation(
-			navigation
+			ParamUtil.getString(httpServletRequest, "navigation", "entries")
 		).setParameter(
 			"orderByCol",
 			() -> {

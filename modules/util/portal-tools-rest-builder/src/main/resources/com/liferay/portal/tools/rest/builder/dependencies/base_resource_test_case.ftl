@@ -1542,7 +1542,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 													<#if stringUtil.equals(javaMethodParameter.parameterName, "id") || stringUtil.equals(javaMethodParameter.parameterName, "${schemaVarName}Id")>
 														"${javaMethodParameter.parameterName}",
 														<#if stringUtil.equals(properties.id, "String")>
-															"\"" + ${schemaVarName}.getId() + "\""
+															<@getQuotedString unquotedString="${schemaVarName}.getId()" />
 														<#else>
 															${schemaVarName}.getId()
 														</#if>
@@ -1566,7 +1566,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 													<#if stringUtil.equals(javaMethodParameter.parameterName, "id") || stringUtil.equals(javaMethodParameter.parameterName, "${schemaVarName}Id")>
 														"${javaMethodParameter.parameterName}",
 														<#if stringUtil.equals(properties.id, "String")>
-															"\"" + ${schemaVarName}.getId() + "\""
+															<@getQuotedString unquotedString="${schemaVarName}.getId()" />
 														<#else>
 															${schemaVarName}.getId()
 														</#if>
@@ -1607,11 +1607,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 								<#list javaMethodSignature.pathJavaMethodParameters as javaMethodParameter>
 									<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-										put("siteKey", "\"" + ${javaMethodParameter.parameterName} + "\"");
+										put("siteKey", <@getQuotedString unquotedString="${javaMethodParameter.parameterName}" />);
 									<#else>
 										put("${javaMethodParameter.parameterName}",
 											<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-												"\"" + ${javaMethodParameter.parameterName} + "\""
+												<@getQuotedString unquotedString="${javaMethodParameter.parameterName}" />
 											<#else>
 												${javaMethodParameter.parameterName}
 											</#if>
@@ -1675,18 +1675,18 @@ public abstract class Base${schemaName}ResourceTestCase {
 														<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
 															put("${javaMethodParameter.parameterName}",
 																<#if stringUtil.equals(properties.id, "String")>
-																	"\"" + ${schemaVarName}.getId() + "\""
+																	<@getQuotedString unquotedString="${schemaVarName}.getId()" />
 																<#else>
 																	${schemaVarName}.getId()
 																</#if>
 															);
 														<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>
 															<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-																put("siteKey", "\"" + ${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() + "\"");
+																put("siteKey", <@getQuotedString unquotedString="${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()" />);
 															<#else>
 																put("${javaMethodParameter.parameterName}",
 																	<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-																		"\"" + ${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() + "\""
+																		<@getQuotedString unquotedString="${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()" />
 																	<#else>
 																		${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 																	</#if>
@@ -1695,11 +1695,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 														<#else>
 															<#assign missingGetterJavaMethodParametersMap = missingGetterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter} />
 															<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-																put("siteKey", "\"" + testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}() + "\"");
+																put("siteKey", <@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()" />);
 															<#else>
 																put("${javaMethodParameter.parameterName}",
 																<#if stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-																	"\"" + testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}() + "\""
+																	<@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()" />
 																<#else>
 																	testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
 																</#if>
@@ -1739,7 +1739,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Double")>
 								RandomTestUtil.randomDouble();
 							<#elseif stringUtil.equals(javaMethodParameter.parameterType, "java.lang.String")>
-								"\"" + RandomTestUtil.randomString() + "\"";
+								<@getQuotedString unquotedString="RandomTestUtil.randomString()" />;
 							<#else>
 								null;
 							</#if>
@@ -1757,7 +1757,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 											<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 												<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
 													<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
-														put("siteKey", "\"" + irrelevantGroup.getGroupId() + "\"");
+														put("siteKey", <@getQuotedString unquotedString="irrelevantGroup.getGroupId()" />);
 													<#else>
 														put("${javaMethodParameter.parameterName}", irrelevant${javaMethodParameter.parameterName?cap_first});
 													</#if>
@@ -1978,7 +1978,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								"createSite${schemaName}",
 								new HashMap<String, Object>() {
 									{
-										put("siteKey", "\"" + testGroup.getGroupId() + "\"");
+										put("siteKey", <@getQuotedString unquotedString="testGroup.getGroupId()" />);
 										put("${schemaVarName}", sb.toString());
 									}
 								},
@@ -2729,6 +2729,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 	<#else>
 		null
 	</#if>
+</#macro>
+
+<#macro getQuotedString
+	unquotedString>
+	"\"" + ${unquotedString} + "\""
 </#macro>
 
 <#macro getPutParameters

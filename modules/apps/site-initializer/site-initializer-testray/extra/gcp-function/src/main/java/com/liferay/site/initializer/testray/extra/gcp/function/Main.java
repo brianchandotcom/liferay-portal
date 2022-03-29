@@ -312,6 +312,28 @@ public class Main {
 		return _postObjectEntry(null, testrayCaseTypeName, "casetypes");
 	}
 
+	private long _getTestrayComponentId(
+			String testrayComponentName, long testrayProjectId,
+			long testrayTeamId)
+		throws Exception {
+
+		long testrayComponentId = _getObjectEntryId(
+			testrayComponentName, "components");
+
+		if (testrayComponentId != 0) {
+			return testrayComponentId;
+		}
+
+		return _postObjectEntry(
+			HashMapBuilder.put(
+				"r_projectToComponents_c_projectId",
+				String.valueOf(testrayProjectId)
+			).put(
+				"r_teamToComponents_c_teamId", String.valueOf(testrayTeamId)
+			).build(),
+			testrayComponentName, "components");
+	}
+
 	private long _getTestrayFactorCategoryId(String testrayFactorCategoryName)
 		throws Exception {
 

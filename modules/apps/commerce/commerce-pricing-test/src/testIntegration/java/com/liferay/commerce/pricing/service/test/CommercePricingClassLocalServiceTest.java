@@ -156,11 +156,10 @@ public class CommercePricingClassLocalServiceTest {
 			_user.getUserId(), RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), _serviceContext);
 
-		commercePricingClassesCount =
+		Assert.assertEquals(
+			1,
 			_commercePricingClassLocalService.getCommercePricingClassesCount(
-				_user.getCompanyId());
-
-		Assert.assertEquals(1, commercePricingClassesCount);
+				_user.getCompanyId()));
 	}
 
 	@Test(expected = CommercePricingClassTitleException.class)

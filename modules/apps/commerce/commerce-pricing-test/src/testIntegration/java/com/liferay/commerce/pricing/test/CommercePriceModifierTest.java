@@ -388,14 +388,12 @@ public class CommercePriceModifierTest {
 			commercePriceModifier.getCommercePriceModifierId(),
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
 
-		CommerceMoney priceCommerceMoney =
-			commercePriceEntry.getPriceCommerceMoney(
-				_commerceCurrency.getCommerceCurrencyId());
-
 		BigDecimal finalPrice =
 			_commercePriceModifierHelper.applyCommercePriceModifier(
 				commercePriceList.getCommercePriceListId(),
-				cpInstance.getCPDefinitionId(), priceCommerceMoney);
+				cpInstance.getCPDefinitionId(),
+				commercePriceEntry.getPriceCommerceMoney(
+					_commerceCurrency.getCommerceCurrencyId()));
 
 		RoundingMode roundingMode = RoundingMode.valueOf(
 			_commerceCurrency.getRoundingMode());
@@ -422,13 +420,11 @@ public class CommercePriceModifierTest {
 			CommercePriceListLocalServiceUtil.getCommercePriceList(
 				commercePriceListId);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				commercePriceList.getGroupId());
-
 		return CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
 			externalReferenceCode, cpProductId, cpInstanceUuid,
-			commercePriceListId, price, BigDecimal.ZERO, serviceContext);
+			commercePriceListId, price, BigDecimal.ZERO,
+			ServiceContextTestUtil.getServiceContext(
+				commercePriceList.getGroupId()));
 	}
 
 	private static User _user;

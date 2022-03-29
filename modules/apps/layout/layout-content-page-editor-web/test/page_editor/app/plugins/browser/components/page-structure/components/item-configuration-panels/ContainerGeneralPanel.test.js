@@ -171,24 +171,39 @@ describe('ContainerGeneralPanel', () => {
 		);
 	});
 
-	it('shows Align and Justify selects when item is flex container', async () => {
+	it('does not show Flex Wrap, Align and Justify selects when item is not flex container', async () => {
+		renderComponent({
+			contentDisplay: CONTAINER_DISPLAY_OPTIONS.block,
+		});
+
+		expect(screen.queryByLabelText('flex-wrap')).not.toBeInTheDocument();
+		expect(screen.queryByLabelText('align-items')).not.toBeInTheDocument();
+		expect(
+			screen.queryByLabelText('justify-content')
+		).not.toBeInTheDocument();
+	});
+
+	it('shows Flex Wrap, Align and Justify selects when item is flex container', async () => {
 		renderComponent({
 			contentDisplay: CONTAINER_DISPLAY_OPTIONS.flexRow,
 		});
 
+		expect(screen.getByLabelText('flex-wrap')).toBeInTheDocument();
 		expect(screen.getByLabelText('align-items')).toBeInTheDocument();
 		expect(screen.getByLabelText('justify-content')).toBeInTheDocument();
 	});
 
-	it('sets correct default values for Align and Justify when flex is selected', async () => {
+	it('sets correct default values for Flex Wrap, Align and Justify when flex is selected', async () => {
 		renderComponent({
 			contentDisplay: CONTAINER_DISPLAY_OPTIONS.flexRow,
 		});
 
+		const flexWrapInput = screen.getByLabelText('flex-wrap');
 		const alignInput = screen.getByLabelText('align-items');
 		const justifyInput = screen.getByLabelText('justify-content');
 
-		expect(alignInput.value).toBe('align-items-stretch');
-		expect(justifyInput.value).toBe('justify-content-start');
+		expect(flexWrapInput).toHaveValue('flex-nowrap');
+		expect(alignInput).toHaveValue('align-items-stretch');
+		expect(justifyInput).toHaveValue('justify-content-start');
 	});
 });

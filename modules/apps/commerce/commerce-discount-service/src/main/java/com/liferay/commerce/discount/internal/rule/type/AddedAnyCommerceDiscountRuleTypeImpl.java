@@ -70,10 +70,10 @@ public class AddedAnyCommerceDiscountRuleTypeImpl
 
 		long[] orderItemDefinitionIds = longStream.toArray();
 
-		String settingsProperty = commerceDiscountRule.getSettingsProperty(
-			commerceDiscountRule.getType());
-
-		long[] cpDefinitionIds = StringUtil.split(settingsProperty, 0L);
+		long[] cpDefinitionIds = StringUtil.split(
+			commerceDiscountRule.getSettingsProperty(
+				commerceDiscountRule.getType()),
+			0L);
 
 		for (long cpDefinitionId : cpDefinitionIds) {
 			if (ArrayUtil.contains(orderItemDefinitionIds, cpDefinitionId)) {

@@ -49,11 +49,11 @@ runGradleTest {
 
 			if (shortFileName.contains("-uat-")) {
 				configTypes.add("uat/uat.txt")
-				configTypes.add("uat/license/copyright-uat.txt")
+				configTypes.add("uat/license/copyright.txt")
 			}
 			else if (shortFileName.contains("-local-")) {
 				configTypes.add("local/local.txt")
-				configTypes.add("local/license/copyright-local.txt")
+				configTypes.add("local/license/copyright.txt")
 			}
 
 			zipFile.withCloseable {

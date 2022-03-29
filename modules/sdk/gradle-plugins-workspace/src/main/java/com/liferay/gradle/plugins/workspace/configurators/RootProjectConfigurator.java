@@ -235,8 +235,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			project, verifyProductTask, downloadBundleTask, workspaceExtension);
 
 		Copy distBundleTask = _addTaskDistBundle(
-			project, downloadBundleTask, workspaceExtension,
-			providedModulesConfiguration);
+			project, downloadBundleTask, DIST_BUNDLE_TASK_NAME,
+			workspaceExtension, null, providedModulesConfiguration);
 
 		_addTasksDistBundleArchive(project, distBundleTask, workspaceExtension);
 
@@ -419,7 +419,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	@SuppressWarnings("serial")
 	private Copy _addTaskCopyBundle(
 		Project project, String taskName, Download downloadBundleTask,
-		final WorkspaceExtension workspaceExtension,
+		final WorkspaceExtension workspaceExtension, String environment,
 		Configuration providedModulesConfiguration) {
 
 		Copy copy = GradleUtil.addTask(project, taskName, Copy.class);
@@ -432,7 +432,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				public File call() throws Exception {
 					return new File(
 						workspaceExtension.getConfigsDir(),
-						workspaceExtension.getEnvironment());
+						(environment == null) ?
+							workspaceExtension.getEnvironment() : environment);
 				}
 
 			});
@@ -726,13 +727,13 @@ public class RootProjectConfigurator implements Plugin<Project> {
 	}
 
 	private Copy _addTaskDistBundle(
-		final Project project, Download downloadBundleTask,
-		WorkspaceExtension workspaceExtension,
+		final Project project, Download downloadBundleTask, String taskName,
+		WorkspaceExtension workspaceExtension, String environment,
 		Configuration providedModulesConfiguration) {
 
 		Copy copy = _addTaskCopyBundle(
-			project, DIST_BUNDLE_TASK_NAME, downloadBundleTask,
-			workspaceExtension, providedModulesConfiguration);
+			project, taskName, downloadBundleTask, workspaceExtension,
+			environment, providedModulesConfiguration);
 
 		_configureTaskDisableUpToDate(copy);
 
@@ -753,7 +754,7 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	@SuppressWarnings("serial")
 	private <T extends AbstractArchiveTask> T _addTaskDistBundle(
-		Project project, String taskName, Class<T> clazz, long buildTime,
+		Project project, String taskName, Class<T> clazz,
 		final Copy distBundleTask,
 		final WorkspaceExtension workspaceExtension) {
 
@@ -785,61 +786,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 				}
 
 			});
-
-		Property<String> archiveBaseNameProperty = task.getArchiveBaseName();
-
-		String environment = workspaceExtension.getEnvironment();
-
-		if (environment != null) {
-			archiveBaseNameProperty.set(
-				project.provider(
-					new Callable<String>() {
-
-						@Override
-						public String call() throws Exception {
-							StringBuilder sb = new StringBuilder();
-
-							sb.append(project.getName());
-
-							if (workspaceExtension.
-									isBundleDistIncludeMetadata()) {
-
-								sb.append("-");
-								sb.append(environment);
-								sb.append("-");
-								sb.append(buildTime);
-							}
-
-							return sb.toString();
-						}
-
-					}));
-		}
-		else {
-			archiveBaseNameProperty.set(
-				project.provider(
-					new Callable<String>() {
-
-						@Override
-						public String call() throws Exception {
-							StringBuilder sb = new StringBuilder();
-
-							sb.append(project.getName());
-
-							if (workspaceExtension.
-									isBundleDistIncludeMetadata()) {
-
-								sb.append("-");
-								sb.append(workspaceExtension.getEnvironment());
-								sb.append("-");
-								sb.append(buildTime);
-							}
-
-							return sb.toString();
-						}
-
-					}));
-		}
 
 		DirectoryProperty destinationDirectoryProperty =
 			task.getDestinationDirectory();
@@ -1239,27 +1185,51 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 		long buildTime = System.currentTimeMillis();
 
-		Task distBundleTar = _addTaskDistBundle(
-			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, buildTime,
-			distBundleTask, workspaceExtension);
+		Tar distBundleTar = _addTaskDistBundle(
+			project, DIST_BUNDLE_TAR_TASK_NAME, Tar.class, distBundleTask,
+			workspaceExtension);
 
 		distBundleTar.setDescription(
 			"Assembles a Liferay bundle (tar.gz) for the current environment.");
+
 		distBundleTar.setGroup(BUNDLE_GROUP);
 
-		Task distBundleZip = _addTaskDistBundle(
-			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, buildTime,
-			distBundleTask, workspaceExtension);
+		Zip distBundleZip = _addTaskDistBundle(
+			project, DIST_BUNDLE_ZIP_TASK_NAME, Zip.class, distBundleTask,
+			workspaceExtension);
 
 		distBundleZip.setDescription(
 			"Assembles a Liferay bundle (zip) for the current environment.");
+
 		distBundleZip.setGroup(BUNDLE_GROUP);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					_configureDistBundleEnvArchive(
+						project, distBundleTar,
+						workspaceExtension.getEnvironment(),
+						workspaceExtension.isBundleDistIncludeMetadata(),
+						buildTime);
+
+					_configureDistBundleEnvArchive(
+						project, distBundleZip,
+						workspaceExtension.getEnvironment(),
+						workspaceExtension.isBundleDistIncludeMetadata(),
+						buildTime);
+				}
+
+			});
 	}
 
 	private void _addTasksDistBundleEnvironments(
 		Project project, Download downloadBundleTask,
 		WorkspaceExtension workspaceExtension,
 		Configuration providedModulesConfiguration) {
+
+		long buildTime = System.currentTimeMillis();
 
 		File configsDir = workspaceExtension.getConfigsDir();
 
@@ -1283,45 +1253,40 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			return;
 		}
 
+		Task distBundleTarAll = GradleUtil.addTask(
+			project, DIST_BUNDLE_TAR_ALL_TASK_NAME, DefaultTask.class);
+
+		distBundleTarAll.setDescription(
+			"Assembles a Liferay bundle (tar.gz) for each environment.");
+		distBundleTarAll.setGroup(BUNDLE_GROUP);
+
+		Task distBundleZipAll = GradleUtil.addTask(
+			project, DIST_BUNDLE_ZIP_ALL_TASK_NAME, DefaultTask.class);
+
+		distBundleZipAll.setDescription(
+			"Assembles a Liferay bundle (zip) for each environment.");
+		distBundleZipAll.setGroup(BUNDLE_GROUP);
+
 		project.afterEvaluate(
 			new Action<Project>() {
 
 				@Override
 				public void execute(Project project) {
-					long buildTime = System.currentTimeMillis();
-
-					Task distBundleTarAll = GradleUtil.addTask(
-						project, DIST_BUNDLE_TAR_ALL_TASK_NAME,
-						DefaultTask.class);
-
-					distBundleTarAll.setDescription(
-						"Assembles a Liferay bundle (tar.gz) for each " +
-							"environment.");
-					distBundleTarAll.setGroup(BUNDLE_GROUP);
-
-					Task distBundleZipAll = GradleUtil.addTask(
-						project, DIST_BUNDLE_ZIP_ALL_TASK_NAME,
-						DefaultTask.class);
-
-					distBundleZipAll.setDescription(
-						"Assembles a Liferay bundle (zip) for each " +
-							"environment.");
-					distBundleZipAll.setGroup(BUNDLE_GROUP);
+					workspaceExtension.setBundleDistIncludeMetadata(true);
 
 					for (String environment : environments) {
-						Copy distBundleEnvTask = _addTaskCopyBundle(
-							project,
+						Copy distBundleEnvTask = _addTaskDistBundle(
+							project, downloadBundleTask,
 							DIST_BUNDLE_TASK_NAME +
 								StringUtil.capitalize(environment),
-							downloadBundleTask, workspaceExtension,
+							workspaceExtension, environment,
 							providedModulesConfiguration);
 
 						Tar distBundleTarTask = _addTaskDistBundle(
 							project,
 							DIST_BUNDLE_TAR_TASK_NAME +
 								StringUtil.capitalize(environment),
-							Tar.class, buildTime, distBundleEnvTask,
-							workspaceExtension);
+							Tar.class, distBundleEnvTask, workspaceExtension);
 
 						Property<String> archiveExtensionProperty =
 							distBundleTarTask.getArchiveExtension();
@@ -1333,18 +1298,25 @@ public class RootProjectConfigurator implements Plugin<Project> {
 							"Assembles a Liferay bundle (tar.gz) for " +
 								environment + ".");
 
+						_configureDistBundleEnvArchive(
+							project, distBundleTarTask, environment, true,
+							buildTime);
+
 						distBundleTarAll.dependsOn(distBundleTarTask);
 
 						Zip distBundleZipTask = _addTaskDistBundle(
 							project,
 							DIST_BUNDLE_ZIP_TASK_NAME +
 								StringUtil.capitalize(environment),
-							Zip.class, buildTime, distBundleEnvTask,
-							workspaceExtension);
+							Zip.class, distBundleEnvTask, workspaceExtension);
 
 						distBundleZipTask.setDescription(
 							"Assembles a Liferay bundle (zip) for " +
 								environment + ".");
+
+						_configureDistBundleEnvArchive(
+							project, distBundleZipTask, environment, true,
+							buildTime);
 
 						distBundleZipAll.dependsOn(distBundleZipTask);
 					}
@@ -1517,6 +1489,36 @@ public class RootProjectConfigurator implements Plugin<Project> {
 			"Verify liferay workspace product settings.");
 
 		return verifyProductTask;
+	}
+
+	private <T extends AbstractArchiveTask> void _configureDistBundleEnvArchive(
+		Project project, T distBundleArchiveTask, String environment,
+		boolean bundleDistIncludeMetadata, long buildTime) {
+
+		Property<String> archiveBaseNameProperty =
+			distBundleArchiveTask.getArchiveBaseName();
+
+		archiveBaseNameProperty.set(
+			project.provider(
+				new Callable<String>() {
+
+					@Override
+					public String call() throws Exception {
+						StringBuilder sb = new StringBuilder();
+
+						sb.append(project.getName());
+
+						if (bundleDistIncludeMetadata) {
+							sb.append("-");
+							sb.append(environment);
+							sb.append("-");
+							sb.append(buildTime);
+						}
+
+						return sb.toString();
+					}
+
+				}));
 	}
 
 	private void _configureNpmProject(Project project) {

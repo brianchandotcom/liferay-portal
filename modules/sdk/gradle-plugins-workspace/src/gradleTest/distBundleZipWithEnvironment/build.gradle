@@ -27,7 +27,7 @@ runGradleTest {
 
 			// Configs
 
-			for (String fileName in ["common/common.txt", "uat/uat.txt", "uat/license/copyright-uat.txt"]) {
+			for (String fileName in ["common/common.txt", "uat/uat.txt", "uat/license/copyright.txt"]) {
 				File expectedFile = file("configs/" + fileName)
 
 				String zipEntryName = zipEntryRootName + fileName.substring(fileName.indexOf('/') + 1)

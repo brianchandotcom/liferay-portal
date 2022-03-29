@@ -49,7 +49,9 @@ public class ObjectEntryValuesException extends PortalException {
 	public static class ExceedsLongMinSize extends ObjectEntryValuesException {
 
 		public ExceedsLongMinSize() {
-			super("Object entry value exceeds minimum long field allowed size");
+			super(
+				"Object entry value falls bellow minimum long field allowed " +
+					"size");
 		}
 
 	}

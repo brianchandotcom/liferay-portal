@@ -479,7 +479,8 @@ public class ObjectEntryLocalServiceTest {
 					objectEntryValuesException) {
 
 			Assert.assertEquals(
-				"Object entry value exceeds minimum long field allowed size",
+				"Object entry value falls bellow minimum long field allowed " +
+					"size",
 				objectEntryValuesException.getMessage());
 		}
 
@@ -1600,7 +1601,8 @@ public class ObjectEntryLocalServiceTest {
 					objectEntryValuesException) {
 
 			Assert.assertEquals(
-				"Object entry value exceeds minimum long field allowed size",
+				"Object entry value falls bellow minimum long field allowed " +
+					"size",
 				objectEntryValuesException.getMessage());
 		}
 

@@ -57,13 +57,13 @@ public class RegistrationUtil {
 
 		if (Objects.equals(portletName, "*")) {
 			for (String curPortletName : allPortletNames) {
-				String portletId = _getPortletId(
-					curPortletName, servletContext.getServletContextName());
-
 				serviceRegistrations.add(
 					_registerBeanFilter(
 						beanFilter, beanFilterMethodFactory,
-						beanFilterMethodInvoker, bundleContext, portletId));
+						beanFilterMethodInvoker, bundleContext,
+						_getPortletId(
+							curPortletName,
+							servletContext.getServletContextName())));
 			}
 		}
 		else {
@@ -75,13 +75,13 @@ public class RegistrationUtil {
 						portletName));
 			}
 			else {
-				String portletId = _getPortletId(
-					portletName, servletContext.getServletContextName());
-
 				serviceRegistrations.add(
 					_registerBeanFilter(
 						beanFilter, beanFilterMethodFactory,
-						beanFilterMethodInvoker, bundleContext, portletId));
+						beanFilterMethodInvoker, bundleContext,
+						_getPortletId(
+							portletName,
+							servletContext.getServletContextName())));
 			}
 		}
 

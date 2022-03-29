@@ -109,12 +109,10 @@ public class CPOptionDisplayContext {
 	public String getDDMFormFieldTypeLabel(
 		DDMFormFieldType ddmFormFieldType, Locale locale) {
 
-		Map<String, Object> ddmFormFieldTypeProperties =
-			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
-				ddmFormFieldType.getName());
-
 		String label = MapUtil.getString(
-			ddmFormFieldTypeProperties, "ddm.form.field.type.label");
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
+				ddmFormFieldType.getName()),
+			"ddm.form.field.type.label");
 
 		try {
 			if (Validator.isNotNull(label)) {

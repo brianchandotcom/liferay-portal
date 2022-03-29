@@ -94,11 +94,11 @@ public class CommerceNotificationTemplateGroupIdUpgradeProcess
 			}
 		}
 
-		long classNameId = _classNameLocalService.getClassNameId(
-			CommerceChannel.class.getName());
-
 		Group group = _groupLocalService.fetchGroup(
-			companyId, classNameId, commerceChannelId);
+			companyId,
+			_classNameLocalService.getClassNameId(
+				CommerceChannel.class.getName()),
+			commerceChannelId);
 
 		if (group != null) {
 			return group.getGroupId();

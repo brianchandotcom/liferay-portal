@@ -152,12 +152,11 @@ public class CommerceOrderStatusNotificationTest {
 			CommerceOrderConstants.ORDER_STATUS_PENDING,
 			_commerceOrder.getOrderStatus());
 
-		int commerceNotificationQueueEntriesCount =
+		Assert.assertEquals(
+			1,
 			_commerceNotificationQueueEntryLocalService.
 				getCommerceNotificationQueueEntriesCount(
-					_commerceChannel.getGroupId());
-
-		Assert.assertEquals(1, commerceNotificationQueueEntriesCount);
+					_commerceChannel.getGroupId()));
 
 		_checkCommerceNotificationTemplate(
 			CommerceOrderConstants.ORDER_NOTIFICATION_PLACED);
@@ -243,12 +242,11 @@ public class CommerceOrderStatusNotificationTest {
 			_commerceOrder, CommerceOrderConstants.ORDER_STATUS_COMPLETED,
 			_user.getUserId());
 
-		commerceNotificationQueueEntriesCount =
+		Assert.assertEquals(
+			4,
 			_commerceNotificationQueueEntryLocalService.
 				getCommerceNotificationQueueEntriesCount(
-					_commerceChannel.getGroupId());
-
-		Assert.assertEquals(4, commerceNotificationQueueEntriesCount);
+					_commerceChannel.getGroupId()));
 
 		_checkCommerceNotificationTemplate(
 			CommerceOrderConstants.ORDER_NOTIFICATION_COMPLETED);

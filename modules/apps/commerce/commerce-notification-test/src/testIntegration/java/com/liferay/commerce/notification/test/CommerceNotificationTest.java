@@ -168,11 +168,10 @@ public class CommerceNotificationTest {
 			_group.getGroupId(), _user.getUserId(),
 			CommerceOrderConstants.ORDER_NOTIFICATION_PLACED, _commerceOrder);
 
-		int commerceNotificationQueueEntriesCount =
+		Assert.assertEquals(
+			1,
 			_commerceNotificationQueueEntryLocalService.
-				getCommerceNotificationQueueEntriesCount(_group.getGroupId());
-
-		Assert.assertEquals(1, commerceNotificationQueueEntriesCount);
+				getCommerceNotificationQueueEntriesCount(_group.getGroupId()));
 	}
 
 	@Test
@@ -265,11 +264,10 @@ public class CommerceNotificationTest {
 			_group.getGroupId(), _user.getUserId(),
 			CommerceOrderConstants.ORDER_NOTIFICATION_PLACED, _commerceOrder);
 
-		int commerceNotificationQueueEntriesCount =
+		Assert.assertEquals(
+			1,
 			_commerceNotificationQueueEntryLocalService.
-				getCommerceNotificationQueueEntriesCount(_group.getGroupId());
-
-		Assert.assertEquals(1, commerceNotificationQueueEntriesCount);
+				getCommerceNotificationQueueEntriesCount(_group.getGroupId()));
 	}
 
 	@Test
@@ -294,11 +292,10 @@ public class CommerceNotificationTest {
 			_group.getGroupId(), _user.getUserId(),
 			CommerceOrderConstants.ORDER_NOTIFICATION_PLACED, _commerceOrder);
 
-		int commerceNotificationQueueEntriesCount =
+		Assert.assertEquals(
+			1,
 			_commerceNotificationQueueEntryLocalService.
-				getCommerceNotificationQueueEntriesCount(_group.getGroupId());
-
-		Assert.assertEquals(1, commerceNotificationQueueEntriesCount);
+				getCommerceNotificationQueueEntriesCount(_group.getGroupId()));
 	}
 
 	private void _setUpAccountAdministrator() throws Exception {

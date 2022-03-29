@@ -286,7 +286,9 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 			cssSB.append(
 				StringUtil.replace(
 					CommonStylesUtil.getCSSTemplate(styleName), "{value}",
-					_getStyleValue(frontendTokensJSONObject, value)));
+					_getStyleValue(
+						frontendTokensJSONObject, styledLayoutStructureItem,
+						styleName, value)));
 			cssSB.append(StringPool.NEW_LINE);
 		}
 
@@ -325,14 +327,59 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 
 	private String _getStyleValue(
 		JSONObject frontendTokensJSONObject,
+		StyledLayoutStructureItem styledLayoutStructureItem, String styleName,
 		String value) {
 
+		if (styleName.startsWith("margin") || styleName.startsWith("padding")) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("var(--spacer-");
+			sb.append(value);
+			sb.append(StringPool.COMMA);
+			sb.append(_spacings.get(value));
+			sb.append("rem)");
+
+			return sb.toString();
+		}
+
+		if (Objects.equals(styleName, "backgroundImage")) {
+			return "var(--lfr-" + styledLayoutStructureItem.getItemId() +
+				"-background-image)";
+		}
+
+		if (Objects.equals(styleName, "opacity")) {
+			return String.valueOf(GetterUtil.getInteger(value, 100) / 100.0);
+		}
 
 		return _getStyleFromStyleBookEntry(frontendTokensJSONObject, value);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutStructureCommonStylesCSSTopHeadDynamicInclude.class);
+
+	private static final Map<String, String> _spacings = HashMapBuilder.put(
+		"0", "0"
+	).put(
+		"1", "0.25"
+	).put(
+		"2", "0.5"
+	).put(
+		"3", "1"
+	).put(
+		"4", "1.5"
+	).put(
+		"5", "3"
+	).put(
+		"6", "4.5"
+	).put(
+		"7", "6"
+	).put(
+		"8", "7.5"
+	).put(
+		"9", "9"
+	).put(
+		"10", "10"
+	).build();
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

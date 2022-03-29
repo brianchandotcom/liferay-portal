@@ -26,99 +26,103 @@ long commercePricingClassId = commercePricingClass.getCommercePricingClassId();
 boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermission();
 %>
 
-<c:if test="<%= hasPermission %>">
-	<div class="row">
-		<div class="col-12 pt-4">
-			<div id="item-finder-root"></div>
+<portlet:actionURL name="/commerce_pricing_classes/edit_commerce_pricing_class" var="editCommercePricingClassActionURL" />
 
-			<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
-				var CommerceProductGroupsResource = ServiceProvider.default.AdminCatalogAPI(
-					'v1'
-				);
+<aui:form action="<%= editCommercePricingClassActionURL %>" cssClass="pt-4" method="post" name="fm">
+	<c:if test="<%= hasPermission %>">
+		<div class="row">
+			<div class="col-12 pt-4">
+				<div id="item-finder-root"></div>
 
-				var id = <%= commercePricingClass.getCommercePricingClassId() %>;
-				var pricingClassExternalReferenceCode =
-					'<%= HtmlUtil.escapeJS(commercePricingClass.getExternalReferenceCode()) %>';
+				<aui:script require="commerce-frontend-js/components/item_finder/entry as itemFinder, commerce-frontend-js/utilities/slugify as slugify, commerce-frontend-js/utilities/eventsDefinitions as events, commerce-frontend-js/ServiceProvider/index as ServiceProvider">
+					var CommerceProductGroupsResource = ServiceProvider.default.AdminCatalogAPI(
+						'v1'
+					);
 
-				function selectItem(product) {
-					var productData = {
-						productExternalReferenceCode: product.externalReferenceCode,
-						productId: product.productId,
-						productGroupExternalReferenceCode: pricingClassExternalReferenceCode,
-						productGroupId: id,
-					};
+					var id = <%= commercePricingClass.getCommercePricingClassId() %>;
+					var pricingClassExternalReferenceCode =
+						'<%= HtmlUtil.escapeJS(commercePricingClass.getExternalReferenceCode()) %>';
 
-					return CommerceProductGroupsResource.addProductToProductGroup(
-						id,
-						productData
-					)
-						.then(() => {
-							Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
-								id:
-									'<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>',
+					function selectItem(product) {
+						var productData = {
+							productExternalReferenceCode: product.externalReferenceCode,
+							productId: product.productId,
+							productGroupExternalReferenceCode: pricingClassExternalReferenceCode,
+							productGroupId: id,
+						};
+
+						return CommerceProductGroupsResource.addProductToProductGroup(
+							id,
+							productData
+						)
+							.then(() => {
+								Liferay.fire(events.UPDATE_DATASET_DISPLAY, {
+									id:
+										'<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>',
+								});
+							})
+							.catch((error) => {
+								return Promise.reject(error);
 							});
-						})
-						.catch((error) => {
-							return Promise.reject(error);
-						});
-				}
+					}
 
-				function getSelectedItems() {
-					return Promise.resolve([]);
-				}
+					function getSelectedItems() {
+						return Promise.resolve([]);
+					}
 
-				itemFinder.default('itemFinder', 'item-finder-root', {
-					apiUrl:
-						'/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=catalog',
-					getSelectedItems: getSelectedItems,
-					inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-product") %>',
-					itemSelectedMessage: '<%= LanguageUtil.get(request, "product-selected") %>',
-					linkedDatasetsId: [
-						'<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>',
-					],
-					itemCreation: false,
-					itemsKey: 'id',
-					onItemSelected: selectItem,
-					pageSize: 10,
-					panelHeaderLabel: '<%= LanguageUtil.get(request, "add-products") %>',
-					portletId: '<%= portletDisplay.getRootPortletId() %>',
-					schema: [
-						{
-							fieldName: ['name', 'LANG'],
-						},
-						{
-							fieldName: 'productId',
-						},
-						{
-							fieldName: ['catalog', 'name'],
-						},
-					],
-					spritemap: '<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
-					titleLabel: '<%= LanguageUtil.get(request, "add-existing-product") %>',
-				});
-			</aui:script>
+					itemFinder.default('itemFinder', 'item-finder-root', {
+						apiUrl:
+							'/o/headless-commerce-admin-catalog/v1.0/products?nestedFields=catalog',
+						getSelectedItems: getSelectedItems,
+						inputPlaceholder: '<%= LanguageUtil.get(request, "find-a-product") %>',
+						itemSelectedMessage: '<%= LanguageUtil.get(request, "product-selected") %>',
+						linkedDatasetsId: [
+							'<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>',
+						],
+						itemCreation: false,
+						itemsKey: 'id',
+						onItemSelected: selectItem,
+						pageSize: 10,
+						panelHeaderLabel: '<%= LanguageUtil.get(request, "add-products") %>',
+						portletId: '<%= portletDisplay.getRootPortletId() %>',
+						schema: [
+							{
+								fieldName: ['name', 'LANG'],
+							},
+							{
+								fieldName: 'productId',
+							},
+							{
+								fieldName: ['catalog', 'name'],
+							},
+						],
+						spritemap: '<%= themeDisplay.getPathThemeImages() %>/clay/icons.svg',
+						titleLabel: '<%= LanguageUtil.get(request, "add-existing-product") %>',
+					});
+				</aui:script>
+			</div>
+
+			<div class="col-12">
+				<commerce-ui:panel
+					bodyClasses="p-0"
+					title='<%= LanguageUtil.get(request, "products") %>'
+				>
+					<frontend-data-set:classic-display
+						contextParams='<%=
+							HashMapBuilder.<String, String>put(
+								"commercePricingClassId", String.valueOf(commercePricingClassId)
+							).build()
+						%>'
+						dataProviderKey="<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>"
+						formName="fm"
+						id="<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>"
+						itemsPerPage="<%= 10 %>"
+						namespace="<%= liferayPortletResponse.getNamespace() %>"
+						pageNumber="<%= 1 %>"
+						portletURL="<%= currentURLObj %>"
+					/>
+				</commerce-ui:panel>
+			</div>
 		</div>
-
-		<div class="col-12">
-			<commerce-ui:panel
-				bodyClasses="p-0"
-				title='<%= LanguageUtil.get(request, "products") %>'
-			>
-				<frontend-data-set:classic-display
-					contextParams='<%=
-						HashMapBuilder.<String, String>put(
-							"commercePricingClassId", String.valueOf(commercePricingClassId)
-						).build()
-					%>'
-					dataProviderKey="<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>"
-					formName="fm"
-					id="<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>"
-					itemsPerPage="<%= 10 %>"
-					namespace="<%= liferayPortletResponse.getNamespace() %>"
-					pageNumber="<%= 1 %>"
-					portletURL="<%= currentURLObj %>"
-				/>
-			</commerce-ui:panel>
-		</div>
-	</div>
-</c:if>
+	</c:if>
+</aui:form>

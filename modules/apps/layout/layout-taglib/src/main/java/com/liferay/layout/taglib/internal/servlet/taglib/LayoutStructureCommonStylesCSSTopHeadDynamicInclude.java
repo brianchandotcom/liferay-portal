@@ -164,41 +164,6 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 		}
 	}
 
-	private boolean _includeStyles(
-		StyledLayoutStructureItem styledLayoutStructureItem, String styleName,
-		String value) {
-
-		if (Validator.isNull(value) ||
-			Objects.equals(
-				value, CommonStylesUtil.getDefaultStyleValue(styleName))) {
-
-			return false;
-		}
-
-		if (!(styledLayoutStructureItem instanceof
-			ContainerStyledLayoutStructureItem)) {
-
-			return true;
-		}
-
-		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem =
-			(ContainerStyledLayoutStructureItem)styledLayoutStructureItem;
-
-		if (!Objects.equals(
-			containerStyledLayoutStructureItem.getWidthType(), "fixed")) {
-
-			return true;
-		}
-
-		if (Objects.equals(styleName, "marginLeft") ||
-			Objects.equals(styleName, "marginRight")) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	private List<String> _getAvailableStyleNames() {
 		try {
 			return CommonStylesUtil.getAvailableStyleNames();
@@ -346,7 +311,8 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 			String value = stylesJSONObject.getString(styleName);
 
 			if (!_includeStyles(
-					styledLayoutStructureItem, styleName, value)) {
+					styledLayoutStructureItem, styleName, value,
+					viewportSize)) {
 
 				continue;
 			}
@@ -436,6 +402,42 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 		}
 
 		return _getStyleFromStyleBookEntry(frontendTokensJSONObject, value);
+	}
+
+	private boolean _includeStyles(
+		StyledLayoutStructureItem styledLayoutStructureItem, String styleName,
+		String value, ViewportSize viewportSize) {
+
+		if (Validator.isNull(value) ||
+			(Objects.equals(
+				value, CommonStylesUtil.getDefaultStyleValue(styleName)) &&
+			 Objects.equals(viewportSize, ViewportSize.DESKTOP))) {
+
+			return false;
+		}
+
+		if (!(styledLayoutStructureItem instanceof
+				ContainerStyledLayoutStructureItem)) {
+
+			return true;
+		}
+
+		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem =
+			(ContainerStyledLayoutStructureItem)styledLayoutStructureItem;
+
+		if (!Objects.equals(
+				containerStyledLayoutStructureItem.getWidthType(), "fixed")) {
+
+			return true;
+		}
+
+		if (Objects.equals(styleName, "marginLeft") ||
+			Objects.equals(styleName, "marginRight")) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

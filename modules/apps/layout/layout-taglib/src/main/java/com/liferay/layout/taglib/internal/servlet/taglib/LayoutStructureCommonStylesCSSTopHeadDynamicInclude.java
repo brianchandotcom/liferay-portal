@@ -95,12 +95,6 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 			return;
 		}
 
-		PrintWriter printWriter = httpServletResponse.getWriter();
-
-		printWriter.print("<style id=\"layout-common-styles\"");
-		printWriter.print(" data-senna-track=\"temporary\" ");
-		printWriter.print("type=\"text/css\">\n");
-
 		LayoutStructure layoutStructure =
 			LayoutStructureUtil.getLayoutStructure(
 				httpServletRequest, themeDisplay.getPlid());
@@ -108,6 +102,12 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 		if (layoutStructure == null) {
 			return;
 		}
+
+		PrintWriter printWriter = httpServletResponse.getWriter();
+
+		printWriter.print("<style id=\"layout-common-styles\"");
+		printWriter.print(" data-senna-track=\"temporary\" ");
+		printWriter.print("type=\"text/css\">\n");
 
 		JSONObject frontendTokensJSONObject = _getFrontendTokensJSONObject(
 			themeDisplay.getSiteGroupId(), themeDisplay.getLayout(),
@@ -127,6 +127,10 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 					_getLayoutStructureItemCSS(
 						frontendTokensJSONObject, layoutStructureItem,
 						viewportSize));
+			}
+
+			if (cssSB.length() == 0) {
+				continue;
 			}
 
 			if (Objects.equals(viewportSize, ViewportSize.DESKTOP)) {

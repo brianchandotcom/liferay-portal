@@ -68,8 +68,6 @@ public class SpringSessionSynchronization implements TransactionSynchronization,
 	public void suspend() {
 		if (this.holderActive) {
 			TransactionSynchronizationManager.unbindResource(this.sessionFactory);
-			// Eagerly disconnect the Session here, to make release mode "on_close" work on JBoss.
-			getCurrentSession().disconnect();
 		}
 	}
 
@@ -141,3 +139,4 @@ public class SpringSessionSynchronization implements TransactionSynchronization,
 	}
 
 }
+/* @generated */

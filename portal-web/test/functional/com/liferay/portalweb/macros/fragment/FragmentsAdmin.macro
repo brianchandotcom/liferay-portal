@@ -144,6 +144,25 @@ definition {
 		Navigator.openWithAppendToBaseURL(urlAppend = "group/${siteURLKey}/~/control_panel/manage/-/fragments");
 	}
 
+	macro propagateChanges {
+		if (isSet(itemNameList)) {
+			for (var itemName : list "${itemNameList}") {
+				Check(
+					key_tableEntry = "${itemName}",
+					locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
+			}
+		}
+		else {
+			PortletEntry.selectAll();
+		}
+
+		Click(
+			key_text = "propagation",
+			locator1 = "Icon#ANY");
+
+		Alert.viewSuccessMessage();
+	}
+
 	macro selectCollection {
 		SelectFrame(locator1 = "IFrame#MODAL_BODY");
 

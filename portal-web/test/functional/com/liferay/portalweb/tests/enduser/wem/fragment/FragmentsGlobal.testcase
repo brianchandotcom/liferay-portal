@@ -245,13 +245,7 @@ definition {
 				entry = "Global Fragment Name",
 				item = "View Site Usages");
 
-			Check(
-				key_tableEntry = "Site Name",
-				locator1 = "LexiconTable#TABLE_ENTRY_CHECKBOX");
-
-			Click(locator1 = "Button#PROPAGATE");
-
-			Alert.viewSuccessMessage();
+			FragmentsAdmin.propagateChanges(itemNameList = "Site Name");
 		}
 
 		task ("View the changes propagated to normal site") {

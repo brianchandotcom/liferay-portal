@@ -463,11 +463,7 @@ definition {
 				entry = "Test Fragment Name",
 				item = "View Usages");
 
-			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
-
-			Click(locator1 = "Button#PROPAGATE");
-
-			Alert.viewSuccessMessage();
+			FragmentsAdmin.propagateChanges();
 		}
 
 		task ("View the changes of fragment at view mode") {
@@ -579,11 +575,7 @@ definition {
 				entry = "Test Fragment Name",
 				item = "View Usages");
 
-			Click(locator1 = "Checkbox#LEXICON_SELECT_ALL_CONTAINER");
-
-			Click(locator1 = "Button#PROPAGATE");
-
-			Alert.viewSuccessMessage();
+			FragmentsAdmin.propagateChanges();
 		}
 
 		task ("View the edited inline text of new fragment at edit mode") {

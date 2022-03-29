@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/bookmarks/item/selector/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 BookmarkEntriesItemSelectorDisplayContext bookmarkEntriesItemSelectorDisplayContext = (BookmarkEntriesItemSelectorDisplayContext)request.getAttribute(BookmarkEntriesItemSelectorDisplayContext.class.getName());

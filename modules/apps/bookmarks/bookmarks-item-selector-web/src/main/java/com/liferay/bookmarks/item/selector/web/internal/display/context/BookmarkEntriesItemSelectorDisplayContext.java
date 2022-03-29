@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.internal.display.context;
+package com.liferay.bookmarks.item.selector.web.internal.display.context;
 
+import com.liferay.bookmarks.item.selector.web.internal.item.selector.BookmarksEntryItemSelectorView;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryServiceUtil;
-import com.liferay.bookmarks.web.internal.item.selector.BookmarksEntryItemSelectorView;
 import com.liferay.bookmarks.web.internal.portlet.util.BookmarksUtil;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.dao.search.SearchContainer;

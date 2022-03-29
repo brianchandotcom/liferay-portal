@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.internal.item.selector;
+package com.liferay.bookmarks.item.selector.web.internal.item.selector;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterion;

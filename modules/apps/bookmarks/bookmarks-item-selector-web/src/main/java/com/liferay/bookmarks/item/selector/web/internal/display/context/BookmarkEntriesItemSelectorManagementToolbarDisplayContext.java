@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.internal.display.context;
+package com.liferay.bookmarks.item.selector.web.internal.display.context;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;

@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.internal.item.selector;
+package com.liferay.bookmarks.item.selector.web.internal.item.selector;
 
+import com.liferay.bookmarks.item.selector.web.internal.display.context.BookmarkEntriesItemSelectorDisplayContext;
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.web.internal.display.context.BookmarkEntriesItemSelectorDisplayContext;
 import com.liferay.info.item.selector.InfoItemSelectorView;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
@@ -105,7 +105,7 @@ public class BookmarksEntryItemSelectorView
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(
-				"/bookmarks/item/selector/select_entries.jsp");
+				"/select_entries.jsp");
 
 		requestDispatcher.include(servletRequest, servletResponse);
 	}

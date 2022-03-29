@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>CP2NavigationMenu</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CP2NavigationMenu</td></tr>
+</thead>
+
+<tbody>
+<tr>
+	<td>OVERVIEW</td>
+	<td>//button[contains(text(),'Overview')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRODUCT_ACTIVATION</td>
+	<td>//button[@id='customer-portal-toggle-products']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEAM_MEMBERS</td>
+	<td>//button[contains(text(),'Team Members')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_ADD</td>
+	<td>//button[contains(@class, 'nav-btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_SUBSCRIPTION_GROUPS</td>
+	<td>//label[contains(text(), '${field}')]/parent::div//input[contains(@type,'text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_HAS_ACTIVATION</td>
+	<td>//div[contains(@class, 'field-container')]//span[contains(text(), 'Has Activation')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BUTTON_SAVE</td>
+	<td>//span[text()='Save']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATIONS_MENU_ACCOUNTS</td>
+	<td>//button[contains(@data-qa-id,'applicationsMenu')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ID_CREATED</td>
+	<td>//a[contains(@href, 'objectEntryId')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

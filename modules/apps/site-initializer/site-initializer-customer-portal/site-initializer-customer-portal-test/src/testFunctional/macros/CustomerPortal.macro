@@ -149,7 +149,9 @@ definition {
 
 		Click(locator1 = "CustomerPortalSite#OKTA_SUBMIT");
 
-		OpenIDConnect.acceptConditions();
+		if (IsElementPresent(locator1 = "CustomerPortalSite#OKTA_COOKIES")) {
+			Click(locator1 = "CustomerPortalSite#OKTA_ACCEPT_COOKIES");
+		}
 	}
 
 	macro replaceCertificateAndPrivateKey {

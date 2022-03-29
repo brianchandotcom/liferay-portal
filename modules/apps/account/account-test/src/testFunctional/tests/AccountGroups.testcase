@@ -91,6 +91,51 @@ definition {
 		}
 	}
 
+	@description = "This test asserts the user with Access in Control Panel permission can acess account group via Control Panel."
+	@priority = "3"
+	test CanAccessAccountGroupsInControlPanelWithPermissions {
+		task ("Given A new User exists") {
+			JSONUser.addUser(
+				userEmailAddress = "userea1@liferay.com",
+				userFirstName = "userfn1",
+				userLastName = "userln1",
+				userScreenName = "usersn1");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "userea1@liferay.com");
+
+			task ("And A new Regular role with Access in Control Panel permission exists") {
+				JSONRole.addRegularRole(roleTitle = "View AG Reg Role");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "VIEW_CONTROL_PANEL",
+					resourceName = "90",
+					roleTitle = "View AG Reg Role");
+
+				Permissions.definePermissionViaJSONAPI(
+					resourceAction = "ACCESS_IN_CONTROL_PANEL",
+					resourceName = "com_liferay_account_admin_web_internal_portlet_AccountGroupsAdminPortlet",
+					roleTitle = "View AG Reg Role");
+			}
+		}
+
+		task ("When Assign the user with regular role") {
+			JSONRole.assignRoleToUser(
+				roleTitle = "View AG Reg Role",
+				userEmailAddress = "userea1@liferay.com");
+
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea1@liferay.com",
+				userLoginFullName = "userfn1 userln1");
+		}
+
+		task ("Then The new User can access the Account Group via Control Panel") {
+			AccountGroups.openAccountGroupsAdmin();
+		}
+	}
+
 	@description = "This test asserts the user with Assign Account permission can assign account to account group."
 	@priority = "3"
 	test CanAssignAccountFromAccountGroupWithPermissions {

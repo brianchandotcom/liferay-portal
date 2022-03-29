@@ -69,18 +69,15 @@ public class JWTAssertionUtil {
 	private static JSONObject _createKeyJSONObject(
 		String alg, String kid, String kty, String use) {
 
-		JSONObject jsonObject = JSONUtil.put(
+		return JSONUtil.put(
 			"alg", alg
 		).put(
-			"kid",
-			() -> kid
+			"kid", () -> kid
 		).put(
 			"kty", kty
 		).put(
 			"use", use
 		);
-
-		return jsonObject;
 	}
 
 	private static JSONObject _createRSAKeyPairJSONObject(

@@ -237,11 +237,10 @@ public class PendingCommerceOrderItemDataSetDataProvider
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		List<CommerceOrderItem> childCommerceOrderItems =
+		return _getOrderItems(
 			_commerceOrderItemService.getChildCommerceOrderItems(
-				commerceOrderItem.getCommerceOrderItemId());
-
-		return _getOrderItems(childCommerceOrderItems, httpServletRequest);
+				commerceOrderItem.getCommerceOrderItemId()),
+			httpServletRequest);
 	}
 
 	private long _getCommerceOptionValueCPDefinitionId(

@@ -1,7 +1,5 @@
 {
 	"dependencies": {
-		"frontend-js-web": "*",
-		"social-bookmarks-taglib": "*"
 	},
 	"name": "@liferay/social-bookmark-twitter",
 	"scripts": {

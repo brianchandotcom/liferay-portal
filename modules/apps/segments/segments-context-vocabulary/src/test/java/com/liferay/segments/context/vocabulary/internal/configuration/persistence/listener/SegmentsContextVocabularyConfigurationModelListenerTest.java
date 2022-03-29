@@ -15,6 +15,7 @@
 package com.liferay.segments.context.vocabulary.internal.configuration.persistence.listener;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.context.Context;
 
@@ -51,11 +52,11 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 			"com.liferay.segments.context.vocabulary.internal.configuration." +
 				"SegmentsContextVocabularyConfiguration";
 
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put("entityField", Context.BROWSER);
-		properties.put("assetVocabulary", "topic");
-		properties.put("companyId", "123");
+		Dictionary<String, Object> properties =
+			HashMapDictionaryBuilder.<String, Object>put("assetVocabulary", "topic")
+			.put("companyId", "123")
+			.put("entityField", Context.BROWSER)
+			.build();
 
 		Configuration configuration = Mockito.mock(Configuration.class);
 
@@ -100,11 +101,11 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 			"com.liferay.segments.context.vocabulary.internal.configuration." +
 				"SegmentsContextVocabularyConfiguration";
 
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put("entityField", Context.BROWSER);
-		properties.put("assetVocabulary", "topic");
-		properties.put("companyId", "123");
+		Dictionary<String, Object> properties =
+			HashMapDictionaryBuilder.<String, Object>put("assetVocabulary", "topic")
+				.put("companyId", "123")
+				.put("entityField", Context.BROWSER)
+				.build();
 
 		Dictionary<String, Object> propertiesConfiguration = new Hashtable<>();
 
@@ -153,11 +154,11 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 			"com.liferay.segments.context.vocabulary.internal.configuration." +
 				"SegmentsContextVocabularyCompanyConfiguration";
 
-		Dictionary<String, Object> properties = new Hashtable<>();
-
-		properties.put("entityField", Context.BROWSER);
-		properties.put("assetVocabulary", "topic");
-		properties.put("companyId", "123");
+		Dictionary<String, Object> properties =
+			HashMapDictionaryBuilder.<String, Object>put("assetVocabulary", "topic")
+				.put("companyId", "123")
+				.put("entityField", Context.BROWSER)
+				.build();
 
 		Dictionary<String, Object> propertiesConfiguration = new Hashtable<>();
 

@@ -153,24 +153,25 @@ public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _upgradeContentLayouts(long groupId) throws PortalException {
-		List<Layout> layouts = _layoutLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
-				LayoutTable.INSTANCE
-			).from(
-				LayoutTable.INSTANCE
-			).where(
-				LayoutTable.INSTANCE.groupId.eq(
-					groupId
-				).and(
-					LayoutTable.INSTANCE.hidden.eq(false)
-				).and(
-					LayoutTable.INSTANCE.system.eq(false)
-				).and(
-					LayoutTable.INSTANCE.type.eq(LayoutConstants.TYPE_CONTENT)
-				)
-			));
+		for (Layout layout :
+				(List<Layout>)_layoutLocalService.dslQuery(
+					DSLQueryFactoryUtil.select(
+						LayoutTable.INSTANCE
+					).from(
+						LayoutTable.INSTANCE
+					).where(
+						LayoutTable.INSTANCE.groupId.eq(
+							groupId
+						).and(
+							LayoutTable.INSTANCE.hidden.eq(false)
+						).and(
+							LayoutTable.INSTANCE.system.eq(false)
+						).and(
+							LayoutTable.INSTANCE.type.eq(
+								LayoutConstants.TYPE_CONTENT)
+						)
+					))) {
 
-		for (Layout layout : layouts) {
 			_createInitialContentLayoutRevisions(layout);
 		}
 	}

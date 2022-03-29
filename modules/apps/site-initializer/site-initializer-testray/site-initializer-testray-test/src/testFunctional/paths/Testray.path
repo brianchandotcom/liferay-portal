@@ -17,7 +17,7 @@
 </tr>
 <tr>
 	<td>ITEMS_PER_PAGE_BUTTON_DROPDOWN</td>
-	<td>//button[contains(text(), "${key_itemvalue}")]</td>
+	<td>g </td>
 	<td></td>
 </tr>
 <tr>
@@ -48,6 +48,11 @@
 <tr>
 	<td>PROJECT_NAVIGATOR_TAB_BUTTON</td>
 	<td>//button[contains(@class, 'nav-link') and contains(text(), "${key_navTabName}")]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_SIDEBAR</td>
+	<td>//div[contains(@class, 'dropdown-toggle') and contains(., 'Manage')]</td>
 	<td></td>
 </tr>
 </tbody>

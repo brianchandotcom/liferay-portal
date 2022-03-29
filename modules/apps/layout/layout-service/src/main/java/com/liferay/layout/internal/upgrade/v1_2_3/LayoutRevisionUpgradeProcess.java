@@ -15,10 +15,10 @@
 package com.liferay.layout.internal.upgrade.v1_2_3;
 
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutBranch;
@@ -33,8 +33,6 @@ import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
 import java.util.List;
@@ -66,12 +64,8 @@ public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 		try {
 			StagingAdvicesThreadLocal.setEnabled(false);
 
-			for (Group group : _getStagingGroups()) {
-				if (!_isBranchingEnabledInStagingGroup(group)) {
-					continue;
-				}
-
-				_upgradeContentLayouts(group);
+			for (long groupId : _getBranchingEnabledStagingGroupIds()) {
+				_upgradeContentLayouts(groupId);
 			}
 		}
 		finally {
@@ -118,47 +112,51 @@ public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private List<Group> _getStagingGroups() {
+	private List<Long> _getBranchingEnabledStagingGroupIds() {
 		return _groupLocalService.dslQuery(
 			DSLQueryFactoryUtil.select(
-				GroupTable.INSTANCE
+				GroupTable.INSTANCE.groupId
 			).from(
 				GroupTable.INSTANCE
 			).where(
-				GroupTable.INSTANCE.liveGroupId.eq(
-					0L
-				).or(
+				Predicate.withParentheses(
 					GroupTable.INSTANCE.typeSettings.like(
-						"%stagedRemotely=true%")
+						"%stagedRemotely=true%"
+					).and(
+						Predicate.withParentheses(
+							GroupTable.INSTANCE.typeSettings.like(
+								"%branchingPrivate=true%"
+							).or(
+								GroupTable.INSTANCE.typeSettings.like(
+									"%branchingPublic=true%")
+							))
+					)
+				).or(
+					GroupTable.INSTANCE.liveGroupId.gt(
+						0L
+					).and(
+						GroupTable.INSTANCE.liveGroupId.in(
+							DSLQueryFactoryUtil.select(
+								GroupTable.INSTANCE.groupId
+							).from(
+								GroupTable.INSTANCE
+							).where(
+								GroupTable.INSTANCE.typeSettings.like(
+									"%branchingPrivate=true%"
+								).or(
+									GroupTable.INSTANCE.typeSettings.like(
+										"%branchingPublic=true%")
+								)
+							))
+					)
 				)
 			));
 	}
 
-	private boolean _isBranchingEnabledInStagingGroup(Group group) {
-		if (!group.isStagedRemotely()) {
-			group = group.getLiveGroup();
-		}
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			group.getTypeSettingsProperties();
-
-		if (GetterUtil.getBoolean(
-				typeSettingsUnicodeProperties.getProperty(
-					"branchingPrivate")) ||
-			GetterUtil.getBoolean(
-				typeSettingsUnicodeProperties.getProperty("branchingPublic"))) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private void _upgradeContentLayouts(Group group) throws PortalException {
+	private void _upgradeContentLayouts(long groupId) throws PortalException {
 		DynamicQuery dynamicQuery = _layoutLocalService.dynamicQuery();
 
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.eq("groupId", group.getGroupId()));
+		dynamicQuery.add(RestrictionsFactoryUtil.eq("groupId", groupId));
 		dynamicQuery.add(
 			RestrictionsFactoryUtil.eq("type", LayoutConstants.TYPE_CONTENT));
 		dynamicQuery.add(RestrictionsFactoryUtil.eq("hidden", false));

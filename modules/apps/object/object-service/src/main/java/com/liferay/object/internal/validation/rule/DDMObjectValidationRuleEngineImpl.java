@@ -55,10 +55,7 @@ public class DDMObjectValidationRuleEngineImpl
 	@Override
 	public boolean isValidScript(String script) {
 		try {
-			_ddmExpressionFactory.createExpression(
-				CreateExpressionRequest.Builder.newBuilder(
-					script
-				).build());
+			_getDDMExpression(script);
 		}
 		catch (DDMExpressionException ddmExpressionException) {
 			if (_log.isDebugEnabled()) {
@@ -74,15 +71,20 @@ public class DDMObjectValidationRuleEngineImpl
 	private boolean _evaluate(Map<String, Object> inputObjects, String script)
 		throws Exception {
 
-		DDMExpression<Boolean> ddmExpression =
-			_ddmExpressionFactory.createExpression(
-				CreateExpressionRequest.Builder.newBuilder(
-					script
-				).build());
+		DDMExpression<Boolean> ddmExpression = _getDDMExpression(script);
 
 		ddmExpression.setVariables(inputObjects);
 
 		return ddmExpression.evaluate();
+	}
+
+	private DDMExpression<Boolean> _getDDMExpression(String script)
+		throws DDMExpressionException {
+
+		return _ddmExpressionFactory.createExpression(
+			CreateExpressionRequest.Builder.newBuilder(
+				script
+			).build());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

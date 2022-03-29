@@ -393,8 +393,9 @@ public class LayoutStructureCommonStylesCSSTopHeadDynamicInclude
 		}
 
 		if (Objects.equals(styleName, "backgroundImage")) {
-			return "var(--lfr-" + styledLayoutStructureItem.getItemId() +
-				"-background-image)";
+			return "var(--lfr-background-image-" +
+				styledLayoutStructureItem.getItemId() +
+					StringPool.CLOSE_PARENTHESIS;
 		}
 
 		if (Objects.equals(styleName, "opacity")) {

@@ -576,9 +576,9 @@ public class RenderLayoutStructureDisplayContext {
 
 		if (isCommonStylesFFEnabled()) {
 			if (Validator.isNotNull(backgroundImageURL)) {
-				styleSB.append("--lfr-");
+				styleSB.append("--lfr-background-image-");
 				styleSB.append(styledLayoutStructureItem.getItemId());
-				styleSB.append("-background-image: url(");
+				styleSB.append(": url(");
 				styleSB.append(backgroundImageURL);
 				styleSB.append(");");
 			}

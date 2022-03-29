@@ -887,4 +887,94 @@ definition {
 			optionValue = "Option 2");
 	}
 
+	@description = "Verify that is possible to choose different options for Grid field for a translated language"
+	@priority = "5"
+	test DanChooseDifferentOptionsFromGridField {
+		WebContentNavigator.openWebContentAdmin(siteURLKey = "test-site-name");
+
+		NavItem.gotoStructures();
+
+		WebContentStructures.addCP(
+			structureDescription = "Structure Description Test",
+			structureName = "Structure Name Test");
+
+		DataEngine.addField(
+			fieldFieldLabel = "Grid",
+			fieldName = "Grid");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Grid",
+			optionFieldLabel = "Rows",
+			optionValueList = "Option 1,Option 2,Option 3, Option 4, Option 5, Option 6");
+
+		DEBuilder.addFieldOptions(
+			fieldLabel = "Grid",
+			optionFieldLabel = "Columns",
+			optionValueList = "Option 1,Option 2,Option 3, Option 4, Option 5, Option 6");
+
+		WebContentStructures.addTranslations(localeList = "zh-CN");
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		DataEngine.editFieldLabel(
+			fieldFieldLabel = "Grid",
+			fieldFieldLabelEdit = "网格");
+
+		WebContentStructures.saveCP();
+
+		NavItem.click(navItem = "Web Content");
+
+		WebContentNavigator.gotoAddWithStructureCP(structureName = "Structure Name Test");
+
+		PortletEntry.inputTitle(title = "Test");
+
+		for (var index : list "1,2,3") {
+			DERenderer.inputDataInGridField(
+				column = "${index}",
+				fieldLabel = "Grid",
+				row = "${index}");
+		}
+
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		PortletEntry.inputTitle(title = "测试");
+
+
+		for (var index : list "4,5,6") {
+			DERenderer.inputDataInGridField(
+				column = "${index}",
+				fieldLabel = "网格",
+				row = "${index}");
+		}
+
+		PortletEntry.publish();
+
+		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "Test");
+
+		for (var index : list "1,2,3") {
+			DERenderer.assertDataInGridField(
+				column = "${index}",
+				fieldLabel = "Grid",
+				row = "${index}");
+		}
+
+		PortletEntry.changeLocale(locale = "zh-CN");
+
+		AssertTextEquals(
+			locator1 = "TextInput#TITLE",
+			value1 = "测试");
+
+		for (var index : list "1,2,3,4,5,6") {
+			DERenderer.assertDataInGridField(
+				column = "${index}",
+				fieldLabel = "网格",
+				row = "${index}");
+		}
+	}
+
 }

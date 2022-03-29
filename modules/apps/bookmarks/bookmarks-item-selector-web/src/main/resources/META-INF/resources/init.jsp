@@ -26,9 +26,14 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.bookmarks.item.selector.web.internal.display.context.BookmarkEntriesItemSelectorDisplayContext" %><%@
 page import="com.liferay.bookmarks.item.selector.web.internal.display.context.BookmarkEntriesItemSelectorManagementToolbarDisplayContext" %><%@
+page import="com.liferay.bookmarks.model.BookmarksEntry" %><%@
 page import="com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
-page import="com.liferay.portal.kernel.json.JSONUtil" %>
+page import="com.liferay.portal.kernel.json.JSONUtil" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %>
+
+<%@ page import="java.util.Objects" %>
 
 <liferay-frontend:defineObjects />
 

@@ -26,6 +26,42 @@ definition {
 		}
 	}
 
+	@description = "Verify users can exclude fields from being exported in CSV format"
+	@priority = "3"
+	test CanExcludeCSVFieldsFromExport {
+		property portal.acceptance = "true";
+
+		task ("Given several channels") {
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = "Test Channel 1",
+				channelType = "site",
+				currencyCode = "USD",
+				externalReferenceCode = "101");
+
+			CommerceJSONChannelsAPI._addChannel(
+				channelName = "Test Channel 2",
+				channelType = "site",
+				currencyCode = "CAD",
+				externalReferenceCode = "102");
+		}
+
+		task ("When the user selects specific channel fields for export and exports the channels in CSV format") {
+			ImportExport.openImportExportAdmin();
+
+			ImportExport.exportFile(
+				entityType = "Channel",
+				exportFields = "name,type,currencyCode",
+				exportFileFormat = "CSV",
+				headlessEndpoint = "/headless-commerce-admin-channel");
+		}
+
+		task ("Then only those fields should be imported") {
+			ImportExport.assertExportFileContent(
+				comparisonFileName = "csv_channel_import_auto_map.csv",
+				exportFileName = "export.csv");
+		}
+	}
+
 	@description = "Verify users can exclude fields from being imported"
 	@priority = "3"
 	test CanExcludeFieldsFromImport {

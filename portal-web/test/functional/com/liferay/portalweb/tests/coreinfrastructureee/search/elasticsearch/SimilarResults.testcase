@@ -824,24 +824,14 @@ definition {
 
 		AssetPublisherPortlet.configureAssetLinkBehaviorPG(assetLinkBehavior = "Show Full Content");
 
-		var index = "0";
-		var list1 = ListUtil.newListFromString("WC Title,DM Document Title,Blogs Entry Title,Wiki Page Title");
-		var list2 = ListUtil.newListFromString("1,2,3");
+		for (var assetTitle : list "WC Title,DM Document Title,Blogs Entry Title,Wiki Page Title") {
+			AssetPublisherPortlet.clickAssetTitle(assetTitle = "${assetTitle} 0");
 
-		for (var list1item : list "${list1}") {
-			AssetPublisherPortlet.clickAssetTitle(assetTitle = "${list1item}");
-
-			var list2item = ListUtil.get("${list2}", "${index}");
-
-			AssertElementPresent(
-				key_linkResultTitle = "${list1item} ${list2item}",
-				locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-			AssertElementPresent(
-				key_linkResultTitle = "${list1item} ${list2item}",
-				locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
-
-			var index = ${index} + 1;
+			for (var count : list "1,2,3") {
+				AssertElementPresent(
+					key_linkResultTitle = "${assetTitle} ${count}",
+					locator1 = "Search#SIMILAR_RESULTS_LINK_TITLE");
+			}
 
 			Click(locator1 = "Icon#ANGLE_LEFT_BACK");
 		}

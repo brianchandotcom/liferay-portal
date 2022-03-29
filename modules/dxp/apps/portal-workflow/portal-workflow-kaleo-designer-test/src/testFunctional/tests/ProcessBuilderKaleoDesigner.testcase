@@ -210,7 +210,7 @@ definition {
 		PortletEntry.inputTitle(title = "Test Title");
 
 		Click(
-			key_icon = "en-us",
+			key_icon = "pt-br",
 			locator1 = "KaleoDesigner#ICON_COUNTRY");
 
 		Click(

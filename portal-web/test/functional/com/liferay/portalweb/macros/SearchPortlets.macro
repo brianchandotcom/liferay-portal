@@ -362,22 +362,17 @@ definition {
 				value1 = "${minimumWordLength}");
 		}
 
+		if (isSet(searchScope)) {
+			Select(
+				locator1 = "Select#SCOPE_CONFIGURATION",
+				value1 = "${searchScope}");
+		}
+
 		if (isSet(stopWords)) {
 			Type(
 				key_fieldLabel = "Stop Words",
 				locator1 = "TextInput#GENERIC_TEXT_INPUT",
 				value1 = "${stopWords}");
-		}
-
-		if (isSet(searchScope)) {
-			if (("${searchScope}" == "Everything") || ("${searchScope}" == "This Site")) {
-				Select(
-					locator1 = "Select#SCOPE_CONFIGURATION",
-					value1 = "${searchScope}");
-			}
-			else {
-				fail("Invalid search scope. Must be (Everything|Let the User Choose|This Site).");
-			}
 		}
 
 		PortletEntry.save();

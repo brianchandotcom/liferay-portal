@@ -62,13 +62,11 @@ public class BlogsStatsUserLocalServiceTest {
 	public void testAddFirstUserBlogsEntryAddsNewBlogsStatsUser()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _user1.getUserId());
-
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 			_user1.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user1.getUserId()));
 
 		BlogsStatsUser blogsStatsUser =
 			BlogsStatsUserLocalServiceUtil.getStatsUser(
@@ -110,13 +108,11 @@ public class BlogsStatsUserLocalServiceTest {
 	public void testAddNewRatingsEntryIncrementsBlogsStatsUserRatings()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _user1.getUserId());
-
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 			_user1.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user1.getUserId()));
 
 		RatingsEntryLocalServiceUtil.updateEntry(
 			_user2.getUserId(), BlogsEntry.class.getName(),
@@ -146,13 +142,11 @@ public class BlogsStatsUserLocalServiceTest {
 	public void testDeleteRatingsEntryDecreasesBlogsStatsUserEntryEntryCount()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _user1.getUserId());
-
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 			_user1.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user1.getUserId()));
 
 		RatingsEntryLocalServiceUtil.updateEntry(
 			_user2.getUserId(), BlogsEntry.class.getName(),
@@ -186,13 +180,11 @@ public class BlogsStatsUserLocalServiceTest {
 	public void testDeleteRatingsEntryUpdatesBlogsStatsUserRatings()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _user1.getUserId());
-
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 			_user1.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user1.getUserId()));
 
 		RatingsEntryLocalServiceUtil.updateEntry(
 			_user2.getUserId(), BlogsEntry.class.getName(),
@@ -228,13 +220,11 @@ public class BlogsStatsUserLocalServiceTest {
 	public void testUpdateRatingsEntryDoesNotIncreaseBlogsStatsUserEntryEntryCount()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _user1.getUserId());
-
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 			_user1.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user1.getUserId()));
 
 		RatingsEntryLocalServiceUtil.updateEntry(
 			_user2.getUserId(), BlogsEntry.class.getName(),
@@ -259,13 +249,11 @@ public class BlogsStatsUserLocalServiceTest {
 	public void testUpdateRatingsEntryUpdatesBlogsStatsUserRatings()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group, _user1.getUserId());
-
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 			_user1.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group, _user1.getUserId()));
 
 		RatingsEntryLocalServiceUtil.updateEntry(
 			_user2.getUserId(), BlogsEntry.class.getName(),

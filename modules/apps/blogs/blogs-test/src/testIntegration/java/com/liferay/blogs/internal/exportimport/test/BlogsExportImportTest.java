@@ -68,13 +68,11 @@ public class BlogsExportImportTest extends BasePortletExportImportTestCase {
 
 	@Override
 	protected StagedModel addStagedModel(long groupId) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				groupId, TestPropsValues.getUserId());
-
 		return BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				groupId, TestPropsValues.getUserId()));
 	}
 
 	@Override

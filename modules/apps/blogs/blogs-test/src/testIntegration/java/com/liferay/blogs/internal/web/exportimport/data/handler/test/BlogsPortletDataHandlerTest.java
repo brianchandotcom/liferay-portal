@@ -19,7 +19,6 @@ import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -44,13 +43,11 @@ public class BlogsPortletDataHandlerTest
 
 	@Override
 	protected void addStagedModels() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				stagingGroup, TestPropsValues.getUserId());
-
 		BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup, TestPropsValues.getUserId()));
 	}
 
 	@Override

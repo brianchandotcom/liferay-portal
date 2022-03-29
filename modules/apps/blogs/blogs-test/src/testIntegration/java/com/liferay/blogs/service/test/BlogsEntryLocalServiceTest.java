@@ -543,13 +543,11 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testAddOriginalImageInVisibleImageFolder() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
 		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), serviceContext);
+			RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId()));
 
 		FileEntry tempFileEntry = getTempFileEntry(
 			_user.getUserId(), _group.getGroupId(), "image.jpg");

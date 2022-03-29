@@ -52,12 +52,10 @@ public abstract class BaseBlogsEntryImageTestCase {
 	public void testAddImage() throws Exception {
 		BlogsEntry blogsEntry = addBlogsEntry((ImageSelector)null);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), user.getUserId());
-
 		FileEntry fileEntry = getTempFileEntry(
-			user.getUserId(), "image1.jpg", serviceContext);
+			user.getUserId(), "image1.jpg",
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId()));
 
 		ImageSelector imageSelector = new ImageSelector(
 			FileUtil.getBytes(fileEntry.getContentStream()),

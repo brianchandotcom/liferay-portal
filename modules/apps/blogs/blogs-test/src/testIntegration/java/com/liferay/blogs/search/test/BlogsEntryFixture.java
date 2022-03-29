@@ -50,12 +50,10 @@ public class BlogsEntryFixture {
 	}
 
 	public BlogsEntry createBlogsEntry(String title) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), getUserId());
-
 		BlogsEntry blogsEntry = addEntryWithWorkflow(
-			getUserId(), title, true, serviceContext);
+			getUserId(), title, true,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), getUserId()));
 
 		_blogsEntries.add(blogsEntry);
 

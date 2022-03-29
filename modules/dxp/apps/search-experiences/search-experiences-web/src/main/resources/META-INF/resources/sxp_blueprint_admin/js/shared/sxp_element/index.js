@@ -24,7 +24,7 @@ import {DEFAULT_SXP_ELEMENT_ICON} from '../../utils/data';
 import {INPUT_TYPES} from '../../utils/inputTypes';
 import {
 	cleanUIConfiguration,
-	getConfigurationEntry,
+	getSXPElementJSON,
 	isDefined,
 } from '../../utils/utils';
 import {PreviewModalWithCopyDownload} from '../PreviewModal';
@@ -355,10 +355,10 @@ function SXPElement({
 								fileName="sxpElement.json"
 								size="lg"
 								text={JSON.stringify(
-									getConfigurationEntry({
+									getSXPElementJSON(
 										sxpElement,
-										uiConfigurationValues,
-									}),
+										uiConfigurationValues
+									),
 									null,
 									'\t'
 								)}

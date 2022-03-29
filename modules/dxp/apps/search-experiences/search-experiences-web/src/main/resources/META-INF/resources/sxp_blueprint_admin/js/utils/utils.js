@@ -566,6 +566,34 @@ export function parseCustomSXPElement(sxpElement, uiConfigurationValues) {
 }
 
 /**
+ * Function that provides the element JSON, with title, description, and elementDefinition.
+ * The elementDefinition's configuration is updated to have its variables replaced with
+ * values from uiConfigurationValues.
+ *
+ * @param {object} _.sxpElement SXP Element with title, description, elementDefinition
+ * @param {object} _.uiConfigurationValues Values that will replace the keys in uiConfiguration
+ * @return {object}
+ */
+export function getSXPElementJSON(sxpElement, uiConfigurationValues) {
+	const {description_i18n, elementDefinition, title_i18n} = sxpElement;
+
+	const {category, icon} = elementDefinition;
+
+	return {
+		description_i18n,
+		elementDefinition: {
+			category,
+			configuration: getConfigurationEntry({
+				sxpElement,
+				uiConfigurationValues,
+			}),
+			icon,
+		},
+		title_i18n,
+	};
+}
+
+/**
  * Function for getting all the default values from an SXPElement. For non-custom
  * json elements, returns the configuration values after looping over all fieldSets.
  * For custom json elements, returns a stringified sxpElement for the editor.

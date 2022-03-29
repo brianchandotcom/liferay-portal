@@ -23,7 +23,6 @@ import com.liferay.commerce.price.list.service.CommerceTierPriceEntryLocalServic
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 
 import java.math.BigDecimal;
@@ -45,14 +44,12 @@ public class CommerceTierPriceEntryTestUtil {
 		CommercePriceList commercePriceList =
 			commercePriceEntry.getCommercePriceList();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				commercePriceList.getGroupId());
-
 		return CommerceTierPriceEntryLocalServiceUtil.addCommerceTierPriceEntry(
 			externalReferenceCode, commercePriceEntryId,
 			BigDecimal.valueOf(price), BigDecimal.valueOf(promoPrice),
-			minQuantity, serviceContext);
+			minQuantity,
+			ServiceContextTestUtil.getServiceContext(
+				commercePriceList.getGroupId()));
 	}
 
 	public static CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(

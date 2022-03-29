@@ -530,11 +530,9 @@ public class CommercePriceEntryLocalServiceTest {
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
 				true, null, null);
 
-		CommercePriceEntry commercePriceEntry =
+		Assert.assertNull(
 			_commercePriceEntryLocalService.fetchCommercePriceEntry(
-				cpInstanceId, commercePriceList.getCommercePriceListId());
-
-		Assert.assertNull(commercePriceEntry);
+				cpInstanceId, commercePriceList.getCommercePriceListId()));
 	}
 
 	@Test

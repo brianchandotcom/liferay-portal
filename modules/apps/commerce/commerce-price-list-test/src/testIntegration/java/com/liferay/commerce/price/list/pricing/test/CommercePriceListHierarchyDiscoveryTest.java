@@ -385,12 +385,10 @@ public class CommercePriceListHierarchyDiscoveryTest {
 				_commerceCurrency.getCode(), LocaleUtil.US.getDisplayLanguage(),
 				_serviceContext);
 
-		long[] commerceAccountGroupIds =
-			_commerceAccountHelper.getCommerceAccountGroupIds(
-				_commerceAccount1.getCommerceAccountId());
-
 		CommercePriceListTestUtil.addAccountGroupAndChannelPriceList(
-			catalog.getGroupId(), commerceAccountGroupIds,
+			catalog.getGroupId(),
+			_commerceAccountHelper.getCommerceAccountGroupIds(
+				_commerceAccount1.getCommerceAccountId()),
 			_commerceChannel1.getCommerceChannelId(), _TYPE);
 
 		CommercePriceList discoveredPriceList =

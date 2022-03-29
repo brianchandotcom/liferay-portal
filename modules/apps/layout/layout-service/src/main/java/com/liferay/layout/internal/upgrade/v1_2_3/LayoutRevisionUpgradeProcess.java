@@ -16,6 +16,7 @@ package com.liferay.layout.internal.upgrade.v1_2_3;
 
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.GroupTable;
 import com.liferay.portal.kernel.model.Layout;
@@ -63,9 +64,7 @@ public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 		try {
 			StagingAdvicesThreadLocal.setEnabled(false);
 
-			for (long groupId : _getBranchingEnabledStagingGroupIds()) {
-				_upgradeContentLayouts(groupId);
-			}
+			_upgradeContentLayouts();
 		}
 		finally {
 			StagingAdvicesThreadLocal.setEnabled(
@@ -111,48 +110,47 @@ public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private List<Long> _getBranchingEnabledStagingGroupIds() {
-		return _groupLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
-				GroupTable.INSTANCE.groupId
-			).from(
-				GroupTable.INSTANCE
-			).where(
-				Predicate.withParentheses(
-					GroupTable.INSTANCE.typeSettings.like(
-						"%stagedRemotely=true%"
-					).and(
-						Predicate.withParentheses(
+	private DSLQuery _getBranchingEnabledStagingGroupIdsDSLQuery() {
+		return DSLQueryFactoryUtil.select(
+			GroupTable.INSTANCE.groupId
+		).from(
+			GroupTable.INSTANCE
+		).where(
+			Predicate.withParentheses(
+				GroupTable.INSTANCE.typeSettings.like(
+					"%stagedRemotely=true%"
+				).and(
+					Predicate.withParentheses(
+						GroupTable.INSTANCE.typeSettings.like(
+							"%branchingPrivate=true%"
+						).or(
+							GroupTable.INSTANCE.typeSettings.like(
+								"%branchingPublic=true%")
+						))
+				)
+			).or(
+				GroupTable.INSTANCE.liveGroupId.gt(
+					0L
+				).and(
+					GroupTable.INSTANCE.liveGroupId.in(
+						DSLQueryFactoryUtil.select(
+							GroupTable.INSTANCE.groupId
+						).from(
+							GroupTable.INSTANCE
+						).where(
 							GroupTable.INSTANCE.typeSettings.like(
 								"%branchingPrivate=true%"
 							).or(
 								GroupTable.INSTANCE.typeSettings.like(
 									"%branchingPublic=true%")
-							))
-					)
-				).or(
-					GroupTable.INSTANCE.liveGroupId.gt(
-						0L
-					).and(
-						GroupTable.INSTANCE.liveGroupId.in(
-							DSLQueryFactoryUtil.select(
-								GroupTable.INSTANCE.groupId
-							).from(
-								GroupTable.INSTANCE
-							).where(
-								GroupTable.INSTANCE.typeSettings.like(
-									"%branchingPrivate=true%"
-								).or(
-									GroupTable.INSTANCE.typeSettings.like(
-										"%branchingPublic=true%")
-								)
-							))
-					)
+							)
+						))
 				)
-			));
+			)
+		);
 	}
 
-	private void _upgradeContentLayouts(long groupId) throws PortalException {
+	private void _upgradeContentLayouts() throws PortalException {
 		for (Layout layout :
 				(List<Layout>)_layoutLocalService.dslQuery(
 					DSLQueryFactoryUtil.select(
@@ -160,8 +158,8 @@ public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 					).from(
 						LayoutTable.INSTANCE
 					).where(
-						LayoutTable.INSTANCE.groupId.eq(
-							groupId
+						LayoutTable.INSTANCE.groupId.in(
+							_getBranchingEnabledStagingGroupIdsDSLQuery()
 						).and(
 							LayoutTable.INSTANCE.hidden.eq(false)
 						).and(

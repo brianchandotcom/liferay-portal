@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutRevisionConstants;
-import com.liferay.portal.kernel.model.LayoutSetBranch;
+import com.liferay.portal.kernel.model.LayoutSetBranchTable;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.service.LayoutBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -103,17 +103,27 @@ public class LayoutRevisionUpgradeProcess extends UpgradeProcess {
 
 		serviceContext.setUserId(layout.getUserId());
 
-		for (LayoutSetBranch layoutSetBranch :
-				_layoutSetBranchLocalService.getLayoutSetBranches(
-					layout.getGroupId(), layout.isPrivateLayout())) {
+		for (long layoutSetBranchId :
+				(List<Long>)_layoutSetBranchLocalService.dslQuery(
+					DSLQueryFactoryUtil.select(
+						LayoutSetBranchTable.INSTANCE.layoutSetBranchId
+					).from(
+						LayoutSetBranchTable.INSTANCE
+					).where(
+						LayoutSetBranchTable.INSTANCE.groupId.eq(
+							layout.getGroupId()
+						).and(
+							LayoutSetBranchTable.INSTANCE.privateLayout.eq(
+								layout.isPrivateLayout())
+						)
+					))) {
 
 			LayoutBranch layoutBranch =
 				_layoutBranchLocalService.getMasterLayoutBranch(
-					layoutSetBranch.getLayoutSetBranchId(), layout.getPlid(),
-					serviceContext);
+					layoutSetBranchId, layout.getPlid(), serviceContext);
 
 			_layoutRevisionLocalService.addLayoutRevision(
-				layout.getUserId(), layoutSetBranch.getLayoutSetBranchId(),
+				layout.getUserId(), layoutSetBranchId,
 				layoutBranch.getLayoutBranchId(),
 				LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, true,
 				layout.getPlid(), LayoutConstants.DEFAULT_PLID,

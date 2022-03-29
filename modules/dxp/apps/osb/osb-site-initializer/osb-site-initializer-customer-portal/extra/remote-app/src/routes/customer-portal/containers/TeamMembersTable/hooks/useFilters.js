@@ -11,9 +11,6 @@
 
 import {useEffect, useState} from 'react';
 import {STATUS_TAG_TYPE_NAMES} from '../../../utils/constants';
-
-// import {STATUS_TAG_TYPE_NAMES} from '../../../utils/constants';
-
 import {INITIAL_FILTER} from '../utils/constants/initialFilter';
 
 export default function useFilters(setFilterTerm) {
@@ -29,10 +26,10 @@ export default function useFilters(setFilterTerm) {
 			initialFilter = initialFilter.concat(`${searchTermFilter}`);
 		}
 
-		if (filters.roles.value.length) {
+		if (filters.role.value.length) {
 			hasFilterPill = true;
 
-			const rolesFilter = `(${filters.roles.value.reduce(
+			const rolesFilter = `(${filters.role.value.reduce(
 				(accumulatorRolesFilter, role, index) => {
 					return `${accumulatorRolesFilter}${
 						index > 0 ? ' or ' : ''
@@ -90,7 +87,7 @@ export default function useFilters(setFilterTerm) {
 
 		setFilterTerm(`${initialFilter}`);
 	}, [
-		filters.roles.value,
+		filters.role.value,
 		filters.searchTerm,
 		filters.status.value,
 		filters.supportSeat.value,

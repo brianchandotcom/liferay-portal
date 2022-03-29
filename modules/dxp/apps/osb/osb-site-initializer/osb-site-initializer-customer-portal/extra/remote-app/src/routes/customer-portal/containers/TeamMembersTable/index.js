@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -257,7 +256,7 @@ const TeamMembersTable = ({licenseKeyDownloadURL, project, sessionId}) => {
 						),
 						role: (
 							<RoleColumnType
-								accountRoles={accountRoles}
+								accountRoles={accountRolesOptions}
 								selectedRole={selectedRole}
 								setSelectedRole={setSelectedRole}
 								userAccount={userAccount}

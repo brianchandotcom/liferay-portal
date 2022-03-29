@@ -211,8 +211,7 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 													displayType="link"
 													onClick={() =>
 														onTrafficSourceClick(
-															entry.endpointURL,
-															entry.name,
+															entry,
 															false
 														)
 													}

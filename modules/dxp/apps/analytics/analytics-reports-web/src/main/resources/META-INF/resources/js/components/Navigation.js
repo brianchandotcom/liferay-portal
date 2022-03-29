@@ -115,26 +115,25 @@ export default function Navigation({
 	]);
 
 	const updateTrafficSourcesAndCurrentPage = useCallback(
-		(trafficSourceEndpointURL, trafficSourceName, sameTrafficSource) => {
-			setTrafficSourceName(trafficSourceName);
+		(trafficSource, sameTrafficSource) => {
+			setTrafficSourceName(trafficSource.name);
 			if (!sameTrafficSource) {
 				setLoadingDetailView(true);
 			}
 			setCurrentPage({
 				data: sameTrafficSource ? currentPage.data : null,
-				view: trafficSourceName,
+				view: trafficSource.name,
 			});
-
-			APIService.getTrafficSources(trafficSourceEndpointURL, {
+			APIService.getTrafficSources(trafficSource.endpointURL, {
 				namespace,
 				plid: page.plid,
 				timeSpanKey,
 				timeSpanOffset,
 			}).then((response) => {
+				response.title = trafficSource.title;
 				setCurrentPage({
 					data: response,
-					trafficSourceEndpointURL,
-					view: trafficSourceName,
+					view: trafficSource.name,
 				});
 				if (!sameTrafficSource) {
 					setLoadingDetailView(false);

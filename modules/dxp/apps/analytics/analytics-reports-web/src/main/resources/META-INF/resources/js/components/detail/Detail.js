@@ -47,7 +47,7 @@ export default function Detail({
 
 	return (
 		<>
-			{loadingData && !currentPage.data ? (
+			{loadingData ? (
 				<ClayLoadingIndicator
 					className="chart-loading-indicator"
 					small
@@ -72,7 +72,7 @@ export default function Detail({
 						</ClayButton>
 
 						<div className="align-self-center flex-grow-1 mx-2">
-							<strong>{currentPage.data?.title}</strong>
+							<strong>{currentPage.data.title}</strong>
 						</div>
 					</div>
 

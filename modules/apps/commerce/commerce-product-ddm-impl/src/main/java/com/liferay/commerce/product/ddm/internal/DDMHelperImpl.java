@@ -364,10 +364,8 @@ public class DDMHelperImpl implements DDMHelper {
 			return ddmFormField;
 		}
 
-		DDMFormFieldOptions ddmFormFieldOptions = _getDDMFormFieldOptions(
-			cpDefinitionOptionValueRels, locale);
-
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+		ddmFormField.setDDMFormFieldOptions(
+			_getDDMFormFieldOptions(cpDefinitionOptionValueRels, locale));
 
 		return ddmFormField;
 	}

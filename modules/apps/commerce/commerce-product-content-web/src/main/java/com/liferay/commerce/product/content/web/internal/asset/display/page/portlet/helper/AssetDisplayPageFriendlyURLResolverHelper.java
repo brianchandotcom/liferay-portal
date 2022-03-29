@@ -79,11 +79,10 @@ public class AssetDisplayPageFriendlyURLResolverHelper {
 			};
 
 			for (String layoutType : validLayoutTypes) {
-				List<Layout> layouts = _layoutLocalService.getLayouts(
-					groupId, privateLayout, layoutType);
-
 				long plid = getPlidFromPortletId(
-					layouts, portletId, scopeGroupId);
+					_layoutLocalService.getLayouts(
+						groupId, privateLayout, layoutType),
+					portletId, scopeGroupId);
 
 				if (plid != LayoutConstants.DEFAULT_PLID) {
 					return plid;

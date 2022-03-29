@@ -40,7 +40,7 @@ public class JWTAssertionUtil {
 	).toString();
 
 	public static String getJWTAssertion(
-		String issuer, String subject, URI audienceURI) {
+		URI audienceURI, String issuer, String subject) {
 
 		JwsHeaders jwsHeaders = new JwsHeaders(
 			JoseType.JWT, SignatureAlgorithm.RS256);

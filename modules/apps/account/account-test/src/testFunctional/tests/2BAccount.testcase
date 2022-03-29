@@ -1603,14 +1603,14 @@ definition {
 				userFirstName = "userfn2",
 				userLastName = "userln2",
 				userScreenName = "usersn2");
-		}
 
-		task ("And given a new account role is created") {
-			Accounts.openAccountsAdmin();
+			task ("And given a new account role is created") {
+				Accounts.openAccountsAdmin();
 
-			LexiconEntry.gotoEntry(rowEntry = "Account Name");
+				LexiconEntry.gotoEntry(rowEntry = "Account Name");
 
-			Accounts.addOwnedAccountRole(accountRoleTitle = "Test Account Role");
+				Accounts.addOwnedAccountRole(accountRoleTitle = "Test Account Role");
+			}
 		}
 
 		task ("When both account users are assigned to the default 'Account Administrator' role and the newly created role") {

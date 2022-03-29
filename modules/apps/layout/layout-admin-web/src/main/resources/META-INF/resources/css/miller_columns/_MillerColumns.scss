@@ -39,7 +39,7 @@
 	}
 
 	&--active {
-		background-color: $light-l1;
+		background-color: $light;
 	}
 
 	&.dragging {
@@ -80,7 +80,7 @@
 	.miller-columns-item-drag-handler {
 		color: $gray-500;
 		cursor: move;
-		font-size: 0.75rem;
+		font-size: 1rem;
 		top: 2px;
 		z-index: 2;
 	}

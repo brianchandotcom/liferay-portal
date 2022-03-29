@@ -486,6 +486,12 @@ public class CommercePaymentEngineImpl implements CommercePaymentEngine {
 			long commerceOrderId, HttpServletRequest httpServletRequest)
 		throws Exception {
 
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+
+		CommerceGroupThreadLocal.set(
+			_groupLocalService.fetchGroup(commerceOrder.getGroupId()));
+
 		_commerceOrderLocalService.updatePaymentStatusAndTransactionId(
 			_portal.getUserId(httpServletRequest), commerceOrderId,
 			CommerceOrderConstants.PAYMENT_STATUS_PAID, StringPool.BLANK);

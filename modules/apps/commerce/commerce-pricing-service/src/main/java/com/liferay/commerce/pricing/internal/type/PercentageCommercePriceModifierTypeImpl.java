@@ -70,7 +70,7 @@ public class PercentageCommercePriceModifierTypeImpl
 			modifierAmount.scaleByPowerOfTen(-2));
 
 		MathContext mathContext = new MathContext(
-			percentage.precision(), roundingMode);
+			originalPrice.precision(), roundingMode);
 
 		return originalPrice.multiply(percentage, mathContext);
 	}

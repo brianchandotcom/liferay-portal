@@ -73,7 +73,7 @@ export default function IconConfiguration({
 
 		const formData = new FormData();
 
-		formData.append(portletNamespace + 'iconPack', iconPackName);
+		formData.append(portletNamespace + 'name', iconPackName);
 
 		return fetch(deleteIconPackURL, {body: formData, method: 'post'}).then(
 			() => {

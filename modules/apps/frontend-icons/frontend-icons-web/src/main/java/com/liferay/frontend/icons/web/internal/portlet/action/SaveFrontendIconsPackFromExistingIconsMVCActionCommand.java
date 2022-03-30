@@ -79,8 +79,8 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 			return;
 		}
 
-		String iconPackName = ParamUtil.getString(
-			actionRequest, "iconPackName");
+		String name = ParamUtil.getString(
+			actionRequest, "name");
 
 		String icons = ParamUtil.getString(actionRequest, "icons");
 
@@ -91,7 +91,7 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 
 		FrontendIconsResourcePack frontendIconsResourcePack =
 			frontendIconsResourcePacks.getOrDefault(
-				iconPackName, new FrontendIconsResourcePack(iconPackName));
+				name, new FrontendIconsResourcePack(name));
 
 		for (String key : iconsJSONObject.keySet()) {
 			FrontendIconsResourcePack existingIconsResourcePack =

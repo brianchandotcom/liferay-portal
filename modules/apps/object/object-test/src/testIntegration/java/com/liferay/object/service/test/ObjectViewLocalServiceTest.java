@@ -79,8 +79,8 @@ public class ObjectViewLocalServiceTest {
 				_createObjectViewColumn("Able", "able"),
 				_createObjectViewColumn("Baker", "baker")),
 			Arrays.asList(
-				_createObjectViewSortColumn("Charlie", "charlie", "asc"),
-				_createObjectViewSortColumn("Dog", "dog", "asc")));
+				_createObjectViewSortColumn("able", "asc"),
+				_createObjectViewSortColumn("baker", "asc")));
 
 		try {
 			_objectViewLocalService.addObjectView(
@@ -91,8 +91,8 @@ public class ObjectViewLocalServiceTest {
 					_createObjectViewColumn("Easy", "easy"),
 					_createObjectViewColumn("Fox", "fox")),
 				Arrays.asList(
-					_createObjectViewSortColumn("George", "george", "asc"),
-					_createObjectViewSortColumn("How", "how", "asc")));
+					_createObjectViewSortColumn("easy", "asc"),
+					_createObjectViewSortColumn("fox", "asc")));
 
 			Assert.fail();
 		}
@@ -110,8 +110,7 @@ public class ObjectViewLocalServiceTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Arrays.asList(_createObjectViewColumn("Item", "item")),
 				Arrays.asList(
-					_createObjectViewSortColumnWithWrongObjectFieldName(
-						"Jig", "jig", "asc")));
+					_createObjectViewSortColumnWithWrongObjectFieldName()));
 		}
 		catch (ObjectViewSortColumnException objectViewSortColumnException) {
 			Assert.assertEquals(
@@ -125,8 +124,7 @@ public class ObjectViewLocalServiceTest {
 				_objectDefinition.getObjectDefinitionId(), false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				Arrays.asList(_createObjectViewColumn("King", "king")),
-				Arrays.asList(
-					_createObjectViewSortColumn("Love", "love", "zulu")));
+				Arrays.asList(_createObjectViewSortColumn("king", "zulu")));
 		}
 		catch (ObjectViewSortColumnException objectViewSortColumnException) {
 			Assert.assertEquals(
@@ -170,7 +168,7 @@ public class ObjectViewLocalServiceTest {
 			objectView.getNameMap(),
 			Collections.singletonList(_createObjectViewColumn("Fox", "fox")),
 			Collections.singletonList(
-				_createObjectViewSortColumn("George", "george", "desc")));
+				_createObjectViewSortColumn("fox", "desc")));
 
 		List<ObjectViewColumn> objectViewColumns =
 			objectView.getObjectViewColumns();
@@ -191,7 +189,7 @@ public class ObjectViewLocalServiceTest {
 				Collections.singletonList(
 					_createObjectViewColumn("Jig", "jig")),
 				Collections.singletonList(
-					_createObjectViewSortColumn("King", "king", "desc")));
+					_createObjectViewSortColumn("jig", "desc")));
 		}
 		catch (ObjectViewSortColumnException objectViewSortColumnException) {
 			Assert.assertEquals(
@@ -206,7 +204,7 @@ public class ObjectViewLocalServiceTest {
 				Collections.singletonList(
 					_createObjectViewColumn("Love", "love")),
 				Collections.singletonList(
-					_createObjectViewSortColumn("Mike", "mike", "zulu")));
+					_createObjectViewSortColumn("love", "zulu")));
 		}
 		catch (ObjectViewSortColumnException objectViewSortColumnException) {
 			Assert.assertEquals(
@@ -241,8 +239,8 @@ public class ObjectViewLocalServiceTest {
 				_createObjectViewColumn("Able", "able"),
 				_createObjectViewColumn("Baker", "baker")),
 			Arrays.asList(
-				_createObjectViewSortColumn("Charlie", "charlie", "asc"),
-				_createObjectViewSortColumn("Dog", "dog", "asc")));
+				_createObjectViewSortColumn("able", "asc"),
+				_createObjectViewSortColumn("baker", "asc")));
 	}
 
 	private void _assertObjectView(ObjectView objectView) {
@@ -274,14 +272,12 @@ public class ObjectViewLocalServiceTest {
 	}
 
 	private ObjectViewSortColumn _createObjectViewSortColumn(
-			String objectFieldLabel, String objectFieldName, String sortOrder)
-		throws Exception {
+		String objectFieldName, String sortOrder) {
 
 		ObjectViewSortColumn objectViewSortColumn =
 			_objectViewSortColumnPersistence.create(0);
 
-		objectViewSortColumn.setObjectFieldName(
-			_addObjectField(objectFieldLabel, objectFieldName));
+		objectViewSortColumn.setObjectFieldName(objectFieldName);
 		objectViewSortColumn.setPriority(0);
 		objectViewSortColumn.setSortOrder(sortOrder);
 
@@ -289,13 +285,10 @@ public class ObjectViewLocalServiceTest {
 	}
 
 	private ObjectViewSortColumn
-			_createObjectViewSortColumnWithWrongObjectFieldName(
-				String objectFieldLabel, String objectFieldName,
-				String sortOrder)
-		throws Exception {
+		_createObjectViewSortColumnWithWrongObjectFieldName() {
 
 		ObjectViewSortColumn objectViewSortColumn = _createObjectViewSortColumn(
-			objectFieldLabel, objectFieldName, sortOrder);
+			"item", "asc");
 
 		objectViewSortColumn.setObjectFieldName("zulu");
 

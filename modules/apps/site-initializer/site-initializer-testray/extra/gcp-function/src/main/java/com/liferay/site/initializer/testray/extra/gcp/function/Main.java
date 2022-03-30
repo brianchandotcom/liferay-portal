@@ -124,7 +124,7 @@ public class Main {
 	}
 
 	private void _addTestrayAttachments(
-			Node testrayTestcaseNode, long testrayCaseResultId)
+			long testrayCaseResultId, Node testrayTestcaseNode)
 		throws Exception {
 
 		Element testcaseElement = (Element)testrayTestcaseNode;
@@ -211,7 +211,7 @@ public class Main {
 			testrayBuildId, testrayCaseId, testrayCasePropertiesMap,
 			testrayComponentId, testrayRunId, testrayTestcaseNode);
 
-		_addTestrayAttachments(testrayTestcaseNode, testrayCaseResultId);
+		_addTestrayAttachments(testrayCaseResultId, testrayTestcaseNode);
 
 		_addTestrayIssue(
 			testrayCaseResultId,

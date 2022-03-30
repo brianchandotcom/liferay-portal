@@ -103,7 +103,7 @@ public class GogoShellClient implements AutoCloseable {
 
 		// Send the terminal type:
 
-		//255(IAC),250(SB),24,0,'V','T','2','2','0',255(IAC),240(SE)
+		// 255(IAC),250(SB),24,0,'V','T','2','2','0',255(IAC),240(SE)
 
 		_sendCommand(255, 250, 24, 0, 'V', 'T', '2', '2', '0', 255, 240);
 

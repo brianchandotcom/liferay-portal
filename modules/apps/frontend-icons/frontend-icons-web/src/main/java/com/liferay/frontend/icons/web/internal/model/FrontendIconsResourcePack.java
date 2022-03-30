@@ -26,7 +26,7 @@ import java.util.Optional;
 public class FrontendIconsResourcePack {
 
 	public FrontendIconsResourcePack(String name) {
-		this(name, true);
+		this(true, name);
 	}
 
 	public FrontendIconsResourcePack(boolean editable, String name) {

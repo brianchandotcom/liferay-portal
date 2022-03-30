@@ -1272,20 +1272,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 				Objects.equals(
 					pageElementJSONObject.getString("type"), "Root")) {
 
-				LayoutPageTemplateStructure layoutPageTemplateStructure =
-					_layoutPageTemplateStructureLocalService.
-						fetchLayoutPageTemplateStructure(
-							draftLayout.getGroupId(), draftLayout.getPlid(),
-							true);
-
-				LayoutStructure layoutStructure = LayoutStructure.of(
-					layoutPageTemplateStructure.
-						getDefaultSegmentsExperienceData());
-
 				JSONArray jsonArray = pageElementJSONObject.getJSONArray(
 					"pageElements");
 
 				if (!JSONUtil.isEmpty(jsonArray)) {
+					LayoutPageTemplateStructure layoutPageTemplateStructure =
+						_layoutPageTemplateStructureLocalService.
+							fetchLayoutPageTemplateStructure(
+								draftLayout.getGroupId(), draftLayout.getPlid(),
+								true);
+
+					LayoutStructure layoutStructure = LayoutStructure.of(
+						layoutPageTemplateStructure.
+							getDefaultSegmentsExperienceData());
+
 					for (int i = 0; i < jsonArray.length(); i++) {
 						_layoutPageTemplatesImporter.importPageElement(
 							draftLayout, layoutStructure,
@@ -2755,8 +2755,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			List<Role> roles = new ArrayList<>();
-
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			JSONArray rolesJSONArray = jsonObject.getJSONArray("roles");
@@ -2764,6 +2762,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 			if (JSONUtil.isEmpty(rolesJSONArray)) {
 				continue;
 			}
+
+			List<Role> roles = new ArrayList<>();
 
 			for (int j = 0; j < rolesJSONArray.length(); j++) {
 				roles.add(
@@ -2905,19 +2905,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 			return;
 		}
 
-		AccountRoleResource.Builder builder =
-			_accountRoleResourceFactory.create();
-
-		AccountRoleResource accountRoleResource = builder.user(
-			serviceContext.fetchUser()
-		).build();
-
 		JSONArray jsonArray = accountBriefsJSONObject.getJSONArray(
 			"roleBriefs");
 
 		if (JSONUtil.isEmpty(jsonArray)) {
 			return;
 		}
+
+		AccountRoleResource.Builder builder =
+			_accountRoleResourceFactory.create();
+
+		AccountRoleResource accountRoleResource = builder.user(
+			serviceContext.fetchUser()
+		).build();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			Page<AccountRole> accountRolePage =

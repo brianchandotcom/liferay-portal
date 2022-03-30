@@ -132,7 +132,9 @@ if (commerceOrder != null) {
 					<dt><liferay-ui:message key="order-date" /></dt>
 					<dd>
 						<%= commerceOrderContentDisplayContext.getCommerceOrderDate(commerceOrder) %>
-						<%= commerceOrderContentDisplayContext.getCommerceOrderTime(commerceOrder) %>
+						<c:if test="<%= commerceOrderContentDisplayContext.isShowCommerceOrderCreationTime() %>">
+							<%= commerceOrderContentDisplayContext.getCommerceOrderTime(commerceOrder) %>
+						</c:if>
 					</dd>
 				</dl>
 			</div>

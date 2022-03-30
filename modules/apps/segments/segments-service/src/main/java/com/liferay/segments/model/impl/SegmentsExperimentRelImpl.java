@@ -64,11 +64,7 @@ public class SegmentsExperimentRelImpl extends SegmentsExperimentRelBaseImpl {
 			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
 				getSegmentsExperienceId());
 
-		if (segmentsExperience != null) {
-			return segmentsExperience.getSegmentsExperienceKey();
-		}
-
-		return SegmentsExperienceConstants.KEY_DEFAULT;
+		return segmentsExperience.getSegmentsExperienceKey();
 	}
 
 	@Override

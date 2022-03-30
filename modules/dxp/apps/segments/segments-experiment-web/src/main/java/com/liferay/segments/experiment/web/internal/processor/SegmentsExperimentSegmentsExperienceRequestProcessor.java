@@ -280,9 +280,7 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
 					segmentsExperienceId);
 
-			if (segmentsExperience != null) {
-				return segmentsExperience.getSegmentsExperienceKey();
-			}
+			return segmentsExperience.getSegmentsExperienceKey();
 		}
 
 		return SegmentsExperienceConstants.KEY_DEFAULT;

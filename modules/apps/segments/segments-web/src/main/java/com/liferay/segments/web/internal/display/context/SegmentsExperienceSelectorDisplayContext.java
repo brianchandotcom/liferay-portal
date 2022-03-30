@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -95,11 +94,6 @@ public class SegmentsExperienceSelectorDisplayContext {
 		SegmentsExperience segmentsExperience =
 			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
 				segmentsExperienceId);
-
-		if (segmentsExperience == null) {
-			return SegmentsExperienceConstants.getDefaultSegmentsExperienceName(
-				_themeDisplay.getLocale());
-		}
 
 		SegmentsExperience parentSegmentsExperience =
 			_getParentSegmentExperience(segmentsExperience);

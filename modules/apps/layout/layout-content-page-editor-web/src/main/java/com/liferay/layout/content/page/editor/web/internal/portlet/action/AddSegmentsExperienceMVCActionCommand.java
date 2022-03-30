@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
@@ -155,25 +154,13 @@ public class AddSegmentsExperienceMVCActionCommand
 		throws PortalException {
 
 		if (segmentsExperiment != null) {
-			long segmentsEntryId = SegmentsEntryConstants.ID_DEFAULT;
-
-			long defaultSegmentsExperienceId =
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(classPK);
-
-			if (segmentsExperiment.getSegmentsExperienceId() !=
-					defaultSegmentsExperienceId) {
-
-				SegmentsExperience segmentsExperience =
-					_segmentsExperienceService.getSegmentsExperience(
-						segmentsExperiment.getSegmentsExperienceId());
-
-				segmentsEntryId = segmentsExperience.getSegmentsEntryId();
-			}
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceService.getSegmentsExperience(
+					segmentsExperiment.getSegmentsExperienceId());
 
 			return _segmentsExperienceService.appendSegmentsExperience(
-				serviceContext.getScopeGroupId(), segmentsEntryId, classNameId,
-				classPK,
+				serviceContext.getScopeGroupId(),
+				segmentsExperience.getSegmentsEntryId(), classNameId, classPK,
 				Collections.singletonMap(
 					LocaleUtil.getSiteDefault(),
 					ParamUtil.getString(actionRequest, "name")),

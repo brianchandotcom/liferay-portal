@@ -108,11 +108,7 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
 				getSegmentsExperienceId());
 
-		if (segmentsExperience != null) {
-			return segmentsExperience.getSegmentsExperienceKey();
-		}
-
-		return SegmentsExperienceConstants.KEY_DEFAULT;
+		return segmentsExperience.getSegmentsExperienceKey();
 	}
 
 	@Override
@@ -160,11 +156,7 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
 				winnerSegmentsExperienceId);
 
-		if (winnerSegmentsExperience != null) {
-			return winnerSegmentsExperience.getSegmentsExperienceKey();
-		}
-
-		return SegmentsExperienceConstants.KEY_DEFAULT;
+		return winnerSegmentsExperience.getSegmentsExperienceKey();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

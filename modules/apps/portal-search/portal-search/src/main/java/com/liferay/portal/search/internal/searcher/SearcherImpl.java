@@ -120,12 +120,10 @@ public class SearcherImpl implements Searcher {
 
 		List<SearchRequest> list = searchRequest.getFederatedSearchRequests();
 
-		list.stream(
-		).map(
-			this::search
-		).forEach(
-			searchResponseBuilder::addFederatedSearchResponse
-		);
+		for (SearchRequest federatedSearchRequest : list) {
+			searchResponseBuilder.addFederatedSearchResponse(
+				search(federatedSearchRequest));
+		}
 	}
 
 	private Stream<Function<SearchRequest, SearchRequest>> _getContributors(

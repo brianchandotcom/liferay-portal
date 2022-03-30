@@ -17,11 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL()));
-
 long batchPlannerPlanId = ParamUtil.getLong(renderRequest, "batchPlannerPlanId");
 
 boolean editable = ParamUtil.getBoolean(renderRequest, "editable");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf(renderResponse.createRenderURL())));
 
 renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : LanguageUtil.get(request, "export"));
 %>
@@ -133,13 +134,6 @@ renderResponse.setTitle(editable ? LanguageUtil.get(request, "edit-template") : 
 
 		<div class="mt-4">
 			<liferay-frontend:edit-form-footer>
-				<clay:link
-					displayType="secondary"
-					href="<%= backURL %>"
-					label="cancel"
-					type="button"
-				/>
-
 				<span>
 					<react:component
 						module="js/SaveTemplate"

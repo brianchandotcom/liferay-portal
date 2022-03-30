@@ -12,7 +12,6 @@
  * details.
  */
 
-import ClayLink from '@clayui/link';
 import ClayTable from '@clayui/table';
 import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
@@ -48,7 +47,6 @@ const TableFieldsHeader = () => (
 	</ClayTable.Head>
 );
 function ImportForm({
-	backUrl,
 	formDataQuerySelector,
 	formImportURL,
 	formSaveAsTemplateURL,
@@ -358,10 +356,6 @@ function ImportForm({
 			)}
 
 			<div className="mt-4 sheet-footer">
-				<ClayLink className="btn btn-secondary" href={backUrl}>
-					{Liferay.Language.get('cancel')}
-				</ClayLink>
-
 				<SaveTemplate
 					evaluateForm={handleEvaluateForm}
 					formIsValid={formIsValid}
@@ -394,7 +388,6 @@ ImportForm.defaultProps = {
 };
 
 ImportForm.propTypes = {
-	backUrl: PropTypes.string.isRequired,
 	formDataQuerySelector: PropTypes.string.isRequired,
 	formImportURL: PropTypes.string.isRequired,
 	formSaveAsTemplateURL: PropTypes.string.isRequired,

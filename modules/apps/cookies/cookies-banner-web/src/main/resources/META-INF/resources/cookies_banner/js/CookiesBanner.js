@@ -12,7 +12,7 @@
  * details.
  */
 
-export default function ({configurationTitle, configurationUrl}) {
+export default function ({configurationUrl}) {
 	const buttonAccept = document.querySelector(
 		'.cookies-banner-button-accept'
 	);
@@ -43,7 +43,7 @@ export default function ({configurationTitle, configurationUrl}) {
 				Liferay.Util.openModal({
 					buttons: [
 						{
-							label: 'Decline all',
+							label: Liferay.Language.get('decline-all'),
 							onClick() {
 								cookiesDeclineAll();
 
@@ -59,7 +59,7 @@ export default function ({configurationTitle, configurationUrl}) {
 						},
 						{
 							displayType: 'secondary',
-							label: 'Confirm',
+							label: Liferay.Language.get('confirm'),
 							onClick() {
 								checkCookiesConsent(cookieBanner);
 
@@ -73,7 +73,7 @@ export default function ({configurationTitle, configurationUrl}) {
 						},
 						{
 							displayType: 'secondary',
-							label: 'Accept all',
+							label: Liferay.Language.get('accept-all'),
 							onClick() {
 								cookiesAcceptAll();
 
@@ -92,7 +92,7 @@ export default function ({configurationTitle, configurationUrl}) {
 					height: '70vh',
 					id: 'cookiesBannerConfiguration',
 					size: 'lg',
-					title: configurationTitle,
+					title: Liferay.Language.get('cookies-configuration'),
 					url: configurationUrl,
 				});
 			}

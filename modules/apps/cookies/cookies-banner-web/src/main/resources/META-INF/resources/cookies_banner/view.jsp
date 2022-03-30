@@ -38,7 +38,7 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 				<clay:button
 					cssClass="cookies-banner-button-configuration"
 					displayType="link"
-					label="Configuration"
+					label='<%= LanguageUtil.get(request, "configuration") %>'
 					small="<%= true %>"
 				/>
 			</clay:content-col>
@@ -47,7 +47,7 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 				<clay:button
 					cssClass="cookies-banner-button-accept"
 					displayType="secondary"
-					label="Accept all"
+					label='<%= LanguageUtil.get(request, "accept-all") %>'
 					small="<%= true %>"
 				/>
 			</clay:content-col>
@@ -56,7 +56,7 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 				<clay:button
 					cssClass="cookies-banner-button-decline"
 					displayType="primary"
-					label="Decline All"
+					label='<%= LanguageUtil.get(request, "decline-all") %>'
 					small="<%= true %>"
 				/>
 			</clay:content-col>
@@ -68,8 +68,6 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 	componentId="CookiesBanner"
 	context='<%=
 		HashMapBuilder.<String, Object>put(
-			"configurationTitle", LanguageUtil.get(request, "cookies-configuration")
-		).put(
 			"configurationUrl", cookiesBannerDisplayContext.getConfigurationURL()
 		).build()
 	%>'

@@ -38,4 +38,10 @@ public interface CommerceOrderContentPortletInstanceConfiguration {
 	@Meta.AD(deflt = "0", name = "display-style-group-id", required = false)
 	public long displayStyleGroupId();
 
+	@Meta.AD(
+		deflt = "true", name = "show-commerce-order-creation-time",
+		required = false
+	)
+	public boolean showCommerceOrderCreationTime();
+
 }

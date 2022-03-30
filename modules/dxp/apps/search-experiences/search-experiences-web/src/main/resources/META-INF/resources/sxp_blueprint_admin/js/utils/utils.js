@@ -560,7 +560,9 @@ export function getSXPElementJSON(sxpElement, uiConfigurationValues) {
 	const {category, icon} = elementDefinition;
 
 	return {
-		description_i18n,
+		description_i18n: renameKeys(description_i18n, (str) =>
+			str.replace('-', '_')
+		),
 		elementDefinition: {
 			category,
 			configuration: getConfigurationEntry({
@@ -569,7 +571,7 @@ export function getSXPElementJSON(sxpElement, uiConfigurationValues) {
 			}),
 			icon,
 		},
-		title_i18n,
+		title_i18n: renameKeys(title_i18n, (str) => str.replace('-', '_')),
 	};
 }
 

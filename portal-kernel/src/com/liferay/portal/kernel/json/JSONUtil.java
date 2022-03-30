@@ -200,7 +200,7 @@ public class JSONUtil {
 	}
 
 	public static boolean isEmpty(JSONArray jsonArray) {
-		if((jsonArray == null) || (jsonArray.length() == 0)) {
+		if ((jsonArray == null) || (jsonArray.length() == 0)) {
 			return true;
 		}
 

@@ -1,6 +1,15 @@
 definition {
 
 	macro configurationPaypal {
+		ApplicationsMenu.gotoPortlet(
+			category = "Store Management",
+			panel = "Commerce",
+			portlet = "Channels");
+
+		CommerceNavigator.gotoEntry(entryName = "Raylife Channel");
+
+		Refresh();
+
 		CommerceEntry.clickTableEntryEditButton(
 			entryName = "PayPal",
 			table = "Payment Methods");
@@ -29,6 +38,8 @@ definition {
 		Button.clickSave();
 
 		Click(locator1 = "Icon#CLOSE");
+
+		Refresh();
 	}
 
 	macro enablePayPalPayment {

@@ -29,8 +29,6 @@ definition {
 	@description = "LPS-144582 - Check if I am redirected to the payment confirmation page, after selected payment by PayPal"
 	@priority = "5"
 	test CanViewConfirmSuccessfulPayment {
-		RaylifePaymentMethod.enablePayPalPayment();
-
 		RaylifePaymentMethod.configurationPaypal();
 
 		ApplicationsMenu.gotoSite(key_site = "Raylife");

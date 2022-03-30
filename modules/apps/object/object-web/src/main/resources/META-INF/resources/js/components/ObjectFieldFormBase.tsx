@@ -57,6 +57,7 @@ async function fetchPickList() {
 }
 
 export default function ObjectFieldFormBase({
+	allowMaxLength,
 	children,
 	disabled,
 	errors,
@@ -104,12 +105,14 @@ export default function ObjectFieldFormBase({
 
 			case 'LongText':
 			case 'Text':
-				objectFieldSettings = [
-					{
-						name: 'showCounter',
-						value: false,
-					},
-				];
+				if (allowMaxLength) {
+					objectFieldSettings = [
+						{
+							name: 'showCounter',
+							value: false,
+						},
+					];
+				}
 				break;
 
 			default:
@@ -286,6 +289,7 @@ interface IPickList {
 }
 
 interface IProps {
+	allowMaxLength?: boolean;
 	children?: ReactNode;
 	disabled?: boolean;
 	errors: ObjectFieldErrors;

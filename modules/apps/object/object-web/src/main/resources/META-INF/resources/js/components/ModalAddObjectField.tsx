@@ -32,6 +32,7 @@ const headers = new Headers({
 });
 
 function ModalAddObjectField({
+	allowMaxLength,
 	apiURL,
 	objectFieldTypes,
 	observer,
@@ -112,6 +113,7 @@ function ModalAddObjectField({
 					/>
 
 					<ObjectFieldFormBase
+						allowMaxLength={allowMaxLength}
 						errors={errors}
 						handleChange={handleChange}
 						objectField={values}
@@ -141,7 +143,11 @@ function ModalAddObjectField({
 	);
 }
 
-export default function ModalWithProvider({apiURL, objectFieldTypes}: IProps) {
+export default function ModalWithProvider({
+	allowMaxLength,
+	apiURL,
+	objectFieldTypes,
+}: IProps) {
 	const [isVisible, setVisibility] = useState<boolean>(false);
 	const {observer, onClose} = useModal({onClose: () => setVisibility(false)});
 
@@ -155,6 +161,7 @@ export default function ModalWithProvider({apiURL, objectFieldTypes}: IProps) {
 		<ClayModalProvider>
 			{isVisible && (
 				<ModalAddObjectField
+					allowMaxLength={allowMaxLength}
 					apiURL={apiURL}
 					objectFieldTypes={objectFieldTypes}
 					observer={observer}
@@ -166,11 +173,13 @@ export default function ModalWithProvider({apiURL, objectFieldTypes}: IProps) {
 }
 
 interface IModal extends IProps {
+	allowMaxLength: boolean;
 	observer: any;
 	onClose: () => void;
 }
 
 interface IProps {
+	allowMaxLength: boolean;
 	apiURL: string;
 	objectFieldTypes: ObjectFieldType[];
 }

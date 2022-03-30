@@ -24,9 +24,26 @@ import com.liferay.batch.planner.rest.resource.v1_0.PlanResource;
 import com.liferay.batch.planner.service.BatchPlannerMappingService;
 import com.liferay.batch.planner.service.BatchPlannerPlanService;
 import com.liferay.batch.planner.service.BatchPlannerPolicyService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.batch.engine.Field;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegateRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.resource.OpenAPIResource;
+import com.liferay.portal.vulcan.util.OpenAPIUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
+import com.liferay.portal.vulcan.yaml.YAMLUtil;
+import com.liferay.portal.vulcan.yaml.openapi.OpenAPIYAML;
+
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+import javax.ws.rs.core.Response;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,6 +79,14 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 			pagination,
 			_batchPlannerPlanService.getBatchPlannerPlansCount(
 				contextCompany.getCompanyId()));
+	}
+
+	@Override
+	public Response getPlanTemplate(String internalClassName) throws Exception {
+		Map<String, Field> dtoEntityFields = OpenAPIUtil.getDTOEntityFields(
+			internalClassName, _getOpenAPIYAML(internalClassName));
+
+		return _getTemplateContent(dtoEntityFields);
 	}
 
 	@Override
@@ -127,6 +152,60 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 		return _toPlan(batchPlannerPlan);
 	}
 
+	private OpenAPIYAML _getOpenAPIYAML(String internalClassName)
+		throws Exception {
+
+		VulcanBatchEngineTaskItemDelegate vulcanBatchEngineTaskItemDelegate =
+			_vulcanBatchEngineTaskItemDelegateRegistry.
+				getVulcanBatchEngineTaskItemDelegate(internalClassName);
+
+		Response response = _openAPIResource.getOpenAPI(
+			Collections.singleton(
+				vulcanBatchEngineTaskItemDelegate.getResourceClass()),
+			"yaml");
+
+		if (response.getStatus() != 200) {
+			throw new IllegalArgumentException(
+				"Unable to find Open API specification for " +
+					internalClassName);
+		}
+
+		return YAMLUtil.loadOpenAPIYAML((String)response.getEntity());
+	}
+
+	private Response _getTemplateContent(Map<String, Field> dtoEntityFields) {
+		Set<Map.Entry<String, Field>> entrySet = dtoEntityFields.entrySet();
+
+		Iterator<Map.Entry<String, Field>> iterator = entrySet.iterator();
+
+		StringBundler headerSB = new StringBundler(dtoEntityFields.size() * 2);
+		StringBundler lineSB = new StringBundler(dtoEntityFields.size() * 2);
+
+		while (iterator.hasNext()) {
+			Map.Entry<String, Field> entry = iterator.next();
+
+			headerSB.append(entry.getKey());
+
+			Field field = entry.getValue();
+
+			lineSB.append(field.getType());
+
+			if (iterator.hasNext()) {
+				headerSB.append(StringPool.COMMA_AND_SPACE);
+
+				lineSB.append(StringPool.COMMA_AND_SPACE);
+			}
+		}
+
+		return Response.ok(
+			StringBundler.concat(
+				headerSB.toString(), System.lineSeparator(), lineSB.toString())
+		).header(
+			"content-disposition",
+			"attachment; filename=" + StringUtil.randomString() + ".csv"
+		).build();
+	}
+
 	private Mapping _toMapping(BatchPlannerMapping batchPlannerMapping) {
 		return new Mapping() {
 			{
@@ -187,5 +266,12 @@ public class PlanResourceImpl extends BasePlanResourceImpl {
 
 	@Reference
 	private BatchPlannerPolicyService _batchPlannerPolicyService;
+
+	@Reference
+	private OpenAPIResource _openAPIResource;
+
+	@Reference
+	private VulcanBatchEngineTaskItemDelegateRegistry
+		_vulcanBatchEngineTaskItemDelegateRegistry;
 
 }

@@ -18,6 +18,8 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.content.web.internal.frontend.constants.CommerceOrderDataSetConstants;
 import com.liferay.commerce.order.content.web.internal.frontend.util.CommerceOrderClayTableUtil;
 import com.liferay.commerce.order.content.web.internal.model.Order;
+import com.liferay.commerce.order.content.web.internal.portlet.configuration.CommerceOrderContentPortletInstanceConfiguration;
+import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
@@ -26,6 +28,7 @@ import com.liferay.frontend.taglib.clay.data.Pagination;
 import com.liferay.frontend.taglib.clay.data.set.provider.ClayDataSetDataProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -72,9 +75,21 @@ public class PlacedCommerceOrderDataSetDataProvider
 				filter.getKeywords(), pagination.getStartPosition(),
 				pagination.getEndPosition());
 
+		CPRequestHelper cpRequestHelper = new CPRequestHelper(
+			httpServletRequest);
+
+		PortletDisplay portletDisplay = cpRequestHelper.getPortletDisplay();
+
+		CommerceOrderContentPortletInstanceConfiguration
+			commerceOrderContentPortletInstanceConfiguration =
+				portletDisplay.getPortletInstanceConfiguration(
+					CommerceOrderContentPortletInstanceConfiguration.class);
+
 		return CommerceOrderClayTableUtil.getOrders(
-			commerceOrders, themeDisplay,
-			commerceChannel.getPriceDisplayType());
+			commerceOrders, commerceChannel.getPriceDisplayType(),
+			commerceOrderContentPortletInstanceConfiguration.
+				showCommerceOrderCreateTime(),
+			themeDisplay);
 	}
 
 	@Override

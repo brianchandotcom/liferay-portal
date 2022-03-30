@@ -9,50 +9,112 @@
  * distribution rights of the Software.
  */
 
-import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
-import {Button} from '../../../../../common/components';
+import {Link, useNavigate} from 'react-router-dom';
+import {Button, Input} from '../../../../../common/components';
 import Layout from '../../../../../common/containers/setup-forms/Layout';
+import {createNewGenerateKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import getInitialGenerateNewDXPKey from '../../../../../common/utils/constants/getInitialGenerateNewDXPKey';
-import AdminInputs from '../AdminInputs';
 import GenerateCardLayout from '../GenerateCardLayout';
+import KeyInputs from '../KeyInputs';
+import KeySelect from '../KeySelect';
 
 const RequiredInformation = ({
+	accountKey,
 	errors,
-	handleComeBackPage,
-	handlePage,
 	infoSelectedKey,
+	licenseKeyDownloadURL,
+	sessionId,
+	setStep,
 	touched,
+	urlPreviousPage,
 	values,
 }) => {
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [addButtonDisabled, setAddButtonDisabled] = useState(false);
-
-	const [availableAdminsRoles, setAvailableAdminsRoles] = useState(1);
+	const [availableKeys, setAvailableKeys] = useState(1);
+	const navigate = useNavigate();
 
 	const hasTouched = !Object.keys(touched).length;
 	const hasError = Object.keys(errors).length;
 
-	const getAvaliableKeys =
-		Number(
-			infoSelectedKey.getSelectedSubscription?.keyActivationAvailable.split(
-				' '
-			)[0]
-		) + Number(values?.keys.length);
-
-	const getAvaliableKeys1 = Number(
-		infoSelectedKey.getSelectedSubscription?.keyActivationAvailable.split(
-			' '
-		)[2]
-	);
+	const avaliableKeysMaximumCount =
+		infoSelectedKey.selectedSubscription?.quantity;
+	const usedKeysCount =
+		infoSelectedKey.selectedSubscription?.provisionedCount;
 
 	useEffect(() => {
-		setBaseButtonDisabled(hasTouched || hasError);
-		setAddButtonDisabled(getAvaliableKeys === getAvaliableKeys1);
-	}, [getAvaliableKeys, getAvaliableKeys1, hasError, hasTouched]);
+		const newUsedKeys = usedKeysCount + +values?.keys?.length;
+		const hasFilledAtLeastOneField = values?.keys?.every((key) => {
+			const fieldValues = Object.values(key).filter(Boolean);
+
+			return fieldValues.length > 0;
+		});
+
+		const verificationDisabledType = infoSelectedKey.hasNotPermanentLicence
+			? !values.name || !values.maxClusterNodes
+			: !hasFilledAtLeastOneField || hasError;
+
+		setBaseButtonDisabled(verificationDisabledType);
+		setAddButtonDisabled(newUsedKeys === avaliableKeysMaximumCount);
+	}, [
+		avaliableKeysMaximumCount,
+		hasError,
+		infoSelectedKey.hasNotPermanentLicence,
+		usedKeysCount,
+		values?.keys,
+		values.maxClusterNodes,
+		values.name,
+	]);
+
+	const submitKey = async () => {
+		const productName = `${infoSelectedKey?.productType} ${infoSelectedKey?.licenseEntryType}`;
+
+		const licenseKey = {
+			accountKey,
+			active: true,
+			description: values?.description,
+			expirationDate: infoSelectedKey?.selectedSubscription.endDate,
+			licenseEntryType: 'production',
+			maxClusterNodes: values?.maxClusterNodes || 0,
+			name: values?.name,
+			productKey: infoSelectedKey?.selectedSubscription.productKey,
+			productName,
+			productPurchaseKey:
+				infoSelectedKey?.selectedSubscription.productPurchaseKey,
+			productVersion: infoSelectedKey?.productVersion,
+			sizing: `Sizing ${infoSelectedKey?.selectedSubscription.instanceSize}`,
+			startDate: infoSelectedKey?.selectedSubscription.startDate,
+		};
+
+		if (infoSelectedKey.hasNotPermanentLicence) {
+			await createNewGenerateKey(
+				accountKey,
+				licenseKeyDownloadURL,
+				sessionId,
+				licenseKey
+			);
+		} else {
+			await Promise.all(
+				values?.keys?.map(({hostName, ipAddresses, macAddresses}) => {
+					licenseKey.macAddresses = macAddresses.replace('\n', ',');
+					licenseKey.hostName = hostName.replace('\n', ',');
+					licenseKey.ipAddresses = ipAddresses.replace('\n', ',');
+
+					return createNewGenerateKey(
+						accountKey,
+						licenseKeyDownloadURL,
+						sessionId,
+						licenseKey
+					);
+				})
+			);
+		}
+
+		navigate(urlPreviousPage, {state: {newKeyGeneratedAlert: true}});
+	};
 
 	return (
 		<div className="d-flex justify-content-end">
@@ -60,7 +122,7 @@ const RequiredInformation = ({
 				footerProps={{
 					footerClass: 'mx-5 mb-2',
 					leftButton: (
-						<Link to={handleComeBackPage}>
+						<Link to={urlPreviousPage}>
 							<Button
 								className="btn btn-borderless btn-style-neutral"
 								displayType="secondary"
@@ -74,6 +136,7 @@ const RequiredInformation = ({
 							<Button
 								className="btn btn-secondary mr-3"
 								displayType="secundary"
+								onClick={() => setStep(0)}
 							>
 								Previous
 							</Button>
@@ -81,9 +144,13 @@ const RequiredInformation = ({
 							<Button
 								disabled={baseButtonDisabled}
 								displayType="primary"
-								onClick={handlePage}
+								onClick={() => submitKey()}
 							>
-								Generate {availableAdminsRoles} Key
+								{infoSelectedKey.hasNotPermanentLicence
+									? `Generate Cluster (${values.maxClusterNodes} Keys)`
+									: `Generate ${availableKeys} Key${
+											availableKeys > 1 ? 's' : ''
+									  }`}
 							</Button>
 						</div>
 					),
@@ -97,7 +164,7 @@ const RequiredInformation = ({
 				layoutType="cp-required-info"
 			>
 				<FieldArray
-					name="dxp.admins"
+					name="keys"
 					render={({pop, push}) => (
 						<>
 							<div className="px-6">
@@ -106,104 +173,95 @@ const RequiredInformation = ({
 								<div className="dropdown-divider mb-4 mt-2"></div>
 
 								<div className="mb-2">
-									<div className="mr-3 w-100">
-										<label htmlFor="basicInputText">
-											Environment Name
-										</label>
-
-										<ClayInput
-											id="basicInputText"
-											placeholder="e.g. Liferay Ecommerce Site"
+									<div className="cp-input-generate-label">
+										<Input
+											label="Environment Name"
+											name="name"
+											required
 											type="text"
 										/>
-
-										<h6 className="font-weight-normal mb-2 mt-1 mx-3 pb-4">
-											Name this environment. This cannot
-											be edited later.
-										</h6>
 									</div>
 								</div>
 
 								<div className="mb-2">
-									<div className="mr-3 w-100">
-										<label htmlFor="basicInputText">
-											Description
-										</label>
-
-										<ClayInput
-											id="basicInputText"
-											placeholder="e.g. Liferay Dev Environment – ECOM DXP 7.2 "
+									<div className="cp-input-generate-label">
+										<Input
+											label="Description"
+											name="description"
 											type="text"
 										/>
-
-										<h6 className="font-weight-normal mb-3 mt-1 mx-3 pb-4">
-											Include a description to uniquely
-											identify this environment. This
-											cannot be edited later.
-										</h6>
 									</div>
 								</div>
 							</div>
 
-							<div className="px-6">
-								<h4>Activation Key Server Details</h4>
+							{!infoSelectedKey.hasNotPermanentLicence ? (
+								<div className="px-6">
+									<h4>Activation Key Server Details</h4>
 
-								<div className="dropdown-divider mb-4 mt-2"></div>
+									<div className="dropdown-divider mb-4 mt-2"></div>
 
-								{values.keys.map((index) => (
-									<AdminInputs id={index} key={index} />
-								))}
+									{values?.keys?.map((_, index) => (
+										<KeyInputs id={index} key={index} />
+									))}
 
-								{values?.keys.length > 1 && (
+									{values?.keys?.length > 1 && (
+										<Button
+											className="btn btn-secondary mb-3 mr-3 mt-4 py-2"
+											displayType="secundary"
+											onClick={() => {
+												pop();
+												setAvailableKeys(
+													(previousAdmins) =>
+														previousAdmins - 1
+												);
+												setBaseButtonDisabled(
+													hasTouched || hasError
+												);
+											}}
+										>
+											<ClayIcon
+												className="cp-button-icon-plus mr-2"
+												symbol="hr"
+											/>
+											Remove Activation Key
+										</Button>
+									)}
+
 									<Button
-										className="btn btn-secondary mb-3 mr-3 mt-4 py-2"
+										className="btn btn-secondary mb-3 mt-4 py-2"
+										disabled={addButtonDisabled}
 										displayType="secundary"
 										onClick={() => {
-											pop();
-											setAvailableAdminsRoles(
-												(previousAdmins) =>
-													previousAdmins - 1
-											);
-											setBaseButtonDisabled(
-												hasTouched || hasError
+											push(getInitialGenerateNewDXPKey());
+
+											setAvailableKeys(
+												(
+													previousAvailableAdminsRoles
+												) =>
+													previousAvailableAdminsRoles +
+													1
 											);
 										}}
 									>
 										<ClayIcon
 											className="cp-button-icon-plus mr-2"
-											symbol="hr"
+											symbol="plus"
 										/>
-										Remove Activation Key
+										Add Activation Key
 									</Button>
-								)}
 
-								<Button
-									className="btn btn-secondary mb-3 mt-4 py-2"
-									disabled={addButtonDisabled}
-									displayType="secundary"
-									onClick={() => {
-										push(
-											getInitialGenerateNewDXPKey(
-												values?.keys
-											)
-										);
-
-										setAvailableAdminsRoles(
-											(previousAdmins) =>
-												previousAdmins + 1
-										);
-										setBaseButtonDisabled(true);
-									}}
-								>
-									<ClayIcon
-										className="cp-button-icon-plus mr-2"
-										symbol="plus"
+									<div className="dropdown-divider"></div>
+								</div>
+							) : (
+								<div className="cp-input-generate-label px-6">
+									<KeySelect
+										minAvaliableKeysCount={
+											infoSelectedKey.selectedSubscription
+												?.provisionedCount
+										}
 									/>
-									Add Activation Key
-								</Button>
-
-								<div className="dropdown-divider"></div>
-							</div>
+								</div>
+							)}
 						</>
 					)}
 				/>
@@ -219,8 +277,9 @@ const RequiredInformationForm = (props) => {
 		<Formik
 			initialValues={{
 				description: '',
-				environmentName: '',
 				keys: [getInitialGenerateNewDXPKey()],
+				maxClusterNodes: '',
+				name: '',
 			}}
 		>
 			{(formikProps) => (

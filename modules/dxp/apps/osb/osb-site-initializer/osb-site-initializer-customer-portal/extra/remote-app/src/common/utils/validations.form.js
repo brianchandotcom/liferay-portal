@@ -68,6 +68,10 @@ const isValidHost = (value) => {
 };
 
 const isValidIp = (value) => {
+	if (!value) {
+		return;
+	}
+
 	const ipArray = value.split('\n');
 
 	for (let i = 0; i < ipArray.length; i++) {
@@ -84,6 +88,10 @@ const isValidIp = (value) => {
 };
 
 const isValidMac = (value) => {
+	if (!value) {
+		return;
+	}
+
 	const macArray = value.split('\n');
 
 	for (let i = 0; i < macArray.length; i++) {

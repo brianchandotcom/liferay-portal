@@ -427,7 +427,7 @@ public class BatchEngineImportTaskExecutorTest
 	}
 
 	private void _assertInvalidFile(LogCapture logCapture) {
-		Assert.assertEquals(0, _batchEngineImportTask.getProcessedItemsCount());
+		Assert.assertEquals(1, _batchEngineImportTask.getProcessedItemsCount());
 		Assert.assertEquals(0, blogsEntryLocalService.getBlogsEntriesCount());
 
 		List<LogEntry> logEntries = logCapture.getLogEntries();

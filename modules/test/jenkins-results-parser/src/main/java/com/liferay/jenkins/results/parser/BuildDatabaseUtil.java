@@ -30,8 +30,6 @@ import java.util.concurrent.TimeoutException;
 public class BuildDatabaseUtil {
 
 	public static void clear() {
-		_buildDatabases.clear();
-
 		File buildDir = _getBuildDir(null);
 
 		File buildDatabaseFile = new File(
@@ -60,6 +58,8 @@ public class BuildDatabaseUtil {
 				BuildDatabase buildDatabase = _buildDatabases.get(buildDir);
 
 				if (buildDatabase != null) {
+					buildDatabase.readBuildDatabaseFile();
+
 					return buildDatabase;
 				}
 

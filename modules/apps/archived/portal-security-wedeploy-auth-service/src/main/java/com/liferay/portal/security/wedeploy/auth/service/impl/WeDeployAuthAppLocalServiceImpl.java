@@ -66,7 +66,6 @@ public class WeDeployAuthAppLocalServiceImpl
 		String clientId = PortalUUIDUtil.generate();
 
 		weDeployAuthApp.setClientId(clientId);
-
 		weDeployAuthApp.setClientSecret(
 			DigesterUtil.digestHex(
 				Digester.MD5, clientId, PwdGenerator.getPassword()));

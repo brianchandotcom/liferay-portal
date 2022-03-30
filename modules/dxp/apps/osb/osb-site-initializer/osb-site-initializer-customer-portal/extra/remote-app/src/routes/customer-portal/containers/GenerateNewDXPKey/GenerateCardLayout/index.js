@@ -10,7 +10,12 @@
  */
 
 import ClayCard from '@clayui/card';
+import getCurrentEndDate from '../../../../../common/utils/getCurrentEndDate';
 const GenerateCardLayout = ({infoSelectedKey}) => {
+	const currentDate = `${getCurrentEndDate(
+		infoSelectedKey?.selectedSubscription?.startDate
+	)} - ${getCurrentEndDate(infoSelectedKey?.selectedSubscription?.endDate)}`;
+
 	return (
 		<ClayCard className="mr-5 position-absolute rounded-xl shadow-none">
 			<ClayCard.Body className="bg-brand-primary-lighten-6 cp-info-new-key-card p-4 rounded-xl">
@@ -27,40 +32,36 @@ const GenerateCardLayout = ({infoSelectedKey}) => {
 						<p className="m-0">Version</p>
 
 						<p className="font-weight-normal">
-							{infoSelectedKey?.selectedVersion}
+							{infoSelectedKey?.productVersion}
 						</p>
 
 						<p className="m-0">License Type</p>
 
 						<p className="font-weight-normal">
-							{infoSelectedKey?.selectedLicenseType}{' '}
+							{infoSelectedKey?.licenseEntryType}{' '}
 						</p>
 
 						<p className="m-0">Subscription</p>
 
-						<p className="font-weight-normal">
-							{
-								infoSelectedKey.getSelectedSubscription
-									?.currentDate
-							}
-						</p>
+						<p className="font-weight-normal">{currentDate}</p>
 
 						<p className="m-0">Key Activations Available</p>
 
 						<p className="font-weight-normal">
 							{
-								infoSelectedKey.getSelectedSubscription
-									?.keyActivationAvailable
+								infoSelectedKey.selectedSubscription
+									?.provisionedCount
 							}
+
+							{' of '}
+
+							{infoSelectedKey.selectedSubscription?.quantity}
 						</p>
 
 						<p className="m-0">Instance Size</p>
 
 						<p className="font-weight-normal m-0">
-							{
-								infoSelectedKey.getSelectedSubscription
-									?.instanceSize
-							}
+							{infoSelectedKey.selectedSubscription?.instanceSize}
 						</p>
 					</div>
 				</ClayCard.Description>

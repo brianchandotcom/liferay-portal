@@ -17,7 +17,6 @@ import {Link} from 'react-router-dom';
 import {Button} from '../../../../../common/components';
 import {Radio} from '../../../../../common/components/Radio';
 import Layout from '../../../../../common/containers/setup-forms/Layout';
-import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
 import {getNewGenerateKeyFormValues} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import getCurrentEndDate from '../../../../../common/utils/getCurrentEndDate';
 import {useCustomerPortal} from '../../../context';
@@ -30,22 +29,25 @@ const DXP_PRODUCT = 'DXP ';
 
 const SelectSubscription = ({
 	accountKey,
-	handleComeBackPage,
+	infoSelectedKey,
+	licenseKeyDownloadURL,
 	productGroupName,
 	sessionId,
 	setInfoSelectedKey,
 	setStep,
+	urlPreviousPage,
 }) => {
-	const {licenseKeyDownloadURL} = useApplicationProvider();
 	const [{subscriptionGroups}] = useCustomerPortal();
 
-	const [selected, setSelected] = useState();
+	const [selected, setSelected] = useState(
+		infoSelectedKey?.selectedSubscription
+	);
 	const [generateFormValues, setGenerateFormValues] = useState();
 	const [selectedVersion, setSelectedVersion] = useState(
-		INICIAL_SELECTED_VERSION
+		infoSelectedKey?.productVersion || INICIAL_SELECTED_VERSION
 	);
 	const [selectedKeyType, setSelectedKeyType] = useState(
-		INICIAL_SELECTED_TYPE
+		infoSelectedKey?.licenseEntryType || INICIAL_SELECTED_TYPE
 	);
 
 	useEffect(() => {
@@ -102,7 +104,7 @@ const SelectSubscription = ({
 						footerClass: 'mx-5 mb-2',
 
 						leftButton: (
-							<Link to={handleComeBackPage}>
+							<Link to={urlPreviousPage}>
 								<Button
 									className="btn btn-borderless btn-style-neutral"
 									displayType="secondary"
@@ -115,7 +117,16 @@ const SelectSubscription = ({
 							<Button
 								disabled={!selected}
 								displayType="primary"
-								onClick={() => setStep(1)}
+								onClick={() => {
+									setInfoSelectedKey((oldInfo) => ({
+										...oldInfo,
+										hasNotPermanentLicence,
+										selectedSubscription: {
+											...selected,
+										},
+									}));
+									setStep(1);
+								}}
 							>
 								Next
 							</Button>
@@ -219,24 +230,22 @@ const SelectSubscription = ({
 								{getSubscriptionTerms.map(
 									(subscriptionterm, index) => {
 										const wasSelected =
-											selected === subscriptionterm;
+											JSON.stringify(selected) ===
+											JSON.stringify({
+												...subscriptionterm,
+												index,
+											});
 										const getCurrentStartAndEndDate = `${getCurrentEndDate(
 											subscriptionterm.startDate
 										)} - ${getCurrentEndDate(
 											subscriptionterm.endDate
 										)}`;
 
-										const getSelectedSubscription = {
-											currentDate: `${getCurrentStartAndEndDate}`,
-											instanceSize: `${subscriptionterm.instanceSize}`,
-											keyActivationAvailable: `${subscriptionterm.provisionedCount} of 5`,
-										};
-
 										const getInfoSelectedKey = {
-											getSelectedSubscription,
+											index,
+											licenseEntryType: `${selectedKeyType}`,
 											productType: `${PRODUCT_TYPES.dxp}`,
-											selectedLicenseType: `${selectedKeyType}`,
-											selectedVersion: `${selectedVersion}`,
+											productVersion: `${selectedVersion}`,
 										};
 
 										const displayAlertType = hasNotPermanentLicence ? (
@@ -299,9 +308,10 @@ const SelectSubscription = ({
 													getCurrentStartAndEndDate
 												}
 												onChange={(event) => {
-													setSelected(
-														event.target.value
-													);
+													setSelected({
+														...event.target.value,
+														index,
+													});
 													setInfoSelectedKey(
 														getInfoSelectedKey
 													);

@@ -648,6 +648,15 @@ public class Main {
 		return httpInvoker.invoke();
 	}
 
+	private void _postObjectEntries(
+			JSONArray jsonArray, String objectDefinitionShortName)
+		throws Exception {
+
+		_invoke(
+			jsonArray.toString(), null, HttpInvoker.HttpMethod.POST,
+			objectDefinitionShortName + "/batch", null);
+	}
+
 	private long _postObjectEntry(
 			Map<String, String> headers, String name,
 			String objectDefinitionShortName)

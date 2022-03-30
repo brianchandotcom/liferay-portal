@@ -639,7 +639,8 @@ definition {
 	test SearchIndividualsActivitiesList {
 		property portal.upstream = "quarantine";
 
-		// AC Quarantine Reason: Individual activities takes some time to load
+		// AC Quarantine Reason: Individual activities bar xpath needs to change
+		// AC refactor ticket: LRAC-10829
 
 		task ("Create a Document And Media") {
 			ACUtils.createDMAndAddToPage();

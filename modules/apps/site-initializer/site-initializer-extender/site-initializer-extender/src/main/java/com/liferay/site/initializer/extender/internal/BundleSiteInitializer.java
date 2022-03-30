@@ -1285,11 +1285,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 				JSONArray jsonArray = pageElementJSONObject.getJSONArray(
 					"pageElements");
 
-				for (int i = 0; i < jsonArray.length(); i++) {
-					_layoutPageTemplatesImporter.importPageElement(
-						draftLayout, layoutStructure,
-						layoutStructure.getMainItemId(), jsonArray.getString(i),
-						i);
+				if (!JSONUtil.isEmpty(jsonArray)) {
+					for (int i = 0; i < jsonArray.length(); i++) {
+						_layoutPageTemplatesImporter.importPageElement(
+							draftLayout, layoutStructure,
+							layoutStructure.getMainItemId(),
+							jsonArray.getString(i), i);
+					}
 				}
 			}
 		}
@@ -1868,12 +1870,14 @@ public class BundleSiteInitializer implements SiteInitializer {
 		JSONArray childOrganizationsJSONArray = jsonObject.getJSONArray(
 			"childOrganizations");
 
-		if (childOrganizationsJSONArray != null) {
-			for (int i = 0; i < childOrganizationsJSONArray.length(); i++) {
-				_addOrganization(
-					childOrganizationsJSONArray.getString(i), organization,
-					serviceContext);
-			}
+		if (JSONUtil.isEmpty(childOrganizationsJSONArray)) {
+			return;
+		}
+
+		for (int i = 0; i < childOrganizationsJSONArray.length(); i++) {
+			_addOrganization(
+				childOrganizationsJSONArray.getString(i), organization,
+				serviceContext);
 		}
 	}
 
@@ -2104,6 +2108,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		JSONArray jsonArray = jsonObject.getJSONArray("actions");
+
+		if (JSONUtil.isEmpty(jsonArray)) {
+			return;
+		}
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject actionsJSONObject = jsonArray.getJSONObject(i);
@@ -2688,7 +2696,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONArray accountBriefsJSONArray = jsonObject.getJSONArray(
 				"accountBriefs");
 
-			if (accountBriefsJSONArray.length() == 0) {
+			if (JSONUtil.isEmpty(accountBriefsJSONArray)) {
 				continue;
 			}
 
@@ -2752,6 +2760,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
 			JSONArray rolesJSONArray = jsonObject.getJSONArray("roles");
+
+			if (JSONUtil.isEmpty(rolesJSONArray)) {
+				continue;
+			}
 
 			for (int j = 0; j < rolesJSONArray.length(); j++) {
 				roles.add(
@@ -2902,6 +2914,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		JSONArray jsonArray = accountBriefsJSONObject.getJSONArray(
 			"roleBriefs");
+
+		if (JSONUtil.isEmpty(jsonArray)) {
+			return;
+		}
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			Page<AccountRole> accountRolePage =

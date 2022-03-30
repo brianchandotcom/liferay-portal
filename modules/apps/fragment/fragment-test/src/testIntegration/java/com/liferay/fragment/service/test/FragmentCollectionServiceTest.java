@@ -189,6 +189,7 @@ public class FragmentCollectionServiceTest {
 				fragmentCollection.getFragmentCollectionId());
 
 		Assert.assertEquals(
+			actualFragmentCollectionFileEntries.toString(),
 			originalFragmentCollectionFileEntries.size() + 1,
 			actualFragmentCollectionFileEntries.size());
 	}

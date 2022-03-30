@@ -1442,8 +1442,8 @@ AUI.add(
 
 					instance._updateEntryIcon(node, fileName);
 
-					if (REGEX_IMAGE.test(fileName)) {
-						instance._updateThumbnail(node, fileName);
+					if (!displayStyleList && REGEX_IMAGE.test(fileName)) {
+						instance._updateThumbnail(node, fileName, displayStyle);
 					}
 				},
 
@@ -1544,26 +1544,31 @@ AUI.add(
 					}
 				},
 
-				_updateThumbnail(node, fileName) {
+				_updateThumbnail(node, fileName, displayStyle) {
 					var instance = this;
 
 					var imageNode = node.one('img');
 					var thumbnailPath = instance._getMediaThumbnail(fileName);
 
 					if (!imageNode) {
-						var svgContainerNode = node.one(
-							'.card-type-asset-icon'
-						);
+						var targetNodeSelector = '.sticker-overlay svg';
+						var imageClassName = 'sticker-img';
+
+						if (displayStyle === CSS_ICON) {
+							targetNodeSelector = '.card-type-asset-icon';
+							imageClassName =
+								'aspect-ratio-item-center-middle aspect-ratio-item-fluid';
+						}
 
 						imageNode = A.Node.create(
-							'<img alt="" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="' +
-								thumbnailPath +
-								'" />'
+							`<img alt="" class="${imageClassName}" src="${thumbnailPath}" />`
 						);
 
-						svgContainerNode
+						var targetNode = node.one(targetNodeSelector);
+
+						targetNode
 							.get('parentNode')
-							.replaceChild(imageNode, svgContainerNode);
+							.replaceChild(imageNode, targetNode);
 					}
 					else {
 						imageNode.attr('src', thumbnailPath);

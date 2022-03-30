@@ -191,11 +191,10 @@ DLViewDisplayContext dlViewDisplayContext = new DLViewDisplayContext(dlAdminDisp
 									<div class="autofit-col"></div>
 
 									<div class="autofit-col">
-										<div class="click-selector sticker">
-											<div class="sticker-overlay">
-												<img alt="thumbnail" class="sticker-img" src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/default.png" %>" />
-											</div>
-										</div>
+										<clay:sticker
+											cssClass="file-icon-color-0"
+											icon="document-default"
+										/>
 									</div>
 
 									<div class="autofit-col autofit-col-expand">

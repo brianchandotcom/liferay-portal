@@ -272,30 +272,38 @@ public class PortletSharedSearchRequestImpl
 		);
 	}
 
-	private Stream<SearchSettingsContributor>
-		_getSearchSettingsContributorsStream(
-			ThemeDisplay themeDisplay, RenderRequest renderRequest) {
+	private List<SearchSettingsContributor> _getSearchSettingsContributors(
+		ThemeDisplay themeDisplay, RenderRequest renderRequest) {
 
 		List<Portlet> portlets = _getPortlets(
 			themeDisplay.getLayout(), themeDisplay.getCompanyId());
 
-		Stream<Portlet> portletsStream = portlets.stream();
+		List<SearchSettingsContributor> searchSettingsContributors =
+			new ArrayList<>();
 
-		return portletsStream.map(
-			portlet -> _getSearchSettingsContributorOptional(
-				portlet, themeDisplay, renderRequest)
-		).filter(
-			Optional::isPresent
-		).map(
-			Optional::get
-		);
+		for (Portlet portlet : portlets) {
+			Optional<SearchSettingsContributor>
+				searchSettingsContributorOptional =
+					_getSearchSettingsContributorOptional(
+						portlet, themeDisplay, renderRequest);
+
+			if (searchSettingsContributorOptional.isPresent()) {
+				searchSettingsContributors.add(
+					searchSettingsContributorOptional.get());
+			}
+		}
+
+		return searchSettingsContributors;
 	}
 
 	private PortletSharedSearchResponse _search(RenderRequest renderRequest) {
 		ThemeDisplay themeDisplay = getThemeDisplay(renderRequest);
 
+		List<SearchSettingsContributor> searchSettingsContributors =
+			_getSearchSettingsContributors(themeDisplay, renderRequest);
+
 		Stream<SearchSettingsContributor> stream =
-			_getSearchSettingsContributorsStream(themeDisplay, renderRequest);
+			searchSettingsContributors.stream();
 
 		SearchRequestImpl searchRequestImpl = _createSearchRequestImpl(
 			themeDisplay, renderRequest);

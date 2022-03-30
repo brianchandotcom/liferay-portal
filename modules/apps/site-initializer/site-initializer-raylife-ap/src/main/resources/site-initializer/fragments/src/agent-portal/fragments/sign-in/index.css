@@ -1,15 +1,5 @@
-.raylife-sign-in {
-	background-color: var(--color-brand-primary-darken-5);
-	height: 100vh;
-}
-
 .raylife-sign-in .form-column {
-	color: var(--white);
-	display: flex;
-	padding-bottom: var(--spacer-2);
-	padding-left: var(--spacer-6);
-	padding-right: var(--spacer-8);
-	padding-top: var(--spacer-6);
+	padding: var(--spacer-6) var(--spacer-8) var(--spacer-6) var(--spacer-2);
 }
 
 .raylife-sign-in .login-title {
@@ -26,16 +16,11 @@
 
 .raylife-sign-in .sign-in-logo {
 	height: 40px;
-	margin-top: 3rem;
-	position: absolute;
+	left: 0;
 	top: 0;
 }
 
 .raylife-login-form {
-	align-items: flex-start;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
 	max-width: 370px !important;
 	min-width: 200px !important;
 	width: 370px !important;

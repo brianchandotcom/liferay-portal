@@ -23,6 +23,12 @@ emailInput.removeAttribute('value');
 const passwordInput = document.getElementById(PASSWORD_INPUT_ID);
 passwordInput.setAttribute('placeholder', 'Password');
 
+window.onload = function () {
+	document.getElementById(EMAIL_INPUT_ID).focus();
+};
+
+document.getElementById(EMAIL_INPUT_ID).focus();
+
 function inputValidation() {
 	const EMAIL_REGEX = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 

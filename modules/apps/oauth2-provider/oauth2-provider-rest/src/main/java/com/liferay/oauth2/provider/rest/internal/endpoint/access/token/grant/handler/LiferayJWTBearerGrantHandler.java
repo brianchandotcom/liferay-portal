@@ -75,9 +75,11 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 
 	@Override
 	protected boolean hasPermission(
-		Client client, MultivaluedMap<String, String> params) {
+		Client client, MultivaluedMap<String, String> multivaluedMap) {
 
-		if (params.getFirst(Constants.CLIENT_GRANT_ASSERTION_PARAM) != null) {
+		if (multivaluedMap.getFirst(Constants.CLIENT_GRANT_ASSERTION_PARAM) !=
+				null) {
+
 			return true;
 		}
 
@@ -105,10 +107,10 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 
 		@Override
 		public ServerAccessToken createAccessToken(
-				Client client, MultivaluedMap<String, String> params)
+				Client client, MultivaluedMap<String, String> multivaluedMap)
 			throws OAuthServiceException {
 
-			String assertion = params.getFirst(
+			String assertion = multivaluedMap.getFirst(
 				Constants.CLIENT_GRANT_ASSERTION_PARAM);
 
 			Map<String, String> clientProperties = client.getProperties();
@@ -143,7 +145,7 @@ public class LiferayJWTBearerGrantHandler extends BaseAccessTokenGrantHandler {
 						jwtClaims.getSubject()),
 					Constants.JWT_BEARER_GRANT,
 					OAuthUtils.parseScope(
-						params.getFirst(OAuthConstants.SCOPE)));
+						multivaluedMap.getFirst(OAuthConstants.SCOPE)));
 			}
 			catch (Exception exception) {
 				throw new OAuthServiceException(exception);

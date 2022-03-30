@@ -80,17 +80,18 @@ public class LiferayJWTBearerAuthenticationHandler
 
 		JwtToken jwtToken = super.getJwtToken(assertion, null, null);
 
-		String subject = (String)jwtToken.getClaim(JwtConstants.CLAIM_SUBJECT);
+		String claimSubject = (String)jwtToken.getClaim(
+			JwtConstants.CLAIM_SUBJECT);
 
 		String clientId = ParamUtil.getString(
 			httpServletRequest, OAuthConstants.CLIENT_ID);
 
-		if (Validator.isNotNull(clientId) && !clientId.equals(subject)) {
+		if (Validator.isNotNull(clientId) && !clientId.equals(claimSubject)) {
 			throw new NotAuthorizedException(
 				"ClientId parameter does not match JWT subject");
 		}
 
-		message.put(OAuthConstants.CLIENT_ID, subject);
+		message.put(OAuthConstants.CLIENT_ID, claimSubject);
 
 		SecurityContext securityContext = configureSecurityContext(jwtToken);
 
@@ -102,7 +103,7 @@ public class LiferayJWTBearerAuthenticationHandler
 		}
 	}
 
-	public void setClientProvider(
+	public void setClientRegistrationProvider(
 		ClientRegistrationProvider clientRegistrationProvider) {
 
 		_clientRegistrationProvider = clientRegistrationProvider;

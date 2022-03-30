@@ -39,7 +39,7 @@ public class LiferayJWTBearerAuthenticationHandlerRegistrator {
 			liferayJWTBearerAuthenticationHandler =
 				new LiferayJWTBearerAuthenticationHandler();
 
-		liferayJWTBearerAuthenticationHandler.setClientProvider(
+		liferayJWTBearerAuthenticationHandler.setClientRegistrationProvider(
 			_liferayOAuthDataProvider);
 
 		liferayJWTBearerAuthenticationHandler.

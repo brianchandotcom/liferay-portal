@@ -19,9 +19,8 @@ import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.asset.SearchableAssetClassNamesProvider;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,38 +37,36 @@ public class SearchableAssetClassNamesProviderImpl
 		List<AssetRendererFactory<?>> assetRendererFactories =
 			assetRendererFactoryRegistry.getAssetRendererFactories(companyId);
 
-		Stream<AssetRendererFactory<?>> stream1 =
-			assetRendererFactories.stream();
-
 		String[] searchEngineHelperEntryClassNames =
 			searchEngineHelper.getEntryClassNames();
 
-		String[] array1 = stream1.filter(
-			AssetRendererFactory::isSearchable
-		).map(
-			AssetRendererFactory::getClassName
-		).filter(
-			className -> ArrayUtil.contains(
-				searchEngineHelperEntryClassNames, className, false)
-		).toArray(
-			String[]::new
-		);
+		List<String> classNames = new ArrayList<>();
 
-		Stream<String> stream2 = Arrays.stream(
-			searchEngineHelperEntryClassNames);
+		for (AssetRendererFactory<?> assetRendererFactory :
+				assetRendererFactories) {
 
-		String[] array2 = stream2.filter(
-			className -> className.startsWith(
-				"com.liferay.object.model.ObjectDefinition#")
-		).toArray(
-			String[]::new
-		);
+			if (assetRendererFactory.isSearchable()) {
+				String className = assetRendererFactory.getClassName();
 
-		String[] classNames = new String[array1.length + array2.length];
+				if (ArrayUtil.contains(
+						searchEngineHelperEntryClassNames, className, false)) {
 
-		ArrayUtil.combine(array1, array2, classNames);
+					classNames.add(className);
+				}
+			}
+		}
 
-		return classNames;
+		for (String searchEngineHelperEntryClassName :
+				searchEngineHelperEntryClassNames) {
+
+			if (searchEngineHelperEntryClassName.startsWith(
+					"com.liferay.object.model.ObjectDefinition#")) {
+
+				classNames.add(searchEngineHelperEntryClassName);
+			}
+		}
+
+		return classNames.toArray(new String[0]);
 	}
 
 	@Reference

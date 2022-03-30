@@ -15,7 +15,9 @@ definition {
 	}
 
 	macro uploadFile {
-		var dependencyFilePath = TestCase.getDependenciesDirPath(fileName = "${fileName}");
+		var dependencyFilePath = TestCase.getDependenciesDirPath(
+			fileName = "${fileName}",
+			filePath = "${filePath}");
 
 		UploadFile(
 			locator1 = "TextInput#FILE",

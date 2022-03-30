@@ -308,7 +308,6 @@ public class JournalArticleInfoItemFieldValuesUpdaterImpl
 		serviceContext.setExpandoBridgeAttributes(
 			expandoBridge.getAttributes());
 
-		serviceContext.setFormDate(new Date());
 		serviceContext.setScopeGroupId(journalArticle.getGroupId());
 
 		if (journalArticle.getStatus() != WorkflowConstants.STATUS_APPROVED) {

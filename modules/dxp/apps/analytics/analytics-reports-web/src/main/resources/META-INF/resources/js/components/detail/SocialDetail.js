@@ -126,10 +126,7 @@ export default function SocialDetail({
 
 			trafficSourcesDataProvider()
 				.then((trafficSources) => {
-					const trafficSource = trafficSources.find(
-						(source) => source.name === 'social'
-					);
-					handleDetailPeriodChange(trafficSource, true);
+					handleDetailPeriodChange(trafficSources, 'social', true);
 				})
 				.catch(() => {
 					dispatch({type: 'ADD_WARNING'});

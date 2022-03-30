@@ -252,7 +252,7 @@ public class CommerceAccountLocalServiceImpl
 
 		// Resources
 
-		//	TODO Check permissions
+		// TODO Check permissions
 
 		resourceLocalService.deleteResource(
 			commerceAccount.getCompanyId(), CommerceAccount.class.getName(),

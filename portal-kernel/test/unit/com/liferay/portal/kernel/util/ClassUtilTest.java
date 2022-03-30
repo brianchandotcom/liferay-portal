@@ -176,7 +176,7 @@ public class ClassUtilTest {
 			expectedParentPath,
 			ClassUtil.getParentPath(classLoader, "java.lang.String"));
 
-		//Test log output
+		// Test log output
 
 		try (LogCapture logCapture = LoggerTestUtil.configureJDKLogger(
 				ClassUtil.class.getName(), Level.FINE)) {

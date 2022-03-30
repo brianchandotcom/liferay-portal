@@ -127,7 +127,7 @@ public class CommerceOrderConstants {
 		else if (orderStatus ==
 					CommerceOrderConstants.ORDER_STATUS_PROCESSING) {
 
-			//TODO check correct status
+			// TODO check correct status
 
 			return ORDER_NOTIFICATION_AWAITING_SHIPMENT;
 		}

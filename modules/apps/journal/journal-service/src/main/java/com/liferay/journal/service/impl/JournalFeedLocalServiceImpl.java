@@ -345,7 +345,7 @@ public class JournalFeedLocalServiceImpl
 
 		feed = journalFeedPersistence.update(feed);
 
-		//DDM Structure Link
+		// DDM Structure Link
 
 		long classNameId = _classNameLocalService.getClassNameId(
 			JournalFeed.class);

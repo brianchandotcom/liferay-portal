@@ -149,7 +149,7 @@ public class BlogsImporter {
 		_blogsEntryLocalService.addCoverImage(
 			blogsEntry.getEntryId(), imageSelector);
 
-		//Add Tags
+		// Add Tags
 
 		JSONArray tagsJSONArray = jsonObject.getJSONArray("tags");
 

@@ -132,7 +132,7 @@ public class DDMFormImporter {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		//DDM Form
+		// DDM Form
 
 		Locale locale = serviceContext.getLocale();
 

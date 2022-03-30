@@ -114,7 +114,9 @@ public class ProductFeedXMLGenerator {
 				/* TODO: To be implemented in COMMERCE-2690.
 
 				for (CPCatalogEntry cpCatalogEntry : cpCatalogEntries) {
-					//TODO COMMERCE-2690 add XML for a product here
+
+					// TODO COMMERCE-2690 add XML for a product here
+
 				}
 				*/
 

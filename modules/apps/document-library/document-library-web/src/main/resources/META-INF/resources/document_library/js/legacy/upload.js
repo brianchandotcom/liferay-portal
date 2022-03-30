@@ -46,10 +46,6 @@ AUI.add(
 
 		var CSS_SEARCHCONTAINER = 'searchcontainer';
 
-		var CSS_TAGLIB_ICON = 'taglib-icon';
-
-		var CSS_TAGLIB_TEXT = 'taglib-text';
-
 		var CSS_UPLOAD_ERROR = 'upload-error';
 
 		var CSS_UPLOAD_SUCCESS = 'upload-success';
@@ -90,8 +86,6 @@ AUI.add(
 		var SELECTOR_IMAGE_ICON = 'img.icon';
 
 		var SELECTOR_SEARCH_CONTAINER = STR_DOT + CSS_SEARCHCONTAINER;
-
-		var SELECTOR_TAGLIB_ICON = STR_DOT + CSS_TAGLIB_ICON;
 
 		var STR_BLANK = '';
 
@@ -145,21 +139,23 @@ AUI.add(
 
 		var TPL_ENTRIES_CONTAINER = '<dl class="{cssClass}"></dl>';
 
-		var TPL_ENTRY_ROW_TITLE =
-			'<span class="' +
-			CSS_APP_VIEW_ENTRY +
-			STR_SPACE +
-			CSS_ENTRY_DISPLAY_STYLE +
-			'">' +
-			'<a class="' +
-			CSS_TAGLIB_ICON +
-			'">' +
-			Liferay.Util.getLexiconIconTpl('document') +
-			'<span class="' +
-			CSS_TAGLIB_TEXT +
-			'">{0}</span>' +
-			'</a>' +
-			'</span>';
+		var TPL_ENTRY_ROW_TITLE = `<div class="autofit-row ${
+			CSS_APP_VIEW_ENTRY + STR_SPACE + CSS_ENTRY_DISPLAY_STYLE
+		}">
+			<div class="autofit-col">
+				<span class="sticker sticker-rounded sticker-document sticker-secondary file-icon-color-0">
+					<span class="sticker-overlay">
+						${Liferay.Util.getLexiconIconTpl(STR_ICON_DEFAULT)}
+					</span>
+				</span>
+			</div>
+
+			<div class="autofit-col autofit-col-expand">
+				<div class="table-title">
+					<a>{0}</a>
+				</div>
+			</div>
+		</div>`;
 
 		var TPL_ENTRY_WRAPPER =
 			'<dd class="card-page-item card-page-item-asset" data-title="{title}"></dd>';
@@ -1267,14 +1263,14 @@ AUI.add(
 							);
 						}
 						else {
-							var displayStyleList = displayStyle === STR_LIST;
-
 							var fileEntryId = JSON.parse(event.data)
 								.fileEntryId;
 
-							if (!displayStyleList) {
-								instance._updateEntryUI(fileNode, file.name);
-							}
+							instance._updateEntryUI(
+								fileNode,
+								file.name,
+								displayStyle
+							);
 
 							instance._updateFileLink(
 								fileNode,
@@ -1437,13 +1433,15 @@ AUI.add(
 					stickerNode.html(Liferay.Util.getLexiconIconTpl(mediaIcon));
 				},
 
-				_updateEntryUI(node, fileName) {
+				_updateEntryUI(node, fileName, displayStyle) {
 					var instance = this;
+
+					var displayStyleList = displayStyle === STR_LIST;
 
 					instance._updateEntryIcon(node, fileName);
 
 					if (!displayStyleList && REGEX_IMAGE.test(fileName)) {
-						instance._updateThumbnail(node, fileName, displayStyle);
+						instance._updateThumbnail(node, fileName);
 					}
 				},
 
@@ -1462,12 +1460,6 @@ AUI.add(
 
 					if (displayStyle === CSS_ICON) {
 						selector = SELECTOR_ENTRY_LINK;
-					}
-					else if (displayStyle === STR_LIST) {
-						selector =
-							SELECTOR_ENTRY_DISPLAY_STYLE +
-							STR_SPACE +
-							SELECTOR_TAGLIB_ICON;
 					}
 
 					var link = node.all(selector);

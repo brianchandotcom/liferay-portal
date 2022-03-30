@@ -135,6 +135,38 @@ public class TrafficChannelTest {
 	}
 
 	@Test
+	public void testToJSONWithParameters() {
+		TrafficChannel trafficChannel = TrafficChannel.newInstance(
+			1, 7.0, TrafficChannel.Type.ORGANIC);
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setParameter("param1", "value1");
+
+		Assert.assertEquals(
+			JSONUtil.put(
+				"endpointURL",
+				"http//localhost/test?param_name=organic;param_param1=value1"
+			).put(
+				"helpMessage", trafficChannel.getHelpMessageKey()
+			).put(
+				"name", String.valueOf(trafficChannel.getType())
+			).put(
+				"share", String.format("%.1f", trafficChannel.getTrafficShare())
+			).put(
+				"title", String.valueOf(trafficChannel.getType())
+			).put(
+				"value", Math.toIntExact(trafficChannel.getTrafficAmount())
+			).toString(),
+			String.valueOf(
+				trafficChannel.toJSONObject(
+					mockLiferayPortletActionRequest,
+					new MockLiferayPortletRenderResponse(),
+					_getResourceBundle(trafficChannel))));
+	}
+
+	@Test
 	public void testToTrafficChannelWithOrganicName() {
 		AcquisitionChannel acquisitionChannel = new AcquisitionChannel(
 			"ORGANIC", RandomTestUtil.randomInt(),

@@ -87,7 +87,7 @@ export default function TopperItemActions({item}) {
 							selectItem,
 						})
 					),
-				icon: 'paste',
+				icon: 'copy',
 				label: Liferay.Language.get('duplicate'),
 			});
 
@@ -105,7 +105,7 @@ export default function TopperItemActions({item}) {
 							selectItem,
 						})
 					),
-				icon: 'times-circle',
+				icon: 'trash',
 				label: Liferay.Language.get('delete'),
 			});
 		}

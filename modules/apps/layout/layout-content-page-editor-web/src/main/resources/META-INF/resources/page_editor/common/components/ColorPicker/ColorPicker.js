@@ -438,7 +438,7 @@ export function ColorPicker({
 									);
 								}}
 								small
-								symbol="times-circle"
+								symbol="trash"
 								title={Liferay.Language.get('clear-selection')}
 							/>
 						</ClayInput.GroupItem>

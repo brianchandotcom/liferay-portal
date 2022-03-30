@@ -424,7 +424,7 @@ const RemoveButton = ({node, visible}) => {
 				dispatch(deleteItem({itemId: node.id, selectItem}));
 			}}
 		>
-			<ClayIcon symbol="times-circle" />
+			<ClayIcon symbol="trash" />
 		</ClayButton>
 	);
 };

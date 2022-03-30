@@ -267,7 +267,7 @@ const ExperienceActions = ({
 						monospaced
 						onClick={handleExperienceDelete}
 						outline
-						symbol="times-circle"
+						symbol="trash"
 						title={Liferay.Language.get('delete-experience')}
 						type="button"
 					/>

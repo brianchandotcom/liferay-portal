@@ -149,7 +149,7 @@ export default function ItemSelector({
 				onClick: () => onItemSelect({}),
 				symbolLeft:
 					label === Liferay.Language.get('collection')
-						? 'times-circle'
+						? 'trash'
 						: null,
 			});
 

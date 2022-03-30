@@ -27,7 +27,6 @@
 						"borderWidth": 0,
 						"contentDisplay": "FlexRow",
 						"flexWrap": "WrapReverse",
-						"htmlTag": "Div",
 						"justify": "Start",
 						"marginBottom": 0,
 						"marginLeft": 0,

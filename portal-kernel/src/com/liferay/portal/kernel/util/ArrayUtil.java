@@ -1874,14 +1874,6 @@ public class ArrayUtil {
 		return newArray;
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public static String[] toArray(String[] array) {
-		return array.clone();
-	}
-
 	public static <T, A> A[] toArray(T[] list, Accessor<T, A> accessor) {
 		A[] aArray = (A[])Array.newInstance(
 			accessor.getAttributeClass(), list.length);

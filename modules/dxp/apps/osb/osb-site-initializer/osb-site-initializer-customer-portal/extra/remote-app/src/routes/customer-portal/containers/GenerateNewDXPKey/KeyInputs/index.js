@@ -19,34 +19,30 @@ import {
 const KeyInputs = ({id}) => {
 	return (
 		<>
-			<div className="mb-2">
-				<div className="cp-input-generate-label">
-					<Input
-						label="Host Name"
-						name={`keys[${id}].hostName`}
-						type="text"
-						validations={[(value) => isValidHost(value)]}
-					/>
-				</div>
+			<div className="cp-input-generate-label mb-3">
+				<Input
+					label="Host Name"
+					name={`keys[${id}].hostName`}
+					type="text"
+					validations={[(value) => isValidHost(value)]}
+				/>
 			</div>
 
-			<div className="mb-2">
-				<div className="cp-input-generate-label">
-					<Input
-						className="cp-input-generate-placeholder m-0 w-100"
-						component="textarea"
-						label="IP Addresses"
-						name={`keys[${id}].ipAddresses`}
-						placeholder="1.1.1.1&#10;2.2.2.2"
-						type="text"
-						validations={[(value) => isValidIp(value)]}
-					/>
+			<div className="cp-input-generate-label">
+				<Input
+					className="cp-input-generate-placeholder w-100"
+					component="textarea"
+					label="IP Addresses"
+					name={`keys[${id}].ipAddresses`}
+					placeholder="1.1.1.1&#10;2.2.2.2"
+					type="text"
+					validations={[(value) => isValidIp(value)]}
+				/>
 
-					<h6 className="font-weight-normal mt-1 mx-3">
-						Add one IP addresses per line. IPv6 addresses are not
-						supported.
-					</h6>
-				</div>
+				<h6 className="font-weight-normal mb-3 mx-3">
+					Add one IP addresses per line. IPv6 addresses are not
+					supported.
+				</h6>
 
 				<div className="cp-input-generate-label">
 					<Input
@@ -59,7 +55,7 @@ const KeyInputs = ({id}) => {
 						validations={[(value) => isValidMac(value)]}
 					/>
 
-					<h6 className="font-weight-normal mt-1 mx-3">
+					<h6 className="font-weight-normal mb-3 mx-3">
 						Add one MAC addresses per line
 					</h6>
 				</div>

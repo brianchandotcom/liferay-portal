@@ -64,9 +64,7 @@ const RequiredInformation = ({
 		hasError,
 		infoSelectedKey.hasNotPermanentLicence,
 		usedKeysCount,
-		values?.keys,
-		values.maxClusterNodes,
-		values.name,
+		values,
 	]);
 
 	const submitKey = async () => {
@@ -96,8 +94,7 @@ const RequiredInformation = ({
 				sessionId,
 				licenseKey
 			);
-		}
-		else {
+		} else {
 			await Promise.all(
 				values?.keys?.map(({hostName, ipAddresses, macAddresses}) => {
 					licenseKey.macAddresses = macAddresses.replace('\n', ',');
@@ -173,31 +170,46 @@ const RequiredInformation = ({
 
 								<div className="dropdown-divider mb-4 mt-2"></div>
 
-								<div className="mb-2">
+								<div className="mb-3">
 									<div className="cp-input-generate-label">
 										<Input
 											label="Environment Name"
 											name="name"
+											placeholder="e.g. Liferay Ecommerce Site"
 											required
 											type="text"
 										/>
 									</div>
+
+									<h6 className="font-weight-normal ml-3 mt-1">
+										Name this environment. This cannot be
+										edited later.
+									</h6>
 								</div>
 
-								<div className="mb-2">
+								<div className="mb-3">
 									<div className="cp-input-generate-label">
 										<Input
 											label="Description"
 											name="description"
+											placeholder="e.g. Liferay Dev Environment – ECOM DXP 7.2 "
 											type="text"
 										/>
 									</div>
+
+									<h6 className="font-weight-normal ml-3 mr-0 mt-1">
+										Include a description to uniquely
+										identify this environment. This cannot
+										be edited later.
+									</h6>
 								</div>
 							</div>
 
 							{!infoSelectedKey.hasNotPermanentLicence ? (
 								<div className="px-6">
-									<h4>Activation Key Server Details</h4>
+									<h4 className="mt-5">
+										Activation Key Server Details
+									</h4>
 
 									<div className="dropdown-divider mb-4 mt-2"></div>
 
@@ -256,9 +268,15 @@ const RequiredInformation = ({
 							) : (
 								<div className="cp-input-generate-label px-6">
 									<KeySelect
+										avaliableKeysMaximumCount={
+											avaliableKeysMaximumCount
+										}
 										minAvaliableKeysCount={
 											infoSelectedKey.selectedSubscription
 												?.provisionedCount
+										}
+										selectedClusterNodes={
+											values.maxClusterNodes
 										}
 									/>
 								</div>

@@ -12,7 +12,11 @@
 import {ClayInput} from '@clayui/form';
 import {Select} from '../../../../../common/components';
 
-const KeySelect = ({minAvaliableKeysCount}) => {
+const KeySelect = ({
+	avaliableKeysMaximumCount,
+	minAvaliableKeysCount,
+	selectedClusterNodes,
+}) => {
 	const emptyOption = {
 		disabled: true,
 		label: 'Select the option',
@@ -28,11 +32,21 @@ const KeySelect = ({minAvaliableKeysCount}) => {
 		<ClayInput.Group className="m-0">
 			<ClayInput.GroupItem className="m-0">
 				<Select
-					label="Cluster Nodes (Maximum)"
+					label={`Cluster Nodes${
+						+selectedClusterNodes === +avaliableKeysMaximumCount
+							? ' (Maximum)'
+							: ''
+					}`}
 					name="maxClusterNodes"
 					options={[emptyOption, ...options]}
 					required
 				/>
+
+				<h6 className="font-weight-normal ml-3 mt-1">
+					{!selectedClusterNodes
+						? `Cluster nodes may not exceed the maximum number of Activation Keys available (${avaliableKeysMaximumCount})`
+						: `This is the description area`}
+				</h6>
 			</ClayInput.GroupItem>
 		</ClayInput.Group>
 	);

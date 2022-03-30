@@ -21,13 +21,11 @@ const GenerateCardLayout = ({infoSelectedKey}) => {
 			<ClayCard.Body className="bg-brand-primary-lighten-6 cp-info-new-key-card p-4 rounded-xl">
 				<ClayCard.Description displayType="title" tag="div">
 					<div className="p-2">
-						<div className="d-flex">
-							<p className="m-0">Product</p>
+						<p className="m-0">Product</p>
 
-							<p className="font-weight-normal">
-								{infoSelectedKey?.productType}
-							</p>
-						</div>
+						<p className="font-weight-normal">
+							{infoSelectedKey?.productType}
+						</p>
 
 						<p className="m-0">Version</p>
 
@@ -49,19 +47,22 @@ const GenerateCardLayout = ({infoSelectedKey}) => {
 
 						<p className="font-weight-normal">
 							{
-								infoSelectedKey.selectedSubscription
+								infoSelectedKey?.selectedSubscription
 									?.provisionedCount
 							}
 
 							{' of '}
 
-							{infoSelectedKey.selectedSubscription?.quantity}
+							{infoSelectedKey?.selectedSubscription?.quantity}
 						</p>
 
 						<p className="m-0">Instance Size</p>
 
 						<p className="font-weight-normal m-0">
-							{infoSelectedKey.selectedSubscription?.instanceSize}
+							{
+								infoSelectedKey?.selectedSubscription
+									?.instanceSize
+							}
 						</p>
 					</div>
 				</ClayCard.Description>

@@ -150,7 +150,7 @@ const SelectSubscription = ({
 										className="cp-select-card mr-2"
 										disabled={true}
 									>
-										{subscriptionGroups.map((product) => (
+										{subscriptionGroups?.map((product) => (
 											<ClaySelect.Option
 												key={product.name}
 												label={product.name}

@@ -181,7 +181,7 @@ This affects you if you have custom entities for which display pages can be crea
 
 ### How should I update my code?
 
-If you have custom entities with display pages, swap the display page logic by adding the `BaseUpgradeAssetDisplayPageEntries` upgrade process to your application. The process receives a table, primary key column name, and a class name.
+If you have custom entities with display pages, swap the display page logic by adding the `BaseUpgradeAssetDisplayPageEntry` upgrade process to your application. The process receives a table, primary key column name, and a class name.
 
 ### Why was this change made?
 

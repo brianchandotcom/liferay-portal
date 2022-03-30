@@ -146,7 +146,6 @@ public class CommercePriceListFinderTest {
 				fetchCommercePriceListAccountRel(
 					_commerceAccount.getCommerceAccountId(),
 					retrievedPriceList.getCommercePriceListId()));
-
 		Assert.assertNotNull(
 			_commercePriceListChannelRelLocalService.
 				fetchCommercePriceListChannelRel(
@@ -234,7 +233,6 @@ public class CommercePriceListFinderTest {
 		Assert.assertEquals(
 			commercePriceList.getCommercePriceListId(),
 			retrievedPriceList.getCommercePriceListId());
-
 		Assert.assertNotNull(
 			_commercePriceListCommerceAccountGroupRelLocalService.
 				fetchCommercePriceListCommerceAccountGroupRel(
@@ -268,7 +266,6 @@ public class CommercePriceListFinderTest {
 		Assert.assertEquals(
 			commercePriceList.getCommercePriceListId(),
 			retrievedPriceList.getCommercePriceListId());
-
 		Assert.assertNotNull(
 			_commercePriceListAccountRelLocalService.
 				fetchCommercePriceListAccountRel(
@@ -302,7 +299,6 @@ public class CommercePriceListFinderTest {
 		Assert.assertEquals(
 			commercePriceList.getCommercePriceListId(),
 			retrievedPriceList.getCommercePriceListId());
-
 		Assert.assertNotNull(
 			_commercePriceListChannelRelLocalService.
 				fetchCommercePriceListChannelRel(
@@ -340,13 +336,11 @@ public class CommercePriceListFinderTest {
 		Assert.assertEquals(
 			commercePriceList.getCommercePriceListId(),
 			retrievedPriceList.getCommercePriceListId());
-
 		Assert.assertNotNull(
 			_commercePriceListAccountRelLocalService.
 				fetchCommercePriceListAccountRel(
 					CommerceAccountConstants.ACCOUNT_ID_GUEST,
 					retrievedPriceList.getCommercePriceListId()));
-
 		Assert.assertNotNull(
 			_commercePriceListChannelRelLocalService.
 				fetchCommercePriceListChannelRel(
@@ -380,7 +374,6 @@ public class CommercePriceListFinderTest {
 		Assert.assertEquals(
 			commercePriceList.getCommercePriceListId(),
 			retrievedPriceList.getCommercePriceListId());
-
 		Assert.assertNotNull(
 			_commercePriceListAccountRelLocalService.
 				fetchCommercePriceListAccountRel(
@@ -411,7 +404,6 @@ public class CommercePriceListFinderTest {
 		Assert.assertEquals(
 			commercePriceList.getCommercePriceListId(),
 			retrievedPriceList.getCommercePriceListId());
-
 		Assert.assertNull(
 			_commercePriceListAccountRelLocalService.
 				fetchCommercePriceListAccountRel(
@@ -472,9 +464,7 @@ public class CommercePriceListFinderTest {
 		Assert.assertEquals(
 			commercePriceList.getCommercePriceListId(),
 			retrievedPriceList.getCommercePriceListId());
-
 		Assert.assertFalse(retrievedPriceList.isCatalogBasePriceList());
-
 		Assert.assertNull(
 			_commercePriceListAccountRelLocalService.
 				fetchCommercePriceListAccountRel(

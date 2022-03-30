@@ -88,7 +88,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			boolean bulkPricing, int minQuantity, ServiceContext serviceContext)
 		throws PortalException {
 
-		return addCommerceTierPriceEntry(
+		return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
 			null, commercePriceEntryId, price, promoPrice, bulkPricing,
 			minQuantity, serviceContext);
 	}
@@ -99,12 +99,11 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			int minQuantity, ServiceContext serviceContext)
 		throws PortalException {
 
-		return addCommerceTierPriceEntry(
+		return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
 			null, commercePriceEntryId, price, promoPrice, minQuantity,
 			serviceContext);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceTierPriceEntry addCommerceTierPriceEntry(
 			String externalReferenceCode, long commercePriceEntryId,
@@ -114,7 +113,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		Calendar now = new GregorianCalendar();
 
-		return addCommerceTierPriceEntry(
+		return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
 			externalReferenceCode, commercePriceEntryId, price, promoPrice,
 			minQuantity, bulkPricing, true, null, null, null, null,
 			now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH),
@@ -219,7 +218,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		Calendar now = new GregorianCalendar();
 
-		return addCommerceTierPriceEntry(
+		return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
 			externalReferenceCode, commercePriceEntryId, price, promoPrice,
 			minQuantity, true, true, null, null, null, null,
 			now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH),
@@ -241,7 +240,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return addCommerceTierPriceEntry(
+		return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
 			externalReferenceCode, commercePriceEntryId, price, null,
 			minQuantity, bulkPricing, discountDiscovery, discountLevel1,
 			discountLevel2, discountLevel3, discountLevel4, displayDateMonth,
@@ -270,14 +269,16 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		if (commerceTierPriceEntryId > 0) {
 			try {
-				return updateCommerceTierPriceEntry(
-					commerceTierPriceEntryId, price, promoPrice, minQuantity,
-					bulkPricing, discountDiscovery, discountLevel1,
-					discountLevel2, discountLevel3, discountLevel4,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
+				return commerceTierPriceEntryLocalService.
+					updateCommerceTierPriceEntry(
+						commerceTierPriceEntryId, price, promoPrice,
+						minQuantity, bulkPricing, discountDiscovery,
+						discountLevel1, discountLevel2, discountLevel3,
+						discountLevel4, displayDateMonth, displayDateDay,
+						displayDateYear, displayDateHour, displayDateMinute,
+						expirationDateMonth, expirationDateDay,
+						expirationDateYear, expirationDateHour,
+						expirationDateMinute, neverExpire, serviceContext);
 			}
 			catch (NoSuchTierPriceEntryException
 						noSuchTierPriceEntryException) {
@@ -301,15 +302,17 @@ public class CommerceTierPriceEntryLocalServiceImpl
 					serviceContext.getCompanyId(), externalReferenceCode);
 
 			if (commerceTierPriceEntry != null) {
-				return updateCommerceTierPriceEntry(
-					commerceTierPriceEntry.getCommerceTierPriceEntryId(), price,
-					promoPrice, minQuantity, bulkPricing, discountDiscovery,
-					discountLevel1, discountLevel2, discountLevel3,
-					discountLevel4, displayDateMonth, displayDateDay,
-					displayDateYear, displayDateHour, displayDateMinute,
-					expirationDateMonth, expirationDateDay, expirationDateYear,
-					expirationDateHour, expirationDateMinute, neverExpire,
-					serviceContext);
+				return commerceTierPriceEntryLocalService.
+					updateCommerceTierPriceEntry(
+						commerceTierPriceEntry.getCommerceTierPriceEntryId(),
+						price, promoPrice, minQuantity, bulkPricing,
+						discountDiscovery, discountLevel1, discountLevel2,
+						discountLevel3, discountLevel4, displayDateMonth,
+						displayDateDay, displayDateYear, displayDateHour,
+						displayDateMinute, expirationDateMonth,
+						expirationDateDay, expirationDateYear,
+						expirationDateHour, expirationDateMinute, neverExpire,
+						serviceContext);
 			}
 		}
 
@@ -322,7 +325,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 				_commercePriceEntryPersistence.findByPrimaryKey(
 					commercePriceEntryId);
 
-			return addCommerceTierPriceEntry(
+			return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
 				externalReferenceCode,
 				commercePriceEntry.getCommercePriceEntryId(), price, promoPrice,
 				minQuantity, bulkPricing, discountDiscovery, discountLevel1,
@@ -342,7 +345,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			validate(
 				0L, commercePriceEntry.getCommercePriceEntryId(), minQuantity);
 
-			return addCommerceTierPriceEntry(
+			return commerceTierPriceEntryLocalService.addCommerceTierPriceEntry(
 				externalReferenceCode,
 				commercePriceEntry.getCommercePriceEntryId(), price, promoPrice,
 				minQuantity, bulkPricing, discountDiscovery, discountLevel1,
@@ -384,7 +387,6 @@ public class CommerceTierPriceEntryLocalServiceImpl
 	 * @return CommerceTierPriceEntry
 	 * @throws PortalException
 	 */
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceTierPriceEntry addOrUpdateCommerceTierPriceEntry(
 			String externalReferenceCode, long commerceTierPriceEntryId,
@@ -395,13 +397,14 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		Calendar now = new GregorianCalendar();
 
-		return addOrUpdateCommerceTierPriceEntry(
-			externalReferenceCode, commerceTierPriceEntryId,
-			commercePriceEntryId, price, promoPrice, minQuantity, true, true,
-			null, null, null, null, now.get(Calendar.MONTH),
-			now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.YEAR),
-			now.get(Calendar.HOUR), now.get(Calendar.MINUTE), 0, 0, 0, 0, 0,
-			true, priceEntryExternalReferenceCode, serviceContext);
+		return commerceTierPriceEntryLocalService.
+			addOrUpdateCommerceTierPriceEntry(
+				externalReferenceCode, commerceTierPriceEntryId,
+				commercePriceEntryId, price, promoPrice, minQuantity, true,
+				true, null, null, null, null, now.get(Calendar.MONTH),
+				now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.YEAR),
+				now.get(Calendar.HOUR), now.get(Calendar.MINUTE), 0, 0, 0, 0, 0,
+				true, priceEntryExternalReferenceCode, serviceContext);
 	}
 
 	@Override
@@ -419,15 +422,16 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return addOrUpdateCommerceTierPriceEntry(
-			externalReferenceCode, commerceTierPriceEntryId,
-			commercePriceEntryId, price, null, minQuantity, bulkPricing,
-			discountDiscovery, discountLevel1, discountLevel2, discountLevel3,
-			discountLevel4, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, priceEntryExternalReferenceCode,
-			serviceContext);
+		return commerceTierPriceEntryLocalService.
+			addOrUpdateCommerceTierPriceEntry(
+				externalReferenceCode, commerceTierPriceEntryId,
+				commercePriceEntryId, price, null, minQuantity, bulkPricing,
+				discountDiscovery, discountLevel1, discountLevel2,
+				discountLevel3, discountLevel4, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, priceEntryExternalReferenceCode, serviceContext);
 	}
 
 	@Override
@@ -694,7 +698,6 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		return commerceTierPriceEntry;
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceTierPriceEntry updateCommerceTierPriceEntry(
 			long commerceTierPriceEntryId, BigDecimal price,
@@ -704,7 +707,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 
 		Calendar now = new GregorianCalendar();
 
-		return updateCommerceTierPriceEntry(
+		return commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(
 			commerceTierPriceEntryId, price, promoPrice, minQuantity, true,
 			true, null, null, null, null, now.get(Calendar.MONTH),
 			now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.YEAR),
@@ -725,7 +728,7 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		return updateCommerceTierPriceEntry(
+		return commerceTierPriceEntryLocalService.updateCommerceTierPriceEntry(
 			commerceTierPriceEntryId, price, null, minQuantity, bulkPricing,
 			discountDiscovery, discountLevel1, discountLevel2, discountLevel3,
 			discountLevel4, displayDateMonth, displayDateDay, displayDateYear,

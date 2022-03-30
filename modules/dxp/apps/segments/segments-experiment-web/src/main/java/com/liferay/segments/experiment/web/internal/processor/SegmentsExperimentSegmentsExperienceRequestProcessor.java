@@ -275,15 +275,11 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 	}
 
 	private String _getSegmentsExperienceKey(long segmentsExperienceId) {
-		if (segmentsExperienceId != SegmentsExperienceConstants.ID_DEFAULT) {
-			SegmentsExperience segmentsExperience =
-				_segmentsExperienceLocalService.fetchSegmentsExperience(
-					segmentsExperienceId);
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperienceId);
 
-			return segmentsExperience.getSegmentsExperienceKey();
-		}
-
-		return SegmentsExperienceConstants.KEY_DEFAULT;
+		return segmentsExperience.getSegmentsExperienceKey();
 	}
 
 	private long _getSegmentsExperimentSegmentsExperienceId(
@@ -316,12 +312,6 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 			httpServletRequest, "segmentsExperienceId", -1);
 
 		if (selectedSegmentsExperienceId != -1) {
-			if (selectedSegmentsExperienceId ==
-					SegmentsExperienceConstants.ID_DEFAULT) {
-
-				return selectedSegmentsExperienceId;
-			}
-
 			SegmentsExperience segmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
 					selectedSegmentsExperienceId);

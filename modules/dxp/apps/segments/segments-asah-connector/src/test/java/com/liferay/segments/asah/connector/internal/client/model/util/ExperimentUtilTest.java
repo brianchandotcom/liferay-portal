@@ -164,10 +164,9 @@ public class ExperimentUtilTest {
 		String pageURL = RandomTestUtil.randomString();
 
 		Experiment experiment = ExperimentUtil.toExperiment(
-			channelId, dataSourceId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), layout, LocaleUtil.ENGLISH, pageURL,
-			_segmentsEntryLocalService, _segmentsExperienceLocalService,
-			segmentsExperiment);
+			channelId, dataSourceId, RandomTestUtil.randomString(), layout,
+			LocaleUtil.ENGLISH, pageURL, _segmentsEntryLocalService,
+			_segmentsExperienceLocalService, segmentsExperiment);
 
 		Assert.assertEquals(channelId, experiment.getChannelId());
 		Assert.assertEquals(
@@ -252,10 +251,9 @@ public class ExperimentUtilTest {
 		String pageURL = RandomTestUtil.randomString();
 
 		Experiment experiment = ExperimentUtil.toExperiment(
-			channelId, dataSourceId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), layout, LocaleUtil.ENGLISH, pageURL,
-			_segmentsEntryLocalService, _segmentsExperienceLocalService,
-			segmentsExperiment);
+			channelId, dataSourceId, RandomTestUtil.randomString(), layout,
+			LocaleUtil.ENGLISH, pageURL, _segmentsEntryLocalService,
+			_segmentsExperienceLocalService, segmentsExperiment);
 
 		Assert.assertEquals(channelId, experiment.getChannelId());
 		Assert.assertEquals(

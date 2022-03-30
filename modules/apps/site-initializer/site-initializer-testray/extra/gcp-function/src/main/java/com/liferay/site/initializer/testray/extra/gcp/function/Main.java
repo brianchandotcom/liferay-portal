@@ -151,6 +151,8 @@ public class Main {
 
 						jsonArray.put(
 							HashMapBuilder.put(
+								"name", fileElement.getAttribute("name")
+							).put(
 								"r_caseResultToAttachments_c_caseResultId",
 								String.valueOf(testrayCaseResultId)
 							).put(

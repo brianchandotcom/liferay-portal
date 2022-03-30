@@ -159,8 +159,8 @@ definition {
 	test AssertSitesTopPagesCardVisitedPagesHighestViews {
 		property portal.upstream = "quarantine";
 
-		// AC Quarantine Reason: Data is not appearing on time
-		// AC Refactor ticket: LRAC-8961
+		// AC Quarantine Reason: Page name is incorrect
+		// AC Refactor ticket: LRAC-10825
 
 		var num = "1,2";
 		var usernameList = "ac,liferay";

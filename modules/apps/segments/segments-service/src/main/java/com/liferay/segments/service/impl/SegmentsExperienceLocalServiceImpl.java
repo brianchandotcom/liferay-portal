@@ -322,15 +322,18 @@ public class SegmentsExperienceLocalServiceImpl
 
 		// Segments experiments
 
-		long defaultSegmentsExperienceId = fetchDefaultSegmentsExperienceId(
-			classPK);
+		SegmentsExperience defaultSegmentsExperience = fetchSegmentsExperience(
+			groupId, SegmentsExperienceConstants.KEY_DEFAULT,
+			classNameLocalService.getClassNameId(Layout.class), classPK);
 
-		for (SegmentsExperiment segmentsExperiment :
-				segmentsExperimentPersistence.findByS_C_C(
-					defaultSegmentsExperienceId, classNameId,
-					_getPublishedLayoutClassPK(classPK))) {
+		if (defaultSegmentsExperience != null) {
+			for (SegmentsExperiment segmentsExperiment :
+					segmentsExperimentPersistence.findByS_C_C(
+						defaultSegmentsExperience.getSegmentsExperienceId(),
+						classNameId, _getPublishedLayoutClassPK(classPK))) {
 
-			_deleteSegmentsExperiment(segmentsExperiment);
+				_deleteSegmentsExperiment(segmentsExperiment);
+			}
 		}
 
 		// Segments experiences

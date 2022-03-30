@@ -199,6 +199,14 @@ public class JSONUtil {
 		return false;
 	}
 
+	public static boolean isEmpty(JSONArray jsonArray) {
+		if((jsonArray == null) || (jsonArray.length() == 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isValid(String json) {
 		try {
 			_createJSONObject(json);

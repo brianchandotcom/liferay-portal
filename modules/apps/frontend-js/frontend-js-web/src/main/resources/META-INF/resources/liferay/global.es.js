@@ -40,6 +40,7 @@ import {showTab} from './portal/tabs.es';
 import {showTooltip} from './portal/tooltip.es';
 import portlet, {minimizePortlet} from './portlet/portlet.es';
 import SideNavigation from './side_navigation.es';
+import statusCode from './status_code';
 import addParams from './util/add_params';
 import getCountries from './util/address/get_countries.es';
 import getRegions from './util/address/get_regions.es';
@@ -92,6 +93,7 @@ Liferay = window.Liferay || {};
  */
 Liferay.BREAKPOINTS = BREAKPOINTS;
 
+Liferay.STATUS_CODE = statusCode;
 Liferay.zIndex = zIndex;
 
 Liferay.component = component;

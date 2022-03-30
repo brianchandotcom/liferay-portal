@@ -84,7 +84,6 @@ public class NotificationTemplateContextFactory {
 				fetchCalendarNotificationTemplate(
 					calendar.getCalendarId(), notificationType,
 					notificationTemplateType));
-
 		notificationTemplateContext.setCompanyId(
 			calendarBooking.getCompanyId());
 		notificationTemplateContext.setGroupId(calendarBooking.getGroupId());

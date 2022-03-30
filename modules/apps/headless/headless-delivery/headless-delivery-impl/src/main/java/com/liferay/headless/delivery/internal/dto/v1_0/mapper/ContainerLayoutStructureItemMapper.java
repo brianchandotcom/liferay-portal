@@ -95,29 +95,11 @@ public class ContainerLayoutStructureItemMapper
 							});
 
 						setHtmlProperties(
-							() -> _getHtmlProperties(
+							() -> _toHtmlProperties(
 								containerStyledLayoutStructureItem));
 					}
 				};
 				type = Type.SECTION;
-			}
-		};
-	}
-
-	private HtmlProperties _getHtmlProperties(
-		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem) {
-
-		String value = containerStyledLayoutStructureItem.getHtmlTag();
-
-		if (Validator.isNull(value)) {
-			return null;
-		}
-
-		return new HtmlProperties() {
-			{
-				setHtmlTag(
-					() -> HtmlTag.create(
-						HtmlTagConverter.convertToExternalValue(value)));
 			}
 		};
 	}
@@ -173,6 +155,24 @@ public class ContainerLayoutStructureItemMapper
 							StringUtil.upperCaseFirstLetter(
 								target.substring(1)));
 					});
+			}
+		};
+	}
+
+	private HtmlProperties _toHtmlProperties(
+		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem) {
+
+		String value = containerStyledLayoutStructureItem.getHtmlTag();
+
+		if (Validator.isNull(value)) {
+			return null;
+		}
+
+		return new HtmlProperties() {
+			{
+				setHtmlTag(
+					() -> HtmlTag.create(
+						HtmlTagConverter.convertToExternalValue(value)));
 			}
 		};
 	}

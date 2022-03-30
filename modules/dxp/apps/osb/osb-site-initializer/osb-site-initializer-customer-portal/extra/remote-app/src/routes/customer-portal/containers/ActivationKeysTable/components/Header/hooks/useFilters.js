@@ -24,9 +24,14 @@ export default function useFilters(setFilterTerm, productName) {
 		let hasFilterPill = false;
 
 		if (filters.searchTerm) {
-			const searchTermFilter = `(contains(name, '${filters.searchTerm}') or contains(description, '${filters.searchTerm}') or contains(hostName, '${filters.searchTerm}'))`;
+			const seachTermSplitted = filters.searchTerm
+				.split(' ')
+				.map((term) => {
+					return `(contains(name, '${term}') or contains(description, '${term}') or contains(hostName, '${term}') or ipAddresses/any(s:contains(s, '${term}')) or macAddresses/any(s:contains(s, '${term}')))`;
+				})
+				.join(' and ');
 
-			initialFilter = initialFilter.concat(` and ${searchTermFilter}`);
+			initialFilter = initialFilter.concat(` and (${seachTermSplitted})`);
 		}
 
 		if (filters.instanceSizes.value.length) {
@@ -204,8 +209,7 @@ export default function useFilters(setFilterTerm, productName) {
 						"contains(licenseEntryType, 'cluster')"
 					);
 				}
-			}
-			else {
+			} else {
 				hasFilterPill = true;
 			}
 

@@ -54,7 +54,7 @@ const KeyTypeFilter = ({
 			return;
 		}
 
-		if (maxNodesValue < minNodesValue) {
+		if (maxNodesValue < minNodesValue || maxNodesValue === '0') {
 			setErrorMessage(INVALID_MAX_NODE_MESSAGE);
 
 			return;

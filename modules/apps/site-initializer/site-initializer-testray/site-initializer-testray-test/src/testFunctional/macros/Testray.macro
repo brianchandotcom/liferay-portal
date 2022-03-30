@@ -40,7 +40,7 @@ definition {
 
 		LexiconEntry.gotoAdd();
 
-		LexiconCard.clickCard(card = "Testray");
+		LexiconCard.clickCard(card = "Liferay Site Initializer Testray");
 
 		SelectFrame(
 			key_title = "Add Site",

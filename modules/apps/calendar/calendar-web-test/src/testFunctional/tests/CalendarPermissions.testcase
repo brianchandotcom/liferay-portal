@@ -77,7 +77,7 @@ definition {
 
 		CalendarPermissions.searchRoleName(searchTerm = "Guest");
 
-		CalendarPermissions.viewSearchResult(searchResults = "1 Results for "Guest"");
+		CalendarPermissions.viewSearchResult(searchResults = "1 Results for &quot;Guest&quot;");
 
 		CalendarPermissions.cleanSearchResult();
 
@@ -91,7 +91,7 @@ definition {
 
 		CalendarPermissions.searchRoleName(searchTerm = "Guest");
 
-		CalendarPermissions.viewSearchResult(searchResults = "1 Results for "Guest"");
+		CalendarPermissions.viewSearchResult(searchResults = "1 Results for &quot;Guest&quot;");
 
 		CalendarPermissions.viewPermissionsRoleName(roleName = "Guest");
 
@@ -99,7 +99,7 @@ definition {
 
 		CalendarPermissions.searchRoleName(searchTerm = "DXP Client");
 
-		CalendarPermissions.viewSearchResult(searchResults = "0 Results for "DXP Client"");
+		CalendarPermissions.viewSearchResult(searchResults = "0 Results for &quot;DXP Client&quot;");
 
 		CalendarPermissions.viewTableDisplay(message = "No roles were found.");
 	}
@@ -111,7 +111,7 @@ definition {
 
 		CalendarPermissions.searchRoleName(searchTerm = "DXP Client");
 
-		CalendarPermissions.viewSearchResult(searchResults = "0 Results for "DXP Client"");
+		CalendarPermissions.viewSearchResult(searchResults = "0 Results for &quot;DXP Client&quot;");
 
 		CalendarPermissions.viewTableDisplay(message = "No roles were found.");
 	}

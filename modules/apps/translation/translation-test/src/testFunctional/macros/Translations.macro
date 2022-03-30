@@ -275,10 +275,21 @@ definition {
 			value1 = "Select File");
 
 		if (isSet(dependencyfile)) {
-			UploadDependencyFile.uploadArchiveFile(fileName = "${fileName}");
+			if (isSet(archive)) {
+				UploadDependencyFile.uploadArchiveFile(fileName = "${fileName}");
+			}
+			else {
+				for (var fileName : list "${fileName}") {
+					UploadDependencyFile.uploadFile(
+						fileName = "${fileName}",
+						filePath = "${filePath}");
+
+					takeScreenshot();
+				}
+			}
 		}
 		else {
-			for (var fileName : list "${fileNameList}") {
+			for (var fileName : list "${fileName}") {
 				Translations.uploadTranslationsFile(
 					fileName = "${fileName}",
 					filePath = "${filePath}");

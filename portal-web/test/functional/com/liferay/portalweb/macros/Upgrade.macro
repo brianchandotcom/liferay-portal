@@ -1668,6 +1668,7 @@ definition {
 		WebContentNavigator.openWebContentAdmin(siteURLKey = "guest");
 
 		Translations.importTranslation(
+			archive = "true",
 			dependencyfile = "true",
 			fileName = "WebContentTitle-en_US.zip",
 			webContentTitle = "WebContentTitle");

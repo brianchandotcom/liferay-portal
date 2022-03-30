@@ -51,7 +51,7 @@ public class UncompressUtilTest {
 		_badFileTargetDir = _tempDir.resolve(
 			"../../../../../../../../../../../../../../../../../../../../.." +
 				"/../../../../../../../../../../../../../../../../../../.." +
-					"/tmp/bad.txt");
+					"/tmp/evil.txt");
 	}
 
 	@After

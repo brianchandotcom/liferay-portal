@@ -56,7 +56,7 @@ export default function ContainerAdvancedPanel({item}) {
 					},
 				}}
 				onValueSelect={(name, value) => {
-					const itemConfig = {[name]: value};
+					const itemConfig = {[name]: value === 'div' ? '' : value};
 
 					dispatch(
 						updateItemConfig({

@@ -279,7 +279,7 @@ public class ContainerStyledLayoutStructureItem
 	private String _align = "";
 	private String _contentDisplay = "";
 	private String _flexWrap = "";
-	private String _htmlTag = "div";
+	private String _htmlTag = "";
 	private boolean _indexed = true;
 	private String _justify = "";
 	private JSONObject _linkJSONObject;

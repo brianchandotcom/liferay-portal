@@ -160,7 +160,7 @@ const Container = React.forwardRef(
 			.defaultValue;
 
 		const HTMLTag = config.fragmentAdvancedOptionsEnabled
-			? itemConfig.htmlTag
+			? itemConfig.htmlTag || 'div'
 			: 'div';
 
 		const content = (

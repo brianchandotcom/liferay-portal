@@ -58,6 +58,7 @@ import getGeolocation from './util/get_geolocation';
 import getLexiconIcon from './util/get_lexicon_icon';
 import getPortletId from './util/get_portlet_id';
 import getPortletNamespace from './util/get_portlet_namespace.es';
+import getURLWithSessionId from './util/get_url_with_session_id';
 import {
 	MAP_HTML_CHARS_ESCAPED,
 	escapeHTML,
@@ -208,6 +209,7 @@ Liferay.Util.getLexiconIcon = getLexiconIcon;
 Liferay.Util.getPortletId = getPortletId;
 
 Liferay.Util.getPortletNamespace = getPortletNamespace;
+Liferay.Util.getURLWithSessionId = getURLWithSessionId;
 Liferay.Util.groupBy = groupBy;
 
 /**

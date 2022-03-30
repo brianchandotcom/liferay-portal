@@ -507,43 +507,6 @@
 			return topWindow;
 		},
 
-		getURLWithSessionId(url) {
-			if (!themeDisplay.isAddSessionIdToURL()) {
-				return url;
-			}
-
-			// LEP-4787
-
-			var x = url.indexOf(';');
-
-			if (x > -1) {
-				return url;
-			}
-
-			var sessionId = ';jsessionid=' + themeDisplay.getSessionId();
-
-			x = url.indexOf('?');
-
-			if (x > -1) {
-				return url.substring(0, x) + sessionId + url.substring(x);
-			}
-
-			// In IE6, http://www.abc.com;jsessionid=XYZ does not work, but
-			// http://www.abc.com/;jsessionid=XYZ does work.
-
-			x = url.indexOf('//');
-
-			if (x > -1) {
-				var y = url.lastIndexOf('/');
-
-				if (x + 1 === y) {
-					return url + '/' + sessionId;
-				}
-			}
-
-			return url + sessionId;
-		},
-
 		getWindow(id) {
 			if (!id) {
 				id = Util.getWindowName();

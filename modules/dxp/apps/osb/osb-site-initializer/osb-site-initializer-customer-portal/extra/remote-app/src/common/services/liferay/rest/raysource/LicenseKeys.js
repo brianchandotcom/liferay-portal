@@ -211,3 +211,25 @@ export async function getNewGenerateKeyFormValues(
 
 	return response.json();
 }
+
+export async function createNewGenerateKey(
+	accountKey,
+	licenseKeyDownloadURL,
+	sessionId,
+	licenseKey
+) {
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${licenseKeyDownloadURL}/accounts/${accountKey}/license-keys`,
+		{
+			body: JSON.stringify([licenseKey]),
+			headers: {
+				'Content-Type': 'application/json',
+				'Okta-Session-ID': sessionId,
+			},
+			method: 'POST',
+		}
+	);
+
+	return response.json();
+}

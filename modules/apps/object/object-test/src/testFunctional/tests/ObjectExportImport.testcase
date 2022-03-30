@@ -42,13 +42,20 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify if it is possible to export the data structure from a custom objects"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanExportDataStructure {
 		property portal.acceptance = "true";
 
-		// TODO LPS-146357 CanExportDataStructure pending implementation
+		ObjectAdmin.addObjectViaAPI(
+			labelName = "Custom Object 146357",
+			objectName = "CustomObject146357",
+			pluralLabelName = "Custom Objects 146357");
 
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectExportImport.exportObject(
+			objectName = "CustomObject146357",
+			objectLabel = "Custom Object 146357");
 	}
 
 	@description = "LPS-142175 - Verify if it is possible to import the data structure to a custom objects"

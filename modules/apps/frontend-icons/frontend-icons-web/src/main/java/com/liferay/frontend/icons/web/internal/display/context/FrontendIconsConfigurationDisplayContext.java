@@ -66,7 +66,7 @@ public class FrontendIconsConfigurationDisplayContext {
 			PortletURLBuilder.createActionURL(
 				_renderResponse
 			).setActionName(
-				"/instance_settings/delete_custom_icon"
+				"/instance_settings/delete_frontend_icons_resource"
 			).buildString()
 		).put(
 			"icons",

@@ -9,9 +9,9 @@
 	},
 	"active": true,
 	"label": {
-		"en_US": "Custom Object"
+		"en_US": "Imported Object With Field"
 	},
-	"name": "CustomObject",
+	"name": "ImportedObjectWithField",
 	"objectActions": [
 	],
 	"objectFields": [
@@ -35,7 +35,7 @@
 	],
 	"panelCategoryKey": "control_panel.object",
 	"pluralLabel": {
-		"en_US": "Custom Objects"
+		"en_US": "Imported Objects With Field"
 	},
 	"portlet": false,
 	"scope": "company",

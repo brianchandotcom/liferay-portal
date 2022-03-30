@@ -27,9 +27,25 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCancelImport {
+		ObjectAdmin.openObjectAdmin();
 
-		// TODO LPS-146369 CanCancelImport pending implementation
+		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
+		Click(
+			locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_MENUITEM",
+			key_menuItem = "Import Object");
+
+		var filePath = TestCase.getDependenciesDirPath(fileName = "ImportedSimpleObject.json");
+
+		UploadFile(
+			locator1 = "TextInput#FILE",
+			value1 = "${filePath}");
+
+		Button.clickCancel();
+
+		AssertElementNotPresent(locator1 = "IFrame#MODAL_BODY");
+
+		CreateObject.assertCustomObjectNotPresent(labelName = "Imported Simple Object");
 	}
 
 	@description = "LPS-142175 - Verify it is possible to clear the JSON file on the import dialog"

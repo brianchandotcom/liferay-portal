@@ -107,9 +107,9 @@ public class ContainerLayoutStructureItemMapper
 	private HtmlProperties _getHtmlProperties(
 		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem) {
 
-		String htmlTag = containerStyledLayoutStructureItem.getHtmlTag();
+		String value = containerStyledLayoutStructureItem.getHtmlTag();
 
-		if (Validator.isNull(htmlTag)) {
+		if (Validator.isNull(value)) {
 			return null;
 		}
 
@@ -117,7 +117,7 @@ public class ContainerLayoutStructureItemMapper
 			{
 				setHtmlTag(
 					() -> HtmlTag.create(
-						HtmlTagConverter.convertToExternalValue(htmlTag)));
+						HtmlTagConverter.convertToExternalValue(value)));
 			}
 		};
 	}

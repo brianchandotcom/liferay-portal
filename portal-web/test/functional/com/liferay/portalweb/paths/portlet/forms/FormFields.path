@@ -217,7 +217,7 @@
 </tr>
 <tr>
 	<td>PUBLISHED_FORM_FIELD_SEPARATOR_BY_INDEX</td>
-	<td>//div[contains(concat(' ',normalize-space(@class),' '),'ddm-field-container')]/div[${key_index}]//label[contains(text(),'Separator')]//.//../div[contains(@class, 'separator')]</td>
+	<td>//div[contains(concat(' ',normalize-space(@class),' '),'ddm-field-container')]/div[${key_index}]//label[contains(text(),'Separator')]//.//../hr[contains(@class, 'separator')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -855,7 +855,7 @@
 <!--SEPARATOR-->
 <tr>
 	<td>SEPARATOR_LINE</td>
-	<td>//label[text()='${key_fieldLabel}']/following-sibling::div[contains(@class,'separator')]</td>
+	<td>//label[text()='${key_fieldLabel}']/following-sibling::hr[contains(@class,'separator')]</td>
 	<td></td>
 </tr>
 <!--SWITCH-->

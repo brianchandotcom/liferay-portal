@@ -177,7 +177,7 @@
 </tr>
 <tr>
 	<td>EXPORT_FOR_TRANSLATION</td>
-	<td>//*[*[name()='svg'][contains(@class,'import-export')]]</td>
+	<td>//*[*[name()='svg'][contains(@class,'upload')]]</td>
 	<td></td>
 </tr>
 <tr>

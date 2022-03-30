@@ -71,12 +71,21 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify it is possible to maintain Fields after importing an Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanImportFields {
+		ObjectExportImport.importObject(
+			objectFileName = "ImportedObjectWithField",
+			objectName = "ImportedObjectWithField146361");
 
-		// TODO LPS-146361 CanImportFields pending implementation
+		CreateObject.assertCustomObject(labelName = "Imported Object With Field");
 
+		ObjectPortlet.selectCustomObject(label = "Imported Object With Field");
+
+		ObjectAdmin.goToFieldsTab();
+
+		ObjectAdmin.assertObjectField(
+			key_fieldLabel = "Custom Field",
+			key_fieldType = "Text");
 	}
 
 	@description = "LPS-142175 - Verify it is possible to maintain Layouts after importing an Object"

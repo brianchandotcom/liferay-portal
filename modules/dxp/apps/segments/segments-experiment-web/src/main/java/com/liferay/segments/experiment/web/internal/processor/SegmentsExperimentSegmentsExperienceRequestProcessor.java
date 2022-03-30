@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.experiment.web.internal.constants.SegmentsExperimentWebKeys;
 import com.liferay.segments.experiment.web.internal.util.SegmentsExperimentUtil;
@@ -253,13 +252,6 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 	private long _getSegmentsExperienceId(
 		long groupId, String segmentsExperienceKey, long classNameId,
 		long classPK) {
-
-		if (Objects.equals(
-				segmentsExperienceKey,
-				SegmentsExperienceConstants.KEY_DEFAULT)) {
-
-			return SegmentsExperienceConstants.ID_DEFAULT;
-		}
 
 		if (Validator.isNotNull(segmentsExperienceKey)) {
 			SegmentsExperience segmentsExperience =

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -31,7 +30,6 @@ import com.liferay.segments.service.base.SegmentsExperimentServiceBaseImpl;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -343,13 +341,6 @@ public class SegmentsExperimentServiceImpl
 	private long _getSegmentsExperienceId(
 		long groupId, String segmentsExperienceKey, long classNameId,
 		long classPK) {
-
-		if (Objects.equals(
-				segmentsExperienceKey,
-				SegmentsExperienceConstants.KEY_DEFAULT)) {
-
-			return SegmentsExperienceConstants.ID_DEFAULT;
-		}
 
 		if (Validator.isNotNull(segmentsExperienceKey)) {
 			SegmentsExperience segmentsExperience =

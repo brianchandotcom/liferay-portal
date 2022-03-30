@@ -33,6 +33,7 @@ function JSONSXPElement({
 	isSubmitting,
 	onDeleteSXPElement,
 	prefixedId,
+	readOnly,
 	setFieldTouched = () => {},
 	setFieldValue = () => {},
 	touched = {},
@@ -147,6 +148,7 @@ function JSONSXPElement({
 					<JSONInput
 						disabled={isSubmitting}
 						name={_inputName(index)}
+						readOnly={readOnly}
 						setFieldTouched={setFieldTouched}
 						setFieldValue={setFieldValue}
 						value={
@@ -178,6 +180,7 @@ JSONSXPElement.propTypes = {
 	isSubmitting: PropTypes.bool,
 	onDeleteSXPElement: PropTypes.func,
 	prefixedId: PropTypes.string,
+	readOnly: PropTypes.bool,
 	setFieldTouched: PropTypes.func,
 	setFieldValue: PropTypes.func,
 	sxpElement: PropTypes.object,

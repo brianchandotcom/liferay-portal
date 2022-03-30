@@ -19,6 +19,7 @@ function JSONInput({
 	value,
 	label = Liferay.Language.get('json[stands-for]'),
 	nullable,
+	readOnly = false,
 	required = true,
 	name,
 	setFieldValue,
@@ -50,7 +51,11 @@ function JSONInput({
 				)}
 			</label>
 
-			<CodeMirrorEditor onChange={setEditValue} value={editValue} />
+			<CodeMirrorEditor
+				onChange={setEditValue}
+				readOnly={readOnly}
+				value={editValue}
+			/>
 		</div>
 	);
 }

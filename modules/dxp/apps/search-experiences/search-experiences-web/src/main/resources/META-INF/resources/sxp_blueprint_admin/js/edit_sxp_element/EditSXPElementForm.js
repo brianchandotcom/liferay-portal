@@ -360,6 +360,7 @@ function EditSXPElementForm({
 					{isCustomJSONSXPElement(uiConfigurationValues) ? (
 						<JSONSXPElement
 							collapseAll={false}
+							readOnly={true}
 							sxpElement={previewSXPElementJSON}
 							uiConfigurationValues={uiConfigurationValues}
 						/>

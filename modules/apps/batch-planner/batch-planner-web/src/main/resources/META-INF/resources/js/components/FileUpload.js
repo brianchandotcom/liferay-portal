@@ -44,14 +44,14 @@ function FileUpload({portletNamespace}) {
 	const [fileToBeUploaded, setFileToBeUploaded] = useState(null);
 
 	const inputContainsHeadersId = `${portletNamespace}containsHeaders`;
-	const inputCsvSeparatorId = `${portletNamespace}csvSeparator`;
-	const inputCsvDelimiterId = `${portletNamespace}csvDelimiter`;
+	const inputCSVSeparatorId = `${portletNamespace}csvSeparator`;
+	const inputCSVDelimiterId = `${portletNamespace}csvDelimiter`;
 	const inputFileId = `${portletNamespace}importFile`;
 
 	const [parserOptions, setParserOptions] = useState({
-		csvContainsHeaders: true,
-		csvDelimiter: '',
-		csvSeparator: ',',
+		CSVContainsHeaders: true,
+		CSVDelimiter: '',
+		CSVSeparator: ',',
 	});
 
 	const fileExtension = fileToBeUploaded
@@ -66,24 +66,17 @@ function FileUpload({portletNamespace}) {
 
 			Liferay.fire(FILE_SCHEMA_EVENT, {
 				fileContent: null,
-				firstItemDetails: null,
 				schema: null,
 			});
 
 			return;
 		}
 
-		const onComplete = ({
-			extension,
-			fileContent,
-			firstItemDetails,
-			schema,
-		}) => {
+		const onComplete = ({extension, fileContent, schema}) => {
 			updateExtensionInputValue(portletNamespace, extension);
+
 			Liferay.fire(FILE_SCHEMA_EVENT, {
 				fileContent,
-				firstItemDetails,
-				options: parserOptions.csvContainsHeaders,
 				schema,
 			});
 		};
@@ -144,7 +137,7 @@ function FileUpload({portletNamespace}) {
 				<>
 					<ClayForm.Group>
 						<ClayCheckbox
-							checked={parserOptions.csvContainsHeaders}
+							checked={parserOptions.CSVContainsHeaders}
 							label={Liferay.Language.get(
 								'this-file-contains-headers'
 							)}
@@ -152,7 +145,7 @@ function FileUpload({portletNamespace}) {
 							onChange={({target}) =>
 								setParserOptions({
 									...parserOptions,
-									csvContainsHeaders: target.checked,
+									CSVContainsHeaders: target.checked,
 								})
 							}
 							value="true"
@@ -162,38 +155,38 @@ function FileUpload({portletNamespace}) {
 					<div className="row">
 						<div className="col-md-6">
 							<ClayForm.Group>
-								<label htmlFor={inputCsvSeparatorId}>
+								<label htmlFor={inputCSVSeparatorId}>
 									{Liferay.Language.get('csv-separator')}
 								</label>
 
 								<ClayInput
-									id={inputCsvSeparatorId}
-									name={inputCsvSeparatorId}
+									id={inputCSVSeparatorId}
+									name={inputCSVSeparatorId}
 									onChange={({target}) =>
 										setParserOptions({
 											...parserOptions,
-											csvSeparator: target.value,
+											CSVSeparator: target.value,
 										})
 									}
-									value={parserOptions.csvSeparator}
+									value={parserOptions.CSVSeparator}
 								/>
 							</ClayForm.Group>
 						</div>
 
 						<div className="col-md-6">
 							<ClayForm.Group>
-								<label htmlFor={inputCsvDelimiterId}>
+								<label htmlFor={inputCSVDelimiterId}>
 									{Liferay.Language.get(
 										'csv-file-column-delimiter'
 									)}
 								</label>
 
 								<ClaySelect
-									id={inputCsvDelimiterId}
+									id={inputCSVDelimiterId}
 									onChange={({target}) =>
 										setParserOptions({
 											...parserOptions,
-											csvDelimiter: target.value,
+											CSVDelimiter: target.value,
 										})
 									}
 								>

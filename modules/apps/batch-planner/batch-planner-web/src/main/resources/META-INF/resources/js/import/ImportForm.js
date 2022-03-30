@@ -60,99 +60,26 @@ function ImportForm({
 	const [formEvaluated, setFormEvaluated] = useState(false);
 	const [fileFields, setFileFields] = useState();
 	const [fileContent, setFileContent] = useState();
-	const [demoFileValues, setDemoFileValues] = useState({});
 	const [fieldsSelections, setFieldsSelections] = useState({});
 	const [mappingsToBeEvaluated, setMappingsToBeEvaluated] = useState(
 		mappedFields
 	);
 	const useTemplateMappingRef = useRef();
-	const [formIsValid, setFormIsValid] = useState(false);
-	const [csvHeaders, setCsvHeaders] = useState(true);
 
-	useEffect(() => {
-		const requiredFieldNotFilled = dbFields.required
-			? dbFields.required.some(
-					(dbField) => !fieldsSelections[dbField.name]
-			  )
-			: false;
+	const formIsValid = useMemo(() => {
+		if (
+			!Object.keys(fieldsSelections).length ||
+			!(dbFields.optional.length + dbFields.required.length)
+		) {
+			return false;
+		}
 
-		const containsEmptyValue = Object.values(fieldsSelections).some(
-			(element) => element === ''
+		const requiredFieldNotFilled = dbFields.required.some(
+			(dbField) => !fieldsSelections[dbField.name]
 		);
 
-		if (
-			Object.values(fieldsSelections).length > 0 &&
-			!containsEmptyValue &&
-			dbFields.optional?.length > 0 &&
-			!requiredFieldNotFilled
-		) {
-			setFormIsValid(false);
-		}
-		else if (containsEmptyValue) {
-			const cleanSelectedFields = Object.entries(fieldsSelections).reduce(
-				(updatedSelectedFields, [key, value]) => {
-					if (value !== '') {
-						updatedSelectedFields[key] = value;
-					}
-
-					return updatedSelectedFields;
-				},
-				{}
-			);
-			setFieldsSelections(cleanSelectedFields);
-			setFormIsValid(true);
-		}
-		else {
-			setFormIsValid(true);
-		}
+		return !requiredFieldNotFilled;
 	}, [fieldsSelections, dbFields]);
-
-	useEffect(() => {
-		setFieldsSelections({});
-	}, [csvHeaders]);
-
-	const fileContentPreview = useMemo(() => {
-		const fieldsIndex = [];
-		let filePreview;
-		if (Object.keys(fieldsSelections)?.length > 0) {
-			fileFields.filter((element, index) => {
-				if (csvHeaders) {
-					if (Object.values(fieldsSelections).indexOf(element) > -1) {
-						fieldsIndex.push(index);
-					}
-				}
-				else {
-					if (
-						Object.values(fieldsSelections).indexOf(
-							element.toString()
-						) > -1
-					) {
-						fieldsIndex.push(parseInt(index, 10));
-					}
-				}
-			});
-			if (!csvHeaders) {
-				filePreview = fileContent?.map((row) => {
-					return row.filter((element, index) => {
-						if (fieldsIndex.includes(index)) {
-							return element;
-						}
-					});
-				});
-			}
-			else {
-				filePreview = fileContent?.map((row) => {
-					return row.filter((element, index) => {
-						if (fieldsIndex.includes(index)) {
-							return element;
-						}
-					});
-				});
-			}
-
-			return filePreview;
-		}
-	}, [fileFields, fieldsSelections, fileContent, csvHeaders]);
 
 	const updateFieldMapping = (fileField, dbFieldName) => {
 		setFieldsSelections((prevSelections) => ({
@@ -188,16 +115,10 @@ function ImportForm({
 			setDbFields(newDBFields);
 		}
 
-		function handleFileSchemaUpdate({
-			fileContent,
-			firstItemDetails,
-			options,
-			schema,
-		}) {
+		function handleFileSchemaUpdate({fileContent, schema}) {
 			setFileContent(fileContent);
+
 			setFileFields(schema);
-			setDemoFileValues(firstItemDetails);
-			setCsvHeaders(options);
 		}
 
 		function handleTemplateSelect({template}) {
@@ -222,6 +143,19 @@ function ImportForm({
 	);
 
 	const handleEvaluateForm = useCallback(() => {
+		setFormEvaluated(true);
+
+		if (!formIsVisible) {
+			openToast({
+				message: Liferay.Language.get(
+					'please-upload-a-file-and-select-the-required-columns-before-continuing'
+				),
+				type: 'danger',
+			});
+
+			return;
+		}
+
 		if (!formIsValid) {
 			openToast({
 				message: Liferay.Language.get(
@@ -231,9 +165,7 @@ function ImportForm({
 				type: 'danger',
 			});
 		}
-
-		setFormEvaluated(true);
-	}, [formIsValid]);
+	}, [formIsValid, formIsVisible]);
 
 	return (
 		<>
@@ -274,7 +206,8 @@ function ImportForm({
 													fieldsSelections[
 														dbField.name
 													] &&
-													demoFileValues[
+													fileContent?.length &&
+													fileContent[0][
 														fieldsSelections[
 															dbField.name
 														]
@@ -325,7 +258,8 @@ function ImportForm({
 													fieldsSelections[
 														dbField.name
 													] &&
-													demoFileValues[
+													fileContent?.length &&
+													fileContent[0][
 														fieldsSelections[
 															dbField.name
 														]
@@ -367,16 +301,13 @@ function ImportForm({
 				/>
 
 				<ImportSubmit
-					disabled={!formIsValid}
 					evaluateForm={handleEvaluateForm}
 					fieldsSelections={fieldsSelections}
-					fileContentPreview={fileContentPreview}
+					fileContent={fileContent}
 					formDataQuerySelector={formDataQuerySelector}
 					formImportURL={formImportURL}
 					formIsValid={formIsValid}
 					formIsVisible={formIsVisible}
-					portletNamespace={portletNamespace}
-					setFileContent={setFileContent}
 				/>
 			</div>
 		</>

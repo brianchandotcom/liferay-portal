@@ -111,7 +111,7 @@ ImportMappingItem.propTypes = {
 	}),
 	fileFields: PropTypes.arrayOf(
 		PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-	).isRequired,
+	),
 	formEvaluated: PropTypes.bool.isRequired,
 	portletNamespace: PropTypes.string.isRequired,
 	previewValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),

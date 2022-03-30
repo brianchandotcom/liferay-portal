@@ -51,84 +51,93 @@ export function getItemDetails(itemData, headers) {
 	);
 }
 
+export function addColumnsNamesToCSVData(itemsData, headers) {
+	return itemsData.map((itemData) => getItemDetails(itemData, headers));
+}
+
 export function extractFieldsFromCSV(
 	content,
-	{csvContainsHeaders, csvDelimiter, csvSeparator}
+	{CSVContainsHeaders, CSVDelimiter, CSVSeparator}
 ) {
-	const splitLines = content.split('\n');
-	const newLineFound = content.indexOf('\n') > -1;
-	let fileContent;
+	const rawFileContent = parseCSV(content, CSVSeparator, CSVDelimiter);
 
-	if (csvContainsHeaders && splitLines.length > 2) {
-		const [schema, firstItemData] = parseCSV(content, csvSeparator);
-		if (firstItemData) {
-			fileContent = parseCSV(content, csvSeparator).slice(
-				1,
-				content.length
-			);
-
-			return {
-				fileContent,
-				firstItemDetails: getItemDetails(firstItemData, schema),
-				schema,
-			};
-		}
+	if (!rawFileContent) {
+		return;
 	}
 
-	if (!csvContainsHeaders && newLineFound) {
-		fileContent = parseCSV(content, csvSeparator);
-		const firstItemData = Object.values(fileContent[0]);
+	let items;
+	let schema;
+	let fileContent;
 
-		const schema = new Array(firstItemData.length)
+	if (CSVContainsHeaders) {
+		[schema, ...items] = rawFileContent;
+
+		fileContent = addColumnsNamesToCSVData(items, schema);
+	}
+	else {
+		schema = new Array(rawFileContent[0].length)
 			.fill()
 			.map((_, index) => index);
 
-		return {
-			fileContent,
-			firstItemDetails: getItemDetails(firstItemData, schema),
-			schema,
-		};
+		fileContent = addColumnsNamesToCSVData(rawFileContent, schema);
 	}
+
+	return {
+		fileContent,
+		schema,
+	};
 }
 
 export function extractFieldsFromJSONL(content) {
-	if (content.trim().charAt(content.length - 1) === '}') {
-		const contentLines = content.replace(/\r?\n/g, ',');
+	const fileContent = [];
+	const rows = content.split(/\r?\n/);
 
-		const jsonStringContent = `[${contentLines}]`;
+	if (!rows?.length) {
+		return;
+	}
 
-		const jsonContent = JSON.parse(jsonStringContent);
-
+	for (const row of rows) {
 		try {
-			const data = Object.keys(jsonContent[0]);
-
-			const schema = Object.values(data);
-
-			return {
-				fileContent: jsonContent
-					.map((row) => Object.values(row))
-					.slice(1, content.length),
-				firstItemDetails: getItemDetails(Object.values(data), schema),
-				schema,
-			};
+			fileContent.push(JSON.parse(row));
 		}
 		catch (error) {
-			console.error(error);
+			break;
 		}
 	}
+
+	const schema = Object.keys(fileContent[0]);
+
+	return {
+		fileContent,
+		schema,
+	};
 }
 
 export function extractFieldsFromJSON(content) {
-	if (content.trim().charAt(content.length - 1) === ']') {
-		const jsonfile = JSON.parse(content);
-		const fileContent = jsonfile.map((row) => Object.values(row));
+	const jsonArray = content.split('');
+	let parsedJSON;
 
-		return {
-			fileContent,
-			firstItemDetails: fileContent[0],
-			schema: Object.keys(jsonfile[0]),
-		};
+	for (let index = jsonArray.length - 1; index >= 0; index--) {
+		if (jsonArray[index] === '}') {
+			const partialJson = jsonArray.slice(0, index + 1).join('') + ']';
+
+			try {
+				parsedJSON = JSON.parse(partialJson);
+
+				break;
+			}
+			catch (error) {
+				console.error(error);
+			}
+		}
 	}
+
+	const schema = Object.keys(parsedJSON[0]);
+
+	return {
+		fileContent: parsedJSON,
+		schema,
+	};
 }
 
 function parseInChunk({
@@ -161,11 +170,13 @@ function parseInChunk({
 
 		const parsedData = chunkParser(event.target.result, options);
 
-		if (parsedData) {
+		if (
+			parsedData?.fileContent?.length &&
+			parsedData?.fileContent?.length
+		) {
 			return onComplete({
 				extension,
 				fileContent: parsedData.fileContent,
-				firstItemDetails: parsedData.firstItemDetails,
 				schema: parsedData.schema,
 			});
 		}

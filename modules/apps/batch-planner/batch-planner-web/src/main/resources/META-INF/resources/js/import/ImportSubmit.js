@@ -13,74 +13,72 @@
  */
 
 import ClayButton from '@clayui/button';
-import {useModal} from '@clayui/modal';
-import {openToast} from 'frontend-js-web';
+import ClayModal, {useModal} from '@clayui/modal';
 import PropTypes from 'prop-types';
 import React, {useCallback, useState} from 'react';
 
-import ImportModal from './ImportModal';
+import ImportPreviewModalBody from './ImportPreviewModalBody';
+import ImportProcessModalBody from './ImportProcessModalBody';
 
 function ImportSubmit({
-	disabled,
 	evaluateForm,
 	fieldsSelections,
-	fileContentPreview,
+	fileContent,
 	formDataQuerySelector,
 	formImportURL,
 	formIsValid,
-	formIsVisible,
-	portletNamespace,
-	setFileContent,
 }) {
-	const [visibleModalPreview, setVisibleModalPreview] = useState(undefined);
-	const [startImport, setStartImport] = useState(undefined);
+	const [modalVisibile, setModalVisibile] = useState(false);
+	const [stage, setStage] = useState('preview');
 
 	const {observer, onClose} = useModal({
-		onClose: () => setVisibleModalPreview(false),
+		onClose: () => {
+			setStage('preview');
+
+			setModalVisibile(false);
+		},
 	});
 
 	const showPreviewModal = useCallback(() => {
-		evaluateForm(true);
+		evaluateForm();
 
-		if (!formIsVisible) {
-			openToast({
-				message: Liferay.Language.get(
-					'please-upload-a-file-and-select-the-required-columns-before-saving-a-template'
-				),
-				type: 'danger',
-			});
+		if (formIsValid) {
+			setModalVisibile(true);
 		}
-
-		if (!formIsValid) {
-			setVisibleModalPreview(true);
-		}
-	}, [evaluateForm, formIsValid, formIsVisible]);
+	}, [evaluateForm, formIsValid]);
 
 	return (
 		<span className="mr-3">
 			<ClayButton
-				disabled={!disabled}
 				displayType="primary"
-				id={`${portletNamespace}-import-submit`}
 				onClick={showPreviewModal}
 				type="button"
 			>
 				{Liferay.Language.get('next')}
 			</ClayButton>
 
-			{visibleModalPreview && (
-				<ImportModal
-					closeModal={onClose}
-					fieldsSelections={fieldsSelections}
-					fileContentPreview={fileContentPreview}
-					formDataQuerySelector={formDataQuerySelector}
-					formSubmitURL={formImportURL}
-					namespace={portletNamespace}
+			{modalVisibile && (
+				<ClayModal
 					observer={observer}
-					setFileContent={setFileContent}
-					setStartImport={setStartImport}
-					startImport={startImport}
-				/>
+					size={stage === 'import' ? 'md' : 'lg'}
+				>
+					{stage === 'preview' && (
+						<ImportPreviewModalBody
+							closeModal={onClose}
+							fieldsSelections={fieldsSelections}
+							fileContent={fileContent}
+							startImport={() => setStage('import')}
+						/>
+					)}
+
+					{stage === 'import' && (
+						<ImportProcessModalBody
+							closeModal={onClose}
+							formDataQuerySelector={formDataQuerySelector}
+							formImportURL={formImportURL}
+						/>
+					)}
+				</ClayModal>
 			)}
 		</span>
 	);
@@ -89,7 +87,6 @@ function ImportSubmit({
 ImportSubmit.propTypes = {
 	formDataQuerySelector: PropTypes.string.isRequired,
 	formImportURL: PropTypes.string.isRequired,
-	portletNamespace: PropTypes.string.isRequired,
 };
 
 export default ImportSubmit;

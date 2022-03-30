@@ -22,14 +22,14 @@ import React from 'react';
 import {importStatus} from '../BatchPlannerImport';
 import Poller from '../Poller';
 
-const ImportProcessModal = ({
+const ImportProcessModalBody = ({
 	closeModal,
 	formDataQuerySelector,
-	formSubmitURL,
+	formImportURL,
 }) => {
 	const {errorMessage, loading, percentage} = Poller(
 		formDataQuerySelector,
-		formSubmitURL,
+		formImportURL,
 		importStatus
 	);
 
@@ -94,8 +94,8 @@ const ImportProcessModal = ({
 	);
 };
 
-ImportProcessModal.propTypes = {
-	formSubmitURL: PropTypes.string.isRequired,
+ImportProcessModalBody.propTypes = {
+	formImportURL: PropTypes.string.isRequired,
 };
 
-export default ImportProcessModal;
+export default ImportProcessModalBody;

@@ -52,11 +52,6 @@ const SCHEMA = {
 };
 
 const FILE_SCHEMA = ['currencyCode', 'type', 'name'];
-const firstItemDetails = {
-	currencyCode: 'USD',
-	name: 'car',
-	type: 'default',
-};
 const fileContent = [
 	['USD', 'bike', 'default'],
 	['EUR', 'truck', 'default'],
@@ -79,7 +74,6 @@ describe('ImportForm', () => {
 
 			Liferay.fire(FILE_SCHEMA_EVENT, {
 				fileContent,
-				firstItemDetails,
 				schema: FILE_SCHEMA,
 			});
 		});
@@ -97,7 +91,6 @@ describe('ImportForm', () => {
 
 			Liferay.fire(FILE_SCHEMA_EVENT, {
 				fileContent,
-				firstItemDetails,
 				schema: FILE_SCHEMA,
 			});
 		});

@@ -14,7 +14,6 @@
 
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
-import {openToast} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
@@ -28,7 +27,6 @@ import {
 function SaveTemplate({
 	evaluateForm,
 	formIsValid,
-	formIsVisible,
 	formSaveAsTemplateDataQuerySelector,
 	formSaveAsTemplateURL,
 	portletNamespace,
@@ -47,15 +45,6 @@ function SaveTemplate({
 		if (type === 'import') {
 			evaluateForm();
 
-			if (!formIsVisible) {
-				openToast({
-					message: Liferay.Language.get(
-						'please-upload-a-file-and-select-the-required-columns-before-saving-a-template'
-					),
-					type: 'danger',
-				});
-			}
-
 			if (formIsValid) {
 				setModalVisible(true);
 			}
@@ -63,7 +52,7 @@ function SaveTemplate({
 		else {
 			setModalVisible(true);
 		}
-	}, [evaluateForm, formIsValid, formIsVisible, type]);
+	}, [evaluateForm, formIsValid, type]);
 
 	useEffect(() => {
 		function handleSchemaChange({schema}) {

@@ -567,13 +567,100 @@ definition {
 			entryTitle = "Blogs Entry 1");
 	}
 
-	@description = "This test deletes multiple staged data from an application."
-	@ignore = "Test Stub"
+	@description = "This test deletes multiple staged data from an application, tests with Blogs and DM entries."
 	@priority = "3"
 	test CanDeleteAllStagedDataFromAnApplication {
+		User.logoutPG();
 
-		// TODO LRQA-50753 Delete all staged data from an Application
+		User.firstLoginUI(
+			password = "test",
+			userEmailAddress = "userea@liferay.com");
 
+		JSONGroup.addGroup(groupName = "Site Name");
+
+		JSONLayout.addPublicLayout(
+			groupName = "Site Name",
+			layoutName = "Staging Test Page");
+
+		JSONUser.addUserToSite(
+			groupName = "Site Name",
+			userEmailAddress = "userea@liferay.com");
+
+		JSONStaging.enableLocalStaging(groupName = "Site Name");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 1",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title 2",
+			groupName = "Site Name (Staging)",
+			site = "false",
+			userEmailAddress = "userea@liferay.com",
+			userPassword = "test");
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-staging");
+
+		Staging.publishToLiveNowViaPortletCP();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3");
+
+		Staging.publishToLiveNowViaPortletCP();
+
+		User.logoutAndLoginPG(
+			userLoginEmailAddress = "test@liferay.com",
+			userLoginFullName = "Test Test");
+
+		User.openUsersAdmin();
+
+		User.deletePersonalDataCP(
+			userFirstName = "userfn",
+			userLastName = "userln");
+
+		GDPR.filterByApplications(
+			applicationItemsCount = "4",
+			applications = "Blogs",
+			totalItemsCount = "10");
+
+		for (var rowIndexNum : list "1,2") {
+			GDPR.deleteStagedDatainApplicationCP(rowIndexNumber = "${rowIndexNum}");
+		}
+
+		GDPR.filterByApplications(
+			applicationItemsCount = "6",
+			applications = "Documents and Media",
+			totalItemsCount = "8");
+
+		for (var rowIndexNum : list "1,2,3") {
+			GDPR.deleteStagedDatainApplicationCP(rowIndexNumber = "${rowIndexNum}");
+		}
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-staging");
+
+		Blogs.viewNoEntryCP();
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name-staging");
+
+		DMDocument.viewDefault();
+
+		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+		LexiconEntry.viewEntryName(rowEntry = "Blogs Entry Title 1");
+
+		LexiconEntry.viewEntryName(rowEntry = "Blogs Entry Title 2");
+
+		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "site-name");
+
+		for (var rowEntry : list "Document_1,Document_2,Document_3") {
+			LexiconEntry.viewEntryName(rowEntry = "${rowEntry}");
+		}
 	}
 
 	@description = "This test deletes and anonymizes all entries from all applications"

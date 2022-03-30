@@ -16,15 +16,14 @@ import {
 	isValidMac,
 } from '../../../../../common/utils/validations.form';
 
-const AdminInputs = ({id}) => {
+const KeyInputs = ({id}) => {
 	return (
 		<>
 			<div className="mb-2">
 				<div className="cp-input-generate-label">
 					<Input
 						label="Host Name"
-						name={`dxp.admins[${id}].hostName`}
-						required
+						name={`keys[${id}].hostName`}
 						type="text"
 						validations={[(value) => isValidHost(value)]}
 					/>
@@ -37,9 +36,8 @@ const AdminInputs = ({id}) => {
 						className="cp-input-generate-placeholder m-0 w-100"
 						component="textarea"
 						label="IP Addresses"
-						name={`dxp.admins[${id}].ipAddresses`}
+						name={`keys[${id}].ipAddresses`}
 						placeholder="1.1.1.1&#10;2.2.2.2"
-						required
 						type="text"
 						validations={[(value) => isValidIp(value)]}
 					/>
@@ -55,9 +53,8 @@ const AdminInputs = ({id}) => {
 						className="cp-input-generate-placeholder"
 						component="textarea"
 						label="MAC Addresses"
-						name={`dxp.admins[${id}].macAddresses`}
+						name={`keys[${id}].macAddresses`}
 						placeholder="XX-XX-XX-XX-XX-XX&#10;XX-XX-XX-XX-XX-XX"
-						required
 						type="text"
 						validations={[(value) => isValidMac(value)]}
 					/>
@@ -71,4 +68,4 @@ const AdminInputs = ({id}) => {
 	);
 };
 
-export default AdminInputs;
+export default KeyInputs;

@@ -119,9 +119,21 @@ definition {
 	@ignore = "Test Stub"
 	@priority = "4"
 	test CanPublishImportedObject {
+		ObjectExportImport.importObject(
+			objectFileName = "ImportedObjectWithField",
+			objectName = "ImportedObjectWithField146365");
 
-		// TODO LPS-146365 CanPublishImportedObject pending implementation
+		CreateObject.assertCustomObject(labelName = "Imported Object With Field");
 
+		ObjectPortlet.selectCustomObject(label = "Imported Object With Field");
+
+		Button.clickPublish();
+
+		ObjectAdmin.openObjectAdmin();
+
+		ObjectAdmin.assertObjectStatus(
+			label = "Imported Object With Field",
+			status = "Approved");
 	}
 
 	@description = "LPS-142175 - Verify that an imported custom object is created with Draft Status"

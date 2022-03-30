@@ -1,16 +1,8 @@
 {
 	"childOrganizations": [
 		{
-			"location": {
-				"addressCountry": "United-States",
-				"addressRegion": "California"
-			},
 			"name": "Test Organization 3"
 		}
 	],
-	"location": {
-		"addressCountry": "United-States",
-		"addressRegion": "California"
-	},
 	"name": "Test Organization 2"
 }

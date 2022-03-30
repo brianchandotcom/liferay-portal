@@ -52,7 +52,6 @@ import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition;
 import com.liferay.headless.admin.list.type.dto.v1_0.ListTypeEntry;
 import com.liferay.headless.admin.list.type.resource.v1_0.ListTypeDefinitionResource;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
-import com.liferay.headless.admin.user.dto.v1_0.Location;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
@@ -920,12 +919,6 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(organization1);
 
-		Location location1 = organization1.getLocation();
-
-		Assert.assertNotNull(location1);
-		Assert.assertEquals("United States", location1.getAddressCountry());
-		Assert.assertEquals("California", location1.getAddressRegion());
-
 		Page<Organization> organizationsPage2 =
 			organizationResource.getOrganizationsPage(
 				null, null,
@@ -937,12 +930,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertNotNull(organization2);
 		Assert.assertTrue(organization2.getNumberOfOrganizations() == 1);
 
-		Location location2 = organization2.getLocation();
-
-		Assert.assertNotNull(location2);
-		Assert.assertEquals("United States", location2.getAddressCountry());
-		Assert.assertEquals("California", location2.getAddressRegion());
-
 		Page<Organization> organizationsPage3 =
 			organizationResource.getOrganizationChildOrganizationsPage(
 				organization2.getId(), null, null, null, null, null);
@@ -950,14 +937,7 @@ public class BundleSiteInitializerTest {
 		Organization organization3 = organizationsPage3.fetchFirstItem();
 
 		Assert.assertNotNull(organization3);
-		Assert.assertEquals(
-			"Test Organization 3", organization3.getName());
-
-		Location location3 = organization3.getLocation();
-
-		Assert.assertNotNull(location3);
-		Assert.assertEquals("United States", location3.getAddressCountry());
-		Assert.assertEquals("California", location3.getAddressRegion());
+		Assert.assertEquals("Test Organization 3", organization3.getName());
 	}
 
 	private void _assertPermissions(Group group) throws Exception {

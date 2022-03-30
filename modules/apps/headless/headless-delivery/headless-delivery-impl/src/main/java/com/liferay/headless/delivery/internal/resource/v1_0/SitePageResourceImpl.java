@@ -330,12 +330,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 					_portal.getClassNameId(Layout.class.getName()),
 					layout.getPlid(), segmentsEntryIds);
 
-		if (segmentsExperienceIds.length > 0) {
-			return _segmentsExperienceLocalService.getSegmentsExperience(
-				segmentsExperienceIds[0]);
-		}
-
-		return null;
+		return _segmentsExperienceLocalService.getSegmentsExperience(
+			segmentsExperienceIds[0]);
 	}
 
 	private boolean _isEmbeddedPageDefinition() {

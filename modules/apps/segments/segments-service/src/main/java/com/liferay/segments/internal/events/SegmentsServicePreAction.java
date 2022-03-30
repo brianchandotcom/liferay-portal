@@ -75,25 +75,17 @@ public class SegmentsServicePreAction extends Action {
 		long classNameId, long classPK) {
 
 		try {
-			long[] segmentsExperienceIds =
+			long[] segmentsEntryIds =
+				_segmentsEntryRetriever.getSegmentsEntryIds(
+					groupId, userId,
+					_requestContextMapper.map(httpServletRequest));
+
+			return ArrayUtil.append(
 				_segmentsExperienceRequestProcessorRegistry.
 					getSegmentsExperienceIds(
 						httpServletRequest, httpServletResponse, groupId,
-						classNameId, classPK);
-
-			if (segmentsExperienceIds.length > 0) {
-				long[] segmentsEntryIds =
-					_segmentsEntryRetriever.getSegmentsEntryIds(
-						groupId, userId,
-						_requestContextMapper.map(httpServletRequest));
-
-				return ArrayUtil.append(
-					_segmentsExperienceRequestProcessorRegistry.
-						getSegmentsExperienceIds(
-							httpServletRequest, httpServletResponse, groupId,
-							classNameId, classPK, segmentsEntryIds),
-					SegmentsExperienceConstants.ID_DEFAULT);
-			}
+						classNameId, classPK, segmentsEntryIds),
+				SegmentsExperienceConstants.ID_DEFAULT);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

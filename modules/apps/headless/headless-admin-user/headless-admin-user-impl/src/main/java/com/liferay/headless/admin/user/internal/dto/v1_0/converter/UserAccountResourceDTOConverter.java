@@ -167,17 +167,6 @@ public class UserAccountResourceDTOConverter
 									contact, Contact::getTwitterSn));
 						}
 					};
-				setRoleBriefs(
-					() -> {
-						List<Role> userRoles = (contact != null) ?
-							_roleService.getUserRoles(user.getUserId()) :
-								Collections.emptyList();
-
-						return TransformUtil.transformToArray(
-							userRoles,
-							role -> _toRoleBrief(dtoConverterContext, role),
-							RoleBrief.class);
-					});
 				setBirthDate(_getContactField(contact, Contact::getBirthday));
 				setDashboardURL(
 					() -> {
@@ -229,6 +218,17 @@ public class UserAccountResourceDTOConverter
 						}
 
 						return group.getDisplayURL(_getThemeDisplay(group));
+					});
+				setRoleBriefs(
+					() -> {
+						List<Role> userRoles = (contact != null) ?
+							_roleService.getUserRoles(user.getUserId()) :
+								Collections.emptyList();
+
+						return TransformUtil.transformToArray(
+							userRoles,
+							role -> _toRoleBrief(dtoConverterContext, role),
+							RoleBrief.class);
 					});
 			}
 		};

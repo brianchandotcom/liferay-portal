@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.model.adapter.util;
+package com.liferay.portal.utilities.model.adapter;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.model.ModelWrapper;

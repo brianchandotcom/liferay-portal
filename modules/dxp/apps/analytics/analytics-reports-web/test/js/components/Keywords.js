@@ -20,7 +20,7 @@ describe('Keywords', () => {
 	it('renders message no best keywords when content was published today', () => {
 		const mockCurrentPage = {
 			data: {
-				countryKeywords: [
+				countrySearchKeywords: [
 					{
 						countryCode: 'us',
 						countryName: 'United States',

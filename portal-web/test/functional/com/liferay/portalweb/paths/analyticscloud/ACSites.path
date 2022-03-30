@@ -133,7 +133,7 @@
 </tr>
 <tr>
 	<td>VISITED_TOP_PAGES_CARD</td>
-	<td>//tr[${key_index}]//div[contains(@class,'text-truncate')]//div[contains(@class,'table-title')]</td>
+	<td>//tr[${key_index}]//div[contains(@class,'text-truncate')]//div[contains(@class,'table-title')and text()='${key_pageName}']</td>
 	<td></td>
 </tr>
 </tbody>

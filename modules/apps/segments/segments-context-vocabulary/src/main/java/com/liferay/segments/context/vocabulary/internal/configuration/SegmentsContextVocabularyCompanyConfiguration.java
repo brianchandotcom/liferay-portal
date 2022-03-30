@@ -38,12 +38,12 @@ public interface SegmentsContextVocabularyCompanyConfiguration {
 		description = "segments-context-vocabulary-configuration-entity-field-description",
 		name = "segments-context-vocabulary-company-configuration-entity-field-name"
 	)
-	public String entityField();
+	public String entityFieldName();
 
 	@Meta.AD(
 		description = "segments-context-vocabulary-configuration-asset-vocabulary-description",
 		name = "segments-context-vocabulary-company-configuration-asset-vocabulary-name"
 	)
-	public String assetVocabulary();
+	public String assetVocabularyName();
 
 }

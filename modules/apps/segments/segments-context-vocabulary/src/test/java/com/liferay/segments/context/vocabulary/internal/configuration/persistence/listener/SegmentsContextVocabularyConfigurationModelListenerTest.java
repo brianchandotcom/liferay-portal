@@ -20,7 +20,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.segments.context.Context;
 
 import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.ResourceBundle;
 
 import org.junit.ClassRule;
@@ -69,7 +68,7 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 			properties
 		);
 
-		Configuration[] configurationList = {configuration};
+		Configuration[] configurations = {configuration};
 
 		ConfigurationAdmin configurationAdmin = Mockito.mock(
 			ConfigurationAdmin.class);
@@ -77,7 +76,7 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 		Mockito.when(
 			configurationAdmin.listConfigurations(Mockito.any())
 		).thenReturn(
-			configurationList
+			configurations
 		);
 
 		ReflectionTestUtil.getAndSetFieldValue(
@@ -113,11 +112,14 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 				"entityField", Context.BROWSER
 			).build();
 
-		Dictionary<String, Object> propertiesConfiguration = new Hashtable<>();
-
-		propertiesConfiguration.put("entityField", Context.BROWSER);
-		propertiesConfiguration.put("assetVocabulary", "audience");
-		propertiesConfiguration.put("companyId", "123");
+		Dictionary<String, Object> propertiesConfiguration =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"assetVocabulary", "audience"
+			).put(
+				"companyId", "123"
+			).put(
+				"entityField", Context.BROWSER
+			).build();
 
 		Configuration configuration = Mockito.mock(Configuration.class);
 
@@ -127,7 +129,7 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 			propertiesConfiguration
 		);
 
-		Configuration[] configurationList = {configuration};
+		Configuration[] configurations = {configuration};
 
 		ConfigurationAdmin configurationAdmin = Mockito.mock(
 			ConfigurationAdmin.class);
@@ -135,7 +137,7 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 		Mockito.when(
 			configurationAdmin.listConfigurations(Mockito.any())
 		).thenReturn(
-			configurationList
+			configurations
 		);
 
 		ReflectionTestUtil.getAndSetFieldValue(
@@ -169,11 +171,14 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 				"entityField", Context.BROWSER
 			).build();
 
-		Dictionary<String, Object> propertiesConfiguration = new Hashtable<>();
-
-		propertiesConfiguration.put("entityField", Context.BROWSER);
-		propertiesConfiguration.put("assetVocabulary", "audience");
-		propertiesConfiguration.put("companyId", "678");
+		Dictionary<String, Object> propertiesConfiguration =
+			HashMapDictionaryBuilder.<String, Object>put(
+				"assetVocabulary", "audience"
+			).put(
+				"companyId", "456"
+			).put(
+				"entityField", Context.BROWSER
+			).build();
 
 		Configuration configuration = Mockito.mock(Configuration.class);
 
@@ -183,7 +188,7 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 			propertiesConfiguration
 		);
 
-		Configuration[] configurationList = {configuration};
+		Configuration[] configurations = {configuration};
 
 		ConfigurationAdmin configurationAdmin = Mockito.mock(
 			ConfigurationAdmin.class);
@@ -191,7 +196,7 @@ public class SegmentsContextVocabularyConfigurationModelListenerTest {
 		Mockito.when(
 			configurationAdmin.listConfigurations(Mockito.any())
 		).thenReturn(
-			configurationList
+			configurations
 		);
 
 		ReflectionTestUtil.getAndSetFieldValue(

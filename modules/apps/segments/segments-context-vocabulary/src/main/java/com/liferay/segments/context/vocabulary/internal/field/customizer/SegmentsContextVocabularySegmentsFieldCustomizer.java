@@ -130,10 +130,10 @@ public class SegmentsContextVocabularySegmentsFieldCustomizer
 				ConfigurableUtil.createConfigurable(
 					SegmentsContextVocabularyConfiguration.class, properties);
 
-		_entityField = segmentsContextVocabularyConfiguration.entityField();
+		_entityField = segmentsContextVocabularyConfiguration.entityFieldName();
 
 		_assetVocabulary =
-			segmentsContextVocabularyConfiguration.assetVocabulary();
+			segmentsContextVocabularyConfiguration.assetVocabularyName();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

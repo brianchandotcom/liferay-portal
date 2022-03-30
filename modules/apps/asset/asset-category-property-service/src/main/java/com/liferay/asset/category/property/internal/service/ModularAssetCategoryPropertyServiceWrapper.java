@@ -17,9 +17,9 @@ package com.liferay.asset.category.property.internal.service;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyService;
 import com.liferay.asset.kernel.model.AssetCategoryProperty;
 import com.liferay.asset.kernel.service.AssetCategoryPropertyServiceWrapper;
-import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.model.adapter.ModelAdapterUtil;
 
 import java.util.List;
 

@@ -14,12 +14,12 @@
 
 package com.liferay.subscription.internal.service;
 
-import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Subscription;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.service.SubscriptionLocalServiceWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.model.adapter.ModelAdapterUtil;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.util.List;

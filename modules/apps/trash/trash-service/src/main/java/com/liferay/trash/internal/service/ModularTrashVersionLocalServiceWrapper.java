@@ -14,10 +14,10 @@
 
 package com.liferay.trash.internal.service;
 
-import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.adapter.ModelAdapterUtil;
 import com.liferay.trash.kernel.model.TrashVersion;
 import com.liferay.trash.kernel.service.TrashVersionLocalServiceWrapper;
 import com.liferay.trash.service.TrashVersionLocalService;

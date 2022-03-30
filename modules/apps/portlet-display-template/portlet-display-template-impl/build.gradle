@@ -10,7 +10,7 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 	compileOnly project(":apps:export-import:export-import-api")
-	compileOnly project(":apps:petra:petra-model-adapter")
+	compileOnly project(":apps:portal:portal-model-adapter")
 	compileOnly project(":apps:portlet-display-template:portlet-display-template-api")
 	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":core:petra:petra-lang")

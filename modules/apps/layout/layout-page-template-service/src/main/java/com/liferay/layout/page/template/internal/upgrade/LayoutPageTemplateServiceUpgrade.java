@@ -170,6 +170,11 @@ public class LayoutPageTemplateServiceUpgrade
 			new com.liferay.layout.page.template.internal.upgrade.v4_0_0.
 				LayoutPageTemplateStructureRelUpgradeProcess(
 					_collectionPaginationHelper));
+
+		registry.register(
+			"4.0.0", "5.0.0",
+			new com.liferay.layout.page.template.internal.upgrade.v5_0_0.
+				LayoutPageTemplateStructureUpgradeProcess());
 	}
 
 	@Reference

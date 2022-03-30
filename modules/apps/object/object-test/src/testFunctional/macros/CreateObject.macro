@@ -47,8 +47,6 @@ definition {
 
 		WaitForSPARefresh();
 
-		WaitForVisible(locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD");
-
 		AssertVisible(locator1 = "ObjectAdmin#ENTRY_STRING_VALUE_FIELD");
 	}
 

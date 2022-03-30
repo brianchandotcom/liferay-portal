@@ -104,3 +104,14 @@ body.portlet {
 		display: none;
 	}
 }
+
+.controls-hidden {
+	.lfr-meta-actions,
+	.lfr-configurator-visibility {
+		display: none;
+	}
+
+	.portlet-topper-toolbar {
+		display: none !important;
+	}
+}

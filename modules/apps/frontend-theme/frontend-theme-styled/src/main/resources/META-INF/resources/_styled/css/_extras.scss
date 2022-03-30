@@ -445,3 +445,12 @@ input.switch {
 		transform: rotate(15deg);
 	}
 }
+
+.form-group.form-inline {
+	&.input-boolean-wrapper,
+	&.input-checkbox-wrapper {
+		label {
+			gap: 0.3125rem;
+		}
+	}
+}

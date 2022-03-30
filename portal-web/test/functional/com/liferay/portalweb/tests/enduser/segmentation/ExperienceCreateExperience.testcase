@@ -4834,6 +4834,8 @@ definition {
 	@description = "This is a test for LPS-132573. Assert no error occurs after switching back to default experience with fragment removed."
 	@priority = "4"
 	test RemoveFragmentAndChangeBackToDefaultExperience {
+		property test.name.skip.portal.instance = "ExperienceCreateExperience#RemoveFragmentAndChangeBackToDefaultExperience";
+
 		JSONWebcontent.addWebContent(
 			content = "Web Content Content",
 			groupName = "Test Site Name",

@@ -143,7 +143,6 @@ public class DLAMImageOptimizerTest {
 			_getImageBytes(), null, null,
 			ServiceContextTestUtil.getServiceContext(
 				_group1.getGroupId(), _user1.getUserId()));
-
 		_dlAppLocalService.addFileEntry(
 			null, _user2.getUserId(), _group2.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,

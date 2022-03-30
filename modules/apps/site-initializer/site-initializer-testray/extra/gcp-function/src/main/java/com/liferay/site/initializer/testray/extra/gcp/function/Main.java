@@ -30,6 +30,9 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -280,6 +283,29 @@ public class Main {
 					_postObjectEntry(null, testrayIssueName, "issues"))
 			).build(),
 			null, "caseresultsissueses");
+	}
+
+	private void _addTestrayTask(long testrayBuildId, String testrayTaskName)
+		throws Exception {
+
+		long testrayTaskId = _getObjectEntryId(testrayTaskName, "tasks");
+
+		if (testrayTaskId != 0) {
+			return;
+		}
+
+		LocalDateTime currentLocalDateTime = LocalDateTime.now(ZoneOffset.UTC);
+
+		_postObjectEntry(
+			HashMapBuilder.put(
+				"dueStatus",
+				String.valueOf(_TESTRAY_CASE_RESULT_STATUS_IN_PROGRESS)
+			).put(
+				"r_buildToTasks_c_buildId", String.valueOf(testrayBuildId)
+			).put(
+				"statusUpdateDate", currentLocalDateTime::toString
+			).build(),
+			testrayTaskName, "tasks");
 	}
 
 	private void _addTestrayWarnings(
@@ -933,9 +959,10 @@ public class Main {
 
 		_addTestrayCases(
 			element, testrayBuildId, testrayProjectId, testrayRunId);
-	}
 
-	
+		_addTestrayTask(
+			testrayBuildId, propertiesMap.get("testray.build.name"));
+	}
 
 	private static final int _TESTRAY_CASE_RESULT_STATUS_BLOCKED = 4;
 

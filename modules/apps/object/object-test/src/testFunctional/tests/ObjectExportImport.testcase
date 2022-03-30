@@ -125,12 +125,17 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify that an imported custom object is created with Draft Status"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ImportedObjectIsDraft {
+		ObjectExportImport.importObject(
+			objectFileName = "ImportedSimpleObject",
+			objectName = "ImportedSimpleObject146363");
 
-		// TODO LPS-146363 ImportedObjectIsDraft pending implementation
+		CreateObject.assertCustomObject(labelName = "Imported Simple Object");
 
+		ObjectAdmin.assertObjectStatus(
+			label = "Imported Simple Object",
+			status = "Draft");
 	}
 
 }

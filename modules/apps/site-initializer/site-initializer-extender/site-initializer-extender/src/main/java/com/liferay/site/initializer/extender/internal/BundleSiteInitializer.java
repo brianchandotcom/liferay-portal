@@ -379,7 +379,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 					documentsStringUtilReplaceValues, serviceContext));
 
 			_invoke(() -> _addOrganizations(serviceContext));
-
 			_invoke(() -> _addSAPEntries(serviceContext));
 			_invoke(() -> _addSiteConfiguration(serviceContext));
 			_invoke(() -> _addStyleBookEntries(serviceContext));

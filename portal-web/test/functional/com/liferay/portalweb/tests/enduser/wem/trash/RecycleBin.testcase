@@ -746,7 +746,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "2 Results for Comment");
+				value1 = "2 Results for &quot;Comment&quot;");
 
 			for (var title : list "Blogs Entry Title 1,Blogs Entry Title 2") {
 				Blogs.viewEntryTitle(entryTitle = "${title}");
@@ -764,7 +764,7 @@ definition {
 
 			AssertTextEquals(
 				locator1 = "Search#SEARCH_INFO",
-				value1 = "1 Results for Comment");
+				value1 = "1 Results for &quot;Comment&quot;");
 
 			Blogs.viewEntryTitle(entryTitle = "Blogs Entry Title 2");
 

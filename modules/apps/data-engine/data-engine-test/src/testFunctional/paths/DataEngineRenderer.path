@@ -127,7 +127,7 @@
 </tr>
 <tr>
 	<td>SEPARATOR_STYLE</td>
-	<td>//div[contains(@class, 'separator') and contains(@style, '${key_styleValue}')]</td>
+	<td>//hr[contains(@class, 'separator') and contains(@style, '${key_styleValue}')]</td>
 	<td></td>
 </tr>
 <tr>

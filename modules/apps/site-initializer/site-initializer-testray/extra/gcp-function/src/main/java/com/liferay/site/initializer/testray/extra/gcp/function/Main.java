@@ -119,8 +119,8 @@ public class Main {
 	}
 
 	private void _addTestrayCase(
-			Node testcaseNode, long testrayBuildId, long testrayProjectId,
-			long testrayRunId, Map<String, Object> testrayCasePropertiesMap)
+			long testrayBuildId, Map<String, Object> testrayCasePropertiesMap,
+			long testrayProjectId, long testrayRunId, Node testrayTestcaseNode)
 		throws Exception {
 
 		long testrayCaseTypeId = _getTestrayCaseTypeId(
@@ -157,20 +157,9 @@ public class Main {
 			(String)testrayCasePropertiesMap.get("testray.testcase.name"),
 			"cases");
 
-		// long testrayCaseResultId = _addTestrayCaseResult(
-		// 	testrayBuildId, testrayCaseId, testrayComponentId, testrayRunId,
-		// 	testrayCasePropertiesMap, testcaseNode);
-
-		// _addTestrayAttachments(testcaseNode, testrayCaseResultId);
-
-		// _addTestrayIssue(
-		// 	(String)testrayCasePropertiesMap.get("testray.case.issue"),
-		// 	testrayCaseResultId);
-		// _addTestrayIssue(
-		// 	(String)testrayCasePropertiesMap.get("testray.case.defect"),
-		// 	testrayCaseResultId);
-		// _addTestrayWarnings(testrayCasePropertiesMap, testrayCaseResultId);
-
+		_getTestrayCaseResultId(
+			testrayBuildId, testrayCaseId, testrayCasePropertiesMap,
+			testrayComponentId, testrayRunId, testrayTestcaseNode);
 	}
 
 	private void _addTestrayFactor(
@@ -352,6 +341,67 @@ public class Main {
 				String.valueOf(testrayRoutineId)
 			).build(),
 			testrayBuildName, "builds");
+	}
+
+	private long _getTestrayCaseResultId(
+			long testrayBuildId, long testrayCaseId,
+			Map<String, Object> testrayCasePropertiesMap,
+			long testrayComponentId, long testrayRunId,
+			Node testrayTestcaseNode)
+		throws Exception {
+
+		String dueStatus = String.valueOf(_TESTRAY_CASE_RESULT_STATUS_UNTESTED);
+
+		String testrayTestcaseStatus = (String)testrayCasePropertiesMap.get(
+			"testray.testcase.status");
+
+		if (testrayTestcaseStatus.equals("in-progress")) {
+			dueStatus = String.valueOf(_TESTRAY_CASE_RESULT_STATUS_IN_PROGRESS);
+		}
+		else if (testrayTestcaseStatus.equals("passed")) {
+			dueStatus = String.valueOf(_TESTRAY_CASE_RESULT_STATUS_PASSED);
+		}
+		else if (testrayTestcaseStatus.equals("failed")) {
+			dueStatus = String.valueOf(_TESTRAY_CASE_RESULT_STATUS_FAILED);
+		}
+		else if (testrayTestcaseStatus.equals("blocked")) {
+			dueStatus = String.valueOf(_TESTRAY_CASE_RESULT_STATUS_BLOCKED);
+		}
+		else if (testrayTestcaseStatus.equals("dnr")) {
+			dueStatus = String.valueOf(_TESTRAY_CASE_RESULT_STATUS_DID_NOT_RUN);
+		}
+		else if (testrayTestcaseStatus.equals("test-fix")) {
+			dueStatus = String.valueOf(_TESTRAY_CASE_RESULT_STATUS_TEST_FIX);
+		}
+
+		Map<String, String> map = HashMapBuilder.put(
+			"dueStatus", dueStatus
+		).put(
+			"r_buildToCaseResult_c_buildId", String.valueOf(testrayBuildId)
+		).put(
+			"r_caseResultToCase_c_caseId", String.valueOf(testrayCaseId)
+		).put(
+			"r_componentToCaseResult_c_componentId",
+			String.valueOf(testrayComponentId)
+		).put(
+			"r_runToCaseResult_c_runId", String.valueOf(testrayRunId)
+		).build();
+
+		Element element = (Element)testrayTestcaseNode;
+
+		NodeList nodeList = element.getElementsByTagName("failure");
+
+		Node failureNode = nodeList.item(0);
+
+		if (failureNode != null) {
+			String message = _getAttributeValue("message", failureNode);
+
+			if (!message.isEmpty()) {
+				map.put("errors", message);
+			}
+		}
+
+		return _postObjectEntry(map, null, "caseresults");
 	}
 
 	private long _getTestrayCaseTypeId(String testrayCaseTypeName)
@@ -689,6 +739,20 @@ public class Main {
 		_getTestrayRunId(
 			element, propertiesMap, testrayBuildId, testrayRunName);
 	}
+
+	private static final int _TESTRAY_CASE_RESULT_STATUS_BLOCKED = 4;
+
+	private static final int _TESTRAY_CASE_RESULT_STATUS_DID_NOT_RUN = 6;
+
+	private static final int _TESTRAY_CASE_RESULT_STATUS_FAILED = 3;
+
+	private static final int _TESTRAY_CASE_RESULT_STATUS_IN_PROGRESS = 1;
+
+	private static final int _TESTRAY_CASE_RESULT_STATUS_PASSED = 2;
+
+	private static final int _TESTRAY_CASE_RESULT_STATUS_TEST_FIX = 7;
+
+	private static final int _TESTRAY_CASE_RESULT_STATUS_UNTESTED = 0;
 
 	private static final int _TESTRAY_RUN_EXTERNAL_REFERENCE_TYPE_POSHI = 1;
 

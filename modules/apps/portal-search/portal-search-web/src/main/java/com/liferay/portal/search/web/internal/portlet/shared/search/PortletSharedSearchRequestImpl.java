@@ -51,7 +51,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -302,13 +301,15 @@ public class PortletSharedSearchRequestImpl
 		List<SearchSettingsContributor> searchSettingsContributors =
 			_getSearchSettingsContributors(themeDisplay, renderRequest);
 
-		Stream<SearchSettingsContributor> stream =
-			searchSettingsContributors.stream();
-
 		SearchRequestImpl searchRequestImpl = _createSearchRequestImpl(
 			themeDisplay, renderRequest);
 
-		stream.forEach(searchRequestImpl::addSearchSettingsContributor);
+		for (SearchSettingsContributor searchSettingsContributor :
+				searchSettingsContributors) {
+
+			searchRequestImpl.addSearchSettingsContributor(
+				searchSettingsContributor);
+		}
 
 		SearchResponseImpl searchResponseImpl = searchRequestImpl.search();
 

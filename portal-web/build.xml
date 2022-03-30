@@ -24,7 +24,6 @@
 		<pathelement location="${project.dir}/lib/portal/commons-fileupload.jar" />
 		<pathelement location="${project.dir}/lib/portal/commons-lang.jar" />
 		<pathelement location="${project.dir}/lib/portal/commons-logging.jar" />
-		<pathelement location="${project.dir}/lib/portal/commons-math.jar" />
 		<pathelement location="${project.dir}/lib/portal/dom4j.jar" />
 		<pathelement location="${project.dir}/lib/portal/jabsorb.jar" />
 		<pathelement location="${project.dir}/lib/portal/log4j-1.2-api.jar" />

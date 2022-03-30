@@ -48,7 +48,9 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -147,8 +149,8 @@ public class CommerceOrderClayTableUtil {
 	}
 
 	public static List<Order> getOrders(
-			List<CommerceOrder> commerceOrders, ThemeDisplay themeDisplay,
-			String priceDisplayType)
+			List<CommerceOrder> commerceOrders, String priceDisplayType,
+			boolean showCommerceOrderCreateTime, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		List<Order> orders = new ArrayList<>();
@@ -167,10 +169,6 @@ public class CommerceOrderClayTableUtil {
 			if (totalCommerceMoney != null) {
 				amount = totalCommerceMoney.format(themeDisplay.getLocale());
 			}
-
-			Format dateFormat = FastDateFormatFactoryUtil.getDate(
-				DateFormat.MEDIUM, themeDisplay.getLocale(),
-				themeDisplay.getTimeZone());
 
 			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content.Language", themeDisplay.getLocale(),
@@ -196,8 +194,11 @@ public class CommerceOrderClayTableUtil {
 					commerceOrder.getExternalReferenceCode(),
 					commerceOrder.getCommerceOrderId(),
 					commerceOrder.getCommerceAccountName(),
-					dateFormat.format(orderDate), commerceOrder.getUserName(),
-					commerceOrderStatusLabel,
+					_formatCommerceOrderCreateDate(
+						themeDisplay.getLocale(), orderDate,
+						showCommerceOrderCreateTime,
+						themeDisplay.getTimeZone()),
+					commerceOrder.getUserName(), commerceOrderStatusLabel,
 					commerceOrder.getPurchaseOrderNumber(), workflowStatusLabel,
 					amount));
 		}
@@ -294,6 +295,25 @@ public class CommerceOrderClayTableUtil {
 		).setWindowState(
 			LiferayWindowState.POP_UP
 		).buildString();
+	}
+
+	private static String _formatCommerceOrderCreateDate(
+		Locale locale, Date orderDate, boolean showCommerceOrderCreateTime,
+		TimeZone timeZone) {
+
+		Format commerceOrderDateFormatDate = FastDateFormatFactoryUtil.getDate(
+			DateFormat.MEDIUM, locale, timeZone);
+
+		if (showCommerceOrderCreateTime) {
+			Format commerceOrderDateFormatTime =
+				FastDateFormatFactoryUtil.getTime(
+					DateFormat.MEDIUM, locale, timeZone);
+
+			return commerceOrderDateFormatDate.format(orderDate) + " " +
+				commerceOrderDateFormatTime.format(orderDate);
+		}
+
+		return commerceOrderDateFormatDate.format(orderDate);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

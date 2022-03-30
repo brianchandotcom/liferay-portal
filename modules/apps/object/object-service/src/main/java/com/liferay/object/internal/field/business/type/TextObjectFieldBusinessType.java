@@ -54,7 +54,7 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
-		if (!_FEATURE_FLAG) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
 			return ObjectFieldBusinessType.super.
 				getAllowedObjectFieldSettingsNames();
 		}
@@ -98,7 +98,7 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 		ObjectField objectField,
 		ObjectFieldRenderingContext objectFieldRenderingContext) {
 
-		if (!_FEATURE_FLAG) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
 			return ObjectFieldBusinessType.super.getProperties(
 				objectField, objectFieldRenderingContext);
 		}
@@ -119,7 +119,7 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 
 	@Override
 	public Set<String> getRequiredObjectFieldSettingsNames() {
-		if (!_FEATURE_FLAG) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
 			return ObjectFieldBusinessType.super.
 				getRequiredObjectFieldSettingsNames();
 		}
@@ -136,7 +136,7 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 		ObjectFieldBusinessType.super.validateObjectFieldSettings(
 			objectFieldName, objectFieldSettings);
 
-		if (!_FEATURE_FLAG) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
 			return;
 		}
 
@@ -166,9 +166,6 @@ public class TextObjectFieldBusinessType implements ObjectFieldBusinessType {
 			}
 		}
 	}
-
-	private static final boolean _FEATURE_FLAG = GetterUtil.getBoolean(
-		PropsUtil.get("feature.flag.LPS-146889"));
 
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;

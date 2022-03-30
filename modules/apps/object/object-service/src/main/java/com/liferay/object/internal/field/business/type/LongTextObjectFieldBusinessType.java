@@ -57,7 +57,7 @@ public class LongTextObjectFieldBusinessType
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
-		if (!_FEATURE_FLAG) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
 			return ObjectFieldBusinessType.super.
 				getAllowedObjectFieldSettingsNames();
 		}
@@ -105,7 +105,7 @@ public class LongTextObjectFieldBusinessType
 			"displayStyle", "multiline"
 		).build();
 
-		if (!_FEATURE_FLAG) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
 			return properties;
 		}
 
@@ -123,7 +123,7 @@ public class LongTextObjectFieldBusinessType
 
 	@Override
 	public Set<String> getRequiredObjectFieldSettingsNames() {
-		if (!_FEATURE_FLAG) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
 			return ObjectFieldBusinessType.super.
 				getRequiredObjectFieldSettingsNames();
 		}
@@ -140,7 +140,7 @@ public class LongTextObjectFieldBusinessType
 		ObjectFieldBusinessType.super.validateObjectFieldSettings(
 			objectFieldName, objectFieldSettings);
 
-		if (!_FEATURE_FLAG) {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146889"))) {
 			return;
 		}
 
@@ -170,9 +170,6 @@ public class LongTextObjectFieldBusinessType
 			}
 		}
 	}
-
-	private static final boolean _FEATURE_FLAG = GetterUtil.getBoolean(
-		PropsUtil.get("feature.flag.LPS-146889"));
 
 	@Reference
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;

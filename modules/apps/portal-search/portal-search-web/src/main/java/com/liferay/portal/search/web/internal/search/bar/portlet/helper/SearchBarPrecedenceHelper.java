@@ -31,7 +31,6 @@ import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortle
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,11 +46,17 @@ public class SearchBarPrecedenceHelper {
 
 		List<Portlet> portlets = _getPortlets(themeDisplay);
 
-		Stream<Portlet> stream = portlets.stream();
+		Portlet headerSearchBarPortlet = null;
 
-		return stream.filter(
-			this::_isHeaderSearchBar
-		).findAny();
+		for (Portlet portlet : portlets) {
+			if (_isHeaderSearchBar(portlet)) {
+				headerSearchBarPortlet = portlet;
+
+				break;
+			}
+		}
+
+		return Optional.ofNullable(headerSearchBarPortlet);
 	}
 
 	public boolean isDisplayWarningIgnoredConfiguration(

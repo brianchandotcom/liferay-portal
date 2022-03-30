@@ -26,7 +26,7 @@ const KORONEIKI_ACCOUNTS_EVENT_NAME =
 const SELECTED_KORONEIKI_ACCOUNT_EVENT_NAME = 'customer-portal-project-loading';
 
 const DELAY_TYPING_TIME = 500;
-const MAX_ITEM_BEFORE_FILTER = 10;
+const MAX_ITEM_BEFORE_FILTER = 9;
 
 const eventFetchMoreData = Liferay.publish(
 	'customer-portal-fetch-more-koroneiki-accounts'
@@ -205,7 +205,7 @@ const DropDown = memo(
 							spritemap={spritemap}
 							symbolRight={isSelected ? 'check' : ''}
 						>
-							{koroneikiAccount.name || koroneikiAccount.code}
+							{koroneikiAccount.name}
 						</ClayDropDown.Item>
 					);
 				}),
@@ -225,8 +225,7 @@ const DropDown = memo(
 				trigger={
 					<Button className="align-items-center bg-white cp-project-breadcrumbs-toggle d-flex p-0">
 						<div className="font-weight-bold h5 m-0 text-neutral-9">
-							{selectedKoroneikiAccount.name ||
-								selectedKoroneikiAccount.code}
+							{selectedKoroneikiAccount.name}
 						</div>
 
 						<span className="inline-item inline-item-after position-absolute text-brand-primary">

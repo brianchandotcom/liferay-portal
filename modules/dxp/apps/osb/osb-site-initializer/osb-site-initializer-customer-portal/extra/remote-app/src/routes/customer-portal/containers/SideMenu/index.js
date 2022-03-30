@@ -15,6 +15,7 @@ import {Link} from 'react-router-dom';
 import Button from '../../../../common/components/Button';
 import {useCustomerPortal} from '../../context';
 import {MENU_TYPES, PAGE_TYPES, PRODUCT_TYPES} from '../../utils/constants';
+import {PRODUCT_PAGE_TYPES} from '../../utils/constants/productPageTypes';
 import {getCamelCase} from '../../utils/getCamelCase';
 import SideMenuSkeleton from './Skeleton';
 
@@ -135,47 +136,55 @@ const SideMenu = ({getCurrentPage, subscriptionGroups}) => {
 								)}
 								ref={productActivationButtonRef}
 							>
-								{subscriptionGroups.map(({name}) => {
-									const currentSubscription = name
-										.split(' ')[0]
-										.toLowerCase();
+								{subscriptionGroups
+									.filter(({name}) =>
+										Object.values(
+											PRODUCT_PAGE_TYPES
+										).includes(name)
+									)
+									.map(({name}) => {
+										const currentSubscription = name
+											.split(' ')[0]
+											.toLowerCase();
 
-									const redirectPage =
-										PAGE_TYPES[getSubscriptionKey(name)];
+										const redirectPage =
+											PAGE_TYPES[
+												getSubscriptionKey(name)
+											];
 
-									const hasProductSelected =
-										currentMenuSelected === name;
+										const hasProductSelected =
+											currentMenuSelected === name;
 
-									const iconPath = `${assetsPath}/assets/navigation-menu/${currentSubscription}_icon${
-										hasProductSelected ? '' : '_gray'
-									}.svg`;
+										const iconPath = `${assetsPath}/assets/navigation-menu/${currentSubscription}_icon${
+											hasProductSelected ? '' : '_gray'
+										}.svg`;
 
-									return (
-										<li key={name}>
-											<Link
-												to={`${ACTIVATION_PATH}${redirectPage}`}
-											>
-												<Button
-													className={classNames(
-														'align-items-center btn-borderless d-flex mt-1 px-3 py-2 rounded text-neutral-10',
-														{
-															'cp-menu-btn-active': hasProductSelected,
-														}
-													)}
-													isImagePrependIcon
-													onClick={() =>
-														setCurrentMenuSelected(
-															name
-														)
-													}
-													prependIcon={iconPath}
+										return (
+											<li key={name}>
+												<Link
+													to={`${ACTIVATION_PATH}${redirectPage}`}
 												>
-													{name}
-												</Button>
-											</Link>
-										</li>
-									);
-								})}
+													<Button
+														className={classNames(
+															'align-items-center btn-borderless d-flex mt-1 px-3 py-2 rounded text-neutral-10',
+															{
+																'cp-menu-btn-active': hasProductSelected,
+															}
+														)}
+														isImagePrependIcon
+														onClick={() =>
+															setCurrentMenuSelected(
+																name
+															)
+														}
+														prependIcon={iconPath}
+													>
+														{name}
+													</Button>
+												</Link>
+											</li>
+										);
+									})}
 							</ul>
 						</li>
 					);

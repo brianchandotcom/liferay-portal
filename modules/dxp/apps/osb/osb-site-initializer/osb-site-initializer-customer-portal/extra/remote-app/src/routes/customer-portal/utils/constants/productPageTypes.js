@@ -9,23 +9,11 @@
  * distribution rights of the Software.
  */
 
-import {Navigate, useOutletContext, useParams} from 'react-router-dom';
-
-const ProductsOutlet = () => {
-	const {accountKey, productId} = useParams();
-
-	const {
-		activationComponents,
-		hasAccessToCurrentProduct,
-	} = useOutletContext();
-
-	const currentProduct = activationComponents[productId];
-
-	if (!currentProduct || !hasAccessToCurrentProduct) {
-		return <Navigate replace={true} to={`/${accountKey}`} />;
-	}
-
-	return currentProduct;
+export const PRODUCT_PAGE_TYPES = {
+	analyticsCloud: 'Analytics Cloud',
+	commerce: 'Commerce',
+	dxp: 'DXP',
+	dxpCloud: 'DXP Cloud',
+	enterpriseSearch: 'Enterprise Search',
+	portal: 'Portal',
 };
-
-export default ProductsOutlet;

@@ -30,7 +30,7 @@ export default function usePaginatedKoroneikiAccounts(userAccount) {
 
 	const getFilterKoroneikiAccountsBySearch = useCallback(
 		(searchTerm) => {
-			const filterBySearch = `contains(name, '${searchTerm}') or contains(code, '${searchTerm}')`;
+			const filterBySearch = `contains(name, '${searchTerm}')`;
 
 			return searchTerm
 				? filterKoroneikiAccounts

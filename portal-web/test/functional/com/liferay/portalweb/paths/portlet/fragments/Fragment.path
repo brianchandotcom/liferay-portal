@@ -34,7 +34,7 @@
 </tr>
 <tr>
 	<td>CONTENT_DISPLAY_ASSET_SUMMARY_TEXT</td>
-	<td>//*[contains(@class,'asset-summary')] | //div[contains(@class, 'text-lg-left')]</td>
+	<td>//div[contains(@class, 'text-lg-left')]/ul/li</td>
 	<td></td>
 </tr>
 <tr>

@@ -550,8 +550,8 @@ export function getDefaultValue(item) {
  * The elementDefinition's configuration is updated to have its variables replaced with
  * values from uiConfigurationValues.
  *
- * @param {object} _.sxpElement SXP Element with title, description, elementDefinition
- * @param {object} _.uiConfigurationValues Values that will replace the keys in uiConfiguration
+ * @param {object} sxpElement SXP Element with title, description, elementDefinition
+ * @param {object} uiConfigurationValues Values that will replace the keys in uiConfiguration
  * @return {object}
  */
 export function getSXPElementJSON(sxpElement, uiConfigurationValues) {

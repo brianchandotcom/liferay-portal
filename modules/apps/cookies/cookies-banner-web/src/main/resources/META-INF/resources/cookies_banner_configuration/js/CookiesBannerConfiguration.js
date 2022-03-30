@@ -23,35 +23,6 @@ export default function () {
 		'.toggle-switch-check-personalization'
 	);
 
-	function setCookie(name, value, days = 180) {
-		var date = new Date();
-
-		date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-
-		var expires = '; expires=' + date.toUTCString();
-
-		document.cookie = name + '=' + (value || '') + expires + '; path=/';
-	}
-
-	function getCookie(name) {
-		var cookieName = name + '=';
-		var cookieSet = document.cookie.split(';');
-
-		for (var i = 0; i < cookieSet.length; i++) {
-			var c = cookieSet[i];
-
-			while (c.charAt(0) === ' ') {
-				c = c.substring(1, c.length);
-			}
-
-			if (c.indexOf(cookieName) === 0) {
-				return c.substring(cookieName.length, c.length);
-			}
-		}
-
-		return null;
-	}
-
 	if (getCookie('liferay.cookie.consent.functional') === 'accepted') {
 		toggleFunctional.checked = true;
 	}
@@ -66,7 +37,7 @@ export default function () {
 
 	toggleFunctional.addEventListener(
 		'click',
-		function handletoggleFunctional() {
+		function handleToggleFunctional() {
 			if (toggleFunctional.checked) {
 				setCookie('liferay.cookie.consent.functional', 'accepted');
 			}
@@ -90,7 +61,7 @@ export default function () {
 
 	togglePersonalization.addEventListener(
 		'click',
-		function handletogglePersonalization() {
+		function handleTogglePersonalization() {
 			if (togglePersonalization.checked) {
 				setCookie('liferay.cookie.consent.personalization', 'accepted');
 			}
@@ -103,4 +74,33 @@ export default function () {
 	toggleFunctional.removeAttribute('disabled');
 	togglePerformance.removeAttribute('disabled');
 	togglePersonalization.removeAttribute('disabled');
+}
+
+function getCookie(name) {
+	const cookieName = name + '=';
+	const cookieSet = document.cookie.split(';');
+
+	for (let i = 0; i < cookieSet.length; i++) {
+		let c = cookieSet[i];
+
+		while (c.charAt(0) === ' ') {
+			c = c.substring(1, c.length);
+		}
+
+		if (c.indexOf(cookieName) === 0) {
+			return c.substring(cookieName.length, c.length);
+		}
+	}
+
+	return null;
+}
+
+function setCookie(name, value, days = 180) {
+	const date = new Date();
+
+	date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+
+	const expires = '; expires=' + date.toUTCString();
+
+	document.cookie = name + '=' + (value || '') + expires + '; path=/';
 }

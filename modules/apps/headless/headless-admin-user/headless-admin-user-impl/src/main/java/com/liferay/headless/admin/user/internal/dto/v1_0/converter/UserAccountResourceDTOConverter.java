@@ -53,9 +53,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.TransformUtil;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -221,12 +218,12 @@ public class UserAccountResourceDTOConverter
 					});
 				setRoleBriefs(
 					() -> {
-						List<Role> userRoles = (contact != null) ?
-							_roleService.getUserRoles(user.getUserId()) :
-								Collections.emptyList();
+						if (contact == null) {
+							return new RoleBrief[0];
+						}
 
 						return TransformUtil.transformToArray(
-							userRoles,
+							_roleService.getUserRoles(user.getUserId()),
 							role -> _toRoleBrief(dtoConverterContext, role),
 							RoleBrief.class);
 					});

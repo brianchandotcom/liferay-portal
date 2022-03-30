@@ -15,6 +15,7 @@
 package com.liferay.segments.configuration.provider.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
@@ -33,6 +34,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+
 /**
  * @author Cristina González
  */
@@ -43,6 +47,109 @@ public class SegmentsConfigurationProviderTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testIsRoleSegmentationEnabled() throws Exception {
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					SegmentsConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"roleSegmentationEnabled", true
+					).build())) {
+
+			Assert.assertTrue(
+				_segmentsConfigurationProvider.isRoleSegmentationEnabled(
+					TestPropsValues.getCompanyId()));
+		}
+	}
+
+	@Test
+	public void testIsRoleSegmentationEnabledWithCompanyConfigurationDisabled()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					SegmentsConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"roleSegmentationEnabled", true
+					).build())) {
+
+			Configuration configuration =
+				_configurationAdmin.createFactoryConfiguration(
+					SegmentsCompanyConfiguration.class.getName() + ".scoped",
+					StringPool.QUESTION);
+
+			configuration.update(
+				HashMapDictionaryBuilder.<String, Object>put(
+					"companyId", TestPropsValues.getCompanyId()
+				).put(
+					"roleSegmentationEnabled", false
+				).build());
+
+			try (CompanyConfigurationTemporarySwapper
+					companyConfigurationTemporarySwapper =
+						new CompanyConfigurationTemporarySwapper(
+							TestPropsValues.getCompanyId(),
+							SegmentsCompanyConfiguration.class.getName(),
+							HashMapDictionaryBuilder.<String, Object>put(
+								"roleSegmentationEnabled", false
+							).build(),
+							SettingsFactoryUtil.getSettingsFactory())) {
+
+				Assert.assertFalse(
+					_segmentsConfigurationProvider.isRoleSegmentationEnabled(
+						TestPropsValues.getCompanyId()));
+			}
+			finally {
+				configuration.delete();
+			}
+		}
+	}
+
+	@Test
+	public void testIsRoleSegmentationEnabledWithCompanyConfigurationEnabled()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					SegmentsConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"roleSegmentationEnabled", true
+					).build())) {
+
+			try (CompanyConfigurationTemporarySwapper
+					companyConfigurationTemporarySwapper =
+						new CompanyConfigurationTemporarySwapper(
+							TestPropsValues.getCompanyId(),
+							SegmentsCompanyConfiguration.class.getName(),
+							HashMapDictionaryBuilder.<String, Object>put(
+								"roleSegmentationEnabled", true
+							).build(),
+							SettingsFactoryUtil.getSettingsFactory())) {
+
+				Assert.assertTrue(
+					_segmentsConfigurationProvider.isRoleSegmentationEnabled(
+						TestPropsValues.getCompanyId()));
+			}
+		}
+	}
+
+	@Test
+	public void testIsRoleSegmentationEnabledWithRoleSegmentationDisabled()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					SegmentsConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"roleSegmentationEnabled", false
+					).build())) {
+
+			Assert.assertFalse(
+				_segmentsConfigurationProvider.isRoleSegmentationEnabled(
+					TestPropsValues.getCompanyId()));
+		}
+	}
 
 	@Test
 	public void testIsSegmentationEnabled() throws Exception {
@@ -70,6 +177,18 @@ public class SegmentsConfigurationProviderTest {
 						"segmentationEnabled", true
 					).build())) {
 
+			Configuration configuration =
+				_configurationAdmin.createFactoryConfiguration(
+					SegmentsCompanyConfiguration.class.getName() + ".scoped",
+					StringPool.QUESTION);
+
+			configuration.update(
+				HashMapDictionaryBuilder.<String, Object>put(
+					"companyId", TestPropsValues.getCompanyId()
+				).put(
+					"roleSegmentationEnabled", false
+				).build());
+
 			try (CompanyConfigurationTemporarySwapper
 					companyConfigurationTemporarySwapper =
 						new CompanyConfigurationTemporarySwapper(
@@ -83,6 +202,9 @@ public class SegmentsConfigurationProviderTest {
 				Assert.assertFalse(
 					_segmentsConfigurationProvider.isSegmentationEnabled(
 						TestPropsValues.getCompanyId()));
+			}
+			finally {
+				configuration.delete();
 			}
 		}
 	}
@@ -131,6 +253,9 @@ public class SegmentsConfigurationProviderTest {
 					TestPropsValues.getCompanyId()));
 		}
 	}
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private SegmentsConfigurationProvider _segmentsConfigurationProvider;

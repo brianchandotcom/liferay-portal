@@ -32,15 +32,6 @@ import org.json.JSONObject;
 public class JobFactory {
 
 	public static String getKey(Job job) {
-		PortalGitWorkingDirectory portalGitWorkingDirectory = null;
-
-		if (job instanceof PortalTestClassJob) {
-			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
-
-			portalGitWorkingDirectory =
-				portalTestClassJob.getPortalGitWorkingDirectory();
-		}
-
 		List<String> projectNames = null;
 
 		if (job instanceof QAWebsitesGitRepositoryJob) {
@@ -55,10 +46,7 @@ public class JobFactory {
 		if (job instanceof GitRepositoryJob) {
 			GitRepositoryJob gitRepositoryJob = (GitRepositoryJob)job;
 
-			GitWorkingDirectory gitWorkingDirectory =
-				gitRepositoryJob.getGitWorkingDirectory();
-
-			repositoryName = gitWorkingDirectory.getGitRepositoryName();
+			repositoryName = gitRepositoryJob.getRepositoryName();
 		}
 
 		String testSuiteName = "default";
@@ -77,10 +65,34 @@ public class JobFactory {
 			upstreamBranchName = gitRepositoryJob.getUpstreamBranchName();
 		}
 
+		String portalUpstreamBranchName = null;
+
+		if (job instanceof PortalTestClassJob) {
+			PortalTestClassJob portalTestClassJob = (PortalTestClassJob)job;
+
+			PortalGitWorkingDirectory portalGitWorkingDirectory =
+				portalTestClassJob.getPortalGitWorkingDirectory();
+
+			portalUpstreamBranchName =
+				portalGitWorkingDirectory.getUpstreamBranchName();
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(repositoryName)) {
+				repositoryName =
+					portalGitWorkingDirectory.getGitRepositoryName();
+			}
+
+			if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+				upstreamBranchName = portalUpstreamBranchName;
+			}
+		}
+		else if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+			portalUpstreamBranchName = upstreamBranchName;
+		}
+
 		return getKey(
-			job.getBuildProfile(), job.getJobName(), portalGitWorkingDirectory,
-			null, projectNames, repositoryName, testSuiteName,
-			upstreamBranchName);
+			job.getBuildProfile(), job.getJobName(), null,
+			portalUpstreamBranchName, projectNames, repositoryName,
+			testSuiteName, upstreamBranchName);
 	}
 
 	public static String getKey(
@@ -101,11 +113,16 @@ public class JobFactory {
 
 		sb.append(jobName);
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName) &&
-			(portalGitWorkingDirectory != null)) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
+			if (portalGitWorkingDirectory != null) {
+				portalUpstreamBranchName =
+					portalGitWorkingDirectory.getUpstreamBranchName();
+			}
+			else if (JenkinsResultsParserUtil.isNullOrEmpty(
+						upstreamBranchName)) {
 
-			portalUpstreamBranchName =
-				portalGitWorkingDirectory.getUpstreamBranchName();
+				portalUpstreamBranchName = upstreamBranchName;
+			}
 		}
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(portalUpstreamBranchName)) {
@@ -589,10 +606,6 @@ public class JobFactory {
 		}
 
 		_jobs.put(key, job);
-
-		if (jsonObject == null) {
-			buildDatabase.putJob(key, job);
-		}
 
 		return _jobs.get(key);
 	}

@@ -31,7 +31,7 @@ import org.json.JSONObject;
 public abstract class GitRepositoryJob extends BaseJob {
 
 	public String getBranchName() {
-		return _upstreamBranchName;
+		return getUpstreamBranchName();
 	}
 
 	public GitWorkingDirectory getGitWorkingDirectory() {
@@ -72,6 +72,14 @@ public abstract class GitRepositoryJob extends BaseJob {
 		jsonObject.put("upstream_branch_name", _upstreamBranchName);
 
 		return jsonObject;
+	}
+
+	public String getRepositoryName() {
+		String gitRepositoryDirPath = JenkinsResultsParserUtil.getCanonicalPath(
+			gitRepositoryDir);
+
+		return JenkinsResultsParserUtil.getGitRepositoryName(
+			gitRepositoryDirPath.replaceAll(".*/([^/]+)", "$1"));
 	}
 
 	public String getUpstreamBranchName() {

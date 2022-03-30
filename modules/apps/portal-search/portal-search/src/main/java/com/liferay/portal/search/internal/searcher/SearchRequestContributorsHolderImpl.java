@@ -90,15 +90,13 @@ public class SearchRequestContributorsHolderImpl
 		Collection<SearchRequestContributor> collection,
 		Collection<String> ids) {
 
-		Stream<String> stream = ids.stream();
+		for (String id : ids) {
+			Object searchRequestContributor = _serviceTrackerMap.getService(id);
 
-		stream.map(
-			_serviceTrackerMap::getService
-		).filter(
-			Objects::nonNull
-		).forEach(
-			collection::removeAll
-		);
+			if (Objects.nonNull(searchRequestContributor)) {
+				collection.remove(searchRequestContributor);
+			}
+		}
 	}
 
 	private Collection<SearchRequestContributor> _include(

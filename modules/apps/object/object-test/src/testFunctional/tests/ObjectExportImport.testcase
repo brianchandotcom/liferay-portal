@@ -49,12 +49,28 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify it is possible to clear the JSON file on the import dialog"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanClearJsonFile {
+		ObjectAdmin.openObjectAdmin();
 
-		// TODO LPS-146368 CanClearJsonFile pending implementation
+		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
+		Click(
+			locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_MENUITEM",
+			key_menuItem = "Import Object");
+
+		var filePath = TestCase.getDependenciesDirPath(fileName = "ImportedSimpleObject.json");
+
+		UploadFile(
+			locator1 = "TextInput#FILE",
+			value1 = "${filePath}");
+
+		Button.click(button = "Clear");
+
+		AssertElementNotPresent(
+			locator1 = "ObjectAdmin#OBJECT_IMPORT_FIELDS",
+			fieldName = "JSON File",
+			valueName = "ImportedSimpleObject.json");
 	}
 
 	@description = "LPS-142175 - Verify if it is possible to export the data structure from a custom objects"

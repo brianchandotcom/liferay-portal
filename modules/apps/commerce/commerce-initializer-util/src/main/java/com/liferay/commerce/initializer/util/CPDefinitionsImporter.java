@@ -518,13 +518,12 @@ public class CPDefinitionsImporter {
 				BigDecimal cost = BigDecimal.valueOf(
 					jsonObject.getDouble("cost", 0));
 
+				cpInstance.setManufacturerPartNumber(
+					jsonObject.getString("manufacturerPartNumber"));
 				cpInstance.setPrice(price);
 				cpInstance.setPromoPrice(
 					BigDecimal.valueOf(jsonObject.getDouble("promoPrice", 0)));
 				cpInstance.setCost(cost);
-
-				cpInstance.setManufacturerPartNumber(
-					jsonObject.getString("manufacturerPartNumber"));
 
 				String cpInstanceExternalReferenceCode =
 					_friendlyURLNormalizer.normalize(sku);

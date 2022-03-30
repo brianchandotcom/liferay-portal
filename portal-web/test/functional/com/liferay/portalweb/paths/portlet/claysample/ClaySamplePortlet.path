@@ -106,6 +106,17 @@
 	<td>//section[contains(@id,'portlet_ClaySamplePortlet')]</td>
 	<td></td>
 </tr>
+<!--MANAGEMENT_TOOLBARS-->
+<tr>
+	<td>DISPLAY_CONTEXT_CHECKBOX</td>
+	<td>//div[not(contains(@class,'hide')) and contains(@id, 'tabs')]//h3[text()='USING DISPLAY CONTEXT']//following::nav[contains(@class,'management-bar')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_CONTEXT_CONTAINER</td>
+	<td>//h3[text()='USING DISPLAY CONTEXT']//following::nav[contains(@class,'management-bar')]/*[contains(@class,'container')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -1,1 +1,39 @@
-{"active":false,"objectActions":[],"label":{"en_US":"Imported Object With Scope"},"panelCategoryKey":"control_panel.object","pluralLabel":{"en_US":"Imported Objects With Scope"},"objectLayouts":[],"system":false,"objectViews":[],"objectFields":[],"scope":"company","name":"ImportedObjectWithScope","portlet":false,"actions":{"permissions":{},"get":{},"publish":{},"update":{},"delete":{}},"status":{"label_i18n":"Draft","code":2,"label":"draft"}}
+{
+	"actions": {
+		"delete": {
+		},
+		"get": {
+		},
+		"permissions": {
+		},
+		"publish": {
+		},
+		"update": {
+		}
+	},
+	"active": false,
+	"label": {
+		"en_US": "Imported Object With Scope"
+	},
+	"name": "ImportedObjectWithScope",
+	"objectActions": [
+	],
+	"objectFields": [
+	],
+	"objectLayouts": [
+	],
+	"objectViews": [
+	],
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "Imported Objects With Scope"
+	},
+	"portlet": false,
+	"scope": "company",
+	"status": {
+		"code": 2,
+		"label": "draft",
+		"label_i18n": "Draft"
+	},
+	"system": false
+}

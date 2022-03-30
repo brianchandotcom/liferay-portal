@@ -1,7 +1,7 @@
 definition {
 
-    macro exportObject {
-        ObjectAdmin.selectSpecificKebabMenuOption(
+	macro exportObject {
+		ObjectAdmin.selectSpecificKebabMenuOption(
 			kebabOption = "Export as JSON",
 			objectLabel = "${objectLabel}");
 
@@ -16,7 +16,7 @@ definition {
 		else {
 			fail("FAIL! The file ${tempFileName} doesn't exists.");
 		}
-    }
+	}
 
 	macro importObject {
 		ObjectAdmin.openObjectAdmin();
@@ -24,8 +24,8 @@ definition {
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
 		Click(
-			locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_MENUITEM",
-			key_menuItem = "Import Object");
+			key_menuItem = "Import Object",
+			locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_MENUITEM");
 
 		var filePath = TestCase.getDependenciesDirPath(fileName = "${objectFileName}.json");
 

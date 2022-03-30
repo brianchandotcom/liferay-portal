@@ -32,8 +32,8 @@ definition {
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
 		Click(
-			locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_MENUITEM",
-			key_menuItem = "Import Object");
+			key_menuItem = "Import Object",
+			locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_MENUITEM");
 
 		var filePath = TestCase.getDependenciesDirPath(fileName = "ImportedSimpleObject.json");
 
@@ -56,8 +56,8 @@ definition {
 		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
 
 		Click(
-			locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_MENUITEM",
-			key_menuItem = "Import Object");
+			key_menuItem = "Import Object",
+			locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_MENUITEM");
 
 		var filePath = TestCase.getDependenciesDirPath(fileName = "ImportedSimpleObject.json");
 
@@ -68,8 +68,8 @@ definition {
 		Button.click(button = "Clear");
 
 		AssertElementNotPresent(
-			locator1 = "ObjectAdmin#OBJECT_IMPORT_FIELDS",
 			fieldName = "JSON File",
+			locator1 = "ObjectAdmin#OBJECT_IMPORT_FIELDS",
 			valueName = "ImportedSimpleObject.json");
 	}
 
@@ -86,8 +86,8 @@ definition {
 		ObjectAdmin.openObjectAdmin();
 
 		ObjectExportImport.exportObject(
-			objectName = "CustomObject146357",
-			objectLabel = "Custom Object 146357");
+			objectLabel = "Custom Object 146357",
+			objectName = "CustomObject146357");
 	}
 
 	@description = "LPS-142175 - Verify if it is possible to import the data structure to a custom objects"
@@ -148,12 +148,12 @@ definition {
 			objectName = "ImportedSimpleObject146367B");
 
 		CreateObject.assertCustomObjectWithIndex(
-			labelName = "Imported Simple Object",
-			index = "1");
+			index = "1",
+			labelName = "Imported Simple Object");
 
 		CreateObject.assertCustomObjectWithIndex(
-			labelName = "Imported Simple Object",
-			index = "2");
+			index = "2",
+			labelName = "Imported Simple Object");
 	}
 
 	@description = "LPS-142175 - Verify it's possible to maintain Scope after importing an Object"

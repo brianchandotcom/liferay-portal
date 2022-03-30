@@ -114,12 +114,19 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify it's possible to maintain Scope after importing an Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanImportScope {
+		ObjectExportImport.importObject(
+			objectFileName = "ImportedObjectWithScope",
+			objectName = "ImportedObjectWithScope146370");
 
-		// TODO LPS-146370 CanImportScope pending implementation
+		CreateObject.assertCustomObject(labelName = "Imported Object With Scope");
 
+		ObjectPortlet.selectCustomObject(label = "Imported Object With Scope");
+
+		CreateObject.assertScopeFieldSelected(fieldScope = "Company");
+
+		CreateObject.assertPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
 	}
 
 	@description = "LPS-142175 - Verify it is not possible to maintain Relationships after importing an Object"

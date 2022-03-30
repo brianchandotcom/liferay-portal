@@ -62,12 +62,31 @@ definition {
 	}
 
 	macro viewVisitedTopPages {
-		var key_index = StringUtil.extractFirst("${current}", "-");
-		var value = StringUtil.extractLast("${current}", "-");
+		var list1 = ListUtil.newListFromString("${pageNameList}");
+		var list2 = ListUtil.newListFromString("${positionList}");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
 
-		AssertTextEquals(
-			locator1 = "ACSites#VISITED_TOP_PAGES_CARD",
-			value1 = "${value}");
+		while ("${i}" != "${size}") {
+			var pageName = ListUtil.get("${list1}", "${i}");
+			var position = ListUtil.get("${list2}", "${i}");
+
+			while (IsElementNotPresent(key_pageName = "${pageName}", key_index = "${position}", locator1 = "ACSites#VISITED_TOP_PAGES_CARD") && (maxIterations = "50")) {
+				TestUtils.hardRefresh();
+
+				ACTimeFilter.clickTimeFilterButton(cardName = "Top Pages");
+
+				ACTimeFilter.setLast24Hours();
+			}
+
+			AssertElementPresent(
+				key_pageName = "${pageName}",
+				key_index = "${position}",
+				locator1 = "ACSites#VISITED_TOP_PAGES_CARD");
+
+			var i = ${i} + 1;
+			var i = StringUtil.valueOf("${i}");
+		}
 	}
 
 	macro viewVisitorsOnGraph {

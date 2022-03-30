@@ -22,12 +22,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry;
@@ -80,12 +78,10 @@ public class SegmentsServicePreAction extends Action {
 					groupId, userId,
 					_requestContextMapper.map(httpServletRequest));
 
-			return ArrayUtil.append(
-				_segmentsExperienceRequestProcessorRegistry.
-					getSegmentsExperienceIds(
-						httpServletRequest, httpServletResponse, groupId,
-						classNameId, classPK, segmentsEntryIds),
-				SegmentsExperienceConstants.ID_DEFAULT);
+			return _segmentsExperienceRequestProcessorRegistry.
+				getSegmentsExperienceIds(
+					httpServletRequest, httpServletResponse, groupId,
+					classNameId, classPK, segmentsEntryIds);
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

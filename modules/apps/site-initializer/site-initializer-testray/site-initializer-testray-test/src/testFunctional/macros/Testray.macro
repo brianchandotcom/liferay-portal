@@ -12,6 +12,12 @@ definition {
 			locator1 = "Testray#NUMBER_PAGE_BUTTON");
 	}
 
+	macro assertProjectTitleHeader {
+		AssertElementPresent(
+			key_projectName = "${projectName}",
+			locator1 = "Testray#PROJECT_NAME_HEADER");
+	}
+
 	macro assertShowedItems {
 		AssertElementPresent(
 			key_text = "${itemsText}",
@@ -96,6 +102,10 @@ definition {
 		Click(
 			key_projectName = "${projectName}",
 			locator1 = "Testray#PROJECT_NAME_BUTTON");
+	}
+
+	macro goToTestflow {
+		Click(locator1 = "Testray#TESTFLOW_SIDEBAR");
 	}
 
 	macro projectTabNavigator {

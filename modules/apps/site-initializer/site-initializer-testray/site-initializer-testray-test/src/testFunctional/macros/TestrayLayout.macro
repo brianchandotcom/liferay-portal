@@ -1,0 +1,30 @@
+definition {
+
+	macro assertDropdownOnSidebar {
+		AssertElementPresent(locator1 = "TestrayLayout#DROPDOWN_ON_SIDEBAR");
+	}
+
+	macro clickLogoOnSidebar {
+		Click(locator1 = "TestrayLayout#TESTRAY_LOGO_SIDEBAR");
+	}
+
+    macro clickResultsOnSidebar {
+		Click(locator1 = "TestrayLayout#RESULTS_SIDEBAR");
+	}
+
+    macro clickManageOnSidebar {
+		Click(locator1 = "TestrayLayout#MANAGE_SIDEBAR");
+	}
+
+    macro clickUserOnSidebar {
+		Click(locator1 = "TestrayLayout#USER_SIDEBAR");
+	}
+    
+    macro assertTabPageTitle {
+		Click(
+			key_pageTabTilte = "${pageTabTilte}",
+			locator1 = "TestrayLayout#PAGE_TAB_TITLE");
+	}
+
+
+}

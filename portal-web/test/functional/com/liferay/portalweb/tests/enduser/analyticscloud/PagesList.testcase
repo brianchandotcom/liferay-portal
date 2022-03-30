@@ -296,6 +296,14 @@ definition {
 		task ("Add pages") {
 			for (var layoutName : list "AC Page 2,AC Page 3") {
 				ACUtils.addPage(layoutName = "${layoutName}");
+
+				Navigator.gotoSitePage(
+					pageName = "${layoutName}",
+					siteName = "Site Name");
+
+				ACUtils.addWidgetToPage(
+					layoutName = "${layoutName}",
+					widgetName = "Blogs");
 			}
 		}
 
@@ -305,10 +313,15 @@ definition {
 				userFirstName = "ac",
 				userLastName = "ac",
 				userScreenName = "ac");
+
+			JSONUser.setFirstPassword(
+				agreeToTermsAndAnswerReminderQuery = "true",
+				requireReset = "false",
+				userEmailAddress = "ac@liferay.com");
 		}
 
-		task ("Get site assigned property name") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+		task ("Connect DXP to AC") {
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Sign in with the new user to visit the site pages") {
@@ -318,6 +331,8 @@ definition {
 
 			for (var pageName : list "AC Page,AC Page 2,AC Page 3") {
 				ACUtils.navigateToSitePage(
+					actionType = "View Blog",
+					documentTitleList = "Blogs AC Title",
 					pageName = "${pageName}",
 					siteName = "Site Name");
 			}
@@ -328,7 +343,7 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Go to sites pages tab") {
@@ -343,10 +358,11 @@ definition {
 			ACTimeFilter.setLast24Hours();
 		}
 
-		// Couldn't assert the list due to missing data.
-
 		task ("Assert that the page list is beeing showed") {
-			ACUtils.assertItemsName(itemList = "AC Page,AC Page 2, AC Page 3");
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
+			var pageNameList = "AC Page - Site Name - ${dataSourceName},AC Page 2 - Site Name - ${dataSourceName},AC Page 3 - Site Name - ${dataSourceName}";
+			
+			ACUtils.viewNameList(nameList = "${pageNameList}");
 		}
 	}
 

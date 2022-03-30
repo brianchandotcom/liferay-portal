@@ -535,7 +535,7 @@ definition {
 		task ("Site and blogs creation and connection with AC") {
 			ACUtils.createBlogsAndAddToPage();
 
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Interation with pages") {
@@ -551,13 +551,10 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Go to Sites Pages") {
-
-			// Unable to perform the declaration because the data does not appear at the time
-
 			ACNavigation.switchTab(tabName = "Pages");
 
 			ACTimeFilter.clickTimeFilterButton();
@@ -566,7 +563,9 @@ definition {
 		}
 
 		task ("Assert the unique visitors label is shown") {
-			ACNavigation.openItem(itemName = "Blogs AC Title");
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+			ACNavigation.openItem(itemName = "Blogs AC Title - Site Name - ${dataSourceName}");
 
 			ACAssets.viewVisitorsBehaviorMetric(
 				metricTitle = "Unique Visitors",

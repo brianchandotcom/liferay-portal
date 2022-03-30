@@ -168,6 +168,11 @@ definition {
 					userFirstName = "${name}",
 					userLastName = "${name}",
 					userScreenName = "${name}");
+
+				JSONUser.setFirstPassword(
+					agreeToTermsAndAnswerReminderQuery = "true",
+					requireReset = "false",
+					userEmailAddress = "${name}@liferay.com");
 			}
 		}
 
@@ -178,7 +183,7 @@ definition {
 		}
 
 		task ("Connect Analytics Cloud to DXP") {
-			var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
+			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 
 		task ("Access the page as a Test user") {
@@ -192,13 +197,15 @@ definition {
 				userLoginEmailAddress = "ac@liferay.com",
 				userLoginFullName = "ac ac");
 
-			for (var n : list "${num}") {
-				ACUtils.navigateToSitePage(
-					actionType = "View Blog",
-					documentTitleList = "Test Blog ${n}",
-					pageName = "AC Page",
-					siteName = "Site Name");
-			}
+			ACUtils.navigateToSitePage(
+				actionType = "View Blog",
+				documentTitleList = "Test Blog 1,Test Blog 2",
+				pageName = "AC Page",
+				siteName = "Site Name");
+		}
+
+		task ("Close sessions") {
+			ACUtils.closeAllSessionsAndWait();
 		}
 
 		task ("Interation with liferay user") {
@@ -218,20 +225,19 @@ definition {
 
 			ACUtils.launchAC();
 
-			ACProperties.switchProperty(propertyName = "${propertyName}");
+			ACProperties.switchProperty(propertyName = "${assignedPropertyName}");
 		}
 
 		task ("Asset highest views pages Top Pages") {
-
-			// Unable to perform the declaration because the data does not appear at the time
-
 			ACTimeFilter.clickTimeFilterButton(cardName = "Top Pages");
 
 			ACTimeFilter.setLast24Hours();
 
-			for (var current : list "1-AC Page,2-Test Blog 2,3-Test Blog 1") {
-				ACSites.viewVisitedTopPages(current = "${current}");
-			}
+			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
+
+			ACSites.viewVisitedTopPages(
+				positionList = "1,2,3",
+				pageNameList = "Test Blog 2 - Site Name - ${dataSourceName},AC Page - Site Name - ${dataSourceName},Test Blog 1 - Site Name - ${dataSourceName}");
 		}
 	}
 

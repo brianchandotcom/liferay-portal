@@ -84,6 +84,17 @@ const getSelectedNodeIds = (
 		: fragmentEntryKeys;
 };
 
+const searchHasResults = (nodes = [], filter) => {
+	return (
+		!filter ||
+		nodes.some(
+			(node) =>
+				node.name?.toLowerCase().includes(filter.toLowerCase()) ||
+				searchHasResults(node.children, filter)
+		)
+	);
+};
+
 const AllowedFragmentSelector = ({dropZoneConfig, onSelectedFragment}) => {
 	const fragments = useSelector((state) => state.fragments);
 
@@ -116,13 +127,10 @@ const AllowedFragmentSelector = ({dropZoneConfig, onSelectedFragment}) => {
 		)
 	);
 
-	const isFragmentSearchResults = fragments.some((fragment) =>
-		fragment.fragmentEntries.some(
-			(fragmentEntry) =>
-				fragmentEntry.fragmentEntryKey &&
-				fragmentEntry.name?.toLowerCase().includes(filter.toLowerCase())
-		)
-	);
+	const hasResults = useMemo(() => searchHasResults(nodes, filter), [
+		nodes,
+		filter,
+	]);
 
 	useEffect(() => {
 		const newFragmentEntryKeys = getSelectedNodeIds(
@@ -153,7 +161,7 @@ const AllowedFragmentSelector = ({dropZoneConfig, onSelectedFragment}) => {
 					type="text"
 				/>
 
-				{isFragmentSearchResults ? (
+				{hasResults ? (
 					<div className="mb-2 page-editor__allowed-fragment__tree pl-2">
 						<Treeview
 							NodeComponent={AllowedFragmentTreeNode}

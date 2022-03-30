@@ -14,6 +14,8 @@
 
 package com.liferay.segments.internal.configuration.provider;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -21,8 +23,13 @@ import com.liferay.segments.configuration.SegmentsCompanyConfiguration;
 import com.liferay.segments.configuration.SegmentsConfiguration;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 
+import java.io.IOException;
+
 import java.util.Map;
 
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
@@ -46,6 +53,10 @@ public class SegmentsConfigurationProviderImpl
 			return false;
 		}
 
+		if (!_isSegmentsCompanyConfigurationDefined(companyId)) {
+			return _segmentsConfiguration.roleSegmentationEnabled();
+		}
+
 		SegmentsCompanyConfiguration segmentsCompanyConfiguration =
 			_configurationProvider.getCompanyConfiguration(
 				SegmentsCompanyConfiguration.class, companyId);
@@ -65,6 +76,10 @@ public class SegmentsConfigurationProviderImpl
 			return false;
 		}
 
+		if (!_isSegmentsCompanyConfigurationDefined(companyId)) {
+			return _segmentsConfiguration.segmentationEnabled();
+		}
+
 		SegmentsCompanyConfiguration segmentsCompanyConfiguration =
 			_configurationProvider.getCompanyConfiguration(
 				SegmentsCompanyConfiguration.class, companyId);
@@ -82,6 +97,32 @@ public class SegmentsConfigurationProviderImpl
 		_segmentsConfiguration = ConfigurableUtil.createConfigurable(
 			SegmentsConfiguration.class, properties);
 	}
+
+	private boolean _isSegmentsCompanyConfigurationDefined(long companyId)
+		throws ConfigurationException {
+
+		try {
+			String filterString = StringBundler.concat(
+				"(&(", ConfigurationAdmin.SERVICE_FACTORYPID, StringPool.EQUAL,
+				SegmentsCompanyConfiguration.class.getName(), ".scoped",
+				")(companyId=", companyId, "))");
+
+			Configuration[] configuration =
+				_configurationAdmin.listConfigurations(filterString);
+
+			if (configuration != null) {
+				return true;
+			}
+
+			return false;
+		}
+		catch (InvalidSyntaxException | IOException exception) {
+			throw new ConfigurationException(exception);
+		}
+	}
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

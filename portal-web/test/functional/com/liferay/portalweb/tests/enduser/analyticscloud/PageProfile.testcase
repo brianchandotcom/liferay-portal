@@ -38,7 +38,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8112 | Test Summary: Assert clicking on a page in the pages lists navigates to the page profile"
 	@priority = "5"
 	test ClickOnPageInPagesListsNavigatesToPageProfile {
-		task ("Connect DXP to Analytics Cloud and get the property name") {
+		task ("Connect DXP to Analytics Cloud") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 

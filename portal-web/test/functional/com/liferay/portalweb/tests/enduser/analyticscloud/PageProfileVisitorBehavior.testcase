@@ -72,7 +72,7 @@ definition {
 				userLoginFullName = "userfn userln");
 		}
 
-		task ("View the blog") {
+		task ("View the blog page") {
 			ACUtils.navigateToSitePage(
 				actionType = "View Blog",
 				documentTitleList = "Blogs AC Title",

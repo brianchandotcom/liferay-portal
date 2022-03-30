@@ -58,7 +58,7 @@ definition {
 			}
 		}
 
-		task ("Get site assigned property name") {
+		task ("Connect DXP to AC") {
 			ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 		}
 

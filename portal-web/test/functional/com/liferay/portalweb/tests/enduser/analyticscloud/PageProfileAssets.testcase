@@ -101,7 +101,7 @@ definition {
 			ACCards.viewCards(cardTitle = "Displayed Assets");
 		}
 
-		task ("Assert Blog and WC on the List") {
+		task ("Assert Blog on the List") {
 			for (var assetName : list "Blogs AC Title,Blogs") {
 				AssertElementPresent(
 					key_nameList = "${assetName}",

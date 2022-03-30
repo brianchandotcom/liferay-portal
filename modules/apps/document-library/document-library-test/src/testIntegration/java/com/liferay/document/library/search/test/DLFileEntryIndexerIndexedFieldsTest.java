@@ -81,13 +81,13 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 			PermissionCheckerMethodTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
-	public FileEntry addFileEntry(String fileName) throws IOException {
+	public long addFileEntry(String fileName) throws IOException {
 		Class<?> clazz = getClass();
 
 		try (InputStream inputStream = clazz.getResourceAsStream(
 				"dependencies/" + fileName)) {
 
-			return fileEntrySearchFixture.addFileEntry(
+			FileEntry fileEntry = fileEntrySearchFixture.addFileEntry(
 				new FileEntryBlueprint() {
 					{
 						setFileName(fileName);
@@ -97,6 +97,8 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 						setUserId(dlFixture.getUserId());
 					}
 				});
+
+			return fileEntry.getFileEntryId();
 		}
 	}
 
@@ -130,14 +132,15 @@ public class DLFileEntryIndexerIndexedFieldsTest extends BaseDLIndexerTestCase {
 
 		String searchTerm = "新規";
 
-		FileEntry fileEntry = addFileEntry(fileName_jp);
+		long fileEntryId = addFileEntry(fileName_jp);
 
 		Document document = dlSearchFixture.searchOnlyOneSearchHit(
 			searchTerm, LocaleUtil.JAPAN);
 
 		Map<String, String> map = new HashMap<>();
 
-		populateExpectedFieldValues(fileEntry, map);
+		populateExpectedFieldValues(
+			dlAppLocalService.getFileEntry(fileEntryId), map);
 
 		FieldValuesAssert.assertFieldValues(searchTerm, document, map);
 	}

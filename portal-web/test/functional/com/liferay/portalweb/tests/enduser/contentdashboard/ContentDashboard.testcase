@@ -2407,7 +2407,7 @@ definition {
 				value1 = "Blogs Entry Title");
 		}
 	}
-	
+
 	@description = "LPS-150558 Given The Filter and Order dropdown
 	When the user selects the option Filter by Author: Me
 	Then the list of contents displays content where the user is the creator, including Blogs"

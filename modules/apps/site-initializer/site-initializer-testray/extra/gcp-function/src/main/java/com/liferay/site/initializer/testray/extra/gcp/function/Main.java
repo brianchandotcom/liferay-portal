@@ -904,7 +904,7 @@ public class Main {
 
 			Files.write(tempFilePath, bytes);
 
-			Archiver archiver = ArchiverFactory.createArchiver("tar", "gz");
+			Archiver archiver = ArchiverFactory.createArchiver("tar");
 
 			File tempDirectoryFile = tempDirectoryPath.toFile();
 

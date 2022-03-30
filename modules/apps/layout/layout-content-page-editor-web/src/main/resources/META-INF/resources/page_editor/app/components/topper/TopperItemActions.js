@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useSelectItem} from '../../contexts/ControlsContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import {useWidgets} from '../../contexts/WidgetsContext';
@@ -48,20 +49,22 @@ export default function TopperItemActions({item}) {
 	const dropdownItems = useMemo(() => {
 		const items = [];
 
-		items.push({
-			action: () => {
-				updateItemStyle({
-					dispatch,
-					itemId: item.itemId,
-					segmentsExperienceId,
-					selectedViewportSize,
-					styleName: 'display',
-					styleValue: 'none',
-				});
-			},
-			icon: 'hidden',
-			label: Liferay.Language.get('hide-fragment'),
-		});
+		if (item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone) {
+			items.push({
+				action: () => {
+					updateItemStyle({
+						dispatch,
+						itemId: item.itemId,
+						segmentsExperienceId,
+						selectedViewportSize,
+						styleName: 'display',
+						styleValue: 'none',
+					});
+				},
+				icon: 'hidden',
+				label: Liferay.Language.get('hide-fragment'),
+			});
+		}
 
 		if (canBeSaved(item, layoutData)) {
 			items.push({

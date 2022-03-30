@@ -1,0 +1,21 @@
+definition {
+
+    macro exportObject {
+        ObjectAdmin.selectSpecificKebabMenuOption(
+			kebabOption = "Export as JSON",
+			objectLabel = "${objectLabel}");
+
+		var tempFileName = TestCase.getDownloadedTempFileName(fileNamePattern = "Object_${objectName}*.json");
+
+		var tempFileDirectory = selenium.getOutputDirName();
+		var exportedConfigFile = FileUtil.exists("${tempFileDirectory}/${tempFileName}");
+
+		if ("${exportedConfigFile}" == "true") {
+			echo("PASSED! The file ${tempFileName} exists.");
+		}
+		else {
+			fail("FAIL! The file ${tempFileName} doesn't exists.");
+		}
+    }
+
+}

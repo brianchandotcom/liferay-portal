@@ -6,5 +6,6 @@
 		<suppress checks="GradleDependencyArtifactsCheck" files=".*" />
 		<suppress checks="JavaXMLSecurityCheck" files="extra/gcp-function/src/main/java/com/liferay/site/initializer/testray/extra/gcp/function/Main\.java" />
 		<suppress checks="JSONPackageJSONDependencyVersionCheck" files="extra/remote-app/package\.json" />
+		<suppress checks="StringMethodsCheck" files="extra/gcp-function/src/main/java/com/liferay/site/initializer/testray/extra/gcp/function/Main\.java" />
 	</source-check>
 </suppressions>

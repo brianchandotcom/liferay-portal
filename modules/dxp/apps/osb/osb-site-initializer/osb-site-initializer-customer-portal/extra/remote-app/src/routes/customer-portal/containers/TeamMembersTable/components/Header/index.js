@@ -96,7 +96,11 @@ const TeamMembersTableHeader = ({
 									}
 								)}
 							>
-								{`${administratorsAvailable} of ${project.maxRequestors} available`}
+								{`${
+									administratorsAvailable < 0
+										? '0'
+										: administratorsAvailable
+								} of ${project.maxRequestors} available`}
 							</p>
 						</>
 					)}

@@ -111,7 +111,6 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 		batchIndexingActionable.setInterval(
 			_batchIndexingHelper.getBulkSize(
 				_modelSearchSettings.getClassName()));
-
 		batchIndexingActionable.setSearchEngineId(
 			_modelSearchSettings.getSearchEngineId());
 

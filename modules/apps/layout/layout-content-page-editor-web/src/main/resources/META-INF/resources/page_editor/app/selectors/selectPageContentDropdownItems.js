@@ -43,6 +43,7 @@ export function selectPageContentDropdownItems(classPK, label = '') {
 				label: label
 					? Liferay.Util.sub(Liferay.Language.get('edit-x'), label)
 					: Liferay.Language.get('edit'),
+				symbolLeft: 'pencil',
 			});
 		}
 
@@ -50,6 +51,7 @@ export function selectPageContentDropdownItems(classPK, label = '') {
 			dropdownItems.push({
 				...editImage,
 				label: Liferay.Language.get('edit-image'),
+				symbolLeft: 'pencil',
 			});
 		}
 
@@ -61,6 +63,7 @@ export function selectPageContentDropdownItems(classPK, label = '') {
 						title: Liferay.Language.get('view-items'),
 						url: viewItemsURL,
 					}),
+				symbolLeft: 'list-ul',
 			});
 		}
 
@@ -68,6 +71,7 @@ export function selectPageContentDropdownItems(classPK, label = '') {
 			dropdownItems.push({
 				items: addItems,
 				label: Liferay.Language.get('add-items'),
+				symbolLeft: 'plus',
 				type: 'contextual',
 			});
 		}
@@ -90,6 +94,7 @@ export function selectPageContentDropdownItems(classPK, label = '') {
 							: Liferay.Language.get('permissions'),
 						url: permissionsURL,
 					}),
+				symbolLeft: 'password-policies',
 			});
 		}
 
@@ -111,6 +116,7 @@ export function selectPageContentDropdownItems(classPK, label = '') {
 							: Liferay.Language.get('view-usages'),
 						url: viewUsagesURL,
 					}),
+				symbolLeft: 'list-ul',
 			});
 		}
 

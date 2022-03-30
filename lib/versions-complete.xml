@@ -6917,18 +6917,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/commons-math.jar</file-name>
-				<version>2.0</version>
-				<project-name>Commons Math</project-name>
-				<project-url>http://commons.apache.org/math</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/commons-pool.jar</file-name>
 				<version>1.5.7</version>
 				<project-name>Commons Pool</project-name>

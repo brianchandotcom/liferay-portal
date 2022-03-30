@@ -66,7 +66,7 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 			Validator.isNotNull(
 				_getToken(
 					_getDefaultAuthorizationGrant(),
-					_TEST_CLIENT_PASSWORD_CLIENT_AUTHENTICATION)));
+					_testClientPasswordClientAuthentication)));
 
 		Assert.assertTrue(
 			Validator.isNotNull(
@@ -132,8 +132,7 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 
 	private String _getToken(TestAuthorizationGrant testAuthorizationGrant) {
 		return _getToken(
-			testAuthorizationGrant,
-			_TEST_CLIENT_PASSWORD_CLIENT_AUTHENTICATION);
+			testAuthorizationGrant, _testClientPasswordClientAuthentication);
 	}
 
 	private String _getToken(
@@ -162,18 +161,17 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 
 	private static final String _TEST_CLIENT_ID_01 = "test_client_id_01";
 
-	private static final TestClientPasswordClientAuthentication
-		_TEST_CLIENT_PASSWORD_CLIENT_AUTHENTICATION =
-			new TestClientPasswordClientAuthentication(
-				_TEST_CLIENT_ID_01,
-				JWTAssertAuthorizationGrantTest._TEST_CLIENT_SECRET);
-
 	private static final String _TEST_CLIENT_SECRET =
 		"oauthTestApplicationSecret";
 
 	private static final Invocation.Builder _invocationBuilder =
 		_getInvocationBuilder();
 
+	private final TestClientPasswordClientAuthentication
+		_testClientPasswordClientAuthentication =
+			new TestClientPasswordClientAuthentication(
+				_TEST_CLIENT_ID_01,
+				JWTAssertAuthorizationGrantTest._TEST_CLIENT_SECRET);
 	private final TestJWTAssertionClientAuthentication
 		_testJWTAssertionClientAuthentication01 =
 			new TestJWTAssertionClientAuthentication(

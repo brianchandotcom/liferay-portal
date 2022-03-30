@@ -92,7 +92,7 @@ export function ImageSelector({
 									displayType="secondary"
 									onClick={onClearButtonPressed}
 									small
-									symbol="trash"
+									symbol="times-circle"
 									title={Liferay.Language.get(
 										'clear-selection'
 									)}

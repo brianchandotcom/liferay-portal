@@ -1867,17 +1867,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 				existingOrganization.getId(), organization);
 		}
 
-		JSONArray childOrganizationsJSONArray = jsonObject.getJSONArray(
-			"childOrganizations");
+		JSONArray jsonArray = jsonObject.getJSONArray("childOrganizations");
 
-		if (JSONUtil.isEmpty(childOrganizationsJSONArray)) {
+		if (JSONUtil.isEmpty(jsonArray)) {
 			return;
 		}
 
-		for (int i = 0; i < childOrganizationsJSONArray.length(); i++) {
+		for (int i = 0; i < jsonArray.length(); i++) {
 			_addOrganization(
-				childOrganizationsJSONArray.getString(i), organization,
-				serviceContext);
+				jsonArray.getString(i), organization, serviceContext);
 		}
 	}
 

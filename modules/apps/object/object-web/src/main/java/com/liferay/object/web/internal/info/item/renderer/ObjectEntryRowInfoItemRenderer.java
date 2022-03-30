@@ -128,6 +128,9 @@ public class ObjectEntryRowInfoItemRenderer
 			_objectFieldLocalService.getObjectFields(
 				objectEntry.getObjectDefinitionId());
 
+		objectFields = _objectFieldLocalService.getActiveObjectFields(
+			objectFields);
+
 		Stream<ObjectField> objectFieldsStream = objectFields.stream();
 
 		Map<String, ObjectField> objectFieldsMap = objectFieldsStream.collect(

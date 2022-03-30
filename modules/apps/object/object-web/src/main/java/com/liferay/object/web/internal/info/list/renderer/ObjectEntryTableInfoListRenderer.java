@@ -24,6 +24,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.info.item.renderer.ObjectEntryRowInfoItemRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -84,11 +85,20 @@ public class ObjectEntryTableInfoListRenderer
 		if ((objectEntries != null) && !objectEntries.isEmpty()) {
 			ObjectEntry objectEntry = objectEntries.get(0);
 
+			List<ObjectField> objectFields =
+				_objectFieldLocalService.getObjectFields(
+					objectEntry.getObjectDefinitionId());
+
+			try {
+				objectFields = _objectFieldLocalService.getActiveObjectFields(
+					objectFields);
+			}
+			catch (PortalException portalException) {
+				_log.error(portalException);
+			}
+
 			infoListBasicTableTag.setInfoListObjectColumnNames(
-				ListUtil.toList(
-					_objectFieldLocalService.getObjectFields(
-						objectEntry.getObjectDefinitionId()),
-					ObjectField::getLabel));
+				ListUtil.toList(objectFields, ObjectField::getLabel));
 		}
 
 		infoListBasicTableTag.setInfoListObjects(objectEntries);

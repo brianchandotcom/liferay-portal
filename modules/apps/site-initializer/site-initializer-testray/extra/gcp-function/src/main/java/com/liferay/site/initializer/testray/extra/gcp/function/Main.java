@@ -205,6 +205,13 @@ public class Main {
 			testrayComponentId, testrayRunId, testrayTestcaseNode);
 
 		_addTestrayAttachments(testrayTestcaseNode, testrayCaseResultId);
+
+		_addTestrayIssue(
+			testrayCaseResultId,
+			(String)testrayCasePropertiesMap.get("testray.case.issue"));
+		_addTestrayIssue(
+			testrayCaseResultId,
+			(String)testrayCasePropertiesMap.get("testray.case.defect"));
 	}
 
 	private void _addTestrayFactor(
@@ -231,6 +238,26 @@ public class Main {
 				String.valueOf(testrayFactorOptionName)
 			).build(),
 			null, "factors");
+	}
+
+	private void _addTestrayIssue(
+			long testrayCaseResultId, String testrayIssueName)
+		throws Exception {
+
+		if (_isEmpty(testrayIssueName)) {
+			return;
+		}
+
+		_postObjectEntry(
+			HashMapBuilder.put(
+				"r_caseResultToCaseResultsIssues_c_caseResultId",
+				String.valueOf(testrayCaseResultId)
+			).put(
+				"r_issueToCaseResultsIssues_c_issueId",
+				String.valueOf(
+					_postObjectEntry(null, testrayIssueName, "issues"))
+			).build(),
+			null, "caseresultsissueses");
 	}
 
 	private String _getAttributeValue(String attributeName, Node node) {
@@ -691,6 +718,20 @@ public class Main {
 		httpInvoker.userNameAndPassword(_liferayLogin + ":" + _liferayPassword);
 
 		return httpInvoker.invoke();
+	}
+
+	private boolean _isEmpty(String value) {
+		if (value == null) {
+			return true;
+		}
+
+		String trimmedValue = value.trim();
+
+		if (trimmedValue.isEmpty()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private void _postObjectEntries(

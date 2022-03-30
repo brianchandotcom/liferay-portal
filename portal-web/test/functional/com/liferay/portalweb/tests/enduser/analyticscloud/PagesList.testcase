@@ -361,7 +361,7 @@ definition {
 		task ("Assert that the page list is beeing showed") {
 			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
 			var pageNameList = "AC Page - Site Name - ${dataSourceName},AC Page 2 - Site Name - ${dataSourceName},AC Page 3 - Site Name - ${dataSourceName}";
-			
+
 			ACUtils.viewNameList(nameList = "${pageNameList}");
 		}
 	}

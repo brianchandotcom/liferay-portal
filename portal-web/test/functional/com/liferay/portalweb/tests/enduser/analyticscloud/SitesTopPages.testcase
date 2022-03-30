@@ -236,8 +236,8 @@ definition {
 			var dataSourceName = StringUtil.extractFirst("${assignedPropertyName}", " ");
 
 			ACSites.viewVisitedTopPages(
-				positionList = "1,2,3",
-				pageNameList = "Test Blog 2 - Site Name - ${dataSourceName},AC Page - Site Name - ${dataSourceName},Test Blog 1 - Site Name - ${dataSourceName}");
+				pageNameList = "Test Blog 2 - Site Name - ${dataSourceName},AC Page - Site Name - ${dataSourceName},Test Blog 1 - Site Name - ${dataSourceName}",
+				positionList = "1,2,3");
 		}
 	}
 

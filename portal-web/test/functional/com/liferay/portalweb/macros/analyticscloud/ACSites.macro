@@ -71,7 +71,7 @@ definition {
 			var pageName = ListUtil.get("${list1}", "${i}");
 			var position = ListUtil.get("${list2}", "${i}");
 
-			while (IsElementNotPresent(key_pageName = "${pageName}", key_index = "${position}", locator1 = "ACSites#VISITED_TOP_PAGES_CARD") && (maxIterations = "50")) {
+			while (IsElementNotPresent(key_index = "${position}", key_pageName = "${pageName}", locator1 = "ACSites#VISITED_TOP_PAGES_CARD") && (maxIterations = "50")) {
 				TestUtils.hardRefresh();
 
 				ACTimeFilter.clickTimeFilterButton(cardName = "Top Pages");
@@ -80,8 +80,8 @@ definition {
 			}
 
 			AssertElementPresent(
-				key_pageName = "${pageName}",
 				key_index = "${position}",
+				key_pageName = "${pageName}",
 				locator1 = "ACSites#VISITED_TOP_PAGES_CARD");
 
 			var i = ${i} + 1;

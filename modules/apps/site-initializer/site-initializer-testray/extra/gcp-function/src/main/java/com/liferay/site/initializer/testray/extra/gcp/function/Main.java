@@ -32,6 +32,7 @@ import java.nio.file.Path;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -212,6 +213,7 @@ public class Main {
 		_addTestrayIssue(
 			testrayCaseResultId,
 			(String)testrayCasePropertiesMap.get("testray.case.defect"));
+		_addTestrayWarnings(testrayCasePropertiesMap, testrayCaseResultId);
 	}
 
 	private void _addTestrayFactor(
@@ -258,6 +260,33 @@ public class Main {
 					_postObjectEntry(null, testrayIssueName, "issues"))
 			).build(),
 			null, "caseresultsissueses");
+	}
+
+	private void _addTestrayWarnings(
+			Map<String, Object> testrayCasePropertiesMap,
+			long testrayCaseResultId)
+		throws Exception {
+
+		List<String> warningsList = (List<String>)testrayCasePropertiesMap.get(
+			"testray.testcase.warnings");
+
+		if (warningsList == null) {
+			return;
+		}
+
+		JSONArray jsonArray = new JSONArray();
+
+		for (String warning : warningsList) {
+			jsonArray.put(
+				HashMapBuilder.put(
+					"content", warning
+				).put(
+					"r_caseResultToWarnings_c_caseResultId",
+					String.valueOf(testrayCaseResultId)
+				).build());
+		}
+
+		_postObjectEntries(jsonArray, "warnings");
 	}
 
 	private String _getAttributeValue(String attributeName, Node node) {

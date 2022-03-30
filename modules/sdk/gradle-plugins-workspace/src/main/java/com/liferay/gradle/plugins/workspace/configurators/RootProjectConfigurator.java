@@ -1272,8 +1272,6 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					workspaceExtension.setBundleDistIncludeMetadata(true);
-
 					for (String environment : environments) {
 						Copy distBundleEnvTask = _addTaskDistBundle(
 							project, downloadBundleTask,

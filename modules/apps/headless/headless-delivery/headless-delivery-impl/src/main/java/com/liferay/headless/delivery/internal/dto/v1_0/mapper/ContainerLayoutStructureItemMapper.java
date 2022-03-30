@@ -68,8 +68,6 @@ public class ContainerLayoutStructureItemMapper
 							containerStyledLayoutStructureItem.
 								getLinkJSONObject(),
 							saveMappingConfiguration);
-						htmlProperties = _toHtmlProperties(
-							containerStyledLayoutStructureItem);
 						indexed =
 							containerStyledLayoutStructureItem.isIndexed();
 						layout = _toLayout(containerStyledLayoutStructureItem);
@@ -95,9 +93,33 @@ public class ContainerLayoutStructureItemMapper
 								return getFragmentViewPorts(
 									itemConfigJSONObject);
 							});
+
+						setHtmlProperties(
+							() -> {
+								return _getHtmlProperties(
+									containerStyledLayoutStructureItem);
+							});
 					}
 				};
 				type = Type.SECTION;
+			}
+		};
+	}
+
+	private HtmlProperties _getHtmlProperties(
+		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem) {
+
+		String htmlTag = containerStyledLayoutStructureItem.getHtmlTag();
+
+		if (Validator.isNull(htmlTag)) {
+			return null;
+		}
+
+		return new HtmlProperties() {
+			{
+				setHtmlTag(
+					() -> HtmlTag.create(
+						HtmlTagConverter.convertToExternalValue(htmlTag)));
 			}
 		};
 	}
@@ -152,27 +174,6 @@ public class ContainerLayoutStructureItemMapper
 						return Target.create(
 							StringUtil.upperCaseFirstLetter(
 								target.substring(1)));
-					});
-			}
-		};
-	}
-
-	private HtmlProperties _toHtmlProperties(
-		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem) {
-
-		return new HtmlProperties() {
-			{
-				setHtmlTag(
-					() -> {
-						String htmlTag =
-							containerStyledLayoutStructureItem.getHtmlTag();
-
-						if (Validator.isNull(htmlTag)) {
-							return null;
-						}
-
-						return HtmlTag.create(
-							HtmlTagConverter.convertToExternalValue(htmlTag));
 					});
 			}
 		};

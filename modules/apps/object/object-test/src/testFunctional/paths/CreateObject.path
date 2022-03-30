@@ -100,6 +100,11 @@
 		<td>//div[(@class='table-list-title') and contains(.,'${key_labelName}')]</td>
 		<td></td>
 	</tr>
+		<tr>
+		<td>OBJECT_NAME_INDEX</td>
+		<td>xpath=(//div[(@class='table-list-title') and contains(.,'${key_labelName}')])[${key_index}]</td>
+		<td></td>
+	</tr>
 	<tr>
 		<td>KEBAB_MENU_BLOCK_FIELD</td>
 		<td>xpath=(//*[contains(@class,'lexicon-icon-ellipsis')])[3]</td>

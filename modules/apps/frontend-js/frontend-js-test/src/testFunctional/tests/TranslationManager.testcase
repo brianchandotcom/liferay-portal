@@ -40,6 +40,36 @@ definition {
 		}
 	}
 
+	@description = "LPS-148143. Validates language can be added to translation list."
+	@priority = "3"
+	test CanAddLanguageToTranslationList {
+		task ("Given manage translations modal") {
+			TranslationManagerPortlet.goToManageTranslationsModal(
+				key_currentLocale = "en-us",
+				key_title = "Admin");
+		}
+
+		task ("When add language in Manage Translations table list") {
+			ManageTranslations.addLanguage(key_locale = "zh-CN");
+		}
+
+		task ("Then save add language and assert the modal is closed") {
+			Click(locator1 = "Button#DONE");
+
+			AssertElementNotPresent(locator1 = "Modal#MODAL");
+		}
+
+		task ("Then assert the language is active in language selector") {
+			TranslationManagerPortlet.clickSelectTranslation(
+				key_currentLocale = "en-us",
+				key_title = "Admin");
+
+			AssertElementPresent(
+				key_locale = "zh-CN",
+				locator1 = "Translation#DROPDOWN_MENU_ITEM");
+		}
+	}
+
 	@description = "LPS-147612. Validates translation can be synced in selector and text field."
 	@priority = "3"
 	test CanBeSyncedOnSelectedAndTranslatedLanguages {

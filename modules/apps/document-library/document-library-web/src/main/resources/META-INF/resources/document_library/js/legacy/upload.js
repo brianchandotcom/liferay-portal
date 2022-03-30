@@ -113,20 +113,6 @@ AUI.add(
 
 		var STR_SPACE = ' ';
 
-		var STR_THUMBNAIL_EXTENSION = '.png';
-
-		var STR_THUMBNAIL_DEFAULT = 'default' + STR_THUMBNAIL_EXTENSION;
-
-		var STR_THUMBNAIL_PDF = 'pdf' + STR_THUMBNAIL_EXTENSION;
-
-		var STR_THUMBNAIL_AUDIO = 'music' + STR_THUMBNAIL_EXTENSION;
-
-		var STR_THUMBNAIL_COMPRESSED = 'compressed' + STR_THUMBNAIL_EXTENSION;
-
-		var STR_THUMBNAIL_VIDEO = 'video' + STR_THUMBNAIL_EXTENSION;
-
-		var STR_THUMBNAIL_PATH = PATH_THEME_IMAGES + '/file_system/large/';
-
 		var STR_ICON_DEFAULT = 'document-default';
 
 		var STR_ICON_PDF = 'document-vector';
@@ -917,6 +903,16 @@ AUI.add(
 					return folderEntry;
 				},
 
+				_getImageThumbnail(fileName) {
+					var instance = this;
+
+					return sub(TPL_IMAGE_THUMBNAIL, [
+						instance._scopeGroupId,
+						instance.get(STR_FOLDER_ID),
+						fileName,
+					]);
+				},
+
 				_getMediaIcon(fileName) {
 					var iconName = STR_ICON_DEFAULT;
 
@@ -942,43 +938,6 @@ AUI.add(
 					}
 
 					return iconName;
-				},
-
-				_getMediaThumbnail(fileName) {
-					var instance = this;
-
-					var thumbnailName = STR_THUMBNAIL_DEFAULT;
-
-					if (REGEX_IMAGE.test(fileName)) {
-						thumbnailName = sub(TPL_IMAGE_THUMBNAIL, [
-							instance._scopeGroupId,
-							instance.get(STR_FOLDER_ID),
-							fileName,
-						]);
-					}
-					else {
-						if (
-							LString.endsWith(
-								fileName.toLowerCase(),
-								STR_EXTENSION_PDF
-							)
-						) {
-							thumbnailName = STR_THUMBNAIL_PDF;
-						}
-						else if (REGEX_AUDIO.test(fileName)) {
-							thumbnailName = STR_THUMBNAIL_AUDIO;
-						}
-						else if (REGEX_VIDEO.test(fileName)) {
-							thumbnailName = STR_THUMBNAIL_VIDEO;
-						}
-						else if (REGEX_COMPRESSED.test(fileName)) {
-							thumbnailName = STR_THUMBNAIL_COMPRESSED;
-						}
-
-						thumbnailName = STR_THUMBNAIL_PATH + thumbnailName;
-					}
-
-					return thumbnailName;
 				},
 
 				_getNavigationOverlays() {
@@ -1540,7 +1499,7 @@ AUI.add(
 					var instance = this;
 
 					var imageNode = node.one('img');
-					var thumbnailPath = instance._getMediaThumbnail(fileName);
+					var thumbnailPath = instance._getImageThumbnail(fileName);
 
 					if (!imageNode) {
 						var targetNodeSelector = '.sticker-overlay svg';

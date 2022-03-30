@@ -110,8 +110,6 @@ definition {
 	@description = "LPS-133867|LPS-135004 - Verify it is possible to define a fixed filters with Picklist type for table view on the Display Page"
 	@priority = "4"
 	test CanDefineFixedFilterForPicklistType {
-		property portal.upstream = "quarantine";
-
 		Picklist.addPicklistViaAPI(picklistName = "Custom Picklist");
 
 		for (var itemsName : list "1,2") {
@@ -166,7 +164,7 @@ definition {
 
 		PageEditor.gotoEllipsisMenuItemInItemSelector(
 			fieldLabel = "Collection",
-			menuItem = "Filter Collection");
+			menuItem = "Prefilter Collection");
 
 		VisualizeObjectDisplayPage.selectFilterCollection(
 			fieldLabel = "Field Picklist",

@@ -12,6 +12,10 @@ definition {
 		Click(locator1 = "TestrayLayout#RESULTS_SIDEBAR");
 	}
 
+    macro clickTestfowOnSidebar {
+		Click(locator1 = "TestrayLayout#TESTFLOW_SIDEBAR");
+	}
+
     macro clickManageOnSidebar {
 		Click(locator1 = "TestrayLayout#MANAGE_SIDEBAR");
 	}

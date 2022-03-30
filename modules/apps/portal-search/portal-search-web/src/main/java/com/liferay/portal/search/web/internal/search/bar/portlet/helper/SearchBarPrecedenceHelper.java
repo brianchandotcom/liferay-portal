@@ -45,7 +45,9 @@ public class SearchBarPrecedenceHelper {
 	public Optional<Portlet> findHeaderSearchBarPortletOptional(
 		ThemeDisplay themeDisplay) {
 
-		Stream<Portlet> stream = _getPortletsStream(themeDisplay);
+		List<Portlet> portlets = _getPortlets(themeDisplay);
+
+		Stream<Portlet> stream = portlets.stream();
 
 		return stream.filter(
 			this::_isHeaderSearchBar
@@ -137,15 +139,13 @@ public class SearchBarPrecedenceHelper {
 		_portletPreferencesLookup = portletPreferencesLookup;
 	}
 
-	private Stream<Portlet> _getPortletsStream(ThemeDisplay themeDisplay) {
+	private List<Portlet> _getPortlets(ThemeDisplay themeDisplay) {
 		Layout layout = themeDisplay.getLayout();
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
-		List<Portlet> portlets = layoutTypePortlet.getAllPortlets(false);
-
-		return portlets.stream();
+		return layoutTypePortlet.getAllPortlets(false);
 	}
 
 	private SearchBarPortletPreferences _getSearchBarPortletPreferences(

@@ -1,0 +1,108 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Testray 2";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+
+		Refresh();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-150331 - Verify if clicking on 'Manage Users' takes you to the 'Users' page."
+	@priority = "5"
+    test CanAcessUsersPage {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+        Click(locator1 = "Testray#MANAGE_SIDEBAR");
+
+        Click(
+            locator1 = "TestrayManage#MANAGE_DROPDOWN_ITEM",
+            key_optionType = "Manage Users");
+
+        AssertElementPresent(
+            locator1 = "Testray#NAME_TITLE",
+            key_title = "Users");
+    }
+
+    @description = "LPS-150332 - Verify if clicking on 'Manage Users groups' takes you to the 'User Groups' page."
+    @priority = "5"
+    test CanAcessUsersGroupsPage {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+        Click(locator1 = "Testray#MANAGE_SIDEBAR");
+
+        Click(
+            locator1 = "TestrayManage#MANAGE_DROPDOWN_ITEM",
+            key_optionType = "Manage User Groups");
+
+        AssertElementPresent(
+            locator1 = "TestrayManage#TITLE_BREADCRUMB",
+            key_title = "User Groups");
+    }
+
+    @description = "LPS-150333 - Verify if clicking on 'Manage Roles' takes you to the 'Manage Roles' page."
+    @priority = "5"
+    test CanAcessManageRolesPage {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+        Click(locator1 = "Testray#MANAGE_SIDEBAR");
+
+        Click(
+            locator1 = "TestrayManage#MANAGE_DROPDOWN_ITEM",
+            key_optionType = "Manage Roles");
+
+        AssertElementPresent(
+            locator1 = "TestrayManage#TITLE_BREADCRUMB",
+            key_title = "Roles");
+    }
+
+    @description = "LPS-150334 - Verify if clicking on 'Manage Server' takes you to the 'Server Admistration' page."
+    @priority = "5"
+    test CanAcessServerAdministrationPage {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+        Click(locator1 = "Testray#MANAGE_SIDEBAR");
+
+        Click(
+            locator1 = "TestrayManage#MANAGE_DROPDOWN_ITEM",
+            key_optionType = "Manage Server");
+
+        AssertElementPresent(
+            locator1 = "TestrayManage#TITLE_BREADCRUMB",
+            key_title = "Server Administration");
+    }
+
+    @description = "LPS-150335 - Verify if clicking on 'Add Project' takes you to the 'Add Project' page."
+    @priority = "5"
+    test CanAcessAddProjectPage {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+        Click(locator1 = "Testray#MANAGE_SIDEBAR");
+
+        Click(
+            locator1 = "TestrayManage#MANAGE_DROPDOWN_ITEM",
+            key_optionType = "Add Project");
+
+        AssertElementPresent(
+            locator1 = "TestrayManage#TITLE_MODAL_ITEM",
+            key_title = "Projects");
+    }
+
+}

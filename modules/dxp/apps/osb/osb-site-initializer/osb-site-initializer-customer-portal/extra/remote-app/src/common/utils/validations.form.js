@@ -61,6 +61,42 @@ const isValidFriendlyURL = (value) => {
 	}
 };
 
+const isValidHost = (value) => {
+	if (value.indexOf(' ') > 0) {
+		return 'The Workspace Host most not have spaces.';
+	}
+};
+
+const isValidIp = (value) => {
+	const ipArray = value.split('\n');
+
+	for (let i = 0; i < ipArray.length; i++) {
+		if (ipArray[i].indexOf(' ') > 0) {
+			return 'The Ip most not have spaces.';
+		}
+
+		if (
+			!/^(?:(?:^|\.)(?:2(?:5[0-5]|[0-4]\d)|1?\d?\d)){4}$/.test(ipArray[i])
+		) {
+			return 'Invalid IP.';
+		}
+	}
+};
+
+const isValidMac = (value) => {
+	const macArray = value.split('\n');
+
+	for (let i = 0; i < macArray.length; i++) {
+		if (macArray[i].indexOf(' ') > 0) {
+			return 'The Mac most not have spaces.';
+		}
+
+		if (!/^([0-9A-F]{2}[.:-]){5}[0-9A-F]{2}$/i.test(macArray[i])) {
+			return 'Invalid Mac.';
+		}
+	}
+};
+
 const validate = (validations, value) => {
 	let error;
 
@@ -85,4 +121,7 @@ export {
 	maxLength,
 	required,
 	validate,
+	isValidHost,
+	isValidIp,
+	isValidMac,
 };

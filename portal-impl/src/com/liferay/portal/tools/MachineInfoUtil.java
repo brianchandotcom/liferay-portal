@@ -20,6 +20,8 @@ import com.sun.management.OperatingSystemMXBean;
 
 import java.lang.management.ManagementFactory;
 
+import java.util.TimeZone;
+
 /**
  * @author Renato Rego
  */
@@ -42,6 +44,10 @@ public class MachineInfoUtil {
 				operatingSystemMXBean.getTotalPhysicalMemorySize());
 
 			System.out.println("RAM: " + formatMemorySize(gigaBytesMemorySize));
+
+			TimeZone defaultTimeZone = TimeZone.getDefault();
+
+			System.out.println("Timezone: " + defaultTimeZone.getID());
 		}
 		catch (Exception exception) {
 			System.out.println("\nUnable to get all machine info");

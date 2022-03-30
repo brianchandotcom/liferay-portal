@@ -31,6 +31,7 @@ import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsWebKeys;
 import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessorRegistry;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -100,7 +101,10 @@ public class SegmentsServicePreAction extends Action {
 			}
 		}
 
-		return new long[] {SegmentsExperienceConstants.ID_DEFAULT};
+		return new long[] {
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				classPK)
+		};
 	}
 
 	private void _run(
@@ -146,6 +150,9 @@ public class SegmentsServicePreAction extends Action {
 
 	@Reference
 	private volatile SegmentsEntryRetriever _segmentsEntryRetriever;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
 	private SegmentsExperienceRequestProcessorRegistry

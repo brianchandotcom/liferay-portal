@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.web.internal.exportimport.data.handler;
 
+import com.liferay.dynamic.data.lists.constants.DDLConstants;
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
@@ -44,6 +45,11 @@ public class DDLDisplayPortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
+	}
+
+	@Override
+	public String getServiceName() {
+		return DDLConstants.SERVICE_NAME;
 	}
 
 	@Activate

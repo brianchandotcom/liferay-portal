@@ -68,6 +68,11 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 		return SCHEMA_VERSION;
 	}
 
+	@Override
+	public String getServiceName() {
+		return DDLConstants.SERVICE_NAME;
+	}
+
 	@Activate
 	protected void activate() {
 		setDataLocalized(true);

@@ -40,10 +40,10 @@
 					<%
 					Properties resourceLimitsProperties = ImageMagickUtil.getResourceLimitsProperties();
 
-					for (String label : _IMAGEMAGICK_RESOURCE_LIMIT_LABELS) {
+					for (String label : ImageMagickResourceLimitConstants.PROPERTY_NAMES) {
 					%>
 
-						<aui:input cssClass="lfr-input-text-container" label="<%= label %>" name='<%= "imageMagickLimit" + StringUtil.upperCaseFirstLetter(label) %>' type="text" value="<%= resourceLimitsProperties.getProperty(label) %>" />
+						<aui:input cssClass="lfr-input-text-container" label="<%= label %>" name="<%= PropsKeys.IMAGEMAGICK_RESOURCE_LIMIT + label %>" type="text" value="<%= resourceLimitsProperties.getProperty(label) %>" />
 
 					<%
 					}
@@ -58,7 +58,3 @@
 <aui:button-row>
 	<aui:button cssClass="save-server-button" data-cmd="updateExternalServices" value="save" />
 </aui:button-row>
-
-<%!
-private static final String[] _IMAGEMAGICK_RESOURCE_LIMIT_LABELS = {"area", "disk", "file", "map", "memory", "thread", "time"};
-%>

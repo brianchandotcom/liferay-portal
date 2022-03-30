@@ -66,4 +66,6 @@ public class DDLConstants {
 
 	public static final String RESOURCE_NAME = "com.liferay.dynamic.data.lists";
 
+	public static final String SERVICE_NAME = "com.liferay.dynamic.data.lists";
+
 }

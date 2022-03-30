@@ -141,7 +141,6 @@ public class CommercePriceListFinderTest {
 		Assert.assertEquals(
 			commercePriceList.getCommercePriceListId(),
 			retrievedPriceList.getCommercePriceListId());
-
 		Assert.assertNotNull(
 			_commercePriceListAccountRelLocalService.
 				fetchCommercePriceListAccountRel(

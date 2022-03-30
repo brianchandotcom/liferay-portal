@@ -172,6 +172,10 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 					<table>
 						<tbody>
 							{trafficSources?.map((entry) => {
+								const hasDetails =
+									entry?.value > 0 &&
+									 entry.name !== 'direct';
+									 
 								return (
 									<tr key={entry.name}>
 										<td
@@ -204,8 +208,7 @@ export default function TrafficSources({dataProvider, onTrafficSourceClick}) {
 										>
 											{validAnalyticsConnection &&
 											!publishedToday &&
-											!(entry.name === 'direct') &&
-											entry.value > 0 ? (
+											hasDetails ? (
 												<ClayButton
 													className="px-0 py-1 text-primary"
 													displayType="link"

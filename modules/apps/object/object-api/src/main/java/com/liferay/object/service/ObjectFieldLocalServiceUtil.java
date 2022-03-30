@@ -281,6 +281,13 @@ public class ObjectFieldLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static List<ObjectField> getActiveObjectFields(
+			List<ObjectField> objectFields)
+		throws PortalException {
+
+		return getService().getActiveObjectFields(objectFields);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

@@ -316,6 +316,16 @@ public class ObjectFieldLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.object.model.ObjectField>
+			getActiveObjectFields(
+				java.util.List<com.liferay.object.model.ObjectField>
+					objectFields)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectFieldLocalService.getActiveObjectFields(objectFields);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

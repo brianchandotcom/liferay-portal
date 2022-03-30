@@ -302,14 +302,10 @@ public class CalendarUtilTest {
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(_group.getCompanyId()));
-
 		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
-
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
-
+		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setUser(_user);
 
 		return themeDisplay;

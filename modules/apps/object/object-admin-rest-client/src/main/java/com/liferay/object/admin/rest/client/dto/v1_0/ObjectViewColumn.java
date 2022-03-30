@@ -19,6 +19,7 @@ import com.liferay.object.admin.rest.client.serdes.v1_0.ObjectViewColumnSerDes;
 
 import java.io.Serializable;
 
+import java.util.Map;
 import java.util.Objects;
 
 import javax.annotation.Generated;
@@ -52,6 +53,27 @@ public class ObjectViewColumn implements Cloneable, Serializable {
 	}
 
 	protected Long id;
+
+	public Map<String, String> getLabel() {
+		return label;
+	}
+
+	public void setLabel(Map<String, String> label) {
+		this.label = label;
+	}
+
+	public void setLabel(
+		UnsafeSupplier<Map<String, String>, Exception> labelUnsafeSupplier) {
+
+		try {
+			label = labelUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Map<String, String> label;
 
 	public String getObjectFieldName() {
 		return objectFieldName;

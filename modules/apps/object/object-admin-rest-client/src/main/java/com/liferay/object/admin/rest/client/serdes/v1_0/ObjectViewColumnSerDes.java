@@ -65,6 +65,16 @@ public class ObjectViewColumnSerDes {
 			sb.append(objectViewColumn.getId());
 		}
 
+		if (objectViewColumn.getLabel() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label\": ");
+
+			sb.append(_toJSON(objectViewColumn.getLabel()));
+		}
+
 		if (objectViewColumn.getObjectFieldName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -115,6 +125,13 @@ public class ObjectViewColumnSerDes {
 			map.put("id", String.valueOf(objectViewColumn.getId()));
 		}
 
+		if (objectViewColumn.getLabel() == null) {
+			map.put("label", null);
+		}
+		else {
+			map.put("label", String.valueOf(objectViewColumn.getLabel()));
+		}
+
 		if (objectViewColumn.getObjectFieldName() == null) {
 			map.put("objectFieldName", null);
 		}
@@ -156,6 +173,13 @@ public class ObjectViewColumnSerDes {
 				if (jsonParserFieldValue != null) {
 					objectViewColumn.setId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "label")) {
+				if (jsonParserFieldValue != null) {
+					objectViewColumn.setLabel(
+						(Map)ObjectViewColumnSerDes.toMap(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "objectFieldName")) {

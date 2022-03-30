@@ -89,12 +89,19 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify it is possible to maintain Layouts after importing an Object"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanImportLayouts {
+		ObjectExportImport.importObject(
+			objectFileName = "ImportedObjectWithLayout",
+			objectName = "ImportedObjectWithLayout146360");
 
-		// TODO LPS-146360 CanImportLayouts pending implementation
+		CreateObject.assertCustomObject(labelName = "Imported Object With Layout");
 
+		ObjectPortlet.selectCustomObject(label = "Imported Object With Layout");
+
+		ObjectAdmin.goToLayoutsTab();
+
+		ObjectAdmin.assertObjectLayout(layoutLabel = "Layout");
 	}
 
 	@description = "LPS-142175 - Verify it is possible to import the same object more then one time"

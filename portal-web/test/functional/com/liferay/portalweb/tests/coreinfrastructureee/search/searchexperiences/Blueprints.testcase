@@ -3024,7 +3024,7 @@ definition {
 
 		Button.clickTrash();
 
-		Alert.viewErrorMessage(errorMessage = "System read-only elements cannot be deleted.");
+		Alert.viewErrorMessage(errorMessage = "System read only elements cannot be deleted.");
 
 		Blueprints.viewNoEntry(title = "Test Element 3");
 

@@ -90,6 +90,14 @@ public class SegmentsExperimentLocalServiceTest {
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
+
+		_segmentsExperienceLocalService.updateSegmentsExperiencePriority(
+			defaultSegmentsExperienceId,
+			SegmentsExperienceConstants.PRIORITY_DEFAULT - 10);
+
 		ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
 	}
 
@@ -471,10 +479,14 @@ public class SegmentsExperimentLocalServiceTest {
 
 	@Test
 	public void testGetSegmentsExperiments() throws Exception {
+		long defaultSegmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid());
+
 		SegmentsExperiment segmentsExperimentDefault =
 			SegmentsTestUtil.addSegmentsExperiment(
-				_group.getGroupId(), SegmentsExperienceConstants.ID_DEFAULT,
-				_classNameId, _layout.getPlid());
+				_group.getGroupId(), defaultSegmentsExperienceId, _classNameId,
+				_layout.getPlid());
 
 		SegmentsExperience segmentsExperience1 =
 			SegmentsTestUtil.addSegmentsExperience(
@@ -952,9 +964,15 @@ public class SegmentsExperimentLocalServiceTest {
 				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
+		SegmentsExperience defaultSegmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				_group.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_classNameId, _layout.getPlid());
+
 		SegmentsExperiment segmentsExperiment =
 			SegmentsTestUtil.addSegmentsExperiment(
-				_group.getGroupId(), SegmentsExperienceConstants.ID_DEFAULT,
+				_group.getGroupId(),
+				defaultSegmentsExperience.getSegmentsExperienceId(),
 				_classNameId, _layout.getPlid());
 
 		SegmentsExperience variantSegmentsExperience =

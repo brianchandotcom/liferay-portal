@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -74,11 +75,11 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.addSegmentsExperience(
+			_segmentsExperienceLocalService.appendSegmentsExperience(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				segmentsEntry.getSegmentsEntryId(), classNameId,
-				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), 0,
-				true, new UnicodeProperties(true),
+				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
+				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		long[] segmentsExperienceIds =
@@ -88,11 +89,12 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 				new long[0]);
 
 		Assert.assertEquals(
-			Arrays.toString(segmentsExperienceIds), 1,
+			Arrays.toString(segmentsExperienceIds), 2,
 			segmentsExperienceIds.length);
-		Assert.assertEquals(
-			segmentsExperience.getSegmentsExperienceId(),
-			segmentsExperienceIds[0]);
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				segmentsExperienceIds,
+				segmentsExperience.getSegmentsExperienceId()));
 	}
 
 	@Test
@@ -109,7 +111,7 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 				layout.getPlid(), new long[0]);
 
 		Assert.assertEquals(
-			Arrays.toString(segmentsExperienceIds), 0,
+			Arrays.toString(segmentsExperienceIds), 1,
 			segmentsExperienceIds.length);
 	}
 
@@ -127,7 +129,7 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 				layout.getPlid(), new long[0], new long[0]);
 
 		Assert.assertEquals(
-			Arrays.toString(segmentsExperienceIds), 0,
+			Arrays.toString(segmentsExperienceIds), 1,
 			segmentsExperienceIds.length);
 	}
 
@@ -144,11 +146,11 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.addSegmentsExperience(
+			_segmentsExperienceLocalService.appendSegmentsExperience(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				segmentsEntry.getSegmentsEntryId(), classNameId,
-				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), 0,
-				true, new UnicodeProperties(true),
+				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
+				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		long[] segmentsExperienceIds =
@@ -158,11 +160,12 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 				new long[] {segmentsEntry.getSegmentsEntryId()});
 
 		Assert.assertEquals(
-			Arrays.toString(segmentsExperienceIds), 1,
+			Arrays.toString(segmentsExperienceIds), 2,
 			segmentsExperienceIds.length);
-		Assert.assertEquals(
-			segmentsExperience.getSegmentsExperienceId(),
-			segmentsExperienceIds[0]);
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				segmentsExperienceIds,
+				segmentsExperience.getSegmentsExperienceId()));
 	}
 
 	@Inject

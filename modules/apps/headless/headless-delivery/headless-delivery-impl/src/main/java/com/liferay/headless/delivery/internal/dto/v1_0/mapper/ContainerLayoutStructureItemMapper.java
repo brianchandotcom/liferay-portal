@@ -95,10 +95,8 @@ public class ContainerLayoutStructureItemMapper
 							});
 
 						setHtmlProperties(
-							() -> {
-								return _getHtmlProperties(
-									containerStyledLayoutStructureItem);
-							});
+							() -> _getHtmlProperties(
+								containerStyledLayoutStructureItem));
 					}
 				};
 				type = Type.SECTION;

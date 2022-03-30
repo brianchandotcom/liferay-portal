@@ -61,7 +61,7 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 		}
 
 		if (_isDefined(
-				String.valueOf(properties.get("assetVocabulary")),
+				String.valueOf(properties.get("assetVocabularyName")),
 				String.valueOf(properties.get("companyId")), entityField)) {
 
 			throw new DuplicatedSegmentsContextVocabularyConfigurationModelListenerException(
@@ -91,7 +91,7 @@ public class SegmentsContextVocabularyCompanyConfigurationModelListener
 		Dictionary<String, Object> properties = configuration.getProperties();
 
 		if ((Objects.equals(
-				assetVocabulary, properties.get("assetVocabulary")) &&
+				assetVocabulary, properties.get("assetVocabularyName")) &&
 			 Objects.equals(entityField, properties.get("entityField"))) ||
 			(Objects.equals(
 				companyId, String.valueOf(properties.get("companyId"))) &&

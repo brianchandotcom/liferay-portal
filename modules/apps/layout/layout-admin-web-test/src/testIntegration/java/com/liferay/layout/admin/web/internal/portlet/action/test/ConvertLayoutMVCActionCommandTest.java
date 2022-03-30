@@ -53,7 +53,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
 
@@ -125,10 +126,16 @@ public class ConvertLayoutMVCActionCommandTest {
 				LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column"
 			).buildString());
 
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.addDefaultSegmentsExperience(
+				TestPropsValues.getUserId(), originalLayout.getPlid(),
+				_serviceContext);
+
 		_layoutPageTemplateStructureLocalService.addLayoutPageTemplateStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			originalLayout.getPlid(), SegmentsExperienceConstants.ID_DEFAULT,
-			StringPool.BLANK, _serviceContext);
+			originalLayout.getPlid(),
+			segmentsExperience.getSegmentsExperienceId(), StringPool.BLANK,
+			_serviceContext);
 
 		_mvcActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(originalLayout.getPlid()),
@@ -336,6 +343,9 @@ public class ConvertLayoutMVCActionCommandTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
 

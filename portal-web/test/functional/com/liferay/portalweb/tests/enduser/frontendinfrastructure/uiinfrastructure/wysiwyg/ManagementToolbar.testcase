@@ -206,22 +206,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-147859. Assert the clear button will be displayed as an icon button in responsive mode"
-	@priority = "4"
-	test ResponsiveModeClearButtonShouldDisplayAsIcon {
-		task ("Given a window size set to phone size") {
-			SetWindowSize(value1 = "360,720");
-		}
-
-		task ("Then clear button is not displayed as a text button") {
-			AssertNotVisible(locator1 = "ManagementBar#CLEAR_BUTTON");
-		}
-
-		task ("Then clear button is displayed as an icon button") {
-			AssertElementPresent(locator1 = "ManagementBar#CLEAR_BUTTON_MOBILE");
-		}
-	}
-
 	@description = "LPS-147836. Assert tooltip message will be displayed when hovered over an action button in responsive mode"
 	@priority = "3"
 	test ResponsiveModeActionButtonsShouldDisplayTooltips {
@@ -239,6 +223,22 @@ definition {
 			AssertTextEquals(
 				locator1 = "Message#TOOLTIP",
 				value1 = "Download");
+		}
+	}
+
+	@description = "LPS-147859. Assert the clear button will be displayed as an icon button in responsive mode"
+	@priority = "4"
+	test ResponsiveModeClearButtonShouldDisplayAsIcon {
+		task ("Given a window size set to phone size") {
+			SetWindowSize(value1 = "360,720");
+		}
+
+		task ("Then clear button is not displayed as a text button") {
+			AssertNotVisible(locator1 = "ManagementBar#CLEAR_BUTTON");
+		}
+
+		task ("Then clear button is displayed as an icon button") {
+			AssertElementPresent(locator1 = "ManagementBar#CLEAR_BUTTON_MOBILE");
 		}
 	}
 

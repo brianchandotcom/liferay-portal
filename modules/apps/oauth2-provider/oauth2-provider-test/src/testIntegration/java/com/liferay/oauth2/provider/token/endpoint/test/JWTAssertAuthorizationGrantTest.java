@@ -22,6 +22,7 @@ import com.liferay.oauth2.provider.internal.test.TestAuthorizationGrant;
 import com.liferay.oauth2.provider.internal.test.TestClientAuthentication;
 import com.liferay.oauth2.provider.internal.test.TestClientPasswordClientAuthentication;
 import com.liferay.oauth2.provider.internal.test.TestJWTAssertionAuthorizationGrant;
+import com.liferay.oauth2.provider.internal.test.TestJWTAssertionClientAuthentication;
 import com.liferay.oauth2.provider.internal.test.util.JWTAssertionUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -66,6 +67,18 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 				_getToken(
 					_getDefaultAuthorizationGrant(),
 					_TEST_CLIENT_PASSWORD_CLIENT_AUTHENTICATION)));
+
+		Assert.assertTrue(
+			Validator.isNotNull(
+				_getToken(
+					_getDefaultAuthorizationGrant(),
+					_testJWTAssertionClientAuthentication01)));
+
+		Assert.assertTrue(
+			Validator.isNotNull(
+				_getToken(
+					_getDefaultAuthorizationGrant(),
+					_testJWTAssertionClientAuthentication02)));
 	}
 
 	@Test
@@ -160,6 +173,17 @@ public class JWTAssertAuthorizationGrantTest extends BaseClientTestCase {
 
 	private static final Invocation.Builder _invocationBuilder =
 		_getInvocationBuilder();
+
+	private final TestJWTAssertionClientAuthentication
+		_testJWTAssertionClientAuthentication01 =
+			new TestJWTAssertionClientAuthentication(
+				getTokenWebTarget(), _TEST_CLIENT_ID_01, false,
+				_TEST_CLIENT_ID_01);
+	private final TestJWTAssertionClientAuthentication
+		_testJWTAssertionClientAuthentication02 =
+			new TestJWTAssertionClientAuthentication(
+				getTokenWebTarget(), _TEST_CLIENT_ID_01, true,
+				_TEST_CLIENT_ID_01);
 
 	private static class JWTBearerGrantTestPreparatorBundleActivator
 		extends BaseTestPreparatorBundleActivator {

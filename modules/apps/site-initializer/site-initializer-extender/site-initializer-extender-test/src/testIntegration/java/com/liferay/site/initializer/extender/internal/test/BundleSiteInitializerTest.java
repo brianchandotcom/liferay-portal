@@ -951,7 +951,7 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertNotNull(organization3);
 		Assert.assertEquals(
-			"Test Organization 2 Child", organization3.getName());
+			"Test Organization 3", organization3.getName());
 
 		Location location3 = organization3.getLocation();
 

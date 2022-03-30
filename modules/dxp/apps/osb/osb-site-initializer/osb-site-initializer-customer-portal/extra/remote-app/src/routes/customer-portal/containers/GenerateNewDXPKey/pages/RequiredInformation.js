@@ -94,7 +94,8 @@ const RequiredInformation = ({
 				sessionId,
 				licenseKey
 			);
-		} else {
+		}
+		else {
 			await Promise.all(
 				values?.keys?.map(({hostName, ipAddresses, macAddresses}) => {
 					licenseKey.macAddresses = macAddresses.replace('\n', ',');

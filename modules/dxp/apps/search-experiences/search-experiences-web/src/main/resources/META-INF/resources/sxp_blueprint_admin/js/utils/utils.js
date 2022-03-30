@@ -13,6 +13,7 @@ import moment from 'moment';
 
 import {CONFIG_PREFIX, DEFAULT_ERROR} from './constants';
 import {INPUT_TYPES} from './inputTypes';
+import {renameKeys} from './language';
 
 /**
  * Function to get valid classNames and return them sorted.
@@ -551,13 +552,13 @@ export function getDefaultValue(item) {
  * values from uiConfigurationValues.
  *
  * @param {object} sxpElement SXP Element with title, description, elementDefinition
- * @param {object} uiConfigurationValues Values that will replace the keys in uiConfiguration
+ * @param {object=} uiConfigurationValues Values that will replace the keys in uiConfiguration
  * @return {object}
  */
 export function getSXPElementJSON(sxpElement, uiConfigurationValues) {
 	const {description_i18n, elementDefinition, title_i18n} = sxpElement;
 
-	const {category, icon} = elementDefinition;
+	const {category, configuration, icon} = elementDefinition;
 
 	return {
 		description_i18n: renameKeys(description_i18n, (str) =>
@@ -565,10 +566,12 @@ export function getSXPElementJSON(sxpElement, uiConfigurationValues) {
 		),
 		elementDefinition: {
 			category,
-			configuration: getConfigurationEntry({
-				sxpElement,
-				uiConfigurationValues,
-			}),
+			configuration: uiConfigurationValues
+				? getConfigurationEntry({
+						sxpElement,
+						uiConfigurationValues,
+				  })
+				: configuration,
 			icon,
 		},
 		title_i18n: renameKeys(title_i18n, (str) => str.replace('-', '_')),
@@ -608,7 +611,9 @@ export function getUIConfigurationValues(sxpElement = {}) {
 		);
 	}
 
-	return {sxpElement: JSON.stringify(sxpElement, null, '\t')};
+	return {
+		sxpElement: JSON.stringify(getSXPElementJSON(sxpElement), null, '\t'),
+	};
 }
 
 /**

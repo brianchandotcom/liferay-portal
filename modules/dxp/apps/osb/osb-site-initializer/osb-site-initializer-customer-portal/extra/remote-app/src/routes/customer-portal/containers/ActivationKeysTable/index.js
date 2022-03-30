@@ -12,6 +12,7 @@ import {ButtonWithIcon} from '@clayui/core';
 import {useModal} from '@clayui/modal';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useLocation} from 'react-router-dom';
 import RoundedGroupButtons from '../../../../common/components/RoundedGroupButtons';
 import Table from '../../../../common/components/Table';
 import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
@@ -39,6 +40,14 @@ const ActivationKeysTable = ({productName, project, sessionId}) => {
 	const {licenseKeyDownloadURL} = useApplicationProvider();
 	const [isVisibleModal, setIsVisibleModal] = useState(false);
 	const [downloadStatus, setDownloadStatus] = useState('');
+	const {state} = useLocation();
+	const [
+		newKeyGeneratedAlertStatus,
+		setNewKeyGeneratedAlertStatus,
+	] = useState(state?.newKeyGeneratedAlert ? 'success' : '');
+
+	const messageNewKeyGeneratedAlert =
+		'Activation Key was generated successfully';
 
 	const {
 		activationKeysState: [activationKeys, setActivationKeys],
@@ -213,6 +222,14 @@ const ActivationKeysTable = ({productName, project, sessionId}) => {
 						]
 					}
 					setDownloadStatus={setDownloadStatus}
+				/>
+			)}
+
+			{!!newKeyGeneratedAlertStatus && (
+				<DownloadAlert
+					downloadStatus={newKeyGeneratedAlertStatus}
+					message={messageNewKeyGeneratedAlert}
+					setDownloadStatus={setNewKeyGeneratedAlertStatus}
 				/>
 			)}
 		</>

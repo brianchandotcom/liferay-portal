@@ -118,6 +118,49 @@ public class Main {
 		}
 	}
 
+	private void _addTestrayAttachments(
+			Node testrayTestcaseNode, long testrayCaseResultId)
+		throws Exception {
+
+		Element testcaseElement = (Element)testrayTestcaseNode;
+
+		NodeList attachmentsNodeList = testcaseElement.getElementsByTagName(
+			"attachments");
+
+		JSONArray jsonArray = new JSONArray();
+
+		for (int i = 0; i < attachmentsNodeList.getLength(); i++) {
+			Node attachmentsNode = attachmentsNodeList.item(i);
+
+			if (attachmentsNode.getNodeType() == Node.ELEMENT_NODE) {
+				Element attachmentsElement = (Element)attachmentsNode;
+
+				NodeList fileNodeList = attachmentsElement.getElementsByTagName(
+					"file");
+
+				for (int j = 0; j < fileNodeList.getLength(); j++) {
+					Node fileNode = fileNodeList.item(j);
+
+					if (fileNode.getNodeType() == Node.ELEMENT_NODE) {
+						Element fileElement = (Element)fileNode;
+
+						jsonArray.put(
+							HashMapBuilder.put(
+								"r_caseResultToAttachments_c_caseResultId",
+								String.valueOf(testrayCaseResultId)
+							).put(
+								"url", fileElement.getAttribute("url")
+							).put(
+								"value", fileElement.getAttribute("value")
+							).build());
+					}
+				}
+			}
+		}
+
+		_postObjectEntries(jsonArray, "attachments");
+	}
+
 	private void _addTestrayCase(
 			long testrayBuildId, Map<String, Object> testrayCasePropertiesMap,
 			long testrayProjectId, long testrayRunId, Node testrayTestcaseNode)
@@ -157,9 +200,11 @@ public class Main {
 			(String)testrayCasePropertiesMap.get("testray.testcase.name"),
 			"cases");
 
-		_getTestrayCaseResultId(
+		long testrayCaseResultId = _getTestrayCaseResultId(
 			testrayBuildId, testrayCaseId, testrayCasePropertiesMap,
 			testrayComponentId, testrayRunId, testrayTestcaseNode);
+
+		_addTestrayAttachments(testrayTestcaseNode, testrayCaseResultId);
 	}
 
 	private void _addTestrayFactor(

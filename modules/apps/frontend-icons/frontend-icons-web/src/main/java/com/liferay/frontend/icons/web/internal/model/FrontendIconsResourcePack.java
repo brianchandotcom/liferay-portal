@@ -25,13 +25,13 @@ import java.util.Optional;
  */
 public class FrontendIconsResourcePack {
 
-	public FrontendIconsResourcePack(String name) {
-		this(true, name);
-	}
-
 	public FrontendIconsResourcePack(boolean editable, String name) {
 		_editable = editable;
 		_name = name;
+	}
+
+	public FrontendIconsResourcePack(String name) {
+		this(true, name);
 	}
 
 	public void addFrontendIconResource(
@@ -47,9 +47,7 @@ public class FrontendIconsResourcePack {
 		frontendIconsResources.forEach(this::addFrontendIconResource);
 	}
 
-	public Optional<FrontendIconsResource> getFrontendIconsResource(
-		String id) {
-
+	public Optional<FrontendIconsResource> getFrontendIconsResource(String id) {
 		return Optional.ofNullable(_frontendIconsResources.get(id));
 	}
 

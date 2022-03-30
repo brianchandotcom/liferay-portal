@@ -173,9 +173,13 @@ public class SegmentTestClassGroup extends BaseTestClassGroup {
 				continue;
 			}
 
-			_axisTestClassGroups.add(
+			AxisTestClassGroup axisTestClassGroup =
 				TestClassGroupFactory.newAxisTestClassGroup(
-					axisJSONObject, this));
+					axisJSONObject, this);
+
+			_axisTestClassGroups.add(axisTestClassGroup);
+
+			_batchTestClassGroup.addAxisTestClassGroup(axisTestClassGroup);
 		}
 	}
 

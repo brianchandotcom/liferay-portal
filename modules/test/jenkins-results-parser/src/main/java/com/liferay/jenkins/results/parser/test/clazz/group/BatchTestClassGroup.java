@@ -51,6 +51,10 @@ import org.json.JSONObject;
  */
 public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
+	public void addAxisTestClassGroup(AxisTestClassGroup axisTestClassGroup) {
+		axisTestClassGroups.add(axisTestClassGroup);
+	}
+
 	public int getAxisCount() {
 		JobProperty jobProperty = getJobProperty("test.batch.axis.count");
 

@@ -35,6 +35,8 @@ public interface Build {
 
 	public void addDownstreamBuilds(String... urls);
 
+	public void archive();
+
 	public void archive(String archiveName);
 
 	public String getArchiveName();

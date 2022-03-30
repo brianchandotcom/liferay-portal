@@ -113,6 +113,11 @@ public abstract class BaseBuild implements Build {
 	public abstract void addTimelineData(BaseBuild.TimelineData timelineData);
 
 	@Override
+	public void archive() {
+		archive(getArchiveName());
+	}
+
+	@Override
 	public void archive(final String archiveName) {
 		setArchiveName(archiveName);
 
@@ -2001,7 +2006,7 @@ public abstract class BaseBuild implements Build {
 		}
 
 		if (!fromArchive && JenkinsResultsParserUtil.isCINode()) {
-			archive(getArchiveName());
+			archive();
 		}
 	}
 

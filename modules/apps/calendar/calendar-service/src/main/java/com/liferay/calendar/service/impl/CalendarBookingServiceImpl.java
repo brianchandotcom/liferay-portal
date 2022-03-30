@@ -822,7 +822,6 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 			SyndContent syndContent = _syndModelFactory.createSyndContent();
 
 			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
-
 			syndContent.setValue(
 				_getContent(calendarBooking, displayStyle, themeDisplay));
 

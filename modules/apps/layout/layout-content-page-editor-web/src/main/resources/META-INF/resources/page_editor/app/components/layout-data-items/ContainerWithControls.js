@@ -18,6 +18,7 @@ import React, {useEffect, useState} from 'react';
 import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {CONTAINER_WIDTH_TYPES} from '../../config/constants/containerWidthTypes';
+import {config} from '../../config/index';
 import {
 	useHoveredItemId,
 	useHoveredItemType,
@@ -25,6 +26,7 @@ import {
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
+import getLayoutDataItemTopperClassName from '../../utils/getLayoutDataItemTopperClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import Topper from '../topper/Topper';
@@ -84,6 +86,9 @@ const ContainerWithControls = React.forwardRef(({children, item}, ref) => {
 	return (
 		<Topper
 			className={classNames({
+				[getLayoutDataItemTopperClassName(
+					item.itemId
+				)]: config.featureFlagLps132571,
 				[`container-fluid`]: widthType === CONTAINER_WIDTH_TYPES.fixed,
 				[`container-fluid-max-xl`]:
 					widthType === CONTAINER_WIDTH_TYPES.fixed,

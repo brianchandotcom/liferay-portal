@@ -14,6 +14,7 @@
 
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import classNames from 'classnames';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
 import {COLUMN_SIZE_MODULE_PER_ROW_SIZES} from '../../config/constants/columnSizes';
@@ -29,6 +30,7 @@ import selectLanguageId from '../../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import CollectionService from '../../services/CollectionService';
 import updateItemConfig from '../../thunks/updateItemConfig';
+import getLayoutDataItemClassName from '../../utils/getLayoutDataItemClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import isNullOrUndefined from '../../utils/isNullOrUndefined';
 import UnsafeHTML from '../UnsafeHTML';
@@ -378,7 +380,15 @@ const Collection = React.memo(
 			collectionConfig.listStyle !== '' && collection.fakeCollection;
 
 		return (
-			<div className="page-editor__collection" ref={ref} style={style}>
+			<div
+				className={classNames('page-editor__collection', {
+					[getLayoutDataItemClassName(
+						item.itemId
+					)]: config.featureFlagLps132571,
+				})}
+				ref={ref}
+				style={style}
+			>
 				{loading ? (
 					<ClayLoadingIndicator />
 				) : !collectionIsMapped(collectionConfig) ? (

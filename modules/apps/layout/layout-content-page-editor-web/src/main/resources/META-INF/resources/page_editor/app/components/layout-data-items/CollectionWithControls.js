@@ -18,11 +18,13 @@ import React, {useEffect, useState} from 'react';
 import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {config} from '../../config/index';
 import {
 	useHoveredItemId,
 	useHoveredItemType,
 } from '../../contexts/ControlsContext';
 import {useSelector} from '../../contexts/StoreContext';
+import getLayoutDataItemTopperClassName from '../../utils/getLayoutDataItemTopperClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import Topper from '../topper/Topper';
 import Collection from './Collection';
@@ -53,6 +55,9 @@ const CollectionWithControls = React.forwardRef(({children, item}, ref) => {
 			/>
 			<Topper
 				className={classNames({
+					[getLayoutDataItemTopperClassName(
+						item.itemId
+					)]: config.featureFlagLps132571,
 					'page-editor__topper--hovered': hovered,
 				})}
 				item={item}

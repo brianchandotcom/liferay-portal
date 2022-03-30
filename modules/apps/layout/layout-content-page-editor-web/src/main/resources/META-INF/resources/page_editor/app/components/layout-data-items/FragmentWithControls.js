@@ -18,12 +18,14 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../config/constants/freemarkerFragmentEntryProcessor';
+import {config} from '../../config/index';
 import {
 	useHoveredItemId,
 	useHoveredItemType,
 } from '../../contexts/ControlsContext';
 import {useSelector} from '../../contexts/StoreContext';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
+import getLayoutDataItemTopperClassName from '../../utils/getLayoutDataItemTopperClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import FragmentContent from '../fragment-content/FragmentContent';
@@ -112,6 +114,9 @@ const FragmentWithControls = React.forwardRef(({item}, ref) => {
 	return (
 		<Topper
 			className={classNames({
+				[getLayoutDataItemTopperClassName(
+					item.itemId
+				)]: config.featureFlagLps132571,
 				[`mb-${marginBottom}`]: isValidSpacingOption(marginBottom),
 				[`ml-${marginLeft}`]: isValidSpacingOption(marginLeft),
 				[`mr-${marginRight}`]: isValidSpacingOption(marginRight),

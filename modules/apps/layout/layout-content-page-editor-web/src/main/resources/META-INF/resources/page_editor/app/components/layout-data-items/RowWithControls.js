@@ -18,9 +18,11 @@ import React, {useState} from 'react';
 
 import useSetRef from '../../../core/hooks/useSetRef';
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
+import {config} from '../../config/index';
 import {ResizeContextProvider} from '../../contexts/ResizeContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
+import getLayoutDataItemTopperClassName from '../../utils/getLayoutDataItemTopperClassName';
 import {getResponsiveColumnSize} from '../../utils/getResponsiveColumnSize';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import isItemEmpty from '../../utils/isItemEmpty';
@@ -67,6 +69,9 @@ const RowWithControls = React.forwardRef(({children, item}, ref) => {
 	return (
 		<Topper
 			className={classNames({
+				[getLayoutDataItemTopperClassName(
+					item.itemId
+				)]: config.featureFlagLps132571,
 				[`mb-${marginBottom}`]: isValidSpacingOption(marginBottom),
 				[`ml-${marginLeft}`]: isValidSpacingOption(marginLeft),
 				[`mr-${marginRight}`]: isValidSpacingOption(marginRight),

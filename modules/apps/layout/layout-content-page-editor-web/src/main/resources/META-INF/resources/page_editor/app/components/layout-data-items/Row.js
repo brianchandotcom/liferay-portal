@@ -19,10 +19,12 @@ import React, {useMemo} from 'react';
 
 import {getLayoutDataItemPropTypes} from '../../../prop-types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
+import {config} from '../../config/index';
 import {useGetFieldValue} from '../../contexts/CollectionItemContext';
 import {useSelector} from '../../contexts/StoreContext';
 import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
+import getLayoutDataItemClassName from '../../utils/getLayoutDataItemClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
@@ -121,6 +123,9 @@ const Row = React.forwardRef(
 		const rowContent = (
 			<ClayLayout.Row
 				className={classNames(className, {
+					[getLayoutDataItemClassName(
+						item.itemId
+					)]: config.featureFlagLps132571,
 					'flex-column-reverse':
 						item.config.numberOfColumns === 2 &&
 						modulesPerRow === 1 &&

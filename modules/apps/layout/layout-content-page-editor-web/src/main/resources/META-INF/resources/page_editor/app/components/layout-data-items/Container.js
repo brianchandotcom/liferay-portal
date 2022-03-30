@@ -27,6 +27,7 @@ import resolveEditableValue from '../../utils/editable-value/resolveEditableValu
 import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
 import {getEditableLinkValue} from '../../utils/getEditableLinkValue';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
+import getLayoutDataItemClassName from '../../utils/getLayoutDataItemClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
 import {isValidSpacingOption} from '../../utils/isValidSpacingOption';
 import useBackgroundImageValue from '../../utils/useBackgroundImageValue';
@@ -167,6 +168,9 @@ const Container = React.forwardRef(
 			<HTMLTag
 				{...(link ? {} : data)}
 				className={classNames(className, {
+					[getLayoutDataItemClassName(
+						item.itemId
+					)]: config.featureFlagLps132571,
 					[align]: !!align,
 					[`container-fluid`]:
 						widthType === CONTAINER_WIDTH_TYPES.fixed,

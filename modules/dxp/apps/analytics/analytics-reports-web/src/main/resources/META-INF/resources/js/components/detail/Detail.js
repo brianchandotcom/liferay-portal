@@ -78,7 +78,7 @@ export default function Detail({
 
 					{(currentPage.view === TRAFFIC_CHANNELS.ORGANIC ||
 						currentPage.view === TRAFFIC_CHANNELS.PAID) &&
-						currentPage.data.countryKeywords.length > 0 && (
+						currentPage.data.countrySearchKeywords.length > 0 && (
 							<KeywordsDetail
 								currentPage={currentPage}
 								trafficShareDataProvider={

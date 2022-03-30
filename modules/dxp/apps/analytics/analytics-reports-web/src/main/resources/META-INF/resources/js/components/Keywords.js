@@ -39,7 +39,7 @@ export default function Keywords({currentPage}) {
 	const countries = useMemo(() => {
 		const dataKeys = new Set();
 
-		return currentPage.data.countryKeywords.reduce(
+		return currentPage.data.countrySearchKeywords.reduce(
 			(acc, {countryCode, countryName}) => {
 				if (dataKeys.has(countryCode)) {
 					return acc;
@@ -51,7 +51,7 @@ export default function Keywords({currentPage}) {
 			},
 			[]
 		);
-	}, [currentPage.data.countryKeywords]);
+	}, [currentPage.data.countrySearchKeywords]);
 
 	const [currentCountry, setCurrentCountry] = useState(
 		countries[0].countryCode
@@ -60,12 +60,12 @@ export default function Keywords({currentPage}) {
 	const keywords = useMemo(() => {
 		const countryKeywords =
 			currentCountry &&
-			currentPage.data.countryKeywords.find((country) => {
+			currentPage.data.countrySearchKeywords.find((country) => {
 				return country.countryCode === currentCountry;
 			});
 
 		return countryKeywords?.keywords ?? [];
-	}, [currentPage.data.countryKeywords, currentCountry]);
+	}, [currentPage.data.countrySearchKeywords, currentCountry]);
 
 	const handleCountrySelection = (event) => {
 		const country = event.target.value;

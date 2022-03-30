@@ -203,12 +203,12 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		cpInstance.setExpandoBridgeAttributes(serviceContext);
 		cpInstance.setUnspsc(unspsc);
 		cpInstance.setDiscontinued(discontinued);
-		cpInstance.setReplacementCPInstanceUuid(replacementCPInstanceUuid);
-		cpInstance.setReplacementCProductId(replacementCProductId);
 		cpInstance.setDiscontinuedDate(
 			PortalUtil.getDate(
 				discontinuedDateMonth, discontinuedDateDay,
 				discontinuedDateYear));
+		cpInstance.setReplacementCPInstanceUuid(replacementCPInstanceUuid);
+		cpInstance.setReplacementCProductId(replacementCProductId);
 
 		cpInstance = cpInstancePersistence.update(cpInstance);
 

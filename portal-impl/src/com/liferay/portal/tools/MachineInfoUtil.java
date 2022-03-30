@@ -26,18 +26,26 @@ import java.lang.management.ManagementFactory;
 public class MachineInfoUtil {
 
 	public static void main(String[] args) {
-		OperatingSystemMXBean operatingSystemMXBean =
-			(OperatingSystemMXBean)ManagementFactory.getOperatingSystemMXBean();
+		try {
+			OperatingSystemMXBean operatingSystemMXBean =
+				(OperatingSystemMXBean)
+					ManagementFactory.getOperatingSystemMXBean();
 
-		System.out.println("Architecture: " + operatingSystemMXBean.getArch());
-		System.out.println("OS Name: " + operatingSystemMXBean.getName());
-		System.out.println(
-			"Processors: " + operatingSystemMXBean.getAvailableProcessors());
+			System.out.println(
+				"Architecture: " + operatingSystemMXBean.getArch());
+			System.out.println("OS Name: " + operatingSystemMXBean.getName());
+			System.out.println(
+				"Processors: " +
+					operatingSystemMXBean.getAvailableProcessors());
 
-		double gigaBytesMemorySize = convertToGigaBytes(
-			operatingSystemMXBean.getTotalPhysicalMemorySize());
+			double gigaBytesMemorySize = convertToGigaBytes(
+				operatingSystemMXBean.getTotalPhysicalMemorySize());
 
-		System.out.println("RAM: " + formatMemorySize(gigaBytesMemorySize));
+			System.out.println("RAM: " + formatMemorySize(gigaBytesMemorySize));
+		}
+		catch (Exception exception) {
+			System.out.println("\nUnable to get all machine info");
+		}
 	}
 
 	protected static double convertToGigaBytes(long bytes) {

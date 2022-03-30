@@ -703,6 +703,16 @@ public class CommerceOrderContentDisplayContext {
 			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
 	}
 
+	public boolean isShowCommerceOrderCreationTime() throws PortalException {
+		CommerceOrderContentPortletInstanceConfiguration
+			commerceOrderContentPortletInstanceConfiguration =
+				_portletDisplay.getPortletInstanceConfiguration(
+					CommerceOrderContentPortletInstanceConfiguration.class);
+
+		return commerceOrderContentPortletInstanceConfiguration.
+			showCommerceOrderCreationTime();
+	}
+
 	public boolean isShowPurchaseOrderNumber() throws PortalException {
 		try {
 			CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =

@@ -1,0 +1,50 @@
+@component-name = "portal-solutions"
+definition {
+
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Testray 2";
+
+	setUp {
+		TestCase.setUpPortalInstance();
+
+		User.firstLoginPG();
+
+		Testray.createTestraySite(siteName = "Testray 2");
+
+		Refresh();
+	}
+
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+		Testray.tearDownCP();
+
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
+
+	@description = "LPS-150032 - Verify that user can access a Component Project."
+	@priority = "5"
+	test CanUserEnterAProject {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.goToProjectPage(projectName = "Liferay Portal 7.3");
+
+		Testray.assertProjectTitleHeader(projectName = "Liferay Portal 7.3");
+	}
+
+	@description = "LPS-150031 - Verify that user can access a Task on Testflow."
+	@priority = "5"
+	test CanUserEnterATask {
+		ApplicationsMenu.gotoSite(site = "Testray 2");
+
+		Testray.goToTestflow();
+
+		Testray.goToProjectPage(projectName = "Hotfix Tester - liferay-hotfix-4079-7310 - 7.3.10.3 FP3 HF4079 - 17611 - 2022-02-11[02:58:43]");
+
+		Testray.assertProjectTitleHeader(projectName = "Hotfix Tester - liferay-hotfix-4079-7310 - 7.3.10.3 FP3 HF4079 - 17611 - 2022-02-11[02:58:43]");
+	}
+
+}

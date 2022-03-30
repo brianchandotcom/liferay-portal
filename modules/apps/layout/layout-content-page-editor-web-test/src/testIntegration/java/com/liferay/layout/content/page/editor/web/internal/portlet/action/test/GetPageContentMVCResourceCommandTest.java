@@ -72,7 +72,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
@@ -143,7 +142,8 @@ public class GetPageContentMVCResourceCommandTest {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			_getMockLiferayPortletResourceRequest(
-				SegmentsExperienceConstants.ID_DEFAULT);
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()));
 
 		JSONArray jsonArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPageContentsJSONArray",
@@ -198,7 +198,8 @@ public class GetPageContentMVCResourceCommandTest {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			_getMockLiferayPortletResourceRequest(
-				SegmentsExperienceConstants.ID_DEFAULT);
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()));
 
 		JSONArray jsonArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPageContentsJSONArray",
@@ -245,7 +246,8 @@ public class GetPageContentMVCResourceCommandTest {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			_getMockLiferayPortletResourceRequest(
-				SegmentsExperienceConstants.ID_DEFAULT);
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()));
 
 		JSONArray jsonArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPageContentsJSONArray",
@@ -438,7 +440,8 @@ public class GetPageContentMVCResourceCommandTest {
 
 		MockLiferayResourceRequest mockLiferayResourceRequest =
 			_getMockLiferayPortletResourceRequest(
-				SegmentsExperienceConstants.ID_DEFAULT);
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()));
 
 		JSONArray jsonArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPageContentsJSONArray",

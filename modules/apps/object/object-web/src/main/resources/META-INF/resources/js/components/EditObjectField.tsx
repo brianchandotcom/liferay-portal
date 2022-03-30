@@ -14,9 +14,12 @@
 
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import {fetch} from 'frontend-js-web';
-import React, {ChangeEvent, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {createTextMaskInputElement} from 'text-mask-core';
 
+import {createAutoCorrectedNumberPipe} from '../utils/createAutoCorrectedNumberPipe';
 import {ERRORS} from '../utils/errors';
 import Input from './Form/Input';
 import InputLocalized from './Form/InputLocalized/InputLocalized';
@@ -48,6 +51,16 @@ const defaultLocale = locales.find(({symbol}) => symbol === defaultSymbol);
 function closeSidePanel() {
 	const parentWindow = Liferay.Util.getOpener();
 	parentWindow.Liferay.fire('close-side-panel');
+}
+
+function normalizeFieldSettings(objectFieldSettings: ObjectFieldSetting[]) {
+	const settings: NormalizedSettings = {};
+
+	objectFieldSettings?.forEach(({name, value}) => {
+		settings[name] = value;
+	});
+
+	return settings;
 }
 
 export default function EditObjectField({
@@ -109,6 +122,18 @@ export default function EditObjectField({
 		}
 	);
 
+	const handleSettingsChange = ({name, value}: ObjectFieldSetting) =>
+		setValues({
+			objectFieldSettings: values.objectFieldSettings?.map((setting) =>
+				setting.name === name
+					? {
+							...setting,
+							value,
+					  }
+					: setting
+			),
+		});
+
 	return (
 		<ClayForm
 			className="lfr-objects__edit-object-field"
@@ -145,6 +170,20 @@ export default function EditObjectField({
 							objectFieldSettings={
 								values.objectFieldSettings as ObjectFieldSetting[]
 							}
+							onSettingsChange={handleSettingsChange}
+						/>
+					)}
+
+					{(values.businessType === 'Text' ||
+						values.businessType === 'LongText') && (
+						<MaxLengthProperties
+							disabled={readOnly}
+							errors={errors}
+							objectField={values}
+							objectFieldSettings={
+								values.objectFieldSettings as ObjectFieldSetting[]
+							}
+							onSettingsChange={handleSettingsChange}
 							setValues={setValues}
 						/>
 					)}
@@ -162,7 +201,7 @@ export default function EditObjectField({
 				/>
 			)}
 
-			<div className="lfr-objects__edit-object-field-buttons">
+			<div className="lfr-objects__edit-object-field-container mt-4">
 				<ClayButton displayType="secondary" onClick={closeSidePanel}>
 					{Liferay.Language.get('cancel')}
 				</ClayButton>
@@ -271,25 +310,113 @@ function SearchableContainer({
 	);
 }
 
+function MaxLengthProperties({
+	disabled,
+	errors,
+	objectField,
+	objectFieldSettings,
+	onSettingsChange,
+	setValues,
+}: IMaxLengthPropertiesProps) {
+	const [defaultMaxLength, defaultMaxLengthText] =
+		objectField.businessType === 'Text' ? [280, '280'] : [65000, '65,000'];
+
+	const settings = normalizeFieldSettings(objectFieldSettings);
+
+	const inputRef = useRef(null);
+	const maskRef = useRef();
+
+	useEffect(() => {
+		if (settings.showCounter) {
+			maskRef.current = createTextMaskInputElement({
+				guide: false,
+				inputElement: inputRef.current,
+				keepCharPositions: true,
+				mask:
+					objectField.businessType === 'Text'
+						? [/\d/, /\d/, /\d/]
+						: [/\d/, /\d/, /\d/, /\d/, /\d/],
+				pipe: createAutoCorrectedNumberPipe(defaultMaxLength, 1),
+				showMask: true,
+			});
+		}
+	}, [defaultMaxLength, objectField.businessType, settings.showCounter]);
+
+	return (
+		<>
+			<ClayForm.Group className="lfr-objects__edit-object-field-container">
+				<ClayToggle
+					disabled={disabled}
+					label={Liferay.Language.get('limit-characters')}
+					name="showCounter"
+					onToggle={(value) => {
+						const updatedSettings: ObjectFieldSetting[] = [
+							{name: 'showCounter', value},
+						];
+
+						if (value) {
+							updatedSettings.push({
+								name: 'maxLength',
+								value: defaultMaxLength,
+							});
+						}
+
+						setValues({objectFieldSettings: updatedSettings});
+					}}
+					toggled={!!settings.showCounter}
+				/>
+
+				<div
+					data-tooltip-align="top"
+					title={Liferay.Language.get(
+						'when-enabled-a-character-counter-will-be-shown-to-the-user'
+					)}
+				>
+					<ClayIcon
+						className="lfr-objects__edit-object-field-tooltip-icon"
+						symbol="question-circle-full"
+					/>
+				</div>
+			</ClayForm.Group>
+			<ClayForm.Group>
+				{settings.showCounter && (
+					<Input
+						error={errors.maxLength}
+						feedbackMessage={Liferay.Util.sub(
+							Liferay.Language.get(
+								'set-the-maximum-number-of-characters-accepted-this-value-cant-be-less-than-x-or-greater-than-x'
+							),
+							'1',
+							defaultMaxLengthText
+						)}
+						label={Liferay.Language.get(
+							'maximum-number-of-characters'
+						)}
+						onChange={({target: {value}}) =>
+							onSettingsChange({
+								name: 'maxLength',
+								value: value && Number(value),
+							})
+						}
+						onInput={({target: {value}}: any) =>
+							(maskRef.current as any).update(value)
+						}
+						ref={inputRef}
+						required
+						value={`${settings.maxLength}`}
+					/>
+				)}
+			</ClayForm.Group>
+		</>
+	);
+}
+
 function AttachmentProperties({
 	errors,
 	objectFieldSettings,
-	setValues,
+	onSettingsChange,
 }: IAttachmentPropertiesProps) {
-	const settings: {[key in ObjectFieldSettingName]?: string | number} = {};
-
-	objectFieldSettings.forEach(({name, value}) => {
-		settings[name] = value;
-	});
-
-	const handleChange = ({
-		target: {name, value},
-	}: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-		setValues({
-			objectFieldSettings: objectFieldSettings.map((setting) =>
-				setting.name === name ? {...setting, value} : setting
-			),
-		});
+	const settings = normalizeFieldSettings(objectFieldSettings);
 
 	return (
 		<>
@@ -300,10 +427,11 @@ function AttachmentProperties({
 					'enter-the-list-of-file-extensions-users-can-upload-use-commas-to-separate-extensions'
 				)}
 				label={Liferay.Language.get('accepted-file-extensions')}
-				name="acceptedFileExtensions"
-				onChange={handleChange}
+				onChange={({target: {value}}) =>
+					onSettingsChange({name: 'acceptedFileExtensions', value})
+				}
 				required
-				value={settings.acceptedFileExtensions}
+				value={settings.acceptedFileExtensions as string}
 			/>
 
 			<Input
@@ -311,11 +439,15 @@ function AttachmentProperties({
 				feedbackMessage={Liferay.Language.get('maximum-file-size-help')}
 				label={Liferay.Language.get('maximum-file-size')}
 				min={0}
-				name="maximumFileSize"
-				onChange={handleChange}
+				onChange={({target: {value}}) =>
+					onSettingsChange({
+						name: 'maximumFileSize',
+						value: value && Number(value),
+					})
+				}
 				required
 				type="number"
-				value={settings.maximumFileSize}
+				value={settings.maximumFileSize as number}
 			/>
 		</>
 	);
@@ -324,6 +456,15 @@ function AttachmentProperties({
 interface IAttachmentPropertiesProps {
 	errors: ObjectFieldErrors;
 	objectFieldSettings: ObjectFieldSetting[];
+	onSettingsChange: (setting: ObjectFieldSetting) => void;
+}
+
+interface IMaxLengthPropertiesProps {
+	disabled: boolean;
+	errors: ObjectFieldErrors;
+	objectField: Partial<ObjectField>;
+	objectFieldSettings: ObjectFieldSetting[];
+	onSettingsChange: (setting: ObjectFieldSetting) => void;
 	setValues: (values: Partial<ObjectField>) => void;
 }
 
@@ -342,3 +483,7 @@ interface ISearchableProps {
 	readOnly: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
 }
+
+type NormalizedSettings = {
+	[key in ObjectFieldSettingName]?: string | number | boolean;
+};

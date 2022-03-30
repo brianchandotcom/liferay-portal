@@ -17,44 +17,56 @@ import React from 'react';
 
 import FieldBase from './FieldBase';
 
-export default function Input({
-	className,
-	component,
-	disabled,
-	error,
-	feedbackMessage,
-	id,
-	label,
-	name,
-	onChange,
-	required,
-	type,
-	value,
-	...otherProps
-}: IProps) {
-	return (
-		<FieldBase
-			className={className}
-			disabled={disabled}
-			error={error}
-			feedbackMessage={feedbackMessage}
-			id={id}
-			label={label}
-			required={required}
-		>
-			<ClayInput
-				{...otherProps}
-				component={component}
+const Input: React.ForwardRefExoticComponent<
+	IProps & React.RefAttributes<HTMLInputElement>
+> = React.forwardRef(
+	(
+		{
+			className,
+			component,
+			disabled,
+			error,
+			feedbackMessage,
+			id,
+			label,
+			name,
+			onChange,
+			onInput,
+			required,
+			type,
+			value,
+			...otherProps
+		},
+		forwardRef
+	) => {
+		return (
+			<FieldBase
+				className={className}
 				disabled={disabled}
+				error={error}
+				feedbackMessage={feedbackMessage}
 				id={id}
-				name={name}
-				onChange={onChange}
-				type={type}
-				value={value}
-			/>
-		</FieldBase>
-	);
-}
+				label={label}
+				required={required}
+			>
+				<ClayInput
+					{...otherProps}
+					component={component}
+					disabled={disabled}
+					id={id}
+					name={name}
+					onChange={onChange}
+					onInput={onInput}
+					ref={forwardRef}
+					type={type}
+					value={value}
+				/>
+			</FieldBase>
+		);
+	}
+);
+
+export default Input;
 
 interface IProps
 	extends React.InputHTMLAttributes<HTMLInputElement | HTMLTextAreaElement> {
@@ -64,7 +76,7 @@ interface IProps
 	feedbackMessage?: string;
 	id?: string;
 	label: string;
-	name: string;
+	name?: string;
 	required?: boolean;
 	type?: 'number' | 'text';
 	value?: string | number | string[];

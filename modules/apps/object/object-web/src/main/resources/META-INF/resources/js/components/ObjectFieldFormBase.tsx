@@ -82,23 +82,39 @@ export default function ObjectFieldFormBase({
 			setPickList(await fetchPickList());
 		}
 
-		const objectFieldSettings: ObjectFieldSetting[] | undefined =
-			option.businessType === 'Attachment'
-				? [
-						{
-							name: 'acceptedFileExtensions',
-							value: 'jpeg, jpg, pdf, png',
-						},
-						{
-							name: 'fileSource',
-							value: 'userComputer',
-						},
-						{
-							name: 'maximumFileSize',
-							value: 100,
-						},
-				  ]
-				: undefined;
+		let objectFieldSettings: ObjectFieldSetting[] | undefined;
+
+		switch (option.businessType) {
+			case 'Attachment':
+				objectFieldSettings = [
+					{
+						name: 'acceptedFileExtensions',
+						value: 'jpeg, jpg, pdf, png',
+					},
+					{
+						name: 'fileSource',
+						value: 'userComputer',
+					},
+					{
+						name: 'maximumFileSize',
+						value: 100,
+					},
+				];
+				break;
+
+			case 'LongText':
+			case 'Text':
+				objectFieldSettings = [
+					{
+						name: 'showCounter',
+						value: false,
+					},
+				];
+				break;
+
+			default:
+				break;
+		}
 
 		const isSearchableByText =
 			option.businessType === 'Attachment' || option.dbType === 'String';
@@ -189,6 +205,14 @@ export function useObjectFieldForm({
 
 		const label = field.label?.[defaultLanguageId];
 
+		const settings: {
+			[key in ObjectFieldSettingName]?: string | number | boolean;
+		} = {};
+
+		field.objectFieldSettings?.forEach(({name, value}) => {
+			settings[name] = value;
+		});
+
 		if (invalidateRequired(label)) {
 			errors.label = REQUIRED_MSG;
 		}
@@ -201,14 +225,6 @@ export function useObjectFieldForm({
 			errors.businessType = REQUIRED_MSG;
 		}
 		else if (field.businessType === 'Attachment') {
-			const settings: {
-				[key in ObjectFieldSettingName]?: string | number;
-			} = {};
-
-			field.objectFieldSettings?.forEach(({name, value}) => {
-				settings[name] = value;
-			});
-
 			if (
 				invalidateRequired(
 					settings.acceptedFileExtensions as string | undefined
@@ -229,6 +245,14 @@ export function useObjectFieldForm({
 					),
 					0
 				);
+			}
+		}
+		else if (
+			field.businessType === 'Text' ||
+			field.businessType === 'LongText'
+		) {
+			if (settings.showCounter && !settings.maxLength) {
+				errors.maxLength = REQUIRED_MSG;
 			}
 		}
 		else if (field.businessType === 'Picklist') {

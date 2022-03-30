@@ -18,4 +18,27 @@ definition {
 		}
     }
 
+	macro importObject {
+		ObjectAdmin.openObjectAdmin();
+
+		Click(locator1 = "ObjectAdmin#KEBAB_MENU");
+
+		Click(
+			locator1 = "Notifications#NOTIFICATIONS_CONFIGURATION_MENUITEM",
+			key_menuItem = "Import Object");
+
+		var filePath = TestCase.getDependenciesDirPath(fileName = "${objectFileName}.json");
+
+		UploadFile(
+			locator1 = "TextInput#FILE",
+			value1 = "${filePath}");
+
+		Type(
+			key_fieldLabel = "Name",
+			locator1 = "TextInput#GENERIC_TEXT_INPUT",
+			value1 = "${objectName}");
+
+		Button.clickImport();
+	}
+
 }

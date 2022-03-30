@@ -69,12 +69,12 @@ public class DeleteFrontendIconsResourceMVCActionCommand
 			return;
 		}
 
-		String iconPackName = ParamUtil.getString(
-			actionRequest, "iconPackName");
+		String name = ParamUtil.getString(
+			actionRequest, "name");
 
 		Optional<FrontendIconsResourcePack> frontendIconsResourcePackOptional =
 			_frontendIconsResourcePackRepository.getFrontendIconsResourcePack(
-				themeDisplay.getCompanyId(), iconPackName);
+				themeDisplay.getCompanyId(), name);
 
 		if (frontendIconsResourcePackOptional.isPresent()) {
 			return;

@@ -56,7 +56,7 @@ export default function DeleteIconModal({
 
 		const formData = new FormData();
 
-		formData.append(portletNamespace + 'iconPackName', iconPackName);
+		formData.append(portletNamespace + 'name', iconPackName);
 		formData.append(portletNamespace + 'icon', selectedIcon);
 
 		return fetch(deleteIconURL, {body: formData, method: 'post'}).then(
@@ -103,12 +103,12 @@ export default function DeleteIconModal({
 						}}
 					>
 						<ClayForm.Group>
-							<label htmlFor={portletNamespace + 'iconPackName'}>
+							<label htmlFor={portletNamespace + 'name'}>
 								{Liferay.Language.get('pack-name')}
 							</label>
 
 							<ClayInput
-								name={portletNamespace + 'iconPackName'}
+								name={portletNamespace + 'name'}
 								placeholder="Name"
 								readOnly
 								type="text"
@@ -117,12 +117,12 @@ export default function DeleteIconModal({
 						</ClayForm.Group>
 
 						<ClayForm.Group>
-							<label htmlFor={portletNamespace + 'iconName'}>
+							<label htmlFor={portletNamespace + 'icon'}>
 								{Liferay.Language.get('icon-name')}
 							</label>
 
 							<ClayInput
-								name={portletNamespace + 'iconName'}
+								name={portletNamespace + 'icon'}
 								placeholder="Icon"
 								readOnly
 								type="text"

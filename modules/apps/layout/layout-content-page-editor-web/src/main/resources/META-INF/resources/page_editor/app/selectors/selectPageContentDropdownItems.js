@@ -69,6 +69,10 @@ export function selectPageContentDropdownItems(classPK, label = '') {
 
 		if (addItems) {
 			dropdownItems.push({
+				type: 'divider',
+			});
+
+			dropdownItems.push({
 				items: addItems,
 				label: Liferay.Language.get('add-items'),
 				symbolLeft: 'plus',
@@ -77,6 +81,10 @@ export function selectPageContentDropdownItems(classPK, label = '') {
 		}
 
 		if (permissionsURL) {
+			dropdownItems.push({
+				type: 'divider',
+			});
+
 			dropdownItems.push({
 				label: label
 					? Liferay.Util.sub(
@@ -99,6 +107,10 @@ export function selectPageContentDropdownItems(classPK, label = '') {
 		}
 
 		if (viewUsagesURL) {
+			dropdownItems.push({
+				type: 'divider',
+			});
+
 			dropdownItems.push({
 				label: label
 					? Liferay.Util.sub(

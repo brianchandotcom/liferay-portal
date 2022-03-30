@@ -157,6 +157,8 @@ public class ObjectViewResourceImpl extends BaseObjectViewResourceImpl {
 			serviceBuilderObjectViewColumn =
 				_objectViewColumnPersistence.create(0L);
 
+		serviceBuilderObjectViewColumn.setLabelMap(
+			LocalizedMapUtil.getLocalizedMap(objectViewColumn.getLabel()));
 		serviceBuilderObjectViewColumn.setObjectFieldName(
 			objectViewColumn.getObjectFieldName());
 		serviceBuilderObjectViewColumn.setPriority(

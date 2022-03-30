@@ -73,6 +73,8 @@ public class ObjectViewUtil {
 		return new ObjectViewColumn() {
 			{
 				id = serviceBuilderObjectViewColumn.getObjectViewColumnId();
+				label = LocalizedMapUtil.getLanguageIdMap(
+					serviceBuilderObjectViewColumn.getLabelMap());
 				objectFieldName =
 					serviceBuilderObjectViewColumn.getObjectFieldName();
 				priority = serviceBuilderObjectViewColumn.getPriority();

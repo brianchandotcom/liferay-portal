@@ -45,7 +45,7 @@ export default function IconConfiguration({
 				...acc,
 				[packName]: {
 					...icons[packName],
-					icons: icons[packName].icons.filter((icon) =>
+					icons: icons[packName].icons.filter(icon => Object.keys(icon).length).filter((icon) =>
 						icon.name
 							.toLowerCase()
 							.includes(searchQuery.toLocaleLowerCase())
@@ -307,4 +307,31 @@ export default function IconConfiguration({
 			)}
 		</ClayLayout.Sheet>
 	);
+}
+
+class ErrorBoundary extends React.Component {
+	static getDerivedStateFromError(_error) {
+		return {hasError: true};
+	}
+
+	constructor(props) {
+		super(props);
+
+		this.state = {hasError: false};
+	}
+
+	componentDidCatch(error) {
+		if (this.props.handleError) {
+			this.props.handleError(error);
+		}
+	}
+
+	render() {
+		if (this.state.hasError) {
+			return null;
+		}
+		else {
+			return this.props.children;
+		}
+	}
 }

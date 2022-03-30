@@ -44,11 +44,13 @@ definition {
 	}
 
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8942 | Test Summary: Assert that a User can't create a Custom Range past 365 days max for Individuals"
+	@ignore = "true"
 	@priority = "2"
 	test AssertIndividualsTimeFIlterInvalidCustom {
 		property portal.upstream = "quarantine";
 
 		// AC Quarantine Reason: Active individuals chart takes time to load
+		// AC Quarantine: Can be validated through personas
 
 		task ("Sign in as new user to view the site page") {
 			User.logoutAndLoginPG(

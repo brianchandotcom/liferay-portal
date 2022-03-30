@@ -93,17 +93,11 @@ public abstract class BaseJob implements Job {
 			return _batchTestClassGroups;
 		}
 
-		if ((jsonObject == null) || !jsonObject.has("batches")) {
-			_batchTestClassGroups = getBatchTestClassGroups(getRawBatchNames());
+		if ((jsonObject != null) && jsonObject.has("batches")) {
+			_batchTestClassGroups = new ArrayList<>();
 
-			return _batchTestClassGroups;
-		}
+			JSONArray batchesJSONArray = jsonObject.getJSONArray("batches");
 
-		_batchTestClassGroups = new ArrayList<>();
-
-		JSONArray batchesJSONArray = jsonObject.optJSONArray("batches");
-
-		if ((batchesJSONArray != null) && !batchesJSONArray.isEmpty()) {
 			for (int i = 0; i < batchesJSONArray.length(); i++) {
 				JSONObject batchJSONObject = batchesJSONArray.getJSONObject(i);
 
@@ -115,6 +109,22 @@ public abstract class BaseJob implements Job {
 					TestClassGroupFactory.newBatchTestClassGroup(
 						this, batchJSONObject));
 			}
+
+			return _batchTestClassGroups;
+		}
+
+		_batchTestClassGroups = getBatchTestClassGroups(getRawBatchNames());
+
+		if (jsonObject != null) {
+			JSONArray batchesJSONArray = new JSONArray();
+
+			for (BatchTestClassGroup batchTestClassGroup :
+					_batchTestClassGroups) {
+
+				batchesJSONArray.put(batchTestClassGroup.getJSONObject());
+			}
+
+			jsonObject.put("batches", batchesJSONArray);
 		}
 
 		return _batchTestClassGroups;
@@ -181,20 +191,11 @@ public abstract class BaseJob implements Job {
 			return _dependentBatchTestClassGroups;
 		}
 
-		if ((jsonObject == null) || !jsonObject.has("smoke_batches")) {
-			_dependentBatchTestClassGroups = getBatchTestClassGroups(
-				getRawDependentBatchNames());
+		if ((jsonObject != null) && jsonObject.has("smoke_batches")) {
+			_dependentBatchTestClassGroups = new ArrayList<>();
 
-			return _dependentBatchTestClassGroups;
-		}
-
-		_dependentBatchTestClassGroups = new ArrayList<>();
-
-		JSONArray smokeBatchesJSONArray = jsonObject.optJSONArray(
-			"smoke_batches");
-
-		if ((smokeBatchesJSONArray != null) &&
-			!smokeBatchesJSONArray.isEmpty()) {
+			JSONArray smokeBatchesJSONArray = jsonObject.getJSONArray(
+				"smoke_batches");
 
 			for (int i = 0; i < smokeBatchesJSONArray.length(); i++) {
 				JSONObject smokeBatchJSONObject =
@@ -208,6 +209,23 @@ public abstract class BaseJob implements Job {
 					TestClassGroupFactory.newBatchTestClassGroup(
 						this, smokeBatchJSONObject));
 			}
+
+			return _dependentBatchTestClassGroups;
+		}
+
+		_dependentBatchTestClassGroups = getBatchTestClassGroups(
+			getRawDependentBatchNames());
+
+		if (jsonObject != null) {
+			JSONArray smokeBatchesJSONArray = new JSONArray();
+
+			for (BatchTestClassGroup batchTestClassGroup :
+					_dependentBatchTestClassGroups) {
+
+				smokeBatchesJSONArray.put(batchTestClassGroup.getJSONObject());
+			}
+
+			jsonObject.put("smoke_batches", smokeBatchesJSONArray);
 		}
 
 		return _dependentBatchTestClassGroups;
@@ -343,30 +361,42 @@ public abstract class BaseJob implements Job {
 
 		jsonObject = new JSONObject();
 
-		JSONArray batchesJSONArray = new JSONArray();
+		List<BatchTestClassGroup> batchTestClassGroups =
+			getBatchTestClassGroups();
 
-		for (BatchTestClassGroup batchTestClassGroup :
-				getBatchTestClassGroups()) {
+		if ((batchTestClassGroups != null) && !batchTestClassGroups.isEmpty()) {
+			JSONArray batchesJSONArray = new JSONArray();
 
-			batchesJSONArray.put(batchTestClassGroup.getJSONObject());
+			for (BatchTestClassGroup batchTestClassGroup :
+					batchTestClassGroups) {
+
+				batchesJSONArray.put(batchTestClassGroup.getJSONObject());
+			}
+
+			jsonObject.put("batches", batchesJSONArray);
 		}
-
-		jsonObject.put("batches", batchesJSONArray);
 
 		jsonObject.put("build_profile", String.valueOf(getBuildProfile()));
 		jsonObject.put("job_name", getJobName());
 		jsonObject.put("job_properties", _getJobPropertiesMap());
 		jsonObject.put("job_property_options", getJobPropertyOptions());
 
-		JSONArray smokeBatchesJSONArray = new JSONArray();
+		List<BatchTestClassGroup> dependentBatchTestClassGroups =
+			getDependentBatchTestClassGroups();
 
-		for (BatchTestClassGroup batchTestClassGroup :
-				getDependentBatchTestClassGroups()) {
+		if ((dependentBatchTestClassGroups != null) &&
+			!dependentBatchTestClassGroups.isEmpty()) {
 
-			smokeBatchesJSONArray.put(batchTestClassGroup.getJSONObject());
+			JSONArray smokeBatchesJSONArray = new JSONArray();
+
+			for (BatchTestClassGroup batchTestClassGroup :
+					dependentBatchTestClassGroups) {
+
+				smokeBatchesJSONArray.put(batchTestClassGroup.getJSONObject());
+			}
+
+			jsonObject.put("smoke_batches", smokeBatchesJSONArray);
 		}
-
-		jsonObject.put("smoke_batches", smokeBatchesJSONArray);
 
 		if (this instanceof TestSuiteJob) {
 			TestSuiteJob testSuiteJob = (TestSuiteJob)this;

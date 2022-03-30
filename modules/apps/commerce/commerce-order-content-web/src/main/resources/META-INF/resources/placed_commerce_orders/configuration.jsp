@@ -38,6 +38,10 @@
 						/>
 					</div>
 				</aui:fieldset>
+
+				<aui:fieldset collapsible="<%= true %>" label="order-date-display">
+					<aui:input checked="<%= commerceOrderContentDisplayContext.isShowCommerceOrderCreateTime() %>" id="showCommerceOrderCreateTime" label="show-commerce-order-create-time" name="preferences--showCommerceOrderCreateTime--" type="toggle-switch" />
+				</aui:fieldset>
 			</aui:fieldset-group>
 		</div>
 	</div>

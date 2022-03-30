@@ -2015,7 +2015,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		subscriptionSender.setPortletId(
 			PortletProviderUtil.getPortletId(
 				BlogsEntry.class.getName(), PortletProvider.Action.VIEW));
-
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 

@@ -32,13 +32,9 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.headless.portal.instances.client", version: "1.0.3"
 	compileOnly group: "com.liferay.commerce", name: "com.liferay.headless.commerce.admin.order.client", version: "4.0.12"
 
-	implementation "org.springframework.boot:spring-boot-starter-actuator"
-	implementation "org.springframework.boot:spring-boot-starter-data-rest"
-	implementation "org.springframework.boot:spring-boot-starter-quartz"
-	implementation "org.springframework.boot:spring-boot-starter-security"
-	implementation "org.springframework.boot:spring-boot-starter-web"
-
-	testImplementation "org.springframework.boot:spring-boot-starter-test"
+	compile group: "org.springframework.boot", name: "spring-boot-starter-data-rest"
+	compile group: "org.springframework.boot", name: "spring-boot-starter-security"
+	compile group: "org.springframework.boot", name: "spring-boot-starter-web"
 }
 
 repositories {

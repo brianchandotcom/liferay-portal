@@ -1232,21 +1232,15 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 			<beanshell>
 				<![CDATA[
+					import com.liferay.jenkins.results.parser.GitWorkingDirectory;
+					import com.liferay.jenkins.results.parser.GitWorkingDirectoryFactory;
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 					import com.liferay.jenkins.results.parser.Job;
 					import com.liferay.jenkins.results.parser.JobFactory;
+					import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 					import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 					import com.liferay.jenkins.results.parser.test.clazz.group.SegmentTestClassGroup;
 					import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory;
-
-					public String getBranchName() {
-						String branchName = project.getProperty("env.TEST_PORTAL_BRANCH_NAME");
-
-						if ((branchName == null) || branchName.isEmpty()) {
-							branchName = project.getProperty("liferay.portal.branch");
-						}
-
-						return branchName;
-					}
 
 					public Job.BuildProfile getBuildProfile() {
 						String buildProfile = project.getProperty("build.profile");
@@ -1258,6 +1252,36 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 						return Job.BuildProfile.PORTAL;
 					}
 
+					public String getJobName() {
+						String jobName = project.getProperty("job.name");
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+							jobName = project.getProperty("env.TOP_LEVEL_JOB_NAME");
+						}
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+							jobName = project.getProperty("env.JOB_NAME");
+						}
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+							jobName = "test-portal-testsuite-upstream(" + getUpstreamBranchName() + ")";
+						}
+
+						return jobName;
+					}
+
+					public GitWorkingDirectory getPortalGitWorkingDirectory() {
+						File gitWorkingDir = JenkinsResultsParserUtil.getGitWorkingDir(new File(project.getProperty("project.dir")));
+
+						GitWorkingDirectory gitWorkingDirectory = GitWorkingDirectoryFactory.newGitWorkingDirectory(getUpstreamBranchName(), gitWorkingDir, getRepositoryName());
+
+						if (gitWorkingDirectory instanceof PortalGitWorkingDirectory) {
+							return (PortalGitWorkingDirectory)gitWorkingDirectory;
+						}
+
+						return null;
+					}
+
 					public String getRepositoryName() {
 						String repositoryName = project.getProperty("env.REPOSITORY_NAME");
 
@@ -1265,9 +1289,9 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 							return repositoryName;
 						}
 
-						String branchName = getBranchName();
+						String upstreamBranchName = getUpstreamBranchName();
 
-						if (branchName.equals("master")) {
+						if (upstreamBranchName.equals("master")) {
 							return "liferay-portal";
 						}
 
@@ -1286,27 +1310,31 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 						return Integer.valueOf(jobVariant.replaceAll(jobVariantRegex, "$1"));
 					}
 
-					public String getTestSuite() {
-						String testSuite = project.getProperty("env.CI_TEST_SUITE");
+					public String getTestSuiteName() {
+						String testSuiteName = project.getProperty("env.CI_TEST_SUITE");
 
-						if ((testSuite == null) || testSuite.isEmpty()) {
-							testSuite = "default";
+						if (JenkinsResultsParserUtil.isNullOrEmpty(testSuiteName)) {
+							testSuiteName = "default";
 						}
 
-						return testSuite;
+						return testSuiteName;
 					}
 
-					public String getTopLevelJobName() {
-						String topLevelJobName = project.getProperty("env.TOP_LEVEL_JOB_NAME");
+					public String getUpstreamBranchName() {
+						String upstreamBranchName = project.getProperty("env.TEST_PORTAL_BRANCH_NAME");
 
-						if ((topLevelJobName == null) || topLevelJobName.isEmpty()) {
-							topLevelJobName = "default";
+						if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+							upstreamBranchName = project.getProperty("liferay.portal.branch");
 						}
 
-						return topLevelJobName;
+						if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+							upstreamBranchName = project.getProperty("git.working.branch.name");
+						}
+
+						return upstreamBranchName.replace("-private", "");
 					}
 
-					Job job = JobFactory.newJob(getTopLevelJobName(), getTestSuite(), getBranchName(), getRepositoryName(), getBuildProfile());
+					Job job = JobFactory.newJob(getBuildProfile(), getJobName(), null, getPortalGitWorkingDirectory(), getUpstreamBranchName(), null, getRepositoryName(), getTestSuiteName(), getUpstreamBranchName());
 
 					BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), job);
 
@@ -3693,12 +3721,6 @@ tell application "Safari" to quit
 				<isset property="test.batch.name" />
 			</condition>
 
-			<local name="top.level.job.name" />
-
-			<condition else="@{test.type}-test-csv-report" property="top.level.job.name" value="${env.TOP_LEVEL_JOB_NAME}">
-				<isset property="env.TOP_LEVEL_JOB_NAME" />
-			</condition>
-
 			<beanshell>
 				<![CDATA[
 					import com.liferay.jenkins.results.parser.GitWorkingDirectory;
@@ -3720,6 +3742,24 @@ tell application "Safari" to quit
 						}
 
 						return Job.BuildProfile.PORTAL;
+					}
+
+					public String getJobName() {
+						String jobName = project.getProperty("job.name");
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+							jobName = project.getProperty("env.TOP_LEVEL_JOB_NAME");
+						}
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+							jobName = project.getProperty("env.JOB_NAME");
+						}
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+							jobName = "@{test.type}-test-csv-report";
+						}
+
+						return jobName;
 					}
 
 					public GitWorkingDirectory getPortalGitWorkingDirectory() {
@@ -3744,18 +3784,36 @@ tell application "Safari" to quit
 						return "liferay-portal-ee";
 					}
 
+					public String getTestSuiteName() {
+						String testSuiteName = project.getProperty("env.CI_TEST_SUITE");
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(testSuiteName)) {
+							testSuiteName = "default";
+						}
+
+						return testSuiteName;
+					}
+
 					public String getUpstreamBranchName() {
-						return project.getProperty("git.working.branch.name");
+						String upstreamBranchName = project.getProperty("env.TEST_PORTAL_BRANCH_NAME");
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+							upstreamBranchName = project.getProperty("liferay.portal.branch");
+						}
+
+						if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+							upstreamBranchName = project.getProperty("git.working.branch.name");
+						}
+
+						return upstreamBranchName.replace("-private", "");
 					}
 
 					try {
-						Job job = JobFactory.newJob(project.getProperty("top.level.job.name"), null, getUpstreamBranchName(), getRepositoryName(), getBuildProfile(), getPortalGitWorkingDirectory());
+						Job job = JobFactory.newJob(getBuildProfile(), getJobName(), null, getPortalGitWorkingDirectory(), getUpstreamBranchName(), null, getRepositoryName(), getTestSuiteName(), getUpstreamBranchName());
 
 						BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), job);
 
-						if (batchTestClassGroup instanceof JUnitBatchTestClassGroup ||
-							batchTestClassGroup instanceof NPMTestBatchTestClassGroup) {
-
+						if (batchTestClassGroup instanceof JUnitBatchTestClassGroup || batchTestClassGroup instanceof NPMTestBatchTestClassGroup) {
 							batchTestClassGroup.writeTestCSVReportFile();
 						}
 					}
@@ -12821,10 +12879,6 @@ if (ppstate.equals("normal")) {
 	<target name="record-job-summary">
 		<fail message="Please set the property ${test.suite.name}." unless="test.suite.name" />
 
-		<condition else="test-portal-acceptance-pullrequest(${git.working.branch.name})" property="job.name" value="${job.name}">
-			<isset property="job.name" />
-		</condition>
-
 		<beanshell>
 			<![CDATA[
 				import com.liferay.jenkins.results.parser.CIJobSummaryReportUtil;
@@ -12846,7 +12900,21 @@ if (ppstate.equals("normal")) {
 				}
 
 				public String getJobName() {
-					return project.getProperty("job.name");
+					String jobName = project.getProperty("job.name");
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+						jobName = project.getProperty("env.TOP_LEVEL_JOB_NAME");
+					}
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+						jobName = project.getProperty("env.JOB_NAME");
+					}
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(jobName)) {
+						jobName = "test-portal-testsuite-upstream(" + getUpstreamBranchName() + ")";
+					}
+
+					return jobName;
 				}
 
 				public GitWorkingDirectory getPortalGitWorkingDirectory() {
@@ -12884,10 +12952,20 @@ if (ppstate.equals("normal")) {
 				}
 
 				public String getUpstreamBranchName() {
-					return project.getProperty("git.working.branch.name");
+					String upstreamBranchName = project.getProperty("env.TEST_PORTAL_BRANCH_NAME");
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+						upstreamBranchName = project.getProperty("liferay.portal.branch");
+					}
+
+					if (JenkinsResultsParserUtil.isNullOrEmpty(upstreamBranchName)) {
+						upstreamBranchName = project.getProperty("git.working.branch.name");
+					}
+
+					return upstreamBranchName.replace("-private", "");
 				}
 
-				Job job = JobFactory.newJob(getJobName(), getTestSuiteName(), getUpstreamBranchName(), getRepositoryName(), getBuildProfile(), getPortalGitWorkingDirectory());
+				Job job = JobFactory.newJob(getBuildProfile(), getJobName(), null, getPortalGitWorkingDirectory(), getUpstreamBranchName(), null, getRepositoryName(), getTestSuiteName(), getUpstreamBranchName());
 
 				CIJobSummaryReportUtil.writeJobSummaryReport(getSummaryDir(), job);
 

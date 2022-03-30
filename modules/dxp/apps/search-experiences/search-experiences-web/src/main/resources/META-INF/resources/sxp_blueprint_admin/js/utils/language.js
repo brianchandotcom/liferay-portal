@@ -108,8 +108,11 @@ export function getLocalizedLearnMessageObject(
 }
 
 /**
- * Used for getting the element title and description. Titles and descriptions
- * handle both string `'title'` and a localized object `{'en_US': 'Title'}`.
+ * Used for getting the blueprint or element title and description. Titles
+ * and descriptions handle both string `'title'` and a localized object
+ * `{'en_US': 'Title'}`. This also accommodates for when elements
+ * have titles and descriptions that use the BCP 47 language code,
+ * such as `{'en-US': 'Title'}`.
  * @param {string|Object} value
  * @param {string} locale
  */
@@ -119,6 +122,9 @@ export function getLocalizedText(value, locale) {
 	}
 	else if (value[locale]) {
 		return value[locale];
+	}
+	else if (value[locale.replace('_', '-')]) {
+		return value[locale.replace('_', '-')];
 	}
 	else if (typeof value === 'string' || value instanceof String) {
 		return value;

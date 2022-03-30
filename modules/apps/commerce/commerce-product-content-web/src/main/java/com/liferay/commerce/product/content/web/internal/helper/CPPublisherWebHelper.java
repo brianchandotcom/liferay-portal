@@ -296,7 +296,6 @@ public class CPPublisherWebHelper {
 		cpQuery.setOrderByType1(
 			GetterUtil.getString(
 				portletPreferences.getValue("orderByType1", "DESC")));
-
 		cpQuery.setOrderByType2(
 			GetterUtil.getString(
 				portletPreferences.getValue("orderByType2", "ASC")));

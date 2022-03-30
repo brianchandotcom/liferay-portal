@@ -924,6 +924,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8479 | Test Summary: Create a Segment with a Number Property"
 	@priority = "4"
 	test CanCreateSegmentWithNumberProperty {
+		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateSegmentWithNumberProperty";
+
 		var usernameList = "user1,user2,user3";
 		var emailList = "user1@liferay.com,user2@liferay.com,user3@liferay.com";
 		var membershipList = "user1 user1,user3 user3";
@@ -1027,6 +1029,8 @@ definition {
 	@description = "Create a static segment with individual"
 	@priority = "5"
 	test CanCreateStaticSegmentWithIndividuals {
+		property test.name.skip.portal.instance = "SegmentsCreation#CanCreateStaticSegmentWithIndividuals";
+
 		task ("Sign in as new user") {
 			User.logoutAndLoginPG(
 				userLoginEmailAddress = "userea@liferay.com",
@@ -1073,6 +1077,7 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8474 | Test Summary: Duplicate a criteria"
 	@priority = "3"
 	test CanDuplicateCriteria {
+		property test.name.skip.portal.instance = "SegmentsCreation#CanDuplicateCriteria";
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 
@@ -1141,6 +1146,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8471 | Test Summary: Paginate Segment Profile in Membership List"
 	@priority = "3"
 	test CanPaginateSegmentProfileInMembershipList {
+		property test.name.skip.portal.instance = "SegmentsCreation#CanPaginateSegmentProfileInMembershipList";
+
 		var usernameList = "user1,user2,user3,user4,user5";
 		var emailList = "userea@liferay.com,user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com,user5@liferay.com";
 		var nameList = "userfn userln,user1 user1,user2 user2,user3 user3,user4 user4";
@@ -1237,6 +1244,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8472 | Test Summary: Paginate static segment 'Add Members' creation model"
 	@priority = "3"
 	test CanPaginateStaticSegmentAddMembers {
+		property test.name.skip.portal.instance = "SegmentsCreation#CanPaginateStaticSegmentAddMembers";
+
 		var usernameList = "user1,user2,user3,user4,user5";
 		var emailList = "userea@liferay.com,user1@liferay.com,user2@liferay.com,user3@liferay.com,user4@liferay.com,user5@liferay.com";
 		var nameList = "user1 user1,user2 user2,user3 user3,user4 user4,user5 user5";
@@ -1313,6 +1322,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8475 | Test Summary: Dynamic segment members preview in real time"
 	@priority = "3"
 	test CanPreviewDynamicSegmentMembers {
+		property test.name.skip.portal.instance = "SegmentsCreation#CanPreviewDynamicSegmentMembers";
+
 		var emailList = "userea@liferay.com,user1@liferay.com";
 		var usernameList = "userfn userln,user1 user1";
 

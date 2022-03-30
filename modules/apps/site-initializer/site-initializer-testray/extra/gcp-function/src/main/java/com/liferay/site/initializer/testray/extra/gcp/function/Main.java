@@ -30,6 +30,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -214,6 +215,25 @@ public class Main {
 			testrayCaseResultId,
 			(String)testrayCasePropertiesMap.get("testray.case.defect"));
 		_addTestrayWarnings(testrayCasePropertiesMap, testrayCaseResultId);
+	}
+
+	private void _addTestrayCases(
+			Element element, long testrayBuildId, long testrayProjectId,
+			long testrayRunId)
+		throws Exception {
+
+		NodeList testCaseNodeList = element.getElementsByTagName("testcase");
+
+		for (int i = 0; i < testCaseNodeList.getLength(); i++) {
+			Node testcaseNode = testCaseNodeList.item(i);
+
+			Map<String, Object> testrayCasePropertiesMap =
+				_getTestrayCaseProperties((Element)testcaseNode);
+
+			_addTestrayCase(
+				testrayBuildId, testrayCasePropertiesMap, testrayProjectId,
+				testrayRunId, testcaseNode);
+		}
 	}
 
 	private void _addTestrayFactor(
@@ -442,6 +462,54 @@ public class Main {
 				String.valueOf(testrayRoutineId)
 			).build(),
 			testrayBuildName, "builds");
+	}
+
+	private Map<String, Object> _getTestrayCaseProperties(Element element) {
+		Map<String, Object> map = new HashMap<>();
+
+		NodeList propertiesNodeList = element.getElementsByTagName(
+			"properties");
+
+		Node propertiesNode = propertiesNodeList.item(0);
+
+		Element propertiesElement = (Element)propertiesNode;
+
+		NodeList propertyNodeList = propertiesElement.getElementsByTagName(
+			"property");
+
+		for (int i = 0; i < propertyNodeList.getLength(); i++) {
+			Node propertyNode = propertyNodeList.item(i);
+
+			if (!propertyNode.hasAttributes()) {
+				continue;
+			}
+
+			String propertyName = _getAttributeValue("name", propertyNode);
+
+			if (propertyName.equalsIgnoreCase("testray.testcase.warnings")) {
+				List<String> warningsList = new ArrayList<>();
+
+				NodeList warningsNodeList = propertyNode.getChildNodes();
+
+				for (int j = 0; j < warningsNodeList.getLength(); j++) {
+					Node warningdNode = warningsNodeList.item(j);
+
+					String warning = warningdNode.getTextContent();
+
+					if (!_isEmpty(warning)) {
+						warningsList.add(warningdNode.getTextContent());
+					}
+				}
+
+				map.put(propertyName, warningsList);
+			}
+			else {
+				map.put(
+					propertyName, _getAttributeValue("value", propertyNode));
+			}
+		}
+
+		return map;
 	}
 
 	private long _getTestrayCaseResultId(
@@ -860,9 +928,14 @@ public class Main {
 
 		String testrayRunName = propertiesMap.get("testray.run.id");
 
-		_getTestrayRunId(
+		long testrayRunId = _getTestrayRunId(
 			element, propertiesMap, testrayBuildId, testrayRunName);
+
+		_addTestrayCases(
+			element, testrayBuildId, testrayProjectId, testrayRunId);
 	}
+
+	
 
 	private static final int _TESTRAY_CASE_RESULT_STATUS_BLOCKED = 4;
 

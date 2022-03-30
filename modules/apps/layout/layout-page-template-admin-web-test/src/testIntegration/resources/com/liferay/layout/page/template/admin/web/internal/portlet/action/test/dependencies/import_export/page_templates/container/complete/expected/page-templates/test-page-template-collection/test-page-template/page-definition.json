@@ -21,6 +21,9 @@
 						"textAlign": "none",
 						"width": "w-auto"
 					},
+					"htmlProperties": {
+						"htmlTag": "Div"
+					},
 					"indexed": true,
 					"layout": {
 						"align": "Stretch",

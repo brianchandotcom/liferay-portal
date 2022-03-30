@@ -191,10 +191,10 @@ export default function IconConfiguration({
 													title={
 														!filteredIcons[
 															iconPackName
-														].editable &&
+														].editable ?
 														Liferay.Language.get(
 															'system-icon-not-editable'
-														)
+														) : ""
 													}
 												>
 													<ClayIcon
@@ -229,10 +229,10 @@ export default function IconConfiguration({
 							small
 							symbol="times-circle"
 							title={
-								!filteredIcons[iconPackName].editable &&
+								!filteredIcons[iconPackName].editable ?
 								Liferay.Language.get(
 									'system-icons-not-removable'
-								)
+								): ""
 							}
 						/>
 					</div>

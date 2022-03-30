@@ -59,13 +59,15 @@ definition {
 	}
 
 	@description = "LPS-142175 - Verify if it is possible to import the data structure to a custom objects"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanImportDataStructure {
 		property portal.acceptance = "true";
 
-		// TODO LPS-146358 CanImportDataStructure pending implementation
+		ObjectExportImport.importObject(
+			objectFileName = "ImportedSimpleObject",
+			objectName = "ImportedSimpleObject146358");
 
+		CreateObject.assertCustomObject(labelName = "Imported Simple Object");
 	}
 
 	@description = "LPS-142175 - Verify it is possible to maintain Fields after importing an Object"

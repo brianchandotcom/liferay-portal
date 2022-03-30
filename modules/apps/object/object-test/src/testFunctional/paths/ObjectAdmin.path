@@ -171,6 +171,11 @@
 		<td></td>
 	</tr>
 	<tr>
+		<td>OBJECT_IMPORT_FIELDS</td>
+		<td>//label[contains(text(),'${fieldName}')]/following::input[@class='form-control' and @value='${valueName}']</td>
+		<td></td>
+	</tr>
+	<tr>
 		<td>LAYOUT_ENTRY_CHOOSE_OPTION</td>
 		<td>//span[contains(text(),'Choose an Option')]</td>
 		<td></td>

@@ -73,9 +73,6 @@ public class RowLayoutStructureItemImporter
 		if (definitionMap.containsKey("reverseOrder")) {
 			rowStyledLayoutStructureItem.setModulesPerRow(
 				(Integer)definitionMap.get("modulesPerRow"));
-		}
-
-		if (definitionMap.containsKey("reverseOrder")) {
 			rowStyledLayoutStructureItem.setReverseOrder(
 				(Boolean)definitionMap.get("reverseOrder"));
 		}

@@ -76,6 +76,13 @@ export interface Config {
 		}>;
 	}>;
 
+	commonStylesFields: {
+		[key: string]: {
+			cssTemplate: string;
+			defaultValue: string;
+		};
+	};
+
 	defaultEditorConfigurations: Record<
 		'comment' | 'rich-text' | 'text',
 		{

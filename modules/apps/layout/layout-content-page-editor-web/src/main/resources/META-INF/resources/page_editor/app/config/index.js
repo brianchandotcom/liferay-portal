@@ -29,6 +29,7 @@ export let config = DEFAULT_CONFIG;
  */
 export function initializeConfig(backendConfig) {
 	const {
+		commonStyles,
 		layoutType,
 		pluginsRootPath,
 		portletNamespace,
@@ -41,6 +42,7 @@ export function initializeConfig(backendConfig) {
 	const augmentedPanels = augmentPanelData(pluginsRootPath, sidebarPanels);
 
 	const syntheticItems = {
+		commonStylesFields: getCommonStylesFields(commonStyles),
 		panels: generatePanels(augmentedPanels),
 		sidebarPanels: partitionPanels(augmentedPanels),
 		toolbarId,
@@ -103,6 +105,23 @@ function generatePanels(sidebarPanels) {
 		},
 		[[]]
 	);
+}
+
+function getCommonStylesFields(commonStyles) {
+	const commonStylesFields = {};
+
+	const fieldSets = Object.values(commonStyles);
+
+	fieldSets.forEach((fieldSet) => {
+		fieldSet.styles.forEach((field) => {
+			commonStylesFields[field.name] = {
+				cssTemplate: field.cssTemplate,
+				defaultValue: field.defaultValue,
+			};
+		});
+	});
+
+	return commonStylesFields;
 }
 
 /**

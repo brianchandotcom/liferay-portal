@@ -85,8 +85,7 @@ public class FrontendIconsResourcePackRepository {
 		Folder companyIconsFolder = _getFolder(company);
 
 		_portletFileRepository.deletePortletFileEntry(
-			company.getGroupId(), companyIconsFolder.getFolderId(),
-			name);
+			company.getGroupId(), companyIconsFolder.getFolderId(), name);
 	}
 
 	public Optional<FrontendIconsResourcePack> getFrontendIconsResourcePack(

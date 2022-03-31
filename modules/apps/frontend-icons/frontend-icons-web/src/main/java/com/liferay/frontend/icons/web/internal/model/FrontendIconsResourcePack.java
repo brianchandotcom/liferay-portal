@@ -14,7 +14,10 @@
 
 package com.liferay.frontend.icons.web.internal.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,20 +28,20 @@ import java.util.Optional;
  */
 public class FrontendIconsResourcePack {
 
-	public FrontendIconsResourcePack(String name) {
-		this(true, name);
-	}
-
 	public FrontendIconsResourcePack(boolean editable, String name) {
 		_editable = editable;
 		_name = name;
+	}
+
+	public FrontendIconsResourcePack(String name) {
+		this(true, name);
 	}
 
 	public void addFrontendIconResource(
 		FrontendIconsResource frontendIconsResource) {
 
 		_frontendIconsResources.put(
-			frontendIconsResource.getId(), frontendIconsResource);
+			frontendIconsResource.getName(), frontendIconsResource);
 	}
 
 	public void addFrontendIconsResources(
@@ -48,13 +51,20 @@ public class FrontendIconsResourcePack {
 	}
 
 	public Optional<FrontendIconsResource> getFrontendIconsResource(
-		String id) {
+		String name) {
 
-		return Optional.ofNullable(_frontendIconsResources.get(id));
+		return Optional.ofNullable(_frontendIconsResources.get(name));
 	}
 
 	public Collection<FrontendIconsResource> getFrontendIconsResources() {
-		return _frontendIconsResources.values();
+		List<FrontendIconsResource> frontendIconsResources = new ArrayList<>(
+			_frontendIconsResources.values());
+
+		Collections.sort(
+			frontendIconsResources,
+			Comparator.comparing(FrontendIconsResource::getName));
+
+		return frontendIconsResources;
 	}
 
 	public String getName() {
@@ -65,8 +75,8 @@ public class FrontendIconsResourcePack {
 		return _editable;
 	}
 
-	public void removeFrontendIconsResource(String id) {
-		_frontendIconsResources.remove(id);
+	public void removeFrontendIconsResource(String name) {
+		_frontendIconsResources.remove(name);
 	}
 
 	private final boolean _editable;

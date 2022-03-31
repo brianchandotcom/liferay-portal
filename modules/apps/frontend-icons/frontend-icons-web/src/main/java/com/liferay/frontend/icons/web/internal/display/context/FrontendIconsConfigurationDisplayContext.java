@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -55,18 +53,18 @@ public class FrontendIconsConfigurationDisplayContext {
 
 	public Map<String, Object> getProps() {
 		return HashMapBuilder.<String, Object>put(
-			"deleteIconPackURL",
+			"deleteIconsPackResourceURL",
+			PortletURLBuilder.createActionURL(
+				_renderResponse
+			).setActionName(
+				"/instance_settings/delete_frontend_icons_pack_resource"
+			).buildString()
+		).put(
+			"deleteIconsPackURL",
 			PortletURLBuilder.createActionURL(
 				_renderResponse
 			).setActionName(
 				"/instance_settings/delete_frontend_icons_pack"
-			).buildString()
-		).put(
-			"deleteIconURL",
-			PortletURLBuilder.createActionURL(
-				_renderResponse
-			).setActionName(
-				"/instance_settings/delete_frontend_icons_resource"
 			).buildString()
 		).put(
 			"icons",
@@ -81,24 +79,19 @@ public class FrontendIconsConfigurationDisplayContext {
 				for (FrontendIconsResourcePack frontendIconsResourcePack :
 						frontendIconsResourcePacks) {
 
-					JSONArray iconNamesJSONArray =
-						JSONFactoryUtil.createJSONArray();
+					JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 					List<FrontendIconsResource> frontendIconsResources =
 						new ArrayList<>(
 							frontendIconsResourcePack.
 								getFrontendIconsResources());
 
-					Collections.sort(
-						frontendIconsResources,
-						Comparator.comparing(FrontendIconsResource::getId));
-
 					for (FrontendIconsResource frontendIconsResource :
 							frontendIconsResources) {
 
-						iconNamesJSONArray.put(
+						jsonArray.put(
 							JSONUtil.put(
-								"name", frontendIconsResource.getId()));
+								"name", frontendIconsResource.getName()));
 					}
 
 					jsonObject.put(
@@ -106,7 +99,7 @@ public class FrontendIconsConfigurationDisplayContext {
 						JSONUtil.put(
 							"editable", frontendIconsResourcePack.isEditable()
 						).put(
-							"icons", iconNamesJSONArray
+							"icons", jsonArray
 						));
 				}
 

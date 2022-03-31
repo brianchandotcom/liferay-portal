@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class FrontendIconsResource {
 
-	public FrontendIconsResource(String content, String id, String viewBox) {
+	public FrontendIconsResource(String content, String name, String viewBox) {
 		_content = content;
-		_id = id;
+		_name = name;
 		_viewBox = viewBox;
 	}
 
@@ -31,11 +31,11 @@ public class FrontendIconsResource {
 		return StringUtil.replace(
 			_SYMBOL_TMPL,
 			new String[] {"[$CONTENT$]", "[$NAME$]", "[$VIEW_BOX$]"},
-			new String[] {_content, _id, _viewBox});
+			new String[] {_content, _name, _viewBox});
 	}
 
-	public String getId() {
-		return _id;
+	public String getName() {
+		return _name;
 	}
 
 	private static final String _SYMBOL_TMPL = StringUtil.read(
@@ -44,7 +44,7 @@ public class FrontendIconsResource {
 			"/symbol.svg");
 
 	private final String _content;
-	private final String _id;
+	private final String _name;
 	private final String _viewBox;
 
 }

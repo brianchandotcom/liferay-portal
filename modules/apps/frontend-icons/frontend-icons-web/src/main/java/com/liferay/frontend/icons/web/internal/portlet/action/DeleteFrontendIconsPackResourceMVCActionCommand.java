@@ -43,11 +43,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.INSTANCE_SETTINGS,
-		"mvc.command.name=/instance_settings/delete_frontend_icons_resource"
+		"mvc.command.name=/instance_settings/delete_frontend_icons_pack_resource"
 	},
 	service = MVCActionCommand.class
 )
-public class DeleteFrontendIconsResourceMVCActionCommand
+public class DeleteFrontendIconsPackResourceMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -61,7 +61,9 @@ public class DeleteFrontendIconsResourceMVCActionCommand
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
+		long companyId = themeDisplay.getCompanyId();
+
+		if (!permissionChecker.isCompanyAdmin(companyId)) {
 			SessionErrors.add(actionRequest, PrincipalException.class);
 
 			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
@@ -69,22 +71,21 @@ public class DeleteFrontendIconsResourceMVCActionCommand
 			return;
 		}
 
-		String name = ParamUtil.getString(
-			actionRequest, "name");
+		String name = ParamUtil.getString(actionRequest, "name");
 
 		Optional<FrontendIconsResourcePack> frontendIconsResourcePackOptional =
 			_frontendIconsResourcePackRepository.getFrontendIconsResourcePack(
-				themeDisplay.getCompanyId(), name);
-
-		String icon = ParamUtil.getString(actionRequest, "icon");
+				companyId, name);
 
 		FrontendIconsResourcePack frontendIconsResourcePack =
 			frontendIconsResourcePackOptional.get();
 
+		String icon = ParamUtil.getString(actionRequest, "icon");
+
 		frontendIconsResourcePack.removeFrontendIconsResource(icon);
 
 		_frontendIconsResourcePackRepository.addFrontendIconsResourcePack(
-			themeDisplay.getCompanyId(), frontendIconsResourcePack);
+			companyId, frontendIconsResourcePack);
 	}
 
 	@Reference

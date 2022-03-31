@@ -34,7 +34,7 @@ import {fetch, openToast} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 export default function DeleteIconModal({
-	deleteIconURL,
+	deleteIconsPackResourceURL,
 	iconPackName,
 	icons,
 	portletNamespace,
@@ -59,34 +59,35 @@ export default function DeleteIconModal({
 		formData.append(portletNamespace + 'name', iconPackName);
 		formData.append(portletNamespace + 'icon', selectedIcon);
 
-		return fetch(deleteIconURL, {body: formData, method: 'post'}).then(
-			() => {
-				openToast({
-					message: Liferay.Language.get('icon-deleted'),
-					title: Liferay.Language.get('success'),
-					toastProps: {
-						autoClose: 5000,
-					},
-					type: 'success',
-				});
+		return fetch(deleteIconsPackResourceURL, {
+			body: formData,
+			method: 'post',
+		}).then(() => {
+			openToast({
+				message: Liferay.Language.get('icon-deleted'),
+				title: Liferay.Language.get('success'),
+				toastProps: {
+					autoClose: 5000,
+				},
+				type: 'success',
+			});
 
-				const iconPack = icons[iconPackName];
+			const iconPack = icons[iconPackName];
 
-				const newIcons = {
-					...icons,
-					[iconPackName]: {
-						...iconPack,
-						icons: iconPack.icons.filter(
-							(icon) => icon.name !== selectedIcon
-						),
-					},
-				};
+			const newIcons = {
+				...icons,
+				[iconPackName]: {
+					...iconPack,
+					icons: iconPack.icons.filter(
+						(icon) => icon.name !== selectedIcon
+					),
+				},
+			};
 
-				setIcons(newIcons);
+			setIcons(newIcons);
 
-				onClose();
-			}
-		);
+			onClose();
+		});
 	};
 
 	return (

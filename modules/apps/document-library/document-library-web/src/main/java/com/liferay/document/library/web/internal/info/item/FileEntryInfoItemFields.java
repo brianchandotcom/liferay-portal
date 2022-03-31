@@ -29,11 +29,8 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 public class FileEntryInfoItemFields {
 
 	public static final InfoField<TextInfoFieldType> authorNameInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
 		).name(
 			"authorName"
 		).labelInfoLocalizedValue(
@@ -41,23 +38,18 @@ public class FileEntryInfoItemFields {
 				FileEntryInfoItemFields.class, "author-name")
 		).build();
 	public static final InfoField<ImageInfoFieldType>
-		authorProfileImageInfoField = InfoField.builder(
-		).infoFieldType(
-			ImageInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
-		).name(
-			"authorProfileImage"
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				FileEntryInfoItemFields.class, "author-profile-image")
-		).build();
+		authorProfileImageInfoField =
+			BuilderStaticHolder._builder.infoFieldType(
+				ImageInfoFieldType.INSTANCE
+			).name(
+				"authorProfileImage"
+			).labelInfoLocalizedValue(
+				InfoLocalizedValue.localize(
+					FileEntryInfoItemFields.class, "author-profile-image")
+			).build();
 	public static final InfoField<DateInfoFieldType> createDateInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
 		).name(
 			"createDate"
 		).labelInfoLocalizedValue(
@@ -65,11 +57,8 @@ public class FileEntryInfoItemFields {
 				FileEntryInfoItemFields.class, "create-date")
 		).build();
 	public static final InfoField<TextInfoFieldType> descriptionInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
 		).name(
 			"description"
 		).labelInfoLocalizedValue(
@@ -77,11 +66,8 @@ public class FileEntryInfoItemFields {
 				FileEntryInfoItemFields.class, "description")
 		).build();
 	public static final InfoField<URLInfoFieldType> displayPageURLInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			URLInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
 		).name(
 			"displayPageURL"
 		).labelInfoLocalizedValue(
@@ -89,11 +75,8 @@ public class FileEntryInfoItemFields {
 				"com.liferay.asset.info.display.impl", "display-page-url")
 		).build();
 	public static final InfoField<URLInfoFieldType> downloadURLInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			URLInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
 		).name(
 			"downloadURL"
 		).labelInfoLocalizedValue(
@@ -101,11 +84,8 @@ public class FileEntryInfoItemFields {
 				FileEntryInfoItemFields.class, "download-url")
 		).build();
 	public static final InfoField<TextInfoFieldType> fileNameInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
 		).name(
 			"fileName"
 		).labelInfoLocalizedValue(
@@ -113,11 +93,8 @@ public class FileEntryInfoItemFields {
 				FileEntryInfoItemFields.class, "file-name")
 		).build();
 	public static final InfoField<ImageInfoFieldType> fileURLInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			ImageInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
 		).name(
 			"fileURL"
 		).labelInfoLocalizedValue(
@@ -125,11 +102,8 @@ public class FileEntryInfoItemFields {
 				FileEntryInfoItemFields.class, "file-url")
 		).build();
 	public static final InfoField<TextInfoFieldType> mimeTypeInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
 		).name(
 			"mimeType"
 		).labelInfoLocalizedValue(
@@ -137,11 +111,8 @@ public class FileEntryInfoItemFields {
 				FileEntryInfoItemFields.class, "mime-type")
 		).build();
 	public static final InfoField<DateInfoFieldType> modifiedDateInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
 		).name(
 			"modifiedDate"
 		).labelInfoLocalizedValue(
@@ -149,11 +120,8 @@ public class FileEntryInfoItemFields {
 				FileEntryInfoItemFields.class, "modified-date")
 		).build();
 	public static final InfoField<ImageInfoFieldType> previewImageInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			ImageInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
 		).name(
 			"previewImage"
 		).labelInfoLocalizedValue(
@@ -161,11 +129,8 @@ public class FileEntryInfoItemFields {
 				FileEntryInfoItemFields.class, "preview-image")
 		).build();
 	public static final InfoField<URLInfoFieldType> previewURLInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			URLInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
 		).name(
 			"previewURL"
 		).labelInfoLocalizedValue(
@@ -173,11 +138,8 @@ public class FileEntryInfoItemFields {
 				FileEntryInfoItemFields.class, "preview-url")
 		).build();
 	public static final InfoField<DateInfoFieldType> publishDateInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
 		).name(
 			"publishDate"
 		).labelInfoLocalizedValue(
@@ -185,38 +147,36 @@ public class FileEntryInfoItemFields {
 				FileEntryInfoItemFields.class, "publish-date")
 		).build();
 	public static final InfoField<TextInfoFieldType> sizeInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
 		).name(
 			"size"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(FileEntryInfoItemFields.class, "size")
 		).build();
 	public static final InfoField<TextInfoFieldType> titleInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
 		).name(
 			"title"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(FileEntryInfoItemFields.class, "title")
 		).build();
 	public static final InfoField<TextInfoFieldType> versionInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			FileEntry.class.getSimpleName()
 		).name(
 			"version"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				FileEntryInfoItemFields.class, "version")
 		).build();
+
+	private static class BuilderStaticHolder {
+
+		private static final InfoField.NamespacedBuilder _builder =
+			InfoField.builder(FileEntry.class.getSimpleName());
+
+	}
 
 }

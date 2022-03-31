@@ -22,14 +22,11 @@ import com.liferay.info.localized.InfoLocalizedValue;
 /**
  * @author Jürgen Kappler
  */
-public interface AssetCategoryInfoItemFields {
+public class AssetCategoryInfoItemFields {
 
 	public static final InfoField<TextInfoFieldType> descriptionInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			AssetCategory.class.getSimpleName()
 		).name(
 			"description"
 		).labelInfoLocalizedValue(
@@ -37,11 +34,8 @@ public interface AssetCategoryInfoItemFields {
 				AssetCategoryInfoItemFields.class, "description")
 		).build();
 	public static final InfoField<TextInfoFieldType> displayPageURLInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			AssetCategory.class.getSimpleName()
 		).name(
 			"displayPageURL"
 		).labelInfoLocalizedValue(
@@ -49,11 +43,8 @@ public interface AssetCategoryInfoItemFields {
 				AssetCategoryInfoItemFields.class, "display-page-url")
 		).build();
 	public static final InfoField<TextInfoFieldType> nameInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			AssetCategory.class.getSimpleName()
 		).name(
 			"name"
 		).labelInfoLocalizedValue(
@@ -61,16 +52,20 @@ public interface AssetCategoryInfoItemFields {
 				AssetCategoryInfoItemFields.class, "name")
 		).build();
 	public static final InfoField<TextInfoFieldType> vocabularyInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			AssetCategory.class.getSimpleName()
 		).name(
 			"vocabulary"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(
 				AssetCategoryInfoItemFields.class, "vocabulary")
 		).build();
+
+	private static class BuilderStaticHolder {
+
+		private static final InfoField.NamespacedBuilder _builder =
+			InfoField.builder(AssetCategory.class.getSimpleName());
+
+	}
 
 }

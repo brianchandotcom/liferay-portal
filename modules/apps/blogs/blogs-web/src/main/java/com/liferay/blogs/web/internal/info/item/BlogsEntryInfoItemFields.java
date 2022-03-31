@@ -25,14 +25,11 @@ import com.liferay.info.localized.InfoLocalizedValue;
 /**
  * @author Jorge Ferrer
  */
-public interface BlogsEntryInfoItemFields {
+public class BlogsEntryInfoItemFields {
 
 	public static final InfoField<TextInfoFieldType> authorNameInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			BlogsEntry.class.getSimpleName()
 		).name(
 			"authorName"
 		).labelInfoLocalizedValue(
@@ -40,23 +37,18 @@ public interface BlogsEntryInfoItemFields {
 				BlogsEntryInfoItemFields.class, "author-name")
 		).build();
 	public static final InfoField<ImageInfoFieldType>
-		authorProfileImageInfoField = InfoField.builder(
-		).infoFieldType(
-			ImageInfoFieldType.INSTANCE
-		).namespace(
-			BlogsEntry.class.getSimpleName()
-		).name(
-			"authorProfileImage"
-		).labelInfoLocalizedValue(
-			InfoLocalizedValue.localize(
-				BlogsEntryInfoItemFields.class, "author-profile-image")
-		).build();
+		authorProfileImageInfoField =
+			BuilderStaticHolder._builder.infoFieldType(
+				ImageInfoFieldType.INSTANCE
+			).name(
+				"authorProfileImage"
+			).labelInfoLocalizedValue(
+				InfoLocalizedValue.localize(
+					BlogsEntryInfoItemFields.class, "author-profile-image")
+			).build();
 	public static final InfoField<TextInfoFieldType> contentInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			BlogsEntry.class.getSimpleName()
 		).name(
 			"content"
 		).labelInfoLocalizedValue(
@@ -64,11 +56,8 @@ public interface BlogsEntryInfoItemFields {
 				BlogsEntryInfoItemFields.class, "content")
 		).build();
 	public static final InfoField<TextInfoFieldType>
-		coverImageCaptionInfoField = InfoField.builder(
-		).infoFieldType(
+		coverImageCaptionInfoField = BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			BlogsEntry.class.getSimpleName()
 		).name(
 			"coverImageCaption"
 		).labelInfoLocalizedValue(
@@ -76,11 +65,8 @@ public interface BlogsEntryInfoItemFields {
 				BlogsEntryInfoItemFields.class, "cover-image-caption")
 		).build();
 	public static final InfoField<ImageInfoFieldType> coverImageInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			ImageInfoFieldType.INSTANCE
-		).namespace(
-			BlogsEntry.class.getSimpleName()
 		).name(
 			"coverImage"
 		).labelInfoLocalizedValue(
@@ -88,11 +74,8 @@ public interface BlogsEntryInfoItemFields {
 				BlogsEntryInfoItemFields.class, "cover-image")
 		).build();
 	public static final InfoField<DateInfoFieldType> createDateInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
-		).namespace(
-			BlogsEntry.class.getSimpleName()
 		).name(
 			"createDate"
 		).labelInfoLocalizedValue(
@@ -100,11 +83,8 @@ public interface BlogsEntryInfoItemFields {
 				BlogsEntryInfoItemFields.class, "create-date")
 		).build();
 	public static final InfoField<TextInfoFieldType> descriptionInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			BlogsEntry.class.getSimpleName()
 		).name(
 			"description"
 		).labelInfoLocalizedValue(
@@ -112,11 +92,8 @@ public interface BlogsEntryInfoItemFields {
 				BlogsEntryInfoItemFields.class, "description")
 		).build();
 	public static final InfoField<DateInfoFieldType> displayDateInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
-		).namespace(
-			BlogsEntry.class.getSimpleName()
 		).name(
 			"displayDate"
 		).labelInfoLocalizedValue(
@@ -124,11 +101,8 @@ public interface BlogsEntryInfoItemFields {
 				BlogsEntryInfoItemFields.class, "display-date")
 		).build();
 	public static final InfoField<URLInfoFieldType> displayPageURLInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			URLInfoFieldType.INSTANCE
-		).namespace(
-			BlogsEntry.class.getSimpleName()
 		).name(
 			"displayPageURL"
 		).labelInfoLocalizedValue(
@@ -136,11 +110,8 @@ public interface BlogsEntryInfoItemFields {
 				"com.liferay.asset.info.display.impl", "display-page-url")
 		).build();
 	public static final InfoField<DateInfoFieldType> modifiedDateInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
-		).namespace(
-			BlogsEntry.class.getSimpleName()
 		).name(
 			"modifiedDate"
 		).labelInfoLocalizedValue(
@@ -148,11 +119,8 @@ public interface BlogsEntryInfoItemFields {
 				BlogsEntryInfoItemFields.class, "modified-date")
 		).build();
 	public static final InfoField<DateInfoFieldType> publishDateInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			DateInfoFieldType.INSTANCE
-		).namespace(
-			BlogsEntry.class.getSimpleName()
 		).name(
 			"publishDate"
 		).labelInfoLocalizedValue(
@@ -160,11 +128,8 @@ public interface BlogsEntryInfoItemFields {
 				BlogsEntryInfoItemFields.class, "publish-date")
 		).build();
 	public static final InfoField<ImageInfoFieldType> smallImageInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			ImageInfoFieldType.INSTANCE
-		).namespace(
-			BlogsEntry.class.getSimpleName()
 		).name(
 			"smallImage"
 		).labelInfoLocalizedValue(
@@ -172,11 +137,8 @@ public interface BlogsEntryInfoItemFields {
 				BlogsEntryInfoItemFields.class, "small-image")
 		).build();
 	public static final InfoField<TextInfoFieldType> subtitleInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			BlogsEntry.class.getSimpleName()
 		).name(
 			"subtitle"
 		).labelInfoLocalizedValue(
@@ -184,15 +146,19 @@ public interface BlogsEntryInfoItemFields {
 				BlogsEntryInfoItemFields.class, "subtitle")
 		).build();
 	public static final InfoField<TextInfoFieldType> titleInfoField =
-		InfoField.builder(
-		).infoFieldType(
+		BuilderStaticHolder._builder.infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).namespace(
-			BlogsEntry.class.getSimpleName()
 		).name(
 			"title"
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(BlogsEntryInfoItemFields.class, "title")
 		).build();
+
+	private static class BuilderStaticHolder {
+
+		private static final InfoField.NamespacedBuilder _builder =
+			InfoField.builder(BlogsEntry.class.getSimpleName());
+
+	}
 
 }

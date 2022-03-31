@@ -550,6 +550,9 @@ definition {
 	macro translateFile {
 		var os = OSDetector.isWindows();
 
+		if (contains("${translationFileName}", " ")) {
+			var translationFileName = StringUtil.replace("${translationFileName}", " ", "*");
+		}
 		if ("${os}" == "true") {
 			AntCommand(
 				locator1 = "build-test.xml",

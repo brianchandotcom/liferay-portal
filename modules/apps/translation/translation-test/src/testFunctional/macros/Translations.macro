@@ -743,9 +743,20 @@ definition {
 			AssertTextEquals.assertPartialText(
 				locator1 = "Message#ERROR_IMPORT_TRANSLATIONS_ITEM",
 				value1 = "${failFileName}");
+
+			if (isSet(zipFileName)) {
+				AssertTextEquals(
+					locator1 = "Message#ERROR_IMPORT_TRANSLATIONS_ITEM",
+					value1 = "${zipFileName}");
+			}
 		}
 
 		if (isSet(failFileName2)) {
+			AssertTextEquals.assertPartialText(
+				key_indexNumber = "2",
+				locator1 = "Message#ERROR_IMPORT_TRANSLATIONS_ITEM_MESSAGE_N",
+				value1 = "${errorMessageItem}");
+
 			AssertTextEquals.assertPartialText(
 				key_indexNumber = "2",
 				locator1 = "Message#ERROR_IMPORT_TRANSLATIONS_ITEM_N",

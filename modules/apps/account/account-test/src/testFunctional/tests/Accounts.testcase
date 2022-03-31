@@ -1303,7 +1303,7 @@ definition {
 
 		Click(locator1 = "Pagination#NEXT_LINK");
 
-		LexiconEntry.viewEntryName(rowEntry = "${accountRoleName}");
+		LexiconEntry.viewEntryName(rowEntry = "Account Role 4");
 
 		for (var accountRoleName : list "Account Administrator,Account Role 1,Account Role 2,Account Role 3") {
 			LexiconEntry.viewNoEntry(rowEntry = "${accountRoleName}");

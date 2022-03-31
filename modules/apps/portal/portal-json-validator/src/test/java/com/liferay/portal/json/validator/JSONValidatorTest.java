@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.json.validator;
+package com.liferay.portal.json.validator;
 
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;

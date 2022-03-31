@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.json.validator;
+package com.liferay.portal.json.validator;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;

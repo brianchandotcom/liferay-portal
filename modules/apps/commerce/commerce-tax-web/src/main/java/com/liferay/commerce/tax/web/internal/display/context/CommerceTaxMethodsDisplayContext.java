@@ -206,12 +206,10 @@ public class CommerceTaxMethodsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		CommerceChannel commerceChannel =
-			_commerceChannelLocalService.getCommerceChannel(
-				getCommerceChannelId());
-
 		return _commerceChannelModelResourcePermission.contains(
-			themeDisplay.getPermissionChecker(), commerceChannel,
+			themeDisplay.getPermissionChecker(),
+			_commerceChannelLocalService.getCommerceChannel(
+				getCommerceChannelId()),
 			ActionKeys.UPDATE);
 	}
 

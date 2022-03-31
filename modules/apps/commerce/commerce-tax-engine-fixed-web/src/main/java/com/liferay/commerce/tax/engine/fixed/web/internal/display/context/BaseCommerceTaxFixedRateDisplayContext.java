@@ -138,13 +138,12 @@ public class BaseCommerceTaxFixedRateDisplayContext {
 				commerceChannel.getCompanyId(),
 				commerceChannel.getCommerceCurrencyCode());
 
-		String localizedPercentage = percentageFormatter.getLocalizedPercentage(
-			locale, commerceCurrency.getMaxFractionDigits(),
-			commerceCurrency.getMinFractionDigits(),
-			new BigDecimal(percentage));
-
 		return StringUtil.removeSubstring(
-			localizedPercentage, StringPool.PERCENT);
+			percentageFormatter.getLocalizedPercentage(
+				locale, commerceCurrency.getMaxFractionDigits(),
+				commerceCurrency.getMinFractionDigits(),
+				new BigDecimal(percentage)),
+			StringPool.PERCENT);
 	}
 
 	public String getLocalizedRate(
@@ -230,13 +229,11 @@ public class BaseCommerceTaxFixedRateDisplayContext {
 	}
 
 	public boolean hasUpdateCommerceChannelPermission() throws PortalException {
-		CommerceChannel commerceChannel =
-			commerceChannelLocalService.getCommerceChannel(
-				getCommerceChannelId());
-
 		return modelResourcePermission.contains(
 			commerceTaxFixedRateRequestHelper.getPermissionChecker(),
-			commerceChannel, ActionKeys.UPDATE);
+			commerceChannelLocalService.getCommerceChannel(
+				getCommerceChannelId()),
+			ActionKeys.UPDATE);
 	}
 
 	protected final CommerceChannelLocalService commerceChannelLocalService;

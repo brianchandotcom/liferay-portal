@@ -174,113 +174,38 @@ public class SearchBarPortletDisplayContextBuilder {
 
 		SearchRequest searchRequest = searchResponse.getRequest();
 
-		setDestination(searchBarPortletPreferences.getDestinationString());
+		_destination = searchBarPortletPreferences.getDestinationString();
 
-		setEmptySearchEnabled(
-			_isEmptySearchEnabled(portletSharedSearchResponse));
+		_emptySearchEnabled = _isEmptySearchEnabled(
+			portletSharedSearchResponse);
 
-		setInvisible(searchBarPortletPreferences.isInvisible());
+		_invisible = searchBarPortletPreferences.isInvisible();
 
-		setKeywords(Optional.ofNullable(searchRequest.getQueryString()));
-
-		setKeywordsParameterName(keywordsParameterName);
-
-		setPaginationStartParameterName(
-			searchRequest.getPaginationStartParameterName());
-
-		setScopeParameterName(scopeParameterName);
-
-		setScopeParameterValue(
-			portletSharedSearchResponse.getParameter(
-				scopeParameterName, _renderRequest));
-
-		setSearchScopePreference(
-			searchBarPortletPreferences.getSearchScopePreference());
-
-		setThemeDisplay(themeDisplay);
-
-		return build();
-	}
-
-	public SearchBarPortletDisplayContextBuilder setDestination(
-		String destination) {
-
-		_destination = destination;
-
-		return this;
-	}
-
-	public SearchBarPortletDisplayContextBuilder setEmptySearchEnabled(
-		boolean emptySearchEnabled) {
-
-		_emptySearchEnabled = emptySearchEnabled;
-
-		return this;
-	}
-
-	public SearchBarPortletDisplayContextBuilder setInvisible(
-		boolean invisible) {
-
-		_invisible = invisible;
-
-		return this;
-	}
-
-	public SearchBarPortletDisplayContextBuilder setKeywords(
-		Optional<String> keywordsOptional) {
-
-		keywordsOptional.ifPresent(keywords -> _keywords = keywords);
-
-		return this;
-	}
-
-	public SearchBarPortletDisplayContextBuilder setKeywordsParameterName(
-		String keywordsParameterName) {
+		_keywords = Optional.ofNullable(
+			searchRequest.getQueryString()
+		).orElse(
+			null
+		);
 
 		_keywordsParameterName = keywordsParameterName;
 
-		return this;
-	}
-
-	public SearchBarPortletDisplayContextBuilder
-		setPaginationStartParameterName(String paginationStartParameterName) {
-
-		_paginationStartParameterName = paginationStartParameterName;
-
-		return this;
-	}
-
-	public SearchBarPortletDisplayContextBuilder setScopeParameterName(
-		String scopeParameterName) {
+		_paginationStartParameterName =
+			searchRequest.getPaginationStartParameterName();
 
 		_scopeParameterName = scopeParameterName;
 
-		return this;
-	}
+		Optional<String> scopeParameterValueOptional =
+			portletSharedSearchResponse.getParameter(
+				scopeParameterName, _renderRequest);
 
-	public SearchBarPortletDisplayContextBuilder setScopeParameterValue(
-		Optional<String> scopeParameterValueOptional) {
+		_scopeParameterValue = scopeParameterValueOptional.orElse(null);
 
-		scopeParameterValueOptional.ifPresent(
-			scopeParameterValue -> _scopeParameterValue = scopeParameterValue);
-
-		return this;
-	}
-
-	public SearchBarPortletDisplayContextBuilder setSearchScopePreference(
-		SearchScopePreference searchScopePreference) {
-
-		_searchScopePreference = searchScopePreference;
-
-		return this;
-	}
-
-	public SearchBarPortletDisplayContextBuilder setThemeDisplay(
-		ThemeDisplay themeDisplay) {
+		_searchScopePreference =
+			searchBarPortletPreferences.getSearchScopePreference();
 
 		_themeDisplay = themeDisplay;
 
-		return this;
+		return build();
 	}
 
 	protected Layout fetchLayoutByFriendlyURL(

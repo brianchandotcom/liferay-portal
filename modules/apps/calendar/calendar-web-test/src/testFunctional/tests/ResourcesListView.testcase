@@ -170,13 +170,28 @@ definition {
 		CalendarResource.viewResourceNameNotPresent(calendarResourceName = "Global Scope Resource");
 	}
 
-	@description = "LRQA-71885 - Verify that the user can filter by Nonactive Resources"
-	@ignore = "Test Stub"
+	@description = "LRQA-71923 - Verify that the user can filter by Nonactive Resources"
 	@priority = "3"
 	test CanFilterByNonactiveResources {
+		CalendarNavigator.gotoAddResource();
 
-		// TODO LRQA-71923 CanFilterByNonactiveResources pending implementation
+		CalendarResource.editResourceName(calendarResourceName = "Active Resource");
 
+		CalendarResource.save();
+
+		CalendarNavigator.gotoAddResource();
+
+		CalendarResource.editResourceName(calendarResourceName = "Inactive Resource");
+
+		CalendarResource.deactivate();
+
+		CalendarResource.save();
+
+		CalendarResource.viewResourceNameNotPresent(calendarResourceName = "Inactive Resource");
+
+		CalendarResource.resourceSetFilterAndOrder(filterBy = "No");
+
+		CalendarResource.viewResourceName(calendarResourceName = "Inactive Resource");
 	}
 
 	@description = "LRQA-71885 - Verify that the user can search by Resource Description"

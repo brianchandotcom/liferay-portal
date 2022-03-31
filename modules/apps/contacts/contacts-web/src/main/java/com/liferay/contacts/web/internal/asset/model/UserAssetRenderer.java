@@ -110,12 +110,11 @@ public class UserAssetRenderer extends BaseJSPAssetRenderer<User> {
 			LiferayPortletResponse liferayPortletResponse)
 		throws Exception {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			User.class.getName(), PortletProvider.Action.VIEW);
-
 		return PortletURLBuilder.createLiferayPortletURL(
 			liferayPortletResponse, getControlPanelPlid(liferayPortletRequest),
-			portletId, PortletRequest.RENDER_PHASE
+			PortletProviderUtil.getPortletId(
+				User.class.getName(), PortletProvider.Action.VIEW),
+			PortletRequest.RENDER_PHASE
 		).setMVCRenderCommandName(
 			"/users_admin/edit_user"
 		).setParameter(

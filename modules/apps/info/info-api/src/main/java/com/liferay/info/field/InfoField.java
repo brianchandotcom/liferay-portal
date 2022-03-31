@@ -18,6 +18,8 @@ import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -47,8 +49,8 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 			builder(
 			).infoFieldType(
 				infoFieldType
-			).uniqueId(
-				name
+			).namespace(
+				StringPool.BLANK
 			).name(
 				name
 			).labelInfoLocalizedValue(
@@ -70,8 +72,8 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 			builder(
 			).infoFieldType(
 				infoFieldType
-			).uniqueId(
-				name
+			).namespace(
+				StringPool.BLANK
 			).name(
 				name
 			).labelInfoLocalizedValue(
@@ -160,12 +162,12 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 
 	public static class Builder {
 
-		public <T extends InfoFieldType> UniqueIdStep<T> infoFieldType(
+		public <T extends InfoFieldType> NamespaceStep<T> infoFieldType(
 			T infoFieldType) {
 
 			_infoFieldType = infoFieldType;
 
-			return new UniqueIdStep<>(this);
+			return new NamespaceStep<>(this);
 		}
 
 		private Builder() {
@@ -179,6 +181,7 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		private boolean _localizable;
 		private boolean _multivalued;
 		private String _name;
+		private String _namespace;
 		private String _uniqueId;
 
 	}
@@ -235,6 +238,14 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		public FinalStep<T> name(String name) {
 			_builder._name = name;
 
+			if (Validator.isBlank(_builder._namespace)) {
+				_builder._uniqueId = name;
+			}
+			else {
+				_builder._uniqueId =
+					_builder._namespace + StringPool.UNDERLINE + name;
+			}
+
 			return new FinalStep<>(_builder);
 		}
 
@@ -246,15 +257,15 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 
 	}
 
-	public static class UniqueIdStep<T extends InfoFieldType> {
+	public static class NamespaceStep<T extends InfoFieldType> {
 
-		public NameStep<T> uniqueId(String uniqueId) {
-			_builder._uniqueId = uniqueId;
+		public NameStep<T> namespace(String namespace) {
+			_builder._namespace = namespace;
 
 			return new NameStep<>(_builder);
 		}
 
-		private UniqueIdStep(Builder builder) {
+		private NamespaceStep(Builder builder) {
 			_builder = builder;
 		}
 

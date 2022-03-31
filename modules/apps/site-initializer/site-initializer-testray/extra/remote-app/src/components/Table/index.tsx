@@ -15,6 +15,7 @@
 import {ClayCheckbox} from '@clayui/form';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
+import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 
 import DropDown from '../DropDown/DropDown';
@@ -49,7 +50,21 @@ const Table: React.FC<TableProps> = ({
 	selectedRows = [],
 	rowSelectable = false,
 }) => {
+	const [activeRow, setActiveRow] = useState<number | undefined>();
+
 	const navigate = useNavigate();
+
+	const onMouseLeaveRow = () => {
+		if (actions) {
+			setActiveRow(undefined);
+		}
+	};
+
+	const onMouseOverRow = (rowIndex: number) => {
+		if (actions) {
+			setActiveRow(rowIndex);
+		}
+	};
 
 	return (
 		<ClayTable borderless className="testray-table" hover>
@@ -69,7 +84,12 @@ const Table: React.FC<TableProps> = ({
 
 			<Body>
 				{items.map((item, rowIndex) => (
-					<Row key={rowIndex}>
+					<Row
+						className="table-row"
+						key={rowIndex}
+						onMouseLeave={onMouseLeaveRow}
+						onMouseOver={() => onMouseOverRow(rowIndex)}
+					>
 						{rowSelectable && onSelectRow && (
 							<Cell>
 								<ClayCheckbox
@@ -108,8 +128,15 @@ const Table: React.FC<TableProps> = ({
 						))}
 
 						{actions && (
-							<Cell align="right">
-								<DropDown actions={actions} item={item} />
+							<Cell
+								align="right"
+								className="table-action-column table-cell-expand"
+							>
+								{activeRow === rowIndex ? (
+									<DropDown actions={actions} item={item} />
+								) : (
+									<div style={{height: 32}}></div>
+								)}
 							</Cell>
 						)}
 					</Row>

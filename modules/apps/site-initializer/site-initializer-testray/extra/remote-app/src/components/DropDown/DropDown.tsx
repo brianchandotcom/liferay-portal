@@ -14,7 +14,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
-import React, {cloneElement, useState} from 'react';
+import React, {useState} from 'react';
 
 import DropDownAction from './DropDownAction';
 
@@ -23,36 +23,10 @@ const {ItemList} = ClayDropDown;
 type DropDownProps = {
 	actions: any[];
 	item: any;
-	noActionsMessage?: string;
 };
 
-const DropDown: React.FC<DropDownProps> = ({
-	actions,
-	item,
-	noActionsMessage,
-}) => {
+const DropDown: React.FC<DropDownProps> = ({actions, item}) => {
 	const [active, setActive] = useState(false);
-
-	const DropdownButton = (
-		<ClayButtonWithIcon
-			className="page-link"
-			displayType="unstyled"
-			symbol="ellipsis-v"
-		/>
-	);
-
-	actions = actions.filter((action) =>
-		action.show ? action.show(item) : true
-	);
-
-	if (actions.length === 0) {
-		return cloneElement(DropdownButton, {
-			'data-tooltip-align': 'bottom',
-			'data-tooltip-delay': '200',
-			'disabled': true,
-			'title': noActionsMessage,
-		});
-	}
 
 	return (
 		<ClayDropDown
@@ -60,7 +34,13 @@ const DropDown: React.FC<DropDownProps> = ({
 			alignmentPosition={Align.RightCenter}
 			className="dropdown-action"
 			onActiveChange={(newVal) => setActive(newVal)}
-			trigger={DropdownButton}
+			trigger={
+				<ClayButtonWithIcon
+					className="page-link"
+					displayType="unstyled"
+					symbol="ellipsis-v"
+				/>
+			}
 		>
 			<ItemList>
 				{actions.map((action, index) => (

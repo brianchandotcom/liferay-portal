@@ -18,6 +18,16 @@ definition {
 		CalendarResource.view(calendarResourceName = "${calendarResourceName}");
 	}
 
+	macro addCalendarByResource {
+		Click(locator1 = "CalendarManageCalendars#ADD_CALENDAR");
+
+		Calendar._editName(calendarName = "${calendarName}");
+
+		Button.clickSave();
+
+		Navigator.gotoBack();
+	}
+
 	macro clearSearchResults {
 		Click(locator1 = "WorkflowConfiguration#CLEAR_BUTTON");
 	}
@@ -84,6 +94,16 @@ definition {
 		PortletEntry.inputName(name = "${calendarResourceName}");
 	}
 
+	macro gotoPermissions {
+		Click(locator1 = "CalendarResources#VERTICAL_ELLIPSIS_BY_RESOURCE_NAME");
+
+		MenuItem.clickNoError(menuItem = "Permissions");
+	}
+
+	macro notDisplayResultBar {
+		AssertElementNotPresent(locator1 = "CalendarResources#VIEW_RESOURCE_RESULT_BAR");
+	}
+
 	macro resourceSetFilterAndOrder {
 		ManagementBar.setFilterAndOrder(filterBy = "${filterBy}");
 	}
@@ -140,6 +160,10 @@ definition {
 		AssertElementPresent(locator1 = "CalendarResources#RESOURCE_TABLE_ACTIONS");
 	}
 
+	macro viewCalendarNameByResourceOntable {
+		AssertElementPresent(locator1 = "CalendarManageCalendars#CALENDAR_TABLE_NAME");
+	}
+
 	macro viewDefault {
 		CalendarNavigator.gotoResources();
 
@@ -150,6 +174,10 @@ definition {
 			value1 = "No resources were found.");
 
 		AssertElementNotPresent(locator1 = "CalendarResources#RESOURCE_TABLE_NAME");
+	}
+
+	macro viewMenuPermissionsModal {
+		AssertElementPresent(locator1 = "CalendarResources#RESOURCE_PERMISSIONS_MODAL");
 	}
 
 	macro viewResourceCalendars {

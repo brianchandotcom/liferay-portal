@@ -27,8 +27,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_RESOURCE_RESULT_BAR</td>
+	<td>//nav[contains(@class,'subnav-tbar-primary')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESOURCE_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[4]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VERTICAL_ELLIPSIS_BY_RESOURCE_NAME</td>
+	<td>//tr[contains(.,'${key_calendarName}')]//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_PERMISSIONS_MODAL</td>
+	<td>//div[contains(@class, 'modal-content') and contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 </tbody>

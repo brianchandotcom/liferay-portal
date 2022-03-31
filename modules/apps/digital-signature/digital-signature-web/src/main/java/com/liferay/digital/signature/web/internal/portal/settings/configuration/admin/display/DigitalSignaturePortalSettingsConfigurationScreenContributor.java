@@ -76,13 +76,10 @@ public class DigitalSignaturePortalSettingsConfigurationScreenContributor
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		DigitalSignatureConfiguration digitalSignatureConfiguration =
-			DigitalSignatureConfigurationUtil.getDigitalSignatureConfiguration(
-				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId());
-
 		httpServletRequest.setAttribute(
 			DigitalSignatureConfiguration.class.getName(),
-			digitalSignatureConfiguration);
+			DigitalSignatureConfigurationUtil.getDigitalSignatureConfiguration(
+				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId()));
 	}
 
 	@Reference(

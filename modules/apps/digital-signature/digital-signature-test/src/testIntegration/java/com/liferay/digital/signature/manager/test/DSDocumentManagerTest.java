@@ -134,11 +134,12 @@ public class DSDocumentManagerTest {
 				}
 			});
 
-		byte[] dsDocumentsAsBytes = _dsDocumentManager.getDSDocumentsAsBytes(
-			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-			dsEnvelope.getDSEnvelopeId());
-
-		Assert.assertTrue(ArrayUtil.isNotEmpty(dsDocumentsAsBytes));
+		Assert.assertTrue(
+			ArrayUtil.isNotEmpty(
+				_dsDocumentManager.getDSDocumentsAsBytes(
+					TestPropsValues.getCompanyId(),
+					TestPropsValues.getGroupId(),
+					dsEnvelope.getDSEnvelopeId())));
 
 		_dsEnvelopeManager.deleteDSEnvelopes(
 			TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),

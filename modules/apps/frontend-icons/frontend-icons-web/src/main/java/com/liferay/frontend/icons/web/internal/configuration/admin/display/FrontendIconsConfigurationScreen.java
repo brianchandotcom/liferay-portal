@@ -80,13 +80,13 @@ public class FrontendIconsConfigurationScreen implements ConfigurationScreen {
 		try {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
-					"/portal_settings/frontend_icons_configuration.jsp");
+					"/portal_settings/frontend_icons.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			throw new IOException(
-				"Unable to render frontend_icons_configuration.jsp", exception);
+				"Unable to render frontend_icons.jsp", exception);
 		}
 	}
 

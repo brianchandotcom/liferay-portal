@@ -237,7 +237,7 @@ definition {
 		ACSegments.addSegmentField(segmentField = "Downloaded Document & Media");
 
 		ACSegments.selectDocument(
-			documentTitle = "Document_1.jpg",
+			documentTitle = "DM AC Title",
 			indexField = "1");
 
 		ACSegments.setOccurence(occurenceNumber = "4");

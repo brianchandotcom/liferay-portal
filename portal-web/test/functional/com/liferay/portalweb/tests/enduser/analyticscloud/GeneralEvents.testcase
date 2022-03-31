@@ -351,7 +351,7 @@ definition {
 				applicationId = "Document",
 				eventId = "documentDownloaded",
 				property = "title",
-				value = "Document_1.jpg");
+				value = "DM AC Title");
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",

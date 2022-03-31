@@ -119,7 +119,7 @@ definition {
 				applicationId = "Document",
 				eventId = "documentDownloaded",
 				property = "title",
-				value = "Document_1.jpg");
+				value = "New Document");
 
 			ACUtils.assertEventPropertyValue(
 				applicationId = "Document",

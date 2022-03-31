@@ -56,6 +56,7 @@ import getDOM from './util/get_dom';
 import getElement from './util/get_element';
 import getGeolocation from './util/get_geolocation';
 import getLexiconIcon from './util/get_lexicon_icon';
+import getLexiconIconTpl from './util/get_lexicon_icon_template';
 import getOpener from './util/get_opener';
 import getPortletId from './util/get_portlet_id';
 import getPortletNamespace from './util/get_portlet_namespace.es';
@@ -205,6 +206,7 @@ Liferay.Util.getElement = getElement;
 Liferay.Util.getGeolocation = getGeolocation;
 Liferay.Util.getFormElement = getFormElement;
 Liferay.Util.getLexiconIcon = getLexiconIcon;
+Liferay.Util.getLexiconIconTpl = getLexiconIconTpl;
 Liferay.Util.getOpener = getOpener;
 
 /**

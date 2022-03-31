@@ -122,6 +122,11 @@ declare module Liferay {
 			cssClass?: string
 		): HTMLElement;
 
+		export function getLexiconIconTpl(
+			icon: string,
+			cssClass?: string
+		): string;
+
 		export function getTop(): Window;
 
 		export function getOpener(): any;

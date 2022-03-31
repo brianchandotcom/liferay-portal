@@ -39,13 +39,6 @@
 
 	var STR_RIGHT_SQUARE_BRACKET = ']';
 
-	var TPL_LEXICON_ICON =
-		'<svg aria-hidden="true" class="lexicon-icon lexicon-icon-{0} {1}" focusable="false" role="presentation">' +
-		'<use href="' +
-		themeDisplay.getPathThemeImages() +
-		'/clay/icons.svg#{0}" />' +
-		'</svg>';
-
 	var Window = {
 		_map: {},
 
@@ -431,10 +424,6 @@
 			var columnId = str.replace(/layout-column_/, '');
 
 			return columnId;
-		},
-
-		getLexiconIconTpl(icon, cssClass) {
-			return Liferay.Util.sub(TPL_LEXICON_ICON, icon, cssClass || '');
 		},
 
 		getWindow(id) {

@@ -9,7 +9,7 @@
  * distribution rights of the Software.
  */
 
-export default function getInitialGenerateNewDXPKey() {
+export default function getInitialGenerateNewKey() {
 	return {
 		hostName: '',
 		ipAddresses: '',

@@ -16,7 +16,7 @@ import {Link, useNavigate} from 'react-router-dom';
 import {Button, Input} from '../../../../../common/components';
 import Layout from '../../../../../common/containers/setup-forms/Layout';
 import {createNewGenerateKey} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
-import getInitialGenerateNewDXPKey from '../../../../../common/utils/constants/getInitialGenerateNewDXPKey';
+import getInitialGenerateNewKey from '../../../../../common/utils/constants/getInitialGenerateNewKey';
 import GenerateCardLayout from '../GenerateCardLayout';
 import KeyInputs from '../KeyInputs';
 import KeySelect from '../KeySelect';
@@ -94,8 +94,7 @@ const RequiredInformation = ({
 				sessionId,
 				licenseKey
 			);
-		}
-		else {
+		} else {
 			await Promise.all(
 				values?.keys?.map(({hostName, ipAddresses, macAddresses}) => {
 					licenseKey.macAddresses = macAddresses.replace('\n', ',');
@@ -246,7 +245,7 @@ const RequiredInformation = ({
 										disabled={addButtonDisabled}
 										displayType="secundary"
 										onClick={() => {
-											push(getInitialGenerateNewDXPKey());
+											push(getInitialGenerateNewKey());
 
 											setAvailableKeys(
 												(
@@ -297,7 +296,7 @@ const RequiredInformationForm = (props) => {
 		<Formik
 			initialValues={{
 				description: '',
-				keys: [getInitialGenerateNewDXPKey()],
+				keys: [getInitialGenerateNewKey()],
 				maxClusterNodes: '',
 				name: '',
 			}}

@@ -10,7 +10,7 @@
  */
 
 import {useOutletContext, useParams} from 'react-router-dom';
-import GenerateNewDXPKey from '../../../../containers/GenerateNewDXPKey';
+import GenerateNewKey from '../../../../containers/GenerateNewKey';
 import {PAGE_TYPES} from '../../../../utils/constants';
 
 const NewProductOutlet = () => {
@@ -19,7 +19,7 @@ const NewProductOutlet = () => {
 
 	const newActivationComponents = {
 		[PAGE_TYPES.dxpNew]: (
-			<GenerateNewDXPKey
+			<GenerateNewKey
 				accountKey={project.accountKey}
 				sessionId={sessionId}
 			/>

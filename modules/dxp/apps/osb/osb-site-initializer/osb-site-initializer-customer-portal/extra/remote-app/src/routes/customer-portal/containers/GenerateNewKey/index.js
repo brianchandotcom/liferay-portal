@@ -19,7 +19,7 @@ import {STEP_TYPES} from './utils/constants/stepType';
 
 const ACTIVATION_ROOT_ROUTER = 'activation';
 
-const GenerateNewDXPKey = ({accountKey, sessionId}) => {
+const GenerateNewKey = ({accountKey, sessionId}) => {
 	const [infoSelectedKey, setInfoSelectedKey] = useState();
 	const [step, setStep] = useState(STEP_TYPES.selectDescriptions);
 	const {licenseKeyDownloadURL} = useApplicationProvider();
@@ -52,6 +52,6 @@ const GenerateNewDXPKey = ({accountKey, sessionId}) => {
 	return StepLayout[step];
 };
 
-GenerateNewDXPKey.Skeleton = GenerateNewKeySkeleton;
+GenerateNewKey.Skeleton = GenerateNewKeySkeleton;
 
-export default GenerateNewDXPKey;
+export default GenerateNewKey;

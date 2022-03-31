@@ -62,15 +62,17 @@ public class SiteNavigationMenuActionDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() throws Exception {
-		boolean hasUpdatePermission = SiteNavigationMenuPermission.contains(
-			_themeDisplay.getPermissionChecker(), _siteNavigationMenu,
-			ActionKeys.UPDATE);
+		boolean hasUpdatePermission =
+			SiteNavigationMenuPermission.contains(
+				_themeDisplay.getPermissionChecker(), _siteNavigationMenu,
+				ActionKeys.UPDATE) &&
+			_hasEditPermission;
 
 		return DropdownItemListBuilder.addGroup(
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> _hasEditPermission && hasUpdatePermission,
+						() -> hasUpdatePermission,
 						_getEditActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -79,7 +81,7 @@ public class SiteNavigationMenuActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> _hasEditPermission && hasUpdatePermission,
+						() -> hasUpdatePermission,
 						_getRenameActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -112,13 +114,13 @@ public class SiteNavigationMenuActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> _hasEditPermission && hasUpdatePermission,
+						() -> hasUpdatePermission,
 						_getPrimarySiteNavigationMenuActionUnsafeConsumer()
 					).add(
-						() -> _hasEditPermission && hasUpdatePermission,
+						() -> hasUpdatePermission,
 						_getSecondarySiteNavigationMenuActionUnsafeConsumer()
 					).add(
-						() -> _hasEditPermission && hasUpdatePermission,
+						() -> hasUpdatePermission,
 						_getSocialNavigationMenuActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setLabel(

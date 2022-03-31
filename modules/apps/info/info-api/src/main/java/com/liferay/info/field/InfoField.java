@@ -157,7 +157,8 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 	public String toString() {
 		return StringBundler.concat(
 			"{name: ", _builder._name, ", type: ",
-			_builder._infoFieldType.getName(), "}");
+			_builder._infoFieldType.getName(), ", uniqueId: ",
+			_builder._uniqueId, "}");
 	}
 
 	public static class Builder {

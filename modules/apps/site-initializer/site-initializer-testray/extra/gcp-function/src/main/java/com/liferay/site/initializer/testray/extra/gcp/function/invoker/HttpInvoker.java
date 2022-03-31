@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.http.invoker;
+package com.liferay.site.initializer.testray.extra.gcp.function.invoker;
 
 import java.io.BufferedReader;
 import java.io.File;

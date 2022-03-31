@@ -1018,6 +1018,46 @@ definition {
 		}
 	}
 
+	@description = "This is a test for LRQA-73702 and asserts that a user can see all accounts that they belong to"
+	@priority = "5"
+	test CanAccessAListOfAccountsTheUserBelongsTo {
+		task ("Given two accounts are created") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Test Account Member",
+				accountEntryType = "Business");
+
+			JSONAccountEntry.addAccountEntry(
+				accountEntryName = "Test Account Non-Member",
+				accountEntryType = "Business");
+		}
+
+		task ("And given a user is added to one of the accounts") {
+			User.assignAccountCP(
+				accountName = "Test Account Member",
+				userScreenName = "usersn");
+		}
+
+		task ("When that user logs in and views the account page") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
+
+			Navigator.gotoPage(pageName = "2B Account Page");
+		}
+
+		task ("Then the user should only see accounts they belong to") {
+			for (var accountName : list "Account Name,Test Account Member") {
+				LexiconEntry.viewEntryName(rowEntry = "${accountName}");
+			}
+
+			LexiconEntry.viewNoEntry(rowEntry = "Test Account Non-Member");
+		}
+	}
+
 	@description = "This test checks that the size of the pagination list can be changed."
 	@priority = "4"
 	test CanChangePaginationInAccounts {

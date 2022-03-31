@@ -97,6 +97,10 @@ Liferay.BREAKPOINTS = BREAKPOINTS;
  * @deprecated As of Cavanaugh (7.4.x), replaced by `import {STATUS_CODE} from 'frontend-js-web'`
  */
 Liferay.STATUS_CODE = statusCode;
+
+/**
+ * @deprecated As of Cavanaugh (7.4.x), replaced by `import {zIndex} from 'frontend-js-web'`
+ */
 Liferay.zIndex = zIndex;
 
 Liferay.component = component;

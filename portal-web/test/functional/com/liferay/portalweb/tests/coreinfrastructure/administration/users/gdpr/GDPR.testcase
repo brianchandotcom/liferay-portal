@@ -458,7 +458,7 @@ definition {
 	@description = "This test anonymizes a staged and a live entry from an applciation, test with WC entries."
 	@priority = "3"
 	test CanAnonymizeASingleStagedAndLiveWebContentEntry {
-		task ("Given log in as a new user, create a site enable local staging") {
+		task ("Given Publish the staged web content entries to live as a new admin user") {
 			User.logoutPG();
 
 			User.firstLoginUI(
@@ -476,9 +476,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 
 			JSONStaging.enableLocalStaging(groupName = "Site Name");
-		}
 
-		task ("Publish the staged web content entries to live as a new admin user") {
 			for (var count : list "1,2,3") {
 				JSONWebcontent.addWebContent(
 					content = "WC Content ${count}",
@@ -504,16 +502,16 @@ definition {
 			User.deletePersonalDataCP(
 				userFirstName = "userfn",
 				userLastName = "userln");
-		}
 
-		task ("And select anonymize staged 'GDPR Anonymize Article 1' entry and lived 'GDPR Anonymize Article 2' entry") {
-			GDPR.filterByApplications(
-				applicationItemsCount = "6",
-				applications = "Web Content",
-				totalItemsCount = "6");
+			task ("And select anonymize staged 'GDPR Anonymize Article 1' entry and lived 'GDPR Anonymize Article 2' entry") {
+				GDPR.filterByApplications(
+					applicationItemsCount = "6",
+					applications = "Web Content",
+					totalItemsCount = "6");
 
-			for (var rowIndexNum : list "1,3") {
-				GDPR.anonymizeTheSpecificEntry(rowIndexNumber = "${rowIndexNum}");
+				for (var rowIndexNum : list "1,3") {
+					GDPR.anonymizeTheSpecificEntry(rowIndexNumber = "${rowIndexNum}");
+				}
 			}
 		}
 

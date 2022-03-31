@@ -14,6 +14,7 @@
 
 package com.liferay.batch.engine.internal.strategy;
 
+import com.liferay.batch.engine.internal.util.ItemIndexThreadLocal;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -42,12 +43,8 @@ public class OnErrorContinueBatchEngineImportStrategy
 			UnsafeConsumer<T, Exception> unsafeConsumer)
 		throws Exception {
 
-		int index = 0;
-
 		for (T item : collection) {
 			try {
-				index++;
-
 				unsafeConsumer.accept(item);
 			}
 			catch (Exception exception) {
@@ -57,7 +54,7 @@ public class OnErrorContinueBatchEngineImportStrategy
 
 				addBatchEngineImportTaskError(
 					_companyId, _userId, _batchEngineImportTaskId,
-					item.toString(), _processedItemsCount + index,
+					item.toString(), ItemIndexThreadLocal.get(item),
 					exception.getMessage());
 			}
 		}

@@ -67,11 +67,14 @@ public class CSVBatchEngineTaskProgressImplTest
 			}
 		}
 
+		String content = sb.toString();
+
 		Assert.assertEquals(
 			expectedTotalItemsCount,
 			_batchEngineTaskProgress.getTotalItemsCount(
 				compress(
-					sb.toString(), BatchEngineTaskContentType.CSV.toString())));
+					content.getBytes(),
+					BatchEngineTaskContentType.CSV.toString())));
 	}
 
 	private static final BatchEngineTaskProgress _batchEngineTaskProgress =

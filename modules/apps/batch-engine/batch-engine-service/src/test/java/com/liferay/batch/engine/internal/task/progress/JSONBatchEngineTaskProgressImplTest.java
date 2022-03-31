@@ -62,11 +62,13 @@ public class JSONBatchEngineTaskProgressImplTest
 			sb.append(StringPool.CLOSE_BRACKET);
 		}
 
+		String content = sb.toString();
+
 		Assert.assertEquals(
 			expectedTotalItemsCount,
 			_batchEngineTaskProgress.getTotalItemsCount(
 				compress(
-					sb.toString(),
+					content.getBytes(),
 					BatchEngineTaskContentType.JSON.toString())));
 	}
 

@@ -54,11 +54,13 @@ public class JSONLBatchEngineTaskProgressImplTest
 			}
 		}
 
+		String content = sb.toString();
+
 		Assert.assertEquals(
 			expectedTotalItemsCount,
 			_batchEngineTaskProgress.getTotalItemsCount(
 				compress(
-					sb.toString(),
+					content.getBytes(),
 					BatchEngineTaskContentType.JSONL.toString())));
 	}
 

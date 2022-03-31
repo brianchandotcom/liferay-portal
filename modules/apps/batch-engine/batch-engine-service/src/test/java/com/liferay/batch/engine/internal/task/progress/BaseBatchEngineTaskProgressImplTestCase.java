@@ -31,7 +31,7 @@ import java.util.zip.ZipOutputStream;
  */
 public abstract class BaseBatchEngineTaskProgressImplTestCase {
 
-	protected InputStream compress(String content, String contentType)
+	protected InputStream compress(byte[] bytes, String contentType)
 		throws Exception {
 
 		try (ByteArrayOutputStream byteArrayOutputStream =
@@ -44,8 +44,6 @@ public abstract class BaseBatchEngineTaskProgressImplTestCase {
 					"import." + StringUtil.toLowerCase(contentType));
 
 				zipOutputStream.putNextEntry(zipEntry);
-
-				byte[] bytes = content.getBytes();
 
 				zipOutputStream.write(bytes, 0, bytes.length);
 			}

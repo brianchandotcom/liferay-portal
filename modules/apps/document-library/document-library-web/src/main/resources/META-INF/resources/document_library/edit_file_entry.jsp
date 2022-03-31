@@ -551,6 +551,14 @@ renderResponse.setTitle(headerTitle);
 							className="<%= DLFileEntry.class.getName() %>"
 							classPK="<%= assetClassPK %>"
 						/>
+
+						<c:if test="<%= fileEntry != null %>">
+							<aui:input label="update-auto-tags" name="updateAutoTags" type="checkbox" value="<%= false %>" />
+
+							<p class="text-secondary">
+								<liferay-ui:message key="update-auto-tags-help" />
+							</p>
+						</c:if>
 					</aui:fieldset>
 				</c:if>
 

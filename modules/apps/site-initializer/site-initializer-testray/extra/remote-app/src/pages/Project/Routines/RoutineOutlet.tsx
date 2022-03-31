@@ -42,7 +42,7 @@ const RoutineOutlet = () => {
 	const hasOtherParams = !!Object.values(otherParams).length;
 
 	const {setHeading} = useHeader({
-		shouldUpdate: false,
+		shouldUpdate: true,
 		useTabs: [
 			{
 				active: pathname === basePath,

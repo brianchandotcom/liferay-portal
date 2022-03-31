@@ -137,7 +137,12 @@ public class JSBundleConfigTopHeadDynamicInclude extends BaseDynamicInclude {
 		try {
 			ServletContext servletContext = jsConfig.getServletContext();
 
-			URL url = servletContext.getResource("package.json");
+			URL url = servletContext.getResource(
+				"META-INF/resources/package.json");
+
+			if (url == null) {
+				url = servletContext.getResource("package.json");
+			}
 
 			if (url == null) {
 				return null;

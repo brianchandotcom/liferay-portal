@@ -234,6 +234,14 @@ class UserNameFields extends PortletBase {
 
 		this._createLoadingIndicator();
 	}
+
+	_setElement(selector) {
+		if (typeof selector === 'string') {
+			return this.one(selector);
+		}
+
+		return selector;
+	}
 }
 
 UserNameFields.STATE = {
@@ -252,9 +260,7 @@ UserNameFields.STATE = {
 	 * @memberof UserNameFields
 	 * @type {String}
 	 */
-	formNode: Config.required()
-		.setter((selector) => document.querySelector(selector))
-		.writeOnce(),
+	formNode: Config.required().setter('_setElement').writeOnce(),
 
 	/**
 	 * Language id select field.
@@ -262,9 +268,7 @@ UserNameFields.STATE = {
 	 * @memberof UserNameFields
 	 * @type {String}
 	 */
-	languageIdSelectNode: Config.required()
-		.setter((selector) => document.querySelector(selector))
-		.writeOnce(),
+	languageIdSelectNode: Config.required().setter('_setElement').writeOnce(),
 
 	/**
 	 * HTML element containing the user name fields.
@@ -272,9 +276,7 @@ UserNameFields.STATE = {
 	 * @memberof UserNameFields
 	 * @type {String}
 	 */
-	userNameFieldsNode: Config.required()
-		.setter((selector) => document.querySelector(selector))
-		.writeOnce(),
+	userNameFieldsNode: Config.required().setter('_setElement').writeOnce(),
 };
 
 export default UserNameFields;

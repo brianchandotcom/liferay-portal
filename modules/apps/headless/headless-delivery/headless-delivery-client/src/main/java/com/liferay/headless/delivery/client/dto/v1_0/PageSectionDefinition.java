@@ -166,6 +166,28 @@ public class PageSectionDefinition implements Cloneable, Serializable {
 
 	protected FragmentViewport[] fragmentViewports;
 
+	public HtmlProperties getHtmlProperties() {
+		return htmlProperties;
+	}
+
+	public void setHtmlProperties(HtmlProperties htmlProperties) {
+		this.htmlProperties = htmlProperties;
+	}
+
+	public void setHtmlProperties(
+		UnsafeSupplier<HtmlProperties, Exception>
+			htmlPropertiesUnsafeSupplier) {
+
+		try {
+			htmlProperties = htmlPropertiesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected HtmlProperties htmlProperties;
+
 	public Boolean getIndexed() {
 		return indexed;
 	}

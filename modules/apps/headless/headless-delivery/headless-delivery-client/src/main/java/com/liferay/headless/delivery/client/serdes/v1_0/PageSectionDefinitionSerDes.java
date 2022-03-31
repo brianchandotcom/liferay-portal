@@ -140,6 +140,17 @@ public class PageSectionDefinitionSerDes {
 			sb.append("]");
 		}
 
+		if (pageSectionDefinition.getHtmlProperties() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"htmlProperties\": ");
+
+			sb.append(
+				String.valueOf(pageSectionDefinition.getHtmlProperties()));
+		}
+
 		if (pageSectionDefinition.getIndexed() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -236,6 +247,15 @@ public class PageSectionDefinitionSerDes {
 				String.valueOf(pageSectionDefinition.getFragmentViewports()));
 		}
 
+		if (pageSectionDefinition.getHtmlProperties() == null) {
+			map.put("htmlProperties", null);
+		}
+		else {
+			map.put(
+				"htmlProperties",
+				String.valueOf(pageSectionDefinition.getHtmlProperties()));
+		}
+
 		if (pageSectionDefinition.getIndexed() == null) {
 			map.put("indexed", null);
 		}
@@ -319,6 +339,13 @@ public class PageSectionDefinitionSerDes {
 						).toArray(
 							size -> new FragmentViewport[size]
 						));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "htmlProperties")) {
+				if (jsonParserFieldValue != null) {
+					pageSectionDefinition.setHtmlProperties(
+						HtmlPropertiesSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "indexed")) {

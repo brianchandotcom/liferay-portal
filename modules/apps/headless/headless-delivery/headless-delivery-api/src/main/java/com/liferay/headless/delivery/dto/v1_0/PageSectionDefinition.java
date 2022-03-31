@@ -252,6 +252,36 @@ public class PageSectionDefinition implements Serializable {
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
 
+	@Schema(description = "The page section's html properties")
+	@Valid
+	public HtmlProperties getHtmlProperties() {
+		return htmlProperties;
+	}
+
+	public void setHtmlProperties(HtmlProperties htmlProperties) {
+		this.htmlProperties = htmlProperties;
+	}
+
+	@JsonIgnore
+	public void setHtmlProperties(
+		UnsafeSupplier<HtmlProperties, Exception>
+			htmlPropertiesUnsafeSupplier) {
+
+		try {
+			htmlProperties = htmlPropertiesUnsafeSupplier.get();
+		}
+		catch (RuntimeException re) {
+			throw re;
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	@GraphQLField(description = "The page section's html properties")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected HtmlProperties htmlProperties;
+
 	@Schema(
 		description = "A flag that indicates whether the page section is indexed or not."
 	)
@@ -413,6 +443,16 @@ public class PageSectionDefinition implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		if (htmlProperties != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"htmlProperties\": ");
+
+			sb.append(String.valueOf(htmlProperties));
 		}
 
 		if (indexed != null) {

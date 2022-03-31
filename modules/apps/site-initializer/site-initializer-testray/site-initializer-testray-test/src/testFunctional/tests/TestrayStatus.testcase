@@ -1,88 +1,88 @@
 @component-name = "portal-solutions"
 definition {
 
-    property portal.release = "false";
-    property portal.upstream = "true";
-    property testray.main.component.name = "Testray 2";
+	property portal.release = "false";
+	property portal.upstream = "true";
+	property testray.main.component.name = "Testray 2";
 
-    setUp {
-        TestCase.setUpPortalInstance();
+	setUp {
+		TestCase.setUpPortalInstance();
 
-        User.firstLoginPG();
+		User.firstLoginPG();
 
-        Testray.createTestraySite(siteName = "Testray 2");
-    }
+		Testray.createTestraySite(siteName = "Testray 2");
+	}
 
-    tearDown {
-        var testPortalInstance = PropsUtil.get("test.portal.instance");
+	tearDown {
+		var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-        Testray.tearDownCP();
+		Testray.tearDownCP();
 
-        if ("${testPortalInstance}" == "true") {
-            PortalInstances.tearDownCP();
-        }
-    }
+		if ("${testPortalInstance}" == "true") {
+			PortalInstances.tearDownCP();
+		}
+	}
 
-    @description = "LPS-150029 - Verify if the user will see the results with abandoned status."
-    @priority = "4"
-    test CanVerifyAbandonedStatus {
-        Testray.enableTestrayTasksInPortlet();
+	@description = "LPS-150029 - Verify if the user will see the results with abandoned status."
+	@priority = "4"
+	test CanVerifyAbandonedStatus {
+		Testray.enableTestrayTasksInPortlet();
 
-        Testray.statusChangeTestray(value = "2");
+		Testray.statusChangeTestray(value = "2");
 
-        Refresh();
+		Refresh();
 
-        ApplicationsMenu.gotoSite(key_site = "Testray 2");
+		ApplicationsMenu.gotoSite(key_site = "Testray 2");
 
-        Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
 
-        AssertElementPresent(locator1 = "TestrayTestflow#STATUS_ABANDONED");
-    }
+		AssertElementPresent(locator1 = "TestrayTestflow#STATUS_ABANDONED");
+	}
 
-    @description = "LPS-150028 - Verify if the user will see the results with Complete status."
-    @priority = "4"
-    test CanVerifyCompleteStatus {
-        Testray.enableTestrayTasksInPortlet();
+	@description = "LPS-150028 - Verify if the user will see the results with Complete status."
+	@priority = "4"
+	test CanVerifyCompleteStatus {
+		Testray.enableTestrayTasksInPortlet();
 
-        Testray.statusChangeTestray(value = "3");
+		Testray.statusChangeTestray(value = "3");
 
-        ApplicationsMenu.gotoSite(key_site = "Testray 2");
+		ApplicationsMenu.gotoSite(key_site = "Testray 2");
 
-        Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
 
-        AssertElementPresent(locator1 = "TestrayTestflow#STATUS_COMPLETE");
-    }
+		AssertElementPresent(locator1 = "TestrayTestflow#STATUS_COMPLETE");
+	}
 
-    @description = "LPS-150026 - Verify if the user will see the results with In Analysis status."
-    @priority = "4"
-    test CanVerifyInAnalysisStatus {
-        Testray.enableTestrayTasksInPortlet();
+	@description = "LPS-150026 - Verify if the user will see the results with In Analysis status."
+	@priority = "4"
+	test CanVerifyInAnalysisStatus {
+		Testray.enableTestrayTasksInPortlet();
 
-        Testray.statusChangeTestray(value = "1");
+		Testray.statusChangeTestray(value = "1");
 
-        Refresh();
+		Refresh();
 
-        ApplicationsMenu.gotoSite(key_site = "Testray 2");
+		ApplicationsMenu.gotoSite(key_site = "Testray 2");
 
-        Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
 
-        AssertElementPresent(locator1 = "TestrayTestflow#STATUS_IN_ANALYSIS");
-    }
+		AssertElementPresent(locator1 = "TestrayTestflow#STATUS_IN_ANALYSIS");
+	}
 
-    @description = "LPS-150027 - Verify if the user will see the results with Open status."
-    @priority = "4"
-    test CanVerifyOpenStatus {
-        Testray.enableTestrayTasksInPortlet();
+	@description = "LPS-150027 - Verify if the user will see the results with Open status."
+	@priority = "4"
+	test CanVerifyOpenStatus {
+		Testray.enableTestrayTasksInPortlet();
 
-        Testray.statusChangeTestray(value = "4");
+		Testray.statusChangeTestray(value = "4");
 
-        Refresh();
+		Refresh();
 
-        ApplicationsMenu.gotoSite(key_site = "Testray 2");
+		ApplicationsMenu.gotoSite(key_site = "Testray 2");
 
-        Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+		Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
 
-        AssertElementPresent(locator1 = "TestrayTestflow#STATUS_OPEN");
-    }
+		AssertElementPresent(locator1 = "TestrayTestflow#STATUS_OPEN");
+	}
 
 }

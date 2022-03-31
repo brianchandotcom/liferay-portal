@@ -11,44 +11,44 @@
 
 <tbody>
 <tr>
-    <td>ITEMS_PER_PAGE_BUTTON</td>
-    <td>//div[contains(@class, testray-page)]//div[contains(@class, 'pagination')]//button[contains(@class, 'dropdown')]</td>
-    <td></td>
+	<td>ITEMS_PER_PAGE_BUTTON</td>
+	<td>//div[contains(@class, testray-page)]//div[contains(@class, 'pagination')]//button[contains(@class, 'dropdown')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ITEMS_PER_PAGE_BUTTON_DROPDOWN</td>
-    <td>//button[contains(text(), "${key_itemvalue}")]</td>
-    <td></td>
+	<td>ITEMS_PER_PAGE_BUTTON_DROPDOWN</td>
+	<td>//button[contains(text(), "${key_itemvalue}")]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ITEMS_PER_PAGE_DESCRIPTION</td>
-    <td>//div[contains(@class, 'pagination')]//div[contains(@class, 'pagination-results') and contains(text(), "${key_text}")]</td>
-    <td></td>
+	<td>ITEMS_PER_PAGE_DESCRIPTION</td>
+	<td>//div[contains(@class, 'pagination')]//div[contains(@class, 'pagination-results') and contains(text(), "${key_text}")]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>ITEMS_PER_PAGE_VALUE_BUTTON</td>
-    <td>//div[contains(@class, testray-page)]//div[contains(@class, 'pagination')]//button[contains(text(), "${key_value} Items")]</td>
-    <td></td>
+	<td>ITEMS_PER_PAGE_VALUE_BUTTON</td>
+	<td>//div[contains(@class, testray-page)]//div[contains(@class, 'pagination')]//button[contains(text(), "${key_value} Items")]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>NEXT_AND_PREVIOUS_PAGE_BUTTON</td>
-    <td>//button[contains(@class, 'page-link') and contains(@aria-label, '${key_pageDirection}')]</td>
-    <td></td>
+	<td>NEXT_AND_PREVIOUS_PAGE_BUTTON</td>
+	<td>//button[contains(@class, 'page-link') and contains(@aria-label, '${key_pageDirection}')]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>NUMBER_PAGE_BUTTON</td>
-    <td>//button[contains(@class, 'page-link') and contains(text(), "${key_pageNumber}")]</td>
-    <td></td>
+	<td>NUMBER_PAGE_BUTTON</td>
+	<td>//button[contains(@class, 'page-link') and contains(text(), "${key_pageNumber}")]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>PROJECT_NAME_BUTTON</td>
-    <td>//td[contains(@class, 'text-dark cursor-pointer') and contains(text(), "${key_projectName}")]</td>
-    <td></td>
+	<td>PROJECT_NAME_BUTTON</td>
+	<td>//td[contains(@class, 'text-dark cursor-pointer') and contains(text(), "${key_projectName}")]</td>
+	<td></td>
 </tr>
 <tr>
-    <td>PROJECT_NAVIGATOR_TAB_BUTTON</td>
-    <td>//button[contains(@class, 'nav-link') and contains(text(), "${key_navTabName}")]</td>
-    <td></td>
+	<td>PROJECT_NAVIGATOR_TAB_BUTTON</td>
+	<td>//button[contains(@class, 'nav-link') and contains(text(), "${key_navTabName}")]</td>
+	<td></td>
 </tr>
 </tbody>
 </table>

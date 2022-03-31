@@ -19,9 +19,9 @@ import {testrayProjectFragment} from '../fragments';
 export const CreateProject = gql`
 	${testrayProjectFragment}
 
-	mutation CreateProject($Project: InputC_Project!) {
+	mutation CreateProject($data: InputC_Project!) {
 		c {
-			createProject(Project: $Project) {
+			createProject(Project: $data) {
 				...ProjectFragment
 			}
 		}
@@ -29,9 +29,9 @@ export const CreateProject = gql`
 `;
 
 export const DeleteProject = gql`
-	mutation deleteProject($projectId: Long) {
+	mutation deleteProject($id: Long) {
 		c {
-			deleteProject(projectId: $projectId)
+			deleteProject(projectId: $id)
 		}
 	}
 `;
@@ -39,9 +39,9 @@ export const DeleteProject = gql`
 export const UpdateProject = gql`
 	${testrayProjectFragment}
 
-	mutation updateProject($projectId: Long!, $Project: InputC_Project!) {
+	mutation updateProject($id: Long!, $data: InputC_Project!) {
 		c {
-			updateProject(projectId: $projectId, Project: $Project) {
+			updateProject(projectId: $id, Project: $data) {
 				...ProjectFragment
 			}
 		}

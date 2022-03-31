@@ -38,7 +38,7 @@ export const getRequirements = gql`
 		requirements(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
 				type: "C_Requirement"
-				path: "requirements?page={args.page}&pageSize={args.pageSize}&nestedFields=Component,Team"
+				path: "requirements?page={args.page}&pageSize={args.pageSize}&nestedFields=component,team"
 			) {
 			items {
 				components
@@ -49,9 +49,11 @@ export const getRequirements = gql`
 				linkTitle
 				linkURL
 				summary
-				component: r_requirementComponent_c_Component {
+				component: r_componentToRequirements_c_component {
+					id
 					name
-					team: r_componentTeam_c_Team {
+					team: r_teamToComponents_c_team {
+						id
 						name
 					}
 				}
@@ -69,7 +71,7 @@ export const getRequirement = gql`
 		requirement(requirementId: $requirementId)
 			@rest(
 				type: "C_Requirement"
-				path: "requirements/{args.requirementId}?nestedFields=Component,Team"
+				path: "requirements/{args.requirementId}?nestedFields=component,team"
 			) {
 			components
 			description
@@ -79,9 +81,9 @@ export const getRequirement = gql`
 			linkTitle
 			linkURL
 			summary
-			component: r_requirementComponent_c_Component {
+			component: r_componentToRequirements_c_component {
 				name
-				team: r_componentTeam_c_Team {
+				team: r_teamToComponents_c_team {
 					name
 				}
 			}

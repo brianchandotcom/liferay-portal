@@ -14,40 +14,42 @@
 
 import {gql} from '@apollo/client';
 
-import {testrayRequirementFragment} from '../fragments';
-
 export const CreateRequirement = gql`
-	${testrayRequirementFragment}
-
-	mutation CreateRequirement($Requirement: InputC_Requirement!) {
-		c {
-			createRequirement(Requirement: $Requirement) {
-				...RequirementFragment
-			}
+	mutation createRequirement($data: InputC_FactorOption!) {
+		createRequirement(Requirement: $data)
+			@rest(
+				bodyKey: "Requirement"
+				bodySerializer: "requirement"
+				method: "POST"
+				path: "requirements"
+				type: "C_Requirement"
+			) {
+			id: requirementId
+			name
 		}
 	}
 `;
 
 export const DeleteRequirement = gql`
-	mutation deleteRequirement($requirementId: Long) {
+	mutation deleteRequirement($id: Long) {
 		c {
-			deleteRequirement(requirementId: $requirementId)
+			deleteRequirement(requirementId: $id)
 		}
 	}
 `;
 
-export const UpdateRequirements = gql`
-	mutation updateRequirement(
-		$requirementId: Long
-		$Requirement: InputC_Requirement!
-	) {
-		c {
-			updateRequirement(
-				requirementId: $requirementId
-				Requirement: $Requirement
+export const UpdateRequirement = gql`
+	mutation updateRequirement($data: InputC_FactorOption!, $id: Long) {
+		updateRequirement(Requirement: $data, requirementId: $id)
+			@rest(
+				bodyKey: "Requirement"
+				bodySerializer: "requirement"
+				method: "PUT"
+				path: "requirements/{args.requirementId}"
+				type: "C_Requirement"
 			) {
-				...RequirementFragment
-			}
+			id: requirementId
+			name
 		}
 	}
 `;

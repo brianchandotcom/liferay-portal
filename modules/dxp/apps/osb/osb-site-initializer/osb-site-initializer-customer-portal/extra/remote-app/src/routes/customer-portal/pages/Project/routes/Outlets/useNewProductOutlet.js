@@ -9,12 +9,12 @@
  * distribution rights of the Software.
  */
 
-import {useOutletContext, useParams} from 'react-router-dom';
+import {Navigate, useOutletContext, useParams} from 'react-router-dom';
 import GenerateNewKey from '../../../../containers/GenerateNewKey';
 import {PAGE_TYPES, PRODUCT_TYPES} from '../../../../utils/constants';
 
 const NewProductOutlet = () => {
-	const {productId} = useParams();
+	const {accountKey, productId} = useParams();
 	const {hasAccessToCurrentProduct, project, sessionId} = useOutletContext();
 
 	const newActivationComponents = {
@@ -37,7 +37,7 @@ const NewProductOutlet = () => {
 	const currentProduct = newActivationComponents[`${productId}_new`];
 
 	if (!currentProduct || !hasAccessToCurrentProduct) {
-		return <h3>Page not found</h3>;
+		return <Navigate replace={true} to={`/${accountKey}`} />;
 	}
 
 	return currentProduct;

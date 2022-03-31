@@ -74,9 +74,12 @@ const Layout = () => {
 
 	const hasQuickLinksPanel =
 		currentPage !== PAGE_TYPES.teamMembers &&
-		currentProduct !== PAGE_TYPES.dxpNew;
+		currentProduct !== PAGE_TYPES.dxpNew &&
+		currentProduct !== PAGE_TYPES.portalNew;
 
-	const hasSideMenu = getCurrentProduct() !== PAGE_TYPES.dxpNew;
+	const hasSideMenu =
+		getCurrentProduct() !== PAGE_TYPES.dxpNew &&
+		getCurrentProduct() !== PAGE_TYPES.portalNew;
 
 	if (!project || !sessionId || !subscriptionGroups || !userAccount) {
 		return (

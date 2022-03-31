@@ -17,20 +17,15 @@ import {Link} from 'react-router-dom';
 import {Button} from '../../../../../common/components';
 import {Radio} from '../../../../../common/components/Radio';
 import Layout from '../../../../../common/containers/setup-forms/Layout';
+import {useApplicationProvider} from '../../../../../common/context/AppPropertiesProvider';
 import {getNewGenerateKeyFormValues} from '../../../../../common/services/liferay/rest/raysource/LicenseKeys';
 import getCurrentEndDate from '../../../../../common/utils/getCurrentEndDate';
 import {useCustomerPortal} from '../../../context';
-import {PRODUCT_TYPES} from '../../../utils/constants';
 import GenerateNewKeySkeleton from '../Skeleton';
-
-const INICIAL_SELECTED_VERSION = '7.0';
-const INICIAL_SELECTED_TYPE = 'Backup';
-const DXP_PRODUCT = 'DXP ';
 
 const SelectSubscription = ({
 	accountKey,
 	infoSelectedKey,
-	licenseKeyDownloadURL,
 	productGroupName,
 	sessionId,
 	setInfoSelectedKey,
@@ -38,16 +33,17 @@ const SelectSubscription = ({
 	urlPreviousPage,
 }) => {
 	const [{subscriptionGroups}] = useCustomerPortal();
+	const {licenseKeyDownloadURL} = useApplicationProvider();
 
 	const [selected, setSelected] = useState(
 		infoSelectedKey?.selectedSubscription
 	);
 	const [generateFormValues, setGenerateFormValues] = useState();
 	const [selectedVersion, setSelectedVersion] = useState(
-		infoSelectedKey?.productVersion || INICIAL_SELECTED_VERSION
+		infoSelectedKey?.productVersion
 	);
 	const [selectedKeyType, setSelectedKeyType] = useState(
-		infoSelectedKey?.licenseEntryType || INICIAL_SELECTED_TYPE
+		infoSelectedKey?.licenseEntryType
 	);
 
 	useEffect(() => {
@@ -63,30 +59,41 @@ const SelectSubscription = ({
 				setGenerateFormValues(data);
 			}
 		};
+
 		fetchGenerateFormData();
 	}, [accountKey, licenseKeyDownloadURL, productGroupName, sessionId]);
 
-	const productVersions = generateFormValues?.versions?.sort((a, b) =>
-		a.label - b.label > 0 ? 1 : -1
-	);
+	const productVersions = generateFormValues?.versions;
 
-	const productKeyTypes = generateFormValues?.versions?.map(({types}) =>
+	const productKeyTypes = productVersions?.map(({types}) =>
 		types
 			.map((licenseKey) =>
-				licenseKey.licenseEntryName.replace(DXP_PRODUCT, '')
+				licenseKey.licenseEntryDisplayName.replace(
+					`${productGroupName} `,
+					''
+				)
 			)
 			.sort()
 	);
 
-	const returnSelectedVersionIndex = productVersions
+	let returnSelectedVersionIndex = 0;
+
+	const selectedVersionIndex = productVersions
 		?.map((label) => label.label)
 		.indexOf(selectedVersion);
+	if (selectedVersionIndex && selectedVersionIndex >= 0) {
+		returnSelectedVersionIndex = selectedVersionIndex;
+	}
 
 	const selectedProductKey =
 		productVersions &&
 		productVersions[returnSelectedVersionIndex]?.types?.find(
-			(key) => key.licenseEntryName === `${DXP_PRODUCT}${selectedKeyType}`
-		).productKey;
+			(key) =>
+				key.licenseEntryDisplayName.replace(
+					`${productGroupName} `,
+					''
+				) === selectedKeyType
+		)?.productKey;
 
 	const getSubscriptionTerms = generateFormValues?.subscriptionTerms?.filter(
 		(key) => key.productKey === selectedProductKey
@@ -244,7 +251,7 @@ const SelectSubscription = ({
 										const getInfoSelectedKey = {
 											index,
 											licenseEntryType: `${selectedKeyType}`,
-											productType: `${PRODUCT_TYPES.dxp}`,
+											productType: productGroupName,
 											productVersion: `${selectedVersion}`,
 										};
 

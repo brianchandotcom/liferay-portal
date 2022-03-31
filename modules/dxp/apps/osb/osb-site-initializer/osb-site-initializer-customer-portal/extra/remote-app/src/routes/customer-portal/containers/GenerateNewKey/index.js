@@ -10,7 +10,6 @@
  */
 
 import {useState} from 'react';
-import {PAGE_TYPES} from '../../utils/constants';
 import GenerateNewKeySkeleton from './Skeleton';
 import RequiredInformation from './pages/RequiredInformation';
 import SelectSubscription from './pages/SelectSubscription';
@@ -22,7 +21,7 @@ const GenerateNewKey = ({accountKey, productGroupName, sessionId}) => {
 	const [infoSelectedKey, setInfoSelectedKey] = useState();
 	const [step, setStep] = useState(STEP_TYPES.selectDescriptions);
 
-	const urlPreviousPage = `/${accountKey}/${ACTIVATION_ROOT_ROUTER}/${PAGE_TYPES.dxp}`;
+	const urlPreviousPage = `/${accountKey}/${ACTIVATION_ROOT_ROUTER}/${productGroupName.toLowerCase()}`;
 
 	const StepLayout = {
 		[STEP_TYPES.generateKeys]: (

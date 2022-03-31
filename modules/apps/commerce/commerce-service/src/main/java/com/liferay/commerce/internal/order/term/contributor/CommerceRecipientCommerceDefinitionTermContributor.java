@@ -141,10 +141,9 @@ public class CommerceRecipientCommerceDefinitionTermContributor
 
 			String userGroupName = StringUtil.removeChars(s[2], '%', ']');
 
-			UserGroup userGroup = _userGroupLocalService.getUserGroup(
-				commerceOrder.getCompanyId(), userGroupName);
-
-			return _getUserIds(userGroup);
+			return _getUserIds(
+				_userGroupLocalService.getUserGroup(
+					commerceOrder.getCompanyId(), userGroupName));
 		}
 
 		return term;

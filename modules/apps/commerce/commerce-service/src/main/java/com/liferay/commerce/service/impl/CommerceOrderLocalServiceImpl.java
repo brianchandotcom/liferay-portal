@@ -1618,12 +1618,11 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
 
-		Date orderDate = PortalUtil.getDate(
-			orderDateMonth, orderDateDay, orderDateYear, orderDateHour,
-			orderDateMinute, user.getTimeZone(),
-			CommerceOrderDateException.class);
-
-		commerceOrder.setOrderDate(orderDate);
+		commerceOrder.setOrderDate(
+			PortalUtil.getDate(
+				orderDateMonth, orderDateDay, orderDateYear, orderDateHour,
+				orderDateMinute, user.getTimeZone(),
+				CommerceOrderDateException.class));
 
 		return commerceOrderPersistence.update(commerceOrder);
 	}
@@ -1947,12 +1946,10 @@ public class CommerceOrderLocalServiceImpl
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[] {commerceChannelGroupId});
 		searchContext.setKeywords(keywords);
-
-		Sort sort = SortFactoryUtil.getSort(
-			CommerceOrder.class, Sort.LONG_TYPE, Field.CREATE_DATE, "DESC");
-
-		searchContext.setSorts(sort);
-
+		searchContext.setSorts(
+			SortFactoryUtil.getSort(
+				CommerceOrder.class, Sort.LONG_TYPE, Field.CREATE_DATE,
+				"DESC"));
 		searchContext.setStart(start);
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();

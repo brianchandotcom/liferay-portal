@@ -124,7 +124,6 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		commerceSubscriptionEntry.setCompanyId(user.getCompanyId());
 		commerceSubscriptionEntry.setUserId(user.getUserId());
 		commerceSubscriptionEntry.setUserName(user.getFullName());
-
 		commerceSubscriptionEntry.setCommerceOrderItemId(commerceOrderItemId);
 		commerceSubscriptionEntry.setSubscriptionLength(subscriptionLength);
 		commerceSubscriptionEntry.setSubscriptionType(subscriptionType);
@@ -148,21 +147,14 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		if (cpSubscriptionType != null) {
 			commerceSubscriptionEntry.setSubscriptionStatus(
 				CommerceSubscriptionEntryConstants.SUBSCRIPTION_STATUS_ACTIVE);
-
-			Date subscriptionNextIterationDate =
+			commerceSubscriptionEntry.setNextIterationDate(
 				cpSubscriptionType.getSubscriptionNextIterationDate(
 					user.getTimeZone(), subscriptionLength,
-					subscriptionTypeSettingsUnicodeProperties, null);
-
-			commerceSubscriptionEntry.setNextIterationDate(
-				subscriptionNextIterationDate);
-
-			Date subscriptionStartDate =
+					subscriptionTypeSettingsUnicodeProperties, null));
+			commerceSubscriptionEntry.setStartDate(
 				cpSubscriptionType.getSubscriptionStartDate(
 					user.getTimeZone(),
-					subscriptionTypeSettingsUnicodeProperties);
-
-			commerceSubscriptionEntry.setStartDate(subscriptionStartDate);
+					subscriptionTypeSettingsUnicodeProperties));
 		}
 		else {
 			commerceSubscriptionEntry.setSubscriptionStatus(
@@ -173,22 +165,14 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 		if (deliveryCPSubscriptionType != null) {
 			commerceSubscriptionEntry.setDeliverySubscriptionStatus(
 				CommerceSubscriptionEntryConstants.SUBSCRIPTION_STATUS_ACTIVE);
-
-			Date subscriptionNextIterationDate =
+			commerceSubscriptionEntry.setDeliveryNextIterationDate(
 				deliveryCPSubscriptionType.getSubscriptionNextIterationDate(
 					user.getTimeZone(), deliverySubscriptionLength,
-					deliverySubscriptionTypeSettingsUnicodeProperties, null);
-
-			commerceSubscriptionEntry.setDeliveryNextIterationDate(
-				subscriptionNextIterationDate);
-
-			Date subscriptionStartDate =
+					deliverySubscriptionTypeSettingsUnicodeProperties, null));
+			commerceSubscriptionEntry.setDeliveryStartDate(
 				deliveryCPSubscriptionType.getSubscriptionStartDate(
 					user.getTimeZone(),
-					deliverySubscriptionTypeSettingsUnicodeProperties);
-
-			commerceSubscriptionEntry.setDeliveryStartDate(
-				subscriptionStartDate);
+					deliverySubscriptionTypeSettingsUnicodeProperties));
 		}
 		else {
 			commerceSubscriptionEntry.setDeliverySubscriptionStatus(
@@ -538,13 +522,12 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				CommerceSubscriptionEntryConstants.
 					SUBSCRIPTION_STATUS_INACTIVE) {
 
-			Date nextIterationDate = PortalUtil.getDate(
-				nextIterationDateMonth, nextIterationDateDay,
-				nextIterationDateYear, nextIterationDateHour,
-				nextIterationDateMinute, user.getTimeZone(),
-				CommerceSubscriptionEntryNextIterationDateException.class);
-
-			commerceSubscriptionEntry.setNextIterationDate(nextIterationDate);
+			commerceSubscriptionEntry.setNextIterationDate(
+				PortalUtil.getDate(
+					nextIterationDateMonth, nextIterationDateDay,
+					nextIterationDateYear, nextIterationDateHour,
+					nextIterationDateMinute, user.getTimeZone(),
+					CommerceSubscriptionEntryNextIterationDateException.class));
 		}
 
 		commerceSubscriptionEntry.setDeliverySubscriptionLength(
@@ -562,14 +545,13 @@ public class CommerceSubscriptionEntryLocalServiceImpl
 				CommerceSubscriptionEntryConstants.
 					SUBSCRIPTION_STATUS_INACTIVE) {
 
-			Date deliveryNextIterationDate = PortalUtil.getDate(
-				deliveryNextIterationDateMonth, deliveryNextIterationDateDay,
-				deliveryNextIterationDateYear, deliveryNextIterationDateHour,
-				deliveryNextIterationDateMinute, user.getTimeZone(),
-				CommerceSubscriptionEntryNextIterationDateException.class);
-
 			commerceSubscriptionEntry.setDeliveryNextIterationDate(
-				deliveryNextIterationDate);
+				PortalUtil.getDate(
+					deliveryNextIterationDateMonth,
+					deliveryNextIterationDateDay, deliveryNextIterationDateYear,
+					deliveryNextIterationDateHour,
+					deliveryNextIterationDateMinute, user.getTimeZone(),
+					CommerceSubscriptionEntryNextIterationDateException.class));
 		}
 
 		return commerceSubscriptionEntryPersistence.update(

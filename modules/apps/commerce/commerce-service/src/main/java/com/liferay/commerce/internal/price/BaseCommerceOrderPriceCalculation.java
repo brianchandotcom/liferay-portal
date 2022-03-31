@@ -567,13 +567,11 @@ public abstract class BaseCommerceOrderPriceCalculation
 
 		commerceOrderItemPrice.setDiscountAmount(
 			commerceMoneyFactory.create(commerceCurrency, discountAmount));
-
-		BigDecimal discountPercentage = _getDiscountPercentage(
-			activePrice.multiply(BigDecimal.valueOf(quantity)), discountAmount,
-			RoundingMode.valueOf(commerceCurrency.getRoundingMode()));
-
-		commerceOrderItemPrice.setDiscountPercentage(discountPercentage);
-
+		commerceOrderItemPrice.setDiscountPercentage(
+			_getDiscountPercentage(
+				activePrice.multiply(BigDecimal.valueOf(quantity)),
+				discountAmount,
+				RoundingMode.valueOf(commerceCurrency.getRoundingMode())));
 		commerceOrderItemPrice.setDiscountPercentageLevel1(
 			discountPercentageLevel1);
 		commerceOrderItemPrice.setDiscountPercentageLevel2(

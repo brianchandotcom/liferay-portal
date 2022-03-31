@@ -73,11 +73,10 @@ public class CommerceOrderItemServiceImpl
 
 		CommerceAccount commerceAccount = commerceContext.getCommerceAccount();
 
-		CommerceOrder commerceOrder = commerceOrderService.getCommerceOrder(
-			commerceOrderId);
-
 		_commerceOrderModelResourcePermission.check(
-			getPermissionChecker(), commerceOrder, ActionKeys.UPDATE);
+			getPermissionChecker(),
+			commerceOrderService.getCommerceOrder(commerceOrderId),
+			ActionKeys.UPDATE);
 
 		CPInstance cpInstance = cpInstanceLocalService.getCPInstance(
 			cpInstanceId);

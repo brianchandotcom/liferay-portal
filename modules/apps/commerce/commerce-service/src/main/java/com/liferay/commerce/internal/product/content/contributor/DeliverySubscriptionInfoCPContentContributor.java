@@ -72,12 +72,10 @@ public class DeliverySubscriptionInfoCPContentContributor
 			return jsonObject;
 		}
 
-		String subscriptionInfo = _getSubscriptionInfo(
-			cpInstance.getCPSubscriptionInfo(), httpServletRequest);
-
 		jsonObject.put(
 			CPContentContributorConstants.DELIVERY_SUBSCRIPTION_INFO,
-			subscriptionInfo);
+			_getSubscriptionInfo(
+				cpInstance.getCPSubscriptionInfo(), httpServletRequest));
 
 		return jsonObject;
 	}

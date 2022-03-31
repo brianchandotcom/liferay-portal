@@ -89,11 +89,10 @@ public class ObjectRecipientCommerceDefinitionTermContributor
 		if (term.startsWith("[%USER_GROUP_")) {
 			String[] termParts = term.split("_");
 
-			UserGroup userGroup = _userGroupLocalService.getUserGroup(
-				objectEntry.getCompanyId(),
-				StringUtil.removeChars(termParts[2], '%', ']'));
-
-			return _getUserIds(userGroup);
+			return _getUserIds(
+				_userGroupLocalService.getUserGroup(
+					objectEntry.getCompanyId(),
+					StringUtil.removeChars(termParts[2], '%', ']')));
 		}
 
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(

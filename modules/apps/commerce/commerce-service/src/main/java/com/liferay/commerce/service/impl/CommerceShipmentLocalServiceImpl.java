@@ -572,12 +572,11 @@ public class CommerceShipmentLocalServiceImpl
 
 		User user = userLocalService.getUser(commerceShipment.getUserId());
 
-		Date expectedDate = PortalUtil.getDate(
-			expectedDateMonth, expectedDateDay, expectedDateYear,
-			expectedDateHour, expectedDateMinute, user.getTimeZone(),
-			CommerceShipmentShippingDateException.class);
-
-		commerceShipment.setExpectedDate(expectedDate);
+		commerceShipment.setExpectedDate(
+			PortalUtil.getDate(
+				expectedDateMonth, expectedDateDay, expectedDateYear,
+				expectedDateHour, expectedDateMinute, user.getTimeZone(),
+				CommerceShipmentShippingDateException.class));
 
 		return commerceShipmentPersistence.update(commerceShipment);
 	}
@@ -608,12 +607,11 @@ public class CommerceShipmentLocalServiceImpl
 
 		User user = userLocalService.getUser(commerceShipment.getUserId());
 
-		Date shippingDate = PortalUtil.getDate(
-			shippingDateMonth, shippingDateDay, shippingDateYear,
-			shippingDateHour, shippingDateMinute, user.getTimeZone(),
-			CommerceShipmentShippingDateException.class);
-
-		commerceShipment.setShippingDate(shippingDate);
+		commerceShipment.setShippingDate(
+			PortalUtil.getDate(
+				shippingDateMonth, shippingDateDay, shippingDateYear,
+				shippingDateHour, shippingDateMinute, user.getTimeZone(),
+				CommerceShipmentShippingDateException.class));
 
 		return commerceShipmentPersistence.update(commerceShipment);
 	}

@@ -330,11 +330,9 @@ public class CommerceProductPriceCalculationV2Impl
 			boolean secure, CommerceContext commerceContext)
 		throws PortalException {
 
-		long commercePromoPriceListId = _getCommercePromoPriceListId(
-			cpInstanceId, commerceContext);
-
 		return _getPromoPrice(
-			commercePromoPriceListId, cpInstanceId, quantity, commerceContext);
+			_getCommercePromoPriceListId(cpInstanceId, commerceContext),
+			cpInstanceId, quantity, commerceContext);
 	}
 
 	@Override
@@ -419,11 +417,9 @@ public class CommerceProductPriceCalculationV2Impl
 			boolean secure, CommerceContext commerceContext)
 		throws PortalException {
 
-		long commercePriceListId = _getCommercePriceListId(
-			cpInstanceId, commerceContext);
-
 		return _getUnitPrice(
-			commercePriceListId, cpInstanceId, quantity, commerceContext);
+			_getCommercePriceListId(cpInstanceId, commerceContext),
+			cpInstanceId, quantity, commerceContext);
 	}
 
 	private CommerceDiscountValue _calculateCommerceDiscountValue(

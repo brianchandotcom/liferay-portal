@@ -173,12 +173,10 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 		commerceProductPriceRequest.setQuantity(quantity);
 		commerceProductPriceRequest.setSecure(false);
 
-		CommerceProductPrice commerceProductPrice =
-			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
-
 		_assertCommerceProductPrice(
-			quantity, rate, price, true, commerceProductPrice,
+			quantity, rate, price, true,
+			_commerceProductPriceCalculation.getCommerceProductPrice(
+				commerceProductPriceRequest),
 			RoundingMode.valueOf(_commerceCurrency.getRoundingMode()));
 	}
 
@@ -261,12 +259,10 @@ public class CommerceProductPriceCalculationWithTaxV2Test {
 		commerceProductPriceRequest.setQuantity(quantity);
 		commerceProductPriceRequest.setSecure(false);
 
-		CommerceProductPrice commerceProductPrice =
-			_commerceProductPriceCalculation.getCommerceProductPrice(
-				commerceProductPriceRequest);
-
 		_assertCommerceProductPrice(
-			quantity, rate, price, false, commerceProductPrice,
+			quantity, rate, price, false,
+			_commerceProductPriceCalculation.getCommerceProductPrice(
+				commerceProductPriceRequest),
 			RoundingMode.valueOf(_commerceCurrency.getRoundingMode()));
 	}
 

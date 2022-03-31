@@ -46,13 +46,11 @@ public class CommercePriceEntryTestUtil {
 			CommercePriceListLocalServiceUtil.getCommercePriceList(
 				commercePriceListId);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				commercePriceList.getGroupId());
-
 		return CommercePriceEntryLocalServiceUtil.addCommercePriceEntry(
 			externalReferenceCode, cpProductId, cpInstanceUuid,
-			commercePriceListId, price, BigDecimal.ZERO, serviceContext);
+			commercePriceListId, price, BigDecimal.ZERO,
+			ServiceContextTestUtil.getServiceContext(
+				commercePriceList.getGroupId()));
 	}
 
 	public static CommercePriceEntry addCommercePriceEntry(
@@ -104,13 +102,10 @@ public class CommercePriceEntryTestUtil {
 		CommercePriceList commercePriceList =
 			commercePriceEntry.getCommercePriceList();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				commercePriceList.getGroupId());
-
 		return CommerceTierPriceEntryLocalServiceUtil.addCommerceTierPriceEntry(
 			commercePriceEntryId, price, null, bulkPricing, minQuantity,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				commercePriceList.getGroupId()));
 	}
 
 	public static CommerceTierPriceEntry addCommerceTierPriceEntry(

@@ -123,12 +123,11 @@ public class CommerceSubscriptionEntryTest {
 			_commerceCurrency.getCommerceCurrencyId(),
 			_commerceSubscriptionEntryHelper);
 
-		int commerceSubscriptionEntriesCount =
+		Assert.assertEquals(
+			1,
 			_commerceSubscriptionEntryLocalService.
 				getCommerceSubscriptionEntriesCount(
-					_user.getCompanyId(), _user.getUserId());
-
-		Assert.assertEquals(1, commerceSubscriptionEntriesCount);
+					_user.getCompanyId(), _user.getUserId()));
 	}
 
 	@Test

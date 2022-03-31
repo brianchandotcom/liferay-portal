@@ -296,15 +296,12 @@ public class CommerceShipmentTest {
 		Assert.assertEquals(
 			commerceOrder.getCommerceAccount(),
 			commerceShipment.getCommerceAccount());
-
 		Assert.assertEquals(
 			commerceOrder.getGroupId(), commerceShipment.getGroupId());
-
-		int commerceShipmentItemsCount =
+		Assert.assertEquals(
+			orderedQuantity,
 			_commerceShipmentItemLocalService.getCommerceShipmentItemsCount(
-				commerceShipment.getCommerceShipmentId());
-
-		Assert.assertEquals(orderedQuantity, commerceShipmentItemsCount);
+				commerceShipment.getCommerceShipmentId()));
 
 		List<CommerceShipmentItem> commerceShipmentItems =
 			_commerceShipmentItemLocalService.getCommerceShipmentItems(
@@ -317,7 +314,6 @@ public class CommerceShipmentTest {
 		Assert.assertEquals(
 			commerceOrderItem.getCommerceOrderItemId(),
 			commerceShipmentItem.getCommerceOrderItemId());
-
 		Assert.assertEquals(
 			commerceShipment, commerceShipmentItem.getCommerceShipment());
 	}

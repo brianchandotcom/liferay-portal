@@ -1026,12 +1026,11 @@ public class CommerceOrderTest {
 			Assert.assertNotNull(commerceOrderAccountLimitException);
 		}
 
-		int pendingCommerceOrdersCount =
+		Assert.assertEquals(
+			2,
 			_commerceOrderService.getPendingCommerceOrdersCount(
 				commerceChannelGroupId, commerceAccount.getCommerceAccountId(),
-				StringPool.BLANK);
-
-		Assert.assertEquals(2, pendingCommerceOrdersCount);
+				StringPool.BLANK));
 
 		_commerceAccounts.add(commerceAccount);
 	}

@@ -862,8 +862,6 @@ definition {
 		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
 
 		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeOption = "email");
-
-
 	}
 
 	@description = "Verify that the user can select each node in Diagram"
@@ -1739,8 +1737,6 @@ definition {
 			infoValue = "item_0");
 
 		ProcessBuilderKaleoDesignerReact.viewSidebarFeedback(sidebarMessage = "A node with that ID already exists. Enter a unique ID.");
-
-		
 	}
 
 	@description = "LPS-139387 - Verify that the Step Label is a required field"

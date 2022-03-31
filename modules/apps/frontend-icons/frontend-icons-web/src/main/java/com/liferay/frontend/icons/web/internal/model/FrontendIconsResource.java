@@ -39,9 +39,7 @@ public class FrontendIconsResource {
 	}
 
 	private static final String _SYMBOL_TMPL = StringUtil.read(
-		FrontendIconsResource.class,
-		"/com/liferay/frontend/icon/admin/web/internal/model/dependencies" +
-			"/symbol.svg");
+		FrontendIconsResource.class, "dependencies/symbol.svg");
 
 	private final String _content;
 	private final String _name;

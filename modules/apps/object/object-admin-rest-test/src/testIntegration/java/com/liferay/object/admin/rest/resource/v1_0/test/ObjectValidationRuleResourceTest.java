@@ -25,6 +25,7 @@ import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.Collections;
 
@@ -45,6 +46,8 @@ public class ObjectValidationRuleResourceTest
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
+
+		PropsUtil.set("feature.flag.LPS-147964", Boolean.TRUE.toString());
 
 		String value = "A" + RandomTestUtil.randomString();
 
@@ -67,6 +70,8 @@ public class ObjectValidationRuleResourceTest
 	@Override
 	public void tearDown() throws Exception {
 		super.tearDown();
+
+		PropsUtil.set("feature.flag.LPS-147964", Boolean.FALSE.toString());
 
 		if (_objectDefinition != null) {
 			_objectDefinitionLocalService.deleteObjectDefinition(

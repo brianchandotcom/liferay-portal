@@ -64,6 +64,45 @@ definition {
 	}
 
 	@priority = "3"
+	test CanChangeCompanyLocaleOnRestart {
+		property test.name.skip.portal.instance = "Locale#CanChangeCompanyLocaleOnRestart";
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Welcome to Liferay");
+
+		Portlet.shutdownServer();
+
+		AntCommand(
+			locator1 = "build-test.xml",
+			value1 = "portal-ext-properties-update -Dadd.new.properties=true -Dupdate.properties=company.default.locale=es_ES");
+
+		Portlet.startServer(deleteLiferayHome = "false");
+
+		User.firstLoginPG();
+
+		ApplicationsMenu.gotoPortlet(
+			category = "Configuration",
+			panel = "Control Panel",
+			portlet = "Instance Settings");
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Localization",
+			configurationName = "Language",
+			configurationScope = "Virtual Instance Scope");
+
+		PortalSettings.configureCurrentLanguagesCP(defaultPortalLanguage = "Spanish (Spain)");
+
+		User.logoutPG();
+
+		ContentPages.viewFragmentText(
+			fragmentName = "heading",
+			id = "element-text",
+			text = "Bienvenido a Liferay");
+	}
+
+	@priority = "3"
 	test CannotAccessDisabledLocale {
 		property custom.properties = "locales.enabled=en_US,zh_CN,es_ES,fr_FR";
 		property custom.system.properties = "user.country=US${line.separator}user.language=en";

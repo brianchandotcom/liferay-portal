@@ -155,19 +155,19 @@ public class SearchBarPortletDisplayContextBuilder {
 		PortletSharedSearchResponse portletSharedSearchResponse =
 			portletSharedSearchRequest.search(_renderRequest);
 
-		ThemeDisplay themeDisplay = portletSharedSearchResponse.getThemeDisplay(
+		_themeDisplay = portletSharedSearchResponse.getThemeDisplay(
 			_renderRequest);
 
-		String keywordsParameterName = _getKeywordsParameterName(
+		_keywordsParameterName = _getKeywordsParameterName(
 			portletPreferencesLookup,
 			portletSharedSearchResponse.getSearchSettings(),
 			searchBarPrecedenceHelper, searchBarPortletPreferences,
-			themeDisplay);
+			_themeDisplay);
 
-		String scopeParameterName = _getScopeParameterName(
+		_scopeParameterName = _getScopeParameterName(
 			portletPreferencesLookup, searchBarPrecedenceHelper,
 			portletSharedSearchResponse.getSearchSettings(),
-			searchBarPortletPreferences, themeDisplay);
+			searchBarPortletPreferences, _themeDisplay);
 
 		SearchResponse searchResponse = _getSearchResponse(
 			portletSharedSearchResponse, searchBarPortletPreferences);
@@ -187,23 +187,17 @@ public class SearchBarPortletDisplayContextBuilder {
 			null
 		);
 
-		_keywordsParameterName = keywordsParameterName;
-
 		_paginationStartParameterName =
 			searchRequest.getPaginationStartParameterName();
 
-		_scopeParameterName = scopeParameterName;
-
 		Optional<String> scopeParameterValueOptional =
 			portletSharedSearchResponse.getParameter(
-				scopeParameterName, _renderRequest);
+				_scopeParameterName, _renderRequest);
 
 		_scopeParameterValue = scopeParameterValueOptional.orElse(null);
 
 		_searchScopePreference =
 			searchBarPortletPreferences.getSearchScopePreference();
-
-		_themeDisplay = themeDisplay;
 
 		return build();
 	}

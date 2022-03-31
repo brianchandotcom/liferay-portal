@@ -509,6 +509,11 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition copyCPDefinition(long cpDefinitionId, long groupId)
 		throws PortalException {
 
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
+
 		// CPDefinition
 
 		CPDefinition originalCPDefinition =
@@ -540,6 +545,8 @@ public class CPDefinitionLocalServiceImpl
 
 			newCProduct.setCProductId(counterLocalService.increment());
 			newCProduct.setUuid(PortalUUIDUtil.generate());
+			newCProduct.setUserId(user.getUserId());
+			newCProduct.setUserName(user.getFullName());
 			newCProduct.setPublishedCPDefinitionId(newCPDefinitionId);
 
 			newCPDefinition.setCProductId(newCProduct.getCProductId());
@@ -548,6 +555,8 @@ public class CPDefinitionLocalServiceImpl
 		}
 
 		newCPDefinition.setGroupId(groupId);
+		newCPDefinition.setUserId(user.getUserId());
+		newCPDefinition.setUserName(user.getFullName());
 		newCPDefinition.setUuid(PortalUUIDUtil.generate());
 
 		newCPDefinition = cpDefinitionPersistence.update(newCPDefinition);
@@ -833,9 +842,6 @@ public class CPDefinitionLocalServiceImpl
 				cpInstanceOptionValueRelLocalService.
 					updateCPInstanceOptionValueRel(newCPInstanceOptionValueRel);
 			}
-
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
 
 			_updateCommercePriceEntry(
 				newCPInstance, CommercePriceListConstants.TYPE_PRICE_LIST,

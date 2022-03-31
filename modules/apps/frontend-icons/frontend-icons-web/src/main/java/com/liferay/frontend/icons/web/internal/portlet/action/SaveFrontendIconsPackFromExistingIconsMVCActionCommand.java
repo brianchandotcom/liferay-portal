@@ -71,7 +71,9 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
+		long companyId = themeDisplay.getCompanyId();
+
+		if (!permissionChecker.isCompanyAdmin(companyId)) {
 			SessionErrors.add(actionRequest, PrincipalException.class);
 
 			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
@@ -79,15 +81,14 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 			return;
 		}
 
-		String name = ParamUtil.getString(
-			actionRequest, "name");
+		String name = ParamUtil.getString(actionRequest, "name");
 
 		String icons = ParamUtil.getString(actionRequest, "icons");
 
 		JSONObject iconsJSONObject = JSONFactoryUtil.createJSONObject(icons);
 
 		Map<String, FrontendIconsResourcePack> frontendIconsResourcePacks =
-			_getFrontendIconsResourcePacks(themeDisplay.getCompanyId());
+			_getFrontendIconsResourcePacks(companyId);
 
 		FrontendIconsResourcePack frontendIconsResourcePack =
 			frontendIconsResourcePacks.getOrDefault(
@@ -117,7 +118,7 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 		}
 
 		_frontendIconsResourcePackRepository.addFrontendIconsResourcePack(
-			themeDisplay.getCompanyId(), frontendIconsResourcePack);
+			companyId, frontendIconsResourcePack);
 
 		Collection<FrontendIconsResource> frontendIconsResources =
 			frontendIconsResourcePack.getFrontendIconsResources();
@@ -128,7 +129,7 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 				frontendIconsResources) {
 
 			iconsJSONArray.put(
-				JSONUtil.put("name", frontendIconsResource.getId()));
+				JSONUtil.put("name", frontendIconsResource.getName()));
 		}
 
 		JSONPortletResponseUtil.writeJSON(

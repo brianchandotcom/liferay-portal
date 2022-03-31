@@ -71,6 +71,15 @@ else {
 }
 %>
 
-<liferay-ui:menu
-	menu="<%= dlViewFileVersionDisplayContext.getMenu() %>"
-/>
+<c:choose>
+	<c:when test='<%= GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146954")) %>'>
+		<clay:dropdown-actions
+			dropdownItems="<%= dlViewFileVersionDisplayContext.getActionDropdownItems() %>"
+		/>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:menu
+			menu="<%= dlViewFileVersionDisplayContext.getMenu() %>"
+		/>
+	</c:otherwise>
+</c:choose>

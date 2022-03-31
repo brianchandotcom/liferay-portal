@@ -56,6 +56,7 @@ page import="com.liferay.portal.kernel.repository.model.RepositoryEntry" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.SetUtil" %><%@
 page import="com.liferay.portal.kernel.view.count.ViewCountManagerUtil" %><%@
+page import="com.liferay.portal.util.PropsUtil" %><%@
 page import="com.liferay.portal.util.RepositoryUtil" %><%@
 page import="com.liferay.taglib.util.PortalIncludeUtil" %>
 

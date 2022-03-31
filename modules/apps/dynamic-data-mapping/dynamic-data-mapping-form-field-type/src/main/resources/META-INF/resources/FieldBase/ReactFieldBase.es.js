@@ -13,6 +13,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayPopover from '@clayui/popover';
@@ -376,9 +377,11 @@ export function FieldBase({
 
 			{hasError && (
 				<span className="form-feedback-group">
-					<div aria-hidden="true" className="form-feedback-item">
+					<ClayForm.FeedbackItem aria-hidden="true">
+						<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
 						{errorMessage}
-					</div>
+					</ClayForm.FeedbackItem>
 				</span>
 			)}
 

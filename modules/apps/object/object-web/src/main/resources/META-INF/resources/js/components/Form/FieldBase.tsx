@@ -31,7 +31,9 @@ function FeedbackMessage({feedbackMessage}: IFeedbackMessageProps) {
 	return (
 		<ClayForm.FeedbackGroup>
 			<ClayForm.FeedbackItem>
-				<ClayForm.Text>{feedbackMessage}</ClayForm.Text>
+				<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+				{feedbackMessage}
 			</ClayForm.FeedbackItem>
 		</ClayForm.FeedbackGroup>
 	);

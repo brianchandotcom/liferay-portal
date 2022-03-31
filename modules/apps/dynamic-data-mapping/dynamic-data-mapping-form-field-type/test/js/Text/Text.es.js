@@ -13,7 +13,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, cleanup, fireEvent, render} from '@testing-library/react';
+import {act, cleanup, fireEvent, render, screen} from '@testing-library/react';
 import {PageProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
@@ -456,7 +456,7 @@ describe('Field Text', () => {
 	});
 
 	it('renders a counter when show counter is true, there is a maxLength and value length is greater than the maximum lenght', () => {
-		const {container} = render(
+		render(
 			<TextWithProvider
 				{...defaultTextConfig}
 				maxLength={2}
@@ -465,10 +465,8 @@ describe('Field Text', () => {
 				value="test"
 			/>
 		);
-
-		expect(container.querySelector('.form-feedback-item').innerHTML).toBe(
-			'4/2 characters'
-		);
+		const error = screen.queryAllByText('4/2 characters')[0];
+		expect(error).toHaveClass('form-feedback-item');
 	});
 
 	describe('Confirmation Field', () => {

@@ -270,10 +270,6 @@ definition {
 			Translations.gotoImportTranslation(webContentTitle = "${webContentTitle}");
 		}
 
-		AssertClick(
-			locator1 = "Button#SELECT_FILE",
-			value1 = "Select File");
-
 		if (isSet(dependencyfile)) {
 			if (isSet(archive)) {
 				UploadDependencyFile.uploadArchiveFile(fileName = "${fileName}");
@@ -283,8 +279,6 @@ definition {
 					UploadDependencyFile.uploadFile(
 						fileName = "${fileName}",
 						filePath = "${filePath}");
-
-					takeScreenshot();
 				}
 			}
 		}
@@ -319,6 +313,18 @@ definition {
 
 			Click(locator1 = "Button#TRANSLATIONS_DONE");
 		}
+		else if ("${remove}" == "true") {
+			Button.click(button = "Remove Files");
+
+			for (var fileName : list "${fileName}") {
+				AssertTextNotPresent(
+					locator1 = "Translation#IMPORT_FILE_NAME",
+					value1 = "${fileName}");
+			}
+		}
+		else if ("${replace}" == "true") {
+			Button.click(button = "Replace Files");
+		}
 		else {
 			Button.clickPublish();
 
@@ -337,7 +343,12 @@ definition {
 					successFileNumber = "${successFileNumber}");
 			}
 
-			Click(locator1 = "Button#TRANSLATIONS_DONE");
+			if (isSet(uploadAnotherFile)) {
+				Button.click(button = "Upload Another File");
+			}
+			else {
+				Click(locator1 = "Button#TRANSLATIONS_DONE");
+			}
 		}
 	}
 

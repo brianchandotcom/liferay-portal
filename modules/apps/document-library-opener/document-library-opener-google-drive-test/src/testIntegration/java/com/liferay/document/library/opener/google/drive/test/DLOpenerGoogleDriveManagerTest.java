@@ -113,14 +113,11 @@ public class DLOpenerGoogleDriveManagerTest {
 					FileUtil.read(
 						dlOpenerGoogleDriveFileReference.getContentFile()));
 
-				ServiceContext serviceContext =
-					ServiceContextTestUtil.getServiceContext(
-						_company.getCompanyId(), _company.getGroupId(),
-						_user.getUserId());
-
 				_dlAppService.checkInFileEntry(
 					fileEntry.getFileEntryId(), RandomTestUtil.randomString(),
-					serviceContext);
+					ServiceContextTestUtil.getServiceContext(
+						_company.getCompanyId(), _company.getGroupId(),
+						_user.getUserId()));
 
 				Assert.assertFalse(
 					_dlOpenerGoogleDriveManager.isGoogleDriveFile(fileEntry));

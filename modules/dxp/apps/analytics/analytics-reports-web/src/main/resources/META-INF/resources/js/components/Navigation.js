@@ -147,6 +147,7 @@ export default function Navigation({
 				}
 			});
 		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[namespace, page.plid, timeSpanKey, timeSpanOffset]
 	);
 

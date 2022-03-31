@@ -38,9 +38,11 @@ definition {
 		var testFilePath = StringUtil.extractLast("${testFilePath}", "file:");
 		var testFileParentDir = StringUtil.extractFirst("${testFilePath}", "${testName}.testcase");
 		var dependenciesDir = "${testFileParentDir}${testDependenciesDir}";
+
 		if (isSet(filePath)) {
 			var dependenciesDir = "${dependenciesDir}/${filePath}";
 		}
+
 		var dependencyFilePath = "${dependenciesDir}/${fileName}";
 		var fileExists = FileUtil.exists("${dependencyFilePath}");
 

@@ -43,14 +43,15 @@ public class SVGUtil {
 
 			Element rootElement = document.getRootElement();
 
-			List<Element> symbols = rootElement.elements("symbol");
+			List<Element> symbolElements = rootElement.elements("symbol");
 
-			if (ListUtil.isNotEmpty(symbols)) {
-				for (Element symbol : symbols) {
+			if (ListUtil.isNotEmpty(symbolElements)) {
+				for (Element symbolElement : symbolElements) {
 					frontendIconsResources.add(
 						new FrontendIconsResource(
-							_getInnerSVG(symbol), symbol.attributeValue("id"),
-							symbol.attributeValue("viewBox")));
+							_getInnerSVG(symbolElement),
+							symbolElement.attributeValue("id"),
+							symbolElement.attributeValue("viewBox")));
 				}
 			}
 			else {

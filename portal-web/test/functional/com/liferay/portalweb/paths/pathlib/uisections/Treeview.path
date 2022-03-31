@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>PAGE_STRUCTURE_TREE_NODE_DELETE</td>
-	<td>//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')]//button[contains(@class,'tree-node')][*[name()='svg'][contains(@class,'times-circle')]]</td>
+	<td>//div[contains(@class,'page-structure__tree-node') and contains(.,'${key_nodeName}')]//button[contains(@class,'tree-node')][*[name()='svg'][contains(@class,'trash')]]</td>
 	<td></td>
 </tr>
 <tr>

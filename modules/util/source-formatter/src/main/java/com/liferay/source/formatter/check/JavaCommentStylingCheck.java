@@ -80,7 +80,7 @@ public class JavaCommentStylingCheck extends BaseFileCheck {
 			return StringUtil.replaceFirst(
 				content, matcher.group(),
 				StringBundler.concat(
-					matcher.group(1), StringPool.SPACE, matcher.group(2)),
+					matcher.group(1), StringPool.SPACE, commentContent),
 				matcher.start());
 		}
 

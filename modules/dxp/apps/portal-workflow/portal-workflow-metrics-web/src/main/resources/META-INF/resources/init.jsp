@@ -28,8 +28,6 @@ page import="com.liferay.portal.util.PropsValues" %>
 <%@ page import="java.text.DateFormat" %><%@
 page import="java.text.SimpleDateFormat" %>
 
-<%@ page import="java.util.Locale" %>
-
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

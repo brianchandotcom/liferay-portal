@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.petra.io.delta;
+package com.liferay.sync.service.io.delta;
 
 import gnu.trove.map.hash.TIntIntHashMap;
 import gnu.trove.map.hash.TIntObjectHashMap;

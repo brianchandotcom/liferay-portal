@@ -93,14 +93,11 @@ public class DLFolderLocalServiceTest {
 
 	@Test
 	public void testGetNoAssetEntries() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		Folder folder = _dlAppService.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		DLFolder dlFolder = _dlFolderLocalService.getDLFolder(
 			folder.getFolderId());

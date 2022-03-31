@@ -71,10 +71,10 @@ public class DLAppServiceWhenDeletingAFolderByNameTest
 			folder.getRepositoryId(), folder.getParentFolderId(),
 			folder.getName());
 
-		int foldersCount = DLAppServiceUtil.getFoldersCount(
-			group.getGroupId(), parentFolder.getFolderId());
-
-		Assert.assertEquals(initialFoldersCount, foldersCount);
+		Assert.assertEquals(
+			initialFoldersCount,
+			DLAppServiceUtil.getFoldersCount(
+				group.getGroupId(), parentFolder.getFolderId()));
 	}
 
 	@Test

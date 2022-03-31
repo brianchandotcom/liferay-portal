@@ -293,14 +293,12 @@ public class DLFileEntryTrashHandlerTest
 			long groupId, long folderId, boolean approved)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
 		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
 			TestPropsValues.getUserId(), groupId, folderId,
 			RandomTestUtil.randomString() + ".txt", getSearchKeywords(),
-			approved, serviceContext);
+			approved,
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId()));
 
 		return (DLFileEntry)fileEntry.getModel();
 	}

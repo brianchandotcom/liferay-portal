@@ -244,13 +244,11 @@ public class DocumentLibraryConvertProcessTest {
 			long folderId, String fileName, String mimeType, byte[] bytes)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		return _dlAppLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(), folderId,
-			fileName, mimeType, bytes, null, null, serviceContext);
+			fileName, mimeType, bytes, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 	}
 
 	protected MBMessage addMBMessageAttachment() throws Exception {
@@ -298,14 +296,11 @@ public class DocumentLibraryConvertProcessTest {
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
 			TestDataConstants.TEST_BYTE_ARRAY);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		Folder folder = _dlAppService.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		FileEntry folderFileEntry = addFileEntry(
 			folder.getFolderId(), "liferay.jpg", ContentTypes.IMAGE_JPEG,

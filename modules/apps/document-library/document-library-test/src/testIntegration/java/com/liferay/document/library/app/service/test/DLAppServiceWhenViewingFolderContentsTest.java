@@ -83,12 +83,11 @@ public class DLAppServiceWhenViewingFolderContentsTest
 			StringUtil.randomString(), null, StringUtil.randomString(),
 			StringPool.BLANK, (byte[])null, null, null, serviceContext);
 
-		int foldersAndFileEntriesAndFileShortcutsCount =
+		Assert.assertEquals(
+			2,
 			_dlAppService.getFoldersAndFileEntriesAndFileShortcutsCount(
 				group.getGroupId(), parentFolder.getFolderId(),
-				WorkflowConstants.STATUS_APPROVED, false);
-
-		Assert.assertEquals(2, foldersAndFileEntriesAndFileShortcutsCount);
+				WorkflowConstants.STATUS_APPROVED, false));
 	}
 
 	@Test
@@ -115,12 +114,11 @@ public class DLAppServiceWhenViewingFolderContentsTest
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(
 				user)) {
 
-			int foldersAndFileEntriesAndFileShortcutsCount =
+			Assert.assertEquals(
+				1,
 				_dlAppService.getFoldersAndFileEntriesAndFileShortcutsCount(
 					group.getGroupId(), parentFolder.getFolderId(),
-					WorkflowConstants.STATUS_APPROVED, false);
-
-			Assert.assertEquals(1, foldersAndFileEntriesAndFileShortcutsCount);
+					WorkflowConstants.STATUS_APPROVED, false));
 		}
 		finally {
 			_userLocalService.deleteUser(user.getUserId());

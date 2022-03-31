@@ -69,10 +69,10 @@ public class DLAppServiceWhenDeletingAFolderTest extends BaseDLAppTestCase {
 
 		DLAppServiceUtil.deleteFolder(folder.getFolderId());
 
-		int foldersCount = DLAppServiceUtil.getFoldersCount(
-			group.getGroupId(), parentFolder.getFolderId());
-
-		Assert.assertEquals(initialFoldersCount, foldersCount);
+		Assert.assertEquals(
+			initialFoldersCount,
+			DLAppServiceUtil.getFoldersCount(
+				group.getGroupId(), parentFolder.getFolderId()));
 	}
 
 	@Test

@@ -136,13 +136,11 @@ public class DLFileEntryLocalServiceTreeTest {
 
 		fileEntries.add(fileEntryA);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		Folder folder = DLAppServiceUtil.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Folder A", RandomTestUtil.randomString(), serviceContext);
+			"Folder A", RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		FileEntry fileEntryAA = addFileEntry(
 			folder.getFolderId(), "Entry AA.txt");

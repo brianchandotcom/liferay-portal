@@ -212,10 +212,11 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 		GroupLocalServiceUtil.deleteGroup(group);
 
-		int foldersCount = DLFolderLocalServiceUtil.getFoldersCount(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-
-		Assert.assertEquals(0, foldersCount);
+		Assert.assertEquals(
+			0,
+			DLFolderLocalServiceUtil.getFoldersCount(
+				group.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
 	}
 
 	@Test
@@ -466,11 +467,9 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	}
 
 	protected long addRepositoryEntries() throws Exception {
-		long classNameId = PortalUtil.getClassNameId(
-			LiferayRepository.class.getName());
-
 		Repository repository = RepositoryLocalServiceUtil.addRepository(
-			TestPropsValues.getUserId(), stagingGroup.getGroupId(), classNameId,
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			PortalUtil.getClassNameId(LiferayRepository.class.getName()),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			PortletKeys.BACKGROUND_TASK, StringPool.BLANK,
 			PortletKeys.BACKGROUND_TASK, new UnicodeProperties(), true,

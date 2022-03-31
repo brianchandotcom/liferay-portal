@@ -265,10 +265,6 @@ public class DLFileEntryLocalServiceTest {
 	public void testAddFileEntryWithExternalReferenceCode() throws Exception {
 		String externalReferenceCode = StringUtil.randomString();
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
 			externalReferenceCode, TestPropsValues.getUserId(),
 			_group.getGroupId(), _group.getGroupId(),
@@ -277,7 +273,8 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, -1, new HashMap<>(), null,
 			new ByteArrayInputStream(new byte[0]), 0, null, null,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(
 			externalReferenceCode, dlFileEntry.getExternalReferenceCode());
@@ -294,10 +291,6 @@ public class DLFileEntryLocalServiceTest {
 	public void testAddFileEntryWithoutExternalReferenceCode()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -305,7 +298,8 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, -1, new HashMap<>(), null,
 			new ByteArrayInputStream(new byte[0]), 0, null, null,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		String externalReferenceCode = String.valueOf(
 			dlFileEntry.getFileEntryId());
@@ -347,10 +341,6 @@ public class DLFileEntryLocalServiceTest {
 
 	@Test
 	public void testAddsFileEntryWithNoFileEntryType() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -358,14 +348,13 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, -1, new HashMap<>(), null,
 			new ByteArrayInputStream(new byte[0]), 0, null, null,
-			serviceContext);
-
-		long defaultFileEntryTypeId =
-			DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		Assert.assertEquals(
-			defaultFileEntryTypeId, dlFileEntry.getFileEntryTypeId());
+			DLFileEntryTypeLocalServiceUtil.getDefaultFileEntryTypeId(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID),
+			dlFileEntry.getFileEntryTypeId());
 	}
 
 	@Test
@@ -575,18 +564,14 @@ public class DLFileEntryLocalServiceTest {
 		DLFileEntryLocalServiceUtil.deleteFileEntries(
 			_group.getGroupId(), folder.getFolderId(), false);
 
-		int fileEntriesCount = DLFileEntryLocalServiceUtil.getFileEntriesCount(
-			_group.getGroupId(), folder.getFolderId());
-
-		Assert.assertEquals(20, fileEntriesCount);
+		Assert.assertEquals(
+			20,
+			DLFileEntryLocalServiceUtil.getFileEntriesCount(
+				_group.getGroupId(), folder.getFolderId()));
 	}
 
 	@Test(expected = InvalidFileVersionException.class)
 	public void testDoesNotDeleteUnapprovedVersion() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -595,7 +580,9 @@ public class DLFileEntryLocalServiceTest {
 			StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
-			null, null, serviceContext);
+			null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(true);
 
@@ -990,14 +977,11 @@ public class DLFileEntryLocalServiceTest {
 
 	@Test(expected = DuplicateFolderNameException.class)
 	public void testValidateFileFailsWithAnExistingFolder() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		Folder folder = DLAppServiceUtil.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		DLFileEntryLocalServiceUtil.validateFile(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, -1,
@@ -1035,10 +1019,6 @@ public class DLFileEntryLocalServiceTest {
 	public void testVerifyFileEntryCheckoutWithUnlockedFileEntry()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -1046,7 +1026,8 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, -1, new HashMap<>(), null,
 			new ByteArrayInputStream(new byte[0]), 0, null, null,
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
 
 		DLFileEntryLocalServiceUtil.verifyFileEntryCheckOut(
 			dlFileEntry.getFileEntryId(), RandomTestUtil.randomString());

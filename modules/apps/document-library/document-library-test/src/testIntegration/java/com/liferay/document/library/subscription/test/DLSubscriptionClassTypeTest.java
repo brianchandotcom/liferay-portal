@@ -84,15 +84,13 @@ public class DLSubscriptionClassTypeTest
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			DLFileEntryMetadata.class.getName());
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
 		DLFileEntryType fileEntryType =
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
 				TestPropsValues.getUserId(), group.getGroupId(),
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				new long[] {ddmStructure.getStructureId()}, serviceContext);
+				new long[] {ddmStructure.getStructureId()},
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId()));
 
 		return fileEntryType.getFileEntryTypeId();
 	}

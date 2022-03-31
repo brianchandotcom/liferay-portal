@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.subscription.model.Subscription;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 
 import org.junit.Assert;
@@ -65,20 +64,17 @@ public class DLAppLocalServiceWhenDeletingAFolderTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			_folder.getFolderId());
 
-		Subscription subscription =
+		Assert.assertNotNull(
 			SubscriptionLocalServiceUtil.fetchSubscription(
 				_group.getCompanyId(), TestPropsValues.getUserId(),
-				DLFolderConstants.getClassName(), _folder.getFolderId());
-
-		Assert.assertNotNull(subscription);
+				DLFolderConstants.getClassName(), _folder.getFolderId()));
 
 		DLAppLocalServiceUtil.deleteFolder(_folder.getFolderId());
 
-		subscription = SubscriptionLocalServiceUtil.fetchSubscription(
-			_group.getCompanyId(), TestPropsValues.getUserId(),
-			DLFolderConstants.getClassName(), _folder.getFolderId());
-
-		Assert.assertNull(subscription);
+		Assert.assertNull(
+			SubscriptionLocalServiceUtil.fetchSubscription(
+				_group.getCompanyId(), TestPropsValues.getUserId(),
+				DLFolderConstants.getClassName(), _folder.getFolderId()));
 	}
 
 	private Folder _folder;

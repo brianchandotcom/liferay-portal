@@ -77,11 +77,9 @@ public class DLFileEntryTypeFinderTest {
 				_group.getCompanyId(), new long[] {_group.getGroupId()},
 				_DL_FILE_ENTRY_TYPE_NAME, true);
 
-		ServiceContext serviceContext =
+		addFileEntryType(
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		addFileEntryType(serviceContext);
+				_group.getGroupId(), _user.getUserId()));
 
 		Assert.assertEquals(
 			initialFileEntryTypesCount + 1,
@@ -119,11 +117,9 @@ public class DLFileEntryTypeFinderTest {
 					_group.getCompanyId(), new long[] {_group.getGroupId()},
 					_DL_FILE_ENTRY_TYPE_NAME, true);
 
-			ServiceContext serviceContext =
+			addFileEntryType(
 				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId());
-
-			addFileEntryType(serviceContext);
+					_group.getGroupId(), _user.getUserId()));
 
 			Assert.assertEquals(
 				initialFileEntryTypesCount + 1,
@@ -185,11 +181,9 @@ public class DLFileEntryTypeFinderTest {
 				_group.getCompanyId(), new long[] {_group.getGroupId()},
 				StringPool.BLANK, true);
 
-		ServiceContext serviceContext =
+		addFileEntryType(
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		addFileEntryType(serviceContext);
+				_group.getGroupId(), _user.getUserId()));
 
 		Assert.assertEquals(
 			initialFileEntryTypesCount + 1,
@@ -207,11 +201,9 @@ public class DLFileEntryTypeFinderTest {
 				_group.getCompanyId(), new long[] {_group.getGroupId()},
 				StringPool.BLANK, false);
 
-		ServiceContext serviceContext =
+		addFileEntryType(
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		addFileEntryType(serviceContext);
+				_group.getGroupId(), _user.getUserId()));
 
 		Assert.assertEquals(
 			initialFileEntryTypesCount + 1,
@@ -222,11 +214,9 @@ public class DLFileEntryTypeFinderTest {
 
 	@Test
 	public void testFilterFindByKeywords() throws Exception {
-		ServiceContext serviceContext =
+		DLFileEntryType fileEntryType = addFileEntryType(
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		DLFileEntryType fileEntryType = addFileEntryType(serviceContext);
+				_group.getGroupId(), _user.getUserId()));
 
 		List<DLFileEntryType> fileEntryTypes =
 			DLFileEntryTypeFinderUtil.filterFindByKeywords(
@@ -253,11 +243,9 @@ public class DLFileEntryTypeFinderTest {
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
 		try {
-			ServiceContext serviceContext =
+			DLFileEntryType fileEntryType = addFileEntryType(
 				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), _user.getUserId());
-
-			DLFileEntryType fileEntryType = addFileEntryType(serviceContext);
+					_group.getGroupId(), _user.getUserId()));
 
 			List<DLFileEntryType> fileEntryTypes =
 				DLFileEntryTypeFinderUtil.filterFindByKeywords(
@@ -321,11 +309,9 @@ public class DLFileEntryTypeFinderTest {
 
 	@Test
 	public void testFilterFindByKeywordsWithBlankKeywords() throws Exception {
-		ServiceContext serviceContext =
+		DLFileEntryType fileEntryType = addFileEntryType(
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		DLFileEntryType fileEntryType = addFileEntryType(serviceContext);
+				_group.getGroupId(), _user.getUserId()));
 
 		List<DLFileEntryType> fileEntryTypes =
 			DLFileEntryTypeFinderUtil.filterFindByKeywords(
@@ -373,11 +359,9 @@ public class DLFileEntryTypeFinderTest {
 	public void testFilterFindByKeywordsWithBlankKeywordsExcludingBasicType()
 		throws Exception {
 
-		ServiceContext serviceContext =
+		DLFileEntryType fileEntryType = addFileEntryType(
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		DLFileEntryType fileEntryType = addFileEntryType(serviceContext);
+				_group.getGroupId(), _user.getUserId()));
 
 		List<DLFileEntryType> fileEntryTypes =
 			DLFileEntryTypeFinderUtil.filterFindByKeywords(

@@ -47,10 +47,8 @@ public class WorkflowHandlerInvocationCounter<T> implements AutoCloseable {
 	public int getCount(String methodName, Class<?>... parameterTypes)
 		throws Exception {
 
-		Method method = WorkflowHandler.class.getMethod(
-			methodName, parameterTypes);
-
-		AtomicInteger count = _counts.get(method);
+		AtomicInteger count = _counts.get(
+			WorkflowHandler.class.getMethod(methodName, parameterTypes));
 
 		if (count == null) {
 			return 0;

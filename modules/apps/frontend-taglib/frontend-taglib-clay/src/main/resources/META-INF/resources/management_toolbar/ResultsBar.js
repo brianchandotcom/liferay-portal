@@ -35,7 +35,9 @@ const ResultsBar = ({
 								itemsTotal
 							)}
 
-							<strong>{` "${searchValue}"`}</strong>
+							{searchValue && (
+								<strong>{` "${searchValue}"`}</strong>
+							)}
 						</span>
 					</span>
 				</ClayResultsBar.Item>

@@ -1251,9 +1251,14 @@ public class ManagementToolbarTag extends BaseContainerTag {
 				LanguageUtil.format(
 					resourceBundle, "x-results-for",
 					new Object[] {getItemsTotal()}));
-			jspWriter.write("<strong> \"");
-			jspWriter.write(searchValue);
-			jspWriter.write("\"</strong></span></span></div></li>");
+
+			if (searchValue != null) {
+				jspWriter.write("<strong> \"");
+				jspWriter.write(searchValue);
+				jspWriter.write("\"</strong>");
+			}
+
+			jspWriter.write("</span></span></div></li>");
 
 			if (filterLabelItems != null) {
 				for (int i = 0; i < filterLabelItems.size(); i++) {

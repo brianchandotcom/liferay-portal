@@ -14,20 +14,27 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.bean.BeanLocator;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
+import com.liferay.portal.kernel.messaging.DestinationFactory;
+import com.liferay.portal.kernel.messaging.MessageBus;
 
 /**
  * @author Michael C. Han
  * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
 @Deprecated
-public class PluginSearchEngineConfigurator
+public class DefaultSearchEngineConfigurator
 	extends BaseSearchEngineConfigurator {
 
 	public void setDefaultSearchEngineId(String defaultSearchEngineId) {
 		_defaultSearchEngineId = defaultSearchEngineId;
+	}
+
+	public void setIndexSearcher(IndexSearcher indexSearcher) {
+		_indexSearcher = indexSearcher;
+	}
+
+	public void setIndexWriter(IndexWriter indexWriter) {
+		_indexWriter = indexWriter;
 	}
 
 	@Override
@@ -36,19 +43,20 @@ public class PluginSearchEngineConfigurator
 	}
 
 	@Override
-	protected IndexSearcher getIndexSearcher() {
-		BeanLocator beanLocator = PortalBeanLocatorUtil.getBeanLocator();
+	protected Class<?>[] getDependencies() {
+		return new Class<?>[] {
+			DestinationFactory.class, MessageBus.class, SearchEngineHelper.class
+		};
+	}
 
-		return (IndexSearcher)beanLocator.locate(
-			IndexSearcherProxyBean.class.getName());
+	@Override
+	protected IndexSearcher getIndexSearcher() {
+		return _indexSearcher;
 	}
 
 	@Override
 	protected IndexWriter getIndexWriter() {
-		BeanLocator beanLocator = PortalBeanLocatorUtil.getBeanLocator();
-
-		return (IndexWriter)beanLocator.locate(
-			IndexWriterProxyBean.class.getName());
+		return _indexWriter;
 	}
 
 	/**
@@ -63,7 +71,9 @@ public class PluginSearchEngineConfigurator
 
 	@Override
 	protected ClassLoader getOperatingClassLoader() {
-		return PortletClassLoaderUtil.getClassLoader();
+		Thread currentThread = Thread.currentThread();
+
+		return currentThread.getContextClassLoader();
 	}
 
 	@Override
@@ -72,5 +82,7 @@ public class PluginSearchEngineConfigurator
 	}
 
 	private String _defaultSearchEngineId;
+	private IndexSearcher _indexSearcher;
+	private IndexWriter _indexWriter;
 
 }

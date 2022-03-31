@@ -47,8 +47,9 @@ import {useId} from '../../../../../../../app/utils/useId';
 import Collapse from '../../../../../../../common/components/Collapse';
 import CollectionSelector from '../../../../../../../common/components/CollectionSelector';
 import useControlledState from '../../../../../../../core/hooks/useControlledState';
-import CollectionFilterConfigurationModal from '../CollectionFilterConfigurationModal';
-import {CommonStyles} from './CommonStyles';
+import CollectionFilterConfigurationModal from '../../CollectionFilterConfigurationModal';
+import {CommonStyles} from '../CommonStyles';
+import {StyleDisplaySelector} from './StyleDisplaySelector';
 
 const LAYOUT_OPTIONS = config.featureFlagLps119551
 	? [
@@ -110,11 +111,6 @@ const PAGINATION_TYPE_OPTIONS = [
 
 const LIST_STYLE_GRID = '';
 
-const DEFAULT_LIST_STYLE = {
-	label: Liferay.Language.get('grid'),
-	value: LIST_STYLE_GRID,
-};
-
 const ERROR_MESSAGES = {
 	maximumItems: Liferay.Language.get(
 		'the-current-number-of-items-in-this-collection-is-x'
@@ -145,9 +141,6 @@ export function CollectionGeneralPanel({item}) {
 	} = item.config;
 
 	const [availableListItemStyles, setAvailableListItemStyles] = useState([]);
-	const [availableListStyles, setAvailableListStyles] = useState([
-		DEFAULT_LIST_STYLE,
-	]);
 	const [collectionConfiguration, setCollectionConfiguration] = useState(
 		null
 	);
@@ -158,7 +151,6 @@ export function CollectionGeneralPanel({item}) {
 	const dispatch = useDispatch();
 	const getState = useGetState();
 	const isMounted = useIsMounted();
-	const listStyleId = useId();
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const [totalNumberOfItems, setTotalNumberOfItems] = useState(0);
@@ -275,27 +267,6 @@ export function CollectionGeneralPanel({item}) {
 	);
 
 	useEffect(() => {
-		if (collectionItemType) {
-			InfoItemService.getAvailableListRenderers({
-				className: collectionItemType,
-			})
-				.then((response) => {
-					setAvailableListStyles([
-						DEFAULT_LIST_STYLE,
-						{
-							label: Liferay.Language.get('templates'),
-							options: response,
-							type: 'group',
-						},
-					]);
-				})
-				.catch(() => {
-					setAvailableListStyles([DEFAULT_LIST_STYLE]);
-				});
-		}
-	}, [collectionItemType]);
-
-	useEffect(() => {
 		if (collection) {
 			CollectionService.getCollectionItemCount({
 				collection,
@@ -370,37 +341,13 @@ export function CollectionGeneralPanel({item}) {
 						<>
 							{selectedViewportSize ===
 								VIEWPORT_SIZES.desktop && (
-								<ClayForm.Group small>
-									<label htmlFor={listStyleId}>
-										{config.featureFlagLps119551
-											? Liferay.Language.get(
-													'style-display'
-											  )
-											: Liferay.Language.get(
-													'list-style'
-											  )}
-									</label>
-
-									<ClaySelectWithOption
-										aria-label={
-											config.featureFlagLps119551
-												? Liferay.Language.get(
-														'style-display'
-												  )
-												: Liferay.Language.get(
-														'list-style'
-												  )
-										}
-										id={listStyleId}
-										onChange={(event) =>
-											handleConfigurationChanged({
-												listStyle: event.target.value,
-											})
-										}
-										options={availableListStyles}
-										value={listStyle}
-									/>
-								</ClayForm.Group>
+								<StyleDisplaySelector
+									collectionItemType={collectionItemType}
+									handleConfigurationChanged={
+										handleConfigurationChanged
+									}
+									listStyle={listStyle}
+								/>
 							)}
 
 							{listStyle === LIST_STYLE_GRID && (

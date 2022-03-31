@@ -17,12 +17,14 @@ package com.liferay.object.admin.rest.internal.resource.v1_0;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectValidationRuleUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectValidationRuleResource;
+import com.liferay.object.exception.ObjectValidationRuleException;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectValidationRuleService;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -46,6 +48,8 @@ public class ObjectValidationRuleResourceImpl
 	public void deleteObjectValidationRule(Long objectValidationRuleId)
 		throws Exception {
 
+		_checkFeatureFlag();
+
 		_objectValidationRuleService.deleteObjectValidationRule(
 			objectValidationRuleId);
 	}
@@ -55,6 +59,8 @@ public class ObjectValidationRuleResourceImpl
 			getObjectDefinitionObjectValidationRulesPage(
 				Long objectDefinitionId, String search, Pagination pagination)
 		throws Exception {
+
+		_checkFeatureFlag();
 
 		return SearchUtil.search(
 			HashMapBuilder.put(
@@ -93,6 +99,8 @@ public class ObjectValidationRuleResourceImpl
 			Long objectValidationRuleId)
 		throws Exception {
 
+		_checkFeatureFlag();
+
 		return _toObjectValidationRule(
 			_objectValidationRuleService.getObjectValidationRule(
 				objectValidationRuleId));
@@ -102,6 +110,8 @@ public class ObjectValidationRuleResourceImpl
 	public ObjectValidationRule postObjectDefinitionObjectValidationRule(
 			Long objectDefinitionId, ObjectValidationRule objectValidationRule)
 		throws Exception {
+
+		_checkFeatureFlag();
 
 		return _toObjectValidationRule(
 			_objectValidationRuleService.addObjectValidationRule(
@@ -121,6 +131,8 @@ public class ObjectValidationRuleResourceImpl
 			ObjectValidationRule objectValidationRule)
 		throws Exception {
 
+		_checkFeatureFlag();
+
 		return _toObjectValidationRule(
 			_objectValidationRuleService.updateObjectValidationRule(
 				objectValidationRuleId, objectValidationRule.getActive(),
@@ -130,6 +142,13 @@ public class ObjectValidationRuleResourceImpl
 					objectValidationRule.getName()),
 				objectValidationRule.getEngine(),
 				objectValidationRule.getScript()));
+	}
+
+	private void _checkFeatureFlag() throws Exception {
+		if (!GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-147964"))) {
+			throw new ObjectValidationRuleException(
+				"ObjectValidationRule is not yet supported");
+		}
 	}
 
 	private ObjectValidationRule _toObjectValidationRule(

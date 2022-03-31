@@ -190,6 +190,10 @@ definition {
 			accountName = "Person Account",
 			accountUserName = "userfn2 userln2");
 
+		LexiconEntry.viewNoEntry(rowEntry = "userfn1 userln1");
+
+		ManagementBar.setFilterAndOrder(filterBy = "No Assigned Account");
+
 		AccountUsers.viewEntryAccounts(
 			accountName = "No Assigned Account",
 			accountUserName = "userfn1 userln1");
@@ -1241,28 +1245,30 @@ definition {
 				Pagination.changePagination(itemsPerPage = "${listEntries}");
 
 				if ("${listEntries}" == "4") {
-					Pagination.viewResults(results = "Showing 1 to 4 of 5 entries.");
+					Pagination.viewResults(results = "Showing 1 to 4 of 6 entries.");
 
-					LexiconEntry.viewNoEntry(rowEntry = "userfn5 userln5");
+					LexiconEntry.viewNoEntry(rowEntry = "userfn4 userln4");
 
-					for (var accountUsers : list "userfn1 userln1,userfn2 userln2,userfn3 userln3,userfn4 userln4") {
+					for (var accountUsers : list "Test Test,userfn1 userln1,userfn2 userln2,userfn3 userln3") {
 						LexiconEntry.viewEntryName(rowEntry = "${accountUsers}");
 					}
 
 					Click(locator1 = "Pagination#NEXT_LINK");
 
-					Pagination.viewResults(results = "Showing 5 to 5 of 5 entries.");
+					Pagination.viewResults(results = "Showing 5 to 6 of 6 entries.");
+
+					LexiconEntry.viewEntryName(rowEntry = "userfn4 userln4");
 
 					LexiconEntry.viewEntryName(rowEntry = "userfn5 userln5");
 
-					for (var accountUsers : list "userfn1 userln1,userfn2 userln2,userfn3 userln3,userfn4 userln4") {
+					for (var accountUsers : list "Test Test,userfn1 userln1,userfn2 userln2,userfn3 userln3") {
 						LexiconEntry.viewNoEntry(rowEntry = "${accountUsers}");
 					}
 				}
 				else {
-					Pagination.viewResults(results = "Showing 1 to 5 of 5 entries.");
+					Pagination.viewResults(results = "Showing 1 to 6 of 6 entries.");
 
-					for (var allUsers : list "userfn1 userln1,userfn2 userln2,userfn3 userln3,userfn4 userln4,userfn5 userln5") {
+					for (var allUsers : list "Test Test,userfn1 userln1,userfn2 userln2,userfn3 userln3,userfn4 userln4,userfn5 userln5") {
 						LexiconEntry.viewEntryName(rowEntry = "${allUsers}");
 					}
 				}
@@ -2120,6 +2126,11 @@ definition {
 				key_rowNumber = "3",
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "C-user");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "4",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "Test");
 		}
 
 		task ("Assert users can be ordered by Last Name and are in correct order") {
@@ -2128,15 +2139,20 @@ definition {
 			AssertTextEquals.assertPartialText(
 				key_rowNumber = "1",
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "userln1");
+				value1 = "Test");
 
 			AssertTextEquals.assertPartialText(
 				key_rowNumber = "2",
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "userln2");
+				value1 = "userln1");
 
 			AssertTextEquals.assertPartialText(
 				key_rowNumber = "3",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "userln2");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "4",
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "userln3");
 		}
@@ -2147,15 +2163,20 @@ definition {
 			AssertTextEquals.assertPartialText(
 				key_rowNumber = "1",
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "x-ea@liferay.com");
+				value1 = "test@liferay.com");
 
 			AssertTextEquals.assertPartialText(
 				key_rowNumber = "2",
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
-				value1 = "y-ea@liferay.com");
+				value1 = "x-ea@liferay.com");
 
 			AssertTextEquals.assertPartialText(
 				key_rowNumber = "3",
+				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
+				value1 = "y-ea@liferay.com");
+
+			AssertTextEquals.assertPartialText(
+				key_rowNumber = "4",
 				locator1 = "ContentRow#ENTRY_CONTENT_ROW_NUMBER",
 				value1 = "z-ea@liferay.com");
 		}

@@ -352,9 +352,9 @@ definition {
 
 		ManagementBar.setFilterAndOrder(filterBy = "All");
 
-		LexiconEntry.viewEntryName(rowEntry = "userfn1 userln1");
-
 		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
+
+		LexiconEntry.viewNoEntry(rowEntry = "userfn1 userln1");
 	}
 
 	@description = "This filters users by status: active and inactive"

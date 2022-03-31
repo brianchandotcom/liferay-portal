@@ -45,6 +45,7 @@ import com.liferay.jenkins.results.parser.Retryable;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 import com.liferay.jenkins.results.parser.Workspace;
 import com.liferay.jenkins.results.parser.WorkspaceBuild;
+import com.liferay.jenkins.results.parser.WorkspaceGitRepository;
 import com.liferay.jenkins.results.parser.job.property.JobProperty;
 import com.liferay.jenkins.results.parser.job.property.JobPropertyFactory;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
@@ -1183,6 +1184,43 @@ public class TestrayImporter {
 			WorkspaceBuild workspaceBuild = (WorkspaceBuild)topLevelBuild;
 
 			Workspace workspace = workspaceBuild.getWorkspace();
+
+			for (WorkspaceGitRepository workspaceGitRepository :
+					workspace.getWorkspaceGitRepositories()) {
+
+				if (workspaceGitRepository == null) {
+					continue;
+				}
+
+				workspaceGitRepository.addPropertyOption(
+					String.valueOf(topLevelBuild.getBuildProfile()));
+
+				workspaceGitRepository.addPropertyOption(
+					topLevelBuild.getJobName());
+
+				workspaceGitRepository.addPropertyOption(
+					workspaceGitRepository.getUpstreamBranchName());
+
+				String dockerEnabled = System.getenv("DOCKER_ENABLED");
+
+				if ((dockerEnabled != null) && dockerEnabled.equals("true")) {
+					workspaceGitRepository.addPropertyOption("docker");
+				}
+
+				if (JenkinsResultsParserUtil.isWindows()) {
+					workspaceGitRepository.addPropertyOption("windows");
+				}
+				else {
+					workspaceGitRepository.addPropertyOption("unix");
+				}
+
+				PortalRelease portalRelease = getPortalRelease();
+
+				if (portalRelease != null) {
+					workspaceGitRepository.addPropertyOption(
+						portalRelease.getPortalVersion());
+				}
+			}
 
 			workspace.setUp();
 

@@ -23,10 +23,10 @@ export const DATA_COLORS = {
 export const LABEL_GREATER_THAN_99 = '> 99';
 export const LABEL_LESS_THAN_1 = '< 1';
 
-export const PAGINATION_DELTA = [20, 50, 75, 100, 200];
+export const PAGINATION_DELTA = [20, 50, 75, 100, 150];
 
 export const PAGINATION = {
-	delta: [20, 50, 75, 100, 200],
+	delta: PAGINATION_DELTA,
 	ellipsisBuffer: 3,
 };
 

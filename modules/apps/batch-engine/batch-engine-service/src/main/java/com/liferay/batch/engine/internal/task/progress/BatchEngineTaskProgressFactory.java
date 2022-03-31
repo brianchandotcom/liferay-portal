@@ -41,6 +41,12 @@ public class BatchEngineTaskProgressFactory {
 			return new JSONLBatchEngineTaskProgressImpl();
 		}
 
+		if ((batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||
+			(batchEngineTaskContentType == BatchEngineTaskContentType.XLSX)) {
+
+			return new XLSBatchEngineTaskProgressImpl();
+		}
+
 		return new DefaultBatchEngineTaskProgressImpl();
 	}
 

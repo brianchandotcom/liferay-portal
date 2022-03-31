@@ -48,11 +48,14 @@ public class SearchHitDocumentTranslatorImpl
 				_addFieldFromSource(document, fieldName, documentSourceMap);
 			}
 		}
-		else {
-			Map<String, DocumentField> documentFields = searchHit.getFields();
 
-			for (String documentFieldName : documentFields.keySet()) {
-				_addField(document, documentFieldName, documentFields);
+		Map<String, DocumentField> documentFields = searchHit.getFields();
+
+		if (MapUtil.isNotEmpty(documentFields)) {
+			for (String fieldName : documentFields.keySet()) {
+				if (document.getField(fieldName) == null) {
+					_addField(document, fieldName, documentFields);
+				}
 			}
 		}
 

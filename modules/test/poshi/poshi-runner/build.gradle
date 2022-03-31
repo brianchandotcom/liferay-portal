@@ -1,3 +1,4 @@
+import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 buildCSS {
@@ -31,6 +32,8 @@ dependencies {
 	compileOnly project(":test:data-guard-connector")
 }
 
+task release(type: ReplaceRegexTask)
+
 deploy {
 	from configurations.runtime
 	rename new RenameDependencyClosure(project, configurations.runtime.name)
@@ -42,4 +45,16 @@ liferay {
 
 liferayOSGi {
 	expandCompileInclude = true
+}
+
+release {
+	String releaseVersion = project.getVersion()
+
+	if (project.hasProperty("releaseVersion")) {
+		releaseVersion = getProperty("releaseVersion")
+	}
+
+	setReplacement(releaseVersion)
+
+	match(/private Object _version = "(\d.+)";/, "../../../sdk/gradle-plugins-poshi-runner/src/main/java/com/liferay/gradle/plugins/poshi/runner/PoshiRunnerExtension.java")
 }

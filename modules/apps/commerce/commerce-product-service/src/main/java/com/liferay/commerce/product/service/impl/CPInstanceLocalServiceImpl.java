@@ -574,17 +574,18 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 			CPDefinition cpDefinition =
-				cpDefinitionLocalService.getCPDefinition(cpDefinitionId);
+				cpDefinitionLocalService.getCPDefinition(
+					cpInstance.getCPDefinitionId());
 
 			if (cpDefinition.isIgnoreSKUCombinations()) {
 				_expireApprovedSiblingCPInstances(
-					cpDefinitionId, cpInstance.getCPInstanceId(),
-					serviceContext);
+					cpInstance.getCPDefinitionId(),
+					cpInstance.getCPInstanceId(), serviceContext);
 			}
 			else {
 				_expireApprovedSiblingMatchingCPInstances(
-					cpDefinitionId, cpInstance.getCPInstanceId(),
-					serviceContext);
+					cpInstance.getCPDefinitionId(),
+					cpInstance.getCPInstanceId(), serviceContext);
 			}
 
 			cpInstanceLocalService.updateStatus(

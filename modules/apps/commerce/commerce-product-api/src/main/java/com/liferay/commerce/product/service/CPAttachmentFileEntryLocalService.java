@@ -328,6 +328,12 @@ public interface CPAttachmentFileEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
+			long classNameId, long classPK, String keywords, int type,
+			int status, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries(
 			long cpDefinitionId, String serializedDDMFormValues, int type,
 			int start, int end)
 		throws Exception;
@@ -371,6 +377,12 @@ public interface CPAttachmentFileEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPAttachmentFileEntriesCount(
 		long classNameId, long classPK, int type, int status);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPAttachmentFileEntriesCount(
+			long classNameId, long classPK, String keywords, int type,
+			int status)
+		throws PortalException;
 
 	/**
 	 * Returns the cp attachment file entry with the primary key.

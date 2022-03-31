@@ -106,10 +106,6 @@ public class ImportTranslationDisplayContext {
 		return _title;
 	}
 
-	public boolean isBulkTranslationEnabled() {
-		return _ffBulkTranslationConfiguration.enabled();
-	}
-
 	public boolean isPending() throws PortalException {
 		if (_workflowDefinitionLinkLocalService.hasWorkflowDefinitionLink(
 				_companyId, _groupId, TranslationEntry.class.getName()) &&

@@ -19,7 +19,7 @@ import React, {useEffect, useRef, useState} from 'react';
 
 const VALID_EXTENSIONS = '.xliff,.xlf,.zip';
 
-export default function ImportTranslationMultipleFiles({
+export default function ImportTranslation({
 	saveDraftBtnId,
 	submitBtnId,
 	workflowPending = false,
@@ -100,7 +100,7 @@ export default function ImportTranslationMultipleFiles({
 	);
 }
 
-ImportTranslationMultipleFiles.prototypes = {
+ImportTranslation.prototypes = {
 	saveDraftBtnId: PropTypes.string.isRequired,
 	submitBtnId: PropTypes.string.isRequired,
 	workflowPending: PropTypes.bool,

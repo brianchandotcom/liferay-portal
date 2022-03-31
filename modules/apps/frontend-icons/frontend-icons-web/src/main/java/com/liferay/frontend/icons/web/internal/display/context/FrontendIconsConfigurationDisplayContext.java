@@ -82,9 +82,8 @@ public class FrontendIconsConfigurationDisplayContext {
 					JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 					List<FrontendIconsResource> frontendIconsResources =
-						new ArrayList<>(
-							frontendIconsResourcePack.
-								getFrontendIconsResources());
+						frontendIconsResourcePack.
+							getFrontendIconsResources();
 
 					for (FrontendIconsResource frontendIconsResource :
 							frontendIconsResources) {

@@ -21,7 +21,7 @@ export default function Attachment({
 	maximumFileSize,
 	objectEntryId, // "0" means that there is no previews
 	onChange,
-	uploadURL,
+	url,
 	value,
 	...otherProps
 }: IProps): JSX.Element;
@@ -30,7 +30,7 @@ interface IProps {
 	maximumFileSize: string;
 	objectEntryId: string;
 	onChange: FieldChangeEventHandler;
-	uploadURL: string;
+	url: string;
 	value: string;
 }
 export {};

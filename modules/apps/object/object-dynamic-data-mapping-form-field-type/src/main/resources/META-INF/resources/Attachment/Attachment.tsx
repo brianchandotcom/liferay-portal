@@ -80,7 +80,7 @@ export default function Attachment({
 	maximumFileSize,
 	objectEntryId, // "0" means that there is no previews
 	onChange,
-	uploadURL,
+	url,
 	value,
 
 	...otherProps
@@ -154,7 +154,7 @@ export default function Attachment({
 						[`${portletNamespace}file`]: files[0],
 					}),
 					method: 'POST',
-					url: uploadURL,
+					url,
 				})) as {file: File; success: boolean};
 
 				onChange({target: {value: file.fileEntryId}});
@@ -245,6 +245,6 @@ interface IProps {
 	maximumFileSize: string; // TODO: Fix endpoint to fetch as a number
 	objectEntryId: string; // TODO: Fix endpoint to fetch as a number
 	onChange: FieldChangeEventHandler;
-	uploadURL: string;
+	url: string;
 	value: string; // TODO: Fix endpoint to fetch as a number
 }

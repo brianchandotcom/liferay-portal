@@ -17,19 +17,30 @@ package com.liferay.object.dynamic.data.mapping.form.field.type.internal.attachm
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Map;
+import java.util.Objects;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carolina Barbosa
@@ -57,39 +68,96 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 		).put(
 			"objectEntryId", ddmFormField.getProperty("objectEntryId")
 		).put(
-			"uploadURL",
-			_getUploadURL(
-				ddmFormField,
-				ddmFormFieldRenderingContext.getHttpServletRequest())
+			"url", _getURL(ddmFormField, ddmFormFieldRenderingContext)
 		).put(
 			"value", ddmFormFieldRenderingContext.getValue()
 		).build();
 	}
 
-	private String _getUploadURL(
-		DDMFormField ddmFormField, HttpServletRequest httpServletRequest) {
+	private long _getGroupId(
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		String uploadURL = GetterUtil.getString(
-			ddmFormField.getProperty("uploadURL"));
+		long groupId = GetterUtil.getLong(
+			ddmFormFieldRenderingContext.getProperty("groupId"));
 
-		if (Validator.isNotNull(uploadURL)) {
-			return uploadURL;
+		if (groupId != 0) {
+			return groupId;
 		}
 
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
+		HttpServletRequest httpServletRequest =
+			ddmFormFieldRenderingContext.getHttpServletRequest();
 
-		return PortletURLBuilder.create(
-			requestBackedPortletURLFactory.createActionURL(
-				GetterUtil.getString(ddmFormField.getProperty("portletId")))
-		).setActionName(
-			"/object_entries/upload_attachment"
-		).setParameter(
-			"folderId", GetterUtil.getLong(ddmFormField.getProperty("folderId"))
-		).setParameter(
-			"objectFieldId",
-			GetterUtil.getLong(ddmFormField.getProperty("objectFieldId"))
-		).buildString();
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getCompanyGroupId();
 	}
+
+	private String _getItemSelectorURL(
+		long groupId, String portletNamespace,
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
+
+		FileItemSelectorCriterion fileItemSelectorCriterion =
+			new FileItemSelectorCriterion();
+
+		fileItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			new FileEntryItemSelectorReturnType());
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
+			requestBackedPortletURLFactory,
+			_groupLocalService.fetchGroup(groupId), groupId,
+			portletNamespace + "selectAttachmentEntry",
+			fileItemSelectorCriterion);
+
+		return itemSelectorURL.toString();
+	}
+
+	private String _getURL(
+		DDMFormField ddmFormField,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		String url = GetterUtil.getString(ddmFormField.getProperty("url"));
+
+		if (Validator.isNotNull(url)) {
+			return url;
+		}
+
+		String fileSource = GetterUtil.getString(
+			ddmFormField.getProperty("fileSource"));
+
+		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+			RequestBackedPortletURLFactoryUtil.create(
+				ddmFormFieldRenderingContext.getHttpServletRequest());
+
+		if (Objects.equals(fileSource, "documentsAndMedia")) {
+			return _getItemSelectorURL(
+				_getGroupId(ddmFormFieldRenderingContext),
+				ddmFormFieldRenderingContext.getPortletNamespace(),
+				requestBackedPortletURLFactory);
+		}
+		else if (Objects.equals(fileSource, "userComputer")) {
+			return PortletURLBuilder.create(
+				requestBackedPortletURLFactory.createActionURL(
+					GetterUtil.getString(ddmFormField.getProperty("portletId")))
+			).setActionName(
+				"/object_entries/upload_attachment"
+			).setParameter(
+				"folderId",
+				GetterUtil.getLong(ddmFormField.getProperty("folderId"))
+			).setParameter(
+				"objectFieldId",
+				GetterUtil.getLong(ddmFormField.getProperty("objectFieldId"))
+			).buildString();
+		}
+
+		return StringPool.BLANK;
+	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private ItemSelector _itemSelector;
 
 }

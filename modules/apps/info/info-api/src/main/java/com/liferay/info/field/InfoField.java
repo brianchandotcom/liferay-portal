@@ -37,6 +37,10 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		return new Builder();
 	}
 
+	public static NamespacedBuilder builder(String namespace) {
+		return new NamespacedBuilder(namespace);
+	}
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -190,6 +194,44 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 
 	}
 
+	public static class NamespacedBuilder {
+
+		public <T extends InfoFieldType> NameStep<T> infoFieldType(
+			T infoFieldType) {
+
+			Builder builder = new Builder();
+
+			return builder.infoFieldType(
+				infoFieldType
+			).namespace(
+				_namespace
+			);
+		}
+
+		private NamespacedBuilder(String namespace) {
+			_namespace = namespace;
+		}
+
+		private final String _namespace;
+
+	}
+
+	public static class NamespaceStep<T extends InfoFieldType> {
+
+		public NameStep<T> namespace(String namespace) {
+			_builder._namespace = namespace;
+
+			return new NameStep<>(_builder);
+		}
+
+		private NamespaceStep(Builder builder) {
+			_builder = builder;
+		}
+
+		private final Builder _builder;
+
+	}
+
 	public static class NameStep<T extends InfoFieldType> {
 
 		public FinalStep<T> name(String name) {
@@ -207,22 +249,6 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		}
 
 		private NameStep(Builder builder) {
-			_builder = builder;
-		}
-
-		private final Builder _builder;
-
-	}
-
-	public static class NamespaceStep<T extends InfoFieldType> {
-
-		public NameStep<T> namespace(String namespace) {
-			_builder._namespace = namespace;
-
-			return new NameStep<>(_builder);
-		}
-
-		private NamespaceStep(Builder builder) {
 			_builder = builder;
 		}
 

@@ -484,7 +484,7 @@ public class ServletResponseUtil {
 			String extension = GetterUtil.getString(
 				FileUtil.getExtension(fileName));
 
-			if (extension.isEmpty()) {
+			if (extension.isEmpty() && Validator.isNotNull(contentType)) {
 				Set<String> extensions = MimeTypesUtil.getExtensions(
 					contentType);
 

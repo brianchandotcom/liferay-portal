@@ -337,8 +337,8 @@ const RequiredInformation = ({
 											avaliableKeysMaximumCount
 										}
 										minAvaliableKeysCount={
-											infoSelectedKey.selectedSubscription
-												?.provisionedCount
+											avaliableKeysMaximumCount -
+											usedKeysCount
 										}
 										selectedClusterNodes={
 											values.maxClusterNodes

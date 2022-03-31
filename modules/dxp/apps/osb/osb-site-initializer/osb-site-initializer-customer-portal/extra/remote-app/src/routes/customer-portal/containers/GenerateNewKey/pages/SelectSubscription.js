@@ -327,12 +327,17 @@ const SelectSubscription = ({
 
 							return (
 								<Radio
-									description={`Key activation available: ${subscriptionTerm.provisionedCount} of ${subscriptionTerm.quantity}`}
+									description={`Key activation available: ${
+										subscriptionTerm.quantity -
+										subscriptionTerm.provisionedCount
+									} of ${subscriptionTerm.quantity}`}
 									hasCustomAlert={
 										selected && displayAlertType
 									}
 									isActivationKeyAvailable={
-										subscriptionTerm.provisionedCount > 0
+										subscriptionTerm.quantity -
+											subscriptionTerm.provisionedCount >
+										0
 									}
 									key={index}
 									label={currentStartAndEndDate}

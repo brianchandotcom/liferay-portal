@@ -32,8 +32,8 @@ const useProjectActions = () => {
 				name: i18n.translate('edit'),
 			},
 			{
-				action: ({id: projectId}: TestrayProject) =>
-					onDeleteProject({variables: {projectId}})
+				action: ({id}: TestrayProject) =>
+					onDeleteProject({variables: {id}})
 						.then(() => modal.onSave())
 						.catch(modal.onError),
 				name: i18n.translate('delete'),

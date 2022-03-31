@@ -15,6 +15,7 @@
 import {useMutation} from '@apollo/client';
 
 import {DeleteRequirement} from '../../../graphql/mutations';
+import {TestrayRequirement} from '../../../graphql/queries';
 import useFormModal from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
@@ -27,13 +28,17 @@ const useRequirementActions = () => {
 	return {
 		actions: [
 			{
-				action: modal.open,
+				action: (requirement: TestrayRequirement) =>
+					modal.open({
+						...requirement,
+						componentId: requirement.component?.id,
+					}),
 				name: i18n.translate('edit'),
 			},
 			{
-				action: ({id: testrayRequirementId}: any) =>
+				action: ({id}: TestrayRequirement) =>
 					onDeleteRequirement({
-						variables: {testrayRequirementId},
+						variables: {id},
 					})
 						.then(() => modal.onSave())
 						.catch(modal.onError),

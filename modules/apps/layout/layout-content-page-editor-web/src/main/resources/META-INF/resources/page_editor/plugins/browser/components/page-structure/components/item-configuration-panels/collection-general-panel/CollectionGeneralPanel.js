@@ -50,6 +50,7 @@ import useControlledState from '../../../../../../../core/hooks/useControlledSta
 import CollectionFilterConfigurationModal from '../../CollectionFilterConfigurationModal';
 import {CommonStyles} from '../CommonStyles';
 import {LayoutSelector} from './LayoutSelector';
+import {ShowGutterSelector} from './ShowGutterSelector';
 import {StyleDisplaySelector} from './StyleDisplaySelector';
 
 const PAGINATION_TYPE_OPTIONS = [
@@ -314,25 +315,14 @@ export function CollectionGeneralPanel({item}) {
 										selectedViewportSize ===
 											VIEWPORT_SIZES.desktop && (
 											<>
-												<ClayForm.Group small>
-													<ClayCheckbox
-														checked={
-															item.config.gutters
-														}
-														label={Liferay.Language.get(
-															'show-gutter'
-														)}
-														onChange={({
-															target: {checked},
-														}) =>
-															handleConfigurationChanged(
-																{
-																	gutters: checked,
-																}
-															)
-														}
-													/>
-												</ClayForm.Group>
+												<ShowGutterSelector
+													checked={
+														item.config.gutters
+													}
+													handleConfigurationChanged={
+														handleConfigurationChanged
+													}
+												/>
 
 												<ClayForm.Group small>
 													<label

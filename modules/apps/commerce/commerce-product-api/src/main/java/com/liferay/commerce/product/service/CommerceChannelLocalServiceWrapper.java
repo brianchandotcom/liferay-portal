@@ -424,6 +424,15 @@ public class CommerceChannelLocalServiceWrapper
 		return _commerceChannelLocalService.getCommerceChannels(companyId);
 	}
 
+	@Override
+	public java.util.List<CommerceChannel> getCommerceChannels(
+			long companyId, String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelLocalService.getCommerceChannels(
+			companyId, keywords, start, end);
+	}
+
 	/**
 	 * Returns the number of commerce channels.
 	 *
@@ -432,6 +441,14 @@ public class CommerceChannelLocalServiceWrapper
 	@Override
 	public int getCommerceChannelsCount() {
 		return _commerceChannelLocalService.getCommerceChannelsCount();
+	}
+
+	@Override
+	public int getCommerceChannelsCount(long companyId, String keywords)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelLocalService.getCommerceChannelsCount(
+			companyId, keywords);
 	}
 
 	@Override

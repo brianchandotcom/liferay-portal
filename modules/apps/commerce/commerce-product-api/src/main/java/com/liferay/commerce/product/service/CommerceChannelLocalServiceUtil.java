@@ -380,6 +380,14 @@ public class CommerceChannelLocalServiceUtil {
 		return getService().getCommerceChannels(companyId);
 	}
 
+	public static List<CommerceChannel> getCommerceChannels(
+			long companyId, String keywords, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceChannels(
+			companyId, keywords, start, end);
+	}
+
 	/**
 	 * Returns the number of commerce channels.
 	 *
@@ -387,6 +395,12 @@ public class CommerceChannelLocalServiceUtil {
 	 */
 	public static int getCommerceChannelsCount() {
 		return getService().getCommerceChannelsCount();
+	}
+
+	public static int getCommerceChannelsCount(long companyId, String keywords)
+		throws PortalException {
+
+		return getService().getCommerceChannelsCount(companyId, keywords);
 	}
 
 	public static

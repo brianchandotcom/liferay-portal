@@ -44,24 +44,15 @@ public class JavaCommentStylingCheck extends BaseFileCheck {
 			}
 
 			int level = getLevel(
-				commentContent, StringPool.OPEN_PARENTHESIS,
-				StringPool.CLOSE_PARENTHESIS);
-
-			if (level != 0) {
-				continue;
-			}
-
-			level = getLevel(
-				commentContent, StringPool.OPEN_CURLY_BRACE,
-				StringPool.CLOSE_CURLY_BRACE);
-
-			if (level != 0) {
-				continue;
-			}
-
-			level = getLevel(
-				commentContent, StringPool.OPEN_BRACKET,
-				StringPool.CLOSE_BRACKET);
+				commentContent,
+				new String[] {
+					StringPool.OPEN_BRACKET, StringPool.OPEN_CURLY_BRACE,
+					StringPool.OPEN_PARENTHESIS
+				},
+				new String[] {
+					StringPool.CLOSE_BRACKET, StringPool.CLOSE_CURLY_BRACE,
+					StringPool.CLOSE_PARENTHESIS
+				});
 
 			if ((level != 0) || commentContent.matches(".+\\..+") ||
 				commentContent.matches(".+=.+")) {

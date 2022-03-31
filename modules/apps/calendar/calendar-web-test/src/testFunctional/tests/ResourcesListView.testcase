@@ -74,13 +74,22 @@ definition {
 
 	}
 
-	@description = "LRQA-71885 - Verify that the user can create a New Calendar for the Resource"
-	@ignore = "Test Stub"
+	@description = "LRQA-71924 - Verify that the user can create a New Calendar for the Resource"
 	@priority = "3"
 	test CanCreateCalendarForResource {
+		CalendarNavigator.gotoAddResource();
 
-		// TODO LRQA-71924 CanCreateCalendarForResource pending implementation
+		CalendarResource.editResourceName(calendarResourceName = "New Resource");
 
+		CalendarResource.save();
+
+		CalendarNavigator.gotoResourceCalendars(calendarResourceName = "New Resource");
+
+		CalendarResource.addCalendarByResource(
+			calendarName = "Calendar for New Resource",
+			menuItem = "View Calendars");
+
+		CalendarResource.viewCalendarNameByResourceOntable(key_calendarName = "Calendar for New Resource");
 	}
 
 	@description = "LRQA-71922 - Verify that the user can filter by Active Resources"

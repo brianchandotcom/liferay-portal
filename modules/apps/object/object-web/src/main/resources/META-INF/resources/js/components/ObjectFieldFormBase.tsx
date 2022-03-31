@@ -17,6 +17,10 @@ import {fetch} from 'frontend-js-web';
 import React, {ChangeEventHandler, ReactNode, useMemo, useState} from 'react';
 
 import useForm, {FormError, invalidateRequired} from '../hooks/useForm';
+import {
+	normalizeFieldSettings,
+	updateFieldSettings,
+} from '../utils/fieldSettings';
 import {toCamelCase} from '../utils/string';
 import CustomSelect from './Form/CustomSelect/CustomSelect';
 import Input from './Form/Input';
@@ -24,14 +28,24 @@ import Select from './Form/Select';
 
 const REQUIRED_MSG = Liferay.Language.get('required');
 
-const userComputer = {
-	description: Liferay.Language.get(
-		'files-can-be-stored-in-an-object-entry-or-in-a-specific-folder-in-documents-and-media'
-	),
-	label: Liferay.Language.get('upload-directly-from-users-computer'),
-};
-
-const attachmentSources = [userComputer];
+const attachmentSources = [
+	{
+		description: Liferay.Language.get(
+			'files-can-be-stored-in-an-object-entry-or-in-a-specific-folder-in-documents-and-media'
+		),
+		label: Liferay.Language.get('upload-directly-from-users-computer'),
+		value: 'userComputer',
+	},
+	{
+		description: Liferay.Language.get(
+			'users-can-upload-or-select-existing-files-from-documents-and-media'
+		),
+		label: Liferay.Language.get(
+			'upload-or-select-from-documents-and-media-item-selector'
+		),
+		value: 'documentsAndMedia',
+	},
+];
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId() as Liferay.Language.Locale;
 
@@ -78,6 +92,14 @@ export default function ObjectFieldFormBase({
 
 	const [pickList, setPickList] = useState<IPickList[]>([]);
 
+	const handleSettingsChange = ({name, value}: ObjectFieldSetting) =>
+		setValues({
+			objectFieldSettings: updateFieldSettings(
+				values.objectFieldSettings,
+				{name, value}
+			),
+		});
+
 	const handleTypeChange = async (option: ObjectFieldType) => {
 		if (option.businessType === 'Picklist') {
 			setPickList(await fetchPickList());
@@ -94,7 +116,7 @@ export default function ObjectFieldFormBase({
 					},
 					{
 						name: 'fileSource',
-						value: 'userComputer',
+						value: '',
 					},
 					{
 						name: 'maximumFileSize',
@@ -164,12 +186,13 @@ export default function ObjectFieldFormBase({
 			/>
 
 			{values.businessType === 'Attachment' && (
-				<CustomSelect
+				<AttachmentSourceProperty
 					disabled={disabled}
-					label={Liferay.Language.get('request-files')}
-					options={attachmentSources}
-					required
-					value={userComputer.label}
+					error={errors.fileSource}
+					objectFieldSettings={
+						values.objectFieldSettings as ObjectFieldSetting[]
+					}
+					onSettingsChange={handleSettingsChange}
 				/>
 			)}
 
@@ -208,13 +231,7 @@ export function useObjectFieldForm({
 
 		const label = field.label?.[defaultLanguageId];
 
-		const settings: {
-			[key in ObjectFieldSettingName]?: string | number | boolean;
-		} = {};
-
-		field.objectFieldSettings?.forEach(({name, value}) => {
-			settings[name] = value;
-		});
+		const settings = normalizeFieldSettings(field.objectFieldSettings);
 
 		if (invalidateRequired(label)) {
 			errors.label = REQUIRED_MSG;
@@ -279,6 +296,42 @@ export function useObjectFieldForm({
 	return {errors, handleChange, handleSubmit, setValues, values};
 }
 
+function AttachmentSourceProperty({
+	disabled,
+	error,
+	objectFieldSettings,
+	onSettingsChange,
+}: IAttachmentSourcePropertyProps) {
+	const settings = normalizeFieldSettings(objectFieldSettings);
+
+	const attachmentSource = attachmentSources.find(
+		({value}) => value === settings.fileSource
+	);
+
+	return (
+		<CustomSelect
+			disabled={disabled}
+			error={error}
+			label={Liferay.Language.get('request-files')}
+			onChange={({value}) =>
+				onSettingsChange({
+					name: 'fileSource',
+					value,
+				})
+			}
+			options={attachmentSources}
+			required
+			value={attachmentSource?.label}
+		/>
+	);
+}
+
+interface IAttachmentSourcePropertyProps {
+	disabled?: boolean;
+	error?: string;
+	objectFieldSettings: ObjectFieldSetting[];
+	onSettingsChange: (setting: ObjectFieldSetting) => void;
+}
 interface IUseObjectFieldForm {
 	initialValues: Partial<ObjectField>;
 	onSubmit: (field: ObjectField) => void;

@@ -21,6 +21,10 @@ import {createTextMaskInputElement} from 'text-mask-core';
 
 import {createAutoCorrectedNumberPipe} from '../utils/createAutoCorrectedNumberPipe';
 import {ERRORS} from '../utils/errors';
+import {
+	normalizeFieldSettings,
+	updateFieldSettings,
+} from '../utils/fieldSettings';
 import Input from './Form/Input';
 import InputLocalized from './Form/InputLocalized/InputLocalized';
 import Select from './Form/Select';
@@ -51,16 +55,6 @@ const defaultLocale = locales.find(({symbol}) => symbol === defaultSymbol);
 function closeSidePanel() {
 	const parentWindow = Liferay.Util.getOpener();
 	parentWindow.Liferay.fire('close-side-panel');
-}
-
-function normalizeFieldSettings(objectFieldSettings: ObjectFieldSetting[]) {
-	const settings: NormalizedSettings = {};
-
-	objectFieldSettings?.forEach(({name, value}) => {
-		settings[name] = value;
-	});
-
-	return settings;
 }
 
 export default function EditObjectField({
@@ -125,13 +119,9 @@ export default function EditObjectField({
 
 	const handleSettingsChange = ({name, value}: ObjectFieldSetting) =>
 		setValues({
-			objectFieldSettings: values.objectFieldSettings?.map((setting) =>
-				setting.name === name
-					? {
-							...setting,
-							value,
-					  }
-					: setting
+			objectFieldSettings: updateFieldSettings(
+				values.objectFieldSettings,
+				{name, value}
 			),
 		});
 
@@ -487,7 +477,3 @@ interface ISearchableProps {
 	readOnly: boolean;
 	setValues: (values: Partial<ObjectField>) => void;
 }
-
-type NormalizedSettings = {
-	[key in ObjectFieldSettingName]?: string | number | boolean;
-};

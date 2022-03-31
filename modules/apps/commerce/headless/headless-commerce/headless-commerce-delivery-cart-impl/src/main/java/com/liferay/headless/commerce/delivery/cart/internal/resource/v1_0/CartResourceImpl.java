@@ -122,10 +122,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	@Override
 	public Cart getCart(Long cartId) throws Exception {
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			cartId);
-
-		return _toCart(commerceOrder);
+		return _toCart(_commerceOrderService.getCommerceOrder(cartId));
 	}
 
 	@Override
@@ -188,12 +185,10 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 				commerceChannel.getGroupId(), accountId, null,
 				pagination.getStartPosition(), pagination.getEndPosition());
 
-		long pendingCommerceOrdersCount =
-			_commerceOrderService.getPendingCommerceOrdersCount(
-				commerceChannel.getGroupId(), accountId, null);
-
 		return Page.of(
-			_toCarts(commerceOrders), pagination, pendingCommerceOrdersCount);
+			_toCarts(commerceOrders), pagination,
+			_commerceOrderService.getPendingCommerceOrdersCount(
+				commerceChannel.getGroupId(), accountId, null));
 	}
 
 	@Override

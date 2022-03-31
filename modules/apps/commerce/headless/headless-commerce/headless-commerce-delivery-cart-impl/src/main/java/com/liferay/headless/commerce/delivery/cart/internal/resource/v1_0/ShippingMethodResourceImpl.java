@@ -37,8 +37,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 
 import java.math.BigDecimal;
 
-import java.util.List;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -95,14 +93,11 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 			_commerceShippingEngineRegistry.getCommerceShippingEngine(
 				commerceShippingMethod.getEngineKey());
 
-		List<CommerceShippingOption> commerceShippingOptions =
-			commerceShippingEngine.getCommerceShippingOptions(
-				commerceContext, commerceOrder,
-				contextAcceptLanguage.getPreferredLocale());
-
 		return transformToArray(
 			ListUtil.sort(
-				commerceShippingOptions,
+				commerceShippingEngine.getCommerceShippingOptions(
+					commerceContext, commerceOrder,
+					contextAcceptLanguage.getPreferredLocale()),
 				new CommerceShippingOptionLabelComparator()),
 			shippingOption -> _toShippingOption(
 				shippingOption, commerceContext),

@@ -113,15 +113,12 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 		Availability availability = new Availability();
 
 		if (_cpDefinitionInventoryEngine.isDisplayAvailability(cpInstance)) {
-			String availabilityStatus =
-				_commerceInventoryEngine.getAvailabilityStatus(
-					cpInstance.getCompanyId(), commerceChannelGroupId,
-					_cpDefinitionInventoryEngine.getMinStockQuantity(
-						cpInstance),
-					cpInstance.getSku());
-
 			if (Objects.equals(
-					availabilityStatus,
+					_commerceInventoryEngine.getAvailabilityStatus(
+						cpInstance.getCompanyId(), commerceChannelGroupId,
+						_cpDefinitionInventoryEngine.getMinStockQuantity(
+							cpInstance),
+						cpInstance.getSku()),
 					CommerceInventoryAvailabilityConstants.AVAILABLE)) {
 
 				availability.setLabel_i18n(
@@ -163,14 +160,10 @@ public class SkuDTOConverter implements DTOConverter<CPInstance, Sku> {
 
 		Map<String, String> options = new HashMap<>();
 
-		Map<String, List<String>>
-			cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys =
-				_cpDefinitionOptionRelLocalService.
-					getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
-						cpInstance.getCPInstanceId());
-
 		JSONArray keyValuesJSONArray = _jsonHelper.toJSONArray(
-			cpDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys);
+			_cpDefinitionOptionRelLocalService.
+				getCPDefinitionOptionRelKeysCPDefinitionOptionValueRelKeys(
+					cpInstance.getCPInstanceId()));
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			cpDefinitionOptionRelsMap =

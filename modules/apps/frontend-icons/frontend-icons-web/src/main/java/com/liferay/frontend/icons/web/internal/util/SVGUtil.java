@@ -45,21 +45,20 @@ public class SVGUtil {
 
 			List<Element> symbolElements = rootElement.elements("symbol");
 
-			if (ListUtil.isNotEmpty(symbolElements)) {
-				for (Element symbolElement : symbolElements) {
-					frontendIconsResources.add(
-						new FrontendIconsResource(
-							_getInnerSVG(symbolElement),
-							symbolElement.attributeValue("id"),
-							symbolElement.attributeValue("viewBox")));
-				}
-			}
-			else {
+			if (ListUtil.isEmpty(symbolElements)) {
 				return Collections.singletonList(
 					new FrontendIconsResource(
 						_getInnerSVG(rootElement),
 						rootElement.attributeValue("id"),
 						rootElement.attributeValue("viewBox")));
+			}
+
+			for (Element symbolElement : symbolElements) {
+				frontendIconsResources.add(
+					new FrontendIconsResource(
+						_getInnerSVG(symbolElement),
+						symbolElement.attributeValue("id"),
+						symbolElement.attributeValue("viewBox")));
 			}
 		}
 		catch (DocumentException documentException) {

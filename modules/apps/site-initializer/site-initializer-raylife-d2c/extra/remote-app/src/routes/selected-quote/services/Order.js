@@ -68,7 +68,15 @@ export function createOrder(accountId, channelId, skuId) {
 
 export function updateOrder(paymentMethod, orderItem, orderId) {
 	const payload = {
-		orderItems: [orderItem],
+		orderItems: [
+			{
+				discountPercentageLevel1: 0,
+				discountPercentageLevel2: 0,
+				discountPercentageLevel3: 0,
+				discountPercentageLevel4: 0,
+				...orderItem,
+			},
+		],
 		paymentMethod,
 		subtotal: orderItem.finalPrice,
 		total: orderItem.finalPrice,

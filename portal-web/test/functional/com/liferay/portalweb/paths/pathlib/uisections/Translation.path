@@ -57,7 +57,7 @@
 	<td></td>
 </tr>
 <tr>
-<td>DROPDOWN_MENU_ITEM</td>
+	<td>DROPDOWN_MENU_ITEM</td>
 	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//*[contains(@class,'dropdown-item') and contains(.,'${key_locale}')] | //div[contains(@class,'lfr-icon-menu-open') and contains(@class,'open')]//*[contains(@class,'dropdown-item') and contains(.,'${key_locale}')]</td>
 	<td></td>
 </tr>
@@ -99,6 +99,11 @@
 <tr>
 	<td>BASIC_INFORMATION</td>
 	<td>//div[contains(@class,'col-md-6')]//div[text()='Basic Information']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMPORT_FILE_NAME</td>
+	<td>//li//p[@class='list-group-title']</td>
 	<td></td>
 </tr>
 <tr>

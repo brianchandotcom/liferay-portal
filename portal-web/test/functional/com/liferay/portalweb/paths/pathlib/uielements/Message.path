@@ -216,6 +216,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_IMPORT_TRANSLATIONS_ITEM_MESSAGE_N</td>
+	<td>//*[contains(@class,'list-group-item')][${key_indexNumber}]//div[contains(@class,'text-danger')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_IMPORT_TRANSLATIONS_ITEM</td>
 	<td>//div[contains(@class,'text-danger')]/preceding-sibling::div</td>
 	<td></td>

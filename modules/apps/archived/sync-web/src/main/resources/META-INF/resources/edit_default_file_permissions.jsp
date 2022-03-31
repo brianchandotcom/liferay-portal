@@ -63,7 +63,7 @@ if (groupIds.length == 1) {
 						<c:when test="<%= permissions == SyncPermissionsConstants.PERMISSIONS_FULL_ACCESS %>">
 
 							<%
-							List<String> resourceActions = ListUtil.toList(SyncPermissionsConstants.getFileResourceActions(permissions));
+							List<String> resourceActions = ListUtil.fromArray(SyncPermissionsConstants.getFileResourceActions(permissions));
 
 							List<String> localizedResourceActions = new ArrayList<String>(resourceActions.size());
 

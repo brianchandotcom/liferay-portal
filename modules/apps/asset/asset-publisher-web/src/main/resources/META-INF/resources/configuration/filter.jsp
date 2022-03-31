@@ -59,7 +59,7 @@
 					HashMapBuilder.<String, Object>put(
 						"categorySelectorURL", assetPublisherDisplayContext.getCategorySelectorURL()
 					).put(
-						"groupIds", ListUtil.toList(assetPublisherDisplayContext.getReferencedModelsGroupIds())
+						"groupIds", ListUtil.fromArray(assetPublisherDisplayContext.getReferencedModelsGroupIds())
 					).put(
 						"namespace", liferayPortletResponse.getNamespace()
 					).put(

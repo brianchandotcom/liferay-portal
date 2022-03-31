@@ -59,7 +59,7 @@
 					).put(
 						"disabled", editAssetListDisplayContext.isLiveGroup()
 					).put(
-						"groupIds", ListUtil.toList(editAssetListDisplayContext.getReferencedModelsGroupIds())
+						"groupIds", ListUtil.fromArray(editAssetListDisplayContext.getReferencedModelsGroupIds())
 					).put(
 						"namespace", liferayPortletResponse.getNamespace()
 					).put(

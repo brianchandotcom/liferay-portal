@@ -43,6 +43,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -113,6 +115,27 @@ public class DefaultDLViewFileVersionDisplayContext
 			httpServletRequest, fileVersion, null, dlMimeTypeDisplayContext,
 			resourceBundle, storageEngine, dlTrashHelper,
 			dlPreviewRendererProvider, versioningStrategy, dlURLHelper);
+	}
+
+	@Override
+	public List<DropdownItem> getActionDropdownItems() throws PortalException {
+		if (!isActionsVisible()) {
+			return null;
+		}
+
+		return DropdownItemListBuilder.add(
+			() -> _fileEntryDisplayContextHelper.isDownloadActionAvailable(),
+			_uiItemsBuilder.getDownloadDropdownItem()
+		).add(
+			() -> _uiItemsBuilder.isViewOriginalFileActionAvailable(),
+			_uiItemsBuilder.getViewOriginalFileDropdownItem()
+		).add(
+			() -> _uiItemsBuilder.isEditActionAvailable(),
+			_uiItemsBuilder.getEditDropdownItem()
+		).add(
+			() -> _uiItemsBuilder.isCheckoutActionAvailable(),
+			_uiItemsBuilder.getCheckoutDropdownItem()
+		).build();
 	}
 
 	@Override

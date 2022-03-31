@@ -33,6 +33,7 @@ import com.liferay.document.library.web.internal.display.context.helper.FileVers
 import com.liferay.document.library.web.internal.helper.DLTrashHelper;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringBundler;
@@ -224,6 +225,33 @@ public class UIItemsBuilder {
 		template.processTemplate(unsyncStringWriter);
 
 		javaScriptToolbarItem.setJavaScript(unsyncStringWriter.toString());
+	}
+
+	public boolean isCheckoutActionAvailable() throws PortalException {
+		if ((_fileShortcut != null) ||
+			!_fileEntryDisplayContextHelper.
+				isCheckoutDocumentActionAvailable()) {
+
+			return false;
+		}
+
+		return true;
+	}
+	public DropdownItem getCheckoutDropdownItem() {
+		DropdownItem dropdownItem = new DropdownItem();
+
+		dropdownItem.setHref(
+			PortletURLBuilder.create(
+				_getActionURL(
+					"/document_library/edit_file_entry", Constants.CHECKOUT)
+			).setParameter(
+				"fileEntryId", _fileEntry.getFileEntryId()
+			).buildString());
+		dropdownItem.setIcon("download");
+		dropdownItem.setLabel(
+			LanguageUtil.get(_httpServletRequest, "checkout[document]"));
+
+		return dropdownItem;
 	}
 
 	public void addCheckoutMenuItem(List<MenuItem> menuItems)
@@ -504,6 +532,45 @@ public class UIItemsBuilder {
 		menuItems.add(deleteMenuItem);
 	}
 
+	public DropdownItem getDownloadDropdownItem() {
+		String label = LanguageUtil.formatStorageSize(
+			_fileVersion.getSize(), _themeDisplay.getLocale());
+
+		label = StringBundler.concat(
+			_themeDisplay.translate("download"), " (", label, ")");
+
+		boolean appendVersion;
+
+		if (StringUtil.equalsIgnoreCase(
+				_fileEntry.getVersion(), _fileVersion.getVersion())) {
+
+			appendVersion = false;
+		}
+		else {
+			appendVersion = true;
+		}
+
+		String url = _dlURLHelper.getDownloadURL(
+			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK,
+			appendVersion, true);
+
+		DropdownItem dropdownItem = new DropdownItem();
+
+		dropdownItem.setData(
+			HashMapBuilder.<String, Object>put(
+				"analytics-file-entry-id", _fileEntry.getFileEntryId()
+			).put(
+				"analytics-file-entry-title", _fileEntry.getTitle()
+			).put(
+				"senna-off", "true"
+			).build());
+		dropdownItem.setHref(url);
+		dropdownItem.setIcon("download");
+		dropdownItem.setLabel(label);
+
+		return dropdownItem;
+	}
+
 	public void addDownloadMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -573,6 +640,41 @@ public class UIItemsBuilder {
 				")"),
 			_dlURLHelper.getDownloadURL(
 				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK));
+	}
+
+	public boolean isEditActionAvailable() throws PortalException{
+		if (((_fileShortcut != null) &&
+			 !_fileShortcutDisplayContextHelper.isEditActionAvailable()) ||
+			((_fileShortcut == null) &&
+			 !_fileEntryDisplayContextHelper.isEditActionAvailable())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public DropdownItem getEditDropdownItem(){
+		PortletURL portletURL = null;
+
+		if (_fileShortcut == null) {
+			portletURL = _getControlPanelRenderURL(
+				"/document_library/edit_file_entry");
+		}
+		else {
+			portletURL = _getControlPanelRenderURL(
+				"/document_library/edit_file_shortcut");
+		}
+
+		portletURL.setParameter("backURL", _getCurrentURL());
+
+		DropdownItem dropdownItem = new DropdownItem();
+
+		dropdownItem.setHref(portletURL.toString());
+		dropdownItem.setIcon("pencil");
+		dropdownItem.setLabel(LanguageUtil.get(_httpServletRequest, "edit"));
+
+		return dropdownItem;
 	}
 
 	public void addEditImageItem(List<MenuItem> menuItems)
@@ -884,6 +986,25 @@ public class UIItemsBuilder {
 			).setParameter(
 				"version", _fileVersion.getVersion()
 			).buildString());
+	}
+
+	public boolean isViewOriginalFileActionAvailable() {
+		return _fileShortcut != null;
+	}
+
+	public DropdownItem getViewOriginalFileDropdownItem() {
+		DropdownItem dropdownItem = new DropdownItem();
+
+		dropdownItem.setHref(
+			PortletURLBuilder.create(
+				_getRenderURL("/document_library/view_file_entry")
+			).setParameter(
+				"fileEntryId", _fileShortcut.getToFileEntryId()
+			).buildString());
+		dropdownItem.setLabel(
+			LanguageUtil.get(_httpServletRequest, "view-original-file"));
+
+		return dropdownItem;
 	}
 
 	public void addViewOriginalFileMenuItem(List<MenuItem> menuItems) {

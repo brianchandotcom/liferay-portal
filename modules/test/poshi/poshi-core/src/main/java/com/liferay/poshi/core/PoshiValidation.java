@@ -17,6 +17,7 @@ package com.liferay.poshi.core;
 import com.liferay.poshi.core.elements.PoshiElement;
 import com.liferay.poshi.core.elements.PoshiElementException;
 import com.liferay.poshi.core.script.PoshiScriptParserUtil;
+import com.liferay.poshi.core.selenium.LiferaySeleniumMethod;
 import com.liferay.poshi.core.util.OSDetector;
 import com.liferay.poshi.core.util.PropsUtil;
 import com.liferay.poshi.core.util.StringUtil;
@@ -1460,8 +1461,10 @@ public class PoshiValidation {
 			return;
 		}
 
-		int seleniumParameterCount = PoshiContext.getSeleniumParameterCount(
+		LiferaySeleniumMethod seleniumMethod = PoshiContext.getSeleniumMethod(
 			seleniumMethodName);
+
+		int seleniumParameterCount = seleniumMethod.getParameterCount();
 
 		List<String> methodParameterValues =
 			PoshiScriptParserUtil.getMethodParameterValues(

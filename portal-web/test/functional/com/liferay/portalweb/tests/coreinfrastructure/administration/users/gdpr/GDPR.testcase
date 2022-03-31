@@ -708,7 +708,7 @@ definition {
 			totalItemsCount = "10");
 
 		for (var rowIndexNum : list "1,2") {
-			GDPR.deleteStagedDatainApplicationCP(rowIndexNumber = "${rowIndexNum}");
+			GDPR.deleteTheSpecificEntry(rowIndexNumber = "${rowIndexNum}");
 		}
 
 		GDPR.filterByApplications(
@@ -717,7 +717,7 @@ definition {
 			totalItemsCount = "8");
 
 		for (var rowIndexNum : list "1,2,3") {
-			GDPR.deleteStagedDatainApplicationCP(rowIndexNumber = "${rowIndexNum}");
+			GDPR.deleteTheSpecificEntry(rowIndexNumber = "${rowIndexNum}");
 		}
 
 		BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-staging");
@@ -953,13 +953,85 @@ definition {
 		}
 	}
 
-	@description = "This test deletes a staged and a live entry from an applciation."
-	@ignore = "Test Stub"
+	@description = "This test deletes a staged and a live entry from an application, tests with Blogs entries."
 	@priority = "3"
-	test CanDeleteASingleStagedAndLiveEntryFromAnApplication {
+	test CanDeleteASingleStagedAndLiveBlogsEntry {
+		task ("Given log in as a new user, create a site enable local staging") {
+			User.logoutPG();
 
-		// TODO LRQA-50754 Delete a staged and live single entry from an Application
+			User.firstLoginUI(
+				password = "test",
+				userEmailAddress = "userea@liferay.com");
 
+			JSONGroup.addGroup(groupName = "Site Name");
+
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Staging Test Page");
+
+			JSONUser.addUserToSite(
+				groupName = "Site Name",
+				userEmailAddress = "userea@liferay.com");
+
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
+		}
+
+		task ("Publish the staged blogs entries to live as a new admin user.") {
+			for (var count : list "1,2,3") {
+				JSONBlog.addEntry(
+					entryContent = "Blogs Entry Content",
+					entryTitle = "Blogs Entry Title ${count}",
+					groupName = "Site Name (Staging)",
+					site = "false",
+					userEmailAddress = "userea@liferay.com",
+					userPassword = "test");
+			}
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-staging");
+
+			Staging.publishToLiveNowViaPortletCP();
+		}
+
+		task ("When sign in as Test Test and deactivate the user usersn.") {
+			User.logoutAndLoginPG(
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "Test Test");
+
+			User.openUsersAdmin();
+
+			User.deletePersonalDataCP(
+				userFirstName = "userfn",
+				userLastName = "userln");
+		}
+
+		task ("And select deleted staged 'Blogs Entry Title 1' entry and lived 'Blogs Entry Title 2' entry") {
+			GDPR.filterByApplications(
+				applicationItemsCount = "6",
+				applications = "Blogs",
+				totalItemsCount = "6");
+
+			for (var rowIndexNum : list "1,3") {
+				GDPR.deleteTheSpecificEntry(rowIndexNumber = "${rowIndexNum}");
+			}
+		}
+
+		task ("Then assert staged 'Blogs Entry Title 1' entry and lived 'Blogs Entry Title 2' entry have been deleted") {
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name-staging");
+
+			Blogs.viewEntryNotPresent(entryTitle = "Blogs Entry Title 1");
+
+			for (var rowEntry : list "Blogs Entry Title 2,Blogs Entry Title 3") {
+				LexiconEntry.viewEntryName(rowEntry = "${rowEntry}");
+			}
+
+			BlogsNavigator.openBlogsAdmin(siteURLKey = "site-name");
+
+			Blogs.viewEntryNotPresent(entryTitle = "Blogs Entry Title 2");
+
+			for (var rowEntry : list "Blogs Entry Title 1,Blogs Entry Title 3") {
+				LexiconEntry.viewEntryName(rowEntry = "${rowEntry}");
+			}
+		}
 	}
 
 	@description = "This test deletes entries from an application that has hierarchy"

@@ -117,13 +117,11 @@ public class DepotAdminMembershipsDisplayContext {
 				_user.getUserId(), group.getGroupId(), 0,
 				PropsValues.USERS_ADMIN_ROLE_COLUMN_LIMIT);
 
-		int userGroupRolesCount =
-			UserGroupRoleLocalServiceUtil.getUserGroupRolesCount(
-				_user.getUserId(), group.getGroupId());
-
 		return UsersAdminUtil.getUserColumnText(
 			_themeDisplay.getLocale(), userGroupRoles,
-			UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR, userGroupRolesCount);
+			UsersAdmin.USER_GROUP_ROLE_TITLE_ACCESSOR,
+			UserGroupRoleLocalServiceUtil.getUserGroupRolesCount(
+				_user.getUserId(), group.getGroupId()));
 	}
 
 	public User getUser() {

@@ -91,11 +91,9 @@ public class DepotTestUtil {
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
-		Role role = RoleLocalServiceUtil.getRole(
-			group.getCompanyId(), roleName);
-
 		RoleTestUtil.addResourcePermission(
-			role, resourceName, ResourceConstants.SCOPE_GROUP,
+			RoleLocalServiceUtil.getRole(group.getCompanyId(), roleName),
+			resourceName, ResourceConstants.SCOPE_GROUP,
 			String.valueOf(group.getGroupId()), actionId);
 
 		try {

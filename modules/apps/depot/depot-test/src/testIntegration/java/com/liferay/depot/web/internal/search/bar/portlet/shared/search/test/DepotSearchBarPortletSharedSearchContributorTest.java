@@ -20,7 +20,6 @@ import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Query;
@@ -254,13 +253,13 @@ public class DepotSearchBarPortletSharedSearchContributorTest {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		Layout layout = _layoutLocalService.addLayout(
-			TestPropsValues.getUserId(), _group1.getGroupId(), false, 0, "name",
-			"title", "description", LayoutConstants.TYPE_PORTLET, false,
-			StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
-
-		themeDisplay.setLayout(layout);
+		themeDisplay.setLayout(
+			_layoutLocalService.addLayout(
+				TestPropsValues.getUserId(), _group1.getGroupId(), false, 0,
+				"name", "title", "description", LayoutConstants.TYPE_PORTLET,
+				false, StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(
+					_group1.getGroupId())));
 
 		return new PortletSharedSearchSettings() {
 

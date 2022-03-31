@@ -201,10 +201,9 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 				ddmStructuresAvailable, groupId, start, end);
 
 		for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
-			DepotEntry depotEntry = depotEntryLocalService.getDepotEntry(
-				depotEntryGroupRel.getDepotEntryId());
-
-			depotEntries.add(depotEntry);
+			depotEntries.add(
+				depotEntryLocalService.getDepotEntry(
+					depotEntryGroupRel.getDepotEntryId()));
 		}
 
 		return depotEntries;
@@ -221,10 +220,9 @@ public class DepotEntryLocalServiceImpl extends DepotEntryLocalServiceBaseImpl {
 			_depotEntryGroupRelPersistence.findByToGroupId(groupId, start, end);
 
 		for (DepotEntryGroupRel depotEntryGroupRel : depotEntryGroupRels) {
-			DepotEntry depotEntry = depotEntryLocalService.getDepotEntry(
-				depotEntryGroupRel.getDepotEntryId());
-
-			depotEntries.add(depotEntry);
+			depotEntries.add(
+				depotEntryLocalService.getDepotEntry(
+					depotEntryGroupRel.getDepotEntryId()));
 		}
 
 		return depotEntries;

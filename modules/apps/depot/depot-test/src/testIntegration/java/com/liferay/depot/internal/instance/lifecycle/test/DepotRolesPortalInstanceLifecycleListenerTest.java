@@ -77,13 +77,12 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 		try {
 			Role role = _roleLocalService.getRole(companyId, name);
 
-			int resourcePermissionsCount =
+			Assert.assertEquals(
+				1,
 				_resourcePermissionLocalService.getResourcePermissionsCount(
 					companyId, Role.class.getName(),
 					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(role.getRoleId()));
-
-			Assert.assertEquals(1, resourcePermissionsCount);
+					String.valueOf(role.getRoleId())));
 		}
 		catch (NoSuchRoleException noSuchRoleException) {
 			throw new AssertionError(noSuchRoleException.getMessage());

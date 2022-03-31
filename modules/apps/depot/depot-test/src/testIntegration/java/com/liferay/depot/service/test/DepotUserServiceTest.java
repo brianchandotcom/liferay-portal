@@ -191,10 +191,8 @@ public class DepotUserServiceTest {
 	}
 
 	private void _setUpPermissionThreadLocal(User user) {
-		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
-			user);
-
-		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+		PermissionThreadLocal.setPermissionChecker(
+			_permissionCheckerFactory.create(user));
 	}
 
 	@DeleteAfterTestRun

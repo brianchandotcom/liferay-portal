@@ -1991,6 +1991,12 @@ definition {
 		AssertConsoleTextNotPresent(value1 = "java.lang.NullPointerException");
 
 		AssertConsoleTextNotPresent(value1 = "com.liferay.portal.kernel.exception.SystemException");
+
+		for (var tableEntry : list "Web Content,Wiki,Message Boards,Contacts Center,Blogs,Announcements,Documents and Media") {
+			GDPR.viewEntryRowInApplicationCP(
+				tableEntry = "${tableEntry}",
+				tableEntryPartialTextList = "${tableEntry},Create Date,Completion Date");
+		}
 	}
 
 	@description = "This test changes pagination and assert export processes display properly."

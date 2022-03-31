@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -97,7 +98,10 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 		Layout layout = _layoutLocalService.addLayout(
 			PortalUtil.getValidUserId(companyId, userId), groupId,
 			privateLayout, 0, titleMap, titleMap, null, null, null, layoutType,
-			StringPool.BLANK, true, true, new HashMap<>(), serviceContext);
+			UnicodePropertiesBuilder.put(
+				"published", "true"
+			).buildString(),
+			true, true, new HashMap<>(), serviceContext);
 
 		return layout.getPlid();
 	}

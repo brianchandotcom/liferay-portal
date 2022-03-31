@@ -92,7 +92,7 @@ definition {
 
 			Button.clickDone();
 
-			Button.clickCancel();
+			ImportExport.openImportExportAdmin();
 
 			ImportExport.assertExecutionEntry(
 				entityType = "Account",
@@ -641,16 +641,12 @@ definition {
 
 		task ("When the user tries to import a file without mapping all the required fields") {
 			Button.click(button = "Next");
-
-			Button.click(button = "Start Import");
 		}
 
-		task ("Then the import should fail and the missing field should be highlighted red") {
-			AssertElementNotPresent(locator1 = "Message#SUCCESS_DISMISSIBLE");
-
-			AssertElementPresent(
-				key_destinationField = "currencyCode",
-				locator1 = "ImportExport#REQUIRED_IMPORT_FIELD_ERROR");
+		task ("Then the user should no be able to import the file") {
+			AssertElementNotPresent(
+				key_text = "Start Import",
+				locator1 = "Button#ANY");
 		}
 
 		task ("When the user maps the missing required field and imports the file") {
@@ -766,7 +762,7 @@ definition {
 		}
 
 		task ("Then the export template should be created successfully") {
-			Button.clickCancel();
+			ImportExport.openImportExportAdmin();
 
 			Navigator.gotoNavTab(navTab = "Templates");
 
@@ -803,7 +799,7 @@ definition {
 		}
 
 		task ("Then the import template should be created successfully") {
-			Button.clickCancel();
+			ImportExport.openImportExportAdmin();
 
 			Navigator.gotoNavTab(navTab = "Templates");
 
@@ -916,7 +912,7 @@ definition {
 		task ("When the imports are finished") {
 			Button.clickDone();
 
-			Button.clickCancel();
+			ImportExport.openImportExportAdmin();
 
 			ImportExport.assertExecutionEntry(
 				entityType = "Account",

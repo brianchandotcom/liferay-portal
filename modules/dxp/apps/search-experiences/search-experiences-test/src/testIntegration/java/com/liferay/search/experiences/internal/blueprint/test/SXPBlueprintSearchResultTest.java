@@ -473,7 +473,8 @@ public class SXPBlueprintSearchResultTest {
 	@Test
 	public void testBoostContentsWithMoreVersions() throws Exception {
 		_setUpJournalArticles(
-			new String[] {"", ""}, new String[] {"Article 1.0", "Article 2.0"});
+			new String[] {"Article", ""},
+			new String[] {"Article 1.0", "Article 2.0"});
 
 		_journalArticles.set(
 			0,

@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+	<name>Workflow Title</name>
+	<join>
+		<id>item_3</id>
+		<description>All interactions need to be closed.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						477,
+						101
+					]
+				}
+			]]>
+		</metadata>
+		<labels>
+			<label language-id="en_US">
+				Join
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">
+						Transition Label
+					</label>
+				</labels>
+				<id>item_6</id>
+				<target>item_2</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</join>
+	<state>
+		<id>item_0</id>
+		<description>Begin a workflow.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						93,
+						99
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<labels>
+			<label language-id="en_US">
+				Create
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">
+						Transition Label
+					</label>
+				</labels>
+				<id>item_5</id>
+				<target>item_3</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<id>item_1</id>
+		<description>Conclude the workflow.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"terminal": true,
+					"xy": [
+						855,
+						395
+					]
+				}
+			]]>
+		</metadata>
+		<labels>
+			<label language-id="en_US">
+				Approve
+			</label>
+		</labels>
+	</state>
+	<task>
+		<id>item_2</id>
+		<description>Ask a user to work on the item.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						477,
+						245
+					]
+				}
+			]]>
+		</metadata>
+		<assignments>
+			<user />
+		</assignments>
+		<labels>
+			<label language-id="en_US">
+				Analisis
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">
+						Transition Label
+					</label>
+				</labels>
+				<id>item_7</id>
+				<target>item_4</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+	<task>
+		<id>item_4</id>
+		<description>Ask a user to work on the item.</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						475,
+						396
+					]
+				}
+			]]>
+		</metadata>
+		<assignments>
+			<user />
+		</assignments>
+		<labels>
+			<label language-id="en_US">
+				Review
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="en_US">
+						Transition Label
+					</label>
+				</labels>
+				<id>item_8</id>
+				<target>item_1</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+</workflow-definition>

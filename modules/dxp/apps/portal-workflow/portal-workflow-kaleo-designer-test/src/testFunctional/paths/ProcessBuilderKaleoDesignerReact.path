@@ -17,6 +17,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BUTTON_CLOSE_MODAL</td>
+	<td>//button[contains (@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SOURCE_EDITOR</td>
 	<td>//div[@class='CodeMirror-lines']</td>
 	<td></td>
@@ -42,8 +47,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PANEL_NODE</td>
+	<td>//div[@class='react-flow']//div[contains(@class, 'node ${key_nodeType}-node')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SIDEBAR_CONNECTOR_LABEL</td>
 	<td>//input[@id='edgeLabel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_CONNECTOR_ID</td>
+	<td>//input[@id='transitionId']</td>
 	<td></td>
 </tr>
 <tr>
@@ -67,6 +82,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BUTTON_CANCEL_MODAL</td>
+	<td>//button[contains(@class,'mr-3 btn btn-secondary')][contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BACK_TO_SIDEBAR_BUTTON</td>
 	<td>//button[@class='text-secondary btn btn-monospaced btn-unstyled']</td>
 	<td></td>
@@ -79,6 +99,21 @@
 <tr>
 	<td>PROPERTIES_INPUT</td>
 	<td>//label[contains(., '${key_inputOption}')]/..//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>XML_CODE_SNIPPET</td>
+	<td>//div[contains(@class, 'CodeMirror-lines')]//span[contains(@role,'presentation')and contains(text(),'${key_codeSnippet}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>XML_CODE_METADATA_ELEMENT</td>
+	<td>//div[contains(@class,'CodeMirror-gutter-wrapper') and contains(.,'${key_line}')]/..//span[contains(@class,'cm-atom')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>XML_CODE_SPECIFIC_ELEMENT</td>
+	<td>//div[contains(@class,'CodeMirror-gutter-wrapper')]//..//pre[@class=' CodeMirror-line ']//span[contains(.,'${key_elementOption}')]//..//*[normalize-space(text())='${key_elementValue}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -112,13 +147,38 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SIDEBAR_MESSAGE_FEEDBACK</td>
+	<td>//div[contains(@class, 'form-feedback-item') and contains(text(), '${key_sidebarMessage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALERT_MESSAGE_FEEDBACK</td>
+	<td>//div[contains(@class, 'alert-notifications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRANSLATION_DROPDOWN</td>
+	<td>//div[@class='dropdown-menu show']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONNECTOR_SOURCE_SELECTED</td>
 	<td>//div[@class='node ${key_nodeType}-node selected']/..//div[@data-handleid='${key_direction}Source']</td>
 	<td></td>
 </tr>
 <tr>
+	<td>HIDE_ANGLE_ICON</td>
+	<td>//div[@class='sidebar']//span[contains(text(),'${key_property}')]/..//*[contains(@class,'lexicon-icon-angle-down')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REACT_PANEL</td>
 	<td>//div[@class='react-flow__pane']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DIAGRAM_BODY</td>
+	<td>//body</td>
 	<td></td>
 </tr>
 <tr>
@@ -144,6 +204,11 @@
 <tr>
 	<td>REQUIRED_FEEDBACK_MESSAGE</td>
 	<td>//label[@for='${key_requiredField}']/..//div[@class='form-feedback-item'][contains(text(),'This field is required.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_MESSAGE</td>
+	<td>//div[contains(@class, 'modal-content')]//div[contains(@class, 'modal-body') and contains(text(), '${key_modalMessage}')]</td>
 	<td></td>
 </tr>
 <tr>

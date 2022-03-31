@@ -27,22 +27,30 @@ definition {
 		}
 	}
 
-	@description = "LPS-140056 - Verify that the user is able to edit the transition ID"
-	@ignore = "Test Stub"
-	@priority = "4"
-	test CaEditTransitionID {
-
-		// TODO LRQA-72991 CaEditTransitionID pending implementation
-
-	}
-
 	@description = "Verify that Action can be added"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanAddAction {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanAddAction";
 
-		// TODO LRQA-72954 CanAddAction pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40",
+			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillActions(
+			actionsTemplateValue = "Action Template",
+			executionTypeOption = "On Entry",
+			name = "Liferay Actions");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.viewPropertyValue(
+			propertyName = "Actions",
+			propertyValue = "Liferay Actions");
 	}
 
 	@description = "Verify that Assignment can be added"
@@ -116,14 +124,14 @@ definition {
 
 		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(
 			newTranslationOption = "fr_FR",
-			translationOptionSelected = "en_US",
+			translationOptionSelected = "en-us",
 			translationStatus = "warning");
 
 		ProcessBuilderKaleoDesignerReact.editWorkflowTitle(title = "Titre l'epreuve");
 
 		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(
 			newTranslationOption = "pt_BR",
-			translationOptionSelected = "fr_FR",
+			translationOptionSelected = "fr-fr",
 			translationStatus = "warning");
 
 		ProcessBuilderKaleoDesignerReact.editWorkflowTitle(title = "Titulo do teste");
@@ -141,22 +149,43 @@ definition {
 			translationStatus = "success");
 	}
 
-	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the X button"
-	@ignore = "Test Stub"
-	@priority = "3"
+	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the Cancel button"
 	test CanCancelDelete {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCancelDelete";
 
-		// TODO LRQA-72980 CanCancelDelete pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40",
+			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.deleteNodeByDeleteKey(
+			cancel = "true",
+			nodeType = "task",
+			title = "Delete Task Node");
 	}
 
-	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the Cancel button"
-	@ignore = "Test Stub"
+	@description = "LPS-139387 - Verify that the user can cancel the deletion of a node by clicking on the X button"
 	@priority = "3"
 	test CanCloseDeleteModal {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCloseDeleteModal";
 
-		// TODO LRQA-72979 CanCloseDeleteModal pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40",
+			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.deleteNodeByDeleteKey(
+			close = "true",
+			nodeType = "task",
+			title = "Delete Task Node");
 	}
 
 	@description = "Verify that the user can create a Template for Notification"
@@ -169,12 +198,30 @@ definition {
 	}
 
 	@description = "LPS-140056 - Verify that only one transition in the same direction from one node to the other can be created"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCreateOnlyOneTransitionInSameDirection {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCreateOnlyOneTransitionInSameDirection";
 
-		// TODO LRQA-72992 CanCreateOnlyOneTransitionInSameDirection pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start-End Connector1",
+			connectorOut = "start",
+			key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorOut = "start",
+			key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "START-END CONNECTOR1");
+
+		ProcessBuilderKaleoDesignerReact.viewConnectorNotPresent(connectorLabel = "TRANSITION LABEL");
 	}
 
 	@description = "Verify that user can create transition between nodes from the edge of node"
@@ -201,21 +248,45 @@ definition {
 	}
 
 	@description = "LPS-139387 - Verify that the user is able to delete a node using the Delete key"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDeleteNodeViaDeleteKey {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteNodeViaDeleteKey";
 
-		// TODO LRQA-72977 CanDeleteNodeViaDeleteKey pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "20,-500",
+			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.deleteNodeByDeleteKey(
+			delete = "true",
+			nodeType = "task",
+			title = "Delete Task Node");
 	}
 
 	@description = "LPS-139387 - Verify that the user is able to delete a node using the Delete icon in the sidebar"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanDeleteNodeViaSidebar {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanDeleteNodeViaSidebar";
 
-		// TODO LRQA-72978 CanDeleteNodeViaSidebar pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "20,-500",
+			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(
+			modalMessage = "Are you sure you want to delete the selected task node?",
+			nodeType = "task",
+			title = "Delete Task Node");
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "task");
 	}
 
 	@description = "Verify that the user can Delete a Draft workflow"
@@ -264,30 +335,103 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the Description of the Notification"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditNotificationDescription {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditNotificationDescription";
 
-		// TODO LRQA-73836 CanEditNotificationDescription pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			description = "Notification Description",
+			name = "New Notification",
+			newNotification = "true",
+			notificationTemplateValue = "Notification Template",
+			notificationTypeOption = "userNotification");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationDescription = "Notification Description");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(description = "Notification Description Edited");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationDescription = "Notification Description Edited");
 	}
 
 	@description = "Verify that the user can edit the Name of the Notification"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditNotificationName {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditNotificationName";
 
-		// TODO LRQA-73835 CanEditNotificationName pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			name = "Liferay Notification",
+			newNotification = "true",
+			notificationTemplateValue = "New Notification Template",
+			notificationTypeOption = "email");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationPresent(notificationName = "Liferay Notification");
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "Liferay Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationName = "Liferay Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(name = "Workflow Notifications");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationPresent(notificationName = "Workflow Notifications");
 	}
 
 	@description = "Verify that the user can edit a Template for Notification"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditNotificationTemplate {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditNotificationTemplate";
 
-		// TODO LRQA-73838 CanEditNotificationTemplate pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			name = "New Notification",
+			newNotification = "true",
+			notificationTemplateValue = "Notification Template",
+			notificationTypeOption = "email",
+			templateLanguageOption = "Text");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTemplateValue = "Notification Template");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			notificationTemplateValue = '''${userName} sent you a ${entryType} for review in the workflow. Go Check it!''',
+			templateLanguageOption = "FreeMarker");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTemplateValue = '''${userName} sent you a ${entryType} for review in the workflow. Go Check it!''');
 	}
 
 	@description = "LPS-139387 - Verify that the user is able to view and edit the nodes ID in the sidebar"
@@ -345,39 +489,135 @@ definition {
 	}
 
 	@description = "Verify that the user can edit the Template Language of the Notification to FreeMarker"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditTemplateLanguageToFreeMarker {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTemplateLanguageToFreeMarker";
 
-		// TODO LRQA-73839 CanEditTemplateLanguageToFreeMarker pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			name = "New Notification",
+			newNotification = "true",
+			notificationTemplateValue = "New Notification Template",
+			notificationTypeOption = "userNotification",
+			templateLanguageOption = "FreeMarker");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTemplateLanguage = "FreeMarker");
 	}
 
 	@description = "Verify that the user can edit the Template Language of the Notification to Text"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditTemplateLanguageToText {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTemplateLanguageToText";
 
-		// TODO LRQA-73840 CanEditTemplateLanguageToText pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			name = "New Notification",
+			newNotification = "true",
+			notificationTemplateValue = "Notification Template",
+			notificationTypeOption = "email",
+			templateLanguageOption = "Text");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTemplateLanguage = "Text");
 	}
 
 	@description = "Verify that the user can edit the Template Language of the Notification to Velocity"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanEditTemplateLanguageToVelocity {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTemplateLanguageToVelocity";
 
-		// TODO LRQA-73841 CanEditTemplateLanguageToVelocity pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			name = "New Notification",
+			newNotification = "true",
+			notificationTemplateValue = "Notification Template",
+			notificationTypeOption = "email",
+			templateLanguageOption = "Velocity");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTemplateLanguage = "Velocity");
+	}
+
+	@description = "LPS-140056 - Verify that the user is able to edit the transition ID"
+	@priority = "4"
+	test CanEditTransitionID {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanEditTransitionID";
+
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start-End Connector",
+			connectorOut = "start",
+			key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.editConnectorTransitionField(
+			connectorLabel = "START-END CONNECTOR",
+			nodeId = "New ID");
+
+		Button.clickPublish();
+
+		ProcessBuilderKaleoDesignerReact.viewConnectorID(
+			connectorLabel = "START-END CONNECTOR",
+			nodeId = "New ID");
 	}
 
 	@description = "LPS-139387 - Verify that the user can hide/show the information area"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanHideShowInformationArea {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanHideShowInformationArea";
 
-		// TODO LRQA-72981 CanHideShowInformationArea pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Condition",
+			nodePosition = "-20,-100",
+			nodeType = "condition");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfo(
+			descriptionValue = "Execute conditional logic.",
+			idValue = "item_2",
+			labelValue = "Condition",
+			nodeType = "condition",
+			scriptValue = '''returnValue = "Transition Name"''');
+
+		ProcessBuilderKaleoDesignerReact.hideSidebarFields(property = "Information");
+
+		ProcessBuilderKaleoDesignerReact.viewNodeInfoNotVisible(
+			descriptionValue = "Execute conditional logic.",
+			idValue = "item_2",
+			labelValue = "Condition",
+			nodeType = "condition",
+			scriptValue = '''returnValue = "Transition Name"''');
 	}
 
 	@description = "LPS-139387 - Verify that when the user adds a translation to another language the user is able to localize the Step Label of the node."
@@ -390,12 +630,21 @@ definition {
 	}
 
 	@description = "LPS-140056 - Verify that the user is able to localize the label of the transition"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test CanLocalizeTransitionLabel {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanLocalizeTransitionLabel";
 
-		// TODO LRQA-72990 CanLocalizeTransitionLabel pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start-End Connector",
+			connectorOut = "start",
+			key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "START-END CONNECTOR");
 	}
 
 	@description = "Verify that the user can move nodes in diagram by drag&drop in the middle of node"
@@ -457,12 +706,25 @@ definition {
 	}
 
 	@description = "LPS-139388 - Verify that is not possible to save a process with node ID not unique"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanNotSaveProcessWithDuplicatedNodeID {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanNotSaveProcessWithDuplicatedNodeID";
 
-		// TODO LRQA-72986 CanNotSaveProcessWithDuplicatedNodeID pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Id",
+			infoValue = "item_0");
+
+		ProcessBuilderKaleoDesignerReact.viewSidebarFeedback(sidebarMessage = "A node with that ID already exists. Enter a unique ID.");
+
+		Workflow.saveDefinition(newKaleoDesigner = "True");
+
+		ProcessBuilderKaleoDesignerReact.viewDuplicatedIdAlert();
 	}
 
 	@description = "LPS-139388 - Verify that is not possible to save a process with the node ID not filled"
@@ -554,20 +816,53 @@ definition {
 	}
 
 	@description = "Verify that the is able to select who receives the notification: Asset Creator"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanSelectAssetCreatorAsNotificationRecipientType {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectAssetCreatorAsNotificationRecipientType";
 
-		// TODO LRQA-73848 CanSelectAssetCreatorAsNotificationRecipientType pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			name = "New Notification",
+			newNotification = "true",
+			notificationTemplateValue = "New Notification Template",
+			notificationTypeOption = "email",
+			recipientTypeOption = "Asset Creator");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationRecipientType = "Asset Creator");
 	}
 
 	@description = "Verify that the user can select Email as Notification type"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanSelectEmailAsNotificationType {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectEmailAsNotificationType";
 
-		// TODO LRQA-73842 CanSelectEmailAsNotificationType pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			name = "New Notification",
+			newNotification = "true",
+			notificationTemplateValue = "New Notification Template",
+			notificationTypeOption = "email");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeOption = "email");
+
 
 	}
 
@@ -599,30 +894,81 @@ definition {
 	}
 
 	@description = "Verify that the user can select On Assignment as the time when the notification will be sent in a task"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSelectOnAssignmentAsExecutionTypeAtTaskNotifications {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnAssignmentAsExecutionTypeAtTaskNotifications";
 
-		// TODO LRQA-73845 CanSelectOnAssignmentAsExecutionTypeAtTaskNotifications pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-100",
+			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			executionTypeOption = "On Assignment",
+			name = "Liferay Notification",
+			newNotification = "true",
+			notificationTemplateValue = "Notification Template",
+			notificationTypeOption = "email");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "Liferay Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationExecutionType = "On Assignment");
 	}
 
 	@description = "Verify that the user can select On Entry as the time when the notification will be sent"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSelectOnEntryAsExecutionTypeAtNodeNotifications {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnEntryAsExecutionTypeAtNodeNotifications";
 
-		// TODO LRQA-73846 CanSelectOnEntryAsExecutionTypeAtNodeNotifications pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			executionTypeOption = "On Entry",
+			name = "Liferay Notification",
+			newNotification = "true",
+			notificationTemplateValue = "Notification Template",
+			notificationTypeOption = "email");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "Liferay Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationExecutionType = "On Entry");
 	}
 
 	@description = "Verify that the user can select On Exit as the time when the notification will be sent"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanSelectOnExitAsExecutionTypeAtNodeNotifications {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectOnExitAsExecutionTypeAtNodeNotifications";
 
-		// TODO LRQA-73847 CanSelectOnExitAsExecutionTypeAtNodeNotifications pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			executionTypeOption = "On Exit",
+			name = "Liferay Notification",
+			newNotification = "true",
+			notificationTemplateValue = "Notification Template",
+			notificationTypeOption = "email");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "Liferay Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationExecutionType = "On Exit");
 	}
 
 	@description = "Verify that the is able to select who receives the notification: Role"
@@ -661,30 +1007,83 @@ definition {
 	}
 
 	@description = "Verify that the is able to select who receives the notification: Task Assignees"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanSelectTaskAssigneesAsNotificationRecipientTypeAtTaskNode {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectTaskAssigneesAsNotificationRecipientTypeAtTaskNode";
 
-		// TODO LRQA-73851 CanSelectTaskAssigneesAsNotificationRecipientTypeAtTaskNode pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-100",
+			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			name = "New Notification",
+			newNotification = "true",
+			notificationTemplateValue = '''${userName} sent you a ${entryType} for review in the workflow.''',
+			notificationTypeOption = "userNotification",
+			recipientTypeOption = "Task Assignees");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationRecipientType = "Task Assignees");
 	}
 
 	@description = "Verify that the user can select Email and User Notification as Notification type"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanSelectUserNotificationAndEmailAsNotificationType {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectUserNotificationAndEmailAsNotificationType";
 
-		// TODO LRQA-73844 CanSelectUserNotificationAndEmailAsNotificationType pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			name = "Liferay Notification",
+			newNotification = "true",
+			notificationTemplateValue = "Notification Template",
+			notificationTypeOption = "email");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(notificationTypeOption = "userNotification");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "Liferay Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeOption = "email");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeOption = "userNotification");
 	}
 
 	@description = "Verify that the user can select User Notification as Notification type"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test CanSelectUserNotificationAsNotificationType {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanSelectUserNotificationAsNotificationType";
 
-		// TODO LRQA-73843 CanSelectUserNotificationAsNotificationType pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			name = "New Notification",
+			newNotification = "true",
+			notificationTemplateValue = '''${userName} sent you a ${entryType} for review in the workflow.''',
+			notificationTypeOption = "userNotification");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTypeOption = "userNotification");
 	}
 
 	@description = "Verify that the user can set transition Default"
@@ -720,12 +1119,23 @@ definition {
 	}
 
 	@description = "LPS-129928 - Verify that when the user clicks on the Diagram view button the Diagram editor appears"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanViewDiagramEditor {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanViewDiagramEditor";
 
-		// TODO LRQA-72997 CanViewDiagramEditor pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		ProcessBuilderKaleoDesignerReact.viewSourceEditor();
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		ProcessBuilderKaleoDesignerReact.viewDiagramEditor(
+			endLabelList = "End",
+			startLabelList = "Start");
 	}
 
 	@description = "LPS-129928 - Verify that when the user clicks on the Source button the Source editor appears"
@@ -743,12 +1153,31 @@ definition {
 	}
 
 	@description = "LPS-129928 - Verify that when the user makes changes to the Process Builder these changes are reflected in the XML code"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test ChangesOnDiagramAreReflectedOnXML {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ChangesOnDiagramAreReflectedOnXML";
 
-		// TODO LRQA-73000 ChangesOnDiagramAreReflectedOnXML pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "Workflow Title");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		ProcessBuilderKaleoDesignerReact.viewXMLSourceCodeSnippet(codeSnippet = "Start");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Label",
+			infoValue = "Created");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		ProcessBuilderKaleoDesignerReact.viewXMLSourceCodeSnippet(
+			codeSnippet = "Created",
+			codeSnippetNotPresent = "Start");
 	}
 
 	@description = "LPS-129928 - Verify that when the user makes changes to the XML code these changes are reflected in the Process Builder"
@@ -915,12 +1344,17 @@ definition {
 	}
 
 	@description = "LPS-129928 - Verify that when hovering the Process Builder view button the text Diagram view is displayed"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test DiagramViewToolTipIsDisplayed {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#DiagramViewToolTipIsDisplayed";
 
-		// TODO LRQA-72998 DiagramViewToolTipIsDisplayed pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		ProcessBuilderKaleoDesignerReact.viewSourceDiagramToolTipDisplayed(content = "Diagram View");
 	}
 
 	@description = "Verify that the Fork node must have at least two outgoing transitions"
@@ -1096,21 +1530,57 @@ definition {
 	}
 
 	@description = "LPS-141713 - Verify that the imported workflow definition is shown in the Process Builder"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test ImportedProcessIsShownOnDiagram {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#ImportedProcessIsShownOnDiagram";
 
-		// TODO LRQA-73006 ImportedProcessIsShownOnDiagram pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.uploadDefinition(workflowDefinitionFile = "valid-imported-process-workflow-definition.xml");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		ProcessBuilderKaleoDesignerReact.viewDiagramEditor(
+			endLabelList = "Approve",
+			joinLabelList = "Join",
+			startLabelList = "Create",
+			taskLabelList = "Analisis,Review");
 	}
 
 	@description = "LPS-129928 - Verify that the node coordinates are updated in Source when node is moved in diagram"
-	@ignore = "Test Stub"
 	@priority = "3"
 	test NodeCoordinatedAreUpdated {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeCoordinatedAreUpdated";
 
-		// TODO LRQA-73004 NodeCoordinatedAreUpdated pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		ProcessBuilderKaleoDesignerReact.viewXMLSourceNodeCoordinate(
+			coordinateX = "300",
+			coordinateY = "100",
+			lineX = "15",
+			lineY = "16",
+			nodeLabel = "Start");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		ProcessBuilderKaleoDesignerReact.dragAndDropDiagramNode(
+			nodePosition = "100,-50",
+			nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.diagramSourceSwitchView();
+
+		ProcessBuilderKaleoDesignerReact.viewXMLSourceNodeCoordinate(
+			coordinateX = "400",
+			coordinateY = "50",
+			lineX = "15",
+			lineY = "16",
+			nodeLabel = "Start");
 	}
 
 	@description = "LPS-139387 - Verify that the node info is displayed when the node is selected"
@@ -1137,12 +1607,22 @@ definition {
 	}
 
 	@description = "LPS-139388 - Verify that the active node is highlighted on the diagram"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test NodeIsHighlightedWhenActive {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#NodeIsHighlightedWhenActive";
 
-		// TODO LRQA-72984 NodeIsHighlightedWhenActive pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40",
+			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.viewActiveNodeHighlighted(nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.viewInactiveNodeNotHighlighted(nodeType = "end");
 	}
 
 	@description = "LPS-129928 - Verify that the Publish button turns unavailable after the Workflow is published"
@@ -1244,12 +1724,23 @@ definition {
 	}
 
 	@description = "LPS-139387 - Verify that the user can not use the same name for more than one node"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test StepIDIsUnique {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#StepIDIsUnique";
 
-		// TODO LRQA-72976 StepIDIsUnique pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "end");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Id",
+			infoValue = "item_0");
+
+		ProcessBuilderKaleoDesignerReact.viewSidebarFeedback(sidebarMessage = "A node with that ID already exists. Enter a unique ID.");
+
+		
 	}
 
 	@description = "LPS-139387 - Verify that the Step Label is a required field"
@@ -1295,21 +1786,85 @@ definition {
 	}
 
 	@description = "LPS-130000 - Verify that the transitions do not lose the reference when the Task ID is changed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test TransitionDoNotLoseReferenceOnTaskIDChange {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TransitionDoNotLoseReferenceOnTaskIDChange";
 
-		// TODO LRQA-72993 TransitionDoNotLoseReferenceOnTaskIDChange pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40",
+			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "task",
+			connectorLabel = "Start-Task Connector",
+			connectorOut = "start",
+			key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Task-End Connector",
+			connectorOut = "task",
+			key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "START-TASK CONNECTOR");
+
+		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "TASK-END CONNECTOR");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.editNodeInformationField(
+			infoOption = "Id",
+			infoValue = "Liferay01");
+
+		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "START-TASK CONNECTOR");
+
+		ProcessBuilderKaleoDesignerReact.viewConnectorPresent(connectorLabel = "TASK-END CONNECTOR");
 	}
 
 	@description = "LPS-130000 - Verify that the transitions do not lose the reference when the Task ID is changed"
-	@ignore = "Test Stub"
 	@priority = "5"
 	test TransitionIsDeletedWhenNodeIsDeleted {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TransitionIsDeletedWhenNodeIsDeleted";
 
-		// TODO LRQA-72994 TransitionIsDeletedWhenNodeIsDeleted pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.dragSidebarNodeAndMove(
+			nodeLabel = "Task",
+			nodePosition = "-20,-40",
+			nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "task",
+			connectorLabel = "Start-Task Connector",
+			connectorOut = "start",
+			key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Task-End Connector",
+			connectorOut = "task",
+			key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.deleteNodeOrConnection(title = "Delete Task Node");
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodePresent(nodeType = "end");
+
+		ProcessBuilderKaleoDesignerReact.viewPanelNodeNotPresent(nodeType = "task");
+
+		ProcessBuilderKaleoDesignerReact.viewConnectorNotPresent(connectorLabel = "START-TASK CONNECTOR");
+
+		ProcessBuilderKaleoDesignerReact.viewConnectorNotPresent(connectorLabel = "TASK-END CONNECTOR");
 	}
 
 	@description = "LPS-129928 - Verify that the translation dropdown closes when the user selects a language"
@@ -1322,12 +1877,19 @@ definition {
 	}
 
 	@description = "LPS-129928 - Verify that the translation dropdown closes when the user clicks out of it"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test TranslationDropdownClosesClickOut {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#TranslationDropdownClosesClickOut";
 
-		// TODO LRQA-73003 TranslationDropdownClosesClickOut pending implementation
+		Workflow.openWorkflowListView();
 
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationDropdown(translationOptionSelected = "en-us");
+
+		ProcessBuilderKaleoDesignerReact.selectTranslationLanguage(translationOptionSelected = "en-us");
+
+		ProcessBuilderKaleoDesignerReact.viewTranslationDropdownNotPresent();
 	}
 
 	@description = "Verify that a message warning is displayed when the user adds another transition and selects it as default"

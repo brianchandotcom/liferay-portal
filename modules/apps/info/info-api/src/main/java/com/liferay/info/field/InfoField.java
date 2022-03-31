@@ -37,50 +37,6 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		return new Builder();
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public InfoField(
-		T infoFieldType, InfoLocalizedValue<String> labelInfoLocalizedValue,
-		boolean localizable, String name) {
-
-		this(
-			builder(
-			).infoFieldType(
-				infoFieldType
-			).namespace(
-				StringPool.BLANK
-			).name(
-				name
-			).labelInfoLocalizedValue(
-				labelInfoLocalizedValue
-			).localizable(
-				localizable
-			)._builder);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public InfoField(
-		T infoFieldType, InfoLocalizedValue<String> labelInfoLocalizedValue,
-		String name) {
-
-		this(
-			builder(
-			).infoFieldType(
-				infoFieldType
-			).namespace(
-				StringPool.BLANK
-			).name(
-				name
-			).labelInfoLocalizedValue(
-				labelInfoLocalizedValue
-			)._builder);
-	}
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {

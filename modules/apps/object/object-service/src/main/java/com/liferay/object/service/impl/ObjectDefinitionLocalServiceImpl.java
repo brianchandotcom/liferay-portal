@@ -732,7 +732,8 @@ public class ObjectDefinitionLocalServiceImpl
 						objectField.isIndexedAsKeyword(),
 						objectField.getIndexedLanguageId(),
 						objectField.getLabelMap(), objectField.getName(),
-						objectField.isRequired(), Collections.emptyList());
+						objectField.isRequired(),
+						objectField.getObjectFieldSettings());
 				}
 			}
 		}

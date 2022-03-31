@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.PrintWriter;
 
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -69,22 +68,18 @@ public class FrontendIconsServlet extends HttpServlet {
 				return;
 			}
 
-			Optional<FrontendIconsResourcePack>
-				frontendIconsResourcePackOptional =
-					_frontendIconsResourcePackRepository.
-						getFrontendIconsResourcePack(
-							(Long)httpServletRequest.getAttribute(
-								WebKeys.COMPANY_ID),
-							matcher.group(1));
+			FrontendIconsResourcePack frontendIconsResourcePack =
+				_frontendIconsResourcePackRepository.
+					getFrontendIconsResourcePack(
+						(Long)httpServletRequest.getAttribute(
+							WebKeys.COMPANY_ID),
+						matcher.group(1));
 
-			if (!frontendIconsResourcePackOptional.isPresent()) {
+			if (frontendIconsResourcePack == null) {
 				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
 
 				return;
 			}
-
-			FrontendIconsResourcePack frontendIconsResourcePack =
-				frontendIconsResourcePackOptional.get();
 
 			PrintWriter printWriter = httpServletResponse.getWriter();
 

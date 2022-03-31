@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 

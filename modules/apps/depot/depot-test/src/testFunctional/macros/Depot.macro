@@ -1136,6 +1136,8 @@ definition {
 	}
 
 	macro viewSearchResult {
+		var searchTerm = '''"${searchTerm}"''';
+
 		if ("${resultCount}" != "1") {
 			AssertTextEquals.assertPartialText(
 				locator1 = "ManagementBar#SEARCH_RESULT_SUMMARY",

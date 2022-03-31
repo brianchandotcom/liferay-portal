@@ -31,6 +31,6 @@
 	"engines": {
 		"vscode": "^1.63.0"
 	},
-	"name": "poshi-vscode",
+	"name": "@liferay/poshi-vscode",
 	"version": "0.0.1"
 }

@@ -1,4 +1,4 @@
-/* ---------- Color palette ---------- */
+// ---------- Color palette ----------
 
 $color-primary: #373ecc;
 $color-primary-dark: #0e1387;
@@ -34,7 +34,7 @@ $color-yellow-light: #fffbe7;
 
 $color-blue: #59bbfc;
 
-/* ---------- Result status colors ---------- */
+// ---------- Result status colors ----------
 
 $blocked-color: $color-yellow;
 $dnr-color: $color-gray;
@@ -43,7 +43,7 @@ $incomplete-color: $color-gray-light;
 $passed-color: $color-green;
 $test-fix-color: $color-blue;
 
-/* ---------- TestFlow status colors ---------- */
+// ---------- TestFlow status colors ----------
 
 $abandoned-color: $color-gray;
 $completed-color: $color-primary;
@@ -51,7 +51,7 @@ $in-analysis-color: $color-orange;
 $others-completed-color: $color-primary-light;
 $self-completed-color: $color-primary;
 
-/* ---------- Validation ---------- */
+// ---------- Validation ----------
 
 $validation-error-background: $color-red-light;
 $validation-error-border: $color-red-light;
@@ -69,7 +69,7 @@ $validation-warning-background: $color-yellow-light;
 $validation-warning-border: $color-yellow-light;
 $validation-warning-text: $color-yellow-dark;
 
-/* ---------- General ---------- */
+// ---------- General ----------
 
 $background-color: $color-white;
 $background-color-secondary: $color-gray-lighter;
@@ -89,11 +89,11 @@ $link-hover-color: $color-primary-dark;
 $current-marker-color: $color-primary;
 $placeholder-color: $color-gray-lighter;
 
-/* ---------- Breakpoints ---------- */
+// ---------- Breakpoints ----------
 
 $breakpoint-large: 1440px;
 
-/* ---------- Fonts ---------- */
+// ---------- Fonts ----------
 
 $font-header-weight: 500;
 $font-size-default: 14px;
@@ -103,17 +103,17 @@ $font-size-smallest: 0.85em;
 $font-weight: 400;
 $letter-spacing: 0.01em;
 
-/* ---------- Radius ---------- */
+// ---------- Radius ----------
 
 $border-radius: 0;
 
-/* ---------- Shadows ---------- */
+// ---------- Shadows ----------
 
 $box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.04), 0 4px 14px 0 rgba(0, 0, 0, 0.1);
 $box-shadow-deep: 0 8px 22px 0 rgba(0, 0, 0, 0.18);
 $box-shadow-light: 0 2px 4px 0 rgba(38, 47, 87, 0.05);
 
-/* ---------- Sizing ---------- */
+// ---------- Sizing ----------
 
 $alert-container-width: 450px;
 $avatar-size-default: 36px;
@@ -126,11 +126,11 @@ $metrics-bar-height: 15px;
 $metrics-legend-block-size: 16px;
 $portlet-min-width: 1000px;
 
-/* ---------- Transitions ---------- */
+// ---------- Transitions ----------
 
 $transition: all 0.3s cubic-bezier(0.2, 0.72, 0.57, 1);
 
-/* ---------- Banners ---------- */
+// ---------- Banners ----------
 
 $banner-abandoned-bg-color: $color-gray-lighter;
 $banner-abandoned-color: $color-gray-dark;
@@ -139,7 +139,7 @@ $banner-complete-color: saturate(darken($completed-color, 18%), 22%);
 $banner-in-analysis-bg-color: $color-orange-light;
 $banner-in-analysis-color: $color-orange-dark;
 
-/* ---------- Buttons ---------- */
+// ---------- Buttons ----------
 
 $button-default-background-color: $color-gray-light;
 $button-default-background-hover-color: $color-gray;
@@ -155,13 +155,13 @@ $button-primary-background-color: $color-primary;
 $button-primary-background-hover-color: $color-primary-dark;
 $button-primary-text-color: $color-white;
 
-/* ---------- Code ---------- */
+// ---------- Code ----------
 
 $code-background-color: $color-gray-lighter;
 $code-border-color: $color-gray-lighter;
 $code-text-color: $color-black;
 
-/* ---------- Compare runs colors ---------- */
+// ---------- Compare runs colors ----------
 
 $blocked-cell-color: lighten($blocked-color, 40%);
 $blocked-hover-cell-color: lighten($blocked-color, 30%);
@@ -172,12 +172,12 @@ $passed-hover-cell-color: lighten($passed-color, 30%);
 $test-fix-cell-color: lighten($test-fix-color, 30%);
 $test-fix-hover-cell-color: lighten($test-fix-color, 20%);
 
-/* ---------- Form fields ---------- */
+// ---------- Form fields ----------
 
 $input-border-color: $color-gray;
 $input-border-focus-color: $color-primary;
 
-/* ---------- Sidebar ---------- */
+// ---------- Sidebar ----------
 
 $sidebar-background-active-color: $color-indigo;
 $sidebar-background-color: $color-indigo-dark;
@@ -190,7 +190,7 @@ $sidebar-text-color: $color-indigo-light;
 
 $sidebar-width: 250px;
 
-/* ---------- Tables ---------- */
+// ---------- Tables ----------
 
 $table-border-color: $color-gray-light;
 $table-odd-row-bg-color: $color-white;

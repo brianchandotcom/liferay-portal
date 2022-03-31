@@ -541,9 +541,19 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #checkCPInstances(long)}
+	 */
+	@Deprecated
 	@Override
 	public void checkCPInstances() throws PortalException {
 		checkCPInstancesByDisplayDate(0);
+		checkCPInstancesByExpirationDate();
+	}
+
+	@Override
+	public void checkCPInstances(long cpDefinitionId) throws PortalException {
+		checkCPInstancesByDisplayDate(cpDefinitionId);
 		checkCPInstancesByExpirationDate();
 	}
 

@@ -16,9 +16,15 @@ import ClayTooltip from '@clayui/tooltip';
 import {ReactPortal} from '@liferay/frontend-js-react-web';
 import React, {useEffect, useState} from 'react';
 
-const SHOW_DELAY = 600;
+const DEFAULT_SHOW_DELAY = 600;
 
-export function Tooltip({hoverElement, id: tooltipId, label, positionElement}) {
+export function Tooltip({
+	delay = DEFAULT_SHOW_DELAY,
+	hoverElement,
+	id: tooltipId,
+	label,
+	positionElement,
+}) {
 	const [tooltipStyle, setTooltipStyle] = useState(null);
 
 	useEffect(() => {
@@ -43,7 +49,7 @@ export function Tooltip({hoverElement, id: tooltipId, label, positionElement}) {
 					left: rect.left + rect.width / 2,
 					top: rect.top,
 				});
-			}, SHOW_DELAY);
+			}, delay);
 		};
 
 		hoverElement.addEventListener('mouseleave', handleMouseLeave);
@@ -54,7 +60,7 @@ export function Tooltip({hoverElement, id: tooltipId, label, positionElement}) {
 			hoverElement.removeEventListener('mouseleave', handleMouseLeave);
 			hoverElement.removeEventListener('mouseover', handleMouseOver);
 		};
-	}, [hoverElement, positionElement]);
+	}, [delay, hoverElement, positionElement]);
 
 	return tooltipStyle ? (
 		<ReactPortal className="cadmin">

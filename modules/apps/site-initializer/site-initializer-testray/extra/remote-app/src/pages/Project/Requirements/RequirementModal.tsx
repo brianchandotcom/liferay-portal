@@ -12,18 +12,18 @@
  * details.
  */
 
-import {useMutation, useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import Input from '../../../components/Input';
 import Container from '../../../components/Layout/Container';
 import MarkdownPreview from '../../../components/Markdown';
 import Modal from '../../../components/Modal';
-import {CreateRequirement} from '../../../graphql/mutations';
+import {CreateRequirement, UpdateRequirement} from '../../../graphql/mutations';
 import {
 	CTypePagination,
 	TestrayComponent,
@@ -33,9 +33,10 @@ import {FormModalOptions} from '../../../hooks/useFormModal';
 import i18n from '../../../i18n';
 
 const requirementFormDefault = {
-	components: '',
+	componentId: '',
 	description: '',
 	descriptionType: '',
+	id: undefined,
 	key: '',
 	linkTitle: '',
 	linkURL: '',
@@ -74,13 +75,17 @@ const FormRow: React.FC<{title: string}> = ({children, title}) => (
 type RequirementsFormProps = {
 	form: RequirementsForm;
 	onChange: (event: any) => void;
-	testrayComponents: TestrayComponent[];
 };
 const RequirementsForm: React.FC<RequirementsFormProps> = ({
 	form,
 	onChange,
-	testrayComponents,
 }) => {
+	const {data: testrayComponentsData} = useQuery<
+		CTypePagination<'components', TestrayComponent>
+	>(getComponents);
+
+	const testrayComponents = testrayComponentsData?.c?.components.items || [];
+
 	return (
 		<Container>
 			<ClayForm>
@@ -133,7 +138,7 @@ const RequirementsForm: React.FC<RequirementsFormProps> = ({
 
 							<ClaySelectWithOption
 								className="rounded-xs"
-								name="components"
+								name="componentId"
 								onChange={onChange}
 								options={testrayComponents.map(
 									({id, name}) => ({
@@ -142,7 +147,7 @@ const RequirementsForm: React.FC<RequirementsFormProps> = ({
 									})
 								)}
 								required
-								value={form.components}
+								value={form.componentId}
 							/>
 						</ClayForm.Group>
 					</ClayLayout.Col>
@@ -178,55 +183,42 @@ const RequirementsForm: React.FC<RequirementsFormProps> = ({
 
 type RequirementsModalProps = {
 	modal: FormModalOptions;
+	projectId: number;
 };
 
 const RequirementsModal: React.FC<RequirementsModalProps> = ({
-	modal: {observer, onClose, onError, onSave, visible},
+	modal: {modalState, observer, onChange, onClose, onSubmit, visible},
+	projectId,
 }) => {
 	const [form, setForm] = useState<RequirementsForm>(requirementFormDefault);
 
-	const [onCreateRequirement] = useMutation(CreateRequirement);
+	// eslint-disable-next-line no-console
+	console.log({form});
 
-	const {data: testrayComponentsData} = useQuery<
-		CTypePagination<'components', TestrayComponent>
-	>(getComponents);
-
-	function onchange({target}: any): void {
-		const {name, value} = target;
-
-		setForm({
-			...form,
-			[name]: value,
-		});
-	}
-
-	const testrayComponents = testrayComponentsData?.c?.components.items || [];
-
-	const onSubmit = async () => {
-		const newForm: RequirementsForm = {
-			...form,
-			components: form.components,
-			description: form.description,
-			descriptionType: form.descriptionType,
-			key: form.key,
-			linkTitle: form.linkTitle,
-			linkURL: form.linkURL,
-			summary: form.summary,
-		};
-
-		try {
-			await onCreateRequirement({
-				variables: {
-					TestrayRequirement: newForm,
-				},
-			});
-
-			onSave();
+	useEffect(() => {
+		if (visible && modalState) {
+			setForm(modalState);
 		}
-		catch (error) {
-			onError();
-		}
-	};
+	}, [visible, modalState]);
+
+	const _onSubmit = () =>
+		onSubmit(
+			{
+				componentId: Number(form.componentId),
+				description: form.description,
+				descriptionType: form.descriptionType,
+				id: form.id,
+				key: form.key,
+				linkTitle: form.linkTitle,
+				linkURL: form.linkURL,
+				projectId,
+				summary: form.summary,
+			},
+			{
+				createMutation: CreateRequirement,
+				updateMutation: UpdateRequirement,
+			}
+		).then(() => setForm(requirementFormDefault));
 
 	return (
 		<Modal
@@ -236,20 +228,21 @@ const RequirementsModal: React.FC<RequirementsModalProps> = ({
 						{i18n.translate('close')}
 					</ClayButton>
 
-					<ClayButton displayType="primary" onClick={onSubmit}>
-						{i18n.translate('add-requirements')}
+					<ClayButton displayType="primary" onClick={_onSubmit}>
+						{i18n.translate('save')}
 					</ClayButton>
 				</ClayButton.Group>
 			}
 			observer={observer}
 			size="full-screen"
-			title={i18n.translate('new-requirements')}
+			title={i18n.translate(
+				form.id ? 'edit-requirement' : 'new-requirement'
+			)}
 			visible={visible}
 		>
 			<RequirementsForm
 				form={form}
-				onChange={onchange}
-				testrayComponents={testrayComponents}
+				onChange={onChange({form, setForm})}
 			/>
 		</Modal>
 	);

@@ -40,7 +40,7 @@ const Requirement = () => {
 		getRequirement,
 		{
 			variables: {
-				testrayRequirementId: requirementId,
+				requirementId,
 			},
 		}
 	);
@@ -69,7 +69,7 @@ const Requirement = () => {
 
 	return (
 		<>
-			<Container title="Details">
+			<Container title={i18n.translate('details')}>
 				<QATable
 					items={[
 						{
@@ -130,7 +130,7 @@ const Requirement = () => {
 				/>
 			</Container>
 
-			<Container className="mt-3" title="Cases">
+			<Container className="mt-3" title={i18n.translate('cases')}>
 				<ListView
 					query={getCases}
 					tableProps={{

@@ -155,16 +155,6 @@ public class ResourceBundleUtil {
 			getBundle(locale, clazz), PortalUtil.getResourceBundle(locale));
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static com.liferay.portal.kernel.util.ResourceBundleLoader
-		getResourceBundleLoader(String baseName, ClassLoader classLoader) {
-
-		return new ClassResourceBundleLoader(baseName, classLoader);
-	}
-
 	public static String getString(ResourceBundle resourceBundle, String key) {
 		if (!resourceBundle.containsKey(key)) {
 			return null;

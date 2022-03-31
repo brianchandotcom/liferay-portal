@@ -73,7 +73,7 @@ public class CheckCPInstanceMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		_cpInstanceLocalService.checkCPInstances();
+		_cpInstanceLocalService.checkCPInstances(0);
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

@@ -278,9 +278,11 @@ definition {
 			UploadDependencyFile.uploadArchiveFile(fileName = "${fileName}");
 		}
 		else {
-			Translations.uploadTranslationsFile(
-				fileName = "${fileName}",
-				filePath = "${filePath}");
+			for (var fileName : list "${fileNameList}") {
+				Translations.uploadTranslationsFile(
+					fileName = "${fileName}",
+					filePath = "${filePath}");
+			}
 		}
 
 		if ("${workflow}" == "true") {

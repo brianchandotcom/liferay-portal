@@ -1,0 +1,11 @@
+{
+	"deletionType": "cascade",
+	"label": {
+		"en-US": "One Component to Many Testray Requirements"
+	},
+	"name": "componentToRequirements",
+	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Component$]",
+	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:Requirement$]",
+	"objectDefinitionName2": "Requirement",
+	"type": "oneToMany"
+}

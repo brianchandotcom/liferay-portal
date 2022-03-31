@@ -21,8 +21,15 @@ export default function useFilters(setFilterTerm) {
 
 		if (filters.searchTerm) {
 			hasFilterPill = true;
-			const searchTermFilter = `(contains(givenName, '${filters.searchTerm}') or contains(familyName, '${filters.searchTerm}') or contains(emailAddress, '${filters.searchTerm}'))`;
-			initialFilter = initialFilter.concat(`${searchTermFilter}`);
+
+			const seachTermSplitted = filters.searchTerm
+				.split(' ')
+				.map((term) => {
+					return `(contains(givenName, '${term}') or contains(familyName, '${term}') or contains(emailAddress, '${term}'))`;
+				})
+				.join(' and ');
+
+			initialFilter = initialFilter.concat(`${seachTermSplitted}`);
 		}
 
 		setFilters((previousFilter) => ({

@@ -1,7 +1,10 @@
+import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask
 import com.liferay.gradle.util.GradleUtil
 
 import java.util.regex.Matcher
 
+import org.gradle.api.artifacts.Configuration
+import org.gradle.api.artifacts.ResolvedArtifact
 import org.gradle.util.GUtil
 
 buildscript {
@@ -50,6 +53,7 @@ poshiRunner {
 }
 
 task updateGradleCache
+task updatePoshiCore(type: ReplaceRegexTask)
 
 configurations {
 	sikuliComplete
@@ -141,4 +145,16 @@ updateGradleCache {
 		configurations.poshiRunner.resolve()
 		configurations.sikuliComplete.resolve()
 	}
+}
+
+updatePoshiCore {
+	Configuration compileConfiguration = project.configurations.getByName("poshiRunner")
+
+	ResolvedArtifact resolvedArtifact = compileConfiguration.resolvedConfiguration.resolvedArtifacts.find {
+		it.name.contains('com.liferay.poshi.core')
+	}
+
+	setReplacement(resolvedArtifact.moduleVersion.id.version)
+
+	match(/group: "com\.liferay", name: "com\.liferay\.poshi\.core", version: "(\d.+)"/, "../modules/test/jenkins-results-parser/build.gradle", "../modules/util/source-formatter/build.gradle", "../modules/util/source-formatter-standalone/build.gradle")
 }

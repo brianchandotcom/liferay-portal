@@ -146,7 +146,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro anonymizeStagedDatainApplicationCP {
+	macro anonymizeTheSpecificEntry {
 		for (var rowIndexNumber : list "${rowIndexNumber}") {
 			Click(
 				key_rowIndexNumber = "${rowIndexNumber}",

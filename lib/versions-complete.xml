@@ -2454,18 +2454,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>com.liferay.petra.io.delta.jar!trove4j.jar</file-name>
-				<version>3.0.3</version>
-				<project-name>GNU Trove</project-name>
-				<project-url>http://trove4j.sf.net</project-url>
-				<licenses>
-					<license>
-						<license-name>GNU Lesser General Public License 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.txt</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>com.liferay.petra.json.validator.jar!handy-uri-templates.jar</file-name>
 				<version>2.1.7</version>
 				<project-name>Handy URI Templates</project-name>

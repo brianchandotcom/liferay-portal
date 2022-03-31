@@ -239,7 +239,7 @@ definition {
 		Alert.viewSuccessMessage();
 	}
 
-	macro deleteStagedDatainApplicationCP {
+	macro deleteTheSpecificEntry {
 		for (var rowIndexNumber : list "${rowIndexNumber}") {
 			Click(
 				key_rowIndexNumber = "${rowIndexNumber}",

@@ -13,12 +13,10 @@ import {useCallback} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Button, ButtonDropDown} from '../../../../../../common/components';
 import {useApplicationProvider} from '../../../../../../common/context/AppPropertiesProvider';
-import {ALERT_DOWNLOAD_TYPE, PAGE_TYPES} from '../../../../utils/constants';
+import {ALERT_DOWNLOAD_TYPE} from '../../../../utils/constants';
 import {getActivationKeyDownload} from '../../utils/getActivationKeyDownload';
 import {getActivationKeysActionsItems} from '../../utils/getActivationKeysActionsItems';
 import {getActivationKeysDownloadItems} from '../../utils/getActivationKeysDownloadItems';
-
-const dxpNewRedirectLink = PAGE_TYPES.dxpNew.split('_')[1];
 
 const ActionButton = ({
 	activationKeysByStatusPaginatedChecked,
@@ -84,7 +82,7 @@ const ActionButton = ({
 		);
 	}
 
-	const handleRedirectPage = () => navigate(dxpNewRedirectLink);
+	const handleRedirectPage = () => navigate('new');
 	const activationKeysActionsItems = getActivationKeysActionsItems(
 		project?.accountKey,
 		licenseKeyDownloadURL,

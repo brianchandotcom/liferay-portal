@@ -193,9 +193,16 @@ function SpacingSelectorButton({
 					<Tooltip
 						hoverElement={triggerElement}
 						id={tooltipId}
-						label={`${capitalize(type)} ${capitalize(position)}: ${
-							value || defaultValue
-						}`}
+						label={
+							<>
+								{capitalize(type)} {capitalize(position)} -{' '}
+								<SpacingOptionValue
+									position={position}
+									type={type}
+									value={value || defaultValue}
+								/>
+							</>
+						}
 						positionElement={labelElement}
 					/>
 
@@ -224,9 +231,9 @@ function SpacingSelectorButton({
 
 								<strong className="flex-shrink-0 pl-2">
 									<SpacingOptionValue
-										option={option}
 										position={position}
 										type={type}
+										value={option.value}
 									/>
 								</strong>
 							</ClayDropDown.Item>
@@ -238,14 +245,14 @@ function SpacingSelectorButton({
 	);
 }
 
-function SpacingOptionValue({option, position, type}) {
+function SpacingOptionValue({position, type, value: optionValue}) {
 	const globalContext = useGlobalContext();
-	const [value, setValue] = useState(option.value);
+	const [value, setValue] = useState(optionValue);
 
 	useEffect(() => {
 		const element = globalContext.document.createElement('div');
 		element.style.display = 'none';
-		element.classList.add(`${type[0]}${position[0]}-${option.value}`);
+		element.classList.add(`${type[0]}${position[0]}-${optionValue}`);
 		globalContext.document.body.appendChild(element);
 
 		setValue(
@@ -255,7 +262,7 @@ function SpacingOptionValue({option, position, type}) {
 		);
 
 		globalContext.document.body.removeChild(element);
-	}, [globalContext, option, position, type]);
+	}, [globalContext, optionValue, position, type]);
 
 	return value;
 }

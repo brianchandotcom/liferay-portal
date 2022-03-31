@@ -65,8 +65,6 @@ public class SVGUtil {
 		}
 		catch (DocumentException documentException) {
 			_log.error(documentException);
-
-			return frontendIconsResources;
 		}
 
 		return frontendIconsResources;

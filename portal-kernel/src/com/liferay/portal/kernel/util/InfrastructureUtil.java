@@ -68,13 +68,6 @@ public class InfrastructureUtil {
 		_dynamicDataSourceTargetSource = dynamicDataSourceTargetSource;
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setMailSession(Session mailSession) {
-	}
-
 	public void setTransactionManager(Object transactionManager) {
 		_transactionManager = transactionManager;
 	}

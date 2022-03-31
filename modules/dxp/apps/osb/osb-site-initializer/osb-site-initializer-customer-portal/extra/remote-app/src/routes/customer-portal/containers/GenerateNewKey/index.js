@@ -10,7 +10,6 @@
  */
 
 import {useState} from 'react';
-import {useApplicationProvider} from '../../../../common/context/AppPropertiesProvider';
 import {PAGE_TYPES} from '../../utils/constants';
 import GenerateNewKeySkeleton from './Skeleton';
 import RequiredInformation from './pages/RequiredInformation';
@@ -19,10 +18,9 @@ import {STEP_TYPES} from './utils/constants/stepType';
 
 const ACTIVATION_ROOT_ROUTER = 'activation';
 
-const GenerateNewKey = ({accountKey, sessionId}) => {
+const GenerateNewKey = ({accountKey, productGroupName, sessionId}) => {
 	const [infoSelectedKey, setInfoSelectedKey] = useState();
 	const [step, setStep] = useState(STEP_TYPES.selectDescriptions);
-	const {licenseKeyDownloadURL} = useApplicationProvider();
 
 	const urlPreviousPage = `/${accountKey}/${ACTIVATION_ROOT_ROUTER}/${PAGE_TYPES.dxp}`;
 
@@ -31,7 +29,6 @@ const GenerateNewKey = ({accountKey, sessionId}) => {
 			<RequiredInformation
 				accountKey={accountKey}
 				infoSelectedKey={infoSelectedKey}
-				licenseKeyDownloadURL={licenseKeyDownloadURL}
 				sessionId={sessionId}
 				setStep={setStep}
 				urlPreviousPage={urlPreviousPage}
@@ -41,6 +38,7 @@ const GenerateNewKey = ({accountKey, sessionId}) => {
 			<SelectSubscription
 				accountKey={accountKey}
 				infoSelectedKey={infoSelectedKey}
+				productGroupName={productGroupName}
 				sessionId={sessionId}
 				setInfoSelectedKey={setInfoSelectedKey}
 				setStep={setStep}

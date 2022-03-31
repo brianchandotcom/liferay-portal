@@ -11,7 +11,7 @@
 
 import {useOutletContext, useParams} from 'react-router-dom';
 import GenerateNewKey from '../../../../containers/GenerateNewKey';
-import {PAGE_TYPES} from '../../../../utils/constants';
+import {PAGE_TYPES, PRODUCT_TYPES} from '../../../../utils/constants';
 
 const NewProductOutlet = () => {
 	const {productId} = useParams();
@@ -21,6 +21,14 @@ const NewProductOutlet = () => {
 		[PAGE_TYPES.dxpNew]: (
 			<GenerateNewKey
 				accountKey={project.accountKey}
+				productGroupName={PRODUCT_TYPES.dxp}
+				sessionId={sessionId}
+			/>
+		),
+		[PAGE_TYPES.portalNew]: (
+			<GenerateNewKey
+				accountKey={project.accountKey}
+				productGroupName={PRODUCT_TYPES.portal}
 				sessionId={sessionId}
 			/>
 		),

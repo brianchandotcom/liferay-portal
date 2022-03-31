@@ -31,6 +31,7 @@ const SelectSubscription = ({
 	accountKey,
 	infoSelectedKey,
 	licenseKeyDownloadURL,
+	productGroupName,
 	sessionId,
 	setInfoSelectedKey,
 	setStep,
@@ -54,7 +55,7 @@ const SelectSubscription = ({
 			const data = await getNewGenerateKeyFormValues(
 				accountKey,
 				licenseKeyDownloadURL,
-				PRODUCT_TYPES.dxp,
+				productGroupName,
 				sessionId
 			);
 
@@ -63,7 +64,7 @@ const SelectSubscription = ({
 			}
 		};
 		fetchGenerateFormData();
-	}, [accountKey, licenseKeyDownloadURL, sessionId]);
+	}, [accountKey, licenseKeyDownloadURL, productGroupName, sessionId]);
 
 	const productVersions = generateFormValues?.versions?.sort((a, b) =>
 		a.label - b.label > 0 ? 1 : -1

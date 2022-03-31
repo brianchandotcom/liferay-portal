@@ -132,7 +132,8 @@ public class ExportTranslationServlet extends HttpServlet {
 						LanguageUtil.get(
 							_portal.getLocale(httpServletRequest),
 							"model.resource." + className),
-						_isMultipleModels(classPKs, segmentsExperienceIds),
+						_isMultipleModels(
+							translationRequestHelper.getModelClassPKs()),
 						sourceLanguageId,
 						_portal.getLocale(httpServletRequest)),
 					inputStream, ContentTypes.APPLICATION_ZIP);
@@ -278,10 +279,8 @@ public class ExportTranslationServlet extends HttpServlet {
 			StringPool.DASH, sourceLanguageId, ".zip");
 	}
 
-	private boolean _isMultipleModels(
-		Set<Long> classPKs, long[] segmentsExperienceIds) {
-
-		if ((segmentsExperienceIds.length < 1) && (classPKs.size() > 1)) {
+	private boolean _isMultipleModels(long[] classPKs) {
+		if (classPKs.length > 1) {
 			return true;
 		}
 

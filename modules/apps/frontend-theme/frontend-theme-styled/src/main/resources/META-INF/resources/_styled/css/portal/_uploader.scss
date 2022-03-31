@@ -1,0 +1,203 @@
+.lfr-upload-container {
+	margin-bottom: 1rem;
+
+	.upload-target {
+		border: 3px dashed $secondary-l3;
+		margin-bottom: 1rem;
+		min-height: 2rem;
+		padding: 2rem 0;
+		position: relative;
+		text-align: center;
+
+		.upload-drop-intent & {
+			z-index: 100;
+		}
+
+		.upload-drop-active & {
+			background-color: $success-l2;
+			border-color: $success-l1;
+		}
+
+		.drop-file-text {
+			font-weight: normal;
+
+			.mobile & {
+				display: none;
+			}
+		}
+
+		.small {
+			display: block;
+			margin: 5px 0;
+			text-transform: lowercase;
+		}
+	}
+
+	.manage-upload-target {
+		padding-top: 5px;
+		position: relative;
+
+		.select-files {
+			float: left;
+			line-height: 0;
+			margin: 0 1.125rem 1.125rem;
+			padding: 0 0 0 5px;
+		}
+	}
+
+	.cancel-uploads,
+	.clear-uploads {
+		background-repeat: no-repeat;
+		float: right;
+	}
+
+	.cancel-uploads {
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAnFBMVEX////4YWP/dXjyS07/dXj9bXD6a234YWP4XWD2WVv2VFfsOTzoLzHmKSvkISP2VFf0TE/vREftPT/iHB72WVvvREf0TE//hon/gYX/fYD/e33/dXj/cXP9bXD/a236a23/Zmb4YWP4XWD/Wl32WVv/VVj2VFf3VFb0TE/yS072SUvvREfuQELtPT/sOTzrMzXoLzHnLC/mKSvkISPh2jkWAAAAF3RSTlMAESIiMzMzMzMzMzMzMzNERERERHd3qtw8lzkAAACOSURBVHjaZcjZDsIgEIXhcd+tu5YBKUixttS6vP+7OQKJTfxvTr4D7Tpxu/2w410SjDjwVvLQ805TPiRryfQeKM6OTI68K/BJPHGlJZJjSqSMofEOGXbJecsTgzkds58V5+J8refBU7Jx9yIrmkW0sA6gqbLyuaRjZZWtgXq58rEFan0jf3uTfRuIkf/7AO8DDcVPSSG3AAAAAElFTkSuQmCC);
+		margin-right: 0;
+	}
+
+	.clear-uploads {
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAdVBMVEX///+6QwTEVx65RQPEVx3EWB64RQPDVxq5RAO5RAO5RQPATQ65RQO5RQO5RQPRczjJZCW9TQTLay28QgTdZAHhaAPmdyHqeQXrikDudgDvfxj0nWP1qHL2tY33tY34dgD+za7+1rj/dxH/fxj/hiH/kk3///9TM3sUAAAAFHRSTlMAbXd4eHh6gN3e3+Hi4+T5+/z8/mIsq5IAAABHSURBVBjTY2CgGWDlFuZhRuIz8cspyggxIgQ4ZFWVVCQ4EQLCCmpqalLCCAFeaWV5SVE+hAC7gJi4iCAbkqksXMK8bNRzNADCOQN++eLhCQAAAABJRU5ErkJggg==);
+		padding-left: 16px;
+	}
+
+	.upload-file {
+		&.upload-complete.file-saved {
+			padding-left: 25px;
+		}
+
+		.file-title {
+			display: inline-block;
+			max-width: 95%;
+			overflow: hidden;
+			padding-right: 16px;
+			text-overflow: ellipsis;
+			vertical-align: middle;
+			white-space: nowrap;
+		}
+
+		.icon-file {
+			font-size: 40px;
+		}
+	}
+
+	.upload-list-info {
+		margin: 1em 0 0.5em;
+
+		h4 {
+			font-size: 1.3em;
+		}
+	}
+
+	.cancel-button {
+		color: $secondary;
+		margin-top: 1px;
+		position: absolute;
+		right: 5px;
+		top: 50%;
+		white-space: nowrap;
+
+		.cancel-button-text {
+			display: none;
+			margin-left: 5px;
+		}
+
+		&:hover .cancel-button-text {
+			display: inline;
+		}
+
+		.lexicon-icon {
+			height: 12px;
+		}
+	}
+
+	.delete-button {
+		color: $secondary;
+	}
+
+	.delete-button-col {
+		padding-right: 10px;
+	}
+
+	.file-added .success-message {
+		float: right;
+		font-weight: normal;
+	}
+
+	.upload-error {
+		opacity: 1;
+		padding-left: 25px;
+	}
+
+	.upload-complete .cancel-button,
+	.delete-button,
+	.upload-complete.file-saved .delete-button,
+	.upload-complete.upload-error .delete-button {
+		display: none;
+	}
+
+	.multiple-files {
+		.upload-error {
+			background: $danger-l2
+				url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAAK/INwWK6QAAABl0RVh0U29mdHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAJPSURBVDjLpZPLS5RhFMYfv9QJlelTQZwRb2OKlKuINuHGLlBEBEOLxAu46oL0F0QQFdWizUCrWnjBaDHgThCMoiKkhUONTqmjmDp2GZ0UnWbmfc/ztrC+GbM2dXbv4ZzfeQ7vefKMMfifyP89IbevNNCYdkN2kawkCZKfSPZTOGTf6Y/m1uflKlC3LvsNTWArr9BT2LAf+W73dn5jHclIBFZyfYWU3or7T4K7AJmbl/yG7EtX1BQXNTVCYgtgbAEAYHlqYHlrsTEVQWr63RZFuqsfDAcdQPrGRR/JF5nKGm9xUxMyr0YBAEXXHgIANq/3ADQobD2J9fAkNiMTMSFb9z8ambMAQER3JC1XttkYGGZXoyZEGyTHRuBuPgBTUu7VSnUAgAUAWutOV2MjZGkehgYUA6O5A0AlkAyRnotiX3MLlFKduYCqAtuGXpyH0XQmOj+TIURt51OzURTYZdBKV2UBSsOIcRp/TVTT4ewK6idECAihtUKOArWcjq/B8tQ6UkUR31+OYXP4sTOdisivrkMyHodWejlXwcC38Fvs8dY5xaIId89VlJy7ACpCNCFCuOp8+BJ6A631gANQSg1mVmOxxGQYRW2nHMha4B5WA3chsv22T5/B13AIicWZmNZ6cMchTXUe81Okzz54pLi0uQWp+TmkZqMwxsBV74Or3od4OISPr0e3SHa3PX0f3HXKofNH/UIG9pZ5PeUth+CyS2EMkEqs4fPEOBJLsyske48/+xD8oxcAYPzs4QaS7RR2kbLTTOTQieczfzfTv8QPldGvTGoF6/8AAAAASUVORK5CYII=)
+				no-repeat 5px 5px;
+			border-color: $danger-d2;
+			color: $danger-d2;
+			font-weight: normal;
+			margin-bottom: 16px;
+			padding: 8px 8px 8px 24px;
+
+			.error-message {
+				display: block;
+			}
+		}
+
+		.upload-complete.file-saved,
+		.upload-complete.upload-error {
+			.form-check-middle-left {
+				.card-body {
+					padding-left: 1rem;
+				}
+				.custom-control-label {
+					display: none;
+				}
+			}
+		}
+	}
+
+	.single-file .upload-error {
+		list-style: none;
+		margin-top: 1em;
+
+		.upload-error-message {
+			margin-bottom: 0.5em;
+		}
+	}
+
+	.upload-complete {
+		padding-left: 5px;
+
+		.error-message,
+		.success-message {
+			font-weight: bold;
+			margin-left: 1em;
+		}
+
+		.delete-button {
+			display: inline-block;
+		}
+
+		.select-file:disabled + .custom-control-label {
+			display: none;
+		}
+	}
+
+	.progress {
+		display: none;
+		margin-top: 0.5rem;
+	}
+
+	.file-uploading .progress {
+		display: flex;
+	}
+}

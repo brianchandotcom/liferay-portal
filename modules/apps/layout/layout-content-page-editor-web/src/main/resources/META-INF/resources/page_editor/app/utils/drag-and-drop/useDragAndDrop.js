@@ -270,6 +270,9 @@ export function useDropTarget(_targetItem, computeHover = defaultComputeHover) {
 	return {
 		isOverTarget,
 		sourceItem: state.dropItem,
+		targetItemId: state.dropTargetItem?.toControlsId(
+			state.dropTargetItem.itemId
+		),
 		targetPosition: state.targetPositionWithMiddle,
 		targetRef: setTargetRef,
 	};

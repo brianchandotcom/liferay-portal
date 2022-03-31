@@ -128,6 +128,10 @@ definition {
 			Select(
 				locator1 = "Select#DEFAULT_LANGUAGE",
 				value1 = "${defaultPortalLanguage}");
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#ERROR_3",
+				value1 = "This change will only affect the newly created localized content.");
 		}
 
 		if ("${failExpected}" == "true") {

@@ -399,10 +399,6 @@
 			<category name="Bug Prevention" />
 			<description name="Checks for correct use of `Collator`." />
 		</check>
-		<check name="JavaCommentStylingCheck">
-			<category name="Styling" />
-			<description name="Applies rules to enforce consisteny in code style." />
-		</check>
 		<check name="JavaConfigurationAdminCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks for correct use of `location == ?` when calling `org.osgi.service.cm.ConfigurationAdmin#createFactoryConfiguration`." />

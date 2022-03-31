@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.regex.Matcher;
@@ -33,6 +34,7 @@ public class JavaStylingCheck extends BaseStylingCheck {
 		}
 
 		content = _fixAuthorNames(content);
+		content = _fixSingleLineComment(content);
 
 		content = StringUtil.replace(
 			content, " final static ", " static final ");
@@ -135,9 +137,57 @@ public class JavaStylingCheck extends BaseStylingCheck {
 		return content;
 	}
 
+	private String _fixSingleLineComment(String content) {
+		Matcher matcher = _singleLineCommentPattern.matcher(content);
+
+		while (matcher.find()) {
+			String commentContent = matcher.group(1);
+
+			if (commentContent.contains(StringPool.SEMICOLON) ||
+				commentContent.endsWith(StringPool.COMMA) ||
+				commentContent.endsWith("||") ||
+				commentContent.endsWith("&&")) {
+
+				continue;
+			}
+
+			int level = getLevel(
+				commentContent,
+				new String[] {
+					StringPool.OPEN_BRACKET, StringPool.OPEN_CURLY_BRACE,
+					StringPool.OPEN_PARENTHESIS
+				},
+				new String[] {
+					StringPool.CLOSE_BRACKET, StringPool.CLOSE_CURLY_BRACE,
+					StringPool.CLOSE_PARENTHESIS
+				});
+
+			if ((level != 0) || commentContent.matches(".+\\..+") ||
+				commentContent.matches(".+=.+")) {
+
+				continue;
+			}
+
+			if (commentContent.startsWith(StringPool.SLASH) ||
+				commentContent.startsWith("\tTODO")) {
+
+				return StringUtil.replaceFirst(
+					content, commentContent, commentContent.substring(1),
+					matcher.start(1));
+			}
+
+			return StringUtil.insert(
+				content, StringPool.SPACE, matcher.start(1));
+		}
+
+		return content;
+	}
+
 	private static final Pattern _incorrectJavadocPattern = Pattern.compile(
 		"(\n([\t ]*)/\\*)(\n\\2 \\*)");
 	private static final Pattern _incorrectSynchronizedPattern =
 		Pattern.compile("([\n\t])(synchronized) (private|public|protected)");
+	private static final Pattern _singleLineCommentPattern = Pattern.compile(
+		"\n\t*//(?! )(.+)");
 
 }

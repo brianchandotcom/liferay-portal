@@ -51,8 +51,8 @@ export function Tooltip({hoverElement, id: tooltipId, label, positionElement}) {
 
 		return () => {
 			clearTimeout(showTimeoutId);
-			hoverElement.removeEventListener('mouseleave');
-			hoverElement.removeEventListener('mouseover');
+			hoverElement.removeEventListener('mouseleave', handleMouseLeave);
+			hoverElement.removeEventListener('mouseover', handleMouseOver);
 		};
 	}, [hoverElement, positionElement]);
 

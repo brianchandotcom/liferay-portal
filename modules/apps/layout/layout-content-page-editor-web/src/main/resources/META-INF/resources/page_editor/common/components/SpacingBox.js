@@ -159,6 +159,7 @@ function SpacingSelectorButton({
 }) {
 	const [active, setActive] = useState(false);
 	const itemListRef = useRef();
+	const label = `${capitalize(type)} ${capitalize(position)}`;
 	const [labelElement, setLabelElement] = useState(null);
 	const tooltipId = useId();
 	const triggerId = useId();
@@ -181,6 +182,7 @@ function SpacingSelectorButton({
 					aria-describedby={tooltipId}
 					aria-expanded={active}
 					aria-haspopup={true}
+					aria-label={label}
 					className={`${BUTTON_CLASSNAME} b-0 flex-grow-1 mb-0 text-center`}
 					data-position={position}
 					data-type={type}
@@ -195,7 +197,7 @@ function SpacingSelectorButton({
 						id={tooltipId}
 						label={
 							<>
-								{capitalize(type)} {capitalize(position)} -{' '}
+								{label} -{' '}
 								<SpacingOptionValue
 									position={position}
 									type={type}

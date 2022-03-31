@@ -25,13 +25,17 @@ import withConfirmationField from '../util/withConfirmationField.es';
 
 const CounterContainer = ({
 	counter,
+	displayErrors,
 	error,
 	maxLength,
 	setError,
 	showCounter,
 	valid,
 }) => {
-	if (!showCounter || !valid) {
+	if (
+		!showCounter ||
+		(displayErrors === true && !valid && Object.keys(error).length === 0)
+	) {
 		return null;
 	}
 
@@ -67,6 +71,7 @@ const CounterContainer = ({
 const Text = ({
 	defaultLanguageId,
 	disabled,
+	displayErrors,
 	editingLanguageId,
 	error,
 	fieldName,
@@ -176,6 +181,7 @@ const Text = ({
 
 			<CounterContainer
 				counter={value?.length}
+				displayErrors={displayErrors}
 				error={error}
 				maxLength={maxLength}
 				setError={setError}
@@ -188,6 +194,7 @@ const Text = ({
 
 const Textarea = ({
 	disabled,
+	displayErrors,
 	editingLanguageId,
 	error,
 	id,
@@ -228,6 +235,7 @@ const Textarea = ({
 
 			<CounterContainer
 				counter={value?.length}
+				displayErrors={displayErrors}
 				error={error}
 				maxLength={maxLength}
 				setError={setError}
@@ -417,6 +425,7 @@ const Main = ({
 	autocomplete,
 	autocompleteEnabled,
 	defaultLanguageId,
+	displayErrors,
 	displayStyle = 'singleline',
 	showCounter,
 	fieldName,
@@ -458,6 +467,7 @@ const Main = ({
 		<FieldBase
 			{...otherProps}
 			{...error}
+			displayErrors={error.displayErrors ?? displayErrors}
 			fieldName={fieldName}
 			id={id}
 			localizedValue={localizedValue}
@@ -468,6 +478,7 @@ const Main = ({
 			<Component
 				defaultLanguageId={defaultLanguageId}
 				disabled={readOnly}
+				displayErrors={displayErrors}
 				editingLanguageId={locale}
 				error={error}
 				fieldName={fieldName}

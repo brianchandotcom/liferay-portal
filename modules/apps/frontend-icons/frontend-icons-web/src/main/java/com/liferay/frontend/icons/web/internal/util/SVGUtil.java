@@ -16,6 +16,8 @@ package com.liferay.frontend.icons.web.internal.util;
 
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResource;
 import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -62,6 +64,8 @@ public class SVGUtil {
 			}
 		}
 		catch (DocumentException documentException) {
+			_log.error(documentException);
+
 			return frontendIconsResources;
 		}
 
@@ -99,5 +103,7 @@ public class SVGUtil {
 		SVGUtil.class,
 		"/com/liferay/frontend/icon/admin/web/internal/util/dependencies" +
 			"/spritemap.svg");
+
+	private static final Log _log = LogFactoryUtil.getLog(SVGUtil.class);
 
 }

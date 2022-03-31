@@ -31,7 +31,6 @@ const SelectSubscription = ({
 	accountKey,
 	infoSelectedKey,
 	licenseKeyDownloadURL,
-	productGroupName,
 	sessionId,
 	setInfoSelectedKey,
 	setStep,
@@ -64,7 +63,7 @@ const SelectSubscription = ({
 			}
 		};
 		fetchGenerateFormData();
-	}, [accountKey, licenseKeyDownloadURL, productGroupName, sessionId]);
+	}, [accountKey, licenseKeyDownloadURL, sessionId]);
 
 	const productVersions = generateFormValues?.versions?.sort((a, b) =>
 		a.label - b.label > 0 ? 1 : -1

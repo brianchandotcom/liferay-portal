@@ -109,7 +109,7 @@
 <!--MANAGEMENT_TOOLBARS-->
 <tr>
 	<td>DISPLAY_CONTEXT_CHECKBOX</td>
-	<td>//div[not(contains(@class,'hide')) and contains(@id, 'tabs')]//h3[text()='USING DISPLAY CONTEXT']//following::nav[contains(@class,'management-bar')]//input[@type='checkbox']</td>
+	<td>//div[not(contains(@class,'hide')) and contains(@id, 'tabs')]//h3[text()='USING DISPLAY CONTEXT']//following::nav[contains(@class,'management-bar')][1]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

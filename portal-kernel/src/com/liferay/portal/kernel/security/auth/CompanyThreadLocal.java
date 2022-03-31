@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.security.auth;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeClosable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -80,6 +81,19 @@ public class CompanyThreadLocal {
 
 	public static void setDeleteInProcess(boolean deleteInProcess) {
 		_deleteInProcess.set(deleteInProcess);
+	}
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+	 *             #setInitializingCompanyIdWithSafeCloseable(long)}
+	 */
+	@Deprecated
+	public static SafeClosable setInitializingCompanyId(long companyId) {
+		if (companyId > 0) {
+			return _companyId.setWithSafeClosable(companyId);
+		}
+
+		return _companyId.setWithSafeClosable(CompanyConstants.SYSTEM);
 	}
 
 	public static SafeCloseable setInitializingCompanyIdWithSafeCloseable(

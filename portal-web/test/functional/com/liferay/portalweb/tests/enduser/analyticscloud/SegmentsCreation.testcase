@@ -1078,6 +1078,7 @@ definition {
 	@priority = "3"
 	test CanDuplicateCriteria {
 		property test.name.skip.portal.instance = "SegmentsCreation#CanDuplicateCriteria";
+
 		task ("Switch to new property in AC") {
 			ACUtils.launchAC();
 

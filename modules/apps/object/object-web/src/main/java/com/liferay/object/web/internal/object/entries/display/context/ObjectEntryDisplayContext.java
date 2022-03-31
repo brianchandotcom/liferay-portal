@@ -51,6 +51,8 @@ import com.liferay.object.model.ObjectLayoutColumn;
 import com.liferay.object.model.ObjectLayoutRow;
 import com.liferay.object.model.ObjectLayoutTab;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.scope.ObjectScopeProvider;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -117,6 +119,7 @@ public class ObjectEntryDisplayContext {
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectLayoutLocalService objectLayoutLocalService,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
+		ObjectScopeProviderRegistry objectScopeProviderRegistry,
 		boolean readOnly) {
 
 		_ddmFormRenderer = ddmFormRenderer;
@@ -128,6 +131,7 @@ public class ObjectEntryDisplayContext {
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectLayoutLocalService = objectLayoutLocalService;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
+		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_readOnly = readOnly;
 
 		_objectRequestHelper = new ObjectRequestHelper(httpServletRequest);
@@ -400,6 +404,7 @@ public class ObjectEntryDisplayContext {
 			}
 		}
 
+		ddmFormRenderingContext.setGroupId(_getGroupId());
 		ddmFormRenderingContext.setHttpServletRequest(
 			_objectRequestHelper.getRequest());
 		ddmFormRenderingContext.setHttpServletResponse(
@@ -719,6 +724,26 @@ public class ObjectEntryDisplayContext {
 		return ddmFormValues;
 	}
 
+	private long _getGroupId() {
+		ObjectDefinition objectDefinition = getObjectDefinition();
+
+		ObjectScopeProvider objectScopeProvider =
+			_objectScopeProviderRegistry.getObjectScopeProvider(
+				objectDefinition.getScope());
+
+		try {
+			return objectScopeProvider.getGroupId(
+				_objectRequestHelper.getRequest());
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return 0L;
+		}
+	}
+
 	private String _getNavigationItemHref(
 		LiferayPortletResponse liferayPortletResponse, ObjectEntry objectEntry,
 		ObjectLayoutTab objectLayoutTab) {
@@ -914,6 +939,7 @@ public class ObjectEntryDisplayContext {
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final ObjectRequestHelper _objectRequestHelper;
+	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 	private final boolean _readOnly;
 
 }

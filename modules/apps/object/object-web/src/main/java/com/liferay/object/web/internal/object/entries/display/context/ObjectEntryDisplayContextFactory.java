@@ -17,6 +17,7 @@ package com.liferay.object.web.internal.object.entries.display.context;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeServicesTracker;
+import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -42,7 +43,7 @@ public class ObjectEntryDisplayContextFactory {
 			_objectDefinitionLocalService, _objectEntryService,
 			_objectFieldBusinessTypeServicesTracker, _objectFieldLocalService,
 			_objectLayoutLocalService, _objectRelationshipLocalService,
-			readOnly);
+			_objectScopeProviderRegistry, readOnly);
 	}
 
 	@Reference
@@ -69,5 +70,8 @@ public class ObjectEntryDisplayContextFactory {
 
 	@Reference
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Reference
+	private ObjectScopeProviderRegistry _objectScopeProviderRegistry;
 
 }

@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -88,7 +87,7 @@ public class FrontendIconsResourcePackRepository {
 			company.getGroupId(), companyIconsFolder.getFolderId(), name);
 	}
 
-	public Optional<FrontendIconsResourcePack> getFrontendIconsResourcePack(
+	public FrontendIconsResourcePack getFrontendIconsResourcePack(
 		long companyId, String name) {
 
 		if (Objects.equals(
@@ -96,9 +95,8 @@ public class FrontendIconsResourcePackRepository {
 				ClayFrontendIconsResourcePackUtil.
 					CLAY_FRONTEND_ICONS_PACK_NAME)) {
 
-			return Optional.of(
-				ClayFrontendIconsResourcePackUtil.
-					getFrontendIconResourcePack());
+			return ClayFrontendIconsResourcePackUtil.
+				getFrontendIconResourcePack();
 		}
 
 		try {
@@ -110,7 +108,7 @@ public class FrontendIconsResourcePackRepository {
 				company.getGroupId(), companyIconsFolder.getFolderId(), name);
 
 			if (fileEntry == null) {
-				return Optional.empty();
+				return null;
 			}
 
 			FrontendIconsResourcePack frontendIconsResourcePack =
@@ -123,10 +121,10 @@ public class FrontendIconsResourcePackRepository {
 							fileEntry.getFileEntryId(),
 							fileEntry.getVersion()))));
 
-			return Optional.of(frontendIconsResourcePack);
+			return frontendIconsResourcePack;
 		}
 		catch (Exception exception) {
-			return Optional.empty();
+			return null;
 		}
 	}
 

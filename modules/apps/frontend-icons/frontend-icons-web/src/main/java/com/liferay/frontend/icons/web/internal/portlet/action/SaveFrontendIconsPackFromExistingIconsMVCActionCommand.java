@@ -38,7 +38,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -107,13 +106,14 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 
 			iconNames.forEach(
 				iconName -> {
-					Optional<FrontendIconsResource>
-						frontendIconsResourceOptional =
-							existingIconsResourcePack.getFrontendIconsResource(
-								iconName);
+					FrontendIconsResource frontendIconsResource =
+						existingIconsResourcePack.getFrontendIconsResource(
+							iconName);
 
-					frontendIconsResourceOptional.ifPresent(
-						frontendIconsResourcePack::addFrontendIconResource);
+					if (frontendIconsResource != null) {
+						frontendIconsResourcePack.addFrontendIconResource(
+							frontendIconsResource);
+					}
 				});
 		}
 

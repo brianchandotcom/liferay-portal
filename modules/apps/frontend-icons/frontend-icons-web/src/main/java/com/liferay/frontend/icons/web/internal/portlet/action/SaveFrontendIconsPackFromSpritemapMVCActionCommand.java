@@ -39,8 +39,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.InputStream;
 
-import java.util.Optional;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -96,13 +94,13 @@ public class SaveFrontendIconsPackFromSpritemapMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		Optional<FrontendIconsResourcePack> frontendIconsResourcePackOptional =
+		FrontendIconsResourcePack frontendIconsResourcePack =
 			_frontendIconsResourcePackRepository.getFrontendIconsResourcePack(
 				companyId, name);
 
-		FrontendIconsResourcePack frontendIconsResourcePack =
-			frontendIconsResourcePackOptional.orElse(
-				new FrontendIconsResourcePack(name));
+		if (frontendIconsResourcePack == null) {
+			frontendIconsResourcePack = new FrontendIconsResourcePack(name);
+		}
 
 		frontendIconsResourcePack.addFrontendIconsResources(
 			SVGUtil.getFrontendIconsResources(StringUtil.read(inputStream)));

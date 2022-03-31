@@ -21,7 +21,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * @author Bryce Osterhaus
@@ -50,10 +49,8 @@ public class FrontendIconsResourcePack {
 		frontendIconsResources.forEach(this::addFrontendIconResource);
 	}
 
-	public Optional<FrontendIconsResource> getFrontendIconsResource(
-		String name) {
-
-		return Optional.ofNullable(_frontendIconsResources.get(name));
+	public FrontendIconsResource getFrontendIconsResource(String name) {
+		return _frontendIconsResources.get(name);
 	}
 
 	public Collection<FrontendIconsResource> getFrontendIconsResources() {

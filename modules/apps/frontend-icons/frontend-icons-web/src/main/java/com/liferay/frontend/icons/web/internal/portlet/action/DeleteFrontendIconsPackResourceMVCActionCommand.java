@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Optional;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -73,12 +71,9 @@ public class DeleteFrontendIconsPackResourceMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		Optional<FrontendIconsResourcePack> frontendIconsResourcePackOptional =
+		FrontendIconsResourcePack frontendIconsResourcePack =
 			_frontendIconsResourcePackRepository.getFrontendIconsResourcePack(
 				companyId, name);
-
-		FrontendIconsResourcePack frontendIconsResourcePack =
-			frontendIconsResourcePackOptional.get();
 
 		String icon = ParamUtil.getString(actionRequest, "icon");
 

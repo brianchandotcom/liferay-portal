@@ -760,12 +760,10 @@ public class CMISRepository extends BaseCmisRepository {
 			foldersAndFileEntries = new ArrayList<>();
 
 			foldersAndFileEntries.addAll(getFolders(folderId));
-
-			List<FileEntry> fileEntries = getFileEntries(
-				folderId, mimeTypes, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				null);
-
-			foldersAndFileEntries.addAll(fileEntries);
+			foldersAndFileEntries.addAll(
+				getFileEntries(
+					folderId, mimeTypes, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null));
 
 			if (mimeTypes == null) {
 				_cmisModelCache.putFoldersAndFileEntries(

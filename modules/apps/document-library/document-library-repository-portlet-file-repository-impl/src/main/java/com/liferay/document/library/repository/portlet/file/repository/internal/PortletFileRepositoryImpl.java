@@ -421,10 +421,10 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		ThemeDisplay themeDisplay, FileEntry fileEntry, String queryString,
 		boolean absoluteURL) {
 
-		String portletFileEntryURL = getPortletFileEntryURL(
-			themeDisplay, fileEntry, queryString, absoluteURL);
-
-		return _http.addParameter(portletFileEntryURL, "download", true);
+		return _http.addParameter(
+			getPortletFileEntryURL(
+				themeDisplay, fileEntry, queryString, absoluteURL),
+			"download", true);
 	}
 
 	@Override

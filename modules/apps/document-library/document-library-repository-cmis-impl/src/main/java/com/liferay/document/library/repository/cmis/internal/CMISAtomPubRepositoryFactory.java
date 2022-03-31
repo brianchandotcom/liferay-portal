@@ -48,11 +48,9 @@ public class CMISAtomPubRepositoryFactory
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		CMISRepositoryConfiguration cmisRepositoryConfiguration =
+		super.setCMISRepositoryConfiguration(
 			ConfigurableUtil.createConfigurable(
-				CMISRepositoryConfiguration.class, properties);
-
-		super.setCMISRepositoryConfiguration(cmisRepositoryConfiguration);
+				CMISRepositoryConfiguration.class, properties));
 	}
 
 	@Override

@@ -425,12 +425,10 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 		String extRepositoryFileEntryKey = getExtRepositoryObjectKey(
 			fileEntryId);
 
-		ExtRepositoryObject extRepositoryObject =
-			_extRepository.getExtRepositoryObject(
-				ExtRepositoryObjectType.FILE, extRepositoryFileEntryKey);
-
 		return _toExtRepositoryObjectAdapter(
-			ExtRepositoryObjectAdapterType.FILE, extRepositoryObject);
+			ExtRepositoryObjectAdapterType.FILE,
+			_extRepository.getExtRepositoryObject(
+				ExtRepositoryObjectType.FILE, extRepositoryFileEntryKey));
 	}
 
 	@Override
@@ -439,12 +437,10 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 
 		String extRepositoryFolderKey = getExtRepositoryObjectKey(folderId);
 
-		ExtRepositoryObject extRepositoryObject =
-			_extRepository.getExtRepositoryObject(
-				ExtRepositoryObjectType.FILE, extRepositoryFolderKey, title);
-
 		return _toExtRepositoryObjectAdapter(
-			ExtRepositoryObjectAdapterType.FILE, extRepositoryObject);
+			ExtRepositoryObjectAdapterType.FILE,
+			_extRepository.getExtRepositoryObject(
+				ExtRepositoryObjectType.FILE, extRepositoryFolderKey, title));
 	}
 
 	@Override
@@ -560,14 +556,12 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 		try {
 			String extRepositoryFolderKey = getExtRepositoryObjectKey(folderId);
 
-			List<? extends ExtRepositoryObject> extRepositoryObjects =
-				_extRepository.getExtRepositoryObjects(
-					ExtRepositoryObjectType.OBJECT, extRepositoryFolderKey);
-
 			List<ExtRepositoryObjectAdapter<?>> extRepositoryObjectAdapters =
 				_toExtRepositoryObjectAdapters(
 					ExtRepositoryObjectAdapterType.OBJECT,
-					extRepositoryObjects);
+					_extRepository.getExtRepositoryObjects(
+						ExtRepositoryObjectType.OBJECT,
+						extRepositoryFolderKey));
 
 			return _sublist(
 				extRepositoryObjectAdapters, start, end,
@@ -586,13 +580,11 @@ public class ExtRepositoryAdapter extends BaseRepositoryImpl {
 
 		String extRepositoryFolderKey = getExtRepositoryObjectKey(folderId);
 
-		List<ExtRepositoryObject> extRepositoryObjects =
-			_extRepository.getExtRepositoryObjects(
-				ExtRepositoryObjectType.OBJECT, extRepositoryFolderKey);
-
 		List<ExtRepositoryObjectAdapter<?>> extRepositoryObjectAdapters =
 			_toExtRepositoryObjectAdapters(
-				ExtRepositoryObjectAdapterType.OBJECT, extRepositoryObjects);
+				ExtRepositoryObjectAdapterType.OBJECT,
+				_extRepository.getExtRepositoryObjects(
+					ExtRepositoryObjectType.OBJECT, extRepositoryFolderKey));
 
 		extRepositoryObjectAdapters = _filterByMimeType(
 			extRepositoryObjectAdapters, mimeTypes);

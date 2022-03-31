@@ -1098,6 +1098,22 @@ public class DocumentImpl implements Document {
 		sb.append(StringPool.CLOSE_CURLY_BRACE);
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #toString(StringBundler, Collection)}
+	 */
+	@Deprecated
+	protected void toString(
+		com.liferay.portal.kernel.util.StringBundler sb,
+		Collection<Field> fields) {
+
+		StringBundler petraSB = new StringBundler();
+
+		toString(petraSB, fields);
+
+		sb.append(petraSB.getStrings());
+	}
+
 	private void _createSortableTextField(
 		String name, boolean typify, String value) {
 

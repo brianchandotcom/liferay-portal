@@ -12,23 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.suggest;
+package com.liferay.portal.kernel.security.jaas;
+
+import com.liferay.portal.kernel.servlet.ProtectedPrincipal;
 
 /**
- * @author Michael C. Han
+ * @author Brian Wing Shun Chan
+ * @deprecated As of Cavanaugh (7.4.x), with no replacement
  */
-public interface SuggesterVisitor<T> {
+@Deprecated
+public class PortalPrincipal extends ProtectedPrincipal {
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public T visit(AggregateSuggester aggregateSuggester);
+	public PortalPrincipal() {
+	}
 
-	public T visit(CompletionSuggester completionSuggester);
-
-	public T visit(PhraseSuggester phraseSuggester);
-
-	public T visit(TermSuggester termSuggester);
+	public PortalPrincipal(String name) {
+		super(name);
+	}
 
 }

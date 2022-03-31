@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.suggest;
+package com.liferay.portal.kernel.scheduler;
+
+import com.liferay.portal.kernel.util.BasePortalLifecycle;
 
 /**
- * @author Michael C. Han
+ * @author Tina Tian
+ * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
  */
-public interface SuggesterVisitor<T> {
+@Deprecated
+public class SchedulerLifecycle extends BasePortalLifecycle {
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), with no direct replacement
-	 */
-	@Deprecated
-	public T visit(AggregateSuggester aggregateSuggester);
+	@Override
+	protected void doPortalDestroy() throws Exception {
+	}
 
-	public T visit(CompletionSuggester completionSuggester);
-
-	public T visit(PhraseSuggester phraseSuggester);
-
-	public T visit(TermSuggester termSuggester);
+	@Override
+	protected void doPortalInit() throws Exception {
+	}
 
 }

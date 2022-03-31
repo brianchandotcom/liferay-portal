@@ -77,7 +77,7 @@ const DeveloperKeysInputs = ({
 	}, [dxpVersion, listType]);
 
 	const developerKeyDownload = async () => {
-		const selectedVersionSplitted = selectedVersion.split(' ')[0];
+		const [selectedVersionSplitted] = selectedVersion.split(' ');
 		const license = await getDevelopmentLicenseKey(
 			accountKey,
 			licenseKeyDownloadURL,

@@ -14,10 +14,17 @@
 
 import {useModal} from '@clayui/modal';
 import {Observer} from '@clayui/modal/src/types';
+import {DocumentNode} from 'graphql';
 import {Dispatch, useState} from 'react';
 
+import client from '../graphql/apolloClient';
 import i18n from '../i18n';
 import {Liferay} from '../services/liferay/liferay';
+
+type OnSubmitOptions = {
+	createMutation: DocumentNode;
+	updateMutation: DocumentNode;
+};
 
 export type FormModalOptions = {
 	modalState: any;
@@ -26,6 +33,7 @@ export type FormModalOptions = {
 	onClose: () => void;
 	onError: (error?: any) => void;
 	onSave: (param?: any) => void;
+	onSubmit: (data: any, options: OnSubmitOptions) => Promise<void>;
 	open: (state?: any) => void;
 	setVisible: Dispatch<boolean>;
 	visible: boolean;
@@ -53,6 +61,58 @@ const useFormModal = ({
 
 	const [forceRefetch, setForceRefetch] = useState(0);
 
+	const onError = (error: any) => {
+		console.error(error);
+
+		Liferay.Util.openToast({
+			message: i18n.translate('an-unexpected-error-occurred'),
+			type: 'danger',
+		});
+	};
+
+	const onSave = (state?: any) => {
+		Liferay.Util.openToast({
+			message: i18n.translate('your-request-completed-successfully'),
+			type: 'success',
+		});
+
+		onClose();
+		setForceRefetch(new Date().getTime());
+
+		if (state) {
+			setModalState(state);
+			onSaveModal(state);
+		}
+	};
+
+	const onSubmit = async (
+		data: any,
+		{createMutation, updateMutation}: OnSubmitOptions
+	) => {
+		const variables: any = {
+			data,
+		};
+
+		if (data.id) {
+			variables.id = data.id;
+		}
+
+		delete variables.data.id;
+
+		try {
+			await client.mutate({
+				mutation: variables.id ? updateMutation : createMutation,
+				variables,
+			});
+
+			onSave();
+		} catch (error) {
+			onError(error);
+
+			throw error;
+		}
+	};
+
 	return {
 		forceRefetch,
 		modal: {
@@ -75,30 +135,9 @@ const useFormModal = ({
 				});
 			},
 			onClose,
-			onError: (error) => {
-				console.error(error);
-
-				Liferay.Util.openToast({
-					message: i18n.translate('an-unexpected-error-occurred'),
-					type: 'danger',
-				});
-			},
-			onSave: (state?: any) => {
-				Liferay.Util.openToast({
-					message: i18n.translate(
-						'your-request-completed-successfully'
-					),
-					type: 'success',
-				});
-
-				onClose();
-				setForceRefetch(new Date().getTime());
-
-				if (state) {
-					setModalState(state);
-					onSaveModal(state);
-				}
-			},
+			onError,
+			onSave,
+			onSubmit,
 			open: (state?: any) => {
 				setModalState(state);
 

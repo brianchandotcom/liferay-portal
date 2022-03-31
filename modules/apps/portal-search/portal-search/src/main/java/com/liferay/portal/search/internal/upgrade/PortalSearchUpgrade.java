@@ -16,9 +16,12 @@ package com.liferay.portal.search.internal.upgrade;
 
 import com.liferay.portal.configuration.persistence.upgrade.ConfigurationUpgradeStepFactory;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
+import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.search.internal.index.configuration.IndexStatusManagerInternalConfiguration;
+import com.liferay.portal.search.internal.upgrade.v1_0_1.ReindexConfigurationUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -30,7 +33,7 @@ public class PortalSearchUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
-		registry.register("0.0.0", "1.0.0", new DummyUpgradeStep());
+		registry.register("0.0.0", "1.0.1", new DummyUpgradeStep());
 
 		registry.register(
 			"0.0.1", "1.0.0",
@@ -38,9 +41,20 @@ public class PortalSearchUpgrade implements UpgradeStepRegistrator {
 				"com.liferay.portal.search.internal.index." +
 					"IndexStatusManagerInternalConfiguration",
 				IndexStatusManagerInternalConfiguration.class.getName()));
+
+		registry.register(
+			"1.0.0", "1.0.1",
+			new ReindexConfigurationUpgradeProcess(
+				_configurationAdmin, _prefsProps));
 	}
 
 	@Reference
+	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
 	private ConfigurationUpgradeStepFactory _configurationUpgradeStepFactory;
+
+	@Reference
+	private PrefsProps _prefsProps;
 
 }

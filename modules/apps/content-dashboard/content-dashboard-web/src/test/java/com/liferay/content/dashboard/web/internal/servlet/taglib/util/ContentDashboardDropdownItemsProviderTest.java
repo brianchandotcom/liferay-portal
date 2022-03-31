@@ -100,14 +100,13 @@ public class ContentDashboardDropdownItemsProviderTest {
 					_http, _language, mockLiferayPortletRenderRequest,
 					new MockLiferayPortletRenderResponse(), new PortalImpl());
 
-		ContentDashboardItem contentDashboardItem = _getContentDashboardItem(
-			Collections.singletonList(
-				_getContentDashboardItemAction(
-					"edit", ContentDashboardItemAction.Type.EDIT, "validURL")));
-
 		List<DropdownItem> dropdownItems =
 			contentDashboardDropdownItemsProvider.getDropdownItems(
-				contentDashboardItem);
+				_getContentDashboardItem(
+					Collections.singletonList(
+						_getContentDashboardItemAction(
+							"edit", ContentDashboardItemAction.Type.EDIT,
+							"validURL"))));
 
 		Stream<DropdownItem> stream = dropdownItems.stream();
 
@@ -141,16 +140,14 @@ public class ContentDashboardDropdownItemsProviderTest {
 					_http, _language, mockLiferayPortletRenderRequest,
 					new MockLiferayPortletRenderResponse(), new PortalImpl());
 
-		ContentDashboardItem contentDashboardItem = _getContentDashboardItem(
-			Collections.singletonList(
-				_getContentDashboardItemAction(
-					"viewInPanel",
-					ContentDashboardItemAction.Type.VIEW_IN_PANEL,
-					"validURL")));
-
 		List<DropdownItem> dropdownItems =
 			contentDashboardDropdownItemsProvider.getDropdownItems(
-				contentDashboardItem);
+				_getContentDashboardItem(
+					Collections.singletonList(
+						_getContentDashboardItemAction(
+							"viewInPanel",
+							ContentDashboardItemAction.Type.VIEW_IN_PANEL,
+							"validURL"))));
 
 		Stream<DropdownItem> stream = dropdownItems.stream();
 
@@ -186,14 +183,13 @@ public class ContentDashboardDropdownItemsProviderTest {
 					_http, _language, mockLiferayPortletRenderRequest,
 					new MockLiferayPortletRenderResponse(), new PortalImpl());
 
-		ContentDashboardItem contentDashboardItem = _getContentDashboardItem(
-			Collections.singletonList(
-				_getContentDashboardItemAction(
-					"view", ContentDashboardItemAction.Type.VIEW, "validURL")));
-
 		List<DropdownItem> dropdownItems =
 			contentDashboardDropdownItemsProvider.getDropdownItems(
-				contentDashboardItem);
+				_getContentDashboardItem(
+					Collections.singletonList(
+						_getContentDashboardItemAction(
+							"view", ContentDashboardItemAction.Type.VIEW,
+							"validURL"))));
 
 		Stream<DropdownItem> stream = dropdownItems.stream();
 

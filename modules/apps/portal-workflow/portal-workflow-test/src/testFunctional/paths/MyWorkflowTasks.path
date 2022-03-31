@@ -125,7 +125,7 @@
 </tr>
 <tr>
 	<td>MY_WORKFLOW_TASKS_SEARCH_RESULT_BAR</td>
-	<td>//span[contains(text(),'${key_resultBarMessage}')]</td>
+	<td>//span[contains(@class, 'text-truncate') and contains(., '${key_resultBarMessage}')]</td>
 	<td></td>
 </tr>
 <tr>

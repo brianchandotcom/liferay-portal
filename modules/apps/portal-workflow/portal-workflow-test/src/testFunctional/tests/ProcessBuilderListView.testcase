@@ -299,7 +299,7 @@ definition {
 
 			ProcessBuilderListView.validateIfSearchItem(
 				numberResults = "1",
-				workflowName = "workflow content");
+				workflowName = ""workflow content"");
 
 			AssertElementPresent(
 				key_workflowDefinitionTitle = "Single Approver",
@@ -311,7 +311,7 @@ definition {
 
 			ProcessBuilderListView.validateIfSearchItem(
 				numberResults = "0",
-				workflowName = "new process");
+				workflowName = ""new process"");
 
 			AssertTextEquals(
 				locator1 = "Message#EMPTY_INFO",
@@ -331,7 +331,7 @@ definition {
 
 		ProcessBuilderListView.validateIfSearchItem(
 			numberResults = "1",
-			workflowName = "Approver");
+			workflowName = ""Approver"");
 
 		Workflow.viewDefinitionPublished(workflowDefinitionTitle = "Single Approver");
 	}

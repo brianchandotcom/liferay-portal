@@ -174,28 +174,32 @@ public class SearchBarPortletDisplayContextBuilder {
 
 		SearchRequest searchRequest = searchResponse.getRequest();
 
-		return setDestination(
-			searchBarPortletPreferences.getDestinationString()
-		).setEmptySearchEnabled(
-			_isEmptySearchEnabled(portletSharedSearchResponse)
-		).setInvisible(
-			searchBarPortletPreferences.isInvisible()
-		).setKeywords(
-			Optional.ofNullable(searchRequest.getQueryString())
-		).setKeywordsParameterName(
-			keywordsParameterName
-		).setPaginationStartParameterName(
-			searchRequest.getPaginationStartParameterName()
-		).setScopeParameterName(
-			scopeParameterName
-		).setScopeParameterValue(
+		setDestination(searchBarPortletPreferences.getDestinationString());
+
+		setEmptySearchEnabled(
+			_isEmptySearchEnabled(portletSharedSearchResponse));
+
+		setInvisible(searchBarPortletPreferences.isInvisible());
+
+		setKeywords(Optional.ofNullable(searchRequest.getQueryString()));
+
+		setKeywordsParameterName(keywordsParameterName);
+
+		setPaginationStartParameterName(
+			searchRequest.getPaginationStartParameterName());
+
+		setScopeParameterName(scopeParameterName);
+
+		setScopeParameterValue(
 			portletSharedSearchResponse.getParameter(
-				scopeParameterName, _renderRequest)
-		).setSearchScopePreference(
-			searchBarPortletPreferences.getSearchScopePreference()
-		).setThemeDisplay(
-			themeDisplay
-		).build();
+				scopeParameterName, _renderRequest));
+
+		setSearchScopePreference(
+			searchBarPortletPreferences.getSearchScopePreference());
+
+		setThemeDisplay(themeDisplay);
+
+		return build();
 	}
 
 	public SearchBarPortletDisplayContextBuilder setDestination(

@@ -7,15 +7,23 @@ definition {
 	property testray.main.component.name = "Staging";
 
 	setUp {
-		TestCase.setUpPortalInstance();
+		task ("Setup: Build a portal instance") {
+			TestCase.setUpPortalInstance();
+		}
 
-		User.firstLoginPG();
+		task ("Setup: Login in the portal") {
+			User.firstLoginPG();
+		}
 
-		JSONGroup.addGroup(groupName = "Site Name");
+		task ("Setup: add a group with the name Site Name") {
+			JSONGroup.addGroup(groupName = "Site Name");
+		}
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Staging Test Page");
+		task ("Setup: add a public layout to the group") {
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name",
+				layoutName = "Staging Test Page");
+		}
 	}
 
 	tearDown {
@@ -39,251 +47,277 @@ definition {
 	test AccessStaging {
 		property portal.acceptance = "true";
 
-		JSONStaging.enableLocalStaging(groupName = "Site Name");
+		task ("Given: a regular user is added") {
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		JSONUser.addUser(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
+			JSONUser.addUser(
+				userEmailAddress = "userea@liferay.com",
+				userFirstName = "userfn",
+				userLastName = "userln",
+				userScreenName = "usersn");
+		}
 
-		JSONRole.addRegularRole(
-			roleKey = "Regrole Name",
-			roleTitle = "Regrole Name");
+		task ("And: A regular role is created") {
+			JSONRole.addRegularRole(
+				roleKey = "Regrole Name",
+				roleTitle = "Regrole Name");
+		}
 
-		Role.openRolesAdmin();
+		task ("When: the user is assigned to regular role") {
+			Role.openRolesAdmin();
 
-		Role.definePermissionCP(
-			permissionDefinitionKey = "CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_VIEW_STAGING_CHECKBOX",
-			permissionDefinitionValue = "View Staging",
-			roleTitle = "Regrole Name");
+			Role.definePermissionCP(
+				permissionDefinitionKey = "CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE_VIEW_STAGING_CHECKBOX",
+				permissionDefinitionValue = "View Staging",
+				roleTitle = "Regrole Name");
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Regrole Name",
-			userEmailAddress = "userea@liferay.com");
+			JSONRole.assignRoleToUser(
+				roleTitle = "Regrole Name",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		JSONGroup.assignUserToGroup(
-			groupName = "Site Name",
-			userEmailAddress = "userea@liferay.com");
+		task ("And: the user is assigned to the Site Name group") {
+			JSONGroup.assignUserToGroup(
+				groupName = "Site Name",
+				userEmailAddress = "userea@liferay.com");
+		}
 
-		User.logoutAndLoginPG(
-			password = "test",
-			userLoginEmailAddress = "userea@liferay.com",
-			userLoginFullName = "userfn userln");
+		task ("Then: the user can access the staged page") {
+			User.logoutAndLoginPG(
+				password = "test",
+				userLoginEmailAddress = "userea@liferay.com",
+				userLoginFullName = "userfn userln");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Staging Test Page",
-			siteName = "Site Name");
+			Navigator.gotoStagedSitePage(
+				pageName = "Staging Test Page",
+				siteName = "Site Name");
 
-		Staging.viewStagingLocalLivePG();
+			Staging.viewStagingLocalLivePG();
 
-		User.logoutAndLoginPG(
-			password = "test",
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "test test");
+			User.logoutAndLoginPG(
+				password = "test",
+				userLoginEmailAddress = "test@liferay.com",
+				userLoginFullName = "test test");
+		}
 	}
 
 	@priority = "4"
 	test StagingBlogsRolesWorkflow {
-		JSONUser.addUser(
-			userEmailAddress = "usereapu@liferay.com",
-			userFirstName = "userfnpu",
-			userLastName = "userlnpu",
-			userScreenName = "usersnpu");
+		task ("Given: Three users are created") {
+			JSONUser.addUser(
+				userEmailAddress = "usereapu@liferay.com",
+				userFirstName = "userfnpu",
+				userLastName = "userlnpu",
+				userScreenName = "usersnpu");
 
-		JSONRole.addSiteRole(
-			roleKey = "Power User Name",
-			roleTitle = "Power User Name");
+			JSONUser.addUser(
+				userEmailAddress = "usereaa@liferay.com",
+				userFirstName = "userfna",
+				userLastName = "userlna",
+				userScreenName = "usersna");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "MANAGE_LAYOUTS",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Power User Name",
-			roleType = "site");
+			JSONUser.addUser(
+				userEmailAddress = "usereacr@liferay.com",
+				userFirstName = "userfncr",
+				userLastName = "userlncr",
+				userScreenName = "usersncr");
+		}
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "VIEW_SITE_ADMINISTRATION",
-			resourceName = "com.liferay.portal.kernel.model.Group",
-			roleTitle = "Power User Name",
-			roleType = "site");
+		task ("And: Power User role is created") {
+			JSONRole.addSiteRole(
+				roleKey = "Power User Name",
+				roleTitle = "Power User Name");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ACCESS_IN_CONTROL_PANEL",
-			resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
-			roleTitle = "Power User Name",
-			roleType = "site");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "MANAGE_LAYOUTS",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Power User Name",
+				roleType = "site");
 
-		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "ADD_ENTRY",
-			resourceName = "com.liferay.blogs",
-			roleTitle = "Power User Name",
-			roleType = "site");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_SITE_ADMINISTRATION",
+				resourceName = "com.liferay.portal.kernel.model.Group",
+				roleTitle = "Power User Name",
+				roleType = "site");
 
-		JSONGroup.assignUserToGroup(
-			groupName = "Site Name",
-			userEmailAddress = "usereapu@liferay.com");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ACCESS_IN_CONTROL_PANEL",
+				resourceName = "com_liferay_layout_admin_web_portlet_GroupPagesPortlet",
+				roleTitle = "Power User Name",
+				roleType = "site");
 
-		JSONRole.assignSiteRoleToUser(
-			groupName = "Site Name",
-			roleTitle = "Power User Name",
-			userEmailAddress = "usereapu@liferay.com");
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ADD_ENTRY",
+				resourceName = "com.liferay.blogs",
+				roleTitle = "Power User Name",
+				roleType = "site");
+		}
 
-		JSONUser.addUser(
-			userEmailAddress = "usereacr@liferay.com",
-			userFirstName = "userfncr",
-			userLastName = "userlncr",
-			userScreenName = "usersncr");
+		task ("And: The users are assigned as Power User, Administrator and Portal Content Reviewer") {
+			JSONGroup.assignUserToGroup(
+				groupName = "Site Name",
+				userEmailAddress = "usereapu@liferay.com");
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Portal Content Reviewer",
-			userEmailAddress = "usereacr@liferay.com");
+			JSONRole.assignSiteRoleToUser(
+				groupName = "Site Name",
+				roleTitle = "Power User Name",
+				userEmailAddress = "usereapu@liferay.com");
 
-		JSONGroup.assignUserToGroup(
-			groupName = "Site Name",
-			userEmailAddress = "usereacr@liferay.com");
+			JSONRole.assignRoleToUser(
+				roleTitle = "Portal Content Reviewer",
+				userEmailAddress = "usereacr@liferay.com");
 
-		JSONUser.addUser(
-			userEmailAddress = "usereaa@liferay.com",
-			userFirstName = "userfna",
-			userLastName = "userlna",
-			userScreenName = "usersna");
+			JSONGroup.assignUserToGroup(
+				groupName = "Site Name",
+				userEmailAddress = "usereacr@liferay.com");
 
-		JSONRole.assignRoleToUser(
-			roleTitle = "Administrator",
-			userEmailAddress = "usereaa@liferay.com");
+			JSONRole.assignRoleToUser(
+				roleTitle = "Administrator",
+				userEmailAddress = "usereaa@liferay.com");
 
-		JSONGroup.assignUserToGroup(
-			groupName = "Site Name",
-			userEmailAddress = "usereaa@liferay.com");
+			JSONGroup.assignUserToGroup(
+				groupName = "Site Name",
+				userEmailAddress = "usereaa@liferay.com");
+		}
 
-		JSONStaging.enableLocalStaging(groupName = "Site Name");
+		task ("When: a Blogs Entry is added to a page on Single Approver workflow") {
+			JSONStaging.enableLocalStaging(groupName = "Site Name");
 
-		Workflow.openWorkflowAdmin(siteURLKey = "site-name-staging");
+			Workflow.openWorkflowAdmin(siteURLKey = "site-name-staging");
 
-		Workflow.configureWorkflow(
-			workflowDefinition = "Single Approver",
-			workflowResourceValue = "Blogs Entry");
+			Workflow.configureWorkflow(
+				workflowDefinition = "Single Approver",
+				workflowResourceValue = "Blogs Entry");
 
-		User.logoutAndLoginPG(
-			password = "test",
-			userLoginEmailAddress = "usereapu@liferay.com",
-			userLoginFullName = "userfnpu userlnpu");
+			User.logoutAndLoginPG(
+				password = "test",
+				userLoginEmailAddress = "usereapu@liferay.com",
+				userLoginFullName = "userfnpu userlnpu");
 
-		JSONLayout.addPublicLayout(
-			groupName = "Site Name (Staging)",
-			layoutName = "Blogs Test Page",
-			site = "false");
+			JSONLayout.addPublicLayout(
+				groupName = "Site Name (Staging)",
+				layoutName = "Blogs Test Page",
+				site = "false");
 
-		JSONLayout.addWidgetToPublicLayout(
-			column = "1",
-			groupName = "Site Name (Staging)",
-			layoutName = "Blogs Test Page",
-			site = "false",
-			widgetName = "Blogs");
+			JSONLayout.addWidgetToPublicLayout(
+				column = "1",
+				groupName = "Site Name (Staging)",
+				layoutName = "Blogs Test Page",
+				site = "false",
+				widgetName = "Blogs");
 
-		User.logoutPG();
+			User.logoutPG();
+		}
 
-		Navigator.openSiteURL(siteName = "Site Name");
+		task ("Then: the Administrator user can go to the staged site page and publish to live") {
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		AssertElementNotPresent(locator1 = "Home#PAGE_2_GUEST_VIEW");
+			AssertElementNotPresent(locator1 = "Home#PAGE_2_GUEST_VIEW");
 
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "usereaa@liferay.com");
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "usereaa@liferay.com");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Blogs Test Page",
-			siteName = "Site Name");
+			Navigator.gotoStagedSitePage(
+				pageName = "Blogs Test Page",
+				siteName = "Site Name");
 
-		Staging.gotoPublishToLive();
+			Staging.gotoPublishToLive();
 
-		Staging.publishToLive();
+			Staging.publishToLive();
 
-		User.logoutPG();
+			User.logoutPG();
 
-		Navigator.openSiteURL(siteName = "Site Name");
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		AssertElementPresent(locator1 = "Home#PAGE_2_GUEST_VIEW");
+			AssertElementPresent(locator1 = "Home#PAGE_2_GUEST_VIEW");
+		}
 
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "usereapu@liferay.com");
+		task ("And: the Power User can publish the staged site to live and add a Blogs Entry") {
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "usereapu@liferay.com");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Blogs Test Page",
-			siteName = "Site Name");
+			Navigator.gotoStagedSitePage(
+				pageName = "Blogs Test Page",
+				siteName = "Site Name");
 
-		BlogsEntry.addWithWorkflowPG(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry Title");
+			BlogsEntry.addWithWorkflowPG(
+				entryContent = "Blogs Entry Content",
+				entryTitle = "Blogs Entry Title");
 
-		User.logoutPG();
+			User.logoutPG();
 
-		Navigator.openSiteURL(siteName = "Site Name");
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		AssertClick(
-			locator1 = "Home#PAGE_2_GUEST_VIEW",
-			value1 = "Blogs Test Page");
+			AssertClick(
+				locator1 = "Home#PAGE_2_GUEST_VIEW",
+				value1 = "Blogs Test Page");
 
-		var key_entryTitle = "Blogs Entry Title";
+			var key_entryTitle = "Blogs Entry Title";
 
-		AssertElementNotPresent(locator1 = "BlogsEntry#TITLE");
+			AssertElementNotPresent(locator1 = "BlogsEntry#TITLE");
+		}
 
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "usereacr@liferay.com");
+		task ("And: the Portal Content Reviewer user can approve the blog entry") {
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "usereacr@liferay.com");
 
-		UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
+			UserBar.gotoDropdownItem(dropdownItem = "My Workflow Tasks");
 
-		Workflow.assignToMeTaskByActions(
-			workflowAssetTitle = "Blogs Entry Title",
-			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review");
+			Workflow.assignToMeTaskByActions(
+				workflowAssetTitle = "Blogs Entry Title",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "Review");
 
-		Workflow.approveTaskByActions(
-			workflowAssetTitle = "Blogs Entry Title",
-			workflowAssetType = "Blogs Entry",
-			workflowTask = "Review");
+			Workflow.approveTaskByActions(
+				workflowAssetTitle = "Blogs Entry Title",
+				workflowAssetType = "Blogs Entry",
+				workflowTask = "Review");
 
-		User.logoutPG();
+			User.logoutPG();
 
-		Navigator.openSiteURL(siteName = "Site Name");
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		AssertClick(
-			locator1 = "Home#PAGE_2_GUEST_VIEW",
-			value1 = "Blogs Test Page");
+			AssertClick(
+				locator1 = "Home#PAGE_2_GUEST_VIEW",
+				value1 = "Blogs Test Page");
 
-		var key_entryTitle = "Blogs Entry Title";
+			var key_entryTitle = "Blogs Entry Title";
 
-		AssertElementNotPresent(locator1 = "BlogsEntry#TITLE");
+			AssertElementNotPresent(locator1 = "BlogsEntry#TITLE");
+		}
 
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "usereaa@liferay.com");
+		task ("And: the blog entry is visible") {
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "usereaa@liferay.com");
 
-		Navigator.gotoStagedSitePage(
-			pageName = "Blogs Test Page",
-			siteName = "Site Name");
+			Navigator.gotoStagedSitePage(
+				pageName = "Blogs Test Page",
+				siteName = "Site Name");
 
-		Staging.gotoPublishToLive();
+			Staging.gotoPublishToLive();
 
-		Staging.publishToLive();
+			Staging.publishToLive();
 
-		User.logoutPG();
+			User.logoutPG();
 
-		Navigator.openSiteURL(siteName = "Site Name");
+			Navigator.openSiteURL(siteName = "Site Name");
 
-		Click(locator1 = "Home#PAGE_2_GUEST_VIEW");
+			Click(locator1 = "Home#PAGE_2_GUEST_VIEW");
 
-		var key_entryTitle = "Blogs Entry Title";
+			var key_entryTitle = "Blogs Entry Title";
 
-		AssertTextEquals(
-			locator1 = "BlogsEntry#TITLE",
-			value1 = "Blogs Entry Title");
+			AssertTextEquals(
+				locator1 = "BlogsEntry#TITLE",
+				value1 = "Blogs Entry Title");
 
-		User.loginPG(
-			password = "test",
-			userEmailAddress = "test@liferay.com");
+			User.loginPG(
+				password = "test",
+				userEmailAddress = "test@liferay.com");
+		}
 	}
 
 }

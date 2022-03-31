@@ -199,6 +199,12 @@ public class SiteNavigationMenuActionDropdownItemsProvider {
 		_getPrimarySiteNavigationMenuActionUnsafeConsumer() {
 
 		return dropdownItem -> {
+			if (_siteNavigationMenu.getType() ==
+					SiteNavigationConstants.TYPE_PRIMARY) {
+
+				dropdownItem.put("symbolRight", "check");
+			}
+
 			dropdownItem.putData("action", "markAsPrimary");
 
 			if ((_siteNavigationMenu.getType() !=
@@ -234,12 +240,6 @@ public class SiteNavigationMenuActionDropdownItemsProvider {
 				).setParameter(
 					"type", SiteNavigationConstants.TYPE_PRIMARY
 				).buildString());
-
-			if (_siteNavigationMenu.getType() ==
-					SiteNavigationConstants.TYPE_PRIMARY) {
-
-				dropdownItem.put("symbolRight", "check");
-			}
 
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "primary-navigation"));
@@ -278,6 +278,12 @@ public class SiteNavigationMenuActionDropdownItemsProvider {
 		_getSecondarySiteNavigationMenuActionUnsafeConsumer() {
 
 		return dropdownItem -> {
+			if (_siteNavigationMenu.getType() ==
+					SiteNavigationConstants.TYPE_SECONDARY) {
+
+				dropdownItem.put("symbolRight", "check");
+			}
+
 			dropdownItem.putData("action", "markAsSecondary");
 
 			dropdownItem.putData(
@@ -297,12 +303,6 @@ public class SiteNavigationMenuActionDropdownItemsProvider {
 					"type", SiteNavigationConstants.TYPE_SECONDARY
 				).buildString());
 
-			if (_siteNavigationMenu.getType() ==
-					SiteNavigationConstants.TYPE_SECONDARY) {
-
-				dropdownItem.put("symbolRight", "check");
-			}
-
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "secondary-navigation"));
 		};
@@ -312,6 +312,12 @@ public class SiteNavigationMenuActionDropdownItemsProvider {
 		_getSocialNavigationMenuActionUnsafeConsumer() {
 
 		return dropdownItem -> {
+			if (_siteNavigationMenu.getType() ==
+					SiteNavigationConstants.TYPE_SOCIAL) {
+
+				dropdownItem.put("symbolRight", "check");
+			}
+
 			dropdownItem.putData("action", "markAsSocial");
 
 			dropdownItem.putData(
@@ -330,12 +336,6 @@ public class SiteNavigationMenuActionDropdownItemsProvider {
 				).setParameter(
 					"type", SiteNavigationConstants.TYPE_SOCIAL
 				).buildString());
-
-			if (_siteNavigationMenu.getType() ==
-					SiteNavigationConstants.TYPE_SOCIAL) {
-
-				dropdownItem.put("symbolRight", "check");
-			}
 
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "social-navigation"));

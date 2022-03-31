@@ -1,7 +1,7 @@
 @component-name = "portal-ab-test"
 definition {
 
-	property portal.release = "false";
+	property portal.release = "true";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
 	property testray.main.component.name = "A/B Test";

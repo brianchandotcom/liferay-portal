@@ -1,7 +1,7 @@
 @component-name = "portal-content-dashboard"
 definition {
 
-	property portal.release = "false";
+	property portal.release = "true";
 	property portal.upstream = "true";
 	property property.group = "analytics.cloud.profile";
 	property testray.main.component.name = "Content Dashboard";

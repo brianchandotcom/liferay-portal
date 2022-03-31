@@ -32,7 +32,7 @@ public class JavaCommentStylingCheck extends BaseFileCheck {
 		Matcher matcher = _singleLineCommentPattern.matcher(content);
 
 		while (matcher.find()) {
-			String commentContent = matcher.group(2);
+			String commentContent = matcher.group(1);
 
 			if (commentContent.contains(StringPool.SEMICOLON) ||
 				commentContent.endsWith(StringPool.COMMA) ||
@@ -64,17 +64,17 @@ public class JavaCommentStylingCheck extends BaseFileCheck {
 
 				return StringUtil.replaceFirst(
 					content, commentContent, commentContent.substring(1),
-					matcher.start(2));
+					matcher.start(1));
 			}
 
 			return StringUtil.insert(
-				content, StringPool.SPACE, matcher.start(2));
+				content, StringPool.SPACE, matcher.start(1));
 		}
 
 		return content;
 	}
 
 	private static final Pattern _singleLineCommentPattern = Pattern.compile(
-		"(\n\t*//)(?! )(.+)");
+		"\n\t*//(?! )(.+)");
 
 }

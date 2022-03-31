@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.core;
 
+import com.liferay.poshi.core.selenium.LiferaySeleniumMethod;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.PropsUtil;
 
@@ -131,11 +132,15 @@ public class PoshiContextTest extends TestCase {
 
 	@Test
 	public void testGetSeleniumParameterCount() {
-		int count = PoshiContext.getSeleniumParameterCount("clickAt");
+		LiferaySeleniumMethod seleniumMethod = PoshiContext.getSeleniumMethod("clickAt");
+
+		int count = seleniumMethod.getParameterCount();
 
 		Assert.assertEquals("getSeleniumParameterCount is failing", 2, count);
 
-		count = PoshiContext.getSeleniumParameterCount("click");
+		seleniumMethod = PoshiContext.getSeleniumMethod("click");
+
+		count = seleniumMethod.getParameterCount();
 
 		Assert.assertEquals("getSeleniumParameterCount is failing", 1, count);
 	}

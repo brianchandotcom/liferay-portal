@@ -177,21 +177,27 @@ public class UserAccountResourceDTOConverter
 							_getThemeDisplay(group), true);
 					});
 				setHonorificPrefix(
-					() -> _getContactField(
-						contact,
-						c ->
-							ServiceBuilderListTypeUtil.
-								getServiceBuilderListTypeMessage(
-									c.getPrefixId(),
-									dtoConverterContext.getLocale())));
+					() -> {
+						if (contact == null) {
+							return null;
+						}
+
+						return ServiceBuilderListTypeUtil.
+							getServiceBuilderListTypeMessage(
+								contact.getPrefixId(),
+								dtoConverterContext.getLocale());
+					});
 				setHonorificSuffix(
-					() -> _getContactField(
-						contact,
-						c ->
-							ServiceBuilderListTypeUtil.
-								getServiceBuilderListTypeMessage(
-									c.getSuffixId(),
-									dtoConverterContext.getLocale())));
+					() -> {
+						if (contact == null) {
+							return null;
+						}
+
+						return ServiceBuilderListTypeUtil.
+							getServiceBuilderListTypeMessage(
+								contact.getSuffixId(),
+								dtoConverterContext.getLocale());
+					});
 				setImage(
 					() -> {
 						if (user.getPortraitId() == 0) {
@@ -231,9 +237,10 @@ public class UserAccountResourceDTOConverter
 		};
 	}
 
-	private <T, E extends Exception> T _getContactField(
-			Contact contact, UnsafeFunction<Contact, T, E> fieldFunction)
-		throws E {
+	private <T> T _getContactField(
+			Contact contact,
+			UnsafeFunction<Contact, T, Exception> fieldFunction)
+		throws Exception {
 
 		if (contact != null) {
 			return fieldFunction.apply(contact);

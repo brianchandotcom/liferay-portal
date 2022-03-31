@@ -70,13 +70,34 @@ definition {
 		CalendarResource.viewMenuPermissionsModal();
 	}
 
-	@description = "LRQA-71885 - Verify that the user can Clear the search results"
-	@ignore = "Test Stub"
+	@description = "LRQA-71926 - Verify that the user can Clear the search results"
 	@priority = "3"
 	test CanClearSearchResults {
+		CalendarNavigator.gotoAddResource();
 
-		// TODO LRQA-71926 CanClearSearchResults pending implementation
+		CalendarResource.editResourceName(calendarResourceName = "New Resource1");
 
+		CalendarResource.save();
+
+		CalendarNavigator.gotoAddResource();
+
+		CalendarResource.editResourceName(calendarResourceName = "New Resource2");
+
+		CalendarResource.save();
+
+		CalendarResource.search(searchTerm = "Resource1");
+
+		CalendarResource.viewSearchSummaryResults(searchResults = '''1 Results for "Resource1"''');
+
+		CalendarResource.viewResourceName(calendarResourceName = "New Resource1");
+
+		CalendarResource.clearSearchResults();
+
+		CalendarResource.notDisplayResultBar();
+
+		CalendarResource.viewResourceName(calendarResourceName = "New Resource1");
+
+		CalendarResource.viewResourceName(calendarResourceName = "New Resource2");
 	}
 
 	@description = "LRQA-71924 - Verify that the user can create a New Calendar for the Resource"

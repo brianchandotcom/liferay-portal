@@ -31,7 +31,6 @@ import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriteri
 import com.liferay.petra.portlet.url.builder.PortletURLBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -114,12 +113,8 @@ public class CommerceVirtualOrderItemEditDisplayContext {
 	}
 
 	public PortletURL getCommerceOrderItemsPortletURL() throws PortalException {
-		LiferayPortletResponse liferayPortletResponse =
-			_cpDefinitionVirtualSettingRequestHelper.
-				getLiferayPortletResponse();
-
 		return PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_cpDefinitionVirtualSettingRequestHelper.getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_open_order_content/edit_commerce_order"
 		).setParameter(

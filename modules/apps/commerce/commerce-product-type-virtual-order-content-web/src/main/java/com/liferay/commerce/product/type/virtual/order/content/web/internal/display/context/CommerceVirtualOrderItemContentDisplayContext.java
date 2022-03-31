@@ -221,12 +221,9 @@ public class CommerceVirtualOrderItemContentDisplayContext {
 					commerceVirtualOrderItem.getCommerceVirtualOrderItemId()));
 		}
 
-		LiferayPortletResponse liferayPortletResponse =
-			_commerceVirtualOrderItemContentRequestHelper.
-				getLiferayPortletResponse();
-
 		PortletURL portletURL = PortletURLBuilder.createRenderURL(
-			liferayPortletResponse
+			_commerceVirtualOrderItemContentRequestHelper.
+				getLiferayPortletResponse()
 		).setMVCRenderCommandName(
 			"/commerce_virtual_order_item_content" +
 				"/view_commerce_virtual_order_item_terms_of_use"

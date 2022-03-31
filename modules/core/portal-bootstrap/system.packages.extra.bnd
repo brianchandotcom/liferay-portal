@@ -218,7 +218,7 @@ Export-Package:\
 	\
 	org.dom4j.*;version='2.1.3',\
 	\
-	org.hibernate.*;version='3.6.10',\
+	org.hibernate.*;version='5.6.7',\
 	\
 	org.jaxen.*;version='1.1.6',\
 	\

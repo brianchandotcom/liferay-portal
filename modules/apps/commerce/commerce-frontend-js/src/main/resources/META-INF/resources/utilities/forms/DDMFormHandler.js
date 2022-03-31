@@ -52,6 +52,7 @@ class DDMFormHandler {
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),
 		}).then((cpInstance) => {
 			if (cpInstance.cpInstanceExist) {
+				cpInstance.disabled = this.checkCPInstanceOptions();
 				cpInstance.skuOptions = ddmFormValues;
 				cpInstance.skuId = parseInt(cpInstance.cpInstanceId, 10);
 
@@ -67,6 +68,35 @@ class DDMFormHandler {
 				);
 			}
 		});
+	}
+
+	checkCPInstanceOptions() {
+		let disabled = false;
+
+		for (const ddmFormValue of this.fields) {
+			if (ddmFormValue.required) {
+				if (ddmFormValue.value.length === 0) {
+					disabled = true;
+				}
+				else {
+					for (const value of ddmFormValue.value) {
+						if (value === null || value === '') {
+							disabled = true;
+							break;
+						}
+						else {
+							disabled = false;
+						}
+					}
+				}
+			}
+
+			if (disabled) {
+				break;
+			}
+		}
+
+		return disabled;
 	}
 }
 

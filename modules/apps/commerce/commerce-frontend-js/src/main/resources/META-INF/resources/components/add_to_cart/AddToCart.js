@@ -67,6 +67,7 @@ function AddToCart({
 		if (
 			initialDisabled ||
 			!account?.id ||
+			cpInstance.disabled ||
 			cpInstance.purchasable === false ||
 			!cpInstance.quantity
 		) {
@@ -94,6 +95,7 @@ function AddToCart({
 					setCpInstance((cpInstance) => ({
 						...cpInstance,
 						backOrderAllowed: incomingCpInstance.backOrderAllowed,
+						disabled: incomingCpInstance.disabled,
 						inCart,
 						purchasable: incomingCpInstance.purchasable,
 						skuId: incomingCpInstance.skuId,

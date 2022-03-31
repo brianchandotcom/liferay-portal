@@ -166,7 +166,7 @@ public class SXPBlueprintSearchResultTest {
 			_serviceContext);
 
 		_setUpJournalArticles(
-			new String[] {"", ""},
+			new String[] {"cola", ""},
 			new String[] {"Article coca cola", "Article pepsi cola"});
 
 		_updateElementInstancesJSON(
@@ -301,8 +301,7 @@ public class SXPBlueprintSearchResultTest {
 				).put(
 					"start_date",
 					DateUtil.getDate(
-						new Date(
-							System.currentTimeMillis() - Time.DAY - Time.DAY),
+						new Date(System.currentTimeMillis() - (Time.DAY * 2)),
 						"yyyyMMdd", LocaleUtil.US)
 				).build()
 			},
@@ -361,9 +360,10 @@ public class SXPBlueprintSearchResultTest {
 			new String[] {"", ""},
 			new String[] {"Article", "Article With Category"});
 
-		User user = _userLocalService.getDefaultUser(_group.getCompanyId());
+		User guestUser = _userLocalService.getDefaultUser(
+			_group.getCompanyId());
 
-		_serviceContext.setUserId(user.getUserId());
+		_serviceContext.setUserId(guestUser.getUserId());
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -379,6 +379,12 @@ public class SXPBlueprintSearchResultTest {
 		_keywords = "Article";
 
 		_assertSearch("[Article With Category, Article]");
+
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		_serviceContext.setUserId(user.getUserId());
+
+		_assertSearch("[Article, Article With Category]");
 
 		_updateElementInstancesJSON(null, null);
 
@@ -467,23 +473,22 @@ public class SXPBlueprintSearchResultTest {
 	@Test
 	public void testBoostContentsWithMoreVersions() throws Exception {
 		_setUpJournalArticles(
-			new String[] {"", ""},
-			new String[] {"One Version", "Three Versions"});
+			new String[] {"", ""}, new String[] {"Article 1.0", "Article 2.0"});
 
 		_journalArticles.set(
 			0,
 			JournalTestUtil.updateArticle(
-				_journalArticles.get(0), "Two Versions"));
+				_journalArticles.get(0), "Article 1.1"));
 
 		_journalArticles.set(
 			1,
 			JournalTestUtil.updateArticle(
-				_journalArticles.get(1), "Three Versions"));
+				_journalArticles.get(1), "Article 2.1"));
 
 		_journalArticles.set(
 			1,
 			JournalTestUtil.updateArticle(
-				_journalArticles.get(1), "Three Versions"));
+				_journalArticles.get(1), "Article 2.2"));
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -497,13 +502,13 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Boost Contents With More Versions"});
 
-		_keywords = "Versions";
+		_keywords = "Article";
 
-		_assertSearch("[Three Versions, Two Versions]");
+		_assertSearch("[Article 2.2, Article 1.1]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearch("[Two Versions, Three Versions]");
+		_assertSearch("[Article 1.1, Article 2.2]");
 	}
 
 	@Test
@@ -862,7 +867,7 @@ public class SXPBlueprintSearchResultTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group, _user.getUserId());
 
-		_addAssetCategory("Guest Users", _user);
+		_addAssetCategory("Hide from Guest Users", _user);
 
 		_setUpJournalArticles(
 			new String[] {"", ""},

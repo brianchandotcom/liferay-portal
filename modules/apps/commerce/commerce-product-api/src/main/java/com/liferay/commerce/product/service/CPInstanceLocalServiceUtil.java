@@ -325,8 +325,18 @@ public class CPInstanceLocalServiceUtil {
 		getService().buildCPInstances(cpDefinitionId, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #checkCPInstances(long)}
+	 */
+	@Deprecated
 	public static void checkCPInstances() throws PortalException {
 		getService().checkCPInstances();
+	}
+
+	public static void checkCPInstances(long cpDefinitionId)
+		throws PortalException {
+
+		getService().checkCPInstances(cpDefinitionId);
 	}
 
 	public static void checkCPInstancesByDisplayDate(long cpDefinitionId)

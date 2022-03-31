@@ -328,11 +328,22 @@ public class CPInstanceLocalServiceWrapper
 			cpDefinitionId, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #checkCPInstances(long)}
+	 */
+	@Deprecated
 	@Override
 	public void checkCPInstances()
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		_cpInstanceLocalService.checkCPInstances();
+	}
+
+	@Override
+	public void checkCPInstances(long cpDefinitionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_cpInstanceLocalService.checkCPInstances(cpDefinitionId);
 	}
 
 	@Override

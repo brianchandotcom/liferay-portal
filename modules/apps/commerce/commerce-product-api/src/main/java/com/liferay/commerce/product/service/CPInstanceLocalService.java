@@ -249,7 +249,13 @@ public interface CPInstanceLocalService
 			long cpDefinitionId, ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link #checkCPInstances(long)}
+	 */
+	@Deprecated
 	public void checkCPInstances() throws PortalException;
+
+	public void checkCPInstances(long cpDefinitionId) throws PortalException;
 
 	public void checkCPInstancesByDisplayDate(long cpDefinitionId)
 		throws PortalException;

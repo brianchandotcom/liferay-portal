@@ -32,7 +32,7 @@ const Projects = ({PageContainer = Container}) => {
 				<ListView
 					forceRefetch={formModal.forceRefetch}
 					managementToolbarProps={{
-						addButton: formModal.modal.open,
+						addButton: () => formModal.modal.open(),
 					}}
 					query={getProjects}
 					tableProps={{

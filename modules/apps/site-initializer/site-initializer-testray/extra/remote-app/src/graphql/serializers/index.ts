@@ -28,4 +28,20 @@ export const bodySerializers: RestLink.Serializers = {
 			headers,
 		};
 	},
+	requirement: (data, headers) => {
+		const body = data;
+
+		body.r_projectToRequirements_c_projectId = body.projectId;
+		body.r_componentToRequirements_c_componentId = body.componentId;
+
+		delete body.projectId;
+		delete body.componentId;
+
+		headers.set('Content-Type', 'application/json');
+
+		return {
+			body: JSON.stringify(body),
+			headers,
+		};
+	},
 };

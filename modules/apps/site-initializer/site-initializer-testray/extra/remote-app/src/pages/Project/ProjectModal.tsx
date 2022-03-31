@@ -12,7 +12,6 @@
  * details.
  */
 
-import {useMutation} from '@apollo/client';
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import {useEffect, useState} from 'react';
@@ -26,19 +25,21 @@ import {
 import {FormModalOptions} from '../../hooks/useFormModal';
 import i18n from '../../i18n';
 
-type NewProjectForm = {
-	description: string;
-	id?: number;
-	name: string;
+const projectFormData = {
+	description: '',
+	id: undefined,
+	name: '',
 };
 
-type NewProjectFormProps = {
-	form: NewProjectForm;
+type ProjectForm = typeof projectFormData;
+
+type ProjectFormProps = {
+	form: ProjectForm;
 	onChange: (event: any) => void;
 	onSubmit: (event: any) => void;
 };
 
-const FormNewProject: React.FC<NewProjectFormProps> = ({
+const FormNewProject: React.FC<ProjectFormProps> = ({
 	form,
 	onChange,
 	onSubmit,
@@ -73,15 +74,9 @@ type NewProjectProps = {
 	modal: FormModalOptions;
 };
 const ProjectModal: React.FC<NewProjectProps> = ({
-	modal: {modalState, observer, onChange, onClose, onError, onSave, visible},
+	modal: {modalState, observer, onChange, onClose, onSubmit, visible},
 }) => {
-	const [form, setForm] = useState<NewProjectForm>({
-		description: '',
-		name: '',
-	});
-
-	const [onCreateProject] = useMutation(CreateProject);
-	const [onUpdateProject] = useMutation(UpdateProject);
+	const [form, setForm] = useState<ProjectForm>(projectFormData);
 
 	useEffect(() => {
 		if (visible && modalState) {
@@ -89,30 +84,14 @@ const ProjectModal: React.FC<NewProjectProps> = ({
 		}
 	}, [visible, modalState]);
 
-	const onSubmit = async () => {
-		const variables: any = {
-			Project: {
-				description: form.description,
-				name: form.name,
-			},
-		};
-
-		try {
-			if (form.id) {
-				variables.projectId = form.id;
-
-				await onUpdateProject({variables});
+	const _onSubmit = () =>
+		onSubmit(
+			{description: form.description, id: form.id, name: form.name},
+			{
+				createMutation: CreateProject,
+				updateMutation: UpdateProject,
 			}
-			else {
-				await onCreateProject({variables});
-			}
-
-			onSave();
-		}
-		catch (error) {
-			onError(error);
-		}
-	};
+		);
 
 	return (
 		<Modal
@@ -122,7 +101,7 @@ const ProjectModal: React.FC<NewProjectProps> = ({
 						{i18n.translate('close')}
 					</ClayButton>
 
-					<ClayButton displayType="primary" onClick={onSubmit}>
+					<ClayButton displayType="primary" onClick={_onSubmit}>
 						{i18n.translate('save')}
 					</ClayButton>
 				</ClayButton.Group>
@@ -135,7 +114,7 @@ const ProjectModal: React.FC<NewProjectProps> = ({
 			<FormNewProject
 				form={form}
 				onChange={onChange({form, setForm})}
-				onSubmit={onSubmit}
+				onSubmit={_onSubmit}
 			/>
 		</Modal>
 	);

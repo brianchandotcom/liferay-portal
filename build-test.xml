@@ -7085,6 +7085,13 @@ org.apache.catalina.tribes.level = FINE]]>
 		</if>
 	</target>
 
+	<target name="copy-translation-file">
+		<copy
+			file="${selenium.output.dir.name}/${translation.zip.file.name}/${translation.file.name}"
+			tofile="${selenium.output.dir.name}/${translation.file.name}"
+		/>
+	</target>
+
 	<target name="create-hidden-osgi-file">
 		<get-testcase-property property.name="create.osgi.hidden.file" />
 

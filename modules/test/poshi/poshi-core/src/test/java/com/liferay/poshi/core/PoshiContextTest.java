@@ -132,7 +132,8 @@ public class PoshiContextTest extends TestCase {
 
 	@Test
 	public void testGetSeleniumParameterCount() {
-		LiferaySeleniumMethod seleniumMethod = PoshiContext.getSeleniumMethod("clickAt");
+		LiferaySeleniumMethod seleniumMethod = PoshiContext.getSeleniumMethod(
+			"clickAt");
 
 		int count = seleniumMethod.getParameterCount();
 

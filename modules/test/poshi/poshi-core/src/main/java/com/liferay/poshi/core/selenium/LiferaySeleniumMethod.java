@@ -54,7 +54,7 @@ public class LiferaySeleniumMethod {
 			return Collections.emptyList();
 		}
 
-		return _seleniumParameterNames.subList(0, parameterCount - 1);
+		return _seleniumParameterNames.subList(0, parameterCount);
 	}
 
 	private static final List<String> _javaScriptMethodNames = Arrays.asList(
@@ -63,31 +63,8 @@ public class LiferaySeleniumMethod {
 	private static final List<String> _seleniumParameterNames = Arrays.asList(
 		"locator1", "value1", "locator2");
 
-	private static final Map<String, String[]> _uniqueSeleniumMethods =
-		new HashMap<String, String[]>() {
-			{
-				put(
-					"assertCSSValue",
-					new String[] {"locator1", "locator2", "value1"});
-				put(
-					"ocularAssertElementImage",
-					new String[] {"locator1", "value1", "value2"});
-
-				for (String methodName : _value1MethodNames) {
-					String[] params = {"value1"};
-
-					_uniqueSeleniumMethods.put(methodName, params);
-				}
-
-				for (String methodName : _javaScriptMethodNames) {
-					String[] params = {"value1", "value2", "value3"};
-
-					_uniqueSeleniumMethods.put(methodName, params);
-				}
-			}
-		};
-
-	private static final List<String> _value1MethodNames = Arrays.asList(
+	private final Method _method;
+	private final List<String> _uniqueMethodNames = Arrays.asList(
 		"assertAlertText", "assertConfirmation", "assertConsoleTextNotPresent",
 		"assertConsoleTextPresent", "assertHTMLSourceTextNotPresent",
 		"assertHTMLSourceTextPresent", "assertLocation", "assertNotLocation",
@@ -97,6 +74,28 @@ public class LiferaySeleniumMethod {
 		"waitForConsoleTextNotPresent", "waitForConsoleTextPresent",
 		"waitForTextNotPresent", "waitForTextPresent");
 
-	private final Method _method;
+	private final Map<String, String[]> _uniqueSeleniumMethods =
+		new HashMap<String, String[]>() {
+			{
+				put(
+					"assertCSSValue",
+					new String[] {"locator1", "locator2", "value1"});
+				put(
+					"ocularAssertElementImage",
+					new String[] {"locator1", "value1", "value2"});
+
+				for (String methodName : _uniqueMethodNames) {
+					String[] params = {"value1"};
+
+					put(methodName, params);
+				}
+
+				for (String methodName : _javaScriptMethodNames) {
+					String[] params = {"value1", "value2", "value3"};
+
+					put(methodName, params);
+				}
+			}
+		};
 
 }

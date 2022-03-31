@@ -44,6 +44,8 @@ public interface MailService {
 
 	public void clearSession();
 
+	public void clearSession(long companyId);
+
 	public void deleteEmailAddress(long companyId, long userId);
 
 	public void deleteUser(long companyId, long userId);

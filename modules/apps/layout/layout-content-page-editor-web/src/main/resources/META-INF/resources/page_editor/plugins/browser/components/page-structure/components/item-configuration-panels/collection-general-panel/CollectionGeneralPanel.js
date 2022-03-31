@@ -15,7 +15,6 @@
 import ClayForm, {
 	ClayCheckbox,
 	ClayInput,
-	ClaySelectWithOption,
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {useModal} from '@clayui/modal';
@@ -50,15 +49,10 @@ import CollectionFilterConfigurationModal from '../../CollectionFilterConfigurat
 import {CommonStyles} from '../CommonStyles';
 import {LayoutSelector} from './LayoutSelector';
 import {ListItemStyleSelector} from './ListItemStyleSelector';
+import {PaginationSelector} from './PaginationSelector';
 import {ShowGutterSelector} from './ShowGutterSelector';
 import {StyleDisplaySelector} from './StyleDisplaySelector';
 import {VerticalAlignmentSelector} from './VerticalAlignmentSelector';
-
-const PAGINATION_TYPE_OPTIONS = [
-	{label: Liferay.Language.get('none'), value: 'none'},
-	{label: Liferay.Language.get('numeric'), value: 'numeric'},
-	{label: Liferay.Language.get('simple'), value: 'simple'},
-];
 
 const LIST_STYLE_GRID = '';
 
@@ -345,28 +339,15 @@ export function CollectionGeneralPanel({item}) {
 											/>
 										)}
 
-									<ClayForm.Group small>
-										<label
-											htmlFor={collectionPaginationTypeId}
-										>
-											{Liferay.Language.get('pagination')}
-										</label>
-
-										<ClaySelectWithOption
-											aria-label={Liferay.Language.get(
-												'pagination'
-											)}
-											id={collectionPaginationTypeId}
-											onChange={(event) =>
-												handleConfigurationChanged({
-													paginationType:
-														event.target.value,
-												})
-											}
-											options={PAGINATION_TYPE_OPTIONS}
-											value={paginationType || 'none'}
-										/>
-									</ClayForm.Group>
+									<PaginationSelector
+										collectionPaginationTypeId={
+											collectionPaginationTypeId
+										}
+										handleConfigurationChanged={
+											handleConfigurationChanged
+										}
+										value={paginationType || 'none'}
+									/>
 
 									{paginationType !== 'none' ? (
 										<PaginationOptions

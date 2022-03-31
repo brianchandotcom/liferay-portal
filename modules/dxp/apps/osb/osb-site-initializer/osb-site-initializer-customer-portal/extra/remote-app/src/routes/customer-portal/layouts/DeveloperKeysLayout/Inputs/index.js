@@ -77,11 +77,12 @@ const DeveloperKeysInputs = ({
 	}, [dxpVersion, listType]);
 
 	const developerKeyDownload = async () => {
+		const selectedVersionSplitted = selectedVersion.split(' ')[0];
 		const license = await getDevelopmentLicenseKey(
 			accountKey,
 			licenseKeyDownloadURL,
 			sessionId,
-			encodeURI(selectedVersion),
+			encodeURI(selectedVersionSplitted),
 			productName
 		);
 
@@ -98,7 +99,7 @@ const DeveloperKeysInputs = ({
 
 			return downloadFromBlob(
 				licenseBlob,
-				`activation-key-${productName.toLowerCase()}development-${selectedVersion}-${projectFileName}${extensionFile}`
+				`activation-key-${productName.toLowerCase()}development-${selectedVersionSplitted}-${projectFileName}${extensionFile}`
 			);
 		}
 

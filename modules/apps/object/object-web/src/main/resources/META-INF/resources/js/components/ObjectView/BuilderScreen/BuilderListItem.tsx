@@ -174,6 +174,9 @@ const BuilderListItem: React.FC<Iprops> = ({
 
 			<ClayDropDown
 				active={active}
+				menuElementAttrs={{
+					className: 'lfr-object__object-builder-list-item-dropdown',
+				}}
 				onActiveChange={setActive}
 				trigger={
 					<ClayButtonWithIcon

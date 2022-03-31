@@ -13,6 +13,10 @@
 		}
 	}
 
+	&__object-builder-list-item-dropdown {
+		width: 192px !important;
+	}
+
 	&__object-custom-view-builder-item-icon {
 		margin-right: 10px;
 	}
@@ -22,8 +26,4 @@
 		position: absolute;
 		top: 23px;
 	}
-}
-
-.dropdown-menu {
-	width: 192px !important;
 }

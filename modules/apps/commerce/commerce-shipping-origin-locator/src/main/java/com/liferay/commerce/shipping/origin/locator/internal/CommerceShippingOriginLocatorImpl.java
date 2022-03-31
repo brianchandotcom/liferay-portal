@@ -125,14 +125,14 @@ public class CommerceShippingOriginLocatorImpl
 					commerceAddress.getCompanyId(),
 					commerceInventoryWarehouse.getCountryTwoLettersISOCode());
 
-				Region region = _getRegion(
-					country.getCountryId(),
-					commerceInventoryWarehouse.getCommerceRegionCode());
-
 				double[] coordinates = _commerceGeocoder.getCoordinates(
 					commerceInventoryWarehouse.getStreet1(),
 					commerceInventoryWarehouse.getCity(),
-					commerceInventoryWarehouse.getZip(), region, country);
+					commerceInventoryWarehouse.getZip(),
+					_getRegion(
+						country.getCountryId(),
+						commerceInventoryWarehouse.getCommerceRegionCode()),
+					country);
 
 				commerceInventoryWarehouse =
 					_commerceInventoryWarehouseLocalService.

@@ -693,12 +693,10 @@ public class FedExCommerceShippingOptionHelper {
 				BigDecimal.valueOf(commerceOrderItem.getQuantity()));
 
 			for (int j = 0; j < commerceOrderItem.getQuantity(); j++) {
-				RequestedPackageLineItem requestedPackageLineItem =
+				requestedPackageLineItems.add(
 					_getRequestedPackageLineItem(
 						fedExWidth, fedExHeight, fedExDepth, fedExWeight, price,
-						1, i + 1);
-
-				requestedPackageLineItems.add(requestedPackageLineItem);
+						1, i + 1));
 			}
 		}
 

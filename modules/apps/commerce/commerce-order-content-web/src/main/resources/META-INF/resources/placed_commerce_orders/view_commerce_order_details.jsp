@@ -340,12 +340,14 @@ if (commerceOrder != null) {
 
 						<%
 						CommerceMoney shippingDiscountAmountCommerceMoney = shippingCommerceDiscountValue.getDiscountAmount();
+
+						CommerceDiscountValue shippingDiscountValueWithTaxAmount = commerceOrderPrice.getShippingDiscountValueWithTaxAmount();
 						%>
 
 						<dt><liferay-ui:message key="delivery-discount" /></dt>
 						<dd class="text-right"><%= HtmlUtil.escape(shippingDiscountAmountCommerceMoney.format(locale)) %></dd>
 						<dt></dt>
-						<dd class="text-right"><%= HtmlUtil.escape(commerceOrderContentDisplayContext.getLocalizedPercentage(shippingCommerceDiscountValue.getDiscountPercentage(), locale)) %></dd>
+						<dd class="text-right"><%= HtmlUtil.escape(commerceOrderContentDisplayContext.getLocalizedPercentage(shippingDiscountValueWithTaxAmount.getDiscountPercentage(), locale)) %></dd>
 					</c:if>
 
 					<c:if test="<%= priceDisplayType.equals(CommercePricingConstants.TAX_EXCLUDED_FROM_PRICE) %>">

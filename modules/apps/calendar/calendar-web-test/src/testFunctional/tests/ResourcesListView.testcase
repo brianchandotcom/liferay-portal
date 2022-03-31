@@ -142,13 +142,18 @@ definition {
 		CalendarResource.viewResourceName(calendarResourceName = "Active Resource");
 	}
 
-	@description = "LRQA-71885 - Verify that the user can filter by Current Scope"
-	@ignore = "Test Stub"
+	@description = "LRQA-71921 - Verify that the user can filter by Current Scope"
 	@priority = "3"
 	test CanFilterByCurrentScope {
+		CalendarNavigator.gotoAddResource();
 
-		// TODO LRQA-71921 CanFilterByCurrentScope pending implementation
+		CalendarResource.editResourceName(calendarResourceName = "Current Scope Resource");
 
+		CalendarResource.save();
+
+		CalendarResource.resourceSetFilterAndOrder(filterBy = "Current");
+
+		CalendarResource.viewResourceName(calendarResourceName = "Current Scope Resource");
 	}
 
 	@description = "LRQA-71885 - Verify that the user can filter by Global Scope"

@@ -1,3 +1,14 @@
+[#if themeDisplay.isSignedIn() && !themeDisplay.getLayout().isSystem()]
+<script>
+	window.location.replace(
+		'${themeDisplay.getPathFriendlyURLPrivateGroup() + themeDisplay.getScopeGroup().getFriendlyURL()}'
+	);
+</script>
+
+[@liferay_aui.script]
+window.location.replace("${themeDisplay.getPathFriendlyURLPrivateGroup() +
+themeDisplay.getScopeGroup().getFriendlyURL()}"); [/@] [/#if]
+
 <div class="bg-brand-primary-darken-5 raylife-sign-in vh-100">
 	<div class="h-100 no-gutters row">
 		<div class="col-5 col-lg-4 d-flex form-column text-neutral-0">

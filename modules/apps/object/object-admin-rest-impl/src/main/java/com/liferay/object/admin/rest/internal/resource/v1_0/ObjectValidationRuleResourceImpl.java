@@ -14,9 +14,22 @@
 
 package com.liferay.object.admin.rest.internal.resource.v1_0;
 
+import com.liferay.object.admin.rest.dto.v1_0.ObjectValidationRule;
+import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectValidationRuleUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectValidationRuleResource;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectValidationRuleService;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
@@ -28,4 +41,125 @@ import org.osgi.service.component.annotations.ServiceScope;
 )
 public class ObjectValidationRuleResourceImpl
 	extends BaseObjectValidationRuleResourceImpl {
+
+	@Override
+	public void deleteObjectValidationRule(Long objectValidationRuleId)
+		throws Exception {
+
+		_objectValidationRuleService.deleteObjectValidationRule(
+			objectValidationRuleId);
+	}
+
+	@Override
+	public Page<ObjectValidationRule>
+			getObjectDefinitionObjectValidationRulesPage(
+				Long objectDefinitionId, String search, Pagination pagination)
+		throws Exception {
+
+		return SearchUtil.search(
+			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.UPDATE,
+					"postObjectDefinitionObjectValidationRule",
+					ObjectDefinition.class.getName(), objectDefinitionId)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW,
+					"getObjectDefinitionObjectValidationRulesPage",
+					ObjectDefinition.class.getName(), objectDefinitionId)
+			).build(),
+			booleanQuery -> {
+			},
+			null, com.liferay.object.model.ObjectValidationRule.class.getName(),
+			search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(Field.NAME, search);
+				searchContext.setAttribute(
+					"objectDefinitionId", objectDefinitionId);
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			null,
+			document -> _toObjectValidationRule(
+				_objectValidationRuleService.getObjectValidationRule(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+	}
+
+	@Override
+	public ObjectValidationRule getObjectValidationRule(
+			Long objectValidationRuleId)
+		throws Exception {
+
+		return _toObjectValidationRule(
+			_objectValidationRuleService.getObjectValidationRule(
+				objectValidationRuleId));
+	}
+
+	@Override
+	public ObjectValidationRule postObjectDefinitionObjectValidationRule(
+			Long objectDefinitionId, ObjectValidationRule objectValidationRule)
+		throws Exception {
+
+		return _toObjectValidationRule(
+			_objectValidationRuleService.addObjectValidationRule(
+				objectDefinitionId,
+				GetterUtil.getBoolean(objectValidationRule.getActive()),
+				LocalizedMapUtil.getLocalizedMap(
+					objectValidationRule.getErrorLabel()),
+				LocalizedMapUtil.getLocalizedMap(
+					objectValidationRule.getName()),
+				objectValidationRule.getEngine(),
+				objectValidationRule.getScript()));
+	}
+
+	@Override
+	public ObjectValidationRule putObjectValidationRule(
+			Long objectValidationRuleId,
+			ObjectValidationRule objectValidationRule)
+		throws Exception {
+
+		return _toObjectValidationRule(
+			_objectValidationRuleService.updateObjectValidationRule(
+				objectValidationRuleId, objectValidationRule.getActive(),
+				LocalizedMapUtil.getLocalizedMap(
+					objectValidationRule.getErrorLabel()),
+				LocalizedMapUtil.getLocalizedMap(
+					objectValidationRule.getName()),
+				objectValidationRule.getEngine(),
+				objectValidationRule.getScript()));
+	}
+
+	private ObjectValidationRule _toObjectValidationRule(
+		com.liferay.object.model.ObjectValidationRule
+			serviceBuilderObjectValidationRule) {
+
+		return ObjectValidationRuleUtil.toObjectValidationRule(
+			HashMapBuilder.put(
+				"delete",
+				addAction(
+					ActionKeys.DELETE, "deleteObjectValidationRule",
+					ObjectDefinition.class.getName(),
+					serviceBuilderObjectValidationRule.getObjectDefinitionId())
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, "getObjectValidationRule",
+					ObjectDefinition.class.getName(),
+					serviceBuilderObjectValidationRule.getObjectDefinitionId())
+			).put(
+				"update",
+				addAction(
+					ActionKeys.UPDATE, "putObjectValidationRule",
+					ObjectDefinition.class.getName(),
+					serviceBuilderObjectValidationRule.getObjectDefinitionId())
+			).build(),
+			serviceBuilderObjectValidationRule);
+	}
+
+	@Reference
+	private ObjectValidationRuleService _objectValidationRuleService;
+
 }

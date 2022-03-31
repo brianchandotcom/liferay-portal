@@ -334,8 +334,8 @@ public class JournalArticleInfoItemFieldValuesProvider
 			InfoField.builder(
 			).infoFieldType(
 				TextInfoFieldType.INSTANCE
-			).uniqueId(
-				fieldName
+			).namespace(
+				StringPool.BLANK
 			).name(
 				fieldName
 			).labelInfoLocalizedValue(

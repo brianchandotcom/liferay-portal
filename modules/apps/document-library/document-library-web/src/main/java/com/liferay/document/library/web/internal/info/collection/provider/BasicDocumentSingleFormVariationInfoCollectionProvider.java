@@ -32,6 +32,7 @@ import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.info.sort.Sort;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -217,8 +218,8 @@ public class BasicDocumentSingleFormVariationInfoCollectionProvider
 		InfoField.FinalStep<?> finalStep = InfoField.builder(
 		).infoFieldType(
 			SelectInfoFieldType.INSTANCE
-		).uniqueId(
-			Field.ASSET_TAG_NAMES
+		).namespace(
+			StringPool.BLANK
 		).name(
 			Field.ASSET_TAG_NAMES
 		).attribute(

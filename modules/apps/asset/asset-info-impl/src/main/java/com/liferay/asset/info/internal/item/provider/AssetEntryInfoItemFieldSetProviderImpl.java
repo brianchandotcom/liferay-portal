@@ -92,7 +92,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 					InfoField.builder(
 					).infoFieldType(
 						CategoriesInfoFieldType.INSTANCE
-					).uniqueId(
+					).namespace(
 						AssetVocabulary.class.getSimpleName() +
 							StringPool.UNDERLINE +
 								assetVocabulary.getVocabularyId()
@@ -203,7 +203,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 					InfoField.builder(
 					).infoFieldType(
 						CategoriesInfoFieldType.INSTANCE
-					).uniqueId(
+					).namespace(
 						AssetVocabulary.class.getSimpleName() +
 							StringPool.UNDERLINE +
 								assetVocabulary.getVocabularyId()
@@ -300,8 +300,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		InfoField.builder(
 		).infoFieldType(
 			CategoriesInfoFieldType.INSTANCE
-		).uniqueId(
-			AssetCategory.class.getSimpleName() + "_categories"
+		).namespace(
+			AssetCategory.class.getSimpleName()
 		).name(
 			"categories"
 		).labelInfoLocalizedValue(
@@ -321,8 +321,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		InfoField.builder(
 		).infoFieldType(
 			TagsInfoFieldType.INSTANCE
-		).uniqueId(
-			AssetTag.class.getSimpleName() + "_tagNames"
+		).namespace(
+			AssetTag.class.getSimpleName()
 		).name(
 			"tagNames"
 		).labelInfoLocalizedValue(

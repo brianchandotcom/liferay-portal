@@ -21,6 +21,7 @@ import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
@@ -119,8 +120,8 @@ public class XLIFFInfoFormTranslationImporter
 		return InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).uniqueId(
-			value
+		).namespace(
+			StringPool.BLANK
 		).name(
 			value
 		).labelInfoLocalizedValue(

@@ -29,8 +29,8 @@ public class LayoutInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).uniqueId(
-			Layout.class.getSimpleName() + "_name"
+		).namespace(
+			Layout.class.getSimpleName()
 		).name(
 			"name"
 		).labelInfoLocalizedValue(

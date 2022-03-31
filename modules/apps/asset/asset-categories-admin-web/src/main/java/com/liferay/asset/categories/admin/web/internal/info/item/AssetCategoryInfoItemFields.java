@@ -28,8 +28,8 @@ public interface AssetCategoryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).uniqueId(
-			AssetCategory.class.getSimpleName() + "_displayPageURL"
+		).namespace(
+			AssetCategory.class.getSimpleName()
 		).name(
 			"description"
 		).labelInfoLocalizedValue(
@@ -40,8 +40,8 @@ public interface AssetCategoryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).uniqueId(
-			AssetCategory.class.getSimpleName() + "_displayPageURL"
+		).namespace(
+			AssetCategory.class.getSimpleName()
 		).name(
 			"displayPageURL"
 		).labelInfoLocalizedValue(
@@ -52,8 +52,8 @@ public interface AssetCategoryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).uniqueId(
-			AssetCategory.class.getSimpleName() + "_name"
+		).namespace(
+			AssetCategory.class.getSimpleName()
 		).name(
 			"name"
 		).labelInfoLocalizedValue(
@@ -64,8 +64,8 @@ public interface AssetCategoryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).uniqueId(
-			AssetCategory.class.getSimpleName() + "_vocabulary"
+		).namespace(
+			AssetCategory.class.getSimpleName()
 		).name(
 			"vocabulary"
 		).labelInfoLocalizedValue(

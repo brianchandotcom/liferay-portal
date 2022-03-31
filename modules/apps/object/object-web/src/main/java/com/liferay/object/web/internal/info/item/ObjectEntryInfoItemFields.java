@@ -31,8 +31,8 @@ public interface ObjectEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			DateInfoFieldType.INSTANCE
-		).uniqueId(
-			ObjectEntry.class.getSimpleName() + "_createDate"
+		).namespace(
+			ObjectEntry.class.getSimpleName()
 		).name(
 			"createDate"
 		).labelInfoLocalizedValue(
@@ -43,8 +43,8 @@ public interface ObjectEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			URLInfoFieldType.INSTANCE
-		).uniqueId(
-			ObjectEntry.class.getSimpleName() + "_displayPageURL"
+		).namespace(
+			ObjectEntry.class.getSimpleName()
 		).name(
 			"displayPageURL"
 		).labelInfoLocalizedValue(
@@ -55,8 +55,8 @@ public interface ObjectEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			DateInfoFieldType.INSTANCE
-		).uniqueId(
-			ObjectEntry.class.getSimpleName() + "_modifiedDate"
+		).namespace(
+			ObjectEntry.class.getSimpleName()
 		).name(
 			"modifiedDate"
 		).labelInfoLocalizedValue(
@@ -67,8 +67,8 @@ public interface ObjectEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			DateInfoFieldType.INSTANCE
-		).uniqueId(
-			ObjectEntry.class.getSimpleName() + "_publishDate"
+		).namespace(
+			ObjectEntry.class.getSimpleName()
 		).name(
 			"publishDate"
 		).labelInfoLocalizedValue(
@@ -79,8 +79,8 @@ public interface ObjectEntryInfoItemFields {
 		InfoField.builder(
 		).infoFieldType(
 			TextInfoFieldType.INSTANCE
-		).uniqueId(
-			ObjectEntry.class.getSimpleName() + "_userName"
+		).namespace(
+			ObjectEntry.class.getSimpleName()
 		).name(
 			"userName"
 		).labelInfoLocalizedValue(
@@ -90,8 +90,8 @@ public interface ObjectEntryInfoItemFields {
 	public static final InfoField userProfileImageInfoField = InfoField.builder(
 	).infoFieldType(
 		ImageInfoFieldType.INSTANCE
-	).uniqueId(
-		ObjectEntry.class.getSimpleName() + "_userProfileImage"
+	).namespace(
+		ObjectEntry.class.getSimpleName()
 	).name(
 		"userProfileImage"
 	).labelInfoLocalizedValue(

@@ -191,9 +191,8 @@ public class InfoItemFieldReaderTrackerImpl
 			return InfoField.builder(
 			).infoFieldType(
 				infoFieldType
-			).uniqueId(
-				InfoDisplayContributorField.class.getSimpleName() +
-					StringPool.UNDERLINE + getKey()
+			).namespace(
+				InfoDisplayContributorField.class.getSimpleName()
 			).name(
 				getKey()
 			).labelInfoLocalizedValue(

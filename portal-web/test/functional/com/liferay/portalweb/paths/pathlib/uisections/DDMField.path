@@ -31,6 +31,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GEOLOCATION_MAP_INPUT</td>
+	<td>//div[contains(@class,'field-group')]//div[contains(@id,'Container')]/following-sibling::input | //div[contains(@class,'lfr-map')]/following-sibling::input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HTML</td>
 	<td>//div[@data-fieldname='${key_fieldName}']//div[contains(@id,'cke__')]</td>
 	<td></td>

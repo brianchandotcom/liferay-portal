@@ -72,7 +72,9 @@ public class SaveFrontendIconsPackFromSpritemapMVCActionCommand
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (!permissionChecker.isCompanyAdmin(themeDisplay.getCompanyId())) {
+		long companyId = themeDisplay.getCompanyId();
+
+		if (!permissionChecker.isCompanyAdmin(companyId)) {
 			SessionErrors.add(actionRequest, PrincipalException.class);
 
 			actionResponse.setRenderParameter("mvcPath", "/error.jsp");
@@ -92,12 +94,11 @@ public class SaveFrontendIconsPackFromSpritemapMVCActionCommand
 		InputStream inputStream = uploadPortletRequest.getFileAsStream(
 			"svgFile");
 
-		String name = ParamUtil.getString(
-			actionRequest, "name");
+		String name = ParamUtil.getString(actionRequest, "name");
 
 		Optional<FrontendIconsResourcePack> frontendIconsResourcePackOptional =
 			_frontendIconsResourcePackRepository.getFrontendIconsResourcePack(
-				themeDisplay.getCompanyId(), name);
+				companyId, name);
 
 		FrontendIconsResourcePack frontendIconsResourcePack =
 			frontendIconsResourcePackOptional.orElse(
@@ -107,7 +108,7 @@ public class SaveFrontendIconsPackFromSpritemapMVCActionCommand
 			SVGUtil.getFrontendIconsResources(StringUtil.read(inputStream)));
 
 		_frontendIconsResourcePackRepository.addFrontendIconsResourcePack(
-			themeDisplay.getCompanyId(), frontendIconsResourcePack);
+			companyId, frontendIconsResourcePack);
 
 		JSONArray iconsJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -115,7 +116,7 @@ public class SaveFrontendIconsPackFromSpritemapMVCActionCommand
 				frontendIconsResourcePack.getFrontendIconsResources()) {
 
 			iconsJSONArray.put(
-				JSONUtil.put("name", frontendIconsResource.getId()));
+				JSONUtil.put("name", frontendIconsResource.getName()));
 		}
 
 		JSONPortletResponseUtil.writeJSON(

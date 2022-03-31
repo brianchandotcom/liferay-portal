@@ -96,6 +96,7 @@ definition {
 
 	macro changeAttributeDataType {
 		var key_buttonName = "${attributeName}";
+		var key_attributeName = "${attributeName}";
 
 		MouseOver(locator1 = "ACUtils#GENERIC_BUTTON");
 
@@ -253,6 +254,7 @@ definition {
 
 	macro viewChangedAttributeDataType {
 		var key_buttonName = "${attributeName}";
+		var key_attributeName = "${attributeName}";
 		var newDataType = StringUtil.upperCase("${newDataType}");
 
 		MouseOver(locator1 = "ACUtils#GENERIC_BUTTON");

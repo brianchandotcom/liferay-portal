@@ -45,7 +45,7 @@
 <!-- EDIT_ATTRIBUTE -->
 <tr>
 	<td>FILTER_BUTTON</td>
-	<td>//button[contains(@class,'btn-secondary')]//*</td>
+	<td>//*[text()='${key_attributeName}']/..//button[contains(@class,'options-button')]//*</td>
 	<td></td>
 </tr>
 <tr>

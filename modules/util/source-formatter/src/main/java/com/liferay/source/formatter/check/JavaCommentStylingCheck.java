@@ -30,7 +30,7 @@ public class JavaCommentStylingCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		Matcher matcher = _singleCommentPattern.matcher(content);
+		Matcher matcher = _singleLineCommentPattern.matcher(content);
 
 		while (matcher.find()) {
 			String commentContent = matcher.group(2);
@@ -87,7 +87,7 @@ public class JavaCommentStylingCheck extends BaseFileCheck {
 		return content;
 	}
 
-	private static final Pattern _singleCommentPattern = Pattern.compile(
+	private static final Pattern _singleLineCommentPattern = Pattern.compile(
 		"(\n\t*//)(?! )(.+)");
 
 }

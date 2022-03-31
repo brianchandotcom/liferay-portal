@@ -31,6 +31,7 @@ import com.liferay.object.constants.ObjectConstants;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
@@ -139,7 +140,8 @@ public class ObjectDefinitionResourceImpl
 				transformToList(
 					objectDefinition.getObjectFields(),
 					objectField -> ObjectFieldUtil.toObjectField(
-						objectField, _objectFieldLocalService))));
+						objectField, _objectFieldLocalService,
+						_objectFieldSettingLocalService))));
 	}
 
 	@Override
@@ -303,6 +305,9 @@ public class ObjectDefinitionResourceImpl
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
 
 	@Reference
 	private ObjectLayoutLocalService _objectLayoutLocalService;

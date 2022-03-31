@@ -16,11 +16,13 @@ package com.liferay.object.admin.rest.internal.dto.v1_0.util;
 
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.util.LocalizedMapUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.util.TransformUtil;
 
 import java.util.Map;
 
@@ -79,7 +81,8 @@ public class ObjectFieldUtil {
 
 	public static com.liferay.object.model.ObjectField toObjectField(
 		ObjectField objectField,
-		ObjectFieldLocalService objectFieldLocalService) {
+		ObjectFieldLocalService objectFieldLocalService,
+		ObjectFieldSettingLocalService objectFieldSettingLocalService) {
 
 		com.liferay.object.model.ObjectField serviceBuilderObjectField =
 			objectFieldLocalService.createObjectField(0L);
@@ -101,6 +104,12 @@ public class ObjectFieldUtil {
 		serviceBuilderObjectField.setLabelMap(
 			LocalizedMapUtil.getLocalizedMap(objectField.getLabel()));
 		serviceBuilderObjectField.setName(objectField.getName());
+		serviceBuilderObjectField.setObjectFieldSettings(
+			TransformUtil.transformToList(
+				objectField.getObjectFieldSettings(),
+				objectFieldSetting ->
+					ObjectFieldSettingUtil.toObjectFieldSetting(
+						objectFieldSetting, objectFieldSettingLocalService)));
 		serviceBuilderObjectField.setRequired(
 			GetterUtil.getBoolean(objectField.getRequired()));
 

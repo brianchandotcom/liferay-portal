@@ -52,6 +52,8 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 				"apiURL", objectDefinitionsFieldsDisplayContext.getAPIURL()
 			).put(
 				"objectFieldTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(false, locale)
+			).put(
+				"showDocumentsAndMediaOption", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146523"))
 			).build()
 		%>'
 	/>

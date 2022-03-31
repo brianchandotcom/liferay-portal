@@ -23,6 +23,7 @@ export default function ObjectFieldFormBase({
 	objectField: values,
 	objectFieldTypes,
 	setValues,
+	showDocumentsAndMediaOption,
 }: IProps): JSX.Element;
 export declare function useObjectFieldForm({
 	initialValues,
@@ -55,6 +56,7 @@ interface IProps {
 	objectField: Partial<ObjectField>;
 	objectFieldTypes: ObjectFieldType[];
 	setValues: (values: Partial<ObjectField>) => void;
+	showDocumentsAndMediaOption: boolean;
 }
 export declare type ObjectFieldErrors = FormError<
 	ObjectField &

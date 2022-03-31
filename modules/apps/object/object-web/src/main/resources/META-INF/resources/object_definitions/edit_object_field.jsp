@@ -38,6 +38,8 @@ ObjectField objectField = (ObjectField)request.getAttribute(ObjectWebKeys.OBJECT
 				"objectFieldTypes", objectDefinitionsFieldsDisplayContext.getObjectFieldBusinessTypeMaps(Validator.isNotNull(objectField.getRelationshipType()), locale)
 			).put(
 				"readOnly", !objectDefinitionsFieldsDisplayContext.hasUpdateObjectDefinitionPermission()
+			).put(
+				"showDocumentsAndMediaOption", GetterUtil.getBoolean(PropsUtil.get("feature.flag.LPS-146523"))
 			).build()
 		%>'
 	/>

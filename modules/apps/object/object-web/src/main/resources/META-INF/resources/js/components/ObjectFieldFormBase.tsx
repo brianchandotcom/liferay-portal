@@ -28,24 +28,23 @@ import Select from './Form/Select';
 
 const REQUIRED_MSG = Liferay.Language.get('required');
 
-const attachmentSources = [
-	{
-		description: Liferay.Language.get(
-			'files-can-be-stored-in-an-object-entry-or-in-a-specific-folder-in-documents-and-media'
-		),
-		label: Liferay.Language.get('upload-directly-from-users-computer'),
-		value: 'userComputer',
-	},
-	{
-		description: Liferay.Language.get(
-			'users-can-upload-or-select-existing-files-from-documents-and-media'
-		),
-		label: Liferay.Language.get(
-			'upload-or-select-from-documents-and-media-item-selector'
-		),
-		value: 'documentsAndMedia',
-	},
-];
+const documentsAndMedia = {
+	description: Liferay.Language.get(
+		'users-can-upload-or-select-existing-files-from-documents-and-media'
+	),
+	label: Liferay.Language.get(
+		'upload-or-select-from-documents-and-media-item-selector'
+	),
+	value: 'documentsAndMedia',
+};
+
+const userComputer = {
+	description: Liferay.Language.get(
+		'files-can-be-stored-in-an-object-entry-or-in-a-specific-folder-in-documents-and-media'
+	),
+	label: Liferay.Language.get('upload-directly-from-users-computer'),
+	value: 'userComputer',
+};
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId() as Liferay.Language.Locale;
 
@@ -79,6 +78,7 @@ export default function ObjectFieldFormBase({
 	objectField: values,
 	objectFieldTypes,
 	setValues,
+	showDocumentsAndMediaOption,
 }: IProps) {
 	const businessTypeMap = useMemo(() => {
 		const businessTypeMap = new Map<string, ObjectFieldType>();
@@ -116,7 +116,9 @@ export default function ObjectFieldFormBase({
 					},
 					{
 						name: 'fileSource',
-						value: '',
+						value: showDocumentsAndMediaOption
+							? ''
+							: 'userComputer',
 					},
 					{
 						name: 'maximumFileSize',
@@ -193,6 +195,7 @@ export default function ObjectFieldFormBase({
 						values.objectFieldSettings as ObjectFieldSetting[]
 					}
 					onSettingsChange={handleSettingsChange}
+					showDocumentsAndMediaOption={showDocumentsAndMediaOption}
 				/>
 			)}
 
@@ -301,7 +304,12 @@ function AttachmentSourceProperty({
 	error,
 	objectFieldSettings,
 	onSettingsChange,
+	showDocumentsAndMediaOption,
 }: IAttachmentSourcePropertyProps) {
+	const attachmentSources = showDocumentsAndMediaOption
+		? [userComputer, documentsAndMedia]
+		: [userComputer];
+
 	const settings = normalizeFieldSettings(objectFieldSettings);
 
 	const attachmentSource = attachmentSources.find(
@@ -321,7 +329,11 @@ function AttachmentSourceProperty({
 			}
 			options={attachmentSources}
 			required
-			value={attachmentSource?.label}
+			value={
+				showDocumentsAndMediaOption
+					? attachmentSource?.label
+					: userComputer.label
+			}
 		/>
 	);
 }
@@ -331,6 +343,7 @@ interface IAttachmentSourcePropertyProps {
 	error?: string;
 	objectFieldSettings: ObjectFieldSetting[];
 	onSettingsChange: (setting: ObjectFieldSetting) => void;
+	showDocumentsAndMediaOption: boolean;
 }
 interface IUseObjectFieldForm {
 	initialValues: Partial<ObjectField>;
@@ -350,6 +363,7 @@ interface IProps {
 	objectField: Partial<ObjectField>;
 	objectFieldTypes: ObjectFieldType[];
 	setValues: (values: Partial<ObjectField>) => void;
+	showDocumentsAndMediaOption: boolean;
 }
 
 export type ObjectFieldErrors = FormError<

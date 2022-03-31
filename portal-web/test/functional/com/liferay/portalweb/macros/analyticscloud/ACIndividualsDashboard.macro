@@ -305,18 +305,42 @@ definition {
 	}
 
 	macro viewTimelineItem {
-		for (var activityName : list "${activityNameList}") {
-			AssertTextEquals(
-				locator1 = "ACIndividualsDashboard#BASE_RESULTS_TIMELINE",
-				value1 = "${activityName}");
+		var list1 = ListUtil.newListFromString("${activityNameList}");
+		var list2 = ListUtil.newListFromString("${positionList}");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
+
+		while ("${i}" != "${size}") {
+			var activityName = ListUtil.get("${list1}", "${i}");
+			var position = ListUtil.get("${list2}", "${i}");
+
+			AssertElementPresent(
+				index = "${position}",
+				key_commonInformation = "${activityName}",
+				locator1 = "ACEventAnalysis#VIEW_ANALYSIS_INFORMATION_SPECIFC_ORDER");
+
+			var i = ${i} + 1;
+			var i = StringUtil.valueOf("${i}");
 		}
 	}
 
 	macro viewTimelineItemNotPresent {
-		for (var activityName : list "${activityNameList}") {
-			AssertTextNotEquals(
-				locator1 = "ACIndividualsDashboard#BASE_RESULTS_TIMELINE",
-				value1 = "${activityName}");
+		var list1 = ListUtil.newListFromString("${activityNameList}");
+		var list2 = ListUtil.newListFromString("${positionList}");
+		var size = ListUtil.size("${list1}");
+		var i = "0";
+
+		while ("${i}" != "${size}") {
+			var activityName = ListUtil.get("${list1}", "${i}");
+			var position = ListUtil.get("${list2}", "${i}");
+
+			AssertElementNotPresent(
+				index = "${position}",
+				key_commonInformation = "${activityName}",
+				locator1 = "ACEventAnalysis#VIEW_ANALYSIS_INFORMATION_SPECIFC_ORDER");
+
+			var i = ${i} + 1;
+			var i = StringUtil.valueOf("${i}");
 		}
 	}
 

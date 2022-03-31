@@ -690,9 +690,13 @@ definition {
 
 			ACUtils.searchBar(searchItem = "pageViewed");
 
-			ACIndividualsDashboard.viewTimelineItem(activityNameList = "pageViewed");
+			ACIndividualsDashboard.viewTimelineItem(
+				activityNameList = "pageViewed",
+				positionList = "1");
 
-			ACIndividualsDashboard.viewTimelineItemNotPresent(activityNameList = "documentPreviewed");
+			ACIndividualsDashboard.viewTimelineItemNotPresent(
+				activityNameList = "documentPreviewed",
+				positionList = "1");
 		}
 	}
 

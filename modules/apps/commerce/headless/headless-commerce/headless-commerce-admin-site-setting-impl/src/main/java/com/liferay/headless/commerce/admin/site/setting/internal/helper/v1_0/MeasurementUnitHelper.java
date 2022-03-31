@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -66,9 +65,6 @@ public class MeasurementUnitHelper {
 			}
 		}
 
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			groupId, new long[0], user, true);
-
 		CPMeasurementUnit cpMeasurementUnit =
 			_cpMeasurementUnitService.addCPMeasurementUnit(
 				LanguageUtils.getLocalizedMap(measurementUnit.getName()),
@@ -76,7 +72,9 @@ public class MeasurementUnitHelper {
 				GetterUtil.get(measurementUnit.getRate(), 0D),
 				GetterUtil.get(measurementUnit.getPrimary(), false),
 				GetterUtil.get(measurementUnit.getPriority(), 0D),
-				GetterUtil.get(measurementUnit.getType(), 0), serviceContext);
+				GetterUtil.get(measurementUnit.getType(), 0),
+				_serviceContextHelper.getServiceContext(
+					groupId, new long[0], user, true));
 
 		return _dtoMapper.modelToDTO(cpMeasurementUnit);
 	}
@@ -132,9 +130,6 @@ public class MeasurementUnitHelper {
 		CPMeasurementUnit cpMeasurementUnit =
 			_cpMeasurementUnitService.getCPMeasurementUnit(id);
 
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			cpMeasurementUnit.getGroupId(), new long[0], user, true);
-
 		return _cpMeasurementUnitService.updateCPMeasurementUnit(
 			cpMeasurementUnit.getCPMeasurementUnitId(),
 			LanguageUtils.getLocalizedMap(measurementUnit.getName()),
@@ -147,7 +142,8 @@ public class MeasurementUnitHelper {
 				measurementUnit.getPriority(), cpMeasurementUnit.getPriority()),
 			GetterUtil.get(
 				measurementUnit.getType(), cpMeasurementUnit.getType()),
-			serviceContext);
+			_serviceContextHelper.getServiceContext(
+				cpMeasurementUnit.getGroupId(), new long[0], user, true));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

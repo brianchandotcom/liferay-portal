@@ -17,7 +17,6 @@ package com.liferay.headless.commerce.admin.catalog.internal.dto.v1_0.converter;
 import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
-import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -67,12 +66,11 @@ public class SpecificationDTOConverter
 		};
 
 		if (cpOptionCategory != null) {
-			OptionCategory optionCategory = _optionCategoryDTOConverter.toDTO(
-				new DefaultDTOConverterContext(
-					cpOptionCategory.getCPOptionCategoryId(),
-					dtoConverterContext.getLocale()));
-
-			specification.setOptionCategory(optionCategory);
+			specification.setOptionCategory(
+				_optionCategoryDTOConverter.toDTO(
+					new DefaultDTOConverterContext(
+						cpOptionCategory.getCPOptionCategoryId(),
+						dtoConverterContext.getLocale())));
 		}
 
 		return specification;

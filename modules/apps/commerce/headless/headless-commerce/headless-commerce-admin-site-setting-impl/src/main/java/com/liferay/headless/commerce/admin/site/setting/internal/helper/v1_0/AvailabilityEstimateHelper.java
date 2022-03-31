@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -68,16 +67,14 @@ public class AvailabilityEstimateHelper {
 			}
 		}
 
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			groupId, new long[0], user, true);
-
 		CommerceAvailabilityEstimate commerceAvailabilityEstimate =
 			_commerceAvailabilityEstimateService.
 				addCommerceAvailabilityEstimate(
 					LanguageUtils.getLocalizedMap(
 						availabilityEstimate.getTitle()),
 					GetterUtil.get(availabilityEstimate.getPriority(), 0D),
-					serviceContext);
+					_serviceContextHelper.getServiceContext(
+						groupId, new long[0], user, true));
 
 		return _dtoMapper.modelToDTO(commerceAvailabilityEstimate);
 	}
@@ -129,9 +126,6 @@ public class AvailabilityEstimateHelper {
 			_commerceAvailabilityEstimateService.
 				getCommerceAvailabilityEstimate(id);
 
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			0L, new long[0], user, true);
-
 		return _commerceAvailabilityEstimateService.
 			updateCommerceAvailabilityEstimate(
 				commerceAvailabilityEstimate.
@@ -140,7 +134,8 @@ public class AvailabilityEstimateHelper {
 				GetterUtil.get(
 					availabilityEstimate.getPriority(),
 					commerceAvailabilityEstimate.getPriority()),
-				serviceContext);
+				_serviceContextHelper.getServiceContext(
+					0L, new long[0], user, true));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

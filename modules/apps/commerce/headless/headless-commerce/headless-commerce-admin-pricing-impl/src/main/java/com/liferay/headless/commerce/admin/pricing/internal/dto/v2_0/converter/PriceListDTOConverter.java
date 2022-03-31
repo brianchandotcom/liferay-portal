@@ -29,8 +29,6 @@ import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
-import java.util.ResourceBundle;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -64,11 +62,9 @@ public class PriceListDTOConverter
 		String priceListStatusLabel = WorkflowConstants.getStatusLabel(
 			commercePriceList.getStatus());
 
-		ResourceBundle resourceBundle = LanguageResources.getResourceBundle(
-			dtoConverterContext.getLocale());
-
 		String priceListStatusLabelI18n = LanguageUtil.get(
-			resourceBundle,
+			LanguageResources.getResourceBundle(
+				dtoConverterContext.getLocale()),
 			WorkflowConstants.getStatusLabel(commercePriceList.getStatus()));
 
 		ExpandoBridge expandoBridge = commercePriceList.getExpandoBridge();

@@ -421,11 +421,10 @@ public class ProductResourceImpl
 				ArrayUtil.toLongArray(assetCategoryIds));
 		}
 		else if (cpDefinition != null) {
-			long[] assetCategoryIds = _assetCategoryLocalService.getCategoryIds(
-				cpDefinition.getModelClassName(),
-				cpDefinition.getCPDefinitionId());
-
-			serviceContext.setAssetCategoryIds(assetCategoryIds);
+			serviceContext.setAssetCategoryIds(
+				_assetCategoryLocalService.getCategoryIds(
+					cpDefinition.getModelClassName(),
+					cpDefinition.getCPDefinitionId()));
 		}
 
 		Map<String, String> nameMap = product.getName();
@@ -1009,11 +1008,10 @@ public class ProductResourceImpl
 		Category[] categories = product.getCategories();
 
 		if (categories == null) {
-			long[] assetCategoryIds = _assetCategoryLocalService.getCategoryIds(
-				cpDefinition.getModelClassName(),
-				cpDefinition.getCPDefinitionId());
-
-			serviceContext.setAssetCategoryIds(assetCategoryIds);
+			serviceContext.setAssetCategoryIds(
+				_assetCategoryLocalService.getCategoryIds(
+					cpDefinition.getModelClassName(),
+					cpDefinition.getCPDefinitionId()));
 		}
 		else {
 			List<Long> assetCategoryIds = new ArrayList<>();

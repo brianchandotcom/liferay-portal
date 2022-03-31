@@ -109,11 +109,9 @@ public class ShippingAddressUtil {
 			return commerceAddress.getRegionId();
 		}
 
-		long countryId = _getCountryId(
-			commerceAddress, country, shippingAddress);
-
 		Region region = regionService.fetchRegion(
-			countryId, shippingAddress.getRegionISOCode());
+			_getCountryId(commerceAddress, country, shippingAddress),
+			shippingAddress.getRegionISOCode());
 
 		if (region == null) {
 			return 0;

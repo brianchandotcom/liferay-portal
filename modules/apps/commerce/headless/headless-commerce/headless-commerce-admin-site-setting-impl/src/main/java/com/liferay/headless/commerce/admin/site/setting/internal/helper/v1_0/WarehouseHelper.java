@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -58,9 +57,6 @@ public class WarehouseHelper {
 			}
 		}
 
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			groupId, new long[0], user, true);
-
 		CommerceInventoryWarehouse commerceInventoryWarehouse =
 			_commerceInventoryWarehouseService.addCommerceInventoryWarehouse(
 				null, warehouse.getName(), warehouse.getDescription(),
@@ -68,7 +64,9 @@ public class WarehouseHelper {
 				warehouse.getStreet1(), warehouse.getStreet2(),
 				warehouse.getStreet3(), warehouse.getCity(), warehouse.getZip(),
 				"", "", GetterUtil.get(warehouse.getLatitude(), 0D),
-				GetterUtil.get(warehouse.getLongitude(), 0D), serviceContext);
+				GetterUtil.get(warehouse.getLongitude(), 0D),
+				_serviceContextHelper.getServiceContext(
+					groupId, new long[0], user, true));
 
 		return _dtoMapper.modelToDTO(commerceInventoryWarehouse);
 	}
@@ -130,9 +128,6 @@ public class WarehouseHelper {
 			_commerceInventoryWarehouseService.getCommerceInventoryWarehouse(
 				id);
 
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			0, new long[0], user, true);
-
 		return _commerceInventoryWarehouseService.
 			updateCommerceInventoryWarehouse(
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
@@ -166,7 +161,8 @@ public class WarehouseHelper {
 				GetterUtil.get(
 					warehouse.getMvccVersion(),
 					commerceInventoryWarehouse.getMvccVersion()),
-				serviceContext);
+				_serviceContextHelper.getServiceContext(
+					0, new long[0], user, true));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

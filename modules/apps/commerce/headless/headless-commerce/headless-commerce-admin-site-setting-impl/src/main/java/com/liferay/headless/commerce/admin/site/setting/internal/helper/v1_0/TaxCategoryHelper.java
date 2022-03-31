@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -62,14 +61,12 @@ public class TaxCategoryHelper {
 			}
 		}
 
-		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
-			groupId, new long[0], user, true);
-
 		CPTaxCategory cpTaxCategory = _cpTaxCategoryService.addCPTaxCategory(
 			StringPool.BLANK,
 			LanguageUtils.getLocalizedMap(taxCategory.getName()),
 			LanguageUtils.getLocalizedMap(taxCategory.getDescription()),
-			serviceContext);
+			_serviceContextHelper.getServiceContext(
+				groupId, new long[0], user, true));
 
 		return _dtoMapper.modelToDTO(cpTaxCategory);
 	}

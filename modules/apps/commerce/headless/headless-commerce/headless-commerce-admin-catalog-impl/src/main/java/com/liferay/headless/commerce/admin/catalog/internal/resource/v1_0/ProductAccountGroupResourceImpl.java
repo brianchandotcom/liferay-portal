@@ -77,10 +77,6 @@ public class ProductAccountGroupResourceImpl
 			return Page.of(Collections.emptyList());
 		}
 
-		int commerceAccountGroupRelsCount =
-			_commerceAccountGroupRelService.getCommerceAccountGroupRelsCount(
-				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
-
 		return Page.of(
 			TransformUtil.transform(
 				_commerceAccountGroupRelService.getCommerceAccountGroupRels(
@@ -89,7 +85,10 @@ public class ProductAccountGroupResourceImpl
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
 				this::toProductAccountGroup),
-			pagination, commerceAccountGroupRelsCount);
+			pagination,
+			_commerceAccountGroupRelService.getCommerceAccountGroupRelsCount(
+				CPDefinition.class.getName(),
+				cpDefinition.getCPDefinitionId()));
 	}
 
 	@NestedField(parentClass = Product.class, value = "productAccountGroups")
@@ -105,10 +104,6 @@ public class ProductAccountGroupResourceImpl
 			return Page.of(Collections.emptyList());
 		}
 
-		int commerceAccountGroupRelsCount =
-			_commerceAccountGroupRelService.getCommerceAccountGroupRelsCount(
-				CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());
-
 		return Page.of(
 			TransformUtil.transform(
 				_commerceAccountGroupRelService.getCommerceAccountGroupRels(
@@ -117,7 +112,10 @@ public class ProductAccountGroupResourceImpl
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
 				this::toProductAccountGroup),
-			pagination, commerceAccountGroupRelsCount);
+			pagination,
+			_commerceAccountGroupRelService.getCommerceAccountGroupRelsCount(
+				CPDefinition.class.getName(),
+				cpDefinition.getCPDefinitionId()));
 	}
 
 	public ProductAccountGroup toProductAccountGroup(

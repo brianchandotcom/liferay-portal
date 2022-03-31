@@ -186,11 +186,10 @@ public class DLVideoExternalShortcutMetadataHelper {
 
 			DDMFormValues ddmFormValues = _toDDMFormValues(fields);
 
-			long ddmStorageId = _storageEngine.create(
-				_dlFileVersion.getCompanyId(), ddmStructureId, ddmFormValues,
-				serviceContext);
-
-			_dlFileEntryMetadata.setDDMStorageId(ddmStorageId);
+			_dlFileEntryMetadata.setDDMStorageId(
+				_storageEngine.create(
+					_dlFileVersion.getCompanyId(), ddmStructureId,
+					ddmFormValues, serviceContext));
 
 			_dlFileEntryMetadata.setDDMStructureId(ddmStructureId);
 			_dlFileEntryMetadata.setFileEntryId(dlFileEntry.getFileEntryId());
@@ -232,13 +231,11 @@ public class DLVideoExternalShortcutMetadataHelper {
 		}
 
 		try {
-			DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
-				_dlFileEntryMetadata.getDDMStorageId());
-
 			_fields = _ddmFormValuesToFieldsConverter.convert(
 				_ddmStructureLocalService.getDDMStructure(
 					_ddmStructure.getStructureId()),
-				ddmFormValues);
+				_storageEngine.getDDMFormValues(
+					_dlFileEntryMetadata.getDDMStorageId()));
 
 			for (Field field : _fields) {
 				_fieldsMap.put(field.getName(), field);

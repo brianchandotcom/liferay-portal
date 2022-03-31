@@ -52,6 +52,7 @@ import {CommonStyles} from '../CommonStyles';
 import {LayoutSelector} from './LayoutSelector';
 import {ShowGutterSelector} from './ShowGutterSelector';
 import {StyleDisplaySelector} from './StyleDisplaySelector';
+import {VerticalAlignmentSelector} from './VerticalAlignmentSelector';
 
 const PAGINATION_TYPE_OPTIONS = [
 	{label: Liferay.Language.get('none'), value: 'none'},
@@ -70,12 +71,6 @@ const ERROR_MESSAGES = {
 	),
 	noItems: Liferay.Language.get('this-collection-has-no-items'),
 };
-
-const VERTICAL_ALIGNMENT_OPTIONS = [
-	{label: Liferay.Language.get('top'), value: 'start'},
-	{label: Liferay.Language.get('middle'), value: 'center'},
-	{label: Liferay.Language.get('bottom'), value: 'end'},
-];
 
 export function CollectionGeneralPanel({item}) {
 	const {
@@ -324,40 +319,18 @@ export function CollectionGeneralPanel({item}) {
 													}
 												/>
 
-												<ClayForm.Group small>
-													<label
-														htmlFor={
-															collectionLayoutId
-														}
-													>
-														{Liferay.Language.get(
-															'vertical-alignment'
-														)}
-													</label>
-
-													<ClaySelectWithOption
-														id={collectionLayoutId}
-														onChange={(event) => {
-															const nextValue =
-																event.target
-																	.value;
-
-															handleConfigurationChanged(
-																{
-																	verticalAlignment: nextValue,
-																}
-															);
-														}}
-														options={
-															VERTICAL_ALIGNMENT_OPTIONS
-														}
-														value={
-															item.config
-																.verticalAlignment ||
-															''
-														}
-													/>
-												</ClayForm.Group>
+												<VerticalAlignmentSelector
+													collectionLayoutId={
+														collectionLayoutId
+													}
+													handleConfigurationChanged={
+														handleConfigurationChanged
+													}
+													value={
+														item.config
+															.verticalAlignment
+													}
+												/>
 											</>
 										)}
 								</>

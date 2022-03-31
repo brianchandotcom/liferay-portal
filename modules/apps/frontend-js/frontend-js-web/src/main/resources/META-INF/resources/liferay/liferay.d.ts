@@ -122,6 +122,8 @@ declare module Liferay {
 			cssClass?: string
 		): HTMLElement;
 
+		export function getTop(): Window;
+
 		export function getOpener(): any;
 
 		/**

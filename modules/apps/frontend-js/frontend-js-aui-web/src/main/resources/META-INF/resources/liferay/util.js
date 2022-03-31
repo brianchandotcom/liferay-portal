@@ -459,54 +459,6 @@
 			return openingWindow || window.opener || window.parent;
 		},
 
-		getTop() {
-			var topWindow = Util._topWindow;
-
-			if (!topWindow) {
-				var parentWindow = window.parent;
-
-				var parentThemeDisplay;
-
-				while (parentWindow !== window) {
-					try {
-						if (typeof parentWindow.location.href === 'undefined') {
-							break;
-						}
-
-						parentThemeDisplay = parentWindow.themeDisplay;
-					}
-					catch (error) {
-						break;
-					}
-
-					if (
-						!parentThemeDisplay ||
-						window.name === 'simulationDeviceIframe'
-					) {
-						break;
-					}
-					else if (
-						!parentThemeDisplay.isStatePopUp() ||
-						parentWindow === parentWindow.parent
-					) {
-						topWindow = parentWindow;
-
-						break;
-					}
-
-					parentWindow = parentWindow.parent;
-				}
-
-				if (!topWindow) {
-					topWindow = window;
-				}
-
-				Util._topWindow = topWindow;
-			}
-
-			return topWindow;
-		},
-
 		getWindow(id) {
 			if (!id) {
 				id = Util.getWindowName();

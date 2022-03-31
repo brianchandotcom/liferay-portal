@@ -43,7 +43,7 @@ const ActivationStatusAnalyticsCloud = ({
 	userAccount,
 }) => {
 	const [{assetsPath}, dispatch] = useCustomerPortal();
-	const [groupIdValue, setGroupIdValue] = useState();
+	const [groupIdValue, setGroupIdValue] = useState('');
 	const [activationStatusDate, setActivationStatusDate] = useState('');
 	const [isVisible, setIsVisible] = useState(false);
 	const [visible, setVisible] = useState(false);
@@ -100,7 +100,7 @@ const ActivationStatusAnalyticsCloud = ({
 			buttonLink: (
 				<a
 					className="font-weight-semi-bold m-0 p-0 text-brand-primary text-paragraph"
-					href={`https://analytics.liferay.com/workspace/${analyticsCloudWorkspace?.workspaceName}/sites`}
+					href={`https://analytics.liferay.com/workspace/${analyticsCloudWorkspace?.workspaceGroupId}/sites`}
 					rel="noopener noreferrer"
 					target="_blank"
 				>

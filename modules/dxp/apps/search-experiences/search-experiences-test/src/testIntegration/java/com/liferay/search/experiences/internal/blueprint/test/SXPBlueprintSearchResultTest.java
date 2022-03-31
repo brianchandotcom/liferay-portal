@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -84,6 +85,7 @@ import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -122,7 +124,7 @@ public class SXPBlueprintSearchResultTest {
 	}
 
 	@AfterClass
-	public static void tearDownClass() throws Exception {
+	public static void tearDownClass() {
 		WorkflowThreadLocal.setEnabled(true);
 	}
 
@@ -160,31 +162,31 @@ public class SXPBlueprintSearchResultTest {
 		_updateSXPBlueprint();
 
 		_journalFolder = JournalFolderServiceUtil.addFolder(
-			_group.getGroupId(), 0, "folder cola", StringPool.BLANK,
+			_group.getGroupId(), 0, "Folder cola", StringPool.BLANK,
 			_serviceContext);
 
 		_setUpJournalArticles(
-			new String[] {"cola cola", ""},
-			new String[] {"coca cola", "pepsi cola"});
+			new String[] {"", ""},
+			new String[] {"Article coca cola", "Article pepsi cola"});
 
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(
-					"boost", 100
+					"boost", 10000
 				).put(
 					"entry_class_name",
-					"com.liferay.journal.model.JournalFolder"
+					"com.liferay.journal.model.JournalArticle"
 				).build()
 			},
 			new String[] {"Boost Asset Type"});
 
 		_keywords = "cola";
 
-		_assertSearch("[folder cola, coca cola, pepsi cola]");
+		_assertSearch("[Article coca cola, Article pepsi cola, Folder cola]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[coca cola, folder cola, pepsi cola]");
+		_assertSearch("[Folder cola, Article coca cola, Article pepsi cola]");
 	}
 
 	@Test
@@ -194,8 +196,8 @@ public class SXPBlueprintSearchResultTest {
 		_addGroupAAndGroupB();
 
 		_setUpJournalArticles(
-			new String[] {"cola cola", ""},
-			new String[] {"coca cola", "pepsi cola"});
+			new String[] {"", ""},
+			new String[] {"Article", "Article With Category"});
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -210,36 +212,22 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Boost Contents in a Category"});
 
-		_keywords = "cola";
+		_keywords = "Article";
 
-		_assertSearch("[pepsi cola, coca cola]");
+		_assertSearch("[Article With Category, Article]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[coca cola, pepsi cola]");
-
-		User user = UserTestUtil.addUser(_groupB.getGroupId());
-
-		_serviceContext.setUserId(user.getUserId());
-
-		_updateElementInstancesJSON(
-			new Object[] {
-				HashMapBuilder.<String, Object>put(
-					"boost", 100
-				).build()
-			},
-			new String[] {"Boost Contents on My Sites"});
-
-		_assertSearch("[pepsi cola, coca cola]");
+		_assertSearchIgnoreRelevance("[Article, Article With Category]");
 	}
 
 	@Test
 	public void testBoostContentsInACategoryByKeywordMatch() throws Exception {
-		_addAssetCategory("Promoted", _addGroupUser(_group, "employee"));
+		_addAssetCategory("Promoted", _addGroupUser(_group, "Employee"));
 
 		_setUpJournalArticles(
-			new String[] {"alpha alpha", ""},
-			new String[] {"beta alpha", "charlie alpha"});
+			new String[] {"", ""},
+			new String[] {"Article", "Article With Category"});
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -249,18 +237,18 @@ public class SXPBlueprintSearchResultTest {
 				).put(
 					"boost", 100
 				).put(
-					"keywords", "alpha"
+					"keywords", "Article"
 				).build()
 			},
 			new String[] {"Boost Contents in a Category by Keyword Match"});
 
-		_keywords = "alpha";
+		_keywords = "Article";
 
-		_assertSearch("[charlie alpha, beta alpha]");
+		_assertSearch("[Article With Category, Article]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[beta alpha, charlie alpha]");
+		_assertSearch("[Article, Article With Category]");
 	}
 
 	@Test
@@ -270,8 +258,8 @@ public class SXPBlueprintSearchResultTest {
 		_addAssetCategory("Promoted", _addGroupUser(_group, "Customers"));
 
 		_setUpJournalArticles(
-			new String[] {"cola cola", ""},
-			new String[] {"Coca Cola", "Pepsi Cola"});
+			new String[] {"", ""},
+			new String[] {"Article", "Article With Category"});
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -294,24 +282,48 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Boost Contents in a Category for a Period of Time"});
 
-		_keywords = "cola";
+		_keywords = "Article";
 
-		_assertSearch("[Pepsi Cola, Coca Cola]");
+		_assertSearch("[Article With Category, Article]");
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"asset_category_id",
+					String.valueOf(_assetCategory.getCategoryId())
+				).put(
+					"boost", 1000
+				).put(
+					"end_date",
+					DateUtil.getDate(
+						new Date(System.currentTimeMillis() - Time.DAY),
+						"yyyyMMdd", LocaleUtil.US)
+				).put(
+					"start_date",
+					DateUtil.getDate(
+						new Date(
+							System.currentTimeMillis() - Time.DAY - Time.DAY),
+						"yyyyMMdd", LocaleUtil.US)
+				).build()
+			},
+			new String[] {"Boost Contents in a Category for a Period of Time"});
+
+		_assertSearch("[Article, Article With Category]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[Coca Cola, Pepsi Cola]");
+		_assertSearch("[Article, Article With Category]");
 	}
 
 	@Test
 	public void testBoostContentsInACategoryForAUserSegment() throws Exception {
-		_addAssetCategory("Promoted", _addGroupUser(_group, "employee"));
+		_addAssetCategory("Promoted", _addGroupUser(_group, "Employee"));
 
 		_setUpJournalArticles(
-			new String[] {"alpha alpha", ""},
-			new String[] {"beta alpha", "charlie alpha"});
+			new String[] {"", ""},
+			new String[] {"Article", "Article With Category"});
 
-		_keywords = "alpha";
+		_keywords = "Article";
 
 		SegmentsEntry segmentsEntry = _addSegmentsEntry(_user);
 
@@ -323,31 +335,35 @@ public class SXPBlueprintSearchResultTest {
 				).put(
 					"boost", 1000
 				).put(
-					"user_segment_ids",
-					Long.valueOf(segmentsEntry.getSegmentsEntryId())
+					"user_segment_ids", segmentsEntry.getSegmentsEntryId()
 				).build()
 			},
 			new String[] {"Boost Contents in a Category for a User Segment"});
 
-		_assertSearch("[charlie alpha, beta alpha]");
+		_assertSearch("[Article With Category, Article]");
+
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		_serviceContext.setUserId(user.getUserId());
+
+		_assertSearch("[Article, Article With Category]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[beta alpha, charlie alpha]");
+		_assertSearch("[Article, Article With Category]");
 	}
 
 	@Test
 	public void testBoostContentsInACategoryForGuestUsers() throws Exception {
-		_user = _userLocalService.getDefaultUser(_group.getCompanyId());
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group, _user.getUserId());
-
-		_addAssetCategory("Guest Users", _user);
+		_addAssetCategory("Promoted", _user);
 
 		_setUpJournalArticles(
-			new String[] {"alpha alpha", ""},
-			new String[] {"beta alpha", "charlie alpha"});
+			new String[] {"", ""},
+			new String[] {"Article", "Article With Category"});
+
+		User user = _userLocalService.getDefaultUser(_group.getCompanyId());
+
+		_serviceContext.setUserId(user.getUserId());
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -360,28 +376,24 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Boost Contents in a Category for Guest Users"});
 
-		_keywords = "alpha";
+		_keywords = "Article";
 
-		_assertSearch("[charlie alpha, beta alpha]");
+		_assertSearch("[Article With Category, Article]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[beta alpha, charlie alpha]");
+		_assertSearch("[Article, Article With Category]");
 	}
 
 	@Test
 	public void testBoostContentsInACategoryForNewUserAccounts()
 		throws Exception {
 
-		_addAssetCategory(
-			"For New Recruits", _addGroupUser(_group, "Employee"));
+		_addAssetCategory("New User", _addGroupUser(_group, "Employee"));
 
 		_setUpJournalArticles(
-			new String[] {"policies policies", ""},
-			new String[] {
-				"Company Policies for All Employees Recruits",
-				"Company Policies for New Recruits"
-			});
+			new String[] {"", ""},
+			new String[] {"Article", "Article With Category"});
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -398,20 +410,80 @@ public class SXPBlueprintSearchResultTest {
 				"Boost Contents in a Category for New User Accounts"
 			});
 
-		_keywords = "policies";
+		_keywords = "Article";
 
-		_assertSearch(
-			"[Company Policies for New Recruits, Company Policies for All" +
-				" Employees Recruits]");
+		_assertSearch("[Article With Category, Article]");
+
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+		calendar.add(Calendar.DAY_OF_MONTH, -60);
+
+		Date date = calendar.getTime();
+
+		user.setCreateDate(date);
+
+		_userLocalService.updateUser(user);
+
+		_serviceContext.setUserId(user.getUserId());
+
+		_assertSearch("[Article, Article With Category]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearch("[Article, Article With Category]");
+	}
+
+	@Test
+	public void testBoostContentsOnMySites() throws Exception {
+		_addGroupAAndGroupB();
+
+		_setUpJournalArticles(
+			new String[] {"", ""},
+			new String[] {"Site Default Group", "Site Group B"});
+
+		User userSiteB = UserTestUtil.addUser(_groupB.getGroupId());
+
+		_serviceContext.setUserId(userSiteB.getUserId());
+
+		_keywords = "Site";
+
+		_updateElementInstancesJSON(
+			new Object[] {
+				HashMapBuilder.<String, Object>put(
+					"boost", 100
+				).build()
+			},
+			new String[] {"Boost Contents on My Sites"});
+
+		_assertSearch("[Site Group B, Site Default Group]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearch("[Site Default Group, Site Group B]");
 	}
 
 	@Test
 	public void testBoostContentsWithMoreVersions() throws Exception {
 		_setUpJournalArticles(
-			new String[] {"cola cola", ""},
-			new String[] {"coca cola", "pepsi cola"});
+			new String[] {"", ""},
+			new String[] {"One Version", "Three Versions"});
 
-		JournalTestUtil.updateArticle(_journalArticles.get(1), "pepsi cola");
+		_journalArticles.set(
+			0,
+			JournalTestUtil.updateArticle(
+				_journalArticles.get(0), "Two Versions"));
+
+		_journalArticles.set(
+			1,
+			JournalTestUtil.updateArticle(
+				_journalArticles.get(1), "Three Versions"));
+
+		_journalArticles.set(
+			1,
+			JournalTestUtil.updateArticle(
+				_journalArticles.get(1), "Three Versions"));
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -425,13 +497,13 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Boost Contents With More Versions"});
 
-		_keywords = "cola";
+		_keywords = "Versions";
 
-		_assertSearch("[pepsi cola, coca cola]");
+		_assertSearch("[Three Versions, Two Versions]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[coca cola, pepsi cola]");
+		_assertSearch("[Two Versions, Three Versions]");
 	}
 
 	@Test
@@ -439,8 +511,8 @@ public class SXPBlueprintSearchResultTest {
 		_addJournalArticleSleep = 3;
 
 		_setUpJournalArticles(
-			new String[] {"cola cola", ""},
-			new String[] {"coca cola", "pepsi cola"});
+			new String[] {"", ""},
+			new String[] {"First Created", "Second Created"});
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -456,13 +528,13 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Boost Freshness"});
 
-		_keywords = "cola";
+		_keywords = "Created";
 
-		_assertSearch("[pepsi cola, coca cola]");
+		_assertSearch("[Second Created, First Created]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[coca cola, pepsi cola]");
+		_assertSearch("[First Created, Second Created]");
 	}
 
 	@Test
@@ -566,28 +638,28 @@ public class SXPBlueprintSearchResultTest {
 	@Test
 	public void testBoostTaggedContents() throws Exception {
 		_assetTag = AssetTagLocalServiceUtil.addTag(
-			_user.getUserId(), _group.getGroupId(), "cola", _serviceContext);
+			_user.getUserId(), _group.getGroupId(), "Boost", _serviceContext);
 
 		_setUpJournalArticles(
-			new String[] {"", ""}, new String[] {"coca cola", "pepsi cola"});
-
-		_keywords = "cola";
+			new String[] {"", ""}, new String[] {"Article", "Tagged Article"});
 
 		_updateElementInstancesJSON(
 			new Object[] {
 				HashMapBuilder.<String, Object>put(
-					"asset_tags", new String[] {String.valueOf(_assetTag)}
+					"asset_tags", new String[] {_assetTag.getName()}
 				).put(
-					"boost", 100
+					"boost", 1000
 				).build()
 			},
 			new String[] {"Boost Tagged Contents"});
 
-		_assertSearch("[pepsi cola, coca cola]");
+		_keywords = "Article";
+
+		_assertSearch("[Tagged Article, Article]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[coca cola, pepsi cola]");
+		_assertSearch("[Article, Tagged Article]");
 	}
 
 	@Test
@@ -596,7 +668,7 @@ public class SXPBlueprintSearchResultTest {
 			_user.getUserId(), _group.getGroupId(), "cola", _serviceContext);
 
 		_setUpJournalArticles(
-			new String[] {"", ""}, new String[] {"coca cola", "pepsi cola"});
+			new String[] {"", ""}, new String[] {"coca cola", "pepsi"});
 
 		_keywords = "cola";
 
@@ -608,17 +680,15 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Boost Tags Match"});
 
-		_assertSearch("[pepsi cola, coca cola]");
+		_assertSearch("[pepsi, coca cola]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[coca cola, pepsi cola]");
+		_assertSearch("[coca cola, pepsi]");
 	}
 
 	@Test
 	public void testBoostWebContentsByKeywordsMatch() throws Exception {
-		_addAssetCategory("Promoted", _addGroupUser(_group, "employee"));
-
 		_setUpJournalArticles(
 			new String[] {"alpha alpha", ""},
 			new String[] {"beta alpha", "charlie alpha"});
@@ -643,7 +713,7 @@ public class SXPBlueprintSearchResultTest {
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[beta alpha, charlie alpha]");
+		_assertSearch("[beta alpha, charlie alpha]");
 	}
 
 	@Test
@@ -704,8 +774,6 @@ public class SXPBlueprintSearchResultTest {
 
 	@Test
 	public void testFilterByExactTermsMatch() throws Exception {
-		_assetTag = AssetTestUtil.addTag(_group.getGroupId(), "Filter");
-
 		_setUpJournalArticles(
 			new String[] {"", "", ""},
 			new String[] {
@@ -734,16 +802,15 @@ public class SXPBlueprintSearchResultTest {
 
 	@Test
 	public void testHideByExactTermMatch() throws Exception {
-		_assetTag = AssetTestUtil.addTag(_group.getGroupId(), "hide");
-
 		_journalFolder = JournalFolderServiceUtil.addFolder(
 			_group.getGroupId(), 0, RandomTestUtil.randomString(),
 			StringPool.BLANK, _serviceContext);
 
 		_setUpJournalArticles(
-			new String[] {"", ""}, new String[] {"do not hide me", "hide me"});
+			new String[] {"", ""},
+			new String[] {"Out of the folder", "In-Folder"});
 
-		_keywords = "hide me";
+		_keywords = "folder";
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -755,20 +822,20 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Hide by Exact Term Match"});
 
-		_assertSearch("[do not hide me]");
+		_assertSearch("[Out of the folder]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[do not hide me, hide me]");
+		_assertSearchIgnoreRelevance("[In-Folder, Out of the folder]");
 	}
 
 	@Test
 	public void testHideContentsInACategory() throws Exception {
-		_addAssetCategory("Promoted", _addGroupUser(_group, "employee"));
+		_addAssetCategory("Hidden", _addGroupUser(_group, "Employee"));
 
 		_setUpJournalArticles(
-			new String[] {"alpha alpha", ""},
-			new String[] {"beta alpha", "charlie alpha"});
+			new String[] {"", ""},
+			new String[] {"Without Category", "Hidden Category"});
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -779,13 +846,13 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Hide Contents in a Category"});
 
-		_keywords = "alpha";
+		_keywords = "Category";
 
-		_assertSearchIgnoreRelevance("[beta alpha]");
+		_assertSearchIgnoreRelevance("[Without Category]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[beta alpha, charlie alpha]");
+		_assertSearchIgnoreRelevance("[Hidden Category, Without Category]");
 	}
 
 	@Test
@@ -799,7 +866,7 @@ public class SXPBlueprintSearchResultTest {
 
 		_setUpJournalArticles(
 			new String[] {"", ""},
-			new String[] {"beta alpha", "charlie alpha"});
+			new String[] {"Guest Users", "Non-Guest Users"});
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -810,13 +877,13 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Hide Contents in a Category for Guest Users"});
 
-		_keywords = "alpha";
+		_keywords = "Guest";
 
-		_assertSearch("[beta alpha]");
+		_assertSearchIgnoreRelevance("[Guest Users]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[beta alpha, charlie alpha]");
+		_assertSearchIgnoreRelevance("[Guest Users, Non-Guest Users]");
 	}
 
 	@Test
@@ -923,32 +990,11 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Hide Tagged Contents"});
 
-		_assertSearch("[do not hide me]");
-	}
-
-	@Test
-	public void testKeywordMatch() throws Exception {
-		_assetTag = AssetTagLocalServiceUtil.addTag(
-			_user.getUserId(), _group.getGroupId(), "cola", _serviceContext);
-
-		_setUpJournalArticles(
-			new String[] {"", ""}, new String[] {"coca cola", "pepsi cola"});
-
-		_keywords = "cola";
-
-		_updateElementInstancesJSON(
-			new Object[] {
-				HashMapBuilder.<String, Object>put(
-					"boost", 100
-				).build()
-			},
-			new String[] {"Boost Tags Match"});
-
-		_assertSearch("[pepsi cola, coca cola]");
+		_assertSearchIgnoreRelevance("[do not hide me]");
 
 		_updateElementInstancesJSON(null, null);
 
-		_assertSearchIgnoreRelevance("[coca cola, pepsi cola]");
+		_assertSearchIgnoreRelevance("[do not hide me, hide me]");
 	}
 
 	@Test
@@ -971,7 +1017,7 @@ public class SXPBlueprintSearchResultTest {
 				).put(
 					"start_date",
 					DateUtil.getDate(
-						new Date(System.currentTimeMillis() - 200),
+						new Date(System.currentTimeMillis() - 300),
 						"yyyyMMddHHmmss", LocaleUtil.US)
 				).build()
 			},
@@ -988,37 +1034,68 @@ public class SXPBlueprintSearchResultTest {
 
 	@Test
 	public void testLimitSearchToMyContents() throws Exception {
-		_setUpLimitSearchTest();
+		User newUser = UserTestUtil.addUser(_group.getGroupId());
 
-		_assertSearchIgnoreRelevance("[cola coca, cola pepsi, cola sprite]");
+		_serviceContext.setUserId(newUser.getUserId());
+
+		_setUpJournalArticles(
+			new String[] {"", ""},
+			new String[] {"Article 1 New User", "Article 2 New User"});
+
+		_serviceContext.setUserId(_user.getUserId());
+
+		_setUpJournalArticles(
+			new String[] {"", ""},
+			new String[] {"Article 1 Default User", "Article 2 Default User"});
+
+		_keywords = "Article";
 
 		_updateElementInstancesJSON(
 			null, new String[] {"Limit Search to My Contents"});
 
-		_assertSearchIgnoreRelevance("[cola coca, cola pepsi, cola sprite]");
+		_assertSearchIgnoreRelevance(
+			"[Article 1 Default User, Article 2 Default User]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance(
+			"[Article 1 Default User, Article 1 New User," +
+				" Article 2 Default User, Article 2 New User]");
 	}
 
 	@Test
 	public void testLimitSearchToMySites() throws Exception {
-		_setUpLimitSearchTest();
+		_addGroupAAndGroupB();
 
-		_assertSearchIgnoreRelevance("[cola coca, cola pepsi, cola sprite]");
+		_setUpJournalArticles(
+			new String[] {"", "", ""},
+			new String[] {"Site A", "Site B", "Current Site"});
 
 		User user = UserTestUtil.addUser(_groupA.getGroupId());
 
 		_serviceContext.setUserId(user.getUserId());
 
+		_keywords = "Site";
+
 		_updateElementInstancesJSON(
 			null, new String[] {"Limit Search to My Sites"});
 
-		_assertSearchIgnoreRelevance("[cola coca]");
+		_assertSearchIgnoreRelevance("[Site A]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance("[Current Site, Site A, Site B]");
 	}
 
 	@Test
 	public void testLimitSearchToTheCurrentSite() throws Exception {
-		_setUpLimitSearchTest();
+		_addGroupAAndGroupB();
 
-		_assertSearchIgnoreRelevance("[cola coca, cola pepsi, cola sprite]");
+		_setUpJournalArticles(
+			new String[] {"", "", ""},
+			new String[] {"Site A", "Site B", "Current Site"});
+
+		_keywords = "Site";
 
 		User user = UserTestUtil.addUser(_groupA.getGroupId());
 
@@ -1027,18 +1104,22 @@ public class SXPBlueprintSearchResultTest {
 		_updateElementInstancesJSON(
 			null, new String[] {"Limit Search to the Current Site"});
 
-		_assertSearchIgnoreRelevance("[cola sprite]");
+		_assertSearchIgnoreRelevance("[Current Site]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance("[Current Site, Site A, Site B]");
 	}
 
 	@Test
 	public void testLimitSearchToTheseSites() throws Exception {
-		_setUpLimitSearchTest();
+		_addGroupAAndGroupB();
 
-		_assertSearchIgnoreRelevance("[cola coca, cola pepsi, cola sprite]");
+		_setUpJournalArticles(
+			new String[] {"", "", ""},
+			new String[] {"Site A", "Site B", "Current Site"});
 
-		User user = UserTestUtil.addUser(_groupA.getGroupId());
-
-		_serviceContext.setUserId(user.getUserId());
+		_keywords = "Site";
 
 		_updateElementInstancesJSON(
 			new Object[] {
@@ -1049,7 +1130,11 @@ public class SXPBlueprintSearchResultTest {
 			},
 			new String[] {"Limit Search to These Sites"});
 
-		_assertSearchIgnoreRelevance("[cola coca, cola pepsi]");
+		_assertSearchIgnoreRelevance("[Site A, Site B]");
+
+		_updateElementInstancesJSON(null, null);
+
+		_assertSearchIgnoreRelevance("[Current Site, Site A, Site B]");
 	}
 
 	@Test
@@ -1597,12 +1682,14 @@ public class SXPBlueprintSearchResultTest {
 			searchResponse.getRequestString(),
 			searchResponse.getDocumentsStream(), "title_en_US", expected);
 
-		searchResponse = _getSearchResponsePreview(
-			searchRequestBuilderConsumer);
+		if (!Objects.equals("{}", _sxpBlueprint.getElementInstancesJSON())) {
+			searchResponse = _getSearchResponsePreview(
+				searchRequestBuilderConsumer);
 
-		DocumentsAssert.assertValues(
-			searchResponse.getRequestString(),
-			searchResponse.getDocumentsStream(), "title_en_US", expected);
+			DocumentsAssert.assertValues(
+				searchResponse.getRequestString(),
+				searchResponse.getDocumentsStream(), "title_en_US", expected);
+		}
 	}
 
 	private void _assertSearchIgnoreRelevance(
@@ -1809,16 +1896,6 @@ public class SXPBlueprintSearchResultTest {
 			_setUpJournalArticles(
 				new String[] {""}, new String[] {journalArticleTitles[i]});
 		}
-	}
-
-	private void _setUpLimitSearchTest() throws Exception {
-		_addGroupAAndGroupB();
-
-		_setUpJournalArticles(
-			new String[] {"", "", ""},
-			new String[] {"cola coca", "cola pepsi", "cola sprite"});
-
-		_keywords = "cola";
 	}
 
 	private void _updateElementInstancesJSON(

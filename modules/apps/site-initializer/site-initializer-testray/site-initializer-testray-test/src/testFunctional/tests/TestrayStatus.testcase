@@ -2,7 +2,7 @@
 definition {
 
 	property portal.release = "false";
-	property portal.upstream = "true";
+	property portal.upstream = "false";
 	property testray.main.component.name = "Testray 2";
 
 	setUp {

@@ -16,16 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String redirect = ParamUtil.getString(request, "redirect");
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-if (Validator.isNull(redirect)) {
-	redirect = portletURL.toString();
-}
-%>
-
 <react:component
 	module="js/IconConfiguration"
 	props="<%= frontendIconsConfigurationDisplayContext.getProps() %>"

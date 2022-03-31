@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Petra HTTP Invoker
-Bundle-SymbolicName: com.liferay.petra.http.invoker
-Bundle-Version: 1.0.2
-Export-Package: com.liferay.petra.http.invoker

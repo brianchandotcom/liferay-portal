@@ -646,6 +646,21 @@ this task.
 		</replace>
 
 		<replace
+			file="${app.server.jboss.instance.dir}/configuration/standalone.xml"
+		>
+			<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:security:2.0">
+            <security-domains>]]></replacetoken>
+			<replacevalue><![CDATA[<subsystem xmlns="urn:jboss:domain:security:2.0">
+            <security-domains>
+				<security-domain name="PortalRealm">
+					<authentication>
+						<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
+					</authentication>
+				</security-domain>]]>
+			</replacevalue>
+		</replace>
+
+		<replace
 			file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
 		>
 			<replacetoken><![CDATA[<location name="/" handler="welcome-content"/>]]></replacetoken>
@@ -2189,6 +2204,22 @@ this task.
 			<replacetoken><![CDATA[<deployment-scanner ]]></replacetoken>
 			<replacevalue><![CDATA[<deployment-scanner deployment-timeout="360" ]]></replacevalue>
 		</replace>
+
+		<replace-multilines
+			file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml"
+		>
+			<replace-elements>
+				<replacetoken><![CDATA[">
+            <security-domains>]]></replacetoken>
+				<replacevalue><![CDATA[">
+            <security-domains>
+				<security-domain name="PortalRealm">
+					<authentication>
+						<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
+					</authentication>
+				</security-domain>]]></replacevalue>
+			</replace-elements>
+		</replace-multilines>
 
 		<replace
 			file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml"

@@ -133,7 +133,12 @@ export default class UnsafeHTML extends React.PureComponent {
 
 		Object.entries(this.props.style).forEach(([key, value]) => {
 			if (!isNullOrUndefined(value)) {
-				ref.style[key] = value;
+				if (isCSSVariable(key)) {
+					ref.style.setProperty(key, value);
+				}
+				else {
+					ref.style[key] = value;
+				}
 			}
 		});
 	}
@@ -215,3 +220,7 @@ UnsafeHTML.propTypes = {
 	onRender: PropTypes.func,
 	style: PropTypes.object,
 };
+
+function isCSSVariable(styleName) {
+	return styleName.startsWith('--');
+}

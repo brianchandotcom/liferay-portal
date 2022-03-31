@@ -286,15 +286,20 @@ public class Main {
 			return;
 		}
 
+		long testrayIssueId = _getObjectEntryId(
+			testrayIssueName, "issues");
+
 		_postObjectEntry(
 			HashMapBuilder.<String, Object>put(
 				"r_caseResultToCaseResultsIssues_c_caseResultId",
 				testrayCaseResultId
 			).put(
 				"r_issueToCaseResultsIssues_c_issueId",
-				_postObjectEntry(null, testrayIssueName, "issues")
+				testrayIssueId > 0 ? testrayIssueId :
+					_postObjectEntry(null, testrayIssueName, "issues")
 			).build(),
 			null, "caseresultsissueses");
+
 	}
 
 	private void _addTestrayTask(long testrayBuildId, String testrayTaskName)

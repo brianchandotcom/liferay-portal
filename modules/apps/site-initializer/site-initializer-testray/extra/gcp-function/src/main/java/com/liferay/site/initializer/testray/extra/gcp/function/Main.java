@@ -201,6 +201,9 @@ public class Main {
 
 		long testrayCaseId = _postObjectEntry(
 			HashMapBuilder.<String, Object>put(
+				"caseNumber", _getObjectEntryCount(
+					"projectId", testrayProjectId, "cases")
+			).put(
 				"description",
 				testrayCasePropertiesMap.get("testray.testcase.description")
 			).put(
@@ -364,6 +367,24 @@ public class Main {
 		}
 
 		return attributeNode.getTextContent();
+	}
+
+	private long _getObjectEntryCount(
+		String relationshipName, long relationshipId, String objectDefinitionShortName)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse = _invoke(
+			null, null, HttpInvoker.HttpMethod.GET, objectDefinitionShortName,
+			HashMapBuilder.put(
+				"fields", "id"
+			).put(
+				"filter", relationshipName + " eq " + relationshipId
+			).build());
+
+		JSONObject responseJSONObject = new JSONObject(
+			httpResponse.getContent());
+
+		return responseJSONObject.getLong("totalCount") + 1;
 	}
 
 	private long _getObjectEntryId(
@@ -786,6 +807,8 @@ public class Main {
 				"jenkinsJobKey", propertiesMap.get("jenkins.job.id")
 			).put(
 				"name", testrayRunName
+			).put("number", _getObjectEntryCount(
+				"buildId", testrayBuildId, "runs")
 			).put(
 				"r_buildToRuns_c_buildId", testrayBuildId
 			).build(),

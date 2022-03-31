@@ -1,64 +1,64 @@
 @component-name = "portal-solutions"
 definition {
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Testray 2";
+    setUp {
+        TestCase.setUpPortalInstance();
 
-	property portal.release = "false";
-	property portal.upstream = "true";
-	property testray.main.component.name = "Testray 2";
+        User.firstLoginPG();
 
-	setUp {
-		TestCase.setUpPortalInstance();
+        Testray.createTestraySite(siteName = "Testray 2");
 
-		User.firstLoginPG();
+        Refresh();
+    }
 
-		Testray.createTestraySite(siteName = "Testray 2");
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
 
-		Refresh();
-	}
+        Testray.tearDownCP();
 
-	tearDown {
-		var testPortalInstance = PropsUtil.get("test.portal.instance");
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+    }
 
-		Testray.tearDownCP();
+    @description = "LPS-150348 - Verify that User can access category modal."
+    @priority = "5"
+    test CanAcessOptionModal {
 
-		if ("${testPortalInstance}" == "true") {
-			PortalInstances.tearDownCP();
-		}
-	}
+        ApplicationsMenu.gotoSite(key_site = "Testray 2");
 
-	@description = "LPS-150348 - Verify that User can access category modal."
-	@priority = "5"
-	test CanAcessOptionModal {
-		ApplicationsMenu.gotoSite(key_site = "Testray 2");
+        Click(locator1 = "TestrayManage#MANAGE_SIDEBAR");
 
-		Click(locator1 = "Testray#MANAGE_SIDEBAR");
+        Click(locator1 = "TestrayManage#OPTIONS_MANAGE");
 
-		Click(locator1 = "TestrayManageOptions#OPTIONS_MANAGE");
+        AssertElementPresent(locator1 = "TestrayManage#OPTIONS_MODAL");
 
-		AssertElementPresent(locator1 = "TestrayManageOptions#OPTIONS_MODAL");
+        Click(locator1 = "TestrayManage#CLOSE_MODAL");
 
-		Click(locator1 = "TestrayManageOptions#CLOSE_MODAL");
-	}
+    }
 
-	@description = "LPS-150349 - Verify that User can add new option."
-	@priority = "5"
-	test CanAddNewOption {
-		ApplicationsMenu.gotoSite(key_site = "Testray 2");
+    @description = "LPS-150349 - Verify that User can add new option."
+    @priority = "5"
+    test CanAddNewOption {
 
-		Click(locator1 = "Testray#MANAGE_SIDEBAR");
+        ApplicationsMenu.gotoSite(key_site = "Testray 2");
 
-		Click(locator1 = "TestrayManageOptions#OPTIONS_MANAGE");
+        Click(locator1 = "TestrayManage#MANAGE_SIDEBAR");
 
-		Click(locator1 = "TestrayManageOptions#ADD_OPTIONS");
+        Click(locator1 = "TestrayManage#OPTIONS_MANAGE");
 
-		Type(
-			locator1 = "TestrayManageOptions#NEW_OPTION_NAME",
-			value1 = "Test");
+        Click(locator1 = "TestrayManage#ADD_OPTIONS");
 
-		Click(locator1 = "TestrayManageOptions#SAVE_BUTTON");
+        Type(
+            locator1 = "TestrayManage#NEW_OPTION_NAME",
+            value1 = "Test");
 
-		AssertElementPresent(
-			locator1 = "TestrayManageOptions#OPTIONS_NAME",
-			value = "Test");
-	}
-
+        Click(locator1 = "TestrayManage#SAVE_BUTTON");
+		
+        AssertElementPresent(
+            locator1 = "TestrayManage#OPTIONS_NAME",
+            value = "Test");
+    }
 }

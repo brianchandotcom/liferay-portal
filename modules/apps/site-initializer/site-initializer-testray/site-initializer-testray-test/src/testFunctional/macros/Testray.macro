@@ -1,95 +1,131 @@
 definition {
 
-	macro assertItemsPerPageValue {
-		AssertElementPresent(
-			key_value = "${itemValue}",
-			locator1 = "Testray#ITEMS_PER_PAGE_VALUE_BUTTON");
-	}
+    macro assertItemsPerPageValue {
+        AssertElementPresent(
+            key_value = "${itemValue}",
+            locator1 = "Testray#ITEMS_PER_PAGE_VALUE_BUTTON");
+    }
 
-	macro assertPageNumber {
-		AssertElementPresent(
-			key_pageNumber = "${pageNumber}",
-			locator1 = "Testray#NUMBER_PAGE_BUTTON");
-	}
+    macro assertPageNumber {
+        AssertElementPresent(
+            key_pageNumber = "${pageNumber}",
+            locator1 = "Testray#NUMBER_PAGE_BUTTON");
+    }
 
-	macro assertShowedItems {
-		AssertElementPresent(
-			key_text = "${itemsText}",
-			locator1 = "Testray#ITEMS_PER_PAGE_DESCRIPTION");
-	}
+    macro assertShowedItems {
+        AssertElementPresent(
+            key_text = "${itemsText}",
+            locator1 = "Testray#ITEMS_PER_PAGE_DESCRIPTION");
+    }
 
-	macro changeItemsPerPage {
-		Click(locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
+    macro changeItemsPerPage {
+        Click(locator1 = "Testray#ITEMS_PER_PAGE_BUTTON");
 
-		Click(
-			key_itemvalue = "${itemValue}",
-			locator1 = "Testray#ITEMS_PER_PAGE_BUTTON_DROPDOWN");
-	}
+        Click(
+            key_itemvalue = "${itemValue}",
+            locator1 = "Testray#ITEMS_PER_PAGE_BUTTON_DROPDOWN");
+    }
 
-	macro clickOnPageNumber {
-		Click(
-			key_pageNumber = "${pageNumber}",
-			locator1 = "Testray#NUMBER_PAGE_BUTTON");
-	}
+    macro clickOnPageNumber {
+        Click(
+            key_pageNumber = "${pageNumber}",
+            locator1 = "Testray#NUMBER_PAGE_BUTTON");
+    }
 
-	macro createTestraySite {
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+    macro createTestraySite {
+        ApplicationsMenu.gotoPortlet(
+            category = "Sites",
+            panel = "Control Panel",
+            portlet = "Sites");
 
-		LexiconEntry.gotoAdd();
+        LexiconEntry.gotoAdd();
 
-		LexiconCard.clickCard(card = "Liferay Site Initializer Testray");
+        LexiconCard.clickCard(card = "Liferay Site Initializer Testray");
 
-		SelectFrame(
-			key_title = "Add Site",
-			locator1 = "IFrame#MODAL_ANY");
+        SelectFrame(
+            key_title = "Add Site",
+            locator1 = "IFrame#MODAL_ANY");
 
-		PortletEntry.inputName(name = "${siteName}");
+        PortletEntry.inputName(name = "${siteName}");
 
-		Click(locator1 = "Button#ADD");
+        Click(locator1 = "Button#ADD");
 
-		Alert.viewSuccessMessage();
-	}
+        Alert.viewSuccessMessage();
+    }
 
-	macro goToNextAndPreviousPage {
-		Click(
-			key_pageDirection = "${pageDirection}",
-			locator1 = "Testray#NEXT_AND_PREVIOUS_PAGE_BUTTON");
-	}
+    macro enableTestrayTasksInPortlet {
+        Refresh();
 
-	macro goToProjectPage {
-		Click(
-			key_projectName = "${projectName}",
-			locator1 = "Testray#PROJECT_NAME_BUTTON");
-	}
+        ApplicationsMenu.gotoPortlet(
+            category = "Object",
+            panel = "Control Panel",
+            portlet = "Objects");
 
-	macro projectTabNavigator {
-		Click(
-			key_navTabName = "${navTabName}",
-			locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
-	}
+        Click(
+            key_pageNumber = "2",
+            locator1 = "Pagination#ANY_PAGE");
 
-	macro tearDownCP {
-		Refresh();
+        ObjectPortlet.selectCustomObject(label = "Testray Task");
 
-		ApplicationsMenu.gotoPortlet(
-			category = "Sites",
-			panel = "Control Panel",
-			portlet = "Sites");
+        CreateObject.selectPanelCategoryKey(panelCategoryKey = "Control Panel > Object");
 
-		Refresh();
+        CreateObject.saveObject();
+    }
 
-		PortletEntry.selectAll();
+    macro goToNextAndPreviousPage {
+        Click(
+            key_pageDirection = "${pageDirection}",
+            locator1 = "Testray#NEXT_AND_PREVIOUS_PAGE_BUTTON");
+    }
 
-		Click(locator1 = "Icon#SITES_VERTICAL_ELLIPSIS");
+    macro goToProjectPage {
+        Click(
+            key_projectName = "${projectName}",
+            locator1 = "Testray#PROJECT_NAME_BUTTON");
+    }
 
-		MenuItem.clickNoError(menuItem = "Delete");
+    macro projectTabNavigator {
+        Click(
+            key_navTabName = "${navTabName}",
+            locator1 = "Testray#PROJECT_NAVIGATOR_TAB_BUTTON");
+    }
 
-		AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+    macro statusChangeTestray {
+        ApplicationsMenu.gotoPortlet(
+            category = "Object",
+            panel = "Control Panel",
+            portlet = "Testray Tasks");
 
-		Alert.viewSuccessMessage();
-	}
+        Click(locator1 = "CommerceEntry#DROPDOWN");
+
+        MenuItem.click(menuItem = "View");
+
+        Type(
+            locator1 = "TestrayTestflow#STATUS_EDIT",
+            value1 = "${value}");
+
+        Click(locator1 = "Button#SAVE");
+    }
+
+    macro tearDownCP {
+        Refresh();
+
+        ApplicationsMenu.gotoPortlet(
+            category = "Sites",
+            panel = "Control Panel",
+            portlet = "Sites");
+
+        Refresh();
+
+        PortletEntry.selectAll();
+
+        Click(locator1 = "Icon#SITES_VERTICAL_ELLIPSIS");
+
+        MenuItem.clickNoError(menuItem = "Delete");
+
+        AssertConfirm(value1 = "Are you sure you want to delete this? It will be deleted immediately.");
+
+        Alert.viewSuccessMessage();
+    }
 
 }

@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>TestrayTestflow</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">TestrayTestflow</td></tr>
+</thead>
+
+<tbody>
+<tr>
+    <td>TESTFLOW_SIDEBAR</td>
+    <td>//a[contains(@href, '#/testflow')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>STATUS_IN_ANALYSIS</td>
+    <td>//span[contains(., 'IN ANALYSIS')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>STATUS_ABANDONED</td>
+    <td>//span[contains(., 'ABANDONED')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>STATUS_COMPLETE</td>
+    <td>//span[contains(., 'COMPLETE')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>STATUS_OPEN</td>
+    <td>//span[contains(., 'OPEN')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>STATUS_EDIT</td>
+    <td>//div[contains(@data-field-name, 'dueStatus')]//input[contains(@type, 'text')]</td>
+    <td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

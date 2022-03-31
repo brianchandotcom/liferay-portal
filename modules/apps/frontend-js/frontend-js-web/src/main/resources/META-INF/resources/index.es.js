@@ -38,6 +38,7 @@ export {default as postForm} from './liferay/util/form/post_form.es';
 // Liferay API
 
 export {default as BREAKPOINTS} from './liferay/breakpoints';
+export {default as STATUS_CODE} from './liferay/status_code';
 
 export {default as CompatibilityEventProxy} from './liferay/CompatibilityEventProxy.es';
 

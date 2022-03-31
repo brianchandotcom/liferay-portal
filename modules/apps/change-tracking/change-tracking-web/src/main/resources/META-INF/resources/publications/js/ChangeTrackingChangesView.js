@@ -2431,7 +2431,9 @@ export default function ChangeTrackingChangesView({
 			</ManagementToolbar.ResultsBarItem>
 		);
 
-		return <ManagementToolbar.ResultsBar>{items}</ManagementToolbar.ResultsBar>;
+		return (
+			<ManagementToolbar.ResultsBar>{items}</ManagementToolbar.ResultsBar>
+		);
 	};
 
 	const renderTableBody = () => {

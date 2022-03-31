@@ -71,9 +71,7 @@ class PageToolbar extends Component {
 					</ManagementToolbar.Item>
 				</ManagementToolbar.ItemList>
 
-				<ManagementToolbar.ItemList
-					expand
-				></ManagementToolbar.ItemList>
+				<ManagementToolbar.ItemList expand></ManagementToolbar.ItemList>
 
 				<ManagementToolbar.ItemList>
 					<ManagementToolbar.Item>

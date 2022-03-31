@@ -27,7 +27,9 @@ class FilterDisplay extends Component {
 		const {onClear, searchBarTerm, totalResultsCount} = this.props;
 
 		return (
-			<ManagementToolbar.ResultsBar title={Liferay.Language.get('filter')}>
+			<ManagementToolbar.ResultsBar
+				title={Liferay.Language.get('filter')}
+			>
 				<ManagementToolbar.ResultsBarItem expand>
 					<span className="component-text text-truncate-inline">
 						<span className="text-truncate">

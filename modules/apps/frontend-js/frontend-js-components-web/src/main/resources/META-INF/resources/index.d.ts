@@ -33,12 +33,14 @@ export declare const ManagementToolbar: {
 		expand?: boolean;
 	}>;
 	ResultsBar: React.FunctionComponent<{
-		children: React.ReactElement | Array<React.ReactElement>
+		children: React.ReactElement | Array<React.ReactElement>;
 	}>;
-	ResultsBarItem: React.FunctionComponent<React.LiHTMLAttributes<HTMLLIElement> &{
-		children?: React.ReactElement | Array<React.ReactElement>;
-		expand?: boolean;
-	}>;
+	ResultsBarItem: React.FunctionComponent<
+		React.LiHTMLAttributes<HTMLLIElement> & {
+			children?: React.ReactElement | Array<React.ReactElement>;
+			expand?: boolean;
+		}
+	>;
 	Search: React.FunctionComponent<
 		React.FormHTMLAttributes<HTMLFormElement> & {
 			children?: React.ReactElement | Array<React.ReactElement>;

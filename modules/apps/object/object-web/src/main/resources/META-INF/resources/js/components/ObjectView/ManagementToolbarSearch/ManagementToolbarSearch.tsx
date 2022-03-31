@@ -26,9 +26,7 @@ interface IProps {
 
 export function ManagementToolbarSearch({query, setQuery}: IProps) {
 	return (
-		<ManagementToolbar.Search
-			onSubmit={(event) => event.preventDefault()}
-		>
+		<ManagementToolbar.Search onSubmit={(event) => event.preventDefault()}>
 			<ClayInput.Group>
 				<ClayInput.GroupItem>
 					<ClayInput

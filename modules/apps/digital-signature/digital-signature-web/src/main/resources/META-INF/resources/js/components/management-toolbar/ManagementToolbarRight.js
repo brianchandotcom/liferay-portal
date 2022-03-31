@@ -31,9 +31,7 @@ export default function ManagementToolbarRight({addButton, setShowMobile}) {
 			</ManagementToolbar.Item>
 
 			{addButton && (
-				<ManagementToolbar.Item>
-					{addButton()}
-				</ManagementToolbar.Item>
+				<ManagementToolbar.Item>{addButton()}</ManagementToolbar.Item>
 			)}
 		</ManagementToolbar.ItemList>
 	);

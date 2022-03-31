@@ -16,9 +16,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
-import {
-	ManagementToolbar as FrontendManagementToolbar
-} from 'frontend-js-components-web';
+import {ManagementToolbar as FrontendManagementToolbar} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 import {ALL, ASCENDING} from '../../utils/constants';

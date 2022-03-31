@@ -27,7 +27,9 @@ const ResultsBar = ({
 	return (
 		<>
 			<ManagementToolbar.ResultsBar>
-				<ManagementToolbar.ResultsBarItem expand={!(filterLabelItems?.length > 0)}>
+				<ManagementToolbar.ResultsBarItem
+					expand={!(filterLabelItems?.length > 0)}
+				>
 					<span className="component-text text-truncate-inline">
 						<span className="text-truncate">
 							{Liferay.Util.sub(

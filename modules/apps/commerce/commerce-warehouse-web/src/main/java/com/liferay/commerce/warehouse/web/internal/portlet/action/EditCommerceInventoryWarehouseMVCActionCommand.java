@@ -171,14 +171,14 @@ public class EditCommerceInventoryWarehouseMVCActionCommand
 			_portal.getCompanyId(actionRequest),
 			commerceInventoryWarehouse.getCountryTwoLettersISOCode());
 
-		Region region = _getRegion(
-			country.getCountryId(),
-			commerceInventoryWarehouse.getCommerceRegionCode());
-
 		double[] coordinates = _commerceGeocoder.getCoordinates(
 			commerceInventoryWarehouse.getStreet1(),
 			commerceInventoryWarehouse.getCity(),
-			commerceInventoryWarehouse.getZip(), region, country);
+			commerceInventoryWarehouse.getZip(),
+			_getRegion(
+				country.getCountryId(),
+				commerceInventoryWarehouse.getCommerceRegionCode()),
+			country);
 
 		_commerceInventoryWarehouseService.geolocateCommerceInventoryWarehouse(
 			commerceInventoryWarehouseId, coordinates[0], coordinates[1]);

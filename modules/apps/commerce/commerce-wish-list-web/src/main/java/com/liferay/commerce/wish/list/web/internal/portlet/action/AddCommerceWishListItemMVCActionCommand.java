@@ -113,15 +113,13 @@ public class AddCommerceWishListItemMVCActionCommand
 					commerceWishList.getCommerceWishListId(), cpDefinitionId,
 					cpInstanceUuid, ddmFormValues, serviceContext);
 
-			int commerceWishListItemsCount =
-				_commerceWishListItemService.getCommerceWishListItemsCount(
-					commerceWishList.getCommerceWishListId());
-
 			jsonObject.put(
 				"commerceWishListItemId",
 				commerceWishListItem.getCommerceWishListItemId()
 			).put(
-				"commerceWishListItemsCount", commerceWishListItemsCount
+				"commerceWishListItemsCount",
+				_commerceWishListItemService.getCommerceWishListItemsCount(
+					commerceWishList.getCommerceWishListId())
 			).put(
 				"success", true
 			);

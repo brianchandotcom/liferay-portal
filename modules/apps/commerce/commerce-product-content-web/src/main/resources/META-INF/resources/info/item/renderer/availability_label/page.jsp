@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/availability_label/init.jsp" %>
+<%@ include file="/info/item/renderer/availability_label/init.jsp" %>
 
 <span class="<%= Validator.isNull(label) ? "invisible" + StringPool.SPACE : StringPool.BLANK %>label label-<%= labelType %> m-0 <%= namespace %>availability-label">
 	<span class="label-item label-item-expand"><%= label %></span>
@@ -27,6 +27,6 @@
 				"namespace", namespace
 			).build()
 		%>'
-		module="availability_label/js/AvailabilityCPInstanceChangeHandler"
+		module="info/item/renderer/availability_label/js/AvailabilityCPInstanceChangeHandler"
 	/>
 </c:if>

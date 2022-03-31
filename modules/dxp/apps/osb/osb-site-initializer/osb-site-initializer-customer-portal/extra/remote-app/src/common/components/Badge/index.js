@@ -17,7 +17,7 @@ const Badge = ({badgeClassName, children, ...props}) => {
 		<div
 			{...props}
 			className={classNames(
-				'alert alert-danger ml-3 mr-3 p-sm-2 text-danger text-paragraph-sm',
+				'alert alert-danger p-sm-2 text-danger text-paragraph-sm',
 				{
 					[badgeClassName]: badgeClassName,
 				}

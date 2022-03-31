@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -68,11 +67,8 @@ public class JavaCommentStylingCheck extends BaseFileCheck {
 					matcher.start(2));
 			}
 
-			return StringUtil.replaceFirst(
-				content, matcher.group(),
-				StringBundler.concat(
-					matcher.group(1), StringPool.SPACE, commentContent),
-				matcher.start());
+			return StringUtil.insert(
+				content, StringPool.SPACE, matcher.start(2));
 		}
 
 		return content;

@@ -181,13 +181,11 @@ public class FileEntryStagedModelRepository
 					repositoryIdProperty.in(exportableRepositoryIds));
 			});
 		exportActionableDynamicQuery.setPerformActionMethod(
-			(DLFileEntry dlFileEntry) -> {
-				FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-					dlFileEntry.getFileEntryId());
-
+			(DLFileEntry dlFileEntry) ->
 				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, fileEntry);
-			});
+					portletDataContext,
+					_dlAppLocalService.getFileEntry(
+						dlFileEntry.getFileEntryId())));
 		exportActionableDynamicQuery.setStagedModelType(
 			new StagedModelType(DLFileEntryConstants.getClassName()));
 

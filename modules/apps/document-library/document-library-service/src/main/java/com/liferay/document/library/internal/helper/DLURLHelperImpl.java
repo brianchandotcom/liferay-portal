@@ -87,23 +87,23 @@ public class DLURLHelperImpl implements DLURLHelper {
 			return url;
 		}
 
-		String previewURL = getPreviewURL(
-			fileEntry, fileVersion, themeDisplay, queryString, appendVersion,
-			absoluteURL);
-
-		return _http.addParameter(previewURL, "download", true);
+		return _http.addParameter(
+			getPreviewURL(
+				fileEntry, fileVersion, themeDisplay, queryString,
+				appendVersion, absoluteURL),
+			"download", true);
 	}
 
 	@Override
 	public String getFileEntryControlPanelLink(
 		PortletRequest portletRequest, long fileEntryId) {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			FileEntry.class.getName(), PortletProvider.Action.MANAGE);
-
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(
-				portletRequest, portletId, PortletRequest.RENDER_PHASE)
+				portletRequest,
+				PortletProviderUtil.getPortletId(
+					FileEntry.class.getName(), PortletProvider.Action.MANAGE),
+				PortletRequest.RENDER_PHASE)
 		).setMVCRenderCommandName(
 			"/document_library/view_file_entry"
 		).setParameter(
@@ -115,11 +115,11 @@ public class DLURLHelperImpl implements DLURLHelper {
 	public String getFolderControlPanelLink(
 		PortletRequest portletRequest, long folderId) {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			Folder.class.getName(), PortletProvider.Action.MANAGE);
-
 		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, portletId, PortletRequest.RENDER_PHASE);
+			portletRequest,
+			PortletProviderUtil.getPortletId(
+				Folder.class.getName(), PortletProvider.Action.MANAGE),
+			PortletRequest.RENDER_PHASE);
 
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			portletURL.setParameter(
@@ -345,11 +345,10 @@ public class DLURLHelperImpl implements DLURLHelper {
 			secure = true;
 		}
 
-		String portalURL = _portal.getPortalURL(
-			themeDisplay.getServerName(), themeDisplay.getServerPort(), secure);
-
-		webDavURLSB.append(portalURL);
-
+		webDavURLSB.append(
+			_portal.getPortalURL(
+				themeDisplay.getServerName(), themeDisplay.getServerPort(),
+				secure));
 		webDavURLSB.append(themeDisplay.getPathContext());
 		webDavURLSB.append("/webdav");
 

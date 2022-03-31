@@ -122,11 +122,9 @@ public class FolderStagedModelRepository
 					return;
 				}
 
-				Folder folder = _dlAppLocalService.getFolder(
-					dlFolder.getFolderId());
-
 				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, folder);
+					portletDataContext,
+					_dlAppLocalService.getFolder(dlFolder.getFolderId()));
 			});
 		exportActionableDynamicQuery.setStagedModelType(
 			new StagedModelType(DLFolderConstants.getClassName()));

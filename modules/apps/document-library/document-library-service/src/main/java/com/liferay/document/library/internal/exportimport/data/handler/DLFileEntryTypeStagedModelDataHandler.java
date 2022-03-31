@@ -187,13 +187,11 @@ public class DLFileEntryTypeStagedModelDataHandler
 		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			com.liferay.dynamic.data.mapping.model.DDMStructure structure =
-				_ddmStructureLocalService.getStructure(
-					ddmStructure.getStructureId());
-
 			Element referenceElement =
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, fileEntryType, structure,
+					portletDataContext, fileEntryType,
+					_ddmStructureLocalService.getStructure(
+						ddmStructure.getStructureId()),
 					PortletDataContext.REFERENCE_TYPE_STRONG);
 
 			referenceElement.addAttribute(

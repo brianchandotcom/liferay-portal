@@ -78,11 +78,10 @@ public class DLFileEntrySearchResultContributor
 
 			long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
 
-			Summary summary = _summaryFactory.getSummary(
-				document, className.getClassName(), classPK, locale,
-				portletRequest, portletResponse);
-
-			searchResult.setSummary(summary);
+			searchResult.setSummary(
+				_summaryFactory.getSummary(
+					document, className.getClassName(), classPK, locale,
+					portletRequest, portletResponse));
 		}
 	}
 

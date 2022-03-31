@@ -128,8 +128,8 @@ definition {
 	@description = "Feature ID: LRAC-7185 | Automation ID: LRAC-10201 | Test Summary: Change data type from filter"
 	@priority = "5"
 	test CanChangeDataTypeFromFilter {
-		var attributeName = "animal";
-		var attributeValue = "dog";
+		var attributeName = "phone";
+		var attributeValue = "87900809";
 
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();

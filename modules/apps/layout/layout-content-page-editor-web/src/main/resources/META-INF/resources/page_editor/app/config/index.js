@@ -41,7 +41,6 @@ export function initializeConfig(backendConfig) {
 	const augmentedPanels = augmentPanelData(pluginsRootPath, sidebarPanels);
 
 	const syntheticItems = {
-		marginOptions: [...backendConfig.paddingOptions],
 		panels: generatePanels(augmentedPanels),
 		sidebarPanels: partitionPanels(augmentedPanels),
 		toolbarId,

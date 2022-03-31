@@ -171,8 +171,6 @@ jest.mock(
 			],
 			defaultLanguageId: 'es_ES',
 			defaultSegmentsExperienceId: '0',
-			marginOptions: [],
-			paddingOptions: [],
 		},
 	})
 );

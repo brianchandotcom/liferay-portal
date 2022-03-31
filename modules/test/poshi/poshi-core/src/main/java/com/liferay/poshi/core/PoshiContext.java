@@ -23,6 +23,7 @@ import com.liferay.poshi.core.pql.PQLEntityFactory;
 import com.liferay.poshi.core.prose.PoshiProseMatcher;
 import com.liferay.poshi.core.script.PoshiScriptParserException;
 import com.liferay.poshi.core.selenium.LiferaySelenium;
+import com.liferay.poshi.core.selenium.LiferaySeleniumMethod;
 import com.liferay.poshi.core.util.FileUtil;
 import com.liferay.poshi.core.util.MathUtil;
 import com.liferay.poshi.core.util.OSDetector;
@@ -105,7 +106,7 @@ public class PoshiContext {
 		_poshiPropertyNames.clear();
 		_rootElements.clear();
 		_rootVarElements.clear();
-		_seleniumParameterCounts.clear();
+		_seleniumMethods.clear();
 		_testCaseDescriptions.clear();
 		_testCaseNamespacedClassCommandNames.clear();
 		_testCaseNamespacedClassNames.clear();
@@ -460,8 +461,8 @@ public class PoshiContext {
 			classType + "#" + namespace + "." + className);
 	}
 
-	public static int getSeleniumParameterCount(String commandName) {
-		return _seleniumParameterCounts.get(commandName);
+	public static LiferaySeleniumMethod getSeleniumMethod(String methodName) {
+		return _seleniumMethods.get(methodName);
 	}
 
 	public static List<List<String>> getTestBatchGroups(
@@ -1311,12 +1312,11 @@ public class PoshiContext {
 		Method[] methods = LiferaySelenium.class.getMethods();
 
 		for (Method method : methods) {
-			Class<?>[] classes = method.getParameterTypes();
+			LiferaySeleniumMethod seleniumMethod = new LiferaySeleniumMethod(
+				method);
 
-			_seleniumParameterCounts.put(method.getName(), classes.length);
+			_seleniumMethods.put(method.getName(), seleniumMethod);
 		}
-
-		_seleniumParameterCounts.put("open", 1);
 	}
 
 	private static void _storePathElement(
@@ -1941,7 +1941,7 @@ public class PoshiContext {
 		Collections.synchronizedMap(new HashMap<>());
 	private static final Map<String, List<Element>> _rootVarElements =
 		Collections.synchronizedMap(new HashMap<>());
-	private static final Map<String, Integer> _seleniumParameterCounts =
+	private static final Map<String, LiferaySeleniumMethod> _seleniumMethods =
 		Collections.synchronizedMap(new HashMap<>());
 	private static final Map<String, String> _testCaseDescriptions =
 		Collections.synchronizedMap(new HashMap<>());

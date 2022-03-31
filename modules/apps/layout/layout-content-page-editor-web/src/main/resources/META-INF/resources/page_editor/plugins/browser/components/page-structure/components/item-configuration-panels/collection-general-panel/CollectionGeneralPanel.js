@@ -15,7 +15,6 @@
 import ClayForm, {
 	ClayCheckbox,
 	ClayInput,
-	ClaySelect,
 	ClaySelectWithOption,
 } from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -50,6 +49,7 @@ import useControlledState from '../../../../../../../core/hooks/useControlledSta
 import CollectionFilterConfigurationModal from '../../CollectionFilterConfigurationModal';
 import {CommonStyles} from '../CommonStyles';
 import {LayoutSelector} from './LayoutSelector';
+import {ListItemStyleSelector} from './ListItemStyleSelector';
 import {ShowGutterSelector} from './ShowGutterSelector';
 import {StyleDisplaySelector} from './StyleDisplaySelector';
 import {VerticalAlignmentSelector} from './VerticalAlignmentSelector';
@@ -132,15 +132,6 @@ export function CollectionGeneralPanel({item}) {
 		item.config,
 		selectedViewportSize
 	);
-
-	const handleCollectionListItemStyleChanged = ({target}) => {
-		const options = target.options;
-
-		handleConfigurationChanged({
-			listItemStyle: options[target.selectedIndex].dataset.key,
-			templateKey: options[target.selectedIndex].dataset.templateKey,
-		});
-	};
 
 	const handleCollectionSelect = (collection = {}) => {
 		dispatch(
@@ -340,36 +331,18 @@ export function CollectionGeneralPanel({item}) {
 								<>
 									{listStyle !== LIST_STYLE_GRID &&
 										availableListItemStyles.length > 0 && (
-											<ClayForm.Group small>
-												<label
-													htmlFor={
-														collectionListItemStyleId
-													}
-												>
-													{Liferay.Language.get(
-														'list-item-style'
-													)}
-												</label>
-
-												<ClaySelect
-													aria-label={Liferay.Language.get(
-														'list-item-style'
-													)}
-													id={
-														collectionListItemStyleId
-													}
-													onChange={
-														handleCollectionListItemStyleChanged
-													}
-												>
-													<ListItemStylesOptions
-														item={item}
-														listItemStyles={
-															availableListItemStyles
-														}
-													/>
-												</ClaySelect>
-											</ClayForm.Group>
+											<ListItemStyleSelector
+												availableListItemStyles={
+													availableListItemStyles
+												}
+												collectionListItemStyleId={
+													collectionListItemStyleId
+												}
+												handleConfigurationChanged={
+													handleConfigurationChanged
+												}
+												item={item}
+											/>
 										)}
 
 									<ClayForm.Group small>
@@ -728,44 +701,6 @@ PaginationOptions.propTypes = {
 	handleConfigurationChanged: PropTypes.func.isRequired,
 	initialNumberOfItemsPerPage: PropTypes.number.isRequired,
 	initialNumberOfPages: PropTypes.number.isRequired,
-};
-
-function ListItemStylesOptions({item, listItemStyles}) {
-	return listItemStyles.map((listItemStyle) =>
-		listItemStyle.templates ? (
-			<ClaySelect.OptGroup
-				key={listItemStyle.label}
-				label={listItemStyle.label}
-			>
-				{listItemStyle.templates.map((template) => (
-					<ClaySelect.Option
-						data-key={template.key}
-						data-template-key={template.templateKey}
-						key={`${template.key}_${template.templateKey}`}
-						label={template.label}
-						selected={
-							item.config.listItemStyle === template.key &&
-							(!item.config.templateKey ||
-								item.config.templateKey ===
-									template.templateKey)
-						}
-					/>
-				))}
-			</ClaySelect.OptGroup>
-		) : (
-			<ClaySelect.Option
-				data-key={listItemStyle.key}
-				key={listItemStyle.label}
-				label={listItemStyle.label}
-				selected={item.config.listItemStyle === listItemStyle.key}
-			/>
-		)
-	);
-}
-
-ListItemStylesOptions.propTypes = {
-	item: PropTypes.object.isRequired,
-	listItemStyles: PropTypes.array.isRequired,
 };
 
 function FeedbackMessage({message}) {

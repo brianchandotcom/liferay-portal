@@ -104,7 +104,7 @@ public class SearchBarPortletDisplayContextBuilder {
 
 		String scopeParameterValue = scopeParameterValueOptional.orElse(null);
 
-		_searchScopePreference =
+		SearchScopePreference searchScopePreference =
 			searchBarPortletPreferences.getSearchScopePreference();
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
@@ -142,7 +142,7 @@ public class SearchBarPortletDisplayContextBuilder {
 				searchBarPrecedenceHelper, searchBarPortletPreferences,
 				themeDisplay));
 
-		if (_searchScopePreference ==
+		if (searchScopePreference ==
 				SearchScopePreference.LET_THE_USER_CHOOSE) {
 
 			searchBarPortletDisplayContext.setLetTheUserChooseTheSearchScope(
@@ -161,7 +161,8 @@ public class SearchBarPortletDisplayContextBuilder {
 			searchBarPortletInstanceConfiguration);
 
 		_setSelectedSearchScope(
-			searchBarPortletDisplayContext, scopeParameterValue);
+			searchBarPortletDisplayContext, searchScopePreference,
+			scopeParameterValue);
 
 		if (Validator.isBlank(destination)) {
 			searchBarPortletDisplayContext.setSearchURL(
@@ -256,12 +257,15 @@ public class SearchBarPortletDisplayContextBuilder {
 		}
 	}
 
-	protected SearchScope getSearchScope(String scopeParameterValue) {
+	protected SearchScope getSearchScope(
+		SearchScopePreference searchScopePreference,
+		String scopeParameterValue) {
+
 		if (scopeParameterValue != null) {
 			return SearchScope.getSearchScope(scopeParameterValue);
 		}
 
-		SearchScope searchScope = _searchScopePreference.getSearchScope();
+		SearchScope searchScope = searchScopePreference.getSearchScope();
 
 		if (searchScope != null) {
 			return searchScope;
@@ -374,9 +378,11 @@ public class SearchBarPortletDisplayContextBuilder {
 
 	private void _setSelectedSearchScope(
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext,
+		SearchScopePreference searchScopePreference,
 		String scopeParameterValue) {
 
-		SearchScope searchScope = getSearchScope(scopeParameterValue);
+		SearchScope searchScope = getSearchScope(
+			searchScopePreference, scopeParameterValue);
 
 		if (searchScope == SearchScope.EVERYTHING) {
 			searchBarPortletDisplayContext.setSelectedEverythingSearchScope(
@@ -404,6 +410,5 @@ public class SearchBarPortletDisplayContextBuilder {
 	private final LayoutLocalService _layoutLocalService;
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;
-	private SearchScopePreference _searchScopePreference;
 
 }

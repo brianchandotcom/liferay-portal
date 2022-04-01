@@ -1426,8 +1426,6 @@ definition {
 		task ("Prioritize the variation") {
 			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
 
-			Refresh();
-
 			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
 		}
 
@@ -1783,8 +1781,6 @@ definition {
 
 		task ("Prioritize the variation") {
 			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
-
-			Refresh();
 
 			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
 		}
@@ -2160,8 +2156,6 @@ definition {
 
 			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
 
-			Refresh();
-
 			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
 		}
 
@@ -2450,8 +2444,6 @@ definition {
 				entryList = "WC_Title_3");
 
 			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
-
-			Refresh();
 
 			AssetListsAdmin.prioritizeVariation(variationTitle = "Second Segment");
 		}

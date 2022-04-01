@@ -433,9 +433,11 @@ definition {
 	}
 
 	macro prioritizeVariation {
-		Click(
-			key_variation = "${variationTitle}",
-			locator1 = "AssetLists#VARIATION_ELLIPSIS");
+		if (IsElementNotPresent(key_menuItem = "Prioritize", locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			Click(
+				key_variation = "${variationTitle}",
+				locator1 = "AssetLists#VARIATION_ELLIPSIS");
+		}
 
 		Click(
 			key_menuItem = "Prioritize",

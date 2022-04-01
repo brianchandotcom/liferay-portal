@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "One Issue to Many Testray Case Results Issues"
+		"en-US": "Testray Issue"
 	},
 	"name": "issueToCaseResultsIssues",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:Issue$]",

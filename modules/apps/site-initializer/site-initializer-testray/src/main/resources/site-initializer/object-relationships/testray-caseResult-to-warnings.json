@@ -1,7 +1,7 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en-US": "One Case Result to Many Warnings"
+		"en-US": "Testray Case Result"
 	},
 	"name": "caseResultToWarnings",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:CaseResult$]",

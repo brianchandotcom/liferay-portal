@@ -642,6 +642,8 @@ definition {
 
 		Navigator.openURL();
 
+		Pause(locator1 = "5000");
+
 		SearchAdministration.openSearchAdmin();
 
 		var clientVersion = Elasticsearch.getClientVersion();

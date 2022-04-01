@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.search.searcher.SearchRequest;
+import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
 import com.liferay.portal.search.web.internal.portlet.preferences.PortletPreferencesLookup;
 import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferences;
@@ -37,6 +39,7 @@ import com.liferay.portal.search.web.internal.search.bar.portlet.configuration.S
 import com.liferay.portal.search.web.internal.search.bar.portlet.display.context.SearchBarPortletDisplayContext;
 import com.liferay.portal.search.web.internal.search.bar.portlet.helper.SearchBarPrecedenceHelper;
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
+import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portlet.PortletPreferencesImpl;
 
@@ -303,6 +306,50 @@ public class SearchBarPortletDisplayContextFactoryTest {
 			renderRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			_themeDisplay
+		);
+
+		PortletSharedSearchResponse portletSharedSearchResponse = Mockito.mock(
+			PortletSharedSearchResponse.class);
+
+		Mockito.when(
+			_portletSharedSearchRequest.search(renderRequest)
+		).thenReturn(
+			portletSharedSearchResponse
+		);
+
+		Mockito.when(
+			_searchBarPrecedenceHelper.findHeaderSearchBarPortletOptional(
+				_themeDisplay)
+		).thenReturn(
+			Optional.empty()
+		);
+
+		Mockito.when(
+			portletSharedSearchResponse.getParameter(
+				Mockito.anyObject(), Mockito.anyObject())
+		).thenReturn(
+			Optional.empty()
+		);
+
+		SearchResponse searchResponse = Mockito.mock(SearchResponse.class);
+
+		Mockito.when(
+			portletSharedSearchResponse.getFederatedSearchResponse(
+				Mockito.anyObject())
+		).thenReturn(
+			searchResponse
+		);
+
+		Mockito.when(
+			searchResponse.getRequest()
+		).thenReturn(
+			Mockito.mock(SearchRequest.class)
+		);
+
+		Mockito.when(
+			portletSharedSearchResponse.getSearchResponse()
+		).thenReturn(
+			searchResponse
 		);
 
 		return searchBarPortletDisplayContextFactory;

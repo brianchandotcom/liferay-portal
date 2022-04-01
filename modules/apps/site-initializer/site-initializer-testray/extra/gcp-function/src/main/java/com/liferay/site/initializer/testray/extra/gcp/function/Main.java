@@ -367,11 +367,11 @@ public class Main {
 			String name, String objectDefinitionShortName)
 		throws Exception {
 
-		JSONObject objectEntryJSONObject = _objectEntryJSONObjects.get(
+		Long objectEntryId = _objectEntryIds.get(
 			objectDefinitionShortName + "#" + name);
 
-		if (objectEntryJSONObject != null) {
-			return objectEntryJSONObject.getLong("id");
+		if (objectEntryId != null) {
+			return objectEntryId;
 		}
 
 		HttpInvoker.HttpResponse httpResponse = _invoke(
@@ -391,14 +391,10 @@ public class Main {
 			return 0;
 		}
 
-		// TODO Cache just the ID if we never need more
+		_objectEntryIds.put(
+			objectDefinitionShortName + "#" + name, objectEntryId);
 
-		objectEntryJSONObject = jsonArray.getJSONObject(0);
-
-		_objectEntryJSONObjects.put(
-			objectDefinitionShortName + "#" + name, objectEntryJSONObject);
-
-		return objectEntryJSONObject.getLong("id");
+		return objectEntryId;
 	}
 
 	private Map<String, String> _getPropertiesMap(Element element) {
@@ -891,8 +887,7 @@ public class Main {
 		long id = responseJSONObject.getLong("id");
 
 		if (id > 0) {
-			_objectEntryJSONObjects.put(
-				objectDefinitionShortName + "#" + name, responseJSONObject);
+			_objectEntryIds.put(objectDefinitionShortName + "#" + name, id);
 		}
 
 		return id;
@@ -988,8 +983,7 @@ public class Main {
 	private final String _liferayLogin;
 	private final String _liferayPassword;
 	private final String _liferayURL;
-	private final Map<String, JSONObject> _objectEntryJSONObjects =
-		new HashMap<>();
+	private final Map<String, Long> _objectEntryIds = new HashMap<>();
 	private final String _s3APIKeyPath;
 	private final String _s3BucketName;
 	private final String _s3ErroredFolderName;

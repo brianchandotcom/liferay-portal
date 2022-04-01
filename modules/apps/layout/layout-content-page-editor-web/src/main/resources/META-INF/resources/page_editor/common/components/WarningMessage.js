@@ -16,7 +16,7 @@ import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export function FeedbackMessage({message}) {
+export function WarningMessage({message}) {
 	return (
 		<div className="autofit-row mt-2 small text-warning">
 			<div className="autofit-col">
@@ -32,6 +32,6 @@ export function FeedbackMessage({message}) {
 	);
 }
 
-FeedbackMessage.propTypes = {
+WarningMessage.propTypes = {
 	message: PropTypes.string.isRequired,
 };

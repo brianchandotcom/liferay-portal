@@ -20,7 +20,7 @@ import React, {useEffect, useState} from 'react';
 import {PAGINATION_ERROR_MESSAGES} from '../../../../../../../app/config/constants/paginationErrorMessages';
 import {config} from '../../../../../../../app/config/index';
 import {useId} from '../../../../../../../app/utils/useId';
-import {FeedbackMessage} from '../../../../../../../common/components/FeedbackMessage';
+import {WarningMessage} from '../../../../../../../common/components/WarningMessage';
 import useControlledState from '../../../../../../../core/hooks/useControlledState';
 
 export function PaginationOptions({
@@ -166,7 +166,7 @@ export function PaginationOptions({
 					</span>
 
 					{numberOfItemsPerPageError && (
-						<FeedbackMessage message={numberOfItemsPerPageError} />
+						<WarningMessage message={numberOfItemsPerPageError} />
 					)}
 				</div>
 			</ClayForm.Group>

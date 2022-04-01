@@ -22,7 +22,7 @@ import {PAGINATION_ERROR_MESSAGES} from '../../../../../../../app/config/constan
 import {config} from '../../../../../../../app/config/index';
 import CollectionService from '../../../../../../../app/services/CollectionService';
 import {useId} from '../../../../../../../app/utils/useId';
-import {FeedbackMessage} from '../../../../../../../common/components/FeedbackMessage';
+import {WarningMessage} from '../../../../../../../common/components/WarningMessage';
 import useControlledState from '../../../../../../../core/hooks/useControlledState';
 
 export function NoPaginationOptions({
@@ -145,7 +145,7 @@ export function NoPaginationOptions({
 					</p>
 
 					{numberOfItemsError && (
-						<FeedbackMessage message={numberOfItemsError} />
+						<WarningMessage message={numberOfItemsError} />
 					)}
 				</ClayForm.Group>
 			)}

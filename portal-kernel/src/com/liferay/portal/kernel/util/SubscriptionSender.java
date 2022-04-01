@@ -677,33 +677,12 @@ public class SubscriptionSender implements Serializable {
 		return Boolean.TRUE;
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	protected void notifyPersistedSubscriber(Subscription subscription)
-		throws Exception {
-
-		notifyPersistedSubscriber(subscription, true);
-	}
-
 	protected void notifyPersistedSubscriber(
 			Subscription subscription, boolean notifyImmediately)
 		throws Exception {
 
 		notifyPersistedSubscriber(
 			subscription, _className, _classPK, notifyImmediately);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x)
-	 */
-	@Deprecated
-	protected void notifyPersistedSubscriber(
-			Subscription subscription, String className, long classPK)
-		throws Exception {
-
-		notifyPersistedSubscriber(subscription, _className, _classPK, true);
 	}
 
 	protected void notifyPersistedSubscriber(
@@ -826,7 +805,7 @@ public class SubscriptionSender implements Serializable {
 				return;
 			}
 
-			sendNotification(user);
+			sendNotification(user, true);
 		}
 	}
 

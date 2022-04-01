@@ -302,7 +302,7 @@ const viewReducer = (state: TState, action: TAction) => {
 							...viewColumn,
 							fieldLabel: objectField.label[defaultLanguageId],
 							isDefaultSort: false,
-							label: objectField.label,
+							label: viewColumn.label,
 						});
 					}
 				});

@@ -125,6 +125,7 @@ const CustomView: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 
 		const newObjectViewColumns = objectViewColumns.map((viewColumn) => {
 			return {
+				label: viewColumn.label,
 				objectFieldName: viewColumn.objectFieldName,
 				priority: viewColumn.priority,
 			};

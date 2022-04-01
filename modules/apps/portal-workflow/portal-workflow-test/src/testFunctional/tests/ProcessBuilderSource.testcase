@@ -621,8 +621,10 @@ definition {
 			portlet = "Process Builder");
 
 		Click(
-			key_workflowResourceValue = "Single Approver",
-			locator1 = "WorkflowConfiguration#RESOURCE_TABLE_WORKFLOW");
+			key_workflowDefinitionTitle = "Single Approver",
+			locator1 = "WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS");
+
+		MenuItem.clickNoError(menuItem = "Edit");
 
 		Click.clickAt(locator1 = "Icon#INFO");
 

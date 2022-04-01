@@ -95,12 +95,6 @@ public class SearchBarPortletDisplayContextBuilder {
 
 		String destination = searchBarPortletPreferences.getDestinationString();
 
-		_keywords = Optional.ofNullable(
-			searchRequest.getQueryString()
-		).orElse(
-			null
-		);
-
 		_paginationStartParameterName =
 			searchRequest.getPaginationStartParameterName();
 
@@ -135,7 +129,12 @@ public class SearchBarPortletDisplayContextBuilder {
 		searchBarPortletDisplayContext.setInputPlaceholder(
 			LanguageUtil.get(
 				getHttpServletRequest(_renderRequest), "search-..."));
-		searchBarPortletDisplayContext.setKeywords(getKeywords());
+		searchBarPortletDisplayContext.setKeywords(
+			Optional.ofNullable(
+				searchRequest.getQueryString()
+			).orElse(
+				StringPool.BLANK
+			));
 		searchBarPortletDisplayContext.setKeywordsParameterName(
 			_getKeywordsParameterName(
 				portletPreferencesLookup,
@@ -221,14 +220,6 @@ public class SearchBarPortletDisplayContextBuilder {
 			_portal.getLiferayPortletRequest(renderRequest);
 
 		return liferayPortletRequest.getHttpServletRequest();
-	}
-
-	protected String getKeywords() {
-		if (_keywords != null) {
-			return _keywords;
-		}
-
-		return StringPool.BLANK;
 	}
 
 	protected String getLayoutFriendlyURL(
@@ -422,7 +413,6 @@ public class SearchBarPortletDisplayContextBuilder {
 		SearchBarPortletDisplayContextBuilder.class);
 
 	private final Http _http;
-	private String _keywords;
 	private final LayoutLocalService _layoutLocalService;
 	private String _paginationStartParameterName;
 	private final Portal _portal;

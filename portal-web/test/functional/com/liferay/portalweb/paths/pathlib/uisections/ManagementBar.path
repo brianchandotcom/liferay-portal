@@ -78,7 +78,7 @@
 <!--FEATURE FLAG CONFIGURATIONS-->
 <tr>
 	<td>ACTIVE_DROPDOWN_ITEM</td>
-	<td>//div[contains(@class,'dropdown-menu show')]//li//*[contains(@class,'dropdown-item') and contains(.,'${key_item}')]</td>
+	<td>//div[contains(@class,'dropdown-menu') and contains(@class,'show')]//li//*[contains(@class,'dropdown-item') and contains(.,'${key_item}')]</td>
 	<td></td>
 </tr>
 <tr>

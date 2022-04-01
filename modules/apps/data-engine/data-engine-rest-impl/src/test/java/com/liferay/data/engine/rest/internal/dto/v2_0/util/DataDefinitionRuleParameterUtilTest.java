@@ -26,17 +26,11 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.runners.MockitoJUnitRunner;
-
-import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Mateus Santana
  */
-@RunWith(MockitoJUnitRunner.class)
-public class DataDefinitionRuleParameterUtilTest extends PowerMockito {
+public class DataDefinitionRuleParameterUtilTest {
 
 	@ClassRule
 	@Rule

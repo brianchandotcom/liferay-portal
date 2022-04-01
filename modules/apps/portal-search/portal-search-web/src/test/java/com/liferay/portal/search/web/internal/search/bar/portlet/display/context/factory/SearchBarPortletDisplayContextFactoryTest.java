@@ -31,9 +31,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
+import com.liferay.portal.search.web.internal.portlet.preferences.PortletPreferencesLookup;
 import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferences;
 import com.liferay.portal.search.web.internal.search.bar.portlet.configuration.SearchBarPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.search.bar.portlet.display.context.SearchBarPortletDisplayContext;
+import com.liferay.portal.search.web.internal.search.bar.portlet.helper.SearchBarPrecedenceHelper;
+import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portlet.PortletPreferencesImpl;
 
@@ -85,7 +88,9 @@ public class SearchBarPortletDisplayContextFactoryTest {
 				_createSearchBarPortletDisplayContextFactory(StringPool.BLANK);
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			searchBarPortletDisplayContextFactory.build();
+			searchBarPortletDisplayContextFactory.create(
+				_portletPreferencesLookup, _portletSharedSearchRequest,
+				_searchBarPrecedenceHelper);
 
 		Assert.assertFalse(
 			searchBarPortletDisplayContext.isDestinationUnreachable());
@@ -98,7 +103,9 @@ public class SearchBarPortletDisplayContextFactoryTest {
 				_createSearchBarPortletDisplayContextFactory(null);
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			searchBarPortletDisplayContextFactory.build();
+			searchBarPortletDisplayContextFactory.create(
+				_portletPreferencesLookup, _portletSharedSearchRequest,
+				_searchBarPrecedenceHelper);
 
 		Assert.assertFalse(
 			searchBarPortletDisplayContext.isDestinationUnreachable());
@@ -115,7 +122,9 @@ public class SearchBarPortletDisplayContextFactoryTest {
 				_createSearchBarPortletDisplayContextFactory(destination);
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			searchBarPortletDisplayContextFactory.build();
+			searchBarPortletDisplayContextFactory.create(
+				_portletPreferencesLookup, _portletSharedSearchRequest,
+				_searchBarPrecedenceHelper);
 
 		Assert.assertTrue(
 			searchBarPortletDisplayContext.isDestinationUnreachable());
@@ -139,7 +148,9 @@ public class SearchBarPortletDisplayContextFactoryTest {
 					StringPool.SLASH.concat(destination));
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			searchBarPortletDisplayContextFactory.build();
+			searchBarPortletDisplayContextFactory.create(
+				_portletPreferencesLookup, _portletSharedSearchRequest,
+				_searchBarPrecedenceHelper);
 
 		Assert.assertEquals(
 			layoutFriendlyURL, searchBarPortletDisplayContext.getSearchURL());
@@ -165,7 +176,9 @@ public class SearchBarPortletDisplayContextFactoryTest {
 				_createSearchBarPortletDisplayContextFactory(destination);
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			searchBarPortletDisplayContextFactory.build();
+			searchBarPortletDisplayContextFactory.create(
+				_portletPreferencesLookup, _portletSharedSearchRequest,
+				_searchBarPrecedenceHelper);
 
 		Assert.assertEquals(
 			layoutFriendlyURL, searchBarPortletDisplayContext.getSearchURL());
@@ -187,7 +200,9 @@ public class SearchBarPortletDisplayContextFactoryTest {
 				_createSearchBarPortletDisplayContextFactory(null);
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			searchBarPortletDisplayContextFactory.build();
+			searchBarPortletDisplayContextFactory.create(
+				_portletPreferencesLookup, _portletSharedSearchRequest,
+				_searchBarPrecedenceHelper);
 
 		Assert.assertFalse(
 			searchBarPortletDisplayContext.isDestinationUnreachable());
@@ -386,6 +401,15 @@ public class SearchBarPortletDisplayContextFactoryTest {
 
 	@Mock
 	private PortletDisplay _portletDisplay;
+
+	@Mock
+	private PortletPreferencesLookup _portletPreferencesLookup;
+
+	@Mock
+	private PortletSharedSearchRequest _portletSharedSearchRequest;
+
+	@Mock
+	private SearchBarPrecedenceHelper _searchBarPrecedenceHelper;
 
 	@Mock
 	private ThemeDisplay _themeDisplay;

@@ -172,6 +172,8 @@ definition {
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10152 | Test Summary: Blocked events are not shown on Segments"
 	@priority = "5"
 	test CheckBlockedEventsNotShownOnSegments {
+		property test.name.skip.portal.instance = "CustomEventsBlockEvents#CheckBlockedEventsNotShownOnSegments";
+
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
@@ -224,6 +226,8 @@ definition {
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10150 | Test Summary: Block/Unblock custom events as non-admin"
 	@priority = "3"
 	test CheckCannotBlockOrUnblockCustomEventsAsNonAdmin {
+		property test.name.skip.portal.instance = "CustomEventsBlockEvents#CheckCannotBlockOrUnblockCustomEventsAsNonAdmin";
+
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 
@@ -348,6 +352,8 @@ definition {
 	@description = "Feature ID: LRAC-7346 | Automation ID: LRAC-10151 | Test Summary: Blocked events are not processed"
 	@priority = "5"
 	test CheckEventAnalysisNotUpdatedWhenEventIsBlocked {
+		property test.name.skip.portal.instance = "CustomEventsBlockEvents#CheckEventAnalysisNotUpdatedWhenEventIsBlocked";
+
 		task ("Fill fields and create custom event") {
 			var customEventName = ACCustomEvents.generateCustomEventName();
 

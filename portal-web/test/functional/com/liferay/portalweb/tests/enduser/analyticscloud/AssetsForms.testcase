@@ -616,6 +616,8 @@ definition {
 	@description = "Form known individuals shows which individuals interact with the form"
 	@priority = "5"
 	test KnownIndividualsShowsWhichIndividualsInteractWithForm {
+		property test.name.skip.portal.instance = "AssetsForms#KnownIndividualsShowsWhichIndividualsInteractWithForm";
+
 		var nameList = "ac ac,liferay liferay,dxp dxp";
 		var usernameList = "ac,liferay,dxp";
 		var emailList = "ac@liferay.com,liferay@liferay.com,dxp@liferay.com";
@@ -667,6 +669,8 @@ definition {
 	@description = "Feature ID: Legacy | Automation ID: LRAC-8120 | Test Summary: Assert forms list shows all of the forms in a list"
 	@priority = "5"
 	test ViewAllFormsShownInAssetList {
+		property test.name.skip.portal.instance = "AssetsForms#ViewAllFormsShownInAssetList";
+
 		var formNameList = "Created Form Name,Created Form Name 1,Created Form Name 2,Created Form Name 3";
 
 		for (var n : list "1,2,3") {
@@ -712,6 +716,7 @@ definition {
 	@priority = "5"
 	test VisitorBehaviorCardShowsExpectedAmountOfViews {
 		property portal.acceptance = "true";
+		property test.name.skip.portal.instance = "AssetsForms#VisitorBehaviorCardShowsExpectedAmountOfViews";
 
 		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
 

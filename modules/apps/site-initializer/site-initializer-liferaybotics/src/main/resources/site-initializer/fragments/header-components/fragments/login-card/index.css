@@ -1,0 +1,29 @@
+#loginCardContainer {
+    background: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    width: 100%;
+    z-index: 1500;
+    position: fixed;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+}
+
+#loginCardContainer .close-button {
+    margin-left: 90%;
+    margin-right: 20px;
+    margin-top: 20px;
+    position: relative;
+}
+
+#loginCardArea {
+    border-radius: 0.75rem;
+    background-color: #ffffff;
+    min-width: 300px;
+    max-width: 400px;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    z-index: 2000;
+    padding: 20px;

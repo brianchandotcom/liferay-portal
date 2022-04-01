@@ -1,0 +1,22 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"defaultValue": true,
+					"label": "Enable Notification Indicator",
+					"name": "enableNotificationIndicator",
+					"type": "checkbox"
+				},
+				{
+					"dataType": "int",
+					"defaultValue": "0",
+					"label": "Notification Count",
+					"name": "notificationCount",
+					"type": "text"
+				}
+			],
+			"label": "Notifications"
+		}
+	]
+}

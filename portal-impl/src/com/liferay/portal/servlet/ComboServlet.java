@@ -402,9 +402,6 @@ public class ComboServlet extends HttpServlet {
 						stringFileContent);
 				}
 				else if (minifierType.equals("js")) {
-					stringFileContent = MinifierUtil.minifyJavaScript(
-						resourcePath, stringFileContent);
-
 					Matcher matcher = _esModulePattern.matcher(
 						stringFileContent);
 
@@ -418,6 +415,10 @@ public class ComboServlet extends HttpServlet {
 
 						stringFileContent = stringFileContent.replaceAll(
 							"esModule", identifier);
+					}
+					else {
+						stringFileContent = MinifierUtil.minifyJavaScript(
+							resourcePath, stringFileContent);
 					}
 
 					stringFileContent = stringFileContent.concat(

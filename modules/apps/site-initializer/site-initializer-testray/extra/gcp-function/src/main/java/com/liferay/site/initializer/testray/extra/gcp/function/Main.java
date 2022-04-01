@@ -75,20 +75,27 @@ public class Main {
 			properties.getProperty("liferay.password"),
 			properties.getProperty("liferay.url"),
 			properties.getProperty("s3.api.key.path"),
-			properties.getProperty("s3.bucket.name"));
+			properties.getProperty("s3.bucket.name"),
+			properties.getProperty("s3.errored.folder.name"),
+			properties.getProperty("s3.inbox.folder.name"),
+			properties.getProperty("s3.processed.folder.name"));
 
 		main.uploadToTestray();
 	}
 
 	public Main(
 		String liferayLogin, String liferayPassword, String liferayURL,
-		String s3APIKeyPath, String s3BucketName) {
+		String s3APIKeyPath, String s3BucketName, String s3ErroredFolderName,
+		String s3InboxFolderName, String s3ProcessedFolderName) {
 
 		_liferayLogin = liferayLogin;
 		_liferayPassword = liferayPassword;
 		_liferayURL = liferayURL;
 		_s3APIKeyPath = s3APIKeyPath;
 		_s3BucketName = s3BucketName;
+		_s3ErroredFolderName = s3ErroredFolderName;
+		_s3InboxFolderName = s3InboxFolderName;
+		_s3ProcessedFolderName = s3ProcessedFolderName;
 	}
 
 	public void uploadToTestray() throws Exception {
@@ -100,12 +107,13 @@ public class Main {
 		).getService();
 
 		Page<Blob> page = storage.list(
-			_s3BucketName, Storage.BlobListOption.prefix("inbox/"));
+			_s3BucketName,
+			Storage.BlobListOption.prefix(_s3InboxFolderName + "/"));
 
 		for (Blob blob : page.iterateAll()) {
 			String name = blob.getName();
 
-			if (name.equals("inbox/")) {
+			if (name.equals(_s3InboxFolderName + "/")) {
 				continue;
 			}
 
@@ -113,11 +121,15 @@ public class Main {
 				_processArchive(blob.getContent());
 
 				blob.copyTo(
-					_s3BucketName, name.replaceFirst("inbox", "processed"));
+					_s3BucketName,
+					name.replaceFirst(
+						_s3InboxFolderName, _s3ProcessedFolderName));
 			}
 			catch (Exception exception) {
 				blob.copyTo(
-					_s3BucketName, name.replaceFirst("inbox", "errored"));
+					_s3BucketName,
+					name.replaceFirst(
+						_s3InboxFolderName, _s3ErroredFolderName));
 			}
 
 			blob.delete();
@@ -980,5 +992,8 @@ public class Main {
 		new HashMap<>();
 	private final String _s3APIKeyPath;
 	private final String _s3BucketName;
+	private final String _s3ErroredFolderName;
+	private final String _s3InboxFolderName;
+	private final String _s3ProcessedFolderName;
 
 }

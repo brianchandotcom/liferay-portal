@@ -30,7 +30,10 @@ public class MainHttpFunction implements HttpFunction {
 		Main main = new Main(
 			_getSystemEnv("LIFERAY_LOGIN"), _getSystemEnv("LIFERAY_PASSWORD"),
 			_getSystemEnv("LIFERAY_URL"), _getSystemEnv("S3_API_KEY_PATH"),
-			_getSystemEnv("S3_BUCKET_NAME"));
+			_getSystemEnv("S3_BUCKET_NAME"),
+			_getSystemEnv("S3_ERRORED_FOLDER_NAME"),
+			_getSystemEnv("S3_INBOX_FOLDER_NAME"),
+			_getSystemEnv("S3_PROCESSED_FOLDER_NAME"));
 
 		main.uploadToTestray();
 	}

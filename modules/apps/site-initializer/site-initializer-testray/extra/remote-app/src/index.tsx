@@ -13,7 +13,7 @@
  */
 
 import {ApolloProvider} from '@apollo/client';
-import ReactDOM from 'react-dom';
+import {Root, createRoot} from 'react-dom/client';
 
 import TestrayRouter from './TestrayRouter';
 import AccountContextProvider from './context/AccountContext';
@@ -22,23 +22,28 @@ import apolloClient from './graphql/apolloClient';
 
 import './styles/index.scss';
 
-class WebComponent extends HTMLElement {
+class Testray extends HTMLElement {
+	private root: Root | undefined;
+
 	connectedCallback() {
-		ReactDOM.render(
-			<ApolloProvider client={apolloClient}>
-				<AccountContextProvider>
-					<ClayIconProvider>
-						<TestrayRouter />
-					</ClayIconProvider>
-				</AccountContextProvider>
-			</ApolloProvider>,
-			this
-		);
+		if (!this.root) {
+			this.root = createRoot(this);
+
+			this.root.render(
+				<ApolloProvider client={apolloClient}>
+					<AccountContextProvider>
+						<ClayIconProvider>
+							<TestrayRouter />
+						</ClayIconProvider>
+					</AccountContextProvider>
+				</ApolloProvider>
+			);
+		}
 	}
 }
 
 const ELEMENT_ID = 'liferay-remote-app-testray';
 
 if (!customElements.get(ELEMENT_ID)) {
-	customElements.define(ELEMENT_ID, WebComponent);
+	customElements.define(ELEMENT_ID, Testray);
 }

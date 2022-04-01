@@ -77,35 +77,11 @@ public class SearchBarPortletDisplayContextBuilder {
 			new SearchBarPortletPreferencesImpl(
 				Optional.ofNullable(_renderRequest.getPreferences()));
 
-		PortletSharedSearchResponse portletSharedSearchResponse =
-			portletSharedSearchRequest.search(_renderRequest);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String scopeParameterName = _getScopeParameterName(
-			portletPreferencesLookup, searchBarPrecedenceHelper,
-			portletSharedSearchResponse.getSearchSettings(),
-			searchBarPortletPreferences, themeDisplay);
-
-		SearchResponse searchResponse = _getSearchResponse(
-			portletSharedSearchResponse, searchBarPortletPreferences);
-
-		SearchRequest searchRequest = searchResponse.getRequest();
-
-		String destination = searchBarPortletPreferences.getDestinationString();
-
-		String paginationStartParameterName =
-			searchRequest.getPaginationStartParameterName();
-
-		Optional<String> scopeParameterValueOptional =
-			portletSharedSearchResponse.getParameter(
-				scopeParameterName, _renderRequest);
-
-		String scopeParameterValue = scopeParameterValueOptional.orElse(null);
-
-		SearchScopePreference searchScopePreference =
-			searchBarPortletPreferences.getSearchScopePreference();
+		PortletSharedSearchResponse portletSharedSearchResponse =
+			portletSharedSearchRequest.search(_renderRequest);
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 			new SearchBarPortletDisplayContext();
@@ -126,6 +102,12 @@ public class SearchBarPortletDisplayContextBuilder {
 			_isEmptySearchEnabled(portletSharedSearchResponse));
 		searchBarPortletDisplayContext.setEverythingSearchScopeParameterString(
 			SearchScope.EVERYTHING.getParameterString());
+
+		SearchResponse searchResponse = _getSearchResponse(
+			portletSharedSearchResponse, searchBarPortletPreferences);
+
+		SearchRequest searchRequest = searchResponse.getRequest();
+
 		searchBarPortletDisplayContext.setInputPlaceholder(
 			LanguageUtil.get(
 				getHttpServletRequest(_renderRequest), "search-..."));
@@ -142,6 +124,9 @@ public class SearchBarPortletDisplayContextBuilder {
 				searchBarPrecedenceHelper, searchBarPortletPreferences,
 				themeDisplay));
 
+		SearchScopePreference searchScopePreference =
+			searchBarPortletPreferences.getSearchScopePreference();
+
 		if (searchScopePreference ==
 				SearchScopePreference.LET_THE_USER_CHOOSE) {
 
@@ -149,9 +134,24 @@ public class SearchBarPortletDisplayContextBuilder {
 				true);
 		}
 
+		String paginationStartParameterName =
+			searchRequest.getPaginationStartParameterName();
+
 		searchBarPortletDisplayContext.setPaginationStartParameterName(
 			(paginationStartParameterName != null) ?
 				paginationStartParameterName : StringPool.BLANK);
+
+		String scopeParameterName = _getScopeParameterName(
+			portletPreferencesLookup, searchBarPrecedenceHelper,
+			portletSharedSearchResponse.getSearchSettings(),
+			searchBarPortletPreferences, themeDisplay);
+
+		Optional<String> scopeParameterValueOptional =
+			portletSharedSearchResponse.getParameter(
+				scopeParameterName, _renderRequest);
+
+		String scopeParameterValue = scopeParameterValueOptional.orElse(null);
+
 		searchBarPortletDisplayContext.setScopeParameterName(
 			scopeParameterName);
 		searchBarPortletDisplayContext.setScopeParameterValue(
@@ -163,6 +163,8 @@ public class SearchBarPortletDisplayContextBuilder {
 		_setSelectedSearchScope(
 			searchBarPortletDisplayContext, searchScopePreference,
 			scopeParameterValue);
+
+		String destination = searchBarPortletPreferences.getDestinationString();
 
 		if (Validator.isBlank(destination)) {
 			searchBarPortletDisplayContext.setSearchURL(

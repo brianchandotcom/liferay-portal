@@ -272,6 +272,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 							<#else>
 								<#assign missingGetterJavaMethodParametersMap = missingGetterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter} />
+
 								test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
 							</#if>
 						<#else>
@@ -295,6 +296,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 							<#else>
 								<#assign missingGetterJavaMethodParametersMap = missingGetterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter} />
+
 								test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
 							</#if>
 
@@ -312,6 +314,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
 							<#else>
 								<#assign missingGetterJavaMethodParametersMap = missingGetterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter} />
+
 								test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
 							</#if>
 
@@ -1064,6 +1067,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								post${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
 							<#else>
 								<#assign missingGetterJavaMethodParametersMap = missingGetterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter} />
+
 								test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
 							</#if>
 						<#else>
@@ -1532,6 +1536,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					Assert.assertTrue(false);
 				<#else>
 					<#assign generateTestGraphQLAddMethod = true />
+
 					${schemaName} ${schemaVarName} = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
 					Assert.assertTrue(
@@ -1557,7 +1562,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 									})),
 							"JSONObject/data",
 							"Object/delete${schemaName}"));
-
 					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
 						JSONArray errorsJSONArray = JSONUtil.getValueAsJSONArray(
 							invokeGraphQLQuery(
@@ -1586,7 +1590,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 					</#if>
 				</#if>
 			}
-
 		<#elseif configYAML.generateGraphQL && freeMarkerTool.hasHTTPMethod(javaMethodSignature, "get") && javaMethodSignature.returnType?contains("Page<") && stringUtil.equals(freeMarkerTool.getGraphQLPropertyName(javaMethodSignature, javaMethodSignatures), schemaVarNames)>
 			@Test
 			public void testGraphQL${javaMethodSignature.methodName?cap_first}() throws Exception {
@@ -1641,6 +1644,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					</#if>
 
 					<#assign generateTestGraphQLAddMethod = true />
+
 					${schemaName} ${schemaVarName}1 = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 					${schemaName} ${schemaVarName}2 = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
@@ -1666,6 +1670,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			public void testGraphQL${javaMethodSignature.methodName?cap_first}() throws Exception {
 				<#if properties?keys?seq_contains("id")>
 					<#assign generateTestGraphQLAddMethod = true />
+
 					${schemaName} ${schemaVarName} = testGraphQL${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
 					Assert.assertTrue(
@@ -1701,6 +1706,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 															</#if>
 														<#else>
 															<#assign missingGetterJavaMethodParametersMap = missingGetterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter} />
+
 															<#if stringUtil.equals(javaMethodParameter.parameterName, "siteId")>
 																put("siteKey", <@getQuotedString unquotedString="testGraphQL${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()" />);
 															<#else>

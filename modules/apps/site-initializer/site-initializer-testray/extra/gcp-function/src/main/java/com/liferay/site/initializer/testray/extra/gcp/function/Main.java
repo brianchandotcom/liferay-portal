@@ -186,7 +186,7 @@ public class Main {
 	}
 
 	private void _addTestrayCase(
-			Node testcaseNode, long testrayBuildId,
+			Node testcaseNode, long testrayBuildId, String testrayBuildTime,
 			Map<String, Object> testrayCasePropertiesMap, long testrayProjectId,
 			long testrayRunId)
 		throws Exception {
@@ -223,7 +223,7 @@ public class Main {
 			"cases");
 
 		long testrayCaseResultId = _getTestrayCaseResultId(
-			testcaseNode, testrayBuildId, testrayCaseId,
+			testcaseNode, testrayBuildId, testrayBuildTime, testrayCaseId,
 			testrayCasePropertiesMap, testrayComponentId, testrayRunId);
 
 		_addTestrayAttachments(testcaseNode, testrayCaseResultId);
@@ -238,8 +238,8 @@ public class Main {
 	}
 
 	private void _addTestrayCases(
-			Element element, long testrayBuildId, long testrayProjectId,
-			long testrayRunId)
+			Element element, long testrayBuildId, String testrayBuildTime,
+			long testrayProjectId, long testrayRunId)
 		throws Exception {
 
 		NodeList testCaseNodeList = element.getElementsByTagName("testcase");
@@ -251,8 +251,8 @@ public class Main {
 				_getTestrayCaseProperties((Element)testcaseNode);
 
 			_addTestrayCase(
-				testcaseNode, testrayBuildId, testrayCasePropertiesMap,
-				testrayProjectId, testrayRunId);
+				testcaseNode, testrayBuildId, testrayBuildTime,
+				testrayCasePropertiesMap, testrayProjectId, testrayRunId);
 		}
 	}
 
@@ -571,12 +571,14 @@ public class Main {
 	}
 
 	private long _getTestrayCaseResultId(
-			Node testcaseNode, long testrayBuildId, long testrayCaseId,
-			Map<String, Object> testrayCasePropertiesMap,
+			Node testcaseNode, long testrayBuildId, String testrayBuildTime,
+			long testrayCaseId, Map<String, Object> testrayCasePropertiesMap,
 			long testrayComponentId, long testrayRunId)
 		throws Exception {
 
 		Map<String, Object> map = HashMapBuilder.<String, Object>put(
+			"closedDate", testrayBuildTime
+		).put(
 			"dueStatus",
 			() -> {
 				String testrayTestcaseStatus =
@@ -612,6 +614,8 @@ public class Main {
 			"r_componentToCaseResult_c_componentId", testrayComponentId
 		).put(
 			"r_runToCaseResult_c_runId", testrayRunId
+		).put(
+			"startDate", testrayBuildTime
 		).build();
 
 		Element element = (Element)testcaseNode;
@@ -983,8 +987,11 @@ public class Main {
 		long testrayRunId = _getTestrayRunId(
 			element, propertiesMap, testrayBuildId, testrayRunName);
 
+		String testrayBuildTime = propertiesMap.get("testray.build.time");
+
 		_addTestrayCases(
-			element, testrayBuildId, testrayProjectId, testrayRunId);
+			element, testrayBuildId, testrayBuildTime,
+			testrayProjectId, testrayRunId);
 
 		_addTestrayTask(
 			testrayBuildId, propertiesMap.get("testray.build.name"));

@@ -218,6 +218,20 @@ public class ObjectValidationRuleLocalServiceImpl
 				}
 			}
 
+			if (userId > 0) {
+				User user = _userLocalService.getUser(userId);
+
+				hashMapWrapper.put(
+					"user.emailAddress", user.getEmailAddress()
+				).put(
+					"user.firstName", user.getFirstName()
+				).put(
+					"user.lastName", user.getLastName()
+				).put(
+					"userId", userId
+				);
+			}
+
 			if (!objectValidationRuleEngine.evaluate(
 					hashMapWrapper.build(), objectValidationRule.getScript())) {
 

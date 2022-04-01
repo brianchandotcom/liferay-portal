@@ -19,6 +19,7 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -88,7 +89,7 @@ public class EntityFieldsUtil {
 			expandoColumn.getName());
 
 		String internalName = expandoBridgeIndexer.encodeFieldName(
-			expandoColumn.getName(), indexType);
+			expandoColumn);
 
 		if (type == ExpandoColumnConstants.BOOLEAN) {
 			return new BooleanEntityField(externalName, locale -> internalName);
@@ -105,7 +106,18 @@ public class EntityFieldsUtil {
 				locale -> Field.getLocalizedName(locale, internalName));
 		}
 
-		return new StringEntityField(externalName, locale -> internalName);
+		return new StringEntityField(
+			externalName,
+			locale -> {
+				String numericSuffix = expandoBridgeIndexer.getNumericSuffix(
+					type);
+
+				if (!numericSuffix.equals(StringPool.BLANK)) {
+					return internalName.concat(".keyword");
+				}
+
+				return internalName;
+			});
 	}
 
 }

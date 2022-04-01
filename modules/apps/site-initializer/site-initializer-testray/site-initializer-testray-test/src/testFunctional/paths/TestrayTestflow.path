@@ -11,34 +11,39 @@
 
 <tbody>
 <tr>
-	<td>TESTFLOW_SIDEBAR</td>
-	<td>//a[contains(@href, '#/testflow')]</td>
-	<td></td>
+    <td>TESTFLOW_SIDEBAR</td>
+    <td>//a[contains(@href, '#/testflow')]</td>
+    <td></td>
 </tr>
 <tr>
-	<td>STATUS_IN_ANALYSIS</td>
-	<td>//span[contains(., 'IN ANALYSIS')]</td>
-	<td></td>
+    <td>STATUS_IN_ANALYSIS</td>
+    <td>//span[contains(., 'IN ANALYSIS')]</td>
+    <td></td>
 </tr>
 <tr>
-	<td>STATUS_ABANDONED</td>
-	<td>//span[contains(., 'ABANDONED')]</td>
-	<td></td>
+    <td>STATUS_ABANDONED</td>
+    <td>//span[contains(., 'ABANDONED')]</td>
+    <td></td>
 </tr>
 <tr>
-	<td>STATUS_COMPLETE</td>
-	<td>//span[contains(., 'COMPLETE')]</td>
-	<td></td>
+    <td>STATUS_COMPLETE</td>
+    <td>//span[contains(., 'COMPLETE')]</td>
+    <td></td>
 </tr>
 <tr>
-	<td>STATUS_OPEN</td>
-	<td>//span[contains(., 'OPEN')]</td>
-	<td></td>
+    <td>STATUS_OPEN</td>
+    <td>//span[contains(., 'OPEN')]</td>
+    <td></td>
 </tr>
 <tr>
-	<td>STATUS_EDIT</td>
-	<td>//div[contains(@data-field-name, 'dueStatus')]//input[contains(@type, 'text')]</td>
-	<td></td>
+    <td>STATUS_EDIT</td>
+    <td>//div[contains(@data-field-name, 'dueStatus')]//input[contains(@type, 'text')]</td>
+    <td></td>
+</tr>
+<tr>
+    <td>TESTFLOW_RESULTS</td>
+    <td>//span[contains(text(),'Results')]</td>
+    <td></td>
 </tr>
 </tbody>
 </table>

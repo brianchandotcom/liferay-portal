@@ -1,0 +1,89 @@
+@component-name = "portal-solutions"
+definition {
+
+    property osgi.modules.includes = "site-initializer-testray";
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Testray 2";
+
+    setUp {
+        TestCase.setUpPortalInstance();
+
+        User.firstLoginPG();
+
+        Testray.createTestraySite(siteName = "Testray 2");
+
+        Refresh();
+    }
+
+    tearDown {
+        var testPortalInstance = PropsUtil.get("test.portal.instance");
+
+        Testray.tearDownCP();
+
+        if ("${testPortalInstance}" == "true") {
+            PortalInstances.tearDownCP();
+        }
+    }
+
+    @description = "LPS-149726 - Verify that User can go to a project page."
+    @priority = "5"
+    test CanAcessProjectByDropdown {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+        Click(
+            key_projectName = "Liferay Portal 7.",
+            locator1 = "Testray#PROJECT_NAME_BUTTON");
+
+        Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
+
+        Click(
+            key_itemvalue = "Liferay Portal 7.",
+            locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+
+        AssertElementPresent(
+            key_projectName = "Liferay Portal 7.",
+            locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
+    }
+
+    @description = "LPS-149728 - Verify that User can go to the Project directory."
+    @priority = "5"
+    test CanAcessProjectDirectoryByDropdown {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+        Click(
+            key_projectName = "Liferay Portal 7.",
+            locator1 = "Testray#PROJECT_NAME_BUTTON");
+
+        Click(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
+
+        Click(
+            key_itemvalue = "Project Directory",
+            locator1 = "TestrayDropdown#DROPDOWN_ITEM");
+
+        AssertElementPresent(
+            key_projectName = "Project Directory",
+            locator1 = "TestrayDropdown#PROJECT_NAME_BREADCRUMBS");
+    }
+
+    @description = "LPS-149730 - Verify that User can't acess dropdown on Projects Directory page"
+    @priority = "2"
+    test CanNotAcessDropdownOnProjectDirectory {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+        Click(locator1 = "TestrayTestflow#TESTFLOW_RESULTS");
+
+        AssertElementNotPresent(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
+    }
+
+    @description = "LPS-149729 - Verify that User can't acess dropdown on Testflow page"
+    @priority = "2"
+    test CanNotAcessDropdownOnTestfow {
+        ApplicationsMenu.gotoSite(site = "Testray 2");
+
+        Click(locator1 = "TestrayTestflow#TESTFLOW_SIDEBAR");
+
+        AssertElementNotPresent(locator1 = "TestrayDropdown#DROPDOWN_PROJECT");
+    }
+
+}

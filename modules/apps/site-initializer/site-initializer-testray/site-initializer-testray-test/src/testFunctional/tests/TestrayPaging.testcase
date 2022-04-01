@@ -1,9 +1,10 @@
 @component-name = "portal-solutions"
 definition {
 
-	property portal.release = "false";
-	property portal.upstream = "false";
-	property testray.main.component.name = "Testray 2";
+	property osgi.modules.includes = "site-initializer-testray";
+    property portal.release = "false";
+    property portal.upstream = "true";
+    property testray.main.component.name = "Testray 2";
 
 	setUp {
 		TestCase.setUpPortalInstance();

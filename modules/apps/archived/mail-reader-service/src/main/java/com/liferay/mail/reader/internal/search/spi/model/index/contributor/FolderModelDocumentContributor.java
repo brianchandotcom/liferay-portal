@@ -15,10 +15,10 @@
 package com.liferay.mail.reader.internal.search.spi.model.index.contributor;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.expando.kernel.util.ExpandoBridgeIndexer;
 import com.liferay.mail.reader.model.Folder;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.expando.ExpandoBridgeIndexer;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import org.osgi.service.component.annotations.Component;

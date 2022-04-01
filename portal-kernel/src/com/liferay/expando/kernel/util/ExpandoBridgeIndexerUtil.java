@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.search.Document;
 
 /**
  * @author Raymond Augé
+ * @deprecated As of Cavanaugh (7.4.x)
  */
+@Deprecated
 public class ExpandoBridgeIndexerUtil {
 
 	public static void addAttributes(

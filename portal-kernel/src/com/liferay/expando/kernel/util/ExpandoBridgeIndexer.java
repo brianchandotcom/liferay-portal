@@ -21,7 +21,9 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Raymond Augé
+ * @deprecated As of Cavanaugh (7.4.x)
  */
+@Deprecated
 @ProviderType
 public interface ExpandoBridgeIndexer {
 

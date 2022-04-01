@@ -86,6 +86,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PIE_CHART_WITH_COLOR</td>
+	<td>//*[contains(@fill, '${colorHex}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NUMBER_VIEWS</td>
 	<td>//*[contains(@class, 'recharts-legend-item-text')] //span[contains(@class, 'font-weight-bold')]</td>
 	<td></td>

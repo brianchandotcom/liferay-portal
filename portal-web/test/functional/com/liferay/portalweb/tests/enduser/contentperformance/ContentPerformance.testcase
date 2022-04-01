@@ -22,7 +22,8 @@ definition {
 		}
 
 		task ("Go to DXP portal, login and create site") {
-			TestCase.setUpPortalInstance();
+
+			//TestCase.setUpPortalInstance();
 
 			User.firstLoginPG();
 
@@ -408,6 +409,29 @@ definition {
 			ContentPerformance.openContentPerformance();
 
 			AssertElementPresent(locator1 = "ContentPerformance#SELECT_DATE_RANGE");
+		}
+	}
+
+	@description = "LPS-150536 Bug: Traffic sources with link and full pie chart when the content was published today and there is some data for that content in AC side"
+	@priority = "4"
+	test EmptyDataAtPieChartPublishedToday {
+		task ("Create and go to content page") {
+			JSONLayout.addPublicLayout(
+				groupName = "Test Site Name",
+				layoutName = "Content Page 2",
+				type = "content");
+
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/test-site-name/content-page-2");
+		}
+
+		task ("Open Content Performance panel") {
+			ContentPerformance.openContentPerformance();
+		}
+
+		task ("Check that graph is empty (grey/gray)") {
+			AssertElementPresent(
+				colorHex = "f1f2f5",
+				locator1 = "ContentPerformance#PIE_CHART_WITH_COLOR");
 		}
 	}
 

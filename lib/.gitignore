@@ -135,12 +135,9 @@
 /portal/log4j-1.2-api.jar
 /portal/log4j-api.jar
 /portal/log4j-core.jar
-/portal/mimepull.jar
 /portal/persistence.jar
 /portal/portlet.jar
 /portal/portletmvc4spring-framework.jar
-/portal/saaj-api.jar
-/portal/saaj-impl.jar
 /portal/simplecaptcha.jar
 /portal/slf4j-api.jar
 /portal/soap-api.jar
@@ -160,7 +157,6 @@
 /portal/spring-webmvc.jar
 /portal/stax-ex.jar
 /portal/stax.jar
-/portal/streambuffer.jar
 /portal/transaction.jar
 /portal/wstx.jar
 /portal/xercesImpl.jar

@@ -8,6 +8,8 @@ definition {
 
 		CommerceNavigator.gotoEntry(entryName = "Raylife Channel");
 
+		CommerceChannels.activatePaymentMethod(paymentMethod = "PayPal");
+
 		Refresh();
 
 		CommerceEntry.clickTableEntryEditButton(

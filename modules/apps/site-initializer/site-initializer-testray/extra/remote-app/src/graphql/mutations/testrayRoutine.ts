@@ -14,16 +14,17 @@
 
 import {gql} from '@apollo/client';
 
-import {testrayRoutineFragment} from '../fragments';
-
 export const CreateRoutine = gql`
-	${testrayRoutineFragment}
-
-	mutation CreateRoutine($Routine: InputC_Routine!) {
-		c {
-			createRoutine(Routine: $Routine) {
-				...RoutineFragment
-			}
+	mutation createRoutine($data: InputC_Routine!) {
+		createRoutine(Routine: $data)
+			@rest(
+				bodyKey: "Routine"
+				bodySerializer: "routine"
+				method: "POST"
+				path: "routines"
+				type: "C_Routine"
+			) {
+			id
 		}
 	}
 `;
@@ -37,13 +38,16 @@ export const DeleteRoutine = gql`
 `;
 
 export const UpdateRoutine = gql`
-	${testrayRoutineFragment}
-
-	mutation UpdateRoutine($routineId: Long!, $Routine: InputC_Routine!) {
-		c {
-			updateRoutine(routineId: $routineId, Routine: $Routine) {
-				...RoutineFragment
-			}
+	mutation updateRoutine($data: InputC_Routine!, $id: Long) {
+		updateRoutine(Routine: $data, routineId: $id)
+			@rest(
+				bodyKey: "Routine"
+				bodySerializer: "routine"
+				method: "PUT"
+				path: "routines/{args.routineId}"
+				type: "C_Routine"
+			) {
+			id
 		}
 	}
 `;

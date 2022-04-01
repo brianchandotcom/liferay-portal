@@ -36,7 +36,7 @@ export const getBuilds = gql`
 		builds(filter: $filter, page: $page, pageSize: $pageSize)
 			@rest(
 				type: "C_Build"
-				path: "builds?page={args.page}&pageSize={args.pageSize}&nestedFields=productVersion"
+				path: "builds?page={args.page}&pageSize={args.pageSize}&nestedFields=productVersion&filter={args.filter}"
 			) {
 			items {
 				dateCreated

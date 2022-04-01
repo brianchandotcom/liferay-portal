@@ -127,9 +127,6 @@ public class SearchBarPortletDisplayContextBuilder {
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 			new SearchBarPortletDisplayContext();
 
-		HttpServletRequest httpServletRequest = getHttpServletRequest(
-			_renderRequest);
-
 		SearchBarPortletInstanceConfiguration
 			searchBarPortletInstanceConfiguration =
 				getSearchBarPortletInstanceConfiguration(
@@ -147,7 +144,8 @@ public class SearchBarPortletDisplayContextBuilder {
 		searchBarPortletDisplayContext.setEverythingSearchScopeParameterString(
 			SearchScope.EVERYTHING.getParameterString());
 		searchBarPortletDisplayContext.setInputPlaceholder(
-			LanguageUtil.get(httpServletRequest, "search-..."));
+			LanguageUtil.get(
+				getHttpServletRequest(_renderRequest), "search-..."));
 		searchBarPortletDisplayContext.setKeywords(getKeywords());
 		searchBarPortletDisplayContext.setKeywordsParameterName(
 			_keywordsParameterName);

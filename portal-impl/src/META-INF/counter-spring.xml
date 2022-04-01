@@ -12,7 +12,6 @@
 		<constructor-arg ref="counterDataSource" />
 		<constructor-arg>
 			<bean class="com.liferay.portal.dao.orm.hibernate.SessionFactoryImpl">
-				<property name="sessionFactoryClassLoader" value="#{T(com.liferay.portal.kernel.util.PortalClassLoaderUtil).classLoader}" />
 				<property name="sessionFactoryImplementor" ref="counterHibernateSessionFactory" />
 			</bean>
 		</constructor-arg>

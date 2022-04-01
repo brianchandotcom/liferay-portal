@@ -521,6 +521,12 @@ public class DLExportImportPortletPreferencesProcessor
 
 		try {
 			folder = _dlAppLocalService.getFolder(folderId);
+
+			DLFolder dlFolder = _dlFolderLocalService.getDLFolder(folderId);
+
+			if (dlFolder.isInTrash()) {
+				return null;
+			}
 		}
 		catch (PortalException portalException) {
 			if (_log.isWarnEnabled()) {

@@ -70,9 +70,9 @@ public interface ObjectValidationRuleLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectValidationRule addObjectValidationRule(
-			long userId, long objectDefinitionId, boolean active,
+			long userId, long objectDefinitionId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String engine, String script)
+			String script)
 		throws PortalException;
 
 	/**
@@ -317,9 +317,9 @@ public interface ObjectValidationRuleLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public ObjectValidationRule updateObjectValidationRule(
-			long objectValidationRuleId, boolean active,
+			long objectValidationRuleId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String engine, String script)
+			String script)
 		throws PortalException;
 
 	/**

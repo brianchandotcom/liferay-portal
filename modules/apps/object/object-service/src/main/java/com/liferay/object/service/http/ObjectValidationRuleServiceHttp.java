@@ -53,10 +53,9 @@ public class ObjectValidationRuleServiceHttp {
 	public static com.liferay.object.model.ObjectValidationRule
 			addObjectValidationRule(
 				HttpPrincipal httpPrincipal, long objectDefinitionId,
-				boolean active,
+				boolean active, String engine,
 				java.util.Map<java.util.Locale, String> errorLabelMap,
-				java.util.Map<java.util.Locale, String> nameMap, String engine,
-				String script)
+				java.util.Map<java.util.Locale, String> nameMap, String script)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -66,8 +65,8 @@ public class ObjectValidationRuleServiceHttp {
 				_addObjectValidationRuleParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectDefinitionId, active, errorLabelMap, nameMap,
-				engine, script);
+				methodKey, objectDefinitionId, active, engine, errorLabelMap,
+				nameMap, script);
 
 			Object returnObj = null;
 
@@ -184,10 +183,9 @@ public class ObjectValidationRuleServiceHttp {
 	public static com.liferay.object.model.ObjectValidationRule
 			updateObjectValidationRule(
 				HttpPrincipal httpPrincipal, long objectValidationRuleId,
-				boolean active,
+				boolean active, String engine,
 				java.util.Map<java.util.Locale, String> errorLabelMap,
-				java.util.Map<java.util.Locale, String> nameMap, String engine,
-				String script)
+				java.util.Map<java.util.Locale, String> nameMap, String script)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -197,8 +195,8 @@ public class ObjectValidationRuleServiceHttp {
 				_updateObjectValidationRuleParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, objectValidationRuleId, active, errorLabelMap,
-				nameMap, engine, script);
+				methodKey, objectValidationRuleId, active, engine,
+				errorLabelMap, nameMap, script);
 
 			Object returnObj = null;
 
@@ -233,8 +231,8 @@ public class ObjectValidationRuleServiceHttp {
 
 	private static final Class<?>[] _addObjectValidationRuleParameterTypes0 =
 		new Class[] {
-			long.class, boolean.class, java.util.Map.class, java.util.Map.class,
-			String.class, String.class
+			long.class, boolean.class, String.class, java.util.Map.class,
+			java.util.Map.class, String.class
 		};
 	private static final Class<?>[] _deleteObjectValidationRuleParameterTypes1 =
 		new Class[] {long.class};
@@ -242,8 +240,8 @@ public class ObjectValidationRuleServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[] _updateObjectValidationRuleParameterTypes3 =
 		new Class[] {
-			long.class, boolean.class, java.util.Map.class, java.util.Map.class,
-			String.class, String.class
+			long.class, boolean.class, String.class, java.util.Map.class,
+			java.util.Map.class, String.class
 		};
 
 }

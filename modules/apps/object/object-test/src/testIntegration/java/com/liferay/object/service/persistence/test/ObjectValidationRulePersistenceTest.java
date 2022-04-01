@@ -142,13 +142,13 @@ public class ObjectValidationRulePersistenceTest {
 		newObjectValidationRule.setObjectDefinitionId(
 			RandomTestUtil.nextLong());
 
-		newObjectValidationRule.setName(RandomTestUtil.randomString());
-
-		newObjectValidationRule.setErrorLabel(RandomTestUtil.randomString());
-
 		newObjectValidationRule.setActive(RandomTestUtil.randomBoolean());
 
 		newObjectValidationRule.setEngine(RandomTestUtil.randomString());
+
+		newObjectValidationRule.setErrorLabel(RandomTestUtil.randomString());
+
+		newObjectValidationRule.setName(RandomTestUtil.randomString());
 
 		newObjectValidationRule.setScript(RandomTestUtil.randomString());
 
@@ -189,17 +189,17 @@ public class ObjectValidationRulePersistenceTest {
 			existingObjectValidationRule.getObjectDefinitionId(),
 			newObjectValidationRule.getObjectDefinitionId());
 		Assert.assertEquals(
-			existingObjectValidationRule.getName(),
-			newObjectValidationRule.getName());
-		Assert.assertEquals(
-			existingObjectValidationRule.getErrorLabel(),
-			newObjectValidationRule.getErrorLabel());
-		Assert.assertEquals(
 			existingObjectValidationRule.isActive(),
 			newObjectValidationRule.isActive());
 		Assert.assertEquals(
 			existingObjectValidationRule.getEngine(),
 			newObjectValidationRule.getEngine());
+		Assert.assertEquals(
+			existingObjectValidationRule.getErrorLabel(),
+			newObjectValidationRule.getErrorLabel());
+		Assert.assertEquals(
+			existingObjectValidationRule.getName(),
+			newObjectValidationRule.getName());
 		Assert.assertEquals(
 			existingObjectValidationRule.getScript(),
 			newObjectValidationRule.getScript());
@@ -269,8 +269,8 @@ public class ObjectValidationRulePersistenceTest {
 			"ObjectValidationRule", "mvccVersion", true, "uuid", true,
 			"objectValidationRuleId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"objectDefinitionId", true, "name", true, "errorLabel", true,
-			"active", true, "engine", true, "script", true);
+			"objectDefinitionId", true, "active", true, "engine", true,
+			"errorLabel", true, "name", true, "script", true);
 	}
 
 	@Test
@@ -528,13 +528,13 @@ public class ObjectValidationRulePersistenceTest {
 
 		objectValidationRule.setObjectDefinitionId(RandomTestUtil.nextLong());
 
-		objectValidationRule.setName(RandomTestUtil.randomString());
-
-		objectValidationRule.setErrorLabel(RandomTestUtil.randomString());
-
 		objectValidationRule.setActive(RandomTestUtil.randomBoolean());
 
 		objectValidationRule.setEngine(RandomTestUtil.randomString());
+
+		objectValidationRule.setErrorLabel(RandomTestUtil.randomString());
+
+		objectValidationRule.setName(RandomTestUtil.randomString());
 
 		objectValidationRule.setScript(RandomTestUtil.randomString());
 

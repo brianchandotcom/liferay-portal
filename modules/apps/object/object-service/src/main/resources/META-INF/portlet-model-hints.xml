@@ -202,10 +202,10 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="objectDefinitionId" type="long" />
-		<field localized="true" name="name" type="String" />
-		<field localized="true" name="errorLabel" type="String" />
 		<field name="active" type="boolean" />
 		<field name="engine" type="String" />
+		<field localized="true" name="errorLabel" type="String" />
+		<field localized="true" name="name" type="String" />
 		<field name="script" type="String" />
 	</model>
 	<model name="com.liferay.object.model.ObjectView">

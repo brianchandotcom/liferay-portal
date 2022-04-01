@@ -46,13 +46,13 @@ public class ObjectValidationRuleLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectValidationRuleLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static ObjectValidationRule addObjectValidationRule(
-			long userId, long objectDefinitionId, boolean active,
+			long userId, long objectDefinitionId, boolean active, String engine,
 			Map<java.util.Locale, String> errorLabelMap,
-			Map<java.util.Locale, String> nameMap, String engine, String script)
+			Map<java.util.Locale, String> nameMap, String script)
 		throws PortalException {
 
 		return getService().addObjectValidationRule(
-			userId, objectDefinitionId, active, errorLabelMap, nameMap, engine,
+			userId, objectDefinitionId, active, engine, errorLabelMap, nameMap,
 			script);
 	}
 
@@ -362,13 +362,13 @@ public class ObjectValidationRuleLocalServiceUtil {
 	}
 
 	public static ObjectValidationRule updateObjectValidationRule(
-			long objectValidationRuleId, boolean active,
+			long objectValidationRuleId, boolean active, String engine,
 			Map<java.util.Locale, String> errorLabelMap,
-			Map<java.util.Locale, String> nameMap, String engine, String script)
+			Map<java.util.Locale, String> nameMap, String script)
 		throws PortalException {
 
 		return getService().updateObjectValidationRule(
-			objectValidationRuleId, active, errorLabelMap, nameMap, engine,
+			objectValidationRuleId, active, engine, errorLabelMap, nameMap,
 			script);
 	}
 

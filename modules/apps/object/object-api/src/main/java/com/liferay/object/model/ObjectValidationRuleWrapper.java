@@ -54,10 +54,10 @@ public class ObjectValidationRuleWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
-		attributes.put("name", getName());
-		attributes.put("errorLabel", getErrorLabel());
 		attributes.put("active", isActive());
 		attributes.put("engine", getEngine());
+		attributes.put("errorLabel", getErrorLabel());
+		attributes.put("name", getName());
 		attributes.put("script", getScript());
 
 		return attributes;
@@ -120,18 +120,6 @@ public class ObjectValidationRuleWrapper
 			setObjectDefinitionId(objectDefinitionId);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String errorLabel = (String)attributes.get("errorLabel");
-
-		if (errorLabel != null) {
-			setErrorLabel(errorLabel);
-		}
-
 		Boolean active = (Boolean)attributes.get("active");
 
 		if (active != null) {
@@ -142,6 +130,18 @@ public class ObjectValidationRuleWrapper
 
 		if (engine != null) {
 			setEngine(engine);
+		}
+
+		String errorLabel = (String)attributes.get("errorLabel");
+
+		if (errorLabel != null) {
+			setErrorLabel(errorLabel);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 
 		String script = (String)attributes.get("script");

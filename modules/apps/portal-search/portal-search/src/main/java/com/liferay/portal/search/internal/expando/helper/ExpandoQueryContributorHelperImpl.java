@@ -19,6 +19,7 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
@@ -159,22 +160,22 @@ public class ExpandoQueryContributorHelperImpl
 				expandoBridge.getCompanyId(), expandoBridge.getClassName(),
 				attributeName);
 
-		UnicodeProperties unicodeProperties =
-			expandoColumn.getTypeSettingsProperties();
+		String fieldName = _expandoBridgeIndexer.encodeFieldName(expandoColumn);
 
-		int indexType = GetterUtil.getInteger(
-			unicodeProperties.getProperty(ExpandoColumnConstants.INDEX_TYPE));
+		String numericSuffix = _expandoBridgeIndexer.getNumericSuffix(
+			expandoColumn.getType());
 
-		String fieldName = _expandoBridgeIndexer.encodeFieldName(
-			attributeName, indexType);
-
-		if (expandoColumn.getType() ==
-				ExpandoColumnConstants.STRING_LOCALIZED) {
+		if (!numericSuffix.equals(StringPool.BLANK)) {
+			fieldName = fieldName.concat(".keyword");
+		}
+		else if (expandoColumn.getType() ==
+					ExpandoColumnConstants.STRING_LOCALIZED) {
 
 			fieldName = _getLocalizedName(fieldName, locale);
 		}
+		else if (expandoColumn.getType() ==
+					ExpandoColumnConstants.GEOLOCATION) {
 
-		if (expandoColumn.getType() == ExpandoColumnConstants.GEOLOCATION) {
 			fieldName = fieldName.concat("_geolocation");
 		}
 

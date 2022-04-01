@@ -51,6 +51,14 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 					line = StringUtil.replace(line, " \t", "     ");
 				}
 
+				if (line.matches("\\s*[^\\s#].*[,=]\\\\")) {
+					String leadingSpaces = _getLeadingSpaces(line);
+
+					leadingSpaces = _calLeadingSpaces(leadingSpaces);
+
+					line = leadingSpaces + StringUtil.trim(line);
+				}
+
 				if (previousLine.matches("\\s*[^\\s#].*[,=]\\\\")) {
 					String leadingSpaces = _getLeadingSpaces(line);
 
@@ -90,6 +98,33 @@ public class PropertiesWhitespaceCheck extends WhitespaceCheck {
 		}
 
 		return false;
+	}
+
+	private String _calLeadingSpaces(String leadingSpaces) {
+		int length = leadingSpaces.length();
+
+		int remainder = length % 4;
+
+		if (remainder > 0) {
+			int quotient = length / 4;
+
+			if (quotient > 0) {
+				leadingSpaces = leadingSpaces.substring(remainder);
+			}
+			else {
+				StringBundler sb = new StringBundler();
+
+				sb.append(leadingSpaces);
+
+				for (int i = 0; i < remainder; i++) {
+					sb.append(StringPool.SPACE);
+				}
+
+				leadingSpaces = sb.toString();
+			}
+		}
+
+		return leadingSpaces;
 	}
 
 	private String _getLeadingSpaces(String line) {

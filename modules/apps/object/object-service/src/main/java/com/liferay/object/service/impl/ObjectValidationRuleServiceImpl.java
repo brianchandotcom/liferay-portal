@@ -43,17 +43,17 @@ public class ObjectValidationRuleServiceImpl
 
 	@Override
 	public ObjectValidationRule addObjectValidationRule(
-			long objectDefinitionId, boolean active,
+			long objectDefinitionId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String engine, String script)
+			String script)
 		throws PortalException {
 
 		_objectDefinitionModelResourcePermission.check(
 			getPermissionChecker(), objectDefinitionId, ActionKeys.UPDATE);
 
 		return objectValidationRuleLocalService.addObjectValidationRule(
-			getUserId(), objectDefinitionId, active, errorLabelMap, nameMap,
-			engine, script);
+			getUserId(), objectDefinitionId, active, engine, errorLabelMap,
+			nameMap, script);
 	}
 
 	@Override
@@ -92,9 +92,9 @@ public class ObjectValidationRuleServiceImpl
 
 	@Override
 	public ObjectValidationRule updateObjectValidationRule(
-			long objectValidationRuleId, boolean active,
+			long objectValidationRuleId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String engine, String script)
+			String script)
 		throws PortalException {
 
 		ObjectValidationRule objectValidationRule =
@@ -106,7 +106,7 @@ public class ObjectValidationRuleServiceImpl
 			objectValidationRule.getObjectDefinitionId(), ActionKeys.UPDATE);
 
 		return objectValidationRuleLocalService.updateObjectValidationRule(
-			objectValidationRuleId, active, errorLabelMap, nameMap, engine,
+			objectValidationRuleId, active, engine, errorLabelMap, nameMap,
 			script);
 	}
 

@@ -1062,9 +1062,9 @@ public class ObjectEntryLocalServiceTest {
 			_objectValidationRuleLocalService.addObjectValidationRule(
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				LocalizedMapUtil.getLocalizedMap("Field must be an email"),
 				LocalizedMapUtil.getLocalizedMap("Email Validation"),
-				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				"isEmailAddress(emailAddress)");
 
 		ObjectEntry objectEntry = null;
@@ -1105,9 +1105,9 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectValidationRuleLocalService.updateObjectValidationRule(
 			objectValidationRule.getObjectValidationRuleId(), false,
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap("Field must be an email"),
 			LocalizedMapUtil.getLocalizedMap("Email Validation"),
-			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			"isEmailAddress(emailAddress)");
 
 		objectEntry = _addObjectEntry(
@@ -1124,9 +1124,9 @@ public class ObjectEntryLocalServiceTest {
 		_objectValidationRuleLocalService.addObjectValidationRule(
 			TestPropsValues.getUserId(),
 			_objectDefinition.getObjectDefinitionId(), true,
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			LocalizedMapUtil.getLocalizedMap("Names must be equals"),
 			LocalizedMapUtil.getLocalizedMap("Name Validation"),
-			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 			"equals(lastName, middleName)");
 
 		try {

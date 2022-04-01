@@ -57,9 +57,9 @@ public class ObjectValidationRuleLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectValidationRule addObjectValidationRule(
-			long userId, long objectDefinitionId, boolean active,
+			long userId, long objectDefinitionId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String engine, String script)
+			String script)
 		throws PortalException {
 
 		_validateEngine(engine);
@@ -78,9 +78,9 @@ public class ObjectValidationRuleLocalServiceImpl
 
 		objectValidationRule.setObjectDefinitionId(objectDefinitionId);
 		objectValidationRule.setActive(active);
+		objectValidationRule.setEngine(engine);
 		objectValidationRule.setErrorLabelMap(errorLabelMap);
 		objectValidationRule.setNameMap(nameMap);
-		objectValidationRule.setEngine(engine);
 		objectValidationRule.setScript(script);
 
 		return objectValidationRulePersistence.update(objectValidationRule);
@@ -150,9 +150,9 @@ public class ObjectValidationRuleLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectValidationRule updateObjectValidationRule(
-			long objectValidationRuleId, boolean active,
+			long objectValidationRuleId, boolean active, String engine,
 			Map<Locale, String> errorLabelMap, Map<Locale, String> nameMap,
-			String engine, String script)
+			String script)
 		throws PortalException {
 
 		_validateEngine(engine);
@@ -163,10 +163,10 @@ public class ObjectValidationRuleLocalServiceImpl
 			objectValidationRulePersistence.findByPrimaryKey(
 				objectValidationRuleId);
 
-		objectValidationRule.setNameMap(nameMap);
-		objectValidationRule.setErrorLabelMap(errorLabelMap);
 		objectValidationRule.setActive(active);
 		objectValidationRule.setEngine(engine);
+		objectValidationRule.setErrorLabelMap(errorLabelMap);
+		objectValidationRule.setNameMap(nameMap);
 		objectValidationRule.setScript(script);
 
 		return objectValidationRulePersistence.update(objectValidationRule);

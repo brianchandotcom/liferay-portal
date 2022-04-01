@@ -131,9 +131,9 @@ public class ObjectValidationRuleLocalServiceTest {
 			_objectValidationRuleLocalService.addObjectValidationRule(
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				LocalizedMapUtil.getLocalizedMap("Field must be an email"),
 				LocalizedMapUtil.getLocalizedMap("Email Validation"),
-				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				"isEmailAddress(textField)");
 
 		Assert.assertTrue(objectValidationRule.isActive());
@@ -156,9 +156,9 @@ public class ObjectValidationRuleLocalServiceTest {
 			_objectValidationRuleLocalService.addObjectValidationRule(
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"isEmailAddress(textField)");
 
 		objectValidationRule =
@@ -183,9 +183,9 @@ public class ObjectValidationRuleLocalServiceTest {
 			_objectValidationRuleLocalService.addObjectValidationRule(
 				TestPropsValues.getUserId(),
 				_objectDefinition.getObjectDefinitionId(), true,
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				LocalizedMapUtil.getLocalizedMap("Field must be an email"),
 				LocalizedMapUtil.getLocalizedMap("Email Validation"),
-				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				"isEmailAddress(textField)");
 
 		Assert.assertTrue(objectValidationRule.isActive());
@@ -205,9 +205,9 @@ public class ObjectValidationRuleLocalServiceTest {
 			objectValidationRule =
 				_objectValidationRuleLocalService.updateObjectValidationRule(
 					RandomTestUtil.randomLong(), false,
+					ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 					LocalizedMapUtil.getLocalizedMap("Field must be an email"),
 					LocalizedMapUtil.getLocalizedMap("Email Validation"),
-					ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 					"isEmailAddress(textField)");
 
 			Assert.fail();
@@ -221,9 +221,9 @@ public class ObjectValidationRuleLocalServiceTest {
 		objectValidationRule =
 			_objectValidationRuleLocalService.updateObjectValidationRule(
 				objectValidationRule.getObjectValidationRuleId(), true,
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				LocalizedMapUtil.getLocalizedMap("Field must be an URL"),
 				LocalizedMapUtil.getLocalizedMap("URL Validation"),
-				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
 				"isURL(textField)");
 
 		Assert.assertTrue(objectValidationRule.isActive());
@@ -250,10 +250,10 @@ public class ObjectValidationRuleLocalServiceTest {
 			objectValidationRule =
 				_objectValidationRuleLocalService.addObjectValidationRule(
 					TestPropsValues.getUserId(),
-					_objectDefinition.getObjectDefinitionId(), true,
+					_objectDefinition.getObjectDefinitionId(), true, engine,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
-					LocalizedMapUtil.getLocalizedMap(name), engine, script);
+					LocalizedMapUtil.getLocalizedMap(name), script);
 		}
 		finally {
 			if (objectValidationRule != null) {

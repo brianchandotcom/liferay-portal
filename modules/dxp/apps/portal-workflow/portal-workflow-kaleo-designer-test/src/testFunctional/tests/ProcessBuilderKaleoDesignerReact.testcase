@@ -206,12 +206,12 @@ definition {
 		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
 
 		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
-			newNotification = "true",
-			name = "New Notification",
 			description = "Notification Description",
+			name = "New Notification",
+			newNotification = "true",
 			notificationTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
-			templateLanguageOption = "FreeMarker",
-			notificationTypeOption = "userNotification");
+			notificationTypeOption = "userNotification",
+			templateLanguageOption = "FreeMarker");
 
 		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
 
@@ -228,7 +228,7 @@ definition {
 		Workflow.configureWorkflow(
 			workflowDefinition = "New Workflow Definition",
 			workflowResourceValue = "Blogs Entry");
-		
+
 		JSONBlog.addEntry(
 			entryContent = "Blogs Entry Content",
 			entryTitle = "Blogs Entry Title");
@@ -236,7 +236,6 @@ definition {
 		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
 
 		WorkflowAsset.viewNotification(contentBody = "Test Test sent you a Blogs Entry for review in the workflow.");
-
 	}
 
 	@description = "LPS-140056 - Verify that only one transition in the same direction from one node to the other can be created"

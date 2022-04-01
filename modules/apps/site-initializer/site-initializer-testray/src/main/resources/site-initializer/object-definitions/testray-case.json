@@ -38,17 +38,6 @@
 			"type": "String"
 		},
 		{
-			"DBType": "Long",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Origination Key"
-			},
-			"name": "originationKey",
-			"required": false,
-			"type": "Long"
-		},
-		{
 			"DBType": "Integer",
 			"indexed": false,
 			"indexedAsKeyword": false,
@@ -102,17 +91,6 @@
 			"name": "caseNumber",
 			"required": false,
 			"type": "Long"
-		},
-		{
-			"DBType": "String",
-			"indexed": true,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Issues"
-			},
-			"name": "issues",
-			"required": false,
-			"type": "String"
 		}
 	],
 	"pluralLabel": {

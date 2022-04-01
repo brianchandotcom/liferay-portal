@@ -212,11 +212,9 @@ public class Main {
 					(String)testrayCasePropertiesMap.get(
 						"testray.case.type.name"))
 			).put(
-				"r_componentToCases_componentId", testrayComponentId
+				"r_componentToCases_c_componentId", testrayComponentId
 			).put(
 				"r_projectToCases_c_projectId", testrayProjectId
-			).put(
-				"r_teamToCases_teamId", testrayTeamId
 			).build(),
 			(String)testrayCasePropertiesMap.get("testray.testcase.name"),
 			"cases");
@@ -583,7 +581,7 @@ public class Main {
 		).put(
 			"r_buildToCaseResult_c_buildId", testrayBuildId
 		).put(
-			"r_caseResultToCase_c_caseId", testrayCaseId
+			"r_caseToCaseResult_c_caseId", testrayCaseId
 		).put(
 			"r_componentToCaseResult_c_componentId", testrayComponentId
 		).put(

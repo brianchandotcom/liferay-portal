@@ -6,7 +6,7 @@
 	"objectFields": [
 		{
 			"DBType": "String",
-			"indexed": false,
+			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Name"

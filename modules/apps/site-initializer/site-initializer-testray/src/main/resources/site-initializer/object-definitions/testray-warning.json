@@ -5,7 +5,7 @@
 	"name": "Warning",
 	"objectFields": [
 		{
-			"DBType": "String",
+			"DBType": "Clob",
 			"indexed": false,
 			"indexedAsKeyword": false,
 			"label": {
@@ -13,7 +13,7 @@
 			},
 			"name": "content",
 			"required": false,
-			"type": "String"
+			"type": "Clob"
 		}
 	],
 	"pluralLabel": {

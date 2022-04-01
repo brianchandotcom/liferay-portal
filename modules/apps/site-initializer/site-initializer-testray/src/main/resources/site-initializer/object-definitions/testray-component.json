@@ -6,7 +6,7 @@
 	"objectFields": [
 		{
 			"DBType": "String",
-			"indexed": false,
+			"indexed": true,
 			"indexedAsKeyword": false,
 			"label": {
 				"en_US": "Name"
@@ -14,17 +14,6 @@
 			"name": "name",
 			"required": false,
 			"type": "String"
-		},
-		{
-			"DBType": "Long",
-			"indexed": false,
-			"indexedAsKeyword": false,
-			"label": {
-				"en_US": "Origination Key"
-			},
-			"name": "originationKey",
-			"required": false,
-			"type": "Long"
 		}
 	],
 	"pluralLabel": {

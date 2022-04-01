@@ -361,9 +361,11 @@ definition {
 	}
 
 	macro deprioritizeVariation {
-		Click(
-			key_variation = "${variationTitle}",
-			locator1 = "AssetLists#VARIATION_ELLIPSIS");
+		if (IsElementNotPresent(key_menuItem = "Deprioritize", locator1 = "MenuItem#ANY_MENU_ITEM")) {
+			Click(
+				key_variation = "${variationTitle}",
+				locator1 = "AssetLists#VARIATION_ELLIPSIS");
+		}
 
 		Click(
 			key_menuItem = "Deprioritize",

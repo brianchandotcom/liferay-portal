@@ -40,7 +40,26 @@ definition {
 
 		var subtotal = ${productUnitPrice} * ${productQuantity};
 
-		if (isSet(shippingMethod)) {
+		if (isSet(singleShippingOption)) {
+			if (isSet(shippingMethod)) {
+				if ("${shippingMethod}" == "Standard") {
+					var total = ${subtotal} + 15;
+				}
+				else if ("${shippingMethod}" == "Expedited") {
+					var total = ${subtotal} + 25;
+				}
+				else if (isSet(customDeliveryValue)) {
+					var total = ${subtotal} + ${customDeliveryValue};
+				}
+				else {
+					var total = "${subtotal}";
+				}
+			}
+			else {
+				var total = "${subtotal}";
+			}
+		}
+		else if (isSet(shippingMethod)) {
 			if (IsElementPresent(key_label = "Shipping Method", locator1 = "CommerceAccelerators#CHECKOUT_MULTI_STEP_INDICATOR_LABEL")) {
 				Click(
 					key_radioOption = "${shippingMethod}",
@@ -50,15 +69,17 @@ definition {
 			}
 
 			if ("${shippingMethod}" == "Standard") {
-				var deliveryValue = "15";
+				var total = ${subtotal} + 15;
+			}
+			else if ("${shippingMethod}" == "Expedited") {
+				var total = ${subtotal} + 25;
+			}
+			else if (isSet(customDeliveryValue)) {
+				var total = ${subtotal} + ${customDeliveryValue};
 			}
 			else {
-				if ("${shippingMethod}" == "Expedited") {
-					var deliveryValue = "25";
-				}
+				var total = "${subtotal}";
 			}
-
-			var total = ${subtotal} + ${deliveryValue};
 		}
 		else {
 			var total = "${subtotal}";

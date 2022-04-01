@@ -270,7 +270,7 @@ definition {
 	}
 
 	@description = "This is a test for COMMERCE-4958."
-	test CheckoutWithOneShippingOption {
+	test CheckoutWithDefaultShippingOption {
 		property portal.acceptance = "true";
 
 		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Speedwell");
@@ -320,7 +320,8 @@ definition {
 			productName = "U-Joint",
 			productQuantity = "1",
 			productUnitPrice = "24",
-			shippingMethod = "Standard");
+			shippingMethod = "Standard",
+			singleShippingOption = "true");
 	}
 
 	test DeactivateCommerceAccount {

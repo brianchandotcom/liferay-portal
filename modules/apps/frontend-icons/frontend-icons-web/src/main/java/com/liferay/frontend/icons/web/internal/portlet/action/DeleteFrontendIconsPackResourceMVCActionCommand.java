@@ -73,7 +73,8 @@ public class DeleteFrontendIconsPackResourceMVCActionCommand
 			_frontendIconsResourcePackRepository.getFrontendIconsResourcePack(
 				companyId, ParamUtil.getString(actionRequest, "name"));
 
-		frontendIconsResourcePack.removeFrontendIconsResource(ParamUtil.getString(actionRequest, "icon"));
+		frontendIconsResourcePack.removeFrontendIconsResource(
+			ParamUtil.getString(actionRequest, "icon"));
 
 		_frontendIconsResourcePackRepository.addFrontendIconsResourcePack(
 			companyId, frontendIconsResourcePack);

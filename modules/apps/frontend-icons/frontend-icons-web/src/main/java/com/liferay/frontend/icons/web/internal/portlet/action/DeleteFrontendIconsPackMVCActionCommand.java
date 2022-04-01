@@ -67,7 +67,8 @@ public class DeleteFrontendIconsPackMVCActionCommand
 		}
 
 		_frontendIconsResourcePackRepository.deleteIconResourcePack(
-			themeDisplay.getCompanyId(), ParamUtil.getString(actionRequest, "name"));
+			themeDisplay.getCompanyId(),
+			ParamUtil.getString(actionRequest, "name"));
 	}
 
 	@Reference

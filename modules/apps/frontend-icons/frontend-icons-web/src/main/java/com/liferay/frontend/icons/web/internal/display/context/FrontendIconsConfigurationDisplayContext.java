@@ -70,13 +70,10 @@ public class FrontendIconsConfigurationDisplayContext {
 			() -> {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-				List<FrontendIconsResourcePack> frontendIconsResourcePacks =
+				for (FrontendIconsResourcePack frontendIconsResourcePack :
 					_frontendIconsResourcePackRepository.
 						getFrontendIconsResourcePacks(
-							_themeDisplay.getCompanyId());
-
-				for (FrontendIconsResourcePack frontendIconsResourcePack :
-						frontendIconsResourcePacks) {
+							_themeDisplay.getCompanyId())) {
 
 					JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

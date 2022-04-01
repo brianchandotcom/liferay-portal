@@ -126,12 +126,69 @@ definition {
 	}
 
 	@description = "LRQA-71889 - Verify that the user can modify margin and padding in the calendar widget"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanModifyMarginAndPadding {
+		CalendarLookAndFeelConfiguration.gotoLookAndFeelConfiguration();
 
-		// TODO LRQA-71967 CanModifyMarginAndPadding pending implementation
+		CalendarLookAndFeelConfiguration.selectTab(tabName = "Margin and Padding");
 
+		CalendarLookAndFeelConfiguration.fillPaddingColumn(
+			fieldTextBottom = "35",
+			fieldTextLeft = "15",
+			fieldTextRight = "15",
+			fieldTextTop = "50",
+			optionBottom = "px",
+			optionLeft = "px",
+			optionRight = "px",
+			optionTop = "px");
+
+		CalendarLookAndFeelConfiguration.fillMarginColumn(
+			fieldTextBottom = "20",
+			fieldTextLeft = "60",
+			fieldTextRight = "25",
+			fieldTextTop = "50",
+			optionBottom = "px",
+			optionLeft = "px",
+			optionRight = "px",
+			optionTop = "px");
+
+		Button.clickSave();
+
+		CalendarNavigator.closeModal(modalTitle = "Look and Feel Configuration");
+
+		Refresh();
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "margin-top",
+			cssValue = "50px");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "margin-right",
+			cssValue = "25px");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "margin-bottom",
+			cssValue = "20px");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "margin-left",
+			cssValue = "60px");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "margin-top",
+			cssValue = "50px");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "padding-right",
+			cssValue = "15px");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "padding-bottom",
+			cssValue = "35px");
+
+		CalendarLookAndFeelConfiguration.viewCssValues(
+			cssElement = "padding-left",
+			cssValue = "15px");
 	}
 
 	@description = "LRQA-71889 - Verify that the user can set Advanced Styling on calendar"

@@ -21,6 +21,8 @@ import com.liferay.frontend.icons.web.internal.model.FrontendIconsResourcePack;
 import com.liferay.frontend.icons.web.internal.util.ClayFrontendIconsResourcePackUtil;
 import com.liferay.frontend.icons.web.internal.util.SVGUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -124,6 +126,10 @@ public class FrontendIconsResourcePackRepository {
 			return frontendIconsResourcePack;
 		}
 		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+			
 			return null;
 		}
 	}
@@ -191,6 +197,9 @@ public class FrontendIconsResourcePackRepository {
 	private static final String _REPOSITORY_NAME = "icon.admin.web";
 
 	private static final String _ROOT_FOLDER_NAME = "icon.admin.web.icon.packs";
+
+		private static final Log _log = LogFactoryUtil.getLog(
+		FrontendIconsResourcePackRepository.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

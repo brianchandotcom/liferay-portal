@@ -82,9 +82,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 	public void testDestinationBlank() throws PortletException {
 		SearchBarPortletDisplayContextFactory
 			searchBarPortletDisplayContextFactory =
-				_createSearchBarPortletDisplayContextFactory();
-
-		searchBarPortletDisplayContextFactory.setDestination(StringPool.BLANK);
+				_createSearchBarPortletDisplayContextFactory(StringPool.BLANK);
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 			searchBarPortletDisplayContextFactory.build();
@@ -97,9 +95,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 	public void testDestinationNull() throws PortletException {
 		SearchBarPortletDisplayContextFactory
 			searchBarPortletDisplayContextFactory =
-				_createSearchBarPortletDisplayContextFactory();
-
-		searchBarPortletDisplayContextFactory.setDestination(null);
+				_createSearchBarPortletDisplayContextFactory(null);
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 			searchBarPortletDisplayContextFactory.build();
@@ -116,9 +112,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 
 		SearchBarPortletDisplayContextFactory
 			searchBarPortletDisplayContextFactory =
-				_createSearchBarPortletDisplayContextFactory();
-
-		searchBarPortletDisplayContextFactory.setDestination(destination);
+				_createSearchBarPortletDisplayContextFactory(destination);
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 			searchBarPortletDisplayContextFactory.build();
@@ -141,10 +135,8 @@ public class SearchBarPortletDisplayContextFactoryTest {
 
 		SearchBarPortletDisplayContextFactory
 			searchBarPortletDisplayContextFactory =
-				_createSearchBarPortletDisplayContextFactory();
-
-		searchBarPortletDisplayContextFactory.setDestination(
-			StringPool.SLASH.concat(destination));
+				_createSearchBarPortletDisplayContextFactory(
+					StringPool.SLASH.concat(destination));
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 			searchBarPortletDisplayContextFactory.build();
@@ -170,9 +162,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 
 		SearchBarPortletDisplayContextFactory
 			searchBarPortletDisplayContextFactory =
-				_createSearchBarPortletDisplayContextFactory();
-
-		searchBarPortletDisplayContextFactory.setDestination(destination);
+				_createSearchBarPortletDisplayContextFactory(destination);
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 			searchBarPortletDisplayContextFactory.build();
@@ -194,7 +184,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 
 		SearchBarPortletDisplayContextFactory
 			searchBarPortletDisplayContextFactory =
-				_createSearchBarPortletDisplayContextFactory();
+				_createSearchBarPortletDisplayContextFactory(null);
 
 		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 			searchBarPortletDisplayContextFactory.build();
@@ -210,7 +200,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 	public void testSearchScope() throws ReadOnlyException {
 		SearchBarPortletDisplayContextFactory
 			searchBarPortletDisplayContextFactory =
-				_createSearchBarPortletDisplayContextFactory();
+				_createSearchBarPortletDisplayContextFactory(null);
 
 		searchBarPortletDisplayContextFactory.setScopeParameterValue(
 			Optional.of(SearchScope.EVERYTHING.getParameterString()));
@@ -268,7 +258,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 	}
 
 	private SearchBarPortletDisplayContextFactory
-			_createSearchBarPortletDisplayContextFactory()
+			_createSearchBarPortletDisplayContextFactory(String destination)
 		throws ReadOnlyException {
 
 		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
@@ -283,6 +273,10 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		portletPreferences.setValue(
 			SearchBarPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE,
 			"everything");
+
+		portletPreferences.setValue(
+			SearchBarPortletPreferences.PREFERENCE_KEY_DESTINATION,
+			destination);
 
 		Mockito.when(
 			renderRequest.getPreferences()

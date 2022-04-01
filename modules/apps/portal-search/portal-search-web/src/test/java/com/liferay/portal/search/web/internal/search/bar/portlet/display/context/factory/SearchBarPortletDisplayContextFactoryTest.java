@@ -31,14 +31,17 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.web.internal.display.context.SearchScope;
-import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
+import com.liferay.portal.search.web.internal.search.bar.portlet.SearchBarPortletPreferences;
 import com.liferay.portal.search.web.internal.search.bar.portlet.configuration.SearchBarPortletInstanceConfiguration;
 import com.liferay.portal.search.web.internal.search.bar.portlet.display.context.SearchBarPortletDisplayContext;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portlet.PortletPreferencesImpl;
 
 import java.util.Optional;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
 import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -204,7 +207,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 	}
 
 	@Test
-	public void testSearchScope() {
+	public void testSearchScope() throws ReadOnlyException {
 		SearchBarPortletDisplayContextFactory
 			searchBarPortletDisplayContextFactory =
 				_createSearchBarPortletDisplayContextFactory();
@@ -265,7 +268,8 @@ public class SearchBarPortletDisplayContextFactoryTest {
 	}
 
 	private SearchBarPortletDisplayContextFactory
-		_createSearchBarPortletDisplayContextFactory() {
+			_createSearchBarPortletDisplayContextFactory()
+		throws ReadOnlyException {
 
 		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
 
@@ -274,9 +278,23 @@ public class SearchBarPortletDisplayContextFactoryTest {
 				new SearchBarPortletDisplayContextFactory(
 					_http, _layoutLocalService, _portal, renderRequest);
 
-		searchBarPortletDisplayContextFactory.setSearchScopePreference(
-			SearchScopePreference.getSearchScopePreference("everything"));
-		searchBarPortletDisplayContextFactory.setThemeDisplay(_themeDisplay);
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
+
+		portletPreferences.setValue(
+			SearchBarPortletPreferences.PREFERENCE_KEY_SEARCH_SCOPE,
+			"everything");
+
+		Mockito.when(
+			renderRequest.getPreferences()
+		).thenReturn(
+			portletPreferences
+		);
+
+		Mockito.when(
+			renderRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			_themeDisplay
+		);
 
 		return searchBarPortletDisplayContextFactory;
 	}

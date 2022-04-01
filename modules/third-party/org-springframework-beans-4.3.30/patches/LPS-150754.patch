@@ -1,0 +1,47 @@
+diff --git a/org/springframework/beans/CachedIntrospectionResults.java b/org/springframework/beans/CachedIntrospectionResults.java
+index 092111f..0bc2806 100644
+--- a/org/springframework/beans/CachedIntrospectionResults.java
++++ b/org/springframework/beans/CachedIntrospectionResults.java
+@@ -20,6 +20,7 @@ import java.beans.BeanInfo;
+ import java.beans.IntrospectionException;
+ import java.beans.Introspector;
+ import java.beans.PropertyDescriptor;
++import java.security.ProtectionDomain;
+ import java.util.Collections;
+ import java.util.Iterator;
+ import java.util.LinkedHashMap;
+@@ -288,9 +289,13 @@ public class CachedIntrospectionResults {
+ 			// This call is slow so we do it once.
+ 			PropertyDescriptor[] pds = this.beanInfo.getPropertyDescriptors();
+ 			for (PropertyDescriptor pd : pds) {
+-				if (Class.class == beanClass &&
+-						("classLoader".equals(pd.getName()) ||  "protectionDomain".equals(pd.getName()))) {
+-					// Ignore Class.getClassLoader() and getProtectionDomain() methods - nobody needs to bind to those
++				if (Class.class == beanClass && (!"name".equals(pd.getName()) && !pd.getName().endsWith("Name"))) {
++					// Only allow all name variants of Class properties
++					continue;
++				}
++				if (pd.getPropertyType() != null && (ClassLoader.class.isAssignableFrom(pd.getPropertyType())
++						|| ProtectionDomain.class.isAssignableFrom(pd.getPropertyType()))) {
++					// Ignore ClassLoader and ProtectionDomain types - nobody needs to bind to those
+ 					continue;
+ 				}
+ 				if (logger.isTraceEnabled()) {
+@@ -314,6 +319,11 @@ public class CachedIntrospectionResults {
+ 					for (PropertyDescriptor pd : ifcPds) {
+ 						if (!this.propertyDescriptorCache.containsKey(pd.getName())) {
+ 							pd = buildGenericTypeAwarePropertyDescriptor(beanClass, pd);
++							if (pd.getPropertyType() != null && (ClassLoader.class.isAssignableFrom(pd.getPropertyType())
++								|| ProtectionDomain.class.isAssignableFrom(pd.getPropertyType()))) {
++								// Ignore ClassLoader and ProtectionDomain types - nobody needs to bind to those
++								continue;
++							}
+ 							this.propertyDescriptorCache.put(pd.getName(), pd);
+ 						}
+ 					}
+@@ -380,3 +390,4 @@ public class CachedIntrospectionResults {
+ 	}
+ 
+ }
++/* @generated */
+\ No newline at end of file

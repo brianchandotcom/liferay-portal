@@ -83,7 +83,7 @@ public class SearchBarPortletDisplayContextBuilder {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_scopeParameterName = _getScopeParameterName(
+		String scopeParameterName = _getScopeParameterName(
 			portletPreferencesLookup, searchBarPrecedenceHelper,
 			portletSharedSearchResponse.getSearchSettings(),
 			searchBarPortletPreferences, themeDisplay);
@@ -93,7 +93,7 @@ public class SearchBarPortletDisplayContextBuilder {
 
 		SearchRequest searchRequest = searchResponse.getRequest();
 
-		_destination = searchBarPortletPreferences.getDestinationString();
+		String destination = searchBarPortletPreferences.getDestinationString();
 
 		_keywords = Optional.ofNullable(
 			searchRequest.getQueryString()
@@ -106,7 +106,7 @@ public class SearchBarPortletDisplayContextBuilder {
 
 		Optional<String> scopeParameterValueOptional =
 			portletSharedSearchResponse.getParameter(
-				_scopeParameterName, _renderRequest);
+				scopeParameterName, _renderRequest);
 
 		_scopeParameterValue = scopeParameterValueOptional.orElse(null);
 
@@ -153,7 +153,7 @@ public class SearchBarPortletDisplayContextBuilder {
 		searchBarPortletDisplayContext.setPaginationStartParameterName(
 			getPaginationStartParameterName());
 		searchBarPortletDisplayContext.setScopeParameterName(
-			_scopeParameterName);
+			scopeParameterName);
 		searchBarPortletDisplayContext.setScopeParameterValue(
 			getScopeParameterValue());
 		searchBarPortletDisplayContext.setSearchBarPortletInstanceConfiguration(
@@ -161,13 +161,13 @@ public class SearchBarPortletDisplayContextBuilder {
 
 		_setSelectedSearchScope(searchBarPortletDisplayContext);
 
-		if (Validator.isBlank(_destination)) {
+		if (Validator.isBlank(destination)) {
 			searchBarPortletDisplayContext.setSearchURL(
 				_getURLCurrentPath(themeDisplay));
 		}
 		else {
 			String destinationURL = _getDestinationURL(
-				_destination, themeDisplay);
+				destination, themeDisplay);
 
 			if (destinationURL == null) {
 				searchBarPortletDisplayContext.setDestinationUnreachable(true);
@@ -421,14 +421,12 @@ public class SearchBarPortletDisplayContextBuilder {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchBarPortletDisplayContextBuilder.class);
 
-	private String _destination;
 	private final Http _http;
 	private String _keywords;
 	private final LayoutLocalService _layoutLocalService;
 	private String _paginationStartParameterName;
 	private final Portal _portal;
 	private final RenderRequest _renderRequest;
-	private String _scopeParameterName;
 	private String _scopeParameterValue;
 	private SearchScopePreference _searchScopePreference;
 

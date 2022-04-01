@@ -13,12 +13,9 @@
  */
 
 export default function getLexiconIconTpl(icon, cssClass = '') {
-	return `<svg
-		aria-hidden="true"
-		class="lexicon-icon lexicon-icon-${icon} ${cssClass}"
-		focusable="false"
-		role="presentation"
-	>
-		<use href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#${icon}" />
-	</svg>`;
+	return (
+		`<svg aria-hidden="true" class="lexicon-icon lexicon-icon-${icon} ${cssClass}" focusable="false" role="presentation">` +
+		`<use href="${themeDisplay.getPathThemeImages()}/clay/icons.svg#${icon}" />` +
+		'</svg>'
+	);
 }

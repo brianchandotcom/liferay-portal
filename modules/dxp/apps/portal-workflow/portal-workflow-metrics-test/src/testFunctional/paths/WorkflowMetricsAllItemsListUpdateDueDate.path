@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>NEW_DUE_DATE_INPUT_ALL_ITEMS_LIST</td>
-	<td>//input[contains(@placeholder,'MM/DD/YYYY')]</td>
+	<td>//input[contains(@placeholder,'mm/dd/yyyy')]</td>
 	<td></td>
 </tr>
 <tr>

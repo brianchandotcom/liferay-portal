@@ -20,11 +20,11 @@ dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.dependencymanager", version: "4.6.0"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	compileOnly group: "org.springframework", name: "spring-aop", version: "5.2.2.RELEASE"
-	compileOnly group: "org.springframework", name: "spring-beans", version: "5.2.2.RELEASE"
-	compileOnly group: "org.springframework", name: "spring-context", version: "5.2.2.RELEASE"
-	compileOnly group: "org.springframework", name: "spring-core", version: "5.2.2.RELEASE"
-	compileOnly group: "org.springframework", name: "spring-tx", version: "5.2.2.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-aop", version: "5.2.20.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-beans", version: "5.2.20.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-context", version: "5.2.20.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-core", version: "5.2.20.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-tx", version: "5.2.20.RELEASE"
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
 	compileOnly project(":core:osgi-service-tracker-collections")

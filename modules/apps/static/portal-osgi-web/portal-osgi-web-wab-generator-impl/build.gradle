@@ -9,10 +9,10 @@ dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
-	compileOnly group: "org.springframework", name: "spring-beans", version: "5.2.2.RELEASE"
-	compileOnly group: "org.springframework", name: "spring-context", version: "5.2.2.RELEASE"
-	compileOnly group: "org.springframework", name: "spring-core", version: "5.2.2.RELEASE"
-	compileOnly group: "org.springframework", name: "spring-web", version: "5.2.2.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-beans", version: "5.2.20.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-context", version: "5.2.20.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-core", version: "5.2.20.RELEASE"
+	compileOnly group: "org.springframework", name: "spring-web", version: "5.2.20.RELEASE"
 	compileOnly project(":apps:static:portal-file-install:portal-file-install-api")
 	compileOnly project(":apps:static:portal-osgi-web:portal-osgi-web-wab-generator-api")
 	compileOnly project(":core:petra:petra-string")

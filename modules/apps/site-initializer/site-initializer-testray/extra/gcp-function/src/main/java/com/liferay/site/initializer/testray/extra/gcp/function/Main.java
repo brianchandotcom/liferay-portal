@@ -418,6 +418,13 @@ public class Main {
 		_objectEntryIds.put(
 			objectDefinitionShortName + "#" + name, objectEntryId);
 
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		objectEntryId = jsonObject.getLong("id");
+
+		_objectEntryIds.put(
+			objectDefinitionShortName + "#" + name, objectEntryId);
+
 		return objectEntryId;
 	}
 

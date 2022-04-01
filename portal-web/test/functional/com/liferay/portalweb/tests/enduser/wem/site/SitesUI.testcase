@@ -227,7 +227,7 @@ definition {
 		task ("View site creation message") {
 			AssertTextEquals(
 				locator1 = "Message#SUBTITLE",
-				value1 = "The creation of the site may take some minutes. Closing the window will not cancel the creation process.");
+				value1 = "The creation of the site may take some time. Closing the window will not cancel the process.");
 		}
 
 		task ("View the new site is created") {

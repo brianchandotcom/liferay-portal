@@ -94,7 +94,7 @@ function ItemConfigurationContent() {
 	return (
 		<PageStructureSidebarSection resizable size={1.5}>
 			<div className="page-editor__page-structure__item-configuration">
-				<ClayTabs className="pt-2 px-3" modern>
+				<ClayTabs className="flex-nowrap pt-2 px-3" modern>
 					{panels.map((panel) => (
 						<ClayTabs.Item
 							active={panel.panelId === activePanelId}
@@ -106,8 +106,10 @@ function ItemConfigurationContent() {
 							onClick={() => setActivePanelId(panel.panelId)}
 						>
 							<span
-								className="c-inner page-editor__page-structure__item-configuration-tab"
+								className="c-inner page-editor__page-structure__item-configuration-tab text-truncate"
+								data-tooltip-align="top"
 								tabIndex="-1"
+								title={panel.label}
 							>
 								{panel.label}
 							</span>

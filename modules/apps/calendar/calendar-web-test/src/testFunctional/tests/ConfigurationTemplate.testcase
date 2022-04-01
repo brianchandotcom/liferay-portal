@@ -14,23 +14,23 @@ definition {
 
 		User.firstLoginPG();
 
-		//ProductMenu.gotoPortlet(
-		//	category = "Site Builder",
-		//	portlet = "Pages");
-		//PagesAdmin.addPublicPage(
-		//	pageName = "Calendar Page",
-		//	sitePageType = "Widget Page");
-		//PagesAdmin.configurePage(
-		//	columnName = "1 Column",
-		//	pageName = "Calendar Page",
-		//	privacy = "Public Pages",
-		//	sitePageType = "Widget Page");
+		ProductMenu.gotoPortlet(
+			category = "Site Builder",
+			portlet = "Pages");
+		PagesAdmin.addPublicPage(
+			pageName = "Calendar Page",
+			sitePageType = "Widget Page");
+		PagesAdmin.configurePage(
+			columnName = "1 Column",
+			pageName = "Calendar Page",
+			privacy = "Public Pages",
+			sitePageType = "Widget Page");
 
 		Navigator.gotoPage(pageName = "Calendar Page");
 
-		//Portlet.addPG(
-		//	pageName = "Calendar Page",
-		//	portletName = "Calendar");
+		Portlet.addPG(
+			pageName = "Calendar Page",
+			portletName = "Calendar");
 
 	}
 
@@ -58,88 +58,104 @@ definition {
 	@description = "LRQA-71891 - Verify that the user can apply the selected template"
 	@priority = "3"
 	test CanApplySelectedTemplate {
-		ConfigurationTemplate.gotoCalendarOptions(option = "Configuration Templates");
+		Portlet.gotoPortletOptions(
+			portletName = "Calendar",
+			portletOption = "Configuration Templates");
 
-		ConfigurationTemplate.saveConfigurationTemplateCalendar(configurationName = "Configuration Name");
+		ConfigurationTemplate.saveCurrentConfigurationsTemplate(templateName = "Configuration Templates Name");
 
-		ConfigurationTemplate.viewConfigurationTemplateTableName(configurationName = "Configuration Name");
+		ConfigurationTemplate.viewCurrentConfigurationsTemplate(templateName = "Configuration Templates Name");
 
-		ConfigurationTemplate.optionSelectedTemplate(
-			configurationName = "Configuration Name",
-			item = "Apply");
+		ConfigurationTemplate.applyConfigurationsTemplate(templateName = "Configuration Templates Name");
 	}
 
 	@description = "LRQA-71891 - Verify that the user can delete a template"
 	@priority = "3"
 	test CanDeleteTemplate {
-		ConfigurationTemplate.gotoCalendarOptions(option = "Configuration Templates");
+		Portlet.gotoPortletOptions(
+			portletName = "Calendar",
+			portletOption = "Configuration Templates");
 
-		ConfigurationTemplate.saveConfigurationTemplateCalendar(configurationName = "Configuration Name");
+		ConfigurationTemplate.saveCurrentConfigurationsTemplate(templateName = "Configuration Templates Name");
 
-		ConfigurationTemplate.viewConfigurationTemplateTableName(configurationName = "Configuration Name");
+		ConfigurationTemplate.viewOrderConfigurationsTemplate(tableOrder = "Configuration Templates Name");
 
-		ConfigurationTemplate.optionSelectedTemplate(
-			configurationName = "Configuration Name",
-			item = "Delete");
+		ConfigurationTemplate.deleteConfigurationsTemplate(templateName = "Configuration Templates Name");
 
-		ConfigurationTemplate.confirmDeleteSelectedTemplate();
-
-		ConfigurationTemplate.notViewConfigurationTemplateTableName(configurationName = "Configuration Name");
+		ConfigurationTemplate.notViewCurrentConfigurationsTemplate(templateName = "Configuration Templates Name");
 	}
 
 	@description = "LRQA-71891 - Verify that the user can filter by Modified Date"
-	@ignore = "Test Stub"
 	@priority = "2"
 	test CanFilterByTemplateModifiedDate {
-		ConfigurationTemplate.gotoCalendarOptions(option = "Configuration Templates");
+		Portlet.gotoPortletOptions(
+			portletName = "Calendar",
+			portletOption = "Configuration Templates");
 
-		ConfigurationTemplate.saveConfigurationTemplateCalendar(configurationName = "First template name");
+		for (var templateNum : list "First,Second") {
+			ConfigurationTemplate.saveCurrentConfigurationsTemplate(templateName = "${templateNum} Configuration Templates Name");
 
-		Navigator.gotoPage(pageName = "Calendar Page");
+			IFrame.closeFrame();
 
-		ConfigurationTemplate.gotoCalendarOptions(option = "Configuration Templates");
+			Portlet.gotoPortletOptions(
+				portletName = "Calendar",
+				portletOption = "Configuration Templates");
+		}
 
-		ConfigurationTemplate.saveConfigurationTemplateCalendar(configurationName = "Second template name");
+		IFrame.selectModalFrame();
 
-		ManagementBar.setFilterAndOrder(filterBy = "Modified Date");
+		ManagementBar.setFilterAndOrder(orderBy = "Modified Date");
 
-		ConfigurationTemplate.viewOrderFieldsTable(tableOrder = "First template name,Second template name");
+		ConfigurationTemplate.viewOrderConfigurationsTemplate(tableOrder = "Second Configuration Templates Name,First Configuration Templates Name");
 
 		Workflow.clickRevertSortDirection();
 
-		ConfigurationTemplate.viewOrderFieldsTable(tableOrder = "Second template name,First template name");
+		ConfigurationTemplate.viewOrderConfigurationsTemplate(tableOrder = "First Configuration Templates Name,Second Configuration Templates Name");
 	}
 
 	@description = "LRQA-71891 - Verify that the user can filter by Name"
 	@priority = "2"
 	test CanFilterByTemplateName {
-		ConfigurationTemplate.gotoCalendarOptions(option = "Configuration Templates");
+		Portlet.gotoPortletOptions(
+			portletName = "Calendar",
+			portletOption = "Configuration Templates");
 
-		ConfigurationTemplate.saveConfigurationTemplateCalendar(configurationName = "First template name");
+		for (var templateNum : list "First,Second") {
+			ConfigurationTemplate.saveCurrentConfigurationsTemplate(templateName = "${templateNum} Configuration Templates Name");
 
-		Navigator.gotoPage(pageName = "Calendar Page");
+			IFrame.closeFrame();
 
-		ConfigurationTemplate.gotoCalendarOptions(option = "Configuration Templates");
+			Portlet.gotoPortletOptions(
+				portletName = "Calendar",
+				portletOption = "Configuration Templates");
+		}
 
-		ConfigurationTemplate.saveConfigurationTemplateCalendar(configurationName = "Second template name");
+		IFrame.selectModalFrame();
 
-		ManagementBar.setFilterAndOrder(filterBy = "Name");
+		ManagementBar.setFilterAndOrder(orderBy = "Name");
 
-		ConfigurationTemplate.viewOrderFieldsTable(tableOrder = "First template name,Second template name");
+		ConfigurationTemplate.viewOrderConfigurationsTemplate(tableOrder = "First Configuration Templates Name,Second Configuration Templates Name");
 
 		Workflow.clickRevertSortDirection();
 
-		ConfigurationTemplate.viewOrderFieldsTable(tableOrder = "Second template name,First template name");
+		ConfigurationTemplate.viewOrderConfigurationsTemplate(tableOrder = "Second Configuration Templates Name,First Configuration Templates Name");
 	}
 
 	@description = "LRQA-71891 - Verify that the user can save Current Configuration as a template"
 	@priority = "3"
 	test CanSaveCurrentConfigurationAsTemplate {
-		ConfigurationTemplate.gotoCalendarOptions(option = "Configuration Templates");
+		Portlet.gotoPortletOptions(
+			portletName = "Calendar",
+			portletOption = "Configuration Templates");
 
-		ConfigurationTemplate.saveConfigurationTemplateCalendar(configurationName = "Configuration Name");
+		ConfigurationTemplate.saveCurrentConfigurationsTemplate(templateName = "Configuration Templates Name");
 
-		ConfigurationTemplate.viewConfigurationTemplateTableName(configurationName = "Configuration Name");
+		ConfigurationTemplate.viewCurrentConfigurationsTemplate(templateName = "Configuration Templates Name");
+
+
+
+
+		
 	}
 
 }

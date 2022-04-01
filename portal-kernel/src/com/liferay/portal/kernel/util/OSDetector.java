@@ -23,14 +23,6 @@ import java.io.File;
  */
 public class OSDetector {
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getBitMode()}
-	 */
-	@Deprecated
-	public static String getBitmode() {
-		return getBitMode();
-	}
-
 	public static String getBitMode() {
 		if (_bitMode != null) {
 			return _bitMode;

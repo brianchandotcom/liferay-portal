@@ -23,6 +23,7 @@ import {config} from '../../config/index';
 import {useGetFieldValue} from '../../contexts/CollectionItemContext';
 import {useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
+import checkStylesFF from '../../utils/checkStylesFF';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
 import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
 import {getEditableLinkValue} from '../../utils/getEditableLinkValue';
@@ -209,11 +210,12 @@ const Container = React.forwardRef(
 						? textAlign.startsWith('text-')
 							? textAlign
 							: `text-${textAlign}`
-						: `text-${textAlignDefaultValue}`]: textAlignDefaultValue,
+						: `text-${textAlignDefaultValue}`]:
+						!config.featureFlagLps132571 && textAlignDefaultValue,
 				})}
 				id={elementId}
 				ref={ref}
-				style={style}
+				style={checkStylesFF(item.itemId, style)}
 			>
 				{backgroundImageValue.mediaQueries ? (
 					<style>{backgroundImageValue.mediaQueries}</style>

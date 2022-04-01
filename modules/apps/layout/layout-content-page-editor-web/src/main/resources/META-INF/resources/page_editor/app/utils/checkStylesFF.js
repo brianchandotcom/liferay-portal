@@ -14,10 +14,21 @@
 
 import {config} from '../config/index';
 
-export function isValidSpacingOption(value) {
-	if (config.featureFlagLps132571) {
-		return false;
+export default function checkStylesFF(itemId, styles) {
+	if (!config.featureFlagLps132571) {
+		return styles;
 	}
 
-	return !isNaN(parseInt(value, 10));
+	const nextStyles = {};
+
+	if (styles.backgroundImage) {
+		nextStyles[`--lfr-background-image-${itemId}`] = styles.backgroundImage;
+	}
+
+	if (styles['--background-image-file-entry-id']) {
+		nextStyles['--background-image-file-entry-id'] =
+			styles['--background-image-file-entry-id'];
+	}
+
+	return nextStyles;
 }

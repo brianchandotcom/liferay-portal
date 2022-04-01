@@ -22,6 +22,7 @@ import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes
 import {config} from '../../config/index';
 import {useGetFieldValue} from '../../contexts/CollectionItemContext';
 import {useSelector} from '../../contexts/StoreContext';
+import checkStylesFF from '../../utils/checkStylesFF';
 import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
 import {getFrontendTokenValue} from '../../utils/getFrontendTokenValue';
 import getLayoutDataItemClassName from '../../utils/getLayoutDataItemClassName';
@@ -141,11 +142,12 @@ const Row = React.forwardRef(
 						? textAlign.startsWith('text-')
 							? textAlign
 							: `text-${textAlign}`
-						: `text-${textAlignDefaultValue}`]: textAlignDefaultValue,
+						: `text-${textAlignDefaultValue}`]:
+						!config.featureFlagLps132571 && textAlignDefaultValue,
 				})}
 				id={elementId}
 				ref={ref}
-				style={style}
+				style={checkStylesFF(item.itemId, style)}
 			>
 				{backgroundImageValue.mediaQueries ? (
 					<style>{backgroundImageValue.mediaQueries}</style>

@@ -168,7 +168,7 @@ function TopperContent({
 				hoverItem(item.itemId);
 			}}
 			ref={canBeDragged ? itemHandlerRef : null}
-			style={style}
+			style={config.featureFlagLps132571 ? {} : style}
 		>
 			{isActive ? (
 				<TopperLabel itemElement={itemElement}>

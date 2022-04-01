@@ -33,6 +33,7 @@ import {
 import selectCanConfigureWidgets from '../../selectors/selectCanConfigureWidgets';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
+import checkStylesFF from '../../utils/checkStylesFF';
 import resolveEditableConfig from '../../utils/editable-value/resolveEditableConfig';
 import resolveEditableValue from '../../utils/editable-value/resolveEditableValue';
 import {getCommonStyleByName} from '../../utils/getCommonStyleByName';
@@ -328,7 +329,9 @@ const FragmentContent = ({
 								? textAlign.startsWith('text-')
 									? textAlign
 									: `text-${textAlign}`
-								: `text-${textAlignDefaultValue}`]: textAlignDefaultValue,
+								: `text-${textAlignDefaultValue}`]:
+								!config.featureFlagLps132571 &&
+								textAlignDefaultValue,
 						}
 					)}
 					contentRef={elementRef}
@@ -338,7 +341,7 @@ const FragmentContent = ({
 					id={elementId}
 					markup={content}
 					onRender={withinTopper ? onRender : () => {}}
-					style={style}
+					style={checkStylesFF(item.tiemId, style)}
 				/>
 
 				{backgroundImageValue.mediaQueries ? (

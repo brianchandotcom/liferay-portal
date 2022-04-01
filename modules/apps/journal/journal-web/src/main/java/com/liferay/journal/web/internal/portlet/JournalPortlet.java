@@ -58,7 +58,6 @@ import com.liferay.journal.exception.NoSuchFeedException;
 import com.liferay.journal.exception.NoSuchFolderException;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
-import com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration;
 import com.liferay.journal.web.internal.configuration.FFJournalAutoSaveDraftConfiguration;
 import com.liferay.journal.web.internal.configuration.JournalWebConfiguration;
 import com.liferay.journal.web.internal.helper.JournalDDMTemplateHelper;
@@ -103,7 +102,6 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = {
 		"com.liferay.dynamic.data.mapping.configuration.DDMWebConfiguration",
 		"com.liferay.journal.configuration.JournalFileUploadsConfiguration",
-		"com.liferay.journal.web.internal.configuration.FFBulkTranslationConfiguration",
 		"com.liferay.journal.web.internal.configuration.FFJournalAutoSaveDraftConfiguration",
 		"com.liferay.journal.web.internal.configuration.JournalWebConfiguration"
 	},
@@ -171,9 +169,6 @@ public class JournalPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			DDMWebConfiguration.class.getName(), _ddmWebConfiguration);
 		renderRequest.setAttribute(
-			FFBulkTranslationConfiguration.class.getName(),
-			_ffBulkTranslationConfiguration);
-		renderRequest.setAttribute(
 			FFJournalAutoSaveDraftConfiguration.class.getName(),
 			_ffJournalAutoSaveDraftConfiguration);
 		renderRequest.setAttribute(
@@ -225,8 +220,6 @@ public class JournalPortlet extends MVCPortlet {
 	protected void activate(Map<String, Object> properties) {
 		_ddmWebConfiguration = ConfigurableUtil.createConfigurable(
 			DDMWebConfiguration.class, properties);
-		_ffBulkTranslationConfiguration = ConfigurableUtil.createConfigurable(
-			FFBulkTranslationConfiguration.class, properties);
 		_ffJournalAutoSaveDraftConfiguration =
 			ConfigurableUtil.createConfigurable(
 				FFJournalAutoSaveDraftConfiguration.class, properties);
@@ -352,8 +345,6 @@ public class JournalPortlet extends MVCPortlet {
 	private DDMTemplateHelper _ddmTemplateHelper;
 
 	private volatile DDMWebConfiguration _ddmWebConfiguration;
-	private volatile FFBulkTranslationConfiguration
-		_ffBulkTranslationConfiguration;
 	private volatile FFJournalAutoSaveDraftConfiguration
 		_ffJournalAutoSaveDraftConfiguration;
 

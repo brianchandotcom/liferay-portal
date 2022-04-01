@@ -6327,7 +6327,8 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<equals arg1="${database.version}" arg2="11.5.6" />
 				</and>
 				<then>
-					<property name="docker.database.wait.condition">[[ "$(/bin/su - db2inst1 -c '/opt/ibm/db2/V11.5/bin/db2 db2start')" =~ "SQL1026N" ]]</property>
+					<property name="docker.database.wait.condition">[[ "$(/bin/su - db2inst1 -c '~/sqllib/bin/db2 db2set DB2COMM=tcpip')" =~ "" ]]</property>
+					<property name="docker.database.wait.condition">[[ "$(/bin/su - db2inst1 -c '~/sqllib/bin/db2 db2start')" =~ "SQL1026N" ]]</property>
 				</then>
 				<elseif>
 					<equals arg1="${database.type}" arg2="db2" />

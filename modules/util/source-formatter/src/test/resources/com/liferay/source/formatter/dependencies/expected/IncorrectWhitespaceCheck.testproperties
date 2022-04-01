@@ -3,10 +3,10 @@ configuration.override.com.liferay.dynamic.data.mapping.form.web.internal.config
     "xlsx",\
 ]
 
-   testray.team.developer-tools.component.names=\
-       Blade Samples,\
-       Project Templates
+    testray.team.developer-tools.component.names=\
+        Blade Samples,\
+        Project Templates
 
-   testray.team.engineering.component.names=\
-       Modules Integration,\
-       Tools
+    testray.team.engineering.component.names=\
+        Modules Integration,\
+        Tools

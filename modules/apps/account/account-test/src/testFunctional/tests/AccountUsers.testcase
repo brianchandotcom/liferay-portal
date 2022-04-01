@@ -257,9 +257,9 @@ definition {
 		LexiconEntry.viewNoEntry(rowEntry = "userfn userln");
 	}
 
-	@description = "This filters users by accounts, choosing a specific account to view"
+	@description = "This filters users by Selected Accounts, choosing a specific account to view"
 	@priority = "3"
-	test CanFilterByAccounts {
+	test CanFilterBySelectedAccounts {
 		JSONAccountEntry.addAccountEntry(
 			accountEntryName = "Business Account",
 			accountEntryType = "Business");
@@ -297,7 +297,7 @@ definition {
 
 		AccountUsers.openAccountUsersAdmin();
 
-		ManagementBar.setFilterAndOrder(filterBy = "Accounts");
+		ManagementBar.setFilterAndOrder(filterBy = "Selected Accounts");
 
 		AccountUsers.selectAccounts(accountName = "Person Account");
 
@@ -307,7 +307,7 @@ definition {
 
 		LexiconEntry.viewNoEntry(rowEntry = "business user");
 
-		ManagementBar.setFilterAndOrder(filterBy = "Accounts");
+		ManagementBar.setFilterAndOrder(filterBy = "Selected Accounts");
 
 		AccountUsers.selectAccounts(accountName = "Business Account");
 
@@ -350,7 +350,7 @@ definition {
 
 		LexiconEntry.viewNoEntry(rowEntry = "userfn2 userln2");
 
-		ManagementBar.setFilterAndOrder(filterBy = "All");
+		ManagementBar.setFilterAndOrder(filterBy = "Any Account");
 
 		LexiconEntry.viewEntryName(rowEntry = "userfn2 userln2");
 

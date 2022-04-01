@@ -1,0 +1,299 @@
+definition {
+
+	macro checkToggleSwitch {
+		Click(
+			key_labelName = "${labelName}",
+			locator1 = "CalendarLookAndFeelConfiguration#TOGGLE_SWITCH_LABEL");
+	}
+
+	macro fillBorderColorColumn {
+		if (isSet(colorValueTop)) {
+			Type(
+				key_fieldName = "Top",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_BORDER_COLOR_COLUMN",
+				value1 = "${colorValueTop}");
+		}
+
+		if (isSet(colorValueRight)) {
+			Type(
+				key_fieldName = "Right",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_BORDER_COLOR_COLUMN",
+				value1 = "${colorValueRight}");
+		}
+
+		if (isSet(colorValueBottom)) {
+			Type(
+				key_fieldName = "Bottom",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_BORDER_COLOR_COLUMN",
+				value1 = "${colorValueBottom}");
+		}
+
+		if (isSet(colorValueLeft)) {
+			Type(
+				key_fieldName = "Left",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_BORDER_COLOR_COLUMN",
+				value1 = "${colorValueLeft}");
+		}
+	}
+
+	macro fillBorderWidthColumn {
+		if (isSet(fieldTextTop)) {
+			Type(
+				key_fieldName = "Top",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_BORDER_WIDTH_COLUMN",
+				value1 = "${fieldTextTop}");
+
+			Select(
+				key_title = "Top",
+				locator1 = "CalendarLookAndFeelConfiguration#SELECT_BORDER_WIDTH_COLUMN",
+				value1 = "${optionTop}");
+		}
+
+		if (isSet(fieldTextRight)) {
+			Type(
+				key_fieldName = "Right",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_BORDER_WIDTH_COLUMN",
+				value1 = "${fieldTextRight}");
+
+			Select(
+				key_title = "Right",
+				locator1 = "CalendarLookAndFeelConfiguration#SELECT_BORDER_WIDTH_COLUMN",
+				value1 = "${optionRight}");
+		}
+
+		if (isSet(fieldTextBottom)) {
+			Type(
+				key_fieldName = "Bottom",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_BORDER_WIDTH_COLUMN",
+				value1 = "${fieldTextBottom}");
+
+			Select(
+				key_title = "Bottom",
+				locator1 = "CalendarLookAndFeelConfiguration#SELECT_BORDER_WIDTH_COLUMN",
+				value1 = "${optionBottom}");
+		}
+
+		if (isSet(fieldTextLeft)) {
+			Type(
+				key_fieldName = "Left",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_BORDER_WIDTH_COLUMN",
+				value1 = "${fieldTextLeft}");
+
+			Select(
+				key_title = "Left",
+				locator1 = "CalendarLookAndFeelConfiguration#SELECT_BORDER_WIDTH_COLUMN",
+				value1 = "${optionLeft}");
+		}
+	}
+
+	macro fillCustomTitleCalendar {
+		CalendarLookAndFeelConfiguration.checkToggleSwitch(labelName = "Use Custom Title");
+
+		Type(
+			locator1 = "CalendarLookAndFeelConfiguration#CUSTOM_TITLE",
+			value1 = "${customTitle}");
+	}
+
+	macro fillMarginColumn {
+		if (isSet(fieldTextTop)) {
+			Type(
+				key_fieldName = "Top",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_MARGING_COLUMN",
+				value1 = "${fieldTextTop}");
+
+			Select(
+				key_title = "Top",
+				locator1 = "CalendarLookAndFeelConfiguration#SELECT_MARGING_COLUMN",
+				value1 = "${optionTop}");
+		}
+
+		if (isSet(fieldTextRight)) {
+			Type(
+				key_fieldName = "Right",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_MARGING_COLUMN",
+				value1 = "${fieldTextRight}");
+
+			Select(
+				key_title = "Right",
+				locator1 = "CalendarLookAndFeelConfiguration#SELECT_MARGING_COLUMN",
+				value1 = "${optionRight}");
+		}
+
+		if (isSet(fieldTextBottom)) {
+			Type(
+				key_fieldName = "Bottom",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_MARGING_COLUMN",
+				value1 = "${fieldTextBottom}");
+
+			Select(
+				key_title = "Bottom",
+				locator1 = "CalendarLookAndFeelConfiguration#SELECT_MARGING_COLUMN",
+				value1 = "${optionBottom}");
+		}
+
+		if (isSet(fieldTextLeft)) {
+			Type(
+				key_fieldName = "Left",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_MARGING_COLUMN",
+				value1 = "${fieldTextLeft}");
+
+			Select(
+				key_title = "Left",
+				locator1 = "CalendarLookAndFeelConfiguration#SELECT_MARGING_COLUMN",
+				value1 = "${optionLeft}");
+		}
+	}
+
+	macro fillPaddingColumn {
+		if (isSet(fieldTextTop)) {
+			Type(
+				key_fieldName = "Top",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_PADDING_COLUMN",
+				value1 = "${fieldTextTop}");
+
+			Select(
+				key_title = "Top",
+				locator1 = "CalendarLookAndFeelConfiguration#SELECT_PADDING_COLUMN",
+				value1 = "${optionTop}");
+		}
+
+		if (isSet(fieldTextRight)) {
+			Type(
+				key_fieldName = "Right",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_PADDING_COLUMN",
+				value1 = "${fieldTextRight}");
+
+			Select(
+				key_title = "Right",
+				locator1 = "CalendarLookAndFeelConfiguration#SELECT_PADDING_COLUMN",
+				value1 = "${optionRight}");
+		}
+
+		if (isSet(fieldTextBottom)) {
+			Type(
+				key_fieldName = "Bottom",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_PADDING_COLUMN",
+				value1 = "${fieldTextBottom}");
+
+			Select(
+				key_title = "Bottom",
+				locator1 = "CalendarLookAndFeelConfiguration#SELECT_PADDING_COLUMN",
+				value1 = "${optionBottom}");
+		}
+
+		if (isSet(fieldTextLeft)) {
+			Type(
+				key_fieldName = "Left",
+				locator1 = "CalendarLookAndFeelConfiguration#FIELD_PADDING_COLUMN",
+				value1 = "${fieldTextLeft}");
+
+			Select(
+				key_title = "Left",
+				locator1 = "CalendarLookAndFeelConfiguration#SELECT_PADDING_COLUMN",
+				value1 = "${optionLeft}");
+		}
+	}
+
+	macro gotoLookAndFeelConfiguration {
+		Portlet.gotoPortletOptions(
+			portletName = "Calendar",
+			portletOption = "Look and Feel Configuration");
+
+		SelectFrame(locator1 = "IFrame#MODAL_BODY");
+	}
+
+	macro selectApplicationDecorators {
+		Select(
+			locator1 = "CalendarLookAndFeelConfiguration#APPLICATION_DECORATORS_OPTIONS",
+			value1 = "${optionName}");
+	}
+
+	macro selectSameForAllInBorderStyles {
+		if ("${nameColumn}" == "Border Width") {
+			Click(
+				key_nameColumn = "border-width",
+				locator1 = "CalendarLookAndFeelConfiguration#TOGGLE_SWITCH",
+				value1 = "${nameColumn}");
+		}
+
+		if ("${nameColumn}" == "Border Style") {
+			Click(
+				key_nameColumn = "border-style",
+				locator1 = "CalendarLookAndFeelConfiguration#TOGGLE_SWITCH",
+				value1 = "${nameColumn}");
+		}
+
+		if ("${nameColumn}" == "Border Color") {
+			Click(
+				key_nameColumn = "border-color",
+				locator1 = "CalendarLookAndFeelConfiguration#TOGGLE_SWITCH",
+				value1 = "${nameColumn}");
+		}
+	}
+
+	macro selectTab {
+		Click(
+			key_tabName = "${tabName}",
+			locator1 = "CalendarLookAndFeelConfiguration#TAB_NAVIGATOR");
+	}
+
+	macro viewBorderArroundCalendarWidget {
+		if ("${borderName}" == "Barebone") {
+			AssertElementPresent(
+				key_borderName = "portlet-barebone",
+				locator1 = "CalendarLookAndFeelConfiguration#BORDER_ARROUND",
+				value1 = "${borderName}");
+		}
+
+		if ("${borderName}" == "Bordless") {
+			AssertElementPresent(
+				key_borderName = "portlet-bodless",
+				locator1 = "CalendarLookAndFeelConfiguration#BORDER_ARROUND",
+				value1 = "${borderName}");
+		}
+
+		if ("${borderName}" == "Decorate") {
+			AssertElementPresent(
+				key_borderName = "portlet-decorate",
+				locator1 = "CalendarLookAndFeelConfiguration#BORDER_ARROUND",
+				value1 = "${borderName}");
+		}
+	}
+
+	macro viewCssValues {
+		var idElement = selenium.getAttribute("//div[contains(@class, 'portlet-column-only')]//..//div[contains(@class, 'portlet-borderless')]@id");
+
+		AssertElementPresent(
+			key_cssElement = "${cssElement}",
+			key_cssValue = "${cssValue}",
+			key_idElement = "${idElement}",
+			locator1 = "CalendarLookAndFeelConfiguration#CSS_ELEMENTS");
+	}
+
+	macro viewNotPresentCssValues {
+		var idElement = selenium.getAttribute("//div[contains(@class, 'portlet-column-only')]//..//div[contains(@class, 'portlet-borderless')]@id");
+
+		AssertElementNotPresent(
+			key_cssElement = "${cssElement}",
+			key_cssValue = "${cssValue}",
+			key_idElement = "${idElement}",
+			locator1 = "CalendarLookAndFeelConfiguration#CSS_ELEMENTS");
+	}
+
+	macro viewOptionDefault {
+		AssertSelectedLabel(
+			locator1 = "CalendarLookAndFeelConfiguration#APPLICATION_DECORATORS_OPTIONS",
+			value1 = "${optionName}");
+	}
+
+	macro viewPortletNameDefault {
+		AssertElementPresent(
+			key_portletTitle = "${portletTitle}",
+			locator1 = "Calendar#PORTLET_TITLE");
+	}
+
+	macro viewPortletNameNotPresent {
+		AssertElementNotPresent(locator1 = "Calendar#PORTLET_TITLE");
+	}
+
+}

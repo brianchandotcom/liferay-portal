@@ -692,6 +692,11 @@
 	<td>//td[not(contains(@class,'scheduler-today')) and contains(.,'${key_eventTitle}')]//div[@class='scheduler-event-content']/../../div</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PORTLET_TITLE</td>
+	<td>//div[contains(@class, 'portlet-column-only')]//h2[contains(@class,'portlet-title') and contains(.,'${key_portletTitle}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

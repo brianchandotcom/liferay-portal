@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>CalendarLookAndFeelConfiguration</title>
+</head>
+
+<body>
+<table border="1" cellpadding="1" cellspacing="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CalendarLookAndFeelConfiguration</td></tr>
+</thead>
+
+<tbody>
+<!--NAVIGATOR-->
+<tr>
+	<td>TAB_NAVIGATOR</td>
+	<td>//div[contains(@class, 'lfr-form-content')]//a[contains(@class, 'nav-link') and contains(.,'${key_tabName}')]</td>
+	<td></td>
+</tr>
+<!--LOOK_AND_FEEL_CONFIGURATION-->
+<tr>
+	<td>FIELD_BORDER_WIDTH_COLUMN</td>
+	<td>//div[contains(@class, 'border-width')]//label[contains(@class, 'control-label') and contains(text(), '${key_fieldName}')]//..//input[contains(@class, 'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_BORDER_WIDTH_COLUMN</td>
+	<td>//select[contains(@title, '${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_BORDER_COLOR_COLUMN</td>
+	<td>//div[contains(@class, 'border-color')]//div[contains(@class, 'color')]//label[contains(., '${key_fieldName}')]//..//input[contains(@class, 'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CSS_ELEMENTS</td>
+	<td>//style[contains(text(), '${key_idElement}') and contains(text(), '${key_cssElement}: ${key_cssValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOGGLE_SWITCH</td>
+	<td>//div[contains(@class, '${key_nameColumn}')]//input[contains(@class, 'field toggle-switch-check')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_PADDING_COLUMN</td>
+	<td>//div[contains(@class, 'lfr-padding')]//label[contains(@class, 'control-label') and contains(text(), '${key_fieldName}')]//..//input[contains(@class, 'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_PADDING_COLUMN</td>
+	<td>//div[contains(@class, 'lfr-padding')]//select[contains(@title, '${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_MARGING_COLUMN</td>
+	<td>//div[contains(@class, 'lfr-margin')]//label[contains(@class, 'control-label') and contains(text(), '${key_fieldName}')]//..//input[contains(@class, 'form-control')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_MARGING_COLUMN</td>
+	<td>//div[contains(@class, 'lfr-margin')]//select[contains(@id, '${key_title}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APPLICATION_DECORATORS_OPTIONS</td>
+	<td>//select[contains(@id, 'portletDecoratorId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOGGLE_SWITCH_LABEL</td>
+	<td>//label[contains(@class, 'toggle-switch')]//..//span[contains(@class, 'toggle-switch-label') and contains(text(), '${key_labelName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_TITLE</td>
+	<td>//div[contains(@class, 'custom-title ')]//input[contains(@class, 'form-control ')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BORDER_ARROUND</td>
+	<td>//div[contains(@class, 'portlet-column-only')]//div[contains(@class, '${key_borderName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

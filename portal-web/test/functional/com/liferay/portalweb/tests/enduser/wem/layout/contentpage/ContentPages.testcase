@@ -1518,4 +1518,43 @@ definition {
 		}
 	}
 
+	@description = "LPS-147400. Collection Display and Collection Filter have width and display configuration."
+	@priority = "3"
+	test ViewWidthAndHideOfCollectionFilterAndCollectionDisplayAndCollectionFilterCanBeHidden {
+		task ("Go to edit page") {
+			ContentPagesNavigator.openEditContentPage(
+				pageName = "Test Content Page Name",
+				siteName = "Test Site Name");
+		}
+
+		task ("Add Collection Display and Collection Filter frgaments to page") {
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Display");
+
+			PageEditor.addFragment(
+				collectionName = "Content Display",
+				fragmentName = "Collection Filter",
+				targetFragmentName = "Collection Display");
+		}
+
+		task ("View Collection Filter frgaments width and height options") {
+			PageEditor.gotoConfiguration(fragmentName = "Collection Filter");
+
+			AssertVisible(
+				key_text = "Height",
+				locator1 = "TextInput#ANY_SPECIFIC");
+
+			AssertVisible(
+				key_text = "Width",
+				locator1 = "TextInput#ANY_SPECIFIC");
+		}
+
+		task ("Hide Collection Display and Collection Filter frgaments from fragment options") {
+			PageEditor.hideFragmentViaPageStyles(fragmentName = "Collection Display");
+
+			PageEditor.hideFragmentViaPageStyles(fragmentName = "Collection Filter");
+		}
+	}
+
 }

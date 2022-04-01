@@ -41,6 +41,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANY_SPECIFIC</td>
+	<td>//div/label[text()='${key_text}']/..//input[not(contains(@type,'checkbox'))]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANY_DISABLED</td>
 	<td>//div[contains(@class,'input-text-wrapper')]/label[contains(.,'${key_selectFieldLabel}')]//following-sibling::input[contains(@class,'disabled')]</td>
 	<td></td>

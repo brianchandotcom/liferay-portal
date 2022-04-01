@@ -39,6 +39,7 @@ import ShortcutManager from './ShortcutManager';
 import Sidebar from './Sidebar';
 import Toolbar from './Toolbar';
 import URLParser from './URLParser';
+import CommonStylesManager from './topper/CommonStylesManager';
 
 const DEFAULT_SESSION_LENGTH = 60 * 1000;
 
@@ -99,6 +100,10 @@ export default function App({state}) {
 										<ShortcutManager />
 
 										<GlobalContextProvider>
+											{config.featureFlagLps132571 ? (
+												<CommonStylesManager />
+											) : null}
+
 											<LayoutViewport />
 
 											<StyleBookContextProvider>

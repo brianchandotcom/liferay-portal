@@ -834,6 +834,6 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			}
 		};
 	private static final Pattern _chromeVersionPattern = Pattern.compile(
-		"[A-z=\\s]+(?<chromeMajorVersion>[0-9]{2})\\.");
+		"[A-z=\\s]+(?<chromeMajorVersion>[0-9]+)\\.");
 
 }

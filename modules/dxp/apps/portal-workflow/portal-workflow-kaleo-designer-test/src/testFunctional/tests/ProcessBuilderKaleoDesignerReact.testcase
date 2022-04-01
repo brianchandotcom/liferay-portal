@@ -189,11 +189,53 @@ definition {
 	}
 
 	@description = "Verify that the user can create a Template for Notification"
-	@ignore = "Test Stub"
 	@priority = "4"
 	test CanCreateNotificationTemplate {
+		property test.name.skip.portal.instance = "ProcessBuilderKaleoDesignerReact#CanCreateNotificationTemplate";
 
-		// TODO LRQA-73837 CanCreateNotificationTemplate pending implementation
+		Workflow.openWorkflowListView();
+
+		Workflow.addNewDefinition(workflowDefinitionTitle = "New Workflow Definition");
+
+		ProcessBuilderKaleoDesignerReact.addConnector(
+			connectorIn = "end",
+			connectorLabel = "Start-End Connector",
+			connectorOut = "start",
+			key_direction = "right");
+
+		ProcessBuilderKaleoDesignerReact.selectNode(nodeType = "start");
+
+		ProcessBuilderKaleoDesignerReact.viewAndFillNotification(
+			newNotification = "true",
+			name = "New Notification",
+			description = "Notification Description",
+			notificationTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.",
+			templateLanguageOption = "FreeMarker",
+			notificationTypeOption = "userNotification");
+
+		ProcessBuilderKaleoDesignerReact.backArrowOnSidebar();
+
+		ProcessBuilderKaleoDesignerReact.gotoNotification(notificationName = "New Notification");
+
+		ProcessBuilderKaleoDesignerReact.viewNotificationInfo(notificationTemplateValue = "${userName} sent you a ${entryType} for review in the workflow.");
+
+		Button.clickPublish();
+
+		Navigator.gotoBack();
+
+		Navigator.gotoNavItem(navItem = "Configuration");
+
+		Workflow.configureWorkflow(
+			workflowDefinition = "New Workflow Definition",
+			workflowResourceValue = "Blogs Entry");
+		
+		JSONBlog.addEntry(
+			entryContent = "Blogs Entry Content",
+			entryTitle = "Blogs Entry Title");
+
+		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
+
+		WorkflowAsset.viewNotification(contentBody = "Test Test sent you a Blogs Entry for review in the workflow.");
 
 	}
 

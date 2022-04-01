@@ -20,11 +20,11 @@ export default function NoCommentsMessage() {
 		<div className="p-4 text-center">
 			<ClayEmptyState
 				description={Liferay.Language.get(
-					'try-again-with-a-different-search'
+					'select-a-fragment-to-add-a-comment'
 				)}
 				imgSrc={`${themeDisplay.getPathThemeImages()}/states/search_state.gif`}
 				small
-				title={Liferay.Language.get('no-results-found')}
+				title={Liferay.Language.get('there-are-no-comments-yet')}
 			/>
 		</div>
 	);

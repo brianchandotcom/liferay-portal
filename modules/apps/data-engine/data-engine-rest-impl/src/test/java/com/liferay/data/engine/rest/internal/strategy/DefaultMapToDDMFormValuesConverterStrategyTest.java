@@ -40,31 +40,54 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.mockito.runners.MockitoJUnitRunner;
-
-import org.powermock.api.mockito.PowerMockito;
+import org.mockito.Mockito;
 
 /**
  * @author Leonardo Barros
  */
-@RunWith(MockitoJUnitRunner.class)
-public class DefaultMapToDDMFormValuesConverterStrategyTest
-	extends PowerMockito {
+public class DefaultMapToDDMFormValuesConverterStrategyTest {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Before
-	public void setUp() {
-		_setUpLanguageUtil();
+	@BeforeClass
+	public static void setUpClass() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		Language language = Mockito.mock(Language.class);
+
+		Mockito.when(
+			language.isAvailableLocale(LocaleUtil.BRAZIL)
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			language.isAvailableLocale(LocaleUtil.US)
+		).thenReturn(
+			true
+		);
+
+		Mockito.when(
+			language.getLanguageId(LocaleUtil.BRAZIL)
+		).thenReturn(
+			"pt_BR"
+		);
+
+		Mockito.when(
+			language.getLanguageId(LocaleUtil.US)
+		).thenReturn(
+			"en_US"
+		);
+
+		languageUtil.setLanguage(language);
 	}
 
 	@Test
@@ -540,47 +563,15 @@ public class DefaultMapToDDMFormValuesConverterStrategyTest
 	}
 
 	private DDMForm _mockDDMForm(DDMFormField ddmFormField) {
-		DDMForm ddmForm = mock(DDMForm.class);
+		DDMForm ddmForm = Mockito.mock(DDMForm.class);
 
-		when(
+		Mockito.when(
 			ddmForm.getDDMFormFields()
 		).thenReturn(
 			ListUtil.fromArray(ddmFormField)
 		);
 
 		return ddmForm;
-	}
-
-	private void _setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		Language language = mock(Language.class);
-
-		when(
-			language.isAvailableLocale(LocaleUtil.BRAZIL)
-		).thenReturn(
-			true
-		);
-
-		when(
-			language.isAvailableLocale(LocaleUtil.US)
-		).thenReturn(
-			true
-		);
-
-		when(
-			language.getLanguageId(LocaleUtil.BRAZIL)
-		).thenReturn(
-			"pt_BR"
-		);
-
-		when(
-			language.getLanguageId(LocaleUtil.US)
-		).thenReturn(
-			"en_US"
-		);
-
-		languageUtil.setLanguage(language);
 	}
 
 	private final DefaultMapToDDMFormValuesConverterStrategy

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.internal.search.bar.portlet.display.context.builder;
+package com.liferay.portal.search.web.internal.search.bar.portlet.display.context.factory;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -56,9 +56,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author André de Oliveira
  */
-public class SearchBarPortletDisplayContextBuilder {
+public class SearchBarPortletDisplayContextFactory {
 
-	public SearchBarPortletDisplayContextBuilder(
+	public SearchBarPortletDisplayContextFactory(
 		Http http, LayoutLocalService layoutLocalService, Portal portal,
 		RenderRequest renderRequest) {
 
@@ -68,7 +68,7 @@ public class SearchBarPortletDisplayContextBuilder {
 		_renderRequest = renderRequest;
 	}
 
-	public SearchBarPortletDisplayContext buildDisplayContext(
+	public SearchBarPortletDisplayContext create(
 		PortletPreferencesLookup portletPreferencesLookup,
 		PortletSharedSearchRequest portletSharedSearchRequest,
 		SearchBarPrecedenceHelper searchBarPrecedenceHelper) {
@@ -406,7 +406,7 @@ public class SearchBarPortletDisplayContextBuilder {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SearchBarPortletDisplayContextBuilder.class);
+		SearchBarPortletDisplayContextFactory.class);
 
 	private final Http _http;
 	private final LayoutLocalService _layoutLocalService;

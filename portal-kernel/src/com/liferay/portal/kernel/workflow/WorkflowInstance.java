@@ -44,13 +44,6 @@ public interface WorkflowInstance extends WorkflowModel {
 
 	public Date getStartDate();
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * #getCurrentNodeNames()}
-	 */
-	@Deprecated
-	public String getState();
-
 	public Map<String, Serializable> getWorkflowContext();
 
 	public String getWorkflowDefinitionName();

@@ -73,16 +73,6 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 		return _startDate;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * #getCurrentNodeNames()}
-	 */
-	@Deprecated
-	@Override
-	public String getState() {
-		return _state;
-	}
-
 	@Override
 	public Map<String, Serializable> getWorkflowContext() {
 		return _workflowContext;
@@ -146,15 +136,6 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 		_startDate = startDate;
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 * #setCurrentNodeNames(List)}
-	 */
-	@Deprecated
-	public void setState(String state) {
-		_state = state;
-	}
-
 	public void setWorkflowContext(Map<String, Serializable> workflowContext) {
 		_workflowContext = workflowContext;
 	}
@@ -178,7 +159,6 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 	private Date _endDate;
 	private WorkflowInstance _parentWorkflowInstance;
 	private Date _startDate;
-	private String _state;
 	private Map<String, Serializable> _workflowContext;
 	private String _workflowDefinitionName;
 	private int _workflowDefinitionVersion;

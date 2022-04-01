@@ -44,6 +44,10 @@ const availableLocales: TLocale[] = Object.keys(Liferay.Language.available).map(
 
 const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 
+const defaultLocale = availableLocales.find(
+	(locale) => locale.label === defaultLanguageId
+);
+
 export function ModalEditViewColumn({
 	editingObjectFieldName,
 	observer,
@@ -61,8 +65,11 @@ export function ModalEditViewColumn({
 	);
 	const {label} = editingColumn;
 
-	const [selectedLocale, setSelectedLocale] = useState<TLocale>(
-		availableLocales[0]
+	const [selectedLocale, setSelectedLocale] = useState(
+		defaultLocale as {
+			label: string;
+			symbol: string;
+		}
 	);
 
 	const [translations, setTranslations] = useState(label);

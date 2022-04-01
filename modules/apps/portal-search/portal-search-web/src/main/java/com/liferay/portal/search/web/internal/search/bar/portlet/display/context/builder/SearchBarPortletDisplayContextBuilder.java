@@ -83,12 +83,6 @@ public class SearchBarPortletDisplayContextBuilder {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_keywordsParameterName = _getKeywordsParameterName(
-			portletPreferencesLookup,
-			portletSharedSearchResponse.getSearchSettings(),
-			searchBarPrecedenceHelper, searchBarPortletPreferences,
-			themeDisplay);
-
 		_scopeParameterName = _getScopeParameterName(
 			portletPreferencesLookup, searchBarPrecedenceHelper,
 			portletSharedSearchResponse.getSearchSettings(),
@@ -100,11 +94,6 @@ public class SearchBarPortletDisplayContextBuilder {
 		SearchRequest searchRequest = searchResponse.getRequest();
 
 		_destination = searchBarPortletPreferences.getDestinationString();
-
-		_emptySearchEnabled = _isEmptySearchEnabled(
-			portletSharedSearchResponse);
-
-		_invisible = searchBarPortletPreferences.isInvisible();
 
 		_keywords = Optional.ofNullable(
 			searchRequest.getQueryString()
@@ -140,7 +129,7 @@ public class SearchBarPortletDisplayContextBuilder {
 			getDisplayStyleGroupId(
 				searchBarPortletInstanceConfiguration, themeDisplay));
 		searchBarPortletDisplayContext.setEmptySearchEnabled(
-			_emptySearchEnabled);
+			_isEmptySearchEnabled(portletSharedSearchResponse));
 		searchBarPortletDisplayContext.setEverythingSearchScopeParameterString(
 			SearchScope.EVERYTHING.getParameterString());
 		searchBarPortletDisplayContext.setInputPlaceholder(
@@ -148,7 +137,11 @@ public class SearchBarPortletDisplayContextBuilder {
 				getHttpServletRequest(_renderRequest), "search-..."));
 		searchBarPortletDisplayContext.setKeywords(getKeywords());
 		searchBarPortletDisplayContext.setKeywordsParameterName(
-			_keywordsParameterName);
+			_getKeywordsParameterName(
+				portletPreferencesLookup,
+				portletSharedSearchResponse.getSearchSettings(),
+				searchBarPrecedenceHelper, searchBarPortletPreferences,
+				themeDisplay));
 
 		if (_searchScopePreference ==
 				SearchScopePreference.LET_THE_USER_CHOOSE) {
@@ -185,7 +178,7 @@ public class SearchBarPortletDisplayContextBuilder {
 			}
 		}
 
-		if (_invisible) {
+		if (searchBarPortletPreferences.isInvisible()) {
 			searchBarPortletDisplayContext.setRenderNothing(true);
 		}
 
@@ -429,11 +422,8 @@ public class SearchBarPortletDisplayContextBuilder {
 		SearchBarPortletDisplayContextBuilder.class);
 
 	private String _destination;
-	private boolean _emptySearchEnabled;
 	private final Http _http;
-	private boolean _invisible;
 	private String _keywords;
-	private String _keywordsParameterName;
 	private final LayoutLocalService _layoutLocalService;
 	private String _paginationStartParameterName;
 	private final Portal _portal;

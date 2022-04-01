@@ -82,9 +82,7 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		String icons = ParamUtil.getString(actionRequest, "icons");
-
-		JSONObject iconsJSONObject = JSONFactoryUtil.createJSONObject(icons);
+		JSONObject iconsJSONObject = JSONFactoryUtil.createJSONObject(ParamUtil.getString(actionRequest, "icons"));
 
 		Map<String, FrontendIconsResourcePack> frontendIconsResourcePacks =
 			_getFrontendIconsResourcePacks(companyId);
@@ -120,13 +118,10 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 		_frontendIconsResourcePackRepository.addFrontendIconsResourcePack(
 			companyId, frontendIconsResourcePack);
 
-		Collection<FrontendIconsResource> frontendIconsResources =
-			frontendIconsResourcePack.getFrontendIconsResources();
-
 		JSONArray iconsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (FrontendIconsResource frontendIconsResource :
-				frontendIconsResources) {
+			frontendIconsResourcePack.getFrontendIconsResources()) {
 
 			iconsJSONArray.put(
 				JSONUtil.put("name", frontendIconsResource.getName()));
@@ -148,12 +143,9 @@ public class SaveFrontendIconsPackFromExistingIconsMVCActionCommand
 		Map<String, FrontendIconsResourcePack> frontendIconsResourcePackMap =
 			new HashMap<>();
 
-		List<FrontendIconsResourcePack> frontendIconsResourcePacks =
-			_frontendIconsResourcePackRepository.getFrontendIconsResourcePacks(
-				companyId);
-
 		for (FrontendIconsResourcePack frontendIconsResourcePack :
-				frontendIconsResourcePacks) {
+			_frontendIconsResourcePackRepository.getFrontendIconsResourcePacks(
+				companyId)) {
 
 			frontendIconsResourcePackMap.put(
 				frontendIconsResourcePack.getName(), frontendIconsResourcePack);

@@ -53,9 +53,6 @@ public class FrontendIconsResourcePackRepository {
 
 		Folder companyIconsFolder = _getFolder(company);
 
-		String svgSpritemap = SVGUtil.getSVGSpritemap(
-			frontendIconsResourcePack);
-
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchFileEntry(
 			company.getGroupId(), companyIconsFolder.getFolderId(),
 			frontendIconsResourcePack.getName());
@@ -68,6 +65,9 @@ public class FrontendIconsResourcePackRepository {
 			_portletFileRepository.deletePortletFileEntry(
 				fileEntry.getFileEntryId());
 		}
+
+		String svgSpritemap = SVGUtil.getSVGSpritemap(
+			frontendIconsResourcePack);
 
 		_portletFileRepository.addPortletFileEntry(
 			company.getGroupId(), _userLocalService.getDefaultUserId(companyId),

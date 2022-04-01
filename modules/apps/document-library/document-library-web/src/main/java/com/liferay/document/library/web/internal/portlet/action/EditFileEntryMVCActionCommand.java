@@ -650,6 +650,10 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		_setUpDDMFormValues(serviceContext);
 
+		serviceContext.setAttribute(
+			"updateAutoTags",
+			ParamUtil.getBoolean(httpServletRequest, "updateAutoTags"));
+
 		return serviceContext;
 	}
 
